@@ -1,0 +1,47 @@
+{
+  "name": "@nyayagrid/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "build": "next build",
+    "start": "next start --port 3000",
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@nyayagrid/agents": "*",
+    "@nyayagrid/ai": "*",
+    "@nyayagrid/auth": "*",
+    "@nyayagrid/database": "*",
+    "@nyayagrid/documents": "*",
+    "@nyayagrid/intelligence": "*",
+    "@nyayagrid/jobs": "*",
+    "@nyayagrid/observability": "*",
+    "@nyayagrid/permissions": "*",
+    "@nyayagrid/platform": "*",
+    "@nyayagrid/research": "*",
+    "@nyayagrid/search": "*",
+    "@nyayagrid/ui": "*",
+    "@nyayagrid/validation": "*",
+    "@nyayagrid/workspaces": "*",
+    "inngest": "^3.32.9",
+    "next": "^15.2.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.22.0",
+    "eslint-config-next": "^15.2.2",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8"
+  }
+}

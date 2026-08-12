@@ -1,0 +1,45 @@
+{
+  "name": "nyayagrid",
+  "private": true,
+  "version": "0.1.0",
+  "description": "NyayaGrid — AI-native legal operating system",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @nyayagrid/web",
+    "dev:worker": "npm run dev -w @nyayagrid/worker",
+    "build": "npm run build -w @nyayagrid/web",
+    "lint": "npm run lint -w @nyayagrid/web && npm run lint -w @nyayagrid/database && npm run lint -w @nyayagrid/permissions && npm run lint -w @nyayagrid/ai && npm run lint -w @nyayagrid/documents && npm run lint -w @nyayagrid/auth && npm run lint -w @nyayagrid/validation && npm run lint -w @nyayagrid/jobs && npm run lint -w @nyayagrid/observability && npm run lint -w @nyayagrid/ui && npm run lint -w @nyayagrid/search && npm run lint -w @nyayagrid/intelligence && npm run lint -w @nyayagrid/research && npm run lint -w @nyayagrid/agents && npm run lint -w @nyayagrid/workspaces && npm run lint -w @nyayagrid/platform",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "test:e2e": "playwright test",
+    "test:e2e:install": "playwright install --with-deps chromium",
+    "eval:ai": "npm run eval:ai -w @nyayagrid/ai",
+    "eval:ai:live": "npm run eval:ai:live -w @nyayagrid/ai",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "db:generate": "npm run generate -w @nyayagrid/database",
+    "db:migrate": "npm run migrate -w @nyayagrid/database",
+    "db:studio": "npm run studio -w @nyayagrid/database",
+    "research:import": "npm run research:import -w @nyayagrid/research",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^22.13.10",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8"
+  },
+  "overrides": {
+    "drizzle-orm": "0.40.0"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "npm@10.9.2"
+}

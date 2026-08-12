@@ -1,0 +1,18 @@
+{
+  "name": "@nyayagrid/worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npx inngest-cli@latest dev -u http://localhost:3000/api/inngest",
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nyayagrid/jobs": "*",
+    "inngest": "^3.32.9"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.2"
+  }
+}

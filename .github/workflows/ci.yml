@@ -1,0 +1,121 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+env:
+  # Every provider below is a free/local stand-in — CI never calls a paid API or real model.
+  APP_ENV: development
+  AUTH_PROVIDER: dev
+  DEV_AUTH_USER_ID: ci_dev_user_owner
+  DEV_AUTH_EMAIL: ci-owner@example.nyayagrid.local
+  DEV_AUTH_NAME: CI Dev Owner
+  AI_PROVIDER: mock
+  EMBEDDING_PROVIDER: mock
+  RESEARCH_PROVIDER: local
+  MALWARE_SCANNER: development
+  STORAGE_PROVIDER: minio
+  S3_ENDPOINT: http://localhost:9000
+  S3_REGION: us-east-1
+  S3_ACCESS_KEY_ID: nyayagrid
+  S3_SECRET_ACCESS_KEY: nyayagridsecret
+  S3_BUCKET: nyayagrid-documents
+  S3_FORCE_PATH_STYLE: "true"
+  INNGEST_EVENT_KEY: local
+  INNGEST_SIGNING_KEY: local
+  INNGEST_DEV: "1"
+  DATABASE_URL: postgresql://nyayagrid:nyayagrid@localhost:5432/nyayagrid
+  RUN_DB_TESTS: "1"
+  NEXT_PUBLIC_APP_URL: http://localhost:3000
+
+jobs:
+  build-and-test:
+    name: Lint, typecheck, test, build
+    runs-on: ubuntu-latest
+
+    # pgvector/pgvector:pg16 matches docker-compose.yml so CI and local dev exercise the same
+    # Postgres extension surface (vector similarity search, pgcrypto). GitHub Actions services
+    # don't run a custom init script, so `CREATE EXTENSION` is issued explicitly in a step below.
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: nyayagrid
+          POSTGRES_PASSWORD: nyayagrid
+          POSTGRES_DB: nyayagrid
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U nyayagrid -d nyayagrid"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Enable required Postgres extensions
+        run: |
+          sudo apt-get update -y && sudo apt-get install -y postgresql-client
+          PGPASSWORD=nyayagrid psql -h localhost -p 5432 -U nyayagrid -d nyayagrid \
+            -c 'CREATE EXTENSION IF NOT EXISTS vector;' \
+            -c 'CREATE EXTENSION IF NOT EXISTS "pgcrypto";'
+
+      - name: Run database migrations
+        run: npm run db:migrate
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      # RUN_DB_TESTS=1 is set at the workflow level (env, above), so this exercises every
+      # `phase*.integration.test.ts` against the real Postgres service in addition to the
+      # provider-independent unit tests. Without a reachable DATABASE_URL/RUN_DB_TESTS=1, these
+      # same suites use `describe.runIf(...)` to skip themselves rather than fail, so this stays
+      # green even for a contributor running `npm test` with no Docker available locally.
+      - name: Unit + integration tests
+        run: npm run test
+
+      - name: Build
+        run: npm run build
+
+      - name: AI evaluation suite (mock provider)
+        run: npm run eval:ai
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      # Playwright starts its own `next dev` server (see playwright.config.ts webServer) against
+      # the same Postgres service used above. MinIO/S3 is intentionally not provisioned in CI:
+      # none of the E2E specs upload a document, and /api/health/ready treats storage as an
+      # advisory (non-fatal) check, so the app boots and serves every page these tests touch
+      # without object storage being reachable.
+      - name: End-to-end tests (Playwright)
+        run: npm run test:e2e
+        continue-on-error: false
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7

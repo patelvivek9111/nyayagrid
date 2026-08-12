@@ -1,0 +1,34 @@
+# syntax=docker/dockerfile:1
+
+# NyayaGrid "worker" — IMPORTANT: read before using this in production.
+#
+# apps/worker (packages/jobs' job *handlers* live in @nyayagrid/jobs, not here) is currently only a
+# thin wrapper around the Inngest Dev Server CLI (see apps/worker/src/index.ts and
+# apps/worker/package.json — its only script is `inngest-cli dev`). Job *execution* happens inside
+# the Next.js app itself, at POST /api/inngest (apps/web/src/app/api/inngest/route.ts), which
+# Inngest (local dev server or Inngest Cloud in production) calls over HTTP. There is no separate
+# always-running worker process today — this image packages the local dev-only job queue simulator
+# so it can run in a container (e.g. alongside `docker compose up`) instead of via `npx` on the
+# host, for parity with a docker-based local/staging setup.
+#
+# For a real production deployment, do NOT run this container as "the worker". Instead:
+#   1. Create an Inngest Cloud account/app (or another Inngest-compatible event platform).
+#   2. Point it at your deployed web app's https://<your-domain>/api/inngest endpoint.
+#   3. Set INNGEST_EVENT_KEY / INNGEST_SIGNING_KEY to the real values Inngest Cloud issues you.
+# See docs/DEPLOYMENT.md for the full checklist. This file exists to satisfy local/staging
+# docker-compose parity, not because a production "worker" container is required.
+#
+# Build: docker build -f Dockerfile.worker -t nyayagrid-worker .
+# Run:   docker run --network host nyayagrid-worker  (needs to reach the web app's /api/inngest)
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+RUN apk add --no-cache libc6-compat
+RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 --ingroup nodejs nyayagrid
+USER nyayagrid
+
+ENV INNGEST_DEV=1
+# Overridable at `docker run` time to point at the web app when it isn't on localhost:3000.
+ENV WEB_APP_INNGEST_URL=http://localhost:3000/api/inngest
+
+CMD ["sh", "-c", "npx --yes inngest-cli@latest dev -u \"$WEB_APP_INNGEST_URL\""]

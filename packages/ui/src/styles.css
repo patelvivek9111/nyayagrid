@@ -1,0 +1,24 @@
+:root {
+  --ng-ink: #14212b;
+  --ng-paper: #f4f1ea;
+  --ng-accent: #1f4b3a;
+  --ng-accent-soft: #d7e4dd;
+  --ng-line: #cfc7ba;
+  --ng-danger: #8a1c1c;
+  --ng-warn: #8a5a12;
+  --ng-font-sans: "Source Sans 3", "Segoe UI", sans-serif;
+  --ng-font-display: "Fraunces", Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  color: var(--ng-ink);
+  background:
+    radial-gradient(circle at top left, rgba(31, 75, 58, 0.08), transparent 40%),
+    linear-gradient(180deg, #f7f4ee 0%, #efe8dc 100%);
+  font-family: var(--ng-font-sans);
+}

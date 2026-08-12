@@ -1,0 +1,34 @@
+{
+  "name": "@nyayagrid/permissions",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@nyayagrid/database": "*",
+    "@nyayagrid/validation": "*",
+    "drizzle-orm": "^0.40.0"
+  },
+  "devDependencies": {
+    "@nyayagrid/agents": "*",
+    "@nyayagrid/ai": "*",
+    "@nyayagrid/documents": "*",
+    "@nyayagrid/intelligence": "*",
+    "@nyayagrid/jobs": "*",
+    "@nyayagrid/platform": "*",
+    "@nyayagrid/research": "*",
+    "@nyayagrid/search": "*",
+    "@nyayagrid/workspaces": "*",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8"
+  }
+}

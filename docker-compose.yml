@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: nyayagrid-postgres
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: nyayagrid
+      POSTGRES_PASSWORD: nyayagrid
+      POSTGRES_DB: nyayagrid
+    volumes:
+      - nyayagrid_postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nyayagrid -d nyayagrid"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    container_name: nyayagrid-minio
+    restart: unless-stopped
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: nyayagrid
+      MINIO_ROOT_PASSWORD: nyayagridsecret
+    volumes:
+      - nyayagrid_minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  minio-init:
+    image: minio/mc:latest
+    container_name: nyayagrid-minio-init
+    depends_on:
+      minio:
+        condition: service_started
+    entrypoint: >
+      /bin/sh -c "
+      sleep 3;
+      mc alias set local http://minio:9000 nyayagrid nyayagridsecret;
+      mc mb --ignore-existing local/nyayagrid-documents;
+      exit 0;
+      "
+
+volumes:
+  nyayagrid_postgres_data:
+  nyayagrid_minio_data:

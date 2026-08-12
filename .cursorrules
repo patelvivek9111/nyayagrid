@@ -1,0 +1,527 @@
+# NyayaGrid Cursor Rules
+
+## 1. Product Mission
+Build NyayaGrid as an AI-native legal operating system that does two things equally well:
+1. Answers legal questions with source-grounded, jurisdiction-aware responses.
+2. Manages legal work from intake through resolution.
+
+NyayaGrid serves four user groups only in the initial product:
+- Law firms
+- Solo lawyers
+- Law students
+- Public users
+
+## 1.1 Brand and Product Architecture
+NyayaGrid is the single platform, ecosystem, company-facing product name, and primary domain: `NyayaGrid.com`.
+
+The following are built-in NyayaGrid modules/capabilities. They are NOT separate companies, products, codebases, or domains unless explicitly changed later:
+- **Nyaya** — the primary conversational AI and orchestration layer.
+- **Nyaya Graph** — the legal knowledge graph connecting matters, people, organizations, documents, evidence, events, authorities, claims, and other entities.
+- **Nyaya Memory** — persistent, structured, reviewable matter intelligence.
+- **Nyaya Timeline** — automatically generated and user-verified chronology for matters.
+- **Nyaya Research** — source-grounded legal research experience.
+- **Nyaya Draft** — drafting, editing, review, citation, and document-generation experience.
+- **Nyaya Professor** — law-student learning experience.
+- **Nyaya Guide** — public legal-information and document-understanding experience.
+
+Brand rules:
+- Use `NyayaGrid` for the overall platform and website.
+- Use `Nyaya` for the AI users converse with inside NyayaGrid.
+- Use the branded module names above consistently in UI copy and documentation.
+- Do not generate names such as LegalOS, Legal AI OS, NyayaOS, or separate `{module}.com` products.
+- All modules share one identity system, design system, API surface, security model, and core data platform.
+- Nyaya Graph and Nyaya Memory are primarily platform capabilities and may appear contextually inside matters rather than as disconnected standalone apps.
+
+Do not add government, corporate legal department, insurance, or general enterprise workspaces unless explicitly requested.
+
+## 2. Core Product Principle
+NyayaGrid is not a generic chatbot and not a traditional practice-management app with an AI button.
+
+Every feature must support at least one of these outcomes:
+- Understand a legal matter.
+- Answer a legal question.
+- Draft or review legal work.
+- Organize evidence and documents.
+- Track tasks, deadlines, and events.
+- Improve collaboration and accountability.
+- Explain legal information safely to students or the public.
+
+The central object in the system is a Matter. Documents, people, organizations, facts, events, evidence, deadlines, notes, tasks, drafts, communications, research, and AI outputs must connect to a Matter whenever applicable.
+
+## 3. Non-Negotiable Constraints
+- Never present AI output as guaranteed legal advice.
+- Never fabricate cases, statutes, quotes, docket numbers, judges, deadlines, or citations.
+- Every legal answer based on external or uploaded sources must include source references.
+- Clearly distinguish sourced facts, user-provided facts, AI inferences, and unresolved questions.
+- Preserve original uploaded files and maintain an immutable audit record.
+- All destructive operations require explicit confirmation.
+- Respect workspace, matter, and document permissions at every layer.
+- Never expose one tenant's data to another tenant.
+- Never use customer data for model training without explicit, separately recorded consent.
+- Avoid autonomous legal actions such as filing, sending, accepting, signing, or submitting without human approval.
+- Dates and deadlines must show timezone and source.
+- Generated documents must remain drafts until explicitly approved.
+
+## 4. Initial Product Scope
+
+### 4.1 Law Firm Workspace
+Support:
+- Multi-user organizations
+- Roles and permissions
+- Client and contact management
+- Matters and matter teams
+- Document storage and versioning
+- AI legal research
+- AI legal Q&A
+- Drafting and document review
+- Nyaya Memory
+- Timeline generation
+- Evidence organization
+- Deposition analysis
+- Contract analysis
+- Tasks, deadlines, and calendar
+- Notes and internal collaboration
+- Audit logs
+- Basic time tracking and billing-entry assistance
+
+### 4.2 Solo Lawyer Workspace
+Use the same core system as Law Firm Workspace with:
+- Simpler onboarding
+- Single-user defaults
+- Reduced administrative complexity
+- Lightweight billing and task management
+- Upgrade path to a multi-user firm
+
+Do not create a separate codebase for solo lawyers.
+
+### 4.3 Law Student Workspace
+Support only:
+- Nyaya Professor
+- Legal concept explanations
+- Case upload and case brief generation
+- Interactive follow-up questions about uploaded cases
+- Comparison of cases, rules, holdings, reasoning, and hypotheticals
+- Citation-backed study answers
+- Saved study conversations and case notebooks
+
+Explicitly exclude for now:
+- Flashcards
+- Quiz generation
+- Bar exam coaching
+- Grade prediction
+- Academic dishonesty features
+
+### 4.4 Public Workspace
+Support:
+- Plain-language legal information
+- Legal document explanation
+- Court notice explanation
+- General process explanation
+- Event timeline builder
+- Evidence and document organizer
+- Attorney consultation summary
+- Lawyer-type guidance, not lawyer selection guarantees
+- Clear escalation to a qualified attorney when risk is high
+
+The public workspace must never imply attorney-client privilege or an attorney-client relationship.
+
+## 5. Primary Navigation
+
+### Professional Navigation
+- Home
+- Matters
+- Clients
+- Documents
+- Nyaya Research
+- Nyaya Draft
+- Calendar
+- Tasks
+- Billing
+- Nyaya
+- Settings
+
+### Student Navigation
+- Home
+- Nyaya Professor
+- Cases
+- Case Briefs
+- Notes
+- Saved Conversations
+- Settings
+
+### Public Navigation
+- Nyaya Guide
+- Explain a Document
+- Build My Timeline
+- Prepare for a Lawyer
+- My Files
+- Saved Conversations
+- Safety and Privacy
+
+## 6. Required Core Experiences
+
+### 6.1 Matter Dashboard
+Every professional Matter must display:
+- Matter name and number
+- Client
+- Matter type
+- Jurisdiction
+- Court and judge when relevant
+- Status
+- Responsible lawyer
+- Matter team
+- Upcoming deadlines
+- Recent activity
+- Key facts
+- Open questions
+- People and organizations
+- Documents and evidence
+- Timeline
+- Tasks
+- Research
+- Drafts
+- Notes
+- AI insights
+
+### 6.2 Nyaya — Legal Intelligence
+The assistant must operate in explicit modes:
+- General legal research
+- Current matter
+- Selected documents
+- Drafting
+- Review
+- Student explanation
+- Public explanation
+
+Always show the active context. Never silently mix unrelated matters or workspaces.
+
+### 6.3 Nyaya Memory
+Nyaya Memory must store structured, reviewable information:
+- Confirmed facts
+- Disputed facts
+- Allegations
+- Admissions
+- Legal issues
+- Claims and defenses
+- Important documents
+- Important communications
+- Deadlines
+- People and roles
+- Strategy notes
+- Open questions
+- AI-generated inferences
+
+Users must be able to correct, approve, reject, or delete AI-generated memory entries.
+
+### 6.4 Nyaya Timeline
+Nyaya Timeline events must include:
+- Date and time
+- Event description
+- Event type
+- Matter
+- People and organizations involved
+- Source document or user entry
+- Confidence
+- Verified or unverified state
+
+Never invent missing dates. Use labels such as "date unknown" or "approximately" when needed.
+
+### 6.5 Nyaya Graph
+Represent relationships among:
+- People
+- Organizations
+- Documents
+- Communications
+- Events
+- Contracts
+- Claims
+- Legal issues
+- Evidence items
+
+Every graph edge must be traceable to a source or clearly labeled as an AI inference.
+
+### 6.6 Drafting
+Drafting must support:
+- Motions
+- Pleadings
+- Memoranda
+- Contracts
+- Letters
+- Client communications
+- Internal notes
+- Discovery requests and responses
+
+Each draft must include:
+- Matter context
+- Jurisdiction
+- Document type
+- Intended audience
+- Source list
+- Assumptions
+- Unresolved placeholders
+- Version history
+
+### 6.7 Legal Research
+Research results must:
+- Separate primary and secondary authority
+- Display jurisdiction and court level
+- Display publication and treatment status when available
+- Quote only from retrieved source text
+- Link every proposition to a source
+- Warn when authority is missing, outdated, nonbinding, or uncertain
+- Never create a citation from model memory alone
+
+## 7. AI Architecture Rules
+- Use existing frontier model APIs initially.
+- Keep model providers behind a provider-agnostic interface.
+- Use retrieval-augmented generation for uploaded documents and legal sources.
+- Use task-specific prompt templates, tools, and validators.
+- Use deterministic code for permissions, dates, billing, document storage, and workflow state.
+- Do not use an LLM where normal code is safer and sufficient.
+- Store prompts, model, model version, tools called, sources used, and final output for auditability.
+- Require structured outputs using validated schemas for facts, deadlines, citations, entities, events, and tasks.
+- Run citation validation before showing research or legal drafting output.
+- Run hallucination and unsupported-claim checks before final output.
+- Use confidence labels carefully; never imply mathematical certainty without a defined scoring method.
+
+## 8. Suggested Technical Stack
+Default unless the repository already uses another approved stack:
+- Frontend: Next.js, React, TypeScript
+- Styling: Tailwind CSS and accessible component primitives
+- Backend: Next.js server functions or a dedicated TypeScript API service
+- Database: PostgreSQL
+- ORM: Prisma or Drizzle
+- Vector storage: pgvector initially
+- Object storage: S3-compatible encrypted storage
+- Authentication: enterprise-ready authentication provider with MFA
+- Background jobs: durable queue system
+- Search: PostgreSQL full-text initially; dedicated search service later
+- AI providers: adapter interface for OpenAI, Anthropic, and Google
+- Observability: structured logs, traces, error reporting, AI evaluation logs
+
+Do not introduce microservices until scaling or security boundaries justify them.
+
+## 9. Coding Standards
+- TypeScript strict mode is required.
+- Avoid `any`; use explicit types and validated schemas.
+- Prefer small, composable services and pure functions.
+- Keep business logic out of UI components.
+- Use server-side permission checks even when the UI hides an action.
+- Validate all external inputs.
+- Use database transactions for multi-step state changes.
+- Use idempotency keys for uploads, imports, payments, and AI jobs.
+- Add pagination to all potentially large lists.
+- Add loading, empty, error, and permission-denied states.
+- Meet WCAG 2.2 AA where practical.
+- Add tests for every critical workflow and permission boundary.
+
+## 10. Security and Privacy
+- Encrypt data in transit and at rest.
+- Use tenant-scoped database access patterns.
+- Support role-based and matter-level access controls.
+- Record access to sensitive files.
+- Support retention policies and legal holds later, but design for them now.
+- Scan uploads for malware.
+- Never execute uploaded macros or scripts.
+- Remove hidden metadata only when creating sanitized exports; preserve originals.
+- Secrets must be stored in environment or secret-management systems.
+- Do not log document contents, privileged material, access tokens, or personal data.
+
+## 11. Roles
+Initial professional roles:
+- Organization Owner
+- Administrator
+- Partner or Supervising Lawyer
+- Lawyer
+- Paralegal
+- Staff
+- Client Guest
+
+Permissions must be capability-based, not hard-coded only by title.
+
+Student and Public accounts must be isolated from professional organizations unless a user is explicitly invited into a client portal or shared workspace.
+
+## 12. Data Model Principles
+Use globally unique IDs. Include `tenantId` on all tenant-owned records and `matterId` on all matter-child records where applicable.
+
+Core entities:
+- User
+- Organization
+- Membership
+- Role
+- Permission
+- Client
+- Contact
+- Matter
+- MatterMember
+- Document
+- DocumentVersion
+- Folder
+- EvidenceItem
+- TimelineEvent
+- Entity
+- Relationship
+- Task
+- Deadline
+- CalendarEvent
+- Note
+- Conversation
+- Message
+- ResearchSession
+- Citation
+- Draft
+- DraftVersion
+- ContractReview
+- DepositionAnalysis
+- AIJob
+- AIArtifact
+- AuditEvent
+- TimeEntry
+- Invoice
+- StudentCase
+- CaseBrief
+- PublicIntake
+
+## 13. UI Rules
+- The interface must feel like a professional legal workspace, not a consumer chatbot.
+- Use restrained visual design, strong information hierarchy, and dense-but-readable layouts.
+- Every AI result must show sources, context, and action controls.
+- Never hide critical disclaimers in small print.
+- Avoid decorative AI animations that slow legal work.
+- Prefer side-by-side document and analysis views.
+- Support keyboard navigation and command palette.
+- Keep chat available but do not make chat the only interface.
+
+## 14. Safety Rules by Workspace
+
+### Professional
+- Label all AI output as draft work product.
+- Require human review before sending, filing, signing, or publishing.
+- Warn when citations cannot be verified.
+- Preserve confidentiality and access boundaries.
+
+### Student
+- Encourage learning and reasoning.
+- Do not impersonate a professor or claim academic authority.
+- Do not knowingly complete restricted examinations.
+- Show case sources and distinguish holding from commentary.
+
+### Public
+- Provide legal information, not definitive legal advice.
+- Explain that laws vary by jurisdiction and facts.
+- Ask for jurisdiction before jurisdiction-dependent guidance.
+- Highlight urgent deadlines and recommend qualified legal help for high-risk matters.
+- Do not predict guaranteed outcomes.
+- Do not create false expectations of confidentiality or privilege.
+
+## 15. Build Order
+Follow this order unless explicitly changed:
+
+Phase 1: Foundation
+- Authentication
+- Organizations and roles
+- Workspace selection
+- Database and tenant isolation
+- File upload and storage
+- Audit logging
+
+Phase 2: Professional Matter Core
+- Clients
+- Matters
+- Matter dashboard
+- Documents
+- Notes
+- Tasks
+- Deadlines
+- Basic calendar
+
+Phase 3: AI Document Intelligence
+- OCR and text extraction
+- Document chunking
+- Embeddings
+- Matter-scoped retrieval
+- AI chat with citations
+- Summaries
+- Entity and date extraction
+
+Phase 4: Legal Intelligence
+- Legal research connector layer
+- Citation verification
+- Drafting
+- Contract review
+- Deposition analysis
+
+Phase 5: Matter Intelligence
+- Nyaya Memory
+- Timeline
+- Nyaya Graph
+- AI insights
+- Cross-document contradiction detection
+
+Phase 6: Student Workspace
+- Nyaya Professor
+- Case upload
+- Case brief generator
+- Interactive case Q&A
+- Notes and saved sessions
+
+Phase 7: Public Workspace
+- Plain-language Q&A
+- Document explanation
+- Timeline builder
+- Consultation summary
+- Risk and escalation flows
+
+Phase 8: Firm Operations
+- Email and calendar integrations
+- Time-entry assistance
+- Basic billing
+- Client portal
+- Notifications
+
+## 16. Explicit Non-Goals for Initial Versions
+Do not build unless requested:
+- A proprietary foundation model
+- Autonomous court filing
+- Autonomous legal representation
+- Government workspace
+- Corporate legal department workspace
+- Jury prediction
+- Judge outcome guarantees
+- Settlement probability presented as fact
+- Flashcards
+- Quizzes
+- Bar exam coaching
+- Blockchain
+- Cryptocurrency payments
+- Native mobile apps before the responsive web app is stable
+- Complex accounting
+- Full e-discovery production platform in the MVP
+- Direct replacement for Westlaw or Lexis without licensed data
+
+## 17. Definition of Done
+A feature is not complete until it has:
+- Clear user story
+- Permission checks
+- Input validation
+- Loading, empty, error, and success states
+- Audit events where applicable
+- Tests
+- Accessible UI
+- Documentation
+- Security review for sensitive data
+- Source attribution for AI outputs
+- Human approval controls for consequential actions
+
+## 18. Cursor Behavior
+When implementing:
+1. Read this file and `NYAYAGRID_PRODUCT_SPEC.md` before making architectural changes.
+2. Do not invent product requirements that conflict with these documents.
+3. Prefer completing one vertical workflow over creating many disconnected screens.
+4. Before adding a dependency, explain why the existing stack cannot solve the problem.
+5. Keep TODOs explicit and linked to a product phase.
+6. Do not create mock legal citations that could be mistaken for real authority.
+7. Use clearly labeled synthetic data in demos and tests.
+8. When uncertain, preserve security, source traceability, and human review over convenience.
+9. Never silently reduce a legal or security requirement.
+10. Keep the product centered on legal intelligence plus end-to-end legal work management.

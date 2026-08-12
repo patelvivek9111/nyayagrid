@@ -1,0 +1,39 @@
+import { requireMatterAccess } from "@nyayagrid/permissions";
+import { requireUser } from "@/lib/auth";
+import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
+import { getChunkCitation } from "@/server/nyaya";
+
+type Params = { params: Promise<{ matterId: string; chunkId: string }> };
+
+export async function GET(request: Request, { params }: Params) {
+  try {
+    const { matterId, chunkId } = await params;
+    const { db, user } = await requireUser(request.headers);
+    const { matter } = await requireMatterAccess(db, {
+      userId: user.id,
+      matterId,
+      minAccess: "read",
+      capability: "documents.view",
+    });
+    const chunk = await getChunkCitation({
+      db,
+      organizationId: matter.organizationId,
+      matterId,
+      chunkId,
+    });
+    if (!chunk) return jsonError("NOT_FOUND", "Citation source not found in matter scope", 404);
+    return jsonOk({
+      chunk: {
+        id: chunk.id,
+        documentId: chunk.documentId,
+        documentVersionId: chunk.documentVersionId,
+        pageStart: chunk.pageStart,
+        pageEnd: chunk.pageEnd,
+        segmentRef: chunk.segmentRef,
+        content: chunk.content,
+      },
+    });
+  } catch (error) {
+    return handleRouteError(error);
+  }
+}
