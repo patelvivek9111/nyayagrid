@@ -1,6 +1,12 @@
 import { and, desc, eq, inArray, isNull, sql } from "@nyayagrid/database";
 import type { Database } from "@nyayagrid/database";
-import { matterMemories } from "@nyayagrid/database";
+import {
+  documentChunks,
+  documents,
+  matterEntities,
+  matterMemories,
+  timelineEvents,
+} from "@nyayagrid/database";
 import {
   createAIProviderFromEnv,
   createEmbeddingProviderFromEnv,
@@ -12,7 +18,14 @@ import {
   type EmbeddingProvider,
 } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
+import { loadAuthorizedChunks } from "../provenance";
 import { formatVerifiedIntelligenceForPrompt, loadVerifiedMatterIntelligence } from "../verified";
+import {
+  chunkIdsFromSourceReference,
+  matchRelatedByName,
+  presentMatterMemory,
+  type PublicMemory,
+} from "./present";
 
 const ACTIVE = ["approved", "edited_and_approved"] as const;
 
@@ -239,7 +252,7 @@ export async function listMatterMemories(params: {
   organizationId: string;
   matterId: string;
   status?: string | string[];
-}) {
+}): Promise<PublicMemory[]> {
   const statuses = params.status
     ? Array.isArray(params.status)
       ? params.status
@@ -264,7 +277,75 @@ export async function listMatterMemories(params: {
     .from(matterMemories)
     .where(and(...conditions))
     .orderBy(desc(matterMemories.updatedAt));
-  return rows;
+
+  const chunkIds = [
+    ...new Set(rows.flatMap((row) => chunkIdsFromSourceReference(row.sourceReference))),
+  ];
+  const chunks =
+    chunkIds.length === 0
+      ? []
+      : await params.db
+          .select()
+          .from(documentChunks)
+          .where(
+            and(
+              eq(documentChunks.organizationId, params.organizationId),
+              eq(documentChunks.matterId, params.matterId),
+              inArray(documentChunks.id, chunkIds),
+            ),
+          );
+  const documentIds = [...new Set(chunks.map((c) => c.documentId))];
+  const docs =
+    documentIds.length === 0
+      ? []
+      : await params.db
+          .select({ id: documents.id, title: documents.title })
+          .from(documents)
+          .where(inArray(documents.id, documentIds));
+  const titleByDoc = new Map(docs.map((d) => [d.id, d.title]));
+
+  const [entities, events] = await Promise.all([
+    params.db
+      .select({ id: matterEntities.id, displayName: matterEntities.displayName })
+      .from(matterEntities)
+      .where(
+        and(
+          eq(matterEntities.organizationId, params.organizationId),
+          eq(matterEntities.matterId, params.matterId),
+          isNull(matterEntities.mergedIntoEntityId),
+        ),
+      ),
+    params.db
+      .select({ id: timelineEvents.id, title: timelineEvents.title })
+      .from(timelineEvents)
+      .where(
+        and(
+          eq(timelineEvents.organizationId, params.organizationId),
+          eq(timelineEvents.matterId, params.matterId),
+        ),
+      ),
+  ]);
+
+  return rows.map((row) => {
+    const cited = new Set(chunkIdsFromSourceReference(row.sourceReference));
+    const sources = chunks
+      .filter((c) => cited.has(c.id))
+      .map((c) => ({
+        id: c.id,
+        documentId: c.documentId,
+        chunkId: c.id,
+        page: c.pageStart,
+        supportingText: c.content.slice(0, 400),
+        documentTitle: titleByDoc.get(c.documentId) ?? "Case document",
+      }));
+    const haystack = `${row.title} ${row.content}`;
+    return presentMatterMemory({
+      ...row,
+      sources,
+      relatedPeople: matchRelatedByName(haystack, entities, (e) => e.displayName),
+      relatedEvents: matchRelatedByName(haystack, events, (e) => e.title),
+    });
+  });
 }
 
 export async function retrieveActiveMatterMemories(params: {
@@ -343,6 +424,19 @@ export async function proposeMatterMemories(params: {
     organizationId: params.organizationId,
     matterId: params.matterId,
   });
+  const sourceChunks = await params.db
+    .select({
+      id: documentChunks.id,
+      content: documentChunks.content,
+    })
+    .from(documentChunks)
+    .where(
+      and(
+        eq(documentChunks.organizationId, params.organizationId),
+        eq(documentChunks.matterId, params.matterId),
+      ),
+    )
+    .limit(12);
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "matter_memory_proposal",
@@ -355,6 +449,7 @@ export async function proposeMatterMemories(params: {
           question: params.question,
           hint: params.hint,
           verifiedContext: formatVerifiedIntelligenceForPrompt(verified),
+          chunks: sourceChunks.map((c) => ({ chunkId: c.id, content: c.content })),
         }),
       },
     ],
@@ -366,11 +461,18 @@ export async function proposeMatterMemories(params: {
   } catch {
     raw = { proposals: [] };
   }
-  const parsed = memoryProposalResponseSchema.parse(raw);
+  const parsed = memoryProposalResponseSchema.safeParse(raw);
+  const proposals = parsed.success ? parsed.data.proposals : [];
+  const authorized = await loadAuthorizedChunks(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    chunkIds: proposals.flatMap((p) => p.sourceChunkIds),
+  });
   const created = [];
-  for (const proposal of parsed.proposals.slice(0, 3)) {
+  for (const proposal of proposals.slice(0, 3)) {
     // Prevent AI from marking everything critical.
     const importance = proposal.importance === "critical" ? "high" : proposal.importance;
+    const chunkIds = proposal.sourceChunkIds.filter((id) => authorized.has(id));
     const memory = await createMatterMemory({
       db: params.db,
       organizationId: params.organizationId,
@@ -389,6 +491,36 @@ export async function proposeMatterMemories(params: {
         rationale: proposal.rationale ?? null,
         provider: generation.provider,
         model: generation.model,
+        chunkIds,
+      },
+    });
+    created.push(memory);
+  }
+
+  if (created.length === 0 && params.hint?.trim()) {
+    const fallbackChunks = sourceChunks.slice(0, 1).map((c) => c.id);
+    const hint = params.hint.trim();
+    const memory = await createMatterMemory({
+      db: params.db,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      userId: params.userId,
+      memoryType: "verified_context",
+      title: hint.slice(0, 80),
+      content: hint,
+      importance: "normal",
+      origin: "ai",
+      status: "proposed",
+      confidence: "medium",
+      sourceType: "ai_proposal",
+      sourceReference: {
+        promptVersion: MEMORY_PROPOSAL_PROMPT_VERSION,
+        rationale: parsed.success
+          ? "Nyaya returned no proposals; the attorney hint was recorded as a suggestion."
+          : "Nyaya proposal payload could not be parsed; the attorney hint was recorded as a suggestion.",
+        provider: generation.provider,
+        model: generation.model,
+        chunkIds: fallbackChunks,
       },
     });
     created.push(memory);
@@ -462,3 +594,5 @@ export async function countProposedMemories(params: {
     );
   return row?.count ?? 0;
 }
+
+export * from "./present";

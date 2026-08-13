@@ -23,6 +23,10 @@ import {
 } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
 import { loadAuthorizedChunks, resolveValidatedSources } from "../provenance";
+import {
+  linkContradictionToTimelineEvents,
+  type TimelineLinkCandidate,
+} from "./link-contradiction-timeline";
 
 export async function analyzeDeposition(params: {
   db: Database;
@@ -496,25 +500,31 @@ export async function listFindings(params: {
   findingType?: string;
   documentId?: string;
   includeSources?: boolean;
+  /** Attach related timeline event IDs (read-only; never merges sides). Default true when sources included. */
+  includeTimelineLinks?: boolean;
 }) {
   const runConditions = [
     eq(analysisRuns.organizationId, params.organizationId),
     eq(analysisRuns.matterId, params.matterId),
   ];
   if (params.runType) {
-    runConditions.push(
-      eq(
-        analysisRuns.runType,
-        params.runType as
-          | "contract"
-          | "deposition"
-          | "evidence"
-          | "contradiction"
-          | "document_review"
-          | "discovery"
-          | "comparison",
-      ),
-    );
+    const types = params.runType
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean) as Array<
+      | "contract"
+      | "deposition"
+      | "evidence"
+      | "contradiction"
+      | "document_review"
+      | "discovery"
+      | "comparison"
+    >;
+    if (types.length === 1) {
+      runConditions.push(eq(analysisRuns.runType, types[0]!));
+    } else if (types.length > 1) {
+      runConditions.push(inArray(analysisRuns.runType, types));
+    }
   }
   if (params.documentId) runConditions.push(eq(analysisRuns.documentId, params.documentId));
 
@@ -551,28 +561,72 @@ export async function listFindings(params: {
     .where(and(...findingConditions))
     .orderBy(desc(analysisFindings.createdAt));
 
-  if (!params.includeSources) {
-    return findings.map((f) => ({
-      ...f,
-      run: runs.find((r) => r.id === f.analysisRunId) ?? null,
-      sources: [],
-    }));
+  const includeSources = params.includeSources !== false;
+  let sources: Array<(typeof analysisFindingSources)["$inferSelect"]> = [];
+  if (includeSources && findings.length > 0) {
+    sources = await params.db
+      .select()
+      .from(analysisFindingSources)
+      .where(
+        inArray(
+          analysisFindingSources.findingId,
+          findings.map((f) => f.id),
+        ),
+      );
   }
 
-  const findingIds = findings.map((f) => f.id);
-  const sources =
-    findingIds.length === 0
-      ? []
-      : await params.db
-          .select()
-          .from(analysisFindingSources)
-          .where(inArray(analysisFindingSources.findingId, findingIds));
-
-  return findings.map((f) => ({
+  const base = findings.map((f) => ({
     ...f,
     run: runs.find((r) => r.id === f.analysisRunId) ?? null,
     sources: sources.filter((s) => s.findingId === f.id),
+    relatedTimelineEventIds: [] as string[],
+    sideAEventIds: [] as string[],
+    sideBEventIds: [] as string[],
+    timelineLinks: [] as ReturnType<typeof linkContradictionToTimelineEvents>["links"],
   }));
+
+  const wantsLinks = params.includeTimelineLinks ?? includeSources;
+  if (!wantsLinks) return base;
+
+  const { listTimelineEvents } = await import("../queries");
+  const events = await listTimelineEvents({
+    db: params.db,
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    status: ["proposed", "approved", "edited_and_approved"],
+    includeSources: true,
+    includeContradictionLinks: false,
+  });
+  const candidates: TimelineLinkCandidate[] = events.map((e) => ({
+    id: e.id,
+    title: e.title,
+    description: e.description,
+    eventDate: e.eventDate,
+    actors: e.actors,
+    status: e.status,
+    sources: (e.sources as TimelineLinkCandidate["sources"]) ?? [],
+  }));
+
+  return base.map((finding) => {
+    const type = (finding.findingType ?? "").toLowerCase();
+    if (type !== "contradiction" && type !== "tension") return finding;
+    const linked = linkContradictionToTimelineEvents({
+      finding: {
+        title: finding.title,
+        explanation: finding.explanation,
+        findingType: finding.findingType,
+        sources: finding.sources,
+      },
+      events: candidates,
+    });
+    return {
+      ...finding,
+      relatedTimelineEventIds: linked.relatedTimelineEventIds,
+      sideAEventIds: linked.sideAEventIds,
+      sideBEventIds: linked.sideBEventIds,
+      timelineLinks: linked.links,
+    };
+  });
 }
 
 async function loadFindingsForRun(db: Database, runId: string) {

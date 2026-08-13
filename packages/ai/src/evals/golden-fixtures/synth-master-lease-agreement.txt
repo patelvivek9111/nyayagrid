@@ -1,0 +1,13 @@
+# SYNTH — Master Lease Agreement
+
+SYNTHETIC EVAL FIXTURE — not a real legal authority, docket, or matter.
+Corpus: golden_synth_lease_v1
+
+[§3 · p.2]
+The lease term commences on January 1, 2024 and expires on December 31, 2026, unless earlier terminated in accordance with Section 12.
+
+[§4.1 · p.3]
+Tenant shall pay Base Rent of forty-eight thousand dollars ($48,000) per year, payable in equal monthly installments of four thousand dollars ($4,000) on the first business day of each month.
+
+[§12.2 · p.11]
+Either party may terminate this agreement by providing thirty (30) days written notice to the other party at the notice address listed in Section 15.

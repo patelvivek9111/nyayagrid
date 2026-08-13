@@ -18,6 +18,7 @@
     "@nyayagrid/database": "*",
     "@nyayagrid/permissions": "*",
     "@nyayagrid/validation": "*",
+    "drizzle-orm": "^0.45.2",
     "zod": "^3.24.2"
   },
   "devDependencies": {

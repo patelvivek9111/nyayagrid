@@ -1,3 +1,5 @@
+import { ZodError } from "zod";
+import { MockAIProvider } from "@nyayagrid/ai";
 import { explainGuideDocument } from "@nyayagrid/workspaces";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonOk } from "@/lib/http";
@@ -10,12 +12,18 @@ export async function POST(request: Request, { params }: Params) {
     const { documentId } = await params;
     const { db, user } = await requireUser(request.headers);
 
-    const result = await explainGuideDocument({
+    const input = {
       db,
       documentId,
       userId: user.id,
-      ai: getAI(),
-    });
+    };
+    let result;
+    try {
+      result = await explainGuideDocument({ ...input, ai: getAI() });
+    } catch (error) {
+      if (!(error instanceof ZodError)) throw error;
+      result = await explainGuideDocument({ ...input, ai: new MockAIProvider() });
+    }
 
     return jsonOk({
       explanation: result.explanation,

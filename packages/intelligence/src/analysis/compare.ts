@@ -9,8 +9,11 @@ import {
 import { createAIProviderFromEnv, type AIProvider } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
 import {
+  applyComparisonSummaryAlignmentPolicy,
   buildComparisonIdempotencyKey,
   computeParagraphDiffs,
+  scoreComparisonSummaryAgainstDiffs,
+  type ComparisonSummaryScore,
   type DiffChange,
 } from "../draft/helpers";
 
@@ -62,12 +65,19 @@ async function summarizeComparisonChanges(params: {
   documentATitle: string;
   documentBTitle: string;
   changes: DiffChange[];
-}): Promise<{ summary: string; provider: string; model: string } | null> {
+}): Promise<{
+  summary: string;
+  provider: string;
+  model: string;
+  summaryScore: ComparisonSummaryScore;
+} | null> {
   if (params.changes.length === 0) {
+    const summary = "No substantive differences detected between the compared document versions.";
     return {
-      summary: "No substantive differences detected between the compared document versions.",
+      summary,
       provider: params.ai.name,
       model: "n/a",
+      summaryScore: scoreComparisonSummaryAgainstDiffs(summary, params.changes),
     };
   }
 
@@ -75,7 +85,7 @@ async function summarizeComparisonChanges(params: {
     .slice(0, 20)
     .map(
       (c) =>
-        `- ${c.changeType}: ${c.oldText?.slice(0, 120) ?? "(none)"} -> ${c.newText?.slice(0, 120) ?? "(none)"}`,
+        `- ${c.changeType}/${c.attention}: ${c.oldText?.slice(0, 120) ?? "(none)"} -> ${c.newText?.slice(0, 120) ?? "(none)"}`,
     )
     .join("\n");
 
@@ -86,14 +96,14 @@ async function summarizeComparisonChanges(params: {
       {
         role: "system",
         content:
-          "Summarize substantive document version differences for a lawyer. Return JSON only: {summary:string}. Do not invent changes.",
+          "Summarize substantive document version differences for a lawyer. Return JSON only: {summary:string}. Use ONLY the detected changes listed. Do not invent clauses, parties, or changes absent from the digest.",
       },
       {
         role: "user",
         content: [
           `Document A: ${params.documentATitle}`,
           `Document B: ${params.documentBTitle}`,
-          "Detected changes:",
+          "Detected changes (authoritative):",
           changeDigest,
         ].join("\n"),
       },
@@ -108,7 +118,13 @@ async function summarizeComparisonChanges(params: {
     if (generation.text.trim()) summary = generation.text.trim();
   }
 
-  return { summary, provider: generation.provider, model: generation.model };
+  const aligned = applyComparisonSummaryAlignmentPolicy(summary, params.changes);
+  return {
+    summary: aligned.summary,
+    provider: generation.provider,
+    model: generation.model,
+    summaryScore: aligned.score,
+  };
 }
 
 export async function compareDocuments(params: {
@@ -137,7 +153,20 @@ export async function compareDocuments(params: {
       .from(documentComparisonChanges)
       .where(eq(documentComparisonChanges.comparisonId, existing.id))
       .orderBy(documentComparisonChanges.createdAt);
-    return { comparison: existing, changes, skipped: true as const };
+    const diffLike: DiffChange[] = changes.map((c) => ({
+      changeType: c.changeType as DiffChange["changeType"],
+      locationA: c.locationA,
+      locationB: c.locationB,
+      oldText: c.oldText,
+      newText: c.newText,
+      attention: c.attention as DiffChange["attention"],
+    }));
+    return {
+      comparison: existing,
+      changes,
+      skipped: true as const,
+      summaryScore: scoreComparisonSummaryAgainstDiffs(existing.summary ?? "", diffLike),
+    };
   }
 
   const sideA = await verifyDocumentVersionInMatter({
@@ -162,6 +191,7 @@ export async function compareDocuments(params: {
   let summary: string | null = null;
   let provider: string | null = null;
   let model: string | null = null;
+  let summaryScore: ComparisonSummaryScore = scoreComparisonSummaryAgainstDiffs("", diffs);
 
   if (params.includeAiSummary !== false) {
     const ai = params.ai ?? createAIProviderFromEnv();
@@ -175,11 +205,16 @@ export async function compareDocuments(params: {
       summary = aiSummary.summary;
       provider = aiSummary.provider;
       model = aiSummary.model;
+      summaryScore = aiSummary.summaryScore;
     }
   } else if (diffs.length === 0) {
     summary = "No substantive differences detected between the compared document versions.";
+    summaryScore = scoreComparisonSummaryAgainstDiffs(summary, diffs);
   } else {
     summary = `${diffs.length} paragraph-level change(s) detected between document versions.`;
+    const aligned = applyComparisonSummaryAlignmentPolicy(summary, diffs);
+    summary = aligned.summary;
+    summaryScore = aligned.score;
   }
 
   const [comparison] = await params.db
@@ -226,10 +261,20 @@ export async function compareDocuments(params: {
     action: "document_comparison.completed",
     targetType: "document_comparison",
     targetId: comparison!.id,
-    metadata: { changeCount: createdChanges.length },
+    metadata: {
+      changeCount: createdChanges.length,
+      summaryAlignment: summaryScore.alignment,
+      summaryScore: summaryScore.score,
+      unsupportedClaimCount: summaryScore.unsupportedClaims.length,
+    },
   });
 
-  return { comparison: comparison!, changes: createdChanges, skipped: false as const };
+  return {
+    comparison: comparison!,
+    changes: createdChanges,
+    skipped: false as const,
+    summaryScore,
+  };
 }
 
 export async function getDocumentComparison(params: {
@@ -257,7 +302,20 @@ export async function getDocumentComparison(params: {
     .where(eq(documentComparisonChanges.comparisonId, comparison.id))
     .orderBy(documentComparisonChanges.createdAt);
 
-  return { comparison, changes };
+  const diffLike: DiffChange[] = changes.map((c) => ({
+    changeType: c.changeType as DiffChange["changeType"],
+    locationA: c.locationA,
+    locationB: c.locationB,
+    oldText: c.oldText,
+    newText: c.newText,
+    attention: c.attention as DiffChange["attention"],
+  }));
+
+  return {
+    comparison,
+    changes,
+    summaryScore: scoreComparisonSummaryAgainstDiffs(comparison.summary ?? "", diffLike),
+  };
 }
 
 export async function listDocumentComparisons(params: {
@@ -284,14 +342,29 @@ export async function listDocumentComparisons(params: {
     .from(documentComparisonChanges)
     .where(inArray(documentComparisonChanges.comparisonId, comparisonIds));
 
-  return comparisons.map((comparison) => ({
-    comparison,
-    changes: changes.filter((c) => c.comparisonId === comparison.id),
-  }));
+  return comparisons.map((comparison) => {
+    const rowChanges = changes.filter((c) => c.comparisonId === comparison.id);
+    const diffLike: DiffChange[] = rowChanges.map((c) => ({
+      changeType: c.changeType as DiffChange["changeType"],
+      locationA: c.locationA,
+      locationB: c.locationB,
+      oldText: c.oldText,
+      newText: c.newText,
+      attention: c.attention as DiffChange["attention"],
+    }));
+    return {
+      comparison,
+      changes: rowChanges,
+      summaryScore: scoreComparisonSummaryAgainstDiffs(comparison.summary ?? "", diffLike),
+    };
+  });
 }
 
 export {
+  applyComparisonSummaryAlignmentPolicy,
   buildComparisonIdempotencyKey,
   computeParagraphDiffs,
+  scoreComparisonSummaryAgainstDiffs,
   splitParagraphs,
 } from "../draft/helpers";
+export type { ComparisonSummaryScore, ComparisonSummaryAlignment } from "../draft/helpers";

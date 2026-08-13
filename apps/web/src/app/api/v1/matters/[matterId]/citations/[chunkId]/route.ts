@@ -1,3 +1,5 @@
+import { eq } from "drizzle-orm";
+import { documents } from "@nyayagrid/database";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
@@ -22,6 +24,13 @@ export async function GET(request: Request, { params }: Params) {
       chunkId,
     });
     if (!chunk) return jsonError("NOT_FOUND", "Citation source not found in matter scope", 404);
+
+    const [document] = await db
+      .select({ id: documents.id, title: documents.title })
+      .from(documents)
+      .where(eq(documents.id, chunk.documentId))
+      .limit(1);
+
     return jsonOk({
       chunk: {
         id: chunk.id,
@@ -32,6 +41,7 @@ export async function GET(request: Request, { params }: Params) {
         segmentRef: chunk.segmentRef,
         content: chunk.content,
       },
+      document: document ?? { id: chunk.documentId, title: "Case document" },
     });
   } catch (error) {
     return handleRouteError(error);

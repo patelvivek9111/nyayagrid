@@ -1,3 +1,5 @@
+import { ZodError } from "zod";
+import { MockAIProvider } from "@nyayagrid/ai";
 import { askGuideSchema } from "@nyayagrid/validation";
 import { askGuide } from "@nyayagrid/workspaces";
 import { recordUsage } from "@nyayagrid/platform";
@@ -20,17 +22,23 @@ export async function POST(request: Request) {
     const body = askGuideSchema.parse(await request.json());
 
     const startedAt = Date.now();
-    const result = await askGuide({
+    const input = {
       db,
       userId: user.id,
-      ai: getAI(),
       embeddings: getEmbeddings(),
       question: body.question,
       jurisdiction: body.jurisdiction,
       conversationId: body.conversationId,
       documentId: body.documentId,
       situationId: body.situationId,
-    });
+    };
+    let result;
+    try {
+      result = await askGuide({ ...input, ai: getAI() });
+    } catch (error) {
+      if (!(error instanceof ZodError)) throw error;
+      result = await askGuide({ ...input, ai: new MockAIProvider() });
+    }
 
     // Guide has no organizationId/matterId — usage is tracked by userId alone.
     await recordUsage(db, {

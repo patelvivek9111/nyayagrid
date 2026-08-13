@@ -1,0 +1,39 @@
+name: AI eval live (optional)
+
+# Manual / nightly only — never a PR merge gate. Spends OpenAI budget when secrets exist.
+on:
+  workflow_dispatch:
+  schedule:
+    # 08:15 UTC daily; skips cleanly (exit 0) when OPENAI_API_KEY is unset.
+    - cron: "15 8 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  eval-ai-live:
+    name: Live graded AI eval (pinned model)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run live AI eval suite
+        env:
+          EVAL_LIVE: "1"
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          # Pin via repo variable when set; otherwise live-config defaults to gpt-4o-mini.
+          EVAL_LIVE_MODEL: ${{ vars.EVAL_LIVE_MODEL }}
+          EVAL_LIVE_TIMEOUT_MS: "45000"
+          EVAL_LIVE_MAX_TOKENS: "80000"
+          EVAL_LIVE_MAX_USD: "0.75"
+        run: npm run eval:ai:live

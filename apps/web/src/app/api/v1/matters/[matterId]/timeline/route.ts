@@ -24,6 +24,7 @@ export async function GET(request: Request, { params }: Params) {
       matterId,
       status: statusParam ? statusParam.split(",") : undefined,
       includeSources: true,
+      includeContradictionLinks: url.searchParams.get("includeContradictionLinks") !== "false",
     });
     return jsonOk({ events });
   } catch (error) {

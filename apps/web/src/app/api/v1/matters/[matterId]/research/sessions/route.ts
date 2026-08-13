@@ -1,6 +1,10 @@
 import { createResearchSessionSchema } from "@nyayagrid/validation";
 import { requireMatterAccess } from "@nyayagrid/permissions";
-import { createResearchSession, listResearchSessions } from "@nyayagrid/research";
+import {
+  createResearchSession,
+  listMatterResearchMemos,
+  listResearchSessions,
+} from "@nyayagrid/research";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
@@ -21,12 +25,19 @@ export async function GET(request: Request, { params }: Params) {
       minAccess: "read",
       capability: "matters.view",
     });
-    const sessions = await listResearchSessions({
-      db,
-      organizationId: matter.organizationId,
-      matterId,
-    });
-    return jsonOk({ sessions });
+    const [sessions, memos] = await Promise.all([
+      listResearchSessions({
+        db,
+        organizationId: matter.organizationId,
+        matterId,
+      }),
+      listMatterResearchMemos({
+        db,
+        organizationId: matter.organizationId,
+        matterId,
+      }),
+    ]);
+    return jsonOk({ sessions, memos });
   } catch (error) {
     return handleRouteError(error);
   }

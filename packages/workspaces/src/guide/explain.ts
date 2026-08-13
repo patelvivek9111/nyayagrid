@@ -38,6 +38,80 @@ export type ExplainGuideDocumentResult = {
 
 type QuotedItem = { quote?: string | null; chunkId?: string | null };
 
+const EXPLICIT_MONTH_DAY_YEAR =
+  /\b((January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4})\b/gi;
+
+/**
+ * Dates Guide reports must come from document text, not model memory. This regex only matches
+ * fully written calendar dates already present in a chunk.
+ */
+export function extractExplicitDatesFromChunks(
+  chunks: Array<{ id: string; content: string }>,
+): GuideExplicitDate[] {
+  const found: GuideExplicitDate[] = [];
+  const seen = new Set<string>();
+  for (const chunk of chunks) {
+    const re = new RegExp(EXPLICIT_MONTH_DAY_YEAR.source, "gi");
+    let match: RegExpExecArray | null;
+    while ((match = re.exec(chunk.content)) !== null) {
+      const raw = match[1] ?? match[0];
+      const key = `${chunk.id}:${raw}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      found.push({
+        date: raw,
+        label: "Date mentioned in document",
+        quote: match[0],
+        chunkId: chunk.id,
+      });
+    }
+  }
+  return found;
+}
+
+function mergeExplicitDates(
+  extracted: GuideExplicitDate[],
+  fromModel: GuideExplicitDate[],
+): GuideExplicitDate[] {
+  const seen = new Set<string>();
+  const merged: GuideExplicitDate[] = [];
+  for (const date of [...extracted, ...fromModel]) {
+    const key = `${date.chunkId}:${date.quote}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    merged.push(date);
+  }
+  return merged;
+}
+
+function parseModelJson(text: string): unknown {
+  const trimmed = text
+    .trim()
+    .replace(/^```(?:json)?\s*/i, "")
+    .replace(/\s*```$/, "");
+  try {
+    return JSON.parse(trimmed) as unknown;
+  } catch {
+    return null;
+  }
+}
+
+function fallbackGuideExplanation(params: {
+  documentKind: string;
+  firstChunkContent: string | null;
+  explicitDates: GuideExplicitDate[];
+}): GuideDocumentExplanation {
+  const kind = params.documentKind.replace(/_/g, " ");
+  return guideDocumentExplanationSchema.parse({
+    documentKind: params.documentKind,
+    summary: params.firstChunkContent
+      ? `This ${kind} includes: ${params.firstChunkContent.slice(0, 240)}`
+      : `No document text was available to summarize this ${kind}.`,
+    explicitDates: params.explicitDates,
+    questionsForLawyer: ["Ask a licensed attorney how this document applies to your situation."],
+  });
+}
+
 /**
  * Drop any item whose quote/chunkId cannot be verified verbatim against the chunk it claims to
  * cite. This is the enforcement point for "never fabricate a date, amount, or quotation."
@@ -183,7 +257,19 @@ export async function explainGuideDocument(
     schemaName: "guideDocumentExplanation",
   });
 
-  const parsed = guideDocumentExplanationSchema.parse(JSON.parse(result.text));
+  const extractedDates = extractExplicitDatesFromChunks(chunkRows);
+  const raw = parseModelJson(result.text);
+  const parsedResult = raw ? guideDocumentExplanationSchema.safeParse(raw) : null;
+  const parsed: GuideDocumentExplanation = parsedResult?.success
+    ? {
+        ...parsedResult.data,
+        explicitDates: mergeExplicitDates(extractedDates, parsedResult.data.explicitDates),
+      }
+    : fallbackGuideExplanation({
+        documentKind: document.documentKind ?? "other",
+        firstChunkContent: chunkRows[0]?.content ?? null,
+        explicitDates: extractedDates,
+      });
 
   let rejectedQuoteCount = 0;
 

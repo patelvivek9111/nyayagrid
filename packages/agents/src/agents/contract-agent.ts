@@ -9,13 +9,23 @@ type ContractAnalysis = {
   skipped: boolean;
   analysis: { id: string; documentId: string };
 };
+type DocumentComparison = {
+  comparison: { id: string };
+  changes: unknown[];
+};
 
-/** Clause-level contract review. Findings are proposals; the analysis itself lives in intelligence. */
+function wantsContractCompare(text: string): boolean {
+  return /\b(compar(e|ison|ing)|amendment|redline|diff|side[- ]by[- ]side|two versions|version\s+[ab])\b/i.test(
+    text,
+  );
+}
+
+/** Clause-level contract review and version compare. Findings are proposals. */
 export const contractAgent: NyayaAgent = {
   id: "contract_agent",
   name: "Nyaya Contract Agent",
   description:
-    "Analyzes contract clauses in a matter document and reports items needing attorney attention.",
+    "Analyzes contract clauses or compares document versions and reports items needing attorney attention.",
   supportedIntents: ["contract_review", "multi_step_task"],
   requiredCapabilities: ["documents.view"],
   allowedTools: ["retrieveMatterChunks", "analyzeContract", "compareDocuments"],
@@ -26,6 +36,7 @@ export const contractAgent: NyayaAgent = {
   async execute(ctx, input): Promise<AgentExecutionResult> {
     const { goal, objective } = agentInputSchema.parse(input);
     const builder = new AgentOutputBuilder();
+    const compareRequested = wantsContractCompare(`${objective} ${goal}`);
 
     const chunks = await invokeIfAllowed<ChunkHits>(ctx, builder, "retrieveMatterChunks", {
       query: `${objective} ${goal}`.slice(0, 1000),
@@ -49,6 +60,51 @@ export const contractAgent: NyayaAgent = {
         chunkId: chunk.chunkId,
       })),
     );
+
+    const uniqueVersions: Array<{ documentId: string; documentVersionId: string }> = [];
+    const seenVersions = new Set<string>();
+    for (const hit of hits) {
+      if (seenVersions.has(hit.documentVersionId)) continue;
+      seenVersions.add(hit.documentVersionId);
+      uniqueVersions.push({
+        documentId: hit.documentId,
+        documentVersionId: hit.documentVersionId,
+      });
+    }
+
+    if (compareRequested) {
+      if (uniqueVersions.length < 2) {
+        builder.addLimitation(
+          "Compare was requested but retrieval did not surface two distinct document versions. Specify both version IDs, or upload the second version.",
+        );
+      } else {
+        const [versionA, versionB] = uniqueVersions;
+        const comparison = await invokeIfAllowed<DocumentComparison>(
+          ctx,
+          builder,
+          "compareDocuments",
+          {
+            documentAId: versionA!.documentId,
+            versionAId: versionA!.documentVersionId,
+            documentBId: versionB!.documentId,
+            versionBId: versionB!.documentVersionId,
+            includeAiSummary: true,
+          },
+        );
+        if (comparison) {
+          builder.addToolResult("compareDocuments", comparison);
+          builder.addLimitation(
+            "Comparison changes are deterministic diffs; any AI summary of materiality still requires attorney confirmation.",
+          );
+          return builder.build({
+            fallbackSummary: "Contract comparison completed.",
+            canonicalRef: comparison.data?.comparison?.id
+              ? { kind: "document_comparison", documentComparisonId: comparison.data.comparison.id }
+              : null,
+          });
+        }
+      }
+    }
 
     const target = hits[0];
     if (!target) {

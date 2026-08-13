@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { detectHighStakes } from "@nyayagrid/ai";
 import { GuideAuthorizationError, assertGuideOwnedByUser, isGuideOwnedByUser } from "./auth";
-import { validateExplicitDatesAgainstChunks } from "./explain";
+import { extractExplicitDatesFromChunks, validateExplicitDatesAgainstChunks } from "./explain";
 import {
   FORBIDDEN_PROFESSIONAL_TABLE_NAMES,
   GUIDE_SEARCH_ALLOWED_TABLES,
@@ -85,6 +85,22 @@ describe("validateExplicitDatesAgainstChunks", () => {
     );
     expect(result.kept).toHaveLength(0);
     expect(result.rejected).toBe(1);
+  });
+});
+
+describe("extractExplicitDatesFromChunks", () => {
+  it("copies fully written calendar dates from chunk text and ignores computed phrasing", () => {
+    const dates = extractExplicitDatesFromChunks([
+      {
+        id: CHUNK_A,
+        content:
+          "This residential lease begins on January 1, 2026 and continues month-to-month unless renewed 30 days before the end date.",
+      },
+    ]);
+    expect(dates).toHaveLength(1);
+    expect(dates[0]?.date).toBe("January 1, 2026");
+    expect(dates[0]?.quote).toContain("January 1, 2026");
+    expect(dates[0]?.chunkId).toBe(CHUNK_A);
   });
 });
 

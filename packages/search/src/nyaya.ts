@@ -1,6 +1,8 @@
 import type { Database } from "@nyayagrid/database";
 import { conversations, messages, aiArtifacts } from "@nyayagrid/database";
 import {
+  assessNeedMoreDocuments,
+  buildFollowUpRetrievalQuery,
   buildNyayaSystemPromptWithIntelligence,
   buildNyayaSystemPromptWithResearch,
   buildNyayaUserPrompt,
@@ -173,7 +175,7 @@ export async function askNyayaAboutMatter(params: {
   authorityLimit?: number;
 }) {
   const ai = params.ai ?? createAIProviderFromEnv();
-  const hits = await params.retriever.search({
+  const primaryHits = await params.retriever.search({
     text: params.question,
     scope: {
       organizationId: params.organizationId,
@@ -182,6 +184,33 @@ export async function askNyayaAboutMatter(params: {
     },
     limit: 8,
   });
+
+  // Multi-hop: if retrieval is thin or the question names a doc type, expand once and merge.
+  let usedFollowUpRetrieval = false;
+  let hits = primaryHits;
+  const followUpQuery = buildFollowUpRetrievalQuery(params.question);
+  if (followUpQuery && (primaryHits.length < 3 || followUpQuery !== params.question.trim())) {
+    const secondaryHits = await params.retriever.search({
+      text: followUpQuery,
+      scope: {
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        workspace: "professional",
+      },
+      limit: 8,
+    });
+    if (secondaryHits.length > 0) {
+      usedFollowUpRetrieval = true;
+      const seen = new Set(primaryHits.map((h) => h.chunkId));
+      hits = [...primaryHits];
+      for (const hit of secondaryHits) {
+        if (seen.has(hit.chunkId)) continue;
+        seen.add(hit.chunkId);
+        hits.push(hit);
+        if (hits.length >= 12) break;
+      }
+    }
+  }
 
   const passages: GroundingPassage[] = hits.map((hit) => ({
     chunkId: hit.chunkId,
@@ -347,10 +376,12 @@ export async function askNyayaAboutMatter(params: {
       rawAnswer,
     )
   ) {
-    validated.answer.evidenceState = "grounded";
+    // QA-06: structured intel without document quotes may support an answer, but never as "grounded".
+    validated.answer.evidenceState = "partial";
     validated.answer.answer = rawAnswer;
     validated.answer.assumptions = [
       ...(validated.answer.assumptions ?? []),
+      "Answer relies on verified structured matter context without verbatim document quotes; treat as partial pending document citation.",
       ...(verifiedText ? ["Answer used verified structured matter intelligence."] : []),
       ...(graphText ? ["Answer used verified Graph relationships."] : []),
       ...(memoryText ? ["Answer used approved Matter Memory."] : []),
@@ -360,6 +391,31 @@ export async function askNyayaAboutMatter(params: {
           ]
         : []),
     ];
+  }
+
+  if (
+    validated.answer.evidenceState !== "grounded" &&
+    passages.length === 0 &&
+    !validated.answer.unresolvedQuestions.some((q) => /document|upload|source/i.test(q))
+  ) {
+    validated.answer.unresolvedQuestions = [
+      ...validated.answer.unresolvedQuestions,
+      "Which Case document should be uploaded or selected to answer this?",
+    ];
+  }
+
+  const needMore = assessNeedMoreDocuments({
+    evidenceState: validated.answer.evidenceState,
+    retrievedCount: passages.length,
+    unresolvedQuestions: validated.answer.unresolvedQuestions,
+    question: params.question,
+  });
+  if (needMore.needsMoreDocuments) {
+    for (const reason of needMore.reasons) {
+      if (!validated.answer.assumptions.includes(reason)) {
+        validated.answer.assumptions.push(reason);
+      }
+    }
   }
 
   // Authority references in prose cannot be schema-validated, so check what can be checked: every
@@ -447,6 +503,11 @@ export async function askNyayaAboutMatter(params: {
         authorityResearchMissing: authorityMissingForDoctrine,
         unknownAuthorityIdentifierCount: authorityValidation?.unknownIdentifiers.length ?? 0,
         unverifiedQuoteCount: authorityValidation?.unverifiedQuotes.length ?? 0,
+        assumptions: validated.answer.assumptions,
+        unresolvedQuestions: validated.answer.unresolvedQuestions,
+        needsMoreDocuments: needMore.needsMoreDocuments,
+        needMoreDocumentReasons: needMore.reasons,
+        usedFollowUpRetrieval,
       },
       createdByUserId: params.userId,
     })
@@ -457,6 +518,9 @@ export async function askNyayaAboutMatter(params: {
     artifact,
     answer: validated.answer,
     retrieved: passages,
+    needsMoreDocuments: needMore.needsMoreDocuments,
+    needMoreDocumentReasons: needMore.reasons,
+    usedFollowUpRetrieval,
     usedVerifiedIntelligence: Boolean(verifiedText),
     usedGraph: Boolean(graphText),
     usedMemory: Boolean(memoryText),

@@ -66,6 +66,11 @@ export const memoryProposalSchema = z.object({
   importance: z.enum(["low", "normal", "high", "critical"]).default("normal"),
   confidence: z.enum(["low", "medium", "high"]).default("medium"),
   rationale: z.string().max(2000).optional().nullable(),
+  sourceChunkIds: z
+    .array(z.string())
+    .optional()
+    .default([])
+    .transform((ids) => ids.filter((id) => z.string().uuid().safeParse(id).success)),
 });
 
 export const memoryProposalResponseSchema = z.object({
@@ -112,7 +117,8 @@ export function buildMemoryProposalSystemPrompt(): string {
     "You propose durable Matter Memory entries that are useful for future legal work on this matter.",
     "Do not propose every fact. Prefer operative agreements, identity resolutions, strategic caveats, and explicit user instructions.",
     "Never invent facts. Importance must not default to critical.",
-    "Return JSON: {proposals:[{memoryType,title,content,importance,confidence,rationale}]}",
+    "Cite sourceChunkIds from Sources when the memory is grounded in a document.",
+    "Return JSON: {proposals:[{memoryType,title,content,importance,confidence,rationale,sourceChunkIds}]}",
     "If nothing is worth remembering, return {proposals:[]}.",
   ].join(" ");
 }
@@ -122,6 +128,7 @@ export function buildMemoryProposalUserPrompt(input: {
   question?: string | null;
   verifiedContext: string;
   hint?: string | null;
+  chunks?: Array<{ chunkId: string; content: string }>;
 }): string {
   return [
     `Matter: ${input.matterTitle}`,
@@ -129,6 +136,10 @@ export function buildMemoryProposalUserPrompt(input: {
     input.hint ? `Hint: ${input.hint}` : "",
     "Verified context:",
     input.verifiedContext || "(none)",
+    "Sources:",
+    ...(input.chunks?.length
+      ? input.chunks.map((c) => `- chunkId=${c.chunkId} | text=|${c.content}|`)
+      : ["(none)"]),
   ]
     .filter(Boolean)
     .join("\n");

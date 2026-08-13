@@ -1,4 +1,14 @@
 import type { NextConfig } from "next";
+import { loadEnvConfig } from "@next/env";
+import path from "node:path";
+
+// Next.js only auto-loads `.env*` from `apps/web/`. This monorepo keeps a single
+// `.env` at the repo root (see README / `.env.example`), so load that first.
+// `apps/web/.env*` still wins for any overlapping keys if present.
+// `process.cwd()` is `apps/web` when running `next dev` / `next build` via the workspace.
+const appDir = process.cwd();
+loadEnvConfig(path.resolve(appDir, "../.."));
+loadEnvConfig(appDir);
 
 /**
  * Security headers, applied to every route.
@@ -25,9 +35,11 @@ function buildSecurityHeaders() {
   const csp = [
     "default-src 'self'",
     `script-src 'self' 'unsafe-inline'${isProd ? "" : " 'unsafe-eval'"}`,
-    "style-src 'self' 'unsafe-inline'",
+    // Google Fonts: CSS from fonts.googleapis.com, font files from fonts.gstatic.com
+    // (used by apps/web/src/app/layout.tsx for Fraunces + Source Sans 3).
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "img-src 'self' data: blob:",
-    "font-src 'self' data:",
+    "font-src 'self' data: https://fonts.gstatic.com",
     "connect-src 'self'",
     "frame-ancestors 'none'",
     "base-uri 'self'",
@@ -74,6 +86,7 @@ const nextConfig: NextConfig = {
     "@nyayagrid/search",
     "@nyayagrid/ui",
     "@nyayagrid/validation",
+    "@nyayagrid/workspaces",
   ],
   // `@nyayagrid/documents` (in transpilePackages above, since it ships untranspiled TS) imports
   // `pdf-parse`/`mammoth`, which are plain Node.js CJS libraries. Left to webpack's default
@@ -91,6 +104,17 @@ const nextConfig: NextConfig = {
         source: "/:path*",
         headers: buildSecurityHeaders(),
       },
+    ];
+  },
+  async redirects() {
+    return [
+      { source: "/app/matters", destination: "/app/cases", permanent: false },
+      {
+        source: "/app/matters/:matterId/:path*",
+        destination: "/app/cases/:matterId/:path*",
+        permanent: false,
+      },
+      { source: "/app/matters/:matterId", destination: "/app/cases/:matterId", permanent: false },
     ];
   },
 };

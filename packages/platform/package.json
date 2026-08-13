@@ -17,7 +17,7 @@
     "@nyayagrid/database": "*",
     "@nyayagrid/observability": "*",
     "@nyayagrid/validation": "*",
-    "drizzle-orm": "^0.40.0"
+    "drizzle-orm": "^0.45.2"
   },
   "devDependencies": {
     "@nyayagrid/ai": "*",

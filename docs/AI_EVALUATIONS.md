@@ -23,6 +23,34 @@ Evaluation priorities:
 - Tool authorization fidelity (no privilege escalation via plan or agent output)
 - Honest partial completion under budget/failure conditions
 
+## Agent quality bar (Case Q&A, contract compare, contradictions)
+
+Industrial quality gates for the three money workflows live in [`docs/AGENT_QUALITY.md`](./AGENT_QUALITY.md).
+
+Run the Case Q&A smoke + quote-validator checks with:
+
+```bash
+npm run eval:ai
+```
+
+Optional live (pinned model, budgets, baseline regression) — **not a PR gate**:
+
+```bash
+EVAL_LIVE=1 OPENAI_API_KEY=... EVAL_LIVE_MODEL=gpt-4o-mini npm run eval:ai:live
+```
+
+Full live docs: [`docs/AI_EVAL_LIVE.md`](./AI_EVAL_LIVE.md).
+
+Hard rules encoded in code:
+
+- Matter Q&A: `validateCitedAnswerAgainstPassages` requires **verbatim** quotes in the cited chunk (`packages/ai/src/quotes.ts`).
+- Verified Graph/Memory/intel without document quotes may upgrade an insufficient model answer only to **`partial`**, never `grounded`.
+- Contract compare goals schedule `compareDocuments` in the agent planner; the contract agent calls it when two versions are retrieved.
+- Contradiction candidates require both sides with `chunkIds.min(1)`.
+- Golden graded suite: `packages/ai/src/evals/graded-cases.ts` (faithfulness / completeness / need-more-docs), including CAM date-conflict issue-spotting.
+- Uploadable SYNTH fixtures: `packages/ai/src/evals/golden-fixtures/` — seed with `npm run seed:golden-matter` (Postgres + MinIO; not real authorities).
+- Multi-hop retrieval + `needsMoreDocuments` on ask artifacts (`packages/search/src/nyaya.ts`).
+
 Never fabricate legal citations in fixtures.
 
 ## Phase 5 professional analysis schemas

@@ -1,0 +1,7 @@
+# SYNTH — Deposition of Property Manager
+
+SYNTHETIC EVAL FIXTURE — not a real legal authority, docket, or matter.
+Corpus: golden_synth_lease_v1
+
+[44:12-44:20 · p.44]
+Q: When did you send the February CAM package? A: I emailed the package on February 28, 2025, and Tenant confirmed receipt the same day.

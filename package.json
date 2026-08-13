@@ -24,6 +24,7 @@
     "db:migrate": "npm run migrate -w @nyayagrid/database",
     "db:studio": "npm run studio -w @nyayagrid/database",
     "research:import": "npm run research:import -w @nyayagrid/research",
+    "seed:golden-matter": "npm run seed:golden-matter -w @nyayagrid/documents",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
     "docker:logs": "docker compose logs -f"
@@ -36,7 +37,20 @@
     "vitest": "^3.0.8"
   },
   "overrides": {
-    "drizzle-orm": "0.40.0"
+    "drizzle-orm": "0.45.2",
+    "esbuild": "0.25.12",
+    "postcss": "8.5.26",
+    "sharp": "0.35.3",
+    "next": {
+      "postcss": "8.5.26",
+      "sharp": "0.35.3"
+    },
+    "drizzle-kit": {
+      "esbuild": "0.25.12",
+      "@esbuild-kit/core-utils": {
+        "esbuild": "0.25.12"
+      }
+    }
   },
   "engines": {
     "node": ">=20"

@@ -1,104 +1,112 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { StudentShell } from "@/components/shell";
-import { Badge, Button, PageHeader, Panel } from "@nyayagrid/ui";
-
-type ConversationRow = { id: string; title: string; updatedAt: string; explanationLevel: string };
-type CaseRow = { id: string; title: string; citation: string | null; processingState: string };
-type SavedItemRow = { id: string; title: string; itemType: string };
+import { Button, Panel } from "@nyayagrid/ui";
 
 export default function ProfessorHomePage() {
-  const [conversations, setConversations] = useState<ConversationRow[]>([]);
-  const [cases, setCases] = useState<CaseRow[]>([]);
-  const [saved, setSaved] = useState<SavedItemRow[]>([]);
-  const [message, setMessage] = useState("");
+  const router = useRouter();
+  const [question, setQuestion] = useState("");
+  const [recent, setRecent] = useState<Array<{ id: string; title: string | null }>>([]);
+  const [cases, setCases] = useState<Array<{ id: string; title: string }>>([]);
 
   useEffect(() => {
-    async function load() {
-      try {
-        const [conversationsRes, casesRes, savedRes] = await Promise.all([
-          fetch("/api/v1/professor/conversations"),
-          fetch("/api/v1/professor/cases"),
-          fetch("/api/v1/professor/saved"),
-        ]);
-        const [conversationsData, casesData, savedData] = await Promise.all([
-          conversationsRes.json(),
-          casesRes.json(),
-          savedRes.json(),
-        ]);
-        if (!conversationsRes.ok) throw new Error(conversationsData?.error?.message);
-        if (!casesRes.ok) throw new Error(casesData?.error?.message);
-        if (!savedRes.ok) throw new Error(savedData?.error?.message);
-        setConversations(conversationsData.conversations ?? []);
-        setCases(casesData.cases ?? []);
-        setSaved(savedData.items ?? []);
-      } catch (err) {
-        setMessage(err instanceof Error ? err.message : "Failed to load your workspace");
-      }
-    }
-    load();
+    fetch("/api/v1/professor/conversations")
+      .then(async (res) => {
+        const data = await res.json();
+        if (res.ok) setRecent((data.conversations ?? []).slice(0, 5));
+      })
+      .catch(() => undefined);
+    fetch("/api/v1/professor/cases")
+      .then(async (res) => {
+        const data = await res.json();
+        if (res.ok) setCases((data.cases ?? []).slice(0, 5));
+      })
+      .catch(() => undefined);
   }, []);
 
   return (
     <StudentShell>
-      <PageHeader
-        eyebrow="Nyaya Professor"
-        title="Welcome back"
-        description="Upload cases, ask study questions, generate briefs, and compare opinions — all grounded in the text you provide and the shared legal authority corpus."
-      />
-      {message ? <p className="mb-4 text-sm text-[var(--ng-danger)]">{message}</p> : null}
+      <div className="mx-auto max-w-2xl py-8 text-center">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent">
+          Nyaya Professor
+        </p>
+        <h1 className="mt-2 font-display text-3xl text-ink md:text-4xl">What are you studying?</h1>
+        <p className="mt-2 text-sm text-ink/60">Study aid — not a course substitute.</p>
+        <form
+          className="mt-8 text-left"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const q = encodeURIComponent(question.trim());
+            router.push(q ? `/professor/ask?q=${q}` : "/professor/ask");
+          }}
+        >
+          <textarea
+            className="min-h-[100px] w-full rounded-xl border border-line bg-white px-4 py-3 text-sm"
+            placeholder="Ask Professor…"
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+          />
+          <div className="mt-3 flex flex-wrap justify-center gap-2">
+            <Button type="submit">Ask Professor</Button>
+            <Link href="/professor/cases">
+              <Button type="button" variant="secondary">
+                Upload Case
+              </Button>
+            </Link>
+          </div>
+        </form>
+      </div>
 
-      <div className="mb-6 grid gap-4 md:grid-cols-3">
-        <Panel title="Ask Professor">
-          <p className="mb-3 text-sm text-ink/70">
-            Ask a question in {conversations.length > 0 ? "an existing" : "a new"} conversation.
-          </p>
-          <Link href="/professor/ask">
-            <Button>Ask a question</Button>
+      <div className="mx-auto mt-8 grid max-w-3xl gap-4 md:grid-cols-2">
+        <Panel title="Recent conversations">
+          {recent.length === 0 ? (
+            <p className="text-sm text-ink/60">No saved conversations yet.</p>
+          ) : (
+            <ul className="space-y-2 text-sm">
+              {recent.map((c) => (
+                <li key={c.id}>
+                  <Link
+                    href={`/professor/ask?conversationId=${c.id}`}
+                    className="text-accent underline"
+                  >
+                    {c.title || "Untitled"}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+          <Link
+            href="/professor/saved"
+            className="mt-3 inline-block text-xs font-semibold text-accent underline"
+          >
+            Saved →
           </Link>
         </Panel>
-        <Panel title="Cases">
-          <p className="mb-3 text-sm text-ink/70">
-            {cases.length} case{cases.length === 1 ? "" : "s"} in your library.
-          </p>
-          <Link href="/professor/cases">
-            <Button variant="secondary">View cases</Button>
-          </Link>
-        </Panel>
-        <Panel title="Saved">
-          <p className="mb-3 text-sm text-ink/70">
-            {saved.length} saved item{saved.length === 1 ? "" : "s"}.
-          </p>
-          <Link href="/professor/saved">
-            <Button variant="secondary">View saved</Button>
+        <Panel title="Recent Cases">
+          {cases.length === 0 ? (
+            <p className="text-sm text-ink/60">Upload a case to brief and discuss.</p>
+          ) : (
+            <ul className="space-y-2 text-sm">
+              {cases.map((c) => (
+                <li key={c.id}>
+                  <Link href={`/professor/cases/${c.id}`} className="text-accent underline">
+                    {c.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+          <Link
+            href="/professor/cases"
+            className="mt-3 inline-block text-xs font-semibold text-accent underline"
+          >
+            All cases →
           </Link>
         </Panel>
       </div>
-
-      <Panel title="Recent conversations">
-        {conversations.length === 0 ? (
-          <p className="text-sm text-ink/70">No conversations yet. Ask your first question.</p>
-        ) : (
-          <ul className="space-y-2 text-sm">
-            {conversations.slice(0, 6).map((conversation) => (
-              <li
-                key={conversation.id}
-                className="flex items-center justify-between rounded border border-line px-3 py-2"
-              >
-                <Link
-                  href={`/professor/ask?conversationId=${conversation.id}`}
-                  className="font-semibold text-accent underline"
-                >
-                  {conversation.title}
-                </Link>
-                <Badge>{conversation.explanationLevel}</Badge>
-              </li>
-            ))}
-          </ul>
-        )}
-      </Panel>
     </StudentShell>
   );
 }

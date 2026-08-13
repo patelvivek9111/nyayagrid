@@ -19,7 +19,7 @@ const CASE_TEXT = [
 test.describe.serial("Nyaya Professor (student workspace)", () => {
   test("home page loads for the dev identity", async ({ page }) => {
     await page.goto("/professor");
-    await expect(page.getByRole("heading", { name: "Welcome back" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /What are you studying/i })).toBeVisible();
   });
 
   test("uploads a case to the personal library", async ({ page }) => {

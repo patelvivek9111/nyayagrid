@@ -1,6 +1,6 @@
 import { and, desc, eq } from "drizzle-orm";
 import { aiArtifacts, notes } from "@nyayagrid/database";
-import { saveNyayaNoteSchema } from "@nyayagrid/validation";
+import { createManualNoteSchema, saveNyayaNoteSchema } from "@nyayagrid/validation";
 import { requireMatterAccess, writeAuditEvent } from "@nyayagrid/permissions";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
@@ -38,30 +38,59 @@ export async function POST(request: Request, { params }: Params) {
       minAccess: "edit",
       capability: "matters.edit",
     });
-    const body = saveNyayaNoteSchema.parse(await request.json());
-    const [artifact] = await db
-      .select()
-      .from(aiArtifacts)
-      .where(
-        and(
-          eq(aiArtifacts.id, body.artifactId),
-          eq(aiArtifacts.matterId, matterId),
-          eq(aiArtifacts.organizationId, matter.organizationId),
-        ),
-      )
-      .limit(1);
-    if (!artifact) return jsonError("NOT_FOUND", "AI artifact not found in matter", 404);
+    const json = await request.json();
 
+    if (json?.artifactId) {
+      const body = saveNyayaNoteSchema.parse(json);
+      const [artifact] = await db
+        .select()
+        .from(aiArtifacts)
+        .where(
+          and(
+            eq(aiArtifacts.id, body.artifactId),
+            eq(aiArtifacts.matterId, matterId),
+            eq(aiArtifacts.organizationId, matter.organizationId),
+          ),
+        )
+        .limit(1);
+      if (!artifact) return jsonError("NOT_FOUND", "AI artifact not found in matter", 404);
+
+      const [note] = await db
+        .insert(notes)
+        .values({
+          organizationId: matter.organizationId,
+          matterId,
+          title: body.title ?? `Nyaya answer: ${artifact.question.slice(0, 80)}`,
+          content: artifact.answer,
+          origin: "nyaya",
+          aiArtifactId: artifact.id,
+          citations: artifact.citations ?? [],
+          createdByUserId: user.id,
+        })
+        .returning();
+
+      await writeAuditEvent(db, {
+        organizationId: matter.organizationId,
+        actorUserId: user.id,
+        matterId,
+        action: "note.saved_from_nyaya",
+        targetType: "note",
+        targetId: note!.id,
+        metadata: { artifactId: artifact.id },
+      });
+
+      return jsonOk({ note }, { status: 201 });
+    }
+
+    const body = createManualNoteSchema.parse(json);
     const [note] = await db
       .insert(notes)
       .values({
         organizationId: matter.organizationId,
         matterId,
-        title: body.title ?? `Nyaya answer: ${artifact.question.slice(0, 80)}`,
-        content: artifact.answer,
-        origin: "nyaya",
-        aiArtifactId: artifact.id,
-        citations: artifact.citations ?? [],
+        title: body.title,
+        content: body.content,
+        origin: "user",
         createdByUserId: user.id,
       })
       .returning();
@@ -70,10 +99,9 @@ export async function POST(request: Request, { params }: Params) {
       organizationId: matter.organizationId,
       actorUserId: user.id,
       matterId,
-      action: "note.saved_from_nyaya",
+      action: "note.created",
       targetType: "note",
       targetId: note!.id,
-      metadata: { artifactId: artifact.id },
     });
 
     return jsonOk({ note }, { status: 201 });

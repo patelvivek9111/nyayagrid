@@ -1,6 +1,6 @@
 import { and, desc, eq } from "@nyayagrid/database";
 import type { Database } from "@nyayagrid/database";
-import { researchSessions } from "@nyayagrid/database";
+import { researchArtifacts, researchSessions } from "@nyayagrid/database";
 import { writeAuditEvent } from "@nyayagrid/permissions";
 
 export type ResearchSession = typeof researchSessions.$inferSelect;
@@ -79,6 +79,32 @@ export async function listResearchSessions(params: {
     .where(and(...conditions))
     .orderBy(desc(researchSessions.updatedAt))
     .limit(params.limit ?? 50);
+}
+
+export async function listMatterResearchMemos(params: {
+  db: Database;
+  organizationId: string;
+  matterId: string;
+  limit?: number;
+}) {
+  return params.db
+    .select({
+      id: researchArtifacts.id,
+      issue: researchArtifacts.issue,
+      artifactType: researchArtifacts.artifactType,
+      sessionId: researchArtifacts.sessionId,
+      createdAt: researchArtifacts.createdAt,
+    })
+    .from(researchArtifacts)
+    .where(
+      and(
+        eq(researchArtifacts.organizationId, params.organizationId),
+        eq(researchArtifacts.matterId, params.matterId),
+        eq(researchArtifacts.artifactType, "memo"),
+      ),
+    )
+    .orderBy(desc(researchArtifacts.createdAt))
+    .limit(params.limit ?? 8);
 }
 
 /** Organization scope is enforced here so a session id from another tenant reads as missing. */

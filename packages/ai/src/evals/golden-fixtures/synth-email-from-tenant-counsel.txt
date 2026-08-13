@@ -1,0 +1,7 @@
+# SYNTH — Email from Tenant counsel
+
+SYNTHETIC EVAL FIXTURE — not a real legal authority, docket, or matter.
+Corpus: golden_synth_lease_v1
+
+[p.1]
+On March 14, 2025, Tenant disputed the February CAM reconciliation and requested supporting invoices within ten business days.

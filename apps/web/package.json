@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --port 3000",
+    "dev": "next dev --turbopack --port 3000",
     "build": "next build",
     "start": "next start --port 3000",
     "lint": "tsc --noEmit",
@@ -11,6 +11,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@inngest/ai": "^0.1.7",
     "@nyayagrid/agents": "*",
     "@nyayagrid/ai": "*",
     "@nyayagrid/auth": "*",
@@ -26,8 +27,11 @@
     "@nyayagrid/ui": "*",
     "@nyayagrid/validation": "*",
     "@nyayagrid/workspaces": "*",
+    "canonicalize": "^1.0.8",
+    "drizzle-orm": "^0.45.2",
+    "hash.js": "^1.1.7",
     "inngest": "^3.32.9",
-    "next": "^15.2.2",
+    "next": "^15.5.23",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "zod": "^3.24.2"
@@ -38,8 +42,8 @@
     "@types/react-dom": "^19.0.4",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.22.0",
-    "eslint-config-next": "^15.2.2",
-    "postcss": "^8.5.3",
+    "eslint-config-next": "^15.5.23",
+    "postcss": "^8.5.26",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.2",
     "vitest": "^3.0.8"

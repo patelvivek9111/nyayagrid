@@ -138,6 +138,11 @@ export const saveNyayaNoteSchema = z.object({
   title: z.string().trim().min(1).max(300).optional(),
 });
 
+export const createManualNoteSchema = z.object({
+  title: z.string().trim().min(1).max(300),
+  content: z.string().trim().min(1).max(20000),
+});
+
 export const createTaskSchema = z.object({
   title: z.string().trim().min(1).max(300),
   description: z.string().max(10000).optional().nullable(),
@@ -216,7 +221,8 @@ export const reviewMatterEntitySchema = z.object({
       displayName: z.string().trim().min(1).max(300).optional(),
       description: z.string().max(2000).optional().nullable(),
       entityType: z.enum(["person", "organization"]).optional(),
-      roles: z.array(z.string()).optional(),
+      roles: z.array(z.string().trim().min(1).max(120)).optional(),
+      aliases: z.array(z.string().trim().min(1).max(300)).optional(),
     })
     .optional(),
 });
@@ -417,6 +423,10 @@ export const transformDraftSchema = z.object({
 
 export const restoreDraftVersionSchema = z.object({
   versionId: z.string().uuid(),
+});
+
+export const updateDraftStatusSchema = z.object({
+  status: z.enum(["draft", "in_review", "archived"]),
 });
 
 export const analyzeContractSchema = z.object({

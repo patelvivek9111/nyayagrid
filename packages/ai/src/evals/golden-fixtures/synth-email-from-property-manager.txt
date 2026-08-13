@@ -1,0 +1,7 @@
+# SYNTH — Email from Property Manager
+
+SYNTHETIC EVAL FIXTURE — not a real legal authority, docket, or matter.
+Corpus: golden_synth_lease_v1
+
+[p.1]
+Following up — the February CAM package was uploaded to the portal on March 3, 2025; I do not see an earlier transmission.

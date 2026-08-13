@@ -1,38 +1,301 @@
-import { ProfessionalShell } from "@/components/shell";
-import { Panel, Badge } from "@nyayagrid/ui";
-import Link from "next/link";
+"use client";
 
-export default function ProfessionalHomePage() {
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useActiveOrganization } from "@/components/use-active-organization";
+import {
+  CaseChip,
+  ChatComposer,
+  SourceDrawer,
+  SourceMarker,
+  type CaseOption,
+  type SourceDrawerItem,
+  ErrorState,
+} from "@/components/ux";
+
+type ChatTurn = {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+  evidenceState?: string;
+  sources?: SourceDrawerItem[];
+};
+
+export default function NewChatPage() {
+  const router = useRouter();
+  const { organizationId, loading: orgLoading } = useActiveOrganization();
+  const [question, setQuestion] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+  const [cases, setCases] = useState<CaseOption[]>([]);
+  const [selectedCase, setSelectedCase] = useState<CaseOption | null>(null);
+  const [runTask, setRunTask] = useState(false);
+  const [turns, setTurns] = useState<ChatTurn[]>([]);
+  const [conversationId, setConversationId] = useState<string | null>(null);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [drawerItems, setDrawerItems] = useState<SourceDrawerItem[]>([]);
+
+  useEffect(() => {
+    if (!organizationId) return;
+    fetch(`/api/v1/matters?organizationId=${organizationId}`)
+      .then(async (res) => {
+        const data = await res.json();
+        if (res.ok) {
+          setCases(
+            (data.matters ?? []).map((m: { id: string; title: string; matterNumber: string }) => ({
+              id: m.id,
+              title: m.title,
+              matterNumber: m.matterNumber,
+            })),
+          );
+        }
+      })
+      .catch(() => undefined);
+  }, [organizationId]);
+
+  async function ensureGeneralSession(): Promise<string> {
+    if (sessionId) return sessionId;
+    const res = await fetch("/api/v1/research/sessions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        organizationId,
+        title: question.slice(0, 80) || "General chat",
+      }),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data?.error?.message ?? "Failed to start chat");
+    setSessionId(data.session.id);
+    return data.session.id as string;
+  }
+
+  async function send() {
+    if (!organizationId || !question.trim()) return;
+    setBusy(true);
+    setError("");
+    const q = question.trim();
+    setQuestion("");
+    setTurns((prev) => [...prev, { id: `u-${Date.now()}`, role: "user", content: q }]);
+
+    try {
+      if (selectedCase) {
+        const res = await fetch(`/api/v1/matters/${selectedCase.id}/ask`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            question: q,
+            conversationId,
+            mode: runTask ? "task" : "ask",
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data?.error?.message ?? "Ask failed");
+
+        if (data.mode === "task" || data.run) {
+          router.push(`/app/cases/${selectedCase.id}/work`);
+          return;
+        }
+
+        const cid = data.conversationId as string;
+        setConversationId(cid);
+        const sources: SourceDrawerItem[] = (data.answer?.sources ?? []).map(
+          (
+            s: { chunkId?: string; documentId: string; quote: string; page?: number },
+            i: number,
+          ) => ({
+            id: s.chunkId ?? `${s.documentId}-${i}`,
+            title: `Document source`,
+            classLabel: "Matter Evidence",
+            subtitle: s.page ? `Page ${s.page}` : undefined,
+            quote: s.quote,
+          }),
+        );
+        setTurns((prev) => [
+          ...prev,
+          {
+            id: data.artifact?.id ?? `a-${Date.now()}`,
+            role: "assistant",
+            content: data.answer?.answer ?? data.answer ?? "No answer returned.",
+            evidenceState: data.answer?.evidenceState,
+            sources,
+          },
+        ]);
+        router.replace(`/app/cases/${selectedCase.id}/chats/${cid}`);
+      } else {
+        const sid = await ensureGeneralSession();
+        const res = await fetch(`/api/v1/research/sessions/${sid}/query`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            organizationId,
+            queryText: q,
+            includeMatterContext: false,
+          }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data?.error?.message ?? "Query failed");
+        const sources: SourceDrawerItem[] = (data.hits ?? data.authorities ?? []).map(
+          (
+            h: { chunkId?: string; title?: string; citation?: string; snippet?: string },
+            i: number,
+          ) => ({
+            id: h.chunkId ?? `hit-${i}`,
+            title: h.title ?? "Authority",
+            classLabel: "Legal Authority",
+            subtitle: h.citation ?? undefined,
+            quote: h.snippet,
+          }),
+        );
+        const answerText =
+          data.synthesis?.answer ??
+          data.answer ??
+          (sources.length === 0
+            ? "I couldn't find enough verified authority in the research corpus to answer that confidently."
+            : "See sources for potentially relevant authority.");
+        setTurns((prev) => [
+          ...prev,
+          {
+            id: `a-${Date.now()}`,
+            role: "assistant",
+            content: answerText,
+            evidenceState: data.synthesis?.evidenceState,
+            sources,
+          },
+        ]);
+        router.replace(`/app/chats/${sid}`);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Request failed");
+    } finally {
+      setBusy(false);
+      setRunTask(false);
+    }
+  }
+
+  async function onUpload(file: File) {
+    if (!selectedCase) {
+      setError("Select a Case before uploading a document.");
+      return;
+    }
+    const form = new FormData();
+    form.append("file", file);
+    const res = await fetch(`/api/v1/matters/${selectedCase.id}/documents`, {
+      method: "POST",
+      body: form,
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      setError(data?.error?.message ?? "Upload failed");
+      return;
+    }
+    setError("");
+    setTurns((prev) => [
+      ...prev,
+      {
+        id: `sys-${Date.now()}`,
+        role: "assistant",
+        content: `Uploaded “${file.name}” to ${selectedCase.title}. Processing state: ${data.document?.processingState ?? "uploaded"}.`,
+      },
+    ]);
+  }
+
   return (
-    <ProfessionalShell title="Professional home">
-      <div className="mb-4 flex flex-wrap gap-2">
-        <Badge>Phase 2</Badge>
-        <Badge>Matter workflow</Badge>
+    <div className="mx-auto flex min-h-[70vh] max-w-3xl flex-col">
+      <div className="flex-1">
+        {turns.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-16 text-center">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent">
+              Nyaya
+            </p>
+            <h1 className="mt-2 font-display text-3xl text-ink md:text-4xl">
+              What can Nyaya help you with?
+            </h1>
+            <p className="mt-3 max-w-md text-sm text-ink/60">
+              Ask a general legal question, or attach a Case to work with documents and verified
+              Case intelligence.
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-4 py-6">
+            {turns.map((t) => (
+              <div
+                key={t.id}
+                className={
+                  t.role === "user"
+                    ? "ml-8 rounded-lg bg-accent-soft/40 px-4 py-3 text-sm"
+                    : "mr-4 rounded-lg border border-line bg-white px-4 py-3 text-sm"
+                }
+              >
+                <p className="whitespace-pre-wrap">{t.content}</p>
+                {t.evidenceState === "insufficient" ||
+                t.evidenceState === "insufficient_evidence" ? (
+                  <p className="mt-2 text-xs text-ink/55">
+                    Insufficient verified evidence for a confident answer.
+                  </p>
+                ) : null}
+                {t.sources && t.sources.length > 0 ? (
+                  <div className="mt-2">
+                    {t.sources.map((_, i) => (
+                      <SourceMarker
+                        key={`${t.id}-s-${i}`}
+                        index={i + 1}
+                        onClick={() => {
+                          setDrawerItems(t.sources ?? []);
+                          setDrawerOpen(true);
+                        }}
+                      />
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            ))}
+          </div>
+        )}
+        {error ? <ErrorState message={error} /> : null}
       </div>
-      <div className="grid gap-4 md:grid-cols-3">
-        <Panel title="Clients">
-          <p className="mb-3 text-sm text-ink/70">
-            Create and manage clients for your organization.
-          </p>
-          <Link href="/app/clients" className="text-sm font-semibold text-accent underline">
-            Open clients
-          </Link>
-        </Panel>
-        <Panel title="Matters">
-          <p className="mb-3 text-sm text-ink/70">
-            Open a matter to upload documents, ask Nyaya, and manage tasks.
-          </p>
-          <Link href="/app/matters" className="text-sm font-semibold text-accent underline">
-            Open matters
-          </Link>
-        </Panel>
-        <Panel title="Organization">
-          <p className="mb-3 text-sm text-ink/70">Create a firm or solo organization.</p>
-          <Link href="/app/onboarding" className="text-sm font-semibold text-accent underline">
-            Onboarding
-          </Link>
-        </Panel>
+
+      <div className="sticky bottom-0 bg-gradient-to-t from-[var(--ng-paper)] via-[var(--ng-paper)] to-transparent pb-2 pt-4">
+        {orgLoading ? <p className="mb-2 text-xs text-ink/50">Loading workspace…</p> : null}
+        <ChatComposer
+          value={question}
+          onChange={setQuestion}
+          onSubmit={send}
+          busy={busy}
+          disabled={!organizationId}
+          cases={cases}
+          caseChip={
+            selectedCase ? (
+              <CaseChip
+                label={selectedCase.title}
+                onClear={() => {
+                  setSelectedCase(null);
+                  setConversationId(null);
+                }}
+              />
+            ) : null
+          }
+          onSelectCase={(id) => {
+            const c = cases.find((x) => x.id === id);
+            if (c) setSelectedCase(c);
+          }}
+          onUploadDocument={onUpload}
+          onRunTask={() => setRunTask(true)}
+          placeholder={
+            selectedCase
+              ? `Ask about ${selectedCase.title}…`
+              : "Ask a general legal question (no Case attached)…"
+          }
+          footer={
+            <p className="text-[11px] text-ink/45">
+              Draft work product — not guaranteed legal advice. General chats never retrieve Case
+              files.
+            </p>
+          }
+        />
       </div>
-    </ProfessionalShell>
+
+      <SourceDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} items={drawerItems} />
+    </div>
   );
 }

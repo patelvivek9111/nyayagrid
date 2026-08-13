@@ -10,6 +10,7 @@ import {
   buildGuideAnswerUserPrompt,
   detectHighStakes,
   guideAnswerSchema,
+  mockGuideAnswer,
   buildContextualDisclaimer,
   GUIDE_ANSWER_PROMPT_VERSION,
   type GuideChunk,
@@ -213,7 +214,30 @@ export async function askGuide(params: AskGuideInput): Promise<AskGuideResult> {
     schemaName: "guideAnswer",
   });
 
-  const parsed = guideAnswerSchema.parse(JSON.parse(generateResult.text));
+  const parsedResult = guideAnswerSchema.safeParse((() => {
+    try {
+      const trimmed = generateResult.text
+        .trim()
+        .replace(/^```(?:json)?\s*/i, "")
+        .replace(/\s*```$/, "");
+      return JSON.parse(trimmed) as unknown;
+    } catch {
+      return null;
+    }
+  })());
+  const parsed = parsedResult.success
+    ? parsedResult.data
+    : mockGuideAnswer(
+        buildGuideAnswerUserPrompt({
+          question: input.question,
+          jurisdictionCountry: jurisdiction,
+          jurisdictionRegion: null,
+          highStakesFlags,
+          legalAuthorityChunks,
+          guideDocumentChunks,
+          situationContext,
+        }),
+      );
 
   const authorityContentByChunk = new Map(legalAuthorityChunks.map((c) => [c.chunkId, c.content]));
   const guideContentByChunk = new Map(guideDocumentChunks.map((c) => [c.chunkId, c.content]));

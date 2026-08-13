@@ -296,4 +296,23 @@ describe.runIf(runDbTests)("phase 2 matter workflow integration", () => {
       .where(eq(aiArtifacts.matterId, matterId));
     expect(persistedArtifacts.length).toBeGreaterThan(0);
   }, 120000);
+
+  it("denies an outsider the edit access required to create or patch tasks", async () => {
+    await expect(
+      requireMatterAccess(db, {
+        userId: outsiderId,
+        matterId,
+        minAccess: "edit",
+        capability: "matters.edit",
+      }),
+    ).rejects.toBeInstanceOf(AuthorizationError);
+
+    const allowed = await requireMatterAccess(db, {
+      userId: ownerId,
+      matterId,
+      minAccess: "edit",
+      capability: "matters.edit",
+    });
+    expect(allowed.matter.id).toBe(matterId);
+  });
 });

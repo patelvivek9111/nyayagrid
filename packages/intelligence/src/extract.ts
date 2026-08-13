@@ -19,7 +19,7 @@ import {
   createAIProviderFromEnv,
   buildMatterIntelligenceSystemPrompt,
   buildMatterIntelligenceUserPrompt,
-  matterIntelligenceExtractionSchema,
+  parseMatterIntelligenceExtraction,
   MATTER_INTELLIGENCE_PROMPT_VERSION,
   type AIProvider,
   type ExtractionChunk,
@@ -144,7 +144,9 @@ export async function extractMatterIntelligenceForDocument(params: {
     } catch {
       raw = { timelineEvents: [], facts: [], entities: [], deadlines: [] };
     }
-    const parsed = matterIntelligenceExtractionSchema.parse(raw);
+    const parsed = parseMatterIntelligenceExtraction(raw, {
+      availableChunkIds: extractionChunks.map((chunk) => chunk.chunkId),
+    });
 
     const allChunkIds = [
       ...parsed.timelineEvents.flatMap((e) => e.sourceChunkIds),
@@ -522,6 +524,7 @@ export async function extractMatterIntelligenceForReadyDocuments(params: {
   userId?: string | null;
   ai?: AIProvider;
   documentVersionId?: string;
+  force?: boolean;
 }) {
   const readyDocs = await params.db
     .select({
@@ -558,6 +561,7 @@ export async function extractMatterIntelligenceForReadyDocuments(params: {
       documentVersionId: version.id,
       userId: params.userId,
       ai: params.ai,
+      force: params.force,
     });
     results.push(result);
   }

@@ -268,6 +268,7 @@ export async function reviewMatterEntity(params: {
     description?: string | null;
     entityType?: "person" | "organization";
     roles?: string[];
+    aliases?: string[];
   };
 }) {
   if (params.action !== "reject") {
@@ -308,6 +309,13 @@ export async function reviewMatterEntity(params: {
     patch,
   });
 
+  if (params.action !== "reject") {
+    await params.db
+      .update(entityRoles)
+      .set({ status: "approved", updatedAt: new Date() })
+      .where(and(eq(entityRoles.entityId, params.entityId), eq(entityRoles.status, "proposed")));
+  }
+
   if (params.edits?.roles) {
     for (const role of params.edits.roles) {
       await params.db
@@ -318,6 +326,20 @@ export async function reviewMatterEntity(params: {
           entityId: params.entityId,
           role,
           status: "approved",
+        })
+        .onConflictDoNothing();
+    }
+  }
+
+  if (params.edits?.aliases) {
+    for (const alias of params.edits.aliases) {
+      await params.db
+        .insert(entityAliases)
+        .values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          entityId: params.entityId,
+          alias,
         })
         .onConflictDoNothing();
     }
@@ -514,6 +536,12 @@ export async function createManualMatterEntity(params: {
     action: "matter_entity.manual_created",
     targetType: "matter_entity",
     targetId: entity!.id,
+  });
+  await incrementalMaterializeGraph({
+    db: params.db,
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    userId: params.userId,
   });
   return entity!;
 }

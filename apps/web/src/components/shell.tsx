@@ -1,43 +1,19 @@
+"use client";
+
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { useMatterChrome } from "@/components/use-matter-chrome";
 
 /** Keep in sync with GUIDE_BASE_DISCLAIMER in @nyayagrid/ai — inlined so the shell stays client-safe. */
 const GUIDE_BASE_DISCLAIMER =
   "Nyaya Guide provides legal information and document explanations. It does not replace advice from a licensed attorney.";
 
-const professionalNav = [
-  { href: "/app", label: "Home" },
-  { href: "/app/clients", label: "Clients" },
-  { href: "/app/matters", label: "Matters" },
-  { href: "/app/research", label: "Research" },
-  { href: "/app/onboarding", label: "Onboarding" },
-  { href: "/app/settings", label: "Settings" },
-];
-
 export function ProfessionalShell({ children, title }: { children: ReactNode; title?: string }) {
+  /** Content-only shell — global nav lives in GlobalSidebar via /app layout. */
   return (
-    <div className="min-h-screen">
-      <header className="border-b border-line bg-white/70 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
-          <div>
-            <Link href="/" className="font-display text-xl text-ink">
-              NyayaGrid
-            </Link>
-            <p className="text-xs uppercase tracking-[0.16em] text-accent">Professional</p>
-          </div>
-          <nav className="flex flex-wrap gap-4 text-sm font-semibold text-ink/80">
-            {professionalNav.map((item) => (
-              <Link key={item.href} href={item.href} className="hover:text-accent">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </header>
-      <main className="mx-auto max-w-6xl px-6 py-8">
-        {title ? <h1 className="mb-6 font-display text-3xl text-ink">{title}</h1> : null}
-        {children}
-      </main>
+    <div className="mx-auto max-w-5xl">
+      {title ? <h1 className="mb-6 font-display text-3xl text-ink">{title}</h1> : null}
+      {children}
     </div>
   );
 }
@@ -52,22 +28,20 @@ export function MatterShell({
   children: ReactNode;
 }) {
   const tabs = [
-    { href: `/app/matters/${matterId}`, label: "Overview" },
-    { href: `/app/matters/${matterId}/documents`, label: "Documents" },
-    { href: `/app/matters/${matterId}/nyaya`, label: "Nyaya" },
-    { href: `/app/matters/${matterId}/timeline`, label: "Timeline" },
-    { href: `/app/matters/${matterId}/graph`, label: "Graph" },
-    { href: `/app/matters/${matterId}/memory`, label: "Memory" },
-    { href: `/app/matters/${matterId}/research`, label: "Research" },
-    { href: `/app/matters/${matterId}/draft`, label: "Draft" },
-    { href: `/app/matters/${matterId}/analysis`, label: "Analysis" },
-    { href: `/app/matters/${matterId}/review`, label: "Review" },
-    { href: `/app/matters/${matterId}/tasks`, label: "Tasks" },
+    { href: `/app/cases/${matterId}`, label: "Home" },
+    { href: `/app/cases/${matterId}/chats`, label: "Chats" },
+    { href: `/app/cases/${matterId}/documents`, label: "Documents" },
+    { href: `/app/cases/${matterId}/timeline`, label: "Timeline" },
+    { href: `/app/cases/${matterId}/evidence`, label: "Evidence" },
+    { href: `/app/cases/${matterId}/people`, label: "People" },
+    { href: `/app/cases/${matterId}/graph`, label: "Graph" },
+    { href: `/app/cases/${matterId}/memory`, label: "Memory" },
+    { href: `/app/cases/${matterId}/work`, label: "Work" },
   ];
   return (
-    <ProfessionalShell>
+    <div>
       <div className="mb-6">
-        <p className="text-xs uppercase tracking-[0.16em] text-accent">Matter</p>
+        <p className="text-xs uppercase tracking-[0.16em] text-accent">Case</p>
         <h1 className="font-display text-3xl text-ink">{title}</h1>
         <nav className="mt-4 flex flex-wrap gap-3">
           {tabs.map((tab) => (
@@ -82,13 +56,29 @@ export function MatterShell({
         </nav>
       </div>
       {children}
-    </ProfessionalShell>
+    </div>
+  );
+}
+
+/** Matter chrome that stays mounted across matter tab navigations. */
+export function MatterChromeShell({
+  matterId,
+  children,
+}: {
+  matterId: string;
+  children: ReactNode;
+}) {
+  const { title, error } = useMatterChrome();
+  return (
+    <MatterShell matterId={matterId} title={title}>
+      {error ? <p className="mb-4 text-sm text-[var(--ng-danger)]">{error}</p> : null}
+      {children}
+    </MatterShell>
   );
 }
 
 const studentNav = [
-  { href: "/professor", label: "Home" },
-  { href: "/professor/ask", label: "Ask Professor" },
+  { href: "/professor", label: "Ask" },
   { href: "/professor/cases", label: "Cases" },
   { href: "/professor/saved", label: "Saved" },
 ];
@@ -133,10 +123,10 @@ export function StudentShell({ children }: { children: ReactNode }) {
 }
 
 const publicNav = [
-  { href: "/guide", label: "Ask Guide" },
-  { href: "/guide/explain", label: "Explain Document" },
-  { href: "/guide/situation", label: "Organize Situation" },
-  { href: "/guide/prepare", label: "Prepare for Lawyer" },
+  { href: "/guide", label: "Ask" },
+  { href: "/guide/explain", label: "Documents" },
+  { href: "/guide/situation", label: "My Situation" },
+  { href: "/guide/prepare", label: "Prepare" },
 ];
 
 /**

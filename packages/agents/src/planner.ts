@@ -81,24 +81,51 @@ const TEMPLATES: Record<AgentIntent, Template> = {
       approvalRequirement: "medium",
     },
   ],
-  contract_review: () => [
-    {
-      stepId: "contract-1",
-      agentType: "contract_agent",
-      objective: "Analyze the contract clauses and flag items needing attorney attention.",
-      dependencies: [],
-      requiredTools: ["analyzeContract", "retrieveMatterChunks"],
-      approvalRequirement: "low",
-    },
-    {
-      stepId: "contract-2",
-      agentType: "memory_agent",
-      objective: "Propose matter memory entries capturing the review's key constraints.",
-      dependencies: ["contract-1"],
-      requiredTools: ["proposeMemory"],
-      approvalRequirement: "medium",
-    },
-  ],
+  contract_review: (goal) => {
+    const wantsCompare =
+      /\b(compar(e|ison|ing)|amendment|redline|diff|side[- ]by[- ]side|two versions|version\s+[ab])\b/i.test(
+        goal,
+      );
+    if (wantsCompare) {
+      return [
+        {
+          stepId: "contract-compare-1",
+          agentType: "contract_agent",
+          objective:
+            "Compare the relevant contract versions and surface material differences needing attorney review.",
+          dependencies: [],
+          requiredTools: ["compareDocuments", "retrieveMatterChunks"],
+          approvalRequirement: "low",
+        },
+        {
+          stepId: "contract-compare-2",
+          agentType: "memory_agent",
+          objective: "Propose matter memory entries capturing material changes from the comparison.",
+          dependencies: ["contract-compare-1"],
+          requiredTools: ["proposeMemory"],
+          approvalRequirement: "medium",
+        },
+      ];
+    }
+    return [
+      {
+        stepId: "contract-1",
+        agentType: "contract_agent",
+        objective: "Analyze the contract clauses and flag items needing attorney attention.",
+        dependencies: [],
+        requiredTools: ["analyzeContract", "retrieveMatterChunks"],
+        approvalRequirement: "low",
+      },
+      {
+        stepId: "contract-2",
+        agentType: "memory_agent",
+        objective: "Propose matter memory entries capturing the review's key constraints.",
+        dependencies: ["contract-1"],
+        requiredTools: ["proposeMemory"],
+        approvalRequirement: "medium",
+      },
+    ];
+  },
   deposition_prep: () => [
     {
       stepId: "depo-1",

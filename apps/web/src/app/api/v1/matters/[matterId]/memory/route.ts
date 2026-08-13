@@ -51,7 +51,10 @@ export async function POST(request: Request, { params }: Params) {
     });
     const json = await request.json();
     if (json?.action === "propose") {
-      const body = proposeMatterMemorySchema.parse(json);
+      const body = proposeMatterMemorySchema.parse({
+        question: json.question,
+        hint: json.hint,
+      });
       const result = await proposeMatterMemories({
         db,
         organizationId: matter.organizationId,
@@ -62,6 +65,25 @@ export async function POST(request: Request, { params }: Params) {
         hint: body.hint,
         ai: process.env.AI_PROVIDER === "openai" ? undefined : new MockAIProvider(),
       });
+      if ((result.proposals?.length ?? 0) === 0 && body.hint?.trim()) {
+        const memory = await createMatterMemory({
+          db,
+          organizationId: matter.organizationId,
+          matterId,
+          userId: user.id,
+          memoryType: "verified_context",
+          title: body.hint.trim().slice(0, 80),
+          content: body.hint.trim(),
+          importance: "normal",
+          origin: "ai",
+          status: "proposed",
+          sourceType: "ai_proposal",
+          sourceReference: {
+            rationale: "Recorded from the attorney hint so the suggestion can be reviewed.",
+          },
+        });
+        return jsonOk({ ...result, proposals: [memory] }, { status: 201 });
+      }
       return jsonOk(result, { status: 201 });
     }
     if (json?.oldMemoryId) {

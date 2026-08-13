@@ -1,6 +1,12 @@
 import { and, eq, inArray, or } from "@nyayagrid/database";
 import type { Database } from "@nyayagrid/database";
-import { graphNodes, graphEdges, graphEdgeSources, documentChunks } from "@nyayagrid/database";
+import {
+  graphNodes,
+  graphEdges,
+  graphEdgeSources,
+  documentChunks,
+  documents,
+} from "@nyayagrid/database";
 import {
   createAIProviderFromEnv,
   buildGraphRelationshipSystemPrompt,
@@ -12,6 +18,7 @@ import {
 import { writeAuditEvent } from "@nyayagrid/permissions";
 import { loadAuthorizedChunks, resolveValidatedSources } from "../provenance";
 import { upsertGraphEdge } from "./materialize";
+import { attorneyBadgeKind } from "../review-status";
 
 export async function extractGraphRelationshipCandidates(params: {
   db: Database;
@@ -328,12 +335,28 @@ export async function getGraphNeighborhood(params: {
           .from(graphEdgeSources)
           .where(inArray(graphEdgeSources.graphEdgeId, edgeIds));
 
+  const documentIds = [...new Set(sources.map((s) => s.documentId))];
+  const docs =
+    documentIds.length === 0
+      ? []
+      : await params.db
+          .select({ id: documents.id, title: documents.title })
+          .from(documents)
+          .where(inArray(documents.id, documentIds));
+  const titleByDoc = new Map(docs.map((d) => [d.id, d.title]));
+
   return {
     center,
     neighbors,
     edges: edges.map((e) => ({
       ...e,
-      sources: sources.filter((s) => s.graphEdgeId === e.id),
+      badge: attorneyBadgeKind(e.status),
+      sources: sources
+        .filter((s) => s.graphEdgeId === e.id)
+        .map((s) => ({
+          ...s,
+          documentTitle: titleByDoc.get(s.documentId) ?? "Case document",
+        })),
     })),
   };
 }
@@ -387,7 +410,50 @@ export async function listGraph(params: {
       ),
     );
 
-  return { nodes, edges, proposedEdges };
+  const proposedIds = proposedEdges.map((e) => e.id);
+  const proposedSources =
+    proposedIds.length === 0
+      ? []
+      : await params.db
+          .select()
+          .from(graphEdgeSources)
+          .where(inArray(graphEdgeSources.graphEdgeId, proposedIds));
+  const documentIds = [...new Set(proposedSources.map((s) => s.documentId))];
+  const docs =
+    documentIds.length === 0
+      ? []
+      : await params.db
+          .select({ id: documents.id, title: documents.title })
+          .from(documents)
+          .where(inArray(documents.id, documentIds));
+  const titleByDoc = new Map(docs.map((d) => [d.id, d.title]));
+  const nodeById = new Map(nodes.map((n) => [n.id, n]));
+
+  return {
+    nodes,
+    edges: edges.map((e) => ({
+      ...e,
+      badge: attorneyBadgeKind(e.status),
+      fromName: nodeById.get(e.fromNodeId)?.displayName ?? e.fromNodeId,
+      toName: nodeById.get(e.toNodeId)?.displayName ?? e.toNodeId,
+    })),
+    proposedEdges: proposedEdges.map((e) => ({
+      ...e,
+      badge: attorneyBadgeKind(e.status),
+      fromName: nodeById.get(e.fromNodeId)?.displayName ?? e.fromNodeId,
+      toName: nodeById.get(e.toNodeId)?.displayName ?? e.toNodeId,
+      fromCanonicalEntityType: nodeById.get(e.fromNodeId)?.canonicalEntityType ?? null,
+      toCanonicalEntityType: nodeById.get(e.toNodeId)?.canonicalEntityType ?? null,
+      fromCanonicalEntityId: nodeById.get(e.fromNodeId)?.canonicalEntityId ?? null,
+      toCanonicalEntityId: nodeById.get(e.toNodeId)?.canonicalEntityId ?? null,
+      sources: proposedSources
+        .filter((s) => s.graphEdgeId === e.id)
+        .map((s) => ({
+          ...s,
+          documentTitle: titleByDoc.get(s.documentId) ?? "Case document",
+        })),
+    })),
+  };
 }
 
 export function formatVerifiedGraphForPrompt(input: {

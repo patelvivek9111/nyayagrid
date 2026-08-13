@@ -11,13 +11,16 @@
   "scripts": {
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "seed:golden-matter": "tsx src/cli/seed-golden-matter.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.758.0",
     "@aws-sdk/s3-request-presigner": "^3.758.0",
     "@nyayagrid/ai": "*",
+    "@nyayagrid/auth": "*",
     "@nyayagrid/database": "*",
+    "@nyayagrid/permissions": "*",
     "@nyayagrid/validation": "*",
     "mammoth": "^1.12.1",
     "pdf-parse": "^2.4.5",
@@ -27,6 +30,7 @@
   "devDependencies": {
     "@types/pdf-parse": "^1.1.5",
     "@types/uuid": "^10.0.0",
+    "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "vitest": "^3.0.8"
   }

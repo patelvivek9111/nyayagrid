@@ -11,7 +11,11 @@ import {
   entitySources,
   deadlineCandidates,
   deadlineCandidateSources,
+  documents,
+  graphNodes,
 } from "@nyayagrid/database";
+
+import { presentDeadlineForAttorney } from "./deadlines";
 
 const APPROVED = ["approved", "edited_and_approved"] as const;
 
@@ -76,6 +80,8 @@ export async function listTimelineEvents(params: {
   matterId: string;
   status?: string | string[];
   includeSources?: boolean;
+  /** Attach related contradiction finding IDs (read-only; never merges). */
+  includeContradictionLinks?: boolean;
 }) {
   const statusFilter = params.status
     ? Array.isArray(params.status)
@@ -98,11 +104,17 @@ export async function listTimelineEvents(params: {
     )
     .orderBy(asc(timelineEvents.eventDate), asc(timelineEvents.createdAt));
 
-  if (!params.includeSources) return events.map((e) => ({ ...e, sources: [] as unknown[] }));
+  if (!params.includeSources && !params.includeContradictionLinks) {
+    return events.map((e) => ({
+      ...e,
+      sources: [] as unknown[],
+      relatedFindingIds: [] as string[],
+    }));
+  }
 
   const ids = events.map((e) => e.id);
   const sources =
-    ids.length === 0
+    ids.length === 0 || params.includeSources === false
       ? []
       : await params.db
           .select()
@@ -115,7 +127,50 @@ export async function listTimelineEvents(params: {
     list.push(source);
     byEvent.set(source.timelineEventId, list);
   }
-  return events.map((e) => ({ ...e, sources: byEvent.get(e.id) ?? [] }));
+
+  const withSources = events.map((e) => ({
+    ...e,
+    sources: byEvent.get(e.id) ?? [],
+    relatedFindingIds: [] as string[],
+  }));
+
+  if (!params.includeContradictionLinks) return withSources;
+
+  const { listFindings } = await import("./analysis/deposition");
+  const findings = await listFindings({
+    db: params.db,
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    runType: "contradiction",
+    includeSources: true,
+    includeTimelineLinks: false,
+  });
+
+  const { linkTimelineEventsToContradictionFindings } =
+    await import("./analysis/link-contradiction-timeline");
+  const related = linkTimelineEventsToContradictionFindings({
+    events: withSources.map((e) => ({
+      id: e.id,
+      title: e.title,
+      description: e.description,
+      eventDate: e.eventDate,
+      actors: e.actors,
+      status: e.status,
+      sources: e.sources,
+    })),
+    findings: findings.map((f) => ({
+      id: f.id,
+      title: f.title,
+      explanation: f.explanation,
+      findingType: f.findingType,
+      sources: f.sources,
+    })),
+  });
+
+  return withSources.map((e) => ({
+    ...e,
+    relatedFindingIds: related.get(e.id) ?? [],
+  }));
 }
 
 export async function listProposedIntelligence(params: {
@@ -289,18 +344,12 @@ export async function listVerifiedOverviewIntelligence(params: {
       ? []
       : await params.db.select().from(entityRoles).where(inArray(entityRoles.entityId, entityIds));
 
-  const upcomingDeadlines = await params.db
-    .select()
-    .from(deadlineCandidates)
-    .where(
-      and(
-        eq(deadlineCandidates.organizationId, params.organizationId),
-        eq(deadlineCandidates.matterId, params.matterId),
-        inArray(deadlineCandidates.status, [...APPROVED]),
-      ),
-    )
-    .orderBy(asc(deadlineCandidates.dueAt))
-    .limit(10);
+  const upcomingDeadlines = await listMatterDeadlines({
+    db: params.db,
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    status: "verified",
+  });
 
   return {
     recentEvents,
@@ -309,6 +358,138 @@ export async function listVerifiedOverviewIntelligence(params: {
       ...e,
       roles: roles.filter((r) => r.entityId === e.id),
     })),
-    upcomingDeadlines,
+    upcomingDeadlines: upcomingDeadlines.slice(0, 10),
   };
+}
+
+export async function listMatterEntities(params: {
+  db: Database;
+  organizationId: string;
+  matterId: string;
+  status?: string | null;
+}) {
+  const statusClause =
+    params.status === "proposed"
+      ? eq(matterEntities.status, "proposed")
+      : params.status === "verified"
+        ? inArray(matterEntities.status, [...APPROVED])
+        : inArray(matterEntities.status, ["proposed", "approved", "edited_and_approved"]);
+
+  const entities = await params.db
+    .select()
+    .from(matterEntities)
+    .where(
+      and(
+        eq(matterEntities.organizationId, params.organizationId),
+        eq(matterEntities.matterId, params.matterId),
+        isNull(matterEntities.mergedIntoEntityId),
+        statusClause,
+      ),
+    )
+    .orderBy(desc(matterEntities.updatedAt));
+
+  if (entities.length === 0) return [];
+
+  const entityIds = entities.map((e) => e.id);
+  const [roles, aliases, sources, nodes] = await Promise.all([
+    params.db.select().from(entityRoles).where(inArray(entityRoles.entityId, entityIds)),
+    params.db.select().from(entityAliases).where(inArray(entityAliases.entityId, entityIds)),
+    params.db.select().from(entitySources).where(inArray(entitySources.entityId, entityIds)),
+    params.db
+      .select({
+        id: graphNodes.id,
+        canonicalEntityId: graphNodes.canonicalEntityId,
+      })
+      .from(graphNodes)
+      .where(
+        and(
+          eq(graphNodes.organizationId, params.organizationId),
+          eq(graphNodes.matterId, params.matterId),
+          eq(graphNodes.canonicalEntityType, "matter_entity"),
+          inArray(graphNodes.canonicalEntityId, entityIds),
+        ),
+      ),
+  ]);
+
+  const documentIds = [...new Set(sources.map((s) => s.documentId))];
+  const docs =
+    documentIds.length === 0
+      ? []
+      : await params.db
+          .select({ id: documents.id, title: documents.title })
+          .from(documents)
+          .where(inArray(documents.id, documentIds));
+  const titleByDoc = new Map(docs.map((d) => [d.id, d.title]));
+  const nodeByEntity = new Map(nodes.map((n) => [n.canonicalEntityId, n.id]));
+
+  return entities.map((entity) => ({
+    ...entity,
+    roles: roles.filter((r) => r.entityId === entity.id),
+    aliases: aliases.filter((a) => a.entityId === entity.id),
+    sources: sources
+      .filter((s) => s.entityId === entity.id)
+      .map((s) => ({
+        ...s,
+        documentTitle: titleByDoc.get(s.documentId) ?? "Case document",
+      })),
+    graphNodeId: nodeByEntity.get(entity.id) ?? null,
+  }));
+}
+
+export async function listMatterDeadlines(params: {
+  db: Database;
+  organizationId: string;
+  matterId: string;
+  status?: string | null;
+}) {
+  const statusClause =
+    params.status === "proposed"
+      ? eq(deadlineCandidates.status, "proposed")
+      : params.status === "verified"
+        ? inArray(deadlineCandidates.status, [...APPROVED])
+        : inArray(deadlineCandidates.status, ["proposed", "approved", "edited_and_approved"]);
+
+  const rows = await params.db
+    .select()
+    .from(deadlineCandidates)
+    .where(
+      and(
+        eq(deadlineCandidates.organizationId, params.organizationId),
+        eq(deadlineCandidates.matterId, params.matterId),
+        statusClause,
+      ),
+    )
+    .orderBy(asc(deadlineCandidates.dueAt), desc(deadlineCandidates.updatedAt));
+
+  if (rows.length === 0) return [];
+
+  const ids = rows.map((d) => d.id);
+  const sources = await params.db
+    .select()
+    .from(deadlineCandidateSources)
+    .where(inArray(deadlineCandidateSources.deadlineCandidateId, ids));
+
+  const documentIds = [...new Set(sources.map((s) => s.documentId))];
+  const docs =
+    documentIds.length === 0
+      ? []
+      : await params.db
+          .select({ id: documents.id, title: documents.title })
+          .from(documents)
+          .where(inArray(documents.id, documentIds));
+  const titleByDoc = new Map(docs.map((d) => [d.id, d.title]));
+
+  return rows
+    .map((deadline) =>
+      presentDeadlineForAttorney(
+        deadline,
+        sources
+          .filter((s) => s.deadlineCandidateId === deadline.id)
+          .map((s) => ({
+            ...s,
+            documentTitle: titleByDoc.get(s.documentId) ?? "Case document",
+          })),
+      ),
+    )
+    .filter((d): d is NonNullable<typeof d> => d !== null);
 }

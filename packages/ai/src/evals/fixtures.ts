@@ -1,21 +1,16 @@
 /**
- * Deterministic eval fixtures for the Nyaya matter Q&A prompt.
+ * Deterministic eval fixtures for the Nyaya matter Q&A prompt + quality gates.
  *
- * Each fixture pairs a system/user prompt with the evidence-state the response must land on.
- * These check two properties that make or break trust in a legal-answer product:
- *
- *   1. Citation grounding — every quote in a "grounded" answer must trace back to a provided
- *      passage verbatim. A quote that doesn't appear in any passage means the model invented or
- *      altered text, which `run.ts` treats as a failure regardless of the reported evidenceState.
- *   2. Insufficient-evidence handling — a question with no supporting passage must come back
- *      `insufficient` with zero sources, never an answer synthesized from the model's own
- *      training data.
+ * See docs/AGENT_QUALITY.md. Fixtures check:
+ *   1. Citation grounding — grounded answers must cite verbatim passage text
+ *   2. Insufficient-evidence handling — unanswerable questions must not invent sources
  */
 import { buildNyayaSystemPrompt, buildNyayaUserPrompt, type GroundingPassage } from "../index";
 
 export type EvalCase = {
   name: string;
   description: string;
+  suite: "case_qa";
   systemPrompt: string;
   userPrompt: string;
   expectEvidenceState: "grounded" | "insufficient" | "partial";
@@ -32,9 +27,20 @@ const leasePassage: GroundingPassage = {
   quote: "The lease term commences on January 1, 2024 and expires on December 31, 2026.",
 };
 
+const noticePassage: GroundingPassage = {
+  chunkId: "chunk_notice_1",
+  documentId: "doc_notice",
+  documentVersionId: "docv_notice_1",
+  page: 1,
+  segmentRef: null,
+  quote:
+    "Either party may terminate this agreement by providing thirty days written notice to the other party.",
+};
+
 export const EVAL_CASES: EvalCase[] = [
   {
     name: "citation-grounding",
+    suite: "case_qa",
     description:
       "A question directly answerable from a provided passage must be grounded and cite only that passage's text.",
     systemPrompt: buildNyayaSystemPrompt(),
@@ -44,6 +50,7 @@ export const EVAL_CASES: EvalCase[] = [
   },
   {
     name: "insufficient-evidence-unrelated-question",
+    suite: "case_qa",
     description:
       "A question unrelated to any provided passage must be marked insufficient rather than answered from general knowledge.",
     systemPrompt: buildNyayaSystemPrompt(),
@@ -52,9 +59,19 @@ export const EVAL_CASES: EvalCase[] = [
   },
   {
     name: "insufficient-evidence-no-sources",
+    suite: "case_qa",
     description: "No passages at all must short-circuit to insufficient with zero cited sources.",
     systemPrompt: buildNyayaSystemPrompt(),
     userPrompt: buildNyayaUserPrompt("What happened at the deposition?", []),
     expectEvidenceState: "insufficient",
+  },
+  {
+    name: "grounded-notice-period",
+    suite: "case_qa",
+    description: "Termination notice question must cite the notice passage verbatim.",
+    systemPrompt: buildNyayaSystemPrompt(),
+    userPrompt: buildNyayaUserPrompt("How much notice is required to terminate?", [noticePassage]),
+    expectEvidenceState: "grounded",
+    passages: [noticePassage],
   },
 ];

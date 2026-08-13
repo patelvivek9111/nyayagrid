@@ -1,0 +1,7 @@
+# SYNTH — First Amendment
+
+SYNTHETIC EVAL FIXTURE — not a real legal authority, docket, or matter.
+Corpus: golden_synth_lease_v1
+
+[¶2 · p.1]
+Section 9 (Indemnity) is deleted in its entirety and replaced with: Tenant shall indemnify Landlord only for third-party claims arising from Tenant's negligence, and not for Landlord's sole negligence.

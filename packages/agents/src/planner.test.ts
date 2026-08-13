@@ -78,6 +78,25 @@ describe("planAgentRun", () => {
       }),
     ).toThrow(UnknownAgentTypeError);
   });
+  it("schedules compareDocuments when the goal asks for a contract comparison", () => {
+    const plan = planAgentRun({
+      goal: "Compare the agreement and the amendment for material changes",
+      intent: "contract_review",
+    });
+    const tools = plan.steps.flatMap((s) => s.requiredTools);
+    expect(tools).toContain("compareDocuments");
+    expect(plan.steps[0]?.agentType).toBe("contract_agent");
+  });
+
+  it("keeps analyzeContract for ordinary clause review", () => {
+    const plan = planAgentRun({
+      goal: "Review the indemnification clause in the MSA",
+      intent: "contract_review",
+    });
+    const tools = plan.steps.flatMap((s) => s.requiredTools);
+    expect(tools).toContain("analyzeContract");
+    expect(tools).not.toContain("compareDocuments");
+  });
 });
 
 describe("validatePlanSteps", () => {

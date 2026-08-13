@@ -26,7 +26,8 @@ import {
   appendResearchDisclaimerIfNeeded,
   classifyDraftAssertions,
   countAssertionsByProvenance,
-  validateDraftAssertions,
+  extractUnresolvedPlaceholders,
+  withInsufficientSourceAssumption,
   type ClassifiedDraftAssertion,
 } from "./helpers";
 
@@ -300,6 +301,10 @@ export async function generateDraft(params: {
   }
   const parsed = draftGenerationSchema.parse(raw);
 
+  const honesty = withInsufficientSourceAssumption({
+    chunkCount: chunks.length,
+    assumptions: parsed.assumptions,
+  });
   const { sourceAssertions, counts } = await resolveDraftAssertions({
     db: params.db,
     organizationId: params.organizationId,
@@ -308,7 +313,7 @@ export async function generateDraft(params: {
     authorityContext,
   });
   const content = appendResearchDisclaimerIfNeeded(
-    appendExternalResearchNoteIfNeeded(parsed.content, parsed.assumptions),
+    appendExternalResearchNoteIfNeeded(parsed.content, honesty.assumptions),
     {
       savedAuthorityCount: authorityContext.authorityIds.length,
       legalAuthorityAssertionCount: counts.LEGAL_AUTHORITY,
@@ -317,6 +322,7 @@ export async function generateDraft(params: {
       ).length,
     },
   );
+  const unresolvedPlaceholders = extractUnresolvedPlaceholders(content, honesty.assumptions);
 
   const [draft] = await params.db
     .insert(drafts)
@@ -329,6 +335,9 @@ export async function generateDraft(params: {
       sourceContext: {
         documentIds: params.documentIds ?? [],
         instructions: params.instructions ?? null,
+        assumptions: honesty.assumptions,
+        unresolvedPlaceholders,
+        insufficientSourceMaterial: honesty.insufficientSourceMaterial,
         legalAuthority: {
           authorityIds: authorityContext.authorityIds,
           authorityChunkCount: authorityContext.authorityChunkIds.length,
@@ -382,7 +391,9 @@ export async function generateDraft(params: {
   return {
     draft: draft!,
     version,
-    assumptions: parsed.assumptions,
+    assumptions: honesty.assumptions,
+    unresolvedPlaceholders,
+    insufficientSourceMaterial: honesty.insufficientSourceMaterial,
     legalAuthorityIds: authorityContext.authorityIds,
     authorityWarnings: authorityContext.warnings,
     assertionCounts: counts,
@@ -620,6 +631,10 @@ export async function transformDraftSection(params: {
   }
   const parsed = draftGenerationSchema.parse(raw);
 
+  const honesty = withInsufficientSourceAssumption({
+    chunkCount: chunks.length,
+    assumptions: parsed.assumptions,
+  });
   const { sourceAssertions, counts } = await resolveDraftAssertions({
     db: params.db,
     organizationId: params.organizationId,
@@ -628,7 +643,7 @@ export async function transformDraftSection(params: {
     authorityContext,
   });
   const content = appendResearchDisclaimerIfNeeded(
-    appendExternalResearchNoteIfNeeded(parsed.content, parsed.assumptions),
+    appendExternalResearchNoteIfNeeded(parsed.content, honesty.assumptions),
     {
       savedAuthorityCount: authorityContext.authorityIds.length,
       legalAuthorityAssertionCount: counts.LEGAL_AUTHORITY,
@@ -637,6 +652,7 @@ export async function transformDraftSection(params: {
       ).length,
     },
   );
+  const unresolvedPlaceholders = extractUnresolvedPlaceholders(content, honesty.assumptions);
 
   const nextVersion = existing.draft.currentVersionNumber + 1;
   const version = await insertDraftVersion({
@@ -661,6 +677,12 @@ export async function transformDraftSection(params: {
       provider: generation.provider,
       model: generation.model,
       promptVersion: DRAFT_GENERATION_PROMPT_VERSION,
+      sourceContext: {
+        ...(existing.draft.sourceContext ?? {}),
+        assumptions: honesty.assumptions,
+        unresolvedPlaceholders,
+        insufficientSourceMaterial: honesty.insufficientSourceMaterial,
+      },
       updatedByUserId: params.userId,
       updatedAt: new Date(),
     })
@@ -686,16 +708,69 @@ export async function transformDraftSection(params: {
   return version;
 }
 
+export async function updateDraftStatus(params: {
+  db: Database;
+  organizationId: string;
+  matterId: string;
+  draftId: string;
+  userId: string;
+  status: "draft" | "in_review" | "archived";
+}) {
+  const existing = await getDraftWithVersions(params);
+  if (!existing) throw new Error("Draft not found in matter scope");
+
+  const [updated] = await params.db
+    .update(drafts)
+    .set({
+      status: params.status,
+      updatedByUserId: params.userId,
+      updatedAt: new Date(),
+    })
+    .where(
+      and(
+        eq(drafts.id, params.draftId),
+        eq(drafts.organizationId, params.organizationId),
+        eq(drafts.matterId, params.matterId),
+      ),
+    )
+    .returning();
+  if (!updated) throw new Error("Draft not found in matter scope");
+
+  await writeAuditEvent(params.db, {
+    organizationId: params.organizationId,
+    actorUserId: params.userId,
+    matterId: params.matterId,
+    action: "draft.status_updated",
+    targetType: "draft",
+    targetId: params.draftId,
+    metadata: { status: params.status, previousStatus: existing.draft.status },
+  });
+
+  return updated;
+}
+
 export {
   appendExternalResearchNoteIfNeeded,
   appendResearchDisclaimerIfNeeded,
+  applyComparisonSummaryAlignmentPolicy,
+  buildDiffDigestCorpus,
   classifyDraftAssertions,
   countAssertionsByProvenance,
   needsExternalResearchNote,
   needsResearchDisclaimer,
+  scoreComparisonSummaryAgainstDiffs,
+  extractUnresolvedPlaceholders,
   validateDraftAssertions,
+  withInsufficientSourceAssumption,
+  COMPARISON_SUMMARY_MISALIGN_NOTE,
   EXTERNAL_RESEARCH_NOTE,
+  INSUFFICIENT_SOURCE_MATERIAL,
   RESEARCH_AUTHORITY_INCOMPLETE_NOTE,
 } from "./helpers";
-export type { ClassifiedDraftAssertion, DraftProvenanceClass } from "./helpers";
+export type {
+  ClassifiedDraftAssertion,
+  ComparisonSummaryAlignment,
+  ComparisonSummaryScore,
+  DraftProvenanceClass,
+} from "./helpers";
 export * from "./authorities";

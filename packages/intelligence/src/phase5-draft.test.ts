@@ -7,6 +7,7 @@ import {
   needsExternalResearchNote,
   splitParagraphs,
   validateDraftAssertions,
+  withInsufficientSourceAssumption,
 } from "./draft/helpers";
 
 describe("phase 5 draft helpers", () => {
@@ -42,6 +43,15 @@ describe("phase 5 draft helpers", () => {
     expect(validated).toEqual([{ text: "Grounded claim", chunkIds: ["c1", "c2"] }]);
   });
 
+  it("adds an insufficient source material assumption when no chunks are available", () => {
+    const { assumptions, insufficientSourceMaterial } = withInsufficientSourceAssumption({
+      chunkCount: 0,
+      assumptions: [],
+    });
+    expect(insufficientSourceMaterial).toBe(true);
+    expect(assumptions.some((item) => /insufficient source material/i.test(item))).toBe(true);
+  });
+
   it("computes paragraph diffs deterministically", () => {
     const textA = "Alpha clause.\n\nBeta clause.";
     const textB = "Alpha clause.\n\nBeta clause revised.";
@@ -49,5 +59,10 @@ describe("phase 5 draft helpers", () => {
     expect(changes.length).toBeGreaterThan(0);
     expect(changes.some((c) => c.changeType === "changed" || c.changeType === "added")).toBe(true);
     expect(splitParagraphs(textA)).toEqual(["Alpha clause.", "Beta clause."]);
+  });
+
+  it("returns no changes for identical texts (CC-03 empty diff)", () => {
+    const text = "Same paragraph one.\n\nSame paragraph two.";
+    expect(computeParagraphDiffs(text, text)).toEqual([]);
   });
 });

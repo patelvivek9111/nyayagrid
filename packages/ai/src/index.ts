@@ -33,9 +33,10 @@ import {
 import { mockAgentPlan, mockIntentClassification } from "./agents";
 import { mockCaseBrief, mockCaseComparison, mockProfessorAnswer } from "./professor";
 import { mockConsultationPacket, mockGuideAnswer, mockGuideDocumentExplanation } from "./guide";
+import { validateQuoteAgainstText } from "./quotes";
 
 export const EMBEDDING_DIMENSIONS = 384;
-export const NYAYA_PROMPT_VERSION = "nyaya-matter-qa-v1";
+export const NYAYA_PROMPT_VERSION = "nyaya-matter-qa-v2";
 
 export const citedAnswerSchema = z.object({
   answer: z.string(),
@@ -488,6 +489,19 @@ export class MockAIProvider implements AIProvider {
       parts.push(`Based on verified matter intelligence: ${verifiedBlock.slice(0, 400)}`);
     }
     if (chosen.length > 0) {
+      const dateMatches = new Set<string>();
+      for (const c of chosen) {
+        for (const match of c.quote.matchAll(
+          /\b((January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4})\b/gi,
+        )) {
+          dateMatches.add(match[1]!);
+        }
+      }
+      if (dateMatches.size >= 2) {
+        parts.push(
+          `The Case documents do not fully agree on the date. Conflicting dates appear in the sources (${[...dateMatches].join(" vs ")}).`,
+        );
+      }
       parts.push(
         `Based on the matter documents: ${chosen.map((c) => c.quote.slice(0, 220)).join(" ")}`,
       );
@@ -575,9 +589,13 @@ function mockExtractIntelligence(userPrompt: string): MatterIntelligenceExtracti
       });
     }
 
-    if (/payment is due|due on|response due|filing due|deadline/.test(lower)) {
+    if (/payment is due|due on|response due|filing due|deadline|expires on|expire on/.test(lower)) {
       deadlines.push({
-        title: /payment/i.test(text) ? "Payment due" : "Document-stated deadline",
+        title: /payment/i.test(text)
+          ? "Payment due"
+          : /expir/i.test(text)
+            ? "Lease expires"
+            : "Document-stated deadline",
         description: text.slice(0, 240),
         dueAt: isoish,
         dueAtEnd: null,
@@ -616,8 +634,12 @@ function normalizeMockDate(raw: string): string | null {
 }
 
 function extractMockNames(text: string): string[] {
-  const matches = text.match(/\b([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)\b/g) ?? [];
-  return [...new Set(matches)].slice(0, 5);
+  const titleCase = text.match(/\b([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)\b/g) ?? [];
+  const orgs =
+    text.match(
+      /\b([A-Z][A-Za-z]+(?:\s+[A-Z][A-Za-z]+)*\s+(?:Corp|Inc|LLC|Ltd|Company|Bank)\.?)\b/g,
+    ) ?? [];
+  return [...new Set([...titleCase, ...orgs])].slice(0, 8);
 }
 
 function extractExtractionChunksFromPrompt(prompt: string): Array<{
@@ -627,6 +649,19 @@ function extractExtractionChunksFromPrompt(prompt: string): Array<{
   content: string;
 }> {
   const block = prompt.split(/Sources:\s*/i)[1] ?? prompt;
+  const matches = [
+    ...block.matchAll(
+      /chunkId=([0-9a-f-]{36})[^\n]*?documentId=([0-9a-f-]{36})[^\n]*?documentVersionId=([0-9a-f-]{36})[^\n]*?text=\|([\s\S]*?)\|(?=\s*(?:- chunkId=|$))/gi,
+    ),
+  ];
+  if (matches.length > 0) {
+    return matches.map((m) => ({
+      chunkId: m[1]!,
+      documentId: m[2]!,
+      documentVersionId: m[3]!,
+      content: m[4]!.trim(),
+    }));
+  }
   return block
     .split(/\n?- chunkId=/)
     .map((b) => b.trim())
@@ -635,7 +670,7 @@ function extractExtractionChunksFromPrompt(prompt: string): Array<{
       const chunkId = part.match(/^([^\s|]+)/)?.[1] ?? "";
       const documentId = part.match(/documentId=([^\s|]+)/)?.[1] ?? "";
       const documentVersionId = part.match(/documentVersionId=([^\s|]+)/)?.[1] ?? "";
-      const content = part.match(/text=\|(.*)\|$/s)?.[1] ?? part;
+      const content = part.match(/text=\|([\s\S]*?)\|/)?.[1] ?? part;
       return { chunkId, documentId, documentVersionId, content: content.trim() };
     })
     .filter((c) => c.chunkId && c.documentId);
@@ -690,6 +725,9 @@ function mockExtractRelationships(userPrompt: string): GraphRelationshipExtracti
 function mockProposeMemory(userPrompt: string): { proposals: MemoryProposal[] } {
   const hint = userPrompt.match(/Hint:\s*(.+)/i)?.[1]?.trim();
   const title = hint?.slice(0, 80) || "Operative matter context";
+  const chunkId = userPrompt.match(
+    /chunkId=([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})/i,
+  )?.[1];
   return {
     proposals: [
       {
@@ -703,6 +741,7 @@ function mockProposeMemory(userPrompt: string): { proposals: MemoryProposal[] } 
         importance: "normal",
         confidence: "medium",
         rationale: "Durable context useful for future Nyaya answers.",
+        sourceChunkIds: chunkId ? [chunkId] : [],
       },
     ],
   };
@@ -906,6 +945,8 @@ export function buildNyayaSystemPrompt(): string {
     "Answer ONLY using the provided Sources for the active matter.",
     "Never invent facts, dates, names, quotations, or citations.",
     "If sources are insufficient, set evidenceState to insufficient and say so clearly.",
+    "If the question likely requires documents that are not among Sources, say so in unresolvedQuestions and ask which document to upload or select — do not guess.",
+    "evidenceState MUST be exactly one of: grounded, insufficient, partial. Never use synonyms like sufficient.",
     "Return JSON only matching: {answer, sources, assumptions, unresolvedQuestions, evidenceState}.",
     "Each sources item must reference a provided chunkId/documentId/documentVersionId and include a quote copied from that source.",
   ].join(" ");
@@ -994,6 +1035,17 @@ export * from "./research";
 export * from "./agents";
 export * from "./professor";
 export * from "./guide";
+export * from "./quotes";
+export * from "./need-more-docs";
+export {
+  GOLDEN_MATTER_ID,
+  GOLDEN_PASSAGES,
+  buildGoldenFixtureDocuments,
+  passagesByLabels,
+  passageByChunkId,
+  type GoldenFixtureDocument,
+  type GoldenPassage,
+} from "./evals/golden-matter";
 export type {
   MatterIntelligenceExtraction,
   TimelineProposal,
@@ -1038,6 +1090,26 @@ export type {
   AgentPlan,
   ApprovalRequirement,
 } from "./agents";
+/** Live models sometimes return near-synonyms; map them before Zod rejects the payload. */
+function normalizeCitedAnswerRaw(raw: unknown): unknown {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return raw;
+  const obj = { ...(raw as Record<string, unknown>) };
+  const state = typeof obj.evidenceState === "string" ? obj.evidenceState.toLowerCase().trim() : "";
+  if (state === "sufficient" || state === "supported" || state === "complete" || state === "full") {
+    obj.evidenceState = "grounded";
+  } else if (
+    state === "inadequate" ||
+    state === "none" ||
+    state === "missing" ||
+    state === "unknown"
+  ) {
+    obj.evidenceState = "insufficient";
+  } else if (state === "incomplete" || state === "weak") {
+    obj.evidenceState = "partial";
+  }
+  return obj;
+}
+
 export function validateCitedAnswerAgainstPassages(
   raw: unknown,
   passages: GroundingPassage[],
@@ -1045,13 +1117,15 @@ export function validateCitedAnswerAgainstPassages(
   answer: CitedAnswer;
   rejectedCitations: number;
 } {
-  const parsed = citedAnswerSchema.parse(raw);
+  const parsed = citedAnswerSchema.parse(normalizeCitedAnswerRaw(raw));
   const byChunk = new Map(passages.map((p) => [p.chunkId, p]));
   const allowedDocs = new Set(passages.map((p) => `${p.documentId}:${p.documentVersionId}`));
   let rejectedCitations = 0;
   const sources = parsed.sources.filter((source) => {
-    if (source.chunkId && byChunk.has(source.chunkId)) return true;
-    if (allowedDocs.has(`${source.documentId}:${source.documentVersionId}`)) {
+    let passage: GroundingPassage | undefined;
+    if (source.chunkId && byChunk.has(source.chunkId)) {
+      passage = byChunk.get(source.chunkId);
+    } else if (allowedDocs.has(`${source.documentId}:${source.documentVersionId}`)) {
       const match = passages.find(
         (p) =>
           p.documentId === source.documentId &&
@@ -1060,11 +1134,22 @@ export function validateCitedAnswerAgainstPassages(
       );
       if (match) {
         source.chunkId = match.chunkId;
-        return true;
+        passage = match;
       }
     }
-    rejectedCitations += 1;
-    return false;
+    if (!passage) {
+      rejectedCitations += 1;
+      return false;
+    }
+    const quoteCheck = validateQuoteAgainstText(source.quote, passage.quote);
+    if (!quoteCheck.valid) {
+      rejectedCitations += 1;
+      return false;
+    }
+    if (quoteCheck.normalizedQuote) {
+      source.quote = quoteCheck.normalizedQuote;
+    }
+    return true;
   });
 
   if (passages.length === 0 || sources.length === 0) {

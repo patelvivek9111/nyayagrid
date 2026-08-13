@@ -24,6 +24,7 @@ export async function POST(request: Request, { params }: Params) {
       matterId,
       userId: user.id,
       documentVersionId: body.documentVersionId ?? undefined,
+      force: body.force,
       ai: process.env.AI_PROVIDER === "openai" ? undefined : new MockAIProvider(),
     });
 
