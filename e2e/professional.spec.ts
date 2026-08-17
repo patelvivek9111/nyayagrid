@@ -116,6 +116,7 @@ test.describe.serial("Professional workspace (Nyaya)", () => {
     await page.getByRole("button", { name: /Open source 1/i }).click();
     await expect(page.getByRole("heading", { name: "Case sources" })).toBeVisible();
     await expect(page.getByText(/January 1,\s*2024/i).first()).toBeVisible();
+    await expect(page.getByRole("button", { name: "Open original" }).first()).toBeVisible();
   });
 
   test("Documents exposes compare entry", async ({ page }) => {
@@ -123,6 +124,8 @@ test.describe.serial("Professional workspace (Nyaya)", () => {
     await page.waitForLoadState("networkidle");
     await expect(page.getByRole("heading", { name: "Compare versions" })).toBeVisible();
     await expect(page.getByText(/Diffs are deterministic/i)).toBeVisible();
+    await expect(page.getByRole("button", { name: "Open original" }).first()).toBeVisible();
+    await expect(page.getByRole("button", { name: "Download" }).first()).toBeVisible();
   });
 
   test("Evidence exposes contradiction surface", async ({ page }) => {
@@ -286,6 +289,11 @@ test.describe.serial("Professional workspace (Nyaya)", () => {
     ).toBeEnabled({
       timeout: 20_000,
     });
+    const firstNode = page.locator("button.text-left.font-semibold").first();
+    if (await firstNode.isVisible().catch(() => false)) {
+      await firstNode.click();
+      await expect(page.getByText("Invalid request")).toHaveCount(0);
+    }
     await page.getByRole("button", { name: "Propose AI relationships" }).click();
     await expect(page.getByRole("button", { name: "Propose AI relationships" })).toBeEnabled({
       timeout: 20_000,
@@ -350,16 +358,27 @@ test.describe.serial("Professional workspace (Nyaya)", () => {
     await page.goto(`/app/cases/${matterId}`);
     await page.waitForLoadState("networkidle");
     const tabNav = page.getByRole("navigation", { name: "Case sections" });
-    for (const tab of ["Documents", "Timeline", "Evidence", "People", "Graph", "Memory", "Work"]) {
+    const tabs: Array<[string, string]> = [
+      ["Documents", "documents"],
+      ["Timeline", "timeline"],
+      ["Evidence", "evidence"],
+      ["People", "people"],
+      ["Graph", "graph"],
+      ["Memory", "memory"],
+      ["Work", "work"],
+    ];
+    for (const [tab, segment] of tabs) {
       await tabNav.getByRole("link", { name: tab, exact: true }).click();
-      await expect(page).toHaveURL(new RegExp(`/app/cases/${matterId}/`));
+      await expect(page).toHaveURL(new RegExp(`/app/cases/${matterId}/${segment}$`));
     }
+    await tabNav.getByRole("link", { name: "Home", exact: true }).click();
+    await expect(page).toHaveURL(new RegExp(`/app/cases/${matterId}$`));
     const workNav = page.getByRole("navigation", { name: "Case work surfaces" });
     for (const tab of ["Draft", "Research", "Analysis", "Review"]) {
       await expect(workNav.getByRole("link", { name: tab, exact: true })).toBeVisible();
     }
     await workNav.getByRole("link", { name: "Draft", exact: true }).click();
-    await expect(page).toHaveURL(new RegExp(`/app/cases/${matterId}/draft`));
+    await expect(page).toHaveURL(new RegExp(`/app/cases/${matterId}/draft$`));
   });
 
   test("legacy /app/matters redirects to /app/cases", async ({ page }) => {

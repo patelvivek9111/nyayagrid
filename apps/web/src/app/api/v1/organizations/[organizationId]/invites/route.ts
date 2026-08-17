@@ -4,6 +4,7 @@ import { requireCapability } from "@nyayagrid/permissions";
 import { requireUser } from "@/lib/auth";
 import { inviteMemberByRoleKey } from "@/lib/invites";
 import { handleRouteError, jsonOk } from "@/lib/http";
+import { createNotification } from "@/server/notifications";
 
 type Params = { params: Promise<{ organizationId: string }> };
 
@@ -41,6 +42,15 @@ export async function POST(request: Request, { params }: Params) {
       email: body.email,
       roleKey: body.roleKey,
       invitedByUserId: user.id,
+    });
+
+    await createNotification(db, {
+      organizationId,
+      userId: user.id,
+      kind: "invite",
+      title: "Invitation created",
+      body: `Invite sent to ${body.email} as ${body.roleKey}. Deliver the token now — it is shown once.`,
+      href: "/app/settings",
     });
 
     // The token is returned exactly once, here — it cannot be recovered from the database

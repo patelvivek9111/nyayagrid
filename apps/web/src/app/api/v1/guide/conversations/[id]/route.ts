@@ -1,5 +1,5 @@
 import { and, asc, eq, guideConversations, guideMessages } from "@nyayagrid/database";
-import { requireUser } from "@/lib/auth";
+import { requireGuideUser } from "@/lib/features";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
 
 type Params = { params: Promise<{ id: string }> };
@@ -7,7 +7,7 @@ type Params = { params: Promise<{ id: string }> };
 export async function GET(request: Request, { params }: Params) {
   try {
     const { id } = await params;
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireGuideUser(request.headers);
     const [conversation] = await db
       .select()
       .from(guideConversations)

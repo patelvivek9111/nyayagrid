@@ -216,6 +216,7 @@ export default function CaseTasksPage() {
         subtitle: s.page != null ? `Page ${s.page}` : undefined,
         quote: s.supportingText,
         chunkId: s.chunkId,
+        documentId: s.documentId,
       })),
     );
     setDrawerOpen(true);

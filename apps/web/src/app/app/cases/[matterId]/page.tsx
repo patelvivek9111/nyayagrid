@@ -13,6 +13,7 @@ import {
   SuggestedBadge,
   VerifiedBadge,
 } from "@/components/ux";
+import { formatMatterCalendarDate } from "@/lib/matter-dates";
 
 type Fact = { id: string; label: string; value: string };
 type Entity = { id: string; displayName: string; entityType: string };
@@ -245,6 +246,37 @@ export default function CaseHomePage() {
             </dd>
           </div>
         </dl>
+        <div className="mt-4">
+          <Button
+            type="button"
+            variant="secondary"
+            disabled={busy}
+            onClick={async () => {
+              setBusy(true);
+              setError("");
+              try {
+                const res = await fetch(`/api/v1/matters/${matterId}/audit/export`);
+                if (!res.ok) {
+                  const json = await res.json();
+                  throw new Error(json?.error?.message ?? "Audit export failed");
+                }
+                const blob = await res.blob();
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = url;
+                a.download = `nyayagrid-audit-${matterId.slice(0, 8)}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+              } catch (err) {
+                setError(err instanceof Error ? err.message : "Audit export failed");
+              } finally {
+                setBusy(false);
+              }
+            }}
+          >
+            Export audit log
+          </Button>
+        </div>
       </Panel>
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -265,10 +297,31 @@ export default function CaseHomePage() {
             href={`/app/cases/${matterId}/review`}
           />
         ) : (
-          <Panel title="Suggestions">
-            <p className="text-sm text-ink/60">
-              No pending suggestions. Upload documents to analyze.
+          <Panel title="Next action">
+            <p className="text-sm text-ink/70">
+              No pending suggestions. Continue this file from the Case sections above, or pick a
+              concrete next step:
             </p>
+            <ul className="mt-2 list-inside list-disc text-sm text-ink/70">
+              <li>
+                <Link href={`/app/cases/${matterId}/documents`} className="font-semibold text-accent underline">
+                  Documents
+                </Link>{" "}
+                — open the original file or upload another SYNTH source
+              </li>
+              <li>
+                <Link href={`/app/cases/${matterId}/review`} className="font-semibold text-accent underline">
+                  Review
+                </Link>{" "}
+                — extract proposed chronology and facts
+              </li>
+              <li>
+                <Link href={`/app/cases/${matterId}/work`} className="font-semibold text-accent underline">
+                  Work
+                </Link>{" "}
+                — drafts, approvals, and the attorney command hub
+              </li>
+            </ul>
           </Panel>
         )}
       </div>
@@ -409,7 +462,7 @@ export default function CaseHomePage() {
                     </Link>
                     <p className="text-xs text-ink/55">
                       {ev.eventDate
-                        ? new Date(ev.eventDate).toLocaleDateString()
+                        ? formatMatterCalendarDate(ev.eventDate)
                         : ev.datePrecision === "unknown"
                           ? "Date unknown"
                           : "Approximate"}

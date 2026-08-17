@@ -1,18 +1,20 @@
 import { NextResponse } from "next/server";
 import { sql } from "@nyayagrid/database";
-import { validateConfig, withTimeout } from "@nyayagrid/observability";
+import { withTimeout } from "@nyayagrid/observability";
+import { getConfigBootstrapResult } from "@/lib/bootstrap";
 import { getDb } from "@/lib/db";
+import { publicDatabaseError } from "@/lib/health";
 import { getStorage } from "@/lib/infra";
 
 /**
  * Readiness probe. The database check is load-bearing: if it fails, we return 503 so the load
- * balancer stops routing traffic here. Storage and config are reported as soft/advisory checks —
- * a MinIO blip or a missing optional env var should not take a healthy app server out of rotation.
- * No check ever includes secret values, only variable names / boolean status.
+ * balancer stops routing traffic here. Storage and config are reported as soft/advisory checks.
+ * No check ever includes secret values — only provider names, booleans, and a sanitized status.
  */
 export async function GET() {
   const checks: Record<string, unknown> = {};
   let databaseOk = true;
+  const config = getConfigBootstrapResult();
 
   try {
     const db = getDb();
@@ -21,7 +23,7 @@ export async function GET() {
   } catch (error) {
     databaseOk = false;
     checks.database = "error";
-    checks.databaseError = error instanceof Error ? error.message : "unknown error";
+    checks.databaseError = publicDatabaseError(error, config.appEnv);
   }
 
   try {
@@ -32,8 +34,12 @@ export async function GET() {
     checks.storage = "degraded";
   }
 
-  const config = validateConfig();
-  checks.config = config.ok ? "ok" : "warnings";
+  checks.config = config.problems.length === 0 ? "ok" : "warnings";
+  checks.appEnv = config.appEnv;
+  checks.providers = config.summary;
+  if (config.problems.length > 0) {
+    checks.configProblems = config.problems;
+  }
   if (config.warnings.length > 0) {
     checks.configWarnings = config.warnings;
   }

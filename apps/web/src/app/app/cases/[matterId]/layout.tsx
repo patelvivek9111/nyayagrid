@@ -1,22 +1,12 @@
-"use client";
+import { CaseLayoutClient } from "./case-layout-client";
 
-import { use } from "react";
-import { MatterChromeProvider } from "@/components/use-matter-chrome";
-import { CaseWorkspaceChrome } from "@/components/ux";
-
-export default function CaseLayout({
+export default async function CaseLayout({
   children,
   params,
 }: {
   children: React.ReactNode;
   params: Promise<{ matterId: string }>;
 }) {
-  const { matterId } = use(params);
-  return (
-    <MatterChromeProvider matterId={matterId}>
-      <div className="mx-auto max-w-5xl">
-        <CaseWorkspaceChrome matterId={matterId}>{children}</CaseWorkspaceChrome>
-      </div>
-    </MatterChromeProvider>
-  );
+  const { matterId } = await params;
+  return <CaseLayoutClient matterId={matterId}>{children}</CaseLayoutClient>;
 }

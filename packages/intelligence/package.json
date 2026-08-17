@@ -11,7 +11,9 @@
   "scripts": {
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "eval:ai": "tsx src/evals/run.ts",
+    "eval:ai:live": "tsx src/evals/run.ts --live"
   },
   "dependencies": {
     "@nyayagrid/ai": "*",
@@ -22,6 +24,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "tsx": "^4.19.3",
     "typescript": "^5.8.2",
     "vitest": "^3.0.8"
   }

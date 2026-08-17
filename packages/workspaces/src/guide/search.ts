@@ -24,6 +24,7 @@ export const FORBIDDEN_PROFESSIONAL_TABLE_NAMES = [
   "matter_entities",
   "student_case_documents",
   "student_cases",
+  "student_case_chunks",
 ] as const;
 
 /**

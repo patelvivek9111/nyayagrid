@@ -1,7 +1,7 @@
 import { desc, eq, guideDocuments } from "@nyayagrid/database";
 import { ingestGuideDocumentSchema } from "@nyayagrid/validation";
 import { ingestGuideDocument } from "@nyayagrid/workspaces";
-import { requireUser } from "@/lib/auth";
+import { requireGuideUser } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 import { getEmbeddings } from "@/lib/infra";
 
@@ -11,7 +11,7 @@ import { getEmbeddings } from "@/lib/infra";
  */
 export async function GET(request: Request) {
   try {
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireGuideUser(request.headers);
     const documents = await db
       .select()
       .from(guideDocuments)
@@ -25,7 +25,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireGuideUser(request.headers);
     const body = ingestGuideDocumentSchema.parse(await request.json());
     const result = await ingestGuideDocument({
       db,

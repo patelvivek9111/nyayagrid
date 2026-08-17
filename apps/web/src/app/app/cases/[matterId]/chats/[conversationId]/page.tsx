@@ -31,6 +31,7 @@ function sourcesFromAnswer(sources: any[] | undefined): SourceDrawerItem[] {
   return (sources ?? []).map((s: any, i: number) => ({
     id: s.chunkId || `s-${i}`,
     chunkId: s.chunkId || undefined,
+    documentId: s.documentId || undefined,
     title: s.documentTitle || "Case document",
     classLabel: "Matter Evidence",
     subtitle: [s.page != null ? `Page ${s.page}` : null, s.segmentRef || s.paragraph || null]
@@ -38,7 +39,6 @@ function sourcesFromAnswer(sources: any[] | undefined): SourceDrawerItem[] {
       .join(" · "),
     quote: s.quote,
     quoteVerified: Boolean(s.quote),
-    href: s.documentId ? `#doc-${s.documentId}` : undefined,
   }));
 }
 
@@ -46,6 +46,7 @@ function sourcesFromCitations(citations: any[] | undefined, messageId: string): 
   return (citations ?? []).map((c: any, i: number) => ({
     id: c.chunkId || `${messageId}-${i}`,
     chunkId: c.chunkId || undefined,
+    documentId: c.documentId || undefined,
     title: "Case document",
     classLabel: "Matter Evidence",
     subtitle: [c.page != null ? `Page ${c.page}` : null, c.segmentRef || null]
@@ -126,6 +127,7 @@ export default function CaseChatThreadPage() {
           .join(" · "),
         quote: item.quote || data.chunk?.content,
         quoteVerified: true,
+        documentId: data.document?.id ?? data.chunk?.documentId ?? item.documentId,
       };
     } catch {
       return item;

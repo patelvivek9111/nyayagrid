@@ -6,7 +6,7 @@ import { useMatterChrome } from "@/components/use-matter-chrome";
 
 /** Keep in sync with GUIDE_BASE_DISCLAIMER in @nyayagrid/ai — inlined so the shell stays client-safe. */
 const GUIDE_BASE_DISCLAIMER =
-  "Nyaya Guide provides legal information and document explanations. It does not replace advice from a licensed attorney.";
+  "Nyaya Guide provides legal information, not legal advice. It does not create an attorney-client relationship or attorney-client privilege. It is not a substitute for a licensed lawyer.";
 
 export function ProfessionalShell({ children, title }: { children: ReactNode; title?: string }) {
   /** Content-only shell — global nav lives in GlobalSidebar via /app layout. */
@@ -78,9 +78,13 @@ export function MatterChromeShell({
 }
 
 const studentNav = [
-  { href: "/professor", label: "Ask" },
+  { href: "/professor", label: "Home" },
+  { href: "/professor/ask", label: "Nyaya Professor" },
   { href: "/professor/cases", label: "Cases" },
-  { href: "/professor/saved", label: "Saved" },
+  { href: "/professor/briefs", label: "Case Briefs" },
+  { href: "/professor/notes", label: "Notes" },
+  { href: "/professor/saved", label: "Saved Conversations" },
+  { href: "/professor/settings", label: "Settings" },
 ];
 
 /**
@@ -123,10 +127,13 @@ export function StudentShell({ children }: { children: ReactNode }) {
 }
 
 const publicNav = [
-  { href: "/guide", label: "Ask" },
-  { href: "/guide/explain", label: "Documents" },
-  { href: "/guide/situation", label: "My Situation" },
-  { href: "/guide/prepare", label: "Prepare" },
+  { href: "/guide", label: "Nyaya Guide" },
+  { href: "/guide/explain", label: "Explain a Document" },
+  { href: "/guide/situation", label: "Build My Timeline" },
+  { href: "/guide/prepare", label: "Prepare for a Lawyer" },
+  { href: "/guide/files", label: "My Files" },
+  { href: "/guide/saved", label: "Saved Conversations" },
+  { href: "/guide/safety", label: "Safety and Privacy" },
 ];
 
 /**
@@ -163,7 +170,8 @@ export function PublicShell({ children }: { children: ReactNode }) {
       </header>
       <div className="mx-auto max-w-5xl px-6 pt-4">
         <p className="rounded-md border border-line bg-accent-soft/30 px-3 py-2 text-xs text-ink/70">
-          {GUIDE_BASE_DISCLAIMER} Laws vary by jurisdiction and situation — for anything urgent,
+          {GUIDE_BASE_DISCLAIMER} Laws vary by jurisdiction and facts. For eviction, arrest,
+          deportation, domestic violence, child custody emergencies, or an imminent court date,
           contact a qualified lawyer or emergency service directly.
         </p>
       </div>

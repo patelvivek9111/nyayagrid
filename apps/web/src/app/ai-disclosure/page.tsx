@@ -44,9 +44,11 @@ export default function AiDisclosurePage() {
       </Panel>
       <Panel title="4. Model providers and data handling">
         <p className="text-sm text-ink/70">
-          Placeholder. This section will name the AI model provider(s) in use, describe what is sent
-          to them (document excerpts relevant to a question, never a whole matter file at once), and
-          confirm that provider terms preclude using your data to train their models.
+          When <code>AI_PROVIDER=openai</code>, NyayaGrid sends retrieved excerpts to OpenAI chat
+          completions with <code>store: false</code>. Usage accounting stores token counts and
+          identifiers only — prompt and document text keys are stripped. Customer data is not used
+          to train NyayaGrid or provider models unless a separate training-consent record is filed;
+          this build still has no training pipeline even if consent is recorded.
         </p>
       </Panel>
       <Panel title="5. Usage accounting">

@@ -44,28 +44,99 @@ export const NO_AUTHORITY_LIMITATION =
 export const CASE_ONLY_LIMITATION =
   "This answer is grounded in the case you uploaded only; it does not establish what the law is in any jurisdiction.";
 
+export const RESTRICTED_ASSESSMENT_ANSWER =
+  "Nyaya Professor will not complete a closed or restricted assessment. Use your own work and your course materials. This is a study aid, not a substitute for sitting the exam yourself.";
+
+export const RESTRICTED_ASSESSMENT_LIMITATION =
+  "Refused: the question described a closed or restricted assessment. Nyaya Professor does not complete exams.";
+
+export const PROFESSOR_STARTER_PROMPTS = [
+  { id: "explain-simply", label: "Explain simply", text: "Explain this in simple terms." },
+  {
+    id: "why-ruled",
+    label: "Why the court ruled",
+    text: "Why did the court rule this way?",
+  },
+  {
+    id: "important-fact",
+    label: "Most important fact",
+    text: "What is the most important fact in this case?",
+  },
+  {
+    id: "hypothetical",
+    label: "Hypothetical",
+    text: "What if a key fact in this case were different?",
+  },
+  {
+    id: "compare",
+    label: "Compare with another case",
+    text: "How does this compare with another case in my library?",
+  },
+] as const;
+
 const DEFAULT_CASE_HIT_LIMIT = 8;
 const DEFAULT_AUTHORITY_HIT_LIMIT = 6;
+
+const RESTRICTED_ASSESSMENT_PATTERN =
+  /\b(closed[ -]?book|restricted (exam|assessment|test)|this is (my |an? )?(exam|midterm|final exam)|take[ -]?home exam|proctored exam|complete (this |my )?(exam|midterm|final))\b/i;
+
+/** Deterministic keyword check. A student saying this is an exam is enough — do not send it to the model. */
+export function looksLikeRestrictedAssessment(question: string): boolean {
+  return RESTRICTED_ASSESSMENT_PATTERN.test(question);
+}
 
 export async function createConversation(params: {
   db: Database;
   userId: string;
   title: string;
   explanationLevel?: ExplanationLevel;
+  caseId?: string | null;
 }): Promise<StudentConversation> {
   if (!params.userId) throw new StudentAccessError("userId is required");
   const title = params.title.trim();
   if (!title) throw new Error("Conversation title is required");
+  if (params.caseId) {
+    await assertStudentCaseOwnership(params.db, params.userId, params.caseId);
+  }
   const [row] = await params.db
     .insert(studentConversations)
     .values({
       userId: params.userId,
       title: title.slice(0, 200),
       explanationLevel: params.explanationLevel ?? "standard",
+      caseId: params.caseId ?? null,
     })
     .returning();
   if (!row) throw new Error("Failed to create student conversation");
   return row;
+}
+
+/** Reuses the single persistent thread for this case, or starts it. */
+export async function getOrCreateCaseConversation(params: {
+  db: Database;
+  userId: string;
+  caseId: string;
+  explanationLevel?: ExplanationLevel;
+}): Promise<StudentConversation> {
+  const studentCase = await assertStudentCaseOwnership(params.db, params.userId, params.caseId);
+  const [existing] = await params.db
+    .select()
+    .from(studentConversations)
+    .where(
+      and(
+        eq(studentConversations.userId, params.userId),
+        eq(studentConversations.caseId, studentCase.id),
+      ),
+    )
+    .limit(1);
+  if (existing) return existing;
+  return createConversation({
+    db: params.db,
+    userId: params.userId,
+    title: `About ${studentCase.title}`.slice(0, 200),
+    explanationLevel: params.explanationLevel,
+    caseId: studentCase.id,
+  });
 }
 
 export async function listConversations(
@@ -371,13 +442,21 @@ export async function askProfessor(params: AskProfessorParams): Promise<AskProfe
 
   const conversation = params.conversationId
     ? await assertStudentConversationOwnership(params.db, params.userId, params.conversationId)
-    : await createConversation({
-        db: params.db,
-        userId: params.userId,
-        title: question.slice(0, 200),
-        explanationLevel: params.explanationLevel,
-      });
+    : params.caseId
+      ? await getOrCreateCaseConversation({
+          db: params.db,
+          userId: params.userId,
+          caseId: params.caseId,
+          explanationLevel: params.explanationLevel,
+        })
+      : await createConversation({
+          db: params.db,
+          userId: params.userId,
+          title: question.slice(0, 200),
+          explanationLevel: params.explanationLevel,
+        });
   const level = params.explanationLevel ?? conversation.explanationLevel;
+  const scopedCaseId = params.caseId ?? conversation.caseId ?? null;
 
   await params.db.insert(studentMessages).values({
     conversationId: conversation.id,
@@ -387,10 +466,71 @@ export async function askProfessor(params: AskProfessorParams): Promise<AskProfe
     explanationLevel: level,
   });
 
+  if (looksLikeRestrictedAssessment(question)) {
+    const [message] = await params.db
+      .insert(studentMessages)
+      .values({
+        conversationId: conversation.id,
+        userId: params.userId,
+        role: "assistant",
+        content: RESTRICTED_ASSESSMENT_ANSWER,
+        explanationLevel: level,
+        sources: [{ provenance: "PROFESSOR_EXPLANATION", note: RESTRICTED_ASSESSMENT_LIMITATION }],
+        socraticFollowUp: null,
+        provider: "deterministic",
+        model: "restricted-assessment-guard",
+        promptVersion: PROFESSOR_ANSWER_PROMPT_VERSION,
+      })
+      .returning();
+    if (!message) throw new Error("Failed to persist the restricted-assessment refusal");
+
+    await writeAuditEvent(params.db, {
+      organizationId: null,
+      actorUserId: params.userId,
+      action: "student_professor.restricted_assessment_refused",
+      targetType: "student_conversation",
+      targetId: conversation.id,
+      metadata: {
+        messageId: message.id,
+        caseId: scopedCaseId,
+        explanationLevel: level,
+      },
+    });
+
+    return {
+      conversation,
+      message,
+      answer: {
+        answer: RESTRICTED_ASSESSMENT_ANSWER,
+        explanationLevel: level,
+        uploadedCaseSources: [],
+        legalAuthoritySources: [],
+        explanationNotes: [RESTRICTED_ASSESSMENT_LIMITATION],
+        limitations: [RESTRICTED_ASSESSMENT_LIMITATION, PROFESSOR_STUDY_AID_NOTICE],
+        socraticFollowUp: null,
+        supportState: "insufficient",
+      },
+      sources: [{ provenance: "PROFESSOR_EXPLANATION", note: RESTRICTED_ASSESSMENT_LIMITATION }],
+      socraticFollowUp: null,
+      grounded: false,
+      caseHitCount: 0,
+      authorityChunkCount: 0,
+      validation: {
+        droppedCaseChunkIds: [],
+        droppedAuthorityChunkIds: [],
+        rejectedQuotes: [],
+        grounded: false,
+        schemaValid: true,
+      },
+      provider: "deterministic",
+      model: "restricted-assessment-guard",
+    };
+  }
+
   let caseLabel: string | null = null;
   let caseHits: StudentChunkHit[] = [];
-  if (params.caseId) {
-    const studentCase = await assertStudentCaseOwnership(params.db, params.userId, params.caseId);
+  if (scopedCaseId) {
+    const studentCase = await assertStudentCaseOwnership(params.db, params.userId, scopedCaseId);
     caseLabel = caseDisplayLabel(studentCase);
     caseHits = await searchStudentCaseChunks({
       db: params.db,
@@ -485,7 +625,7 @@ export async function askProfessor(params: AskProfessorParams): Promise<AskProfe
     targetId: conversation.id,
     metadata: {
       messageId: message.id,
-      caseId: params.caseId ?? null,
+      caseId: scopedCaseId,
       explanationLevel: level,
       caseHitCount: caseHits.length,
       authorityChunkCount: authorityChunks.length,

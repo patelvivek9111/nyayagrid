@@ -3,9 +3,15 @@ import { AuthorizationError } from "@nyayagrid/permissions";
 import { InviteError, UnauthenticatedError } from "@nyayagrid/auth";
 import { StudentAccessError, GuideAuthorizationError } from "@nyayagrid/workspaces";
 import { DocumentDownloadError } from "@nyayagrid/documents";
-import { RateLimitExceededError } from "@nyayagrid/platform";
+import {
+  RateLimitExceededError,
+  LegalHoldActiveError,
+  LifecycleNotFoundError,
+  LifecycleValidationError,
+} from "@nyayagrid/platform";
 import { ZodError } from "zod";
 import { InviteRoleNotFoundError } from "./invites";
+import { FeatureDisabledError } from "./features";
 
 const INVITE_ERROR_STATUS: Record<string, number> = {
   NOT_FOUND: 404,
@@ -59,6 +65,18 @@ export function handleRouteError(error: unknown) {
         headers: { "Retry-After": String(Math.max(1, Math.ceil(error.retryAfterMs / 1000))) },
       },
     );
+  }
+  if (error instanceof FeatureDisabledError) {
+    return jsonError(error.code, error.message, 404);
+  }
+  if (error instanceof LegalHoldActiveError) {
+    return jsonError(error.code, error.message, 409);
+  }
+  if (error instanceof LifecycleNotFoundError) {
+    return jsonError(error.code, error.message, 404);
+  }
+  if (error instanceof LifecycleValidationError) {
+    return jsonError(error.code, error.message, 400);
   }
   if (error instanceof ZodError) {
     return jsonError("VALIDATION_ERROR", "Invalid request", 400, error.flatten());

@@ -102,3 +102,22 @@ export function toProfessorCaseChunks(passages: StudentCasePassage[]): Professor
 export function caseDisplayLabel(row: StudentCase): string {
   return row.citation ? `${row.title} (${row.citation})` : row.title;
 }
+
+export async function updateStudentCaseCourseLabel(params: {
+  db: Database;
+  userId: string;
+  caseId: string;
+  courseLabel: string | null;
+}): Promise<StudentCase> {
+  await assertStudentCaseOwnership(params.db, params.userId, params.caseId);
+  const [row] = await params.db
+    .update(studentCases)
+    .set({
+      courseLabel: params.courseLabel?.trim() || null,
+      updatedAt: new Date(),
+    })
+    .where(and(eq(studentCases.id, params.caseId), eq(studentCases.userId, params.userId)))
+    .returning();
+  if (!row) throw new StudentAccessError();
+  return row;
+}

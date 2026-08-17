@@ -7,7 +7,7 @@ import {
   guideDocumentVersions,
 } from "@nyayagrid/database";
 import { assertGuideDocumentOwnership } from "@nyayagrid/workspaces";
-import { requireUser } from "@/lib/auth";
+import { requireGuideUser } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
 type Params = { params: Promise<{ documentId: string }> };
@@ -15,7 +15,7 @@ type Params = { params: Promise<{ documentId: string }> };
 export async function GET(request: Request, { params }: Params) {
   try {
     const { documentId } = await params;
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireGuideUser(request.headers);
     const document = await assertGuideDocumentOwnership(db, { documentId, userId: user.id });
 
     const [version] = await db

@@ -5,7 +5,7 @@ export const DRAFT_GENERATION_PROMPT_VERSION = "draft-generation-v1";
 export const CONTRACT_ANALYSIS_PROMPT_VERSION = "contract-analysis-v1";
 export const REDLINE_SUGGESTIONS_PROMPT_VERSION = "redline-suggestions-v1";
 export const DEPOSITION_ANALYSIS_PROMPT_VERSION = "deposition-analysis-v1";
-export const CONTRADICTION_ANALYSIS_PROMPT_VERSION = "contradiction-analysis-v1";
+export const CONTRADICTION_ANALYSIS_PROMPT_VERSION = "contradiction-analysis-v2";
 export const DISCOVERY_CLASSIFICATION_PROMPT_VERSION = "discovery-classification-v1";
 
 export const analysisAttentionSchema = z.enum(["informational", "review", "high_attention"]);
@@ -74,9 +74,43 @@ export const contradictionCandidateSchema = z.object({
   sideB: contradictionSideSchema,
 });
 
-export const contradictionCandidatesSchema = z.object({
-  candidates: z.array(contradictionCandidateSchema).default([]),
-});
+/** Live models sometimes return `"High"` or `0.9` instead of the enum. */
+export function normalizeConfidenceLevel(value: unknown): unknown {
+  if (typeof value === "string") {
+    const normalized = value.toLowerCase().trim();
+    if (normalized === "low" || normalized === "medium" || normalized === "high") {
+      return normalized;
+    }
+  }
+  if (typeof value === "number" && Number.isFinite(value)) {
+    if (value >= 0.75) return "high";
+    if (value >= 0.4) return "medium";
+    if (value >= 0) return "low";
+  }
+  return value;
+}
+
+export function normalizeContradictionRaw(raw: unknown): unknown {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return raw;
+  const obj = { ...(raw as Record<string, unknown>) };
+  if (!Array.isArray(obj.candidates)) return obj;
+  obj.candidates = obj.candidates.map((candidate) => {
+    if (!candidate || typeof candidate !== "object" || Array.isArray(candidate)) return candidate;
+    const next = { ...(candidate as Record<string, unknown>) };
+    if (next.confidence !== undefined) {
+      next.confidence = normalizeConfidenceLevel(next.confidence);
+    }
+    return next;
+  });
+  return obj;
+}
+
+export const contradictionCandidatesSchema = z.preprocess(
+  normalizeContradictionRaw,
+  z.object({
+    candidates: z.array(contradictionCandidateSchema).default([]),
+  }),
+);
 
 export const relevanceStatusSchema = z.enum(["unknown", "relevant", "not_relevant"]);
 export const privilegeStatusSchema = z.enum([
@@ -233,6 +267,8 @@ export function buildContradictionAnalysisSystemPrompt(): string {
     "You identify potential contradictions across authorized matter Sources only.",
     "Never invent statements or conflicts.",
     "Each candidate MUST include title, explanation, confidence, sideA, and sideB with chunkIds and summaries.",
+    "confidence MUST be exactly one of the lowercase strings low, medium, or high — never a number, never High.",
+    "Do not treat paraphrase, rounding, on-or-about the same date, or imprecise restatements (for example end of February vs February 28) as contradictions. Return {candidates:[]} unless two sources cannot both be true.",
     "Return JSON only: {candidates:[{title,explanation,confidence,sideA:{chunkIds,summary},sideB:{chunkIds,summary}}]}.",
     "If no defensible contradictions exist, return {candidates:[]}.",
   ].join(" ");
@@ -403,27 +439,129 @@ export function mockDepositionAnalysis(userPrompt: string): DepositionAnalysis {
   };
 }
 
+const EXACT_CALENDAR_DATE =
+  /\b((January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4})\b/gi;
+const CAM_TOKEN = /\bCAM\b/;
+const CAM_SEND_VERB = /\b(send|sent|emailed|uploaded|transmitted|transmission)\b/i;
+const CAM_NON_TRANSMITTAL = /\b(not a transmittal|prepared internally|estimated February CAM worksheet)\b/i;
+
+function exactCalendarDates(text: string): string[] {
+  const found = new Set<string>();
+  for (const match of text.matchAll(EXACT_CALENDAR_DATE)) {
+    found.add(match[1]!.toLowerCase());
+  }
+  return [...found];
+}
+
+function isCamSendAccount(text: string): boolean {
+  return CAM_TOKEN.test(text) && CAM_SEND_VERB.test(text) && !CAM_NON_TRANSMITTAL.test(text);
+}
+
+/**
+ * Deterministic dual-sided CAM send-date conflicts (depo Feb 28 vs PM email March 3).
+ * Uses exact month-name dates only; does not invent a single true date.
+ */
+export function findExactCrossDocumentDateConflicts(
+  chunks: ProfessionalChunk[],
+): ContradictionCandidates {
+  const accounts = chunks.filter(
+    (chunk) => isCamSendAccount(chunk.content) && exactCalendarDates(chunk.content).length > 0,
+  );
+  const candidates: ContradictionCandidate[] = [];
+  for (let i = 0; i < accounts.length; i += 1) {
+    for (let j = i + 1; j < accounts.length; j += 1) {
+      const a = accounts[i]!;
+      const b = accounts[j]!;
+      if (a.documentId === b.documentId) continue;
+      const datesA = exactCalendarDates(a.content);
+      const datesB = exactCalendarDates(b.content);
+      const conflict =
+        datesA.some((d) => !datesB.includes(d)) && datesB.some((d) => !datesA.includes(d));
+      if (!conflict) continue;
+      candidates.push({
+        title: "Conflicting CAM send dates",
+        explanation:
+          "Two Case documents give different exact dates for when the CAM package was sent or uploaded. Both sides are presented; neither is treated as the true account.",
+        confidence: "medium",
+        sideA: { chunkIds: [a.chunkId], summary: a.content.slice(0, 400) },
+        sideB: { chunkIds: [b.chunkId], summary: b.content.slice(0, 400) },
+      });
+    }
+  }
+  return { candidates };
+}
+
+export function mergeContradictionCandidates(
+  primary: ContradictionCandidate[],
+  extra: ContradictionCandidate[],
+): ContradictionCandidate[] {
+  const seen = new Set<string>();
+  const merged: ContradictionCandidate[] = [];
+  for (const candidate of [...extra, ...primary]) {
+    const key = [...candidate.sideA.chunkIds, ...candidate.sideB.chunkIds].sort().join("|");
+    if (seen.has(key)) continue;
+    seen.add(key);
+    merged.push(candidate);
+  }
+  return merged.slice(0, 8);
+}
+
 export function mockContradictionCandidates(userPrompt: string): ContradictionCandidates {
   const chunks = extractProfessionalChunksFromPrompt(userPrompt);
   if (chunks.length < 2) return { candidates: [] };
-  const a = chunks[0]!;
-  const b = chunks[1]!;
-  const conflict =
-    (/signed|agreed|yes|confirmed/i.test(a.content) && /denied|never|no|not/i.test(b.content)) ||
-    (/before/i.test(a.content) && /after/i.test(b.content));
-  if (!conflict) return { candidates: [] };
-  return {
-    candidates: [
-      {
-        title: "Potential conflicting statements",
-        explanation:
-          "Mock contradiction candidate based on opposing language in two source chunks.",
-        confidence: "medium",
-        sideA: { chunkIds: [a.chunkId], summary: a.content.slice(0, 280) },
-        sideB: { chunkIds: [b.chunkId], summary: b.content.slice(0, 280) },
-      },
-    ],
+  const camConflicts = findExactCrossDocumentDateConflicts(chunks);
+  if (camConflicts.candidates.length > 0) return camConflicts;
+
+  const exactDates = (text: string): string[] => {
+    const re =
+      /\b((January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4})\b/gi;
+    const found = new Set<string>();
+    for (const match of text.matchAll(re)) {
+      found.add(match[1]!.toLowerCase());
+    }
+    return [...found];
   };
+
+  const datesConflict = (a: string, b: string): boolean => {
+    const da = exactDates(a);
+    const db = exactDates(b);
+    if (da.length === 0 || db.length === 0) return false;
+    return da.some((d) => !db.includes(d)) && db.some((d) => !da.includes(d));
+  };
+
+  const polarityConflict = (a: string, b: string): boolean => {
+    const positive = /\b(signed|agreed|yes|confirmed)\b/i;
+    const negative = /\b(denied|never|unfinished)\b/i;
+    return (
+      (positive.test(a) && negative.test(b)) ||
+      (positive.test(b) && negative.test(a)) ||
+      (/\bbefore\b/i.test(a) && /\bafter\b/i.test(b)) ||
+      (/\bbefore\b/i.test(b) && /\bafter\b/i.test(a))
+    );
+  };
+
+  for (let i = 0; i < chunks.length; i += 1) {
+    for (let j = i + 1; j < chunks.length; j += 1) {
+      const a = chunks[i]!;
+      const b = chunks[j]!;
+      if (!datesConflict(a.content, b.content) && !polarityConflict(a.content, b.content)) {
+        continue;
+      }
+      return {
+        candidates: [
+          {
+            title: "Potential conflicting statements",
+            explanation:
+              "Mock contradiction candidate based on opposing language in two source chunks. Both sides are presented; neither is treated as the true account.",
+            confidence: "medium",
+            sideA: { chunkIds: [a.chunkId], summary: a.content.slice(0, 280) },
+            sideB: { chunkIds: [b.chunkId], summary: b.content.slice(0, 280) },
+          },
+        ],
+      };
+    }
+  }
+  return { candidates: [] };
 }
 
 export function mockDiscoveryClassification(userPrompt: string): DiscoveryClassification {

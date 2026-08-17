@@ -663,18 +663,46 @@ export const saveStudentItemSchema = z.object({
   title: z.string().trim().min(1).max(300),
   content: z.string().max(20000).optional().nullable(),
   ref: z.record(z.unknown()).default({}),
+  courseLabel: z.string().trim().max(80).optional().nullable(),
 });
 
 export const ingestStudentCaseSchema = z.object({
   title: z.string().trim().min(3).max(300),
-  content: z.string().trim().min(20),
+  content: z.string().trim().min(20).optional(),
   citation: z.string().trim().min(1).max(300).optional().nullable(),
   court: z.string().trim().min(1).max(200).optional().nullable(),
+  courseLabel: z.string().trim().max(80).optional().nullable(),
+});
+
+export const updateStudentCaseSchema = z.object({
+  courseLabel: z.string().trim().max(80).optional().nullable(),
 });
 
 export const createStudentConversationSchema = z.object({
   title: z.string().trim().min(1).max(200).optional(),
   explanationLevel: explanationLevelRequestSchema.optional(),
+  caseId: z.string().uuid().optional().nullable(),
+});
+
+export const createStudentNoteSchema = z.object({
+  title: z.string().trim().min(1).max(300),
+  content: z.string().trim().min(1).max(20000),
+  caseId: z.string().uuid().optional().nullable(),
+  briefId: z.string().uuid().optional().nullable(),
+  kind: z.enum(["note", "brief_challenge"]).optional(),
+  sectionKey: z.string().trim().min(1).max(80).optional().nullable(),
+  courseLabel: z.string().trim().max(80).optional().nullable(),
+});
+
+export const updateStudentNoteSchema = z.object({
+  title: z.string().trim().min(1).max(300).optional(),
+  content: z.string().trim().min(1).max(20000).optional(),
+  courseLabel: z.string().trim().max(80).optional().nullable(),
+});
+
+export const challengeBriefSectionSchema = z.object({
+  sectionKey: z.string().trim().min(1).max(80),
+  note: z.string().trim().min(1).max(4000),
 });
 
 export const askGuideSchema = z.object({
@@ -777,5 +805,56 @@ export const cursorPaginationSchema = z.object({
 });
 
 export type CursorPaginationInput = z.infer<typeof cursorPaginationSchema>;
+
+export const createTimeEntrySchema = z.object({
+  organizationId: z.string().uuid(),
+  matterId: z.string().uuid(),
+  description: z.string().trim().min(1).max(2000),
+  minutes: z.number().int().min(1).max(24 * 60),
+  source: z.enum(["manual", "chat", "draft"]).optional(),
+  conversationId: z.string().uuid().optional().nullable(),
+  draftId: z.string().uuid().optional().nullable(),
+});
+
+export const suggestTimeFromChatSchema = z.object({
+  organizationId: z.string().uuid(),
+  matterId: z.string().uuid(),
+  conversationId: z.string().uuid(),
+  minutes: z.number().int().min(1).max(24 * 60).optional(),
+});
+
+export const reviewTimeEntrySchema = z.object({
+  action: z.enum(["post", "reject"]),
+});
+
+export const createInvoiceFromTimeSchema = z.object({
+  organizationId: z.string().uuid(),
+  matterId: z.string().uuid(),
+  notes: z.string().trim().max(4000).optional().nullable(),
+});
+
+export const reviewInvoiceSchema = z.object({
+  action: z.enum(["issue", "void"]),
+});
+
+export const createInboundEmailSchema = z.object({
+  organizationId: z.string().uuid(),
+  fromAddress: z.string().trim().min(1).max(320),
+  subject: z.string().trim().min(1).max(500),
+  body: z.string().trim().min(1).max(100_000),
+});
+
+export const fileInboundEmailSchema = z.object({
+  matterId: z.string().uuid(),
+});
+
+export const assignMatterMemberSchema = z.object({
+  userId: z.string().uuid(),
+  access: z.enum(["read", "comment", "edit", "manage"]).default("read"),
+});
+
+export const recordTrainingConsentSchema = z.object({
+  statement: z.string().trim().min(20).max(4000),
+});
 
 export { z };

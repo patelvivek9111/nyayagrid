@@ -2,6 +2,13 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { StudentShell } from "@/components/shell";
+import { StudyAidNotice } from "@/components/professor/study-aid-notice";
+import {
+  ProfessorSources,
+  type ProfessorSourceRef,
+} from "@/components/professor/professor-sources";
+import { loadProfessorSettings } from "@/lib/professor-settings";
+import { NO_STUDENT_SOURCES_ANSWER } from "@/lib/professor-copy";
 import { Badge, Button, PageHeader, Panel } from "@nyayagrid/ui";
 
 type ExplanationLevel = "simple" | "standard" | "advanced";
@@ -15,22 +22,12 @@ type ConversationRow = {
 
 type CaseRow = { id: string; title: string; citation: string | null };
 
-type SourceRef = {
-  provenance: "UPLOADED_CASE" | "LEGAL_AUTHORITY" | "PROFESSOR_EXPLANATION";
-  caseId?: string;
-  chunkId?: string;
-  authorityId?: string;
-  page?: number | null;
-  opinionPart?: string | null;
-  quote?: string | null;
-  note?: string;
-};
-
 type StudentMessageRow = {
   id: string;
   role: "user" | "assistant" | "system";
   content: string;
-  sources?: SourceRef[];
+  explanationLevel?: ExplanationLevel | null;
+  sources?: ProfessorSourceRef[];
   socraticFollowUp?: string | null;
   createdAt: string;
 };
@@ -41,11 +38,13 @@ const LEVELS: { value: ExplanationLevel; label: string }[] = [
   { value: "advanced", label: "Advanced" },
 ];
 
-function sourceLabel(source: SourceRef): string {
-  if (source.provenance === "UPLOADED_CASE") return "Your uploaded case";
-  if (source.provenance === "LEGAL_AUTHORITY") return "Legal authority";
-  return "Professor's explanation";
-}
+const STARTERS = [
+  { label: "Explain simply", text: "Explain this in simple terms." },
+  { label: "Why the court ruled", text: "Why did the court rule this way?" },
+  { label: "Most important fact", text: "What is the most important fact in this case?" },
+  { label: "Hypothetical", text: "What if a key fact in this case were different?" },
+  { label: "Compare with another case", text: "How does this compare with another case in my library?" },
+];
 
 export default function AskProfessorPage() {
   const [conversations, setConversations] = useState<ConversationRow[]>([]);
@@ -57,6 +56,7 @@ export default function AskProfessorPage() {
   const [question, setQuestion] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [savedMessage, setSavedMessage] = useState("");
 
   async function loadConversations() {
     const res = await fetch("/api/v1/professor/conversations");
@@ -78,11 +78,16 @@ export default function AskProfessorPage() {
     const data = await res.json();
     if (!res.ok) throw new Error(data?.error?.message ?? "Failed to load conversation");
     setMessages(data.messages ?? []);
-    setExplanationLevel(data.conversation?.explanationLevel ?? "standard");
+    setExplanationLevel(data.conversation?.explanationLevel ?? explanationLevel);
   }
 
   useEffect(() => {
-    const initialId = new URLSearchParams(window.location.search).get("conversationId") ?? "";
+    const params = new URLSearchParams(window.location.search);
+    const initialId = params.get("conversationId") ?? "";
+    const initialQ = params.get("q") ?? "";
+    const settings = loadProfessorSettings();
+    setExplanationLevel(settings.explanationLevel);
+    if (initialQ) setQuestion(initialQ);
     Promise.all([loadConversations(), loadCases()])
       .then(() => {
         if (initialId) setConversationId(initialId);
@@ -102,18 +107,24 @@ export default function AskProfessorPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [conversationId]);
 
-  async function ask(event: FormEvent) {
-    event.preventDefault();
-    if (!question.trim()) return;
+  async function ask(event?: FormEvent, override?: string) {
+    event?.preventDefault();
+    const text = (override ?? question).trim();
+    if (!text) return;
     setBusy(true);
     setError("");
+    setSavedMessage("");
     try {
       let activeId = conversationId;
       if (!activeId) {
         const created = await fetch("/api/v1/professor/conversations", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ title: question.slice(0, 120), explanationLevel }),
+          body: JSON.stringify({
+            title: text.slice(0, 120),
+            explanationLevel,
+            caseId: caseId || undefined,
+          }),
         });
         const createdData = await created.json();
         if (!created.ok)
@@ -127,7 +138,7 @@ export default function AskProfessorPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          question,
+          question: text,
           explanationLevel,
           caseId: caseId || undefined,
         }),
@@ -143,6 +154,32 @@ export default function AskProfessorPage() {
     }
   }
 
+  async function saveConversation() {
+    if (!conversationId) return;
+    const title =
+      conversations.find((row) => row.id === conversationId)?.title ?? "Saved conversation";
+    setBusy(true);
+    try {
+      const res = await fetch("/api/v1/professor/saved", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          itemType: "explanation",
+          title,
+          content: messages.at(-1)?.content ?? title,
+          ref: { conversationId },
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error?.message ?? "Failed to save");
+      setSavedMessage("Conversation saved.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to save");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   return (
     <StudentShell>
       <PageHeader
@@ -150,7 +187,11 @@ export default function AskProfessorPage() {
         title="Ask Professor"
         description="Answers are grounded in your uploaded case text and the shared legal authority corpus. Professor is a study aid, not a substitute for your course instruction."
       />
+      <div className="mb-4">
+        <StudyAidNotice />
+      </div>
       {error ? <p className="mb-4 text-sm text-[var(--ng-danger)]">{error}</p> : null}
+      {savedMessage ? <p className="mb-4 text-sm text-accent">{savedMessage}</p> : null}
 
       <div className="mb-4 grid gap-3 rounded-xl border border-line bg-white/80 p-4 md:grid-cols-3">
         <label className="text-sm font-semibold text-ink/80">
@@ -200,7 +241,27 @@ export default function AskProfessorPage() {
         </label>
       </div>
 
+      <div className="mb-4 flex flex-wrap gap-2">
+        {STARTERS.map((starter) => (
+          <button
+            key={starter.label}
+            type="button"
+            className="rounded-full border border-line bg-white px-3 py-1 text-xs text-ink/80 hover:border-accent hover:text-accent"
+            onClick={() => setQuestion(starter.text)}
+          >
+            {starter.label}
+          </button>
+        ))}
+      </div>
+
       <Panel title="Conversation">
+        {conversationId ? (
+          <div className="mb-3">
+            <Button type="button" variant="secondary" disabled={busy} onClick={saveConversation}>
+              Save conversation
+            </Button>
+          </div>
+        ) : null}
         <div className="mb-4 max-h-[28rem] space-y-3 overflow-y-auto">
           {messages.length === 0 ? (
             <p className="text-sm text-ink/70">Ask a question to start the conversation.</p>
@@ -216,29 +277,24 @@ export default function AskProfessorPage() {
               >
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wide text-ink/50">
                   {message.role === "user" ? "You" : "Professor"}
+                  {message.explanationLevel ? ` · ${message.explanationLevel}` : ""}
                 </p>
                 <p className="whitespace-pre-wrap text-ink/90">{message.content}</p>
-                {message.sources && message.sources.length > 0 ? (
-                  <div className="mt-2 space-y-1 border-t border-line/60 pt-2">
-                    {message.sources.map((source, index) => (
-                      <div key={index} className="text-xs text-ink/60">
-                        <Badge>{sourceLabel(source)}</Badge>
-                        {source.quote ? (
-                          <span className="ml-2 italic">&ldquo;{source.quote}&rdquo;</span>
-                        ) : null}
-                        {source.page ? <span className="ml-2">p.{source.page}</span> : null}
-                        {source.opinionPart ? (
-                          <span className="ml-2">({source.opinionPart})</span>
-                        ) : null}
-                      </div>
-                    ))}
-                  </div>
+                {message.content === NO_STUDENT_SOURCES_ANSWER ? (
+                  <p className="mt-1 text-xs text-ink/50">No surviving sources for this answer.</p>
                 ) : null}
+                {message.sources ? <ProfessorSources sources={message.sources} /> : null}
                 {message.socraticFollowUp ? (
-                  <p className="mt-2 rounded border border-accent/30 bg-accent-soft/40 px-2 py-1.5 text-xs text-ink/80">
+                  <button
+                    type="button"
+                    className="mt-2 w-full rounded border border-accent/30 bg-accent-soft/40 px-2 py-1.5 text-left text-xs text-ink/80"
+                    onClick={() => {
+                      setQuestion(message.socraticFollowUp ?? "");
+                    }}
+                  >
                     <span className="font-semibold">Think about this: </span>
                     {message.socraticFollowUp}
-                  </p>
+                  </button>
                 ) : null}
               </div>
             ))
@@ -252,7 +308,7 @@ export default function AskProfessorPage() {
             onChange={(e) => setQuestion(e.target.value)}
           />
           <Button type="submit" disabled={busy || !question.trim()}>
-            {busy ? "Asking…" : "Ask"}
+            Ask
           </Button>
         </form>
       </Panel>

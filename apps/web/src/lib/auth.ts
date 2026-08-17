@@ -10,7 +10,12 @@ let authProvider: AuthProvider | null = null;
 
 export function getAuthProvider(): AuthProvider {
   if (!authProvider) {
-    authProvider = createAuthProviderFromEnv();
+    authProvider = createAuthProviderFromEnv({
+      resolveClerkSession: async (headers) => {
+        const { resolveClerkSession } = await import("./clerk-session");
+        return resolveClerkSession(headers);
+      },
+    });
   }
   return authProvider;
 }

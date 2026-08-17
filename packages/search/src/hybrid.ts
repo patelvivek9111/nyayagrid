@@ -1,6 +1,7 @@
 import { sql } from "@nyayagrid/database";
 import type { Database } from "@nyayagrid/database";
 import type { EmbeddingProvider } from "@nyayagrid/ai";
+import { rankByQuestionOverlap } from "@nyayagrid/ai";
 
 export type RetrievalScope = {
   organizationId: string;
@@ -154,7 +155,10 @@ export class PostgresHybridRetriever implements Retriever {
     addRows(Array.from(vectorRows as Iterable<Row>), 1);
     addRows(Array.from(ftsRows as Iterable<Row>), 1.1);
 
-    const hits = [...merged.values()].sort((a, b) => b.score - a.score).slice(0, limit);
+    const hits = rankByQuestionOverlap(
+      query.text,
+      [...merged.values()].sort((a, b) => b.score - a.score).slice(0, limit),
+    );
     assertHitsWithinScope(hits, query.scope);
     return hits;
   }
@@ -173,6 +177,6 @@ export class InMemoryMatterRetriever implements Retriever {
         c.quote.toLowerCase().includes(query.text.toLowerCase().slice(0, 12)),
     );
     assertHitsWithinScope(hits, query.scope);
-    return hits.slice(0, query.limit ?? 8);
+    return rankByQuestionOverlap(query.text, hits).slice(0, query.limit ?? 8);
   }
 }

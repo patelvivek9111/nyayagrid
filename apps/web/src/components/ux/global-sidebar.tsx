@@ -148,6 +148,21 @@ export function GlobalSidebar() {
         <NavLink href="/app/cases" label="All cases" indent active={pathname === "/app/cases"} />
 
         <div className="mt-4 space-y-0.5 border-t border-line pt-3">
+          <NavLink href="/app/clients" label="Clients" active={pathname.startsWith("/app/clients")} />
+          <NavLink
+            href="/app/calendar"
+            label="Calendar"
+            active={pathname.startsWith("/app/calendar")}
+          />
+          <NavLink href="/app/time" label="Time" active={pathname.startsWith("/app/time")} />
+          <NavLink href="/app/billing" label="Billing" active={pathname.startsWith("/app/billing")} />
+          <NavLink href="/app/inbox" label="Inbox" active={pathname.startsWith("/app/inbox")} />
+          <NavLink
+            href="/app/compliance"
+            label="Compliance"
+            active={pathname.startsWith("/app/compliance")}
+          />
+          <NavLink href="/portal" label="Client portal" />
           <NavLink
             href="/app/research"
             label="Research"

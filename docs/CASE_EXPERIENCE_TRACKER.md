@@ -91,7 +91,13 @@ Product anchors: `.cursorrules` §6.1 Matter Dashboard · `NYAYA_DRAFT.md` · `N
 
 ## To do
 
-All Case Experience tracker sections are complete.
+All Case Experience tracker sections are complete. Do **not** add a §7 here.
+
+**Pick one next track (do not start all three):**
+
+- [`CASE_DOGFOOD_TRACKER.md`](./CASE_DOGFOOD_TRACKER.md) — use a SYNTH Case; open a new tracker only if a surface is still unusable for an attorney
+- [`PRODUCTION_READINESS_TRACKER.md`](./PRODUCTION_READINESS_TRACKER.md) — ops: Clerk, ClamAV, S3, backup/restore, monitoring, attorney-reviewed terms
+- [`NYAYA_PROFESSOR_TRACKER.md`](./NYAYA_PROFESSOR_TRACKER.md) — named product track: harden Nyaya Professor (not firm ops)
 
 ---
 

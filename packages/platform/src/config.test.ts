@@ -20,10 +20,12 @@ const SAFE_PRODUCTION_ENV: EnvSource = {
   AUTH_PROVIDER: "clerk",
   CLERK_SECRET_KEY: "sk_live_test",
   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "pk_live_test",
+  CLERK_WEBHOOK_SECRET: "whsec_test",
   AI_PROVIDER: "openai",
   OPENAI_API_KEY: "sk-openai-test",
   EMBEDDING_PROVIDER: "openai",
   MALWARE_SCANNER: "clamav",
+  CLAMAV_HOST: "clamav.internal",
   STORAGE_PROVIDER: "s3",
   OCR_PROVIDER: "none",
   EMAIL_PROVIDER: "smtp",
@@ -32,6 +34,7 @@ const SAFE_PRODUCTION_ENV: EnvSource = {
   EMAIL_FROM: "noreply@example.com",
   BILLING_PROVIDER: "database",
   RATE_LIMIT_PROVIDER: "redis",
+  REDIS_URL: "redis://127.0.0.1:6379",
   DATABASE_URL: "postgresql://user:pass@host:5432/db",
   S3_BUCKET: "nyayagrid-prod-documents",
 };
@@ -184,6 +187,40 @@ describe("collectProductionConfigProblems", () => {
       RATE_LIMIT_PROVIDER: undefined,
     });
     expect(problems.some((p) => p.includes("RATE_LIMIT_PROVIDER resolves to memory"))).toBe(true);
+  });
+
+  it("flags RATE_LIMIT_PROVIDER=redis without REDIS_URL or REDIS_HOST", () => {
+    const problems = collectProductionConfigProblems({
+      ...SAFE_PRODUCTION_ENV,
+      REDIS_URL: undefined,
+      REDIS_HOST: undefined,
+    });
+    expect(problems.some((p) => p.includes("RATE_LIMIT_PROVIDER=redis requires REDIS_URL"))).toBe(
+      true,
+    );
+  });
+
+  it("flags MALWARE_SCANNER=clamav without CLAMAV_HOST and fixture mode", () => {
+    const missingHost = collectProductionConfigProblems({
+      ...SAFE_PRODUCTION_ENV,
+      CLAMAV_HOST: undefined,
+    });
+    expect(missingHost.some((p) => p.includes("MALWARE_SCANNER=clamav requires CLAMAV_HOST"))).toBe(
+      true,
+    );
+    const fixture = collectProductionConfigProblems({
+      ...SAFE_PRODUCTION_ENV,
+      CLAMAV_FIXTURE: "1",
+    });
+    expect(fixture.some((p) => p.includes("CLAMAV_FIXTURE"))).toBe(true);
+  });
+
+  it("flags AUTH_PROVIDER=clerk without CLERK_WEBHOOK_SECRET", () => {
+    const problems = collectProductionConfigProblems({
+      ...SAFE_PRODUCTION_ENV,
+      CLERK_WEBHOOK_SECRET: undefined,
+    });
+    expect(problems.some((p) => p.includes("CLERK_WEBHOOK_SECRET"))).toBe(true);
   });
 
   it("flags missing DATABASE_URL and S3_BUCKET", () => {

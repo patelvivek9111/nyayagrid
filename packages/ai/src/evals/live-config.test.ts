@@ -4,6 +4,9 @@ import {
   EVAL_LIVE_PINNED_MODEL_DEFAULT,
   liveEvalSkipReason,
   resolveLiveEvalConfig,
+  resolveLiveEvalScope,
+  LIVE_EVAL_TEMPERATURE,
+  formatLiveRunConfig,
 } from "./live-config";
 import {
   MOCK_GRADED_BASELINES,
@@ -37,6 +40,56 @@ describe("live eval config", () => {
     expect(config.maxTokens).toBe(1000);
     expect(config.maxUsd).toBe(0.25);
     expect(config.timeoutMs).toBe(12_000);
+    expect(config.repeats).toBe(1);
+  });
+
+  it("reads EVAL_LIVE_REPEATS", () => {
+    const config = resolveLiveEvalConfig({
+      EVAL_LIVE: "1",
+      OPENAI_API_KEY: "sk-test",
+      EVAL_LIVE_REPEATS: "3",
+    } as NodeJS.ProcessEnv);
+    expect(config.repeats).toBe(3);
+  });
+
+  it("filters isolation scope for a single Case Q&A id", () => {
+    const scope = resolveLiveEvalScope({
+      EVAL_LIVE_CASE_IDS: "golden-adv-similar-clause-rent-vs-late-fee",
+    } as NodeJS.ProcessEnv);
+    expect(scope.caseIds).toEqual(["golden-adv-similar-clause-rent-vs-late-fee"]);
+    expect(scope.runSmoke).toBe(false);
+    expect(scope.runCaseQa).toBe(true);
+    expect(scope.runContradiction).toBe(false);
+  });
+
+  it("runs Case Q&A only when EVAL_LIVE_WORKFLOW=case_qa", () => {
+    const scope = resolveLiveEvalScope({
+      EVAL_LIVE_WORKFLOW: "case_qa",
+    } as NodeJS.ProcessEnv);
+    expect(scope.workflow).toBe("case_qa");
+    expect(scope.runSmoke).toBe(false);
+    expect(scope.runCaseQa).toBe(true);
+    expect(scope.runContradiction).toBe(false);
+  });
+
+  it("pins live sampling temperature at 0", () => {
+    expect(LIVE_EVAL_TEMPERATURE).toBe(0);
+  });
+
+  it("formats the required live-run config block", () => {
+    const block = formatLiveRunConfig({
+      promptVersionCaseQa: "nyaya-matter-qa-v4",
+      promptVersionContradiction: "contradiction-analysis-v2",
+      requestedModel: "gpt-4o-mini",
+      resolvedModel: "gpt-4o-mini-2024-07-18",
+      systemFingerprint: "fp_test",
+      rerank: false,
+      temperature: 0,
+    });
+    expect(block).toMatch(/prompt\.case_qa=nyaya-matter-qa-v4/);
+    expect(block).toMatch(/model\.resolved=gpt-4o-mini-2024-07-18/);
+    expect(block).toMatch(/rerank=off/);
+    expect(block).toMatch(/temperature=0/);
   });
 
   it("tracks token and USD budgets", () => {
@@ -74,6 +127,7 @@ describe("mock graded baselines", () => {
         { name: "faithfulness", passed: true, detail: "ok" },
         { name: "completeness", passed: true, detail: "ok" },
         { name: "need_more_docs", passed: true, detail: "ok" },
+        { name: "citation_relevance", passed: true, detail: "ok" },
       ],
     });
     expect(regressions).toEqual([

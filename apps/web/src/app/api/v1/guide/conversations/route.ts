@@ -1,7 +1,7 @@
 import { desc, eq, guideConversations } from "@nyayagrid/database";
 import { createGuideConversationRequestSchema } from "@nyayagrid/validation";
 import { createGuideConversation } from "@nyayagrid/workspaces";
-import { requireUser } from "@/lib/auth";
+import { requireGuideUser } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
 /**
@@ -10,7 +10,7 @@ import { handleRouteError, jsonOk } from "@/lib/http";
  */
 export async function GET(request: Request) {
   try {
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireGuideUser(request.headers);
     const conversations = await db
       .select()
       .from(guideConversations)
@@ -24,7 +24,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireGuideUser(request.headers);
     const body = createGuideConversationRequestSchema.parse(await request.json().catch(() => ({})));
     const conversation = await createGuideConversation(db, user.id, body);
     return jsonOk({ conversation }, { status: 201 });

@@ -60,7 +60,7 @@ function concatenateChunkText(chunks: Array<{ content: string }>): string {
     .join("\n\n");
 }
 
-async function summarizeComparisonChanges(params: {
+export async function generateComparisonSummaryFromDiffs(params: {
   ai: AIProvider;
   documentATitle: string;
   documentBTitle: string;
@@ -195,7 +195,7 @@ export async function compareDocuments(params: {
 
   if (params.includeAiSummary !== false) {
     const ai = params.ai ?? createAIProviderFromEnv();
-    const aiSummary = await summarizeComparisonChanges({
+    const aiSummary = await generateComparisonSummaryFromDiffs({
       ai,
       documentATitle: sideA.document.title,
       documentBTitle: sideB.document.title,

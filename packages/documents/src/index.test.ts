@@ -165,6 +165,13 @@ describe("malware scanning", () => {
     expect(() => createMalwareScannerFromEnv()).toThrow(/CLAMAV_HOST/);
   });
 
+  it("createMalwareScannerFromEnv refuses fixture mode in staging/production", () => {
+    vi.stubEnv("APP_ENV", "staging");
+    vi.stubEnv("MALWARE_SCANNER", "clamav");
+    vi.stubEnv("CLAMAV_FIXTURE", "1");
+    expect(() => createMalwareScannerFromEnv()).toThrow(/CLAMAV_FIXTURE/);
+  });
+
   it("createMalwareScannerFromEnv returns the development scanner outside production", () => {
     vi.stubEnv("APP_ENV", "development");
     vi.stubEnv("MALWARE_SCANNER", "");

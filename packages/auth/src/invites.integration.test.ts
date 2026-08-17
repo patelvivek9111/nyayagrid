@@ -17,8 +17,8 @@ const runDbTests = process.env.RUN_DB_TESTS === "1";
  * membership, and a stale/expired/revoked/accepted token is never honored twice.
  */
 describe.runIf(runDbTests)("organization invites integration", () => {
-  const db = createDb(process.env.DATABASE_URL);
   const suffix = Date.now().toString(36);
+  let db: ReturnType<typeof createDb>;
 
   let ownerId = "";
   let inviteeId = "";
@@ -26,6 +26,7 @@ describe.runIf(runDbTests)("organization invites integration", () => {
   let staffRoleId = "";
 
   beforeAll(async () => {
+    db = createDb(process.env.DATABASE_URL);
     const [owner] = await db
       .insert(users)
       .values({

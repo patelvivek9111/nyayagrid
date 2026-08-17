@@ -36,7 +36,25 @@ import { mockConsultationPacket, mockGuideAnswer, mockGuideDocumentExplanation }
 import { validateQuoteAgainstText } from "./quotes";
 
 export const EMBEDDING_DIMENSIONS = 384;
-export const NYAYA_PROMPT_VERSION = "nyaya-matter-qa-v2";
+export const NYAYA_PROMPT_VERSION = "nyaya-matter-qa-v7";
+/** Marker the conservatism probe uses to detect the decoy-adjacent worked example. */
+export const NYAYA_WORKED_EXAMPLE_MARKER = "Worked example (SYNTH, not a real lease)";
+/** Marker for Option B: refuse a false-premise number without echoing it. */
+export const NYAYA_FALSE_PREMISE_EXAMPLE_MARKER = "Worked example (SYNTH false premise)";
+/** Marker for amendment-present conservatism (indemnity-with-amendment). */
+export const NYAYA_AMENDMENT_EXAMPLE_MARKER = "Worked example (SYNTH amendment grounded)";
+/** Marker for the QA-05 contrast: amendment present does not imply grounded. */
+export const NYAYA_AMENDMENT_HEDGE_EXAMPLE_MARKER = "Worked example (SYNTH amendment hedge)";
+
+export const NYAYA_DECOY_WORKED_EXAMPLE = `${NYAYA_WORKED_EXAMPLE_MARKER}: Question: What is the monthly base rent under the lease? Source chunk_lease_rent: Tenant shall pay Base Rent of forty-eight thousand dollars ($48,000) per year, payable in equal monthly installments of four thousand dollars ($4,000). Source chunk_late_fee: a delinquency charge of five hundred dollars ($500) if payment is overdue. Correct output: evidenceState=grounded, answer the $4,000 Base Rent, cite chunk_lease_rent only. Do not set insufficient because chunk_late_fee is also present. chunk_late_fee does not answer this question.`;
+
+export const NYAYA_AMENDMENT_GROUNDED_WORKED_EXAMPLE = `${NYAYA_AMENDMENT_EXAMPLE_MARKER}: (a) Question: How does the amendment change the indemnity obligation? Source chunk_amend_indemnity: Section 9 (Indemnity) is deleted in its entirety and replaced with: Tenant shall indemnify Landlord only for third-party claims arising from Tenant's negligence. Source chunk_lease_term: The lease term commences on January 1, 2024. Correct output: evidenceState=grounded, answer from the amendment (Tenant's negligence), cite chunk_amend_indemnity only. Do not set insufficient because a base-lease excerpt is also present. When an original and an amendment both appear, use the amendment's version of the obligation.`;
+
+export const NYAYA_AMENDMENT_HEDGE_WORKED_EXAMPLE = `${NYAYA_AMENDMENT_HEDGE_EXAMPLE_MARKER}: (b) Question: Is the indemnity obligation fully settled in these excerpts, or is this only a partial picture? Source chunk_amend_indemnity: Section 9 (Indemnity) is deleted in its entirety and replaced with: Tenant shall indemnify Landlord only for third-party claims arising from Tenant's negligence. Correct output: evidenceState=partial, cite chunk_amend_indemnity, answer that this is only a partial picture — the excerpt states Tenant's negligence scope but does not complete every indemnity term. Do not set grounded merely because an amendment chunk is present.`;
+
+export const NYAYA_AMENDMENT_WORKED_EXAMPLE = `${NYAYA_AMENDMENT_GROUNDED_WORKED_EXAMPLE} ${NYAYA_AMENDMENT_HEDGE_WORKED_EXAMPLE}`;
+
+export const NYAYA_FALSE_PREMISE_WORKED_EXAMPLE = `${NYAYA_FALSE_PREMISE_EXAMPLE_MARKER}: Question: Is the monthly CAM charge nine thousand dollars? Source chunk_lease_term: The lease term commences on January 1, 2024 and expires on December 31, 2026. Correct output: evidenceState=insufficient, say that Sources do not contain enough information to confirm the CAM charge. Do not restate nine thousand or $9,000 in either polarity (do not say it is that amount, and do not say it is not). Do not set partial.`;
 
 export const citedAnswerSchema = z.object({
   answer: z.string(),
@@ -72,12 +90,15 @@ export type AiGenerateRequest = {
 
 export type AiGenerateResult = {
   provider: string;
+  /** Requested model, or the provider-reported id when the API returns one (may be a dated snapshot). */
   model: string;
   text: string;
   usage?: {
     inputTokens?: number;
     outputTokens?: number;
   };
+  /** OpenAI `system_fingerprint` when present — inference-stack fingerprint, not a model id. */
+  systemFingerprint?: string;
 };
 
 export interface AIProvider {
@@ -183,6 +204,31 @@ export class MockAIProvider implements AIProvider {
   async generate(request: AiGenerateRequest): Promise<AiGenerateResult> {
     const system = request.messages.find((m) => m.role === "system")?.content ?? "";
     const user = request.messages.find((m) => m.role === "user")?.content ?? "";
+
+    if (request.schemaName === "student_case_brief") {
+      return {
+        provider: "mock",
+        model: "mock-1",
+        text: JSON.stringify(mockCaseBrief(user)),
+        usage: { inputTokens: 0, outputTokens: 0 },
+      };
+    }
+    if (request.schemaName === "professor_answer") {
+      return {
+        provider: "mock",
+        model: "mock-1",
+        text: JSON.stringify(mockProfessorAnswer(user)),
+        usage: { inputTokens: 0, outputTokens: 0 },
+      };
+    }
+    if (request.schemaName === "student_case_comparison") {
+      return {
+        provider: "mock",
+        model: "mock-1",
+        text: JSON.stringify(mockCaseComparison(user)),
+        usage: { inputTokens: 0, outputTokens: 0 },
+      };
+    }
 
     if (
       /extract proposed matter intelligence/i.test(system) ||
@@ -474,6 +520,27 @@ export class MockAIProvider implements AIProvider {
         sources: [],
         assumptions: [],
         unresolvedQuestions: [extractQuestionFromPrompt(user)],
+        evidenceState: "insufficient",
+      });
+    }
+
+    const hedge =
+      /what remains uncertain|only a partial picture|is (the|this) (record|evidence) complete|not fully settled/i.test(
+        question,
+      );
+    if (hedge && chosen.length > 0) {
+      return jsonResult({
+        answer: `Based on the matter documents: ${chosen.map((c) => c.quote.slice(0, 220)).join(" ")} The record is not fully settled.`,
+        sources: chosen.map((c) => ({
+          chunkId: c.chunkId,
+          documentId: c.documentId,
+          documentVersionId: c.documentVersionId,
+          page: c.page ?? undefined,
+          paragraph: c.segmentRef ?? undefined,
+          quote: c.quote.slice(0, 400),
+        })),
+        assumptions: [],
+        unresolvedQuestions: ["What remains uncertain given incomplete coverage?"],
         evidenceState: "insufficient",
       });
     }
@@ -787,6 +854,21 @@ function extractPassagesFromPrompt(prompt: string): GroundingPassage[] {
     .filter((p) => p.chunkId && p.documentId);
 }
 
+export function buildOpenAIChatCompletionsBody(params: {
+  model: string;
+  messages: AiGenerateRequest["messages"];
+  temperature?: number;
+}) {
+  return {
+    model: params.model,
+    messages: params.messages,
+    temperature: params.temperature ?? 0,
+    response_format: { type: "json_object" as const },
+    /** Do not persist customer prompts in OpenAI storage / training pipelines. */
+    store: false,
+  };
+}
+
 export class OpenAIProvider implements AIProvider {
   readonly name = "openai";
 
@@ -807,31 +889,36 @@ export class OpenAIProvider implements AIProvider {
         Authorization: `Bearer ${this.config.apiKey}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        model,
-        messages: request.messages,
-        temperature: request.temperature ?? 0,
-        response_format: { type: "json_object" },
-      }),
+      body: JSON.stringify(
+        buildOpenAIChatCompletionsBody({
+          model,
+          messages: request.messages,
+          temperature: request.temperature,
+        }),
+      ),
       signal: request.signal,
     });
     if (!response.ok) {
       throw new Error(`OpenAI request failed with status ${response.status}`);
     }
     const data = (await response.json()) as {
+      model?: string;
+      system_fingerprint?: string;
       choices?: Array<{ message?: { content?: string } }>;
       usage?: { prompt_tokens?: number; completion_tokens?: number };
     };
     const text = data.choices?.[0]?.message?.content;
     if (!text) throw new Error("OpenAI response missing content");
+    const resolvedModel = data.model?.trim() || model;
     return {
       provider: this.name,
-      model,
+      model: resolvedModel,
       text,
       usage: {
         inputTokens: data.usage?.prompt_tokens,
         outputTokens: data.usage?.completion_tokens,
       },
+      systemFingerprint: data.system_fingerprint?.trim() || undefined,
     };
   }
 }
@@ -944,9 +1031,18 @@ export function buildNyayaSystemPrompt(): string {
     "You are Nyaya, the matter-document assistant inside NyayaGrid.",
     "Answer ONLY using the provided Sources for the active matter.",
     "Never invent facts, dates, names, quotations, or citations.",
+    "If one Source answers the question, cite that Source even when other Sources contain similar but non-matching dates, amounts, or clauses. Do not refuse solely because a near-miss decoy is also retrieved.",
+    NYAYA_DECOY_WORKED_EXAMPLE,
+    NYAYA_AMENDMENT_WORKED_EXAMPLE,
+    "If the question asks two distinct facts and two Sources each answer one of them, cite both and answer both. Do not set insufficient because the answer spans two Sources.",
+    "Sources are listed in descending relevance to the question. Prefer an earlier Source that answers the question over a later near-miss.",
     "If sources are insufficient, set evidenceState to insufficient and say so clearly.",
+    NYAYA_FALSE_PREMISE_WORKED_EXAMPLE,
     "If the question likely requires documents that are not among Sources, say so in unresolvedQuestions and ask which document to upload or select — do not guess.",
     "evidenceState MUST be exactly one of: grounded, insufficient, partial. Never use synonyms like sufficient.",
+    "If the question asks whether the record is fully settled or only a partial picture, and Sources cite what exists but do not complete the obligation or term, use evidenceState=partial — not grounded and not insufficient.",
+    "answer MUST be a single string (never an object or null).",
+    "assumptions and unresolvedQuestions MUST be arrays of strings (never a bare string).",
     "Return JSON only matching: {answer, sources, assumptions, unresolvedQuestions, evidenceState}.",
     "Each sources item must reference a provided chunkId/documentId/documentVersionId and include a quote copied from that source.",
   ].join(" ");
@@ -979,6 +1075,7 @@ export function buildNyayaSystemPromptWithIntelligence(): string {
   return [
     buildNyayaSystemPrompt(),
     "You may also use VerifiedMatterIntelligence, VerifiedGraph, VerifiedMemory, and ProfessionalAnalysis when provided.",
+    "If those verified blocks answer the question and document Sources are empty, you MUST still answer from the verified blocks with evidenceState partial — never insufficient solely because no document quote exists.",
     "VerifiedMatterIntelligence / VerifiedGraph / VerifiedMemory contain human-approved structured facts only.",
     "ProfessionalAnalysis may include contract analyses, comparisons, deposition findings, and discovery review states.",
     "Never treat proposed/unapproved/superseded/rejected items as factual.",
@@ -1037,6 +1134,10 @@ export * from "./professor";
 export * from "./guide";
 export * from "./quotes";
 export * from "./need-more-docs";
+export * from "./qa06";
+export * from "./imprecise-date";
+export * from "./retrieval-rank";
+export * from "./contract-compare-intent";
 export {
   GOLDEN_MATTER_ID,
   GOLDEN_PASSAGES,
@@ -1090,8 +1191,34 @@ export type {
   AgentPlan,
   ApprovalRequirement,
 } from "./agents";
+
+function isPresentSourceId(value: unknown): boolean {
+  return typeof value === "string" && value.trim().length > 0;
+}
+
+/**
+ * Live models often cite `{ chunkId, quote }` and omit document ids. The validator
+ * already resolves by chunkId first; backfill so Zod does not reject that shape.
+ */
+function backfillCitedSourceIds(sources: unknown[], passages: GroundingPassage[]): unknown[] {
+  const byChunk = new Map(passages.map((p) => [p.chunkId, p]));
+  return sources.map((item) => {
+    if (!item || typeof item !== "object" || Array.isArray(item)) return item;
+    const source = { ...(item as Record<string, unknown>) };
+    const chunkId = typeof source.chunkId === "string" ? source.chunkId : "";
+    if (!chunkId) return source;
+    const passage = byChunk.get(chunkId);
+    if (!passage) return source;
+    if (!isPresentSourceId(source.documentId)) source.documentId = passage.documentId;
+    if (!isPresentSourceId(source.documentVersionId)) {
+      source.documentVersionId = passage.documentVersionId;
+    }
+    return source;
+  });
+}
+
 /** Live models sometimes return near-synonyms; map them before Zod rejects the payload. */
-function normalizeCitedAnswerRaw(raw: unknown): unknown {
+export function normalizeCitedAnswerRaw(raw: unknown, passages?: GroundingPassage[]): unknown {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return raw;
   const obj = { ...(raw as Record<string, unknown>) };
   const state = typeof obj.evidenceState === "string" ? obj.evidenceState.toLowerCase().trim() : "";
@@ -1107,7 +1234,48 @@ function normalizeCitedAnswerRaw(raw: unknown): unknown {
   } else if (state === "incomplete" || state === "weak") {
     obj.evidenceState = "partial";
   }
+  if (typeof obj.answer !== "string") {
+    obj.answer = flattenCitedAnswerText(obj.answer);
+  }
+  obj.assumptions = asStringList(obj.assumptions);
+  obj.unresolvedQuestions = asStringList(obj.unresolvedQuestions);
+  if (!Array.isArray(obj.sources)) {
+    obj.sources = [];
+  } else if (passages && passages.length > 0) {
+    obj.sources = backfillCitedSourceIds(obj.sources, passages);
+  }
   return obj;
+}
+
+export function citedAnswerTextFromRaw(raw: unknown): string {
+  const normalized = normalizeCitedAnswerRaw(raw);
+  if (!normalized || typeof normalized !== "object" || Array.isArray(normalized)) return "";
+  const answer = (normalized as { answer?: unknown }).answer;
+  return typeof answer === "string" ? answer : "";
+}
+
+function flattenCitedAnswerText(value: unknown): string {
+  if (typeof value === "string") return value;
+  if (value == null) return "";
+  if (typeof value === "number" || typeof value === "boolean") return String(value);
+  if (Array.isArray(value)) {
+    return value.map((item) => flattenCitedAnswerText(item)).filter(Boolean).join(" ");
+  }
+  if (typeof value === "object") {
+    return Object.values(value as Record<string, unknown>)
+      .map((item) => flattenCitedAnswerText(item))
+      .filter(Boolean)
+      .join(" ");
+  }
+  return "";
+}
+
+function asStringList(value: unknown): string[] {
+  if (Array.isArray(value)) {
+    return value.flatMap((item) => (typeof item === "string" ? [item] : []));
+  }
+  if (typeof value === "string" && value.trim()) return [value];
+  return [];
 }
 
 export function validateCitedAnswerAgainstPassages(
@@ -1117,7 +1285,7 @@ export function validateCitedAnswerAgainstPassages(
   answer: CitedAnswer;
   rejectedCitations: number;
 } {
-  const parsed = citedAnswerSchema.parse(normalizeCitedAnswerRaw(raw));
+  const parsed = citedAnswerSchema.parse(normalizeCitedAnswerRaw(raw, passages));
   const byChunk = new Map(passages.map((p) => [p.chunkId, p]));
   const allowedDocs = new Set(passages.map((p) => `${p.documentId}:${p.documentVersionId}`));
   let rejectedCitations = 0;
@@ -1173,7 +1341,10 @@ export function validateCitedAnswerAgainstPassages(
     answer: {
       ...parsed,
       sources,
-      evidenceState: parsed.evidenceState === "insufficient" ? "partial" : "grounded",
+      evidenceState:
+        parsed.evidenceState === "insufficient" || parsed.evidenceState === "partial"
+          ? "partial"
+          : "grounded",
     },
     rejectedCitations,
   };

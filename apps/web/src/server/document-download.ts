@@ -3,7 +3,7 @@ import {
   authorizeAndSignDocumentDownload,
   type AuthorizedDocumentDownload,
 } from "@nyayagrid/documents";
-import { requireMatterAccess } from "@nyayagrid/permissions";
+import { requireMatterAccess, writeAuditEvent } from "@nyayagrid/permissions";
 import { getStorage } from "@/lib/infra";
 
 /**
@@ -27,7 +27,7 @@ export async function signMatterDocumentDownload(params: {
     capability: "documents.view",
   });
 
-  return authorizeAndSignDocumentDownload({
+  const signed = await authorizeAndSignDocumentDownload({
     db: params.db,
     storage: getStorage(),
     userId: params.userId,
@@ -39,4 +39,20 @@ export async function signMatterDocumentDownload(params: {
     // requireMatterAccess above already authorized this request.
     authCheck: () => {},
   });
+
+  await writeAuditEvent(params.db, {
+    organizationId: matter.organizationId,
+    actorUserId: params.userId,
+    matterId: params.matterId,
+    action: "document.download_signed",
+    targetType: "document",
+    targetId: signed.documentId,
+    metadata: {
+      documentVersionId: signed.documentVersionId,
+      disposition: params.disposition ?? "attachment",
+      filename: signed.filename,
+    },
+  });
+
+  return signed;
 }

@@ -1,0 +1,13 @@
+# cc-live-decoy-reformat-govlaw#1
+- Workflow: contract_compare
+- Description: Live comparison summary — harness fail (kind=decoy invented material change on decoy-only pair; unsupported alignment claims)
+- Provider: openai / gpt-4o-mini
+- Live: yes
+## Input
+Golden SYNTH MSA original vs redline (detected diffs are authoritative).
+## Output
+Document versions differ; review the detected changes.
+
+[Note: AI summary claims are not fully aligned with the deterministic paragraph diff. Treat the summary as a proposal and verify every claim against the change list.]
+## Cited sources
+kind=decoy invented material change on decoy-only pair; unsupported alignment claims

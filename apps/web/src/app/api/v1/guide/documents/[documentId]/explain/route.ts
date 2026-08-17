@@ -1,7 +1,7 @@
 import { ZodError } from "zod";
 import { MockAIProvider } from "@nyayagrid/ai";
 import { explainGuideDocument } from "@nyayagrid/workspaces";
-import { requireUser } from "@/lib/auth";
+import { requireGuideUser } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 import { getAI } from "@/lib/infra";
 
@@ -10,7 +10,7 @@ type Params = { params: Promise<{ documentId: string }> };
 export async function POST(request: Request, { params }: Params) {
   try {
     const { documentId } = await params;
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireGuideUser(request.headers);
 
     const input = {
       db,

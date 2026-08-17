@@ -348,11 +348,87 @@ export type ComparisonSummaryScore = {
   highAttentionMentionedInSummary: boolean;
 };
 
+/**
+ * Map number-words to digits so "sixty (60) days" and "60 days" are the same claim.
+ * Digits longer than one character are applied first so 60 is not eaten as 6.
+ */
+const NUMBER_WORD_TO_DIGIT: Record<string, string> = {
+  zero: "0",
+  one: "1",
+  two: "2",
+  three: "3",
+  four: "4",
+  five: "5",
+  six: "6",
+  seven: "7",
+  eight: "8",
+  nine: "9",
+  ten: "10",
+  eleven: "11",
+  twelve: "12",
+  thirteen: "13",
+  fourteen: "14",
+  fifteen: "15",
+  sixteen: "16",
+  seventeen: "17",
+  eighteen: "18",
+  nineteen: "19",
+  twenty: "20",
+  thirty: "30",
+  forty: "40",
+  fifty: "50",
+  sixty: "60",
+  seventy: "70",
+  eighty: "80",
+  ninety: "90",
+};
+
+function numericEquivalents(token: string): string[] {
+  const out = [token];
+  const asDigit = NUMBER_WORD_TO_DIGIT[token];
+  if (asDigit) out.push(asDigit);
+  const asWord = Object.entries(NUMBER_WORD_TO_DIGIT).find(([, d]) => d === token)?.[0];
+  if (asWord) out.push(asWord);
+  return out;
+}
+
+function expandNumericFormsInText(text: string): string {
+  let out = text;
+  const words = Object.keys(NUMBER_WORD_TO_DIGIT).sort((a, b) => b.length - a.length);
+  for (const word of words) {
+    const digit = NUMBER_WORD_TO_DIGIT[word]!;
+    out = out.replace(new RegExp(`\\b${word}\\b`, "gi"), `${word} ${digit}`);
+  }
+  const digits = [...new Set(Object.values(NUMBER_WORD_TO_DIGIT))].sort(
+    (a, b) => b.length - a.length || Number(b) - Number(a),
+  );
+  for (const digit of digits) {
+    const word = Object.entries(NUMBER_WORD_TO_DIGIT).find(([, d]) => d === digit)?.[0];
+    if (!word) continue;
+    out = out.replace(new RegExp(`\\b${digit}\\b`, "g"), `${digit} ${word}`);
+  }
+  return out;
+}
+
 function significantTokens(text: string): string[] {
-  return normalizeWhitespace(text.toLowerCase())
+  const raw = normalizeWhitespace(text.toLowerCase())
     .replace(/[^a-z0-9$\-.\s]/g, " ")
     .split(/\s+/)
-    .filter((t) => t.length >= 5 && !COMPARISON_STOPWORDS.has(t));
+    .filter(Boolean);
+  const tokens: string[] = [];
+  const seen = new Set<string>();
+  for (const t of raw) {
+    const isDigit = /^\d+$/.test(t);
+    const keep = t.length >= 5 || isDigit;
+    if (!keep) continue;
+    if (!isDigit && COMPARISON_STOPWORDS.has(t)) continue;
+    for (const eq of numericEquivalents(t)) {
+      if (seen.has(eq)) continue;
+      seen.add(eq);
+      tokens.push(eq);
+    }
+  }
+  return tokens;
 }
 
 function splitSummaryClaims(summary: string): string[] {
@@ -371,7 +447,8 @@ function isChangeClaim(sentence: string): boolean {
 
 function digestSupportsTokens(digest: string, tokens: string[]): boolean {
   if (tokens.length === 0) return true;
-  const hit = tokens.filter((t) => digest.includes(t)).length;
+  const expanded = expandNumericFormsInText(digest);
+  const hit = tokens.filter((t) => expanded.includes(t)).length;
   return hit / tokens.length >= 0.34;
 }
 

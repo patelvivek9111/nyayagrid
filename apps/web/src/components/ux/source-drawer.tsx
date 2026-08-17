@@ -1,7 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { useParams } from "next/navigation";
 import { Button, cx } from "@nyayagrid/ui";
+import { openMatterDocument } from "@/lib/document-open";
 
 export type SourceDrawerItem = {
   id: string;
@@ -13,6 +15,7 @@ export type SourceDrawerItem = {
   /** When true, show that the quote passed verbatim verification */
   quoteVerified?: boolean;
   chunkId?: string;
+  documentId?: string;
 };
 
 export function SourceDrawer({
@@ -30,6 +33,18 @@ export function SourceDrawer({
   activeId?: string;
   children?: ReactNode;
 }) {
+  const params = useParams<{ matterId?: string }>();
+  const matterId = params.matterId;
+
+  async function openOriginal(documentId: string, disposition: "inline" | "attachment") {
+    if (!matterId) return;
+    try {
+      await openMatterDocument({ matterId, documentId, disposition });
+    } catch (error) {
+      window.alert(error instanceof Error ? error.message : "Could not open the original file");
+    }
+  }
+
   if (!open) return null;
 
   return (
@@ -78,7 +93,28 @@ export function SourceDrawer({
                   Verbatim in cited chunk
                 </p>
               ) : null}
-              {item.href ? (
+              {item.documentId && matterId ? (
+                <div className="mt-2 flex flex-wrap gap-3">
+                  <button
+                    type="button"
+                    className="text-xs font-semibold text-accent underline"
+                    onClick={() => {
+                      void openOriginal(item.documentId!, "inline");
+                    }}
+                  >
+                    Open original
+                  </button>
+                  <button
+                    type="button"
+                    className="text-xs font-semibold text-accent underline"
+                    onClick={() => {
+                      void openOriginal(item.documentId!, "attachment");
+                    }}
+                  >
+                    Download
+                  </button>
+                </div>
+              ) : item.href ? (
                 <a
                   href={item.href}
                   className="mt-2 inline-block text-xs font-semibold text-accent underline"

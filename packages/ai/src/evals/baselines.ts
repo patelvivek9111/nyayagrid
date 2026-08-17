@@ -11,7 +11,8 @@ export type BaselineDimension =
   | "evidence_state"
   | "faithfulness"
   | "completeness"
-  | "need_more_docs";
+  | "need_more_docs"
+  | "citation_relevance";
 
 export type CaseBaseline = {
   /** Dimensions that must pass on live if the mock baseline requires them. */
@@ -39,6 +40,9 @@ export function buildMockBaselinesFromGradedCases(
     };
     if (typeof testCase.rubric.expectNeedsMoreDocuments === "boolean") {
       required.need_more_docs = true;
+    }
+    if ((testCase.rubric.forbiddenChunkIds?.length ?? 0) > 0) {
+      required.citation_relevance = true;
     }
     cases[testCase.id] = { required };
   }

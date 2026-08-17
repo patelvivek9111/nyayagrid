@@ -42,6 +42,8 @@ export const STAFF_CAPABILITIES: Capability[] = [
   "documents.view",
 ];
 
+export const CLIENT_GUEST_CAPABILITIES: Capability[] = ["matters.view", "documents.view"];
+
 export const SYSTEM_ROLE_DEFINITIONS = [
   {
     key: "owner",
@@ -60,5 +62,11 @@ export const SYSTEM_ROLE_DEFINITIONS = [
     name: "Staff",
     description: "Limited operational access",
     capabilities: STAFF_CAPABILITIES,
+  },
+  {
+    key: "client_guest",
+    name: "Client Guest",
+    description: "View assigned matters and documents only",
+    capabilities: CLIENT_GUEST_CAPABILITIES,
   },
 ] as const;

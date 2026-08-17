@@ -12,6 +12,7 @@ import {
   SourceDrawer,
   type SourceDrawerItem,
 } from "@/components/ux";
+import { formatMatterCalendarDate } from "@/lib/matter-dates";
 
 export default function MatterTimelinePage() {
   const params = useParams<{ matterId: string }>();
@@ -26,6 +27,7 @@ export default function MatterTimelinePage() {
   const [manualTitle, setManualTitle] = useState("");
   const [manualType, setManualType] = useState("manual_note");
   const [manualDate, setManualDate] = useState("");
+  const [rejectReason, setRejectReason] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerItems, setDrawerItems] = useState<SourceDrawerItem[]>([]);
 
@@ -97,7 +99,7 @@ export default function MatterTimelinePage() {
       body: JSON.stringify({
         title: manualTitle,
         eventType: manualType,
-        eventDate: manualDate ? new Date(manualDate).toISOString() : null,
+        eventDate: manualDate ? `${manualDate}T00:00:00.000Z` : null,
         datePrecision: manualDate ? "exact" : "unknown",
       }),
     });
@@ -115,7 +117,10 @@ export default function MatterTimelinePage() {
     const res = await fetch(`/api/v1/matters/${matterId}/timeline/${eventId}/review`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action }),
+      body: JSON.stringify({
+        action,
+        rejectionReason: action === "reject" ? rejectReason.trim() || null : null,
+      }),
     });
     const json = await res.json();
     if (!res.ok) {
@@ -129,8 +134,13 @@ export default function MatterTimelinePage() {
     <>
       {error ? <p className="mb-3 text-sm text-[var(--ng-danger)]">{error}</p> : null}
       <p className="mb-4 rounded-lg border border-line bg-white px-4 py-3 text-sm text-ink/70">
-        Suggested events stay <SuggestedBadge /> until you verify them. Conflicting document
-        accounts are reviewed as dual-sided findings on{" "}
+        Suggested events stay <SuggestedBadge /> until you verify them. Nyaya extracts proposed
+        chronology on{" "}
+        <Link href={`/app/cases/${matterId}/review`} className="font-semibold text-accent underline">
+          Review
+        </Link>
+        ; verify them here after they appear as Suggestions. Conflicting document accounts are
+        reviewed as dual-sided findings on{" "}
         <Link
           href={`/app/cases/${matterId}/evidence`}
           className="font-semibold text-accent underline"
@@ -207,9 +217,10 @@ export default function MatterTimelinePage() {
                         <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wide text-ink/60">
                           <span>
                             {event.eventDate
-                              ? new Date(event.eventDate).toLocaleDateString()
+                              ? formatMatterCalendarDate(event.eventDate)
                               : "Date unknown"}{" "}
                             · {event.datePrecision}
+                            {event.origin ? ` · source: ${event.origin}` : ""}
                           </span>
                           <VerifiedBadge />
                           {(event.relatedFindingIds ?? []).length > 0 ? (
@@ -253,8 +264,9 @@ export default function MatterTimelinePage() {
                           id: s.id ?? `src-${i}`,
                           title: s.documentTitle ?? "Source",
                           classLabel: "Matter Evidence",
-                          quote: s.quote ?? s.excerpt ?? s.supportingText,
-                        })),
+                        quote: s.quote ?? s.excerpt ?? s.supportingText,
+                        documentId: s.documentId,
+                      })),
                       );
                       setDrawerOpen(true);
                     }}
@@ -311,9 +323,10 @@ export default function MatterTimelinePage() {
                   </div>
                   <p className="mt-1 text-xs text-ink/60">
                     {event.eventDate
-                      ? new Date(event.eventDate).toLocaleDateString()
+                      ? formatMatterCalendarDate(event.eventDate)
                       : "Date unknown"}{" "}
                     · {event.datePrecision}
+                    {event.origin ? ` · source: ${event.origin}` : ""}
                   </p>
                   {(event.relatedFindingIds ?? []).length > 0 ? (
                     <p className="mt-1 text-xs text-ink/55">
@@ -324,6 +337,15 @@ export default function MatterTimelinePage() {
                     <Button type="button" onClick={() => reviewEvent(event.id, "approve")}>
                       Verify
                     </Button>
+                    <label className="flex min-w-[12rem] flex-1 flex-col gap-1 text-xs text-ink/60">
+                      Rejection reason
+                      <input
+                        className="rounded border border-line px-2 py-1 text-sm text-ink"
+                        value={rejectReason}
+                        onChange={(e) => setRejectReason(e.target.value)}
+                        placeholder="Required when rejecting, like Review facts"
+                      />
+                    </label>
                     <Button
                       type="button"
                       variant="secondary"

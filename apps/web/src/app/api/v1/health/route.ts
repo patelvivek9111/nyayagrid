@@ -1,23 +1,20 @@
 import { createAIProviderFromEnv } from "@nyayagrid/ai";
-import { createAuthProviderFromEnv } from "@nyayagrid/auth";
 import { jsonOk } from "@/lib/http";
 import { getConfigBootstrapResult } from "@/lib/bootstrap";
 
 /**
- * Liveness + readiness in one endpoint. `validateConfigForEnv` is re-run on every call (it's pure
- * and cheap) rather than only at process boot, so an orchestrator's readiness probe reflects the
- * configuration this process is *actually* running with, not just what it started with.
+ * Liveness + readiness in one endpoint. Does not instantiate AUTH_PROVIDER=clerk (that requires
+ * the Next.js session wiring). Provider names come from the configuration summary.
  */
 export async function GET() {
-  const auth = createAuthProviderFromEnv();
   const ai = createAIProviderFromEnv();
   const config = getConfigBootstrapResult();
   return jsonOk({
     status: config.problems.length === 0 ? "ok" : "not_production_ready",
     product: "NyayaGrid",
-    authProvider: auth.name,
+    authProvider: config.summary.authProvider,
     aiProvider: ai.name,
-    storageProvider: process.env.STORAGE_PROVIDER ?? "minio",
+    storageProvider: config.summary.storageProvider,
     appEnv: config.appEnv,
     config: config.summary,
     problems: config.problems,

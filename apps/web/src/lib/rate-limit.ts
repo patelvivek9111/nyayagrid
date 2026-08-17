@@ -1,11 +1,12 @@
 /**
  * Phase 9 — rate-limit enforcement at the API boundary.
  *
- * Thin wrapper over `@nyayagrid/platform`'s `InMemoryRateLimiter`: resolves the caller's identity
- * (user/organization/IP, per the endpoint class's scope), checks the shared process-wide limiter,
- * and — when exceeded — returns a ready-to-return 429 response with `Retry-After` set. A route
- * enforces a limit by checking the return value, never by catching a thrown error, so a route
- * cannot accidentally let a request through by forgetting a try/catch around this call.
+ * Thin wrapper over `@nyayagrid/platform`'s rate limiter: resolves the caller's identity
+ * (user/organization/IP, per the endpoint class's scope), checks the process-wide limiter
+ * (`memory` or `redis`), and — when exceeded — returns a ready-to-return 429 response with
+ * `Retry-After` set. A route enforces a limit by checking the return value, never by catching a
+ * thrown error, so a route cannot accidentally let a request through by forgetting a try/catch
+ * around this call.
  */
 import { NextResponse } from "next/server";
 import {

@@ -78,6 +78,11 @@ export default function GuidePreparePage() {
         <Button onClick={generatePacket} disabled={busy || !situationId}>
           {busy ? "Preparing…" : "Generate consultation packet"}
         </Button>
+        {packet ? (
+          <Button type="button" onClick={() => window.print()}>
+            Print packet
+          </Button>
+        ) : null}
       </div>
 
       {!packet ? (

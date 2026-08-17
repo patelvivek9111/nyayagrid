@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { StudentShell } from "@/components/shell";
+import { StudyAidNotice } from "@/components/professor/study-aid-notice";
 import { Button, Panel } from "@nyayagrid/ui";
 
 export default function ProfessorHomePage() {
@@ -34,7 +35,9 @@ export default function ProfessorHomePage() {
           Nyaya Professor
         </p>
         <h1 className="mt-2 font-display text-3xl text-ink md:text-4xl">What are you studying?</h1>
-        <p className="mt-2 text-sm text-ink/60">Study aid — not a course substitute.</p>
+        <div className="mx-auto mt-3 max-w-xl text-left">
+          <StudyAidNotice />
+        </div>
         <form
           className="mt-8 text-left"
           onSubmit={(e) => {

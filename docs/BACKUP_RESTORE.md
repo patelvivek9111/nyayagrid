@@ -1,10 +1,11 @@
 # Backup & Restore — NyayaGrid
 
-**Status: BLOCKER.** No restore has ever been executed end-to-end against a production-shaped
-(managed) Postgres instance. Everything below is the intended procedure, not a verified one. Do
-not treat this document as evidence that recovery works — treat it as the checklist to work
-through and verify before launch, then keep re-verifying on a schedule (see
-[Operations](./OPERATIONS.md)).
+**Status: BLOCKER for managed production.** A local docker matched rehearsal exists
+(`npm run ops:backup-rehearse`) and restores to a new database `nyayagrid_restore_test`. No restore
+has been executed end-to-end against a production-shaped managed Postgres instance. Everything
+below is the intended procedure for that provider. Do not treat this document as evidence that
+cloud recovery works — treat it as the checklist to work through and verify before launch, then
+keep re-verifying on a schedule (see [Operations](./OPERATIONS.md)).
 
 ## What needs to be backed up
 
@@ -45,6 +46,9 @@ Minimum viable approach until something better is verified:
 # Backup (run on a schedule, e.g. nightly, from a host with network access to the DB)
 pg_dump --format=custom --file=nyayagrid-$(date +%Y%m%d-%H%M%S).dump "$DATABASE_URL"
 
+# Local docker matched rehearsal (restores to nyayagrid_restore_test, never over live):
+npm run ops:backup-rehearse
+
 # Restore (to a NEW, empty database — never restore over a live one without a plan)
 createdb nyayagrid_restore_test
 pg_restore --dbname="postgresql://.../nyayagrid_restore_test" nyayagrid-<timestamp>.dump
@@ -80,13 +84,19 @@ minimum). Encrypt dumps at rest — they contain client legal data.
 
 ## Recovery objectives
 
-Not yet defined. Before launch, the team must agree on and document:
+Until a managed provider with PITR is chosen, these are the **interim self-host / local-staging**
+targets. They are not a substitute for provider PITR.
 
-- **RPO (Recovery Point Objective)** — how much data loss is acceptable (drives backup frequency /
-  whether continuous PITR is required vs. nightly dumps).
-- **RTO (Recovery Time Objective)** — how long a restore is allowed to take (drives whether a
-  warm-standby replica is needed vs. restore-from-backup being acceptable).
+| Objective | Interim (docker / self-host dumps) | Target once managed PITR exists |
+| --- | --- | --- |
+| **RPO** | 24 hours (nightly `pg_dump` + MinIO volume archive via `npm run ops:backup-rehearse`) | ≤ 5 minutes (provider continuous backup / PITR) |
+| **RTO** | 4 hours (restore dump to a **new** database, point a staging app at it, verify ready + `pgvector`) | ≤ 1 hour including object-storage match |
 
-Until these are defined and the restore procedure above has been rehearsed at least once against a
-provider matching your production choice, treat backup/restore as **unverified** regardless of
-what backups exist.
+A local matched rehearsal (`npm run ops:backup-rehearse`) restores Postgres to
+`nyayagrid_restore_test` and archives the MinIO volume. That proves the dump/restore **commands**
+work against docker-compose. It does **not** prove AWS RDS / Neon / equivalent PITR. Treat the
+Backup & Restore row as **BLOCKER for go-live** until a restore has been executed on the target
+managed provider.
+
+Until these are defined for the production provider and rehearsed at least once against that
+provider, treat backup/restore as **unverified** regardless of what local dumps exist.

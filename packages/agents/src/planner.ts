@@ -1,5 +1,5 @@
 import type { AgentIntent } from "@nyayagrid/ai";
-import { AGENT_PLAN_PROMPT_VERSION } from "@nyayagrid/ai";
+import { AGENT_PLAN_PROMPT_VERSION, wantsContractCompare } from "@nyayagrid/ai";
 import {
   UnknownAgentTypeError,
   resolveBudgets,
@@ -82,11 +82,7 @@ const TEMPLATES: Record<AgentIntent, Template> = {
     },
   ],
   contract_review: (goal) => {
-    const wantsCompare =
-      /\b(compar(e|ison|ing)|amendment|redline|diff|side[- ]by[- ]side|two versions|version\s+[ab])\b/i.test(
-        goal,
-      );
-    if (wantsCompare) {
+    if (wantsContractCompare(goal)) {
       return [
         {
           stepId: "contract-compare-1",

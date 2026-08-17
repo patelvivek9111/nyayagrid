@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
 import { Button, Panel, Badge } from "@nyayagrid/ui";
+import { openMatterDocument } from "@/lib/document-open";
 
 type Citation = {
   chunkId?: string;
@@ -100,6 +101,7 @@ export default function MatterNyayaPage() {
   const [history, setHistory] = useState<AskResult[]>([]);
   const [selectedSource, setSelectedSource] = useState<string>("");
   const [sourceText, setSourceText] = useState("");
+  const [sourceDocumentId, setSourceDocumentId] = useState<string | null>(null);
   const [asking, setAsking] = useState(false);
 
   // Run Task state
@@ -203,6 +205,7 @@ export default function MatterNyayaPage() {
     setSourceText(
       `Page ${data.chunk.pageStart ?? "—"} · ${data.chunk.segmentRef ?? ""}\n\n${data.chunk.content}`,
     );
+    setSourceDocumentId(data.document?.id ?? data.chunk?.documentId ?? null);
   }
 
   async function saveAnswer(artifactId: string) {
@@ -424,10 +427,50 @@ export default function MatterNyayaPage() {
             </Panel>
             <Panel title="Source inspector">
               {selectedSource ? (
-                <pre className="whitespace-pre-wrap text-sm text-ink/80">{sourceText}</pre>
+                <div className="space-y-3">
+                  <pre className="whitespace-pre-wrap text-sm text-ink/80">{sourceText}</pre>
+                  {sourceDocumentId ? (
+                    <div className="flex flex-wrap gap-2">
+                      <Button
+                        type="button"
+                        variant="secondary"
+                        onClick={() =>
+                          void openMatterDocument({
+                            matterId,
+                            documentId: sourceDocumentId,
+                            disposition: "inline",
+                          }).catch((err) =>
+                            setMessage(
+                              err instanceof Error ? err.message : "Could not open the original file",
+                            ),
+                          )
+                        }
+                      >
+                        Open original
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        onClick={() =>
+                          void openMatterDocument({
+                            matterId,
+                            documentId: sourceDocumentId,
+                            disposition: "attachment",
+                          }).catch((err) =>
+                            setMessage(
+                              err instanceof Error ? err.message : "Could not download the original file",
+                            ),
+                          )
+                        }
+                      >
+                        Download
+                      </Button>
+                    </div>
+                  ) : null}
+                </div>
               ) : (
                 <p className="text-sm text-ink/70">
-                  Select a citation to inspect the source passage.
+                  Select a citation to inspect the source passage and open the original file.
                 </p>
               )}
             </Panel>

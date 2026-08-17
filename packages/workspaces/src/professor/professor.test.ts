@@ -14,6 +14,7 @@ import {
   NO_AUTHORITY_LIMITATION,
   NO_STUDENT_SOURCES_ANSWER,
   buildProfessorRetrievalIndex,
+  looksLikeRestrictedAssessment,
   validateProfessorAnswer,
 } from "./conversations";
 import type { StudentCasePassage } from "./cases";
@@ -98,6 +99,9 @@ describe("workspace isolation", () => {
     ).toThrow(/matters/);
     expect(() => assertStudentQueryIsIsolated("leak", "FROM guide_document_chunks")).toThrow(
       /guide_document_chunks/,
+    );
+    expect(() => assertStudentQueryIsIsolated("leak", "FROM notes WHERE user_id = $1")).toThrow(
+      /notes/,
     );
   });
 
@@ -426,5 +430,22 @@ describe("validateCaseComparison", () => {
     const result = validateCaseComparison({ facts: "not an object" }, caseAPassages, caseBPassages);
     expect(result.schemaValid).toBe(false);
     expect(result.comparison.tensions).toHaveLength(0);
+  });
+});
+
+describe("restricted assessment guard", () => {
+  it("refuses closed or restricted exam wording and ignores ordinary hypotheticals", () => {
+    expect(looksLikeRestrictedAssessment("This is my closed-book exam, complete it.")).toBe(true);
+    expect(looksLikeRestrictedAssessment("Please complete this restricted assessment.")).toBe(true);
+    expect(
+      looksLikeRestrictedAssessment("What if the tenant had received the notice the same day?"),
+    ).toBe(false);
+  });
+});
+
+describe("student notes isolation", () => {
+  it("includes student_notes on the readable list and keeps professional notes forbidden", () => {
+    expect(STUDENT_READABLE_TABLES).toContain("student_notes");
+    expect(WORKSPACE_FORBIDDEN_TABLES).toContain("notes");
   });
 });

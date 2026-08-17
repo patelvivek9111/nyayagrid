@@ -122,7 +122,7 @@ export function resolveStorageProvider(env: EnvSource = process.env): string {
   return readLower(env, "STORAGE_PROVIDER") ?? "minio";
 }
 
-/** Only `DevelopmentMalwareScanner` exists today, and it never reports a file clean. */
+/** Default is the development scanner, which never reports a file clean. Production must use `clamav`. */
 export function resolveMalwareScanner(env: EnvSource = process.env): string {
   return readLower(env, "MALWARE_SCANNER") ?? "development";
 }
@@ -184,6 +184,11 @@ export function collectProductionConfigProblems(env: EnvSource = process.env): s
     if (!read(env, "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY")) {
       problems.push("AUTH_PROVIDER=clerk requires NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY.");
     }
+    if (!read(env, "CLERK_WEBHOOK_SECRET")) {
+      problems.push(
+        "AUTH_PROVIDER=clerk requires CLERK_WEBHOOK_SECRET so user/org lifecycle webhooks can be signature-verified.",
+      );
+    }
   }
 
   if (resolveAiProvider(env) === "mock") {
@@ -200,10 +205,20 @@ export function collectProductionConfigProblems(env: EnvSource = process.env): s
     );
   }
 
-  if (resolveMalwareScanner(env) === "development") {
+  const malwareScanner = resolveMalwareScanner(env);
+  if (malwareScanner === "development") {
     problems.push(
       "MALWARE_SCANNER resolves to development. DevelopmentMalwareScanner never scans and leaves uploads unscanned_development; wire a real scanner before accepting client uploads.",
     );
+  }
+  if (malwareScanner === "clamav") {
+    if (isTruthyFlag(read(env, "CLAMAV_FIXTURE"))) {
+      problems.push(
+        "CLAMAV_FIXTURE=1 is a test stand-in and must not run in production. Point MALWARE_SCANNER=clamav at a real CLAMAV_HOST.",
+      );
+    } else if (!read(env, "CLAMAV_HOST")) {
+      problems.push("MALWARE_SCANNER=clamav requires CLAMAV_HOST.");
+    }
   }
 
   const storageProvider = resolveStorageProvider(env);
@@ -237,9 +252,18 @@ export function collectProductionConfigProblems(env: EnvSource = process.env): s
     );
   }
 
-  if (resolveRateLimitProvider(env) === "memory") {
+  const rateLimitProvider = resolveRateLimitProvider(env);
+  if (rateLimitProvider === "memory") {
     problems.push(
-      "RATE_LIMIT_PROVIDER resolves to memory. InMemoryRateLimiter counts per process, so limits do not hold across instances; configure a shared store.",
+      "RATE_LIMIT_PROVIDER resolves to memory. InMemoryRateLimiter counts per process, so limits do not hold across instances; set RATE_LIMIT_PROVIDER=redis with REDIS_URL or REDIS_HOST.",
+    );
+  } else if (rateLimitProvider === "redis") {
+    if (!read(env, "REDIS_URL") && !read(env, "REDIS_HOST")) {
+      problems.push("RATE_LIMIT_PROVIDER=redis requires REDIS_URL or REDIS_HOST.");
+    }
+  } else {
+    problems.push(
+      `RATE_LIMIT_PROVIDER=${rateLimitProvider} is not implemented. Use memory (single instance only) or redis.`,
     );
   }
 

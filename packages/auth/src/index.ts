@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm";
 import type { Database } from "@nyayagrid/database";
 import { users } from "@nyayagrid/database";
+import { isProductionLike } from "@nyayagrid/platform";
 
 /**
  * Authentication identity only.
@@ -30,6 +31,9 @@ export class DevAuthProvider implements AuthProvider {
   ) {}
 
   async getIdentity(requestHeaders: Headers): Promise<AuthIdentity | null> {
+    if (isProductionLike()) {
+      return null;
+    }
     const override = requestHeaders.get("x-nyayagrid-dev-user");
     if (override === "anonymous") return null;
     if (override) {
@@ -47,28 +51,40 @@ export class DevAuthProvider implements AuthProvider {
   }
 }
 
+export type ClerkSession = {
+  userId: string | null;
+  email?: string | null;
+  name?: string | null;
+};
+
+export type ClerkSessionResolver = (requestHeaders: Headers) => Promise<ClerkSession>;
+
 /**
- * Clerk adapter placeholder for free-tier development.
- * Requires CLERK_SECRET_KEY + publishable key when AUTH_PROVIDER=clerk.
- * Does not grant authorization; only resolves identity.
+ * Clerk identity adapter. Does not grant authorization; only resolves a verified session to a
+ * NyayaGrid user subject + the Clerk email. The session resolver must be wired from the Next.js
+ * app layer (`apps/web/src/lib/clerk-session.ts`).
  */
 export class ClerkAuthProvider implements AuthProvider {
   readonly name = "clerk";
 
-  constructor(private readonly getAuth: () => Promise<{ userId: string | null }>) {}
+  constructor(private readonly getAuth: ClerkSessionResolver) {}
 
-  async getIdentity(): Promise<AuthIdentity | null> {
-    const auth = await this.getAuth();
+  async getIdentity(requestHeaders: Headers): Promise<AuthIdentity | null> {
+    const auth = await this.getAuth(requestHeaders);
     if (!auth.userId) return null;
+    const email = auth.email?.trim();
+    if (!email) return null;
     return {
       subject: auth.userId,
-      email: `${auth.userId}@clerk.local`,
-      name: null,
+      email,
+      name: auth.name ?? null,
     };
   }
 }
 
-export function createAuthProviderFromEnv(): AuthProvider {
+export function createAuthProviderFromEnv(options?: {
+  resolveClerkSession?: ClerkSessionResolver;
+}): AuthProvider {
   const provider = process.env.AUTH_PROVIDER ?? "dev";
   if (provider === "clerk") {
     if (!process.env.CLERK_SECRET_KEY || !process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
@@ -76,9 +92,12 @@ export function createAuthProviderFromEnv(): AuthProvider {
         "AUTH_PROVIDER=clerk requires CLERK_SECRET_KEY and NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY. Use AUTH_PROVIDER=dev for free local development.",
       );
     }
-    throw new Error(
-      "Clerk adapter is configured but must be wired from the Next.js app layer (see apps/web). Use AUTH_PROVIDER=dev for package-level tests.",
-    );
+    if (!options?.resolveClerkSession) {
+      throw new Error(
+        "Clerk adapter is configured but must be wired from the Next.js app layer (see apps/web). Use AUTH_PROVIDER=dev for package-level tests.",
+      );
+    }
+    return new ClerkAuthProvider(options.resolveClerkSession);
   }
   return new DevAuthProvider({
     userId: process.env.DEV_AUTH_USER_ID ?? "dev_user_owner",
@@ -91,7 +110,25 @@ export async function ensureUserFromIdentity(db: Database, identity: AuthIdentit
   const existing = await db.query.users.findFirst({
     where: eq(users.authSubject, identity.subject),
   });
-  if (existing) return existing;
+  if (existing) {
+    const emailChanged = existing.email !== identity.email;
+    const nameChanged = (existing.name ?? null) !== (identity.name ?? null);
+    if (!emailChanged && !nameChanged) return existing;
+    try {
+      const [updated] = await db
+        .update(users)
+        .set({
+          email: identity.email,
+          name: identity.name ?? existing.name,
+          updatedAt: new Date(),
+        })
+        .where(eq(users.id, existing.id))
+        .returning();
+      return updated ?? existing;
+    } catch {
+      return existing;
+    }
+  }
 
   const [created] = await db
     .insert(users)
@@ -113,3 +150,4 @@ export class UnauthenticatedError extends Error {
 }
 
 export * from "./invites";
+export * from "./clerk-webhook";

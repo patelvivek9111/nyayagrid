@@ -7,3 +7,5 @@ export * from "./conversations";
 export * from "./briefs";
 export * from "./compare";
 export * from "./saved";
+export * from "./notes";
+export * from "./synth-opinions";

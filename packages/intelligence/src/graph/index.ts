@@ -290,7 +290,7 @@ export async function getGraphNeighborhood(params: {
     .limit(1);
   if (!center) return null;
 
-  const statuses = params.statuses ?? ["approved", "edited_and_approved"];
+  const statuses = params.statuses ?? ["proposed", "approved", "edited_and_approved"];
   const edgeConditions = [
     eq(graphEdges.organizationId, params.organizationId),
     eq(graphEdges.matterId, params.matterId),

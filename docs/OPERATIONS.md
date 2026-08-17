@@ -47,9 +47,16 @@ Per-organization overrides exist via the `feature_flag_overrides` table
 
 See `packages/platform/src/rate-limit.ts` for the current presets (requests/window/scope) per
 endpoint class. These are starting points, not tuned numbers — adjust `RATE_LIMIT_PRESETS` if real
-usage patterns show they're too tight or too loose. Remember: `RATE_LIMIT_PROVIDER=memory` is
-per-process; see [Production Readiness](./PRODUCTION_READINESS.md) for the horizontal-scaling
-caveat.
+usage patterns show they're too tight or too loose. `RATE_LIMIT_PROVIDER=redis` holds the limit
+across instances. `RATE_LIMIT_PROVIDER=memory` is per-process and is a production blocker for
+horizontal scale.
+
+## On-call and paging
+
+Not configured. There is no paging destination, rotation, or uptime vendor in this repository.
+Until an operator fills this in, treat monitoring as **BLOCKER**. Suggested contract once a vendor
+exists: page on `/api/health/ready` 503, elevated 5xx, malware scanner down, and AI provider error
+rate. Destination: _TBD_.
 
 ## Running database migrations
 
@@ -95,9 +102,9 @@ are the primary technical control against runaway spend).
 ## Scaling notes
 
 - The web app itself is stateless per-request (no in-process session state beyond the in-memory
-  rate limiter) and can run multiple replicas behind a load balancer, **except** that
-  `RATE_LIMIT_PROVIDER=memory` means rate limits are enforced per-instance, not globally, until a
-  shared-store implementation exists.
+  rate limiter, when that provider is selected) and can run multiple replicas behind a load
+  balancer when `RATE_LIMIT_PROVIDER=redis` points at a shared Redis. `RATE_LIMIT_PROVIDER=memory`
+  means rate limits are enforced per-instance, not globally.
 - Inngest-invoked job functions (`/api/inngest`) run inside the same web app process/replica set —
   there is no separate worker tier to scale independently today.
 - Postgres connection pooling is handled by `postgres.js` inside `@nyayagrid/database` — if you run

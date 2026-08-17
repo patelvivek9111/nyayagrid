@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Panel, Badge, Button } from "@nyayagrid/ui";
 import { EmptyState, ErrorState, LoadingState, SuggestedBadge } from "@/components/ux";
+import { openMatterDocument } from "@/lib/document-open";
 
 type Doc = {
   id: string;
@@ -38,6 +39,7 @@ export default function MatterDocumentsPage() {
   const [compareBusy, setCompareBusy] = useState(false);
   const [comparisons, setComparisons] = useState<any[]>([]);
   const [selected, setSelected] = useState<any | null>(null);
+  const [openingId, setOpeningId] = useState<string | null>(null);
 
   const readyDocs = docs.filter((d) => Boolean(d.latestVersionId));
 
@@ -125,12 +127,29 @@ export default function MatterDocumentsPage() {
     }
   }
 
+  async function openDoc(doc: Doc, disposition: "inline" | "attachment") {
+    setOpeningId(doc.id);
+    setError("");
+    try {
+      await openMatterDocument({
+        matterId,
+        documentId: doc.id,
+        disposition,
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not open the original file");
+    } finally {
+      setOpeningId(null);
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div>
         <h2 className="font-display text-xl text-ink">Documents</h2>
         <p className="text-sm text-ink/60">
-          Case file room — upload, track processing, and compare versions for material changes.
+          Case file room — upload, track processing, and open the stored original. Compare versions
+          for material changes. Opening a file does not replace the original.
         </p>
       </div>
 
@@ -163,6 +182,33 @@ export default function MatterDocumentsPage() {
                 {doc.processingError ? (
                   <p className="mt-2 text-[var(--ng-danger)]">{doc.processingError}</p>
                 ) : null}
+                {doc.latestVersionId &&
+                doc.processingState !== "scan_blocked" &&
+                doc.processingState !== "quarantined" &&
+                doc.processingState !== "malware_scan_failed" ? (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    <Button
+                      type="button"
+                      variant="secondary"
+                      disabled={openingId === doc.id}
+                      onClick={() => void openDoc(doc, "inline")}
+                    >
+                      {openingId === doc.id ? "Opening…" : "Open original"}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      disabled={openingId === doc.id}
+                      onClick={() => void openDoc(doc, "attachment")}
+                    >
+                      Download
+                    </Button>
+                  </div>
+                ) : (
+                  <p className="mt-2 text-xs text-ink/55">
+                    Original file is unavailable until processing finishes or the scan is clear.
+                  </p>
+                )}
               </li>
             ))}
           </ul>

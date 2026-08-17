@@ -3,7 +3,7 @@ import { MockAIProvider } from "@nyayagrid/ai";
 import { askGuideSchema } from "@nyayagrid/validation";
 import { askGuide } from "@nyayagrid/workspaces";
 import { recordUsage } from "@nyayagrid/platform";
-import { requireUser } from "@/lib/auth";
+import { requireGuideUser } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 import { getAI, getEmbeddings } from "@/lib/infra";
 import { enforceRateLimit } from "@/lib/rate-limit";
@@ -15,7 +15,7 @@ import { enforceRateLimit } from "@/lib/rate-limit";
  */
 export async function POST(request: Request) {
   try {
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireGuideUser(request.headers);
     const limited = await enforceRateLimit(request, { endpointClass: "guide", userId: user.id });
     if (limited) return limited;
 

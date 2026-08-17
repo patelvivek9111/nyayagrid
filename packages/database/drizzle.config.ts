@@ -8,6 +8,8 @@ export default defineConfig({
     "./src/schema/phase7.ts",
     "./src/schema/phase8.ts",
     "./src/schema/phase9.ts",
+    "./src/schema/phase10.ts",
+    "./src/schema/phase11.ts",
   ],
   out: "./drizzle",
   dialect: "postgresql",

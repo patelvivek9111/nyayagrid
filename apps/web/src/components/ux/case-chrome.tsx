@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import type { MouseEvent, ReactNode } from "react";
 import { cx } from "@nyayagrid/ui";
 import { useMatterChrome } from "@/components/use-matter-chrome";
 
@@ -35,6 +36,40 @@ function tabActive(pathname: string, base: string, segment: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
+function CaseNavLink({
+  href,
+  active,
+  className,
+  children,
+}: {
+  href: string;
+  active: boolean;
+  className: string;
+  children: ReactNode;
+}) {
+  const router = useRouter();
+
+  function onClick(event: MouseEvent<HTMLAnchorElement>) {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) {
+      return;
+    }
+    event.preventDefault();
+    router.push(href);
+  }
+
+  return (
+    <Link
+      href={href}
+      prefetch={false}
+      aria-current={active ? "page" : undefined}
+      className={className}
+      onClick={onClick}
+    >
+      {children}
+    </Link>
+  );
+}
+
 export function CaseHeader({ subtitle }: { subtitle?: string | null }) {
   const { title, matter, loading } = useMatterChrome();
   return (
@@ -64,9 +99,10 @@ export function CaseTabs({ matterId }: { matterId: string }) {
           const href = tab.segment ? `${base}/${tab.segment}` : base;
           const active = tabActive(pathname, base, tab.segment);
           return (
-            <Link
+            <CaseNavLink
               key={tab.label}
               href={href}
+              active={active}
               className={cx(
                 "whitespace-nowrap border-b-2 px-3 py-2 text-sm font-semibold transition",
                 active
@@ -75,7 +111,7 @@ export function CaseTabs({ matterId }: { matterId: string }) {
               )}
             >
               {tab.label}
-            </Link>
+            </CaseNavLink>
           );
         })}
       </nav>
@@ -87,16 +123,17 @@ export function CaseTabs({ matterId }: { matterId: string }) {
           const href = `${base}/${tab.segment}`;
           const active = tabActive(pathname, base, tab.segment);
           return (
-            <Link
+            <CaseNavLink
               key={tab.label}
               href={href}
+              active={active}
               className={cx(
                 "whitespace-nowrap rounded-md px-3 py-1.5 text-xs font-semibold transition",
                 active ? "bg-accent-soft text-accent" : "text-ink/55 hover:bg-black/[0.03] hover:text-ink",
               )}
             >
               {tab.label}
-            </Link>
+            </CaseNavLink>
           );
         })}
       </nav>

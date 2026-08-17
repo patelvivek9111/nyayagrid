@@ -26,6 +26,7 @@ export async function POST(request: Request) {
       userId: user.id,
       title: body.title?.trim() || "New conversation",
       explanationLevel: body.explanationLevel,
+      caseId: body.caseId,
     });
     return jsonOk({ conversation }, { status: 201 });
   } catch (error) {

@@ -14,6 +14,13 @@ type DocumentRow = {
 
 type ExplicitDate = { rawText: string; isoDate: string | null; label?: string | null };
 
+type CourtNoticeDetails = {
+  parties: string[];
+  court?: string | null;
+  hearingDate?: ExplicitDate | null;
+  responseDeadline?: ExplicitDate | null;
+};
+
 type ExplanationContent = {
   plainLanguageSummary: string;
   obligations: string[];
@@ -43,6 +50,8 @@ export default function GuideExplainPage() {
   const [content, setContent] = useState("");
   const [explanation, setExplanation] = useState<ExplanationContent | null>(null);
   const [explicitDates, setExplicitDates] = useState<ExplicitDate[]>([]);
+  const [courtNotice, setCourtNotice] = useState<CourtNoticeDetails | null>(null);
+  const [courtNoticeMode, setCourtNoticeMode] = useState(false);
   const [sources, setSources] = useState<SourceRef[]>([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -96,6 +105,8 @@ export default function GuideExplainPage() {
       setExplanation(data.record?.explanation ?? null);
       setExplicitDates(data.record?.explicitDates ?? []);
       setSources(data.record?.sources ?? []);
+      setCourtNotice(data.explanation?.courtNoticeDetails ?? null);
+      setCourtNoticeMode(Boolean(data.explanation?.courtNoticeMode) || documentKind === "court_notice");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to explain document");
     } finally {
@@ -141,6 +152,25 @@ export default function GuideExplainPage() {
                 onChange={(e) => setContent(e.target.value)}
                 required
               />
+              <label className="text-xs font-semibold text-ink/70">
+                Or upload a text file
+                <input
+                  className="mt-1 block w-full text-sm"
+                  type="file"
+                  accept=".txt,.md,text/plain"
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (!file) return;
+                    if (!title.trim()) setTitle(file.name.replace(/\.[^.]+$/, ""));
+                    const reader = new FileReader();
+                    reader.onload = () => {
+                      const text = typeof reader.result === "string" ? reader.result : "";
+                      setContent(text);
+                    };
+                    reader.readAsText(file);
+                  }}
+                />
+              </label>
               <Button type="submit" disabled={busy}>
                 {busy ? "Working…" : "Add & explain"}
               </Button>
@@ -182,6 +212,23 @@ export default function GuideExplainPage() {
           ) : (
             <div className="space-y-3 text-sm">
               <p className="whitespace-pre-wrap text-ink/90">{explanation.plainLanguageSummary}</p>
+
+              {courtNoticeMode || courtNotice ? (
+                <div
+                  role="note"
+                  className="rounded-lg border border-accent/40 bg-accent-soft/40 px-3 py-2 text-sm"
+                >
+                  <p className="font-semibold">Court notice</p>
+                  <p className="mt-1 text-ink/80">
+                    Dates below are copied from the document text. Nyaya Guide never calculates a
+                    filing deadline from a start date.
+                  </p>
+                  {courtNotice?.court ? <p className="mt-1">Court: {courtNotice.court}</p> : null}
+                  {courtNotice?.parties?.length ? (
+                    <p className="mt-1">Parties: {courtNotice.parties.join(", ")}</p>
+                  ) : null}
+                </div>
+              ) : null}
 
               {explicitDates.length > 0 ? (
                 <div>

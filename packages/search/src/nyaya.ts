@@ -11,6 +11,9 @@ import {
   formatResearchAuthorityChunks,
   NYAYA_PROMPT_VERSION,
   validateCitedAnswerAgainstPassages,
+  applyQa06VerifiedIntelCap,
+  citedAnswerTextFromRaw,
+  rankByQuestionOverlap,
   type AIProvider,
   type EmbeddingProvider,
   type GroundingPassage,
@@ -212,7 +215,8 @@ export async function askNyayaAboutMatter(params: {
     }
   }
 
-  const passages: GroundingPassage[] = hits.map((hit) => ({
+  const rankedHits = rankByQuestionOverlap(params.question, hits);
+  const passages: GroundingPassage[] = rankedHits.map((hit) => ({
     chunkId: hit.chunkId,
     documentId: hit.documentId,
     documentVersionId: hit.documentVersionId,
@@ -367,31 +371,16 @@ export async function askNyayaAboutMatter(params: {
   }
 
   const validated = validateCitedAnswerAgainstPassages(raw, passages);
-  const rawAnswer = String((raw as { answer?: string }).answer ?? "");
-
-  if (
-    validated.answer.evidenceState === "insufficient" &&
-    (verifiedText || graphText || memoryText || analysisText) &&
-    /(verified matter intelligence|verified graph|approved matter memory|verified timeline|verified deadline|professional analysis|reviewed analytical|contract analysis|discovery review)/i.test(
-      rawAnswer,
-    )
-  ) {
-    // QA-06: structured intel without document quotes may support an answer, but never as "grounded".
-    validated.answer.evidenceState = "partial";
-    validated.answer.answer = rawAnswer;
-    validated.answer.assumptions = [
-      ...(validated.answer.assumptions ?? []),
-      "Answer relies on verified structured matter context without verbatim document quotes; treat as partial pending document citation.",
-      ...(verifiedText ? ["Answer used verified structured matter intelligence."] : []),
-      ...(graphText ? ["Answer used verified Graph relationships."] : []),
-      ...(memoryText ? ["Answer used approved Matter Memory."] : []),
-      ...(analysisText
-        ? [
-            "Answer used matter-scoped professional analysis context (reviewed vs proposed labeled).",
-          ]
-        : []),
-    ];
-  }
+  const rawAnswer = citedAnswerTextFromRaw(raw);
+  validated.answer = applyQa06VerifiedIntelCap({
+    answer: validated.answer,
+    rawAnswer,
+    retrievedCount: passages.length,
+    verifiedIntelligence: verifiedText,
+    verifiedGraph: graphText,
+    verifiedMemory: memoryText,
+    professionalAnalysis: analysisText,
+  });
 
   if (
     validated.answer.evidenceState !== "grounded" &&

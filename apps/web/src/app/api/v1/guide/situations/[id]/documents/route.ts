@@ -1,6 +1,6 @@
 import { linkGuideSituationDocumentSchema } from "@nyayagrid/validation";
 import { linkDocument } from "@nyayagrid/workspaces";
-import { requireUser } from "@/lib/auth";
+import { requireGuideUser } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
 type Params = { params: Promise<{ id: string }> };
@@ -9,7 +9,7 @@ type Params = { params: Promise<{ id: string }> };
 export async function POST(request: Request, { params }: Params) {
   try {
     const { id } = await params;
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireGuideUser(request.headers);
     const body = linkGuideSituationDocumentSchema.parse(await request.json());
     const link = await linkDocument(db, {
       situationId: id,

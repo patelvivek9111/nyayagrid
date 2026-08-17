@@ -59,4 +59,11 @@ test.describe("API authorization", () => {
     });
     expect(res.status()).toBe(401);
   });
+
+  test("unauthenticated matter audit export is rejected with 401", async ({ request }) => {
+    const res = await request.get(`/api/v1/matters/${NONEXISTENT_MATTER_ID}/audit/export`, {
+      headers: { "x-nyayagrid-dev-user": "anonymous" },
+    });
+    expect(res.status()).toBe(401);
+  });
 });

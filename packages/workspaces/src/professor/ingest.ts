@@ -131,6 +131,7 @@ export type IngestStudentCaseParams = {
   citation?: string | null;
   court?: string | null;
   decisionDate?: string | null;
+  courseLabel?: string | null;
   embeddings: EmbeddingProvider;
   /** When supplied, the original bytes are archived and `storageKey` is recorded. */
   storage?: StorageProvider;
@@ -167,7 +168,11 @@ export async function ingestStudentCase(
   const extraction = await resolveContent(params);
   const content = extraction.content;
   if (content.trim().length < 20) {
-    throw new Error("Case text is too short to ingest");
+    throw new Error(
+      params.buffer
+        ? "Could not extract enough text from the uploaded file. The PDF may be scanned or empty — paste the opinion text instead."
+        : "Case text is too short to ingest",
+    );
   }
   const sha256 = createHash("sha256").update(content).digest("hex");
 
@@ -214,6 +219,7 @@ export async function ingestStudentCase(
           citation: metadata.citation ?? null,
           court: metadata.court ?? null,
           decisionDate: metadata.decisionDate ?? null,
+          courseLabel: params.courseLabel?.trim() || null,
           sourceType: params.buffer ? "uploaded_file" : "pasted_text",
           processingState: "uploaded",
           mimeType: params.mimeType ?? null,
@@ -411,10 +417,18 @@ async function resolveContent(
     filename: params.filename ?? "case",
   });
   if (result.status !== "ok") {
-    throw new Error(`Could not extract text from the uploaded case: ${result.reason}`);
+    throw new Error(
+      `Could not extract text from the uploaded case: ${result.reason}. Paste the opinion text instead.`,
+    );
+  }
+  const content = result.segments.map((segment) => segment.text).join("\n\n").trim();
+  if (!content) {
+    throw new Error(
+      "Could not extract text from the uploaded file. The PDF may be scanned or empty — paste the opinion text instead.",
+    );
   }
   return {
-    content: result.segments.map((segment) => segment.text).join("\n\n"),
+    content,
     segments: result.segments,
   };
 }

@@ -94,7 +94,7 @@ const nextConfig: NextConfig = {
   // which crashes at module-evaluation time in `next dev` (`TypeError: Object.defineProperty
   // called on non-object` inside the bundled `extract.ts`). Declaring them here keeps them as real
   // `require()` calls resolved by Node at runtime instead of being bundled.
-  serverExternalPackages: ["pdf-parse", "mammoth"],
+  serverExternalPackages: ["pdf-parse", "mammoth", "@clerk/backend"],
   experimental: {
     externalDir: true,
   },

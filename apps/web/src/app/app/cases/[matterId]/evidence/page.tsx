@@ -79,7 +79,7 @@ export default function CaseEvidencePage() {
       const res = await fetch(`/api/v1/matters/${matterId}/analysis/contradictions`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({}),
+        body: JSON.stringify({ force: true }),
       });
       const json = await res.json();
       if (!res.ok) throw new Error(json?.error?.message ?? "Contradiction detection failed");
@@ -119,6 +119,7 @@ export default function CaseEvidencePage() {
         subtitle: s.page != null ? `Page ${s.page}` : undefined,
         quote: s.supportingText ?? undefined,
         chunkId: s.chunkId ?? undefined,
+        documentId: s.documentId,
       })),
     );
     setDrawerOpen(true);
@@ -151,8 +152,9 @@ export default function CaseEvidencePage() {
             {busy ? "Working…" : "Detect contradictions"}
           </Button>
           <p className="text-xs text-ink/55">
-            Findings stay proposed until reviewed. Timeline suggestions stay separate until
-            verified.
+            Detection re-runs on this click so an earlier empty pass cannot hide a later CAM
+            conflict. Findings stay proposed until reviewed. Timeline suggestions stay separate —
+            Nyaya does not merge Side A and Side B dates into one event.
           </p>
         </div>
         {contradictionFindings.length === 0 ? (

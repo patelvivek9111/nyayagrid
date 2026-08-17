@@ -1,6 +1,6 @@
-import { and, eq } from "@nyayagrid/database";
+import { and, desc, eq } from "@nyayagrid/database";
 import type { Database } from "@nyayagrid/database";
-import { studentCaseBriefs } from "@nyayagrid/database";
+import { studentCaseBriefs, studentCases } from "@nyayagrid/database";
 import type {
   ExplanationLevel,
   StudentCaseBrief,
@@ -19,7 +19,7 @@ import {
 } from "@nyayagrid/ai";
 import { validateQuoteAgainstText } from "@nyayagrid/research";
 import { writeAuditEvent } from "@nyayagrid/permissions";
-import { assertStudentCaseOwnership } from "./auth";
+import { StudentAccessError, assertStudentCaseOwnership } from "./auth";
 import {
   getLatestStudentCaseVersion,
   loadStudentCasePassages,
@@ -401,6 +401,56 @@ export async function getCaseBrief(
     .where(and(eq(studentCaseBriefs.caseId, caseId), eq(studentCaseBriefs.userId, userId)))
     .limit(1);
   return row ?? null;
+}
+
+export type StudentBriefLibraryItem = {
+  briefId: string;
+  caseId: string;
+  title: string;
+  court: string | null;
+  citation: string | null;
+  decisionDate: string | null;
+  year: string | null;
+  courseLabel: string | null;
+  updatedAt: Date;
+};
+
+export async function listStudentBriefs(
+  db: Database,
+  userId: string,
+): Promise<StudentBriefLibraryItem[]> {
+  if (!userId) throw new StudentAccessError("userId is required");
+  const rows = await db
+    .select({
+      briefId: studentCaseBriefs.id,
+      caseId: studentCases.id,
+      title: studentCases.title,
+      court: studentCases.court,
+      citation: studentCases.citation,
+      decisionDate: studentCases.decisionDate,
+      courseLabel: studentCases.courseLabel,
+      updatedAt: studentCaseBriefs.updatedAt,
+      brief: studentCaseBriefs.brief,
+    })
+    .from(studentCaseBriefs)
+    .innerJoin(
+      studentCases,
+      and(eq(studentCases.id, studentCaseBriefs.caseId), eq(studentCases.userId, userId)),
+    )
+    .where(eq(studentCaseBriefs.userId, userId))
+    .orderBy(desc(studentCaseBriefs.updatedAt));
+
+  return rows.map((row) => ({
+    briefId: row.briefId,
+    caseId: row.caseId,
+    title: row.title,
+    court: row.court,
+    citation: row.citation,
+    decisionDate: row.decisionDate ? String(row.decisionDate) : null,
+    year: row.brief.year ?? (row.decisionDate ? String(row.decisionDate).slice(0, 4) : null),
+    courseLabel: row.courseLabel,
+    updatedAt: row.updatedAt,
+  }));
 }
 
 function parseJson(text: string): unknown {

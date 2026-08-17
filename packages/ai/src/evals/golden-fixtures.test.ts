@@ -10,7 +10,14 @@ describe("golden fixture documents", () => {
   it("builds one uploadable body per logical document", () => {
     const docs = buildGoldenFixtureDocuments();
     expect(docs.map((d) => d.documentKey).sort()).toEqual(
-      ["doc_amendment", "doc_depo", "doc_email", "doc_email_pm", "doc_lease"].sort(),
+      [
+        "doc_amendment",
+        "doc_depo",
+        "doc_email",
+        "doc_email_pm",
+        "doc_lease",
+        "doc_party_roster",
+      ].sort(),
     );
     for (const doc of docs) {
       expect(doc.filename).toMatch(/^synth-.*\.txt$/i);

@@ -49,6 +49,8 @@ const { createAgentRegistry } = await import("./agent");
 const { createToolRegistry, toolOk } = await import("./tools/registry");
 const { AgentOutputBuilder } = await import("./agents/shared");
 const { DEFAULT_BUDGETS } = await import("./types");
+const { researchAgent } = await import("./agents/research-agent");
+const { draftAgent } = await import("./agents/draft-agent");
 
 type NyayaAgent = Parameters<typeof createAgentRegistry>[0][number];
 type ToolLike = Parameters<ReturnType<typeof createToolRegistry>["register"]>[0];
@@ -432,6 +434,85 @@ describe("tool allow-list", () => {
       { class: "MATTER_EVIDENCE", refs: ["chunk-1"], note: "readMatter" },
     ]);
     expect(db.rows(agentApprovals)).toHaveLength(0);
+  });
+});
+
+describe("prompt injection on research and drafting retrieved content", () => {
+  it("research_agent scans retrieved authority snippets and does not widen tools", async () => {
+    const created = await seedRun([
+      step({
+        agentType: "research_agent",
+        requiredTools: ["searchLegalAuthorities", "saveResearchArtifact"],
+      }),
+    ]);
+
+    const result = await executeAgentRun({
+      ...baseParams(),
+      runId: created.run.id,
+      agents: createAgentRegistry([researchAgent]),
+      tools: createToolRegistry([
+        readTool("searchLegalAuthorities", "1 hit", {
+          hits: [
+            {
+              authorityId: "auth-1",
+              chunkId: "chunk-auth-1",
+              snippet: INJECTED_DOCUMENT_TEXT,
+            },
+          ],
+        }),
+        readTool("saveResearchArtifact", "saved", {
+          artifactId: "art-1",
+          grounded: true,
+          coverageWarnings: [],
+          provider: "mock",
+          model: "mock-1",
+        }),
+      ]),
+    });
+
+    expect(result.run.status).toBe("completed");
+    expect(result.limitations.join(" ")).toMatch(/did not change tool authorization/i);
+    expect(result.toolCalls.map((c) => c.toolName).sort()).toEqual(
+      ["saveResearchArtifact", "searchLegalAuthorities"].sort(),
+    );
+    expect(result.toolCalls.every((c) => c.status === "completed")).toBe(true);
+  });
+
+  it("draft_agent scans retrieved matter chunks and does not widen tools", async () => {
+    const created = await seedRun([
+      step({
+        agentType: "draft_agent",
+        requiredTools: ["retrieveMatterChunks", "createDraft"],
+      }),
+    ]);
+
+    const result = await executeAgentRun({
+      ...baseParams(),
+      runId: created.run.id,
+      agents: createAgentRegistry([draftAgent]),
+      tools: createToolRegistry([
+        readTool("retrieveMatterChunks", "1 chunk", {
+          chunks: [
+            {
+              chunkId: "chunk-1",
+              documentId: "doc-1",
+              documentVersionId: "docv-1",
+              quote: INJECTED_DOCUMENT_TEXT,
+            },
+          ],
+        }),
+        readTool("createDraft", "drafted", {
+          draft: { id: "draft-1", title: "SYNTH draft" },
+          version: { id: "ver-1", versionNumber: 1, content: "draft" },
+        }),
+      ]),
+    });
+
+    expect(result.run.status).toBe("completed");
+    expect(result.limitations.join(" ")).toMatch(/did not change tool authorization/i);
+    expect(result.toolCalls.map((c) => c.toolName).sort()).toEqual(
+      ["createDraft", "retrieveMatterChunks"].sort(),
+    );
   });
 });
 

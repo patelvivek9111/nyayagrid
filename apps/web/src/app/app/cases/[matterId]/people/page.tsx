@@ -256,7 +256,7 @@ export default function CasePeoplePage() {
         subtitle: s.page != null ? `Page ${s.page}` : undefined,
         quote: s.supportingText ?? undefined,
         chunkId: s.chunkId,
-        href: `/app/cases/${matterId}/documents`,
+        documentId: s.documentId,
       })),
     );
     setDrawerOpen(true);

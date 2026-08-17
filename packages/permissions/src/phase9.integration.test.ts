@@ -69,6 +69,7 @@ describe("production configuration gate (pure, no database required)", () => {
       AUTH_PROVIDER: "clerk",
       CLERK_SECRET_KEY: "sk_live_x",
       NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "pk_live_x",
+      CLERK_WEBHOOK_SECRET: "whsec_x",
       AI_PROVIDER: "openai",
       OPENAI_API_KEY: "sk-x",
       EMBEDDING_PROVIDER: "openai",
@@ -82,6 +83,7 @@ describe("production configuration gate (pure, no database required)", () => {
       EMAIL_FROM: "noreply@example.com",
       BILLING_PROVIDER: "database",
       RATE_LIMIT_PROVIDER: "redis",
+      REDIS_URL: "redis://redis.internal:6379",
       DATABASE_URL: "postgresql://user:pass@db.internal:5432/nyayagrid",
       S3_BUCKET: "nyayagrid-prod-documents",
     };

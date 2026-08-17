@@ -238,7 +238,16 @@ export default function MatterResearchPage() {
                     </li>
                   ))}
                 </ul>
-              ) : null}
+              ) : (
+                <div className="rounded border border-line bg-black/[0.02] p-3 text-sm text-ink/70">
+                  <p>
+                    No retrieved authorities for this query. Nyaya will not invent primary or
+                    secondary labels when the corpus is empty. You can still add a research note
+                    on the right. Pin/Save appears only when a retrieved authority exists — there
+                    is nothing honest to pin here.
+                  </p>
+                </div>
+              )}
             </div>
           ) : (
             <p className="text-sm text-ink/70">No results yet.</p>

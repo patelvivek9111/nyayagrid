@@ -1,3 +1,4 @@
+import { CLOSEST_MATCH_LIMITATION, wantsContractCompare } from "@nyayagrid/ai";
 import type { NyayaAgent } from "../agent";
 import type { AgentExecutionResult } from "../types";
 import { AgentOutputBuilder, agentInputSchema, agentOutputSchema, invokeIfAllowed } from "./shared";
@@ -13,12 +14,6 @@ type DocumentComparison = {
   comparison: { id: string };
   changes: unknown[];
 };
-
-function wantsContractCompare(text: string): boolean {
-  return /\b(compar(e|ison|ing)|amendment|redline|diff|side[- ]by[- ]side|two versions|version\s+[ab])\b/i.test(
-    text,
-  );
-}
 
 /** Clause-level contract review and version compare. Findings are proposals. */
 export const contractAgent: NyayaAgent = {
@@ -115,9 +110,7 @@ export const contractAgent: NyayaAgent = {
     }
 
     if (hits.some((chunk) => chunk.documentId !== target.documentId)) {
-      builder.addLimitation(
-        "Several documents matched; the analysis covers the closest match only. Specify a document to review the others.",
-      );
+      builder.addLimitation(CLOSEST_MATCH_LIMITATION);
     }
 
     const analysis = await invokeIfAllowed<ContractAnalysis>(ctx, builder, "analyzeContract", {

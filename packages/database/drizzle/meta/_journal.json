@@ -64,6 +64,27 @@
       "when": 1786493583536,
       "tag": "0008_phase9_production_readiness",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1786650000000,
+      "tag": "0009_professor_hardening",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1786820000000,
+      "tag": "0010_firm_ops",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1786900000000,
+      "tag": "0011_enterprise_trust",
+      "breakpoints": true
     }
   ]
 }

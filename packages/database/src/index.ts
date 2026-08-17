@@ -6,6 +6,8 @@ import * as schemaPhase6 from "./schema/phase6";
 import * as schemaPhase7 from "./schema/phase7";
 import * as schemaPhase8 from "./schema/phase8";
 import * as schemaPhase9 from "./schema/phase9";
+import * as schemaPhase10 from "./schema/phase10";
+import * as schemaPhase11 from "./schema/phase11";
 
 const schema = {
   ...schemaCore,
@@ -14,6 +16,8 @@ const schema = {
   ...schemaPhase7,
   ...schemaPhase8,
   ...schemaPhase9,
+  ...schemaPhase10,
+  ...schemaPhase11,
 };
 
 export type Database = ReturnType<typeof createDb>;
@@ -32,6 +36,8 @@ export * from "./schema/phase6";
 export * from "./schema/phase7";
 export * from "./schema/phase8";
 export * from "./schema/phase9";
+export * from "./schema/phase10";
+export * from "./schema/phase11";
 export { schema };
 export { SYSTEM_ROLE_DEFINITIONS, OWNER_CAPABILITIES } from "./system-roles";
 export { createOrganizationWithDefaults } from "./organizations";

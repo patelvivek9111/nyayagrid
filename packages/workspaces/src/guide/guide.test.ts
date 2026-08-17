@@ -131,6 +131,9 @@ describe("guide search isolation", () => {
     expect(() => assertSqlTemplatesAreIsolated(["SELECT * FROM student_cases"])).toThrow(
       /student_cases/,
     );
+    expect(() =>
+      assertSqlTemplatesAreIsolated(["SELECT * FROM student_case_chunks WHERE user_id = $1"]),
+    ).toThrow(/student_case_chunks/);
   });
 });
 

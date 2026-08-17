@@ -93,7 +93,11 @@ export function EmptyState({
 }
 
 export function LoadingState({ label = "Loading…" }: { label?: string }) {
-  return <p className="text-sm text-ink/60">{label}</p>;
+  return (
+    <p className="text-sm text-ink/60" suppressHydrationWarning>
+      {label}
+    </p>
+  );
 }
 
 export function ErrorState({ message }: { message: string }) {

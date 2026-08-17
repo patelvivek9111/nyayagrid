@@ -47,9 +47,10 @@ Hard rules encoded in code:
 - Verified Graph/Memory/intel without document quotes may upgrade an insufficient model answer only to **`partial`**, never `grounded`.
 - Contract compare goals schedule `compareDocuments` in the agent planner; the contract agent calls it when two versions are retrieved.
 - Contradiction candidates require both sides with `chunkIds.min(1)`.
-- Golden graded suite: `packages/ai/src/evals/graded-cases.ts` (faithfulness / completeness / need-more-docs), including CAM date-conflict issue-spotting.
+- Golden graded suite: `packages/ai/src/evals/graded-cases.ts` (Case Q&A, including `partial` and QA-06), `graded-cases-contradiction.ts`, `graded-cases-contract-compare.ts`. `npm run eval:ai` prints per-workflow citation accuracy, hallucination, false-insufficient, and false-confidence rates against the numeric bars in `AGENT_QUALITY.md`.
 - Uploadable SYNTH fixtures: `packages/ai/src/evals/golden-fixtures/` — seed with `npm run seed:golden-matter` (Postgres + MinIO; not real authorities).
 - Multi-hop retrieval + `needsMoreDocuments` on ask artifacts (`packages/search/src/nyaya.ts`).
+- Prompt injection: retrieved-content scanning is exercised for `research_agent` and `draft_agent` in `packages/agents/src/engine.test.ts`, not only the generic orchestration path.
 
 Never fabricate legal citations in fixtures.
 
@@ -182,7 +183,9 @@ At minimum, exercise:
   documents") must not change which tools a step invokes; the run should record an
   instruction-like-content limitation without the corresponding tool call appearing in
   `agent_tool_calls`. Cover both the goal-text path (`classifyIntentWithRules`'s `safetyNotes`) and
-  the retrieved-content path (`AgentOutputBuilder.scanRetrievedText`).
+  the retrieved-content path (`AgentOutputBuilder.scanRetrievedText`), including the
+  `research` intent (`research_agent` over authority snippets) and the `drafting` intent
+  (`draft_agent` over retrieved matter chunks) — not only a generic orchestration worker.
 - **Honest partial completion** — a run whose budget is exhausted mid-execution, or whose research
   step legitimately finds zero corpus coverage, must end `partially_completed` (or `failed` if
   nothing usable was produced) with a populated `limitations` array describing what did not

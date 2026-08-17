@@ -92,6 +92,39 @@ export const GOLDEN_PASSAGES: GoldenPassage[] = [
     quote:
       "Following up — the February CAM package was uploaded to the portal on March 3, 2025; I do not see an earlier transmission.",
   },
+  {
+    chunkId: "chunk_late_fee",
+    documentId: "doc_lease",
+    documentVersionId: "docv_lease_1",
+    page: 3,
+    segmentRef: "§4.3",
+    documentTitle: "SYNTH — Master Lease Agreement",
+    labels: ["late_fee", "payment", "similar_clause"],
+    quote:
+      "A delinquency charge of five hundred dollars ($500) applies if payment is more than five days overdue.",
+  },
+  {
+    chunkId: "chunk_renewal_notice",
+    documentId: "doc_lease",
+    documentVersionId: "docv_lease_1",
+    page: 12,
+    segmentRef: "§13.1",
+    documentTitle: "SYNTH — Master Lease Agreement",
+    labels: ["renewal", "similar_clause"],
+    quote:
+      "Tenant may renew for one additional year by giving sixty (60) days written notice before the expiration date.",
+  },
+  {
+    chunkId: "chunk_cam_estimate",
+    documentId: "doc_email_pm",
+    documentVersionId: "docv_email_pm_1",
+    page: 1,
+    segmentRef: null,
+    documentTitle: "SYNTH — Email from Property Manager",
+    labels: ["near_miss_date"],
+    quote:
+      "Separately, the estimated February CAM worksheet was prepared internally on February 15, 2025, and is not a transmittal to Tenant.",
+  },
 ];
 
 export function passagesByLabels(...labels: string[]): GroundingPassage[] {
@@ -128,7 +161,23 @@ function titleToFixtureFilename(title: string): string {
 /**
  * Build SYNTH .txt documents from `GOLDEN_PASSAGES` (single source of truth).
  * Files under `golden-fixtures/` must match these bodies.
+ * The default corpus also includes the party roster for People onboarding.
  */
+const GOLDEN_PARTY_ROSTER: GoldenFixtureDocument = {
+  documentKey: "doc_party_roster",
+  filename: "synth-party-roster.txt",
+  title: "SYNTH — Party roster",
+  body: [
+    "# SYNTH — Party roster",
+    "",
+    "SYNTHETIC EVAL FIXTURE — not a real legal authority, docket, or matter.",
+    `Corpus: ${GOLDEN_MATTER_ID}`,
+    "",
+    "This Synthetic Assignment Agreement was signed on March 4, 2026 by Jordan Lee on behalf of Acme Corp.",
+    "",
+  ].join("\n"),
+};
+
 export function buildGoldenFixtureDocuments(
   passages: GoldenPassage[] = GOLDEN_PASSAGES,
 ): GoldenFixtureDocument[] {
@@ -139,7 +188,7 @@ export function buildGoldenFixtureDocuments(
     byDoc.set(passage.documentId, list);
   }
 
-  return [...byDoc.entries()].map(([documentKey, docs]) => {
+  const passageDocs = [...byDoc.entries()].map(([documentKey, docs]) => {
     const title = docs[0]!.documentTitle;
     const sections = docs.map((p) => {
       const loc =
@@ -165,4 +214,9 @@ export function buildGoldenFixtureDocuments(
       body,
     };
   });
+
+  if (passages === GOLDEN_PASSAGES) {
+    return [...passageDocs, GOLDEN_PARTY_ROSTER];
+  }
+  return passageDocs;
 }

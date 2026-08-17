@@ -25,6 +25,7 @@ import {
 import { storageKeyForOrganization } from "@nyayagrid/permissions";
 import { MockAIProvider, MockEmbeddingProvider } from "@nyayagrid/ai";
 import { InMemoryJobDispatcher } from "@nyayagrid/jobs";
+import { isFeatureEnabled } from "@nyayagrid/platform";
 import {
   importAuthority,
   syntheticStatuteAuthority,
@@ -40,6 +41,11 @@ import {
   assertStudentCaseOwnership,
   StudentAccessError,
   NO_AUTHORITY_LIMITATION,
+  getOrCreateCaseConversation,
+  createStudentNote,
+  listStudentNotes,
+  deleteStudentNote,
+  RESTRICTED_ASSESSMENT_ANSWER,
   // Guide (Public Workspace)
   ingestGuideDocument,
   explainGuideDocument,
@@ -481,6 +487,129 @@ describe.runIf(runDbTests)("phase 8 professor and guide workspaces integration",
           embeddings,
         }),
       ).rejects.toBeInstanceOf(StudentAccessError);
+    });
+
+    it("FEATURE_PROFESSOR being on does not replace ownership checks", async () => {
+      expect(isFeatureEnabled("professor")).toBe(true);
+      await expect(assertStudentCaseOwnership(db, studentBId, caseA.id)).rejects.toBeInstanceOf(
+        StudentAccessError,
+      );
+    });
+
+    it("reuses one case-room conversation for follow-up questions", async () => {
+      const first = await getOrCreateCaseConversation({
+        db,
+        userId: studentAId,
+        caseId: caseA.id,
+      });
+      const second = await getOrCreateCaseConversation({
+        db,
+        userId: studentAId,
+        caseId: caseA.id,
+      });
+      expect(second.id).toBe(first.id);
+
+      const firstAsk = await askProfessor({
+        db,
+        userId: studentAId,
+        conversationId: first.id,
+        caseId: caseA.id,
+        question: HOLDING_QUESTION,
+        ai,
+        embeddings,
+        includeAuthority: false,
+      });
+      const followUp = await askProfessor({
+        db,
+        userId: studentAId,
+        conversationId: first.id,
+        caseId: caseA.id,
+        question: HYPOTHETICAL_QUESTION,
+        ai,
+        embeddings,
+        includeAuthority: false,
+      });
+      expect(followUp.conversation.id).toBe(firstAsk.conversation.id);
+    });
+
+    it("keeps notes user-scoped and treats another student's note as missing", async () => {
+      const note = await createStudentNote({
+        db,
+        userId: studentAId,
+        input: {
+          title: "Receipt holding",
+          content: "Majority required actual receipt.",
+          caseId: caseA.id,
+          kind: "note",
+        },
+      });
+      const listed = await listStudentNotes({ db, userId: studentAId, caseId: caseA.id });
+      expect(listed.some((row) => row.id === note.id)).toBe(true);
+
+      await expect(
+        deleteStudentNote({ db, userId: studentBId, noteId: note.id }),
+      ).rejects.toBeInstanceOf(StudentAccessError);
+      const otherList = await listStudentNotes({ db, userId: studentBId, caseId: caseA.id });
+      expect(otherList).toHaveLength(0);
+    });
+
+    it("ingests a text file buffer without writing professional documents", async () => {
+      const unique = `SYNTH file ingest ${Date.now()} — not a real reporter. Notice is effective only upon mailing under this fixture lease.`;
+      const ingested = await ingestStudentCase({
+        db,
+        userId: studentAId,
+        title: "SYNTH File Ingest Fixture",
+        buffer: Buffer.from(unique, "utf8"),
+        mimeType: "text/plain",
+        filename: "synth-file.txt",
+        embeddings,
+      });
+      expect(ingested.skipped).toBe(false);
+      expect(ingested.case.sourceType).toBe("uploaded_file");
+      expect(ingested.case.storageKey).toBeNull();
+
+      const professionalDocs = await db
+        .select({ id: documents.id })
+        .from(documents)
+        .where(eq(documents.organizationId, orgId));
+      expect(professionalDocs.every((row) => row.id !== ingested.case.id)).toBe(true);
+    });
+
+    it("refuses to store an empty extracted file", async () => {
+      await expect(
+        ingestStudentCase({
+          db,
+          userId: studentAId,
+          title: "Empty PDF fixture",
+          buffer: Buffer.from("%PDF-empty", "utf8"),
+          mimeType: "application/pdf",
+          filename: "empty.pdf",
+          embeddings,
+          extractor: {
+            name: "empty-test",
+            supports: () => true,
+            extract: async () => ({
+              status: "ok",
+              segments: [],
+              extractor: "empty-test",
+            }),
+          },
+        }),
+      ).rejects.toThrow(/Could not extract text/);
+    });
+
+    it("refuses a closed assessment without calling the model", async () => {
+      const result = await askProfessor({
+        db,
+        userId: studentAId,
+        caseId: caseA.id,
+        question: "This is my closed-book exam. Complete the issue-spotter for me.",
+        ai,
+        embeddings,
+      });
+      expect(result.answer.answer).toBe(RESTRICTED_ASSESSMENT_ANSWER);
+      expect(result.provider).toBe("deterministic");
+      expect(result.grounded).toBe(false);
     });
 
     it("never returns professional document_chunks as a Professor source", async () => {

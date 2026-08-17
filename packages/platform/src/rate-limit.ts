@@ -10,6 +10,8 @@
  * "you may not see this".
  */
 
+import { createRedisRateLimiterFromEnv } from "./redis-rate-limit";
+
 export const ENDPOINT_CLASSES = [
   "auth",
   "upload",
@@ -198,16 +200,40 @@ export class RateLimitExceededError extends Error {
   }
 }
 
+export {
+  RedisRateLimiter,
+  createRedisRateLimiterFromEnv,
+  parseRedisTarget,
+} from "./redis-rate-limit";
+
 const globalForRateLimit = globalThis as unknown as { __nyayagridRateLimiter?: RateLimitProvider };
 
+export function createRateLimitProviderFromEnv(
+  env: Record<string, string | undefined> = process.env,
+): RateLimitProvider {
+  const provider = (env.RATE_LIMIT_PROVIDER ?? "memory").trim().toLowerCase();
+  if (provider === "redis") {
+    return createRedisRateLimiterFromEnv(env);
+  }
+  return new InMemoryRateLimiter();
+}
+
 /**
- * Returns the process-wide limiter. Only the in-memory implementation exists today; a shared-store
- * provider is required before production, which the configuration gate enforces rather than papering
- * over here.
+ * Returns the process-wide limiter. `RATE_LIMIT_PROVIDER=memory` is per-process (single instance
+ * only). `RATE_LIMIT_PROVIDER=redis` shares the count across instances.
  */
 export function getRateLimiter(): RateLimitProvider {
   if (!globalForRateLimit.__nyayagridRateLimiter) {
-    globalForRateLimit.__nyayagridRateLimiter = new InMemoryRateLimiter();
+    globalForRateLimit.__nyayagridRateLimiter = createRateLimitProviderFromEnv();
   }
   return globalForRateLimit.__nyayagridRateLimiter;
+}
+
+/** Test helper. Never call this to clear a limit for a real request. */
+export function resetRateLimiterForTests(): void {
+  const current = globalForRateLimit.__nyayagridRateLimiter;
+  if (current && "close" in current && typeof current.close === "function") {
+    current.close();
+  }
+  globalForRateLimit.__nyayagridRateLimiter = undefined;
 }

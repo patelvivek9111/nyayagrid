@@ -47,10 +47,11 @@ for which of these are CONFIG REQUIRED vs. BLOCKER today):
 - **Clerk** production application (auth).
 - **OpenAI** API key (AI + embeddings).
 - **ClamAV** (`clamd`) reachable from the app, or a SaaS malware-scanning equivalent behind the
-  same `MalwareScanner` interface.
+  same `MalwareScanner` interface. Local docker-compose includes `clamav` on port 3310
+  (`npm run ops:verify-clamav`).
 - **SMTP** relay for transactional email (invites).
-- A **shared rate-limit store** if running more than one instance (not implemented yet — see
-  [Production Readiness](./PRODUCTION_READINESS.md), item 10).
+- A **shared rate-limit store**: `RATE_LIMIT_PROVIDER=redis` with `REDIS_URL` (docker-compose
+  includes Redis on port 6379). Do not run more than one web instance on `memory`.
 - **Inngest Cloud** (or compatible) app pointed at your deployed `/api/inngest` URL.
 
 ## 3. Run database migrations
@@ -77,6 +78,7 @@ DATABASE_URL=...
 AUTH_PROVIDER=clerk
 CLERK_SECRET_KEY=...
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=...
+CLERK_WEBHOOK_SECRET=...
 AI_PROVIDER=openai
 OPENAI_API_KEY=...
 EMBEDDING_PROVIDER=openai
@@ -91,7 +93,8 @@ SMTP_HOST=...
 SMTP_PORT=587
 EMAIL_FROM=...
 BILLING_PROVIDER=database
-RATE_LIMIT_PROVIDER=<shared store, once implemented>
+RATE_LIMIT_PROVIDER=redis
+REDIS_URL=redis://...
 INNGEST_EVENT_KEY=...
 INNGEST_SIGNING_KEY=...
 NEXT_PUBLIC_APP_URL=https://<your-domain>
@@ -143,9 +146,9 @@ container serves both user traffic and Inngest-invoked job functions.
 - Run migrations (step 3) **before** deploying a new image version that depends on the new schema.
 - Prefer rolling/blue-green deploys behind the readiness probe above so traffic never reaches an
   instance before its database connection is confirmed live.
-- `RATE_LIMIT_PROVIDER=memory` (the only implementation today) means each instance counts
-  independently — be aware that scaling out effectively multiplies rate limits until a shared
-  store is implemented (see [Production Readiness](./PRODUCTION_READINESS.md)).
+- `RATE_LIMIT_PROVIDER=redis` shares the count across instances. `RATE_LIMIT_PROVIDER=memory`
+  means each instance counts independently — do not scale out on memory (see
+  [Production Readiness](./PRODUCTION_READINESS.md)).
 - Roll back by redeploying the previous image tag; only roll back a migration if you have verified
   it is safely reversible (see [Backup & Restore](./BACKUP_RESTORE.md)).
 

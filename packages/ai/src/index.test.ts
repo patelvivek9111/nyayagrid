@@ -10,6 +10,7 @@ import {
   buildNyayaUserPrompt,
   buildMatterIntelligenceSystemPrompt,
   buildMatterIntelligenceUserPrompt,
+  buildOpenAIChatCompletionsBody,
   EMBEDDING_DIMENSIONS,
 } from "./index";
 
@@ -161,6 +162,28 @@ describe("citation validation", () => {
     expect(result.rejectedCitations).toBe(0);
     expect(result.answer.sources).toHaveLength(1);
   });
+
+  it("does not upgrade a valid partial answer to grounded (QA-05)", () => {
+    const result = validateCitedAnswerAgainstPassages(
+      {
+        answer: "The lease begins on January 1, 2024. This is only a partial picture.",
+        sources: [
+          {
+            chunkId: "c1",
+            documentId: "d1",
+            documentVersionId: "v1",
+            quote: "The lease term commences on January 1, 2024 and expires on December 31, 2026.",
+          },
+        ],
+        assumptions: [],
+        unresolvedQuestions: ["What remains uncertain given incomplete coverage?"],
+        evidenceState: "partial",
+      },
+      [leasePassage],
+    );
+    expect(result.answer.evidenceState).toBe("partial");
+    expect(result.rejectedCitations).toBe(0);
+  });
 });
 
 describe("embeddings", () => {
@@ -178,5 +201,16 @@ describe("createAIProviderFromEnv", () => {
     delete process.env.AI_PROVIDER;
     expect(createAIProviderFromEnv().name).toBe("mock");
     if (previous) process.env.AI_PROVIDER = previous;
+  });
+});
+
+describe("buildOpenAIChatCompletionsBody", () => {
+  it("sets store false so customer prompts are not kept for OpenAI training", () => {
+    const body = buildOpenAIChatCompletionsBody({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: "hello" }],
+    });
+    expect(body.store).toBe(false);
+    expect(body.temperature).toBe(0);
   });
 });

@@ -16,8 +16,9 @@
     "test": "npm run test --workspaces --if-present",
     "test:e2e": "playwright test",
     "test:e2e:install": "playwright install --with-deps chromium",
-    "eval:ai": "npm run eval:ai -w @nyayagrid/ai",
-    "eval:ai:live": "npm run eval:ai:live -w @nyayagrid/ai",
+    "eval:ai": "npm run eval:ai -w @nyayagrid/ai && npm run eval:ai -w @nyayagrid/intelligence",
+    "eval:ai:stress": "npm run eval:ai:stress -w @nyayagrid/ai",
+    "eval:ai:live": "node scripts/eval-ai-live.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "db:generate": "npm run generate -w @nyayagrid/database",
@@ -27,7 +28,9 @@
     "seed:golden-matter": "npm run seed:golden-matter -w @nyayagrid/documents",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
-    "docker:logs": "docker compose logs -f"
+    "docker:logs": "docker compose logs -f",
+    "ops:backup-rehearse": "node scripts/rehearse-backup-restore.mjs",
+    "ops:verify-clamav": "node scripts/verify-clamav.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",

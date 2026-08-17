@@ -51,6 +51,35 @@ services:
       exit 0;
       "
 
+  redis:
+    image: redis:7-alpine
+    container_name: nyayagrid-redis
+    restart: unless-stopped
+    command: ["redis-server", "--save", "", "--appendonly", "no"]
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  clamav:
+    image: clamav/clamav:1.4
+    container_name: nyayagrid-clamav
+    restart: unless-stopped
+    ports:
+      - "3310:3310"
+    volumes:
+      - nyayagrid_clamav_data:/var/lib/clamav
+    healthcheck:
+      test: ["CMD-SHELL", "echo PING | nc 127.0.0.1 3310 | grep -q PONG"]
+      interval: 30s
+      timeout: 10s
+      retries: 20
+      start_period: 240s
+
 volumes:
   nyayagrid_postgres_data:
   nyayagrid_minio_data:
+  nyayagrid_clamav_data:

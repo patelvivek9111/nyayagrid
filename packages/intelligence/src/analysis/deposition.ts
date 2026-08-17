@@ -18,6 +18,9 @@ import {
   contradictionCandidatesSchema,
   DEPOSITION_ANALYSIS_PROMPT_VERSION,
   CONTRADICTION_ANALYSIS_PROMPT_VERSION,
+  filterImpreciseDateContradictionCandidates,
+  findExactCrossDocumentDateConflicts,
+  mergeContradictionCandidates,
   type AIProvider,
   type ProfessionalChunk,
 } from "@nyayagrid/ai";
@@ -249,9 +252,13 @@ export async function detectContradictionCandidates(params: {
     .where(eq(analysisRuns.idempotencyKey, idempotencyKey))
     .limit(1);
 
-  if (existingRun && !params.force) {
+  let force = Boolean(params.force);
+  if (existingRun && !force) {
     const findings = await loadFindingsForRun(params.db, existingRun.id);
-    return { skipped: true as const, run: existingRun, findings };
+    if (findings.length > 0) {
+      return { skipped: true as const, run: existingRun, findings };
+    }
+    force = true;
   }
 
   const [matter] = await params.db
@@ -307,8 +314,17 @@ export async function detectContradictionCandidates(params: {
     raw = { candidates: [] };
   }
   const parsed = contradictionCandidatesSchema.parse(raw);
+  const chunkTextById = new Map(professionalChunks.map((chunk) => [chunk.chunkId, chunk.content]));
+  const mergedCandidates = mergeContradictionCandidates(
+    parsed.candidates,
+    findExactCrossDocumentDateConflicts(professionalChunks).candidates,
+  );
+  const candidates = filterImpreciseDateContradictionCandidates(
+    mergedCandidates,
+    chunkTextById,
+  );
 
-  const allChunkIds = parsed.candidates.flatMap((c) => [...c.sideA.chunkIds, ...c.sideB.chunkIds]);
+  const allChunkIds = candidates.flatMap((c) => [...c.sideA.chunkIds, ...c.sideB.chunkIds]);
   const authorized = await loadAuthorizedChunks(params.db, {
     organizationId: params.organizationId,
     matterId: params.matterId,
@@ -317,7 +333,7 @@ export async function detectContradictionCandidates(params: {
 
   const now = new Date();
   let run = existingRun;
-  if (run && params.force) {
+  if (run && force) {
     await params.db.delete(analysisFindings).where(eq(analysisFindings.analysisRunId, run.id));
     const [updated] = await params.db
       .update(analysisRuns)
@@ -352,7 +368,7 @@ export async function detectContradictionCandidates(params: {
   const createdFindings = [];
   let rejectedIncomplete = 0;
 
-  for (const candidate of parsed.candidates) {
+  for (const candidate of candidates) {
     const sideASources = resolveValidatedSources({
       organizationId: params.organizationId,
       matterId: params.matterId,

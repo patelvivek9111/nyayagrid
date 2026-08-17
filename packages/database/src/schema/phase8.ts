@@ -10,6 +10,7 @@ import {
   date,
   pgEnum,
   customType,
+  type AnyPgColumn,
 } from "drizzle-orm/pg-core";
 import { sql } from "drizzle-orm";
 import { users } from "./index";
@@ -151,12 +152,19 @@ export const studentConversations = pgTable(
     userId: uuid("user_id")
       .notNull()
       .references(() => users.id, { onDelete: "cascade" }),
+    /** When set, this thread is the persistent case-room conversation for that opinion. */
+    caseId: uuid("case_id").references((): AnyPgColumn => studentCases.id, { onDelete: "set null" }),
     title: text("title").notNull(),
     explanationLevel: explanationLevelEnum("explanation_level").notNull().default("standard"),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
   },
-  (table) => [index("student_conversations_user_idx").on(table.userId)],
+  (table) => [
+    index("student_conversations_user_idx").on(table.userId),
+    uniqueIndex("student_conversations_user_case_uidx")
+      .on(table.userId, table.caseId)
+      .where(sql`${table.caseId} IS NOT NULL`),
+  ],
 );
 
 export const studentMessages = pgTable(
@@ -213,6 +221,8 @@ export const studentCases = pgTable(
     mimeType: text("mime_type"),
     sha256: text("sha256"),
     byteSize: integer("byte_size").notNull().default(0),
+    /** Lightweight course folder label — not an LMS, just a string the student typed. */
+    courseLabel: text("course_label"),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
   },
@@ -364,11 +374,39 @@ export const studentSavedItems = pgTable(
       .$type<Record<string, unknown>>()
       .notNull()
       .default(sql`'{}'::jsonb`),
+    courseLabel: text("course_label"),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => [
     index("student_saved_items_user_idx").on(table.userId),
     index("student_saved_items_type_idx").on(table.itemType),
+  ],
+);
+
+/**
+ * Private study notes. User-scoped only — never written to professional `notes`.
+ * `brief_challenge` flags a generated brief section without overwriting the validated brief.
+ */
+export const studentNotes = pgTable(
+  "student_notes",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    caseId: uuid("case_id").references(() => studentCases.id, { onDelete: "cascade" }),
+    briefId: uuid("brief_id").references(() => studentCaseBriefs.id, { onDelete: "set null" }),
+    kind: text("kind").$type<"note" | "brief_challenge">().notNull().default("note"),
+    sectionKey: text("section_key"),
+    title: text("title").notNull(),
+    content: text("content").notNull(),
+    courseLabel: text("course_label"),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    index("student_notes_user_idx").on(table.userId),
+    index("student_notes_case_idx").on(table.caseId),
   ],
 );
 
@@ -688,6 +726,7 @@ export type StudentCaseChunk = typeof studentCaseChunks.$inferSelect;
 export type StudentCaseBrief = typeof studentCaseBriefs.$inferSelect;
 export type StudentCaseComparison = typeof studentCaseComparisons.$inferSelect;
 export type StudentSavedItem = typeof studentSavedItems.$inferSelect;
+export type StudentNote = typeof studentNotes.$inferSelect;
 export type GuideConversation = typeof guideConversations.$inferSelect;
 export type GuideMessage = typeof guideMessages.$inferSelect;
 export type GuideDocument = typeof guideDocuments.$inferSelect;

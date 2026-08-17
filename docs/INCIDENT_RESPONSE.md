@@ -53,8 +53,9 @@ default.
 
 ### Database unreachable / `GET /api/health/ready` returning 503
 
-1. Check the database check's reported error message in the health response
-   (`checks.databaseError` — never contains secrets, see `apps/web/src/app/api/health/ready/route.ts`).
+1. Check the database check's reported error (`checks.databaseError`). Staging and production
+   return the generic label `unreachable` so connection strings never leave the process. Development
+   may include a redacted driver message.
 2. Confirm from the database host/provider side: is it up, is it out of connections, is it out of
    disk?
 3. If it's a managed provider outage, this is generally outside engineering's direct control —
@@ -90,11 +91,10 @@ default.
 
 ### Rate limiter behaving unexpectedly after scaling out
 
-Expected, not a bug (yet): `RATE_LIMIT_PROVIDER=memory` counts per process. Adding instances
-effectively raises the real-world limit (each instance has its own counter) and a rolling
-deploy/restart resets counters to zero. This is tracked as a BLOCKER for horizontal scaling in
-[Production Readiness](./PRODUCTION_READINESS.md) — the fix is implementing a shared-store rate
-limiter, not an incident response action.
+If `RATE_LIMIT_PROVIDER=redis`, limits are shared. A Redis outage **fails closed** (requests are
+denied for 5 seconds) rather than multiplying the limit. If `RATE_LIMIT_PROVIDER=memory`, adding
+instances effectively raises the real-world limit (each instance has its own counter) and a rolling
+deploy/restart resets counters to zero. Memory is a production blocker for horizontal scale.
 
 ## Contacts
 

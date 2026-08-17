@@ -5,9 +5,15 @@ import {
   studentCaseVersions,
   studentCases,
   studentConversations,
+  studentNotes,
   studentSavedItems,
 } from "@nyayagrid/database";
-import type { StudentCase, StudentCaseVersion, StudentConversation } from "@nyayagrid/database";
+import type {
+  StudentCase,
+  StudentCaseVersion,
+  StudentConversation,
+  StudentNote,
+} from "@nyayagrid/database";
 
 /**
  * Ownership checks for the Student Workspace. There is no role model here and no organization to
@@ -96,6 +102,23 @@ export async function assertStudentSavedItemOwnership(
     .select()
     .from(studentSavedItems)
     .where(and(eq(studentSavedItems.id, itemId), eq(studentSavedItems.userId, userId)))
+    .limit(1);
+  if (!row) throw new StudentAccessError();
+  return row;
+}
+
+export async function assertStudentNoteOwnership(
+  db: Database,
+  userId: string,
+  noteId: string,
+): Promise<StudentNote> {
+  if (!userId || !noteId) {
+    throw new StudentAccessError("userId and noteId are required");
+  }
+  const [row] = await db
+    .select()
+    .from(studentNotes)
+    .where(and(eq(studentNotes.id, noteId), eq(studentNotes.userId, userId)))
     .limit(1);
   if (!row) throw new StudentAccessError();
   return row;

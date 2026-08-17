@@ -5,6 +5,7 @@ import {
   computeParagraphDiffs,
   scoreComparisonSummaryAgainstDiffs,
 } from "./draft/helpers";
+import { GOLDEN_CONTRACT_ORIGINAL, GOLDEN_CONTRACT_REDLINE } from "@nyayagrid/ai/evals";
 
 describe("clause-aligned redline / comparison summary scoring", () => {
   it("scores equal texts + honest empty summary as aligned", () => {
@@ -92,5 +93,23 @@ describe("clause-aligned redline / comparison summary scoring", () => {
     );
     // "indemnity" in summary while no high_attention diff → flag
     expect(score.flags.some((f) => /high-attention themes/i.test(f))).toBe(true);
+  });
+
+  it("treats 60 days and sixty (60) days as the same planted notice change", () => {
+    const changes = computeParagraphDiffs(GOLDEN_CONTRACT_ORIGINAL, GOLDEN_CONTRACT_REDLINE);
+    const score = scoreComparisonSummaryAgainstDiffs(
+      "The notice period for termination has been extended to 60 days.",
+      changes,
+    );
+    expect(score.unsupportedClaims).toEqual([]);
+  });
+
+  it("still rejects a different numeral than the planted notice period", () => {
+    const changes = computeParagraphDiffs(GOLDEN_CONTRACT_ORIGINAL, GOLDEN_CONTRACT_REDLINE);
+    const score = scoreComparisonSummaryAgainstDiffs(
+      "The notice period for termination has been extended to 90 days.",
+      changes,
+    );
+    expect(score.unsupportedClaims.length).toBeGreaterThan(0);
   });
 });

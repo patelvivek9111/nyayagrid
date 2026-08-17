@@ -6,8 +6,11 @@ import {
   draftGenerationSchema,
   depositionFindingSchema,
   extractProfessionalChunksFromPrompt,
+  findExactCrossDocumentDateConflicts,
   formatProfessionalChunks,
+  mergeContradictionCandidates,
   mockContractAnalysis,
+  mockContradictionCandidates,
   mockDepositionAnalysis,
   mockDiscoveryClassification,
   mockDraftGeneration,
@@ -160,5 +163,85 @@ describe("mock professional analysis helpers", () => {
       "Excerpt:\nMemo from outside counsel reflecting attorney work product.",
     );
     expect(privileged.privilege).toBe("potentially_privileged");
+  });
+
+  it("finds the golden CAM send-date conflict across depo and PM email", () => {
+    const depo: ProfessionalChunk = {
+      chunkId: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      documentId: "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      documentVersionId: "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+      content:
+        "Q: When did you send the February CAM package? A: I emailed the package on February 28, 2025, and Tenant confirmed receipt the same day.",
+    };
+    const pmEmail: ProfessionalChunk = {
+      chunkId: "dddddddd-dddd-4ddd-8ddd-dddddddddddd",
+      documentId: "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee",
+      documentVersionId: "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      content:
+        "Following up — the February CAM package was uploaded to the portal on March 3, 2025; I do not see an earlier transmission.",
+    };
+    const estimate: ProfessionalChunk = {
+      chunkId: "11111111-1111-4111-8111-111111111111",
+      documentId: pmEmail.documentId,
+      documentVersionId: pmEmail.documentVersionId,
+      content:
+        "Separately, the estimated February CAM worksheet was prepared internally on February 15, 2025, and is not a transmittal to Tenant.",
+    };
+    const found = findExactCrossDocumentDateConflicts([depo, pmEmail, estimate]);
+    expect(found.candidates).toHaveLength(1);
+    expect(found.candidates[0]?.sideA.chunkIds).toEqual([depo.chunkId]);
+    expect(found.candidates[0]?.sideB.chunkIds).toEqual([pmEmail.chunkId]);
+  });
+
+  it("prefers the CAM send-date pair in the mock contradiction path", () => {
+    const depo: ProfessionalChunk = {
+      chunkId: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+      documentId: "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+      documentVersionId: "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+      content:
+        "Q: When did you send the February CAM package? A: I emailed the package on February 28, 2025.",
+    };
+    const pmEmail: ProfessionalChunk = {
+      chunkId: "dddddddd-dddd-4ddd-8ddd-dddddddddddd",
+      documentId: "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee",
+      documentVersionId: "ffffffff-ffff-4fff-8fff-ffffffffffff",
+      content:
+        "The February CAM package was uploaded to the portal on March 3, 2025; I do not see an earlier transmission.",
+    };
+    const result = mockContradictionCandidates(
+      `Matter: SYNTH\nSources:\n${formatProfessionalChunks([depo, pmEmail])}`,
+    );
+    expect(result.candidates[0]?.title).toMatch(/CAM send dates/i);
+  });
+
+  it("mergeContradictionCandidates keeps deterministic CAM pairs first", () => {
+    const cam = findExactCrossDocumentDateConflicts([
+      {
+        chunkId: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
+        documentId: "bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb",
+        documentVersionId: "cccccccc-cccc-4ccc-8ccc-cccccccccccc",
+        content: "I emailed the February CAM package on February 28, 2025.",
+      },
+      {
+        chunkId: "dddddddd-dddd-4ddd-8ddd-dddddddddddd",
+        documentId: "eeeeeeee-eeee-4eee-8eee-eeeeeeeeeeee",
+        documentVersionId: "ffffffff-ffff-4fff-8fff-ffffffffffff",
+        content: "The February CAM package was uploaded on March 3, 2025 transmission.",
+      },
+    ]).candidates;
+    const merged = mergeContradictionCandidates(
+      [
+        {
+          title: "Other tension",
+          explanation: "Unrelated pair.",
+          confidence: "low",
+          sideA: { chunkIds: ["11111111-1111-4111-8111-111111111111"], summary: "A" },
+          sideB: { chunkIds: ["22222222-2222-4222-8222-222222222222"], summary: "B" },
+        },
+      ],
+      cam,
+    );
+    expect(merged[0]?.title).toMatch(/CAM send dates/i);
+    expect(merged).toHaveLength(2);
   });
 });

@@ -143,9 +143,11 @@ export default function CaseGraphPage() {
   async function selectNode(node: GraphNode) {
     setSelected(node);
     setSelectedProposed(null);
+    setError("");
     const res = await fetch(`/api/v1/matters/${matterId}/graph/nodes/${node.id}`);
     const json = await res.json();
     if (!res.ok) {
+      setNeighborhood(null);
       setError(json?.error?.message ?? "Failed to load neighborhood");
       return;
     }
@@ -246,6 +248,7 @@ export default function CaseGraphPage() {
         subtitle: s.page != null ? `Page ${s.page}` : undefined,
         quote: s.supportingText,
         chunkId: s.chunkId,
+        documentId: s.documentId,
       })),
     );
     setDrawerOpen(true);
@@ -343,7 +346,11 @@ export default function CaseGraphPage() {
 
           <Panel title="Proposed relationships">
             {proposedEdges.length === 0 ? (
-              <p className="text-sm text-ink/70">No proposed edges.</p>
+              <p className="text-sm text-ink/70">
+                No proposed edges yet. After documents are processed, use Propose AI relationships.
+                Proposed edges stay Suggested until you approve them — they are never shown as
+                Verified.
+              </p>
             ) : (
               <ul aria-label="Proposed graph edges" className="space-y-3 text-sm">
                 {proposedEdges.map((edge) => (
@@ -410,7 +417,9 @@ export default function CaseGraphPage() {
                   })()}
                 </div>
                 {(neighborhood.edges ?? []).length === 0 ? (
-                  <p className="text-ink/70">No connected verified edges.</p>
+                  <p className="text-ink/70">
+                    No connected edges yet. Proposed edges appear here as Suggested until approved.
+                  </p>
                 ) : (
                   <ul className="space-y-3">
                     {neighborhood.edges.map((edge) => {

@@ -5,3 +5,6 @@ Corpus: golden_synth_lease_v1
 
 [p.1]
 Following up — the February CAM package was uploaded to the portal on March 3, 2025; I do not see an earlier transmission.
+
+[p.1]
+Separately, the estimated February CAM worksheet was prepared internally on February 15, 2025, and is not a transmittal to Tenant.

@@ -1,4 +1,4 @@
-import { and, eq, isNull, or } from "drizzle-orm";
+import { and, desc, eq, isNull, or } from "drizzle-orm";
 import type { Database } from "@nyayagrid/database";
 import {
   auditEvents,
@@ -26,12 +26,15 @@ import {
   tasks,
   timelineEvents,
   aiArtifacts,
+  trainingConsents,
   type DataDeletionRequest,
   type DataDeletionRequestStatus,
   type DataDeletionScope,
   type LegalHold,
   type OperationalWorkspace,
+  type TrainingConsent,
 } from "@nyayagrid/database";
+import { sanitizeUsageMetadata } from "./usage";
 
 export class LegalHoldActiveError extends Error {
   readonly code = "LEGAL_HOLD_ACTIVE";
@@ -179,6 +182,25 @@ export async function releaseLegalHold(params: {
   });
 
   return released;
+}
+
+export async function listLegalHolds(params: {
+  db: Database;
+  organizationId: string;
+  matterId?: string | null;
+}): Promise<LegalHold[]> {
+  return params.db
+    .select()
+    .from(legalHolds)
+    .where(
+      params.matterId
+        ? and(
+            eq(legalHolds.organizationId, params.organizationId),
+            eq(legalHolds.matterId, params.matterId),
+          )
+        : eq(legalHolds.organizationId, params.organizationId),
+    )
+    .orderBy(desc(legalHolds.createdAt));
 }
 
 /**
@@ -678,4 +700,159 @@ export async function exportUserPersonalData(params: {
     },
     generatedAt: new Date().toISOString(),
   };
+}
+
+export function sanitizeAuditMetadata(metadata: unknown): Record<string, unknown> {
+  if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) return {};
+  return sanitizeUsageMetadata(metadata as Record<string, unknown>);
+}
+
+export type MatterAuditExport = {
+  organizationId: string;
+  matterId: string;
+  generatedAt: string;
+  truncated: boolean;
+  eventCount: number;
+  events: Array<{
+    id: string;
+    createdAt: string;
+    action: string;
+    actorUserId: string | null;
+    targetType: string | null;
+    targetId: string | null;
+    metadata: Record<string, unknown>;
+  }>;
+};
+
+const MATTER_AUDIT_EXPORT_LIMIT = 5000;
+
+/**
+ * Attorney-exportable matter audit log. Scoped to one organization + matter. Metadata is passed
+ * through the same content-key stripper as AI usage rows so prompts and document text cannot ride
+ * along in JSON downloads.
+ */
+export async function exportMatterAuditLog(params: {
+  db: Database;
+  organizationId: string;
+  matterId: string;
+}): Promise<MatterAuditExport> {
+  const [matter] = await params.db
+    .select({ id: matters.id })
+    .from(matters)
+    .where(and(eq(matters.id, params.matterId), eq(matters.organizationId, params.organizationId)))
+    .limit(1);
+  if (!matter) throw new LifecycleNotFoundError("Matter not found in organization");
+
+  const rows = await params.db
+    .select({
+      id: auditEvents.id,
+      createdAt: auditEvents.createdAt,
+      action: auditEvents.action,
+      actorUserId: auditEvents.actorUserId,
+      targetType: auditEvents.targetType,
+      targetId: auditEvents.targetId,
+      metadata: auditEvents.metadata,
+    })
+    .from(auditEvents)
+    .where(
+      and(
+        eq(auditEvents.organizationId, params.organizationId),
+        eq(auditEvents.matterId, params.matterId),
+      ),
+    )
+    .orderBy(desc(auditEvents.createdAt))
+    .limit(MATTER_AUDIT_EXPORT_LIMIT + 1);
+
+  const truncated = rows.length > MATTER_AUDIT_EXPORT_LIMIT;
+  const page = truncated ? rows.slice(0, MATTER_AUDIT_EXPORT_LIMIT) : rows;
+
+  return {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    generatedAt: new Date().toISOString(),
+    truncated,
+    eventCount: page.length,
+    events: page.map((row) => ({
+      id: row.id,
+      createdAt: row.createdAt.toISOString(),
+      action: row.action,
+      actorUserId: row.actorUserId,
+      targetType: row.targetType,
+      targetId: row.targetId,
+      metadata: sanitizeAuditMetadata(row.metadata),
+    })),
+  };
+}
+
+export async function getActiveTrainingConsent(params: {
+  db: Database;
+  organizationId: string;
+}): Promise<TrainingConsent | null> {
+  const [row] = await params.db
+    .select()
+    .from(trainingConsents)
+    .where(
+      and(eq(trainingConsents.organizationId, params.organizationId), isNull(trainingConsents.withdrawnAt)),
+    )
+    .orderBy(desc(trainingConsents.recordedAt))
+    .limit(1);
+  return row ?? null;
+}
+
+export async function recordTrainingConsent(params: {
+  db: Database;
+  organizationId: string;
+  userId: string;
+  statement: string;
+}): Promise<TrainingConsent> {
+  const existing = await getActiveTrainingConsent(params);
+  if (existing) {
+    throw new LifecycleValidationError(
+      "An active training-consent record already exists; withdraw it before recording another",
+    );
+  }
+
+  const [row] = await params.db
+    .insert(trainingConsents)
+    .values({
+      organizationId: params.organizationId,
+      recordedByUserId: params.userId,
+      statement: params.statement,
+    })
+    .returning();
+  if (!row) throw new Error("Failed to record training consent");
+
+  await writeLifecycleAuditEvent(params.db, {
+    organizationId: params.organizationId,
+    actorUserId: params.userId,
+    action: "training_consent.recorded",
+    targetType: "training_consent",
+    targetId: row.id,
+  });
+  return row;
+}
+
+export async function withdrawTrainingConsent(params: {
+  db: Database;
+  organizationId: string;
+  userId: string;
+}): Promise<TrainingConsent | null> {
+  const existing = await getActiveTrainingConsent(params);
+  if (!existing) return null;
+
+  const [row] = await params.db
+    .update(trainingConsents)
+    .set({ withdrawnAt: new Date(), withdrawnByUserId: params.userId })
+    .where(eq(trainingConsents.id, existing.id))
+    .returning();
+  if (!row) throw new Error("Failed to withdraw training consent");
+
+  await writeLifecycleAuditEvent(params.db, {
+    organizationId: params.organizationId,
+    actorUserId: params.userId,
+    action: "training_consent.withdrawn",
+    targetType: "training_consent",
+    targetId: row.id,
+  });
+  return row;
 }

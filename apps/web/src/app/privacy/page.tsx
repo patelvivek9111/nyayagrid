@@ -57,8 +57,13 @@ export default function PrivacyPage() {
       </Panel>
       <Panel title="6. Third parties and subprocessors">
         <p className="text-sm text-ink/70">
-          Placeholder. This section will list infrastructure and AI-provider subprocessors and the
-          safeguards applied to any data shared with them.
+          Draft list (not a signed DPA): OpenAI (inference; chat <code>store: false</code>), Clerk
+          (auth), AWS S3 when configured, ClamAV or equivalent scanner, Inngest, and the PostgreSQL
+          host. See{" "}
+          <a className="font-semibold text-accent underline" href="/subprocessors">
+            Subprocessors
+          </a>
+          .
         </p>
       </Panel>
       <Panel title="7. Your rights">

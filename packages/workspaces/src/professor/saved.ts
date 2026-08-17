@@ -20,6 +20,7 @@ export const saveItemInputSchema = z.object({
   content: z.string().max(20000).nullish(),
   /** Pointer back to the source record (conversation message, brief, authority, comparison). */
   ref: z.record(z.unknown()).default({}),
+  courseLabel: z.string().trim().max(80).nullish(),
 });
 
 export type SaveItemInput = z.infer<typeof saveItemInputSchema>;
@@ -39,6 +40,7 @@ export async function saveItem(params: {
       title: input.title,
       content: input.content ?? null,
       ref: input.ref,
+      courseLabel: input.courseLabel ?? null,
     })
     .returning();
   if (!row) throw new Error("Failed to save the item");

@@ -19,6 +19,7 @@ export const STUDENT_READABLE_TABLES = [
   "student_case_briefs",
   "student_case_comparisons",
   "student_saved_items",
+  "student_notes",
   "legal_authorities",
   "legal_authority_versions",
   "legal_authority_chunks",
@@ -51,6 +52,7 @@ export const WORKSPACE_FORBIDDEN_TABLES = [
   "agent_runs",
   "agent_artifacts",
   "drafts",
+  "notes",
   "guide_documents",
   "guide_document_chunks",
 ] as const;
