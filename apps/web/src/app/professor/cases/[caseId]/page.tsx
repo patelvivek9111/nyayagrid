@@ -2,7 +2,6 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
-import { StudentShell } from "@/components/shell";
 import { StudyAidNotice } from "@/components/professor/study-aid-notice";
 import {
   ProfessorSources,
@@ -237,7 +236,7 @@ export default function ProfessorCaseDetailPage() {
   }
 
   return (
-    <StudentShell>
+    <>
       <PageHeader
         eyebrow="Nyaya Professor · Case room"
         title={loading ? "Loading case…" : (studentCase?.title ?? "Case not found")}
@@ -415,6 +414,6 @@ export default function ProfessorCaseDetailPage() {
           )}
         </Panel>
       </div>
-    </StudentShell>
+    </>
   );
 }

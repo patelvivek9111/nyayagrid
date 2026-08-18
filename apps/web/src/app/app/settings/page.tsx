@@ -102,16 +102,13 @@ export default function SettingsPage() {
     <ProfessionalShell title="Settings">
       <div className="space-y-4">
         <Panel title="Members and roles">
-          <p className="text-sm text-ink/70">
-            NyayaGrid owns authorization. Organization memberships, roles, and capabilities are stored
-            in PostgreSQL and enforced server-side. Identity providers authenticate only. SMTP is
-            console-only in development. SSO (SAML/OIDC) is configured in Clerk Enterprise when a
-            live Clerk app exists — see the in-repo user lifecycle note. Compliance (holds, audit
-            export, training consent) is a separate screen.
+        <p className="text-sm text-ink/70">
+            Invite people to this firm and choose what they can do. Holds, privacy, and training
+            consent live on a separate page.
           </p>
           <p className="mt-2 text-sm">
             <a className="font-semibold text-accent underline" href="/app/compliance">
-              Compliance (holds, deletion, training consent)
+              Holds, privacy, and training consent
             </a>
           </p>
         </Panel>

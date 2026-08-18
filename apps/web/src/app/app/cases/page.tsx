@@ -39,7 +39,7 @@ export default function CasesListPage() {
   return (
     <ProfessionalShell title="Cases">
       <div className="mb-4 flex items-center justify-between gap-3">
-        <p className="text-sm text-ink/60">Select a Case to open its workspace and chats.</p>
+        <p className="text-sm text-ink/60">Open a case to see its files, chats, and next steps.</p>
         <Link href="/app/cases/new">
           <Button type="button">New Case</Button>
         </Link>
@@ -49,7 +49,7 @@ export default function CasesListPage() {
       {!loading && cases.length === 0 ? (
         <EmptyState
           title="No cases yet"
-          description="Create a Case to organize documents, chats, and Case intelligence."
+          description="Create a case to keep files, chats, and deadlines in one place."
           action={
             <Link href="/app/cases/new" className="text-sm font-semibold text-accent underline">
               Create Case

@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Badge, Button, Panel } from "@nyayagrid/ui";
+import { humanizeKey } from "@/lib/plain-labels";
 import {
   EmptyState,
   ErrorState,
@@ -264,18 +265,18 @@ export default function CaseGraphPage() {
       <div>
         <h2 className="font-display text-xl text-ink">Nyaya Graph</h2>
         <p className="text-sm text-ink/60">
-          Matter relationships with provenance. Proposed edges stay suggestions until you approve
-          them.
+          Who is connected to whom — and which file that comes from. Suggestions stay suggestions
+          until you confirm them.
         </p>
       </div>
       {error ? <ErrorState message={error} /> : null}
 
       <div className="flex flex-wrap gap-2">
         <Button disabled={busy} onClick={materialize}>
-          Materialize from verified intelligence
+          Build from confirmed facts
         </Button>
         <Button disabled={busy} variant="secondary" onClick={extractRelationships}>
-          Propose AI relationships
+          Suggest connections
         </Button>
         <Badge>{nodes.length} nodes</Badge>
         <Badge>{edges.length} verified edges</Badge>
@@ -285,8 +286,8 @@ export default function CaseGraphPage() {
       <div className="flex flex-wrap gap-3">
         <input
           className="rounded border border-line px-3 py-1.5 text-sm"
-          placeholder="Search nodes"
-          aria-label="Search graph nodes"
+          placeholder="Search people, files, or events"
+          aria-label="Search people, files, or events"
           value={q}
           onChange={(e) => setQ(e.target.value)}
           onBlur={() => load().catch((err) => setError(err.message))}
@@ -303,7 +304,7 @@ export default function CaseGraphPage() {
           <option value="">All types</option>
           {nodeTypes.map((type) => (
             <option key={type} value={type}>
-              {type}
+              {humanizeKey(type)}
             </option>
           ))}
         </select>
@@ -315,7 +316,7 @@ export default function CaseGraphPage() {
             {nodes.length === 0 ? (
               <EmptyState
                 title="No graph nodes yet"
-                description="Materialize verified intelligence to create nodes from people, documents, events, and facts."
+                description="Create people, files, events, and facts from what you have already confirmed."
               />
             ) : (
               <div className="max-h-[28rem] space-y-4 overflow-auto">
@@ -347,7 +348,7 @@ export default function CaseGraphPage() {
           <Panel title="Proposed relationships">
             {proposedEdges.length === 0 ? (
               <p className="text-sm text-ink/70">
-                No proposed edges yet. After documents are processed, use Propose AI relationships.
+                No suggested connections yet. After files are processed, use Suggest connections.
                 Proposed edges stay Suggested until you approve them — they are never shown as
                 Verified.
               </p>
@@ -369,7 +370,7 @@ export default function CaseGraphPage() {
                     >
                       <div className="flex flex-wrap items-center gap-2">
                         <span className="font-semibold">
-                          {edge.fromName} — {edge.relationshipType} → {edge.toName}
+                          {edge.fromName} — {humanizeKey(edge.relationshipType)} → {edge.toName}
                         </span>
                         <SuggestedBadge />
                       </div>
@@ -396,7 +397,7 @@ export default function CaseGraphPage() {
                 <div>
                   <div className="font-semibold">{neighborhood.center.displayName}</div>
                   <div className="text-ink/60">
-                    {neighborhood.center.nodeType} · {neighborhood.center.canonicalEntityType}
+                    {humanizeKey(neighborhood.center.nodeType)}
                   </div>
                   {(() => {
                     const href = nodeHref(matterId, neighborhood.center);
@@ -433,7 +434,7 @@ export default function CaseGraphPage() {
                         <li key={edge.id} className="rounded border border-line p-2">
                           <div className="flex flex-wrap items-center gap-2">
                             <span className="font-semibold">
-                              {edge.relationshipType} → {other?.displayName ?? otherId.slice(0, 8)}
+                              {humanizeKey(edge.relationshipType)} → {other?.displayName ?? otherId.slice(0, 8)}
                             </span>
                             {isVerified(edge.status) ? <VerifiedBadge /> : <SuggestedBadge />}
                           </div>
@@ -475,12 +476,12 @@ export default function CaseGraphPage() {
                   <Badge>{selectedProposed.origin}</Badge>
                 </div>
                 <p>
-                  {selectedProposed.fromName} — {selectedProposed.relationshipType} →{" "}
+                  {selectedProposed.fromName} — {humanizeKey(selectedProposed.relationshipType)} →{" "}
                   {selectedProposed.toName}
                 </p>
                 {(selectedProposed.sources ?? []).length === 0 ? (
                   <p className="text-ink/55">
-                    AI edges cannot be approved without source provenance.
+                    Nyaya cannot confirm this connection until it points to a quote in the files.
                   </p>
                 ) : (
                   <Button
@@ -580,7 +581,7 @@ export default function CaseGraphPage() {
                 {edges.map((edge) => (
                   <li key={edge.id} className="flex flex-wrap items-center gap-2">
                     <span>
-                      {edge.fromName} — {edge.relationshipType} → {edge.toName}
+                      {edge.fromName} — {humanizeKey(edge.relationshipType)} → {edge.toName}
                     </span>
                     {isVerified(edge.status) ? <VerifiedBadge /> : <SuggestedBadge />}
                   </li>

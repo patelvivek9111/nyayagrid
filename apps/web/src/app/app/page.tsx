@@ -106,7 +106,7 @@ export default function NewChatPage() {
           ) => ({
             id: s.chunkId ?? `${s.documentId}-${i}`,
             title: `Document source`,
-            classLabel: "Matter Evidence",
+            classLabel: "From this case",
             subtitle: s.page ? `Page ${s.page}` : undefined,
             quote: s.quote,
           }),
@@ -212,8 +212,7 @@ export default function NewChatPage() {
               What can Nyaya help you with?
             </h1>
             <p className="mt-3 max-w-md text-sm text-ink/60">
-              Ask a general legal question, or attach a Case to work with documents and verified
-              Case intelligence.
+              Ask a question. Attach a case if you want Nyaya to use that case&apos;s files.
             </p>
           </div>
         ) : (
@@ -284,12 +283,12 @@ export default function NewChatPage() {
           placeholder={
             selectedCase
               ? `Ask about ${selectedCase.title}…`
-              : "Ask a general legal question (no Case attached)…"
+              : "Ask a legal question. Attach a case to use its files."
           }
           footer={
             <p className="text-[11px] text-ink/45">
-              Draft work product — not guaranteed legal advice. General chats never retrieve Case
-              files.
+              This is a draft, not legal advice. With no case attached, Nyaya will not read your
+              case files.
             </p>
           }
         />

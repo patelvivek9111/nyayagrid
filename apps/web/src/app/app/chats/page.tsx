@@ -36,17 +36,17 @@ export default function ChatsListPage() {
   return (
     <ProfessionalShell title="Chats">
       <p className="mb-4 text-sm text-ink/60">
-        General chats are not attached to a Case and never retrieve confidential Case documents.
+        General chats are not tied to a case, so Nyaya will not read your case files here.
       </p>
       {loading ? <LoadingState /> : null}
       {error ? <ErrorState message={error} /> : null}
       {!loading && sessions.length === 0 ? (
         <EmptyState
           title="No general chats yet"
-          description="Start from New Chat without selecting a Case."
+          description="Start from Ask Nyaya without picking a case."
           action={
             <Link href="/app" className="text-sm font-semibold text-accent underline">
-              New Chat
+              Ask Nyaya
             </Link>
           }
         />

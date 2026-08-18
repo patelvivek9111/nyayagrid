@@ -6,17 +6,17 @@ import type { MouseEvent, ReactNode } from "react";
 import { cx } from "@nyayagrid/ui";
 import { useMatterChrome } from "@/components/use-matter-chrome";
 
-/** Primary Case objects — always visible. */
+/** Primary Case objects — always visible. `hint` is the plain-language line under the tabs. */
 const CASE_TABS = [
-  { segment: "", label: "Home" },
-  { segment: "chats", label: "Chats" },
-  { segment: "documents", label: "Documents" },
-  { segment: "timeline", label: "Timeline" },
-  { segment: "evidence", label: "Evidence" },
-  { segment: "people", label: "People" },
-  { segment: "graph", label: "Graph" },
-  { segment: "memory", label: "Memory" },
-  { segment: "work", label: "Work" },
+  { segment: "", label: "Home", hint: "Overview of this case" },
+  { segment: "chats", label: "Chats", hint: "Ask Nyaya about the files in this case" },
+  { segment: "documents", label: "Documents", hint: "Original files you uploaded" },
+  { segment: "timeline", label: "Timeline", hint: "What happened, in order" },
+  { segment: "evidence", label: "Evidence", hint: "Proof tied to a source" },
+  { segment: "people", label: "People", hint: "Who is involved" },
+  { segment: "graph", label: "Graph", hint: "How people, files, and events connect" },
+  { segment: "memory", label: "Memory", hint: "Facts and notes Nyaya should remember" },
+  { segment: "work", label: "Work", hint: "Tasks, drafts, and things waiting on you" },
 ] as const;
 
 /**
@@ -24,10 +24,10 @@ const CASE_TABS = [
  * rather than crowding the primary Case tabs. Work remains the attorney command hub.
  */
 const CASE_WORK_SURFACES = [
-  { segment: "draft", label: "Draft" },
-  { segment: "research", label: "Research" },
-  { segment: "analysis", label: "Analysis" },
-  { segment: "review", label: "Review" },
+  { segment: "draft", label: "Draft", hint: "Write a document" },
+  { segment: "research", label: "Research", hint: "Look up legal sources" },
+  { segment: "analysis", label: "Analysis", hint: "Review a contract or deposition" },
+  { segment: "review", label: "Review", hint: "Check what Nyaya found in the files" },
 ] as const;
 
 function tabActive(pathname: string, base: string, segment: string) {
@@ -40,11 +40,13 @@ function CaseNavLink({
   href,
   active,
   className,
+  title,
   children,
 }: {
   href: string;
   active: boolean;
   className: string;
+  title?: string;
   children: ReactNode;
 }) {
   const router = useRouter();
@@ -62,6 +64,7 @@ function CaseNavLink({
       href={href}
       prefetch={false}
       aria-current={active ? "page" : undefined}
+      title={title}
       className={className}
       onClick={onClick}
     >
@@ -88,6 +91,15 @@ export function CaseHeader({ subtitle }: { subtitle?: string | null }) {
 export function CaseTabs({ matterId }: { matterId: string }) {
   const pathname = usePathname();
   const base = `/app/cases/${matterId}`;
+  const segment = pathname.slice(base.length).replace(/^\//, "").split("/")[0] ?? "";
+  const activeTab =
+    CASE_TABS.find((tab) => tab.segment === segment) ??
+    CASE_WORK_SURFACES.find((tab) => tab.segment === segment);
+  const extraHints: Record<string, string> = {
+    nyaya: "Ask Nyaya about this case, or start a longer task",
+    tasks: "To-dos and deadlines for this case",
+  };
+  const activeHint = activeTab?.hint ?? extraHints[segment] ?? CASE_TABS[0].hint;
 
   return (
     <div>
@@ -103,6 +115,7 @@ export function CaseTabs({ matterId }: { matterId: string }) {
               key={tab.label}
               href={href}
               active={active}
+              title={tab.hint}
               className={cx(
                 "whitespace-nowrap border-b-2 px-3 py-2 text-sm font-semibold transition",
                 active
@@ -127,6 +140,7 @@ export function CaseTabs({ matterId }: { matterId: string }) {
               key={tab.label}
               href={href}
               active={active}
+              title={tab.hint}
               className={cx(
                 "whitespace-nowrap rounded-md px-3 py-1.5 text-xs font-semibold transition",
                 active ? "bg-accent-soft text-accent" : "text-ink/55 hover:bg-black/[0.03] hover:text-ink",
@@ -137,6 +151,7 @@ export function CaseTabs({ matterId }: { matterId: string }) {
           );
         })}
       </nav>
+      <p className="mt-2 text-sm text-ink/55">{activeHint}</p>
     </div>
   );
 }

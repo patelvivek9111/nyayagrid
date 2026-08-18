@@ -180,7 +180,7 @@ export default function CompliancePage() {
   }
 
   return (
-    <ProfessionalShell title="Compliance">
+    <ProfessionalShell title="Holds & privacy">
       <p className="mb-4 text-sm text-ink/70">
         Legal holds block deletion. Audit export is per case (no document text). Training consent is
         recorded separately and does <span className="font-semibold">not</span> enable training in
@@ -271,7 +271,8 @@ export default function CompliancePage() {
             </a>
           </div>
           <p className="mt-2 text-xs text-ink/50">
-            Case audit logs: open a case Home and use Export audit log. Originals are not included.
+            Case activity logs: open a case Home and choose Download activity log. Original files
+            are not included.
           </p>
         </Panel>
 

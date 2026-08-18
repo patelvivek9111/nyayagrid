@@ -2,7 +2,6 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
-import { StudentShell } from "@/components/shell";
 import { StudyAidNotice } from "@/components/professor/study-aid-notice";
 import { Badge, Button, PageHeader, Panel } from "@nyayagrid/ui";
 
@@ -111,7 +110,7 @@ export default function ProfessorComparePage() {
   }
 
   return (
-    <StudentShell>
+    <>
       <PageHeader
         eyebrow="Nyaya Professor"
         title="Compare cases"
@@ -234,6 +233,6 @@ export default function ProfessorComparePage() {
           ) : null}
         </div>
       ) : null}
-    </StudentShell>
+    </>
   );
 }

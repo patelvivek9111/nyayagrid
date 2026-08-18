@@ -201,8 +201,8 @@ export default function CaseChatThreadPage() {
         </Link>
       </div>
       <p className="text-xs text-ink/55">
-        Nyaya answers are draft work product. Grounded answers cite Case documents; insufficient
-        means the Case does not support a confident answer.
+        Nyaya&apos;s answers are drafts, not legal advice. If the files support the answer, you will
+        see sources. If they do not, Nyaya will say so instead of guessing.
       </p>
       {loading ? <LoadingState /> : null}
       {error ? <ErrorState message={error} /> : null}

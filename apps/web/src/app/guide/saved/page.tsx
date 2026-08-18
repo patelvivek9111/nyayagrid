@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { PublicShell } from "@/components/shell";
 import { PageHeader, Panel } from "@nyayagrid/ui";
 
 type ConversationRow = {
@@ -27,7 +26,7 @@ export default function GuideSavedPage() {
   }, []);
 
   return (
-    <PublicShell>
+    <>
       <PageHeader
         eyebrow="Nyaya Guide"
         title="Saved Conversations"
@@ -60,6 +59,6 @@ export default function GuideSavedPage() {
           </ul>
         )}
       </Panel>
-    </PublicShell>
+    </>
   );
 }

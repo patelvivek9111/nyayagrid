@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Badge, Button, Panel } from "@nyayagrid/ui";
+import { humanizeKey } from "@/lib/plain-labels";
 import {
   EmptyState,
   ErrorState,
@@ -261,8 +262,8 @@ export default function CaseMemoryPage() {
       <div>
         <h2 className="font-display text-xl text-ink">Nyaya Memory</h2>
         <p className="text-sm text-ink/60">
-          Durable Case context. Nyaya proposals stay suggestions until you approve them — nothing is
-          auto-verified.
+          What Nyaya should remember about this case. Suggestions are not confirmed until you say
+          so.
         </p>
       </div>
       {error ? <ErrorState message={error} /> : null}
@@ -277,14 +278,14 @@ export default function CaseMemoryPage() {
           {active.length === 0 ? (
             <EmptyState
               title="No active memory"
-              description="Save durable Case context here when something should remain available to Nyaya."
+              description="Save something here when Nyaya should keep it in mind for this case."
             />
           ) : (
             <div className="space-y-4">
               {groupByType(active).map(([type, items]) => (
                 <div key={type}>
                   <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink/55">
-                    {type}
+                    {humanizeKey(type)}
                   </p>
                   <ul className="space-y-2">
                     {items.map((memory) => (
@@ -336,7 +337,7 @@ export default function CaseMemoryPage() {
               {groupByType(proposed).map(([type, items]) => (
                 <div key={type}>
                   <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink/55">
-                    {type}
+                    {humanizeKey(type)}
                   </p>
                   <ul aria-label="Proposed memories" className="space-y-2">
                     {items.map((memory) => (
@@ -368,14 +369,14 @@ export default function CaseMemoryPage() {
 
       <Panel title={selected ? selected.title : "Memory detail"}>
         {!selected ? (
-          <p className="text-sm text-ink/60">Select a memory to inspect sources and review.</p>
+          <p className="text-sm text-ink/60">Pick an item to see its sources and confirm or reject it.</p>
         ) : (
           <div className="space-y-3 text-sm">
             <div className="flex flex-wrap items-center gap-2">
               {selected.badge === "verified" ? <VerifiedBadge /> : null}
               {selected.badge === "suggested" ? <SuggestedBadge /> : null}
-              <Badge>{selected.memoryType}</Badge>
-              <Badge>{selected.importance}</Badge>
+              <Badge>{humanizeKey(selected.memoryType)}</Badge>
+              <Badge>{humanizeKey(selected.importance)}</Badge>
               <Badge>{selected.origin ?? "unknown"}</Badge>
             </div>
             <p className="text-ink/80">{selected.content}</p>
@@ -384,7 +385,7 @@ export default function CaseMemoryPage() {
             ) : null}
 
             <div>
-              <p className="font-semibold">Provenance</p>
+              <p className="font-semibold">Where this came from</p>
               {selected.sources.length === 0 ? (
                 <p className="text-ink/55">
                   No document chunks cited. Review the rationale before approving — Nyaya does not
@@ -446,7 +447,7 @@ export default function CaseMemoryPage() {
                 >
                   {MEMORY_TYPES.map((type) => (
                     <option key={type} value={type}>
-                      {type}
+                      {humanizeKey(type)}
                     </option>
                   ))}
                 </select>
@@ -532,7 +533,7 @@ export default function CaseMemoryPage() {
           >
             {MEMORY_TYPES.map((type) => (
               <option key={type} value={type}>
-                {type}
+                {humanizeKey(type)}
               </option>
             ))}
           </select>

@@ -106,7 +106,7 @@ export default function CaseWorkPage() {
         <div>
           <h2 className="font-display text-xl text-ink">Work</h2>
           <p className="text-sm text-ink/60">
-            Approvals, tasks, drafts, and analysis for this Case — the attorney command center.
+            Tasks, drafts, and items waiting for your OK.
           </p>
         </div>
         <nav className="flex flex-wrap gap-2" aria-label="Work destinations">
@@ -141,7 +141,7 @@ export default function CaseWorkPage() {
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <Panel title="Approvals">
           <p className="text-2xl font-semibold">{needsApproval.length}</p>
-          <p className="text-xs text-ink/55">Runs awaiting approval</p>
+          <p className="text-xs text-ink/55">Waiting for your OK</p>
         </Panel>
         <Panel title="Open tasks">
           <p className="text-2xl font-semibold">{openTasks.length}</p>

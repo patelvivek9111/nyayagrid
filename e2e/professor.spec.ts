@@ -44,19 +44,19 @@ test.describe.serial("Nyaya Professor (student workspace)", () => {
     await page.getByPlaceholder(/Paste the full opinion text/).fill(CASE_A_TEXT);
     await page.getByRole("button", { name: "Add case" }).click();
     await expect(page.getByText(/passages indexed/)).toBeVisible({ timeout: 15_000 });
-    await expect(page.getByRole("link", { name: CASE_A_TITLE })).toBeVisible();
+    await expect(page.locator("main").getByRole("link", { name: CASE_A_TITLE })).toBeVisible();
 
     await page.getByPlaceholder(/Case title/).fill(CASE_B_TITLE);
     await page.getByPlaceholder(/Paste the full opinion text/).fill(CASE_B_TEXT);
     await page.getByRole("button", { name: "Add case" }).click();
     await expect(page.getByText(/passages indexed/)).toBeVisible({ timeout: 15_000 });
-    await expect(page.getByRole("link", { name: CASE_B_TITLE })).toBeVisible();
+    await expect(page.locator("main").getByRole("link", { name: CASE_B_TITLE })).toBeVisible();
   });
 
   test("generates a case brief whose sources open the passage", async ({ page }) => {
     await page.goto("/professor/cases");
     await page.waitForLoadState("networkidle");
-    await page.getByRole("link", { name: CASE_A_TITLE }).click();
+    await page.locator("main").getByRole("link", { name: CASE_A_TITLE }).click();
     await expect(page).toHaveURL(/\/professor\/cases\/[^/]+$/);
     await expect(page.getByRole("note")).toContainText(/study aid/i);
     await page.getByRole("button", { name: /Generate brief/ }).click();
@@ -77,7 +77,7 @@ test.describe.serial("Nyaya Professor (student workspace)", () => {
   test("case room keeps two follow-ups on the same conversation with sources", async ({ page }) => {
     await page.goto("/professor/cases");
     await page.waitForLoadState("networkidle");
-    await page.getByRole("link", { name: CASE_A_TITLE }).click();
+    await page.locator("main").getByRole("link", { name: CASE_A_TITLE }).click();
     const askBox = page.getByPlaceholder(/What test does the court apply/);
     await askBox.fill("What did the majority hold about notice?");
     await page.getByRole("button", { name: "Ask" }).click();
@@ -113,12 +113,12 @@ test.describe.serial("Nyaya Professor (student workspace)", () => {
   test("saves a brief, lists it, and can delete a saved item", async ({ page }) => {
     await page.goto("/professor/cases");
     await page.waitForLoadState("networkidle");
-    await page.getByRole("link", { name: CASE_A_TITLE }).click();
+    await page.locator("main").getByRole("link", { name: CASE_A_TITLE }).click();
     await page.getByRole("button", { name: "Save brief" }).click();
     await expect(page.getByText(/Brief saved/)).toBeVisible({ timeout: 10_000 });
 
     await page.goto("/professor/briefs");
-    await expect(page.getByRole("link", { name: CASE_A_TITLE })).toBeVisible();
+    await expect(page.locator("main").getByRole("link", { name: CASE_A_TITLE })).toBeVisible();
 
     await page.goto("/professor/notes");
     await page.getByPlaceholder("Note title").fill(`E2E note ${suffix}`);
@@ -150,7 +150,7 @@ test.describe.serial("Nyaya Professor (student workspace)", () => {
   }) => {
     await page.goto("/professor/cases");
     await page.waitForLoadState("networkidle");
-    const caseLink = page.getByRole("link", { name: CASE_A_TITLE });
+    const caseLink = page.locator("main").getByRole("link", { name: CASE_A_TITLE });
     await expect(caseLink).toBeVisible();
     const href = await caseLink.getAttribute("href");
     expect(href).toBeTruthy();

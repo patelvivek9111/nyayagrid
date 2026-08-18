@@ -1,9 +1,8 @@
-import { PublicShell } from "@/components/shell";
 import { PageHeader, Panel } from "@nyayagrid/ui";
 
 export default function GuideSafetyPage() {
   return (
-    <PublicShell>
+    <>
       <PageHeader
         eyebrow="Nyaya Guide"
         title="Safety and Privacy"
@@ -38,6 +37,6 @@ export default function GuideSafetyPage() {
           </p>
         </Panel>
       </div>
-    </PublicShell>
+    </>
   );
 }

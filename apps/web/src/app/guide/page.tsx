@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import { PublicShell } from "@/components/shell";
 import { Badge, Button, PageHeader, Panel } from "@nyayagrid/ui";
 
 const HIGH_STAKES_GUIDANCE =
@@ -130,7 +129,7 @@ export default function GuideHomePage() {
     lastHighStakes || messages.some((message) => message.cautionLevel === "elevated");
 
   return (
-    <PublicShell>
+    <>
       <PageHeader
         eyebrow="Nyaya Guide"
         title="Ask a legal question"
@@ -277,6 +276,6 @@ export default function GuideHomePage() {
           </Button>
         </form>
       </Panel>
-    </PublicShell>
+    </>
   );
 }

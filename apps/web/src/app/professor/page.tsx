@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { StudentShell } from "@/components/shell";
 import { StudyAidNotice } from "@/components/professor/study-aid-notice";
 import { Button, Panel } from "@nyayagrid/ui";
 
@@ -29,7 +28,7 @@ export default function ProfessorHomePage() {
   }, []);
 
   return (
-    <StudentShell>
+    <>
       <div className="mx-auto max-w-2xl py-8 text-center">
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-accent">
           Nyaya Professor
@@ -110,6 +109,6 @@ export default function ProfessorHomePage() {
           </Link>
         </Panel>
       </div>
-    </StudentShell>
+    </>
   );
 }

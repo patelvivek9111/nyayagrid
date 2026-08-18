@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { StudentShell } from "@/components/shell";
 import { StudyAidNotice } from "@/components/professor/study-aid-notice";
 import { Badge, PageHeader, Panel } from "@nyayagrid/ui";
 
@@ -82,7 +81,7 @@ export default function ProfessorSavedPage() {
   }
 
   return (
-    <StudentShell>
+    <>
       <PageHeader
         eyebrow="Nyaya Professor"
         title="Saved Conversations"
@@ -168,6 +167,6 @@ export default function ProfessorSavedPage() {
           </ul>
         )}
       </Panel>
-    </StudentShell>
+    </>
   );
 }

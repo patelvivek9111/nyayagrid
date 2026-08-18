@@ -110,7 +110,7 @@ export default function CaseChatsPage() {
       <div>
         <Link href={`/app/cases/${matterId}/nyaya`}>
           <Button type="button" variant="ghost">
-            Open classic Ask / Run Task view
+            Ask Nyaya about this case
           </Button>
         </Link>
       </div>

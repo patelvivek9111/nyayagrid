@@ -37,11 +37,11 @@ export default function OnboardingPage() {
   }
 
   return (
-    <ProfessionalShell title="Workspace onboarding">
-      <Panel title="Create organization">
+    <ProfessionalShell title="Set up your workspace">
+      <Panel title="Create your firm">
         <form className="flex max-w-lg flex-col gap-4" onSubmit={onSubmit}>
           <label className="flex flex-col gap-1 text-sm">
-            Organization name
+            Firm or practice name
             <input
               className="rounded-md border border-line px-3 py-2"
               value={name}
@@ -50,7 +50,7 @@ export default function OnboardingPage() {
             />
           </label>
           <label className="flex flex-col gap-1 text-sm">
-            Slug
+            Short name
             <input
               className="rounded-md border border-line px-3 py-2"
               value={slug}
@@ -62,6 +62,9 @@ export default function OnboardingPage() {
               pattern="[-a-z0-9]+"
               required
             />
+            <span className="font-normal text-xs text-ink/55">
+              Letters, numbers, and hyphens only — used in the workspace URL.
+            </span>
           </label>
           <label className="flex flex-col gap-1 text-sm">
             Type

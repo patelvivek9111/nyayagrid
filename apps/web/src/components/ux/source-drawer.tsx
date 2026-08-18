@@ -145,13 +145,13 @@ export function IntelligenceStatus({
   return (
     <div className="rounded-lg border border-line bg-white px-4 py-3">
       <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-accent">
-        Case Intelligence
+        Case status
       </p>
       <ul className="mt-2 space-y-1 text-sm text-ink/80">
-        <li>✓ {verified} Verified</li>
-        <li>◇ {suggested} Suggestions to review</li>
+        <li>✓ {verified} confirmed</li>
+        <li>◇ {suggested} waiting for your review</li>
         {typeof conflicting === "number" && conflicting > 0 ? (
-          <li>⚠ {conflicting} Conflicting evidence items</li>
+          <li>⚠ {conflicting} conflicts to check</li>
         ) : null}
       </ul>
     </div>

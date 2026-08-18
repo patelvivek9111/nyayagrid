@@ -87,7 +87,7 @@ export function ChatComposer({
                 className="rounded-md px-2 py-1 text-xs font-semibold text-ink/55 hover:text-accent"
                 onClick={onRunTask}
               >
-                Run Task
+                Start a task
               </button>
             ) : null}
             {menuOpen ? (
@@ -98,7 +98,7 @@ export function ChatComposer({
                 {onSelectCase && cases.length > 0 ? (
                   <div className="max-h-48 overflow-y-auto border-b border-line py-1">
                     <p className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wide text-ink/45">
-                      Select Case
+                      Use a case
                     </p>
                     {cases.map((c) => (
                       <button
@@ -125,12 +125,12 @@ export function ChatComposer({
                       window.location.href = "/app/cases/new";
                     }}
                   >
-                    New Case…
+                    New case…
                   </button>
                 ) : null}
                 {onUploadDocument ? (
                   <label className="block cursor-pointer px-3 py-1.5 text-sm hover:bg-accent-soft/40">
-                    Upload Document
+                    Upload a file
                     <input
                       type="file"
                       className="hidden"
@@ -153,7 +153,7 @@ export function ChatComposer({
                     setMenuOpen(false);
                   }}
                 >
-                  Add Research Context
+                  Search legal sources
                 </button>
               </div>
             ) : null}

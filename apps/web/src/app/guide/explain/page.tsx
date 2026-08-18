@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import { PublicShell } from "@/components/shell";
 import { Badge, Button, PageHeader, Panel } from "@nyayagrid/ui";
 
 type DocumentRow = {
@@ -115,7 +114,7 @@ export default function GuideExplainPage() {
   }
 
   return (
-    <PublicShell>
+    <>
       <PageHeader
         eyebrow="Nyaya Guide"
         title="Explain a document"
@@ -310,6 +309,6 @@ export default function GuideExplainPage() {
           )}
         </Panel>
       </div>
-    </PublicShell>
+    </>
   );
 }

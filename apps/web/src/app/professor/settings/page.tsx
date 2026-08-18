@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { StudentShell } from "@/components/shell";
 import { StudyAidNotice } from "@/components/professor/study-aid-notice";
 import {
   loadProfessorSettings,
@@ -29,7 +28,7 @@ export default function ProfessorSettingsPage() {
   }
 
   return (
-    <StudentShell>
+    <>
       <PageHeader
         eyebrow="Nyaya Professor"
         title="Settings"
@@ -74,13 +73,13 @@ export default function ProfessorSettingsPage() {
 
       <Panel title="Account and workspace" className="mt-4">
         <p className="text-sm text-ink/70">
-          Switch workspaces from the header. Professor stays a personal study room; it does not
+          Switch workspaces from the sidebar. Professor stays a personal study room; it does not
           open professional matters, billing, or firm administration.
         </p>
         <Link href="/app" className="mt-3 inline-block text-sm font-semibold text-accent underline">
           Professional workspace →
         </Link>
       </Panel>
-    </StudentShell>
+    </>
   );
 }

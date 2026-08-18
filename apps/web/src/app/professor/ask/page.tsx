@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, type FormEvent } from "react";
-import { StudentShell } from "@/components/shell";
 import { StudyAidNotice } from "@/components/professor/study-aid-notice";
 import {
   ProfessorSources,
@@ -181,7 +180,7 @@ export default function AskProfessorPage() {
   }
 
   return (
-    <StudentShell>
+    <>
       <PageHeader
         eyebrow="Nyaya Professor"
         title="Ask Professor"
@@ -312,6 +311,6 @@ export default function AskProfessorPage() {
           </Button>
         </form>
       </Panel>
-    </StudentShell>
+    </>
   );
 }

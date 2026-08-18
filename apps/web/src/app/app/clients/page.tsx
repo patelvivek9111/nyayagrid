@@ -65,10 +65,10 @@ export default function ClientsPage() {
       {loading ? <p>Loading…</p> : null}
       {error ? <p className="text-sm text-[var(--ng-danger)]">{error}</p> : null}
       {!loading && organizations.length === 0 ? (
-        <Panel title="No organization">
-          <p className="mb-3 text-sm text-ink/70">Create an organization first.</p>
+        <Panel title="No firm yet">
+          <p className="mb-3 text-sm text-ink/70">Set up your workspace first.</p>
           <Link href="/app/onboarding" className="text-sm font-semibold text-accent underline">
-            Go to onboarding
+            Set up your workspace
           </Link>
         </Panel>
       ) : null}

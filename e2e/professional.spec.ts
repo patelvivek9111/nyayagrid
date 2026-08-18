@@ -19,15 +19,15 @@ test.describe.serial("Professional workspace (Nyaya)", () => {
     await expect(
       page.getByRole("heading", { name: /What can Nyaya help you with/i }),
     ).toBeVisible();
-    await expect(page.getByRole("link", { name: "New Chat" })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Ask Nyaya" })).toBeVisible();
     await expect(page.getByRole("link", { name: "Cases" }).first()).toBeVisible();
   });
 
   test("creates an organization via onboarding", async ({ page }) => {
     await page.goto("/app/onboarding");
     await page.waitForLoadState("networkidle");
-    await page.getByLabel("Organization name").fill(ORG_NAME);
-    await page.getByLabel("Slug").fill(ORG_SLUG);
+    await page.getByLabel("Firm or practice name").fill(ORG_NAME);
+    await page.getByLabel("Short name").fill(ORG_SLUG);
     await page.getByRole("button", { name: "Create organization" }).click();
     await expect(page.getByText(new RegExp(`Created ${ORG_NAME}`))).toBeVisible({
       timeout: 15_000,
@@ -283,10 +283,8 @@ test.describe.serial("Professional workspace (Nyaya)", () => {
     await page.goto(`/app/cases/${matterId}/graph`);
     await page.waitForLoadState("networkidle");
     await expect(page.getByRole("heading", { name: "Nyaya Graph" })).toBeVisible();
-    await page.getByRole("button", { name: "Materialize from verified intelligence" }).click();
-    await expect(
-      page.getByRole("button", { name: "Materialize from verified intelligence" }),
-    ).toBeEnabled({
+    await page.getByRole("button", { name: "Build from confirmed facts" }).click();
+    await expect(page.getByRole("button", { name: "Build from confirmed facts" })).toBeEnabled({
       timeout: 20_000,
     });
     const firstNode = page.locator("button.text-left.font-semibold").first();
@@ -294,8 +292,8 @@ test.describe.serial("Professional workspace (Nyaya)", () => {
       await firstNode.click();
       await expect(page.getByText("Invalid request")).toHaveCount(0);
     }
-    await page.getByRole("button", { name: "Propose AI relationships" }).click();
-    await expect(page.getByRole("button", { name: "Propose AI relationships" })).toBeEnabled({
+    await page.getByRole("button", { name: "Suggest connections" }).click();
+    await expect(page.getByRole("button", { name: "Suggest connections" })).toBeEnabled({
       timeout: 20_000,
     });
     const proposed = page.getByRole("list", { name: "Proposed graph edges" });
@@ -304,7 +302,7 @@ test.describe.serial("Professional workspace (Nyaya)", () => {
       await expect(proposed.getByText("Verified")).toHaveCount(0);
       await proposed.locator("li").first().click();
       const inspect = page.getByRole("button", { name: /Inspect sources/i });
-      const noSources = page.getByText(/cannot be approved without source provenance/i);
+      const noSources = page.getByText(/cannot confirm this connection until it points to a quote/i);
       await expect(inspect.or(noSources).first()).toBeVisible();
       if (await inspect.isVisible()) {
         await page.getByRole("button", { name: "Approve", exact: true }).click();

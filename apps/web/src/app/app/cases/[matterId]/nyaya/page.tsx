@@ -342,7 +342,7 @@ export default function MatterNyayaPage() {
           Ask Nyaya
         </Button>
         <Button variant={tab === "task" ? "primary" : "secondary"} onClick={() => setTab("task")}>
-          Run Task
+          Start a longer task
         </Button>
       </div>
       {message ? <p className="mb-3 text-sm text-accent">{message}</p> : null}
@@ -351,15 +351,15 @@ export default function MatterNyayaPage() {
         <>
           <Panel title="Ask Nyaya">
             <p className="mb-3 text-sm text-ink/70">
-              Matter-scoped document intelligence. Answers are draft work product and must cite
-              retrieved sources.
+              Answers come only from this case&apos;s files. They are drafts, not legal advice, and
+              must show their sources.
             </p>
             <form className="flex flex-col gap-3" onSubmit={ask}>
               <textarea
                 className="min-h-24 rounded border border-line px-3 py-2"
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
-                placeholder="Ask a factual question about this matter's documents…"
+                placeholder="Ask a question about the files in this case…"
                 required
               />
               <Button type="submit" disabled={asking}>

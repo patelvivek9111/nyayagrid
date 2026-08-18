@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { PublicShell } from "@/components/shell";
 import { Badge, PageHeader, Panel } from "@nyayagrid/ui";
 
 type DocumentRow = {
@@ -28,7 +27,7 @@ export default function GuideFilesPage() {
   }, []);
 
   return (
-    <PublicShell>
+    <>
       <PageHeader
         eyebrow="Nyaya Guide"
         title="My Files"
@@ -63,6 +62,6 @@ export default function GuideFilesPage() {
           </ul>
         )}
       </Panel>
-    </PublicShell>
+    </>
   );
 }

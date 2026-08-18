@@ -14,6 +14,7 @@ import {
   VerifiedBadge,
 } from "@/components/ux";
 import { formatMatterCalendarDate } from "@/lib/matter-dates";
+import { humanizeKey } from "@/lib/plain-labels";
 
 type Fact = { id: string; label: string; value: string };
 type Entity = { id: string; displayName: string; entityType: string };
@@ -211,7 +212,7 @@ export default function CaseHomePage() {
           </div>
           <div>
             <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-              Matter type
+              Type of case
             </dt>
             <dd>{matter.practiceArea || "Not recorded"}</dd>
           </div>
@@ -237,7 +238,7 @@ export default function CaseHomePage() {
           </div>
           <div>
             <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-              Matter team
+              Team
             </dt>
             <dd>
               {team.length === 0
@@ -274,7 +275,7 @@ export default function CaseHomePage() {
               }
             }}
           >
-            Export audit log
+            Download activity log
           </Button>
         </div>
       </Panel>
@@ -299,27 +300,26 @@ export default function CaseHomePage() {
         ) : (
           <Panel title="Next action">
             <p className="text-sm text-ink/70">
-              No pending suggestions. Continue this file from the Case sections above, or pick a
-              concrete next step:
+              No pending suggestions. Continue from the tabs above, or pick a next step:
             </p>
             <ul className="mt-2 list-inside list-disc text-sm text-ink/70">
               <li>
                 <Link href={`/app/cases/${matterId}/documents`} className="font-semibold text-accent underline">
                   Documents
                 </Link>{" "}
-                — open the original file or upload another SYNTH source
+                — open the original file or upload another
               </li>
               <li>
                 <Link href={`/app/cases/${matterId}/review`} className="font-semibold text-accent underline">
                   Review
                 </Link>{" "}
-                — extract proposed chronology and facts
+                — check dates and facts Nyaya found
               </li>
               <li>
                 <Link href={`/app/cases/${matterId}/work`} className="font-semibold text-accent underline">
                   Work
                 </Link>{" "}
-                — drafts, approvals, and the attorney command hub
+                — tasks, drafts, and items waiting on you
               </li>
             </ul>
           </Panel>
@@ -336,7 +336,7 @@ export default function CaseHomePage() {
           </>
         ) : (
           <p className="text-sm text-ink/60">
-            No summary yet. Generate from verified intelligence only.
+            No summary yet. Generate one from facts you have already confirmed.
           </p>
         )}
         <div className="mt-3">
@@ -381,7 +381,7 @@ export default function CaseHomePage() {
           {(openQuestions ?? []).length === 0 ? (
             <EmptyState
               title="No open questions recorded"
-              description="Capture unresolved questions in Nyaya Memory. They stay suggestions until you approve them."
+              description="Save unanswered questions in Memory. They stay suggestions until you confirm them."
               action={
                 <Link
                   href={`/app/cases/${matterId}/memory`}
@@ -402,7 +402,7 @@ export default function CaseHomePage() {
                     {q.title}
                   </Link>
                   <p className="text-xs text-ink/55">
-                    {q.memoryType}
+                    {humanizeKey(q.memoryType)}
                     {q.status === "proposed" ? " · suggested" : ""}
                   </p>
                 </li>
@@ -499,7 +499,7 @@ export default function CaseHomePage() {
                   >
                     {d.title}
                   </Link>
-                  <Badge>{d.processingState}</Badge>
+                  <Badge>{humanizeKey(d.processingState)}</Badge>
                 </li>
               ))}
             </ul>
@@ -685,7 +685,7 @@ export default function CaseHomePage() {
         <div className="mb-3">
           <Link href={`/app/cases/${matterId}/chats`}>
             <Button type="button" variant="secondary">
-              New Chat
+              Ask about this case
             </Button>
           </Link>
         </div>

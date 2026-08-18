@@ -1,4 +1,5 @@
 import { isFeatureEnabled } from "@nyayagrid/platform";
+import { GuideChrome } from "@/components/ux/guide-chrome";
 
 export default function GuideLayout({ children }: { children: React.ReactNode }) {
   if (!isFeatureEnabled("guide")) {
@@ -12,5 +13,5 @@ export default function GuideLayout({ children }: { children: React.ReactNode })
       </main>
     );
   }
-  return children;
+  return <GuideChrome>{children}</GuideChrome>;
 }
