@@ -1,0 +1,156 @@
+[
+  {
+    "id": "openai:gpt-4o-mini",
+    "provider": "openai",
+    "modelId": "gpt-4o-mini",
+    "status": "VALIDATED",
+    "certification": {
+      "ask": "VALIDATED",
+      "research": "VALIDATED",
+      "draft": "VALIDATED",
+      "contract": "VALIDATED",
+      "deposition": "VALIDATED",
+      "evidence": "VALIDATED",
+      "compare": "VALIDATED",
+      "contradiction": "VALIDATED",
+      "timeline": "VALIDATED",
+      "graph": "VALIDATED",
+      "memory": "VALIDATED"
+    },
+    "qualityScore": null,
+    "safetyScore": null,
+    "notes": "VALIDATED only as the historical OpenAI execution route. Snapshot quality scores remain unrated until the four-provider certification phase."
+  },
+  {
+    "id": "openai:gpt-4o-mini-2024-07-18",
+    "provider": "openai",
+    "modelId": "gpt-4o-mini-2024-07-18",
+    "status": "VALIDATED",
+    "certification": {
+      "ask": "VALIDATED",
+      "research": "VALIDATED",
+      "draft": "VALIDATED",
+      "contract": "VALIDATED",
+      "deposition": "VALIDATED",
+      "evidence": "VALIDATED",
+      "compare": "VALIDATED",
+      "contradiction": "VALIDATED",
+      "timeline": "VALIDATED",
+      "graph": "VALIDATED",
+      "memory": "VALIDATED"
+    },
+    "qualityScore": null,
+    "safetyScore": null,
+    "notes": "VALIDATED only as the historical OpenAI execution route. Snapshot quality scores remain unrated until the four-provider certification phase."
+  },
+  {
+    "id": "openai:gpt-4o",
+    "provider": "openai",
+    "modelId": "gpt-4o",
+    "status": "VALIDATED",
+    "certification": {
+      "ask": "VALIDATED",
+      "research": "VALIDATED",
+      "draft": "VALIDATED",
+      "contract": "VALIDATED",
+      "deposition": "VALIDATED",
+      "evidence": "VALIDATED",
+      "compare": "VALIDATED",
+      "contradiction": "VALIDATED",
+      "timeline": "VALIDATED",
+      "graph": "VALIDATED",
+      "memory": "VALIDATED"
+    },
+    "qualityScore": null,
+    "safetyScore": null,
+    "notes": "VALIDATED only as the historical OpenAI execution route. Snapshot quality scores remain unrated until the four-provider certification phase."
+  },
+  {
+    "id": "anthropic:claude-sonnet-4-5-20250929",
+    "provider": "anthropic",
+    "modelId": "claude-sonnet-4-5-20250929",
+    "status": "CANDIDATE",
+    "certification": {
+      "ask": "CANDIDATE",
+      "research": "CANDIDATE",
+      "draft": "CANDIDATE",
+      "contract": "CANDIDATE",
+      "deposition": "CANDIDATE",
+      "evidence": "CANDIDATE",
+      "compare": "CANDIDATE",
+      "contradiction": "CANDIDATE",
+      "timeline": "CANDIDATE",
+      "graph": "CANDIDATE",
+      "memory": "CANDIDATE"
+    },
+    "qualityScore": null,
+    "safetyScore": null,
+    "notes": "Adapter present. Not certified for Auto. Awaiting four-provider benchmark."
+  },
+  {
+    "id": "xai:grok-3",
+    "provider": "xai",
+    "modelId": "grok-3",
+    "status": "CANDIDATE",
+    "certification": {
+      "ask": "CANDIDATE",
+      "research": "CANDIDATE",
+      "draft": "CANDIDATE",
+      "contract": "CANDIDATE",
+      "deposition": "CANDIDATE",
+      "evidence": "CANDIDATE",
+      "compare": "CANDIDATE",
+      "contradiction": "CANDIDATE",
+      "timeline": "CANDIDATE",
+      "graph": "CANDIDATE",
+      "memory": "CANDIDATE"
+    },
+    "qualityScore": null,
+    "safetyScore": null,
+    "notes": "Adapter present. Not certified for Auto. Awaiting four-provider benchmark."
+  },
+  {
+    "id": "google:gemini-2.5-flash",
+    "provider": "google",
+    "modelId": "gemini-2.5-flash",
+    "status": "CANDIDATE",
+    "certification": {
+      "ask": "CANDIDATE",
+      "research": "CANDIDATE",
+      "draft": "CANDIDATE",
+      "contract": "CANDIDATE",
+      "deposition": "CANDIDATE",
+      "evidence": "CANDIDATE",
+      "compare": "CANDIDATE",
+      "contradiction": "CANDIDATE",
+      "timeline": "CANDIDATE",
+      "graph": "CANDIDATE",
+      "memory": "CANDIDATE"
+    },
+    "qualityScore": null,
+    "safetyScore": null,
+    "notes": "Adapter present. Not certified for Auto. Awaiting four-provider benchmark."
+  },
+  {
+    "id": "mock:mock-1",
+    "provider": "mock",
+    "modelId": "mock-1",
+    "status": "VALIDATED",
+    "certification": {
+      "ask": "VALIDATED",
+      "research": "VALIDATED",
+      "draft": "VALIDATED",
+      "contract": "VALIDATED",
+      "deposition": "VALIDATED",
+      "evidence": "VALIDATED",
+      "compare": "VALIDATED",
+      "contradiction": "VALIDATED",
+      "timeline": "VALIDATED",
+      "graph": "VALIDATED",
+      "memory": "VALIDATED"
+    },
+    "qualityScore": null,
+    "safetyScore": null,
+    "notes": "Test/development fixture only. Never a production legal engine."
+  }
+]

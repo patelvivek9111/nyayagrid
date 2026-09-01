@@ -12,13 +12,15 @@
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "research:import": "tsx src/cli/import.ts"
+    "research:import": "tsx src/cli/import.ts",
+    "research:corpus-import": "tsx src/cli/corpus-import.ts"
   },
   "dependencies": {
     "@nyayagrid/ai": "*",
     "@nyayagrid/database": "*",
     "@nyayagrid/documents": "*",
     "@nyayagrid/intelligence": "*",
+    "@nyayagrid/jurisdiction": "*",
     "@nyayagrid/permissions": "*",
     "zod": "^3.24.2"
   },

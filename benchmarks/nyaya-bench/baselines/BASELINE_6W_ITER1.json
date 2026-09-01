@@ -1,0 +1,24 @@
+{
+  "id": "BASELINE_6W_ITER1",
+  "generatedAt": "2026-08-27T05:20:00.000Z",
+  "iteration": 1,
+  "maxIterations": 5,
+  "blockersAddressed": [
+    "OpenAI 429/5xx bounded retry with Retry-After cap",
+    "createDb $client closeDb + bench/CLI process cleanup",
+    "frozen regression harness (lock, timeout, sequential, no historical overwrite)",
+    "internal Error messages no longer returned to clients",
+    "beta-check expected migrations include 0012_phase6s_jurisdiction",
+    "beta-security-audit DATABASE_URL fallback + pool close"
+  ],
+  "notAddressed": [
+    "Clerk staging credentials (EXTERNAL)",
+    "Inngest Cloud registration (EXTERNAL)",
+    "Managed Postgres PITR (EXTERNAL)",
+    "S3 versioning/PITR (EXTERNAL)",
+    "SMTP invite transport"
+  ],
+  "featureAgents": { "staging": false, "production": false },
+  "attorneyValidated": "NO",
+  "nationwideClaim": "NO"
+}

@@ -1,6 +1,6 @@
 /**
  * Live-6 Case Q&A payloads that failed Zod before source-id backfill.
- * Captured from docs/agent-quality-review/exports-live-6 (repeats were identical).
+ * Captured from a live-6 eval export (repeats were identical).
  */
 export const LIVE6_COMBINE_RENT_AND_TERM = {
   answer: "The monthly base rent is $4,000 and the lease term commences on January 1, 2024.",

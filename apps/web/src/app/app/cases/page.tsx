@@ -2,10 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ProfessionalShell } from "@/components/shell";
 import { useActiveOrganization } from "@/components/use-active-organization";
+import { useOrgCapability } from "@/components/use-org-capability";
 import { EmptyState, ErrorState, LoadingState } from "@/components/ux";
 import { Button } from "@nyayagrid/ui";
+import { isClientGuestRole } from "@/lib/first-run";
 
 type CaseRow = {
   id: string;
@@ -18,10 +21,24 @@ type CaseRow = {
 };
 
 export default function CasesListPage() {
-  const { organizationId, loading: orgLoading } = useActiveOrganization();
+  const router = useRouter();
+  const { organizationId, organizations, loading: orgLoading } = useActiveOrganization();
+  const createCap = useOrgCapability(organizationId, "matters.create");
+  const viewCap = useOrgCapability(organizationId, "matters.view");
   const [cases, setCases] = useState<CaseRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (orgLoading) return;
+    if (organizations.length === 0) {
+      router.replace("/app/onboarding");
+      return;
+    }
+    if (isClientGuestRole(viewCap.roleKey)) {
+      router.replace("/portal");
+    }
+  }, [orgLoading, organizations.length, viewCap.roleKey, router]);
 
   useEffect(() => {
     if (!organizationId) return;
@@ -36,24 +53,34 @@ export default function CasesListPage() {
       .finally(() => setLoading(false));
   }, [organizationId]);
 
+  const canCreate = createCap.allowed === true;
+
   return (
     <ProfessionalShell title="Cases">
       <div className="mb-4 flex items-center justify-between gap-3">
         <p className="text-sm text-ink/60">Open a case to see its files, chats, and next steps.</p>
-        <Link href="/app/cases/new">
-          <Button type="button">New Case</Button>
-        </Link>
+        {canCreate ? (
+          <Link href="/app/cases/new">
+            <Button type="button">New Case</Button>
+          </Link>
+        ) : null}
       </div>
       {orgLoading || loading ? <LoadingState /> : null}
       {error ? <ErrorState message={error} /> : null}
       {!loading && cases.length === 0 ? (
         <EmptyState
-          title="No cases yet"
-          description="Create a case to keep files, chats, and deadlines in one place."
+          title="No Cases yet"
+          description={
+            canCreate
+              ? "Create your first Case to add documents and start working with Nyaya."
+              : "This firm has no Cases yet. A lawyer on the team can create one."
+          }
           action={
-            <Link href="/app/cases/new" className="text-sm font-semibold text-accent underline">
-              Create Case
-            </Link>
+            canCreate ? (
+              <Link href="/app/cases/new" className="text-sm font-semibold text-accent underline">
+                Create Case
+              </Link>
+            ) : undefined
           }
         />
       ) : (

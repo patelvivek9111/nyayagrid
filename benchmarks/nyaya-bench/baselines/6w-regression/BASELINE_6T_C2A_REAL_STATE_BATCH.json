@@ -1,0 +1,1659 @@
+{
+  "id": "BASELINE_6T_C2A_REAL_STATE_BATCH",
+  "generatedAt": "2026-08-27T12:55:00.031Z",
+  "elapsedMs": 247747,
+  "environment": {
+    "APP_ENV": null,
+    "database": {
+      "protocol": "postgresql",
+      "host": "localhost",
+      "port": "5433",
+      "database": "nyayagrid",
+      "hasUser": true,
+      "hasPassword": true
+    },
+    "intendedCertification": {
+      "label": "persistent-local-docker-nyayagrid",
+      "host": "localhost",
+      "port": "5433",
+      "database": "nyayagrid",
+      "appEnv": "development",
+      "realSourceProvider": "us-primary-corpus"
+    },
+    "realPrimaryAuthorities": 30
+  },
+  "agents": {
+    "featureAgentsProduction": true,
+    "featureAgentsStaging": true,
+    "certifiedByState": false
+  },
+  "nationwideClaim": "NO",
+  "statesEvaluated": [
+    "PA",
+    "NJ",
+    "NY",
+    "DE",
+    "CA",
+    "TX",
+    "FL",
+    "IL",
+    "MA",
+    "VA"
+  ],
+  "extras": [
+    {
+      "id": "T6T-C2A-GOV-01",
+      "state": "PA",
+      "kind": "labeling",
+      "practiceArea": "Contract",
+      "severity": "PASS",
+      "detail": "Delaware UCC present for governing-law question; PA forum metadata unchanged.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6T-C2A-MULTI-01",
+      "state": "PA",
+      "kind": "labeling",
+      "practiceArea": "Contract",
+      "severity": "PASS",
+      "detail": "Multi-jurisdiction query did not flatten PA/DE/NJ roles.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6T-C2A-ASK-PA",
+      "state": "PA",
+      "kind": "citation",
+      "practiceArea": "Contract",
+      "severity": "PASS",
+      "detail": "Ask used structured jurisdiction and did not invent nationwide contract law.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6T-C2A-ASK-NY",
+      "state": "NY",
+      "kind": "citation",
+      "practiceArea": "Contract",
+      "severity": "PASS",
+      "detail": "Ask used structured jurisdiction and did not invent nationwide contract law.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6T-C2A-ASK-CA",
+      "state": "CA",
+      "kind": "citation",
+      "practiceArea": "Contract",
+      "severity": "PASS",
+      "detail": "Ask used structured jurisdiction and did not invent nationwide contract law.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6T-C2A-DRAFT-PA",
+      "state": "PA",
+      "kind": "citation",
+      "practiceArea": "Contract",
+      "severity": "PASS",
+      "detail": "Draft generated against retrieved home-state authority without metadata-as-evidence substitution.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6T-C2A-DRAFT-DE",
+      "state": "DE",
+      "kind": "citation",
+      "practiceArea": "Contract",
+      "severity": "PASS",
+      "detail": "Draft generated against retrieved home-state authority without metadata-as-evidence substitution.",
+      "qualityPass": true
+    }
+  ],
+  "askResults": [
+    {
+      "state": "PA",
+      "evidenceState": "insufficient",
+      "answerPreview": "Based on Pennsylvania law as recorded in Case metadata... The available matter documents do not provide sufficient evidence to answer this question.\n\nCoverage is UNVALIDATED for this Case's recorded jurisdiction and practice area. NyayaGrid does not have validated primary-law cov"
+    },
+    {
+      "state": "NY",
+      "evidenceState": "insufficient",
+      "answerPreview": "Based on New York law as recorded in Case metadata... The available matter documents do not provide sufficient evidence to answer this question.\n\nCoverage is UNVALIDATED for this Case's recorded jurisdiction and practice area. NyayaGrid does not have validated primary-law coverag"
+    },
+    {
+      "state": "CA",
+      "evidenceState": "insufficient",
+      "answerPreview": "Based on California law as recorded in Case metadata... The available matter documents do not provide sufficient evidence to answer this question.\n\nCoverage is UNVALIDATED for this Case's recorded jurisdiction and practice area. NyayaGrid does not have validated primary-law cover"
+    }
+  ],
+  "draftResults": [
+    {
+      "state": "PA",
+      "draftId": "93f82721-c49c-4f13-8907-f28b7462495b",
+      "preview": "MEMORANDUM\n\nTO: [Recipient Name]  \nFROM: [Your Name]  \nDATE: [Current Date]  \nRE: Statute of Limitations for Contracts for Sale of Goods in Pennsylvania\n\nThis memo serves to outline the statute of limitations applicable to contracts for the sale of goods under Pennsylvania law. A"
+    },
+    {
+      "state": "DE",
+      "draftId": "8caa5d67-c29f-421f-8c83-d9197eea1f89",
+      "preview": "MEMORANDUM\n\nTo: [Recipient]\nFrom: [Your Name]\nDate: [Date]\nRe: Statute of Limitations for Contracts for Sale of Goods in Delaware\n\nThis memo addresses the statute of limitations applicable to contracts for the sale of goods under Delaware law. According to 6 Del. C. § 2-725, an a"
+    }
+  ],
+  "scorecards": [
+    {
+      "state": "PA",
+      "name": "Pennsylvania",
+      "quality": 100,
+      "critical": 0,
+      "fail": 0,
+      "pass": 12,
+      "needsWork": 0,
+      "coverage": {
+        "Contract": {
+          "label": "VALIDATED",
+          "scope": "UCC § 2-725 limitations retrieval and citation",
+          "dbStatus": "supported"
+        },
+        "Employment": {
+          "label": "VALIDATED",
+          "scope": "Imported wage/employment statute retrieval",
+          "dbStatus": "supported"
+        },
+        "Civil": {
+          "label": "LIMITED",
+          "scope": "Excerpt-only high-court retrieval; not general civil completeness.",
+          "dbStatus": "limited"
+        },
+        "Criminal": {
+          "label": "UNVALIDATED",
+          "scope": "No criminal statute corpus; high-court excerpts are not criminal-practice certification.",
+          "dbStatus": "unvalidated"
+        }
+      },
+      "dimensions": {
+        "routing": 100,
+        "retrieval": 100,
+        "citation": 100,
+        "hierarchy": 100,
+        "propositionGrounding": 100,
+        "wrongStateSafety": 100,
+        "temporalSafety": 100,
+        "abstention": 100
+      },
+      "tasks": [
+        {
+          "id": "T6T-C2A-PA-01",
+          "state": "PA",
+          "kind": "contract-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-PA-02",
+          "state": "PA",
+          "kind": "employment-statute",
+          "practiceArea": "Employment",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-PA-03",
+          "state": "PA",
+          "kind": "high-court-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-PA-04",
+          "state": "PA",
+          "kind": "wrong-state-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-PA-05",
+          "state": "PA",
+          "kind": "wrong-state-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-PA-06",
+          "state": "PA",
+          "kind": "hierarchy",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state high court not demoted below controlling/persuasive.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-PA-07",
+          "state": "PA",
+          "kind": "labeling",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-PA-08",
+          "state": "PA",
+          "kind": "citation",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Citation matches stored record and source URL is present.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-PA-09",
+          "state": "PA",
+          "kind": "grounding",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Synthesized proposition is supported by retrieved source text.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-PA-10",
+          "state": "PA",
+          "kind": "abstention",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-PA-11",
+          "state": "PA",
+          "kind": "temporal-current-law",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Temporal uncertainty preserved; no current-law overclaim.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-PA-12",
+          "state": "PA",
+          "kind": "excerpt-limit",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        }
+      ]
+    },
+    {
+      "state": "NJ",
+      "name": "New Jersey",
+      "quality": 100,
+      "critical": 0,
+      "fail": 0,
+      "pass": 12,
+      "needsWork": 0,
+      "coverage": {
+        "Contract": {
+          "label": "VALIDATED",
+          "scope": "UCC § 2-725 limitations retrieval and citation",
+          "dbStatus": "supported"
+        },
+        "Employment": {
+          "label": "VALIDATED",
+          "scope": "Imported wage/employment statute retrieval",
+          "dbStatus": "supported"
+        },
+        "Civil": {
+          "label": "LIMITED",
+          "scope": "Excerpt-only high-court retrieval; not general civil completeness.",
+          "dbStatus": "limited"
+        },
+        "Criminal": {
+          "label": "UNVALIDATED",
+          "scope": "No criminal statute corpus; high-court excerpts are not criminal-practice certification.",
+          "dbStatus": "unvalidated"
+        }
+      },
+      "dimensions": {
+        "routing": 100,
+        "retrieval": 100,
+        "citation": 100,
+        "hierarchy": 100,
+        "propositionGrounding": 100,
+        "wrongStateSafety": 100,
+        "temporalSafety": 100,
+        "abstention": 100
+      },
+      "tasks": [
+        {
+          "id": "T6T-C2A-NJ-01",
+          "state": "NJ",
+          "kind": "contract-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NJ-02",
+          "state": "NJ",
+          "kind": "employment-statute",
+          "practiceArea": "Employment",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NJ-03",
+          "state": "NJ",
+          "kind": "high-court-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NJ-04",
+          "state": "NJ",
+          "kind": "wrong-state-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NJ-05",
+          "state": "NJ",
+          "kind": "wrong-state-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NJ-06",
+          "state": "NJ",
+          "kind": "hierarchy",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state high court not demoted below controlling/persuasive.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NJ-07",
+          "state": "NJ",
+          "kind": "labeling",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NJ-08",
+          "state": "NJ",
+          "kind": "citation",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Citation matches stored record and source URL is present.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NJ-09",
+          "state": "NJ",
+          "kind": "grounding",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Synthesized proposition is supported by retrieved source text.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NJ-10",
+          "state": "NJ",
+          "kind": "abstention",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NJ-11",
+          "state": "NJ",
+          "kind": "temporal-current-law",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Temporal uncertainty preserved; no current-law overclaim.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NJ-12",
+          "state": "NJ",
+          "kind": "excerpt-limit",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        }
+      ]
+    },
+    {
+      "state": "NY",
+      "name": "New York",
+      "quality": 100,
+      "critical": 0,
+      "fail": 0,
+      "pass": 12,
+      "needsWork": 0,
+      "coverage": {
+        "Contract": {
+          "label": "VALIDATED",
+          "scope": "UCC § 2-725 limitations retrieval and citation",
+          "dbStatus": "supported"
+        },
+        "Employment": {
+          "label": "VALIDATED",
+          "scope": "Imported wage/employment statute retrieval",
+          "dbStatus": "supported"
+        },
+        "Civil": {
+          "label": "LIMITED",
+          "scope": "Excerpt-only high-court retrieval; not general civil completeness.",
+          "dbStatus": "limited"
+        },
+        "Criminal": {
+          "label": "UNVALIDATED",
+          "scope": "No criminal statute corpus; high-court excerpts are not criminal-practice certification.",
+          "dbStatus": "unvalidated"
+        }
+      },
+      "dimensions": {
+        "routing": 100,
+        "retrieval": 100,
+        "citation": 100,
+        "hierarchy": 100,
+        "propositionGrounding": 100,
+        "wrongStateSafety": 100,
+        "temporalSafety": 100,
+        "abstention": 100
+      },
+      "tasks": [
+        {
+          "id": "T6T-C2A-NY-01",
+          "state": "NY",
+          "kind": "contract-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NY-02",
+          "state": "NY",
+          "kind": "employment-statute",
+          "practiceArea": "Employment",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NY-03",
+          "state": "NY",
+          "kind": "high-court-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NY-04",
+          "state": "NY",
+          "kind": "wrong-state-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NY-05",
+          "state": "NY",
+          "kind": "wrong-state-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NY-06",
+          "state": "NY",
+          "kind": "hierarchy",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state high court not demoted below controlling/persuasive.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NY-07",
+          "state": "NY",
+          "kind": "labeling",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NY-08",
+          "state": "NY",
+          "kind": "citation",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Citation matches stored record and source URL is present.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NY-09",
+          "state": "NY",
+          "kind": "grounding",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Synthesized proposition is supported by retrieved source text.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NY-10",
+          "state": "NY",
+          "kind": "abstention",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NY-11",
+          "state": "NY",
+          "kind": "temporal-current-law",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Temporal uncertainty preserved; no current-law overclaim.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-NY-12",
+          "state": "NY",
+          "kind": "excerpt-limit",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        }
+      ]
+    },
+    {
+      "state": "DE",
+      "name": "Delaware",
+      "quality": 100,
+      "critical": 0,
+      "fail": 0,
+      "pass": 12,
+      "needsWork": 0,
+      "coverage": {
+        "Contract": {
+          "label": "VALIDATED",
+          "scope": "UCC § 2-725 limitations retrieval and citation",
+          "dbStatus": "supported"
+        },
+        "Employment": {
+          "label": "VALIDATED",
+          "scope": "Imported wage/employment statute retrieval",
+          "dbStatus": "supported"
+        },
+        "Civil": {
+          "label": "LIMITED",
+          "scope": "Excerpt-only high-court retrieval; not general civil completeness.",
+          "dbStatus": "limited"
+        },
+        "Criminal": {
+          "label": "UNVALIDATED",
+          "scope": "No criminal statute corpus; high-court excerpts are not criminal-practice certification.",
+          "dbStatus": "unvalidated"
+        }
+      },
+      "dimensions": {
+        "routing": 100,
+        "retrieval": 100,
+        "citation": 100,
+        "hierarchy": 100,
+        "propositionGrounding": 100,
+        "wrongStateSafety": 100,
+        "temporalSafety": 100,
+        "abstention": 100
+      },
+      "tasks": [
+        {
+          "id": "T6T-C2A-DE-01",
+          "state": "DE",
+          "kind": "contract-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-DE-02",
+          "state": "DE",
+          "kind": "employment-statute",
+          "practiceArea": "Employment",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-DE-03",
+          "state": "DE",
+          "kind": "high-court-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-DE-04",
+          "state": "DE",
+          "kind": "wrong-state-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-DE-05",
+          "state": "DE",
+          "kind": "wrong-state-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-DE-06",
+          "state": "DE",
+          "kind": "hierarchy",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state high court not demoted below controlling/persuasive.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-DE-07",
+          "state": "DE",
+          "kind": "labeling",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-DE-08",
+          "state": "DE",
+          "kind": "citation",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Citation matches stored record and source URL is present.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-DE-09",
+          "state": "DE",
+          "kind": "grounding",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Synthesized proposition is supported by retrieved source text.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-DE-10",
+          "state": "DE",
+          "kind": "abstention",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-DE-11",
+          "state": "DE",
+          "kind": "temporal-current-law",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Temporal uncertainty preserved; no current-law overclaim.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-DE-12",
+          "state": "DE",
+          "kind": "excerpt-limit",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        }
+      ]
+    },
+    {
+      "state": "CA",
+      "name": "California",
+      "quality": 91.7,
+      "critical": 0,
+      "fail": 0,
+      "pass": 11,
+      "needsWork": 1,
+      "coverage": {
+        "Contract": {
+          "label": "LIMITED",
+          "scope": "UCC § 2-725 present but not at 90%+ material quality",
+          "dbStatus": "limited"
+        },
+        "Employment": {
+          "label": "VALIDATED",
+          "scope": "Imported wage/employment statute retrieval",
+          "dbStatus": "supported"
+        },
+        "Civil": {
+          "label": "LIMITED",
+          "scope": "Excerpt-only high-court retrieval; not general civil completeness.",
+          "dbStatus": "limited"
+        },
+        "Criminal": {
+          "label": "UNVALIDATED",
+          "scope": "No criminal statute corpus; high-court excerpts are not criminal-practice certification.",
+          "dbStatus": "unvalidated"
+        }
+      },
+      "dimensions": {
+        "routing": 100,
+        "retrieval": 100,
+        "citation": 100,
+        "hierarchy": 100,
+        "propositionGrounding": 0,
+        "wrongStateSafety": 100,
+        "temporalSafety": 100,
+        "abstention": 100
+      },
+      "tasks": [
+        {
+          "id": "T6T-C2A-CA-01",
+          "state": "CA",
+          "kind": "contract-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-CA-02",
+          "state": "CA",
+          "kind": "employment-statute",
+          "practiceArea": "Employment",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-CA-03",
+          "state": "CA",
+          "kind": "high-court-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-CA-04",
+          "state": "CA",
+          "kind": "wrong-state-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-CA-05",
+          "state": "CA",
+          "kind": "wrong-state-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-CA-06",
+          "state": "CA",
+          "kind": "hierarchy",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state high court not demoted below controlling/persuasive.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-CA-07",
+          "state": "CA",
+          "kind": "labeling",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-CA-08",
+          "state": "CA",
+          "kind": "citation",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Citation matches stored record and source URL is present.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-CA-09",
+          "state": "CA",
+          "kind": "grounding",
+          "practiceArea": "Contract",
+          "severity": "NEEDS_WORK",
+          "detail": "Proposition grounding is weak or the model abstained.",
+          "rootCause": "G",
+          "qualityPass": false
+        },
+        {
+          "id": "T6T-C2A-CA-10",
+          "state": "CA",
+          "kind": "abstention",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-CA-11",
+          "state": "CA",
+          "kind": "temporal-current-law",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Temporal uncertainty preserved; no current-law overclaim.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-CA-12",
+          "state": "CA",
+          "kind": "excerpt-limit",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        }
+      ]
+    },
+    {
+      "state": "TX",
+      "name": "Texas",
+      "quality": 91.7,
+      "critical": 0,
+      "fail": 0,
+      "pass": 11,
+      "needsWork": 1,
+      "coverage": {
+        "Contract": {
+          "label": "LIMITED",
+          "scope": "UCC § 2-725 present but not at 90%+ material quality",
+          "dbStatus": "limited"
+        },
+        "Employment": {
+          "label": "VALIDATED",
+          "scope": "Imported wage/employment statute retrieval",
+          "dbStatus": "supported"
+        },
+        "Civil": {
+          "label": "LIMITED",
+          "scope": "Excerpt-only high-court retrieval; not general civil completeness.",
+          "dbStatus": "limited"
+        },
+        "Criminal": {
+          "label": "UNVALIDATED",
+          "scope": "No criminal statute corpus; high-court excerpts are not criminal-practice certification.",
+          "dbStatus": "unvalidated"
+        }
+      },
+      "dimensions": {
+        "routing": 100,
+        "retrieval": 100,
+        "citation": 100,
+        "hierarchy": 100,
+        "propositionGrounding": 0,
+        "wrongStateSafety": 100,
+        "temporalSafety": 100,
+        "abstention": 100
+      },
+      "tasks": [
+        {
+          "id": "T6T-C2A-TX-01",
+          "state": "TX",
+          "kind": "contract-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-TX-02",
+          "state": "TX",
+          "kind": "employment-statute",
+          "practiceArea": "Employment",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-TX-03",
+          "state": "TX",
+          "kind": "high-court-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-TX-04",
+          "state": "TX",
+          "kind": "wrong-state-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-TX-05",
+          "state": "TX",
+          "kind": "wrong-state-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-TX-06",
+          "state": "TX",
+          "kind": "hierarchy",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state high court not demoted below controlling/persuasive.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-TX-07",
+          "state": "TX",
+          "kind": "labeling",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-TX-08",
+          "state": "TX",
+          "kind": "citation",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Citation matches stored record and source URL is present.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-TX-09",
+          "state": "TX",
+          "kind": "grounding",
+          "practiceArea": "Contract",
+          "severity": "NEEDS_WORK",
+          "detail": "Proposition grounding is weak or the model abstained.",
+          "rootCause": "G",
+          "qualityPass": false
+        },
+        {
+          "id": "T6T-C2A-TX-10",
+          "state": "TX",
+          "kind": "abstention",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-TX-11",
+          "state": "TX",
+          "kind": "temporal-current-law",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Temporal uncertainty preserved; no current-law overclaim.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-TX-12",
+          "state": "TX",
+          "kind": "excerpt-limit",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        }
+      ]
+    },
+    {
+      "state": "FL",
+      "name": "Florida",
+      "quality": 100,
+      "critical": 0,
+      "fail": 0,
+      "pass": 12,
+      "needsWork": 0,
+      "coverage": {
+        "Contract": {
+          "label": "VALIDATED",
+          "scope": "UCC § 2-725 limitations retrieval and citation",
+          "dbStatus": "supported"
+        },
+        "Employment": {
+          "label": "VALIDATED",
+          "scope": "Imported wage/employment statute retrieval",
+          "dbStatus": "supported"
+        },
+        "Civil": {
+          "label": "LIMITED",
+          "scope": "Excerpt-only high-court retrieval; not general civil completeness.",
+          "dbStatus": "limited"
+        },
+        "Criminal": {
+          "label": "UNVALIDATED",
+          "scope": "No criminal statute corpus; high-court excerpts are not criminal-practice certification.",
+          "dbStatus": "unvalidated"
+        }
+      },
+      "dimensions": {
+        "routing": 100,
+        "retrieval": 100,
+        "citation": 100,
+        "hierarchy": 100,
+        "propositionGrounding": 100,
+        "wrongStateSafety": 100,
+        "temporalSafety": 100,
+        "abstention": 100
+      },
+      "tasks": [
+        {
+          "id": "T6T-C2A-FL-01",
+          "state": "FL",
+          "kind": "contract-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-FL-02",
+          "state": "FL",
+          "kind": "employment-statute",
+          "practiceArea": "Employment",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-FL-03",
+          "state": "FL",
+          "kind": "high-court-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-FL-04",
+          "state": "FL",
+          "kind": "wrong-state-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-FL-05",
+          "state": "FL",
+          "kind": "wrong-state-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-FL-06",
+          "state": "FL",
+          "kind": "hierarchy",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state high court not demoted below controlling/persuasive.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-FL-07",
+          "state": "FL",
+          "kind": "labeling",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-FL-08",
+          "state": "FL",
+          "kind": "citation",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Citation matches stored record and source URL is present.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-FL-09",
+          "state": "FL",
+          "kind": "grounding",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Synthesized proposition is supported by retrieved source text.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-FL-10",
+          "state": "FL",
+          "kind": "abstention",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-FL-11",
+          "state": "FL",
+          "kind": "temporal-current-law",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Temporal uncertainty preserved; no current-law overclaim.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-FL-12",
+          "state": "FL",
+          "kind": "excerpt-limit",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        }
+      ]
+    },
+    {
+      "state": "IL",
+      "name": "Illinois",
+      "quality": 100,
+      "critical": 0,
+      "fail": 0,
+      "pass": 12,
+      "needsWork": 0,
+      "coverage": {
+        "Contract": {
+          "label": "VALIDATED",
+          "scope": "UCC § 2-725 limitations retrieval and citation",
+          "dbStatus": "supported"
+        },
+        "Employment": {
+          "label": "VALIDATED",
+          "scope": "Imported wage/employment statute retrieval",
+          "dbStatus": "supported"
+        },
+        "Civil": {
+          "label": "LIMITED",
+          "scope": "Excerpt-only high-court retrieval; not general civil completeness.",
+          "dbStatus": "limited"
+        },
+        "Criminal": {
+          "label": "UNVALIDATED",
+          "scope": "No criminal statute corpus; high-court excerpts are not criminal-practice certification.",
+          "dbStatus": "unvalidated"
+        }
+      },
+      "dimensions": {
+        "routing": 100,
+        "retrieval": 100,
+        "citation": 100,
+        "hierarchy": 100,
+        "propositionGrounding": 100,
+        "wrongStateSafety": 100,
+        "temporalSafety": 100,
+        "abstention": 100
+      },
+      "tasks": [
+        {
+          "id": "T6T-C2A-IL-01",
+          "state": "IL",
+          "kind": "contract-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-IL-02",
+          "state": "IL",
+          "kind": "employment-statute",
+          "practiceArea": "Employment",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-IL-03",
+          "state": "IL",
+          "kind": "high-court-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-IL-04",
+          "state": "IL",
+          "kind": "wrong-state-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-IL-05",
+          "state": "IL",
+          "kind": "wrong-state-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-IL-06",
+          "state": "IL",
+          "kind": "hierarchy",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state high court not demoted below controlling/persuasive.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-IL-07",
+          "state": "IL",
+          "kind": "labeling",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-IL-08",
+          "state": "IL",
+          "kind": "citation",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Citation matches stored record and source URL is present.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-IL-09",
+          "state": "IL",
+          "kind": "grounding",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Synthesized proposition is supported by retrieved source text.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-IL-10",
+          "state": "IL",
+          "kind": "abstention",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-IL-11",
+          "state": "IL",
+          "kind": "temporal-current-law",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Temporal uncertainty preserved; no current-law overclaim.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-IL-12",
+          "state": "IL",
+          "kind": "excerpt-limit",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        }
+      ]
+    },
+    {
+      "state": "MA",
+      "name": "Massachusetts",
+      "quality": 100,
+      "critical": 0,
+      "fail": 0,
+      "pass": 12,
+      "needsWork": 0,
+      "coverage": {
+        "Contract": {
+          "label": "VALIDATED",
+          "scope": "UCC § 2-725 limitations retrieval and citation",
+          "dbStatus": "supported"
+        },
+        "Employment": {
+          "label": "VALIDATED",
+          "scope": "Imported wage/employment statute retrieval",
+          "dbStatus": "supported"
+        },
+        "Civil": {
+          "label": "LIMITED",
+          "scope": "Excerpt-only high-court retrieval; not general civil completeness.",
+          "dbStatus": "limited"
+        },
+        "Criminal": {
+          "label": "UNVALIDATED",
+          "scope": "No criminal statute corpus; high-court excerpts are not criminal-practice certification.",
+          "dbStatus": "unvalidated"
+        }
+      },
+      "dimensions": {
+        "routing": 100,
+        "retrieval": 100,
+        "citation": 100,
+        "hierarchy": 100,
+        "propositionGrounding": 100,
+        "wrongStateSafety": 100,
+        "temporalSafety": 100,
+        "abstention": 100
+      },
+      "tasks": [
+        {
+          "id": "T6T-C2A-MA-01",
+          "state": "MA",
+          "kind": "contract-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-MA-02",
+          "state": "MA",
+          "kind": "employment-statute",
+          "practiceArea": "Employment",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-MA-03",
+          "state": "MA",
+          "kind": "high-court-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-MA-04",
+          "state": "MA",
+          "kind": "wrong-state-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-MA-05",
+          "state": "MA",
+          "kind": "wrong-state-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-MA-06",
+          "state": "MA",
+          "kind": "hierarchy",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state high court not demoted below controlling/persuasive.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-MA-07",
+          "state": "MA",
+          "kind": "labeling",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-MA-08",
+          "state": "MA",
+          "kind": "citation",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Citation matches stored record and source URL is present.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-MA-09",
+          "state": "MA",
+          "kind": "grounding",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Synthesized proposition is supported by retrieved source text.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-MA-10",
+          "state": "MA",
+          "kind": "abstention",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-MA-11",
+          "state": "MA",
+          "kind": "temporal-current-law",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Temporal uncertainty preserved; no current-law overclaim.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-MA-12",
+          "state": "MA",
+          "kind": "excerpt-limit",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        }
+      ]
+    },
+    {
+      "state": "VA",
+      "name": "Virginia",
+      "quality": 91.7,
+      "critical": 0,
+      "fail": 0,
+      "pass": 11,
+      "needsWork": 1,
+      "coverage": {
+        "Contract": {
+          "label": "LIMITED",
+          "scope": "UCC § 2-725 present but not at 90%+ material quality",
+          "dbStatus": "limited"
+        },
+        "Employment": {
+          "label": "VALIDATED",
+          "scope": "Imported wage/employment statute retrieval",
+          "dbStatus": "supported"
+        },
+        "Civil": {
+          "label": "LIMITED",
+          "scope": "Excerpt-only high-court retrieval; not general civil completeness.",
+          "dbStatus": "limited"
+        },
+        "Criminal": {
+          "label": "UNVALIDATED",
+          "scope": "No criminal statute corpus; high-court excerpts are not criminal-practice certification.",
+          "dbStatus": "unvalidated"
+        }
+      },
+      "dimensions": {
+        "routing": 100,
+        "retrieval": 100,
+        "citation": 100,
+        "hierarchy": 100,
+        "propositionGrounding": 0,
+        "wrongStateSafety": 100,
+        "temporalSafety": 100,
+        "abstention": 100
+      },
+      "tasks": [
+        {
+          "id": "T6T-C2A-VA-01",
+          "state": "VA",
+          "kind": "contract-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-VA-02",
+          "state": "VA",
+          "kind": "employment-statute",
+          "practiceArea": "Employment",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-VA-03",
+          "state": "VA",
+          "kind": "high-court-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority retrieved.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-VA-04",
+          "state": "VA",
+          "kind": "wrong-state-statute",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-VA-05",
+          "state": "VA",
+          "kind": "wrong-state-case",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-VA-06",
+          "state": "VA",
+          "kind": "hierarchy",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Home-state high court not demoted below controlling/persuasive.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-VA-07",
+          "state": "VA",
+          "kind": "labeling",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Home-state authority preferred; decoy not controlling.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-VA-08",
+          "state": "VA",
+          "kind": "citation",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Citation matches stored record and source URL is present.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-VA-09",
+          "state": "VA",
+          "kind": "grounding",
+          "practiceArea": "Contract",
+          "severity": "NEEDS_WORK",
+          "detail": "Proposition grounding is weak or the model abstained.",
+          "rootCause": "G",
+          "qualityPass": false
+        },
+        {
+          "id": "T6T-C2A-VA-10",
+          "state": "VA",
+          "kind": "abstention",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-VA-11",
+          "state": "VA",
+          "kind": "temporal-current-law",
+          "practiceArea": "Contract",
+          "severity": "PASS",
+          "detail": "Temporal uncertainty preserved; no current-law overclaim.",
+          "qualityPass": true
+        },
+        {
+          "id": "T6T-C2A-VA-12",
+          "state": "VA",
+          "kind": "excerpt-limit",
+          "practiceArea": "Civil",
+          "severity": "PASS",
+          "detail": "Abstained or limited when corpus does not support the question.",
+          "qualityPass": true
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "tasks": 127,
+    "pass": 124,
+    "needsWork": 3,
+    "fail": 0,
+    "critical": 0
+  }
+}

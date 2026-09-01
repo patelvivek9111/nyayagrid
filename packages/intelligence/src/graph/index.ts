@@ -11,7 +11,7 @@ import {
   createAIProviderFromEnv,
   buildGraphRelationshipSystemPrompt,
   buildGraphRelationshipUserPrompt,
-  graphRelationshipExtractionSchema,
+  parseGraphRelationshipExtraction,
   GRAPH_RELATIONSHIP_PROMPT_VERSION,
   type AIProvider,
 } from "@nyayagrid/ai";
@@ -27,7 +27,6 @@ export async function extractGraphRelationshipCandidates(params: {
   userId?: string | null;
   ai?: AIProvider;
 }) {
-  const ai = params.ai ?? createAIProviderFromEnv();
   const nodes = await params.db
     .select()
     .from(graphNodes)
@@ -51,20 +50,49 @@ export async function extractGraphRelationshipCandidates(params: {
     )
     .limit(24);
 
+  const nodeRefs = nodes.map((n) => ({
+    canonicalEntityType: n.canonicalEntityType,
+    canonicalEntityId: n.canonicalEntityId,
+    nodeType: n.nodeType,
+    displayName: n.displayName,
+  }));
+
+  if (nodes.length === 0) {
+    await writeAuditEvent(params.db, {
+      organizationId: params.organizationId,
+      actorUserId: params.userId ?? null,
+      matterId: params.matterId,
+      action: "graph.relationships_extracted",
+      targetType: "matter",
+      targetId: params.matterId,
+      metadata: { proposed: 0, merged: 0, rejected: 0, skipped: "no_verified_nodes" },
+    });
+    return {
+      proposed: 0,
+      merged: 0,
+      rejected: 0,
+      provider: "none",
+      model: "none",
+      skipped: "no_verified_nodes" as const,
+    };
+  }
+
+  const ai = params.ai ?? createAIProviderFromEnv();
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "graph_relationship_extraction",
+    routing: {
+      subsystem: "graph",
+      strategy: "standard",
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+    },
     messages: [
       { role: "system", content: buildGraphRelationshipSystemPrompt() },
       {
         role: "user",
         content: buildGraphRelationshipUserPrompt({
-          nodes: nodes.map((n) => ({
-            canonicalEntityType: n.canonicalEntityType,
-            canonicalEntityId: n.canonicalEntityId,
-            nodeType: n.nodeType,
-            displayName: n.displayName,
-          })),
+          nodes: nodeRefs,
           chunks: chunks.map((c) => ({ chunkId: c.id, content: c.content })),
         }),
       },
@@ -77,7 +105,7 @@ export async function extractGraphRelationshipCandidates(params: {
   } catch {
     raw = { relationships: [] };
   }
-  const parsed = graphRelationshipExtractionSchema.parse(raw);
+  const parsed = parseGraphRelationshipExtraction(raw, nodeRefs);
   const authorized = await loadAuthorizedChunks(params.db, {
     organizationId: params.organizationId,
     matterId: params.matterId,
@@ -253,8 +281,8 @@ export async function createManualGraphEdge(params: {
     relationshipType: params.relationshipType,
     label: params.label ?? null,
     origin: "manual",
-    status: "approved",
-    confidence: "high",
+    status: "proposed",
+    confidence: "medium",
     userId: params.userId,
   });
 
@@ -290,7 +318,7 @@ export async function getGraphNeighborhood(params: {
     .limit(1);
   if (!center) return null;
 
-  const statuses = params.statuses ?? ["proposed", "approved", "edited_and_approved"];
+  const statuses = params.statuses ?? ["approved", "edited_and_approved"];
   const edgeConditions = [
     eq(graphEdges.organizationId, params.organizationId),
     eq(graphEdges.matterId, params.matterId),

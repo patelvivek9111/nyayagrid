@@ -1,0 +1,2754 @@
+{
+  "v1Counts": {
+    "pass": 80,
+    "needs_work": 7,
+    "fail": 13,
+    "infrastructure": 0,
+    "criticalFails": 2
+  },
+  "v2Counts": {
+    "pass": 215,
+    "needs_work": 65,
+    "fail": 115,
+    "infrastructure": 5,
+    "criticalFails": 65
+  },
+  "v1Config": {
+    "gitCommit": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini-2024-07-18",
+    "embeddingProvider": "openai",
+    "promptVersion": "nyaya-matter-qa-v8",
+    "startedAt": "2026-08-18T03:14:16.869Z",
+    "finishedAt": "2026-08-18T03:20:00.975Z"
+  },
+  "v2Config": {
+    "gitCommit": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini-2024-07-18",
+    "embeddingProvider": "openai",
+    "promptVersion": "nyaya-matter-qa-v8",
+    "startedAt": "2026-08-18T03:20:13.563Z",
+    "finishedAt": "2026-08-18T03:45:37.709Z"
+  },
+  "overall": {
+    "expected": 500,
+    "executed": 500,
+    "infrastructure": 5,
+    "pass": 295,
+    "needs_work": 72,
+    "fail": 128
+  },
+  "byCategory": [
+    {
+      "key": "adversarial",
+      "tests": 32,
+      "pass": 1,
+      "needs_work": 13,
+      "fail": 17,
+      "infrastructure": 1,
+      "passRate": 0.0313
+    },
+    {
+      "key": "case_qa",
+      "tests": 87,
+      "pass": 70,
+      "needs_work": 3,
+      "fail": 13,
+      "infrastructure": 1,
+      "passRate": 0.8046
+    },
+    {
+      "key": "citation",
+      "tests": 16,
+      "pass": 9,
+      "needs_work": 2,
+      "fail": 5,
+      "infrastructure": 0,
+      "passRate": 0.5625
+    },
+    {
+      "key": "contract_compare",
+      "tests": 25,
+      "pass": 19,
+      "needs_work": 0,
+      "fail": 6,
+      "infrastructure": 0,
+      "passRate": 0.76
+    },
+    {
+      "key": "contract_decoy",
+      "tests": 32,
+      "pass": 29,
+      "needs_work": 0,
+      "fail": 2,
+      "infrastructure": 1,
+      "passRate": 0.9063
+    },
+    {
+      "key": "contradiction",
+      "tests": 17,
+      "pass": 7,
+      "needs_work": 10,
+      "fail": 0,
+      "infrastructure": 0,
+      "passRate": 0.4118
+    },
+    {
+      "key": "cross_document",
+      "tests": 32,
+      "pass": 0,
+      "needs_work": 32,
+      "fail": 0,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "decoy",
+      "tests": 5,
+      "pass": 4,
+      "needs_work": 0,
+      "fail": 1,
+      "infrastructure": 0,
+      "passRate": 0.8
+    },
+    {
+      "key": "email_reliability",
+      "tests": 16,
+      "pass": 10,
+      "needs_work": 0,
+      "fail": 5,
+      "infrastructure": 1,
+      "passRate": 0.625
+    },
+    {
+      "key": "entity_resolution",
+      "tests": 16,
+      "pass": 0,
+      "needs_work": 0,
+      "fail": 16,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "false_contradiction",
+      "tests": 24,
+      "pass": 22,
+      "needs_work": 2,
+      "fail": 0,
+      "infrastructure": 0,
+      "passRate": 0.9167
+    },
+    {
+      "key": "insufficient",
+      "tests": 42,
+      "pass": 24,
+      "needs_work": 0,
+      "fail": 18,
+      "infrastructure": 0,
+      "passRate": 0.5714
+    },
+    {
+      "key": "missing_exhibit",
+      "tests": 32,
+      "pass": 28,
+      "needs_work": 0,
+      "fail": 4,
+      "infrastructure": 0,
+      "passRate": 0.875
+    },
+    {
+      "key": "numeric",
+      "tests": 12,
+      "pass": 12,
+      "needs_work": 0,
+      "fail": 0,
+      "infrastructure": 0,
+      "passRate": 1
+    },
+    {
+      "key": "numeric_precision",
+      "tests": 16,
+      "pass": 1,
+      "needs_work": 7,
+      "fail": 8,
+      "infrastructure": 0,
+      "passRate": 0.0625
+    },
+    {
+      "key": "quote_accuracy",
+      "tests": 16,
+      "pass": 1,
+      "needs_work": 0,
+      "fail": 14,
+      "infrastructure": 1,
+      "passRate": 0.0625
+    },
+    {
+      "key": "reasoning",
+      "tests": 9,
+      "pass": 4,
+      "needs_work": 3,
+      "fail": 2,
+      "infrastructure": 0,
+      "passRate": 0.4444
+    },
+    {
+      "key": "termination",
+      "tests": 32,
+      "pass": 32,
+      "needs_work": 0,
+      "fail": 0,
+      "infrastructure": 0,
+      "passRate": 1
+    },
+    {
+      "key": "timeline",
+      "tests": 39,
+      "pass": 22,
+      "needs_work": 0,
+      "fail": 17,
+      "infrastructure": 0,
+      "passRate": 0.5641
+    }
+  ],
+  "byExpectation": [
+    {
+      "key": "challenge_premise",
+      "tests": 47,
+      "pass": 17,
+      "needs_work": 13,
+      "fail": 17,
+      "infrastructure": 0,
+      "passRate": 0.3617
+    },
+    {
+      "key": "entity_distinction",
+      "tests": 16,
+      "pass": 0,
+      "needs_work": 0,
+      "fail": 16,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "evidence_chain",
+      "tests": 32,
+      "pass": 0,
+      "needs_work": 32,
+      "fail": 0,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "exact_fact",
+      "tests": 32,
+      "pass": 32,
+      "needs_work": 0,
+      "fail": 0,
+      "infrastructure": 0,
+      "passRate": 1
+    },
+    {
+      "key": "future_effective",
+      "tests": 32,
+      "pass": 29,
+      "needs_work": 0,
+      "fail": 3,
+      "infrastructure": 0,
+      "passRate": 0.9063
+    },
+    {
+      "key": "infrastructure",
+      "tests": 5,
+      "pass": 0,
+      "needs_work": 0,
+      "fail": 0,
+      "infrastructure": 5,
+      "passRate": 0
+    },
+    {
+      "key": "material_change",
+      "tests": 16,
+      "pass": 1,
+      "needs_work": 7,
+      "fail": 8,
+      "infrastructure": 0,
+      "passRate": 0.0625
+    },
+    {
+      "key": "material_changes",
+      "tests": 16,
+      "pass": 14,
+      "needs_work": 0,
+      "fail": 2,
+      "infrastructure": 0,
+      "passRate": 0.875
+    },
+    {
+      "key": "must_abstain",
+      "tests": 89,
+      "pass": 37,
+      "needs_work": 0,
+      "fail": 52,
+      "infrastructure": 0,
+      "passRate": 0.4157
+    },
+    {
+      "key": "must_answer",
+      "tests": 90,
+      "pass": 72,
+      "needs_work": 7,
+      "fail": 11,
+      "infrastructure": 0,
+      "passRate": 0.8
+    },
+    {
+      "key": "must_cite",
+      "tests": 16,
+      "pass": 9,
+      "needs_work": 2,
+      "fail": 5,
+      "infrastructure": 0,
+      "passRate": 0.5625
+    },
+    {
+      "key": "non_material_change",
+      "tests": 31,
+      "pass": 29,
+      "needs_work": 0,
+      "fail": 2,
+      "infrastructure": 0,
+      "passRate": 0.9355
+    },
+    {
+      "key": "not_contradiction",
+      "tests": 16,
+      "pass": 14,
+      "needs_work": 2,
+      "fail": 0,
+      "infrastructure": 0,
+      "passRate": 0.875
+    },
+    {
+      "key": "possible_contradiction",
+      "tests": 16,
+      "pass": 7,
+      "needs_work": 9,
+      "fail": 0,
+      "infrastructure": 0,
+      "passRate": 0.4375
+    },
+    {
+      "key": "source_hierarchy",
+      "tests": 15,
+      "pass": 10,
+      "needs_work": 0,
+      "fail": 5,
+      "infrastructure": 0,
+      "passRate": 0.6667
+    },
+    {
+      "key": "supersession",
+      "tests": 15,
+      "pass": 8,
+      "needs_work": 0,
+      "fail": 7,
+      "infrastructure": 0,
+      "passRate": 0.5333
+    },
+    {
+      "key": "timeline",
+      "tests": 16,
+      "pass": 16,
+      "needs_work": 0,
+      "fail": 0,
+      "infrastructure": 0,
+      "passRate": 1
+    }
+  ],
+  "byClassification": [
+    {
+      "key": "CONTRACT_DECOY_FALSE_POSITIVE",
+      "tests": 2,
+      "pass": 0,
+      "needs_work": 0,
+      "fail": 2,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "ENTITY_RESOLUTION_ERROR",
+      "tests": 16,
+      "pass": 0,
+      "needs_work": 0,
+      "fail": 16,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "FAILED_ABSTENTION",
+      "tests": 52,
+      "pass": 0,
+      "needs_work": 0,
+      "fail": 52,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "FALSE_PREMISE_ACCEPTED",
+      "tests": 30,
+      "pass": 0,
+      "needs_work": 13,
+      "fail": 17,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "FALSE_REFUSAL",
+      "tests": 25,
+      "pass": 0,
+      "needs_work": 2,
+      "fail": 23,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "FUTURE_TERM_USED_TOO_EARLY",
+      "tests": 3,
+      "pass": 0,
+      "needs_work": 0,
+      "fail": 3,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "MATERIAL_CHANGE_MISSED",
+      "tests": 14,
+      "pass": 0,
+      "needs_work": 7,
+      "fail": 7,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "MISSING_MATERIAL_FACT",
+      "tests": 51,
+      "pass": 0,
+      "needs_work": 48,
+      "fail": 3,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "SCHEMA_VALIDATION_ERROR",
+      "tests": 5,
+      "pass": 0,
+      "needs_work": 0,
+      "fail": 0,
+      "infrastructure": 5,
+      "passRate": 0
+    },
+    {
+      "key": "WRONG_CITATION",
+      "tests": 7,
+      "pass": 0,
+      "needs_work": 2,
+      "fail": 5,
+      "infrastructure": 0,
+      "passRate": 0
+    }
+  ],
+  "bySeverity": [
+    {
+      "key": "critical",
+      "tests": 80,
+      "pass": 0,
+      "needs_work": 13,
+      "fail": 67,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "major",
+      "tests": 120,
+      "pass": 0,
+      "needs_work": 59,
+      "fail": 61,
+      "infrastructure": 0,
+      "passRate": 0
+    }
+  ],
+  "byRetrievalBucket": [
+    {
+      "key": "benchmark_infrastructure",
+      "tests": 5,
+      "pass": 0,
+      "needs_work": 0,
+      "fail": 0,
+      "infrastructure": 5,
+      "passRate": 0
+    },
+    {
+      "key": "citation",
+      "tests": 2,
+      "pass": 0,
+      "needs_work": 2,
+      "fail": 0,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "grounding",
+      "tests": 77,
+      "pass": 0,
+      "needs_work": 8,
+      "fail": 69,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "reasoning",
+      "tests": 84,
+      "pass": 0,
+      "needs_work": 55,
+      "fail": 29,
+      "infrastructure": 0,
+      "passRate": 0
+    },
+    {
+      "key": "retrieval",
+      "tests": 37,
+      "pass": 0,
+      "needs_work": 7,
+      "fail": 30,
+      "infrastructure": 0,
+      "passRate": 0
+    }
+  ],
+  "infra": [
+    {
+      "taskId": "SYNTH-V2-005-T002",
+      "prompt": "As of November 2026, what formal notice period currently applies?",
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"number\",\n    \"path\": [\n      \"sources\",\n      0,\n      \"chunkId\"\n    ],\n    \"message\": \"Expected string, received number\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      0,\n      \"documentId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      0,\n      \"documentVersionId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"number\",\n    \"path\": [\n      \"sources\",\n      1,\n      \"chunkId\"\n    ],\n    \"message\": \"Expected string, received number\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      1,\n      \"documentId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      1,\n      \"documentVersionId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"number\",\n    \"path\": [\n      \"sources\",\n      2,\n      \"chunkId\"\n    ],\n    \"message\": \"Expected string, received number\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      2,\n      \"documentId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      2,\n      \"documentVersionId\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+    },
+    {
+      "taskId": "SYNTH-V2-008-T008",
+      "prompt": "Did Amendment 1 materially change the agreement by renumbering Exhibit A to Exhibit B?",
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      0,\n      \"documentId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      0,\n      \"documentVersionId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      1,\n      \"documentId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      1,\n      \"documentVersionId\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+    },
+    {
+      "taskId": "SYNTH-V2-009-T020",
+      "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-02-08.",
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      0,\n      \"documentId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      0,\n      \"documentVersionId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      1,\n      \"documentId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      1,\n      \"documentVersionId\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+    },
+    {
+      "taskId": "SYNTH-V2-014-T014",
+      "prompt": "An internal email says the contract “still says 60 days.” Should that be treated as the current contractual requirement?",
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      1,\n      \"documentId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      1,\n      \"documentVersionId\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+    },
+    {
+      "taskId": "SYNTH-V2-016-T024",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "error": "[\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      1,\n      \"documentId\"\n    ],\n    \"message\": \"Required\"\n  },\n  {\n    \"code\": \"invalid_type\",\n    \"expected\": \"string\",\n    \"received\": \"undefined\",\n    \"path\": [\n      \"sources\",\n      1,\n      \"documentVersionId\"\n    ],\n    \"message\": \"Required\"\n  }\n]"
+    }
+  ],
+  "criticals": [
+    {
+      "taskId": "SYNTH-008-Q008",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What was the loan’s outstanding principal balance on August 3, 2026?",
+      "answer": "The loan's outstanding principal balance on August 3, 2026, remains unchanged from the original principal amount of $2,500,000, as indicated in the Loan Modification Agreement.",
+      "evidenceState": "grounded",
+      "citations": [
+        "modification.pdf",
+        "note.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-010-Q008",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "Did Pioneer actually issue or pay a service credit for August?",
+      "answer": "Pioneer did not issue or pay a service credit for August. The August service invoice indicates that the monthly service fee billed was $68,000, and it explicitly states that no service credits were reflected on this invoice. Additionally, while there were qualifying missed responses recorded in the Priority-One Incident Log for August, the absence of service credits on the invoice confirms that no credits were applied for that month.",
+      "evidenceState": "grounded",
+      "citations": [
+        "invoice.pdf",
+        "incident_log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-001-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not state any insurance deductible. This is confirmed by the Main Agreement, which specifies that Party B must maintain commercial coverage but does not mention a deductible.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-001-T020",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-03-04.",
+      "answer": "The parties agreed that Amendment 2 would be retroactive to March 4, 2026, because that date marks the commencement of the original agreement between Harbor Holdings LLC and Harbor Operations Inc. This retroactive effect aligns with the initial term of the lease, which begins on the same date. The amendment itself, signed on October 6, 2026, becomes effective on January 1, 2027, but the retroactive provision allows for the notice period and other terms to be applied as if they were in effect from the start of the lease term.",
+      "evidenceState": "grounded",
+      "citations": [
+        "03_Amendment_2.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-001-T024",
+      "category": "quote_accuracy",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "answer": "The document language does not conclusively prove that badge access indicates the witness personally entered the room. The access log states, \"This log records badge activity; it does not independently prove who physically carried the badge.\" This indicates that while the badge was used to gain access, it does not confirm the identity of the person who used it.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-001-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan A. Mercer physically enter the records room?",
+      "answer": "Jordan A. Mercer physically entered the records room at 2:47 p.m. on November 10, 2026, as indicated by the access log.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-002-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not specify any insurance deductible. Party B is required to maintain commercial coverage of at least $310,000 per occurrence, but no deductible amount is mentioned in the provided documents.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-002-T019",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "The agreement clearly requires a $10,000 deductible. Quote that clause.",
+      "answer": "The agreement does not clearly state a $10,000 deductible. In fact, the insurance section specifies that Party B must maintain commercial coverage of at least $310,000 per occurrence, but it does not mention any deductible amount.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-002-T020",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-04-07.",
+      "answer": "The parties agreed that Amendment 2 would be retroactive to April 7, 2026, because that date marks the commencement of the original agreement between CinderCloud Holdings LLC and CinderCloud Operations Inc. This retroactive effect aligns the amendment with the initial terms of the agreement, ensuring continuity in the contractual relationship from the start date. The amendment itself, signed on October 7, 2026, specifies that it becomes effective on January 1, 2027, but the retroactive provision allows for adjustments to be recognized from the original agreement's start date.",
+      "evidenceState": "grounded",
+      "citations": [
+        "03_Amendment_2.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-002-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan B. Mercer physically enter the records room?",
+      "answer": "Jordan B. Mercer did not physically enter the records room on November 15, 2026. He stated during his deposition that he never entered the records room that day. However, the access log indicates that his badge was granted access to the records room at 14:47, and he exited at 14:49. This discrepancy suggests that while his badge was used to access the room, he claims he did not enter it physically.",
+      "evidenceState": "grounded",
+      "citations": [
+        "05_Deposition_Mercer.pdf",
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-003-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not specify any insurance deductible. Party B is required to maintain commercial coverage of at least $365,000 per occurrence, but no deductible amount is mentioned in the provided documents.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-003-T020",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-05-10.",
+      "answer": "The parties agreed that Amendment 2 would be retroactive to 2026-05-10 to align the amendment's effective date with the commencement of the main agreement, which is also dated 2026-05-10. This retroactive application ensures that the terms of the amendment are applicable from the start of the agreement, maintaining consistency in the contractual obligations from that date forward.",
+      "evidenceState": "grounded",
+      "citations": [
+        "03_Amendment_2.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-003-T024",
+      "category": "quote_accuracy",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "answer": "The document language does not conclusively prove that badge access indicates the witness personally entered the room. The access log states, \"This log records badge activity; it does not independently prove who physically carried the badge.\" This indicates that while the badge was used to gain access, it does not confirm the identity of the person who entered.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-003-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan C. Mercer physically enter the records room?",
+      "answer": "Jordan C. Mercer physically entered the records room at 2:47 p.m. on November 20, 2026, as indicated by the access log which states, \"2026-11-20 14:47 - Badge JM-003 assigned to Jordan C. Mercer - Records Room - ACCESS GRANTED.\"",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-004-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not specify any insurance deductible. The deposition excerpt indicates that the individual did not recall seeing a deductible in the agreement, and the main agreement explicitly states that it does not mention any insurance deductible.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf",
+        "05_Deposition_Mercer.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-004-T020",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-06-13.",
+      "answer": "The parties agreed that Amendment 2 would be retroactive to June 13, 2026, as indicated by the effective date of the amendment being set for January 1, 2027, while the notice period change in Section 4 will only take effect on that date. However, the context of the retroactive date is not explicitly detailed in the provided sources, leaving some ambiguity regarding the rationale behind this decision.",
+      "evidenceState": "partial",
+      "citations": [
+        "03_Amendment_2.pdf",
+        "04_Email_Chain.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-004-T024",
+      "category": "quote_accuracy",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "answer": "The document language does not conclusively prove that badge access indicates the witness personally entered the room. The access log states, \"This log records badge activity; it does not independently prove who physically carried the badge.\" This indicates that while the badge was used to gain access, it does not confirm the identity of the person who entered.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-004-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan D. Mercer physically enter the records room?",
+      "answer": "Jordan D. Mercer physically entered the records room at 2:47 p.m. on November 5, 2026, as indicated by the access log.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-005-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not specify any insurance deductible. The relevant section states that Party B must maintain commercial coverage of at least $475,000 per occurrence, but there is no mention of a deductible amount.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-005-T020",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-07-16.",
+      "answer": "The parties agreed that Amendment 2 would be retroactive to July 16, 2026, because that date marks the commencement of the original agreement between Lattice Holdings LLC and Lattice Operations Inc. This retroactive effect aligns the amendment with the original terms and conditions established at that time, ensuring continuity in the contractual relationship. The amendment itself, signed on October 10, 2026, specifies that it becomes effective on January 1, 2027, but the retroactive date allows for adjustments to be recognized from the original agreement's start date.",
+      "evidenceState": "grounded",
+      "citations": [
+        "03_Amendment_2.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-005-T024",
+      "category": "quote_accuracy",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "answer": "The document language does not conclusively prove that badge access indicates the witness personally entered the room. The access log states, \"This log records badge activity; it does not independently prove who physically carried the badge.\" This indicates that while the badge was used to gain access, it does not confirm the identity of the person who used it.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-005-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan E. Mercer physically enter the records room?",
+      "answer": "Jordan E. Mercer physically entered the records room at 2:47 p.m. on November 10, 2026, as indicated by the access log which states, \"2026-11-10 14:47 - Badge JM-005 assigned to Jordan E. Mercer - Records Room - ACCESS GRANTED.\"",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-006-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not specify any insurance deductible. The deposition excerpt indicates that the individual did not recall seeing a deductible in the agreement, and the main agreement explicitly states that there is no deductible mentioned.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf",
+        "05_Deposition_Mercer.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-006-T020",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-08-19.",
+      "answer": "The parties agreed that Amendment 2 would be retroactive to 2026-08-19 because that is the date the original agreement was entered into, establishing the context for the amendment. The amendment itself, signed on 2026-10-11, becomes effective on 2027-01-01, but the retroactive date aligns with the original agreement's commencement, ensuring continuity in the contractual relationship.",
+      "evidenceState": "grounded",
+      "citations": [
+        "03_Amendment_2.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-006-T024",
+      "category": "quote_accuracy",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "answer": "The document language does not conclusively prove that badge access indicates the witness personally entered the room. The access log states, \"This log records badge activity; it does not independently prove who physically carried the badge.\" This indicates that while the badge was used to gain access, it does not confirm the identity of the person who entered.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-006-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan F. Mercer physically enter the records room?",
+      "answer": "Jordan F. Mercer physically entered the records room at 2:47 p.m. on November 15, 2026, as indicated by the access log.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-007-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not state any insurance deductible.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-007-T020",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-09-02.",
+      "answer": "The parties agreed that Amendment 2 would be retroactive to 2026-09-02 because the amendment was signed on 2026-10-12 and specifies that it becomes effective on 2027-01-01. However, the original agreement, which includes the effective date of 2026-09-02, remains in force until the new terms take effect. This retroactive application allows for continuity in the contractual obligations and notice periods as they transition to the new terms outlined in Amendment 2.",
+      "evidenceState": "grounded",
+      "citations": [
+        "03_Amendment_2.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-007-T024",
+      "category": "quote_accuracy",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "answer": "The document language does not conclusively prove that the witness personally entered the room. The access log states, \"This log records badge activity; it does not independently prove who physically carried the badge.\" Additionally, the witness, Jordan G. Mercer, explicitly stated in his deposition, \"A. No. I never entered the records room on 2026-11-20.\"",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf",
+        "05_Deposition_Mercer.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-007-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan G. Mercer physically enter the records room?",
+      "answer": "Jordan G. Mercer physically entered the records room at 2:47 p.m. on November 20, 2026, as indicated by the access log.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-008-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not state any insurance deductible.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-008-T015",
+      "category": "missing_exhibit",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What exact amount appears in Exhibit Z - Cost Reconciliation?",
+      "answer": "The exact amount that appears in Exhibit Z - Cost Reconciliation is not provided in the available sources. The minutes from the review meeting mention Exhibit Z but do not include its contents, and the exhibit itself is not included in the benchmark packet.",
+      "evidenceState": "partial",
+      "citations": [
+        "08_Meeting_Minutes.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-008-T020",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-01-05.",
+      "answer": "The parties agreed that Amendment 2 would be retroactive to January 5, 2026, as indicated by the effective date of the original agreement, which is also January 5, 2026. This retroactive effect aligns with the commencement of the agreement between Cobalt Holdings LLC and Cobalt Operations Inc., establishing a clear timeline for the obligations and terms set forth in the amendment. The amendment itself, signed on October 13, 2026, specifies that it becomes effective on January 1, 2027, but the retroactive application to the original agreement's date ensures continuity in the contractual relationship.",
+      "evidenceState": "grounded",
+      "citations": [
+        "03_Amendment_2.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-008-T024",
+      "category": "quote_accuracy",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "answer": "The document language does not conclusively prove that badge access indicates the witness personally entered the room. The access log states, \"This log records badge activity; it does not independently prove who physically carried the badge.\" This indicates that while the badge was used to gain access, it does not confirm the identity of the person who used it.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-008-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan H. Mercer physically enter the records room?",
+      "answer": "Jordan H. Mercer physically entered the records room at 2:47 p.m. on November 5, 2026, as indicated by the access log.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-009-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not specify any insurance deductible. Party B is required to maintain commercial coverage of at least $695,000 per occurrence, but no deductible amount is mentioned in the provided documents.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-009-T024",
+      "category": "quote_accuracy",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "answer": "The document language does not conclusively prove that the witness personally entered the room. The access log states, \"This log records badge activity; it does not independently prove who physically carried the badge,\" indicating that while the badge was used to access the room, it does not confirm the identity of the person who used it. Additionally, the deposition excerpt from Jordan I. Mercer states, \"A. No. I never entered the records room on 2026-11-10,\" which contradicts any assertion that he personally entered the room.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf",
+        "05_Deposition_Mercer.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-009-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan I. Mercer physically enter the records room?",
+      "answer": "Jordan I. Mercer physically entered the records room at 2:47 p.m. on November 10, 2026, as indicated by the access log entry.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-010-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not state any insurance deductible. This is confirmed by the Main Agreement, which specifies that Party B must maintain commercial coverage of at least $750,000 per occurrence without mentioning a deductible.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-010-T020",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-03-11.",
+      "answer": "The parties agreed that Amendment 2 would be retroactive to March 11, 2026, because the amendment was signed on October 15, 2026, and it specifies that it becomes effective on January 1, 2027. However, the original agreement's terms, including the notice period, were in effect until that date. The retroactive date aligns with the initial term of the agreement, which began on March 11, 2026, thus ensuring continuity in the contractual obligations from the start of the agreement.",
+      "evidenceState": "grounded",
+      "citations": [
+        "03_Amendment_2.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-010-T024",
+      "category": "quote_accuracy",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "answer": "The document language does not conclusively prove that badge access indicates the witness personally entered the room. The access log states, \"This log records badge activity; it does not independently prove who physically carried the badge.\" This indicates that while the badge was assigned to Jordan J. Mercer and access was granted, it does not confirm his physical presence in the records room.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-010-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan J. Mercer physically enter the records room?",
+      "answer": "Jordan J. Mercer physically entered the records room at 2:47 p.m. on November 15, 2026, as indicated by the access log.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-011-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not state any insurance deductible.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-011-T020",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-04-14.",
+      "answer": "The parties agreed that Amendment 2 would be retroactive to April 14, 2026, because the amendment was signed on October 16, 2026, and it specifies that it becomes effective on January 1, 2027. This retroactive effect allows the notice period to be adjusted to 45 days starting from the effective date, aligning with the changes made in Amendment 1, which had already modified the notice period to 45 days effective September 11, 2026. Thus, the retroactive date ensures continuity in the contractual obligations and notice requirements from the original agreement date.",
+      "evidenceState": "grounded",
+      "citations": [
+        "03_Amendment_2.pdf",
+        "02_Amendment_1.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-011-T024",
+      "category": "quote_accuracy",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "answer": "The document language does not conclusively prove that badge access indicates the witness personally entered the room. The access log states, \"This log records badge activity; it does not independently prove who physically carried the badge.\" This indicates that while the badge was used to gain access, it does not confirm the identity of the individual who used it.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-011-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan K. Mercer physically enter the records room?",
+      "answer": "Jordan K. Mercer physically entered the records room at 2:47 p.m. on November 20, 2026, as indicated by the access log which states, \"2026-11-20 14:47 - Badge JM-011 assigned to Jordan K. Mercer - Records Room - ACCESS GRANTED.\"",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-012-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not specify any insurance deductible. Party B is required to maintain commercial coverage of at least $860,000 per occurrence, but no deductible amount is mentioned in the provided documents.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-012-T024",
+      "category": "quote_accuracy",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "answer": "The document language does not conclusively prove that badge access indicates the witness personally entered the room. The access log states, \"This log records badge activity; it does not independently prove who physically carried the badge.\" This indicates that while the badge was used to gain access, it does not confirm the identity of the person who used it.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-012-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan L. Mercer physically enter the records room?",
+      "answer": "Jordan L. Mercer physically entered the records room at 2:47 p.m. on November 5, 2026, as indicated by the access log.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-013-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not specify any insurance deductible. Party B is required to maintain commercial coverage of at least $915,000 per occurrence, but no deductible amount is mentioned in the provided documents.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-013-T019",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "The agreement clearly requires a $10,000 deductible. Quote that clause.",
+      "answer": "The agreement does not clearly state a $10,000 deductible. In fact, the insurance section indicates that the agreement does not specify any insurance deductible. The relevant quote from the sources is: \"The agreement does not state any insurance deductible.\"",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-013-T020",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-06-20.",
+      "answer": "The parties agreed that Amendment 2 would be retroactive to June 20, 2026, because the original agreement was entered into on that date, establishing the terms that Amendment 2 would modify. However, Amendment 2 itself does not take effect until January 1, 2027, as stated in the amendment. This means that while the amendment is retroactive to the original agreement date, its provisions will only apply from the effective date onward.",
+      "evidenceState": "grounded",
+      "citations": [
+        "03_Amendment_2.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-013-T024",
+      "category": "quote_accuracy",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "answer": "The document language does not conclusively prove that badge access indicates the witness personally entered the room. The access log states: 'This log records badge activity; it does not independently prove who physically carried the badge.'",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-013-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan M. Mercer physically enter the records room?",
+      "answer": "Jordan M. Mercer physically entered the records room at 2:47 p.m. on November 10, 2026, as indicated by the access log.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-014-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not specify any insurance deductible. The relevant section states that Party B must maintain commercial coverage of at least $970,000 per occurrence, but it does not mention a deductible amount.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-014-T020",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-07-03.",
+      "answer": "The parties agreed that Amendment 2 would be retroactive to 2026-07-03 to align the amendment's effective date with the original agreement's commencement date. This retroactive application ensures continuity in the contractual relationship and allows for the updated terms to apply from the start of the agreement, rather than waiting until the amendment's signing date of 2026-10-19 or its effective date of 2027-01-01. This approach is often used to avoid gaps in obligations or rights that could arise during the interim period.",
+      "evidenceState": "grounded",
+      "citations": [
+        "03_Amendment_2.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-014-T024",
+      "category": "quote_accuracy",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "answer": "The document language does not conclusively prove that badge access indicates the witness personally entered the room. The access log states, \"This log records badge activity; it does not independently prove who physically carried the badge.\" This indicates that while the badge was used to gain access, it does not confirm the identity of the individual who used it.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-014-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan N. Mercer physically enter the records room?",
+      "answer": "Jordan N. Mercer physically entered the records room at 14:47 (2:47 p.m.) on November 15, 2026, as indicated by the access log.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-015-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not specify an insurance deductible. The relevant section states that Party B must maintain commercial coverage of at least $1,025,000 per occurrence, but it does not mention any deductible amount.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-015-T015",
+      "category": "missing_exhibit",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What exact amount appears in Exhibit Z - Cost Reconciliation?",
+      "answer": "The exact amount that appears in Exhibit Z - Cost Reconciliation is not provided in the available sources. The minutes from the review meeting mention Exhibit Z but do not include its contents, and the exhibit itself is not included in the benchmark packet.",
+      "evidenceState": "partial",
+      "citations": [
+        "08_Meeting_Minutes.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-015-T019",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "The agreement clearly requires a $10,000 deductible. Quote that clause.",
+      "answer": "The agreement does not clearly state a $10,000 deductible. In fact, a deposition excerpt indicates that the witness does not recall seeing a deductible in the agreement.",
+      "evidenceState": "grounded",
+      "citations": [
+        "05_Deposition_Mercer.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-015-T020",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-08-06.",
+      "answer": "The parties agreed that Amendment 2 would be retroactive to 2026-08-06 because the amendment was signed on 2026-10-05 and becomes effective on 2027-01-01. This retroactive date aligns with the initial term of the franchise agreement, which also begins on 2026-08-06. The amendment's provisions, including the notice period change, will apply from the start of the agreement, ensuring continuity and clarity in the contractual obligations from the outset.",
+      "evidenceState": "grounded",
+      "citations": [
+        "03_Amendment_2.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-015-T024",
+      "category": "quote_accuracy",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "answer": "The document language does not conclusively prove that the witness personally entered the room. The access log states, \"This log records badge activity; it does not independently prove who physically carried the badge.\" Additionally, during the deposition, Jordan O. Mercer explicitly stated, \"A. No. I never entered the records room on 2026-11-20.\"",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf",
+        "05_Deposition_Mercer.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-015-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan O. Mercer physically enter the records room?",
+      "answer": "Jordan O. Mercer physically entered the records room at 2:47 p.m. on November 20, 2026, as indicated by the access log.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-016-T004",
+      "category": "insufficient",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "What is the insurance deductible required by the agreement?",
+      "answer": "The agreement does not state any insurance deductible. In the deposition excerpt, it is noted that the individual did not recall seeing a deductible in the agreement, which supports the conclusion that no deductible is specified.",
+      "evidenceState": "grounded",
+      "citations": [
+        "01_Main_Agreement.pdf",
+        "05_Deposition_Mercer.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "taskId": "SYNTH-V2-016-T020",
+      "category": "adversarial",
+      "classification": "FALSE_PREMISE_ACCEPTED",
+      "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-09-09.",
+      "answer": "The parties agreed that Amendment 2 would be retroactive to 2026-09-09 to align the amendment's provisions with the original agreement's effective date. This retroactive effect allows for continuity in the contractual obligations and ensures that any changes made by the amendment are applicable from the original agreement's commencement date. The amendment itself, signed on 2026-10-06, specifies that it becomes effective on 2027-01-01, but the retroactive clause ensures that the terms apply as if they were in effect from the earlier date.",
+      "evidenceState": "grounded",
+      "citations": [
+        "03_Amendment_2.pdf"
+      ],
+      "detail": "Expected the false premise to be challenged; the answer accepted or ignored it."
+    },
+    {
+      "taskId": "SYNTH-V2-016-T025",
+      "category": "timeline",
+      "classification": "FAILED_ABSTENTION",
+      "prompt": "At exactly what time did Jordan P. Mercer physically enter the records room?",
+      "answer": "Jordan P. Mercer physically entered the records room at 2:47 p.m. on November 5, 2026, as indicated by the access log.",
+      "evidenceState": "grounded",
+      "citations": [
+        "06_Access_Log.pdf"
+      ],
+      "detail": "Expected abstention; answer asserted a determination."
+    }
+  ],
+  "samples": {
+    "pass": [
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-012-T021",
+        "scenarioId": "SYNTH-V2-012",
+        "category": "termination",
+        "expectationType": "future_effective",
+        "verdict": "pass",
+        "severity": "major",
+        "detail": "Required facts present.",
+        "classification": "PASS",
+        "retrievalBucket": "ok",
+        "evidenceState": "grounded",
+        "prompt": "As of November 2026, may Party A terminate for convenience under the supplied contract documents?",
+        "answer": "As of November 2026, Party A may not terminate for convenience under the supplied contract documents. The relevant amendment, Amendment No. 2, which allows Party A to terminate for convenience with 90 days written notice, does not take effect until January 1, 2027. Prior to that date, the original agreement, which does not permit termination for convenience, remains in force.",
+        "citations": [
+          "03_Amendment_2.pdf"
+        ],
+        "retrievedCount": 10,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 4004,
+        "extras": {},
+        "needlesRequired": [
+          "no. the convenience right begins 2027-01-01.",
+          "2027-01-01",
+          "2027",
+          "2,027",
+          "01/01/2027"
+        ],
+        "needlesFound": [
+          "no. the convenience right begins 2027-01-01.",
+          "2027-01-01",
+          "2027",
+          "2,027",
+          "01/01/2027"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-010-T014",
+        "scenarioId": "SYNTH-V2-010",
+        "category": "email_reliability",
+        "expectationType": "source_hierarchy",
+        "verdict": "pass",
+        "severity": "major",
+        "detail": "Required facts present.",
+        "classification": "PASS",
+        "retrievalBucket": "ok",
+        "evidenceState": "grounded",
+        "prompt": "An internal email says the contract “still says 45 days.” Should that be treated as the current contractual requirement?",
+        "answer": "The current contractual requirement for the notice period is 30 days, as stated in Amendment 1, which became effective on September 10, 2026. The internal email suggesting it is still 45 days is incorrect, as Amendment 1 explicitly changed the notice period to 30 days. Amendment 2, which states that the notice period will revert to 45 days, does not take effect until January 1, 2027. Therefore, until that date, the notice period remains at 30 days.",
+        "citations": [
+          "04_Email_Chain.pdf",
+          "02_Amendment_1.pdf"
+        ],
+        "retrievedCount": 8,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 4104,
+        "extras": {},
+        "needlesRequired": [
+          "30"
+        ],
+        "needlesFound": [
+          "30"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-013-T008",
+        "scenarioId": "SYNTH-V2-013",
+        "category": "contract_decoy",
+        "expectationType": "non_material_change",
+        "verdict": "pass",
+        "severity": "major",
+        "detail": "Treated the change as non-material.",
+        "classification": "PASS",
+        "retrievalBucket": "ok",
+        "evidenceState": "grounded",
+        "prompt": "Did Amendment 1 materially change the agreement by renumbering Exhibit A to Exhibit B?",
+        "answer": "Amendment 1 did not materially change the agreement by renumbering Exhibit A to Exhibit B. The amendment specifies that administrative changes, such as renumbering and correcting spelling, do not alter substantive obligations. Therefore, this renumbering is considered an administrative correction rather than a material change.",
+        "citations": [
+          "02_Amendment_1.pdf"
+        ],
+        "retrievedCount": 8,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 3021,
+        "extras": {
+          "comparisonSummary": "Removed multiple instances of 'SYNTH - FICTIONAL TEST DOCUMENT - NOT REAL CLIENT WORK' from various pages.",
+          "comparisonChangeCount": 22
+        },
+        "needlesRequired": [
+          "amendment",
+          "expressly",
+          "describes",
+          "renumbering"
+        ],
+        "needlesFound": [
+          "amendment",
+          "renumbering"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-004-T014",
+        "scenarioId": "SYNTH-V2-004",
+        "category": "email_reliability",
+        "expectationType": "source_hierarchy",
+        "verdict": "pass",
+        "severity": "major",
+        "detail": "Required facts present.",
+        "classification": "PASS",
+        "retrievalBucket": "ok",
+        "evidenceState": "grounded",
+        "prompt": "An internal email says the contract “still says 45 days.” Should that be treated as the current contractual requirement?",
+        "answer": "The internal email suggesting the contract 'still says 45 days' should not be treated as the current contractual requirement. Amendment 1 changed the notice period to 30 days, and Amendment 2, which becomes effective on January 1, 2027, will change the notice period to 45 days. Until that effective date, the current requirement remains 30 days as per Amendment 1.",
+        "citations": [
+          "02_Amendment_1.pdf"
+        ],
+        "retrievedCount": 8,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 6484,
+        "extras": {},
+        "needlesRequired": [
+          "30"
+        ],
+        "needlesFound": [
+          "30"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-007-T002",
+        "scenarioId": "SYNTH-V2-007",
+        "category": "case_qa",
+        "expectationType": "supersession",
+        "verdict": "pass",
+        "severity": "major",
+        "detail": "Required facts present.",
+        "classification": "PASS",
+        "retrievalBucket": "ok",
+        "evidenceState": "grounded",
+        "prompt": "As of November 2026, what formal notice period currently applies?",
+        "answer": "As of November 2026, the formal notice period is 30 days. This is confirmed by Amendment 1, which states that formal notice requires 30 days. Although Amendment 2, effective January 1, 2027, will change the notice period to 45 days, it does not take effect until that date.",
+        "citations": [
+          "03_Amendment_2.pdf",
+          "04_Email_Chain.pdf"
+        ],
+        "retrievedCount": 8,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 3496,
+        "extras": {},
+        "needlesRequired": [
+          "30 days",
+          "30"
+        ],
+        "needlesFound": [
+          "30 days",
+          "30"
+        ]
+      },
+      {
+        "dataset": "v1",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-14-16-862Z",
+        "taskId": "SYNTH-001-Q001",
+        "scenarioId": "SYNTH-001",
+        "category": "case_qa",
+        "expectationType": "must_answer",
+        "verdict": "pass",
+        "severity": "major",
+        "detail": "Required facts present.",
+        "classification": "PASS",
+        "retrievalBucket": "ok",
+        "evidenceState": "grounded",
+        "prompt": "What is the current monthly base rent as of August 2026?",
+        "answer": "$19,250 per month",
+        "citations": [
+          "amendment1.pdf",
+          "email_landlord.pdf"
+        ],
+        "retrievedCount": 6,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 2464,
+        "extras": {},
+        "needlesRequired": [
+          "19,250 usd per month",
+          "19250",
+          "19,250"
+        ],
+        "needlesFound": [
+          "19,250 usd per month",
+          "19250",
+          "19,250"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-004-T021",
+        "scenarioId": "SYNTH-V2-004",
+        "category": "termination",
+        "expectationType": "future_effective",
+        "verdict": "pass",
+        "severity": "major",
+        "detail": "Required facts present.",
+        "classification": "PASS",
+        "retrievalBucket": "ok",
+        "evidenceState": "grounded",
+        "prompt": "As of November 2026, may Party A terminate for convenience under the supplied contract documents?",
+        "answer": "As of November 2026, Party A may not terminate for convenience under the supplied contract documents. The relevant amendment, Amendment No. 2, states that Party A may terminate for convenience starting on January 1, 2027, with a notice period of 90 days. Prior to that date, the original termination rules remain in force, which do not allow for convenience termination.",
+        "citations": [
+          "03_Amendment_2.pdf"
+        ],
+        "retrievedCount": 10,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 3055,
+        "extras": {},
+        "needlesRequired": [
+          "no. the convenience right begins 2027-01-01.",
+          "2027-01-01",
+          "2027",
+          "2,027",
+          "01/01/2027"
+        ],
+        "needlesFound": [
+          "no. the convenience right begins 2027-01-01.",
+          "2027-01-01",
+          "2027",
+          "2,027",
+          "01/01/2027"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-016-T015",
+        "scenarioId": "SYNTH-V2-016",
+        "category": "missing_exhibit",
+        "expectationType": "must_abstain",
+        "verdict": "pass",
+        "severity": "critical",
+        "detail": "Answer abstained or marked insufficient as required.",
+        "classification": "PASS",
+        "retrievalBucket": "retrieval",
+        "evidenceState": "insufficient",
+        "prompt": "What exact amount appears in Exhibit Z - Cost Reconciliation?",
+        "answer": "The available matter documents do not provide sufficient evidence to answer this question.",
+        "citations": [],
+        "retrievedCount": 10,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 2811,
+        "extras": {},
+        "needlesRequired": [
+          "cannot determine because exhibit z is referenced but not supplied.",
+          "cannot",
+          "determine",
+          "because"
+        ],
+        "needlesFound": []
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-010-T021",
+        "scenarioId": "SYNTH-V2-010",
+        "category": "termination",
+        "expectationType": "future_effective",
+        "verdict": "pass",
+        "severity": "major",
+        "detail": "Required facts present.",
+        "classification": "PASS",
+        "retrievalBucket": "ok",
+        "evidenceState": "grounded",
+        "prompt": "As of November 2026, may Party A terminate for convenience under the supplied contract documents?",
+        "answer": "As of November 2026, Party A may not terminate for convenience under the supplied contract documents. The relevant amendment, Amendment No. 2, states that Party A may terminate for convenience beginning on January 1, 2027, with a 90-day written notice. Prior to that date, the original termination rules, which do not allow for convenience termination, remain in effect.",
+        "citations": [
+          "03_Amendment_2.pdf"
+        ],
+        "retrievedCount": 9,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 2693,
+        "extras": {},
+        "needlesRequired": [
+          "no. the convenience right begins 2027-01-01.",
+          "2027-01-01",
+          "2027",
+          "2,027",
+          "01/01/2027"
+        ],
+        "needlesFound": [
+          "no. the convenience right begins 2027-01-01.",
+          "2027-01-01",
+          "2027",
+          "2,027",
+          "01/01/2027"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-012-T011",
+        "scenarioId": "SYNTH-V2-012",
+        "category": "false_contradiction",
+        "expectationType": "not_contradiction",
+        "verdict": "pass",
+        "severity": "major",
+        "detail": "Correctly treated the pair as compatible.",
+        "classification": "PASS",
+        "retrievalBucket": "ok",
+        "evidenceState": "grounded",
+        "prompt": "Is “near the middle of November” inconsistent with the meeting date 2026-11-05?",
+        "answer": "Yes, the phrase 'near the middle of November' is inconsistent with the meeting date of 2026-11-05. The meeting occurred on November 5, which is earlier than the middle of November, suggesting that the pricing issue could not have been discussed 'near the middle of November' during that meeting.",
+        "citations": [
+          "05_Deposition_Mercer.pdf",
+          "08_Meeting_Minutes.pdf"
+        ],
+        "retrievedCount": 11,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 3244,
+        "extras": {
+          "contradictionFindingCount": 1,
+          "contradictionTitles": [
+            "Conflicting Notice Periods"
+          ]
+        },
+        "needlesRequired": [
+          "no. the approximate statement is compatible with the precise meeting date.",
+          "approximate",
+          "statement",
+          "compatible"
+        ],
+        "needlesFound": []
+      }
+    ],
+    "needs_work": [
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-002-T006",
+        "scenarioId": "SYNTH-V2-002",
+        "category": "numeric_precision",
+        "expectationType": "material_change",
+        "verdict": "needs_work",
+        "severity": "major",
+        "detail": "Matched 3/7 required needles.",
+        "classification": "MATERIAL_CHANGE_MISSED",
+        "retrievalBucket": "reasoning",
+        "evidenceState": "partial",
+        "prompt": "What was the original liability cap and what did Amendment 1 change it to?",
+        "answer": "The original liability cap was not specified in the provided sources. Amendment 1 changed the aggregate liability cap to $620,000.",
+        "citations": [
+          "02_Amendment_1.pdf"
+        ],
+        "retrievedCount": 9,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 2198,
+        "extras": {},
+        "needlesRequired": [
+          "$310,000 to $620,000",
+          "$310",
+          "$620",
+          "310000",
+          "310,000",
+          "620000",
+          "620,000"
+        ],
+        "needlesFound": [
+          "$620",
+          "620000",
+          "620,000"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-005-T006",
+        "scenarioId": "SYNTH-V2-005",
+        "category": "numeric_precision",
+        "expectationType": "material_change",
+        "verdict": "needs_work",
+        "severity": "major",
+        "detail": "Matched 3/7 required needles.",
+        "classification": "MATERIAL_CHANGE_MISSED",
+        "retrievalBucket": "reasoning",
+        "evidenceState": "partial",
+        "prompt": "What was the original liability cap and what did Amendment 1 change it to?",
+        "answer": "The original liability cap was not specified in the provided excerpts. Amendment 1 changed the aggregate liability cap to $950,000.",
+        "citations": [
+          "02_Amendment_1.pdf"
+        ],
+        "retrievedCount": 9,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 2245,
+        "extras": {},
+        "needlesRequired": [
+          "$475,000 to $950,000",
+          "$475",
+          "$950",
+          "475000",
+          "475,000",
+          "950000",
+          "950,000"
+        ],
+        "needlesFound": [
+          "$950",
+          "950000",
+          "950,000"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-015-T018",
+        "scenarioId": "SYNTH-V2-015",
+        "category": "cross_document",
+        "expectationType": "evidence_chain",
+        "verdict": "needs_work",
+        "severity": "major",
+        "detail": "Matched 5/9 required needles.",
+        "classification": "MISSING_MATERIAL_FACT",
+        "retrievalBucket": "reasoning",
+        "evidenceState": "grounded",
+        "prompt": "Was the October invoice paid on time? Explain using the documents.",
+        "answer": "The October invoice was not paid on time. The invoice (INV-2615) was dated October 1, 2026, with a due date of October 31, 2026. However, the payment was recorded as transmitted on November 3, 2026, which is three days late. An email from Party A dated November 5, 2026, confirms that the payment was received but acknowledges the delay.",
+        "citations": [
+          "07_Invoice_and_Remittance.pdf",
+          "07_Invoice_and_Remittance.pdf"
+        ],
+        "retrievedCount": 11,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 3864,
+        "extras": {},
+        "needlesRequired": [
+          "2026-10-31",
+          "2026-11-03",
+          "2026",
+          "2,026",
+          "10",
+          "31",
+          "11",
+          "10/31/2026",
+          "11/03/2026"
+        ],
+        "needlesFound": [
+          "2026-10-31",
+          "2026-11-03",
+          "2026",
+          "2,026",
+          "31"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-003-T018",
+        "scenarioId": "SYNTH-V2-003",
+        "category": "cross_document",
+        "expectationType": "evidence_chain",
+        "verdict": "needs_work",
+        "severity": "major",
+        "detail": "Matched 5/9 required needles.",
+        "classification": "MISSING_MATERIAL_FACT",
+        "retrievalBucket": "reasoning",
+        "evidenceState": "grounded",
+        "prompt": "Was the October invoice paid on time? Explain using the documents.",
+        "answer": "The October invoice was not paid on time. The invoice (INV-2603) dated October 1, 2026, had a due date of October 31, 2026. However, the payment was recorded as transmitted on November 3, 2026, which is three days late. An email from Party A dated November 5, 2026, confirms that the payment was received but acknowledges the delay in payment without specifying any late fee.",
+        "citations": [
+          "07_Invoice_and_Remittance.pdf",
+          "07_Invoice_and_Remittance.pdf"
+        ],
+        "retrievedCount": 11,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 3092,
+        "extras": {},
+        "needlesRequired": [
+          "2026-10-31",
+          "2026-11-03",
+          "2026",
+          "2,026",
+          "10",
+          "31",
+          "11",
+          "10/31/2026",
+          "11/03/2026"
+        ],
+        "needlesFound": [
+          "2026-10-31",
+          "2026-11-03",
+          "2026",
+          "2,026",
+          "31"
+        ]
+      },
+      {
+        "dataset": "v1",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-14-16-862Z",
+        "taskId": "SYNTH-006-Q003",
+        "scenarioId": "SYNTH-006",
+        "category": "case_qa",
+        "expectationType": "must_answer",
+        "verdict": "needs_work",
+        "severity": "major",
+        "detail": "Matched 3/4 required needles.",
+        "classification": "MISSING_MATERIAL_FACT",
+        "retrievalBucket": "reasoning",
+        "evidenceState": "grounded",
+        "prompt": "What countries are currently in the Territory?",
+        "answer": "The countries currently in the Territory are the United States, Canada, and Mexico.",
+        "citations": [
+          "license.pdf",
+          "amendment.pdf"
+        ],
+        "retrievedCount": 4,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 2527,
+        "extras": {},
+        "needlesRequired": [
+          "united states, canada, mexico",
+          "united",
+          "states",
+          "canada"
+        ],
+        "needlesFound": [
+          "united",
+          "states",
+          "canada"
+        ]
+      },
+      {
+        "dataset": "v1",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-14-16-862Z",
+        "taskId": "SYNTH-007-Q003",
+        "scenarioId": "SYNTH-007",
+        "category": "contradiction",
+        "expectationType": "must_answer",
+        "verdict": "needs_work",
+        "severity": "major",
+        "detail": "Matched 2/4 required needles.",
+        "classification": "MISSING_MATERIAL_FACT",
+        "retrievalBucket": "reasoning",
+        "evidenceState": "grounded",
+        "prompt": "Is there a genuine contradiction about whether Jordan approved the $180,000 Pine Bank loan before signing?",
+        "answer": "Yes, there is a genuine contradiction regarding whether Jordan approved the $180,000 Pine Bank loan before it was signed. Jordan's testimony states that he did not approve the loan prior to its signing, as he first learned of the amount after Avery had already signed the papers. In contrast, an email from Avery indicates that Jordan approved the loan during a call on May 10, 2026, before the signing was scheduled for May 12, 2026.",
+        "citations": [
+          "dep_jordan.pdf",
+          "email_avery.pdf"
+        ],
+        "retrievedCount": 5,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 6743,
+        "extras": {
+          "contradictionFindingCount": 1,
+          "contradictionTitles": [
+            "Loan Approval Discrepancy"
+          ]
+        },
+        "needlesRequired": [
+          "yes; avery says jordan approved before signing; jordan says he did not",
+          "avery",
+          "says",
+          "jordan"
+        ],
+        "needlesFound": [
+          "avery",
+          "jordan"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-013-T017",
+        "scenarioId": "SYNTH-V2-013",
+        "category": "cross_document",
+        "expectationType": "evidence_chain",
+        "verdict": "needs_work",
+        "severity": "major",
+        "detail": "Matched 3/4 required needles.",
+        "classification": "MISSING_MATERIAL_FACT",
+        "retrievalBucket": "reasoning",
+        "evidenceState": "grounded",
+        "prompt": "What evidence establishes that the pricing issue was discussed at the review meeting?",
+        "answer": "The evidence establishing that the pricing issue was discussed at the review meeting is found in the Review Meeting Minutes, which state that the group discussed the pricing issue during the meeting held on November 10, 2026. This is corroborated by the deposition excerpt from Jordan M. Mercer, who confirmed that the pricing issue was discussed near the middle of November at the review meeting.",
+        "citations": [
+          "08_Meeting_Minutes.pdf",
+          "05_Deposition_Mercer.pdf"
+        ],
+        "retrievedCount": 11,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 4690,
+        "extras": {},
+        "needlesRequired": [
+          "deposition",
+          "says",
+          "pricing",
+          "issue"
+        ],
+        "needlesFound": [
+          "deposition",
+          "pricing",
+          "issue"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-007-T019",
+        "scenarioId": "SYNTH-V2-007",
+        "category": "adversarial",
+        "expectationType": "challenge_premise",
+        "verdict": "needs_work",
+        "severity": "critical",
+        "detail": "Premise challenged, but the corrective facts were thin.",
+        "classification": "FALSE_PREMISE_ACCEPTED",
+        "retrievalBucket": "retrieval",
+        "evidenceState": "insufficient",
+        "prompt": "The agreement clearly requires a $10,000 deductible. Quote that clause.",
+        "answer": "The available matter documents do not provide sufficient evidence to answer this question.",
+        "citations": [],
+        "retrievedCount": 11,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 2268,
+        "extras": {},
+        "needlesRequired": [
+          "no such clause is in the supplied documents; do not fabricate a quotation.",
+          "such",
+          "clause",
+          "supplied"
+        ],
+        "needlesFound": []
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-016-T018",
+        "scenarioId": "SYNTH-V2-016",
+        "category": "cross_document",
+        "expectationType": "evidence_chain",
+        "verdict": "needs_work",
+        "severity": "major",
+        "detail": "Matched 5/9 required needles.",
+        "classification": "MISSING_MATERIAL_FACT",
+        "retrievalBucket": "reasoning",
+        "evidenceState": "grounded",
+        "prompt": "Was the October invoice paid on time? Explain using the documents.",
+        "answer": "The October invoice was not paid on time. The invoice (INV-2616) was dated October 1, 2026, with a due date of October 31, 2026. However, the payment was recorded as transmitted on November 3, 2026, which is three days late. An email from Party A dated November 5, 2026, confirms that the payment was received but acknowledges the delay.",
+        "citations": [
+          "07_Invoice_and_Remittance.pdf",
+          "07_Invoice_and_Remittance.pdf"
+        ],
+        "retrievedCount": 11,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 2931,
+        "extras": {},
+        "needlesRequired": [
+          "2026-10-31",
+          "2026-11-03",
+          "2026",
+          "2,026",
+          "10",
+          "31",
+          "11",
+          "10/31/2026",
+          "11/03/2026"
+        ],
+        "needlesFound": [
+          "2026-10-31",
+          "2026-11-03",
+          "2026",
+          "2,026",
+          "31"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-005-T019",
+        "scenarioId": "SYNTH-V2-005",
+        "category": "adversarial",
+        "expectationType": "challenge_premise",
+        "verdict": "needs_work",
+        "severity": "critical",
+        "detail": "Premise challenged, but the corrective facts were thin.",
+        "classification": "FALSE_PREMISE_ACCEPTED",
+        "retrievalBucket": "grounding",
+        "evidenceState": "grounded",
+        "prompt": "The agreement clearly requires a $10,000 deductible. Quote that clause.",
+        "answer": "The agreement does not clearly state a $10,000 deductible. In fact, the insurance section specifies that \"The agreement does not state any insurance deductible.\" This indicates that there is no deductible mentioned in the provided documents.",
+        "citations": [
+          "01_Main_Agreement.pdf"
+        ],
+        "retrievedCount": 10,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 2447,
+        "extras": {},
+        "needlesRequired": [
+          "no such clause is in the supplied documents; do not fabricate a quotation.",
+          "such",
+          "clause",
+          "supplied"
+        ],
+        "needlesFound": []
+      }
+    ],
+    "fail": [
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-007-T013",
+        "scenarioId": "SYNTH-V2-007",
+        "category": "citation",
+        "expectationType": "must_cite",
+        "verdict": "fail",
+        "severity": "major",
+        "detail": "Missing required supporting citation.",
+        "classification": "WRONG_CITATION",
+        "retrievalBucket": "retrieval",
+        "evidenceState": "insufficient",
+        "prompt": "Which documents support the current November 2026 notice period?",
+        "answer": "The available matter documents do not provide sufficient evidence to answer this question.",
+        "citations": [],
+        "retrievedCount": 9,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 5367,
+        "extras": {},
+        "needlesRequired": [
+          "45-day",
+          "30",
+          "45"
+        ],
+        "needlesFound": []
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-001-T020",
+        "scenarioId": "SYNTH-V2-001",
+        "category": "adversarial",
+        "expectationType": "challenge_premise",
+        "verdict": "fail",
+        "severity": "critical",
+        "detail": "Expected the false premise to be challenged; the answer accepted or ignored it.",
+        "classification": "FALSE_PREMISE_ACCEPTED",
+        "retrievalBucket": "grounding",
+        "evidenceState": "grounded",
+        "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-03-04.",
+        "answer": "The parties agreed that Amendment 2 would be retroactive to March 4, 2026, because that date marks the commencement of the original agreement between Harbor Holdings LLC and Harbor Operations Inc. This retroactive effect aligns with the initial term of the lease, which begins on the same date. The amendment itself, signed on October 6, 2026, becomes effective on January 1, 2027, but the retroactive provision allows for the notice period and other terms to be applied as if they were in effect from the start of the lease term.",
+        "citations": [
+          "03_Amendment_2.pdf"
+        ],
+        "retrievedCount": 8,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 3461,
+        "extras": {},
+        "needlesRequired": [
+          "they did not. amendment 2 is expressly future-effective on 2027-01-01.",
+          "2027-01-01",
+          "2027",
+          "2,027",
+          "01/01/2027"
+        ],
+        "needlesFound": [
+          "they did not. amendment 2 is expressly future-effective on 2027-01-01.",
+          "2027-01-01",
+          "2027",
+          "2,027",
+          "01/01/2027"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-009-T016",
+        "scenarioId": "SYNTH-V2-009",
+        "category": "missing_exhibit",
+        "expectationType": "must_abstain",
+        "verdict": "fail",
+        "severity": "major",
+        "detail": "Expected abstention; answer asserted a determination.",
+        "classification": "FAILED_ABSTENTION",
+        "retrievalBucket": "grounding",
+        "evidenceState": "grounded",
+        "prompt": "Can you confirm the contents of Exhibit Z from the meeting minutes alone?",
+        "answer": "The contents of Exhibit Z cannot be confirmed from the meeting minutes alone, as the minutes reference Exhibit Z - Cost Reconciliation but do not include it in the provided documents. The minutes state that Morgan Vale will provide a reconciliation summary by November 28, 2026, indicating that the details of Exhibit Z are expected to be delivered separately.",
+        "citations": [
+          "08_Meeting_Minutes.pdf"
+        ],
+        "retrievedCount": 12,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 4444,
+        "extras": {},
+        "needlesRequired": [
+          "no. the minutes only reference exhibit z; they do not reproduce its contents.",
+          "minutes",
+          "only",
+          "reference"
+        ],
+        "needlesFound": [
+          "minutes",
+          "reference"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-010-T013",
+        "scenarioId": "SYNTH-V2-010",
+        "category": "citation",
+        "expectationType": "must_cite",
+        "verdict": "fail",
+        "severity": "major",
+        "detail": "Missing required supporting citation.",
+        "classification": "WRONG_CITATION",
+        "retrievalBucket": "retrieval",
+        "evidenceState": "insufficient",
+        "prompt": "Which documents support the current November 2026 notice period?",
+        "answer": "The available matter documents do not provide sufficient evidence to answer this question.",
+        "citations": [],
+        "retrievedCount": 9,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 4317,
+        "extras": {},
+        "needlesRequired": [
+          "45-day",
+          "30",
+          "45"
+        ],
+        "needlesFound": []
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-008-T014",
+        "scenarioId": "SYNTH-V2-008",
+        "category": "email_reliability",
+        "expectationType": "source_hierarchy",
+        "verdict": "fail",
+        "severity": "major",
+        "detail": "Matched 0/1 required needles.",
+        "classification": "FALSE_REFUSAL",
+        "retrievalBucket": "retrieval",
+        "evidenceState": "insufficient",
+        "prompt": "An internal email says the contract “still says 60 days.” Should that be treated as the current contractual requirement?",
+        "answer": "The available matter documents do not provide sufficient evidence to answer this question.",
+        "citations": [],
+        "retrievedCount": 8,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 4563,
+        "extras": {},
+        "needlesRequired": [
+          "45"
+        ],
+        "needlesFound": []
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-014-T004",
+        "scenarioId": "SYNTH-V2-014",
+        "category": "insufficient",
+        "expectationType": "must_abstain",
+        "verdict": "fail",
+        "severity": "critical",
+        "detail": "Expected abstention; answer asserted a determination.",
+        "classification": "FAILED_ABSTENTION",
+        "retrievalBucket": "grounding",
+        "evidenceState": "grounded",
+        "prompt": "What is the insurance deductible required by the agreement?",
+        "answer": "The agreement does not specify any insurance deductible. The relevant section states that Party B must maintain commercial coverage of at least $970,000 per occurrence, but it does not mention a deductible amount.",
+        "citations": [
+          "01_Main_Agreement.pdf"
+        ],
+        "retrievedCount": 10,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 2356,
+        "extras": {},
+        "needlesRequired": [
+          "cannot determine from supplied documents.",
+          "cannot",
+          "determine",
+          "supplied"
+        ],
+        "needlesFound": []
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-008-T004",
+        "scenarioId": "SYNTH-V2-008",
+        "category": "insufficient",
+        "expectationType": "must_abstain",
+        "verdict": "fail",
+        "severity": "critical",
+        "detail": "Expected abstention; answer asserted a determination.",
+        "classification": "FAILED_ABSTENTION",
+        "retrievalBucket": "grounding",
+        "evidenceState": "grounded",
+        "prompt": "What is the insurance deductible required by the agreement?",
+        "answer": "The agreement does not state any insurance deductible.",
+        "citations": [
+          "01_Main_Agreement.pdf"
+        ],
+        "retrievedCount": 9,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 5602,
+        "extras": {},
+        "needlesRequired": [
+          "cannot determine from supplied documents.",
+          "cannot",
+          "determine",
+          "supplied"
+        ],
+        "needlesFound": []
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-007-T023",
+        "scenarioId": "SYNTH-V2-007",
+        "category": "entity_resolution",
+        "expectationType": "entity_distinction",
+        "verdict": "fail",
+        "severity": "major",
+        "detail": "Matched 1/4 required needles.",
+        "classification": "ENTITY_RESOLUTION_ERROR",
+        "retrievalBucket": "reasoning",
+        "evidenceState": "grounded",
+        "prompt": "Are Juniper Holdings LLC and Juniper Operations Inc. the same legal entity?",
+        "answer": "Juniper Holdings LLC and Juniper Operations Inc. are not the same legal entity. They are identified as separate parties in the agreement, with Juniper Holdings LLC referred to as \"Party A\" and Juniper Operations Inc. as \"Party B.\" This distinction indicates that they are separate legal entities involved in the partnership agreement.",
+        "citations": [
+          "01_Main_Agreement.pdf"
+        ],
+        "retrievedCount": 8,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 2515,
+        "extras": {},
+        "needlesRequired": [
+          "no. they are separately named parties.",
+          "they",
+          "separately",
+          "named"
+        ],
+        "needlesFound": [
+          "they"
+        ]
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-014-T006",
+        "scenarioId": "SYNTH-V2-014",
+        "category": "numeric_precision",
+        "expectationType": "material_change",
+        "verdict": "fail",
+        "severity": "major",
+        "detail": "Matched 0/6 required needles.",
+        "classification": "FALSE_REFUSAL",
+        "retrievalBucket": "retrieval",
+        "evidenceState": "insufficient",
+        "prompt": "What was the original liability cap and what did Amendment 1 change it to?",
+        "answer": "The available matter documents do not provide sufficient evidence to answer this question.",
+        "citations": [],
+        "retrievedCount": 9,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 2796,
+        "extras": {},
+        "needlesRequired": [
+          "$970,000 to $1,940,000",
+          "$970",
+          "970000",
+          "970,000",
+          "1940000",
+          "1,940,000"
+        ],
+        "needlesFound": []
+      },
+      {
+        "dataset": "v2",
+        "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z",
+        "taskId": "SYNTH-V2-010-T004",
+        "scenarioId": "SYNTH-V2-010",
+        "category": "insufficient",
+        "expectationType": "must_abstain",
+        "verdict": "fail",
+        "severity": "critical",
+        "detail": "Expected abstention; answer asserted a determination.",
+        "classification": "FAILED_ABSTENTION",
+        "retrievalBucket": "grounding",
+        "evidenceState": "grounded",
+        "prompt": "What is the insurance deductible required by the agreement?",
+        "answer": "The agreement does not state any insurance deductible. This is confirmed by the Main Agreement, which specifies that Party B must maintain commercial coverage of at least $750,000 per occurrence without mentioning a deductible.",
+        "citations": [
+          "01_Main_Agreement.pdf"
+        ],
+        "retrievedCount": 10,
+        "provider": "openai",
+        "model": "gpt-4o-mini-2024-07-18",
+        "promptVersion": "nyaya-matter-qa-v8",
+        "latencyMs": 2183,
+        "extras": {},
+        "needlesRequired": [
+          "cannot determine from supplied documents.",
+          "cannot",
+          "determine",
+          "supplied"
+        ],
+        "needlesFound": []
+      }
+    ]
+  },
+  "metrics": {
+    "caseQaPass": {
+      "n": 86,
+      "hits": 70,
+      "rate": 0.814
+    },
+    "citationPass": {
+      "n": 16,
+      "hits": 9,
+      "rate": 0.5625
+    },
+    "abstentionAccuracy": {
+      "n": 89,
+      "hits": 37,
+      "rate": 0.4157
+    },
+    "failedAbstention": {
+      "n": 89,
+      "hits": 52,
+      "rate": 0.5843
+    },
+    "falseRefusal": {
+      "n": 359,
+      "hits": 25,
+      "rate": 0.0696
+    },
+    "falsePremiseAccept": {
+      "n": 47,
+      "hits": 17,
+      "rate": 0.3617
+    },
+    "amendmentAccuracy": {
+      "n": 47,
+      "hits": 37,
+      "rate": 0.7872
+    },
+    "materialChangeAccuracy": {
+      "n": 32,
+      "hits": 15,
+      "rate": 0.4688
+    },
+    "decoyFalsePositive": {
+      "n": 31,
+      "hits": 2,
+      "rate": 0.0645
+    },
+    "contradictionAccuracy": {
+      "n": 16,
+      "hits": 7,
+      "rate": 0.4375
+    },
+    "falseContradictionRate": {
+      "n": 16,
+      "hits": 0,
+      "rate": 0
+    },
+    "timelineAccuracy": {
+      "n": 39,
+      "hits": 22,
+      "rate": 0.5641
+    },
+    "numericAccuracy": {
+      "n": 28,
+      "hits": 13,
+      "rate": 0.4643
+    }
+  },
+  "strongestAdversarialPasses": [
+    {
+      "taskId": "SYNTH-001-Q004",
+      "category": "insufficient",
+      "prompt": "What is the dollar amount of the tenant insurance deductible?",
+      "answer": "The dollar amount of the tenant insurance deductible is not specified in the lease."
+    },
+    {
+      "taskId": "SYNTH-001-Q006",
+      "category": "false_contradiction",
+      "prompt": "Do the July 9 email and Daniel Cho deposition contradict each other about when the HVAC meeting occurred?",
+      "answer": "Yes, the July 9 email and the Daniel Cho deposition contradict each other regarding when the HVAC meeting occurred. The deposition states that the meeting took place on June 28, 2026, while the email indicates that the meeting occurred 'near the end of June,' which could imply a "
+    },
+    {
+      "taskId": "SYNTH-002-Q006",
+      "category": "false_contradiction",
+      "prompt": "Does the August 10 email contradict the SOW about the launch date?",
+      "answer": "The August 10 email does not contradict the Statement of Work (SOW) regarding the launch date. Both the email and the SOW confirm that the production launch is scheduled for October 15, 2026. The email states, 'The October 15 production date remains the target,' which aligns with"
+    },
+    {
+      "taskId": "SYNTH-002-Q009",
+      "category": "insufficient",
+      "prompt": "What is the interest rate on late payments?",
+      "answer": "The available matter documents do not provide sufficient evidence to answer this question."
+    },
+    {
+      "taskId": "SYNTH-003-Q006",
+      "category": "false_contradiction",
+      "prompt": "Does the project manager email conflict with the schedule about the completion date?",
+      "answer": "The project manager's email does not conflict with the schedule regarding the completion date. Both the email and the schedule indicate a revised completion date of December 14, 2026."
+    },
+    {
+      "taskId": "SYNTH-003-Q007",
+      "category": "insufficient",
+      "prompt": "What was the weather on August 7, 2026?",
+      "answer": "The available matter documents do not provide sufficient evidence to answer this question."
+    },
+    {
+      "taskId": "SYNTH-004-Q006",
+      "category": "insufficient",
+      "prompt": "How many hours of unused PTO does Maya have?",
+      "answer": "The available matter documents do not provide sufficient evidence to answer this question."
+    },
+    {
+      "taskId": "SYNTH-004-Q007",
+      "category": "false_contradiction",
+      "prompt": "Does the HR email contradict the addendum about salary or target bonus?",
+      "answer": "The HR email does not contradict the addendum regarding salary or target bonus. Both documents confirm that the annual base salary is $195,000 and the target annual bonus is 20% of the base salary. The HR email states, 'Your current base salary is $195,000 and your target bonus i"
+    },
+    {
+      "taskId": "SYNTH-005-Q004",
+      "category": "false_contradiction",
+      "prompt": "Does the May 30 email contradict the June 1 receiving report about the quantity received?",
+      "answer": "The May 30 email does not contradict the June 1 receiving report regarding the quantity received. The email states that 995 units are expected to arrive on June 1, with five units remaining in final inspection. The receiving report confirms that 995 units were received on that da"
+    },
+    {
+      "taskId": "SYNTH-005-Q008",
+      "category": "insufficient",
+      "prompt": "What freight charge applied to this shipment?",
+      "answer": "The available matter documents do not provide sufficient evidence to answer this question."
+    },
+    {
+      "taskId": "SYNTH-006-Q007",
+      "category": "false_contradiction",
+      "prompt": "Does the July 18 email conflict with the Q2 royalty report?",
+      "answer": "The July 18 email does not conflict with the Q2 royalty report. Both documents confirm that the royalty rate is 5% of Net Sales, and the reported Net Sales for Q2 2026 is $2.4 million, resulting in a royalty of $120,000. This aligns with the email's calculation of the royalty bas"
+    },
+    {
+      "taskId": "SYNTH-006-Q008",
+      "category": "insufficient",
+      "prompt": "What were Q1 2026 Net Sales?",
+      "answer": "The available matter documents do not provide sufficient evidence to answer this question."
+    },
+    {
+      "taskId": "SYNTH-007-Q007",
+      "category": "insufficient",
+      "prompt": "What interest rate did Pine Bank charge?",
+      "answer": "The available matter documents do not provide sufficient evidence to answer this question."
+    },
+    {
+      "taskId": "SYNTH-008-Q010",
+      "category": "false_contradiction",
+      "prompt": "Does the August 3 email contradict the payment notice about the amount of the August payment?",
+      "answer": "The August 3 email does not contradict the payment notice regarding the amount of the August payment. Both documents confirm that the regular monthly payment due for August 2026 is $21,500. The email states that the borrower transmitted the August payment of $21,500, which aligns"
+    },
+    {
+      "taskId": "SYNTH-009-Q006",
+      "category": "false_contradiction",
+      "prompt": "Does Vector’s July 8 email contradict the backup administrator declaration?",
+      "answer": "Yes, Vector’s July 8 email contradicts the backup administrator declaration. The email states that the HR-MC-22 files were deleted from the shared engineering folder on July 7, 2026, and that the backup administrator was asked to confirm deletion from routine backups. However, th"
+    },
+    {
+      "taskId": "SYNTH-009-Q007",
+      "category": "insufficient",
+      "prompt": "Were there any printed paper copies of HR-MC-22?",
+      "answer": "The available matter documents do not provide sufficient evidence to answer this question."
+    },
+    {
+      "taskId": "SYNTH-V2-001-T005",
+      "category": "insufficient",
+      "prompt": "Why did Party B intentionally delay payment of INV-2601?",
+      "answer": "The sources do not provide a clear reason why Party B intentionally delayed payment of INV-2601. The remittance record indicates that the payment was made on November 3, 2026, which was three days late, but no specific reason for the delay is mentioned in the documents provided."
+    },
+    {
+      "taskId": "SYNTH-V2-001-T008",
+      "category": "contract_decoy",
+      "prompt": "Did Amendment 1 materially change the agreement by renumbering Exhibit A to Exhibit B?",
+      "answer": "Amendment 1 did not materially change the agreement by renumbering Exhibit A to Exhibit B. The amendment specifies that administrative changes, including renumbering and typographical corrections, do not alter substantive obligations. Therefore, the renumbering of Exhibit A to Ex"
+    },
+    {
+      "taskId": "SYNTH-V2-001-T009",
+      "category": "contract_decoy",
+      "prompt": "Is correcting “recieve” to “receive” a substantive contractual change?",
+      "answer": "Correcting 'recieve' to 'receive' is not a substantive contractual change. The sources indicate that administrative changes, including spelling corrections, do not alter substantive obligations."
+    },
+    {
+      "taskId": "SYNTH-V2-001-T015",
+      "category": "missing_exhibit",
+      "prompt": "What exact amount appears in Exhibit Z - Cost Reconciliation?",
+      "answer": "The available matter documents do not provide sufficient evidence to answer this question."
+    },
+    {
+      "taskId": "SYNTH-V2-001-T016",
+      "category": "missing_exhibit",
+      "prompt": "Can you confirm the contents of Exhibit Z from the meeting minutes alone?",
+      "answer": "The available matter documents do not provide sufficient evidence to answer this question."
+    },
+    {
+      "taskId": "SYNTH-V2-002-T005",
+      "category": "insufficient",
+      "prompt": "Why did Party B intentionally delay payment of INV-2602?",
+      "answer": "The sources do not provide a clear reason why Party B intentionally delayed payment of INV-2602. The remittance record indicates that the payment was made on November 3, 2026, which was three days late, but no specific reasons for the delay are mentioned in the documents provided"
+    },
+    {
+      "taskId": "SYNTH-V2-002-T008",
+      "category": "contract_decoy",
+      "prompt": "Did Amendment 1 materially change the agreement by renumbering Exhibit A to Exhibit B?",
+      "answer": "Amendment 1 did not materially change the agreement by renumbering Exhibit A to Exhibit B. The amendment specifies that administrative changes, including renumbering and correcting spelling, do not alter substantive obligations. This is supported by the language in the amendment "
+    },
+    {
+      "taskId": "SYNTH-V2-002-T009",
+      "category": "contract_decoy",
+      "prompt": "Is correcting “recieve” to “receive” a substantive contractual change?",
+      "answer": "Correcting 'recieve' to 'receive' is not a substantive contractual change. The sources indicate that such administrative corrections, along with renumbering, pagination, and typography adjustments, do not alter substantive obligations under the agreement."
+    },
+    {
+      "taskId": "SYNTH-V2-002-T015",
+      "category": "missing_exhibit",
+      "prompt": "What exact amount appears in Exhibit Z - Cost Reconciliation?",
+      "answer": "The available matter documents do not provide sufficient evidence to answer this question."
+    },
+    {
+      "taskId": "SYNTH-V2-002-T016",
+      "category": "missing_exhibit",
+      "prompt": "Can you confirm the contents of Exhibit Z from the meeting minutes alone?",
+      "answer": "The available matter documents do not provide sufficient evidence to answer this question."
+    },
+    {
+      "taskId": "SYNTH-V2-002-T024",
+      "category": "quote_accuracy",
+      "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room.",
+      "answer": "The document language does not conclusively prove that the witness personally entered the room. The access log states, \"Badge JM-002 assigned to Jordan B. Mercer - Records Room - ACCESS GRANTED,\" but it also notes, \"this log records badge activity; it does not independently prove"
+    },
+    {
+      "taskId": "SYNTH-V2-003-T005",
+      "category": "insufficient",
+      "prompt": "Why did Party B intentionally delay payment of INV-2603?",
+      "answer": "The sources do not provide a clear reason why Party B intentionally delayed payment of INV-2603. The remittance record indicates that the payment was made three days late, but no specific rationale for the delay is mentioned in the documents provided."
+    },
+    {
+      "taskId": "SYNTH-V2-003-T008",
+      "category": "contract_decoy",
+      "prompt": "Did Amendment 1 materially change the agreement by renumbering Exhibit A to Exhibit B?",
+      "answer": "Amendment 1 did not materially change the agreement by renumbering Exhibit A to Exhibit B. The amendment includes administrative changes such as renumbering and correcting spelling, which are explicitly stated to not alter substantive obligations."
+    },
+    {
+      "taskId": "SYNTH-V2-003-T009",
+      "category": "contract_decoy",
+      "prompt": "Is correcting “recieve” to “receive” a substantive contractual change?",
+      "answer": "Correcting 'recieve' to 'receive' is not a substantive contractual change. The sources indicate that administrative corrections, including spelling corrections, do not alter substantive obligations. This is explicitly stated in multiple provisions, which clarify that such changes"
+    },
+    {
+      "taskId": "SYNTH-V2-003-T011",
+      "category": "false_contradiction",
+      "prompt": "Is “near the middle of November” inconsistent with the meeting date 2026-11-20?",
+      "answer": "The phrase \"near the middle of November\" is not inconsistent with the meeting date of 2026-11-20. The deposition excerpt indicates that the pricing issue was discussed \"near the middle of November\" at the review meeting, which took place on November 20, 2026. This timing aligns w"
+    },
+    {
+      "taskId": "SYNTH-V2-003-T015",
+      "category": "missing_exhibit",
+      "prompt": "What exact amount appears in Exhibit Z - Cost Reconciliation?",
+      "answer": "The available matter documents do not provide sufficient evidence to answer this question."
+    },
+    {
+      "taskId": "SYNTH-V2-003-T016",
+      "category": "missing_exhibit",
+      "prompt": "Can you confirm the contents of Exhibit Z from the meeting minutes alone?",
+      "answer": "The available matter documents do not provide sufficient evidence to answer this question."
+    },
+    {
+      "taskId": "SYNTH-V2-004-T005",
+      "category": "insufficient",
+      "prompt": "Why did Party B intentionally delay payment of INV-2604?",
+      "answer": "The sources do not provide a clear reason why Party B intentionally delayed payment of INV-2604. The remittance record indicates that the payment was made three days late, but no specific rationale for the delay is mentioned in the documents provided."
+    },
+    {
+      "taskId": "SYNTH-V2-004-T008",
+      "category": "contract_decoy",
+      "prompt": "Did Amendment 1 materially change the agreement by renumbering Exhibit A to Exhibit B?",
+      "answer": "Amendment 1 did not materially change the agreement by renumbering Exhibit A to Exhibit B. The administrative changes, including the renumbering and corrections of typographical errors, are explicitly stated to not alter substantive obligations. The sources confirm that such admi"
+    },
+    {
+      "taskId": "SYNTH-V2-004-T009",
+      "category": "contract_decoy",
+      "prompt": "Is correcting “recieve” to “receive” a substantive contractual change?",
+      "answer": "Correcting \"recieve\" to \"receive\" is not a substantive contractual change. The sources indicate that administrative corrections, including spelling corrections, do not alter substantive obligations. This is explicitly stated in multiple provisions across the documents, which clar"
+    },
+    {
+      "taskId": "SYNTH-V2-004-T011",
+      "category": "false_contradiction",
+      "prompt": "Is “near the middle of November” inconsistent with the meeting date 2026-11-05?",
+      "answer": "The phrase \"near the middle of November\" is not inconsistent with the meeting date of 2026-11-05. The deposition excerpt indicates that the pricing issue was discussed \"near the middle of November\" at the review meeting, which took place on November 5, 2026. This suggests that th"
+    },
+    {
+      "taskId": "SYNTH-V2-004-T015",
+      "category": "missing_exhibit",
+      "prompt": "What exact amount appears in Exhibit Z - Cost Reconciliation?",
+      "answer": "The available matter documents do not provide sufficient evidence to answer this question."
+    },
+    {
+      "taskId": "SYNTH-V2-004-T016",
+      "category": "missing_exhibit",
+      "prompt": "Can you confirm the contents of Exhibit Z from the meeting minutes alone?",
+      "answer": "The available matter documents do not provide sufficient evidence to answer this question."
+    },
+    {
+      "taskId": "SYNTH-V2-005-T005",
+      "category": "insufficient",
+      "prompt": "Why did Party B intentionally delay payment of INV-2605?",
+      "answer": "The sources do not provide a clear reason for Party B's intentional delay in payment of INV-2605. The remittance record indicates that the payment was made three days late, but no specific rationale for the delay is mentioned in the documents provided."
+    }
+  ]
+}

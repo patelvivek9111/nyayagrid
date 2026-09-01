@@ -1,10 +1,8 @@
 import { createResearchNoteSchema } from "@nyayagrid/validation";
-import { requireAnyCapability } from "@nyayagrid/permissions";
-import { createResearchNote, getResearchSession, listResearchNotes } from "@nyayagrid/research";
+import { createResearchNote, listResearchNotes } from "@nyayagrid/research";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
-
-const RESEARCH_CAPABILITIES = ["research.run", "matters.view"] as const;
+import { requireResearchSessionAccess } from "@/server/research-access";
 
 type Params = { params: Promise<{ sessionId: string }> };
 
@@ -17,14 +15,13 @@ export async function GET(request: Request, { params }: Params) {
     if (!organizationId) {
       return jsonError("VALIDATION_ERROR", "organizationId is required", 400);
     }
-    await requireAnyCapability(db, {
+    const session = await requireResearchSessionAccess(db, {
       userId: user.id,
       organizationId,
-      capabilities: [...RESEARCH_CAPABILITIES],
+      sessionId,
     });
-    const session = await getResearchSession({ db, organizationId, sessionId });
     if (!session) return jsonError("NOT_FOUND", "Research session not found", 404);
-    const notes = await listResearchNotes({ db, organizationId, sessionId });
+    const notes = await listResearchNotes({ db, organizationId, sessionId: session.id });
     return jsonOk({ notes });
   } catch (error) {
     return handleRouteError(error);
@@ -41,12 +38,11 @@ export async function POST(request: Request, { params }: Params) {
     if (!organizationId) {
       return jsonError("VALIDATION_ERROR", "organizationId is required", 400);
     }
-    await requireAnyCapability(db, {
+    const session = await requireResearchSessionAccess(db, {
       userId: user.id,
       organizationId,
-      capabilities: [...RESEARCH_CAPABILITIES],
+      sessionId,
     });
-    const session = await getResearchSession({ db, organizationId, sessionId });
     if (!session) return jsonError("NOT_FOUND", "Research session not found", 404);
     const note = await createResearchNote({
       db,

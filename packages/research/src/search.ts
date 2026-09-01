@@ -24,6 +24,8 @@ export type AuthoritySearchOptions = {
   includeSupersededVersions?: boolean;
   /** Jurisdiction used for citation/title boosting only; filtering still uses filters.jurisdiction. */
   queryJurisdiction?: string | null;
+  preferredStateCodes?: string[];
+  preferredCircuitIds?: string[];
 };
 
 const VECTOR_WEIGHT = 1;
@@ -49,6 +51,13 @@ type ChunkRow = {
   jurisdiction: string | null;
   court: string | null;
   decision_date: string | Date | null;
+  effective_date: string | Date | null;
+  effective_from: string | Date | null;
+  effective_to: string | Date | null;
+  authority_state: string | null;
+  court_id: string | null;
+  federal_circuit: string | null;
+  court_level: string | null;
   score: number | string | null;
 };
 
@@ -218,7 +227,14 @@ export class AuthorityHybridRetriever {
       a.authority_type::text AS authority_type,
       a.jurisdiction,
       a.court,
-      a.decision_date
+      a.decision_date,
+      a.effective_date,
+      v.effective_from,
+      v.effective_to,
+      a.authority_state,
+      a.court_id,
+      a.federal_circuit,
+      a.court_level
     `;
 
     const execute = (statement: unknown) =>
@@ -268,7 +284,7 @@ export class AuthorityHybridRetriever {
     const addRows = (rows: ChunkRow[], weight: number) => {
       for (const row of Array.from(rows)) {
         const base = Number(row.score ?? 0) * weight;
-        const score = base + this.boostFor(row, queryCitations, lowerQuery, tokens);
+        const score = base + this.boostFor(row, queryCitations, lowerQuery, tokens, options);
         const existing = merged.get(row.chunk_id);
         if (existing && existing.score >= score) continue;
         merged.set(row.chunk_id, {
@@ -281,6 +297,12 @@ export class AuthorityHybridRetriever {
           jurisdiction: row.jurisdiction,
           court: row.court,
           decisionDate: toDateString(row.decision_date),
+          effectiveStart: toDateString(row.effective_from) ?? toDateString(row.effective_date),
+          effectiveEnd: toDateString(row.effective_to),
+          courtId: row.court_id,
+          authorityState: row.authority_state,
+          federalCircuit: row.federal_circuit,
+          courtLevel: row.court_level,
           score,
           snippet: buildSnippet(row.content, tokens),
           sectionRef: row.section_ref,
@@ -307,6 +329,7 @@ export class AuthorityHybridRetriever {
     queryCitations: Set<string>,
     lowerQuery: string,
     tokens: string[],
+    options: AuthoritySearchOptions,
   ): number {
     let boost = 0;
     if (row.normalized_citation && queryCitations.has(row.normalized_citation)) {
@@ -329,6 +352,19 @@ export class AuthorityHybridRetriever {
         break;
       }
     }
+    const preferredStates = new Set(
+      (options.preferredStateCodes ?? []).map((code) => code.toUpperCase()),
+    );
+    if (preferredStates.size > 0) {
+      const state = (row.authority_state ?? "").toUpperCase();
+      if (state && preferredStates.has(state)) boost += 0.45;
+      else if (state && !preferredStates.has(state) && row.court_level !== "scotus") boost -= 0.3;
+    }
+    const preferredCircuits = new Set(options.preferredCircuitIds ?? []);
+    if (preferredCircuits.size > 0 && row.federal_circuit && preferredCircuits.has(row.federal_circuit)) {
+      boost += 0.3;
+    }
+    if (row.court_level === "scotus") boost += 0.55;
     return boost;
   }
 }

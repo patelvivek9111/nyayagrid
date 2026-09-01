@@ -53,6 +53,14 @@ describe("classifyIntentWithRules", () => {
     expect(classifyIntentWithRules("Find precedent on the good-faith standard").intent).toBe(
       "research",
     );
+    expect(classifyIntentWithRules("Build a chronology of the verified events").intent).toBe(
+      "timeline_analysis",
+    );
+    expect(
+      classifyIntentWithRules(
+        "Summarize the approved chronology. Do not draft a filing and do not research case law.",
+      ).intent,
+    ).toBe("timeline_analysis");
   });
 
   it("always reports the baseline refused actions", () => {

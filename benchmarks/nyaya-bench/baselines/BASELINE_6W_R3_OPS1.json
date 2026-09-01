@@ -1,0 +1,213 @@
+{
+  "id": "BASELINE_6W_R3_OPS1",
+  "generatedAt": "2026-08-27T13:52:11.335Z",
+  "base": "http://localhost:3000",
+  "localhostIsNotStaging": true,
+  "technicallyDeployable": false,
+  "clerkBlocked": true,
+  "inngestCloudBlocked": true,
+  "httpsStagingBlocked": true,
+  "stopCondition": "B",
+  "checks": [
+    {
+      "name": "file.env",
+      "status": "AVAILABLE",
+      "detail": ".env"
+    },
+    {
+      "name": "file.env.staging",
+      "status": "MISSING",
+      "detail": ".env.staging"
+    },
+    {
+      "name": "clerk.secret",
+      "status": "MISSING",
+      "detail": "CLERK_SECRET_KEY"
+    },
+    {
+      "name": "clerk.publishable",
+      "status": "MISSING",
+      "detail": "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY"
+    },
+    {
+      "name": "clerk.webhook",
+      "status": "MISSING",
+      "detail": "CLERK_WEBHOOK_SECRET"
+    },
+    {
+      "name": "inngest.eventKey",
+      "status": "AVAILABLE",
+      "detail": "presence only; local/weak keys are not Cloud proof"
+    },
+    {
+      "name": "inngest.signingKey",
+      "status": "AVAILABLE",
+      "detail": "presence only; local/weak keys are not Cloud proof"
+    },
+    {
+      "name": "inngest.dev",
+      "status": "BLOCKED",
+      "detail": "INNGEST_DEV must be unset/false for Cloud"
+    },
+    {
+      "name": "redis.url",
+      "status": "MISSING",
+      "detail": "app env Redis"
+    },
+    {
+      "name": "s3.bucket",
+      "status": "AVAILABLE",
+      "detail": "local MinIO rehearsal if endpoint is localhost"
+    },
+    {
+      "name": "database.url",
+      "status": "AVAILABLE",
+      "detail": "presence only"
+    },
+    {
+      "name": "malware.env",
+      "status": "AVAILABLE",
+      "detail": "development scanner is not staging proof"
+    },
+    {
+      "name": "staging.baseUrl",
+      "status": "MISSING",
+      "detail": "no staging host configured"
+    },
+    {
+      "name": "https.host",
+      "status": "MISSING",
+      "detail": "no https:// staging host in env"
+    },
+    {
+      "name": "github.secrets",
+      "status": "EXTERNAL",
+      "detail": "gh CLI unauthenticated; CI secret names not listed"
+    },
+    {
+      "name": "feature.agents.env",
+      "status": "MISSING",
+      "detail": "unset uses env default"
+    },
+    {
+      "name": "feature.agents.staging",
+      "status": "PASS",
+      "detail": "staging default agents=false"
+    },
+    {
+      "name": "feature.agents.production",
+      "status": "PASS",
+      "detail": "production default agents=false"
+    },
+    {
+      "name": "probe.base",
+      "status": "BLOCKED",
+      "detail": "probe base is localhost — not staging proof"
+    },
+    {
+      "name": "http.live",
+      "status": "PASS",
+      "detail": "GET http://localhost:3000/api/health/live → 200 (localhost ≠ staging)"
+    },
+    {
+      "name": "http.ready",
+      "status": "PASS",
+      "detail": "GET http://localhost:3000/api/health/ready → 200 (development 200 is not staging proof; staging 503 expected until config complete)"
+    },
+    {
+      "name": "http.unauthenticated",
+      "status": "PASS",
+      "detail": "GET /api/v1/matters → 401 (local 401 is not Clerk session proof)"
+    },
+    {
+      "name": "http.securityHeaders",
+      "status": "PASS",
+      "detail": "observed: content-security-policy, x-frame-options, x-content-type-options, referrer-policy; HSTS only expected on production/staging HTTPS"
+    },
+    {
+      "name": "redis.docker",
+      "status": "PASS",
+      "detail": "local docker Redis ping (not multi-instance staging proof)"
+    },
+    {
+      "name": "malware.clamavContainer",
+      "status": "PASS",
+      "detail": "local ClamAV container; app MALWARE_SCANNER must still be clamav for staging proof"
+    },
+    {
+      "name": "storage.minio",
+      "status": "PASS",
+      "detail": "local MinIO rehearsal; provider S3 remains EXTERNAL"
+    },
+    {
+      "name": "clerk.authProof",
+      "status": "BLOCKED",
+      "detail": "Clerk credentials absent — HUMAN EXTERNAL ACTION REQUIRED"
+    },
+    {
+      "name": "clerk.invites",
+      "status": "BLOCKED",
+      "detail": "Clerk-managed invitations require a Clerk staging application"
+    },
+    {
+      "name": "inngest.cloud",
+      "status": "BLOCKED",
+      "detail": "INNGEST_DEV active / Cloud keys not proven — HUMAN EXTERNAL ACTION REQUIRED"
+    },
+    {
+      "name": "http.rbac",
+      "status": "BLOCKED",
+      "detail": "requires Clerk staging sessions"
+    },
+    {
+      "name": "http.isolation",
+      "status": "BLOCKED",
+      "detail": "requires Clerk Org A/B sessions"
+    },
+    {
+      "name": "upload.http202",
+      "status": "BLOCKED",
+      "detail": "requires authenticated staging upload"
+    },
+    {
+      "name": "ingest.cloud",
+      "status": "BLOCKED",
+      "detail": "requires Inngest Cloud registration"
+    },
+    {
+      "name": "e2e.canary",
+      "status": "BLOCKED",
+      "detail": "requires Clerk + Inngest Cloud + HTTPS host"
+    },
+    {
+      "name": "coverage.canary",
+      "status": "BLOCKED",
+      "detail": "requires authenticated staging Cases"
+    },
+    {
+      "name": "rollback.image",
+      "status": "EXTERNAL",
+      "detail": "no staging host for N→N+1→N"
+    },
+    {
+      "name": "pitr.managed",
+      "status": "EXTERNAL",
+      "detail": "no managed Postgres provider"
+    },
+    {
+      "name": "storage.providerRecovery",
+      "status": "EXTERNAL",
+      "detail": "localhost MinIO is rehearsal only"
+    },
+    {
+      "name": "alerting",
+      "status": "EXTERNAL",
+      "detail": "no alerting provider configured"
+    },
+    {
+      "name": "monitoring",
+      "status": "EXTERNAL",
+      "detail": "hosting/Inngest/Clerk dashboards unavailable without staging"
+    }
+  ]
+}

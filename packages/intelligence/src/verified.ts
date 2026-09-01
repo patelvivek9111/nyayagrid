@@ -12,6 +12,7 @@ import {
   createAIProviderFromEnv,
   buildMatterSummarySystemPrompt,
   buildMatterSummaryUserPrompt,
+  formatVerifiedTimelineEventLine,
   MATTER_SUMMARY_PROMPT_VERSION,
   type AIProvider,
 } from "@nyayagrid/ai";
@@ -109,9 +110,17 @@ export function formatVerifiedIntelligenceForPrompt(
   }
   return [
     "Verified timeline events:",
-    ...input.events.map(
-      (e) =>
-        `- ${e.eventDate?.toISOString() ?? "unknown"} | ${e.eventType} | ${e.title} | actors=${JSON.stringify(e.actors ?? [])} | ${e.description ?? ""}`,
+    ...input.events.map((e) =>
+      formatVerifiedTimelineEventLine({
+        title: e.title,
+        eventType: e.eventType,
+        eventDate: e.eventDate,
+        eventDateEnd: e.eventDateEnd,
+        datePrecision: e.datePrecision,
+        actors: e.actors,
+        description: e.description,
+        uncertaintyNotes: e.uncertaintyNotes,
+      }),
     ),
     "Verified facts:",
     ...input.facts.map((f) => `- ${f.label} (${f.factKey}): ${f.value}`),
@@ -146,6 +155,12 @@ export async function regenerateMatterSummary(params: {
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "matter_summary",
+    routing: {
+      subsystem: "ask",
+      strategy: "standard",
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+    },
     messages: [
       { role: "system", content: buildMatterSummarySystemPrompt() },
       {

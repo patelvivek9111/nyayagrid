@@ -1,6 +1,6 @@
 import { createStudentConversationSchema } from "@nyayagrid/validation";
 import { createConversation, listConversations } from "@nyayagrid/workspaces";
-import { requireUser } from "@/lib/auth";
+import { requireProfessorUser } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
 /**
@@ -9,7 +9,7 @@ import { handleRouteError, jsonOk } from "@/lib/http";
  */
 export async function GET(request: Request) {
   try {
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireProfessorUser(request.headers);
     const conversations = await listConversations(db, user.id);
     return jsonOk({ conversations });
   } catch (error) {
@@ -19,7 +19,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireProfessorUser(request.headers);
     const body = createStudentConversationSchema.parse(await request.json().catch(() => ({})));
     const conversation = await createConversation({
       db,

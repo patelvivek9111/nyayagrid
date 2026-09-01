@@ -1,0 +1,89 @@
+{
+  "scenario_id": "SYNTH-008",
+  "title": "Summit Retail Commercial Loan",
+  "ground_truth_version": "1.0",
+  "answers": {
+    "Q001": {
+      "task_id": "SYNTH-008-Q001",
+      "expected": "5.75%",
+      "supporting_refs": [
+        "modification:2"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q002": {
+      "task_id": "SYNTH-008-Q002",
+      "expected": "June 30, 2029",
+      "supporting_refs": [
+        "modification:3"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q003": {
+      "task_id": "SYNTH-008-Q003",
+      "expected": "No",
+      "supporting_refs": [
+        "modification:4"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q004": {
+      "task_id": "SYNTH-008-Q004",
+      "expected": "Interest 6.25%->5.75% effective July 1, 2026; maturity Dec 31 2028->June 30 2029",
+      "supporting_refs": [
+        "note:2",
+        "note:3",
+        "modification:2",
+        "modification:3"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q005": {
+      "task_id": "SYNTH-008-Q005",
+      "expected": "$2,500,000",
+      "supporting_refs": [
+        "note:1"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q006": {
+      "task_id": "SYNTH-008-Q006",
+      "expected": "$21,500",
+      "supporting_refs": [
+        "payment_notice:Payment"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q007": {
+      "task_id": "SYNTH-008-Q007",
+      "expected": "August 3, 2026",
+      "supporting_refs": [
+        "email:Message"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q008": {
+      "task_id": "SYNTH-008-Q008",
+      "expected": "ABSTAIN: outstanding balance not supplied",
+      "supporting_refs": [],
+      "verdict_logic": "must_abstain"
+    },
+    "Q009": {
+      "task_id": "SYNTH-008-Q009",
+      "expected": "4%",
+      "supporting_refs": [
+        "note:4"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q010": {
+      "task_id": "SYNTH-008-Q010",
+      "expected": "No; both identify $21,500",
+      "supporting_refs": [
+        "payment_notice:Payment",
+        "email:Message"
+      ],
+      "verdict_logic": "must_answer"
+    }
+  }
+}

@@ -12,6 +12,7 @@ import { chunkSegments } from "@nyayagrid/documents";
 import type { ExtractedSegment } from "@nyayagrid/documents";
 import type { EmbeddingProvider } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
+import { structuredAuthorityFields } from "@nyayagrid/jurisdiction";
 import { extractCitationsFromText, parseCitation, resolveCitationAgainstCorpus } from "./citations";
 
 export const AUTHORITY_TYPES = [
@@ -71,6 +72,10 @@ export const importAuthorityInputSchema = z
       )
       .optional(),
     treatmentStatus: z.enum(["unknown", "source_reported"]).optional(),
+    courtId: z.string().nullish(),
+    authorityState: z.string().nullish(),
+    federalCircuit: z.string().nullish(),
+    courtLevel: z.string().nullish(),
     metadata: z.record(z.unknown()).optional(),
     sourceMetadata: z.record(z.unknown()).optional(),
   })
@@ -307,10 +312,22 @@ export async function importAuthority(
     };
   }
 
+  const structured = structuredAuthorityFields({
+    court: input.court,
+    jurisdiction: input.jurisdiction,
+    courtId: input.courtId,
+    authorityState: input.authorityState,
+    federalCircuit: input.federalCircuit,
+    courtLevel: input.courtLevel,
+  });
   const authorityValues = {
     authorityType: input.authorityType,
     jurisdiction: input.jurisdiction ?? null,
     court: input.court ?? null,
+    courtId: structured.courtId,
+    authorityState: structured.authorityState,
+    federalCircuit: structured.federalCircuit,
+    courtLevel: structured.courtLevel,
     title: input.title.trim(),
     shortTitle: input.shortTitle ?? null,
     citation: input.citation ?? null,

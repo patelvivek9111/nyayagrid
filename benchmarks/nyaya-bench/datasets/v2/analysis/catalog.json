@@ -1,0 +1,160 @@
+{
+  "comment": "Overlay only. Loaded in --mode analysis. Reuses V2 PDFs. Actions invoke production Analysis engines. Does not score Compare or Contradiction.",
+  "tasks": [
+    {
+      "id": "SYNTH-V2-001-AN001",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "analysis",
+      "difficulty": "medium",
+      "prompt": "Analyze the main agreement for material contract terms.",
+      "action": {
+        "kind": "analyze_contract",
+        "documentPattern": "01_Main_Agreement"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-AN002",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "analysis",
+      "difficulty": "medium",
+      "prompt": "Analyze Amendment 1 for operative notice and liability terms.",
+      "action": {
+        "kind": "analyze_contract",
+        "documentPattern": "02_Amendment_1"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-AN003",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "analysis",
+      "difficulty": "medium",
+      "prompt": "Analyze Amendment 1 for numeric obligations.",
+      "action": {
+        "kind": "analyze_contract",
+        "documentPattern": "02_Amendment_1"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-AN005",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "analysis",
+      "difficulty": "hard",
+      "prompt": "Analyze the main agreement for any insurance deductible or Exhibit Z terms.",
+      "action": {
+        "kind": "analyze_contract",
+        "documentPattern": "01_Main_Agreement"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-AN006",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "analysis",
+      "difficulty": "hard",
+      "prompt": "Analyze the email chain as if it were a contract.",
+      "action": {
+        "kind": "analyze_contract",
+        "documentPattern": "04_Email_Chain"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-AN011",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "analysis",
+      "difficulty": "medium",
+      "prompt": "Analyze Amendment 1 and inspect finding provenance.",
+      "action": {
+        "kind": "analyze_contract",
+        "documentPattern": "02_Amendment_1"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-AN013",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "analysis",
+      "difficulty": "medium",
+      "prompt": "Analyze then mark the first contract item reviewed.",
+      "action": {
+        "kind": "review_contract_item",
+        "documentPattern": "02_Amendment_1",
+        "reviewAction": "reviewed"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-AN014",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "analysis",
+      "difficulty": "medium",
+      "prompt": "Analyze then dismiss a contract item and check Ask Nyaya context.",
+      "action": {
+        "kind": "review_contract_item",
+        "documentPattern": "02_Amendment_1",
+        "reviewAction": "dismissed"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-AN015",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "analysis",
+      "difficulty": "medium",
+      "prompt": "Run contract analysis twice without force.",
+      "action": {
+        "kind": "duplicate_contract",
+        "documentPattern": "01_Main_Agreement"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-AN016",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "analysis",
+      "difficulty": "hard",
+      "prompt": "Analyze then format professional analysis context for Ask Nyaya.",
+      "action": {
+        "kind": "downstream_context",
+        "documentPattern": "02_Amendment_1"
+      }
+    },
+    {
+      "id": "SYNTH-V2-006-AN007",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "analysis",
+      "difficulty": "medium",
+      "prompt": "Analyze the Mercer deposition for admissions and denials.",
+      "action": {
+        "kind": "analyze_deposition",
+        "documentPattern": "05_Deposition_Mercer"
+      }
+    },
+    {
+      "id": "SYNTH-V2-006-AN008",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "analysis",
+      "difficulty": "hard",
+      "prompt": "Analyze the Mercer deposition without inferring physical entry from other documents.",
+      "action": {
+        "kind": "analyze_deposition",
+        "documentPattern": "05_Deposition_Mercer"
+      }
+    },
+    {
+      "id": "SYNTH-V2-006-AN010",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "analysis",
+      "difficulty": "hard",
+      "prompt": "Analyze the deposition for unsupported conclusions about who entered the records room.",
+      "action": {
+        "kind": "analyze_deposition",
+        "documentPattern": "05_Deposition_Mercer"
+      }
+    },
+    {
+      "id": "SYNTH-V2-006-AN012",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "analysis",
+      "difficulty": "medium",
+      "prompt": "Load the evidence matrix without additional extraction.",
+      "action": {
+        "kind": "evidence_matrix"
+      }
+    }
+  ]
+}

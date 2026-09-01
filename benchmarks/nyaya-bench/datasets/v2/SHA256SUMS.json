@@ -1,0 +1,718 @@
+[
+  {
+    "path": "DATASET_INDEX.md",
+    "sha256": "89c750d2c55478081c3e447a6ae522ed8c9c8ae306b646651c8c81bee365f73f"
+  },
+  {
+    "path": "README.md",
+    "sha256": "eeb12dda56cfe2f74ad6765cab207185e2855f6ee262f800ef66656853827225"
+  },
+  {
+    "path": "benchmark_manifest.json",
+    "sha256": "0a216b3754fad4eec6f5558ca00064c283639f1fdf802919e1078904d0b46f5e"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-001_ground_truth.json",
+    "sha256": "4e8df5c7e45b9988adfd75b0cde9cca2449c4c76f1f8b6f30b1243ce8ce42f7e"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-002_ground_truth.json",
+    "sha256": "b3c94bed90c10ad8780b9d63f63fc16313f9aed31f5077c7a4aa9af741968302"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-003_ground_truth.json",
+    "sha256": "b23999ee2ab6e7e31c380170e84cdaea743d6b77ef61dfdcf3831b03ab1b743f"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-004_ground_truth.json",
+    "sha256": "371801c47625e9f41f79b65709554a09dda0cabd13535ecb673dc35c9d40f589"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-005_ground_truth.json",
+    "sha256": "9b2f9078d94f612998f79f31d84d35e426556c0ecd01f3ced10b5b87807b47fb"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-006_ground_truth.json",
+    "sha256": "e3ff606413b7ebb97ecd779625068f04c63d114fd73978500a6b0dcf8f612908"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-007_ground_truth.json",
+    "sha256": "5da35d822305ff7b28c7d0844fc837db657cf2822362fd75187706f200125e9c"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-008_ground_truth.json",
+    "sha256": "0885b1b449a278fbeb953de1a0b88856af7ac7b5f8a410befb6bf18851b28b04"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-009_ground_truth.json",
+    "sha256": "50ff80dfa3178c1df4d2cce65230c6229bc2001728df7388a73a62bd6d1f9c50"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-010_ground_truth.json",
+    "sha256": "a99b60efacad62d847993fa615a241d8360036fd1a47f6e7b072de7d6d4ee653"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-011_ground_truth.json",
+    "sha256": "ee9c2e6c376971e3c34b81a340bc9be2e5ce701ba8f9bab2e2446b81dbbacf2f"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-012_ground_truth.json",
+    "sha256": "e566eb9956e1d62ffb7dd1882201db6f09f876b2048b0e4ccf50b0c4aec43581"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-013_ground_truth.json",
+    "sha256": "871be917aab9f926f018e53a81499df6e5d11cd971b09fda21bb149f4d05b7db"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-014_ground_truth.json",
+    "sha256": "cc564e393a4904091339980b3ab421d5e3f2aaccbafdcff3199155ef96785577"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-015_ground_truth.json",
+    "sha256": "1828d550cbaf0f610a0f980ba436e8343322dcd308d32cadd8ce8a9c35810bde"
+  },
+  {
+    "path": "hidden_ground_truth/SYNTH-V2-016_ground_truth.json",
+    "sha256": "b38c985e1c5a7208b7900c1a41d0170dee6b622fcb2433d6db2848f18627054d"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-001/documents/01_Main_Agreement.pdf",
+    "sha256": "28069628f6281c615975fff7d1b58b84477daaa4d1f1af3e85d4c20aebc29748"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-001/documents/02_Amendment_1.pdf",
+    "sha256": "6de5775e214deba97c8f40165979922f2a52781a2ff18766e8b3d0b912d6e92a"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-001/documents/03_Amendment_2.pdf",
+    "sha256": "1bb705c2fc5dcb31c17be47a4d05c1cd377d57f0d00126fdac45315e99cf4760"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-001/documents/04_Email_Chain.pdf",
+    "sha256": "a5669def07cf6e986c2d20a62362fd16d36d5d3910a9b7bf3fb57328b7a5f26e"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-001/documents/05_Deposition_Mercer.pdf",
+    "sha256": "52f8949c5b60514dc16af927a6c38094aad7808df22ffa9e50bcfd37615427ee"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-001/documents/06_Access_Log.pdf",
+    "sha256": "3252368b36f56a613f5d8066f0a210e8e45857cae8fded645fa96fea5de66e5f"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-001/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "95f772e5af0468bf2f68038f3bfac2fe859da2c0da71bddb587b0dc15069d289"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-001/documents/08_Meeting_Minutes.pdf",
+    "sha256": "877fe57068f9d4f238dbc4761dc3390eb2d718e095b9a6c094017ad6a8d48dd3"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-001/scenario.json",
+    "sha256": "52988b335a35a380115a30c7fce6ed697c29fa058127e486c126576062180f35"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-001/tasks.json",
+    "sha256": "921ff77fbea516608b93801bb55b719856772ddda36a955b6b3ef89738b88b6c"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-002/documents/01_Main_Agreement.pdf",
+    "sha256": "2a2f7508a440d23cd1cd1359da226a6d2a7d45d253bc80fb0d8b0472838188cc"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-002/documents/02_Amendment_1.pdf",
+    "sha256": "0d14018ffdf9fb578f093244c482eaa7e05bbb24e614b3945c8e8a0999b35821"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-002/documents/03_Amendment_2.pdf",
+    "sha256": "4ff56e2ac65bdf470eb60e1a85b6a69747ab0b09120a4b7654c971d2bc6e24f3"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-002/documents/04_Email_Chain.pdf",
+    "sha256": "03263cc4cd68053e6e2fc8571287f72709d65f7121213a5d225704ca7a7639bc"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-002/documents/05_Deposition_Mercer.pdf",
+    "sha256": "e19350244fb2b7e265de3ab4619c4e33a9224ceab657b4e083daabb7e3d5ea78"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-002/documents/06_Access_Log.pdf",
+    "sha256": "34a0eebd50ab31cf7c1ca0896db123b86b0c2c000df6bc895edffa6acd201360"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-002/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "901a374d87752d9f497f355cdd6b8d234b4978eac6fbe5787f416b44a82e890c"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-002/documents/08_Meeting_Minutes.pdf",
+    "sha256": "e140827d2d5cdc11d9e2365fd9c5df82171490f469279d3b7657677664e65331"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-002/scenario.json",
+    "sha256": "d1f059a878598e5bff98bc432f6fc47436b605c5814a3d0c073ad2dfab426704"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-002/tasks.json",
+    "sha256": "c340bbd53251ec4b4ac6b4be2e635ede34ff77d19df221cb65d45cf33cc63dd2"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-003/documents/01_Main_Agreement.pdf",
+    "sha256": "f4b997a55a92315c7641ac8a9e43a290358ce7c2f023ade9ca41750c04f7b062"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-003/documents/02_Amendment_1.pdf",
+    "sha256": "56bffa5ce6a3d355143aa2dcbb3e369707515a3897ed185cef9db4a3e9d212a2"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-003/documents/03_Amendment_2.pdf",
+    "sha256": "50c942a80a00e3b61534d3836b108295a977d8399481720f26fa9cc997bccd02"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-003/documents/04_Email_Chain.pdf",
+    "sha256": "91a2ef0f3231e4383fb0b60296ad48099bdce2997b2da7ed0ece93c3cad2916f"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-003/documents/05_Deposition_Mercer.pdf",
+    "sha256": "98813acca736b471f726b9b8c7b502f731828f9951221d608c1a8e07bb09fe32"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-003/documents/06_Access_Log.pdf",
+    "sha256": "236ec5ae6ef2e030d56809e509df54db06a641c313b412db2146673a668dd3a1"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-003/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "da36a47d9f09df2857f311f704377344125bdc59a8c0a00a3d46f2131d0eeab4"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-003/documents/08_Meeting_Minutes.pdf",
+    "sha256": "71f7467ba4e3149e37d1f3576dfc71fa940fb49cda0f1734d2e269e6fe74a34e"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-003/scenario.json",
+    "sha256": "363051090abfa147c6d0a1a652485b6a008993f8610d084cdfaa3870dc1e655e"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-003/tasks.json",
+    "sha256": "39a565af9558e75d06ebdbb483f0096631e1ad8e661012a9e3e5dfb60212ecb6"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-004/documents/01_Main_Agreement.pdf",
+    "sha256": "d0dffdc9ca25deb1543623c60cd2dbe7196e1e907980bf5ed827ae9481113b51"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-004/documents/02_Amendment_1.pdf",
+    "sha256": "0ffe47353300c1b59e650155f532450590c2a51b1442dace3d4c1a3f1ea98929"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-004/documents/03_Amendment_2.pdf",
+    "sha256": "07d7eda2366ab555b0902035c6b58ed45a252bd7e0e833c682d49027ce814f93"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-004/documents/04_Email_Chain.pdf",
+    "sha256": "a453b4aa37747dd07e2fb6784bbdd184c3846252584b4cc22db91aa4080a956f"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-004/documents/05_Deposition_Mercer.pdf",
+    "sha256": "6954ff204efad4da9e5987a23eda0238897c0a3e5f224d70d74f089501e2194d"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-004/documents/06_Access_Log.pdf",
+    "sha256": "68edcff52f1b7f4adafd30a45e27cec7964a9486a5bd9144671431ec0a465a0a"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-004/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "f69b4b7a793eb3701d28e6e0508d9709eab39016d45d6f361b7f3a1b2ece8854"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-004/documents/08_Meeting_Minutes.pdf",
+    "sha256": "758ee64aa158963711d30d43e48d55b82a2f47f28652e1fd222c1871edc15fe5"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-004/scenario.json",
+    "sha256": "f140525cd2f90332a509a460c8a52161605ec9971c5401385f1c49dc988f58ef"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-004/tasks.json",
+    "sha256": "883bbdf9ed874b09ed19e09ecac67c1958188bb48b2dd96673d606c699bd12bd"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-005/documents/01_Main_Agreement.pdf",
+    "sha256": "7b9831a38d39808d696a361ada3a0cbdd81aff0ddfd175c6bd84a8e0950f5c3e"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-005/documents/02_Amendment_1.pdf",
+    "sha256": "c3efe01732677b44cdbff3e02f4eef14f2243aa626aefd750ee9889892a30763"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-005/documents/03_Amendment_2.pdf",
+    "sha256": "a1de574b2586b895f6860d2c1c26953061fb64bca96bb320fc1e510dae13132d"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-005/documents/04_Email_Chain.pdf",
+    "sha256": "a809f84d83c1252304a266c573dcc59fed338eb21fe341e13d64d444eab4d361"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-005/documents/05_Deposition_Mercer.pdf",
+    "sha256": "cb165a938dccfc509a30715f74ddba06f9c4f425ab4efcb49940e17055aca894"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-005/documents/06_Access_Log.pdf",
+    "sha256": "3585d97cd6bd6f58c9095d10dade12d58042e14ba385f8bde035679193d5c02f"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-005/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "695ad6faa2df83e7cf8ebea4775515fac83c9fbd9e74e0a9e525a7039421a17e"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-005/documents/08_Meeting_Minutes.pdf",
+    "sha256": "dbbf767dee0858db793e0a3598ecac5d3154dbe4d1b3103df8543b534190cd8d"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-005/scenario.json",
+    "sha256": "1ab166f9c2898089f9bf6a9ef59630f6920645c2e982777e98def23511eb6abd"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-005/tasks.json",
+    "sha256": "7e974cf9780f9ffc53a74907c671d46097adfda013b8ab1c41d41e8e8e50fc0f"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-006/documents/01_Main_Agreement.pdf",
+    "sha256": "72b5a3887d60b26f87d894f8af050c06444be9cd93cc45195da78922efdb71ce"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-006/documents/02_Amendment_1.pdf",
+    "sha256": "a71fdcf08220fba6e82e6532cecc465d7f5de1603dd4349772d5ed93536e0afd"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-006/documents/03_Amendment_2.pdf",
+    "sha256": "f7c05e9c66c2abc34d808da0412f2a6b878b2e50957d98fd80825e8aa5ba8b46"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-006/documents/04_Email_Chain.pdf",
+    "sha256": "90f0fbe58a04f69e0ae368ea9960a300c22fc1c36d4e39e8650b6524a3932678"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-006/documents/05_Deposition_Mercer.pdf",
+    "sha256": "a615a4bf1db5b16ff953ec0157e0ab0469d6fce4d01a4ee8efab4c9cfea808d0"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-006/documents/06_Access_Log.pdf",
+    "sha256": "dd30b1309462fd3ae0ce852e9bbbe7d812e467fbf8cf451d01f6438bc67ee7a0"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-006/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "b4a9daf746c05713f69e6a1af22272623efc458630001a1b04d4c6633abce123"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-006/documents/08_Meeting_Minutes.pdf",
+    "sha256": "57f7d4349e3003baedd425996f7d36853b74d3ab2338f25f20e7d23a7824ca00"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-006/scenario.json",
+    "sha256": "2129eadc60745854aeb27df438c99d7f776a8e27b28c09bbbf3d0440c96e24e1"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-006/tasks.json",
+    "sha256": "56068e469b4dfc4ecd882ddcc8a8c719bd0b6a814d396f161ac4338786e06dea"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-007/documents/01_Main_Agreement.pdf",
+    "sha256": "4b9ed7dca270c187e459316594ffb1113fe0b57a128144f142ef1dfe8959712e"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-007/documents/02_Amendment_1.pdf",
+    "sha256": "5cee239f6f0945169981f3b9c4970f3e058fc0a5606a3537806744032d4f05a7"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-007/documents/03_Amendment_2.pdf",
+    "sha256": "32404e641e63455d6c01891485aeb8f7b4faef71b93602b762efc291c31fc4b4"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-007/documents/04_Email_Chain.pdf",
+    "sha256": "663035b9447634390c33a6bad7cdaa1ab5cfa02b7ef95554c19c5d8b6306395d"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-007/documents/05_Deposition_Mercer.pdf",
+    "sha256": "f242ed67ef604e02181af632874d9a5b3162f64c5bf351e03268d66ae5981e31"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-007/documents/06_Access_Log.pdf",
+    "sha256": "b5f9553e3e9ccf270e7066a0c4f27fc23f9982f1a18d9f177cfca1fb2e67f4cb"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-007/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "e9bc695a8a30678c2cdaa1057b087a518e31a7139bae5f7129dedce440bdab5b"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-007/documents/08_Meeting_Minutes.pdf",
+    "sha256": "b6a49a0ba1adb8d6ad83150fa975576ae231e928d579bef44fdfd3f132fb0c0c"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-007/scenario.json",
+    "sha256": "7c1abcfa2635b7a08b959dfdbf3085d22cb22461b3af88a9937c9ea17cdd6905"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-007/tasks.json",
+    "sha256": "5263b6546f41235b97b41d14de2e0574a9bdf5c34e67e78f6b35cecc9b9ebe4d"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-008/documents/01_Main_Agreement.pdf",
+    "sha256": "710dbfd638b79e073e777cf877f8acfae469647680d335b33e56783408411d7e"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-008/documents/02_Amendment_1.pdf",
+    "sha256": "e5f5a71f0e5b1a92c1f6eccdf0ca6b4bccdba4515e4324cfbf7a91b95f9d73db"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-008/documents/03_Amendment_2.pdf",
+    "sha256": "926fe4c0d42231143a442922d9ecc759bfcf8aa268afda85cc4b86636f89988a"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-008/documents/04_Email_Chain.pdf",
+    "sha256": "7ba61e4c8c1094c6b357107f0b4603fd8283ae20bb00f05d082096391384c6a0"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-008/documents/05_Deposition_Mercer.pdf",
+    "sha256": "e9ae968894476af20d22f7be1a02fed2183ae8793cbf2fbec2169642e6df3cff"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-008/documents/06_Access_Log.pdf",
+    "sha256": "31ce5961d562c3b70cb39ba27cab90b6838f6d94ed360f6f9310d263d112fc6b"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-008/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "2e4268f6bc2dff4e2ef7d6d9482feaf26031400e66302f7a2c3c5a7295bcbc29"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-008/documents/08_Meeting_Minutes.pdf",
+    "sha256": "dfb4a75fbf42e9daf838a417e3023443706f937f164ffe7d35b1611350fadf64"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-008/scenario.json",
+    "sha256": "91741e68d3158b09e6fd650c770f11bbfb34b61129b2761cc1d0faac23069d88"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-008/tasks.json",
+    "sha256": "8910de3d3627cb5a056c772001a446251beabf054deebe3ff1fb6b0eaa7cb798"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-009/documents/01_Main_Agreement.pdf",
+    "sha256": "2d6ee6dbedf649c57092f3f21a5d27a830215d317d9ff3ec7160fc29198b3266"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-009/documents/02_Amendment_1.pdf",
+    "sha256": "3ab2792d6b3e073648e2fa3f07e896083bfc79d7a33c46358e6c91155c4f1e6e"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-009/documents/03_Amendment_2.pdf",
+    "sha256": "b86ab9964ee497d553edf6eabeff1ce363d4a53ef5705d69120374a41edca46e"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-009/documents/04_Email_Chain.pdf",
+    "sha256": "1e855eed558e4f5de17f2d91a1769cac5c0b2282e3d1965bcf33289e5f627eb2"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-009/documents/05_Deposition_Mercer.pdf",
+    "sha256": "a929d653ac657fd45470cc984561ec7dc1fffc4b02ee00e855189905efb2b78c"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-009/documents/06_Access_Log.pdf",
+    "sha256": "53aade323e7913656ea44da889e3d5334eb0cb1cf1eb449fc478eed62b12914d"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-009/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "9f024832e237caf73045f173cbca2c884bd20849b368b976a2f3029420600993"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-009/documents/08_Meeting_Minutes.pdf",
+    "sha256": "8455a74ec1beb08b9241abf97ff36d3b3688cabc9cc11cd521a5ad171a060954"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-009/scenario.json",
+    "sha256": "f6e0a0e4703802f72fb88350ff8cebbce1f3cc84f5bc6d6d7a994aa92338c2d5"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-009/tasks.json",
+    "sha256": "fc8afb3d211f509e742efd2f298b3df800be3f2c1eaae82c3b756a1c7fba399c"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-010/documents/01_Main_Agreement.pdf",
+    "sha256": "c81a80068efb87c2436efcc964f4b026d432d368fc99eb56e271ff394b0aea88"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-010/documents/02_Amendment_1.pdf",
+    "sha256": "fe624773dc6d0817321ace6465f33e27db42f5749223a364a35377be90e18ea3"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-010/documents/03_Amendment_2.pdf",
+    "sha256": "5897247b0a7a31be0847adf930ff64adbd242bf4ef49c17c8dac93f0a948dba8"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-010/documents/04_Email_Chain.pdf",
+    "sha256": "5eb97e4433cac7a56e813171dcd97da91a905a3e264ff4edd508e2d50f4f508c"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-010/documents/05_Deposition_Mercer.pdf",
+    "sha256": "0d27b176e862f19d8875d2fc53302e29028c727d2adc7c5e91b5ba1e993adefe"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-010/documents/06_Access_Log.pdf",
+    "sha256": "34aa8463bcf79a70a096b6bbcbec3f11534ecf7fa4a26f98efc6b70c4fb4a04a"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-010/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "e6096627797bb35c6563806647db09cd5b76b37e0cddd2a1d46abe24f3a531d2"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-010/documents/08_Meeting_Minutes.pdf",
+    "sha256": "dab4fe89f0bc64b6bd0ff976b3ddcde8ef56eb9047570f3ec49eb410d6a65ca4"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-010/scenario.json",
+    "sha256": "8d74b4a0f5095827d8921f7571f191f6d24c1c14201a2573f0517904feb93f48"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-010/tasks.json",
+    "sha256": "1bf979f6bd4d9539bf859923752931e6b3990aeda33a6c131591c28201d191b0"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-011/documents/01_Main_Agreement.pdf",
+    "sha256": "af481b4c4852520f2f18d78d5ed7d8d2f87922cb1c0b1eec5a2f25d9a35c09fc"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-011/documents/02_Amendment_1.pdf",
+    "sha256": "bbe587d732c6b0ba62e5bae2a4d67d6b127e28d35767636f6f580dbda382b334"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-011/documents/03_Amendment_2.pdf",
+    "sha256": "f035f6b1090b99d622baed024ebf8f30878f7a8801dc3166f1ed718ca5ea37b7"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-011/documents/04_Email_Chain.pdf",
+    "sha256": "f1512cffe063aaa669ce3ed1c01cb6406dc90bbb304ddca18e7af728b2e56f85"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-011/documents/05_Deposition_Mercer.pdf",
+    "sha256": "c21e2c0a7dae60b4b7eb34d1fc97cf9fe745f3907fbce354988ff4450f337a33"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-011/documents/06_Access_Log.pdf",
+    "sha256": "a88dd37e51461b17cec6dbeb3ad856477548dbb404a35781b3c886609defecb5"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-011/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "127abc96e4eb28a363619c1036108ffb466a2b677ff7a2f26f614eb121ccbbd9"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-011/documents/08_Meeting_Minutes.pdf",
+    "sha256": "410a659fc261f728824f8502bd6fb95500e3bde35db94365358a59ddb15e60fc"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-011/scenario.json",
+    "sha256": "b9f8f3e076883e5babae05547ce4f5c927f2a86daec126232bca0480a69b1dfd"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-011/tasks.json",
+    "sha256": "175131c0b63c2582f52470ded446395b8e4172d2bf05ca7d0b797bd5c855bb0f"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-012/documents/01_Main_Agreement.pdf",
+    "sha256": "58f41476776f88c25d25f8a1ce65e3f8392183197fd30476bb00e3b38b9776ca"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-012/documents/02_Amendment_1.pdf",
+    "sha256": "3153575fc8fa79eaf19d3439f8890b6a996f81fa64f43c9da44da6afedd0ff59"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-012/documents/03_Amendment_2.pdf",
+    "sha256": "7490486c07ed8a7789c2ba9d4db7130c2782037328825dadac2aec1d3989ea9f"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-012/documents/04_Email_Chain.pdf",
+    "sha256": "c0aa6a27214068b9445b4b5b8f9ea2622721189cb4267d5dc37ef69fc340844e"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-012/documents/05_Deposition_Mercer.pdf",
+    "sha256": "abbf8c259673d30b06fa1d8e308d1f3c2ea061aebb7e808076a5f50a09a5a1d8"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-012/documents/06_Access_Log.pdf",
+    "sha256": "0ea09adf536174e3877afa424b65ac3ce6b28cdc50dacdc24b50d37955817c90"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-012/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "9cdc677693ea0bf7d5cbc0fc3d3ef80490871cb7172f7b1ff3d944b8072b812f"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-012/documents/08_Meeting_Minutes.pdf",
+    "sha256": "e9cbef26641e0428ca70d9471c2b9ea9cfa49c11bc4cd4a87b2a95b09a04432b"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-012/scenario.json",
+    "sha256": "f4bd9f18ab5a0400ae11f4e38a4521e06e78200b23dcdb06dbd24419347a1f28"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-012/tasks.json",
+    "sha256": "537a805992881736adf385c61b6e5d3c4aa917f7a59c77eeeea84e7eb0a18e7c"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-013/documents/01_Main_Agreement.pdf",
+    "sha256": "0fd0f71e03f809b11bb9967f1dc0d9955c69e1a0f83653b3063a7f45bc8f88db"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-013/documents/02_Amendment_1.pdf",
+    "sha256": "8dfe304086efb12a65364a72ba9942fbf2fd668f67b14f36153404424c0fee3f"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-013/documents/03_Amendment_2.pdf",
+    "sha256": "c0f990807e3a22b4ac69f4a892dfbd2ec360aa990956c7a6f8f75cc944334258"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-013/documents/04_Email_Chain.pdf",
+    "sha256": "64f1c3b01fb1e7367576d5c3f2c39c995066abb7874b50e0cd1078b2b1716333"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-013/documents/05_Deposition_Mercer.pdf",
+    "sha256": "de78bfcfd6c2a2d7d05810a43e3faa755b2fee32748f867fa98d7094a2bf12b8"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-013/documents/06_Access_Log.pdf",
+    "sha256": "9032644c3afe61098a02b03a382ffc04e7e7f760a318636a581c87ca97b759be"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-013/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "60a99f126d301194bc8c6ae716f73a2dabeca51581689f0d682d03fbddf2852a"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-013/documents/08_Meeting_Minutes.pdf",
+    "sha256": "f2ac71fa1e1743be6214ef7cd39dc990154b7f62c341de90be56b04a13f777e3"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-013/scenario.json",
+    "sha256": "df15930f41d08425f4be660d8f0cf9553f2a53df4408385c465328386b0b75bb"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-013/tasks.json",
+    "sha256": "20e713500424d7464affd2c0d399e45edafb62d8df051f615ffc644baae06468"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-014/documents/01_Main_Agreement.pdf",
+    "sha256": "06beb33abf4eca7f200a9b5b0892cc7246ac7fab7f2c23be421ecf6982eadbb9"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-014/documents/02_Amendment_1.pdf",
+    "sha256": "ca28b14791c269bbf6b5b3fae0b975724213efe5ca73b28a0b2ed59c6c3a6156"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-014/documents/03_Amendment_2.pdf",
+    "sha256": "7d0dbec38e82755f7871f003ac1953739522a12b8c4b2ca9963d720e42020287"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-014/documents/04_Email_Chain.pdf",
+    "sha256": "d5e5e602ac88c6e540d44bd6af1e6543bee114358111e39c6af8e5f626656d3e"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-014/documents/05_Deposition_Mercer.pdf",
+    "sha256": "72ebf6c1c66e23a6ada140bdcf35a488e805431f7640ca71d11d1cd514a8204d"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-014/documents/06_Access_Log.pdf",
+    "sha256": "2123de63e7b9889b4386c4ff2cc3ca4e95f605dce09da7588f57a607e2ca77d8"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-014/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "9a007190d30430414dc070a750a5cb6021edf5dd4467fc81534482aee9f5ad72"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-014/documents/08_Meeting_Minutes.pdf",
+    "sha256": "fc39c448851d659ca327a2ec7f6f20a9c13e7b9080e30ad63eee170197703859"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-014/scenario.json",
+    "sha256": "5c5877068f7973546ad40f03026b66b10cb782dbfc87738c0089039e9dee3e84"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-014/tasks.json",
+    "sha256": "d7dec2c725224e232b2be7f9e08e3380845b0339359843f06c96f1c8ab4d661f"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-015/documents/01_Main_Agreement.pdf",
+    "sha256": "a625dfbd1e2a17b307bed7d9027c8e2ce8fa9f3ed1fd6dd0b8b358adef47422b"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-015/documents/02_Amendment_1.pdf",
+    "sha256": "0285cd9436539004cab35a2570a2b128b732dacbd100a75d9e7c64a34013ff98"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-015/documents/03_Amendment_2.pdf",
+    "sha256": "9a9666c4f9401b9612ed56b1097dca746bd8d0cbb240357d3c5a7fbb9d07543a"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-015/documents/04_Email_Chain.pdf",
+    "sha256": "ad821081afaa6c37fa6bc2e67beb8dc0e9951308813890474a985d8389cd9504"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-015/documents/05_Deposition_Mercer.pdf",
+    "sha256": "c69391144d42d1b85f9a92a15164bf5795eadd9145e5359a79aad4957e23f6e3"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-015/documents/06_Access_Log.pdf",
+    "sha256": "bf544b0e924368eccdd1ea6ce5078b728f8675deb06aec4766238da332471744"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-015/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "7cdbb24dbfd4d7c1b6f0535bd850d524f78157c6eac25fcbc1300e09c90099b2"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-015/documents/08_Meeting_Minutes.pdf",
+    "sha256": "b63ad6475270a8e2e7c722628a00412dd0e2ce2692e5b2336fd6feb6ecaf2f98"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-015/scenario.json",
+    "sha256": "30c19bcd38acad84551558b3eee85efadad82773d23e4d9da593672154338b59"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-015/tasks.json",
+    "sha256": "1847a1b4bc3a0af221339a9cb8111aec46f6da892fd5a230b47879538bd79bec"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-016/documents/01_Main_Agreement.pdf",
+    "sha256": "3eaaec77b31812c0eebafd33cb6058b824c32dd2de5759f9bc9d395fead463f0"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-016/documents/02_Amendment_1.pdf",
+    "sha256": "b9b69c491d67dc4501bfa89dfc6cd7d2166eb010368bb11bbf1a175ea224350b"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-016/documents/03_Amendment_2.pdf",
+    "sha256": "15a0bc7e7b2255d43e81041f40979a44c49ecd6ffe49b8b08c7d529e922823c1"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-016/documents/04_Email_Chain.pdf",
+    "sha256": "a48b59d8a1170aa0cb034300dfd07cda781973498c1609ecfd4c7690c40d5030"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-016/documents/05_Deposition_Mercer.pdf",
+    "sha256": "e5bb80fc48c01471f74336e6f6fa9699adf2502f08656aef67daee72dffcfd73"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-016/documents/06_Access_Log.pdf",
+    "sha256": "88a535e726ed928e80d4ebf0ab236340ed9cdbeed45fc545dfd270c249f2f88b"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-016/documents/07_Invoice_and_Remittance.pdf",
+    "sha256": "72c41676bb59bb085096190302a37033003515170ed0f46794ae2fc42dc7f6e9"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-016/documents/08_Meeting_Minutes.pdf",
+    "sha256": "d227aa61b002a11ada67b2e6a8e33fd76dca5e9e8075941b1bd65aaec947423a"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-016/scenario.json",
+    "sha256": "6ceb0d46e1f8a4ea4de2f48a5ad4185f9119355208cb80c6c06486dc50c5da0b"
+  },
+  {
+    "path": "scenarios/SYNTH-V2-016/tasks.json",
+    "sha256": "f4f0f597affafcf2bc38832bc111f99f066adf00b9826932fad621b5c1953ebd"
+  }
+]

@@ -79,4 +79,20 @@ describe("enforceRateLimit", () => {
       await enforceRateLimit(request, { endpointClass: "upload", organizationId: "org-2" }),
     ).toBeNull();
   });
+
+  it("enforces research, agent_run, and expensive_ai organization presets", async () => {
+    const request = makeRequest();
+    for (const endpointClass of ["research", "agent_run", "expensive_ai"] as const) {
+      (getRateLimiter() as InMemoryRateLimiter).reset();
+      const preset = RATE_LIMIT_PRESETS[endpointClass];
+      for (let i = 0; i < preset.limit; i++) {
+        expect(
+          await enforceRateLimit(request, { endpointClass, organizationId: "org-limit" }),
+        ).toBeNull();
+      }
+      expect(
+        await enforceRateLimit(request, { endpointClass, organizationId: "org-limit" }),
+      ).not.toBeNull();
+    }
+  });
 });

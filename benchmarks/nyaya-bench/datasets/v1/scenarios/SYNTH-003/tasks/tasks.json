@@ -1,0 +1,82 @@
+[
+  {
+    "task_id": "SYNTH-003-Q001",
+    "scenario_id": "SYNTH-003",
+    "category": "case_qa",
+    "prompt": "What is the current contract sum after CO-014?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q001"
+  },
+  {
+    "task_id": "SYNTH-003-Q002",
+    "scenario_id": "SYNTH-003",
+    "category": "case_qa",
+    "prompt": "What is the revised substantial completion date?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q002"
+  },
+  {
+    "task_id": "SYNTH-003-Q003",
+    "scenario_id": "SYNTH-003",
+    "category": "numeric",
+    "prompt": "How much retainage was withheld on Progress Application 08?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q003"
+  },
+  {
+    "task_id": "SYNTH-003-Q004",
+    "scenario_id": "SYNTH-003",
+    "category": "case_qa",
+    "prompt": "Was CO-014 signed by both sides?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q004"
+  },
+  {
+    "task_id": "SYNTH-003-Q005",
+    "scenario_id": "SYNTH-003",
+    "category": "timeline",
+    "prompt": "When was CO-014 signed?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q005"
+  },
+  {
+    "task_id": "SYNTH-003-Q006",
+    "scenario_id": "SYNTH-003",
+    "category": "false_contradiction",
+    "prompt": "Does the project manager email conflict with the schedule about the completion date?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q006"
+  },
+  {
+    "task_id": "SYNTH-003-Q007",
+    "scenario_id": "SYNTH-003",
+    "category": "insufficient",
+    "prompt": "What was the weather on August 7, 2026?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q007"
+  },
+  {
+    "task_id": "SYNTH-003-Q008",
+    "scenario_id": "SYNTH-003",
+    "category": "case_qa",
+    "prompt": "Did generator enclosure work occur on August 7?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q008"
+  },
+  {
+    "task_id": "SYNTH-003-Q009",
+    "scenario_id": "SYNTH-003",
+    "category": "contract_compare",
+    "prompt": "What did CO-014 change in price and time?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q009"
+  },
+  {
+    "task_id": "SYNTH-003-Q010",
+    "scenario_id": "SYNTH-003",
+    "category": "numeric",
+    "prompt": "What net payment was requested on Progress Application 08?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q010"
+  }
+]

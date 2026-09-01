@@ -1,0 +1,36 @@
+{
+  "label": "R1",
+  "title": "Research reliability against unchanged production",
+  "liveRunDir": "benchmarks/nyaya-bench/reports/runs/2026-08-19T16-09-49-522Z",
+  "officialGradeDir": "benchmarks/nyaya-bench/reports/runs/regrade-A1-2026-08-19T16-14-43-552Z",
+  "executionMode": "research",
+  "benchmarkKind": "NYAYA_RESEARCH",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "productionUnchanged": true,
+  "graderVersion": "r1-2026-08-19",
+  "promptVersion": "research-synthesis-v2",
+  "memoPromptVersion": "research-memo-v1",
+  "counts": {
+    "pass": 15,
+    "needs_work": 3,
+    "fail": 0,
+    "infrastructure": 0,
+    "criticalFails": 0
+  },
+  "needsWorkTasks": [
+    "SYNTH-V2-001-R002",
+    "SYNTH-V2-001-R003",
+    "SYNTH-V2-001-R004"
+  ],
+  "graderDefectNote": "Original live R015 fail was class L: decoy citation in retrieval hits, not in validated propositions. Regrade is official R1.",
+  "metrics": {
+    "retrievalRecall": "needs_work on R003/R004 needle completeness in synthesis; retrieval itself ranked SJC § 100 first on R003",
+    "exactCitationAccuracy": "R001 pass",
+    "jurisdictionAccuracy": "R005 pass",
+    "treatmentClaimAccuracy": "R009 pass",
+    "corpusSilenceAccuracy": "R011 R012 R017 pass",
+    "proposedContextLeakage": 0,
+    "memoGroundingAccuracy": "R016 pass"
+  }
+}

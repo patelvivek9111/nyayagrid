@@ -1,0 +1,38 @@
+{
+  "scenario_id": "SYNTH-V2-006",
+  "comment": "Draft overlay hidden GT for actor/silence/dispute. Loaded after persist.",
+  "ground_truth": [
+    {
+      "task_id": "SYNTH-V2-006-D006",
+      "expectation_type": "draft",
+      "canonical_answer": ["name actors only as sourced"],
+      "supporting_documents": ["05_Deposition_Mercer.pdf"],
+      "notes": "{\"profile\":\"actor\",\"forbiddenResolvedAsFactPhrases\":[\"mercer entered\",\"witness entered the server\"]}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-006-D007",
+      "expectation_type": "draft",
+      "canonical_answer": ["badge activity is not named physical entry"],
+      "supporting_documents": ["06_Access_Log.pdf"],
+      "notes": "{\"profile\":\"actor_entry\",\"forbiddenResolvedAsFactPhrases\":[\"mercer entered\",\"entered the server room\",\"went into the room\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-006-D010",
+      "expectation_type": "draft",
+      "canonical_answer": ["invoice silence is not a universal negative"],
+      "supporting_documents": ["07_Invoice_and_Remittance.pdf"],
+      "notes": "{\"profile\":\"silence\",\"forbiddenResolvedAsFactPhrases\":[\"never issued\",\"no service credit was ever\",\"never paid\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-006-D012",
+      "expectation_type": "draft",
+      "canonical_answer": ["preserve tension, no proven contradiction or physical entry"],
+      "supporting_documents": ["06_Access_Log.pdf", "05_Deposition_Mercer.pdf"],
+      "notes": "{\"profile\":\"dispute\",\"forbiddenResolvedAsFactPhrases\":[\"proven contradiction\",\"mercer entered\",\"established that both cannot\"]}",
+      "failure_severity_if_wrong": "critical"
+    }
+  ]
+}

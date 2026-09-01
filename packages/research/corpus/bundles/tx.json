@@ -1,0 +1,63 @@
+[
+  {
+    "title": "Tex. Bus. & Com. Code § 2.725 — Statute of Limitations in Contracts for Sale",
+    "shortTitle": "Tex. UCC § 2.725",
+    "authorityType": "statute",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "Tex. Bus. & Com. Code § 2.725",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tx-ucc-2-725",
+    "canonicalSourceUrl": "https://statutes.capitol.texas.gov/Docs/BC/htm/BC.2.htm#2.725",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["contract", "commercial", "civil"],
+    "content": "Tex. Bus. & Com. Code § 2.725\n\nSec. 2.725. STATUTE OF LIMITATIONS IN CONTRACTS FOR SALE. (a) An action for breach of any contract for sale must be commenced within four years after the cause of action has accrued. By the original agreement the parties may reduce the period of limitation to not less than one year but may not extend it.\n\n(b) A cause of action accrues when the breach occurs, regardless of the aggrieved party's lack of knowledge of the breach.",
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "ucc_article_2_limitations" }
+  },
+  {
+    "title": "Tex. Lab. Code § 62.051 — Minimum Wage",
+    "shortTitle": "Tex. Lab. Code § 62.051",
+    "authorityType": "statute",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "Tex. Lab. Code § 62.051",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tx-labor-62-051",
+    "canonicalSourceUrl": "https://statutes.capitol.texas.gov/Docs/LA/htm/LA.62.htm#62.051",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["employment"],
+    "content": "Tex. Lab. Code § 62.051\n\nSec. 62.051. MINIMUM WAGE. (a) An employer shall pay an employee who is not exempt under Section 62.052 a wage of not less than the federal minimum wage under Section 6, Fair Labor Standards Act of 1938 (29 U.S.C. Section 206).",
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "minimum_wage" }
+  },
+  {
+    "title": "Robinson v. Kroger Co., 268 S.W.3d 594 (Tex. 2008)",
+    "shortTitle": "Robinson v. Kroger",
+    "authorityType": "case",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "court": "Supreme Court of Texas",
+    "courtId": "st-tx-high",
+    "courtLevel": "state_high",
+    "citation": "268 S.W.3d 594",
+    "decisionDate": "2008-06-20",
+    "publicationStatus": "published",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tx-robinson-v-kroger-268-sw3d-594",
+    "canonicalSourceUrl": "https://www.courtlistener.com/opinion/1576905/robinson-v-kroger-co/",
+    "bundleSourceClass": "PRIMARY_PUBLIC_REPOSITORY",
+    "bundleQualityTier": "TIER_2_TRUSTED_PUBLIC",
+    "bundlePracticeAreas": ["civil"],
+    "content": "Robinson v. Kroger Co., 268 S.W.3d 594 (Tex. 2008).\n\nThe Supreme Court of Texas addressed premises liability for open and obvious hazards. The court held that when a dangerous condition is open and obvious, the property owner generally owes no duty to warn or protect against that condition unless the owner should anticipate that customers will nevertheless be distracted and fail to protect themselves.",
+    "opinionParts": [
+      {
+        "part": "majority",
+        "content": "When a dangerous condition is open and obvious, the property owner generally owes no duty to warn or protect against that condition unless the owner should anticipate that customers will nevertheless be distracted and fail to protect themselves."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "public_repository_snapshot",
+      "repository": "courtlistener",
+      "excerptNote": "Excerpt summarizing holding; full opinion at canonical URL."
+    }
+  }
+]

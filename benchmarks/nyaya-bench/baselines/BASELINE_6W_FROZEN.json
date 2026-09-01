@@ -1,0 +1,180 @@
+{
+  "id": "BASELINE_6W_FROZEN",
+  "generatedAt": "2026-08-27T06:23:48.903Z",
+  "policy": "sequential, per-suite timeout, lock file, no historical baseline overwrite",
+  "unitOnly": false,
+  "results": [
+    {
+      "id": "unit-openai-retry",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 1937,
+      "log": ".\\tmp\\6w-frozen\\unit-openai-retry.log"
+    },
+    {
+      "id": "unit-feature-flags",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 1656,
+      "log": ".\\tmp\\6w-frozen\\unit-feature-flags.log"
+    },
+    {
+      "id": "unit-http-errors",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 2077,
+      "log": ".\\tmp\\6w-frozen\\unit-http-errors.log"
+    },
+    {
+      "id": "unit-analysis-trust",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 2051,
+      "log": ".\\tmp\\6w-frozen\\unit-analysis-trust.log"
+    },
+    {
+      "id": "unit-draft-source-limitation",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 2517,
+      "log": ".\\tmp\\6w-frozen\\unit-draft-source-limitation.log"
+    },
+    {
+      "id": "j1",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 10671,
+      "log": ".\\tmp\\6w-frozen\\j1.log"
+    },
+    {
+      "id": "isolation-rbac",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 7162,
+      "log": ".\\tmp\\6w-frozen\\isolation-rbac.log"
+    },
+    {
+      "id": "compare-b2",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 73486,
+      "log": ".\\tmp\\6w-frozen\\compare-b2.log"
+    },
+    {
+      "id": "contradiction-b2",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 213615,
+      "log": ".\\tmp\\6w-frozen\\contradiction-b2.log"
+    },
+    {
+      "id": "timeline-t2",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 860753,
+      "log": ".\\tmp\\6w-frozen\\timeline-t2.log"
+    },
+    {
+      "id": "memory-m2",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 24650,
+      "log": ".\\tmp\\6w-frozen\\memory-m2.log"
+    },
+    {
+      "id": "analysis-trust-live",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 100081,
+      "log": ".\\tmp\\6w-frozen\\analysis-trust-live.log"
+    },
+    {
+      "id": "deposition-da1",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 99119,
+      "log": ".\\tmp\\6w-frozen\\deposition-da1.log"
+    },
+    {
+      "id": "contract-ca1",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 187644,
+      "log": ".\\tmp\\6w-frozen\\contract-ca1.log"
+    },
+    {
+      "id": "evidence-em2",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 162612,
+      "log": ".\\tmp\\6w-frozen\\evidence-em2.log"
+    },
+    {
+      "id": "graph-g2",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 307723,
+      "log": ".\\tmp\\6w-frozen\\graph-g2.log"
+    },
+    {
+      "id": "research-r1",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 188320,
+      "log": ".\\tmp\\6w-frozen\\research-r1.log"
+    },
+    {
+      "id": "draft-source-limitation-live",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 288927,
+      "log": ".\\tmp\\6w-frozen\\draft-source-limitation-live.log"
+    },
+    {
+      "id": "full-system-6r",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 1131711,
+      "log": ".\\tmp\\6w-frozen\\full-system-6r.log"
+    },
+    {
+      "id": "c2a-critical",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 287430,
+      "log": ".\\tmp\\6w-frozen\\c2a-critical.log"
+    },
+    {
+      "id": "6u-r1",
+      "critical": true,
+      "status": "PASS",
+      "exitCode": 0,
+      "elapsedMs": 101287,
+      "log": ".\\tmp\\6w-frozen\\6u-r1.log"
+    }
+  ],
+  "pass": 21,
+  "fail": 0,
+  "timeout": 0,
+  "criticalFailures": []
+}

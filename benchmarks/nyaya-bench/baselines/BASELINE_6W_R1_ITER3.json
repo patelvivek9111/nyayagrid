@@ -1,0 +1,11 @@
+{
+  "id": "BASELINE_6W_R1_ITER3",
+  "generatedAt": "2026-08-27T11:03:00.000Z",
+  "iteration": 3,
+  "productionChange": "refineDepositionFindingClass: credential/system activity versus physical testimony cannot persist as inconsistency/contradiction; demote to tension using the same relation as the contradiction engine. Imprecise-date restatements labeled inconsistency demote to testimony_statement.",
+  "fixtureSpecific": false,
+  "originalTaskIdsInProduction": false,
+  "reason": "Frozen DA1 reported 3 criticalFails (DA003/DA004/DA006) after the 6W-R1 Research remediations. 6W had 1 non-critical DA004 miss. This run invented a sworn-testimony contradiction from testimony versus access-log/badge activity.",
+  "narrowTests": "packages/ai contradiction-semantics.test.ts + professional.test.ts",
+  "nextGate": "deposition DA1 alone; full frozen harness only if DA1 criticalFails=0"
+}

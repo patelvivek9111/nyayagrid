@@ -1,0 +1,96 @@
+{
+  "scenario_id": "SYNTH-004",
+  "title": "Aster Labs Employment Separation",
+  "ground_truth_version": "1.0",
+  "answers": {
+    "Q001": {
+      "task_id": "SYNTH-004-Q001",
+      "expected": "$195,000",
+      "supporting_refs": [
+        "addendum:Salary",
+        "hr_email:Message"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q002": {
+      "task_id": "SYNTH-004-Q002",
+      "expected": "20%",
+      "supporting_refs": [
+        "addendum:Bonus",
+        "hr_email:Message"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q003": {
+      "task_id": "SYNTH-004-Q003",
+      "expected": "Salary $180k->$195k; target bonus 15%->20%",
+      "supporting_refs": [
+        "agreement:2",
+        "agreement:3",
+        "addendum:Salary",
+        "addendum:Bonus"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q004": {
+      "task_id": "SYNTH-004-Q004",
+      "expected": "45 days",
+      "supporting_refs": [
+        "agreement:4"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q005": {
+      "task_id": "SYNTH-004-Q005",
+      "expected": "August 29, 2026",
+      "supporting_refs": [
+        "termination:Notice"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q006": {
+      "task_id": "SYNTH-004-Q006",
+      "expected": "ABSTAIN: accrued PTO balance not supplied",
+      "supporting_refs": [
+        "policy:PTO"
+      ],
+      "verdict_logic": "must_abstain"
+    },
+    "Q007": {
+      "task_id": "SYNTH-004-Q007",
+      "expected": "No",
+      "supporting_refs": [
+        "addendum:Salary",
+        "addendum:Bonus",
+        "hr_email:Message"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q008": {
+      "task_id": "SYNTH-004-Q008",
+      "expected": "No; email says it does not change approval conditions",
+      "supporting_refs": [
+        "agreement:3",
+        "hr_email:Message"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q009": {
+      "task_id": "SYNTH-004-Q009",
+      "expected": "$39,000 mathematical target amount, not necessarily owed",
+      "supporting_refs": [
+        "addendum:Salary",
+        "addendum:Bonus"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q010": {
+      "task_id": "SYNTH-004-Q010",
+      "expected": "Yes",
+      "supporting_refs": [
+        "agreement:5"
+      ],
+      "verdict_logic": "must_answer"
+    }
+  }
+}

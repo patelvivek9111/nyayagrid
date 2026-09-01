@@ -5,6 +5,7 @@ import { createEmbeddingProviderFromEnv } from "@nyayagrid/ai";
 import type { EmbeddingProvider } from "@nyayagrid/ai";
 import { PostgresHybridRetriever } from "@nyayagrid/search";
 import { AuthorityHybridRetriever, runResearchQuery } from "@nyayagrid/research";
+import { preferredSearchHints } from "@nyayagrid/jurisdiction";
 import {
   analyzeContract,
   analyzeDeposition,
@@ -151,13 +152,18 @@ export const searchLegalAuthoritiesTool = defineTool({
   }),
   async execute(ctx, input) {
     const retriever = new AuthorityHybridRetriever(ctx.db, resolveEmbeddings(ctx));
+    const hints = preferredSearchHints(ctx.caseJurisdictionContext ?? null);
     const hits = await retriever.search(
       input.query,
       {
         ...(input.jurisdiction ? { jurisdiction: input.jurisdiction } : {}),
         ...(input.authorityType ? { authorityType: input.authorityType } : {}),
       },
-      { limit: clampLimit(input.limit) },
+      {
+        limit: clampLimit(input.limit),
+        preferredStateCodes: hints.preferredStateCodes,
+        preferredCircuitIds: hints.preferredCircuitIds,
+      },
     );
     return toolOk({
       summary: `Found ${hits.length} authority passage(s) in the corpus.`,

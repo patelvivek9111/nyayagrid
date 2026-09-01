@@ -24,8 +24,13 @@ import {
   type EmbeddingProvider,
   type ResearchAuthorityChunk,
   type ResearchSynthesis,
+  type RoutingMode,
 } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
+import {
+  loadMatterJurisdictionForResearch,
+  labelResearchHits,
+} from "./jurisdiction-layer";
 import {
   formatActiveMemoryForPrompt,
   formatVerifiedIntelligenceForPrompt,
@@ -42,8 +47,9 @@ import { AuthorityHybridRetriever } from "./search";
 import type { AuthoritySearchOptions } from "./search";
 import { loadAuthorizedAuthorityChunks, type AuthorityChunkProvenance } from "./context";
 import { validateQuoteAgainstText } from "./quotes";
-import { TREATMENT_UNVERIFIED_NOTICE } from "./treatment";
+import { TREATMENT_UNVERIFIED_NOTICE, rewriteUnsourcedEditorialTreatment } from "./treatment";
 import { ensureResearchSession, type ResearchSession } from "./sessions";
+import { rewriteUnsupportedControllingClaims } from "./weight";
 
 export const LIMITED_CORPUS_WARNING =
   "Search covered only the authorities imported into this NyayaGrid corpus; it is not a comprehensive survey of the law of any jurisdiction.";
@@ -68,6 +74,9 @@ export type ResearchQueryOrigin = "primary" | "concept" | "contrary";
 export type ResearchHit = AuthoritySearchHit & {
   /** Which retrieval pass surfaced this passage. */
   queryOrigin: ResearchQueryOrigin;
+  hierarchyRelationship?: string;
+  hierarchyReason?: string;
+  temporalApplicability?: "applicable" | "inapplicable" | "unknown";
 };
 
 /** Anything that can retrieve authority passages: the hybrid retriever or a provider adapter. */
@@ -136,6 +145,9 @@ export type SynthesisValidation = {
   grounded: boolean;
   droppedPropositions: DroppedProposition[];
   droppedSources: Array<{ authorityId: string; chunkId: string | null; reason: string }>;
+  /** Unsupported ids that were stripped and never published. */
+  droppedUnsupportedAuthorityIds: string[];
+  /** Ids that remain in the published synthesis and were not retrieved. Must be empty after validation. */
   fabricatedAuthorityIds: string[];
   unknownChunkIds: string[];
   rejectedQuotes: RejectedQuote[];
@@ -154,6 +166,71 @@ function emptySynthesis(answer: string, warnings: string[]): ResearchSynthesis {
     coverageWarnings: warnings,
     sources: [],
   };
+}
+
+function retrievedTextSupportsAnswer(answer: string, index: AuthorityRetrievalIndex): boolean {
+  const hay = answer.toLowerCase().replace(/\s+/g, " ").trim();
+  if (hay.length < 12) return false;
+  for (const text of index.textByChunkId.values()) {
+    const compact = text.toLowerCase().replace(/\s+/g, " ").trim();
+    if (compact.length < 12) continue;
+    const window = Math.min(40, compact.length);
+    for (let i = 0; i + 12 <= compact.length; i += 8) {
+      const span = compact.slice(i, i + window).trim();
+      if (span.length >= 12 && hay.includes(span.slice(0, Math.min(span.length, 32)))) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+const UUID_GLOBAL_RE = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/gi;
+
+function collectPublishedAuthorityIds(synthesis: ResearchSynthesis): Set<string> {
+  const ids = new Set<string>();
+  for (const proposition of synthesis.legalPropositions) {
+    for (const id of proposition.authorityIds) ids.add(id);
+  }
+  for (const source of synthesis.sources) ids.add(source.authorityId);
+  for (const id of synthesis.supportingAuthorities) ids.add(id);
+  for (const id of synthesis.contraryAuthorities) ids.add(id);
+  return ids;
+}
+
+function stripDisallowedUuids(text: string, allowed: Set<string>): string {
+  return text.replace(UUID_GLOBAL_RE, (id) => (allowed.has(id) ? id : "")).replace(/\s{2,}/g, " ").trim();
+}
+
+function coerceResearchSynthesisRaw(raw: unknown): unknown {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return raw;
+  const rec = { ...(raw as Record<string, unknown>) };
+  const cleanIds = (value: unknown): string[] =>
+    Array.isArray(value) ? value.filter((id): id is string => typeof id === "string" && UUID_RE.test(id)) : [];
+  if (Array.isArray(rec.legalPropositions)) {
+    rec.legalPropositions = rec.legalPropositions
+      .map((row) => {
+        if (!row || typeof row !== "object") return null;
+        const item = row as Record<string, unknown>;
+        const authorityIds = cleanIds(item.authorityIds);
+        if (typeof item.text !== "string" || authorityIds.length === 0) return null;
+        return { ...item, authorityIds, chunkIds: cleanIds(item.chunkIds) };
+      })
+      .filter(Boolean);
+  }
+  if (Array.isArray(rec.sources)) {
+    rec.sources = rec.sources.filter((row) => {
+      if (!row || typeof row !== "object") return false;
+      return UUID_RE.test(String((row as { authorityId?: unknown }).authorityId ?? ""));
+    });
+  }
+  rec.supportingAuthorities = cleanIds(rec.supportingAuthorities);
+  rec.contraryAuthorities = cleanIds(rec.contraryAuthorities);
+  if (typeof rec.conciseAnswer !== "string" || !rec.conciseAnswer.trim()) {
+    rec.conciseAnswer = " ";
+  }
+  return rec;
 }
 
 /** Filter model-supplied authority ids down to the ones that were actually retrieved. */
@@ -184,7 +261,7 @@ export function validateSynthesisAgainstRetrieval(
   raw: unknown,
   index: AuthorityRetrievalIndex,
 ): SynthesisValidation {
-  const parsed = researchSynthesisSchema.safeParse(raw);
+  const parsed = researchSynthesisSchema.safeParse(coerceResearchSynthesisRaw(raw));
   if (!parsed.success) {
     return {
       synthesis: emptySynthesis(UNSUPPORTED_SYNTHESIS_ANSWER, [
@@ -193,6 +270,7 @@ export function validateSynthesisAgainstRetrieval(
       grounded: false,
       droppedPropositions: [],
       droppedSources: [],
+      droppedUnsupportedAuthorityIds: [],
       fabricatedAuthorityIds: [],
       unknownChunkIds: [],
       rejectedQuotes: [],
@@ -310,24 +388,40 @@ export function validateSynthesisAgainstRetrieval(
   const conciseAnswer =
     index.authorityIds.size === 0
       ? NO_CORPUS_SYNTHESIS_ANSWER
-      : grounded
-        ? synthesis.conciseAnswer
+      : grounded || retrievedTextSupportsAnswer(synthesis.conciseAnswer, index)
+        ? stripDisallowedUuids(synthesis.conciseAnswer, index.authorityIds)
         : UNSUPPORTED_SYNTHESIS_ANSWER;
+  if (
+    index.authorityIds.size > 0 &&
+    !grounded &&
+    conciseAnswer !== UNSUPPORTED_SYNTHESIS_ANSWER &&
+    conciseAnswer.length > 0
+  ) {
+    coverageWarnings.push(
+      "Structured citations did not survive validation; the prose answer was retained only where it matches retrieved passage text.",
+    );
+  }
+
+  const published = {
+    ...synthesis,
+    conciseAnswer,
+    legalPropositions,
+    sources,
+    supportingAuthorities: supporting.known,
+    contraryAuthorities: contrary.known,
+    coverageWarnings,
+  };
+  const remainingUnsourced = [...collectPublishedAuthorityIds(published)].filter(
+    (id) => !index.authorityIds.has(id),
+  );
 
   return {
-    synthesis: {
-      ...synthesis,
-      conciseAnswer,
-      legalPropositions,
-      sources,
-      supportingAuthorities: supporting.known,
-      contraryAuthorities: contrary.known,
-      coverageWarnings,
-    },
+    synthesis: published,
     grounded,
     droppedPropositions,
     droppedSources,
-    fabricatedAuthorityIds: [...fabricatedAuthorityIds],
+    droppedUnsupportedAuthorityIds: [...fabricatedAuthorityIds],
+    fabricatedAuthorityIds: remainingUnsourced,
     unknownChunkIds: [...unknownChunkIds],
     rejectedQuotes,
     schemaValid: true,
@@ -346,6 +440,7 @@ export function buildCoverageWarnings(input: {
   jurisdictionFilters?: string[];
   treatmentVerified?: boolean;
   extra?: string[];
+  jurisdictionKnown?: boolean;
 }): string[] {
   const warnings: string[] = [LIMITED_CORPUS_WARNING];
 
@@ -362,7 +457,9 @@ export function buildCoverageWarnings(input: {
   }
 
   const hasJurisdiction =
-    Boolean(input.jurisdictionFilter?.trim()) || (input.jurisdictionFilters?.length ?? 0) > 0;
+    input.jurisdictionKnown === true ||
+    Boolean(input.jurisdictionFilter?.trim()) ||
+    (input.jurisdictionFilters?.length ?? 0) > 0;
   if (!hasJurisdiction) {
     warnings.push(JURISDICTION_UNSPECIFIED_WARNING);
   }
@@ -386,6 +483,31 @@ function parseJson(text: string): unknown {
   }
 }
 
+function applyWeightGuard(
+  synthesis: ResearchSynthesis,
+  hits: ResearchHit[],
+  queryJurisdiction: string | null | undefined,
+  forumLabels: string[],
+): ResearchSynthesis {
+  const guard = (text: string) =>
+    rewriteUnsourcedEditorialTreatment(
+      rewriteUnsupportedControllingClaims({
+        text,
+        hits,
+        queryJurisdiction,
+        forumLabels,
+      }),
+    );
+  return {
+    ...synthesis,
+    conciseAnswer: guard(synthesis.conciseAnswer),
+    legalPropositions: synthesis.legalPropositions.map((row) => ({
+      ...row,
+      text: guard(row.text),
+    })),
+  };
+}
+
 function toResearchAuthorityChunks(
   hits: ResearchHit[],
   chunkTexts: Map<string, AuthorityChunkProvenance>,
@@ -397,6 +519,9 @@ function toResearchAuthorityChunks(
     court: hit.court,
     date: hit.decisionDate,
     content: chunkTexts.get(hit.chunkId)?.content ?? hit.snippet,
+    hierarchyRelationship: hit.hierarchyRelationship ?? "unknown",
+    jurisdiction: hit.jurisdiction,
+    temporalApplicability: hit.temporalApplicability ?? "unknown",
   }));
 }
 
@@ -444,6 +569,7 @@ export async function retrieveResearchAuthorities(params: {
   queries: ResearchRetrievalQuery[];
   filters?: AuthoritySearchFilters;
   limit?: number;
+  searchOptions?: AuthoritySearchOptions;
 }): Promise<ResearchHit[]> {
   const limit = params.limit ?? DEFAULT_HIT_LIMIT;
   const merged = new Map<string, ResearchHit>();
@@ -451,6 +577,7 @@ export async function retrieveResearchAuthorities(params: {
     const text = query.text.trim();
     if (!text) continue;
     const hits = await params.search.search(text, params.filters ?? {}, {
+      ...(params.searchOptions ?? {}),
       limit: query.limit ?? limit,
     });
     mergeHits(merged, hits, query.origin);
@@ -541,6 +668,7 @@ export async function extractSearchConcepts(params: {
   const generation = await params.ai.generate({
     temperature: 0,
     schemaName: "legal_issue_extraction",
+    routing: { subsystem: "research", strategy: "fast" },
     messages: [
       { role: "system", content: buildLegalIssueExtractionSystemPrompt() },
       { role: "user", content: userPrompt },
@@ -577,6 +705,7 @@ export async function generateContraryQueries(params: {
   const generation = await params.ai.generate({
     temperature: 0,
     schemaName: "contrary_authority_search",
+    routing: { subsystem: "research", strategy: "fast" },
     messages: [
       { role: "system", content: buildContraryAuthoritySearchSystemPrompt() },
       {
@@ -612,6 +741,8 @@ export type RunResearchQueryParams = {
   retriever?: AuthorityRetrieverLike;
   /** Alternative to retriever: any LegalAuthorityProvider (e.g. LocalImportedAuthorityProvider). */
   provider?: LegalAuthorityProvider;
+  executionStrategy?: RoutingMode;
+  modelId?: string;
 };
 
 export type RunResearchQueryResult = {
@@ -675,6 +806,14 @@ export async function runResearchQuery(
   let matterContextText: string | null = null;
   let concepts: string[] = [];
 
+  const jurisdictionLayer = await loadMatterJurisdictionForResearch({
+    db: params.db,
+    organizationId: params.organizationId,
+    matterId,
+    question,
+  });
+  extraWarnings.push(...jurisdictionLayer.warnings);
+
   if (matterId && params.includeMatterContext !== false) {
     const matterContext = await loadResearchMatterContext({
       db: params.db,
@@ -707,6 +846,7 @@ export async function runResearchQuery(
     search,
     filters,
     limit,
+    searchOptions: jurisdictionLayer.searchOptions,
     queries: [
       { text: question, origin: "primary" },
       ...concepts.map((concept) => ({
@@ -731,6 +871,7 @@ export async function runResearchQuery(
         search,
         filters,
         limit,
+        searchOptions: jurisdictionLayer.searchOptions,
         queries: contraryQueries.slice(0, MAX_CONTRARY_QUERIES).map((text) => ({
           text,
           origin: "contrary" as const,
@@ -748,7 +889,10 @@ export async function runResearchQuery(
     if (existing && existing.score >= hit.score) continue;
     combined.set(hit.chunkId, existing ? { ...hit, queryOrigin: existing.queryOrigin } : hit);
   }
-  const hits = [...combined.values()].sort((a, b) => b.score - a.score).slice(0, limit);
+  const hits = labelResearchHits(
+    jurisdictionLayer.context,
+    [...combined.values()],
+  ).slice(0, limit);
 
   const chunkTexts = await loadAuthorizedAuthorityChunks({
     db: params.db,
@@ -759,13 +903,27 @@ export async function runResearchQuery(
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "research_synthesis",
+    routing: {
+      subsystem: "research",
+      strategy: params.executionStrategy ?? "auto",
+      modelId: params.modelId,
+      organizationId: params.organizationId,
+      matterId: params.matterId ?? undefined,
+      userId: params.userId,
+      promptVersion: RESEARCH_SYNTHESIS_PROMPT_VERSION,
+      retrievalIds: hits.map((hit) => hit.chunkId),
+      authorityIds: hits.map((hit) => hit.authorityId),
+      jurisdictionSummary: jurisdictionLayer.context?.summary,
+    },
     messages: [
       { role: "system", content: buildResearchSynthesisSystemPrompt() },
       {
         role: "user",
         content: buildResearchSynthesisUserPrompt({
           question,
-          jurisdiction: filters.jurisdiction ?? null,
+          jurisdiction:
+            jurisdictionLayer.context?.summary ?? filters.jurisdiction ?? null,
+          jurisdictionContext: jurisdictionLayer.context?.promptBlock ?? null,
           authorityChunks: toResearchAuthorityChunks(hits, chunkTexts),
           matterContextSummary: matterContextText,
         }),
@@ -773,13 +931,33 @@ export async function runResearchQuery(
     ],
   });
 
-  const validated = validateSynthesisAgainstRetrieval(parseJson(generation.text), index);
+  const validatedRaw = validateSynthesisAgainstRetrieval(parseJson(generation.text), index);
+  const forumLabels = [
+    filters.jurisdiction,
+    jurisdictionLayer.context?.primaryState,
+    jurisdictionLayer.context?.governingLawState,
+    jurisdictionLayer.context?.summary,
+    ...(jurisdictionLayer.context?.relatedJurisdictions ?? []).map((row) => row.stateCode),
+  ].filter((value): value is string => Boolean(value));
+  const validated = {
+    ...validatedRaw,
+    synthesis: applyWeightGuard(
+      validatedRaw.synthesis,
+      hits,
+      filters.jurisdiction ?? jurisdictionLayer.context?.summary ?? null,
+      forumLabels,
+    ),
+  };
   const coverageWarnings = buildCoverageWarnings({
     hitCount: hits.length,
     authorityCount: index.authorityIds.size,
     contrarySearchPerformed,
     jurisdictionFilter: filters.jurisdiction ?? null,
     jurisdictionFilters: session.jurisdictionFilters ?? [],
+    jurisdictionKnown: Boolean(
+      jurisdictionLayer.context &&
+        jurisdictionLayer.context.jurisdictionMode !== "unknown",
+    ),
     extra: [...validated.synthesis.coverageWarnings, ...extraWarnings],
   });
 
@@ -1038,6 +1216,7 @@ export async function summarizeAuthority(params: {
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "authority_summary",
+    routing: { subsystem: "research", strategy: "standard" },
     messages: [
       { role: "system", content: buildAuthoritySummarySystemPrompt() },
       {

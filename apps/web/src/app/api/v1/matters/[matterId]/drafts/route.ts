@@ -48,6 +48,8 @@ export async function POST(request: Request, { params }: Params) {
         instructions: body.instructions,
         documentIds: body.documentIds,
         ai: process.env.AI_PROVIDER === "openai" ? undefined : new MockAIProvider(),
+        executionStrategy: body.executionStrategy,
+        modelId: body.modelId,
       });
       return jsonOk(result, { status: 201 });
     }

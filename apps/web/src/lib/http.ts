@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { AuthorizationError } from "@nyayagrid/permissions";
-import { InviteError, UnauthenticatedError } from "@nyayagrid/auth";
+import { InviteError, UnauthenticatedError, userFacingInviteMessage, USER_FACING_AUTH } from "@nyayagrid/auth";
 import { StudentAccessError, GuideAuthorizationError } from "@nyayagrid/workspaces";
 import { DocumentDownloadError } from "@nyayagrid/documents";
 import {
@@ -12,12 +12,20 @@ import {
 import { ZodError } from "zod";
 import { InviteRoleNotFoundError } from "./invites";
 import { FeatureDisabledError } from "./features";
+import { InvalidJurisdictionError } from "@nyayagrid/jurisdiction";
+import { RouterUnavailableError, ROUTER_UNAVAILABLE_USER_MESSAGE } from "@nyayagrid/ai";
+import { createLogger } from "@nyayagrid/observability";
+
+const logger = createLogger("web.http");
+const PUBLIC_INTERNAL_ERROR = "An unexpected error occurred";
 
 const INVITE_ERROR_STATUS: Record<string, number> = {
   NOT_FOUND: 404,
   REVOKED: 409,
   EXPIRED: 409,
   ALREADY_ACCEPTED: 409,
+  EMAIL_MISMATCH: 403,
+  ROLE_NOT_INVITEABLE: 400,
   INTERNAL: 500,
 };
 
@@ -40,10 +48,10 @@ export function jsonError(code: string, message: string, status: number, details
 
 export function handleRouteError(error: unknown) {
   if (error instanceof UnauthenticatedError) {
-    return jsonError(error.code, error.message, 401);
+    return jsonError(error.code, USER_FACING_AUTH.unauthenticated, 401);
   }
   if (error instanceof AuthorizationError) {
-    return jsonError(error.code, error.message, 403);
+    return jsonError(error.code, USER_FACING_AUTH.forbidden, 403);
   }
   if (error instanceof StudentAccessError || error instanceof GuideAuthorizationError) {
     return jsonError(error.code, error.message, 404);
@@ -55,7 +63,11 @@ export function handleRouteError(error: unknown) {
     return jsonError(error.code, error.message, 400);
   }
   if (error instanceof InviteError) {
-    return jsonError(error.code, error.message, INVITE_ERROR_STATUS[error.code] ?? 400);
+    return jsonError(
+      error.code,
+      userFacingInviteMessage(error.code),
+      INVITE_ERROR_STATUS[error.code] ?? 400,
+    );
   }
   if (error instanceof RateLimitExceededError) {
     return NextResponse.json(
@@ -78,11 +90,17 @@ export function handleRouteError(error: unknown) {
   if (error instanceof LifecycleValidationError) {
     return jsonError(error.code, error.message, 400);
   }
+  if (error instanceof InvalidJurisdictionError) {
+    return jsonError(error.code, error.message, 400);
+  }
+  if (error instanceof RouterUnavailableError) {
+    return jsonError(error.code, ROUTER_UNAVAILABLE_USER_MESSAGE, 503);
+  }
   if (error instanceof ZodError) {
     return jsonError("VALIDATION_ERROR", "Invalid request", 400, error.flatten());
   }
-  if (error instanceof Error) {
-    return jsonError("INTERNAL_ERROR", error.message, 500);
-  }
-  return jsonError("INTERNAL_ERROR", "Unknown error", 500);
+  logger.error("Unhandled route error", {
+    name: error instanceof Error ? error.name : "unknown",
+  });
+  return jsonError("INTERNAL_ERROR", PUBLIC_INTERNAL_ERROR, 500);
 }

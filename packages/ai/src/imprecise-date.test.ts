@@ -34,6 +34,21 @@ describe("imprecise-date contradiction reject", () => {
     expect(isImpreciseDateRestatement(DEPO, ABOUT)).toBe(true);
   });
 
+  it("treats near the middle of November as compatible with an ISO date in that month", () => {
+    expect(
+      isImpreciseDateRestatement(
+        "The discussion was near the middle of November.",
+        "The meeting occurred on 2026-11-10.",
+      ),
+    ).toBe(true);
+    expect(
+      isImpreciseDateRestatement(
+        "Near the middle of November, at the review meeting.",
+        "Minutes dated 2026-11-05.",
+      ),
+    ).toBe(true);
+  });
+
   it("keeps February 28 vs March 3 as a real date conflict", () => {
     expect(isImpreciseDateRestatement(DEPO, MARCH)).toBe(false);
   });

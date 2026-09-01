@@ -1,0 +1,190 @@
+{
+  "baselineId": "BASELINE_A3_STRUCTURED_EVIDENCE_CASE_QA",
+  "benchmarkKind": "NYAYA_CASE_QA",
+  "graderVersion": "a1-2026-08-18",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "notLegalCorrectnessProof": true,
+  "promptVersion": "nyaya-matter-qa-v10",
+  "measures": [
+    "pdf_ingestion",
+    "chunking",
+    "embeddings",
+    "retrieval",
+    "askNyayaAboutMatter",
+    "answer_grounding",
+    "case_qa_citations",
+    "evidence_bound_reasoning",
+    "false_premise_resistance",
+    "structured_evidence_assessment"
+  ],
+  "doesNotMeasure": [
+    "agents",
+    "timeline_subsystem",
+    "memory_subsystem",
+    "graph_subsystem",
+    "research_subsystem",
+    "draft_subsystem",
+    "contract_compare_workflow",
+    "contradiction_engine"
+  ],
+  "comparedTo": "BASELINE_A2_EVIDENCE_BOUND_CASE_QA",
+  "runs": {
+    "v1": "benchmarks/nyaya-bench/reports/runs/2026-08-18T17-18-03-355Z",
+    "v2": "benchmarks/nyaya-bench/reports/runs/2026-08-18T17-59-29-753Z",
+    "targetedGate": "benchmarks/nyaya-bench/reports/runs/2026-08-18T17-10-35-431Z",
+    "discardedRateLimitedV2": "benchmarks/nyaya-bench/reports/runs/2026-08-18T17-36-27-621Z"
+  },
+  "config": {
+    "gitCommit": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "workingTree": "dirty — Phase 4 structured evidence assessment uncommitted",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini-2024-07-18",
+    "embeddingProvider": "openai",
+    "promptVersion": "nyaya-matter-qa-v10",
+    "assessment": "deterministic in production; LLM assessor implemented but not invoked from askNyayaAboutMatter",
+    "graderVersion": "a1-2026-08-18",
+    "openaiRecalled": true,
+    "gradersUnchanged": true,
+    "fixturesUnchanged": true,
+    "baselineA2Preserved": true
+  },
+  "counts": {
+    "expected": 500,
+    "executed": 500,
+    "pass": 376,
+    "needs_work": 68,
+    "fail": 56,
+    "infrastructure": 0,
+    "criticalFails": 3,
+    "passRateExpected": 0.752,
+    "foldedUserPresentation": {
+      "pass": 376,
+      "needsWork": 124,
+      "failCritical": 3,
+      "note": "Needs Work folds official needs_work + non-critical fail + infrastructure."
+    },
+    "v1": {
+      "total": 100,
+      "pass": 83,
+      "needs_work": 7,
+      "fail": 10,
+      "infrastructure": 0,
+      "criticalFails": 1,
+      "passRate": 0.83,
+      "note": "V1 ran before LLM assessor was disabled; 9 questions attempted LLM assessment and failed schema parse, then used v9-style fallback."
+    },
+    "v2": {
+      "total": 400,
+      "pass": 293,
+      "needs_work": 61,
+      "fail": 46,
+      "infrastructure": 0,
+      "criticalFails": 2,
+      "passRate": 0.7325
+    }
+  },
+  "comparisonToA2": {
+    "pass": { "a2": 351, "a3": 376, "delta": 25 },
+    "needs_work": { "a2": 68, "a3": 68, "delta": 0 },
+    "fail": { "a2": 77, "a3": 56, "delta": -21 },
+    "infrastructure": { "a2": 4, "a3": 0, "delta": -4 },
+    "criticalFails": { "a2": 28, "a3": 3, "delta": -25 },
+    "passRateExpected": { "a2": 0.702, "a3": 0.752, "deltaPp": 5.0 }
+  },
+  "transitions": {
+    "PASS → PASS": 324,
+    "PASS → NEEDS_WORK": 2,
+    "PASS → FAIL": 25,
+    "PASS → INFRA": 0,
+    "NEEDS_WORK → PASS": 5,
+    "NEEDS_WORK → NEEDS_WORK": 60,
+    "NEEDS_WORK → FAIL": 3,
+    "NEEDS_WORK → INFRA": 0,
+    "FAIL → PASS": 44,
+    "FAIL → NEEDS_WORK": 5,
+    "FAIL → FAIL": 28,
+    "FAIL → INFRA": 0,
+    "INFRA → PASS": 3,
+    "INFRA → NEEDS_WORK": 1,
+    "INFRA → FAIL": 0,
+    "INFRA → INFRA": 0
+  },
+  "passToFail": {
+    "T002": ["SYNTH-V2-002-T002", "SYNTH-V2-004-T002", "SYNTH-V2-005-T002", "SYNTH-V2-006-T002", "SYNTH-V2-007-T002"],
+    "T021": ["SYNTH-V2-002-T021", "SYNTH-V2-004-T021", "SYNTH-V2-006-T021", "SYNTH-V2-007-T021", "SYNTH-V2-011-T021"],
+    "T011": ["SYNTH-V2-001-T011", "SYNTH-V2-013-T011", "SYNTH-V2-014-T011", "SYNTH-V2-016-T011"],
+    "T014": ["SYNTH-V2-002-T014", "SYNTH-V2-006-T014", "SYNTH-V2-014-T014"],
+    "T013": ["SYNTH-V2-002-T013", "SYNTH-V2-010-T013"],
+    "T015": ["SYNTH-V2-006-T015", "SYNTH-V2-010-T015"],
+    "V1": ["SYNTH-001-Q002", "SYNTH-007-Q004"],
+    "other": ["SYNTH-V2-010-T012", "SYNTH-V2-014-T006"]
+  },
+  "passToNeedsWork": ["SYNTH-V2-002-T011", "SYNTH-V2-009-T013"],
+  "clusters": {
+    "t025Badge": {
+      "a2": { "pass": 3, "fail": 13, "criticalFail": 13 },
+      "a3": { "pass": 16, "fail": 0, "criticalFail": 0 }
+    },
+    "t020Retroactivity": {
+      "a2": { "pass": 1, "fail": 14, "infra": 1, "criticalFail": 14 },
+      "a3": { "pass": 12, "needs_work": 4, "fail": 0, "criticalFail": 0 }
+    },
+    "t002CurrentNotice": {
+      "a2": { "pass": 6, "fail": 10 },
+      "a3": { "pass": 6, "fail": 10 },
+      "note": "Net count unchanged; 5 recovered and 5 new needle misses. Isolated gate 001 passed; full-run 001 failed."
+    },
+    "t003FutureNotice": {
+      "a2": { "pass": 11, "fail": 5 },
+      "a3": { "pass": 15, "fail": 1 },
+      "remainingFail": "SYNTH-V2-001-T003"
+    },
+    "t014EmailVsContract": {
+      "a2": { "pass": 8, "fail": 8 },
+      "a3": { "pass": 11, "fail": 5 }
+    },
+    "t011FalseContradiction": {
+      "a2": { "pass": 13, "needs_work": 1, "fail": 2 },
+      "a3": { "pass": 8, "needs_work": 1, "fail": 7 }
+    },
+    "t021Termination": {
+      "a2": { "pass": 14, "fail": 2 },
+      "a3": { "pass": 9, "fail": 7 }
+    },
+    "v1Silence": {
+      "a2Pass": ["SYNTH-008-Q008"],
+      "a2Fail": ["SYNTH-010-Q008"],
+      "a3Pass": ["SYNTH-008-Q008"],
+      "a3Fail": ["SYNTH-010-Q008"]
+    }
+  },
+  "remainingCritical": [
+    {
+      "id": "SYNTH-010-Q008",
+      "detail": "Treated silence or an original figure as proof of the asked fact."
+    },
+    {
+      "id": "SYNTH-V2-006-T015",
+      "detail": "Expected abstention; answer asserted a determination."
+    },
+    {
+      "id": "SYNTH-V2-010-T015",
+      "detail": "Expected abstention; answer asserted a determination."
+    }
+  ],
+  "performance": {
+    "a2": { "medianLatencyMs": 3184, "p95LatencyMs": 6810 },
+    "a3": {
+      "medianLatencyMs": 2788,
+      "p95LatencyMs": 5108,
+      "medianAssessmentMs": 0,
+      "p95AssessmentMs": 2,
+      "triggered": 183,
+      "triggerRate": 0.366,
+      "extraModelCallsProduction": 0,
+      "v1ExtraLlmAssessorAttempts": 9,
+      "sources": { "skipped": 317, "deterministic": 174, "failed": 9 }
+    }
+  }
+}

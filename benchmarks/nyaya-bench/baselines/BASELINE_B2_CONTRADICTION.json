@@ -1,0 +1,88 @@
+{
+  "baselineId": "BASELINE_B2_CONTRADICTION",
+  "benchmarkKind": "NYAYA_CONTRADICTION",
+  "graderVersion": "b1-2026-08-18",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "notLegalCorrectnessProof": true,
+  "comparedTo": "BASELINE_B1_COMPARE_CONTRADICTION",
+  "b1Frozen": true,
+  "compareUnchanged": true,
+  "labelDisambiguation": "This is Contradiction B.2, not Compare B.2 (BASELINE_B2_COMPARE).",
+  "measures": [
+    "detectContradictionCandidates",
+    "contradiction_semantics",
+    "tension_vs_contradiction",
+    "actor_vs_credential",
+    "sequential_amendment_filter",
+    "compatible_date_precision",
+    "cross_document_pair_ranking",
+    "proposed_status"
+  ],
+  "doesNotMeasure": [
+    "compare_engine",
+    "case_qa",
+    "timeline_subsystem",
+    "memory_subsystem",
+    "graph_subsystem",
+    "research_subsystem",
+    "draft_subsystem",
+    "agents"
+  ],
+  "runs": {
+    "targetedGate": [
+      "benchmarks/nyaya-bench/reports/runs/2026-08-19T00-29-04-692Z",
+      "benchmarks/nyaya-bench/reports/runs/2026-08-19T00-29-39-493Z",
+      "benchmarks/nyaya-bench/reports/runs/2026-08-19T00-30-50-039Z"
+    ],
+    "live": "benchmarks/nyaya-bench/reports/runs/2026-08-19T00-32-27-509Z"
+  },
+  "config": {
+    "dataset": "v2",
+    "executionMode": "contradictions",
+    "promptVersion": "contradiction-analysis-v3",
+    "gitCommit": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini",
+    "embeddingProvider": "openai",
+    "startedAt": "2026-08-19T00:32:27.517Z",
+    "finishedAt": "2026-08-19T00:38:19.579Z"
+  },
+  "contradiction": {
+    "tasks": 32,
+    "pass": 32,
+    "needs_work": 0,
+    "fail": 0,
+    "infrastructure": 0,
+    "critical": 0,
+    "t010TensionAccuracy": 1,
+    "t011CompatibleAccuracy": 1,
+    "missedConflictRate": 0,
+    "actorInferenceOverclaim": 0,
+    "provenanceFailures": 0,
+    "wrongUnrelatedFindingRate": 0.0625,
+    "irrelevantContradictionRate": 0,
+    "noticePeriodFalseFindings": 0,
+    "extraSameChunkNoiseFindings": 1,
+    "allFindingsProposed": true
+  },
+  "versusB1": {
+    "pass": { "B1": 16, "B2": 32 },
+    "fail": { "B1": 16, "B2": 0 },
+    "critical": { "B1": 1, "B2": 0 },
+    "t010TensionAccuracy": { "B1": 0, "B2": 1 },
+    "t011CompatibleAccuracy": { "B1": 1, "B2": 1 },
+    "missedConflictRate": { "B1": 0.9375, "B2": 0 },
+    "actorInferenceOverclaim": { "B1": 1, "B2": 0 },
+    "t010": {
+      "failToPass": 16,
+      "failToNeedsWork": 0,
+      "failToFail": 0
+    },
+    "t011": {
+      "passToPass": 16,
+      "passToNeedsWork": 0,
+      "passToFail": 0
+    }
+  }
+}

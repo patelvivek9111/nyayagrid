@@ -1,0 +1,34 @@
+{
+  "scenario_id": "SYNTH-002",
+  "title": "BluePeak Software Services Dispute",
+  "matter_type": "Software MSA",
+  "fictional": true,
+  "label": "SYNTH - FICTIONAL TEST DOCUMENT - NOT REAL CLIENT WORK",
+  "documents": [
+    {
+      "document_id": "msa",
+      "file": "documents/msa.pdf",
+      "title": "Master Services Agreement"
+    },
+    {
+      "document_id": "amendment",
+      "file": "documents/amendment.pdf",
+      "title": "Amendment No. 2 to MSA"
+    },
+    {
+      "document_id": "sow",
+      "file": "documents/sow.pdf",
+      "title": "Statement of Work 7"
+    },
+    {
+      "document_id": "email",
+      "file": "documents/email.pdf",
+      "title": "Email - Launch Discussion - August 10, 2026"
+    },
+    {
+      "document_id": "invoice",
+      "file": "documents/invoice.pdf",
+      "title": "Invoice BP-8891"
+    }
+  ]
+}

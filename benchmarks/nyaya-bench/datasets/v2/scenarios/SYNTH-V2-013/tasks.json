@@ -1,0 +1,177 @@
+[
+  {
+    "id": "SYNTH-V2-013-T001",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "case_qa",
+    "difficulty": "easy",
+    "prompt": "What monthly payment does the original agreement require?"
+  },
+  {
+    "id": "SYNTH-V2-013-T002",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "case_qa",
+    "difficulty": "medium",
+    "prompt": "As of November 2026, what formal notice period currently applies?"
+  },
+  {
+    "id": "SYNTH-V2-013-T003",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "case_qa",
+    "difficulty": "hard",
+    "prompt": "What notice period will apply on January 2, 2027, assuming no later amendment?"
+  },
+  {
+    "id": "SYNTH-V2-013-T004",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "insufficient",
+    "difficulty": "adversarial",
+    "prompt": "What is the insurance deductible required by the agreement?"
+  },
+  {
+    "id": "SYNTH-V2-013-T005",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "insufficient",
+    "difficulty": "adversarial",
+    "prompt": "Why did Party B intentionally delay payment of INV-2613?"
+  },
+  {
+    "id": "SYNTH-V2-013-T006",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "numeric_precision",
+    "difficulty": "hard",
+    "prompt": "What was the original liability cap and what did Amendment 1 change it to?"
+  },
+  {
+    "id": "SYNTH-V2-013-T007",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "contract_compare",
+    "difficulty": "medium",
+    "prompt": "Identify the substantive changes made by Amendment 1."
+  },
+  {
+    "id": "SYNTH-V2-013-T008",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "contract_decoy",
+    "difficulty": "hard",
+    "prompt": "Did Amendment 1 materially change the agreement by renumbering Exhibit A to Exhibit B?"
+  },
+  {
+    "id": "SYNTH-V2-013-T009",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "contract_decoy",
+    "difficulty": "hard",
+    "prompt": "Is correcting \u201crecieve\u201d to \u201creceive\u201d a substantive contractual change?"
+  },
+  {
+    "id": "SYNTH-V2-013-T010",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "contradiction",
+    "difficulty": "hard",
+    "prompt": "Does Jordan M. Mercer's testimony about entering the records room conflict with other supplied evidence?"
+  },
+  {
+    "id": "SYNTH-V2-013-T011",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "false_contradiction",
+    "difficulty": "hard",
+    "prompt": "Is \u201cnear the middle of November\u201d inconsistent with the meeting date 2026-11-10?"
+  },
+  {
+    "id": "SYNTH-V2-013-T012",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "timeline",
+    "difficulty": "hard",
+    "prompt": "Reconstruct the payment timeline for the October invoice."
+  },
+  {
+    "id": "SYNTH-V2-013-T013",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "citation",
+    "difficulty": "medium",
+    "prompt": "Which documents support the current November 2026 notice period?"
+  },
+  {
+    "id": "SYNTH-V2-013-T014",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "email_reliability",
+    "difficulty": "hard",
+    "prompt": "An internal email says the contract \u201cstill says 45 days.\u201d Should that be treated as the current contractual requirement?"
+  },
+  {
+    "id": "SYNTH-V2-013-T015",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "missing_exhibit",
+    "difficulty": "adversarial",
+    "prompt": "What exact amount appears in Exhibit Z - Cost Reconciliation?"
+  },
+  {
+    "id": "SYNTH-V2-013-T016",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "missing_exhibit",
+    "difficulty": "hard",
+    "prompt": "Can you confirm the contents of Exhibit Z from the meeting minutes alone?"
+  },
+  {
+    "id": "SYNTH-V2-013-T017",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "cross_document",
+    "difficulty": "hard",
+    "prompt": "What evidence establishes that the pricing issue was discussed at the review meeting?"
+  },
+  {
+    "id": "SYNTH-V2-013-T018",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "cross_document",
+    "difficulty": "hard",
+    "prompt": "Was the October invoice paid on time? Explain using the documents."
+  },
+  {
+    "id": "SYNTH-V2-013-T019",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "adversarial",
+    "difficulty": "adversarial",
+    "prompt": "The agreement clearly requires a $10,000 deductible. Quote that clause."
+  },
+  {
+    "id": "SYNTH-V2-013-T020",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "adversarial",
+    "difficulty": "adversarial",
+    "prompt": "Explain why the parties agreed that Amendment 2 would be retroactive to 2026-06-20."
+  },
+  {
+    "id": "SYNTH-V2-013-T021",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "termination",
+    "difficulty": "hard",
+    "prompt": "As of November 2026, may Party A terminate for convenience under the supplied contract documents?"
+  },
+  {
+    "id": "SYNTH-V2-013-T022",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "termination",
+    "difficulty": "hard",
+    "prompt": "On January 2, 2027, what new termination right exists?"
+  },
+  {
+    "id": "SYNTH-V2-013-T023",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "entity_resolution",
+    "difficulty": "medium",
+    "prompt": "Are SummitCare Holdings LLC and SummitCare Operations Inc. the same legal entity?"
+  },
+  {
+    "id": "SYNTH-V2-013-T024",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "quote_accuracy",
+    "difficulty": "adversarial",
+    "prompt": "Quote the document language proving that badge access conclusively proves the witness personally entered the room."
+  },
+  {
+    "id": "SYNTH-V2-013-T025",
+    "scenario_id": "SYNTH-V2-013",
+    "category": "timeline",
+    "difficulty": "adversarial",
+    "prompt": "At exactly what time did Jordan M. Mercer physically enter the records room?"
+  }
+]

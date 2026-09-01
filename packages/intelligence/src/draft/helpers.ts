@@ -1,3 +1,101 @@
+import {
+  buildDeterministicMaterialSummary,
+  computeClauseDiffs,
+  summaryDeniesSubstantiveChanges,
+} from "../analysis/clause-compare";
+
+export function normalizeDraftGenerationRaw(raw: unknown): {
+  content: string;
+  assertions: unknown;
+  assumptions: unknown;
+} {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
+    return { content: typeof raw === "string" && raw.trim() ? raw : " ", assertions: [], assumptions: [] };
+  }
+  const rec = raw as Record<string, unknown>;
+  let content = rec.content;
+  if (typeof content !== "string") {
+    content =
+      content == null
+        ? " "
+        : typeof content === "object"
+          ? JSON.stringify(content)
+          : String(content);
+  }
+  if (!(content as string).trim()) content = " ";
+  const uuid =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const assertions = Array.isArray(rec.assertions)
+    ? rec.assertions
+        .map((row) => {
+          if (!row || typeof row !== "object") return null;
+          const item = row as { text?: unknown; chunkIds?: unknown };
+          const chunkIds = Array.isArray(item.chunkIds)
+            ? item.chunkIds.filter((id): id is string => typeof id === "string" && uuid.test(id))
+            : [];
+          if (typeof item.text !== "string" || chunkIds.length === 0) return null;
+          return { text: item.text, chunkIds };
+        })
+        .filter(Boolean)
+    : [];
+  return {
+    content: content as string,
+    assertions,
+    assumptions: Array.isArray(rec.assumptions) ? rec.assumptions : [],
+  };
+}
+
+/** Drop quotation marks around spans that do not appear in provided source text. */
+export function neutralizeUnsupportedQuotes(content: string, sourceText: string): string {
+  if (!sourceText.trim()) return content;
+  return content.replace(/[“"]([^”"]{8,400})[”"]/g, (full, inner: string) => {
+    const span = inner.trim();
+    if (sourceText.includes(span)) return full;
+    return inner;
+  });
+}
+
+/**
+ * User instructions may request advocacy tone. They are not evidence.
+ * If Sources limit physical-entry inferences or mark an exhibit missing, do not leave
+ * those requests as established facts in the draft body.
+ */
+export function applySourceLimitationGuard(content: string, sourceText: string): string {
+  if (!content.trim() || !sourceText.trim()) return content;
+  const sources = sourceText.toLowerCase();
+  const entryLimited =
+    /does not independently prove|did not enter|denies entering|not a finding that/.test(sources);
+  const exhibitMissing = /not attached|not among the uploaded|exhibit [a-z0-9]+ is not/.test(sources);
+  const sourcesMarkCurrent = /\btemporalApplicability["']?\s*[:=]\s*["']?applicable\b/i.test(
+    sourceText,
+  );
+
+  let next = content;
+  if (entryLimited) {
+    next = next.replace(
+      /\b(?:it is unequivocally clear that |we (?:can |must )?say )?[A-Z][\w'.-]*(?:\s+[A-Z][\w'.-]*)*\s+entered the\b/g,
+      "Sources do not independently prove that a named person entered the",
+    );
+    next = next.replace(
+      /\bentered the (archive vault|records room|vault)\b/gi,
+      "was not independently proven by the access record to have entered the $1",
+    );
+  }
+  if (exhibitMissing) {
+    next = next.replace(
+      /\bExhibit\s+([A-Z0-9]+)\s+(proves|substantiates|establishes|shows|provides)\b/gi,
+      "Exhibit $1 is not in the Case file and does not $2",
+    );
+  }
+  if (!sourcesMarkCurrent) {
+    next = next.replace(/\bno temporal uncertainty\b/gi, "unresolved temporal uncertainty");
+    next = next.replace(/\bdefinitely the current law\b/gi, "not proven to be current law from imported sources");
+    next = next.replace(/\bthis is (definitely )?the current law\b/gi, "this is not proven current from imported sources");
+    next = next.replace(/\bcurrently effective\b/gi, "not shown as current by the imported sources");
+  }
+  return next;
+}
+
 export const INSUFFICIENT_SOURCE_MATERIAL =
   "Insufficient source material was provided for a fully grounded draft.";
 
@@ -62,88 +160,9 @@ export type DiffChange = {
   attention: "informational" | "review" | "high_attention";
 };
 
-/** Deterministic paragraph-level diff for document comparison. */
+/** Deterministic clause-level diff for document comparison. */
 export function computeParagraphDiffs(textA: string, textB: string): DiffChange[] {
-  const paragraphsA = splitParagraphs(textA);
-  const paragraphsB = splitParagraphs(textB);
-  const lcs = longestCommonSubsequence(paragraphsA, paragraphsB);
-  const changes: DiffChange[] = [];
-
-  let i = 0;
-  let j = 0;
-
-  for (const [ai, bj] of lcs) {
-    while (i < ai) {
-      changes.push({
-        changeType: "removed",
-        locationA: `paragraph ${i + 1}`,
-        locationB: null,
-        oldText: paragraphsA[i] ?? null,
-        newText: null,
-        attention: classifyAttention(paragraphsA[i] ?? ""),
-      });
-      i += 1;
-    }
-    while (j < bj) {
-      changes.push({
-        changeType: "added",
-        locationA: null,
-        locationB: `paragraph ${j + 1}`,
-        oldText: null,
-        newText: paragraphsB[j] ?? null,
-        attention: classifyAttention(paragraphsB[j] ?? ""),
-      });
-      j += 1;
-    }
-    const aText = paragraphsA[i] ?? "";
-    const bText = paragraphsB[j] ?? "";
-    if (normalizeWhitespace(aText) !== normalizeWhitespace(bText)) {
-      changes.push({
-        changeType: "changed",
-        locationA: `paragraph ${i + 1}`,
-        locationB: `paragraph ${j + 1}`,
-        oldText: aText,
-        newText: bText,
-        attention: classifyAttention(`${aText} ${bText}`),
-      });
-    } else if (aText !== bText) {
-      changes.push({
-        changeType: "formatting",
-        locationA: `paragraph ${i + 1}`,
-        locationB: `paragraph ${j + 1}`,
-        oldText: aText,
-        newText: bText,
-        attention: "informational",
-      });
-    }
-    i += 1;
-    j += 1;
-  }
-
-  while (i < paragraphsA.length) {
-    changes.push({
-      changeType: "removed",
-      locationA: `paragraph ${i + 1}`,
-      locationB: null,
-      oldText: paragraphsA[i] ?? null,
-      newText: null,
-      attention: classifyAttention(paragraphsA[i] ?? ""),
-    });
-    i += 1;
-  }
-  while (j < paragraphsB.length) {
-    changes.push({
-      changeType: "added",
-      locationA: null,
-      locationB: `paragraph ${j + 1}`,
-      oldText: null,
-      newText: paragraphsB[j] ?? null,
-      attention: classifyAttention(paragraphsB[j] ?? ""),
-    });
-    j += 1;
-  }
-
-  return changes;
+  return computeClauseDiffs(textA, textB);
 }
 
 export function splitParagraphs(text: string): string[] {
@@ -162,47 +181,6 @@ export function splitParagraphs(text: string): string[] {
 
 function normalizeWhitespace(text: string): string {
   return text.replace(/\s+/g, " ").trim();
-}
-
-function classifyAttention(text: string): "informational" | "review" | "high_attention" {
-  const lower = text.toLowerCase();
-  if (/indemn|liabil|terminat|warrant|sole discretion|without limitation/.test(lower)) {
-    return "high_attention";
-  }
-  if (/payment|confidential|obligation|shall|must|agreement/.test(lower)) {
-    return "review";
-  }
-  return "informational";
-}
-
-function longestCommonSubsequence(a: string[], b: string[]): Array<[number, number]> {
-  const m = a.length;
-  const n = b.length;
-  const dp: number[][] = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
-  for (let i = 1; i <= m; i++) {
-    for (let j = 1; j <= n; j++) {
-      if (normalizeWhitespace(a[i - 1]!) === normalizeWhitespace(b[j - 1]!)) {
-        dp[i]![j] = dp[i - 1]![j - 1]! + 1;
-      } else {
-        dp[i]![j] = Math.max(dp[i - 1]![j]!, dp[i]![j - 1]!);
-      }
-    }
-  }
-  const out: Array<[number, number]> = [];
-  let i = m;
-  let j = n;
-  while (i > 0 && j > 0) {
-    if (normalizeWhitespace(a[i - 1]!) === normalizeWhitespace(b[j - 1]!)) {
-      out.unshift([i - 1, j - 1]);
-      i -= 1;
-      j -= 1;
-    } else if (dp[i - 1]![j]! >= dp[i]![j - 1]!) {
-      i -= 1;
-    } else {
-      j -= 1;
-    }
-  }
-  return out;
 }
 
 export function validateDraftAssertions(
@@ -548,6 +526,10 @@ export function scoreComparisonSummaryAgainstDiffs(
     );
   }
 
+  if (highAttentionInDiff > 0 && summaryDeniesSubstantiveChanges(trimmed)) {
+    flags.push("Summary denies substantive changes while high-attention diffs exist.");
+  }
+
   const effectiveClaimCount = Math.max(claims.length, unsupportedClaims.length > 0 ? 1 : 0);
   const supportedClaimCount = Math.max(0, effectiveClaimCount - unsupportedClaims.length);
   const score =
@@ -593,6 +575,12 @@ export function applyComparisonSummaryAlignmentPolicy(
         changes,
       ),
     };
+  }
+
+  const hasMaterial = changes.some((change) => change.attention === "high_attention");
+  if (hasMaterial && summaryDeniesSubstantiveChanges(summary)) {
+    const rewritten = buildDeterministicMaterialSummary(changes);
+    return { summary: rewritten, score: scoreComparisonSummaryAgainstDiffs(rewritten, changes) };
   }
 
   if (score.alignment === "aligned") {

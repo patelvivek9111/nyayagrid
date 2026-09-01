@@ -1,0 +1,57 @@
+[
+  {
+    "title": "810 ILCS 5/2-725 — Statute of limitations in contracts for sale",
+    "shortTitle": "Ill. UCC § 2-725",
+    "authorityType": "statute",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "810 ILCS 5/2-725",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "il-ucc-2-725",
+    "canonicalSourceUrl": "https://www.ilga.gov/legislation/ilcs/ilcs5.asp?ActID=1298&ChapterID=24",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["contract", "commercial", "civil"],
+    "content": "810 ILCS 5/2-725\n\n(1) An action for breach of any contract for sale must be commenced within 4 years after the cause of action has accrued. By the original agreement the parties may reduce the period of limitation to not less than one year but may not extend it.\n\n(2) A cause of action accrues when the breach occurs, regardless of the aggrieved party's lack of knowledge of the breach.",
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "ucc_article_2_limitations" }
+  },
+  {
+    "title": "820 ILCS 105/4 — Minimum wage rate",
+    "shortTitle": "820 ILCS 105/4",
+    "authorityType": "statute",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "820 ILCS 105/4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "il-labor-105-4",
+    "canonicalSourceUrl": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=1430&ChapterID=32",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["employment"],
+    "content": "820 ILCS 105/4\n\nEvery employer shall pay to all employees engaged in any occupation within the State at least the minimum wage rate prescribed in this Act.",
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "minimum_wage" }
+  },
+  {
+    "title": "Brunton v. Schmidt, 114 Ill. 2d 380 (1986)",
+    "shortTitle": "Brunton v. Schmidt",
+    "authorityType": "case",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "court": "Supreme Court of Illinois",
+    "courtId": "st-il-high",
+    "courtLevel": "state_high",
+    "citation": "114 Ill. 2d 380",
+    "decisionDate": "1986-09-18",
+    "publicationStatus": "published",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "il-brunton-v-schmidt-114-ill-2d-380",
+    "canonicalSourceUrl": "https://www.courtlistener.com/opinion/2056920/brunton-v-schmidt/",
+    "bundleSourceClass": "PRIMARY_PUBLIC_REPOSITORY",
+    "bundleQualityTier": "TIER_2_TRUSTED_PUBLIC",
+    "bundlePracticeAreas": ["civil"],
+    "content": "Brunton v. Schmidt, 114 Ill. 2d 380 (1986).\n\nThe Supreme Court of Illinois addressed whether a physician-patient relationship existed for purposes of medical malpractice liability. The court held that such a relationship requires a mutual agreement, express or implied, that the physician will treat the patient.",
+    "sourceMetadata": {
+      "retrievalMethod": "public_repository_snapshot",
+      "repository": "courtlistener",
+      "excerptNote": "Excerpt summarizing holding; full opinion at canonical URL."
+    }
+  }
+]

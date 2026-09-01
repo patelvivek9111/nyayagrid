@@ -1,0 +1,59 @@
+{
+  "label": "EM2",
+  "title": "Evidence Matrix reliability after Phase 6M integration fixes",
+  "an1Da1Ca1NotCombined": true,
+  "doesNotOverwriteEm1": true,
+  "liveRunDir": "benchmarks/nyaya-bench/reports/runs/2026-08-19T14-07-09-015Z",
+  "em1RunDir": "benchmarks/nyaya-bench/reports/runs/2026-08-19T13-56-47-498Z",
+  "executionMode": "evidence",
+  "benchmarkKind": "NYAYA_EVIDENCE",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "graderVersion": "em1-2026-08-19",
+  "freeze": "FREEZE_EVIDENCE_MATRIX",
+  "analysisAsAWholeFreezeable": true,
+  "nextPhase": "PHASE 6N — DRAFT RELIABILITY",
+  "config": {
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini",
+    "aiTimeoutMs": 180000
+  },
+  "counts": {
+    "pass": 28,
+    "needs_work": 0,
+    "fail": 0,
+    "infrastructure": 0,
+    "criticalFails": 0
+  },
+  "evidence": {
+    "tasks": 28,
+    "pass": 28,
+    "needs_work": 0,
+    "fail": 0,
+    "infrastructure": 0,
+    "critical": 0,
+    "propositionAccuracy": 1,
+    "provenanceAccuracy": 1,
+    "supportingSpanAccuracy": 1,
+    "trustStatusAccuracy": 1,
+    "disputedEvidenceAccuracy": 1,
+    "unsupportedEvidenceRate": 0,
+    "proposedToVerifiedLeakageRate": 0,
+    "wrongDocumentAttributionRate": 0,
+    "duplicateCorroborationErrorRate": 0,
+    "missingEvidenceFabricationRate": 0
+  },
+  "transitionsFromEm1": {
+    "PASS_PASS": 26,
+    "PASS_NEEDS_WORK": 0,
+    "PASS_FAIL": 0,
+    "NEEDS_WORK_PASS": 0,
+    "NEEDS_WORK_NEEDS_WORK": 0,
+    "NEEDS_WORK_FAIL": 0,
+    "FAIL_PASS": 2,
+    "FAIL_NEEDS_WORK": 0,
+    "FAIL_FAIL": 0,
+    "failToPass": ["SYNTH-V2-006-EM009", "SYNTH-V2-001-EM021"],
+    "regressions": []
+  }
+}

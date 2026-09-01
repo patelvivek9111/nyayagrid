@@ -1,0 +1,34 @@
+{
+  "scenario_id": "SYNTH-004",
+  "title": "Aster Labs Employment Separation",
+  "matter_type": "Employment Agreement",
+  "fictional": true,
+  "label": "SYNTH - FICTIONAL TEST DOCUMENT - NOT REAL CLIENT WORK",
+  "documents": [
+    {
+      "document_id": "agreement",
+      "file": "documents/agreement.pdf",
+      "title": "Employment Agreement"
+    },
+    {
+      "document_id": "addendum",
+      "file": "documents/addendum.pdf",
+      "title": "Compensation Addendum"
+    },
+    {
+      "document_id": "hr_email",
+      "file": "documents/hr_email.pdf",
+      "title": "HR Email - July 2, 2026"
+    },
+    {
+      "document_id": "termination",
+      "file": "documents/termination.pdf",
+      "title": "Termination Notice - July 15, 2026"
+    },
+    {
+      "document_id": "policy",
+      "file": "documents/policy.pdf",
+      "title": "Employee Handbook Excerpt"
+    }
+  ]
+}

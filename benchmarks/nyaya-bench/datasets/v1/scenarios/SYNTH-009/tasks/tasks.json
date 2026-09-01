@@ -1,0 +1,82 @@
+[
+  {
+    "task_id": "SYNTH-009-Q001",
+    "scenario_id": "SYNTH-009",
+    "category": "case_qa",
+    "prompt": "How long do confidentiality obligations continue after disclosure?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q001"
+  },
+  {
+    "task_id": "SYNTH-009-Q002",
+    "scenario_id": "SYNTH-009",
+    "category": "case_qa",
+    "prompt": "When were the HR-MC-22 drawings disclosed?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q002"
+  },
+  {
+    "task_id": "SYNTH-009-Q003",
+    "scenario_id": "SYNTH-009",
+    "category": "case_qa",
+    "prompt": "What period does the NDA give to return or destroy information after written request?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q003"
+  },
+  {
+    "task_id": "SYNTH-009-Q004",
+    "scenario_id": "SYNTH-009",
+    "category": "timeline",
+    "prompt": "When was the shared-folder copy removed?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q004"
+  },
+  {
+    "task_id": "SYNTH-009-Q005",
+    "scenario_id": "SYNTH-009",
+    "category": "timeline",
+    "prompt": "When were backup copies removed?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q005"
+  },
+  {
+    "task_id": "SYNTH-009-Q006",
+    "scenario_id": "SYNTH-009",
+    "category": "false_contradiction",
+    "prompt": "Does Vector\u2019s July 8 email contradict the backup administrator declaration?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q006"
+  },
+  {
+    "task_id": "SYNTH-009-Q007",
+    "scenario_id": "SYNTH-009",
+    "category": "insufficient",
+    "prompt": "Were there any printed paper copies of HR-MC-22?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q007"
+  },
+  {
+    "task_id": "SYNTH-009-Q008",
+    "scenario_id": "SYNTH-009",
+    "category": "case_qa",
+    "prompt": "What type of information is excluded if developed independently without use of Confidential Information?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q008"
+  },
+  {
+    "task_id": "SYNTH-009-Q009",
+    "scenario_id": "SYNTH-009",
+    "category": "reasoning",
+    "prompt": "Does the July 8 email establish that backup deletion was already complete on July 8?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q009"
+  },
+  {
+    "task_id": "SYNTH-009-Q010",
+    "scenario_id": "SYNTH-009",
+    "category": "case_qa",
+    "prompt": "Who requested return or destruction on July 1?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q010"
+  }
+]

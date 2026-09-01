@@ -26,6 +26,15 @@ import {
   presentMatterMemory,
   type PublicMemory,
 } from "./present";
+import {
+  filterSupportingMemoryChunkIds,
+  isDownstreamEligibleMemory,
+  memoriesEligibleForDownstreamPrompt,
+  memoryPromptTrustLabel,
+  memoryTypeForUnsupportedAiClaim,
+  resolveMemoryCreateConfidence,
+  resolveMemoryCreateStatus,
+} from "./trust";
 
 const ACTIVE = ["approved", "edited_and_approved"] as const;
 
@@ -57,7 +66,7 @@ export async function createMatterMemory(params: {
 }) {
   const embeddings = params.embeddings ?? createEmbeddingProviderFromEnv();
   const [vector] = await embeddings.embed([`${params.title}\n${params.content}`]);
-  const status = params.status ?? (params.origin === "manual" ? "approved" : "proposed");
+  const status = resolveMemoryCreateStatus(params);
   const now = new Date();
 
   const [memory] = await params.db
@@ -71,7 +80,7 @@ export async function createMatterMemory(params: {
       normalizedContent: params.content.toLowerCase().replace(/\s+/g, " ").trim(),
       status,
       origin: params.origin ?? "manual",
-      confidence: params.confidence ?? (params.origin === "manual" ? "high" : "medium"),
+      confidence: resolveMemoryCreateConfidence(params),
       importance: params.importance ?? "normal",
       createdByUserId: params.userId,
       approvedByUserId: status === "approved" ? params.userId : null,
@@ -368,8 +377,10 @@ export async function retrieveActiveMatterMemories(params: {
       ),
     );
 
-  if (!params.question || active.length === 0) {
-    return active
+  const eligible = active.filter((row) => isDownstreamEligibleMemory(row));
+
+  if (!params.question || eligible.length === 0) {
+    return eligible
       .sort((a, b) => importanceRank(b.importance) - importanceRank(a.importance))
       .slice(0, params.limit ?? 8);
   }
@@ -377,11 +388,11 @@ export async function retrieveActiveMatterMemories(params: {
   const embeddings = params.embeddings ?? createEmbeddingProviderFromEnv();
   const [queryVec] = await embeddings.embed([params.question]);
   if (!queryVec) {
-    return active.slice(0, params.limit ?? 8);
+    return eligible.slice(0, params.limit ?? 8);
   }
 
   // Scope first in SQL, then rank in-memory (safe for Phase 4 matter-sized sets).
-  const ranked = active
+  const ranked = eligible
     .map((m) => ({
       memory: m,
       score:
@@ -397,13 +408,24 @@ export async function retrieveActiveMatterMemories(params: {
 }
 
 export function formatActiveMemoryForPrompt(
-  memories: Array<{ title: string; content: string; memoryType: string; importance: string }>,
+  memories: Array<{
+    title: string;
+    content: string;
+    memoryType: string;
+    importance: string;
+    origin?: string | null;
+    status?: string | null;
+    supersededBy?: string | null;
+    sourceReference?: Record<string, unknown> | null;
+  }>,
 ): string {
-  if (memories.length === 0) return "";
+  const eligible = memoriesEligibleForDownstreamPrompt(memories);
+  if (eligible.length === 0) return "";
   return [
     "Approved Matter Memory:",
-    ...memories.map(
-      (m) => `- [${m.importance}/${m.memoryType}] ${m.title}: ${m.content.slice(0, 300)}`,
+    ...eligible.map(
+      (m) =>
+        `- [${memoryPromptTrustLabel(m)} / ${m.importance}/${m.memoryType}] ${m.title}: ${m.content.slice(0, 300)}`,
     ),
   ].join("\n");
 }
@@ -440,6 +462,12 @@ export async function proposeMatterMemories(params: {
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "matter_memory_proposal",
+    routing: {
+      subsystem: "memory",
+      strategy: "standard",
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+    },
     messages: [
       { role: "system", content: buildMemoryProposalSystemPrompt() },
       {
@@ -472,13 +500,23 @@ export async function proposeMatterMemories(params: {
   for (const proposal of proposals.slice(0, 3)) {
     // Prevent AI from marking everything critical.
     const importance = proposal.importance === "critical" ? "high" : proposal.importance;
-    const chunkIds = proposal.sourceChunkIds.filter((id) => authorized.has(id));
+    const claimed = proposal.sourceChunkIds.filter((id) => authorized.has(id));
+    const chunkIds = filterSupportingMemoryChunkIds({
+      title: proposal.title,
+      content: proposal.content,
+      claimedChunkIds: claimed,
+      chunks: [...authorized.values()].map((chunk) => ({
+        id: chunk.chunkId,
+        content: chunk.content,
+      })),
+    });
+    const memoryType = memoryTypeForUnsupportedAiClaim(proposal.memoryType, chunkIds);
     const memory = await createMatterMemory({
       db: params.db,
       organizationId: params.organizationId,
       matterId: params.matterId,
       userId: params.userId,
-      memoryType: proposal.memoryType,
+      memoryType,
       title: proposal.title,
       content: proposal.content,
       importance,
@@ -498,29 +536,28 @@ export async function proposeMatterMemories(params: {
   }
 
   if (created.length === 0 && params.hint?.trim()) {
-    const fallbackChunks = sourceChunks.slice(0, 1).map((c) => c.id);
     const hint = params.hint.trim();
     const memory = await createMatterMemory({
       db: params.db,
       organizationId: params.organizationId,
       matterId: params.matterId,
       userId: params.userId,
-      memoryType: "verified_context",
+      memoryType: "other",
       title: hint.slice(0, 80),
       content: hint,
       importance: "normal",
       origin: "ai",
       status: "proposed",
       confidence: "medium",
-      sourceType: "ai_proposal",
+      sourceType: "attorney_hint",
       sourceReference: {
         promptVersion: MEMORY_PROPOSAL_PROMPT_VERSION,
         rationale: parsed.success
-          ? "Nyaya returned no proposals; the attorney hint was recorded as a suggestion."
-          : "Nyaya proposal payload could not be parsed; the attorney hint was recorded as a suggestion.",
+          ? "Nyaya returned no proposals; the attorney hint was recorded as an unverified suggestion with no document provenance."
+          : "Nyaya proposal payload could not be parsed; the attorney hint was recorded as an unverified suggestion with no document provenance.",
         provider: generation.provider,
         model: generation.model,
-        chunkIds: fallbackChunks,
+        chunkIds: [],
       },
     });
     created.push(memory);
@@ -596,3 +633,4 @@ export async function countProposedMemories(params: {
 }
 
 export * from "./present";
+export * from "./trust";

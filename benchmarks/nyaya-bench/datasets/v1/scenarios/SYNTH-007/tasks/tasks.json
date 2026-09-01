@@ -1,0 +1,82 @@
+[
+  {
+    "task_id": "SYNTH-007-Q001",
+    "scenario_id": "SYNTH-007",
+    "category": "case_qa",
+    "prompt": "What ownership percentage does Jordan Reed hold?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q001"
+  },
+  {
+    "task_id": "SYNTH-007-Q002",
+    "scenario_id": "SYNTH-007",
+    "category": "case_qa",
+    "prompt": "What borrowing threshold requires both partners\u2019 approval?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q002"
+  },
+  {
+    "task_id": "SYNTH-007-Q003",
+    "scenario_id": "SYNTH-007",
+    "category": "contradiction",
+    "prompt": "Is there a genuine contradiction about whether Jordan approved the $180,000 Pine Bank loan before signing?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q003"
+  },
+  {
+    "task_id": "SYNTH-007-Q004",
+    "scenario_id": "SYNTH-007",
+    "category": "case_qa",
+    "prompt": "Who signed the Pine Bank loan according to the bank summary?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q004"
+  },
+  {
+    "task_id": "SYNTH-007-Q005",
+    "scenario_id": "SYNTH-007",
+    "category": "timeline",
+    "prompt": "When was the $180,000 loan made?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q005"
+  },
+  {
+    "task_id": "SYNTH-007-Q006",
+    "scenario_id": "SYNTH-007",
+    "category": "reasoning",
+    "prompt": "Do the May 9 meeting notes establish that the specific $180,000 Pine Bank loan was approved?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q006"
+  },
+  {
+    "task_id": "SYNTH-007-Q007",
+    "scenario_id": "SYNTH-007",
+    "category": "insufficient",
+    "prompt": "What interest rate did Pine Bank charge?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q007"
+  },
+  {
+    "task_id": "SYNTH-007-Q008",
+    "scenario_id": "SYNTH-007",
+    "category": "case_qa",
+    "prompt": "How are quarterly distributions normally allocated?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q008"
+  },
+  {
+    "task_id": "SYNTH-007-Q009",
+    "scenario_id": "SYNTH-007",
+    "category": "numeric",
+    "prompt": "What is Avery Lin\u2019s ownership percentage?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q009"
+  },
+  {
+    "task_id": "SYNTH-007-Q010",
+    "scenario_id": "SYNTH-007",
+    "category": "reasoning",
+    "prompt": "Based only on the documents, can NyayaGrid resolve which person is truthful about prior approval?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q010"
+  }
+]

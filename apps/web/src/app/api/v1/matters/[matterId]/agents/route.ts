@@ -3,8 +3,10 @@ import { requireMatterAccess } from "@nyayagrid/permissions";
 import { NyayaOrchestrator } from "@nyayagrid/agents";
 import { agentRuns, and, desc, eq } from "@nyayagrid/database";
 import { requireUser } from "@/lib/auth";
+import { assertFeatureEnabled } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 import { getAgentBudgetsFromEnv, getAI, getEmbeddings, getRetriever } from "@/lib/infra";
+import { enforceRateLimit } from "@/lib/rate-limit";
 import { askNyayaAboutMatter } from "@/server/nyaya";
 
 type Params = { params: Promise<{ matterId: string }> };
@@ -18,6 +20,7 @@ export async function POST(request: Request, { params }: Params) {
   try {
     const { matterId } = await params;
     const { db, user } = await requireUser(request.headers);
+    assertFeatureEnabled("agents");
     const body = runAgentTaskSchema.parse(await request.json());
     const execute = body.execute !== false;
 
@@ -27,6 +30,12 @@ export async function POST(request: Request, { params }: Params) {
       minAccess: execute ? "edit" : "read",
       capability: execute ? "matters.edit" : "matters.view",
     });
+    const limited = await enforceRateLimit(request, {
+      endpointClass: "agent_run",
+      organizationId: matter.organizationId,
+      userId: user.id,
+    });
+    if (limited) return limited;
 
     const orchestrator = new NyayaOrchestrator();
     const outcome = await orchestrator.runTask({
@@ -78,6 +87,7 @@ export async function GET(request: Request, { params }: Params) {
   try {
     const { matterId } = await params;
     const { db, user } = await requireUser(request.headers);
+    assertFeatureEnabled("agents");
     const { matter } = await requireMatterAccess(db, {
       userId: user.id,
       matterId,

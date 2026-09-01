@@ -154,7 +154,8 @@ describe("validateSynthesisAgainstRetrieval", () => {
     expect(result.synthesis.legalPropositions).toEqual([]);
     expect(result.synthesis.sources).toEqual([]);
     expect(result.synthesis.supportingAuthorities).toEqual([]);
-    expect(result.fabricatedAuthorityIds).toContain(UNKNOWN_AUTHORITY_ID);
+    expect(result.droppedUnsupportedAuthorityIds).toContain(UNKNOWN_AUTHORITY_ID);
+    expect(result.fabricatedAuthorityIds).toEqual([]);
     expect(result.droppedPropositions).toHaveLength(1);
     expect(result.grounded).toBe(false);
     expect(result.synthesis.conciseAnswer).toBe(UNSUPPORTED_SYNTHESIS_ANSWER);
@@ -230,6 +231,79 @@ describe("validateSynthesisAgainstRetrieval", () => {
     expect(result.schemaValid).toBe(false);
     expect(result.grounded).toBe(false);
     expect(result.synthesis.conciseAnswer).toBe(UNSUPPORTED_SYNTHESIS_ANSWER);
+  });
+
+  it("keeps a retrieved-text-backed conciseAnswer when structured citations drop", () => {
+    const result = validateSynthesisAgainstRetrieval(
+      {
+        conciseAnswer: `${SYNTHETIC_VALID_QUOTE} The imported statute therefore limits irreparable harm.`,
+        legalPropositions: [
+          {
+            text: SYNTHETIC_VALID_QUOTE,
+            authorityIds: ["13 Pa.C.S. § 2725"],
+            chunkIds: [],
+          },
+        ],
+        sources: [],
+      },
+      indexWithFullText(),
+    );
+    expect(result.synthesis.legalPropositions).toEqual([]);
+    expect(result.synthesis.conciseAnswer).toContain("Irreparable harm does not include");
+    expect(result.synthesis.conciseAnswer).not.toBe(UNSUPPORTED_SYNTHESIS_ANSWER);
+  });
+
+  it("still replaces a conciseAnswer that does not match retrieved passage text", () => {
+    const result = validateSynthesisAgainstRetrieval(
+      {
+        conciseAnswer: "A six-year criminal limitations period is definitely the current law.",
+        legalPropositions: [],
+        sources: [],
+      },
+      indexWithFullText(),
+    );
+    expect(result.synthesis.conciseAnswer).toBe(UNSUPPORTED_SYNTHESIS_ANSWER);
+  });
+
+  it("keeps a valid retrieved authority and drops a real UUID that was not in this retrieval set", () => {
+    const stale = "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa";
+    const result = validateSynthesisAgainstRetrieval(
+      synthesisPayload({
+        legalPropositions: [
+          {
+            text: "Money damages defeat a claim of irreparable harm.",
+            authorityIds: [AUTHORITY_ID, stale],
+            chunkIds: [CHUNK_ID],
+          },
+        ],
+        supportingAuthorities: [AUTHORITY_ID, stale],
+        sources: [
+          { authorityId: AUTHORITY_ID, chunkId: CHUNK_ID, quote: SYNTHETIC_VALID_QUOTE },
+          { authorityId: stale, chunkId: null, quote: null },
+        ],
+      }),
+      indexWithFullText(),
+    );
+    expect(result.synthesis.legalPropositions[0]?.authorityIds).toEqual([AUTHORITY_ID]);
+    expect(result.synthesis.supportingAuthorities).toEqual([AUTHORITY_ID]);
+    expect(result.synthesis.sources.every((row) => row.authorityId === AUTHORITY_ID)).toBe(true);
+    expect(result.droppedUnsupportedAuthorityIds).toContain(stale);
+    expect(result.fabricatedAuthorityIds).toEqual([]);
+    expect(result.synthesis.conciseAnswer).toContain("Irreparable harm");
+  });
+
+  it("strips an unretrieved UUID from conciseAnswer so it cannot remain a citation", () => {
+    const phantom = "bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb";
+    const result = validateSynthesisAgainstRetrieval(
+      synthesisPayload({
+        conciseAnswer: `Irreparable harm excludes fully compensable monetary loss. See ${phantom}.`,
+        supportingAuthorities: [phantom],
+      }),
+      indexWithFullText(),
+    );
+    expect(result.synthesis.conciseAnswer).not.toContain(phantom);
+    expect(result.synthesis.supportingAuthorities).toEqual([]);
+    expect(result.fabricatedAuthorityIds).toEqual([]);
   });
 });
 
@@ -341,7 +415,8 @@ describe("validateMemoAgainstRetrieval", () => {
     expect(result.grounded).toBe(true);
     expect(result.memo.applicableAuthorities).toEqual([AUTHORITY_ID]);
     expect(result.memo.propositions[0]?.chunkIds).toEqual([CHUNK_ID]);
-    expect(result.fabricatedAuthorityIds).toContain(UNKNOWN_AUTHORITY_ID);
+    expect(result.droppedUnsupportedAuthorityIds).toContain(UNKNOWN_AUTHORITY_ID);
+    expect(result.fabricatedAuthorityIds).toEqual([]);
     expect(result.unknownChunkIds).toEqual([UNKNOWN_CHUNK_ID]);
   });
 

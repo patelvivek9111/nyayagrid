@@ -1,0 +1,12 @@
+KEYSTONE GOODS — INTERNAL COUNSEL NOTE
+Matter: Keystone Goods SOL Dispute (synthetic 6U fixture)
+Date: 12 March 2026
+
+Party email excerpt (evidence, not Case metadata):
+
+"We believe New Jersey law applies to this sale of goods because the buyer sits in Newark."
+
+This statement is a document assertion. It does not update forum, governing law, or related jurisdictions.
+The Case file still records Pennsylvania as forum and Delaware as governing law where those fields are set on other 6U Cases.
+
+No Exhibit Q is attached.

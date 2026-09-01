@@ -14,13 +14,16 @@ import {
   buildDepositionAnalysisUserPrompt,
   buildContradictionAnalysisSystemPrompt,
   buildContradictionAnalysisUserPrompt,
-  depositionAnalysisSchema,
+  parseDepositionAnalysis,
   contradictionCandidatesSchema,
   DEPOSITION_ANALYSIS_PROMPT_VERSION,
   CONTRADICTION_ANALYSIS_PROMPT_VERSION,
-  filterImpreciseDateContradictionCandidates,
   findExactCrossDocumentDateConflicts,
   mergeContradictionCandidates,
+  selectChunksForContradictionAnalysis,
+  selectRelatedChunksForDeposition,
+  findDeterministicContradictionCandidates,
+  refineContradictionCandidates,
   type AIProvider,
   type ProfessionalChunk,
 } from "@nyayagrid/ai";
@@ -91,9 +94,39 @@ export async function analyzeDeposition(params: {
     content: c.content,
   }));
 
+  const relatedRows = await params.db
+    .select()
+    .from(documentChunks)
+    .where(
+      and(
+        eq(documentChunks.organizationId, params.organizationId),
+        eq(documentChunks.matterId, params.matterId),
+      ),
+    )
+    .orderBy(documentChunks.documentId, documentChunks.chunkIndex)
+    .limit(240);
+  const relatedChunks = selectRelatedChunksForDeposition(
+    relatedRows
+      .filter((row) => row.documentId !== params.documentId)
+      .map((c) => ({
+        chunkId: c.id,
+        documentId: c.documentId,
+        documentVersionId: c.documentVersionId,
+        page: c.pageStart,
+        segmentRef: c.segmentRef,
+        content: c.content,
+      })),
+  );
+
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "deposition_analysis",
+    routing: {
+      subsystem: "deposition",
+      strategy: "standard",
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+    },
     messages: [
       { role: "system", content: buildDepositionAnalysisSystemPrompt() },
       {
@@ -101,18 +134,24 @@ export async function analyzeDeposition(params: {
         content: buildDepositionAnalysisUserPrompt({
           documentTitle: doc.title,
           chunks: professionalChunks,
+          relatedChunks,
         }),
       },
     ],
   });
 
+  let jsonParseFailed = false;
   let raw: unknown;
   try {
     raw = JSON.parse(generation.text);
   } catch {
+    jsonParseFailed = true;
     raw = { summary: null, findings: [] };
   }
-  const parsed = depositionAnalysisSchema.parse(raw);
+  const parsedResult = parseDepositionAnalysis(raw);
+  const parsed = parsedResult.analysis;
+  const rejectedMalformed = parsedResult.rejectedMalformed + (jsonParseFailed ? 1 : 0);
+  const normalizedCount = parsedResult.normalizedCount;
 
   const allChunkIds = parsed.findings.flatMap((f) => f.sourceChunkIds);
   const authorized = await loadAuthorizedChunks(params.db, {
@@ -162,14 +201,20 @@ export async function analyzeDeposition(params: {
   let rejectedNoSource = 0;
 
   for (const proposal of parsed.findings) {
+    const quotes = (proposal.supportingQuotes ?? []).map((quote) => quote.trim()).filter(Boolean);
     const sources = resolveValidatedSources({
       organizationId: params.organizationId,
       matterId: params.matterId,
       sourceChunkIds: proposal.sourceChunkIds,
-      sourceQuotes: proposal.sourceChunkIds.map(
-        (id) => authorized.get(id)?.content.slice(0, 400) ?? "",
-      ),
+      sourceQuotes: quotes,
       authorized,
+      event:
+        quotes.length > 0
+          ? undefined
+          : {
+              title: proposal.title,
+              description: proposal.explanation ?? null,
+            },
     });
     if (sources.length === 0) {
       rejectedNoSource += 1;
@@ -219,6 +264,10 @@ export async function analyzeDeposition(params: {
       documentId: params.documentId,
       findingsCreated: createdFindings.length,
       rejectedNoSource,
+      rejectedMalformed,
+      normalizedCount,
+      jsonParseFailed,
+      relatedChunkCount: relatedChunks.length,
       provider: generation.provider,
     },
   });
@@ -228,6 +277,10 @@ export async function analyzeDeposition(params: {
     run,
     findings: createdFindings,
     rejectedNoSource,
+    rejectedMalformed,
+    normalizedCount,
+    jsonParseFailed,
+    parseRetryCount: 0,
     provider: generation.provider,
     model: generation.model,
   };
@@ -281,7 +334,7 @@ export async function detectContradictionCandidates(params: {
     .from(documentChunks)
     .where(and(...chunkConditions))
     .orderBy(documentChunks.documentId, documentChunks.chunkIndex)
-    .limit(48);
+    .limit(500);
 
   const professionalChunks: ProfessionalChunk[] = chunks.map((c) => ({
     chunkId: c.id,
@@ -291,17 +344,25 @@ export async function detectContradictionCandidates(params: {
     segmentRef: c.segmentRef,
     content: c.content,
   }));
+  const analysisChunks = selectChunksForContradictionAnalysis(professionalChunks, 48);
 
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "contradiction_analysis",
+    routing: {
+      subsystem: "contradiction",
+      strategy: "auto",
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      riskSignals: ["contradiction_request"],
+    },
     messages: [
       { role: "system", content: buildContradictionAnalysisSystemPrompt() },
       {
         role: "user",
         content: buildContradictionAnalysisUserPrompt({
           matterTitle: matter.title,
-          chunks: professionalChunks,
+          chunks: analysisChunks,
         }),
       },
     ],
@@ -315,14 +376,11 @@ export async function detectContradictionCandidates(params: {
   }
   const parsed = contradictionCandidatesSchema.parse(raw);
   const chunkTextById = new Map(professionalChunks.map((chunk) => [chunk.chunkId, chunk.content]));
-  const mergedCandidates = mergeContradictionCandidates(
-    parsed.candidates,
-    findExactCrossDocumentDateConflicts(professionalChunks).candidates,
-  );
-  const candidates = filterImpreciseDateContradictionCandidates(
-    mergedCandidates,
-    chunkTextById,
-  );
+  const mergedCandidates = mergeContradictionCandidates(parsed.candidates, [
+    ...findDeterministicContradictionCandidates(professionalChunks),
+    ...findExactCrossDocumentDateConflicts(professionalChunks).candidates,
+  ]);
+  const candidates = refineContradictionCandidates(mergedCandidates, chunkTextById);
 
   const allChunkIds = candidates.flatMap((c) => [...c.sideA.chunkIds, ...c.sideB.chunkIds]);
   const authorized = await loadAuthorizedChunks(params.db, {
@@ -375,6 +433,7 @@ export async function detectContradictionCandidates(params: {
       sourceChunkIds: candidate.sideA.chunkIds,
       sourceQuotes: [candidate.sideA.summary],
       authorized,
+      event: { title: candidate.title, description: candidate.explanation },
     });
     const sideBSources = resolveValidatedSources({
       organizationId: params.organizationId,
@@ -382,6 +441,7 @@ export async function detectContradictionCandidates(params: {
       sourceChunkIds: candidate.sideB.chunkIds,
       sourceQuotes: [candidate.sideB.summary],
       authorized,
+      event: { title: candidate.title, description: candidate.explanation },
     });
     if (sideASources.length === 0 || sideBSources.length === 0) {
       rejectedIncomplete += 1;
@@ -389,10 +449,12 @@ export async function detectContradictionCandidates(params: {
     }
 
     const findingType =
-      sideASources.some((s) => s.documentId !== sideBSources[0]!.documentId) ||
-      sideBSources.some((s) => s.documentId !== sideASources[0]!.documentId)
-        ? "contradiction"
-        : "tension";
+      candidate.relation === "tension" || candidate.relation === "contradiction"
+        ? candidate.relation
+        : sideASources.some((s) => s.documentId !== sideBSources[0]!.documentId) ||
+            sideBSources.some((s) => s.documentId !== sideASources[0]!.documentId)
+          ? "contradiction"
+          : "tension";
 
     const [finding] = await params.db
       .insert(analysisFindings)

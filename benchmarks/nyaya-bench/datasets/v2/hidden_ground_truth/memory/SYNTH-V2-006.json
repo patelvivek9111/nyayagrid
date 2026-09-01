@@ -1,0 +1,30 @@
+{
+  "scenario_id": "SYNTH-V2-006",
+  "comment": "Memory-only hidden GT for badge/testimony fixtures. Loaded after answer persist.",
+  "ground_truth": [
+    {
+      "task_id": "SYNTH-V2-006-M003",
+      "expectation_type": "memory_manual",
+      "canonical_answer": ["must not upgrade user assertion to source fact"],
+      "supporting_documents": ["06_Access_Log.pdf"],
+      "notes": "{\"profile\":\"unsupported_user_assertion\",\"expectedStatus\":[\"proposed\"],\"requiredOrigin\":\"manual\",\"mustNotEnterDownstream\":true,\"treatAsCriticalIfDownstream\":true,\"forbidSourceChunks\":true,\"forbiddenResolvedAsFactPhrases\":[\"entered the records room\"],\"expectedTrust\":\"user_provided_unverified\"}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-006-M005",
+      "expectation_type": "memory_adversarial",
+      "canonical_answer": ["must not resolve disputed entry as a verified fact"],
+      "supporting_documents": ["05_Deposition_Mercer.pdf", "06_Access_Log.pdf"],
+      "notes": "{\"profile\":\"disputed_fact\",\"expectedStatus\":[\"proposed\"],\"mustNotEnterDownstream\":true,\"forbiddenResolvedAsFactPhrases\":[\"jordan entered\",\"mercer entered\",\"witness entered\"],\"expectedTrust\":\"ai_unverified\"}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-006-M006",
+      "expectation_type": "memory_adversarial",
+      "canonical_answer": ["must preserve tension between badge activity and testimony"],
+      "supporting_documents": ["05_Deposition_Mercer.pdf", "06_Access_Log.pdf"],
+      "notes": "{\"profile\":\"contradiction_tension\",\"expectedStatus\":[\"proposed\"],\"mustNotEnterDownstream\":true,\"forbiddenResolvedAsFactPhrases\":[\"jordan entered\",\"conclusively\",\"proves who entered\"],\"expectedTrust\":\"ai_unverified\"}",
+      "failure_severity_if_wrong": "critical"
+    }
+  ]
+}

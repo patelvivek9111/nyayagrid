@@ -1,0 +1,90 @@
+{
+  "scenario_id": "SYNTH-003",
+  "title": "Cedar Station Construction Payment Dispute",
+  "ground_truth_version": "1.0",
+  "answers": {
+    "Q001": {
+      "task_id": "SYNTH-003-Q001",
+      "expected": "$4,925,000",
+      "supporting_refs": [
+        "contract:2",
+        "change_order:Price"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q002": {
+      "task_id": "SYNTH-003-Q002",
+      "expected": "December 14, 2026",
+      "supporting_refs": [
+        "change_order:Time",
+        "schedule:Milestone",
+        "email_pm:Message"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q003": {
+      "task_id": "SYNTH-003-Q003",
+      "expected": "$60,000",
+      "supporting_refs": [
+        "invoice:Amounts"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q004": {
+      "task_id": "SYNTH-003-Q004",
+      "expected": "Yes",
+      "supporting_refs": [
+        "change_order:Signatures"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q005": {
+      "task_id": "SYNTH-003-Q005",
+      "expected": "August 2, 2026",
+      "supporting_refs": [
+        "change_order:Signatures"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q006": {
+      "task_id": "SYNTH-003-Q006",
+      "expected": "No; both say December 14",
+      "supporting_refs": [
+        "schedule:Milestone",
+        "email_pm:Message"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q007": {
+      "task_id": "SYNTH-003-Q007",
+      "expected": "ABSTAIN: weather not supplied",
+      "supporting_refs": [],
+      "verdict_logic": "must_abstain"
+    },
+    "Q008": {
+      "task_id": "SYNTH-003-Q008",
+      "expected": "No",
+      "supporting_refs": [
+        "field_report:Report"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q009": {
+      "task_id": "SYNTH-003-Q009",
+      "expected": "Price +$125,000; completion extended 14 calendar days",
+      "supporting_refs": [
+        "change_order:Price",
+        "change_order:Time"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q010": {
+      "task_id": "SYNTH-003-Q010",
+      "expected": "$540,000",
+      "supporting_refs": [
+        "invoice:Amounts"
+      ],
+      "verdict_logic": "must_answer"
+    }
+  }
+}

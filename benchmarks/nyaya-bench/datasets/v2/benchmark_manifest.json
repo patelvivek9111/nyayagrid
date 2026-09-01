@@ -1,0 +1,121 @@
+{
+  "version": "2.0",
+  "synthetic": true,
+  "scenario_count": 16,
+  "document_count": 128,
+  "task_count": 400,
+  "scenarios": [
+    {
+      "scenario_id": "SYNTH-V2-001",
+      "name": "Harbor Point Office Lease",
+      "domain": "Commercial Lease",
+      "documents": 8,
+      "tasks": 25
+    },
+    {
+      "scenario_id": "SYNTH-V2-002",
+      "name": "CinderCloud Enterprise MSA",
+      "domain": "Software Services",
+      "documents": 8,
+      "tasks": 25
+    },
+    {
+      "scenario_id": "SYNTH-V2-003",
+      "name": "Northgate Medical Buildout",
+      "domain": "Construction",
+      "documents": 8,
+      "tasks": 25
+    },
+    {
+      "scenario_id": "SYNTH-V2-004",
+      "name": "BrightArc Executive Employment",
+      "domain": "Employment",
+      "documents": 8,
+      "tasks": 25
+    },
+    {
+      "scenario_id": "SYNTH-V2-005",
+      "name": "Lattice Components Supply",
+      "domain": "Supply",
+      "documents": 8,
+      "tasks": 25
+    },
+    {
+      "scenario_id": "SYNTH-V2-006",
+      "name": "SilverKey Patent License",
+      "domain": "IP License",
+      "documents": 8,
+      "tasks": 25
+    },
+    {
+      "scenario_id": "SYNTH-V2-007",
+      "name": "Juniper Ridge Partnership",
+      "domain": "Partnership",
+      "documents": 8,
+      "tasks": 25
+    },
+    {
+      "scenario_id": "SYNTH-V2-008",
+      "name": "Cobalt River Credit Facility",
+      "domain": "Commercial Loan",
+      "documents": 8,
+      "tasks": 25
+    },
+    {
+      "scenario_id": "SYNTH-V2-009",
+      "name": "Aster Labs NDA Dispute",
+      "domain": "NDA / Trade Secret",
+      "documents": 8,
+      "tasks": 25
+    },
+    {
+      "scenario_id": "SYNTH-V2-010",
+      "name": "MetroVale Managed Services",
+      "domain": "Services Termination",
+      "documents": 8,
+      "tasks": 25
+    },
+    {
+      "scenario_id": "SYNTH-V2-011",
+      "name": "Orchid Retail Distribution",
+      "domain": "Distribution",
+      "documents": 8,
+      "tasks": 25
+    },
+    {
+      "scenario_id": "SYNTH-V2-012",
+      "name": "Pinecrest Equipment Lease",
+      "domain": "Equipment Lease",
+      "documents": 8,
+      "tasks": 25
+    },
+    {
+      "scenario_id": "SYNTH-V2-013",
+      "name": "SummitCare Vendor Agreement",
+      "domain": "Healthcare Vendor - Synthetic",
+      "documents": 8,
+      "tasks": 25
+    },
+    {
+      "scenario_id": "SYNTH-V2-014",
+      "name": "Redwood Data Processing Addendum",
+      "domain": "Data Processing",
+      "documents": 8,
+      "tasks": 25
+    },
+    {
+      "scenario_id": "SYNTH-V2-015",
+      "name": "BlueMesa Franchise Agreement",
+      "domain": "Franchise - Synthetic",
+      "documents": 8,
+      "tasks": 25
+    },
+    {
+      "scenario_id": "SYNTH-V2-016",
+      "name": "Keystone Renewable EPC",
+      "domain": "Energy Construction",
+      "documents": 8,
+      "tasks": 25
+    }
+  ]
+}

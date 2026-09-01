@@ -2,9 +2,14 @@
 
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
-import { Button, PageHeader, Panel } from "@nyayagrid/ui";
+import { useRouter } from "next/navigation";
+import { Button } from "@nyayagrid/ui";
+import { userFacingInviteMessage } from "@nyayagrid/auth/user-facing";
+import { AuthShell } from "@/components/ux/auth-shell";
+import { safeAuthReturnTo } from "@/lib/auth-return";
 
 export default function AcceptInvitePage() {
+  const router = useRouter();
   const [token, setToken] = useState(() => {
     if (typeof window === "undefined") return "";
     return new URLSearchParams(window.location.search).get("token") ?? "";
@@ -25,42 +30,69 @@ export default function AcceptInvitePage() {
         body: JSON.stringify({ token }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data?.error?.message ?? "Accept failed");
-      setMessage("Invitation accepted. Open the client portal or professional workspace.");
+      if (res.status === 401) {
+        const returnTo = safeAuthReturnTo(
+          `/invites/accept${token.trim() ? `?token=${encodeURIComponent(token.trim())}` : ""}`,
+        );
+        router.replace(`/sign-in?returnTo=${encodeURIComponent(returnTo)}&reason=session`);
+        return;
+      }
+      if (!res.ok) {
+        const code = typeof data?.error?.code === "string" ? data.error.code : "";
+        throw new Error(userFacingInviteMessage(code));
+      }
+      setMessage("Invitation accepted. Opening your workspace…");
+      router.push("/app/cases");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed");
+      setError(err instanceof Error ? err.message : userFacingInviteMessage("INTERNAL"));
     } finally {
       setBusy(false);
     }
   }
 
   return (
-    <main className="mx-auto max-w-xl px-6 py-12">
-      <PageHeader
-        eyebrow="NyayaGrid"
-        title="Accept invitation"
-        description="Use the token from your invite email or the Settings page. The token cannot be recovered after it is created."
-      />
-      {error ? <p className="mb-4 text-sm text-[var(--ng-danger)]">{error}</p> : null}
-      {message ? <p className="mb-4 text-sm text-ink/80">{message}</p> : null}
-      <Panel title="Token">
-        <form className="flex flex-col gap-3" onSubmit={accept}>
+    <AuthShell
+      title="Accept invitation"
+      description="Sign in with the email your firm invited, then confirm this invitation to join the workspace."
+    >
+      {error ? (
+        <p id="invite-error" className="text-sm text-[var(--ng-danger)]" role="alert">
+          {error}
+        </p>
+      ) : null}
+      {message ? (
+        <p className="text-sm text-ink/80" role="status">
+          {message}
+        </p>
+      ) : null}
+      <form className="flex flex-col gap-3" onSubmit={accept}>
+        <label className="text-sm font-semibold text-ink" htmlFor="invite-token">
+          Invitation
           <textarea
-            className="min-h-[80px] rounded border border-line px-2 py-1.5 text-sm"
+            id="invite-token"
+            className="mt-1 min-h-[80px] w-full rounded border border-line px-2 py-1.5 text-sm font-normal"
             value={token}
             onChange={(e) => setToken(e.target.value)}
             required
+            autoComplete="off"
+            aria-invalid={Boolean(error)}
+            aria-describedby={error ? "invite-token-help invite-error" : "invite-token-help"}
           />
-          <Button type="submit" disabled={busy || !token.trim()}>
-            Accept invite
-          </Button>
-        </form>
-        <p className="mt-3 text-sm">
-          <Link className="font-semibold text-accent underline" href="/portal">
-            Client portal
-          </Link>
+        </label>
+        <p id="invite-token-help" className="text-xs text-ink/55">
+          Paste the invitation from your email. If it no longer works, ask your administrator for a
+          new invitation.
         </p>
-      </Panel>
-    </main>
+        <Button type="submit" disabled={busy || !token.trim()}>
+          {busy ? "Accepting…" : "Accept invitation"}
+        </Button>
+      </form>
+      <p className="text-sm text-ink/60">
+        Need to sign in first?{" "}
+        <Link className="font-semibold text-accent underline" href="/sign-in">
+          Sign in
+        </Link>
+      </p>
+    </AuthShell>
   );
 }

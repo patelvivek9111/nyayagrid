@@ -1,0 +1,245 @@
+{
+  "id": "BASELINE_6W_FROZEN",
+  "generatedAt": "2026-08-27T10:58:13.499Z",
+  "policy": "sequential, per-suite timeout, lock file, parse suite JSON, no historical baseline overwrite",
+  "unitOnly": false,
+  "results": [
+    {
+      "id": "unit-openai-retry",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "PASS",
+      "status": "PASS",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 1913,
+      "log": ".\\tmp\\6w-frozen\\unit-openai-retry.log"
+    },
+    {
+      "id": "unit-feature-flags",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "PASS",
+      "status": "PASS",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 1590,
+      "log": ".\\tmp\\6w-frozen\\unit-feature-flags.log"
+    },
+    {
+      "id": "unit-http-errors",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "PASS",
+      "status": "PASS",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 13492,
+      "log": ".\\tmp\\6w-frozen\\unit-http-errors.log"
+    },
+    {
+      "id": "unit-analysis-trust",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "PASS",
+      "status": "PASS",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 2248,
+      "log": ".\\tmp\\6w-frozen\\unit-analysis-trust.log"
+    },
+    {
+      "id": "unit-draft-source-limitation",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "PASS",
+      "status": "PASS",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 2439,
+      "log": ".\\tmp\\6w-frozen\\unit-draft-source-limitation.log"
+    },
+    {
+      "id": "j1",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "PASS",
+      "status": "PASS",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 10402,
+      "log": ".\\tmp\\6w-frozen\\j1.log"
+    },
+    {
+      "id": "isolation-rbac",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "PASS",
+      "status": "PASS",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 6832,
+      "log": ".\\tmp\\6w-frozen\\isolation-rbac.log"
+    },
+    {
+      "id": "compare-b2",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "PASS",
+      "status": "PASS",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 75800,
+      "log": ".\\tmp\\6w-frozen\\compare-b2.log"
+    },
+    {
+      "id": "contradiction-b2",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "PASS",
+      "status": "PASS",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 254113,
+      "log": ".\\tmp\\6w-frozen\\contradiction-b2.log"
+    },
+    {
+      "id": "timeline-t2",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "NEEDS_WORK",
+      "status": "NEEDS_WORK",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 853877,
+      "log": ".\\tmp\\6w-frozen\\timeline-t2.log"
+    },
+    {
+      "id": "memory-m2",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "NEEDS_WORK",
+      "status": "NEEDS_WORK",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 24491,
+      "log": ".\\tmp\\6w-frozen\\memory-m2.log"
+    },
+    {
+      "id": "analysis-trust-live",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "PASS",
+      "status": "PASS",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 108482,
+      "log": ".\\tmp\\6w-frozen\\analysis-trust-live.log"
+    },
+    {
+      "id": "deposition-da1",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "CRITICAL",
+      "status": "CRITICAL",
+      "exitCode": 0,
+      "criticalFails": 3,
+      "elapsedMs": 118714,
+      "log": ".\\tmp\\6w-frozen\\deposition-da1.log"
+    },
+    {
+      "id": "contract-ca1",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "FAIL",
+      "status": "FAIL",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 176677,
+      "log": ".\\tmp\\6w-frozen\\contract-ca1.log"
+    },
+    {
+      "id": "evidence-em2",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "PASS",
+      "status": "PASS",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 150144,
+      "log": ".\\tmp\\6w-frozen\\evidence-em2.log"
+    },
+    {
+      "id": "graph-g2",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "PASS",
+      "status": "PASS",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 305603,
+      "log": ".\\tmp\\6w-frozen\\graph-g2.log"
+    },
+    {
+      "id": "research-r1",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "NEEDS_WORK",
+      "status": "NEEDS_WORK",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 141707,
+      "log": ".\\tmp\\6w-frozen\\research-r1.log"
+    },
+    {
+      "id": "draft-source-limitation-live",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "PASS",
+      "status": "PASS",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 225845,
+      "log": ".\\tmp\\6w-frozen\\draft-source-limitation-live.log"
+    },
+    {
+      "id": "full-system-6r",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "NEEDS_WORK",
+      "status": "NEEDS_WORK",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 890855,
+      "log": ".\\tmp\\6w-frozen\\full-system-6r.log"
+    },
+    {
+      "id": "c2a-critical",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "NEEDS_WORK",
+      "status": "NEEDS_WORK",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 243837,
+      "log": ".\\tmp\\6w-frozen\\c2a-critical.log"
+    },
+    {
+      "id": "6u-r1",
+      "critical": true,
+      "processStatus": "exited",
+      "suiteStatus": "NEEDS_WORK",
+      "status": "NEEDS_WORK",
+      "exitCode": 0,
+      "criticalFails": 0,
+      "elapsedMs": 83144,
+      "log": ".\\tmp\\6w-frozen\\6u-r1.log"
+    }
+  ],
+  "pass": 13,
+  "fail": 1,
+  "timeout": 0,
+  "criticalFailures": [
+    "deposition-da1"
+  ]
+}

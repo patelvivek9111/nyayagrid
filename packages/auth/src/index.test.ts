@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   ClerkAuthProvider,
   DevAuthProvider,
+  UnavailableAuthProvider,
   clerkWebhookAction,
   createAuthProviderFromEnv,
   verifyClerkWebhookSignature,
@@ -59,6 +60,21 @@ describe("DevAuthProvider", () => {
     vi.stubEnv("APP_ENV", "production");
     expect(await provider.getIdentity(new Headers())).toBeNull();
   });
+
+  it("refuses DevAuth when APP_ENV is missing even if NODE_ENV is development", async () => {
+    vi.unstubAllEnvs();
+    vi.stubEnv("NODE_ENV", "development");
+    delete process.env.APP_ENV;
+    const provider = new DevAuthProvider({
+      userId: "dev_user_owner",
+      email: "owner@example.nyayagrid.local",
+      name: "Dev Owner",
+    });
+    expect(await provider.getIdentity(new Headers())).toBeNull();
+    expect(
+      await provider.getIdentity(new Headers({ "x-nyayagrid-dev-user": "attacker" })),
+    ).toBeNull();
+  });
 });
 
 describe("ClerkAuthProvider", () => {
@@ -90,6 +106,28 @@ describe("ClerkAuthProvider", () => {
     });
     expect(provider.name).toBe("clerk");
     vi.unstubAllEnvs();
+  });
+
+  it("returns no identity instead of throwing when Clerk keys are missing", async () => {
+    vi.stubEnv("AUTH_PROVIDER", "clerk");
+    vi.stubEnv("CLERK_SECRET_KEY", "");
+    vi.stubEnv("NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY", "");
+    const provider = createAuthProviderFromEnv({
+      resolveClerkSession: async () => ({ userId: "user_abc", email: "a@example.nyayagrid.local" }),
+    });
+    expect(provider).toBeInstanceOf(UnavailableAuthProvider);
+    expect(await provider.getIdentity(new Headers())).toBeNull();
+  });
+
+  it("does not fall back to DevAuth when Clerk is requested or the host is not explicit local", async () => {
+    vi.stubEnv("APP_ENV", "staging");
+    vi.stubEnv("AUTH_PROVIDER", "dev");
+    expect(createAuthProviderFromEnv().name).toBe("unavailable");
+    vi.stubEnv("APP_ENV", "production");
+    vi.stubEnv("AUTH_PROVIDER", "clerk");
+    vi.stubEnv("CLERK_SECRET_KEY", "");
+    vi.stubEnv("NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY", "");
+    expect(createAuthProviderFromEnv().name).toBe("unavailable");
   });
 });
 

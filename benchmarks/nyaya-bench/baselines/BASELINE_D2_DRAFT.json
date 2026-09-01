@@ -1,0 +1,27 @@
+{
+  "label": "D2",
+  "title": "Draft reliability after Phase 6N parse and quote safety fixes",
+  "doesNotOverwriteD1": true,
+  "liveRunDir": "benchmarks/nyaya-bench/reports/runs/2026-08-19T14-48-18-447Z",
+  "d1RunDir": "benchmarks/nyaya-bench/reports/runs/2026-08-19T14-30-01-693Z",
+  "executionMode": "draft",
+  "benchmarkKind": "NYAYA_DRAFT",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "graderVersion": "d1-2026-08-19",
+  "freeze": "FREEZE_DRAFT",
+  "nextPhase": "PHASE 6O — GRAPH RELIABILITY",
+  "counts": {
+    "pass": 24,
+    "needs_work": 0,
+    "fail": 0,
+    "infrastructure": 0,
+    "criticalFails": 0
+  },
+  "transitionsFromD1": {
+    "PASS_PASS": 22,
+    "INFRA_PASS": 2,
+    "infraToPass": ["SYNTH-V2-001-D018", "SYNTH-V2-001-D023"],
+    "regressions": []
+  }
+}

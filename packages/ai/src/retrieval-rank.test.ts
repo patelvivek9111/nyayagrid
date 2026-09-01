@@ -45,4 +45,19 @@ describe("question-overlap rerank", () => {
       testCase.retrieved.map((p) => p.chunkId).sort(),
     );
   });
+
+  it("is deterministic for the same question and passage set", () => {
+    const items = [
+      { chunkId: "b", quote: "notice period currently applies thirty days" },
+      { chunkId: "a", quote: "notice period currently applies thirty days" },
+      { chunkId: "c", quote: "unrelated invoice amount" },
+    ];
+    const question = "What notice period currently applies?";
+    const first = rankByQuestionOverlap(question, items).map((row) => row.chunkId);
+    const shuffled = rankByQuestionOverlap(question, [items[1]!, items[2]!, items[0]!]).map(
+      (row) => row.chunkId,
+    );
+    expect(first).toEqual(shuffled);
+    expect(first).toEqual(["a", "b", "c"]);
+  });
 });

@@ -32,9 +32,16 @@ const EXACT_DATE_RE = new RegExp(
 );
 
 const IMPRECISE_END_RE = new RegExp(
-  `\\b(?:(?:around|approximately|about)\\s+(?:the\\s+)?)?(?:the\\s+)?(end|beginning|start|middle)\\s+of\\s+(${MONTH_ALT})(?:\\s+(\\d{4}))?\\b`,
+  `\\b(?:(?:around|approximately|about|near)\\s+(?:the\\s+)?)?(?:the\\s+)?(end|beginning|start|middle)\\s+of\\s+(${MONTH_ALT})(?:\\s+(\\d{4}))?\\b`,
   "gi",
 );
+
+const NEAR_MIDDLE_RE = new RegExp(
+  `\\b(?:near|around|approximately|about)\\s+(?:the\\s+)?middle\\s+of\\s+(${MONTH_ALT})(?:\\s+(\\d{4}))?\\b`,
+  "gi",
+);
+
+const ISO_DATE_RE = /\b(20\d{2})-(\d{2})-(\d{2})\b/g;
 
 const IMPRECISE_LATE_EARLY_RE = new RegExp(
   `\\b(late|early|mid-?)\\s+(${MONTH_ALT})(?:\\s+(\\d{4}))?\\b`,
@@ -55,7 +62,7 @@ export type ExactCalendarDate = {
 export type ImpreciseDateWindow = {
   month: number;
   year: number | null;
-  kind: "end" | "early" | "mid" | "about" | "month";
+  kind: "end" | "early" | "mid" | "about" | "month" | "near_mid";
   day: number | null;
 };
 
@@ -71,6 +78,13 @@ export function extractExactDates(text: string): ExactCalendarDate[] {
     const day = Number(match[2]);
     const year = Number(match[3]);
     if (month == null || !Number.isFinite(day) || !Number.isFinite(year)) continue;
+    found.push({ month, day, year });
+  }
+  for (const match of text.matchAll(ISO_DATE_RE)) {
+    const year = Number(match[1]);
+    const month = Number(match[2]) - 1;
+    const day = Number(match[3]);
+    if (!Number.isFinite(year) || month < 0 || month > 11 || !Number.isFinite(day)) continue;
     found.push({ month, day, year });
   }
   return found;
@@ -113,6 +127,17 @@ export function extractImpreciseWindows(text: string): ImpreciseDateWindow[] {
     windows.push({ month, year, kind: "about", day });
   }
 
+  for (const match of text.matchAll(NEAR_MIDDLE_RE)) {
+    const month = monthIndex(match[1] ?? "");
+    if (month == null) continue;
+    windows.push({
+      month,
+      year: match[2] ? Number(match[2]) : null,
+      kind: "near_mid",
+      day: null,
+    });
+  }
+
   return windows;
 }
 
@@ -135,8 +160,11 @@ export function impreciseWindowCoversDate(
   } else if (window.kind === "early") {
     end = Math.min(10, last);
   } else if (window.kind === "mid") {
-    start = 11;
-    end = Math.min(20, last);
+    start = 8;
+    end = Math.min(22, last);
+  } else if (window.kind === "near_mid") {
+    start = 1;
+    end = last;
   } else if (window.kind === "about" && window.day != null) {
     start = Math.max(1, window.day - 2);
     end = Math.min(last, window.day + 2);

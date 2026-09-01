@@ -54,6 +54,11 @@ export function resolveValidatedSources(params: {
   sourceChunkIds: string[];
   sourceQuotes: string[];
   authorized: Map<string, ChunkProvenance>;
+  event?: {
+    title?: string;
+    description?: string | null;
+    eventDate?: string | null;
+  };
 }): Array<{
   organizationId: string;
   matterId: string;
@@ -81,7 +86,18 @@ export function resolveValidatedSources(params: {
     if (chunk.organizationId !== params.organizationId || chunk.matterId !== params.matterId) {
       return;
     }
-    const quote = params.sourceQuotes[index]?.trim() || chunk.content.slice(0, 400);
+    const quotes = [params.sourceQuotes[index], ...params.sourceQuotes].filter(
+      (value): value is string => Boolean(value?.trim()),
+    );
+    const supporting =
+      findSupportingSpan({
+        chunkText: chunk.content,
+        quotes,
+        title: params.event?.title,
+        description: params.event?.description,
+        eventDate: params.event?.eventDate ?? null,
+      }) ?? fallbackChunkSpan(chunk.content);
+    if (!supporting) return;
     out.push({
       organizationId: params.organizationId,
       matterId: params.matterId,
@@ -90,7 +106,7 @@ export function resolveValidatedSources(params: {
       chunkId: chunk.chunkId,
       page: chunk.page,
       segmentRef: chunk.segmentRef,
-      supportingText: quote,
+      supportingText: supporting,
     });
   });
 
@@ -135,4 +151,61 @@ export function jaccard(a: Set<string>, b: Set<string>): number {
   }
   const union = a.size + b.size - intersection;
   return union === 0 ? 0 : intersection / union;
+}
+
+function fallbackChunkSpan(chunkText: string): string | null {
+  const folded = chunkText.replace(/\s+/g, " ").trim();
+  if (folded.length < 12) return null;
+  if (/^synth\s*-\s*fictional test document/i.test(folded)) return null;
+  return folded.slice(0, 400);
+}
+
+export function findSupportingSpan(params: {
+  chunkText: string;
+  quotes: string[];
+  title?: string;
+  description?: string | null;
+  eventDate?: string | null;
+}): string | null {
+  const text = params.chunkText;
+  if (!text.trim()) return null;
+  const foldedText = text.replace(/\s+/g, " ").trim();
+  for (const quote of params.quotes) {
+    const trimmed = quote.trim();
+    if (trimmed.length < 8) continue;
+    const needle = trimmed.slice(0, Math.min(trimmed.length, 120));
+    const foldedNeedle = needle.replace(/\s+/g, " ").trim();
+    if (
+      text.includes(needle) ||
+      text.toLowerCase().includes(needle.toLowerCase()) ||
+      foldedText.toLowerCase().includes(foldedNeedle.toLowerCase())
+    ) {
+      return trimmed.slice(0, 400);
+    }
+  }
+  const iso = params.eventDate?.match(/\b(20\d{2}-\d{2}-\d{2})\b/)?.[1] ?? null;
+  if (iso) {
+    const index = text.indexOf(iso);
+    if (index >= 0) {
+      return text
+        .slice(Math.max(0, index - 80), index + iso.length + 80)
+        .replace(/\s+/g, " ")
+        .trim()
+        .slice(0, 400);
+    }
+  }
+  const tokens = tokenize(`${params.title ?? ""} ${params.description ?? ""}`);
+  const words = [...tokens].filter((token) => token.length >= 4).slice(0, 4);
+  if (words.length === 0) return null;
+  const lower = text.toLowerCase();
+  let hit = -1;
+  for (const word of words) {
+    hit = lower.indexOf(word);
+    if (hit >= 0) break;
+  }
+  if (hit < 0) return null;
+  const span = text.slice(Math.max(0, hit - 60), hit + 160).replace(/\s+/g, " ").trim();
+  if (span.length < 12) return null;
+  if (/^synth\s*-\s*fictional test document/i.test(span) && !iso) return null;
+  return span.slice(0, 400);
 }

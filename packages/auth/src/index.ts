@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import type { Database } from "@nyayagrid/database";
 import { users } from "@nyayagrid/database";
-import { isProductionLike } from "@nyayagrid/platform";
+import { isExplicitLocalDevAuthAllowed } from "@nyayagrid/platform";
 
 /**
  * Authentication identity only.
@@ -31,7 +31,7 @@ export class DevAuthProvider implements AuthProvider {
   ) {}
 
   async getIdentity(requestHeaders: Headers): Promise<AuthIdentity | null> {
-    if (isProductionLike()) {
+    if (!isExplicitLocalDevAuthAllowed()) {
       return null;
     }
     const override = requestHeaders.get("x-nyayagrid-dev-user");
@@ -82,22 +82,29 @@ export class ClerkAuthProvider implements AuthProvider {
   }
 }
 
+export class UnavailableAuthProvider implements AuthProvider {
+  readonly name = "unavailable";
+
+  async getIdentity(_requestHeaders: Headers): Promise<AuthIdentity | null> {
+    return null;
+  }
+}
+
 export function createAuthProviderFromEnv(options?: {
   resolveClerkSession?: ClerkSessionResolver;
 }): AuthProvider {
   const provider = process.env.AUTH_PROVIDER ?? "dev";
   if (provider === "clerk") {
     if (!process.env.CLERK_SECRET_KEY || !process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY) {
-      throw new Error(
-        "AUTH_PROVIDER=clerk requires CLERK_SECRET_KEY and NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY. Use AUTH_PROVIDER=dev for free local development.",
-      );
+      return new UnavailableAuthProvider();
     }
     if (!options?.resolveClerkSession) {
-      throw new Error(
-        "Clerk adapter is configured but must be wired from the Next.js app layer (see apps/web). Use AUTH_PROVIDER=dev for package-level tests.",
-      );
+      return new UnavailableAuthProvider();
     }
     return new ClerkAuthProvider(options.resolveClerkSession);
+  }
+  if (!isExplicitLocalDevAuthAllowed()) {
+    return new UnavailableAuthProvider();
   }
   return new DevAuthProvider({
     userId: process.env.DEV_AUTH_USER_ID ?? "dev_user_owner",
@@ -143,7 +150,7 @@ export async function ensureUserFromIdentity(db: Database, identity: AuthIdentit
 
 export class UnauthenticatedError extends Error {
   readonly code = "UNAUTHENTICATED";
-  constructor(message = "Authentication required") {
+  constructor(message = "Please sign in to continue.") {
     super(message);
     this.name = "UnauthenticatedError";
   }
@@ -151,3 +158,4 @@ export class UnauthenticatedError extends Error {
 
 export * from "./invites";
 export * from "./clerk-webhook";
+export * from "./user-facing";

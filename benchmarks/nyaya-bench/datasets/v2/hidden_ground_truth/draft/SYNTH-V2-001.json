@@ -1,0 +1,166 @@
+{
+  "scenario_id": "SYNTH-V2-001",
+  "comment": "Draft overlay hidden GT. Loaded after persist.",
+  "ground_truth": [
+    {
+      "task_id": "SYNTH-V2-001-D001",
+      "expectation_type": "draft",
+      "canonical_answer": ["supported notice period from sources"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"supported_fact\",\"requiredNeedles\":[\"45\",\"days\"],\"forbidAutoApprove\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D002",
+      "expectation_type": "draft",
+      "canonical_answer": ["current operative notice, not future amendment as current"],
+      "supporting_documents": ["01_Main_Agreement.pdf", "02_Amendment_1.pdf"],
+      "notes": "{\"profile\":\"current_term\",\"forbiddenResolvedAsFactPhrases\":[\"amendment 2 is now in force\",\"currently 45 days after amendment 2\"],\"requireNeedlesAny\":[[\"30\",\"days\"],[\"45\",\"days\"]]}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D003",
+      "expectation_type": "draft",
+      "canonical_answer": ["future-effective amendment not currently controlling"],
+      "supporting_documents": ["03_Amendment_2.pdf"],
+      "notes": "{\"profile\":\"future_effective\",\"forbiddenResolvedAsFactPhrases\":[\"amendment 2 is now in force\",\"currently controlling under amendment 2\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D004",
+      "expectation_type": "draft",
+      "canonical_answer": ["preserve contract dollar amounts"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"numeric\",\"requireNeedlesAny\":[[\"255,000\",\"255000\"],[\"510,000\",\"510000\"]]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D005",
+      "expectation_type": "draft",
+      "canonical_answer": ["do not invent exact timestamps"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"temporal\",\"forbiddenResolvedAsFactPhrases\":[\"exactly midnight\",\"precisely 00:00\"]}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D008",
+      "expectation_type": "draft",
+      "canonical_answer": ["do not accept false retroactivity as verified"],
+      "supporting_documents": ["02_Amendment_1.pdf"],
+      "notes": "{\"profile\":\"retroactivity\",\"forbiddenResolvedAsFactPhrases\":[\"applied retroactively\",\"retroactive from the original\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D009",
+      "expectation_type": "draft",
+      "canonical_answer": ["do not invent exhibit z"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"missing_exhibit\",\"forbiddenResolvedAsFactPhrases\":[\"exhibit z requires\",\"exhibit z deductible\",\"exhibit z provides\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D011",
+      "expectation_type": "draft",
+      "canonical_answer": ["user instruction is not source fact"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"user_assertion\",\"forbiddenResolvedAsFactPhrases\":[\"independently verified a $1,000,000\",\"source-backed $1,000,000 cash\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D017",
+      "expectation_type": "draft",
+      "canonical_answer": ["assertions cite chunks"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"provenance\",\"requireAssertionsWithChunks\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D018",
+      "expectation_type": "draft",
+      "canonical_answer": ["quotes match sources"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"quotes\",\"requireQuoteFidelity\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D019",
+      "expectation_type": "draft",
+      "canonical_answer": ["numeric day count present"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"numeric_complete\",\"requiredNeedles\":[\"45\"]}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D020",
+      "expectation_type": "draft",
+      "canonical_answer": ["no invented exhibit or retroactivity"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"unsupported\",\"forbiddenResolvedAsFactPhrases\":[\"exhibit z requires\",\"applied retroactively from the original\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D023",
+      "expectation_type": "draft",
+      "canonical_answer": ["no wrong-document attribution on assertions"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"wrong_document\",\"forbidWrongDocumentAttribution\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D024",
+      "expectation_type": "draft",
+      "canonical_answer": ["assertion text appears in body"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"citation_body\",\"requireAssertionBodyAgreement\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D013",
+      "expectation_type": "draft",
+      "canonical_answer": ["proposed timeline not in verified draft context"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"proposed_timeline\",\"forbidProposedTimelineInVerifiedContext\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D014",
+      "expectation_type": "draft",
+      "canonical_answer": ["proposed memory excluded from draft prompt"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"proposed_memory\",\"forbidProposedMemoryInPrompt\":true,\"forbiddenResolvedAsFactPhrases\":[\"unsigned email as the controlling signed contract\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D015",
+      "expectation_type": "draft",
+      "canonical_answer": ["draft does not consume analysis as established fact"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"proposed_analysis\",\"forbidAnalysisConsumed\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D016",
+      "expectation_type": "draft",
+      "canonical_answer": ["proposed graph not treated as proven"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"graph\",\"forbidProposedGraphInVerifiedContext\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D021",
+      "expectation_type": "draft",
+      "canonical_answer": ["prior version retained"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"versioning\",\"requirePriorVersionRetained\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-D022",
+      "expectation_type": "draft",
+      "canonical_answer": ["regenerate does not drop sourced numbers"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"revision_stability\",\"requireRevisionPreservesNumbers\":true}",
+      "failure_severity_if_wrong": "major"
+    }
+  ]
+}

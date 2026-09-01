@@ -1,0 +1,253 @@
+{
+  "comment": "Graph overlay. Reuses V2 PDFs. Grades persisted graph_nodes/graph_edges, not chat. Does not score Draft or frozen Analysis.",
+  "tasks": [
+    {
+      "id": "SYNTH-V2-001-G012",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "graph",
+      "difficulty": "hard",
+      "prompt": "Proposed graph relationships must not enter verified graph context.",
+      "action": {
+        "extractIntelligence": true,
+        "materialize": true,
+        "extractRelationships": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-G017",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "graph",
+      "difficulty": "hard",
+      "prompt": "Manual graph writes must not auto-approve as verified evidence.",
+      "action": {
+        "materialize": true,
+        "createManual": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-G001",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "graph",
+      "difficulty": "medium",
+      "prompt": "Persist correct party or document relationships from the main agreement.",
+      "action": {
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true,
+        "materialize": true,
+        "extractRelationships": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-G002",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "graph",
+      "difficulty": "medium",
+      "prompt": "Distinguish the original agreement from Amendment 1 as related documents.",
+      "action": {
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true,
+        "materialize": true,
+        "extractRelationships": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-G003",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "graph",
+      "difficulty": "hard",
+      "prompt": "Do not represent a future-effective amendment as currently operative.",
+      "action": {
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true,
+        "materialize": true,
+        "extractRelationships": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-G009",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "graph",
+      "difficulty": "hard",
+      "prompt": "An allegation of nonpayment must not become an established failed_to_pay or paid fact.",
+      "action": {
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true,
+        "materialize": true,
+        "extractRelationships": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-G010",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "graph",
+      "difficulty": "hard",
+      "prompt": "A missing exhibit must not generate exhibit contents as graph facts.",
+      "action": {
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true,
+        "materialize": true,
+        "extractRelationships": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-G011",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "graph",
+      "difficulty": "hard",
+      "prompt": "Approximate dates must not be upgraded to exact calendar facts.",
+      "action": {
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true,
+        "materialize": true,
+        "extractRelationships": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-G015",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "graph",
+      "difficulty": "hard",
+      "prompt": "Material AI graph edges must carry document and chunk provenance.",
+      "action": {
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true,
+        "materialize": true,
+        "extractRelationships": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-G016",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "graph",
+      "difficulty": "hard",
+      "prompt": "Wrong-document provenance on a material agreement relationship must fail.",
+      "action": {
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true,
+        "materialize": true,
+        "extractRelationships": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-G013",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "graph",
+      "difficulty": "medium",
+      "prompt": "An approved graph edge must enter the approved loader.",
+      "action": {
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true,
+        "materialize": true,
+        "extractRelationships": true,
+        "reviewAction": "approve"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-G014",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "graph",
+      "difficulty": "hard",
+      "prompt": "A rejected graph edge must stay out of verified context and must not return as verified.",
+      "action": {
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true,
+        "materialize": true,
+        "extractRelationships": true,
+        "reviewAction": "reject"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-G018",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "graph",
+      "difficulty": "hard",
+      "prompt": "Agent graph neighborhood must not launder proposed relationships as approved.",
+      "action": {
+        "extractIntelligence": true,
+        "materialize": true,
+        "extractRelationships": true,
+        "inspectNeighborhood": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-006-G004",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "graph",
+      "difficulty": "medium",
+      "prompt": "Payment or remittance relationships must not invert or invent payment facts.",
+      "action": {
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true,
+        "materialize": true,
+        "extractRelationships": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-006-G005",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "graph",
+      "difficulty": "hard",
+      "prompt": "Invoice silence must not prove a service credit was never issued or paid.",
+      "action": {
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true,
+        "materialize": true,
+        "extractRelationships": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-006-G006",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "graph",
+      "difficulty": "hard",
+      "prompt": "Deposition denial of entry must preserve negation and must not become an entered fact.",
+      "action": {
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true,
+        "materialize": true,
+        "extractRelationships": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-006-G007",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "graph",
+      "difficulty": "hard",
+      "prompt": "Badge ACCESS GRANTED activity must not prove a named person physically entered a room.",
+      "action": {
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true,
+        "materialize": true,
+        "extractRelationships": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-006-G008",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "graph",
+      "difficulty": "medium",
+      "prompt": "A badge assignment relationship may exist without converting to physical entry.",
+      "action": {
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true,
+        "materialize": true,
+        "extractRelationships": true
+      }
+    }
+  ]
+}

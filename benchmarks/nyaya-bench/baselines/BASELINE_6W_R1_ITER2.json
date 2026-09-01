@@ -1,0 +1,15 @@
+{
+  "id": "BASELINE_6W_R1_ITER2",
+  "generatedAt": "2026-08-27T09:55:00.000Z",
+  "iteration": 2,
+  "researchR1": {
+    "pass": 15,
+    "needsWork": 3,
+    "fail": 0,
+    "criticalFails": 0,
+    "r010": "PASS",
+    "r014": "PASS",
+    "r009": "PASS",
+    "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-27T09-52-06-747Z"
+  }
+}

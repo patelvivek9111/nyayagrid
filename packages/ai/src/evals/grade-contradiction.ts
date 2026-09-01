@@ -134,6 +134,12 @@ export function gradeContradictionCase(
       if (!got.has(id)) issues.push(`missing side chunk ${id}`);
     }
   }
+  if (testCase.expectRelation) {
+    const relations = parsed.candidates.map((candidate) => candidate.relation);
+    if (!relations.includes(testCase.expectRelation)) {
+      issues.push(`expected relation ${testCase.expectRelation}, got ${relations.join(",") || "(none)"}`);
+    }
+  }
 
   for (const candidate of parsed.candidates) {
     if (candidate.sideA.chunkIds.length < 1 || candidate.sideB.chunkIds.length < 1) {

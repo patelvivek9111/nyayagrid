@@ -93,6 +93,24 @@ export const evidenceAgent: NyayaAgent = {
       }
     }
 
+    const retrievedText = [
+      ...(search?.data?.hits ?? []).map((hit) => hit.quote),
+      ...(chunks?.data?.chunks ?? []).map((chunk) => chunk.quote),
+    ]
+      .join("\n")
+      .toLowerCase();
+    const requestedExhibits = [
+      ...`${goal} ${objective}`.matchAll(/\bexhibit\s+([A-Za-z0-9]+)\b/gi),
+    ].map((match) => match[1]!.toUpperCase());
+    for (const label of [...new Set(requestedExhibits)]) {
+      const needle = `exhibit ${label.toLowerCase()}`;
+      if (!retrievedText.includes(needle) && !retrievedText.includes(`ex. ${label.toLowerCase()}`)) {
+        builder.addLimitation(
+          `Exhibit ${label} was requested but was not found in retrieved matter sources. Its contents were not invented.`,
+        );
+      }
+    }
+
     return builder.build({
       fallbackSummary: "No evidence tool was authorized for this step.",
     });

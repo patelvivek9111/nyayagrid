@@ -1,0 +1,82 @@
+[
+  {
+    "task_id": "SYNTH-010-Q001",
+    "scenario_id": "SYNTH-010",
+    "category": "case_qa",
+    "prompt": "What convenience-termination notice period applies after August 1, 2026?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q001"
+  },
+  {
+    "task_id": "SYNTH-010-Q002",
+    "scenario_id": "SYNTH-010",
+    "category": "contract_compare",
+    "prompt": "What substantive changes did the Service Amendment make?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q002"
+  },
+  {
+    "task_id": "SYNTH-010-Q003",
+    "scenario_id": "SYNTH-010",
+    "category": "decoy",
+    "prompt": "Did renaming Schedule B to Schedule C change the maintenance specifications?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q003"
+  },
+  {
+    "task_id": "SYNTH-010-Q004",
+    "scenario_id": "SYNTH-010",
+    "category": "case_qa",
+    "prompt": "What termination effective date did Eastbridge state?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q004"
+  },
+  {
+    "task_id": "SYNTH-010-Q005",
+    "scenario_id": "SYNTH-010",
+    "category": "numeric",
+    "prompt": "What is 5% of the $68,000 monthly fee?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q005"
+  },
+  {
+    "task_id": "SYNTH-010-Q006",
+    "scenario_id": "SYNTH-010",
+    "category": "reasoning",
+    "prompt": "What total service-credit percentage corresponds to the two recorded qualifying August incidents, before considering the monthly cap?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q006"
+  },
+  {
+    "task_id": "SYNTH-010-Q007",
+    "scenario_id": "SYNTH-010",
+    "category": "reasoning",
+    "prompt": "What dollar amount corresponds to that two-incident credit under the amended 5% rate and 10% monthly cap?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q007"
+  },
+  {
+    "task_id": "SYNTH-010-Q008",
+    "scenario_id": "SYNTH-010",
+    "category": "insufficient",
+    "prompt": "Did Pioneer actually issue or pay a service credit for August?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q008"
+  },
+  {
+    "task_id": "SYNTH-010-Q009",
+    "scenario_id": "SYNTH-010",
+    "category": "case_qa",
+    "prompt": "What is the monthly service-credit cap percentage?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q009"
+  },
+  {
+    "task_id": "SYNTH-010-Q010",
+    "scenario_id": "SYNTH-010",
+    "category": "numeric",
+    "prompt": "What monthly service fee is stated in the agreement and invoice?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q010"
+  }
+]

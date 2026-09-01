@@ -1,0 +1,67 @@
+{
+  "baselineId": "BASELINE_AN2_ANALYSIS_TRUST",
+  "benchmarkKind": "NYAYA_ANALYSIS_TRUST",
+  "graderVersion": "an1-2026-08-19",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "notLegalCorrectnessProof": true,
+  "phase": "6J",
+  "an1Frozen": true,
+  "engineQualityUnchanged": true,
+  "depositionNotHardened": true,
+  "caseQaFrozen": true,
+  "compareFrozen": true,
+  "contradictionFrozen": true,
+  "timelineT2Frozen": true,
+  "memoryM2Frozen": true,
+  "draftUnchanged": true,
+  "agentsOutOfScope": true,
+  "runs": {
+    "an1": "benchmarks/nyaya-bench/reports/runs/2026-08-19T10-31-15-343Z",
+    "an2Trust": "benchmarks/nyaya-bench/reports/runs/2026-08-19T11-06-16-743Z"
+  },
+  "config": {
+    "dataset": "v2",
+    "executionMode": "analysis",
+    "scenario": "SYNTH-V2-001",
+    "gitCommit": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini",
+    "productionChange": "packages/intelligence/src/analysis/context.ts"
+  },
+  "trustGate": {
+    "AN013": { "an1": "fail", "an2": "pass" },
+    "AN014": { "an1": "pass", "an2": "pass" },
+    "AN016": { "an1": "fail_critical", "an2": "pass" }
+  },
+  "metrics": {
+    "proposedContractSummaryLeakage": 0,
+    "proposedContractItemLeakage": 0,
+    "proposedAnalysisFindingLeakage": 0,
+    "dismissedFindingLeakage": 0,
+    "reviewedItemInclusionAccuracy": 1,
+    "mixedReviewIsolationAccuracy": 1,
+    "reviewedProvenancePreservation": 1,
+    "downstreamContextViolations": 0
+  },
+  "targets": {
+    "proposedLeakage": 0,
+    "dismissedLeakage": 0,
+    "downstreamContextViolations": 0,
+    "reviewedInclusion": 1,
+    "mixedReviewIsolation": 1
+  },
+  "safety": {
+    "unreviewedAnalysisCanEnterAskNyaya": false,
+    "reviewedAnalysisCanEnterAskNyaya": true,
+    "reviewedLabel": "[REVIEWED ANALYSIS]",
+    "dismissedAnalysisCanEnterAskNyaya": false
+  },
+  "notClaimed": [
+    "deposition_schema_reliability",
+    "contract_extraction_quality",
+    "AN001_notice_45",
+    "executionTarget_analysis_routing",
+    "agent_proposed_payloads"
+  ]
+}

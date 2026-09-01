@@ -52,6 +52,7 @@ export default function CaseWorkPage() {
   const [findings, setFindings] = useState<Finding[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [agentsEnabled, setAgentsEnabled] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -64,8 +65,12 @@ export default function CaseWorkPage() {
       fetch(`/api/v1/matters/${matterId}/analysis/findings`).then((r) => r.json()),
     ])
       .then(([agents, draftsJson, tasksJson, deadlinesJson, researchJson, findingsJson]) => {
-        if (agents.error) throw new Error(agents.error.message);
-        setRuns(agents.runs ?? []);
+        const agentsDisabled =
+          agents?.error?.code === "FEATURE_DISABLED" ||
+          String(agents?.error?.message ?? "").includes("not enabled");
+        if (agents.error && !agentsDisabled) throw new Error(agents.error.message);
+        setAgentsEnabled(!agentsDisabled);
+        setRuns(agentsDisabled ? [] : (agents.runs ?? []));
         setDrafts(draftsJson.drafts ?? []);
         setTasks(tasksJson.tasks ?? []);
         setDeadlines(deadlinesJson.deadlines ?? []);
@@ -110,8 +115,8 @@ export default function CaseWorkPage() {
           </p>
         </div>
         <nav className="flex flex-wrap gap-2" aria-label="Work destinations">
-          <Link href={`/app/cases/${matterId}/nyaya`}>
-            <Button type="button">Nyaya</Button>
+          <Link href={agentsEnabled ? `/app/cases/${matterId}/nyaya` : `/app/cases/${matterId}/chats`}>
+            <Button type="button">{agentsEnabled ? "Nyaya" : "Chats"}</Button>
           </Link>
           <Link href={`/app/cases/${matterId}/draft`}>
             <Button type="button" variant="secondary">
@@ -139,10 +144,12 @@ export default function CaseWorkPage() {
       {error ? <ErrorState message={error} /> : null}
 
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {agentsEnabled ? (
         <Panel title="Approvals">
           <p className="text-2xl font-semibold">{needsApproval.length}</p>
           <p className="text-xs text-ink/55">Waiting for your OK</p>
         </Panel>
+        ) : null}
         <Panel title="Open tasks">
           <p className="text-2xl font-semibold">{openTasks.length}</p>
           <p className="text-xs text-ink/55">Open or in progress</p>
@@ -162,6 +169,8 @@ export default function CaseWorkPage() {
         </Panel>
       </div>
 
+      {agentsEnabled ? (
+        <>
       <Panel title="Needs Approval">
         {needsApproval.length === 0 ? (
           <p className="text-sm text-ink/60">No pending approvals.</p>
@@ -196,6 +205,8 @@ export default function CaseWorkPage() {
           </div>
         )}
       </Panel>
+        </>
+      ) : null}
 
       <div className="grid gap-4 md:grid-cols-2">
         <Panel title="Open tasks">
@@ -251,6 +262,7 @@ export default function CaseWorkPage() {
         </Panel>
       </div>
 
+      {agentsEnabled ? (
       <Panel title="Completed runs">
         {completed.length === 0 ? (
           <EmptyState
@@ -270,6 +282,7 @@ export default function CaseWorkPage() {
           </div>
         )}
       </Panel>
+      ) : null}
 
       <Panel title="Saved work">
         <div className="grid gap-4 md:grid-cols-2">

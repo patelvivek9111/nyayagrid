@@ -1,5 +1,10 @@
 import { requireMatterAccess } from "@nyayagrid/permissions";
-import { getReviewQueueCounts, listProposedIntelligence } from "@nyayagrid/intelligence";
+import {
+  getReviewQueueCounts,
+  listMatterMemories,
+  listProposedAnalysisForReview,
+  listProposedIntelligence,
+} from "@nyayagrid/intelligence";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
@@ -15,7 +20,7 @@ export async function GET(request: Request, { params }: Params) {
       minAccess: "read",
       capability: "matters.view",
     });
-    const [counts, proposed] = await Promise.all([
+    const [counts, proposed, analysis, memoryRows] = await Promise.all([
       getReviewQueueCounts({
         db,
         organizationId: matter.organizationId,
@@ -26,8 +31,20 @@ export async function GET(request: Request, { params }: Params) {
         organizationId: matter.organizationId,
         matterId,
       }),
+      listProposedAnalysisForReview({
+        db,
+        organizationId: matter.organizationId,
+        matterId,
+      }),
+      listMatterMemories({
+        db,
+        organizationId: matter.organizationId,
+        matterId,
+        status: "proposed",
+      }),
     ]);
-    return jsonOk({ counts, ...proposed });
+    const memories = memoryRows.filter((row) => !row.supersededBy);
+    return jsonOk({ counts, ...proposed, analysis, memories });
   } catch (error) {
     return handleRouteError(error);
   }

@@ -81,6 +81,19 @@ export async function listResearchSessions(params: {
     .limit(params.limit ?? 50);
 }
 
+/**
+ * Matter-linked sessions are visible only when the viewer may access that matter.
+ * Organization-level sessions (no matterId) remain visible to anyone who can list research.
+ */
+export function filterVisibleResearchSessions<T extends { matterId: string | null }>(
+  sessions: T[],
+  authorizedMatterIds: string[] | "all",
+): T[] {
+  if (authorizedMatterIds === "all") return sessions;
+  const allowed = new Set(authorizedMatterIds);
+  return sessions.filter((session) => !session.matterId || allowed.has(session.matterId));
+}
+
 export async function listMatterResearchMemos(params: {
   db: Database;
   organizationId: string;

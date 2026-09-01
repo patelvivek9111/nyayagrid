@@ -41,7 +41,7 @@ function extractPassagesFromPrompt(prompt: string): GroundingPassage[] {
       const documentVersionId = block.match(/documentVersionId=([^\s|]+)/)?.[1] ?? "";
       const pageRaw = block.match(/page=([^\s|]+)/)?.[1];
       const segmentRef = block.match(/segmentRef=([^\s|]+)/)?.[1];
-      const quote = block.match(/quote=\|(.*)\|$/s)?.[1] ?? block;
+      const quote = block.match(/quote=\|(.*?)\|/s)?.[1] ?? block;
       return {
         chunkId,
         documentId,
@@ -55,7 +55,10 @@ function extractPassagesFromPrompt(prompt: string): GroundingPassage[] {
 }
 
 export function tokenOverlap(question: string, quote: string): number {
-  const tokens = question.toLowerCase().split(/\W+/).filter((t) => t.length > 3);
+  const tokens = question
+    .toLowerCase()
+    .split(/\W+/)
+    .filter((t) => t.length > 3);
   const hay = quote.toLowerCase();
   return tokens.filter((token) => {
     if (hay.includes(token)) return true;
@@ -65,7 +68,10 @@ export function tokenOverlap(question: string, quote: string): number {
 }
 
 /** Prefer the least-overlapping (later) passage — the planted decoy. */
-export function pickBaitPassages(question: string, passages: GroundingPassage[]): GroundingPassage[] {
+export function pickBaitPassages(
+  question: string,
+  passages: GroundingPassage[],
+): GroundingPassage[] {
   if (passages.length === 0) return [];
   if (passages.length === 1) return passages;
   const scored = passages.map((p, index) => ({
@@ -137,10 +143,7 @@ function gullibleContradiction(user: string): AiGenerateResult {
 
   const first = chunks[0]!;
   const last = chunks[chunks.length - 1]!;
-  const sideB =
-    chunks.length === 1
-      ? first
-      : last;
+  const sideB = chunks.length === 1 ? first : last;
   return jsonResult({
     candidates: [
       {
@@ -193,7 +196,11 @@ export class GullibleMockProvider implements AIProvider {
   }
 }
 
-export function decoyClaimPrompt(decoyNeedles: string[], original: string, redline: string): {
+export function decoyClaimPrompt(
+  decoyNeedles: string[],
+  original: string,
+  redline: string,
+): {
   systemPrompt: string;
   userPrompt: string;
 } {

@@ -1,0 +1,95 @@
+{
+  "id": "BASELINE_6W_R1_FINAL",
+  "generatedAt": "2026-08-27T12:56:31.897Z",
+  "phase": "6W-R1",
+  "stopCondition": "B",
+  "stopReason": "Track A in-repo criticals closed. Clerk staging credentials and Inngest Cloud registration remain absent, so authenticated HTTP, Cloud ingest, E2E canary, ready=200, HTTP RBAC, HTTP rate limits, image-tag rollback, managed PITR, and provider object recovery are not proven.",
+  "remediationIterationsUsed": 3,
+  "maxRemediationIterations": 5,
+  "technicallyDeployable": false,
+  "attorneyValidated": false,
+  "nationwide": false,
+  "featureAgents": "OFF",
+  "automaticProductionDeployment": false,
+  "nextPhase": "PHASE 6W-R2 — CLERK STAGING, INNGEST CLOUD, AND HTTP CANARY",
+  "startingQuality": {
+    "source": "BASELINE_6V_FINAL",
+    "materialQuality": 96.7,
+    "criticalSafety": 100
+  },
+  "researchR1": {
+    "dedicatedAfterIter2": {
+      "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-27T09-52-06-747Z",
+      "pass": 15,
+      "needsWork": 3,
+      "fail": 0,
+      "criticalFails": 0,
+      "r010": "PASS",
+      "r014": "PASS",
+      "r009": "PASS"
+    },
+    "frozenAttempt3": {
+      "pass": 15,
+      "needsWork": 3,
+      "fail": 0,
+      "criticalFails": 0,
+      "r010": "PASS",
+      "r014": "PASS"
+    }
+  },
+  "depositionDa1": {
+    "frozenAttempt1": { "criticalFails": 3, "fail": 4, "note": "DA003/DA004/DA006 labeled inconsistency for testimony vs access-log" },
+    "dedicatedAfterIter3": {
+      "runDir": "benchmarks/nyaya-bench/reports/runs/2026-08-27T11-02-57-563Z",
+      "pass": 15,
+      "fail": 1,
+      "criticalFails": 0,
+      "note": "DA002 quote span major, not critical"
+    },
+    "frozenAttempt3": { "pass": 16, "fail": 0, "criticalFails": 0, "infrastructure": 0 }
+  },
+  "frozenHarness": {
+    "attempt1": "BASELINE_6W_R1_FROZEN_ATTEMPT1.json",
+    "attempt1Gate": "FAIL (deposition-da1 CRITICAL)",
+    "attempt2": "BASELINE_6W_R1_FROZEN_ATTEMPT2.json",
+    "attempt2Gate": "INVALID (OpenAI DNS ENOTFOUND; infrastructure mislabeled PASS — later fixed)",
+    "attempt3": "BASELINE_6W_R1_FROZEN.json",
+    "attempt3Gate": "PASS (criticalFailures [])",
+    "stacked": false,
+    "parsesCriticalFails": true,
+    "parsesInfrastructure": true,
+    "historicalBaselinesOverwritten": false
+  },
+  "nonCriticalAccepted": [
+    "SYNTH-V2-001-CA012",
+    "SYNTH-V2-001-R002",
+    "SYNTH-V2-001-R003",
+    "SYNTH-V2-001-R004",
+    "T6U-R-B",
+    "T6U-ASK-A",
+    "SYNTH-FS-001-FS029",
+    "memory M001/M007/M010 proposition needles",
+    "timeline 1 NEEDS_WORK",
+    "C2A 3 NEEDS_WORK"
+  ],
+  "trackB": {
+    "clerkCredentials": "UNSET",
+    "clerkAuthProof": "NOT PROVEN",
+    "httpRbac": "NOT PROVEN",
+    "inngestCloud": "NOT PROVEN",
+    "asyncIngest": "NOT PROVEN",
+    "e2eCanary": "NOT PROVEN",
+    "coverageHttpCanary": "NOT PROVEN",
+    "ready200": "NOT PROVEN",
+    "httpPerformance": "NOT PROVEN",
+    "httpRateLimits": "NOT PROVEN",
+    "imageTagRollback": "NOT PROVEN",
+    "managedPitr": "EXTERNAL — NOT PROVEN",
+    "providerObjectRecovery": "EXTERNAL — NOT PROVEN",
+    "redis": "EXTERNAL",
+    "malwareStaging": "EXTERNAL",
+    "monitoringAlerting": "EXTERNAL",
+    "invitePath": "Clerk-managed invites (SMTP unimplemented; not a code blocker if Clerk invites used)"
+  },
+  "largestBlocker": "Clerk staging credentials plus Inngest Cloud registration (INNGEST_DEV still on locally)."
+}

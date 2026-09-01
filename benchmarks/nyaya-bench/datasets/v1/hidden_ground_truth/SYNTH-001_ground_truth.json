@@ -1,0 +1,93 @@
+{
+  "scenario_id": "SYNTH-001",
+  "title": "Harbor Point Lease Dispute",
+  "ground_truth_version": "1.0",
+  "answers": {
+    "Q001": {
+      "task_id": "SYNTH-001-Q001",
+      "expected": "19,250 USD per month",
+      "supporting_refs": [
+        "amendment1:2"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q002": {
+      "task_id": "SYNTH-001-Q002",
+      "expected": "30 days",
+      "supporting_refs": [
+        "amendment1:1"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q003": {
+      "task_id": "SYNTH-001-Q003",
+      "expected": "Tenant",
+      "supporting_refs": [
+        "lease:6"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q004": {
+      "task_id": "SYNTH-001-Q004",
+      "expected": "ABSTAIN: deductible amount is not specified",
+      "supporting_refs": [
+        "lease:7"
+      ],
+      "verdict_logic": "must_abstain"
+    },
+    "Q005": {
+      "task_id": "SYNTH-001-Q005",
+      "expected": "June 28, 2026",
+      "supporting_refs": [
+        "deposition:Q. Meeting",
+        "email_tenant:Message"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q006": {
+      "task_id": "SYNTH-001-Q006",
+      "expected": "No contradiction; late June is consistent with June 28",
+      "supporting_refs": [
+        "email_tenant:Message",
+        "deposition:Q. Meeting"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q007": {
+      "task_id": "SYNTH-001-Q007",
+      "expected": "Notice 60->30 days; rent $18,500->$19,250 effective July 1, 2026",
+      "supporting_refs": [
+        "lease:4",
+        "lease:5",
+        "amendment1:1",
+        "amendment1:2"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q008": {
+      "task_id": "SYNTH-001-Q008",
+      "expected": "$19,250",
+      "supporting_refs": [
+        "email_landlord:Message"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q009": {
+      "task_id": "SYNTH-001-Q009",
+      "expected": "September 15, 2026",
+      "supporting_refs": [
+        "notice:Notice"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q010": {
+      "task_id": "SYNTH-001-Q010",
+      "expected": "No; tenant/deponent expressly did not agree replacement was required",
+      "supporting_refs": [
+        "email_tenant:Message",
+        "deposition:Q. Replacement"
+      ],
+      "verdict_logic": "must_answer"
+    }
+  }
+}

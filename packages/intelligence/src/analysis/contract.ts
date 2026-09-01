@@ -12,7 +12,7 @@ import {
   createAIProviderFromEnv,
   buildContractAnalysisSystemPrompt,
   buildContractAnalysisUserPrompt,
-  contractAnalysisSchema,
+  parseContractAnalysis,
   CONTRACT_ANALYSIS_PROMPT_VERSION,
   buildRedlineSuggestionsSystemPrompt,
   buildRedlineSuggestionsUserPrompt,
@@ -24,6 +24,18 @@ import {
 import { writeAuditEvent } from "@nyayagrid/permissions";
 import { loadAuthorizedChunks } from "../provenance";
 import { buildContractAnalysisIdempotencyKey } from "../draft/helpers";
+import {
+  alignContractSummary,
+  collapseNearDuplicateContractItems,
+  preserveLimitationLanguage,
+  preserveSourceQuantities,
+  resolveContractItemProvenance,
+  type VersionChunk,
+} from "./contract-span";
+
+function foldKey(value: string): string {
+  return value.toLowerCase().replace(/\s+/g, " ").trim();
+}
 
 async function loadVersionChunks(params: {
   db: Database;
@@ -93,6 +105,15 @@ export async function analyzeContract(params: {
     .where(eq(documentAnalyses.idempotencyKey, idempotencyKey))
     .limit(1);
 
+  const emptyTelemetry = {
+    rejectedMalformed: 0,
+    rejectedNoSource: 0,
+    rejectedBadSpan: 0,
+    normalizedCount: 0,
+    jsonParseFailed: false,
+    duplicateSuppressed: 0,
+  };
+
   if (existing && !params.force) {
     const analysis = await getContractAnalysis({
       db: params.db,
@@ -100,7 +121,7 @@ export async function analyzeContract(params: {
       matterId: params.matterId,
       analysisId: existing.id,
     });
-    return { skipped: true as const, analysis: analysis! };
+    return { skipped: true as const, analysis: analysis!, ...emptyTelemetry };
   }
 
   const doc = await verifyDocumentInMatter({
@@ -120,6 +141,12 @@ export async function analyzeContract(params: {
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "contract_analysis",
+    routing: {
+      subsystem: "contract",
+      strategy: "standard",
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+    },
     messages: [
       { role: "system", content: buildContractAnalysisSystemPrompt() },
       {
@@ -132,19 +159,90 @@ export async function analyzeContract(params: {
     ],
   });
 
+  let jsonParseFailed = false;
   let raw: unknown;
   try {
     raw = JSON.parse(generation.text);
   } catch {
-    raw = { summary: generation.text, items: [] };
+    jsonParseFailed = true;
+    raw = { summary: "Contract analysis could not be parsed from model output.", items: [] };
   }
-  const parsed = contractAnalysisSchema.parse(raw);
+  const parsed = parseContractAnalysis(raw);
+
+  const versionChunks: VersionChunk[] = chunks.map((chunk) => ({
+    chunkId: chunk.chunkId,
+    documentId: chunk.documentId,
+    documentVersionId: chunk.documentVersionId,
+    page: chunk.page ?? null,
+    segmentRef: chunk.segmentRef ?? null,
+    content: chunk.content,
+  }));
+  const versionById = new Map(versionChunks.map((chunk) => [chunk.chunkId, chunk]));
 
   const authorized = await loadAuthorizedChunks(params.db, {
     organizationId: params.organizationId,
     matterId: params.matterId,
-    chunkIds: parsed.items.flatMap((item) => item.sourceChunkIds),
+    chunkIds: parsed.analysis.items.flatMap((item) => item.sourceChunkIds),
   });
+
+  let rejectedNoSource = 0;
+  let rejectedBadSpan = 0;
+  const prepared: Array<{
+    item: (typeof parsed.analysis.items)[number];
+    explanation: string;
+    sources: Array<VersionChunk & { supportingText: string }>;
+  }> = [];
+
+  for (const item of parsed.analysis.items) {
+    const citedChunks = item.sourceChunkIds
+      .map((id) => {
+        const authorizedChunk = authorized.get(id);
+        if (authorizedChunk) {
+          return {
+            chunkId: authorizedChunk.chunkId,
+            documentId: authorizedChunk.documentId,
+            documentVersionId: authorizedChunk.documentVersionId,
+            page: authorizedChunk.page,
+            segmentRef: authorizedChunk.segmentRef,
+            content: authorizedChunk.content,
+          } satisfies VersionChunk;
+        }
+        return versionById.get(id) ?? null;
+      })
+      .filter((chunk): chunk is VersionChunk => Boolean(chunk));
+    if (citedChunks.length === 0 && item.sourceChunkIds.length > 0) {
+      rejectedNoSource += 1;
+    }
+    const resolved = resolveContractItemProvenance({
+      item,
+      citedChunks,
+      versionChunks,
+    });
+    if (resolved.sources.length === 0) {
+      rejectedBadSpan += 1;
+      continue;
+    }
+    const primarySpan = resolved.sources[0]!.supportingText;
+    const explanation = preserveLimitationLanguage(
+      preserveSourceQuantities(item.explanation, primarySpan),
+      primarySpan,
+    );
+    prepared.push({ item, explanation, sources: resolved.sources });
+  }
+
+  const collapsed = collapseNearDuplicateContractItems(
+    prepared.map((row) => ({ ...row.item, explanation: row.explanation })),
+  );
+  const keptKeys = new Set(
+    collapsed.items.map((item) => foldKey(`${item.title}\n${item.explanation}`)),
+  );
+  const keptPrepared = prepared.filter((row) =>
+    keptKeys.has(foldKey(`${row.item.title}\n${row.explanation}`)),
+  );
+  const summary = alignContractSummary(
+    parsed.analysis.summary,
+    keptPrepared.map((row) => ({ title: row.item.title, explanation: row.explanation })),
+  );
 
   let analysis = existing;
   if (!analysis) {
@@ -156,7 +254,7 @@ export async function analyzeContract(params: {
         documentId: params.documentId,
         documentVersionId: params.documentVersionId,
         analysisType: "contract",
-        summary: parsed.summary,
+        summary,
         status: "proposed",
         provider: generation.provider,
         model: generation.model,
@@ -170,7 +268,7 @@ export async function analyzeContract(params: {
     const [updated] = await params.db
       .update(documentAnalyses)
       .set({
-        summary: parsed.summary,
+        summary,
         status: "proposed",
         provider: generation.provider,
         model: generation.model,
@@ -197,42 +295,38 @@ export async function analyzeContract(params: {
   }
 
   const createdItems = [];
-  for (const item of parsed.items) {
-    const validChunkIds = item.sourceChunkIds.filter((id) => authorized.has(id));
-    if (validChunkIds.length === 0) continue;
-
-    const [row] = await params.db
+  for (const row of keptPrepared) {
+    const [created] = await params.db
       .insert(documentAnalysisItems)
       .values({
         organizationId: params.organizationId,
         matterId: params.matterId,
         analysisId: analysis.id,
-        category: item.category,
-        title: item.title,
-        summary: item.explanation.slice(0, 500),
-        originalText: item.originalText ?? null,
-        explanation: item.explanation,
-        attention: item.attention,
+        category: row.item.category,
+        title: row.item.title,
+        summary: row.explanation.slice(0, 500),
+        originalText: row.item.originalText ?? null,
+        explanation: row.explanation,
+        attention: row.item.attention,
         status: "proposed",
         confidence: "medium",
       })
       .returning();
 
-    for (const chunkId of validChunkIds) {
-      const chunk = authorized.get(chunkId)!;
+    for (const source of row.sources) {
       await params.db.insert(documentAnalysisSources).values({
         organizationId: params.organizationId,
         matterId: params.matterId,
-        analysisItemId: row!.id,
-        documentId: chunk.documentId,
-        documentVersionId: chunk.documentVersionId,
-        chunkId: chunk.chunkId,
-        page: chunk.page,
-        segmentRef: chunk.segmentRef,
-        supportingText: chunk.content.slice(0, 400),
+        analysisItemId: created!.id,
+        documentId: source.documentId,
+        documentVersionId: source.documentVersionId,
+        chunkId: source.chunkId,
+        page: source.page,
+        segmentRef: source.segmentRef,
+        supportingText: source.supportingText,
       });
     }
-    createdItems.push(row!);
+    createdItems.push(created!);
   }
 
   await writeAuditEvent(params.db, {
@@ -242,7 +336,16 @@ export async function analyzeContract(params: {
     action: "contract_analysis.completed",
     targetType: "document_analysis",
     targetId: analysis.id,
-    metadata: { itemCount: createdItems.length, provider: generation.provider },
+    metadata: {
+      itemCount: createdItems.length,
+      provider: generation.provider,
+      rejectedMalformed: parsed.rejectedMalformed,
+      rejectedNoSource,
+      rejectedBadSpan,
+      normalizedCount: parsed.normalizedCount,
+      jsonParseFailed,
+      duplicateSuppressed: collapsed.duplicateSuppressed,
+    },
   });
 
   const full = await getContractAnalysis({
@@ -252,7 +355,16 @@ export async function analyzeContract(params: {
     analysisId: analysis.id,
   });
 
-  return { skipped: false as const, analysis: full! };
+  return {
+    skipped: false as const,
+    analysis: full!,
+    rejectedMalformed: parsed.rejectedMalformed,
+    rejectedNoSource,
+    rejectedBadSpan,
+    normalizedCount: parsed.normalizedCount,
+    jsonParseFailed,
+    duplicateSuppressed: collapsed.duplicateSuppressed,
+  };
 }
 
 export async function listContractAnalyses(params: {
@@ -394,6 +506,12 @@ export async function generateRedlineSuggestions(params: {
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "redline_suggestions",
+    routing: {
+      subsystem: "contract",
+      strategy: "standard",
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+    },
     messages: [
       { role: "system", content: buildRedlineSuggestionsSystemPrompt() },
       {

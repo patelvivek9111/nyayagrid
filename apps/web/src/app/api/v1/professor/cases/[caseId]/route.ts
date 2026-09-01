@@ -8,7 +8,7 @@ import {
   StudentAccessError,
   updateStudentCaseCourseLabel,
 } from "@nyayagrid/workspaces";
-import { requireUser } from "@/lib/auth";
+import { requireProfessorUser } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
 type Params = { params: Promise<{ caseId: string }> };
@@ -16,7 +16,7 @@ type Params = { params: Promise<{ caseId: string }> };
 export async function GET(request: Request, { params }: Params) {
   try {
     const { caseId } = await params;
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireProfessorUser(request.headers);
     const studentCase = await getStudentCase(db, user.id, caseId);
 
     let version = null;
@@ -45,7 +45,7 @@ export async function GET(request: Request, { params }: Params) {
 export async function PATCH(request: Request, { params }: Params) {
   try {
     const { caseId } = await params;
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireProfessorUser(request.headers);
     const body = updateStudentCaseSchema.parse(await request.json());
     const studentCase = await updateStudentCaseCourseLabel({
       db,

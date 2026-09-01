@@ -1,0 +1,55 @@
+{
+  "comment": "Adversarial local corpus extras for Nyaya-bench Research overlay. Fictional jurisdictions/citations only. Imported via production importAuthority. Not hidden GT.",
+  "authorities": [
+    {
+      "title": "Acme Corp. v. Contoso Holdings, 888 F.3d 9 (Fed. Cir. 2098)",
+      "shortTitle": "Acme v. Contoso Holdings",
+      "authorityType": "case",
+      "jurisdiction": "Synthetic Federal",
+      "court": "Synthetic Court of Appeals",
+      "citation": "888 F.3d 9",
+      "docketNumber": "SYN-2098-0009",
+      "decisionDate": "2098-06-15",
+      "publicationStatus": "published",
+      "sourceProvider": "nyaya-bench-research-overlay",
+      "sourceExternalId": "acme-v-contoso-holdings-888-f3d-9",
+      "content": "Acme Corp. v. Contoso Holdings, 888 F.3d 9 (Fed. Cir. 2098).\n\nThis synthetic opinion is a near-name decoy. It addresses venue transfer under Synthetic Venue Code § 12 and does not discuss preliminary injunctions or irreparable harm.\n\nHeld: a motion to transfer venue is granted when the transferee forum is clearly more convenient. No injunction standard is announced.",
+      "metadata": { "synthetic": true, "role": "similar_case_name_decoy" }
+    },
+    {
+      "title": "Synthetic Jurisdiction Code § 101 — Permanent Injunctions",
+      "shortTitle": "SJC § 101",
+      "authorityType": "statute",
+      "jurisdiction": "Synthetic Jurisdiction",
+      "citation": "Synthetic Jurisdiction Code § 101",
+      "effectiveDate": "2095-01-01",
+      "sourceProvider": "nyaya-bench-research-overlay",
+      "sourceExternalId": "synthetic-jurisdiction-code-101",
+      "content": "Synthetic Jurisdiction Code § 101. Permanent injunctions.\n\n(a) A court may grant a permanent injunction only after a trial on the merits and a finding of actual success, not a mere likelihood of success.\n\n(b) This section does not govern preliminary relief under § 100.",
+      "metadata": { "synthetic": true, "role": "neighboring_statute_decoy" }
+    },
+    {
+      "title": "Other State Code § 100 — Emergency Stays",
+      "shortTitle": "OSC § 100",
+      "authorityType": "statute",
+      "jurisdiction": "Other State",
+      "citation": "Other State Code § 100",
+      "effectiveDate": "2090-01-01",
+      "sourceProvider": "nyaya-bench-research-overlay",
+      "sourceExternalId": "other-state-code-100",
+      "content": "Other State Code § 100. Emergency stays.\n\nA court of Other State may stay enforcement on a showing of substantial hardship. This provision is not a preliminary-injunction standard and does not apply outside Other State.",
+      "metadata": { "synthetic": true, "role": "wrong_jurisdiction_decoy" }
+    },
+    {
+      "title": "Synthetic Restatement of Injunctions § 4 (secondary commentary)",
+      "shortTitle": "Synth. Rest. Inj. § 4",
+      "authorityType": "other",
+      "jurisdiction": "Synthetic Jurisdiction",
+      "citation": "Synth. Rest. Inj. § 4",
+      "sourceProvider": "nyaya-bench-research-overlay",
+      "sourceExternalId": "synthetic-restatement-injunctions-4",
+      "content": "Synthetic Restatement of Injunctions § 4. Commentary only.\n\nCommentators sometimes describe irreparable harm loosely. This restatement is secondary commentary and is not enacted law. It is not a statute and not a judicial holding.",
+      "metadata": { "synthetic": true, "role": "secondary_source" }
+    }
+  ]
+}

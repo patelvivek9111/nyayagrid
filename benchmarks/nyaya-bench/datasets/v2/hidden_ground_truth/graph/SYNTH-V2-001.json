@@ -1,0 +1,110 @@
+{
+  "scenario_id": "SYNTH-V2-001",
+  "comment": "Graph overlay hidden GT. Loaded after persist.",
+  "ground_truth": [
+    {
+      "task_id": "SYNTH-V2-001-G012",
+      "expectation_type": "graph",
+      "canonical_answer": ["proposed edges excluded from verified loader"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"proposed_leak\",\"forbidProposedInVerified\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-G017",
+      "expectation_type": "graph",
+      "canonical_answer": ["manual storage is not verification"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"manual_write\",\"forbidManualAutoApproved\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-G001",
+      "expectation_type": "graph",
+      "canonical_answer": ["party or document relationship present"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"party_document\",\"requireDocumentNodes\":true,\"requireRelationshipTypesAny\":[\"party_to\",\"signed\",\"mentioned_in\",\"supported_by\",\"related_to\"]}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-G002",
+      "expectation_type": "graph",
+      "canonical_answer": ["agreement and amendment document nodes"],
+      "supporting_documents": ["01_Main_Agreement.pdf", "02_Amendment_1.pdf"],
+      "notes": "{\"profile\":\"amendment\",\"requireDocumentNameNeedles\":[\"agreement\",\"amendment\"]}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-G003",
+      "expectation_type": "graph",
+      "canonical_answer": ["future amendment not currently operative"],
+      "supporting_documents": ["03_Amendment_2.pdf"],
+      "notes": "{\"profile\":\"future_effective\",\"forbiddenResolvedAsFactPhrases\":[\"currently controls\",\"currently operative\",\"now in force\",\"currently_controls\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-G009",
+      "expectation_type": "graph",
+      "canonical_answer": ["allegation is not established nonpayment"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"allegation\",\"forbiddenRelationshipTypes\":[\"failed_to_pay\",\"never_paid\"],\"forbiddenResolvedAsFactPhrases\":[\"failed to pay\",\"never paid\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-G010",
+      "expectation_type": "graph",
+      "canonical_answer": ["do not invent missing exhibit contents"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"missing_exhibit\",\"forbiddenResolvedAsFactPhrases\":[\"exhibit z requires\",\"exhibit z deductible\",\"exhibit z provides\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-G011",
+      "expectation_type": "graph",
+      "canonical_answer": ["do not upgrade approximate dates"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"temporal\",\"forbiddenResolvedAsFactPhrases\":[\"exactly november 10\",\"on november 10 at\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-G015",
+      "expectation_type": "graph",
+      "canonical_answer": ["AI edges carry provenance"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"provenance\",\"requireAiProvenance\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-G016",
+      "expectation_type": "graph",
+      "canonical_answer": ["material agreement edges must not cite only the informal email"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"wrong_document\",\"forbidEmailOnlyMaterialEdges\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-G013",
+      "expectation_type": "graph",
+      "canonical_answer": ["approved edge in verified loader"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"approved_loader\",\"requireApprovedInVerified\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-G014",
+      "expectation_type": "graph",
+      "canonical_answer": ["rejected edge stays out"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"rejected\",\"requireRejectedExcluded\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-G018",
+      "expectation_type": "graph",
+      "canonical_answer": ["neighborhood does not treat proposed as approved"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"agents_boundary\",\"forbidProposedInNeighborhood\":true}",
+      "failure_severity_if_wrong": "critical"
+    }
+  ]
+}

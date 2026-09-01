@@ -77,7 +77,7 @@ const EVIDENCE_PATTERN =
 const DISCOVERY_PATTERN =
   /\b(?:discovery|privilege|responsive|production\s+request|e-?discovery|bates|confidentialit)\b/i;
 const TIMELINE_PATTERN =
-  /\b(?:timeline|chronolog|sequence\s+of\s+events|deadline|calendar|order\s+of\s+events)\b/i;
+  /\b(?:timeline|chronolog(?:y|ical|ies)?|sequence\s+of\s+events|deadline|calendar|order\s+of\s+events)\b/i;
 const GRAPH_PATTERN =
   /\b(?:relationship|who\s+(?:is|are)\s+related|entity\s+map|connection|graph)\b/i;
 const MEMORY_PATTERN = /\b(?:remember|memory|note\s+for\s+later|keep\s+in\s+mind|preference)\b/i;
@@ -96,6 +96,18 @@ const TASK_VERB_PATTERN =
  * deadline but wants an answer, not a timeline analysis. Requiring question form and the absence of
  * a task verb keeps cheap questions cheap.
  */
+/**
+ * Drops negated work requests so "do not draft" does not route into drafting, and "do not
+ * research" does not open a research run. The original text is still used for blocked-action
+ * detection and for the stored goal.
+ */
+function withoutNegatedWorkRequests(text: string): string {
+  return text.replace(
+    /\b(?:do\s+not|don't|dont)\s+(?:draft|write|prepare|compose|revise|redline|rewrite|research|analy[sz]e|file|send)\b[^.?!]{0,80}/gi,
+    " ",
+  );
+}
+
 function isPlainQuestion(text: string): boolean {
   if (TASK_VERB_PATTERN.test(text)) return false;
   return SIMPLE_QA_PATTERN.test(text) || text.trimEnd().endsWith("?");
@@ -145,6 +157,7 @@ function countMatches(goal: string, patterns: RegExp[]): number {
  */
 export function classifyIntentWithRules(goal: string): IntentDecision {
   const text = goal.trim();
+  const domainText = withoutNegatedWorkRequests(text);
   const blockedActions = detectBlockedActions(text);
   const requestedBlocked = detectRequestedBlockedActions(text);
   const safetyNotes: string[] = [];
@@ -194,7 +207,7 @@ export function classifyIntentWithRules(goal: string): IntentDecision {
     );
   }
 
-  if (isPlainQuestion(text)) {
+  if (isPlainQuestion(domainText)) {
     return decide(
       "simple_qa",
       "high",
@@ -203,7 +216,7 @@ export function classifyIntentWithRules(goal: string): IntentDecision {
     );
   }
 
-  const domainMatches = countMatches(text, [
+  const domainMatches = countMatches(domainText, [
     RESEARCH_PATTERN,
     DRAFTING_PATTERN,
     CONTRACT_PATTERN,
@@ -213,7 +226,7 @@ export function classifyIntentWithRules(goal: string): IntentDecision {
     TIMELINE_PATTERN,
   ]);
 
-  if (MULTI_STEP_PATTERN.test(text) && domainMatches >= 2) {
+  if (MULTI_STEP_PATTERN.test(domainText) && domainMatches >= 2) {
     return decide(
       "multi_step_task",
       "high",
@@ -222,10 +235,10 @@ export function classifyIntentWithRules(goal: string): IntentDecision {
     );
   }
 
-  if (CONTRACT_PATTERN.test(text)) {
+  if (CONTRACT_PATTERN.test(domainText)) {
     return decide("contract_review", "high", "Request concerns contract or clause review.", true);
   }
-  if (DEPOSITION_PATTERN.test(text)) {
+  if (DEPOSITION_PATTERN.test(domainText)) {
     return decide(
       "deposition_prep",
       "high",
@@ -233,7 +246,7 @@ export function classifyIntentWithRules(goal: string): IntentDecision {
       true,
     );
   }
-  if (DISCOVERY_PATTERN.test(text)) {
+  if (DISCOVERY_PATTERN.test(domainText)) {
     return decide(
       "discovery_review",
       "high",
@@ -241,10 +254,10 @@ export function classifyIntentWithRules(goal: string): IntentDecision {
       true,
     );
   }
-  if (DRAFTING_PATTERN.test(text) && !SIMPLE_QA_PATTERN.test(text)) {
+  if (DRAFTING_PATTERN.test(domainText) && !SIMPLE_QA_PATTERN.test(domainText)) {
     return decide("drafting", "high", "Request asks for document drafting or revision.", true);
   }
-  if (RESEARCH_PATTERN.test(text)) {
+  if (RESEARCH_PATTERN.test(domainText)) {
     return decide(
       "research",
       "high",
@@ -252,7 +265,7 @@ export function classifyIntentWithRules(goal: string): IntentDecision {
       true,
     );
   }
-  if (EVIDENCE_PATTERN.test(text)) {
+  if (EVIDENCE_PATTERN.test(domainText)) {
     return decide(
       "evidence_analysis",
       "medium",
@@ -260,7 +273,7 @@ export function classifyIntentWithRules(goal: string): IntentDecision {
       true,
     );
   }
-  if (TIMELINE_PATTERN.test(text) || GRAPH_PATTERN.test(text) || MEMORY_PATTERN.test(text)) {
+  if (TIMELINE_PATTERN.test(domainText) || GRAPH_PATTERN.test(domainText) || MEMORY_PATTERN.test(domainText)) {
     return decide(
       "timeline_analysis",
       "medium",

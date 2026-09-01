@@ -8,6 +8,11 @@ import {
 } from "@nyayagrid/permissions";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
+import {
+  applyMatterJurisdictionInput,
+  jurisdictionColumnsFromNormalized,
+  jurisdictionInputFromBody,
+} from "@nyayagrid/jurisdiction";
 
 export async function GET(request: Request) {
   try {
@@ -65,6 +70,9 @@ export async function POST(request: Request) {
       body.matterNumber?.trim() ||
       `M-${new Date().getFullYear()}-${Math.floor(Math.random() * 9000 + 1000)}`;
 
+    const jurisdiction = jurisdictionColumnsFromNormalized(
+      applyMatterJurisdictionInput(jurisdictionInputFromBody(body)),
+    );
     const created = await db.transaction(async (tx) => {
       const [matter] = await tx
         .insert(matters)
@@ -74,11 +82,9 @@ export async function POST(request: Request) {
           matterNumber,
           title: body.title,
           description: body.description ?? null,
-          practiceArea: body.practiceArea ?? null,
-          jurisdiction: body.jurisdiction ?? null,
-          court: body.court ?? null,
           status: body.status ?? "open",
           createdByUserId: user.id,
+          ...jurisdiction,
         })
         .returning();
       await tx.insert(matterMembers).values({
@@ -97,6 +103,12 @@ export async function POST(request: Request) {
       action: "matter.created",
       targetType: "matter",
       targetId: created.id,
+      metadata: {
+        primaryState: created.primaryState,
+        courtId: created.courtId,
+        forumType: created.forumType,
+        governingLawState: created.governingLawState,
+      },
     });
 
     return jsonOk({ matter: created }, { status: 201 });

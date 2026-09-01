@@ -1,10 +1,13 @@
 import { createResearchSessionSchema } from "@nyayagrid/validation";
-import { requireAnyCapability } from "@nyayagrid/permissions";
-import { createResearchSession, listResearchSessions } from "@nyayagrid/research";
+import { filterVisibleResearchSessions, createResearchSession, listResearchSessions } from "@nyayagrid/research";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
-
-const RESEARCH_CAPABILITIES = ["research.run", "matters.view"] as const;
+import { enforceRateLimit } from "@/lib/rate-limit";
+import {
+  authorizedMatterIdsForResearch,
+  requireResearchMatterAccess,
+  requireResearchRunCapability,
+} from "@/server/research-access";
 
 export async function GET(request: Request) {
   try {
@@ -14,19 +17,31 @@ export async function GET(request: Request) {
     if (!organizationId) {
       return jsonError("VALIDATION_ERROR", "organizationId is required", 400);
     }
-    await requireAnyCapability(db, {
-      userId: user.id,
+    await requireResearchRunCapability(db, { userId: user.id, organizationId });
+    const limited = await enforceRateLimit(request, {
+      endpointClass: "research",
       organizationId,
-      capabilities: [...RESEARCH_CAPABILITIES],
+      userId: user.id,
     });
+    if (limited) return limited;
+
+    const matterId = url.searchParams.get("matterId");
+    if (matterId) {
+      await requireResearchMatterAccess(db, { userId: user.id, organizationId, matterId });
+    }
+
     const statusParam = url.searchParams.get("status");
     const sessions = await listResearchSessions({
       db,
       organizationId,
-      matterId: url.searchParams.get("matterId") ?? undefined,
+      matterId: matterId ?? undefined,
       status: statusParam === "active" || statusParam === "archived" ? statusParam : undefined,
     });
-    return jsonOk({ sessions });
+    const authorizedMatterIds = await authorizedMatterIdsForResearch(db, {
+      userId: user.id,
+      organizationId,
+    });
+    return jsonOk({ sessions: filterVisibleResearchSessions(sessions, authorizedMatterIds) });
   } catch (error) {
     return handleRouteError(error);
   }
@@ -36,11 +51,25 @@ export async function POST(request: Request) {
   try {
     const { db, user } = await requireUser(request.headers);
     const body = createResearchSessionSchema.parse(await request.json());
-    await requireAnyCapability(db, {
+    await requireResearchRunCapability(db, {
       userId: user.id,
       organizationId: body.organizationId,
-      capabilities: [...RESEARCH_CAPABILITIES],
     });
+    const limited = await enforceRateLimit(request, {
+      endpointClass: "research",
+      organizationId: body.organizationId,
+      userId: user.id,
+    });
+    if (limited) return limited;
+
+    if (body.matterId) {
+      await requireResearchMatterAccess(db, {
+        userId: user.id,
+        organizationId: body.organizationId,
+        matterId: body.matterId,
+      });
+    }
+
     const session = await createResearchSession({
       db,
       organizationId: body.organizationId,

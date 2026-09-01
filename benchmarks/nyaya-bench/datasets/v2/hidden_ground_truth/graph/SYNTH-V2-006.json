@@ -1,0 +1,46 @@
+{
+  "scenario_id": "SYNTH-V2-006",
+  "comment": "Graph overlay hidden GT. Loaded after persist.",
+  "ground_truth": [
+    {
+      "task_id": "SYNTH-V2-006-G004",
+      "expectation_type": "graph",
+      "canonical_answer": ["do not invent inverted payment facts"],
+      "supporting_documents": ["07_Invoice_and_Remittance.pdf"],
+      "notes": "{\"profile\":\"payment\",\"forbiddenRelationshipTypes\":[\"never_paid\",\"never_issued\"],\"forbiddenResolvedAsFactPhrases\":[\"never paid the invoice\",\"invoice was never paid\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-006-G005",
+      "expectation_type": "graph",
+      "canonical_answer": ["invoice silence is not universal non-occurrence"],
+      "supporting_documents": ["07_Invoice_and_Remittance.pdf"],
+      "notes": "{\"profile\":\"silence\",\"forbiddenRelationshipTypes\":[\"never_paid\",\"never_issued\"],\"forbiddenResolvedAsFactPhrases\":[\"never issued\",\"never paid\",\"service credit was never\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-006-G006",
+      "expectation_type": "graph",
+      "canonical_answer": ["preserve deposition negation"],
+      "supporting_documents": ["05_Deposition_Mercer.pdf"],
+      "notes": "{\"profile\":\"negation\",\"forbidPhysicalEntryOverclaim\":true,\"forbiddenRelationshipTypes\":[\"entered\"],\"forbiddenResolvedAsFactPhrases\":[\"physically entered the records room\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-006-G007",
+      "expectation_type": "graph",
+      "canonical_answer": ["badge activity is not named physical entry"],
+      "supporting_documents": ["06_Access_Log.pdf"],
+      "notes": "{\"profile\":\"actor\",\"forbidPhysicalEntryOverclaim\":true,\"forbiddenRelationshipTypes\":[\"entered\"],\"forbiddenResolvedAsFactPhrases\":[\"physically entered the records room\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-006-G008",
+      "expectation_type": "graph",
+      "canonical_answer": ["assignment may exist; entry must not"],
+      "supporting_documents": ["06_Access_Log.pdf"],
+      "notes": "{\"profile\":\"assignment\",\"forbidPhysicalEntryOverclaim\":true,\"forbiddenRelationshipTypes\":[\"entered\"]}",
+      "failure_severity_if_wrong": "critical"
+    }
+  ]
+}

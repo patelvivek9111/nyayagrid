@@ -3,18 +3,27 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { Panel, Badge, Button } from "@nyayagrid/ui";
+import { Button } from "@nyayagrid/ui";
 import {
-  EmptyState,
+  CompactSection,
   ErrorState,
-  IntelligenceStatus,
+  IntelligenceDialog,
+  IntelligenceHeader,
   LoadingState,
-  ReviewSuggestionCard,
-  SuggestedBadge,
+  OverflowMenu,
+  TrustStatus,
   VerifiedBadge,
 } from "@/components/ux";
 import { formatMatterCalendarDate } from "@/lib/matter-dates";
 import { humanizeKey } from "@/lib/plain-labels";
+import { totalPendingReviewCount } from "@/lib/review-queue";
+import { userFacingLoadError } from "@/lib/case-intelligence-ux";
+import { activityKindLabel, taskPriorityLabel, taskStatusLabel } from "@/lib/workspace-ux";
+import { useMatterChrome } from "@/components/use-matter-chrome";
+import {
+  compactJurisdictionHeaderLine,
+  type UiJurisdictionContract,
+} from "@/lib/case-jurisdiction";
 
 type Fact = { id: string; label: string; value: string };
 type Entity = { id: string; displayName: string; entityType: string };
@@ -45,12 +54,6 @@ type OpenQuestion = {
 };
 type TeamMember = { id: string; displayName: string; access: string };
 type Activity = { id: string; kind: string; title: string; at: string };
-type Artifact = {
-  id: string;
-  artifactType: string;
-  question: string;
-  evidenceState: string;
-};
 type Conversation = {
   id: string;
   title: string | null;
@@ -70,11 +73,12 @@ type CaseHomeData = {
     description: string | null;
     openedAt: string;
   };
+  jurisdictionContext: UiJurisdictionContract | null;
   client: { displayName: string } | null;
   recentDocuments: DocumentRow[];
   recentNotes: NoteRow[];
   openTasks: TaskRow[];
-  recentArtifacts: Artifact[];
+  recentArtifacts: Array<{ id: string; question: string; evidenceState: string }>;
   recentDrafts: DraftRow[];
   verified: {
     recentEvents: TimelineEvent[];
@@ -82,12 +86,7 @@ type CaseHomeData = {
     entities: Entity[];
     upcomingDeadlines: Deadline[];
   };
-  reviewCounts: {
-    proposedEvents?: number;
-    proposedFacts?: number;
-    proposedEntities?: number;
-    proposedDeadlines?: number;
-  };
+  reviewCounts: Parameters<typeof totalPendingReviewCount>[0];
   summary: { summary: string } | null;
   team: TeamMember[];
   responsibleLawyer: { id: string; displayName: string } | null;
@@ -98,23 +97,27 @@ type CaseHomeData = {
 export default function CaseHomePage() {
   const params = useParams<{ matterId: string }>();
   const matterId = params.matterId;
+  const { canReview, openCaseDetails } = useMatterChrome();
   const [data, setData] = useState<CaseHomeData | null>(null);
   const [chats, setChats] = useState<Conversation[]>([]);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [conflicting, setConflicting] = useState(0);
+  const [noteOpen, setNoteOpen] = useState(false);
   const [noteTitle, setNoteTitle] = useState("");
   const [noteContent, setNoteContent] = useState("");
 
   async function load() {
     const res = await fetch(`/api/v1/matters/${matterId}`);
     const json = await res.json();
-    if (!res.ok) throw new Error(json?.error?.message ?? "Failed to load case");
+    if (!res.ok) throw new Error(userFacingLoadError("home", res.status));
     setData(json as CaseHomeData);
   }
 
   useEffect(() => {
-    load().catch((err) => setError(err instanceof Error ? err.message : "Failed to load case"));
+    load().catch((err) =>
+      setError(err instanceof Error ? err.message : userFacingLoadError("home")),
+    );
     fetch(`/api/v1/matters/${matterId}/conversations?limit=8`)
       .then(async (res) => {
         const json = await res.json();
@@ -134,11 +137,13 @@ export default function CaseHomePage() {
     setBusy(true);
     try {
       const res = await fetch(`/api/v1/matters/${matterId}/summary`, { method: "POST" });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.error?.message ?? "Summary failed");
+      await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error("We couldn't refresh the matter summary. Try again.");
       await load();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Summary failed");
+      setError(
+        err instanceof Error ? err.message : "We couldn't refresh the matter summary. Try again.",
+      );
     } finally {
       setBusy(false);
     }
@@ -155,12 +160,13 @@ export default function CaseHomePage() {
         body: JSON.stringify({ title: noteTitle, content: noteContent }),
       });
       const json = await res.json();
-      if (!res.ok) throw new Error(json?.error?.message ?? "Save note failed");
+      if (!res.ok) throw new Error(json?.error?.message ?? "We couldn't save that note.");
       setNoteTitle("");
       setNoteContent("");
+      setNoteOpen(false);
       await load();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Save note failed");
+      setError(err instanceof Error ? err.message : "We couldn't save that note.");
     } finally {
       setBusy(false);
     }
@@ -175,7 +181,6 @@ export default function CaseHomePage() {
     recentDocuments,
     recentNotes,
     openTasks,
-    recentArtifacts,
     recentDrafts,
     verified,
     reviewCounts,
@@ -185,459 +190,454 @@ export default function CaseHomePage() {
     openQuestions,
     recentActivity,
   } = data;
-  const suggested =
-    (reviewCounts?.proposedEvents ?? 0) +
-    (reviewCounts?.proposedFacts ?? 0) +
-    (reviewCounts?.proposedEntities ?? 0) +
-    (reviewCounts?.proposedDeadlines ?? 0);
-  const verifiedCount =
-    (verified?.recentEvents?.length ?? 0) +
-    (verified?.facts?.length ?? 0) +
-    (verified?.entities?.length ?? 0) +
-    (verified?.upcomingDeadlines?.length ?? 0);
+  const suggested = totalPendingReviewCount(reviewCounts);
+  const pendingDeadlines = reviewCounts?.proposedDeadlines ?? 0;
+  const attentionItems = [
+    suggested > 0
+      ? {
+          href: `/app/cases/${matterId}/review`,
+          label: suggested === 1 ? "1 item needs review" : `${suggested} items need review`,
+        }
+      : null,
+    conflicting > 0
+      ? {
+          href: `/app/cases/${matterId}/evidence`,
+          label: conflicting === 1 ? "1 evidence conflict" : `${conflicting} evidence conflicts`,
+        }
+      : null,
+    (openTasks ?? []).length > 0
+      ? {
+          href: `/app/cases/${matterId}/tasks`,
+          label: openTasks.length === 1 ? "1 open task" : `${openTasks.length} open tasks`,
+        }
+      : null,
+    pendingDeadlines > 0
+      ? {
+          href: `/app/cases/${matterId}/review`,
+          label:
+            pendingDeadlines === 1
+              ? "1 deadline pending review"
+              : `${pendingDeadlines} deadlines pending review`,
+        }
+      : null,
+  ].filter(Boolean) as Array<{ href: string; label: string }>;
 
   return (
-    <div className="space-y-6">
-      <Panel title="Case details">
-        <dl className="grid gap-3 text-sm sm:grid-cols-2">
-          <div>
-            <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">Client</dt>
-            <dd>{client?.displayName ?? "Unknown client"}</dd>
-          </div>
-          <div>
-            <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">Status</dt>
-            <dd>
-              <Badge>{matter.status}</Badge>
-            </dd>
-          </div>
-          <div>
-            <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-              Type of case
-            </dt>
-            <dd>{matter.practiceArea || "Not recorded"}</dd>
-          </div>
-          <div>
-            <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-              Jurisdiction
-            </dt>
-            <dd>{matter.jurisdiction || "Not recorded"}</dd>
-          </div>
-          <div>
-            <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">Court</dt>
-            <dd>{matter.court || "Not recorded"}</dd>
-          </div>
-          <div>
-            <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">Judge</dt>
-            <dd>Not recorded</dd>
-          </div>
-          <div>
-            <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-              Responsible lawyer
-            </dt>
-            <dd>{responsibleLawyer?.displayName ?? "Not assigned"}</dd>
-          </div>
-          <div>
-            <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50">
-              Team
-            </dt>
-            <dd>
-              {team.length === 0
-                ? "No team members listed"
-                : team.map((m) => `${m.displayName} (${m.access})`).join(", ")}
-            </dd>
-          </div>
-        </dl>
-        <div className="mt-4">
-          <Button
-            type="button"
-            variant="secondary"
-            disabled={busy}
-            onClick={async () => {
-              setBusy(true);
-              setError("");
-              try {
-                const res = await fetch(`/api/v1/matters/${matterId}/audit/export`);
-                if (!res.ok) {
-                  const json = await res.json();
-                  throw new Error(json?.error?.message ?? "Audit export failed");
+    <div className="space-y-5">
+      <IntelligenceHeader
+        title="Home"
+        description="What is happening in this matter, what needs attention, and what to do next."
+        actions={
+          <OverflowMenu label="More">
+            <Button type="button" variant="ghost" onClick={openCaseDetails}>
+              Case details
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              disabled={busy}
+              onClick={async () => {
+                setBusy(true);
+                setError("");
+                try {
+                  const res = await fetch(`/api/v1/matters/${matterId}/audit/export`);
+                  if (!res.ok) {
+                    const json = await res.json();
+                    throw new Error(
+                      json?.error?.message ?? "We couldn't download the activity log.",
+                    );
+                  }
+                  const blob = await res.blob();
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = `nyayagrid-audit-${matterId.slice(0, 8)}.json`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                } catch (err) {
+                  setError(
+                    err instanceof Error ? err.message : "We couldn't download the activity log.",
+                  );
+                } finally {
+                  setBusy(false);
                 }
-                const blob = await res.blob();
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = url;
-                a.download = `nyayagrid-audit-${matterId.slice(0, 8)}.json`;
-                a.click();
-                URL.revokeObjectURL(url);
-              } catch (err) {
-                setError(err instanceof Error ? err.message : "Audit export failed");
-              } finally {
-                setBusy(false);
-              }
-            }}
-          >
-            Download activity log
-          </Button>
-        </div>
-      </Panel>
+              }}
+            >
+              Download activity log
+            </Button>
+          </OverflowMenu>
+        }
+      />
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <IntelligenceStatus
-          verified={verifiedCount}
-          suggested={suggested}
-          conflicting={conflicting || undefined}
-        />
-        {suggested > 0 ? (
-          <ReviewSuggestionCard
-            title={`Nyaya found ${suggested} new items`}
-            counts={[
-              reviewCounts.proposedEvents ? `${reviewCounts.proposedEvents} Timeline events` : "",
-              reviewCounts.proposedEntities ? `${reviewCounts.proposedEntities} People` : "",
-              reviewCounts.proposedFacts ? `${reviewCounts.proposedFacts} Facts` : "",
-              reviewCounts.proposedDeadlines ? `${reviewCounts.proposedDeadlines} Deadlines` : "",
-            ].filter(Boolean)}
-            href={`/app/cases/${matterId}/review`}
-          />
-        ) : (
-          <Panel title="Next action">
-            <p className="text-sm text-ink/70">
-              No pending suggestions. Continue from the tabs above, or pick a next step:
-            </p>
-            <ul className="mt-2 list-inside list-disc text-sm text-ink/70">
-              <li>
-                <Link href={`/app/cases/${matterId}/documents`} className="font-semibold text-accent underline">
-                  Documents
-                </Link>{" "}
-                — open the original file or upload another
-              </li>
-              <li>
-                <Link href={`/app/cases/${matterId}/review`} className="font-semibold text-accent underline">
-                  Review
-                </Link>{" "}
-                — check dates and facts Nyaya found
-              </li>
-              <li>
-                <Link href={`/app/cases/${matterId}/work`} className="font-semibold text-accent underline">
-                  Work
-                </Link>{" "}
-                — tasks, drafts, and items waiting on you
-              </li>
-            </ul>
-          </Panel>
-        )}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 rounded-xl border border-line bg-white/80 px-4 py-3 text-sm text-ink/70">
+        <span>
+          <span className="text-xs font-semibold uppercase tracking-wide text-ink/45">Client</span>{" "}
+          {client?.displayName ?? "Unknown client"}
+        </span>
+        <span>
+          <span className="text-xs font-semibold uppercase tracking-wide text-ink/45">Type</span>{" "}
+          {humanizeKey(matter.practiceArea) || "Not recorded"}
+        </span>
+        <span>
+          <span className="text-xs font-semibold uppercase tracking-wide text-ink/45">Status</span>{" "}
+          {humanizeKey(matter.status) || matter.status}
+        </span>
+        <span className="min-w-0 truncate">
+          <span className="text-xs font-semibold uppercase tracking-wide text-ink/45">Forum</span>{" "}
+          {data.jurisdictionContext
+            ? compactJurisdictionHeaderLine(data.jurisdictionContext)
+            : matter.jurisdiction || "Not recorded"}
+        </span>
+        <span>
+          <span className="text-xs font-semibold uppercase tracking-wide text-ink/45">Lawyer</span>{" "}
+          {responsibleLawyer?.displayName ?? "Not assigned"}
+        </span>
+        <button
+          type="button"
+          className="font-semibold text-accent underline"
+          onClick={openCaseDetails}
+        >
+          Case details
+        </button>
       </div>
+      {team.length > 0 ? (
+        <p className="text-xs text-ink/50">
+          Team: {team.map((member) => member.displayName).join(", ")}
+        </p>
+      ) : null}
 
-      <Panel title="AI insights">
-        {summary ? (
-          <>
-            <p className="mb-2 text-xs uppercase tracking-wide text-ink/55">
-              AI-generated · not attorney-authored
-            </p>
-            <p className="whitespace-pre-wrap text-sm">{summary.summary}</p>
-          </>
-        ) : (
-          <p className="text-sm text-ink/60">
-            No summary yet. Generate one from facts you have already confirmed.
+      {(recentDocuments ?? []).length === 0 ? (
+        <section className="rounded-xl border border-line bg-white/80 p-4">
+          <h3 className="font-display text-lg text-ink">Start this Case</h3>
+          <p className="mt-1 text-sm text-ink/70">
+            Start by adding the documents for this Case. Nyaya reads those files for Ask and Review.
           </p>
-        )}
-        <div className="mt-3">
-          <Button disabled={busy} onClick={regenerateSummary}>
-            {busy ? "Generating…" : "Regenerate summary"}
-          </Button>
-        </div>
-        {(recentArtifacts ?? []).length > 0 ? (
-          <ul className="mt-4 space-y-2 border-t border-line pt-3 text-sm">
-            {recentArtifacts.map((a) => (
-              <li key={a.id}>
-                <span className="font-semibold">{a.question.slice(0, 100)}</span>
-                <span className="text-ink/50"> · {a.evidenceState}</span>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Link href={`/app/cases/${matterId}/documents`}>
+              <Button type="button">Upload documents</Button>
+            </Link>
+            <Link href={`/app/cases/${matterId}/chats`}>
+              <Button type="button" variant="secondary">
+                Ask about this Case
+              </Button>
+            </Link>
+          </div>
+        </section>
+      ) : chats.length === 0 && suggested === 0 ? (
+        <section className="rounded-xl border border-line bg-white/80 p-4">
+          <h3 className="font-display text-lg text-ink">Next on this Case</h3>
+          <p className="mt-1 text-sm text-ink/70">
+            Documents are in the Case. Ask Nyaya about this Case, or wait for suggested items on
+            Review after processing finishes.
+          </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <Link href={`/app/cases/${matterId}/chats`}>
+              <Button type="button">Ask about this Case</Button>
+            </Link>
+            <Link
+              href={`/app/cases/${matterId}/review`}
+              className="self-center text-sm font-semibold text-accent underline"
+            >
+              Open Review
+            </Link>
+          </div>
+        </section>
+      ) : null}
+
+      {attentionItems.length > 0 ? (
+        <section className="rounded-xl border border-amber-700/20 bg-amber-50/40 px-4 py-3">
+          <p className="text-xs font-semibold uppercase tracking-wide text-amber-900/70">
+            Needs attention
+          </p>
+          <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+            {attentionItems.map((item) => (
+              <li key={item.label}>
+                <Link href={item.href} className="font-semibold text-accent underline">
+                  {item.label}
+                </Link>
               </li>
             ))}
           </ul>
-        ) : null}
-      </Panel>
+          {suggested > 0 ? (
+            <p className="mt-2 text-xs text-ink/60">
+              {canReview
+                ? "They stay suggested until you inspect the source and decide — they are not established facts."
+                : "They stay suggested until a team member with review access inspects the source and decides."}{" "}
+              <Link
+                href={`/app/cases/${matterId}/review`}
+                className="font-semibold text-accent underline"
+              >
+                {suggested === 1
+                  ? "1 item waiting for review"
+                  : `${suggested} items waiting for review`}
+              </Link>
+            </p>
+          ) : null}
+        </section>
+      ) : null}
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <Panel title="Key facts">
+      {summary ? (
+        <section className="rounded-xl border border-line bg-white/80 p-4">
+          <div className="mb-2 flex flex-wrap items-center gap-2">
+            <h3 className="font-display text-lg text-ink">Matter summary</h3>
+            <TrustStatus kind="suggested" />
+            <span className="text-xs text-ink/50">Not attorney-authored</span>
+          </div>
+          <p className="whitespace-pre-wrap text-sm">{summary.summary}</p>
+          <Button
+            className="mt-3"
+            type="button"
+            variant="ghost"
+            disabled={busy}
+            onClick={regenerateSummary}
+          >
+            {busy ? "Updating…" : "Refresh summary"}
+          </Button>
+        </section>
+      ) : null}
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        <CompactSection title="Key facts">
           {(verified?.facts ?? []).length === 0 ? (
-            <EmptyState
-              title="No verified facts yet"
-              description="Approve facts from Review after Nyaya extracts them from Case documents."
-            />
+            <p className="text-sm text-ink/55">No verified facts yet.</p>
           ) : (
             <ul className="space-y-2 text-sm">
-              {verified.facts.slice(0, 8).map((fact) => (
+              {verified.facts.slice(0, 6).map((fact) => (
                 <li key={fact.id} className="flex items-start justify-between gap-2">
                   <span>
-                    <span className="font-semibold">{fact.label}:</span> {fact.value}
+                    <span className="font-semibold">{fact.label}</span>
+                    <span className="mt-0.5 block text-ink/70">{fact.value}</span>
                   </span>
                   <VerifiedBadge />
                 </li>
               ))}
             </ul>
           )}
-        </Panel>
+        </CompactSection>
 
-        <Panel title="Open questions">
-          {(openQuestions ?? []).length === 0 ? (
-            <EmptyState
-              title="No open questions recorded"
-              description="Save unanswered questions in Memory. They stay suggestions until you confirm them."
-              action={
-                <Link
-                  href={`/app/cases/${matterId}/memory`}
-                  className="text-sm font-semibold text-accent underline"
-                >
-                  Open Memory
-                </Link>
-              }
-            />
+        <CompactSection
+          title="Upcoming dates"
+          href={`/app/cases/${matterId}/timeline`}
+          linkLabel="Open Timeline"
+        >
+          {(verified?.upcomingDeadlines ?? []).length === 0 ? (
+            <p className="text-sm text-ink/55">No verified deadlines.</p>
           ) : (
             <ul className="space-y-2 text-sm">
-              {openQuestions.map((q) => (
-                <li key={q.id}>
+              {verified.upcomingDeadlines.slice(0, 4).map((deadline) => (
+                <li key={deadline.id}>
                   <Link
-                    href={`/app/cases/${matterId}/memory?memoryId=${q.id}`}
+                    href={`/app/cases/${matterId}/tasks?deadlineId=${deadline.id}`}
                     className="font-semibold text-accent underline"
                   >
-                    {q.title}
+                    {deadline.title}
                   </Link>
                   <p className="text-xs text-ink/55">
-                    {humanizeKey(q.memoryType)}
-                    {q.status === "proposed" ? " · suggested" : ""}
+                    {deadline.dueAt
+                      ? formatMatterCalendarDate(deadline.dueAt, {
+                          timezoneLabel: deadline.timezoneLabel ?? deadline.timezone,
+                        })
+                      : "Date unknown"}{" "}
+                    · {deadline.dateKind === "inferred" ? "inferred" : "stated in source"}
                   </p>
                 </li>
               ))}
             </ul>
           )}
-        </Panel>
+        </CompactSection>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <Panel title="People & Organizations">
-          {(verified?.entities ?? []).length === 0 ? (
-            <p className="text-sm text-ink/60">No verified people yet.</p>
-          ) : (
-            <ul className="flex flex-wrap gap-2 text-sm">
-              {verified.entities.slice(0, 8).map((ent) => (
-                <li key={ent.id}>
-                  <Link
-                    href={`/app/cases/${matterId}/people?entityId=${ent.id}`}
-                    className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3 py-1"
-                  >
-                    <span className="font-semibold">{ent.displayName}</span>
-                    <span className="text-ink/50">{ent.entityType}</span>
-                    <VerifiedBadge />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-          <Link
-            href={`/app/cases/${matterId}/people`}
-            className="mt-3 inline-block text-xs font-semibold text-accent underline"
-          >
-            Open People
-          </Link>
-        </Panel>
-
-        <Panel title="Timeline">
-          {(verified?.recentEvents ?? []).length === 0 ? (
-            <EmptyState
-              title="No verified events yet"
-              description="Nyaya can analyze uploaded documents for timeline suggestions."
-            />
-          ) : (
-            <ul className="space-y-2 text-sm">
-              {verified.recentEvents.slice(0, 5).map((ev) => (
-                <li
-                  key={ev.id}
-                  className="flex items-start justify-between gap-2 border-b border-line pb-2"
+      {(openQuestions ?? []).length > 0 ? (
+        <CompactSection
+          title="Open questions"
+          href={`/app/cases/${matterId}/memory`}
+          linkLabel="Open Memory"
+        >
+          <ul className="space-y-2 text-sm">
+            {openQuestions.map((question) => (
+              <li key={question.id}>
+                <Link
+                  href={`/app/cases/${matterId}/memory?memoryId=${question.id}`}
+                  className="font-semibold text-accent underline"
                 >
-                  <div>
-                    <Link
-                      href={`/app/cases/${matterId}/timeline?eventId=${ev.id}`}
-                      className="font-semibold text-accent underline"
-                    >
-                      {ev.title}
-                    </Link>
-                    <p className="text-xs text-ink/55">
-                      {ev.eventDate
-                        ? formatMatterCalendarDate(ev.eventDate)
-                        : ev.datePrecision === "unknown"
-                          ? "Date unknown"
-                          : "Approximate"}
-                    </p>
-                  </div>
-                  <VerifiedBadge />
-                </li>
-              ))}
-            </ul>
-          )}
+                  {question.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </CompactSection>
+      ) : (
+        <p className="text-sm text-ink/55">
+          No open questions recorded.{" "}
           <Link
-            href={`/app/cases/${matterId}/timeline`}
-            className="mt-3 inline-block text-xs font-semibold text-accent underline"
+            href={`/app/cases/${matterId}/memory`}
+            className="font-semibold text-accent underline"
           >
-            Open Timeline
+            Open Memory
           </Link>
-        </Panel>
-      </div>
+        </p>
+      )}
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <Panel title="Documents">
-          {(recentDocuments ?? []).length === 0 ? (
-            <EmptyState
-              title="No documents"
-              description="Upload documents to let Nyaya understand this Case."
-            />
-          ) : (
-            <ul className="space-y-2 text-sm">
-              {recentDocuments.map((d) => (
-                <li key={d.id} className="flex justify-between gap-2">
-                  <Link
-                    href={`/app/cases/${matterId}/documents`}
-                    className="font-semibold text-accent underline"
-                  >
-                    {d.title}
-                  </Link>
-                  <Badge>{humanizeKey(d.processingState)}</Badge>
-                </li>
-              ))}
-            </ul>
-          )}
-          <Link
-            href={`/app/cases/${matterId}/documents`}
-            className="mt-3 inline-block text-xs font-semibold text-accent underline"
-          >
-            Open Documents
-          </Link>
-        </Panel>
-
-        <Panel title="Open Tasks">
-          {(openTasks ?? []).length === 0 ? (
-            <p className="text-sm text-ink/60">No open tasks.</p>
-          ) : (
-            <ul className="space-y-2 text-sm">
-              {openTasks.map((t) => (
-                <li key={t.id} className="flex justify-between gap-2">
-                  <Link
-                    href={`/app/cases/${matterId}/tasks?taskId=${t.id}`}
-                    className="font-semibold text-accent underline"
-                  >
-                    {t.title}
-                  </Link>
-                  <span className="text-xs text-ink/50">
-                    {t.status}
-                    {t.priority ? ` · ${t.priority}` : ""}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
-          <Link
-            href={`/app/cases/${matterId}/tasks`}
-            className="mt-3 inline-block text-xs font-semibold text-accent underline"
-          >
-            Open Tasks
-          </Link>
-        </Panel>
-      </div>
-
-      <Panel title="Upcoming Deadlines">
-        {(verified?.upcomingDeadlines ?? []).length === 0 ? (
-          <EmptyState
-            title="No verified deadlines"
-            description="Nyaya can propose dates from documents. Deadlines stay suggestions until you verify them, and they always show timezone and whether the date was explicit or inferred."
-          />
+      <CompactSection title="Recent activity">
+        {(recentActivity ?? []).length === 0 ? (
+          <p className="text-sm text-ink/55">No recent Case activity yet.</p>
         ) : (
           <ul className="space-y-2 text-sm">
-            {verified.upcomingDeadlines.map((d) => (
-              <li key={d.id} className="flex flex-wrap items-start justify-between gap-2">
-                <div>
-                  <Link
-                    href={`/app/cases/${matterId}/tasks?deadlineId=${d.id}`}
-                    className="font-semibold text-accent underline"
-                  >
-                    {d.title}
-                  </Link>
-                  <p className="text-xs text-ink/55">
-                    {d.dueAt ? new Date(d.dueAt).toLocaleString() : "Date unknown"} ·{" "}
-                    {d.dateKind === "inferred" ? "inferred" : "explicit"} ·{" "}
-                    {d.timezoneLabel ?? d.timezone ?? "timezone unknown"}
-                  </p>
-                </div>
-                <VerifiedBadge />
+            {recentActivity.slice(0, 6).map((item) => (
+              <li key={`${item.kind}-${item.id}`} className="flex justify-between gap-3">
+                <span>
+                  <span className="text-xs font-semibold uppercase tracking-wide text-ink/45">
+                    {activityKindLabel(item.kind)}
+                  </span>
+                  <span className="mt-0.5 block font-semibold">{item.title}</span>
+                </span>
+                <span className="shrink-0 text-xs text-ink/50">
+                  {new Date(item.at).toLocaleDateString(undefined, {
+                    month: "short",
+                    day: "numeric",
+                  })}
+                </span>
               </li>
             ))}
           </ul>
         )}
-      </Panel>
+      </CompactSection>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <Panel title="Research">
-          <p className="text-sm text-ink/70">
-            Source-grounded research lives on Nyaya Research. Open it from the work-surfaces bar or
-            Work.
-          </p>
-          <Link
-            href={`/app/cases/${matterId}/research`}
-            className="mt-3 inline-block text-xs font-semibold text-accent underline"
-          >
-            Open Research
-          </Link>
-        </Panel>
-        <Panel title="Drafts">
-          {(recentDrafts ?? []).length === 0 ? (
-            <p className="text-sm text-ink/60">No drafts yet.</p>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <CompactSection
+          title="People"
+          href={`/app/cases/${matterId}/people`}
+          linkLabel="Open People"
+        >
+          {(verified?.entities ?? []).length === 0 ? (
+            <p className="text-sm text-ink/55">No verified people yet.</p>
           ) : (
-            <ul className="space-y-2 text-sm">
-              {recentDrafts.map((d) => (
-                <li key={d.id} className="flex justify-between gap-2">
-                  <Link
-                    href={`/app/cases/${matterId}/draft`}
-                    className="font-semibold text-accent underline"
-                  >
-                    {d.title}
-                  </Link>
-                  <span className="text-xs text-ink/50">
-                    {d.status}
-                    {d.aiGenerated ? " · AI" : ""}
-                  </span>
+            <ul className="space-y-1 text-sm">
+              {verified.entities.slice(0, 4).map((entity) => (
+                <li key={entity.id} className="font-semibold">
+                  {entity.displayName}
                 </li>
               ))}
             </ul>
           )}
-          <Link
-            href={`/app/cases/${matterId}/draft`}
-            className="mt-3 inline-block text-xs font-semibold text-accent underline"
-          >
-            Open Draft
-          </Link>
-        </Panel>
+        </CompactSection>
+        <CompactSection
+          title="Documents"
+          href={`/app/cases/${matterId}/documents`}
+          linkLabel="Open Documents"
+        >
+          {(recentDocuments ?? []).length === 0 ? (
+            <p className="text-sm text-ink/55">No documents yet.</p>
+          ) : (
+            <ul className="space-y-1 text-sm">
+              {recentDocuments.slice(0, 4).map((doc) => (
+                <li key={doc.id} className="truncate font-semibold">
+                  {doc.title}
+                </li>
+              ))}
+            </ul>
+          )}
+        </CompactSection>
+        <CompactSection title="Tasks" href={`/app/cases/${matterId}/tasks`} linkLabel="Open Tasks">
+          {(openTasks ?? []).length === 0 ? (
+            <p className="text-sm text-ink/55">No open tasks.</p>
+          ) : (
+            <ul className="space-y-2 text-sm">
+              {openTasks.slice(0, 4).map((task) => (
+                <li key={task.id}>
+                  <Link
+                    href={`/app/cases/${matterId}/tasks?taskId=${task.id}`}
+                    className="font-semibold"
+                  >
+                    {task.title}
+                  </Link>
+                  <p className="text-xs text-ink/55">
+                    {taskStatusLabel(task.status)}
+                    {task.priority ? ` · ${taskPriorityLabel(task.priority)}` : ""}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </CompactSection>
       </div>
 
-      <Panel title="Notes">
-        <p className="mb-3 text-sm text-ink/70">
-          There is no separate Notes tab yet. Record working notes here, save Nyaya answers from
-          Chat, and keep durable Case context in{" "}
-          <Link href={`/app/cases/${matterId}/memory`} className="font-semibold text-accent underline">
-            Memory
-          </Link>
-          .
-        </p>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <CompactSection
+          title="Research"
+          href={`/app/cases/${matterId}/research`}
+          linkLabel="Open Research"
+        >
+          <p className="text-sm text-ink/60">Source-grounded research for this Case.</p>
+        </CompactSection>
+        <CompactSection title="Drafts" href={`/app/cases/${matterId}/draft`} linkLabel="Open Draft">
+          {(recentDrafts ?? []).length === 0 ? (
+            <p className="text-sm text-ink/55">No drafts yet.</p>
+          ) : (
+            <ul className="space-y-1 text-sm">
+              {recentDrafts.slice(0, 3).map((draft) => (
+                <li key={draft.id} className="font-semibold">
+                  {draft.title}
+                </li>
+              ))}
+            </ul>
+          )}
+        </CompactSection>
+      </div>
+
+      <CompactSection title="Notes">
+        <div className="mb-2">
+          <Button type="button" variant="secondary" onClick={() => setNoteOpen(true)}>
+            + Add note
+          </Button>
+        </div>
         {(recentNotes ?? []).length === 0 ? (
-          <p className="mb-3 text-sm text-ink/60">No notes yet.</p>
+          <p className="text-sm text-ink/55">No notes yet.</p>
         ) : (
-          <ul className="mb-3 space-y-2 text-sm">
-            {recentNotes.map((n) => (
-              <li key={n.id} className="rounded border border-line px-3 py-2">
-                <span className="font-semibold">{n.title}</span>
-                <span className="text-ink/50"> · {n.origin}</span>
-                <p className="mt-1 line-clamp-2 text-xs text-ink/60">{n.content}</p>
+          <ul className="space-y-2 text-sm">
+            {recentNotes.slice(0, 4).map((note) => (
+              <li key={note.id}>
+                <span className="font-semibold">{note.title}</span>
+                <p className="line-clamp-2 text-xs text-ink/60">{note.content}</p>
               </li>
             ))}
           </ul>
         )}
-        <form className="space-y-2" onSubmit={saveNote}>
+      </CompactSection>
+
+      <CompactSection
+        title="Recent chats"
+        href={`/app/cases/${matterId}/chats`}
+        linkLabel="Open Chats"
+      >
+        {chats.length === 0 ? (
+          <p className="text-sm text-ink/55">No Case chats yet.</p>
+        ) : (
+          <ul className="space-y-2 text-sm">
+            {chats.slice(0, 4).map((chat) => (
+              <li key={chat.id}>
+                <Link
+                  href={`/app/cases/${matterId}/chats/${chat.id}`}
+                  className="font-semibold text-accent underline"
+                >
+                  {chat.title || "Untitled chat"}
+                </Link>
+                {chat.preview ? (
+                  <p className="truncate text-xs text-ink/50">{chat.preview}</p>
+                ) : null}
+              </li>
+            ))}
+          </ul>
+        )}
+      </CompactSection>
+
+      <IntelligenceDialog
+        open={noteOpen}
+        title="Add note"
+        description="Working notes stay on this Case. Durable context belongs in Memory."
+        onClose={() => setNoteOpen(false)}
+      >
+        <form className="flex flex-col gap-3" onSubmit={saveNote}>
           <input
             className="w-full rounded border border-line px-2 py-1.5 text-sm"
             placeholder="Note title"
@@ -650,7 +650,7 @@ export default function CaseHomePage() {
             className="w-full rounded border border-line px-2 py-1.5 text-sm"
             placeholder="Working note"
             aria-label="Note content"
-            rows={3}
+            rows={4}
             value={noteContent}
             onChange={(e) => setNoteContent(e.target.value)}
             required
@@ -659,67 +659,7 @@ export default function CaseHomePage() {
             Save note
           </Button>
         </form>
-      </Panel>
-
-      <Panel title="Recent activity">
-        {(recentActivity ?? []).length === 0 ? (
-          <p className="text-sm text-ink/60">No recent Case activity yet.</p>
-        ) : (
-          <ul className="space-y-2 text-sm">
-            {recentActivity.map((item) => (
-              <li key={`${item.kind}-${item.id}`} className="flex justify-between gap-2">
-                <span>
-                  <span className="font-semibold">{item.title}</span>
-                  <span className="text-ink/50"> · {item.kind}</span>
-                </span>
-                <span className="text-xs text-ink/50">
-                  {new Date(item.at).toLocaleString()}
-                </span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </Panel>
-
-      <Panel title="Recent Chats">
-        <div className="mb-3">
-          <Link href={`/app/cases/${matterId}/chats`}>
-            <Button type="button" variant="secondary">
-              Ask about this case
-            </Button>
-          </Link>
-        </div>
-        {chats.length === 0 ? (
-          <p className="text-sm text-ink/60">
-            No Case chats yet. Start one to ask Nyaya about this Case.
-          </p>
-        ) : (
-          <ul className="divide-y divide-line rounded border border-line">
-            {chats.map((c) => (
-              <li key={c.id}>
-                <Link
-                  href={`/app/cases/${matterId}/chats/${c.id}`}
-                  className="block px-3 py-2 text-sm hover:bg-accent-soft/30"
-                >
-                  <span className="font-semibold">{c.title || "Untitled chat"}</span>
-                  {c.preview ? (
-                    <span className="mt-0.5 block truncate text-xs text-ink/50">{c.preview}</span>
-                  ) : null}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </Panel>
-
-      {suggested > 0 ? (
-        <div className="flex items-center gap-2 text-sm">
-          <SuggestedBadge />
-          <span className="text-ink/70">
-            Items awaiting human review remain suggestions until verified.
-          </span>
-        </div>
-      ) : null}
+      </IntelligenceDialog>
       {error ? <ErrorState message={error} /> : null}
     </div>
   );

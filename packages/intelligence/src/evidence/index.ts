@@ -10,6 +10,7 @@ import {
   graphEdgeSources,
   graphEdges,
   graphNodes,
+  matterEntities,
   matterFactSources,
   matterFacts,
   timelineEventSources,
@@ -20,11 +21,29 @@ import { ensureReviewState } from "../discovery/index";
 
 const APPROVED = ["approved", "edited_and_approved"] as const;
 
+export type EvidenceTrustClass =
+  | "source_evidence"
+  | "reviewed_intelligence"
+  | "user_assertion"
+  | "disputed";
+
+export type EvidenceMatrixCitation = {
+  kind: string;
+  id: string;
+  rationale: string;
+  documentId: string | null;
+  documentVersionId: string | null;
+  chunkId: string | null;
+  status: string | null;
+  trustClass: EvidenceTrustClass;
+  origin: string | null;
+};
+
 export type EvidenceMatrixEntry = {
   issueKey: string;
   label: string;
-  supporting: Array<{ kind: string; id: string; rationale: string }>;
-  contrary: Array<{ kind: string; id: string; rationale: string }>;
+  supporting: EvidenceMatrixCitation[];
+  contrary: EvidenceMatrixCitation[];
   gaps: Array<{ rationale: string }>;
 };
 
@@ -104,6 +123,19 @@ export async function getEvidenceIntelligence(params: {
       ),
     );
 
+  const approvedEntities = await params.db
+    .select({ id: matterEntities.id })
+    .from(matterEntities)
+    .where(
+      and(
+        eq(matterEntities.organizationId, params.organizationId),
+        eq(matterEntities.matterId, params.matterId),
+        inArray(matterEntities.status, [...APPROVED]),
+      ),
+    );
+  const approvedEntityIds = new Set(approvedEntities.map((row) => row.id));
+  const reviewedEntitySrc = entitySrc.filter((s) => approvedEntityIds.has(s.entityId));
+
   const approvedEdges = await params.db
     .select()
     .from(graphEdges)
@@ -159,7 +191,7 @@ export async function getEvidenceIntelligence(params: {
               eq(analysisFindings.organizationId, params.organizationId),
               eq(analysisFindings.matterId, params.matterId),
               inArray(analysisFindings.analysisRunId, contradictionRunIds),
-              inArray(analysisFindings.status, ["proposed", "reviewed"]),
+              eq(analysisFindings.status, "reviewed"),
             ),
           );
   const contradictionFindingIds = contradictionFindings.map((f) => f.id);
@@ -187,7 +219,7 @@ export async function getEvidenceIntelligence(params: {
         fact: f,
         sources: factSources.filter((s) => s.documentId === doc.id && s.matterFactId === f.id),
       }));
-    const linkedEntities = entitySrc
+    const linkedEntities = reviewedEntitySrc
       .filter((s) => s.documentId === doc.id)
       .map((s) => ({ entityId: s.entityId, source: s }));
     const linkedGraphEdges = approvedEdges
@@ -211,11 +243,33 @@ export async function getEvidenceIntelligence(params: {
   });
 
   const evidenceMatrix = buildEvidenceMatrix({
-    facts: verifiedFacts,
+    facts: verifiedFacts.map((f) => ({
+      id: f.id,
+      factKey: f.factKey,
+      label: f.label,
+      value: f.value,
+      origin: f.origin,
+      status: f.status,
+      uncertaintyNotes: f.uncertaintyNotes,
+    })),
     factSources,
-    events: verifiedEvents,
+    events: verifiedEvents.map((e) => ({
+      id: e.id,
+      title: e.title,
+      description: e.description,
+      origin: e.origin,
+      status: e.status,
+      datePrecision: e.datePrecision,
+      uncertaintyNotes: e.uncertaintyNotes,
+    })),
     eventSources,
-    contradictionFindings,
+    contradictionFindings: contradictionFindings.map((f) => ({
+      id: f.id,
+      title: f.title,
+      explanation: f.explanation,
+      findingType: f.findingType,
+      status: f.status,
+    })),
     contradictionSources,
     importantDocumentIds: new Set(
       documentsWithLinks.filter((d) => d.important).map((d) => d.document.id),
@@ -228,17 +282,71 @@ export async function getEvidenceIntelligence(params: {
   };
 }
 
-function buildEvidenceMatrix(input: {
-  facts: Array<{ id: string; factKey: string; label: string; value: string }>;
+function sourceTrust(origin: string | null | undefined): EvidenceTrustClass {
+  return origin === "user" ? "user_assertion" : "source_evidence";
+}
+
+function findingTrust(findingType: string): EvidenceTrustClass {
+  const type = findingType.toLowerCase();
+  if (type.includes("tension") || type.includes("disput")) return "disputed";
+  return "reviewed_intelligence";
+}
+
+function citationFromSource(params: {
+  kind: string;
+  id: string;
+  rationale: string;
+  documentId?: string | null;
+  documentVersionId?: string | null;
+  chunkId?: string | null;
+  status?: string | null;
+  trustClass: EvidenceTrustClass;
+  origin?: string | null;
+}): EvidenceMatrixCitation {
+  return {
+    kind: params.kind,
+    id: params.id,
+    rationale: params.rationale,
+    documentId: params.documentId ?? null,
+    documentVersionId: params.documentVersionId ?? null,
+    chunkId: params.chunkId ?? null,
+    status: params.status ?? null,
+    trustClass: params.trustClass,
+    origin: params.origin ?? null,
+  };
+}
+
+export function buildEvidenceMatrix(input: {
+  facts: Array<{
+    id: string;
+    factKey: string;
+    label: string;
+    value: string;
+    origin?: string | null;
+    status?: string | null;
+    uncertaintyNotes?: string | null;
+  }>;
   factSources: Array<{
     matterFactId: string;
     documentId: string;
+    documentVersionId?: string | null;
+    chunkId?: string | null;
     supportingText: string;
   }>;
-  events: Array<{ id: string; title: string; description: string | null }>;
+  events: Array<{
+    id: string;
+    title: string;
+    description: string | null;
+    origin?: string | null;
+    status?: string | null;
+    datePrecision?: string | null;
+    uncertaintyNotes?: string | null;
+  }>;
   eventSources: Array<{
     timelineEventId: string;
     documentId: string;
+    documentVersionId?: string | null;
+    chunkId?: string | null;
     supportingText: string;
   }>;
   contradictionFindings: Array<{
@@ -246,10 +354,12 @@ function buildEvidenceMatrix(input: {
     title: string;
     explanation: string | null;
     findingType: string;
+    status?: string | null;
   }>;
   contradictionSources: Array<{
     findingId: string;
     documentId: string;
+    documentVersionId?: string | null;
     chunkId: string;
     supportingText: string;
     side: string | null;
@@ -257,43 +367,58 @@ function buildEvidenceMatrix(input: {
   importantDocumentIds: Set<string>;
 }): { issues: EvidenceMatrixEntry[] } {
   const issues: EvidenceMatrixEntry[] = [];
+  const attachedFindingIds = new Set<string>();
+
+  function contraryForChunks(chunkIds: Set<string>): EvidenceMatrixCitation[] {
+    const contrary: EvidenceMatrixCitation[] = [];
+    for (const finding of input.contradictionFindings) {
+      const findingSources = input.contradictionSources.filter((s) => s.findingId === finding.id);
+      const overlapping = findingSources.filter((s) => chunkIds.has(s.chunkId));
+      if (overlapping.length === 0) continue;
+      attachedFindingIds.add(finding.id);
+      const trust = findingTrust(finding.findingType);
+      for (const s of overlapping) {
+        const side = s.side ? ` [${s.side}]` : "";
+        contrary.push(
+          citationFromSource({
+            kind: "analysis_finding",
+            id: finding.id,
+            rationale: `${finding.findingType}${side}: ${s.supportingText}`,
+            documentId: s.documentId,
+            documentVersionId: s.documentVersionId,
+            chunkId: s.chunkId,
+            status: finding.status ?? "reviewed",
+            trustClass: trust,
+            origin: "ai",
+          }),
+        );
+      }
+    }
+    return contrary;
+  }
 
   for (const fact of input.facts) {
     const sources = input.factSources.filter((s) => s.matterFactId === fact.id);
     const sourceDocIds = new Set(sources.map((s) => s.documentId));
+    const chunkIds = new Set(sources.map((s) => s.chunkId).filter(Boolean) as string[]);
+    const origin = fact.origin ?? "ai";
+    const trust = sourceTrust(origin);
+    const uncertainty = fact.uncertaintyNotes ? ` (uncertainty: ${fact.uncertaintyNotes})` : "";
+    const userMark = origin === "user" ? "User assertion — " : "";
 
-    const supporting: EvidenceMatrixEntry["supporting"] = sources.map((s) => ({
-      kind: "fact_source",
-      id: fact.id,
-      rationale: s.supportingText,
-    }));
-
-    for (const event of input.events) {
-      const related = input.eventSources.filter(
-        (s) =>
-          s.timelineEventId === event.id &&
-          [...sourceDocIds].some((docId) => docId === s.documentId),
-      );
-      for (const s of related) {
-        supporting.push({
-          kind: "timeline_event",
-          id: event.id,
-          rationale: `${event.title}: ${s.supportingText}`,
-        });
-      }
-    }
-
-    const contrary: EvidenceMatrixEntry["contrary"] = [];
-    for (const finding of input.contradictionFindings) {
-      const findingSources = input.contradictionSources.filter((s) => s.findingId === finding.id);
-      const overlapsFactDocs = findingSources.some((s) => sourceDocIds.has(s.documentId));
-      if (!overlapsFactDocs) continue;
-      contrary.push({
-        kind: "analysis_finding",
-        id: finding.id,
-        rationale: finding.explanation ?? finding.title,
-      });
-    }
+    const supporting = sources.map((s) =>
+      citationFromSource({
+        kind: "fact_source",
+        id: fact.id,
+        rationale: s.supportingText,
+        documentId: s.documentId,
+        documentVersionId: s.documentVersionId,
+        chunkId: s.chunkId,
+        status: fact.status ?? "approved",
+        trustClass: trust,
+        origin,
+      }),
+    );
 
     const gaps: EvidenceMatrixEntry["gaps"] = [];
     if (sources.length === 0) {
@@ -310,9 +435,9 @@ function buildEvidenceMatrix(input: {
 
     issues.push({
       issueKey: fact.factKey,
-      label: `${fact.label}: ${fact.value}`,
+      label: `${userMark}${fact.label}: ${fact.value}${uncertainty}`,
       supporting,
-      contrary,
+      contrary: contraryForChunks(chunkIds),
       gaps,
     });
   }
@@ -320,33 +445,78 @@ function buildEvidenceMatrix(input: {
   for (const event of input.events) {
     const sources = input.eventSources.filter((s) => s.timelineEventId === event.id);
     if (sources.length === 0) continue;
-    const alreadyCovered = issues.some((i) =>
-      i.supporting.some((s) => s.kind === "timeline_event" && s.id === event.id),
-    );
-    if (alreadyCovered) continue;
+    const chunkIds = new Set(sources.map((s) => s.chunkId).filter(Boolean) as string[]);
+    const origin = event.origin ?? "ai";
+    const precision =
+      event.datePrecision && event.datePrecision !== "exact"
+        ? ` (date ${event.datePrecision})`
+        : "";
+    const uncertainty = event.uncertaintyNotes ? ` (uncertainty: ${event.uncertaintyNotes})` : "";
+    const userMark = origin === "user" ? "User assertion — " : "";
 
     issues.push({
       issueKey: `event:${event.id}`,
-      label: event.title,
-      supporting: sources.map((s) => ({
-        kind: "timeline_event_source",
-        id: event.id,
-        rationale: s.supportingText,
-      })),
-      contrary: input.contradictionFindings
-        .filter((f) =>
-          input.contradictionSources.some(
-            (s) => s.findingId === f.id && sources.some((es) => es.documentId === s.documentId),
-          ),
-        )
-        .map((f) => ({
-          kind: "analysis_finding",
-          id: f.id,
-          rationale: f.explanation ?? f.title,
-        })),
+      label: `${userMark}${event.title}${precision}${uncertainty}`,
+      supporting: sources.map((s) =>
+        citationFromSource({
+          kind: "timeline_event_source",
+          id: event.id,
+          rationale: s.supportingText,
+          documentId: s.documentId,
+          documentVersionId: s.documentVersionId,
+          chunkId: s.chunkId,
+          status: event.status ?? "approved",
+          trustClass: sourceTrust(origin),
+          origin,
+        }),
+      ),
+      contrary: contraryForChunks(chunkIds),
       gaps: event.description
         ? []
         : [{ rationale: `Timeline event "${event.title}" has no description on record.` }],
+    });
+  }
+
+  for (const finding of input.contradictionFindings) {
+    if (attachedFindingIds.has(finding.id)) continue;
+    const findingSources = input.contradictionSources.filter((s) => s.findingId === finding.id);
+    if (findingSources.length === 0) continue;
+    const trust = findingTrust(finding.findingType);
+    const sideA = findingSources.filter((s) => (s.side ?? "A").toUpperCase().startsWith("A"));
+    const sideB = findingSources.filter((s) => (s.side ?? "").toUpperCase().startsWith("B"));
+    const unsided = findingSources.filter(
+      (s) => !sideA.includes(s) && !sideB.includes(s),
+    );
+    issues.push({
+      issueKey: `finding:${finding.id}`,
+      label: `${finding.findingType}: ${finding.title}`,
+      supporting: [...sideA, ...unsided].map((s) =>
+        citationFromSource({
+          kind: "analysis_finding",
+          id: finding.id,
+          rationale: s.supportingText,
+          documentId: s.documentId,
+          documentVersionId: s.documentVersionId,
+          chunkId: s.chunkId,
+          status: finding.status ?? "reviewed",
+          trustClass: trust,
+          origin: "ai",
+        }),
+      ),
+      contrary: sideB.map((s) =>
+        citationFromSource({
+          kind: "analysis_finding",
+          id: finding.id,
+          rationale: s.supportingText,
+          documentId: s.documentId,
+          documentVersionId: s.documentVersionId,
+          chunkId: s.chunkId,
+          status: finding.status ?? "reviewed",
+          trustClass: trust,
+          origin: "ai",
+        }),
+      ),
+      gaps: [],
     });
   }
 

@@ -8,6 +8,7 @@ import * as schemaPhase8 from "./schema/phase8";
 import * as schemaPhase9 from "./schema/phase9";
 import * as schemaPhase10 from "./schema/phase10";
 import * as schemaPhase11 from "./schema/phase11";
+import * as schemaPhase12 from "./schema/phase12";
 
 const schema = {
   ...schemaCore,
@@ -18,6 +19,7 @@ const schema = {
   ...schemaPhase9,
   ...schemaPhase10,
   ...schemaPhase11,
+  ...schemaPhase12,
 };
 
 export type Database = ReturnType<typeof createDb>;
@@ -27,7 +29,16 @@ export function createDb(connectionString = process.env.DATABASE_URL) {
     throw new Error("DATABASE_URL is required");
   }
   const client = postgres(connectionString, { max: 10 });
-  return drizzle(client, { schema });
+  const db = drizzle(client, { schema });
+  Object.assign(db, { $client: client });
+  return db;
+}
+
+/** Close the postgres.js pool opened by `createDb`. Safe to call more than once. */
+export async function closeDb(db: Database): Promise<void> {
+  const client = (db as { $client?: { end?: (options?: { timeout?: number }) => Promise<void> } })
+    .$client;
+  await client?.end?.({ timeout: 5 });
 }
 
 export * from "./schema/index";
@@ -38,6 +49,7 @@ export * from "./schema/phase8";
 export * from "./schema/phase9";
 export * from "./schema/phase10";
 export * from "./schema/phase11";
+export * from "./schema/phase12";
 export { schema };
 export { SYSTEM_ROLE_DEFINITIONS, OWNER_CAPABILITIES } from "./system-roles";
 export { createOrganizationWithDefaults } from "./organizations";

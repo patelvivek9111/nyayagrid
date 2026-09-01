@@ -1,0 +1,60 @@
+{
+  "label": "EM1",
+  "title": "Evidence Matrix reliability against unchanged production",
+  "an1Da1Ca1NotCombined": true,
+  "liveRunDir": "benchmarks/nyaya-bench/reports/runs/2026-08-19T13-56-47-498Z",
+  "priorInfraAttempt": "benchmarks/nyaya-bench/reports/runs/2026-08-19T13-51-33-272Z",
+  "executionMode": "evidence",
+  "benchmarkKind": "NYAYA_EVIDENCE",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "productionUnchanged": true,
+  "graderVersion": "em1-2026-08-19",
+  "config": {
+    "gitCommitRecordedOnRun": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini",
+    "aiTimeoutMs": 180000
+  },
+  "counts": {
+    "pass": 26,
+    "needs_work": 0,
+    "fail": 2,
+    "infrastructure": 0,
+    "criticalFails": 0
+  },
+  "evidence": {
+    "tasks": 28,
+    "pass": 26,
+    "needs_work": 0,
+    "fail": 2,
+    "infrastructure": 0,
+    "critical": 0,
+    "propositionAccuracy": 1,
+    "provenanceAccuracy": 0.9285714285714286,
+    "supportingSpanAccuracy": 1,
+    "trustStatusAccuracy": 1,
+    "disputedEvidenceAccuracy": 1,
+    "unsupportedEvidenceRate": 0,
+    "proposedToVerifiedLeakageRate": 0,
+    "wrongDocumentAttributionRate": 0,
+    "duplicateCorroborationErrorRate": 0,
+    "missingEvidenceFabricationRate": 0
+  },
+  "fails": [
+    {
+      "taskId": "SYNTH-V2-006-EM009",
+      "taxonomy": "provenance",
+      "critical": false
+    },
+    {
+      "taskId": "SYNTH-V2-001-EM021",
+      "taxonomy": "provenance",
+      "critical": false
+    }
+  ],
+  "auditDefectsNotHitByLiveDetector": [
+    "proposed contradiction findings included as contrary when findings exist",
+    "same-document timeline events attached as extra fact support"
+  ]
+}

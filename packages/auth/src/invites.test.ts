@@ -63,6 +63,19 @@ describe("createOrganizationInvite", () => {
       }),
     ).rejects.toBeInstanceOf(InviteError);
   });
+
+  it("refuses to invite the owner role through the normal invite flow", async () => {
+    const db = fakeDb([[ORG_ROW], [{ id: "role_owner", organizationId: "org_1", key: "owner" }]]);
+    await expect(
+      createOrganizationInvite({
+        db,
+        organizationId: "org_1",
+        email: "person@example.com",
+        roleId: "role_owner",
+        invitedByUserId: "user_1",
+      }),
+    ).rejects.toMatchObject({ code: "ROLE_NOT_INVITEABLE" });
+  });
 });
 
 describe("acceptOrganizationInvite", () => {
@@ -118,6 +131,24 @@ describe("acceptOrganizationInvite", () => {
     ).rejects.toMatchObject({
       code: "EXPIRED",
     });
+  });
+
+  it("throws EMAIL_MISMATCH when the authenticated user email does not match the invite", async () => {
+    const db = fakeDb([
+      [
+        {
+          id: "inv_1",
+          email: "invitee@example.com",
+          revokedAt: null,
+          acceptedAt: null,
+          expiresAt: new Date(Date.now() + 60_000),
+        },
+      ],
+      [{ email: "attacker@example.com" }],
+    ]);
+    await expect(
+      acceptOrganizationInvite({ db, token: "t", userId: "user_1" }),
+    ).rejects.toMatchObject({ code: "EMAIL_MISMATCH" });
   });
 });
 

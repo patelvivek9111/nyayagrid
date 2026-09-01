@@ -1,0 +1,21 @@
+{
+  "label": "D1",
+  "title": "Draft reliability against unchanged production",
+  "liveRunDir": "benchmarks/nyaya-bench/reports/runs/2026-08-19T14-30-01-693Z",
+  "executionMode": "draft",
+  "benchmarkKind": "NYAYA_DRAFT",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "productionUnchanged": true,
+  "graderVersion": "d1-2026-08-19",
+  "promptVersion": "draft-generation-v1",
+  "counts": {
+    "pass": 22,
+    "needs_work": 0,
+    "fail": 0,
+    "infrastructure": 2,
+    "criticalFails": 0
+  },
+  "infrastructureTasks": ["SYNTH-V2-001-D018", "SYNTH-V2-001-D023"],
+  "infrastructureCause": "draftGenerationSchema expected content string; model returned object"
+}

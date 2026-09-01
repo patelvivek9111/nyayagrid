@@ -1,25 +1,33 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { ProfessionalShell } from "@/components/shell";
 import { useActiveOrganization } from "@/components/use-active-organization";
-import { Badge, Panel } from "@nyayagrid/ui";
-
-type CalendarEvent = {
-  id: string;
-  kind: "deadline" | "task";
-  title: string;
-  dueAt: string | null;
-  timezone: string | null;
-  matterId: string;
-  matterTitle: string;
-};
+import { FilterChipBar } from "@/components/ux/case-intelligence";
+import { VerifiedBadge } from "@/components/ux/trust";
+import {
+  FirmEmpty,
+  FirmError,
+  FirmNotice,
+  FirmPageHeader,
+  FirmRow,
+  FirmStatusText,
+} from "@/components/ux/firm-workspace";
+import {
+  calendarKindLabel,
+  calendarTrustLabel,
+  filterCalendarEvents,
+  formatCalendarWhen,
+  groupCalendarEventsByDate,
+  type FirmCalendarEvent,
+} from "@/lib/firm-workspace-ux";
 
 export default function CalendarPage() {
   const { organizationId } = useActiveOrganization();
-  const [events, setEvents] = useState<CalendarEvent[]>([]);
+  const [events, setEvents] = useState<FirmCalendarEvent[]>([]);
   const [error, setError] = useState("");
+  const [filter, setFilter] = useState("all");
 
   useEffect(() => {
     if (!organizationId) return;
@@ -32,37 +40,87 @@ export default function CalendarPage() {
       .catch((err) => setError(err instanceof Error ? err.message : "Failed to load"));
   }, [organizationId]);
 
+  const visible = useMemo(() => filterCalendarEvents(events, filter), [events, filter]);
+  const groups = useMemo(() => groupCalendarEventsByDate(visible), [visible]);
+
   return (
-    <ProfessionalShell title="Calendar">
-      <p className="mb-4 text-sm text-ink/70">
-        Verified deadlines (with timezone when recorded) and task due dates for cases you can
-        access. This is not Outlook or Google Calendar sync.
-      </p>
-      {error ? <p className="mb-4 text-sm text-[var(--ng-danger)]">{error}</p> : null}
-      <Panel title="Upcoming">
-        {events.length === 0 ? (
-          <p className="text-sm text-ink/70">No dated deadlines or tasks yet.</p>
+    <ProfessionalShell>
+      <FirmPageHeader
+        title="Calendar"
+        description="What is coming up on cases you can access — verified deadlines and task due dates."
+      />
+      <div className="mt-4">
+        <FirmNotice>
+          This list is built from case deadlines and tasks. It is not Outlook or Google Calendar
+          sync.
+        </FirmNotice>
+      </div>
+      {error ? (
+        <div className="mt-4">
+          <FirmError message={error} />
+        </div>
+      ) : null}
+
+      <div className="mt-6 space-y-4">
+        <FilterChipBar
+          value={filter}
+          onChange={setFilter}
+          options={[
+            { id: "all", label: "All", count: events.length },
+            { id: "deadlines", label: "Deadlines" },
+            { id: "tasks", label: "Tasks" },
+          ]}
+        />
+
+        {visible.length === 0 ? (
+          <FirmEmpty
+            title="No upcoming dated work."
+            description="Verified deadlines and task due dates will appear here."
+          />
         ) : (
-          <ul className="space-y-2 text-sm">
-            {events.map((event) => (
-              <li key={`${event.kind}-${event.id}`} className="rounded border border-line px-3 py-2">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <Link className="font-semibold text-accent underline" href={`/app/cases/${event.matterId}`}>
-                    {event.title}
-                  </Link>
-                  <Badge>{event.kind}</Badge>
-                </div>
-                <p className="text-xs text-ink/60">
-                  {event.matterTitle}
-                  {event.dueAt
-                    ? ` · ${event.dueAt}${event.timezone ? ` (${event.timezone})` : ""}`
-                    : " · date unknown"}
-                </p>
-              </li>
+          <div className="space-y-5">
+            {groups.map((group) => (
+              <section key={group.dateKey}>
+                <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink/45">
+                  {group.dateLine}
+                </h2>
+                <ul className="space-y-2">
+                  {group.items.map((event) => {
+                    const when = formatCalendarWhen(event.dueAt, event.timezone);
+                    const verified = event.source === "verified_deadline";
+                    return (
+                      <li key={`${event.kind}-${event.id}`}>
+                        <FirmRow
+                          title={event.title}
+                          subtitle={event.matterTitle}
+                          meta={when.timeLine ?? undefined}
+                          status={
+                            verified ? (
+                              <VerifiedBadge>
+                                {calendarTrustLabel(event.source, event.kind)}
+                              </VerifiedBadge>
+                            ) : (
+                              <FirmStatusText>{calendarKindLabel(event.kind)}</FirmStatusText>
+                            )
+                          }
+                          actions={
+                            <Link
+                              href={`/app/cases/${event.matterId}`}
+                              className="text-xs font-semibold text-accent underline"
+                            >
+                              Open case
+                            </Link>
+                          }
+                        />
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
             ))}
-          </ul>
+          </div>
         )}
-      </Panel>
+      </div>
     </ProfessionalShell>
   );
 }

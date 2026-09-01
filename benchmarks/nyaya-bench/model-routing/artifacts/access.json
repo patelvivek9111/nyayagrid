@@ -1,0 +1,46 @@
+{
+  "files": {
+    ".env": "EXISTS",
+    ".env.local": "ABSENT",
+    "apps/web/.env": "EXISTS",
+    "benchmarks/nyaya-bench/.env": "ABSENT"
+  },
+  "dotenv": {
+    "OPENAI_API_KEY": "commented-empty"
+  },
+  "process": {
+    "OPENAI_API_KEY": "absent",
+    "ANTHROPIC_API_KEY": "absent",
+    "XAI_API_KEY": "absent",
+    "GOOGLE_GENERATIVE_AI_API_KEY": "absent",
+    "GEMINI_API_KEY": "absent",
+    "GOOGLE_API_KEY": "absent"
+  },
+  "databaseUrl": "present",
+  "providers": [
+    {
+      "provider": "openai",
+      "keyAvailable": false,
+      "modelId": "gpt-4o-mini",
+      "status": "BLOCKED_EXTERNAL"
+    },
+    {
+      "provider": "anthropic",
+      "keyAvailable": false,
+      "modelId": "claude-sonnet-4-5-20250929",
+      "status": "BLOCKED_EXTERNAL"
+    },
+    {
+      "provider": "xai",
+      "keyAvailable": false,
+      "modelId": "grok-3",
+      "status": "BLOCKED_EXTERNAL"
+    },
+    {
+      "provider": "google",
+      "keyAvailable": false,
+      "modelId": "gemini-2.5-flash",
+      "status": "BLOCKED_EXTERNAL"
+    }
+  ]
+}

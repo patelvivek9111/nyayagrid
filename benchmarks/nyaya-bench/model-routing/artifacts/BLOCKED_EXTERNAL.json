@@ -1,0 +1,656 @@
+{
+  "id": "FOUR_PROVIDER_CERTIFICATION_V1",
+  "generatedAt": "2026-09-01T11:46:24.976Z",
+  "overall": "BLOCKED",
+  "reason": "No provider API keys were available in process environment or repo-local dotenv. Live legal benchmarking was not run. Results were not fabricated.",
+  "registryVersion": "nyaya-registry-v1",
+  "frozenConfig": {
+    "id": "nyaya-four-provider-cert-v1",
+    "frozenAt": "2026-09-01",
+    "routerRegistryVersion": "nyaya-registry-v1",
+    "certificationRulesVersion": "nyaya-cert-rules-v1",
+    "graderVersionNyayaBench": "a1-2026-08-18",
+    "temperature": 0,
+    "strategy": "standard",
+    "sampling": "temperature-0-no-latest-alias",
+    "hiddenGroundTruth": "unchanged",
+    "historicalBaselines": "do-not-overwrite",
+    "agents": "OFF",
+    "promptVersions": {
+      "ask": "nyaya-matter-qa-v11",
+      "contradiction": "contradiction-analysis-v3",
+      "compare": "compare-summary-v4",
+      "draft": "draft-generation-v1",
+      "contract": "contract-analysis-v2",
+      "deposition": "deposition-analysis-v2",
+      "research": "research-synthesis-v3",
+      "timeline": "matter-intelligence-extract-v3",
+      "graph": "graph-relationship-extract-v2",
+      "memory": "matter-memory-propose-v2"
+    },
+    "pinnedModelIds": {
+      "openai": "gpt-4o-mini",
+      "anthropic": "claude-sonnet-4-5-20250929",
+      "xai": "grok-3",
+      "google": "gemini-2.5-flash"
+    },
+    "inProcessAskContradiction": {
+      "dataset": "packages/ai golden fixtures (synthetic)",
+      "askTasks": 51,
+      "contradictionTasks": 26,
+      "matters": 1
+    },
+    "nyayaBenchV2": {
+      "dataset": "benchmarks/nyaya-bench/datasets/v2",
+      "requiresDatabase": true,
+      "requiresLiveProvider": true
+    },
+    "bars": {
+      "materialQualityAutoPct": 90,
+      "preferredQualityPct": 95,
+      "criticalSafetyPct": 100
+    }
+  },
+  "access": {
+    "files": {
+      ".env": "EXISTS",
+      ".env.local": "ABSENT",
+      "apps/web/.env": "EXISTS",
+      "benchmarks/nyaya-bench/.env": "ABSENT"
+    },
+    "dotenv": {
+      "OPENAI_API_KEY": "commented-empty"
+    },
+    "process": {
+      "OPENAI_API_KEY": "absent",
+      "ANTHROPIC_API_KEY": "absent",
+      "XAI_API_KEY": "absent",
+      "GOOGLE_GENERATIVE_AI_API_KEY": "absent",
+      "GEMINI_API_KEY": "absent",
+      "GOOGLE_API_KEY": "absent"
+    },
+    "databaseUrl": "present",
+    "providers": [
+      {
+        "provider": "openai",
+        "keyAvailable": false,
+        "modelId": "gpt-4o-mini",
+        "status": "BLOCKED_EXTERNAL"
+      },
+      {
+        "provider": "anthropic",
+        "keyAvailable": false,
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "BLOCKED_EXTERNAL"
+      },
+      {
+        "provider": "xai",
+        "keyAvailable": false,
+        "modelId": "grok-3",
+        "status": "BLOCKED_EXTERNAL"
+      },
+      {
+        "provider": "google",
+        "keyAvailable": false,
+        "modelId": "gemini-2.5-flash",
+        "status": "BLOCKED_EXTERNAL"
+      }
+    ]
+  },
+  "smoke": [
+    {
+      "provider": "openai",
+      "modelId": "unresolved",
+      "result": "BLOCKED_EXTERNAL",
+      "normalized": false,
+      "structuredOk": false,
+      "usageCaptured": false,
+      "modelCaptured": false,
+      "timeoutWorks": false,
+      "latencyMs": null,
+      "errorClass": "BLOCKED_EXTERNAL"
+    },
+    {
+      "provider": "anthropic",
+      "modelId": "unresolved",
+      "result": "BLOCKED_EXTERNAL",
+      "normalized": false,
+      "structuredOk": false,
+      "usageCaptured": false,
+      "modelCaptured": false,
+      "timeoutWorks": false,
+      "latencyMs": null,
+      "errorClass": "BLOCKED_EXTERNAL"
+    },
+    {
+      "provider": "xai",
+      "modelId": "unresolved",
+      "result": "BLOCKED_EXTERNAL",
+      "normalized": false,
+      "structuredOk": false,
+      "usageCaptured": false,
+      "modelCaptured": false,
+      "timeoutWorks": false,
+      "latencyMs": null,
+      "errorClass": "BLOCKED_EXTERNAL"
+    },
+    {
+      "provider": "google",
+      "modelId": "unresolved",
+      "result": "BLOCKED_EXTERNAL",
+      "normalized": false,
+      "structuredOk": false,
+      "usageCaptured": false,
+      "modelCaptured": false,
+      "timeoutWorks": false,
+      "latencyMs": null,
+      "errorClass": "BLOCKED_EXTERNAL"
+    }
+  ],
+  "registryBefore": [
+    {
+      "id": "openai:gpt-4o-mini",
+      "provider": "openai",
+      "modelId": "gpt-4o-mini",
+      "status": "VALIDATED",
+      "certification": {
+        "ask": "VALIDATED",
+        "research": "VALIDATED",
+        "draft": "VALIDATED",
+        "contract": "VALIDATED",
+        "deposition": "VALIDATED",
+        "evidence": "VALIDATED",
+        "compare": "VALIDATED",
+        "contradiction": "VALIDATED",
+        "timeline": "VALIDATED",
+        "graph": "VALIDATED",
+        "memory": "VALIDATED"
+      },
+      "qualityScore": null,
+      "safetyScore": null,
+      "notes": "VALIDATED only as the historical OpenAI execution route. Snapshot quality scores remain unrated until the four-provider certification phase."
+    },
+    {
+      "id": "openai:gpt-4o-mini-2024-07-18",
+      "provider": "openai",
+      "modelId": "gpt-4o-mini-2024-07-18",
+      "status": "VALIDATED",
+      "certification": {
+        "ask": "VALIDATED",
+        "research": "VALIDATED",
+        "draft": "VALIDATED",
+        "contract": "VALIDATED",
+        "deposition": "VALIDATED",
+        "evidence": "VALIDATED",
+        "compare": "VALIDATED",
+        "contradiction": "VALIDATED",
+        "timeline": "VALIDATED",
+        "graph": "VALIDATED",
+        "memory": "VALIDATED"
+      },
+      "qualityScore": null,
+      "safetyScore": null,
+      "notes": "VALIDATED only as the historical OpenAI execution route. Snapshot quality scores remain unrated until the four-provider certification phase."
+    },
+    {
+      "id": "openai:gpt-4o",
+      "provider": "openai",
+      "modelId": "gpt-4o",
+      "status": "VALIDATED",
+      "certification": {
+        "ask": "VALIDATED",
+        "research": "VALIDATED",
+        "draft": "VALIDATED",
+        "contract": "VALIDATED",
+        "deposition": "VALIDATED",
+        "evidence": "VALIDATED",
+        "compare": "VALIDATED",
+        "contradiction": "VALIDATED",
+        "timeline": "VALIDATED",
+        "graph": "VALIDATED",
+        "memory": "VALIDATED"
+      },
+      "qualityScore": null,
+      "safetyScore": null,
+      "notes": "VALIDATED only as the historical OpenAI execution route. Snapshot quality scores remain unrated until the four-provider certification phase."
+    },
+    {
+      "id": "anthropic:claude-sonnet-4-5-20250929",
+      "provider": "anthropic",
+      "modelId": "claude-sonnet-4-5-20250929",
+      "status": "CANDIDATE",
+      "certification": {
+        "ask": "CANDIDATE",
+        "research": "CANDIDATE",
+        "draft": "CANDIDATE",
+        "contract": "CANDIDATE",
+        "deposition": "CANDIDATE",
+        "evidence": "CANDIDATE",
+        "compare": "CANDIDATE",
+        "contradiction": "CANDIDATE",
+        "timeline": "CANDIDATE",
+        "graph": "CANDIDATE",
+        "memory": "CANDIDATE"
+      },
+      "qualityScore": null,
+      "safetyScore": null,
+      "notes": "Adapter present. Not certified for Auto. Awaiting four-provider benchmark."
+    },
+    {
+      "id": "xai:grok-3",
+      "provider": "xai",
+      "modelId": "grok-3",
+      "status": "CANDIDATE",
+      "certification": {
+        "ask": "CANDIDATE",
+        "research": "CANDIDATE",
+        "draft": "CANDIDATE",
+        "contract": "CANDIDATE",
+        "deposition": "CANDIDATE",
+        "evidence": "CANDIDATE",
+        "compare": "CANDIDATE",
+        "contradiction": "CANDIDATE",
+        "timeline": "CANDIDATE",
+        "graph": "CANDIDATE",
+        "memory": "CANDIDATE"
+      },
+      "qualityScore": null,
+      "safetyScore": null,
+      "notes": "Adapter present. Not certified for Auto. Awaiting four-provider benchmark."
+    },
+    {
+      "id": "google:gemini-2.5-flash",
+      "provider": "google",
+      "modelId": "gemini-2.5-flash",
+      "status": "CANDIDATE",
+      "certification": {
+        "ask": "CANDIDATE",
+        "research": "CANDIDATE",
+        "draft": "CANDIDATE",
+        "contract": "CANDIDATE",
+        "deposition": "CANDIDATE",
+        "evidence": "CANDIDATE",
+        "compare": "CANDIDATE",
+        "contradiction": "CANDIDATE",
+        "timeline": "CANDIDATE",
+        "graph": "CANDIDATE",
+        "memory": "CANDIDATE"
+      },
+      "qualityScore": null,
+      "safetyScore": null,
+      "notes": "Adapter present. Not certified for Auto. Awaiting four-provider benchmark."
+    },
+    {
+      "id": "mock:mock-1",
+      "provider": "mock",
+      "modelId": "mock-1",
+      "status": "VALIDATED",
+      "certification": {
+        "ask": "VALIDATED",
+        "research": "VALIDATED",
+        "draft": "VALIDATED",
+        "contract": "VALIDATED",
+        "deposition": "VALIDATED",
+        "evidence": "VALIDATED",
+        "compare": "VALIDATED",
+        "contradiction": "VALIDATED",
+        "timeline": "VALIDATED",
+        "graph": "VALIDATED",
+        "memory": "VALIDATED"
+      },
+      "qualityScore": null,
+      "safetyScore": null,
+      "notes": "Test/development fixture only. Never a production legal engine."
+    }
+  ],
+  "registryAfter": "unchanged",
+  "registryUpdateApplied": false,
+  "matrix": [
+    {
+      "subsystem": "ask",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "google": {
+        "modelId": "gemini-2.5-flash",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      }
+    },
+    {
+      "subsystem": "research",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "google": {
+        "modelId": "gemini-2.5-flash",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      }
+    },
+    {
+      "subsystem": "draft",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "google": {
+        "modelId": "gemini-2.5-flash",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      }
+    },
+    {
+      "subsystem": "contract",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "google": {
+        "modelId": "gemini-2.5-flash",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      }
+    },
+    {
+      "subsystem": "deposition",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "google": {
+        "modelId": "gemini-2.5-flash",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      }
+    },
+    {
+      "subsystem": "evidence",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "google": {
+        "modelId": "gemini-2.5-flash",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      }
+    },
+    {
+      "subsystem": "compare",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "google": {
+        "modelId": "gemini-2.5-flash",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      }
+    },
+    {
+      "subsystem": "contradiction",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "google": {
+        "modelId": "gemini-2.5-flash",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      }
+    },
+    {
+      "subsystem": "timeline",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "google": {
+        "modelId": "gemini-2.5-flash",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      }
+    },
+    {
+      "subsystem": "graph",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "google": {
+        "modelId": "gemini-2.5-flash",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      }
+    },
+    {
+      "subsystem": "memory",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      },
+      "google": {
+        "modelId": "gemini-2.5-flash",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "access": "BLOCKED_EXTERNAL"
+      }
+    }
+  ],
+  "autoBenchmark": "not_run",
+  "deepReview": "not_run",
+  "featureAgents": "OFF",
+  "trustArchitectureChanged": false,
+  "nextPhaseIfBlocked": "PROVIDER ACCESS & CERTIFICATION CLOSEOUT"
+}

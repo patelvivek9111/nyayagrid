@@ -1,0 +1,201 @@
+{
+  "comment": "Overlay only. Loaded in --mode memory. Reuses V2 PDFs. Actions are user/script fixtures, not hidden answers.",
+  "tasks": [
+    {
+      "id": "SYNTH-V2-001-M001",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "memory",
+      "difficulty": "medium",
+      "prompt": "Propose memories that capture the currently operative notice period.",
+      "action": {
+        "kind": "propose",
+        "question": "What formal notice period currently applies under Amendment 1?"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-M002",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "memory",
+      "difficulty": "medium",
+      "prompt": "Record a client statement that payment was made on Friday.",
+      "action": {
+        "kind": "create_manual",
+        "memoryType": "user_instruction",
+        "title": "Client payment statement",
+        "content": "Client says payment was made on Friday."
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-M004",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "memory",
+      "difficulty": "hard",
+      "prompt": "Propose memories about whether the parties intended to extend the deadline.",
+      "action": {
+        "kind": "propose",
+        "question": "Did the parties intend to extend the deadline beyond the written terms?"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-M007",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "memory",
+      "difficulty": "medium",
+      "prompt": "Propose a sourced memory of Amendment 1's notice period.",
+      "action": {
+        "kind": "propose",
+        "question": "Cite Amendment 1 for the current notice period."
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-M008",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "memory",
+      "difficulty": "medium",
+      "prompt": "Supersede a 60-day notice memory with a 30-day operative memory.",
+      "action": {
+        "kind": "supersede",
+        "oldTitle": "Original notice period",
+        "oldContent": "Notice period is 60 days.",
+        "oldMemoryType": "verified_context",
+        "newTitle": "Operative notice period",
+        "newContent": "Amendment 1 requires 30 days' notice.",
+        "newMemoryType": "verified_context"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-M009",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "memory",
+      "difficulty": "medium",
+      "prompt": "Reject a proposed memory and confirm it is not retrieved.",
+      "action": {
+        "kind": "reject",
+        "memoryType": "verified_context",
+        "title": "Rejected service-credit claim",
+        "content": "A service credit was issued on INV-2601."
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-M010",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "memory",
+      "difficulty": "hard",
+      "prompt": "Propose a memory of the notice period using the controlling amendment, not the email recollection.",
+      "action": {
+        "kind": "propose",
+        "question": "What notice period does the controlling signed amendment require?"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-M011",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "memory",
+      "difficulty": "hard",
+      "prompt": "Propose memories about any service credit on the October invoice.",
+      "action": {
+        "kind": "propose",
+        "question": "What service credit was issued on INV-2601?"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-M012",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "memory",
+      "difficulty": "hard",
+      "prompt": "Record a user claim that Amendment 1 applied retroactively.",
+      "action": {
+        "kind": "create_manual",
+        "memoryType": "verified_context",
+        "title": "Retroactive amendment",
+        "content": "The amendment applied retroactively."
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-M013",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "memory",
+      "difficulty": "hard",
+      "prompt": "Propose memories about the Exhibit Z insurance deductible.",
+      "action": {
+        "kind": "propose",
+        "question": "What insurance deductible does Exhibit Z require?"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-M014",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "memory",
+      "difficulty": "medium",
+      "prompt": "Create the same client-payment statement twice.",
+      "action": {
+        "kind": "duplicate",
+        "memoryType": "user_instruction",
+        "title": "Client payment statement",
+        "content": "Client says payment was made on Friday."
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-M015",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "memory",
+      "difficulty": "medium",
+      "prompt": "Create then edit a memory so the old proposition is replaced.",
+      "action": {
+        "kind": "edit",
+        "memoryType": "verified_context",
+        "title": "Notice period draft",
+        "content": "Notice period is 60 days.",
+        "newTitle": "Notice period corrected",
+        "newContent": "Amendment 1 requires 30 days' notice."
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-M017",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "memory",
+      "difficulty": "hard",
+      "prompt": "Record an attorney hint that no service credit was ever issued.",
+      "action": {
+        "kind": "hint_fallback",
+        "question": "What service credit is stated in the invoice?",
+        "hint": "No service credit was ever issued."
+      }
+    },
+    {
+      "id": "SYNTH-V2-006-M003",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "memory",
+      "difficulty": "hard",
+      "prompt": "Record a user assertion that Mercer entered the records room.",
+      "action": {
+        "kind": "create_manual",
+        "memoryType": "verified_context",
+        "title": "Records room entry",
+        "content": "Mercer entered the records room."
+      }
+    },
+    {
+      "id": "SYNTH-V2-006-M005",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "memory",
+      "difficulty": "hard",
+      "prompt": "Propose memories about whether Jordan entered the records room.",
+      "action": {
+        "kind": "propose",
+        "question": "Did Jordan enter the records room?"
+      }
+    },
+    {
+      "id": "SYNTH-V2-006-M006",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "memory",
+      "difficulty": "hard",
+      "prompt": "Propose memories that resolve the badge log versus testimony about entry.",
+      "action": {
+        "kind": "propose",
+        "question": "The badge log and testimony conflict. Who entered the records room?"
+      }
+    }
+  ]
+}

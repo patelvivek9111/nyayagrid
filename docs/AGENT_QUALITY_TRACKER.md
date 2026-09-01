@@ -5,9 +5,13 @@ Mark items `[x]` in this file as they ship. Do **not** create a new plan `.md` f
 
 Spec: [`AGENT_QUALITY.md`](./AGENT_QUALITY.md) · Evals notes: [`AI_EVALUATIONS.md`](./AI_EVALUATIONS.md) · Attorney review: [`AGENT_QUALITY_ATTORNEY_REVIEW.md`](./AGENT_QUALITY_ATTORNEY_REVIEW.md)
 
+Historical `eval:ai:live` markdown export packets were removed from the repository (gitignored under `docs/agent-quality-review/`). Measured rates in this tracker remain the record. Re-export locally with `EVAL_EXPORT_REVIEW=1` if a packet is needed.
+
 **Reopened (measurement track).** The prior “hardening slice complete / To do: none” close-out was premature. `AGENT_QUALITY.md` itself never claimed statistical precision/recall on golden matters, and its old “definition of done” (`eval:ai` green + unit tests green) is a code-regression bar, not a quality bar. **An automated suite passing with no human sign-off is not evidence of Harvey-level quality.**
 
 This track does **not** add Case tabs or product surfaces. Do not close this tracker until Section B is recorded with actual attorney scores. Mock rates below meet the written numeric bars as a *code-regression* measurement only — they do **not** substitute for live-model rates or attorney review.
+
+**Section A (2026-08-17): closed-with-documented-residual.** That is **not** closed-clean, **not** “bars met,” and **not** still-open for another prompt-example round. Contradiction fully meets its numeric bar on the **measured** live-9 config (`nyaya-matter-qa-v7`). Case Q&A and contract-compare do not, for the named residuals in [`AGENT_QUALITY.md`](./AGENT_QUALITY.md). Prompt-example stacking is deliberately paused. Production Case Q&A prompt is now `nyaya-matter-qa-v8` (thoroughness UX only — not a live remasure, not a new worked example). **Section B is unchanged (not started) and is now the only active blocker** on any Harvey-level claim for these workflows.
 
 ---
 
@@ -34,9 +38,9 @@ These items shipped. They do **not** by themselves satisfy the measurement bar.
 - [x] Playwright grounded answer path (upload synth lease → sources + grounded badge)
 - [x] Issue-spotting graded cases (CAM date conflict across depo + email)
 
-### Section A — Golden dataset coverage (suites + mock-measured rates)
+### Section A — Golden dataset coverage (closed-with-documented-residual)
 
-Artifacts exist. Mock `npm run eval:ai` (2026-08-14) still meets the written bars after the harness was strengthened (canaries, `citation_relevance`, adversarial density). **These bars are not trusted as a quality close-out until Section B.** The mock 100% result is recorded below — **treat it as worth double-checking, not as reassurance.** `MockAIProvider` keyword-matches passages and tends not to grab decoys; the canary suite is what proves the grader can fail.
+**Status: closed-with-documented-residual (2026-08-17).** Suites, canaries, mock rates, and live 1–9 measurement exist. Live 9 on the current config (`nyaya-matter-qa-v7`, `compare-summary-v4`, `gpt-4o-mini-2024-07-18`) is the last prompt-stacking remasure. **This close-out does not mean the written bars are met.** Contradiction **fully meets** its bar (21/21 × 3). Case Q&A **misses** false-confidence 0% (2.6%, all `golden-false-rent-amount`) and hallucination **range** straddles &lt;5% (max 5.3%). Contract-compare **misses** citation accuracy ≥90% (47.2%; golden-pair “as is” 3/3 since live 7; `cc-live-mixed-term-labelled` 1/3). Further prompt-example stacking is **deliberately paused**: live 7–9 reshuffled failures as often as they fixed them, even though failure magnitude decreased (compare decoy FPR 50% → 0%). Named residuals and the unbuilt validator-coerce candidate are in [`AGENT_QUALITY.md`](./AGENT_QUALITY.md) “Not yet claimed.” **Do not read any `[x]` below as “bars passed.”** Mock `npm run eval:ai` (2026-08-14) still meets the written bars after the harness was strengthened (canaries, `citation_relevance`, adversarial density). **These bars are not trusted as a quality close-out until Section B.** The mock 100% result is recorded below — **treat it as worth double-checking, not as reassurance.** `MockAIProvider` keyword-matches passages and tends not to grab decoys; the canary suite is what proves the grader can fail.
 
 - [x] Grader canaries (always-run, not `EVAL_LIVE`): `packages/ai/src/evals/canary.ts` feeds `gradeCitedAnswer` three hand-crafted bad answers (invented date → `faithfulness`; real-but-irrelevant chunk → `citation_relevance`; grounded when rubric expects `insufficient` → `evidence_state`). If a canary does not fail as expected, `eval:ai` exits immediately.
 - [x] Case Q&A: 38 cases in `packages/ai/src/evals/graded-cases.ts` against the golden lease matter, including `partial` (QA-05 hedge), QA-06 verified intel/graph/memory with no document cite, ≥5 two-chunk-combine cases, ≥5 near-miss decoys in the retrieved set, and ≥8 cases with `forbiddenChunkIds` / `citation_relevance`.
@@ -56,7 +60,7 @@ Artifacts exist. Mock `npm run eval:ai` (2026-08-14) still meets the written bar
 
 **Still 100% after citation-relevance and adversarial cases.** That is not evidence the live model is safe. It is evidence that (1) the canaries prove the grader can fail, (2) `eval:ai:stress` proves decoy scoring fires when a provider takes the bait, and (3) the default mock provider does not take the traps. Do not treat this table as grounds to close Section B.
 
-**Measured rates (live 1 — OpenAI `gpt-4o-mini`, 2026-08-14, before schema/QA-06/prompt fixes):** pinned `EVAL_LIVE_MODEL=gpt-4o-mini`. In-process cap `EVAL_LIVE_MAX_USD=0.75` (actual **~$0.0068**, 59 requests, 23,289 tokens). 25/68 evals failed. **Neither live workflow meets the written bar.** First real model signal; mock 100% was never a proxy. Packet: [`docs/agent-quality-review/exports-live/`](./agent-quality-review/exports-live/).
+**Measured rates (live 1 — OpenAI `gpt-4o-mini`, 2026-08-14, before schema/QA-06/prompt fixes):** pinned `EVAL_LIVE_MODEL=gpt-4o-mini`. In-process cap `EVAL_LIVE_MAX_USD=0.75` (actual **~$0.0068**, 59 requests, 23,289 tokens). 25/68 evals failed. **Neither live workflow meets the written bar.** First real model signal; mock 100% was never a proxy. Export packet removed from the repo.
 
 | Workflow | Provider | Model | n | Citation accuracy | Hallucination | False-insufficient | False-confidence | Citation-relevance fail | Meets written bar? |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -66,7 +70,7 @@ Artifacts exist. Mock `npm run eval:ai` (2026-08-14) still meets the written bar
 
 Read live-1 hallucination % with care: a large share of those Case Q&A fails were schema-shape (`answer` as object, `confidence` as `"High"` / `0.9`), not invented reporters.
 
-**Measured rates (live 2 — remasure after filed fixes, 2026-08-14 evening):** same pin and cap. Actual **~$0.0068**, 59 requests, 26,538 tokens. 11/68 evals failed. Packet: [`docs/agent-quality-review/exports-live-remeasure/`](./agent-quality-review/exports-live-remeasure/). **Still misses the written bar.** Do not overwrite live 1.
+**Measured rates (live 2 — remasure after filed fixes, 2026-08-14 evening):** same pin and cap. Actual **~$0.0068**, 59 requests, 26,538 tokens. 11/68 evals failed. Export packet removed from the repo. **Still misses the written bar.** Do not overwrite live 1.
 
 | Workflow | Provider | Model | n | Citation accuracy | Hallucination | False-insufficient | False-confidence | Citation-relevance fail | Meets written bar? |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -78,7 +82,7 @@ What moved: schema-shape inflation dropped (combine answers are strings; contrad
 
 **Live 2 export files were later overwritten** by a mock `eval:ai` in the same shell (`EVAL_EXPORT_DIR` leaked). The **rates above still stand.** A mock-export guard now refuses to write mock output into a `*live*` path. Do not score files currently in `exports-live-remeasure/` as live.
 
-**Measured rates (live 3 — after imprecise-date filter + retrieval ranking + `EVAL_LIVE_REPEATS=3`, 2026-08-14 night):** same pin. Case Q&A + contradiction: **~$0.0205**, 177 requests, 82,124 tokens. 39/194 evals failed — the same 13 Case Q&A cases on every repeat. Packet: [`docs/agent-quality-review/exports-live-3/`](./agent-quality-review/exports-live-3/). Contract-compare live summaries: [`exports-live-3/contract-compare/`](./agent-quality-review/exports-live-3/contract-compare/). **Bar judged on the mean; min/max shown. Ranges did not straddle any bar.** Do not overwrite live 1 or live 2.
+**Measured rates (live 3 — after imprecise-date filter + retrieval ranking + `EVAL_LIVE_REPEATS=3`, 2026-08-14 night):** same pin. Case Q&A + contradiction: **~$0.0205**, 177 requests, 82,124 tokens. 39/194 evals failed — the same 13 Case Q&A cases on every repeat. Export packet removed from the repo. Contract-compare live summaries were in that packet. **Bar judged on the mean; min/max shown. Ranges did not straddle any bar.** Do not overwrite live 1 or live 2.
 
 | Workflow | Provider | Model | n | repeats | Citation accuracy | Hallucination | False-insufficient | False-confidence | Citation-relevance fail | Meets written bar? |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -95,7 +99,7 @@ Engineering shipped this round (not a quality close-out): deterministic imprecis
 
 `golden-adv-similar-clause-rent-vs-late-fee` × 5 (ranking still on, temp=0): **refused 5/5**. Same case without ranking (live 4 below): **refused 3/3**. Recorded live 2 operator score for this id was **answered**; live 3 was **refused 3/3**. Within-session sampling on the current snapshot is stable-refuse. That does **not** close the cross-session flip (live 2 vs later runs). Do not treat 5× stability as “resolved.”
 
-**Measured rates (live 4 — Case Q&A only, rerank reverted, imprecise-date still in, 3 repeats):** ~$0.0148, 114 requests, 57,478 tokens. Snapshot `gpt-4o-mini-2024-07-18`. Packet: [`docs/agent-quality-review/exports-live-4-no-rerank/`](./agent-quality-review/exports-live-4-no-rerank/).
+**Measured rates (live 4 — Case Q&A only, rerank reverted, imprecise-date still in, 3 repeats):** ~$0.0148, 114 requests, 57,478 tokens. Snapshot `gpt-4o-mini-2024-07-18`. Export packet removed from the repo.
 
 | Workflow | n | repeats | Citation accuracy | Hallucination | False-insufficient | False-confidence | Meets written bar? |
 |---|---|---|---|---|---|---|---|
@@ -126,13 +130,13 @@ Reranking accounts for about **11 points** of cite-acc drop and **~7 points** of
 
 **Required on every live tracker row (same cell/block as the rates, not a side note):** `prompt.*` per workflow, `model.requested`, `model.resolved` (API snapshot, not the alias), `system_fingerprint`, `rerank=on|off`, `temperature`. The runner prints this as `=== Live run config ===` (`packages/ai/src/evals/live-config.ts`). A live number without that block is not a baseline. Do not backfill guessed values for live 1–3.
 
-**Measured rates (live 4 — contract-compare summaries after numeral scorer fix, 3 repeats):** packet [`exports-live-4-cc/contract-compare/`](./agent-quality-review/exports-live-4-cc/contract-compare/). **Scorer-bugfix verified on n=2, workflow-level rate not yet measured.** Do not cite this 100% as a workflow result.
+**Measured rates (live 4 — contract-compare summaries after numeral scorer fix, 3 repeats):** export packet removed from the repo. **Scorer-bugfix verified on n=2, workflow-level rate not yet measured.** Do not cite this 100% as a workflow result.
 
 | Workflow | n | repeats | Citation accuracy | Hallucination | False-insufficient | False-confidence | Meets written bar? |
 |---|---|---|---|---|---|---|---|
 | Contract compare (live summaries) | 2 scenarios | 3 | 100.0% (100–100) | 0.0% | 0.0% | 0.0% | **n=2 scorer-bugfix only — not a workflow-level measurement** |
 
-**Measured rates (live 5 — expanded live compare, first workflow-level read):** 16 scenarios × 3 (8 isolated planted material including 4 numeric-phrasing pairs, 6 decoys, full golden pair, empty). Packet: [`exports-live-5-cc/contract-compare/`](./agent-quality-review/exports-live-5-cc/contract-compare/). 48/48 passed.
+**Measured rates (live 5 — expanded live compare, first workflow-level read):** 16 scenarios × 3 (8 isolated planted material including 4 numeric-phrasing pairs, 6 decoys, full golden pair, empty). Export packet removed from the repo. 48/48 passed.
 
 ```
 prompt.contract_compare=compare-summary-v1
@@ -163,7 +167,7 @@ Fixture diagnosis of the live-3 stable 13 (`packages/ai/src/evals/recall-debug.t
 
 All five combine cases have **both** required chunks in the same prompt. Layout check: answering chunks are not buried (notice-period is 1/1; rent-vs-late-fee answering chunk is first of two). **Fix (mock-verified, not live):** `nyaya-matter-qa-v5` adds a SYNTH rent-vs-late-fee worked example (cite the answering chunk; do not refuse because a decoy is present) plus a two-source combine line. QA-05 is **not** a “cites should count as grounded” scorer bug: the rubric wants `partial` (`expectNeedsMoreDocuments=true`); the validator was upgrading `partial`→`grounded` whenever cites were valid. Validator now keeps `partial`. A model that still emits `grounded` on those questions will still fail, correctly. Conservatism probe mock: 13/13 pass with the example in the prompt; rent-vs-late-fee fails when the example is stripped.
 
-**Measured rates (live 6 — Case Q&A v5 + mixed compare decoy-discrimination, 3 repeats, 2026-08-14 night):** packet [`exports-live-6/`](./agent-quality-review/exports-live-6/). Contradiction skipped (`EVAL_LIVE_WORKFLOW=case_qa`). In-process cap `$0.75` / `200000` tokens. Case Q&A: 114 requests, 80,904 tokens, **~$0.0182**. OpenAI project spend limit cannot be verified from this repo.
+**Measured rates (live 6 — Case Q&A v5 + mixed compare decoy-discrimination, 3 repeats, 2026-08-14 night):** export packet removed from the repo. Contradiction skipped (`EVAL_LIVE_WORKFLOW=case_qa`). In-process cap `$0.75` / `200000` tokens. Case Q&A: 114 requests, 80,904 tokens, **~$0.0182**. OpenAI project spend limit cannot be verified from this repo.
 
 Case Q&A config:
 
@@ -220,7 +224,7 @@ temperature=0
 
 Decoy-discrimination **fired on 36/36** decoy+mixed runs (6 isolated + 6 mixed × 3). That is the first nonzero live fire count. Mixed pairs: term/fee/notice/insurance mostly pass; assignment+Exhibit I flags the exhibit numbering 3/3; isolated decoys mostly fail because “No material changes detected” is marked misaligned against the digest even when decoy needles are absent (details say `kind=decoy pass` while the case FAILs). Isolated material isolates still pass. Golden pair misses `fifteen` / `sixty` / `as is` 3/3. **Do not cite live 5’s 48/48 as the compare baseline.** No new lever this session.
 
-**Measured rates (live 7 — schema backfill + compare-scorer allowlist, 3 repeats, 2026-08-14 night):** packet [`exports-live-7/`](./agent-quality-review/exports-live-7/). Contradiction skipped (`EVAL_LIVE_WORKFLOW=case_qa`). In-process cap `$0.75` / `200000` tokens. Case Q&A: 114 requests, 81,055 tokens, **~$0.0183**. OpenAI project spend limit cannot be verified from this repo. **Measurement only — no new lever this session.**
+**Measured rates (live 7 — schema backfill + compare-scorer allowlist, 3 repeats, 2026-08-14 night):** export packet removed from the repo. Contradiction skipped (`EVAL_LIVE_WORKFLOW=case_qa`). In-process cap `$0.75` / `200000` tokens. Case Q&A: 114 requests, 81,055 tokens, **~$0.0183**. OpenAI project spend limit cannot be verified from this repo. **Measurement only — no new lever this session.**
 
 Case Q&A config:
 
@@ -279,7 +283,7 @@ Decoy-discrimination **fired on 36/36** decoy+mixed runs. Corrected FPR **8.3% (
 
 **Decided (Task 2, Option B — 2026-08-14):** `golden-false-rent-amount` rubric stays as-is (`expectEvidenceState: insufficient`, `forbiddenPhrases` unchanged). Do not relax the rubric to accept a hedged denial that echoes the bait number. Reasoning: a legal-product transcript should never contain an unverified figure in either polarity (asserted or denied) — “not seven thousand dollars” is as risky downstream (skimmed, copy-pasted, quoted out of context) as asserting it. This is a deliberate, stricter-than-conversational-norm bar, chosen on purpose, not a default. Needed fix is prompt-level: flat refusal (“insufficient information to confirm the rent amount”) instead of denial-with-echo.
 
-**Measured rates (live 8 — v6/v3 worked-example remasure, 3 repeats, 2026-08-14 night):** packet [`exports-live-8/`](./agent-quality-review/exports-live-8/). Contradiction skipped (`EVAL_LIVE_WORKFLOW=case_qa`). In-process cap `$0.75` / `200000` tokens. Case Q&A: 114 requests, 109,936 tokens, **~$0.0228**. OpenAI project spend limit cannot be verified from this repo. **Measurement only — no new fix this session.**
+**Measured rates (live 8 — v6/v3 worked-example remasure, 3 repeats, 2026-08-14 night):** export packet removed from the repo. Contradiction skipped (`EVAL_LIVE_WORKFLOW=case_qa`). In-process cap `$0.75` / `200000` tokens. Case Q&A: 114 requests, 109,936 tokens, **~$0.0228**. OpenAI project spend limit cannot be verified from this repo. **Measurement only — no new fix this session.**
 
 Case Q&A config:
 
@@ -339,7 +343,7 @@ Compare fingerprint **changed** vs live 7 (`fp_f344a168a1` → `fp_c881474fd1`).
 
 `cc-live-mixed-assignment-exhibit` **pass 3/3** (reports reasonable consent only; does not restate Exhibit I). Isolated material isolates still pass. Other mixed pairs still pass. Golden pair still misses **`as is` only** 3/3 (`fifteen`/`sixty` no longer missing — numeral/word scorer held). **Isolated decoys regressed 18/18** vs live 7: model now emits “Document versions differ; review the detected changes” instead of “No material changes detected,” which the grader counts as an invented material change. That is the entire 50% FPR (18 isolated / 36 decoy+mixed). Do not scorer-patch in this measurement session. **Do not cite live 5’s 48/48, live 6’s 55.6% FPR, or live 7’s 8.3% FPR as the compare baseline.**
 
-**Measured rates (live 9 — v7/v4 remasure + contradiction, 3 repeats, 2026-08-17):** packet [`exports-live-9/`](./agent-quality-review/exports-live-9/). All three workflows. In-process cap `$0.75` / `200000` tokens. Case Q&A + contradiction: 177 requests, 157,480 tokens, **~$0.0322**. OpenAI project spend limit cannot be verified from this repo. **Measurement only — no new fix this session.**
+**Measured rates (live 9 — v7/v4 remasure + contradiction, 3 repeats, 2026-08-17):** export packet removed from the repo. All three workflows. In-process cap `$0.75` / `200000` tokens. Case Q&A + contradiction: 177 requests, 157,480 tokens, **~$0.0322**. OpenAI project spend limit cannot be verified from this repo. **Measurement only — no new fix this session.**
 
 Case Q&A + contradiction config:
 
@@ -408,7 +412,16 @@ Isolated decoys **18/18 pass** with a real `"No material changes detected."` —
 - **`golden-adv-near-miss-ninety-day-draft`.** Live 9 fail #1/#3 (`insufficient`), pass #2. **Not a clean new regression.** Same case was already **1/3** on live 6 and live 7 (`grounded` / `insufficient` / `insufficient`). Live 8 was the first 3/3 pass (fingerprint `fp_6ec6bfb92d`); live 9 is 1/3 again (`fp_786821a2b4`). Not in the conservatism-13 set. Treat as historically noisy decoy-adjacent over-refusal.
 - **`cc-live-mixed-term-labelled#1`.** Real but **low-frequency** adjacent over-correction. Live 6–8 passed 3/3 with a term-extension summary. Live 9 #1 is exactly the v4 isolated-decoy taught string `"No material changes detected."`; #2/#3 pass. Mixed example does not teach that string.
 
-**Pattern live 6→9 (prompt-change rounds):** live 8 (v6/v3) fixed 3 targeted cases and introduced 2 new regressions (isolated decoys 18/18, QA-05 indemnity 3/3). Live 9 (v7/v4) **closed both of those** and introduced 1 solid adjacent miss (false-rent 3/3, copy held) plus 1 one-repeat compare miss. Magnitude is converging (FPR 50%→0%; new FC is 2.6% labeling). Count of “something moved” is not yet zero. **Recommendation: document-and-stop stacking worked examples.** Remaining gaps are small/specific (false-rent cite+coerce, hallu range max 5.3%, golden-pair `as is` since live 7, mixed-term 1/3, ninety-day noise). Do not add a fifth example. Contradiction stays clean — leave it.
+**Pattern live 6→9 (prompt-change rounds):** live 8 (v6/v3) fixed 3 targeted cases and introduced 2 new regressions (isolated decoys 18/18, QA-05 indemnity 3/3). Live 9 (v7/v4) **closed both of those** and introduced 1 solid adjacent miss (false-rent 3/3, copy held) plus 1 one-repeat compare miss. Magnitude is converging (FPR 50%→0%; new FC is 2.6% labeling). Count of “something moved” is not yet zero.
+
+**Section A close-out (2026-08-17): closed-with-documented-residual.** Document-and-stop stacking worked examples. This is an **accepted gap**, not a passing result. Contradiction stays clean — leave it. Remaining named residuals (see [`AGENT_QUALITY.md`](./AGENT_QUALITY.md)):
+
+- Case Q&A false-confidence **2.6%** — validator coerce of a correct insufficient refusal when `chunk_lease_term` is kept; not a false-fact assertion. Candidate scorer-only fix identified, **not built**.
+- Case Q&A hallucination range still straddles &lt;5% (**max 5.3%**).
+- Contract-compare citation accuracy still misses ≥90% — golden-pair **“as is”** (3/3 since live 7) and **`cc-live-mixed-term-labelled`** (1/3, isolated-decoy string on a mixed pair).
+- **`golden-adv-near-miss-ninety-day-draft`** noisy (1/3 to 3/3 across rounds); not attributable to a prompt version; open item, not a regression to chase.
+
+Do not add a fifth example. **Section B is now the only active step.**
 
 ### Section C — Adversarial / red-team (automated)
 
@@ -419,42 +432,45 @@ Isolated decoys **18/18 pass** with a real `"No material changes detected."` —
 
 ## To do — still blocking close-out
 
-### Next prompt-engineering session (worked-example class)
+Prompt-example stacking on Section A is **paused**. The items below are **accepted residuals**, not a next engineering session. Do not treat them as “still open to chase.”
 
-Live 9 diagnosis: stacking another worked example is **not** the next move. Magnitude is converging; remaining misses are specific residuals. See the live-9 diagnosis block above.
+### Documented residuals (accepted; not a pass; stacking paused)
 
-- [ ] **`golden-false-rent-amount` (Option B).** Live 8 pass 3/3 (`insufficient`, no bait echo). **Live 9 fail 3/3:** refusal copy held (no “seven thousand”) but `evidenceState=partial` with a term cite. Validator coerce + example collision; keyword ablation cannot reproduce. Document as residual unless editing the *existing* false-premise example to require empty sources — do not add a new example.
-- [x] **`golden-indemnity-with-amendment`.** Live 8 and live 9 pass 3/3: grounded, cites `chunk_amend_indemnity`.
-- [x] **`cc-live-mixed-assignment-exhibit`.** Live 8 and live 9 pass 3/3: reports reasonable consent only.
-- [x] **Isolated decoys.** Live 8 fail 18/18 (fallback string). Live 9 **pass 18/18** with `"No material changes detected."` — no fallback. FPR 0/36.
-- [ ] **Golden-pair `as is`.** Still missing 3/3 on live 7–9. Isolated `cc-live-material-as-is` still passes. Real omission, not a scorer bug. Stable residual, not a v7/v4 regression.
-- [ ] **`cc-live-mixed-term-labelled#1` (live 9).** Isolated-decoy example over-applied to a mixed pair (emitted no-change; missing 2027). #2/#3 passed. Real, low-frequency. Do not chase with a third compare example.
+- [x] **`golden-false-rent-amount` — documented residual, not fixed.** Live 8 pass 3/3 (`insufficient`, no bait echo). Live 9 fail 3/3: refusal copy held (no “seven thousand”) but validator coerces to `partial` because `chunk_lease_term` was kept. Entire Case Q&A false-confidence **2.6%** (bar 0%). Candidate validator-coerce narrowing identified in [`AGENT_QUALITY.md`](./AGENT_QUALITY.md); **not built**. Do not add a new prompt example.
+- [x] **Golden-pair `as is` — documented residual, not fixed.** Missing 3/3 on live 7–9. Isolated `cc-live-material-as-is` still passes. Real omission, not a scorer bug. Stable; not a v7/v4 regression.
+- [x] **`cc-live-mixed-term-labelled#1` — documented residual, not fixed.** Live 9 1/3: isolated-decoy example over-applied to a mixed pair (emitted no-change; missing 2027). #2/#3 passed. Real, low-frequency. Do not chase with a third compare example.
+- [x] **`golden-adv-near-miss-ninety-day-draft` — documented as noisy, not a regression to chase.** 1/3 (live 6–7) → 3/3 (live 8) → 1/3 (live 9). Not attributable to a specific prompt version.
+- [x] **`golden-indemnity-with-amendment`.** Live 8 and live 9 pass 3/3.
+- [x] **`cc-live-mixed-assignment-exhibit`.** Live 8 and live 9 pass 3/3.
+- [x] **Isolated decoys.** Live 9 **pass 18/18**; FPR 0/36.
 
-### Separately tracked — not in the worked-example session
+### Leftover graded-case miss (not a named bar driver; not chasing)
 
-- [ ] **QA-05 term (`golden-partial-hedge-term`).** Live 8 `grounded` 3/3 (“fully settled”). Live 9 state is **`partial` 3/3** (labeling improved) but still fails completeness (missing phrase “January 1, 2024”).
-- [x] **QA-05 indemnity (`golden-partial-hedge-indemnity`).** Live 8 fail 3/3 (`grounded`). Live 9 **pass 3/3** (`partial`, includes “negligence”).
+- [x] **QA-05 term (`golden-partial-hedge-term`) — documented leftover.** Live 9 state is `partial` 3/3 (labeling improved vs live 8 `grounded`) but still fails completeness (missing phrase “January 1, 2024”). Not treated as a Section A reopen.
+- [x] **QA-05 indemnity (`golden-partial-hedge-indemnity`).** Live 9 **pass 3/3**.
 
-### Section B — Real attorney review (currently missing entirely)
+### Section B — Real attorney review (not started; now the only active blocker)
 
-- [x] Export 20–30 **live** agent outputs across Case Q&A + contradiction (`EVAL_EXPORT_REVIEW=1 npm run eval:ai:live` against pinned `gpt-4o-mini`, 2026-08-14) into [`docs/agent-quality-review/exports-live/`](./agent-quality-review/exports-live/). Contract compare was **not** live-model in this packet.
-- [x] Live remasure after filed fixes (same pin/cap, 2026-08-14 evening). **Rates recorded** in the live-2 table above. The markdown files in [`exports-live-remeasure/`](./agent-quality-review/exports-live-remeasure/) were later overwritten by a mock run; do not score those files as live.
-- [x] Live 3 after imprecise-date filter + ranking + variance harness (repeats=3, 2026-08-14 night) into [`docs/agent-quality-review/exports-live-3/`](./agent-quality-review/exports-live-3/), including first live contract-compare summaries.
+Section B’s status is **unchanged: still not started.** Operator review exists and does **not** close it. This section is now the **only active blocker** on any Harvey-level claim for these workflows. Section A’s documented residual must not be misread as substituting for attorney scores.
+
+- [x] Export 20–30 **live** agent outputs across Case Q&A + contradiction (`EVAL_EXPORT_REVIEW=1 npm run eval:ai:live` against pinned `gpt-4o-mini`, 2026-08-14) into a local gitignored export folder. Contract compare was **not** live-model in this packet.
+- [x] Live remasure after filed fixes (same pin/cap, 2026-08-14 evening). **Rates recorded** in the live-2 table above. Those export files were later overwritten by a mock run and have been removed from the repo.
+- [x] Live 3 after imprecise-date filter + ranking + variance harness (repeats=3, 2026-08-14 night) into a local gitignored export folder, including first live contract-compare summaries.
 - [x] Layer 1 **operator** review recorded in [`AGENT_QUALITY_ATTORNEY_REVIEW.md`](./AGENT_QUALITY_ATTORNEY_REVIEW.md) (role=`operator`, 2026-08-14 live 1 + evening remasure + live 3). **Does not close Section B.**
-- [x] If findings show a systematic gap, file it as a specific fix — it **blocks treating Section A’s bar as sufficient for that workflow** even if the automated suite passed. Operator gaps filed as code 2026-08-14, remasured live 2, then ranking + imprecise-date filter remasured live 3. Live 3: contradiction meets the numeric bar; Case Q&A false-insufficient **regressed** (15.8% → 28.9%, range 28.9–28.9); live contract-compare summaries miss. Remaining engineering gaps: decoy-adjacent and combine-case over-refusal (**model behavior**: required chunks already in the eval prompt; diagnosis 2026-08-14, no fifth lever yet), QA-05 `grounded` vs `partial`. Live 5 SYNTH compare 100% is summarization/scorer; citation_relevance 0/48. Do not overwrite the live-1 or live-2 tables. **Do not treat contradiction’s numeric pass or live 5 SYNTH compare as closing Section B.**
+- [x] If findings show a systematic gap, file it as a specific fix — it **blocks treating Section A’s bar as sufficient for that workflow** even if the automated suite passed. Operator gaps filed as code 2026-08-14, remasured live 2, then ranking + imprecise-date filter remasured live 3. Live 3: contradiction meets the numeric bar; Case Q&A false-insufficient **regressed** (15.8% → 28.9%, range 28.9–28.9); live contract-compare summaries miss. Remaining engineering gaps were later remasured through live 9; Section A is now **closed-with-documented-residual**, not a bar pass. Do not overwrite the live-1 or live-2 tables. **Do not treat contradiction’s numeric pass, live 5 SYNTH compare, or the Section A residual close-out as closing Section B.**
 - [ ] Get someone with legal judgment who did not write this code to blind-review each one: (1) Would I have caught this myself? (2) Is anything wrong or missing? (3) Would I send this to a client with light editing, or does it need a rewrite? Score pass / needs-work / fail. **Layer 2 (attorney / 2L–3L) still missing.**
 - [ ] Record an **`attorney`** pass in [`AGENT_QUALITY_ATTORNEY_REVIEW.md`](./AGENT_QUALITY_ATTORNEY_REVIEW.md). The operator row must not be relabeled attorney.
-- [ ] This step must happen before Section A’s bars are trusted. **Attorney review still not recorded.** An automated suite passing with no human sign-off is not evidence of Harvey-level quality.
+- [ ] This step must happen before Section A’s bars are trusted. **Attorney review still not recorded.** An automated suite passing with no human sign-off is not evidence of Harvey-level quality. A documented residual is also not evidence of Harvey-level quality.
 
 ---
 
 ## Do not close this tracker until
 
-- All three workflows have graded suites at 20–30+ cases each with **measured** rates meeting the written numeric bar. Live 9 contradiction **meets** (21/21 × 3, 0–0). Live 9 Case Q&A **misses** false-confidence 2.6% > 0% (false-rent `partial` 3/3); hallucination mean meets &lt;5% but **range straddles** (max 5.3%). Live 9 contract-compare **misses** citation accuracy 47.2% &lt; 90% (golden-pair `as is` 3/3; mixed-term-labelled#1); decoy FPR is now **0.0%**. **Live 2 is not a configuration baseline.** Section B is still required.
+- All three workflows have graded suites at 20–30+ cases each with **measured** rates meeting the written numeric bar. **Section A is closed-with-documented-residual, not passed.** Live 9 contradiction **meets** (21/21 × 3, 0–0). Live 9 Case Q&A **misses** false-confidence 2.6% > 0% (false-rent `partial` 3/3 — validator coerce of a correct refusal, not a false-fact assertion); hallucination mean meets &lt;5% but **range straddles** (max 5.3%). Live 9 contract-compare **misses** citation accuracy 47.2% &lt; 90% (golden-pair `as is` 3/3; mixed-term-labelled#1); decoy FPR is now **0.0%**. **Live 2 is not a configuration baseline.** Those gaps are accepted and documented; they are not a license to claim the bars. Section B is still required and is now the only active blocker.
 - At least one real attorney review pass (Section B) is recorded with actual scores, not “we plan to.”
 - Any systematic gap found in review has a corresponding fix or is explicitly logged as an open risk in `AGENT_QUALITY.md`, not silently dropped.
 
-When Section B is checked, move it into **Done** and only then leave **To do** empty. Do not mark this complete based on code existing — mark it complete based on live measured numbers plus attorney scores meeting the bar in `AGENT_QUALITY.md`.
+When Section B is checked, move it into **Done** and only then leave **To do** empty. Do not mark this complete based on code existing — mark it complete based on live measured numbers plus attorney scores meeting the bar in `AGENT_QUALITY.md`. Do not mark it complete because Section A was closed-with-documented-residual.
 
 ---
 
@@ -471,7 +487,7 @@ When Section B is checked, move it into **Done** and only then leave **To do** e
 
 ## How to use
 
-1. Pick the next unchecked section (Section B is the remaining blocker).
+1. Pick the next unchecked section (**Section B is the only active blocker.** Section A is closed-with-documented-residual — do not reopen it for prompt-example stacking.)
 2. Implement + measure. Check off a box only when the artifact exists.
 3. Record measured rates in the table above in the same PR/session.
-4. Move a whole section to **Done** only when all of its boxes are `[x]`.
+4. Move a whole section to **Done** only when all of its boxes are `[x]` **and** the written bars are actually met. Section A’s `[x]` residual boxes mean documented-and-accepted, not passed.

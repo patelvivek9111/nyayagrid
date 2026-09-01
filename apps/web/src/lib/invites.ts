@@ -1,6 +1,10 @@
 import { and, eq } from "drizzle-orm";
 import { roles, type Database } from "@nyayagrid/database";
-import { createOrganizationInvite, type CreateOrganizationInviteResult } from "@nyayagrid/auth";
+import {
+  assertInviteableRoleKey,
+  createOrganizationInvite,
+  type CreateOrganizationInviteResult,
+} from "@nyayagrid/auth";
 import { createEmailProviderFromEnv } from "@nyayagrid/platform";
 
 export class InviteRoleNotFoundError extends Error {
@@ -29,6 +33,7 @@ export async function inviteMemberByRoleKey(params: {
     .where(and(eq(roles.organizationId, params.organizationId), eq(roles.key, params.roleKey)))
     .limit(1);
   if (!role) throw new InviteRoleNotFoundError(params.roleKey);
+  assertInviteableRoleKey(params.roleKey);
 
   return createOrganizationInvite({
     db: params.db,

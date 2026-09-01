@@ -32,6 +32,13 @@ export type AuthoritySearchHit = {
   jurisdiction: string | null;
   court: string | null;
   decisionDate: string | null;
+  /** Authority- or version-level effective window. Missing values stay unknown for temporal ranking. */
+  effectiveStart?: string | null;
+  effectiveEnd?: string | null;
+  courtId?: string | null;
+  authorityState?: string | null;
+  federalCircuit?: string | null;
+  courtLevel?: string | null;
   score: number;
   snippet: string;
   sectionRef?: string | null;

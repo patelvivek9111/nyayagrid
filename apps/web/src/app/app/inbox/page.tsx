@@ -1,30 +1,40 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { ProfessionalShell } from "@/components/shell";
 import { useActiveOrganization } from "@/components/use-active-organization";
-import { Badge, Button, Panel } from "@nyayagrid/ui";
+import { Button } from "@nyayagrid/ui";
+import { FilterChipBar, IntelligenceDialog } from "@/components/ux/case-intelligence";
+import {
+  FirmEmpty,
+  FirmError,
+  FirmNotice,
+  FirmPageHeader,
+  FirmRow,
+  FirmStatusText,
+} from "@/components/ux/firm-workspace";
+import {
+  inboxBucket,
+  inboxStatusLabel,
+  filterInbox,
+  formatShortDate,
+  type FirmInboxEmail,
+} from "@/lib/firm-workspace-ux";
 
 type MatterRow = { id: string; title: string };
-type EmailRow = {
-  id: string;
-  fromAddress: string;
-  subject: string;
-  body: string;
-  status: string;
-  documentId: string | null;
-};
 
 export default function InboxPage() {
   const { organizationId } = useActiveOrganization();
   const [matters, setMatters] = useState<MatterRow[]>([]);
-  const [emails, setEmails] = useState<EmailRow[]>([]);
+  const [emails, setEmails] = useState<FirmInboxEmail[]>([]);
   const [fromAddress, setFromAddress] = useState("");
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
   const [fileMatterId, setFileMatterId] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [captureOpen, setCaptureOpen] = useState(false);
+  const [tab, setTab] = useState("pending");
 
   async function load(orgId: string) {
     const [mattersRes, inboxRes] = await Promise.all([
@@ -60,6 +70,8 @@ export default function InboxPage() {
       setFromAddress("");
       setSubject("");
       setBody("");
+      setCaptureOpen(false);
+      setTab("pending");
       await load(organizationId);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed");
@@ -106,45 +118,44 @@ export default function InboxPage() {
     }
   }
 
-  return (
-    <ProfessionalShell title="Inbox">
-      <p className="mb-4 text-sm text-ink/70">
-        Paste an email, then confirm the case before it becomes a document. Nyaya never sends mail
-        from this screen.
-      </p>
-      {error ? <p className="mb-4 text-sm text-[var(--ng-danger)]">{error}</p> : null}
+  const pendingCount = emails.filter((email) => inboxBucket(email.status) === "pending").length;
+  const filedCount = emails.filter((email) => inboxBucket(email.status) === "filed").length;
+  const visible = useMemo(() => filterInbox(emails, tab), [emails, tab]);
 
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Panel title="Paste email">
-          <form className="flex flex-col gap-3" onSubmit={capture}>
-            <input
-              className="rounded border border-line px-2 py-1.5 text-sm"
-              placeholder="From"
-              value={fromAddress}
-              onChange={(e) => setFromAddress(e.target.value)}
-              required
-            />
-            <input
-              className="rounded border border-line px-2 py-1.5 text-sm"
-              placeholder="Subject"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-              required
-            />
-            <textarea
-              className="min-h-[160px] rounded border border-line px-2 py-1.5 text-sm"
-              placeholder="Body"
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-              required
-            />
-            <Button type="submit" disabled={busy}>
-              Capture for review
-            </Button>
-          </form>
-        </Panel>
-        <Panel title="Pending and filed">
-          <label className="mb-3 block text-sm font-semibold">
+  return (
+    <ProfessionalShell>
+      <FirmPageHeader
+        title="Inbox"
+        description="Captured communications waiting to be filed to a case. NyayaGrid does not send mail from this screen."
+        actions={
+          <Button type="button" disabled={!organizationId} onClick={() => setCaptureOpen(true)}>
+            + Capture email
+          </Button>
+        }
+      />
+      <div className="mt-4">
+        <FirmNotice>
+          Paste an email to capture it for review. Nothing is filed to a case until you confirm.
+        </FirmNotice>
+      </div>
+      {error ? (
+        <div className="mt-4">
+          <FirmError message={error} />
+        </div>
+      ) : null}
+
+      <div className="mt-6 space-y-4">
+        <FilterChipBar
+          value={tab}
+          onChange={setTab}
+          options={[
+            { id: "pending", label: "Pending", count: pendingCount },
+            { id: "filed", label: "Filed", count: filedCount },
+          ]}
+        />
+
+        {tab === "pending" && pendingCount > 0 ? (
+          <label className="block max-w-sm text-sm font-semibold">
             File to case
             <select
               className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal"
@@ -159,38 +170,101 @@ export default function InboxPage() {
               ))}
             </select>
           </label>
-          {emails.length === 0 ? (
-            <p className="text-sm text-ink/70">No captured emails.</p>
-          ) : (
-            <ul className="space-y-2 text-sm">
-              {emails.map((email) => (
-                <li key={email.id} className="rounded border border-line px-3 py-2">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="font-semibold">{email.subject}</span>
-                    <Badge>{email.status}</Badge>
-                  </div>
-                  <p className="text-xs text-ink/50">From {email.fromAddress}</p>
-                  {email.status === "pending" ? (
-                    <div className="mt-2 flex gap-2">
-                      <Button type="button" disabled={busy} onClick={() => fileToMatter(email.id)}>
-                        Confirm file to case
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="secondary"
-                        disabled={busy}
-                        onClick={() => discard(email.id)}
+        ) : null}
+
+        {visible.length === 0 ? (
+          <FirmEmpty
+            title={tab === "filed" ? "No filed emails yet." : "No captured emails yet."}
+            description={
+              tab === "filed"
+                ? "Filed messages appear here after you file them to a case."
+                : "Captured messages will appear here before they are filed to a case."
+            }
+            action={
+              tab === "pending" ? (
+                <Button type="button" onClick={() => setCaptureOpen(true)}>
+                  + Capture email
+                </Button>
+              ) : undefined
+            }
+          />
+        ) : (
+          <ul className="space-y-2">
+            {visible.map((email) => (
+              <li key={email.id}>
+                <FirmRow
+                  title={email.subject}
+                  subtitle={`From ${email.fromAddress}${email.matterId ? ` · ${matters.find((m) => m.id === email.matterId)?.title ?? "Case"}` : ""}`}
+                  meta={formatShortDate(email.createdAt) || undefined}
+                  status={<FirmStatusText>{inboxStatusLabel(email.status)}</FirmStatusText>}
+                  actions={
+                    email.status === "pending" ? (
+                      <div className="flex gap-2">
+                        <Button
+                          type="button"
+                          disabled={busy}
+                          onClick={() => fileToMatter(email.id)}
+                        >
+                          File to case
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          disabled={busy}
+                          onClick={() => discard(email.id)}
+                        >
+                          Dismiss
+                        </Button>
+                      </div>
+                    ) : email.matterId ? (
+                      <a
+                        href={`/app/cases/${email.matterId}`}
+                        className="text-xs font-semibold text-accent underline"
                       >
-                        Discard
-                      </Button>
-                    </div>
-                  ) : null}
-                </li>
-              ))}
-            </ul>
-          )}
-        </Panel>
+                        Open case
+                      </a>
+                    ) : null
+                  }
+                />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
+
+      <IntelligenceDialog
+        open={captureOpen}
+        title="Capture email"
+        description="Paste an email to capture it for review. NyayaGrid does not send mail from this screen."
+        onClose={() => setCaptureOpen(false)}
+      >
+        <form className="flex flex-col gap-3" onSubmit={capture}>
+          <input
+            className="rounded border border-line px-2 py-1.5 text-sm"
+            placeholder="From"
+            value={fromAddress}
+            onChange={(e) => setFromAddress(e.target.value)}
+            required
+          />
+          <input
+            className="rounded border border-line px-2 py-1.5 text-sm"
+            placeholder="Subject"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+            required
+          />
+          <textarea
+            className="min-h-[160px] rounded border border-line px-2 py-1.5 text-sm"
+            placeholder="Body"
+            value={body}
+            onChange={(e) => setBody(e.target.value)}
+            required
+          />
+          <Button type="submit" disabled={busy}>
+            Capture for review
+          </Button>
+        </form>
+      </IntelligenceDialog>
     </ProfessionalShell>
   );
 }

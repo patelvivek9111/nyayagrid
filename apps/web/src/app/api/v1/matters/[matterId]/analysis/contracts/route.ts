@@ -4,6 +4,7 @@ import { analyzeContract, listContractAnalyses } from "@nyayagrid/intelligence";
 import { MockAIProvider } from "@nyayagrid/ai";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonOk } from "@/lib/http";
+import { enforceRateLimit } from "@/lib/rate-limit";
 
 type Params = { params: Promise<{ matterId: string }> };
 
@@ -40,6 +41,12 @@ export async function POST(request: Request, { params }: Params) {
       minAccess: "edit",
       capability: "documents.edit",
     });
+    const limited = await enforceRateLimit(request, {
+      endpointClass: "expensive_ai",
+      organizationId: matter.organizationId,
+      userId: user.id,
+    });
+    if (limited) return limited;
     const body = analyzeContractSchema.parse(await request.json());
     const result = await analyzeContract({
       db,

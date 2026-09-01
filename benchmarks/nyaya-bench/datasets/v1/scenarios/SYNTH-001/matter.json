@@ -1,0 +1,39 @@
+{
+  "scenario_id": "SYNTH-001",
+  "title": "Harbor Point Lease Dispute",
+  "matter_type": "Commercial Lease",
+  "fictional": true,
+  "label": "SYNTH - FICTIONAL TEST DOCUMENT - NOT REAL CLIENT WORK",
+  "documents": [
+    {
+      "document_id": "lease",
+      "file": "documents/lease.pdf",
+      "title": "Original Commercial Lease"
+    },
+    {
+      "document_id": "amendment1",
+      "file": "documents/amendment1.pdf",
+      "title": "First Amendment to Commercial Lease"
+    },
+    {
+      "document_id": "email_landlord",
+      "file": "documents/email_landlord.pdf",
+      "title": "Email - Landlord to Tenant - July 8, 2026"
+    },
+    {
+      "document_id": "email_tenant",
+      "file": "documents/email_tenant.pdf",
+      "title": "Email - Tenant Operations - July 9, 2026"
+    },
+    {
+      "document_id": "deposition",
+      "file": "documents/deposition.pdf",
+      "title": "Deposition Excerpt - Daniel Cho"
+    },
+    {
+      "document_id": "notice",
+      "file": "documents/notice.pdf",
+      "title": "Tenant Notice Letter - August 1, 2026"
+    }
+  ]
+}

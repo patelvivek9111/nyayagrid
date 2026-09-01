@@ -11,5 +11,7 @@ export * from "./sessions";
 export * from "./matter-authorities";
 export * from "./notes";
 export * from "./context";
+export * from "./jurisdiction-layer";
 export * from "./synthesize";
 export * from "./memo";
+export * from "./corpus";

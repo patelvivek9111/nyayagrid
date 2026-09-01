@@ -1,0 +1,49 @@
+{
+  "id": "BASELINE_6W_R2_FINAL",
+  "generatedAt": "2026-08-27T13:42:30.000Z",
+  "phase": "6W-R2",
+  "stopCondition": "B",
+  "stopReason": "Clerk staging credentials and Inngest Cloud registration are absent. Authenticated HTTP, Cloud ingest, E2E canary, staging ready=200, HTTP RBAC/isolation, HTTP rate limits, image rollback, managed PITR, and provider object recovery cannot be proven without fabricating external PASSes.",
+  "remediationIterationsUsed": 0,
+  "maxRemediationIterations": 5,
+  "technicallyDeployable": false,
+  "attorneyValidated": false,
+  "nationwide": false,
+  "featureAgentsStaging": false,
+  "featureAgentsProduction": false,
+  "automaticProductionDeployment": false,
+  "nextPhase": "PHASE 6W-R3 — EXTERNAL STAGING INFRASTRUCTURE CLOSEOUT",
+  "frozenAi": {
+    "researchR1Critical": 0,
+    "depositionDa1": "16/16 PASS (6W-R1 frozen attempt 3)",
+    "frozenHarnessCriticalFailures": [],
+    "spotCheckUnits": "PASS (jurisdiction, research weight/synthesize, deposition semantics, FEATURE_AGENTS, auth Clerk-missing)"
+  },
+  "inventory": {
+    "CLERK_SECRET_KEY": "MISSING",
+    "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY": "MISSING",
+    "CLERK_WEBHOOK_SECRET": "MISSING",
+    "INNGEST_EVENT_KEY": "AVAILABLE_LOCAL_WEAK",
+    "INNGEST_SIGNING_KEY": "AVAILABLE_LOCAL_WEAK",
+    "INNGEST_DEV": "ACTIVE",
+    "REDIS_URL": "MISSING_IN_APP_ENV",
+    "redisDocker": "HEALTHY_LOCAL",
+    "S3": "LOCAL_MINIO",
+    "DATABASE_URL": "AVAILABLE_LOCAL",
+    "MALWARE_SCANNER": "development",
+    "clamavDocker": "HEALTHY_LOCAL",
+    "STAGING_BASE_URL": "MISSING",
+    "FEATURE_AGENTS": "UNSET"
+  },
+  "localProbesCurrentDev": {
+    "live": 200,
+    "ready": 200,
+    "mattersUnauth": 401,
+    "note": "APP_ENV default development. ready=200 is not staging proof. 401 is DevAuth refused (APP_ENV source=default), not Clerk sign-in."
+  },
+  "staleStagingShapedProcess": {
+    "ready": 503,
+    "mattersUnauth": 500,
+    "note": "Enumerated Clerk/Inngest/malware/MinIO/email/billing/memory-limiter blockers. 500 attributed to stale process; current code returns 401."
+  }
+}

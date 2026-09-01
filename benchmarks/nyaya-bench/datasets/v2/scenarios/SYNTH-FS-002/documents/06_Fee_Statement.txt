@@ -1,0 +1,6 @@
+SYNTHETIC twin fee statement.
+
+Fee statement RL-8801
+Amount due: $188,200.00
+Isolation marker: ROURKE_LEDGER_TOKEN
+No courtesy-credit line appears on this statement.

@@ -1,0 +1,87 @@
+{
+  "scenario_id": "SYNTH-009",
+  "title": "Helio Robotics Confidentiality Dispute",
+  "ground_truth_version": "1.0",
+  "answers": {
+    "Q001": {
+      "task_id": "SYNTH-009-Q001",
+      "expected": "3 years",
+      "supporting_refs": [
+        "nda:2"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q002": {
+      "task_id": "SYNTH-009-Q002",
+      "expected": "March 5, 2026",
+      "supporting_refs": [
+        "disclosure_log:Entry"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q003": {
+      "task_id": "SYNTH-009-Q003",
+      "expected": "10 business days",
+      "supporting_refs": [
+        "nda:4"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q004": {
+      "task_id": "SYNTH-009-Q004",
+      "expected": "July 7, 2026",
+      "supporting_refs": [
+        "email_vector:Message",
+        "affidavit:Statement"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q005": {
+      "task_id": "SYNTH-009-Q005",
+      "expected": "July 12, 2026",
+      "supporting_refs": [
+        "affidavit:Statement"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q006": {
+      "task_id": "SYNTH-009-Q006",
+      "expected": "No; email says backup deletion was pending confirmation; declaration says backups removed July 12",
+      "supporting_refs": [
+        "email_vector:Message",
+        "affidavit:Statement"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q007": {
+      "task_id": "SYNTH-009-Q007",
+      "expected": "ABSTAIN: paper copies not addressed",
+      "supporting_refs": [],
+      "verdict_logic": "must_abstain"
+    },
+    "Q008": {
+      "task_id": "SYNTH-009-Q008",
+      "expected": "Independently developed information",
+      "supporting_refs": [
+        "nda:3"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q009": {
+      "task_id": "SYNTH-009-Q009",
+      "expected": "No",
+      "supporting_refs": [
+        "email_vector:Message"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q010": {
+      "task_id": "SYNTH-009-Q010",
+      "expected": "Helio Robotics Inc.",
+      "supporting_refs": [
+        "request:Request"
+      ],
+      "verdict_logic": "must_answer"
+    }
+  }
+}

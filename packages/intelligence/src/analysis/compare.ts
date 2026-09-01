@@ -81,17 +81,23 @@ export async function generateComparisonSummaryFromDiffs(params: {
     };
   }
 
-  const changeDigest = params.changes
+  const orderedChanges = [...params.changes].sort((a, b) => {
+    const rank = (attention: DiffChange["attention"]) =>
+      attention === "high_attention" ? 0 : attention === "review" ? 1 : 2;
+    return rank(a.attention) - rank(b.attention);
+  });
+  const changeDigest = orderedChanges
     .slice(0, 20)
     .map(
       (c) =>
-        `- ${c.changeType}/${c.attention}: ${c.oldText?.slice(0, 120) ?? "(none)"} -> ${c.newText?.slice(0, 120) ?? "(none)"}`,
+        `- ${c.changeType}/${c.attention} ${c.locationA ?? ""}/${c.locationB ?? ""}: ${c.oldText?.slice(0, 180) ?? "(none)"} -> ${c.newText?.slice(0, 180) ?? "(none)"}`,
     )
     .join("\n");
 
   const generation = await params.ai.generate({
     temperature: 0,
     schemaName: "document_comparison_summary",
+    routing: { subsystem: "compare", strategy: "standard" },
     messages: [
       {
         role: "system",

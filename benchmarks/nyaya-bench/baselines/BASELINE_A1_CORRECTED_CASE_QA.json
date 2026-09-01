@@ -1,0 +1,108 @@
+{
+  "baselineId": "BASELINE_A1_CORRECTED_CASE_QA",
+  "benchmarkKind": "NYAYA_CASE_QA",
+  "graderVersion": "a1-2026-08-18",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "notLegalCorrectnessProof": true,
+  "measures": [
+    "pdf_ingestion",
+    "chunking",
+    "embeddings",
+    "retrieval",
+    "askNyayaAboutMatter",
+    "answer_grounding",
+    "case_qa_citations"
+  ],
+  "doesNotMeasure": [
+    "agents",
+    "timeline_subsystem",
+    "memory_subsystem",
+    "graph_subsystem",
+    "research_subsystem",
+    "draft_subsystem",
+    "contract_compare_workflow",
+    "contradiction_engine"
+  ],
+  "originalBaseline": "BASELINE_A_RAW_CASE_QA",
+  "originalRuns": {
+    "v1": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-14-16-862Z",
+    "v2": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z"
+  },
+  "regradeRun": "benchmarks/nyaya-bench/reports/runs/regrade-A1-2026-08-18T10-52-14-395Z",
+  "originalArtifactsUnchanged": true,
+  "openaiRecalled": false,
+  "configFromOriginalAnswers": {
+    "gitCommit": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini-2024-07-18",
+    "promptVersion": "nyaya-matter-qa-v8"
+  },
+  "counts": {
+    "expected": 500,
+    "executed": 500,
+    "pass": 350,
+    "needs_work": 66,
+    "fail": 79,
+    "infrastructure": 5,
+    "passRateExpected": 0.7,
+    "v1": {
+      "total": 100,
+      "pass": 81,
+      "needs_work": 7,
+      "fail": 12,
+      "infrastructure": 0,
+      "passRate": 0.81
+    },
+    "v2": {
+      "total": 400,
+      "pass": 269,
+      "needs_work": 59,
+      "fail": 67,
+      "infrastructure": 5,
+      "passRate": 0.6725
+    }
+  },
+  "comparisonToOriginalGraders": {
+    "pass": { "original": 295, "corrected": 350, "delta": 55 },
+    "needs_work": { "original": 72, "corrected": 66, "delta": -6 },
+    "fail": { "original": 128, "corrected": 79, "delta": -49 },
+    "infrastructure": { "original": 5, "corrected": 5, "delta": 0 },
+    "criticalFails": { "original": 67, "corrected": 32, "delta": -35 },
+    "graderFalseFailuresCorrectedFailToPass": 54,
+    "graderFalseFailuresCorrectedNeedsWorkToPass": 13,
+    "graderFalsePassesCorrectedPassToFail": 5,
+    "passToNeedsWork": 7
+  },
+  "automatedSeverity": {
+    "criticalFail": 32,
+    "note": "After grader repair, automated critical fails match the remaining product clusters (15 T025 overclaim + 1 T025 non-overclaim abstention miss + 14 T020 retroactivity + 2 V1 silence-as-proof)."
+  },
+  "remainingProductClusters": {
+    "badgeLogTreatedAsPhysicalEntry": { "pattern": "V2 T025 overclaim", "count": 15 },
+    "badgeLogDeterminationWithoutLimitation": { "ids": ["SYNTH-V2-002-T025"], "count": 1 },
+    "falseRetroactivityPremiseAccepted": { "pattern": "V2 T020", "count": 14 },
+    "v1OverclaimFromSilence": { "ids": ["SYNTH-008-Q008", "SYNTH-010-Q008"], "count": 2 },
+    "falseContradictionAsserted": {
+      "pattern": "V2 T011",
+      "ids": [
+        "SYNTH-V2-005-T011",
+        "SYNTH-V2-008-T011",
+        "SYNTH-V2-012-T011",
+        "SYNTH-V2-014-T011",
+        "SYNTH-V2-016-T011"
+      ],
+      "count": 5
+    }
+  },
+  "infrastructureTaskIds": [
+    "SYNTH-V2-005-T002",
+    "SYNTH-V2-008-T008",
+    "SYNTH-V2-009-T020",
+    "SYNTH-V2-014-T014",
+    "SYNTH-V2-016-T024"
+  ],
+  "possibleBenchmarkDefects": [
+    "SYNTH-001-Q006 (and V1 Q006 siblings) are category false_contradiction but hidden GT uses must_answer needles rather than not_contradiction. Fixtures were not edited."
+  ]
+}

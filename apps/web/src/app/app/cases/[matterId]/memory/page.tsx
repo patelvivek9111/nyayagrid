@@ -3,17 +3,29 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { Badge, Button, Panel } from "@nyayagrid/ui";
+import { Button } from "@nyayagrid/ui";
 import { humanizeKey } from "@/lib/plain-labels";
 import {
   EmptyState,
   ErrorState,
+  FilterChipBar,
+  IntelligenceDialog,
+  IntelligenceHeader,
+  IntelligenceInspector,
   LoadingState,
+  RelatedList,
   SourceDrawer,
-  SuggestedBadge,
-  VerifiedBadge,
+  TrustStatus,
   type SourceDrawerItem,
 } from "@/components/ux";
+import {
+  isVerifiedStatus,
+  memoryGroupId,
+  memoryGroupLabel,
+  sourceCountLabel,
+  trustStatusFromRecord,
+  userFacingLoadError,
+} from "@/lib/case-intelligence-ux";
 
 type MemorySource = {
   id: string;
@@ -54,18 +66,20 @@ const MEMORY_TYPES = [
   "other",
 ] as const;
 
-function isVerified(status: string) {
-  return status === "approved" || status === "edited_and_approved";
-}
+type MemoryFilter = "active" | "suggested" | "history";
 
-function groupByType(items: MemoryItem[]) {
+function groupActive(items: MemoryItem[]) {
   const groups = new Map<string, MemoryItem[]>();
   for (const item of items) {
-    const list = groups.get(item.memoryType) ?? [];
+    const id = memoryGroupId(item.memoryType);
+    const list = groups.get(id) ?? [];
     list.push(item);
-    groups.set(item.memoryType, list);
+    groups.set(id, list);
   }
-  return [...groups.entries()].sort(([a], [b]) => a.localeCompare(b));
+  const order = ["confirmed_facts", "strategy", "instructions", "preferences", "other"];
+  return order
+    .filter((id) => (groups.get(id) ?? []).length > 0)
+    .map((id) => ({ id, label: memoryGroupLabel(id), items: groups.get(id) ?? [] }));
 }
 
 export default function CaseMemoryPage() {
@@ -76,12 +90,14 @@ export default function CaseMemoryPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [filter, setFilter] = useState<MemoryFilter>("active");
+  const [addOpen, setAddOpen] = useState(false);
+  const [editOpen, setEditOpen] = useState(false);
   const [hint, setHint] = useState("");
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [memoryType, setMemoryType] = useState<(typeof MEMORY_TYPES)[number]>("verified_context");
   const [importance, setImportance] = useState("normal");
-  const [supersedeId, setSupersedeId] = useState("");
   const [editTitle, setEditTitle] = useState("");
   const [editContent, setEditContent] = useState("");
   const [editType, setEditType] = useState<(typeof MEMORY_TYPES)[number]>("verified_context");
@@ -92,7 +108,7 @@ export default function CaseMemoryPage() {
   async function load(keepId?: string | null) {
     const res = await fetch(`/api/v1/matters/${matterId}/memory`);
     const json = await res.json();
-    if (!res.ok) throw new Error(json?.error?.message ?? "Failed to load memory");
+    if (!res.ok) throw new Error(userFacingLoadError("memory", res.status));
     const next: MemoryItem[] = json.memories ?? [];
     setMemories(next);
     const id = keepId ?? selected?.id;
@@ -104,7 +120,7 @@ export default function CaseMemoryPage() {
     const memoryId = new URLSearchParams(window.location.search).get("memoryId");
     setLoading(true);
     load(memoryId)
-      .catch((err) => setError(err instanceof Error ? err.message : "Failed to load memory"))
+      .catch((err) => setError(err instanceof Error ? err.message : userFacingLoadError("memory")))
       .finally(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matterId]);
@@ -122,7 +138,7 @@ export default function CaseMemoryPage() {
   }, [selected]);
 
   const active = useMemo(
-    () => memories.filter((m) => isVerified(m.status) && !m.supersededBy),
+    () => memories.filter((m) => isVerifiedStatus(m.status) && !m.supersededBy),
     [memories],
   );
   const proposed = useMemo(() => memories.filter((m) => m.status === "proposed"), [memories]);
@@ -133,6 +149,8 @@ export default function CaseMemoryPage() {
       ),
     [memories],
   );
+  const visible = filter === "active" ? active : filter === "suggested" ? proposed : historical;
+  const grouped = filter === "active" ? groupActive(active) : null;
 
   async function createManual(event: FormEvent) {
     event.preventDefault();
@@ -142,22 +160,16 @@ export default function CaseMemoryPage() {
       const res = await fetch(`/api/v1/matters/${matterId}/memory`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title,
-          content,
-          memoryType,
-          importance,
-          supersedesId: supersedeId || null,
-        }),
+        body: JSON.stringify({ title, content, memoryType, importance }),
       });
       const json = await res.json();
-      if (!res.ok) throw new Error(json?.error?.message ?? "Create failed");
+      if (!res.ok) throw new Error("We couldn't save that memory. Try again.");
       setTitle("");
       setContent("");
-      setSupersedeId("");
+      setAddOpen(false);
       await load(json.memory?.id ?? null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Create failed");
+      setError(err instanceof Error ? err.message : "We couldn't save that memory. Try again.");
     } finally {
       setBusy(false);
     }
@@ -173,21 +185,25 @@ export default function CaseMemoryPage() {
         body: JSON.stringify({ action: "propose", hint }),
       });
       const json = await res.json();
-      if (!res.ok) throw new Error(json?.error?.message ?? "Propose failed");
+      if (!res.ok) throw new Error("We couldn't suggest memory. Try again.");
+      setFilter("suggested");
       await load(json.proposals?.[0]?.id ?? selected?.id);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Propose failed");
+      setError(err instanceof Error ? err.message : "We couldn't suggest memory. Try again.");
     } finally {
       setBusy(false);
     }
   }
 
-  async function review(action: "approve" | "edit_and_approve" | "reject" | "archive") {
-    if (!selected) return;
+  async function review(
+    action: "approve" | "edit_and_approve" | "reject" | "archive",
+    target = selected,
+  ) {
+    if (!target) return;
     setBusy(true);
     setError("");
     try {
-      const res = await fetch(`/api/v1/matters/${matterId}/memory/${selected.id}/review`, {
+      const res = await fetch(`/api/v1/matters/${matterId}/memory/${target.id}/review`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(
@@ -204,17 +220,18 @@ export default function CaseMemoryPage() {
             : { action },
         ),
       });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.error?.message ?? "Review failed");
-      await load(action === "reject" || action === "archive" ? null : selected.id);
+      if (!res.ok) throw new Error("We couldn't update that memory. Try again.");
+      setEditOpen(false);
+      if (action === "approve" || action === "edit_and_approve") setFilter("active");
+      await load(action === "reject" || action === "archive" ? null : target.id);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Review failed");
+      setError(err instanceof Error ? err.message : "We couldn't update that memory. Try again.");
     } finally {
       setBusy(false);
     }
   }
 
-  async function supersedeSelected() {
+  async function saveUpdatedMemory() {
     if (!selected) return;
     setBusy(true);
     setError("");
@@ -231,10 +248,13 @@ export default function CaseMemoryPage() {
         }),
       });
       const json = await res.json();
-      if (!res.ok) throw new Error(json?.error?.message ?? "Supersede failed");
+      if (!res.ok) throw new Error("We couldn't save the updated memory. Try again.");
+      setEditOpen(false);
       await load(json.memory?.id ?? null);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Supersede failed");
+      setError(
+        err instanceof Error ? err.message : "We couldn't save the updated memory. Try again.",
+      );
     } finally {
       setBusy(false);
     }
@@ -258,258 +278,204 @@ export default function CaseMemoryPage() {
   if (loading) return <LoadingState label="Loading memory…" />;
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="font-display text-xl text-ink">Nyaya Memory</h2>
-        <p className="text-sm text-ink/60">
-          What Nyaya should remember about this case. Suggestions are not confirmed until you say
-          so.
-        </p>
-      </div>
-      {error ? <ErrorState message={error} /> : null}
-      <div className="flex flex-wrap gap-2">
-        <Badge>{active.length} active</Badge>
-        <Badge>{proposed.length} suggested</Badge>
-        <Badge>{historical.length} superseded / archived</Badge>
-      </div>
-
-      <div className="grid gap-4 lg:grid-cols-2">
-        <Panel title="Active Memory">
-          {active.length === 0 ? (
-            <EmptyState
-              title="No active memory"
-              description="Save something here when Nyaya should keep it in mind for this case."
-            />
-          ) : (
-            <div className="space-y-4">
-              {groupByType(active).map(([type, items]) => (
-                <div key={type}>
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink/55">
-                    {humanizeKey(type)}
-                  </p>
-                  <ul className="space-y-2">
-                    {items.map((memory) => (
-                      <li key={memory.id}>
-                        <button
-                          type="button"
-                          className={`w-full rounded-lg border px-3 py-2 text-left text-sm ${
-                            selected?.id === memory.id
-                              ? "border-accent bg-accent-soft/40"
-                              : "border-line bg-white hover:bg-accent-soft/20"
-                          }`}
-                          onClick={() => setSelected(memory)}
-                        >
-                          <div className="flex flex-wrap items-center gap-2">
-                            <span className="font-semibold">{memory.title}</span>
-                            <VerifiedBadge />
-                          </div>
-                          <p className="mt-1 line-clamp-2 text-xs text-ink/60">{memory.content}</p>
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          )}
-        </Panel>
-
-        <Panel title="Proposed memories">
-          <div className="mb-3 flex gap-2">
+    <div className="space-y-4">
+      <IntelligenceHeader
+        title="Memory"
+        description="What Nyaya should remember about this case. Suggestions are not confirmed until you say so."
+        actions={
+          <div className="flex flex-wrap items-center gap-2">
             <input
-              className="flex-1 rounded border border-line px-2 py-1.5 text-sm"
-              placeholder="Optional hint for proposal"
+              className="w-44 rounded border border-line px-3 py-1.5 text-sm"
+              placeholder="Optional hint"
               aria-label="Memory proposal hint"
               value={hint}
               onChange={(e) => setHint(e.target.value)}
             />
-            <Button disabled={busy} onClick={propose}>
-              Propose
+            <Button type="button" variant="secondary" disabled={busy} onClick={propose}>
+              Suggest from case
+            </Button>
+            <Button type="button" onClick={() => setAddOpen(true)}>
+              + Add memory
             </Button>
           </div>
-          {proposed.length === 0 ? (
-            <p className="text-sm text-ink/70">
-              No proposals. Nyaya may suggest durable context, but nothing is saved without
-              approval.
-            </p>
-          ) : (
-            <div className="space-y-4">
-              {groupByType(proposed).map(([type, items]) => (
-                <div key={type}>
-                  <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink/55">
-                    {humanizeKey(type)}
-                  </p>
-                  <ul aria-label="Proposed memories" className="space-y-2">
-                    {items.map((memory) => (
-                      <li key={memory.id}>
-                        <button
-                          type="button"
-                          className={`w-full rounded-lg border px-3 py-2 text-left text-sm ${
-                            selected?.id === memory.id
-                              ? "border-amber-700/40 bg-amber-50/60"
-                              : "border-amber-700/20 bg-amber-50/40"
-                          }`}
-                          onClick={() => setSelected(memory)}
-                        >
-                          <div className="flex flex-wrap items-center gap-2">
-                            <span className="font-semibold">{memory.title}</span>
-                            <SuggestedBadge />
-                          </div>
-                          <p className="mt-1 line-clamp-2 text-xs text-ink/60">{memory.content}</p>
-                        </button>
-                      </li>
+        }
+      />
+      {error ? <ErrorState message={error} /> : null}
+      <FilterChipBar
+        value={filter}
+        onChange={(id) => setFilter(id as MemoryFilter)}
+        options={[
+          { id: "active", label: "Active", count: active.length },
+          { id: "suggested", label: "Suggested by Nyaya", count: proposed.length },
+          { id: "history", label: "Memory history", count: historical.length },
+        ]}
+      />
+      {filter === "suggested" ? (
+        <p className="text-xs text-ink/55">
+          Suggestions stay unconfirmed until you accept them. Review remains the approval gate.
+        </p>
+      ) : null}
+
+      <div className={selected ? "grid gap-4 lg:grid-cols-[minmax(0,1fr)_22rem]" : undefined}>
+        <div>
+          {visible.length === 0 ? (
+            <EmptyState
+              title={
+                filter === "active"
+                  ? "No active case memories yet."
+                  : filter === "suggested"
+                    ? "No suggested memory yet."
+                    : "No memory history yet."
+              }
+              description={
+                filter === "active"
+                  ? "Save confirmed facts, strategy, and instructions Nyaya should keep in mind."
+                  : filter === "suggested"
+                    ? "Nyaya may suggest durable context, but nothing is saved without your approval."
+                    : "Previous versions and archived items will appear here."
+              }
+            />
+          ) : grouped ? (
+            <div className="space-y-5">
+              {grouped.map((group) => (
+                <section key={group.id}>
+                  <h3 className="mb-2 font-display text-lg text-ink">{group.label}</h3>
+                  <ul className="space-y-2">
+                    {group.items.map((memory) => (
+                      <MemoryCard
+                        key={memory.id}
+                        memory={memory}
+                        selected={selected?.id === memory.id}
+                        onSelect={setSelected}
+                        busy={busy}
+                        reviewHref={`/app/cases/${matterId}/review`}
+                        onAccept={() => void review("approve", memory)}
+                        onDismiss={() => void review("reject", memory)}
+                      />
                     ))}
                   </ul>
-                </div>
+                </section>
               ))}
             </div>
+          ) : (
+            <ul aria-label="Proposed memories" className="space-y-2">
+              {visible.map((memory) => (
+                <MemoryCard
+                  key={memory.id}
+                  memory={memory}
+                  selected={selected?.id === memory.id}
+                  onSelect={setSelected}
+                  busy={busy}
+                  reviewHref={`/app/cases/${matterId}/review`}
+                  onAccept={() => void review("approve", memory)}
+                  onDismiss={() => void review("reject", memory)}
+                />
+              ))}
+            </ul>
           )}
-        </Panel>
+        </div>
+
+        <IntelligenceInspector
+          open={Boolean(selected)}
+          title={selected?.title ?? "Memory"}
+          subtitle={selected ? humanizeKey(selected.memoryType) : undefined}
+          status={
+            selected ? (
+              <TrustStatus
+                kind={trustStatusFromRecord({ status: selected.status, badge: selected.badge })}
+              />
+            ) : undefined
+          }
+          onClose={() => setSelected(null)}
+          actions={
+            selected ? (
+              <>
+                <Button type="button" variant="secondary" onClick={() => openSources(selected)}>
+                  {sourceCountLabel(selected.sources.length)}
+                </Button>
+                {selected.status === "proposed" ? (
+                  <>
+                    <Button type="button" disabled={busy} onClick={() => review("approve")}>
+                      Accept
+                    </Button>
+                    <Button
+                      type="button"
+                      disabled={busy}
+                      variant="ghost"
+                      onClick={() => review("reject")}
+                    >
+                      Dismiss
+                    </Button>
+                    <Link
+                      href={`/app/cases/${matterId}/review`}
+                      className="inline-flex items-center text-sm font-semibold text-accent underline"
+                    >
+                      Open Review
+                    </Link>
+                  </>
+                ) : isVerifiedStatus(selected.status) && !selected.supersededBy ? (
+                  <>
+                    <Button type="button" variant="secondary" onClick={() => setEditOpen(true)}>
+                      Edit
+                    </Button>
+                    <Button
+                      type="button"
+                      disabled={busy}
+                      variant="ghost"
+                      onClick={() => review("archive")}
+                    >
+                      Archive
+                    </Button>
+                  </>
+                ) : null}
+              </>
+            ) : null
+          }
+        >
+          {selected ? (
+            <>
+              <p className="text-ink/80">{selected.content}</p>
+              {selected.rationale ? (
+                <p className="text-xs text-ink/55">{selected.rationale}</p>
+              ) : null}
+              {(selected.relatedPeople.length > 0 || selected.relatedEvents.length > 0) && (
+                <RelatedList heading="Related">
+                  <div className="flex flex-col gap-1">
+                    {selected.relatedPeople.map((person) => (
+                      <Link
+                        key={person.id}
+                        href={`/app/cases/${matterId}/people?entityId=${person.id}`}
+                        className="font-semibold text-accent underline"
+                      >
+                        {person.displayName}
+                      </Link>
+                    ))}
+                    {selected.relatedEvents.map((event) => (
+                      <Link
+                        key={event.id}
+                        href={`/app/cases/${matterId}/timeline?eventId=${event.id}`}
+                        className="font-semibold text-accent underline"
+                      >
+                        {event.title}
+                      </Link>
+                    ))}
+                  </div>
+                </RelatedList>
+              )}
+            </>
+          ) : null}
+        </IntelligenceInspector>
       </div>
 
-      <Panel title={selected ? selected.title : "Memory detail"}>
-        {!selected ? (
-          <p className="text-sm text-ink/60">Pick an item to see its sources and confirm or reject it.</p>
-        ) : (
-          <div className="space-y-3 text-sm">
-            <div className="flex flex-wrap items-center gap-2">
-              {selected.badge === "verified" ? <VerifiedBadge /> : null}
-              {selected.badge === "suggested" ? <SuggestedBadge /> : null}
-              <Badge>{humanizeKey(selected.memoryType)}</Badge>
-              <Badge>{humanizeKey(selected.importance)}</Badge>
-              <Badge>{selected.origin ?? "unknown"}</Badge>
-            </div>
-            <p className="text-ink/80">{selected.content}</p>
-            {selected.rationale ? (
-              <p className="text-xs text-ink/55">Rationale: {selected.rationale}</p>
-            ) : null}
-
-            <div>
-              <p className="font-semibold">Where this came from</p>
-              {selected.sources.length === 0 ? (
-                <p className="text-ink/55">
-                  No document chunks cited. Review the rationale before approving — Nyaya does not
-                  auto-verify Memory.
-                </p>
-              ) : (
-                <Button type="button" variant="secondary" onClick={() => openSources(selected)}>
-                  Inspect sources ({selected.sources.length})
-                </Button>
-              )}
-            </div>
-
-            {(selected.relatedPeople.length > 0 || selected.relatedEvents.length > 0) && (
-              <div className="flex flex-wrap gap-3 text-xs">
-                {selected.relatedPeople.map((person) => (
-                  <Link
-                    key={person.id}
-                    href={`/app/cases/${matterId}/people?entityId=${person.id}`}
-                    className="font-semibold text-accent underline"
-                  >
-                    People: {person.displayName}
-                  </Link>
-                ))}
-                {selected.relatedEvents.map((event) => (
-                  <Link
-                    key={event.id}
-                    href={`/app/cases/${matterId}/timeline?eventId=${event.id}`}
-                    className="font-semibold text-accent underline"
-                  >
-                    Timeline: {event.title}
-                  </Link>
-                ))}
-              </div>
-            )}
-
-            <div className="space-y-2 rounded-lg border border-line p-3">
-              <p className="font-semibold">
-                {selected.status === "proposed" ? "Edit before approve" : "Supersede / edit"}
-              </p>
-              <input
-                className="w-full rounded border border-line px-2 py-1.5"
-                aria-label="Edit memory title"
-                value={editTitle}
-                onChange={(e) => setEditTitle(e.target.value)}
-              />
-              <textarea
-                className="w-full rounded border border-line px-2 py-1.5"
-                aria-label="Edit memory content"
-                rows={4}
-                value={editContent}
-                onChange={(e) => setEditContent(e.target.value)}
-              />
-              <div className="grid gap-2 sm:grid-cols-2">
-                <select
-                  className="rounded border border-line px-2 py-1.5"
-                  aria-label="Edit memory type"
-                  value={editType}
-                  onChange={(e) => setEditType(e.target.value as (typeof MEMORY_TYPES)[number])}
-                >
-                  {MEMORY_TYPES.map((type) => (
-                    <option key={type} value={type}>
-                      {humanizeKey(type)}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  className="rounded border border-line px-2 py-1.5"
-                  aria-label="Edit memory importance"
-                  value={editImportance}
-                  onChange={(e) => setEditImportance(e.target.value)}
-                >
-                  <option value="low">low</option>
-                  <option value="normal">normal</option>
-                  <option value="high">high</option>
-                  <option value="critical">critical</option>
-                </select>
-              </div>
-            </div>
-
-            {selected.status === "proposed" ? (
-              <div className="flex flex-wrap gap-2">
-                <Button type="button" disabled={busy} onClick={() => review("approve")}>
-                  Approve
-                </Button>
-                <Button
-                  type="button"
-                  disabled={busy || !editTitle.trim() || !editContent.trim()}
-                  variant="secondary"
-                  onClick={() => review("edit_and_approve")}
-                >
-                  Edit & approve
-                </Button>
-                <Button
-                  type="button"
-                  disabled={busy}
-                  variant="ghost"
-                  onClick={() => review("reject")}
-                >
-                  Reject
-                </Button>
-              </div>
-            ) : isVerified(selected.status) && !selected.supersededBy ? (
-              <div className="flex flex-wrap gap-2">
-                <Button type="button" disabled={busy} onClick={supersedeSelected}>
-                  Supersede with edited copy
-                </Button>
-                <Button
-                  type="button"
-                  disabled={busy}
-                  variant="ghost"
-                  onClick={() => review("archive")}
-                >
-                  Archive
-                </Button>
-              </div>
-            ) : null}
-          </div>
-        )}
-      </Panel>
-
-      <Panel title="Create / supersede memory">
-        <form className="space-y-2" onSubmit={createManual}>
+      <IntelligenceDialog
+        open={addOpen}
+        title="Add memory"
+        description="Manual entries are recorded as verified immediately."
+        onClose={() => setAddOpen(false)}
+      >
+        <form className="flex flex-col gap-3" onSubmit={createManual}>
           <input
-            className="w-full rounded border border-line px-2 py-1.5 text-sm"
+            className="rounded border border-line px-3 py-2 text-sm"
             placeholder="Title"
             aria-label="New memory title"
             value={title}
@@ -517,8 +483,8 @@ export default function CaseMemoryPage() {
             required
           />
           <textarea
-            className="w-full rounded border border-line px-2 py-1.5 text-sm"
-            placeholder="Content"
+            className="rounded border border-line px-3 py-2 text-sm"
+            placeholder="What should Nyaya remember?"
             aria-label="New memory content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
@@ -526,8 +492,8 @@ export default function CaseMemoryPage() {
             rows={4}
           />
           <select
-            className="w-full rounded border border-line px-2 py-1.5 text-sm"
-            aria-label="New memory type"
+            className="rounded border border-line px-3 py-2 text-sm"
+            aria-label="Memory type"
             value={memoryType}
             onChange={(e) => setMemoryType(e.target.value as (typeof MEMORY_TYPES)[number])}
           >
@@ -538,56 +504,130 @@ export default function CaseMemoryPage() {
             ))}
           </select>
           <select
-            className="w-full rounded border border-line px-2 py-1.5 text-sm"
-            aria-label="New memory importance"
+            className="rounded border border-line px-3 py-2 text-sm"
+            aria-label="Priority"
             value={importance}
             onChange={(e) => setImportance(e.target.value)}
           >
-            <option value="low">low</option>
-            <option value="normal">normal</option>
-            <option value="high">high</option>
-            <option value="critical">critical</option>
+            <option value="low">Low</option>
+            <option value="normal">Normal</option>
+            <option value="high">High</option>
+            <option value="critical">Critical</option>
           </select>
+          <Button disabled={busy} type="submit">
+            Save memory
+          </Button>
+        </form>
+      </IntelligenceDialog>
+
+      <IntelligenceDialog
+        open={editOpen}
+        title="Edit memory"
+        description="Editing preserves the previous version in history."
+        onClose={() => setEditOpen(false)}
+      >
+        <div className="flex flex-col gap-3">
+          <input
+            className="rounded border border-line px-3 py-2 text-sm"
+            aria-label="Edit memory title"
+            value={editTitle}
+            onChange={(e) => setEditTitle(e.target.value)}
+          />
+          <textarea
+            className="rounded border border-line px-3 py-2 text-sm"
+            aria-label="Edit memory content"
+            rows={4}
+            value={editContent}
+            onChange={(e) => setEditContent(e.target.value)}
+          />
           <select
-            className="w-full rounded border border-line px-2 py-1.5 text-sm"
-            aria-label="Supersede existing memory"
-            value={supersedeId}
-            onChange={(e) => setSupersedeId(e.target.value)}
+            className="rounded border border-line px-3 py-2 text-sm"
+            aria-label="Edit memory type"
+            value={editType}
+            onChange={(e) => setEditType(e.target.value as (typeof MEMORY_TYPES)[number])}
           >
-            <option value="">Do not supersede</option>
-            {active.map((memory) => (
-              <option key={memory.id} value={memory.id}>
-                Supersede: {memory.title}
+            {MEMORY_TYPES.map((type) => (
+              <option key={type} value={type}>
+                {humanizeKey(type)}
               </option>
             ))}
           </select>
-          <p className="text-xs text-ink/55">
-            Manual entries are recorded as <VerifiedBadge /> immediately. Nyaya proposals stay{" "}
-            <SuggestedBadge /> until you approve them on this tab.
-          </p>
-          <Button disabled={busy} type="submit">
-            Save approved memory
-          </Button>
-        </form>
-      </Panel>
-
-      <Panel title="Historical / superseded">
-        {historical.length === 0 ? (
-          <p className="text-sm text-ink/70">No superseded or archived memories.</p>
-        ) : (
-          <ul className="space-y-2 text-sm">
-            {historical.map((memory) => (
-              <li key={memory.id}>
-                <button type="button" className="text-left" onClick={() => setSelected(memory)}>
-                  <span className="font-semibold">{memory.title}</span> · {memory.status}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-      </Panel>
-
+          {selected?.status === "proposed" ? (
+            <Button
+              type="button"
+              disabled={busy || !editTitle.trim() || !editContent.trim()}
+              onClick={() => review("edit_and_approve")}
+            >
+              Save and accept
+            </Button>
+          ) : (
+            <Button type="button" disabled={busy} onClick={saveUpdatedMemory}>
+              Save updated memory
+            </Button>
+          )}
+        </div>
+      </IntelligenceDialog>
       <SourceDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} items={drawerItems} />
     </div>
+  );
+}
+
+function MemoryCard({
+  memory,
+  selected,
+  onSelect,
+  busy,
+  reviewHref,
+  onAccept,
+  onDismiss,
+}: {
+  memory: MemoryItem;
+  selected: boolean;
+  onSelect: (memory: MemoryItem) => void;
+  busy: boolean;
+  reviewHref: string;
+  onAccept: () => void;
+  onDismiss: () => void;
+}) {
+  const suggested = memory.status === "proposed" || memory.badge === "suggested";
+  return (
+    <li
+      className={`rounded-lg border px-4 py-3 ${
+        selected
+          ? "border-accent bg-accent-soft/40"
+          : suggested
+            ? "border-amber-700/20 bg-amber-50/40"
+            : "border-line bg-white"
+      }`}
+    >
+      <button type="button" className="w-full text-left" onClick={() => onSelect(memory)}>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-sm font-semibold">{memory.title}</span>
+          <TrustStatus
+            kind={trustStatusFromRecord({ status: memory.status, badge: memory.badge })}
+          />
+        </div>
+        <p className="mt-1 line-clamp-2 text-sm text-ink/70">{memory.content}</p>
+        {memory.sources[0]?.documentTitle ? (
+          <p className="mt-1 text-xs text-ink/50">Source: {memory.sources[0].documentTitle}</p>
+        ) : null}
+      </button>
+      {suggested ? (
+        <div className="mt-3 flex flex-wrap gap-2">
+          <Button type="button" disabled={busy} onClick={onAccept}>
+            Accept
+          </Button>
+          <Button type="button" variant="ghost" disabled={busy} onClick={onDismiss}>
+            Dismiss
+          </Button>
+          <Link
+            href={reviewHref}
+            className="inline-flex items-center text-sm font-semibold text-accent underline"
+          >
+            Review
+          </Link>
+        </div>
+      ) : null}
+    </li>
   );
 }

@@ -2,8 +2,9 @@ import { askOrTaskSchema } from "@nyayagrid/validation";
 import { requireMatterAccess, writeAuditEvent } from "@nyayagrid/permissions";
 import { NyayaOrchestrator } from "@nyayagrid/agents";
 import type { Database } from "@nyayagrid/database";
-import { recordUsage } from "@nyayagrid/platform";
+import { isFeatureEnabled, recordUsage } from "@nyayagrid/platform";
 import { requireUser } from "@/lib/auth";
+import { assertFeatureEnabled } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 import { getAgentBudgetsFromEnv, getAI, getEmbeddings, getRetriever } from "@/lib/infra";
 import { enforceRateLimit } from "@/lib/rate-limit";
@@ -18,6 +19,8 @@ async function answerDirectly(params: {
   userId: string;
   question: string;
   conversationId?: string | null;
+  executionStrategy?: "auto" | "fast" | "deep";
+  modelId?: string;
 }) {
   const startedAt = Date.now();
   const result = await askNyayaAboutMatter({
@@ -29,6 +32,8 @@ async function answerDirectly(params: {
     question: params.question,
     conversationId: params.conversationId,
     ai: getAI(),
+    executionStrategy: params.executionStrategy,
+    modelId: params.modelId,
   });
 
   await writeAuditEvent(params.db, {
@@ -81,7 +86,11 @@ export async function POST(request: Request, { params }: Params) {
     const body = askOrTaskSchema.parse(await request.json());
     const mode = body.mode ?? "auto";
     const execute = body.execute !== false;
-    const mayCreateRun = mode !== "ask";
+    const agentsOn = isFeatureEnabled("agents");
+    if (mode === "task" && !agentsOn) {
+      assertFeatureEnabled("agents");
+    }
+    const mayCreateRun = agentsOn && mode !== "ask";
 
     const { matter } = await requireMatterAccess(db, {
       userId: user.id,
@@ -90,7 +99,16 @@ export async function POST(request: Request, { params }: Params) {
       capability: mayCreateRun && execute ? "matters.edit" : "matters.view",
     });
 
-    if (mode === "ask") {
+    if (mayCreateRun) {
+      const agentLimited = await enforceRateLimit(request, {
+        endpointClass: "agent_run",
+        organizationId: matter.organizationId,
+        userId: user.id,
+      });
+      if (agentLimited) return agentLimited;
+    }
+
+    if (mode === "ask" || !agentsOn) {
       const qa = await answerDirectly({
         db,
         organizationId: matter.organizationId,
@@ -98,6 +116,8 @@ export async function POST(request: Request, { params }: Params) {
         userId: user.id,
         question: body.question,
         conversationId: body.conversationId,
+        executionStrategy: body.executionStrategy,
+        modelId: body.modelId,
       });
       return jsonOk({ mode: "qa", qa });
     }
@@ -124,6 +144,8 @@ export async function POST(request: Request, { params }: Params) {
         userId: user.id,
         question: body.question,
         conversationId: body.conversationId,
+        executionStrategy: body.executionStrategy,
+        modelId: body.modelId,
       });
       return jsonOk({ mode: "qa", intent: outcome.intent, qa });
     }

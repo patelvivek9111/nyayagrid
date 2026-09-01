@@ -6,7 +6,7 @@
  *
  * Local development:
  *   1. Start the web app: `npm run dev`
- *   2. Start the Inngest dev server: `npm run dev:worker`
+ *   2. Start the Inngest dev server: `npm run dev:worker` (127.0.0.1:8288)
  *
  * This package exists so job transport can later move to a dedicated worker
  * process without rewriting domain handlers.

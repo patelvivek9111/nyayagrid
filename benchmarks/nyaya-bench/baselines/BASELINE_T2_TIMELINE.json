@@ -1,0 +1,121 @@
+{
+  "baselineId": "BASELINE_T2_TIMELINE",
+  "benchmarkKind": "NYAYA_TIMELINE",
+  "graderVersion": "t1-2026-08-19",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "notLegalCorrectnessProof": true,
+  "productionUnchanged": false,
+  "phase": "6F",
+  "t1Frozen": true,
+  "caseQaFrozen": true,
+  "compareFrozen": true,
+  "contradictionFrozen": true,
+  "measures": [
+    "extractMatterIntelligenceForDocument",
+    "proposed_timeline_events",
+    "datePrecision_field",
+    "deterministic_multi_event_split",
+    "actors",
+    "status_proposed_vs_verified",
+    "specific_source_chunk_mapping",
+    "supporting_span_not_chunk_prefix",
+    "event_recall_on_T012_payment_chain",
+    "verified_timeline_date_formatting"
+  ],
+  "doesNotMeasure": [
+    "case_qa",
+    "compare_engine",
+    "contradiction_engine",
+    "memory_subsystem",
+    "graph_subsystem",
+    "research_subsystem",
+    "draft_subsystem",
+    "agents",
+    "live_reject_reproposal_workflow",
+    "approximate_vs_exact_date_traps_in_T012"
+  ],
+  "runs": {
+    "targetedGate": [
+      "benchmarks/nyaya-bench/reports/runs/2026-08-19T02-11-55-369Z",
+      "benchmarks/nyaya-bench/reports/runs/2026-08-19T02-13-46-553Z"
+    ],
+    "live": "benchmarks/nyaya-bench/reports/runs/2026-08-19T02-15-53-117Z"
+  },
+  "config": {
+    "dataset": "v2",
+    "executionMode": "timeline",
+    "promptVersion": "matter-intelligence-extract-v3",
+    "gitCommit": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "workingTree": "phase-6f-timeline-reliability",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini",
+    "embeddingProvider": "openai",
+    "startedAt": "2026-08-19T02:15:53.124Z",
+    "finishedAt": "2026-08-19T02:34:08.178Z"
+  },
+  "scope": {
+    "taggedTimelineTasks": 32,
+    "scoredT012": 16,
+    "notApplicableT025": 16,
+    "eventsExpected": 64,
+    "eventsProduced": 445,
+    "eventsMatched": 64
+  },
+  "timeline": {
+    "tasks": 16,
+    "notApplicable": 16,
+    "pass": 16,
+    "needs_work": 0,
+    "fail": 0,
+    "infrastructure": 0,
+    "criticalAutomated": 0,
+    "eventRecallTaskComplete": 16,
+    "eventRecallEventLevel": 1,
+    "eventPrecisionMean": 0.44917582417582413,
+    "dateAccuracyTaskComplete": 1,
+    "dateAccuracyMatchedEvents": 1,
+    "datePrecisionAccuracy": 1,
+    "actorAccuracyAutomated": 1,
+    "actorOverclaimAutomated": 0,
+    "provenanceFailures": 0,
+    "unsupportedEventTasks": 0,
+    "unsupportedEventCount": 0,
+    "duplicateCountAutomated": 86,
+    "allEventsProposed": true,
+    "allDatePrecisionUnknown": false,
+    "datePrecisionHistogram": {
+      "exact": 407,
+      "approximate": 38,
+      "month": 0,
+      "year": 0,
+      "range": 0,
+      "unknown": 0
+    },
+    "invoiceIssuanceMiss": 0,
+    "meaningfulSourceSpanCoverage": 1,
+    "synthHeaderSupportingText": 0,
+    "allChunkFallbackCount": 0,
+    "singleChunkSourceCount": 445,
+    "titleDescriptionContradictionCount": 0,
+    "rejectedEventReproposal": "unit_tested_not_live_measured",
+    "taxonomy": {}
+  },
+  "manualReview": {
+    "invoiceDatePresentInSourceChunkButNotExtracted": 0,
+    "badgeExitListsAssignedPersonAsActor": 0,
+    "recordsRoomEntryTitleWithNegatingDescription": [],
+    "sameDayNonDuplicateInflatingPrecision": ["SYNTH-V2-004", "SYNTH-V2-008", "SYNTH-V2-012", "SYNTH-V2-016"],
+    "supportingTextLooksLikeChunkPrefix": 0,
+    "modelPlusDeterministicSameDayPairs": 16,
+    "ingestTimeoutWarning": ["SYNTH-V2-015"]
+  },
+  "comparisonToT1": {
+    "pass": { "t1": 0, "t2": 16 },
+    "needsWork": { "t1": 16, "t2": 0 },
+    "eventLevelRecall": { "t1": 0.75, "t2": 1 },
+    "taskCompleteRecall": { "t1": 0, "t2": 16 },
+    "datePrecisionAccuracy": { "t1": 0, "t2": 1 },
+    "invoiceIssuanceMiss": { "t1": 16, "t2": 0 }
+  }
+}

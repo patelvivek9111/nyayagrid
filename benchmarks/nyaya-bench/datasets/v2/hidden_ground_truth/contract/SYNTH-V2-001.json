@@ -1,0 +1,150 @@
+{
+  "scenario_id": "SYNTH-V2-001",
+  "comment": "Contract-analysis-only hidden GT. Maps CA1 overlay to AN1 contract defects without overwriting AN1.",
+  "ground_truth": [
+    {
+      "task_id": "SYNTH-V2-001-CA001",
+      "expectation_type": "analysis_contract",
+      "canonical_answer": ["45 days"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"contract_material\",\"engine\":\"contract\",\"requiredPhrases\":[\"45\"],\"requireQuotePhrases\":[\"45\"],\"expectedStatus\":[\"proposed\"],\"requireSourceChunks\":true,\"forbiddenPhrases\":[\"exhibit z requires\"]}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA002",
+      "expectation_type": "analysis_contract",
+      "canonical_answer": ["30 days"],
+      "supporting_documents": ["02_Amendment_1.pdf"],
+      "notes": "{\"profile\":\"operative_amendment\",\"engine\":\"contract\",\"requiredPhrases\":[\"30\"],\"expectedStatus\":[\"proposed\"],\"requireSourceChunks\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA003",
+      "expectation_type": "analysis_contract",
+      "canonical_answer": ["255000", "not exceed"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"numeric_obligation\",\"engine\":\"contract\",\"requiredPhrases\":[\"255\"],\"requireQuotePhrases\":[\"255\"],\"expectedStatus\":[\"proposed\"],\"requireSourceChunks\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA004",
+      "expectation_type": "analysis_contract",
+      "canonical_answer": ["63750"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"contract_material\",\"engine\":\"contract\",\"requiredPhrases\":[\"63\"],\"expectedStatus\":[\"proposed\"],\"requireSourceChunks\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA005",
+      "expectation_type": "analysis_contract",
+      "canonical_answer": ["terminate", "20-day"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"contract_material\",\"engine\":\"contract\",\"requiredPhrases\":[\"terminat\"],\"expectedStatus\":[\"proposed\"],\"requireSourceChunks\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA006",
+      "expectation_type": "analysis_contract",
+      "canonical_answer": ["30", "510000"],
+      "supporting_documents": ["02_Amendment_1.pdf"],
+      "notes": "{\"profile\":\"operative_amendment\",\"engine\":\"contract\",\"requiredPhrases\":[\"30\",\"510\"],\"expectedStatus\":[\"proposed\"],\"requireSourceChunks\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA007",
+      "expectation_type": "analysis_contract",
+      "canonical_answer": ["2027-01-01"],
+      "supporting_documents": ["03_Amendment_2.pdf"],
+      "notes": "{\"profile\":\"future_effective\",\"engine\":\"contract\",\"requiredPhrases\":[\"2027\"],\"expectedStatus\":[\"proposed\"]}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA008",
+      "expectation_type": "analysis_adversarial",
+      "canonical_answer": ["must not invent Exhibit Z contents"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"missing_exhibit\",\"engine\":\"contract\",\"forbiddenResolvedAsFactPhrases\":[\"exhibit z requires\",\"exhibit z provides\",\"exhibit z deductible\",\"$10,000 deductible\"],\"expectedStatus\":[\"proposed\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA009",
+      "expectation_type": "analysis_adversarial",
+      "canonical_answer": ["email is not the controlling signed amendment"],
+      "supporting_documents": ["04_Email_Chain.pdf"],
+      "notes": "{\"profile\":\"informal_source\",\"engine\":\"contract\",\"forbiddenResolvedAsFactPhrases\":[\"controlling amendment\",\"operative notice is 45\",\"email requires 30\",\"signed contract in this email\"],\"expectedStatus\":[\"proposed\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA010",
+      "expectation_type": "analysis_contract",
+      "canonical_answer": ["45", "255000"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"numeric_obligation\",\"engine\":\"contract\",\"requiredPhrases\":[\"45\",\"255\"],\"expectedStatus\":[\"proposed\"],\"requireSourceChunks\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA011",
+      "expectation_type": "analysis_contract",
+      "canonical_answer": ["source chunks required"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"provenance\",\"engine\":\"contract\",\"requireSourceChunks\":true,\"expectedStatus\":[\"proposed\"]}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA012",
+      "expectation_type": "analysis_contract",
+      "canonical_answer": ["notice span contains 45"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"supporting_span\",\"engine\":\"contract\",\"requiredPhrases\":[\"45\"],\"requireQuotePhrases\":[\"45\"],\"forbidHeaderSpanPhrases\":[\"parties and purpose\"],\"expectedStatus\":[\"proposed\"],\"requireSourceChunks\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA013",
+      "expectation_type": "analysis_contract",
+      "canonical_answer": ["will not exceed"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"negation_preservation\",\"engine\":\"contract\",\"requiredPhrases\":[\"255\"],\"requireLimitationPhrases\":[\"not\",\"exceed\",\"cap\",\"limit\"],\"expectedStatus\":[\"proposed\"]}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA014",
+      "expectation_type": "analysis_contract",
+      "canonical_answer": ["typo and exhibit-letter changes are not material risks"],
+      "supporting_documents": ["02_Amendment_1.pdf"],
+      "notes": "{\"profile\":\"decoy\",\"engine\":\"contract\",\"decoyHighAttentionPhrases\":[\"recieve\",\"typo\",\"renumber\"],\"expectedStatus\":[\"proposed\"]}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA015",
+      "expectation_type": "analysis_contract",
+      "canonical_answer": ["overlapping restatements should not multiply findings"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"duplicate_noise\",\"engine\":\"contract\",\"maxCreatedCount\":16,\"expectedStatus\":[\"proposed\"]}",
+      "failure_severity_if_wrong": "minor"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA016",
+      "expectation_type": "analysis_contract",
+      "canonical_answer": ["summary aligns with items"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"summary_alignment\",\"engine\":\"contract\",\"summaryMustNotDenyItems\":true,\"expectedStatus\":[\"proposed\"]}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA017",
+      "expectation_type": "analysis_downstream",
+      "canonical_answer": ["proposed findings must not appear as reviewed"],
+      "supporting_documents": ["02_Amendment_1.pdf"],
+      "notes": "{\"profile\":\"downstream\",\"engine\":\"contract\",\"flagProposedInAskNyaya\":true,\"mustNotAppearAsReviewed\":true,\"expectedStatus\":[\"proposed\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-CA018",
+      "expectation_type": "analysis_lifecycle",
+      "canonical_answer": ["dismissed finding excluded from reviewed context"],
+      "supporting_documents": ["02_Amendment_1.pdf"],
+      "notes": "{\"profile\":\"dismissal\",\"engine\":\"contract\",\"expectedStatus\":[\"dismissed\"],\"mustNotEnterReviewedContext\":true,\"treatAsCriticalIfReviewedLeak\":true}",
+      "failure_severity_if_wrong": "critical"
+    }
+  ]
+}

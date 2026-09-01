@@ -1,6 +1,7 @@
 import { getAgentRun, listPendingApprovals } from "@nyayagrid/agents";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { requireUser } from "@/lib/auth";
+import { assertFeatureEnabled } from "@/lib/features";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
 
 type Params = { params: Promise<{ matterId: string; runId: string }> };
@@ -10,6 +11,7 @@ export async function GET(request: Request, { params }: Params) {
   try {
     const { matterId, runId } = await params;
     const { db, user } = await requireUser(request.headers);
+    assertFeatureEnabled("agents");
     const { matter } = await requireMatterAccess(db, {
       userId: user.id,
       matterId,

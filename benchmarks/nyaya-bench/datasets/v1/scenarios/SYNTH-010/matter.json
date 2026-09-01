@@ -1,0 +1,34 @@
+{
+  "scenario_id": "SYNTH-010",
+  "title": "Pioneer Facilities Services Termination",
+  "matter_type": "Services Agreement",
+  "fictional": true,
+  "label": "SYNTH - FICTIONAL TEST DOCUMENT - NOT REAL CLIENT WORK",
+  "documents": [
+    {
+      "document_id": "agreement",
+      "file": "documents/agreement.pdf",
+      "title": "Facilities Services Agreement"
+    },
+    {
+      "document_id": "amendment",
+      "file": "documents/amendment.pdf",
+      "title": "Service Amendment"
+    },
+    {
+      "document_id": "termination",
+      "file": "documents/termination.pdf",
+      "title": "Customer Termination Notice - August 5, 2026"
+    },
+    {
+      "document_id": "incident_log",
+      "file": "documents/incident_log.pdf",
+      "title": "Priority-One Incident Log - August 2026"
+    },
+    {
+      "document_id": "invoice",
+      "file": "documents/invoice.pdf",
+      "title": "August Service Invoice"
+    }
+  ]
+}

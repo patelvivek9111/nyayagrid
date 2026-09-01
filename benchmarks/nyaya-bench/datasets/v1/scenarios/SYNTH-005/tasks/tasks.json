@@ -1,0 +1,82 @@
+[
+  {
+    "task_id": "SYNTH-005-Q001",
+    "scenario_id": "SYNTH-005",
+    "category": "case_qa",
+    "prompt": "What unit price applies to PO ZPS-4402?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q001"
+  },
+  {
+    "task_id": "SYNTH-005-Q002",
+    "scenario_id": "SYNTH-005",
+    "category": "case_qa",
+    "prompt": "How many V-8 units were ordered?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q002"
+  },
+  {
+    "task_id": "SYNTH-005-Q003",
+    "scenario_id": "SYNTH-005",
+    "category": "case_qa",
+    "prompt": "How many units were received June 1?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q003"
+  },
+  {
+    "task_id": "SYNTH-005-Q004",
+    "scenario_id": "SYNTH-005",
+    "category": "false_contradiction",
+    "prompt": "Does the May 30 email contradict the June 1 receiving report about the quantity received?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q004"
+  },
+  {
+    "task_id": "SYNTH-005-Q005",
+    "scenario_id": "SYNTH-005",
+    "category": "contract_compare",
+    "prompt": "What did the Pricing Amendment change?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q005"
+  },
+  {
+    "task_id": "SYNTH-005-Q006",
+    "scenario_id": "SYNTH-005",
+    "category": "decoy",
+    "prompt": "Did the Pricing Amendment change the warranty?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q006"
+  },
+  {
+    "task_id": "SYNTH-005-Q007",
+    "scenario_id": "SYNTH-005",
+    "category": "numeric",
+    "prompt": "What is the extended price for 1,000 units at $265 each, before taxes/other charges?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q007"
+  },
+  {
+    "task_id": "SYNTH-005-Q008",
+    "scenario_id": "SYNTH-005",
+    "category": "insufficient",
+    "prompt": "What freight charge applied to this shipment?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q008"
+  },
+  {
+    "task_id": "SYNTH-005-Q009",
+    "scenario_id": "SYNTH-005",
+    "category": "case_qa",
+    "prompt": "What is the standard contractual delivery period?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q009"
+  },
+  {
+    "task_id": "SYNTH-005-Q010",
+    "scenario_id": "SYNTH-005",
+    "category": "reasoning",
+    "prompt": "Does the 995-unit shipment fall within the agreement\u2019s +/-2% quantity tolerance for an order of 1,000 units?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q010"
+  }
+]

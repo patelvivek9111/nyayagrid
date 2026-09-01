@@ -1,0 +1,232 @@
+{
+  "id": "BASELINE_6W_OPS1",
+  "generatedAt": "2026-08-27T05:05:02.744Z",
+  "outDir": ".\\tmp\\6w-ops\\2026-08-27T05-04-44-704Z",
+  "envMatrix": {
+    "localDevelopment": {
+      "NODE_ENV": "development",
+      "APP_ENV": "development",
+      "notes": "DevAuth allowed only when APP_ENV is explicitly development. Stand-ins expected."
+    },
+    "testBenchmark": {
+      "NODE_ENV": "test",
+      "APP_ENV": "development",
+      "database": {
+        "configured": true,
+        "protocol": "postgresql",
+        "host": "localhost",
+        "port": "5433",
+        "database": "nyayagrid",
+        "hasUser": true,
+        "hasPassword": true
+      },
+      "notes": "Benchmark/certification DB is localhost:5433/nyayagrid. Not used as staging proof."
+    },
+    "staging": {
+      "NODE_ENV": "production",
+      "APP_ENV": "staging",
+      "database": {
+        "host": "localhost",
+        "port": "5433",
+        "database": "nyayagrid_staging_6w",
+        "identity": "disposable-staging-6w"
+      },
+      "objectStorage": {
+        "provider": "minio",
+        "bucket": "nyayagrid-staging-6w",
+        "endpoint": "http://localhost:9000"
+      },
+      "clerk": false,
+      "inngest": true,
+      "openai": true,
+      "featureAgents": false,
+      "authMode": "clerk required (DevAuth refused)",
+      "devAuth": false,
+      "storageMode": "minio + ALLOW_MINIO_IN_PRODUCTION rehearsal"
+    },
+    "production": {
+      "NODE_ENV": "production",
+      "APP_ENV": "production",
+      "database": "managed postgres + pgvector (EXTERNAL)",
+      "objectStorage": "private S3 or operator-backed MinIO (EXTERNAL)",
+      "clerk": "required",
+      "inngest": "Inngest Cloud registration required",
+      "featureAgents": false,
+      "authMode": "clerk",
+      "devAuth": false,
+      "notes": "Boot throws unless collectProductionConfigProblems is empty."
+    },
+    "effectiveLocal": {
+      "appEnv": "development",
+      "appEnvSource": "default",
+      "summary": {
+        "appEnv": "development",
+        "appEnvSource": "default",
+        "authProvider": "dev",
+        "aiProvider": "openai",
+        "embeddingProvider": "openai",
+        "storageProvider": "minio",
+        "malwareScanner": "development",
+        "ocrProvider": "none",
+        "emailProvider": "console",
+        "billingProvider": "development",
+        "rateLimitProvider": "memory",
+        "databaseConfigured": true,
+        "storageBucketConfigured": true
+      },
+      "presence": {
+        "DATABASE_URL": "SET",
+        "AUTH_PROVIDER": "dev",
+        "CLERK_SECRET_KEY": "UNSET",
+        "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY": "UNSET",
+        "CLERK_WEBHOOK_SECRET": "UNSET",
+        "INNGEST_SIGNING_KEY": "SET",
+        "INNGEST_EVENT_KEY": "SET",
+        "INNGEST_DEV": "1",
+        "OPENAI_API_KEY": "SET",
+        "REDIS_URL": "UNSET",
+        "SMTP_HOST": "UNSET",
+        "S3_BUCKET": "SET",
+        "S3_ENDPOINT": "SET"
+      },
+      "flags": {
+        "agents": true,
+        "professor": true,
+        "guide": true,
+        "research": true,
+        "ocr": false,
+        "live_ai": true
+      },
+      "productionProblemCount": 9,
+      "stagingProblemCount": 11
+    }
+  },
+  "backup": {
+    "timestamp": "2026-08-27T05:04:53.299Z",
+    "database": "nyayagrid_staging_6w",
+    "format": "pg_dump custom (-Fc)",
+    "sizeBytes": 413703,
+    "command": "docker exec nyayagrid-postgres pg_dump -U nyayagrid -d nyayagrid_staging_6w -Fc",
+    "encryption": "none (local rehearsal; encrypt before any off-host copy)",
+    "storage": ".\\tmp\\6w-ops\\2026-08-27T05-04-44-704Z\\nyayagrid_staging_6w.dump"
+  },
+  "restoreCounts": {
+    "organizations": 1,
+    "matters": 2,
+    "documents": 1,
+    "conversations": 1,
+    "legalAuthorities": 1,
+    "drafts": 1,
+    "memories": 1,
+    "graphEdges": 1,
+    "analysisRunsTable": "analysis_runs",
+    "documentAnalysesTable": "document_analyses",
+    "vaMatters": 1,
+    "unvalidatedMatters": 1,
+    "extensions": "pgcrypto\nvector"
+  },
+  "checks": [
+    {
+      "name": "feature_agents_off",
+      "status": "PASS",
+      "detail": "staging=false production=false"
+    },
+    {
+      "name": "devauth_staging",
+      "status": "PASS",
+      "detail": "DevAuth identity is unavailable for APP_ENV=staging"
+    },
+    {
+      "name": "corpus_import_default",
+      "status": "PASS",
+      "detail": "ALLOW_AUTHORITY_HTTP_IMPORT unset/false for this process"
+    },
+    {
+      "name": "postgres_container",
+      "status": "PASS",
+      "detail": "nyayagrid-postgres"
+    },
+    {
+      "name": "benchmark_db_isolation",
+      "status": "PASS",
+      "detail": "Ops proof targets disposable staging DBs, not the certification database name nyayagrid"
+    },
+    {
+      "name": "staging_db_created",
+      "status": "PASS",
+      "detail": "nyayagrid_staging_6w"
+    },
+    {
+      "name": "migrations",
+      "status": "PASS",
+      "detail": "applied=13 expected>=13 extensions=pgcrypto,vector indexes=359"
+    },
+    {
+      "name": "pgvector",
+      "status": "PASS",
+      "detail": "pgcrypto\nvector"
+    },
+    {
+      "name": "seed",
+      "status": "PASS",
+      "detail": "org=6w-staging-mtb26lk2 matters=2 documents=1"
+    },
+    {
+      "name": "backup",
+      "status": "PASS",
+      "detail": "sizeBytes=413703"
+    },
+    {
+      "name": "restore",
+      "status": "PASS",
+      "detail": "pg_restore_status=0 {\"organizations\":1,\"matters\":2,\"documents\":1,\"conversations\":1,\"legalAuthorities\":1,\"drafts\":1,\"memories\":1,\"graphEdges\":1,\"analysisRunsTable\":\"analysis_runs\",\"documentAnalysesTable\":\"document_analyses\",\"vaMatters\":1,\"unvalidatedMatters\":1,\"extensions\":\"pgcrypto\\nvector\"}"
+    },
+    {
+      "name": "coverage_labels",
+      "status": "PASS",
+      "detail": "VA supported matter and UNVALIDATED matter survived restore"
+    },
+    {
+      "name": "object_key_isolation",
+      "status": "PASS",
+      "detail": "filename traversal normalized; org-prefixed key"
+    },
+    {
+      "name": "object_storage",
+      "status": "PASS",
+      "detail": "upload/download=true missing=true signed=true privateHeuristic=true"
+    },
+    {
+      "name": "object_storage_recovery",
+      "status": "PASS",
+      "detail": "local MinIO copy/delete/restore=PASS. Provider-native versioning/PITR is EXTERNAL PROOF REQUIRED."
+    },
+    {
+      "name": "secret_hygiene_tracked",
+      "status": "PASS",
+      "detail": "no live-looking credential patterns in scanned non-test sources"
+    },
+    {
+      "name": "clerk_credentials",
+      "status": "BLOCKED",
+      "detail": "EXTERNAL ACTION REQUIRED — CLERK BETA USERS"
+    },
+    {
+      "name": "inngest_credentials",
+      "status": "BLOCKED",
+      "detail": "EXTERNAL ACTION REQUIRED — INNGEST CLOUD REGISTRATION"
+    }
+  ],
+  "externalActions": [
+    "CLERK staging application + beta users",
+    "Inngest Cloud app registration against /api/inngest",
+    "Managed Postgres PITR rehearsal on the production-shaped provider",
+    "Private non-localhost object storage with versioning",
+    "SMTP transport or Clerk-only invites",
+    "Hosting/DNS/TLS cutover"
+  ],
+  "featureAgents": {
+    "staging": false,
+    "production": false
+  }
+}

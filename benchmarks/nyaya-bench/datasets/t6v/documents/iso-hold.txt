@@ -1,0 +1,4 @@
+INTERNAL HOLD SLIP — NOT YET PROCESSED
+Matter: 6V isolation twin
+Token: NYAYA_BENCH_6V_PROCESSING_TOKEN appears only in this unreviewed hold slip.
+Do not treat this slip as a reviewed exhibit.

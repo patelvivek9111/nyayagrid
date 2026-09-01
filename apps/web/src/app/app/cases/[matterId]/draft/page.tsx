@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
 import { Badge, Button, Panel } from "@nyayagrid/ui";
 import { EmptyState, ErrorState, LoadingState, SuggestedBadge } from "@/components/ux";
+import { ExecutionStrategyControl, type ExecutionStrategyValue } from "@/components/ux/execution-strategy-control";
 
 const DRAFT_TYPES = [
   "demand_letter",
@@ -72,6 +73,8 @@ export default function CaseDraftPage() {
   const [editContent, setEditContent] = useState("");
   const [changeSummary, setChangeSummary] = useState("");
   const [sectionHint, setSectionHint] = useState("");
+  const [executionStrategy, setExecutionStrategy] = useState<ExecutionStrategyValue>("auto");
+  const [modelId, setModelId] = useState<string | undefined>(undefined);
 
   async function loadDrafts() {
     const res = await fetch(`/api/v1/matters/${matterId}/drafts`);
@@ -160,6 +163,8 @@ export default function CaseDraftPage() {
           draftType,
           instructions,
           documentIds: selectedDocIds.length > 0 ? selectedDocIds : undefined,
+          executionStrategy,
+          modelId,
         }),
       });
       const json = await res.json();
@@ -379,6 +384,13 @@ export default function CaseDraftPage() {
                 insufficient source material.
               </p>
             </fieldset>
+            <ExecutionStrategyControl
+              subsystem="draft"
+              value={executionStrategy}
+              onChange={setExecutionStrategy}
+              modelId={modelId}
+              onModelChange={setModelId}
+            />
             <div className="flex gap-2">
               <Button disabled={busy} type="submit">
                 Create manual draft

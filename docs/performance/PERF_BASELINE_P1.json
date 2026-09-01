@@ -1,0 +1,278 @@
+{
+  "label": "PERF_BASELINE_P1",
+  "capturedAt": "2026-08-19T14:16:46.947Z",
+  "environment": {
+    "host": "Vivek",
+    "platform": "win32",
+    "arch": "x64",
+    "cpus": 20,
+    "cpuModel": "12th Gen Intel(R) Core(TM) i7-12700H",
+    "totalMemMb": 16055,
+    "freeMemMb": 1139,
+    "node": "v22.14.0",
+    "aiProvider": "mock",
+    "embeddingProvider": "mock",
+    "note": "Local laptop/process numbers. Not a production SLA. Live OpenAI timings below come from frozen reliability runs, not this process."
+  },
+  "loadModel": {
+    "users": {
+      "firms": "3–8",
+      "activeProfessionals": "10–25",
+      "concurrentActive": [
+        1,
+        5,
+        10,
+        20
+      ]
+    },
+    "cases": {
+      "small": {
+        "documents": "5–10",
+        "pages": "50–150"
+      },
+      "medium": {
+        "documents": "25–50",
+        "pages": "300–800"
+      },
+      "large": {
+        "documents": "100–200",
+        "pages": "1,500–4,000"
+      }
+    },
+    "operations": [
+      "ask_nyaya",
+      "upload_ingest",
+      "contract_analysis",
+      "deposition_analysis",
+      "compare",
+      "research",
+      "agent_run",
+      "timeline_extract"
+    ]
+  },
+  "productRateLimits": {
+    "auth": {
+      "limit": 10,
+      "windowMs": 300000,
+      "scope": "ip"
+    },
+    "upload": {
+      "limit": 120,
+      "windowMs": 3600000,
+      "scope": "organization"
+    },
+    "ask_nyaya": {
+      "limit": 60,
+      "windowMs": 3600000,
+      "scope": "user"
+    },
+    "research": {
+      "limit": 40,
+      "windowMs": 3600000,
+      "scope": "organization"
+    },
+    "agent_run": {
+      "limit": 20,
+      "windowMs": 3600000,
+      "scope": "organization"
+    },
+    "professor": {
+      "limit": 60,
+      "windowMs": 3600000,
+      "scope": "user"
+    },
+    "guide": {
+      "limit": 30,
+      "windowMs": 3600000,
+      "scope": "user"
+    },
+    "expensive_ai": {
+      "limit": 10,
+      "windowMs": 3600000,
+      "scope": "organization"
+    }
+  },
+  "dbPoolMax": 10,
+  "upload": {
+    "maxBytes": 15728640,
+    "maxPages": 2000,
+    "processing": "synchronous in POST /documents including malware scan, extract, chunk, embed, and intelligence extract"
+  },
+  "offlineHarness": {
+    "ingestByPageCount": [
+      {
+        "pages": 10,
+        "chunks": 11,
+        "embeddingCount": 11,
+        "bytes": 25200,
+        "parseMs": 0,
+        "chunkMs": 0,
+        "embedMs": 32,
+        "wallMs": 33,
+        "rssMb": 374,
+        "rssDeltaMb": 4
+      },
+      {
+        "pages": 30,
+        "chunks": 31,
+        "embeddingCount": 31,
+        "bytes": 75600,
+        "parseMs": 0,
+        "chunkMs": 0,
+        "embedMs": 67,
+        "wallMs": 67,
+        "rssMb": 377,
+        "rssDeltaMb": 3
+      },
+      {
+        "pages": 100,
+        "chunks": 101,
+        "embeddingCount": 101,
+        "bytes": 252000,
+        "parseMs": 0,
+        "chunkMs": 0,
+        "embedMs": 205,
+        "wallMs": 205,
+        "rssMb": 384,
+        "rssDeltaMb": 7
+      },
+      {
+        "pages": 250,
+        "chunks": 251,
+        "embeddingCount": 251,
+        "bytes": 630000,
+        "parseMs": 0,
+        "chunkMs": 0,
+        "embedMs": 519,
+        "wallMs": 520,
+        "rssMb": 395,
+        "rssDeltaMb": 11
+      }
+    ],
+    "ingestByDocumentCount": [
+      {
+        "documents": 1,
+        "pages": 10,
+        "chunks": 11,
+        "wallMs": 36,
+        "documentsPerMin": 1685,
+        "pagesPerMin": 16850,
+        "chunksPerMin": 18535,
+        "rssDeltaMb": -15,
+        "note": "CPU-only mock embeddings; excludes PDF parse, MinIO, serial DB inserts, and intelligence model calls"
+      },
+      {
+        "documents": 10,
+        "pages": 100,
+        "chunks": 110,
+        "wallMs": 211,
+        "documentsPerMin": 2848,
+        "pagesPerMin": 28478,
+        "chunksPerMin": 31326,
+        "rssDeltaMb": 7,
+        "note": "CPU-only mock embeddings; excludes PDF parse, MinIO, serial DB inserts, and intelligence model calls"
+      },
+      {
+        "documents": 25,
+        "pages": 250,
+        "chunks": 275,
+        "wallMs": 528,
+        "documentsPerMin": 2840,
+        "pagesPerMin": 28395,
+        "chunksPerMin": 31235,
+        "rssDeltaMb": 9,
+        "note": "CPU-only mock embeddings; excludes PDF parse, MinIO, serial DB inserts, and intelligence model calls"
+      },
+      {
+        "documents": 50,
+        "pages": 500,
+        "chunks": 550,
+        "wallMs": 1093,
+        "documentsPerMin": 2745,
+        "pagesPerMin": 27448,
+        "chunksPerMin": 30193,
+        "rssDeltaMb": -2,
+        "note": "CPU-only mock embeddings; excludes PDF parse, MinIO, serial DB inserts, and intelligence model calls"
+      }
+    ],
+    "mockAskConcurrency": {
+      "concurrency": 10,
+      "requests": 40,
+      "elapsedMs": 33,
+      "latencies": {
+        "n": 40,
+        "min": 4.275200000000041,
+        "max": 16.121900000000096,
+        "p50": 5.0010999999994965,
+        "p95": 15.896700000000237,
+        "p99": 16.121900000000096,
+        "mean": 8
+      },
+      "failures": {},
+      "askNyayaPreset": {
+        "limit": 60,
+        "windowMs": 3600000,
+        "scope": "user"
+      },
+      "productVsRateLimit": {
+        "note": "40 asks from one user stay under the 60/hour product cap. 70 sequential asks isolate 10 RATE_LIMITED rejections from capacity.",
+        "seventySequentialAsksSameUser": {
+          "ok": 60,
+          "rate_limit": 10
+        }
+      }
+    },
+    "mockEmbeddingByChunkCount": [
+      {
+        "chunks": 100,
+        "embedAllMs": 34,
+        "note": "mock embeddings; production hybrid also runs two SQL queries (vector + FTS) with LIMIT"
+      },
+      {
+        "chunks": 1000,
+        "embedAllMs": 413,
+        "note": "mock embeddings; production hybrid also runs two SQL queries (vector + FTS) with LIMIT"
+      },
+      {
+        "chunks": 5000,
+        "embedAllMs": 1971,
+        "note": "mock embeddings; production hybrid also runs two SQL queries (vector + FTS) with LIMIT"
+      }
+    ]
+  },
+  "liveOpenAiFromFrozenReliabilityRuns": {
+    "askNyayaA3": {
+      "medianLatencyMs": 2788,
+      "p95LatencyMs": 5108,
+      "source": "BASELINE_A3"
+    },
+    "askNyayaA4": {
+      "medianLatencyMs": 2708,
+      "source": "BASELINE_A4"
+    },
+    "contractAnalysisCa1": {
+      "medianLatencyMs": 15891,
+      "p95LatencyMs": 19845,
+      "maxLatencyMs": 19956,
+      "modelCallsPerTask": 1,
+      "source": "BASELINE_CA1"
+    },
+    "depositionAnalysisDa1": {
+      "medianLatencyMs": 8840,
+      "p95LatencyMs": 11713,
+      "maxLatencyMs": 12016,
+      "modelCallsPerTask": 1,
+      "source": "BASELINE_DA1"
+    },
+    "compareB2": {
+      "tasks": 48,
+      "wallClockMs": 68935,
+      "approxMeanMsIfSerial": 1436,
+      "source": "BASELINE_B2 config startedAt/finishedAt"
+    },
+    "known429Storm": {
+      "run": "2026-08-18T17-36-27-621Z",
+      "note": "80× OpenAI HTTP 429; excluded from A.3 reliability scoring"
+    }
+  }
+}

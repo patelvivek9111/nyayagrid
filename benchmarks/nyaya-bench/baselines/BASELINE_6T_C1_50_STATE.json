@@ -1,0 +1,4919 @@
+{
+  "id": "BASELINE_6T_C1_50_STATE",
+  "benchmarkVersion": "6T-C1-2026-08-19",
+  "generatedAt": "2026-08-20T02:34:08.812Z",
+  "elapsedMs": 7,
+  "corpus": {
+    "totalAuthorities": 7,
+    "typeCounts": {
+      "case": 2,
+      "statute": 4,
+      "other": 1
+    },
+    "unmappedCount": 7,
+    "unmappedJurisdictions": {
+      "Synthetic Federal": 2,
+      "Synthetic Jurisdiction": 4,
+      "Other State": 1
+    },
+    "statesWithMappedAuthorities": 0
+  },
+  "totals": {
+    "tasks": 514,
+    "pass": 463,
+    "needsWork": 51,
+    "fail": 0,
+    "critical": 0,
+    "wrongStateControlling": 0,
+    "wrongCircuitControlling": 0
+  },
+  "certifiedWording": "Certified/supported here means NyayaGrid internal benchmark certification only — not government, bar, court, or attorney validation.",
+  "betaEligibility": {
+    "eligible": [],
+    "limited": [],
+    "notYetValidated": [
+      "AL",
+      "AK",
+      "AZ",
+      "AR",
+      "CA",
+      "CO",
+      "CT",
+      "DE",
+      "FL",
+      "GA",
+      "HI",
+      "ID",
+      "IL",
+      "IN",
+      "IA",
+      "KS",
+      "KY",
+      "LA",
+      "ME",
+      "MD",
+      "MA",
+      "MI",
+      "MN",
+      "MS",
+      "MO",
+      "MT",
+      "NE",
+      "NV",
+      "NH",
+      "NJ",
+      "NM",
+      "NY",
+      "NC",
+      "ND",
+      "OH",
+      "OK",
+      "OR",
+      "PA",
+      "RI",
+      "SC",
+      "SD",
+      "TN",
+      "TX",
+      "UT",
+      "VT",
+      "VA",
+      "WA",
+      "WV",
+      "WI",
+      "WY",
+      "DC"
+    ]
+  },
+  "nationwideClaim": "NO",
+  "agents": {
+    "featureAgentsProduction": false,
+    "certifiedByState": false
+  },
+  "scorecards": [
+    {
+      "state": "AL",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "AK",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "AZ",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "AR",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "CA",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "CO",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "CT",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "DE",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "FL",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "GA",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "HI",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "ID",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "IL",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "IN",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "IA",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "KS",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "KY",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "LA",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "ME",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "MD",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "MA",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "MI",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "MN",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "MS",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "MO",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "MT",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "NE",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "NV",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "NH",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "NJ",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "NM",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "NY",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "NC",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "ND",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "OH",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "OK",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "OR",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "PA",
+      "overall": "NEEDS_WORK",
+      "pass": 12,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "RI",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "SC",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "SD",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "TN",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "TX",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "UT",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "VT",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "VA",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "WA",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "WV",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "WI",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "WY",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    },
+    {
+      "state": "DC",
+      "overall": "NEEDS_WORK",
+      "pass": 9,
+      "needsWork": 1,
+      "fail": 0,
+      "critical": 0,
+      "routingScore": 100,
+      "hierarchyScore": 100,
+      "temporalScore": 100,
+      "citationScore": null,
+      "retrievalPrecision": null,
+      "retrievalRecall": null,
+      "abstentionCorrectness": 100,
+      "coverage": {
+        "Contract": "unvalidated",
+        "Employment": "unvalidated",
+        "Civil": "unvalidated",
+        "Criminal": "unvalidated"
+      },
+      "overallCoverage": "PARTIAL",
+      "corpusAuthorities": 0
+    }
+  ],
+  "tasks": [
+    {
+      "id": "T6T-AL-01",
+      "state": "AL",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-AL-02",
+      "state": "AL",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy AK high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-AL-03",
+      "state": "AL",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-AL-04",
+      "state": "AL",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "3 district(s) map to circuit 11; expected 11."
+    },
+    {
+      "id": "T6T-AL-05",
+      "state": "AL",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-AL-06",
+      "state": "AL",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-AL-07",
+      "state": "AL",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-AL-08",
+      "state": "AL",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-AL-09",
+      "state": "AL",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-AL-10",
+      "state": "AL",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-AK-01",
+      "state": "AK",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-AK-02",
+      "state": "AK",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy AZ high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-AK-03",
+      "state": "AK",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-AK-04",
+      "state": "AK",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 9; expected 9."
+    },
+    {
+      "id": "T6T-AK-05",
+      "state": "AK",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 3 classified persuasive."
+    },
+    {
+      "id": "T6T-AK-06",
+      "state": "AK",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-AK-07",
+      "state": "AK",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-AK-08",
+      "state": "AK",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-AK-09",
+      "state": "AK",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-AK-10",
+      "state": "AK",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-AZ-01",
+      "state": "AZ",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-AZ-02",
+      "state": "AZ",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy AR high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-AZ-03",
+      "state": "AZ",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-AZ-04",
+      "state": "AZ",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 9; expected 9."
+    },
+    {
+      "id": "T6T-AZ-05",
+      "state": "AZ",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 3 classified persuasive."
+    },
+    {
+      "id": "T6T-AZ-06",
+      "state": "AZ",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-AZ-07",
+      "state": "AZ",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-AZ-08",
+      "state": "AZ",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-AZ-09",
+      "state": "AZ",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-AZ-10",
+      "state": "AZ",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-AR-01",
+      "state": "AR",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-AR-02",
+      "state": "AR",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy CA high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-AR-03",
+      "state": "AR",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-AR-04",
+      "state": "AR",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "2 district(s) map to circuit 8; expected 8."
+    },
+    {
+      "id": "T6T-AR-05",
+      "state": "AR",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-AR-06",
+      "state": "AR",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-AR-07",
+      "state": "AR",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-AR-08",
+      "state": "AR",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-AR-09",
+      "state": "AR",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-AR-10",
+      "state": "AR",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-CA-01",
+      "state": "CA",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-CA-02",
+      "state": "CA",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy CO high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-CA-03",
+      "state": "CA",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-CA-04",
+      "state": "CA",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "4 district(s) map to circuit 9; expected 9."
+    },
+    {
+      "id": "T6T-CA-05",
+      "state": "CA",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 3 classified persuasive."
+    },
+    {
+      "id": "T6T-CA-06",
+      "state": "CA",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-CA-07",
+      "state": "CA",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-CA-08",
+      "state": "CA",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-CA-09",
+      "state": "CA",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-CA-10",
+      "state": "CA",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-CO-01",
+      "state": "CO",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-CO-02",
+      "state": "CO",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy CT high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-CO-03",
+      "state": "CO",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-CO-04",
+      "state": "CO",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 10; expected 10."
+    },
+    {
+      "id": "T6T-CO-05",
+      "state": "CO",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-CO-06",
+      "state": "CO",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-CO-07",
+      "state": "CO",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-CO-08",
+      "state": "CO",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-CO-09",
+      "state": "CO",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-CO-10",
+      "state": "CO",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-CT-01",
+      "state": "CT",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-CT-02",
+      "state": "CT",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy DE high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-CT-03",
+      "state": "CT",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-CT-04",
+      "state": "CT",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 2; expected 2."
+    },
+    {
+      "id": "T6T-CT-05",
+      "state": "CT",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-CT-06",
+      "state": "CT",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-CT-07",
+      "state": "CT",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-CT-08",
+      "state": "CT",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-CT-09",
+      "state": "CT",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-CT-10",
+      "state": "CT",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-DE-01",
+      "state": "DE",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-DE-02",
+      "state": "DE",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy FL high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-DE-03",
+      "state": "DE",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-DE-04",
+      "state": "DE",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 3; expected 3."
+    },
+    {
+      "id": "T6T-DE-05",
+      "state": "DE",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-DE-06",
+      "state": "DE",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-DE-07",
+      "state": "DE",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-DE-08",
+      "state": "DE",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-DE-09",
+      "state": "DE",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-DE-10",
+      "state": "DE",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-FL-01",
+      "state": "FL",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-FL-02",
+      "state": "FL",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy GA high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-FL-03",
+      "state": "FL",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-FL-04",
+      "state": "FL",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "3 district(s) map to circuit 11; expected 11."
+    },
+    {
+      "id": "T6T-FL-05",
+      "state": "FL",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-FL-06",
+      "state": "FL",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-FL-07",
+      "state": "FL",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-FL-08",
+      "state": "FL",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-FL-09",
+      "state": "FL",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-FL-10",
+      "state": "FL",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-GA-01",
+      "state": "GA",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-GA-02",
+      "state": "GA",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy HI high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-GA-03",
+      "state": "GA",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-GA-04",
+      "state": "GA",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "3 district(s) map to circuit 11; expected 11."
+    },
+    {
+      "id": "T6T-GA-05",
+      "state": "GA",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-GA-06",
+      "state": "GA",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-GA-07",
+      "state": "GA",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-GA-08",
+      "state": "GA",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-GA-09",
+      "state": "GA",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-GA-10",
+      "state": "GA",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-HI-01",
+      "state": "HI",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-HI-02",
+      "state": "HI",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy ID high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-HI-03",
+      "state": "HI",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-HI-04",
+      "state": "HI",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 9; expected 9."
+    },
+    {
+      "id": "T6T-HI-05",
+      "state": "HI",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 3 classified persuasive."
+    },
+    {
+      "id": "T6T-HI-06",
+      "state": "HI",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-HI-07",
+      "state": "HI",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-HI-08",
+      "state": "HI",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-HI-09",
+      "state": "HI",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-HI-10",
+      "state": "HI",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-ID-01",
+      "state": "ID",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-ID-02",
+      "state": "ID",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy IL high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-ID-03",
+      "state": "ID",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-ID-04",
+      "state": "ID",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 9; expected 9."
+    },
+    {
+      "id": "T6T-ID-05",
+      "state": "ID",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 3 classified persuasive."
+    },
+    {
+      "id": "T6T-ID-06",
+      "state": "ID",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-ID-07",
+      "state": "ID",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-ID-08",
+      "state": "ID",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-ID-09",
+      "state": "ID",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-ID-10",
+      "state": "ID",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-IL-01",
+      "state": "IL",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-IL-02",
+      "state": "IL",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy IN high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-IL-03",
+      "state": "IL",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-IL-04",
+      "state": "IL",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "3 district(s) map to circuit 7; expected 7."
+    },
+    {
+      "id": "T6T-IL-05",
+      "state": "IL",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-IL-06",
+      "state": "IL",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-IL-07",
+      "state": "IL",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-IL-08",
+      "state": "IL",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-IL-09",
+      "state": "IL",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-IL-10",
+      "state": "IL",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-IN-01",
+      "state": "IN",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-IN-02",
+      "state": "IN",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy IA high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-IN-03",
+      "state": "IN",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-IN-04",
+      "state": "IN",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "2 district(s) map to circuit 7; expected 7."
+    },
+    {
+      "id": "T6T-IN-05",
+      "state": "IN",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-IN-06",
+      "state": "IN",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-IN-07",
+      "state": "IN",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-IN-08",
+      "state": "IN",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-IN-09",
+      "state": "IN",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-IN-10",
+      "state": "IN",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-IA-01",
+      "state": "IA",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-IA-02",
+      "state": "IA",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy KS high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-IA-03",
+      "state": "IA",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-IA-04",
+      "state": "IA",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "2 district(s) map to circuit 8; expected 8."
+    },
+    {
+      "id": "T6T-IA-05",
+      "state": "IA",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-IA-06",
+      "state": "IA",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-IA-07",
+      "state": "IA",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-IA-08",
+      "state": "IA",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-IA-09",
+      "state": "IA",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-IA-10",
+      "state": "IA",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-KS-01",
+      "state": "KS",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-KS-02",
+      "state": "KS",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy KY high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-KS-03",
+      "state": "KS",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-KS-04",
+      "state": "KS",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 10; expected 10."
+    },
+    {
+      "id": "T6T-KS-05",
+      "state": "KS",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-KS-06",
+      "state": "KS",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-KS-07",
+      "state": "KS",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-KS-08",
+      "state": "KS",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-KS-09",
+      "state": "KS",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-KS-10",
+      "state": "KS",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-KY-01",
+      "state": "KY",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-KY-02",
+      "state": "KY",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy LA high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-KY-03",
+      "state": "KY",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-KY-04",
+      "state": "KY",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "2 district(s) map to circuit 6; expected 6."
+    },
+    {
+      "id": "T6T-KY-05",
+      "state": "KY",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-KY-06",
+      "state": "KY",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-KY-07",
+      "state": "KY",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-KY-08",
+      "state": "KY",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-KY-09",
+      "state": "KY",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-KY-10",
+      "state": "KY",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-LA-01",
+      "state": "LA",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-LA-02",
+      "state": "LA",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy ME high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-LA-03",
+      "state": "LA",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-LA-04",
+      "state": "LA",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "3 district(s) map to circuit 5; expected 5."
+    },
+    {
+      "id": "T6T-LA-05",
+      "state": "LA",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-LA-06",
+      "state": "LA",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-LA-07",
+      "state": "LA",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-LA-08",
+      "state": "LA",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-LA-09",
+      "state": "LA",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-LA-10",
+      "state": "LA",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-ME-01",
+      "state": "ME",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-ME-02",
+      "state": "ME",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy MD high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-ME-03",
+      "state": "ME",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-ME-04",
+      "state": "ME",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 1; expected 1."
+    },
+    {
+      "id": "T6T-ME-05",
+      "state": "ME",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-ME-06",
+      "state": "ME",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-ME-07",
+      "state": "ME",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-ME-08",
+      "state": "ME",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-ME-09",
+      "state": "ME",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-ME-10",
+      "state": "ME",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-MD-01",
+      "state": "MD",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-MD-02",
+      "state": "MD",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy MA high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-MD-03",
+      "state": "MD",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-MD-04",
+      "state": "MD",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 4; expected 4."
+    },
+    {
+      "id": "T6T-MD-05",
+      "state": "MD",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-MD-06",
+      "state": "MD",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-MD-07",
+      "state": "MD",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-MD-08",
+      "state": "MD",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-MD-09",
+      "state": "MD",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-MD-10",
+      "state": "MD",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-MA-01",
+      "state": "MA",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-MA-02",
+      "state": "MA",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy MI high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-MA-03",
+      "state": "MA",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-MA-04",
+      "state": "MA",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 1; expected 1."
+    },
+    {
+      "id": "T6T-MA-05",
+      "state": "MA",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-MA-06",
+      "state": "MA",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-MA-07",
+      "state": "MA",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-MA-08",
+      "state": "MA",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-MA-09",
+      "state": "MA",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-MA-10",
+      "state": "MA",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-MI-01",
+      "state": "MI",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-MI-02",
+      "state": "MI",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy MN high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-MI-03",
+      "state": "MI",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-MI-04",
+      "state": "MI",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "2 district(s) map to circuit 6; expected 6."
+    },
+    {
+      "id": "T6T-MI-05",
+      "state": "MI",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-MI-06",
+      "state": "MI",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-MI-07",
+      "state": "MI",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-MI-08",
+      "state": "MI",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-MI-09",
+      "state": "MI",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-MI-10",
+      "state": "MI",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-MN-01",
+      "state": "MN",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-MN-02",
+      "state": "MN",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy MS high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-MN-03",
+      "state": "MN",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-MN-04",
+      "state": "MN",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 8; expected 8."
+    },
+    {
+      "id": "T6T-MN-05",
+      "state": "MN",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-MN-06",
+      "state": "MN",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-MN-07",
+      "state": "MN",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-MN-08",
+      "state": "MN",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-MN-09",
+      "state": "MN",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-MN-10",
+      "state": "MN",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-MS-01",
+      "state": "MS",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-MS-02",
+      "state": "MS",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy MO high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-MS-03",
+      "state": "MS",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-MS-04",
+      "state": "MS",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "2 district(s) map to circuit 5; expected 5."
+    },
+    {
+      "id": "T6T-MS-05",
+      "state": "MS",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-MS-06",
+      "state": "MS",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-MS-07",
+      "state": "MS",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-MS-08",
+      "state": "MS",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-MS-09",
+      "state": "MS",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-MS-10",
+      "state": "MS",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-MO-01",
+      "state": "MO",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-MO-02",
+      "state": "MO",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy MT high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-MO-03",
+      "state": "MO",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-MO-04",
+      "state": "MO",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "2 district(s) map to circuit 8; expected 8."
+    },
+    {
+      "id": "T6T-MO-05",
+      "state": "MO",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-MO-06",
+      "state": "MO",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-MO-07",
+      "state": "MO",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-MO-08",
+      "state": "MO",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-MO-09",
+      "state": "MO",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-MO-10",
+      "state": "MO",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-MT-01",
+      "state": "MT",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-MT-02",
+      "state": "MT",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy NE high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-MT-03",
+      "state": "MT",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-MT-04",
+      "state": "MT",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 9; expected 9."
+    },
+    {
+      "id": "T6T-MT-05",
+      "state": "MT",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 3 classified persuasive."
+    },
+    {
+      "id": "T6T-MT-06",
+      "state": "MT",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-MT-07",
+      "state": "MT",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-MT-08",
+      "state": "MT",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-MT-09",
+      "state": "MT",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-MT-10",
+      "state": "MT",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-NE-01",
+      "state": "NE",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-NE-02",
+      "state": "NE",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy NV high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-NE-03",
+      "state": "NE",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-NE-04",
+      "state": "NE",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 8; expected 8."
+    },
+    {
+      "id": "T6T-NE-05",
+      "state": "NE",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-NE-06",
+      "state": "NE",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-NE-07",
+      "state": "NE",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-NE-08",
+      "state": "NE",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-NE-09",
+      "state": "NE",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-NE-10",
+      "state": "NE",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-NV-01",
+      "state": "NV",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-NV-02",
+      "state": "NV",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy NH high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-NV-03",
+      "state": "NV",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-NV-04",
+      "state": "NV",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 9; expected 9."
+    },
+    {
+      "id": "T6T-NV-05",
+      "state": "NV",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 3 classified persuasive."
+    },
+    {
+      "id": "T6T-NV-06",
+      "state": "NV",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-NV-07",
+      "state": "NV",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-NV-08",
+      "state": "NV",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-NV-09",
+      "state": "NV",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-NV-10",
+      "state": "NV",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-NH-01",
+      "state": "NH",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-NH-02",
+      "state": "NH",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy NJ high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-NH-03",
+      "state": "NH",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-NH-04",
+      "state": "NH",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 1; expected 1."
+    },
+    {
+      "id": "T6T-NH-05",
+      "state": "NH",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-NH-06",
+      "state": "NH",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-NH-07",
+      "state": "NH",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-NH-08",
+      "state": "NH",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-NH-09",
+      "state": "NH",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-NH-10",
+      "state": "NH",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-NJ-01",
+      "state": "NJ",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-NJ-02",
+      "state": "NJ",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy NM high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-NJ-03",
+      "state": "NJ",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-NJ-04",
+      "state": "NJ",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 3; expected 3."
+    },
+    {
+      "id": "T6T-NJ-05",
+      "state": "NJ",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-NJ-06",
+      "state": "NJ",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-NJ-07",
+      "state": "NJ",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-NJ-08",
+      "state": "NJ",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-NJ-09",
+      "state": "NJ",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-NJ-10",
+      "state": "NJ",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-NM-01",
+      "state": "NM",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-NM-02",
+      "state": "NM",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy NY high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-NM-03",
+      "state": "NM",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-NM-04",
+      "state": "NM",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 10; expected 10."
+    },
+    {
+      "id": "T6T-NM-05",
+      "state": "NM",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-NM-06",
+      "state": "NM",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-NM-07",
+      "state": "NM",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-NM-08",
+      "state": "NM",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-NM-09",
+      "state": "NM",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-NM-10",
+      "state": "NM",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-NY-01",
+      "state": "NY",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-NY-02",
+      "state": "NY",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy NC high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-NY-03",
+      "state": "NY",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-NY-04",
+      "state": "NY",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "4 district(s) map to circuit 2; expected 2."
+    },
+    {
+      "id": "T6T-NY-05",
+      "state": "NY",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-NY-06",
+      "state": "NY",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-NY-07",
+      "state": "NY",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-NY-08",
+      "state": "NY",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-NY-09",
+      "state": "NY",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-NY-10",
+      "state": "NY",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-NC-01",
+      "state": "NC",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-NC-02",
+      "state": "NC",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy ND high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-NC-03",
+      "state": "NC",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-NC-04",
+      "state": "NC",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "3 district(s) map to circuit 4; expected 4."
+    },
+    {
+      "id": "T6T-NC-05",
+      "state": "NC",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-NC-06",
+      "state": "NC",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-NC-07",
+      "state": "NC",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-NC-08",
+      "state": "NC",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-NC-09",
+      "state": "NC",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-NC-10",
+      "state": "NC",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-ND-01",
+      "state": "ND",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-ND-02",
+      "state": "ND",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy OH high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-ND-03",
+      "state": "ND",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-ND-04",
+      "state": "ND",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 8; expected 8."
+    },
+    {
+      "id": "T6T-ND-05",
+      "state": "ND",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-ND-06",
+      "state": "ND",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-ND-07",
+      "state": "ND",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-ND-08",
+      "state": "ND",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-ND-09",
+      "state": "ND",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-ND-10",
+      "state": "ND",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-OH-01",
+      "state": "OH",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-OH-02",
+      "state": "OH",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy OK high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-OH-03",
+      "state": "OH",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-OH-04",
+      "state": "OH",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "2 district(s) map to circuit 6; expected 6."
+    },
+    {
+      "id": "T6T-OH-05",
+      "state": "OH",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-OH-06",
+      "state": "OH",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-OH-07",
+      "state": "OH",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-OH-08",
+      "state": "OH",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-OH-09",
+      "state": "OH",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-OH-10",
+      "state": "OH",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-OK-01",
+      "state": "OK",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-OK-02",
+      "state": "OK",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy OR high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-OK-03",
+      "state": "OK",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-OK-04",
+      "state": "OK",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "3 district(s) map to circuit 10; expected 10."
+    },
+    {
+      "id": "T6T-OK-05",
+      "state": "OK",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-OK-06",
+      "state": "OK",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-OK-07",
+      "state": "OK",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-OK-08",
+      "state": "OK",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-OK-09",
+      "state": "OK",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-OK-10",
+      "state": "OK",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-OR-01",
+      "state": "OR",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-OR-02",
+      "state": "OR",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy PA high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-OR-03",
+      "state": "OR",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-OR-04",
+      "state": "OR",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 9; expected 9."
+    },
+    {
+      "id": "T6T-OR-05",
+      "state": "OR",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 3 classified persuasive."
+    },
+    {
+      "id": "T6T-OR-06",
+      "state": "OR",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-OR-07",
+      "state": "OR",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-OR-08",
+      "state": "OR",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-OR-09",
+      "state": "OR",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-OR-10",
+      "state": "OR",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-PA-01",
+      "state": "PA",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-PA-02",
+      "state": "PA",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy RI high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-PA-03",
+      "state": "PA",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-PA-04",
+      "state": "PA",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "3 district(s) map to circuit 3; expected 3."
+    },
+    {
+      "id": "T6T-PA-05",
+      "state": "PA",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-PA-06",
+      "state": "PA",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-PA-07",
+      "state": "PA",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-PA-08",
+      "state": "PA",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-PA-09",
+      "state": "PA",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-PA-10",
+      "state": "PA",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-RI-01",
+      "state": "RI",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-RI-02",
+      "state": "RI",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy SC high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-RI-03",
+      "state": "RI",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-RI-04",
+      "state": "RI",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 1; expected 1."
+    },
+    {
+      "id": "T6T-RI-05",
+      "state": "RI",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-RI-06",
+      "state": "RI",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-RI-07",
+      "state": "RI",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-RI-08",
+      "state": "RI",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-RI-09",
+      "state": "RI",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-RI-10",
+      "state": "RI",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-SC-01",
+      "state": "SC",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-SC-02",
+      "state": "SC",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy SD high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-SC-03",
+      "state": "SC",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-SC-04",
+      "state": "SC",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 4; expected 4."
+    },
+    {
+      "id": "T6T-SC-05",
+      "state": "SC",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-SC-06",
+      "state": "SC",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-SC-07",
+      "state": "SC",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-SC-08",
+      "state": "SC",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-SC-09",
+      "state": "SC",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-SC-10",
+      "state": "SC",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-SD-01",
+      "state": "SD",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-SD-02",
+      "state": "SD",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy TN high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-SD-03",
+      "state": "SD",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-SD-04",
+      "state": "SD",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 8; expected 8."
+    },
+    {
+      "id": "T6T-SD-05",
+      "state": "SD",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-SD-06",
+      "state": "SD",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-SD-07",
+      "state": "SD",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-SD-08",
+      "state": "SD",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-SD-09",
+      "state": "SD",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-SD-10",
+      "state": "SD",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-TN-01",
+      "state": "TN",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-TN-02",
+      "state": "TN",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy TX high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-TN-03",
+      "state": "TN",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-TN-04",
+      "state": "TN",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "3 district(s) map to circuit 6; expected 6."
+    },
+    {
+      "id": "T6T-TN-05",
+      "state": "TN",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-TN-06",
+      "state": "TN",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-TN-07",
+      "state": "TN",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-TN-08",
+      "state": "TN",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-TN-09",
+      "state": "TN",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-TN-10",
+      "state": "TN",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-TX-01",
+      "state": "TX",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-TX-02",
+      "state": "TX",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy UT high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-TX-03",
+      "state": "TX",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-TX-04",
+      "state": "TX",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "4 district(s) map to circuit 5; expected 5."
+    },
+    {
+      "id": "T6T-TX-05",
+      "state": "TX",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-TX-06",
+      "state": "TX",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-TX-07",
+      "state": "TX",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-TX-08",
+      "state": "TX",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-TX-09",
+      "state": "TX",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-TX-10",
+      "state": "TX",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-UT-01",
+      "state": "UT",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-UT-02",
+      "state": "UT",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy VT high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-UT-03",
+      "state": "UT",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-UT-04",
+      "state": "UT",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 10; expected 10."
+    },
+    {
+      "id": "T6T-UT-05",
+      "state": "UT",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-UT-06",
+      "state": "UT",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-UT-07",
+      "state": "UT",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-UT-08",
+      "state": "UT",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-UT-09",
+      "state": "UT",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-UT-10",
+      "state": "UT",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-VT-01",
+      "state": "VT",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-VT-02",
+      "state": "VT",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy VA high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-VT-03",
+      "state": "VT",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-VT-04",
+      "state": "VT",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 2; expected 2."
+    },
+    {
+      "id": "T6T-VT-05",
+      "state": "VT",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-VT-06",
+      "state": "VT",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-VT-07",
+      "state": "VT",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-VT-08",
+      "state": "VT",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-VT-09",
+      "state": "VT",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-VT-10",
+      "state": "VT",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-VA-01",
+      "state": "VA",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-VA-02",
+      "state": "VA",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy WA high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-VA-03",
+      "state": "VA",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-VA-04",
+      "state": "VA",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "2 district(s) map to circuit 4; expected 4."
+    },
+    {
+      "id": "T6T-VA-05",
+      "state": "VA",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-VA-06",
+      "state": "VA",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-VA-07",
+      "state": "VA",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-VA-08",
+      "state": "VA",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-VA-09",
+      "state": "VA",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-VA-10",
+      "state": "VA",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-WA-01",
+      "state": "WA",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-WA-02",
+      "state": "WA",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy WV high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-WA-03",
+      "state": "WA",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-WA-04",
+      "state": "WA",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "2 district(s) map to circuit 9; expected 9."
+    },
+    {
+      "id": "T6T-WA-05",
+      "state": "WA",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 3 classified persuasive."
+    },
+    {
+      "id": "T6T-WA-06",
+      "state": "WA",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-WA-07",
+      "state": "WA",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-WA-08",
+      "state": "WA",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-WA-09",
+      "state": "WA",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-WA-10",
+      "state": "WA",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-WV-01",
+      "state": "WV",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-WV-02",
+      "state": "WV",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy WI high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-WV-03",
+      "state": "WV",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-WV-04",
+      "state": "WV",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "2 district(s) map to circuit 4; expected 4."
+    },
+    {
+      "id": "T6T-WV-05",
+      "state": "WV",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-WV-06",
+      "state": "WV",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-WV-07",
+      "state": "WV",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-WV-08",
+      "state": "WV",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-WV-09",
+      "state": "WV",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-WV-10",
+      "state": "WV",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-WI-01",
+      "state": "WI",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-WI-02",
+      "state": "WI",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy WY high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-WI-03",
+      "state": "WI",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-WI-04",
+      "state": "WI",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "2 district(s) map to circuit 7; expected 7."
+    },
+    {
+      "id": "T6T-WI-05",
+      "state": "WI",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-WI-06",
+      "state": "WI",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-WI-07",
+      "state": "WI",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-WI-08",
+      "state": "WI",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-WI-09",
+      "state": "WI",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-WI-10",
+      "state": "WI",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-WY-01",
+      "state": "WY",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-WY-02",
+      "state": "WY",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy DC high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-WY-03",
+      "state": "WY",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-WY-04",
+      "state": "WY",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit 10; expected 10."
+    },
+    {
+      "id": "T6T-WY-05",
+      "state": "WY",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-WY-06",
+      "state": "WY",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-WY-07",
+      "state": "WY",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-WY-08",
+      "state": "WY",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-WY-09",
+      "state": "WY",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-WY-10",
+      "state": "WY",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-DC-01",
+      "state": "DC",
+      "class": "correct-state",
+      "severity": "PASS",
+      "detail": "Own high court classified controlling."
+    },
+    {
+      "id": "T6T-DC-02",
+      "state": "DC",
+      "class": "wrong-state",
+      "severity": "PASS",
+      "detail": "Decoy AL high court classified out_of_jurisdiction."
+    },
+    {
+      "id": "T6T-DC-03",
+      "state": "DC",
+      "class": "lower-court",
+      "severity": "PASS",
+      "detail": "Same-state trial court classified persuasive."
+    },
+    {
+      "id": "T6T-DC-04",
+      "state": "DC",
+      "class": "federal-circuit",
+      "severity": "PASS",
+      "detail": "1 district(s) map to circuit dc; expected dc."
+    },
+    {
+      "id": "T6T-DC-05",
+      "state": "DC",
+      "class": "other-circuit",
+      "severity": "PASS",
+      "detail": "Foreign circuit 9 classified persuasive."
+    },
+    {
+      "id": "T6T-DC-06",
+      "state": "DC",
+      "class": "scotus",
+      "severity": "PASS",
+      "detail": "SCOTUS classified controlling."
+    },
+    {
+      "id": "T6T-DC-07",
+      "state": "DC",
+      "class": "temporal",
+      "severity": "PASS",
+      "detail": "expired=inapplicable current=applicable undated=unknown; ranked-first=applicable."
+    },
+    {
+      "id": "T6T-DC-08",
+      "state": "DC",
+      "class": "abstention",
+      "severity": "PASS",
+      "detail": "Unknown jurisdiction abstains on a limitations question."
+    },
+    {
+      "id": "T6T-DC-09",
+      "state": "DC",
+      "class": "hierarchy",
+      "severity": "PASS",
+      "detail": "Research ranking placed home-state high court above the decoy."
+    },
+    {
+      "id": "T6T-DC-10",
+      "state": "DC",
+      "class": "corpus",
+      "severity": "NEEDS_WORK",
+      "detail": "Local corpus has 0 mapped US-state authorities. Statute/case/regulation retrieval is not graded as FAIL; coverage stays UNVALIDATED.",
+      "rootCause": "A"
+    },
+    {
+      "id": "T6T-REP-16",
+      "state": "PA",
+      "class": "choice-of-law",
+      "severity": "PASS",
+      "detail": "forum=PA governing=DE DE=controlling PA=persuasive."
+    },
+    {
+      "id": "T6T-REP-17",
+      "state": "PA",
+      "class": "multi-jurisdiction",
+      "severity": "PASS",
+      "detail": "mode=multi_jurisdiction NJ=persuasive."
+    },
+    {
+      "id": "T6T-REP-46",
+      "state": "PA",
+      "class": "draft-metadata",
+      "severity": "PASS",
+      "detail": "Draft/Ask metadata block keeps DE governing law distinct from NJ related and PA forum."
+    },
+    {
+      "id": "T6T-REP-47",
+      "state": "US",
+      "class": "agents-flag",
+      "severity": "PASS",
+      "detail": "FEATURE_AGENTS remains off in production and staging defaults."
+    }
+  ]
+}

@@ -2,12 +2,16 @@ import type { Database } from "@nyayagrid/database";
 import { conversations, messages, aiArtifacts } from "@nyayagrid/database";
 import {
   assessNeedMoreDocuments,
+  assessRetrievedEvidence,
   buildFollowUpRetrievalQuery,
   buildNyayaSystemPromptWithIntelligence,
   buildNyayaSystemPromptWithResearch,
   buildNyayaUserPrompt,
   buildNyayaUserPromptWithResearch,
+  constrainCitedAnswer,
   createAIProviderFromEnv,
+  ensureMissingInstrumentDisclosure,
+  formatEvidenceAssessmentForPrompt,
   formatResearchAuthorityChunks,
   NYAYA_PROMPT_VERSION,
   validateCitedAnswerAgainstPassages,
@@ -18,6 +22,8 @@ import {
   type EmbeddingProvider,
   type GroundingPassage,
   type ResearchAuthorityChunk,
+  type RiskSignal,
+  type RoutingMode,
 } from "@nyayagrid/ai";
 import {
   formatVerifiedIntelligenceForPrompt,
@@ -40,6 +46,15 @@ import {
   type AuthoritySearchFilters,
   type AuthoritySearchHit,
 } from "@nyayagrid/research";
+import {
+  ensureLimitedCoverageDisclosure,
+  ensureUnvalidatedCoverageDisclosure,
+  formatJurisdictionDisclosure,
+  preferredSearchHints,
+  resolveMatterJurisdictionContext,
+  shouldAbstainForUnknownJurisdiction,
+  UNKNOWN_JURISDICTION_ABSTENTION,
+} from "@nyayagrid/jurisdiction";
 import type { Retriever } from "./hybrid";
 
 /** Retrieval surface for the legal authority corpus; matter documents are never searched here. */
@@ -47,7 +62,11 @@ export type NyayaAuthorityRetriever = {
   search(
     query: string,
     filters?: AuthoritySearchFilters,
-    options?: { limit?: number },
+    options?: {
+      limit?: number;
+      preferredStateCodes?: string[];
+      preferredCircuitIds?: string[];
+    },
   ): Promise<AuthoritySearchHit[]>;
 };
 
@@ -82,6 +101,10 @@ async function loadNyayaLegalAuthorityContext(params: {
   authorityRetriever?: NyayaAuthorityRetriever;
   authorityFilters?: AuthoritySearchFilters;
   authorityLimit?: number;
+  searchOptions?: {
+    preferredStateCodes?: string[];
+    preferredCircuitIds?: string[];
+  };
 }): Promise<NyayaLegalAuthorityContext> {
   const saved = await loadMatterLegalAuthorityContext({
     db: params.db,
@@ -109,6 +132,7 @@ async function loadNyayaLegalAuthorityContext(params: {
       params.authorityRetriever ?? new AuthorityHybridRetriever(params.db, params.embeddings!);
     corpusHits = await retriever.search(params.question, params.authorityFilters ?? {}, {
       limit: params.authorityLimit ?? AUTHORITY_HIT_LIMIT,
+      ...(params.searchOptions ?? {}),
     });
     const fullText = await loadAuthorizedAuthorityChunks({
       db: params.db,
@@ -123,6 +147,8 @@ async function loadNyayaLegalAuthorityContext(params: {
         court: hit.court,
         date: hit.decisionDate,
         content: fullText.get(hit.chunkId)?.content ?? hit.snippet,
+        hierarchyRelationship: undefined,
+        jurisdiction: hit.jurisdiction,
       }));
     for (const chunk of corpusChunks) {
       authorityIds.add(chunk.authorityId);
@@ -176,6 +202,8 @@ export async function askNyayaAboutMatter(params: {
   authorityRetriever?: NyayaAuthorityRetriever;
   authorityFilters?: AuthoritySearchFilters;
   authorityLimit?: number;
+  executionStrategy?: RoutingMode;
+  modelId?: string;
 }) {
   const ai = params.ai ?? createAIProviderFromEnv();
   const primaryHits = await params.retriever.search({
@@ -225,6 +253,14 @@ export async function askNyayaAboutMatter(params: {
     quote: hit.quote,
   }));
 
+  const assessmentAbort = new AbortController();
+  const assessmentTimer = setTimeout(() => assessmentAbort.abort(), 8_000);
+  const assessmentPromise = assessRetrievedEvidence({
+    question: params.question,
+    passages,
+    signal: assessmentAbort.signal,
+  }).finally(() => clearTimeout(assessmentTimer));
+
   let verifiedText: string | null = null;
   let graphText: string | null = null;
   let memoryText: string | null = null;
@@ -272,6 +308,16 @@ export async function askNyayaAboutMatter(params: {
     analysisText = formatProfessionalAnalysisForPrompt(analysis) || null;
   }
 
+  const jurisdictionContext = await resolveMatterJurisdictionContext({
+    db: params.db,
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+  });
+  const jurisdictionHints = preferredSearchHints(jurisdictionContext);
+  const jurisdictionBlock = jurisdictionContext?.promptBlock?.trim()
+    ? `${jurisdictionContext.promptBlock.trim()}\n\n`
+    : "";
+
   const doctrineQuestion = looksLikeLegalDoctrineQuestion(params.question);
   const authority =
     params.includeLegalAuthority === false
@@ -286,9 +332,15 @@ export async function askNyayaAboutMatter(params: {
           authorityRetriever: params.authorityRetriever,
           authorityFilters: params.authorityFilters,
           authorityLimit: params.authorityLimit,
+          searchOptions: jurisdictionHints,
         });
   const authorityText = authority?.text ?? null;
   const useResearchPrompt = Boolean(authorityText) || doctrineQuestion;
+
+  const assessmentResult = await assessmentPromise;
+  const assessmentText = assessmentResult.assessment
+    ? formatEvidenceAssessmentForPrompt(assessmentResult.assessment)
+    : null;
 
   let conversationId = params.conversationId ?? null;
   if (!conversationId) {
@@ -325,6 +377,30 @@ export async function askNyayaAboutMatter(params: {
 
   const generation = await ai.generate({
     temperature: 0,
+    routing: {
+      subsystem: useResearchPrompt ? "research" : "ask",
+      strategy: params.executionStrategy ?? "auto",
+      modelId: params.modelId,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      userId: params.userId,
+      promptVersion: NYAYA_PROMPT_VERSION,
+      retrievalIds: passages.map((p) => p.chunkId),
+      evidenceChunkIds: passages.map((p) => p.chunkId),
+      authorityIds: [...(authority?.authorityIds ?? [])],
+      jurisdictionSummary: jurisdictionContext?.summary,
+      contextTokensEstimate: Math.ceil(
+        (jurisdictionBlock.length + (authorityText?.length ?? 0) + passages.reduce((n, p) => n + p.quote.length, 0)) /
+          4,
+      ),
+      riskSignals: askRiskSignals({
+        coverage: jurisdictionContext?.coverage,
+        relatedCount: jurisdictionContext?.relatedJurisdictions.length ?? 0,
+        governingLawState: jurisdictionContext?.governingLawState,
+        choiceOfLawDistinct: jurisdictionContext?.choiceOfLawDistinctFromForum,
+        retrievedCount: passages.length,
+      }),
+    },
     messages: [
       {
         role: "system",
@@ -335,7 +411,7 @@ export async function askNyayaAboutMatter(params: {
       {
         role: "user",
         content: useResearchPrompt
-          ? buildNyayaUserPromptWithResearch(
+          ? `${jurisdictionBlock}${buildNyayaUserPromptWithResearch(
               params.question,
               passages,
               authorityText ?? "",
@@ -343,15 +419,17 @@ export async function askNyayaAboutMatter(params: {
               graphText,
               memoryText,
               analysisText,
-            )
-          : buildNyayaUserPrompt(
+              assessmentText,
+            )}`
+          : `${jurisdictionBlock}${buildNyayaUserPrompt(
               params.question,
               passages,
               verifiedText,
               graphText,
               memoryText,
               analysisText,
-            ),
+              assessmentText,
+            )}`,
       },
     ],
   });
@@ -371,6 +449,13 @@ export async function askNyayaAboutMatter(params: {
   }
 
   const validated = validateCitedAnswerAgainstPassages(raw, passages);
+  if (assessmentResult.assessment) {
+    validated.answer = constrainCitedAnswer(
+      validated.answer,
+      assessmentResult.assessment,
+      passages,
+    );
+  }
   const rawAnswer = citedAnswerTextFromRaw(raw);
   validated.answer = applyQa06VerifiedIntelCap({
     answer: validated.answer,
@@ -428,6 +513,34 @@ export async function askNyayaAboutMatter(params: {
     );
   }
 
+  if (shouldAbstainForUnknownJurisdiction(params.question, jurisdictionContext)) {
+    if (validated.answer.evidenceState !== "grounded") {
+      validated.answer.answer = UNKNOWN_JURISDICTION_ABSTENTION;
+      validated.answer.evidenceState = "insufficient";
+    }
+    const missing = "Which forum and governing law should be recorded for this Case?";
+    if (!validated.answer.unresolvedQuestions.includes(missing)) {
+      validated.answer.unresolvedQuestions = [...validated.answer.unresolvedQuestions, missing];
+    }
+  } else if (doctrineQuestion && jurisdictionContext) {
+    const disclosure = formatJurisdictionDisclosure(jurisdictionContext);
+    if (disclosure && !validated.answer.answer.toLowerCase().includes("based on") && !validated.answer.answer.toLowerCase().includes("forum:")) {
+      validated.answer.answer = `${disclosure} ${validated.answer.answer}`;
+    }
+    validated.answer.answer = ensureUnvalidatedCoverageDisclosure(
+      validated.answer.answer,
+      jurisdictionContext.coverage,
+    );
+    validated.answer.answer = ensureLimitedCoverageDisclosure(
+      validated.answer.answer,
+      jurisdictionContext.coverage,
+    );
+  }
+  validated.answer.answer = ensureMissingInstrumentDisclosure(
+    params.question,
+    validated.answer.answer,
+    [...passages.map((passage) => passage.quote), ...(authority?.sourceTexts ?? [])].join("\n"),
+  );
   const authorityMissingForDoctrine = doctrineQuestion && !authorityText;
   if (authorityMissingForDoctrine) {
     validated.answer.answer = `${validated.answer.answer.trim()}\n\n${NO_AUTHORITY_CORPUS_NOTICE}`;
@@ -497,6 +610,15 @@ export async function askNyayaAboutMatter(params: {
         needsMoreDocuments: needMore.needsMoreDocuments,
         needMoreDocumentReasons: needMore.reasons,
         usedFollowUpRetrieval,
+        evidenceAssessmentStatus: assessmentResult.assessment?.status ?? "skipped",
+        premiseStatus: assessmentResult.assessment?.premiseStatus ?? null,
+        dateSensitive: assessmentResult.assessment?.dateSensitive ?? false,
+        assessmentModel: assessmentResult.model,
+        assessmentLatency: assessmentResult.latencyMs,
+        assessmentFailure: assessmentResult.failure,
+        assessmentSource: assessmentResult.source,
+        assessmentTriggered: assessmentResult.triggered,
+        assessmentCategories: assessmentResult.categories,
       },
       createdByUserId: params.userId,
     })
@@ -537,6 +659,22 @@ export async function getChunkCitation(params: {
       ),
   });
   return chunk ?? null;
+}
+
+function askRiskSignals(params: {
+  coverage?: string | null;
+  relatedCount: number;
+  governingLawState?: string | null;
+  choiceOfLawDistinct?: boolean;
+  retrievedCount: number;
+}): RiskSignal[] {
+  const signals: RiskSignal[] = [];
+  if (params.coverage === "limited") signals.push("limited_coverage");
+  if (params.coverage === "unvalidated") signals.push("unvalidated_coverage");
+  if (params.relatedCount > 0 || params.choiceOfLawDistinct) signals.push("multiple_jurisdictions");
+  if (!params.governingLawState) signals.push("missing_governing_law");
+  if (params.retrievedCount < 2) signals.push("weak_retrieval");
+  return signals;
 }
 
 export async function listMatterArtifacts(params: {

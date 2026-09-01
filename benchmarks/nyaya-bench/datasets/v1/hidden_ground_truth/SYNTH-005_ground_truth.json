@@ -1,0 +1,93 @@
+{
+  "scenario_id": "SYNTH-005",
+  "title": "Orion Components Supply Dispute",
+  "ground_truth_version": "1.0",
+  "answers": {
+    "Q001": {
+      "task_id": "SYNTH-005-Q001",
+      "expected": "$265",
+      "supporting_refs": [
+        "pricing_amendment:Effective",
+        "pricing_amendment:Price",
+        "po:Order"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q002": {
+      "task_id": "SYNTH-005-Q002",
+      "expected": "1,000",
+      "supporting_refs": [
+        "po:Order"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q003": {
+      "task_id": "SYNTH-005-Q003",
+      "expected": "995",
+      "supporting_refs": [
+        "receipt:Receipt"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q004": {
+      "task_id": "SYNTH-005-Q004",
+      "expected": "No; email predicted 995 and report confirms 995",
+      "supporting_refs": [
+        "delivery_email:Message",
+        "receipt:Receipt"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q005": {
+      "task_id": "SYNTH-005-Q005",
+      "expected": "V-8 unit price $240->$265 for accepted POs on/after May 1",
+      "supporting_refs": [
+        "agreement:2",
+        "pricing_amendment:Effective",
+        "pricing_amendment:Price"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q006": {
+      "task_id": "SYNTH-005-Q006",
+      "expected": "No",
+      "supporting_refs": [
+        "pricing_amendment:Warranty"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q007": {
+      "task_id": "SYNTH-005-Q007",
+      "expected": "$265,000",
+      "supporting_refs": [
+        "po:Order",
+        "pricing_amendment:Price"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q008": {
+      "task_id": "SYNTH-005-Q008",
+      "expected": "ABSTAIN: freight charge not supplied",
+      "supporting_refs": [],
+      "verdict_logic": "must_abstain"
+    },
+    "Q009": {
+      "task_id": "SYNTH-005-Q009",
+      "expected": "30 days after accepted purchase order",
+      "supporting_refs": [
+        "agreement:3"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q010": {
+      "task_id": "SYNTH-005-Q010",
+      "expected": "Yes; 995 is 0.5% below 1,000, within +/-2%",
+      "supporting_refs": [
+        "agreement:5",
+        "po:Order",
+        "receipt:Receipt"
+      ],
+      "verdict_logic": "must_answer"
+    }
+  }
+}

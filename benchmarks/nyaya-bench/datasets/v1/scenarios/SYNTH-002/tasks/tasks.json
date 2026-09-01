@@ -1,0 +1,82 @@
+[
+  {
+    "task_id": "SYNTH-002-Q001",
+    "scenario_id": "SYNTH-002",
+    "category": "contract_compare",
+    "prompt": "What material changes did Amendment No. 2 make?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q001"
+  },
+  {
+    "task_id": "SYNTH-002-Q002",
+    "scenario_id": "SYNTH-002",
+    "category": "decoy",
+    "prompt": "Did the capitalization change to the Service Level heading materially change the contract?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q002"
+  },
+  {
+    "task_id": "SYNTH-002-Q003",
+    "scenario_id": "SYNTH-002",
+    "category": "numeric",
+    "prompt": "What is the current liability cap?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q003"
+  },
+  {
+    "task_id": "SYNTH-002-Q004",
+    "scenario_id": "SYNTH-002",
+    "category": "numeric",
+    "prompt": "What availability target applies beginning September 1, 2026?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q004"
+  },
+  {
+    "task_id": "SYNTH-002-Q005",
+    "scenario_id": "SYNTH-002",
+    "category": "case_qa",
+    "prompt": "What is the scheduled production launch date?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q005"
+  },
+  {
+    "task_id": "SYNTH-002-Q006",
+    "scenario_id": "SYNTH-002",
+    "category": "false_contradiction",
+    "prompt": "Does the August 10 email contradict the SOW about the launch date?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q006"
+  },
+  {
+    "task_id": "SYNTH-002-Q007",
+    "scenario_id": "SYNTH-002",
+    "category": "case_qa",
+    "prompt": "What is the one-time implementation fee?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q007"
+  },
+  {
+    "task_id": "SYNTH-002-Q008",
+    "scenario_id": "SYNTH-002",
+    "category": "case_qa",
+    "prompt": "How much of the implementation fee was billed on invoice BP-8891?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q008"
+  },
+  {
+    "task_id": "SYNTH-002-Q009",
+    "scenario_id": "SYNTH-002",
+    "category": "insufficient",
+    "prompt": "What is the interest rate on late payments?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q009"
+  },
+  {
+    "task_id": "SYNTH-002-Q010",
+    "scenario_id": "SYNTH-002",
+    "category": "contract_compare",
+    "prompt": "Compare the original and amended liability cap precisely.",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q010"
+  }
+]

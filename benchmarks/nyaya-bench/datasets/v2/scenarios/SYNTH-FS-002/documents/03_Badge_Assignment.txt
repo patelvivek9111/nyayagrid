@@ -1,0 +1,4 @@
+SYNTHETIC twin badge record.
+
+Badge HV-7741 is assigned on paper to Quinn Rourke. Isolation marker: ROURKE_LEDGER_TOKEN
+This does not prove Quinn Rourke entered any vault.

@@ -3,6 +3,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useActiveOrganization } from "@/components/use-active-organization";
+import { useFeatureFlags } from "@/components/use-feature-flags";
+import { genericAskRedirect } from "@/lib/first-run";
+import { useOrgCapability } from "@/components/use-org-capability";
 import {
   CaseChip,
   ChatComposer,
@@ -23,7 +26,9 @@ type ChatTurn = {
 
 export default function NewChatPage() {
   const router = useRouter();
-  const { organizationId, loading: orgLoading } = useActiveOrganization();
+  const { organizationId, organizations, loading: orgLoading } = useActiveOrganization();
+  const viewCap = useOrgCapability(organizationId, "matters.view");
+  const { flags } = useFeatureFlags();
   const [question, setQuestion] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -35,6 +40,27 @@ export default function NewChatPage() {
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerItems, setDrawerItems] = useState<SourceDrawerItem[]>([]);
+
+  useEffect(() => {
+    if (orgLoading || viewCap.loading) return;
+    if (organizations.length === 0) {
+      router.replace("/app/onboarding");
+      return;
+    }
+    if (!organizationId) return;
+    fetch(`/api/v1/matters?organizationId=${organizationId}`)
+      .then(async (res) => {
+        const data = await res.json();
+        const caseCount = res.ok ? (data.matters ?? []).length : 0;
+        const href = genericAskRedirect({
+          organizationCount: organizations.length,
+          caseCount,
+          roleKey: viewCap.roleKey,
+        });
+        if (href) router.replace(href);
+      })
+      .catch(() => undefined);
+  }, [orgLoading, viewCap.loading, viewCap.roleKey, organizations.length, organizationId, router]);
 
   useEffect(() => {
     if (!organizationId) return;
@@ -279,7 +305,7 @@ export default function NewChatPage() {
             if (c) setSelectedCase(c);
           }}
           onUploadDocument={onUpload}
-          onRunTask={() => setRunTask(true)}
+          onRunTask={flags.agents ? () => setRunTask(true) : undefined}
           placeholder={
             selectedCase
               ? `Ask about ${selectedCase.title}…`

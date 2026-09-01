@@ -49,4 +49,34 @@ describe("retrieval scope", () => {
     expect(hits).toHaveLength(1);
     expect(hits[0]?.matterId).toBe("m1");
   });
+
+  it("never returns Matter A secret text when querying Matter B", async () => {
+    const secret = "BETA-SEC-PHRASE-MATTER-A-ONLY-9f3c";
+    const retriever = new InMemoryMatterRetriever([
+      {
+        chunkId: "c-a",
+        documentId: "d-a",
+        documentVersionId: "v-a",
+        organizationId: "org_a",
+        matterId: "matter_a",
+        score: 1,
+        quote: `Confidential settlement figure ${secret}`,
+      },
+      {
+        chunkId: "c-b",
+        documentId: "d-b",
+        documentVersionId: "v-b",
+        organizationId: "org_a",
+        matterId: "matter_b",
+        score: 1,
+        quote: "Public scheduling order for the unrelated matter",
+      },
+    ]);
+    const hits = await retriever.search({
+      text: secret,
+      scope: { organizationId: "org_a", matterId: "matter_b", workspace: "professional" },
+    });
+    expect(hits.every((hit) => hit.matterId === "matter_b")).toBe(true);
+    expect(hits.some((hit) => hit.quote.includes(secret))).toBe(false);
+  });
 });

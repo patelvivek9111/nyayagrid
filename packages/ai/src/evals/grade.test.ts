@@ -39,6 +39,14 @@ describe("buildFollowUpRetrievalQuery", () => {
     const q = buildFollowUpRetrievalQuery("How does the amendment change indemnity?");
     expect(q).toMatch(/amendment indemnity/i);
   });
+
+  it("expands original-and-amendment cap questions toward the original figure", () => {
+    const q = buildFollowUpRetrievalQuery(
+      "What was the original liability cap and what did Amendment 1 change it to?",
+    );
+    expect(q).toMatch(/original aggregate liability cap/i);
+    expect(q).not.toMatch(/amendment indemnity/i);
+  });
 });
 
 describe("golden graded cases (deterministic validator path)", () => {
@@ -106,9 +114,9 @@ describe("golden graded cases (deterministic validator path)", () => {
   it("exposes the graded case catalog", () => {
     expect(GRADED_CASES.length).toBeGreaterThanOrEqual(30);
     expect(GRADED_CASES.some((c) => c.rubric.expectEvidenceState === "partial")).toBe(true);
-    expect(GRADED_CASES.some((c) => Boolean(c.verifiedIntelligence) && c.retrieved.length === 0)).toBe(
-      true,
-    );
+    expect(
+      GRADED_CASES.some((c) => Boolean(c.verifiedIntelligence) && c.retrieved.length === 0),
+    ).toBe(true);
     expect(GRADED_CASES.filter((c) => c.adversarial).length).toBeGreaterThanOrEqual(5);
     expect(
       GRADED_CASES.filter((c) => (c.rubric.forbiddenChunkIds?.length ?? 0) > 0).length,
@@ -373,9 +381,10 @@ describe("live-6 chunkId-only JSON backfill", () => {
         question: testCase!.question,
         workflow: "case_qa",
       });
-      expect(grade.passed, `${id}: ${grade.dimensions.map((d) => `${d.name}:${d.detail}`).join(" | ")}`).toBe(
-        true,
-      );
+      expect(
+        grade.passed,
+        `${id}: ${grade.dimensions.map((d) => `${d.name}:${d.detail}`).join(" | ")}`,
+      ).toBe(true);
       expect(grade.answer?.evidenceState).toBe("grounded");
       expect(grade.answer?.sources.every((s) => s.documentId && s.documentVersionId)).toBe(true);
     }
@@ -384,7 +393,9 @@ describe("live-6 chunkId-only JSON backfill", () => {
 
 describe("eval retrieval order (rerank isolation)", () => {
   it("keeps fixture passage order in the Case Q&A prompt", () => {
-    const testCase = GRADED_CASES.find((c) => c.id === "golden-adv-similar-clause-rent-vs-late-fee");
+    const testCase = GRADED_CASES.find(
+      (c) => c.id === "golden-adv-similar-clause-rent-vs-late-fee",
+    );
     expect(testCase).toBeDefined();
     const { userPrompt } = gradedCaseToPrompt(testCase!);
     const positions = testCase!.retrieved.map((p) => userPrompt.indexOf(`chunkId=${p.chunkId}`));

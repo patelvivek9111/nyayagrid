@@ -1,0 +1,22 @@
+{
+  "name": "@nyayagrid/perf-baseline",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "perf:offline": "tsx run-offline.ts",
+    "perf:p2": "tsx run-p2.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@nyayagrid/ai": "*",
+    "@nyayagrid/documents": "*",
+    "@nyayagrid/platform": "*"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8"
+  }
+}

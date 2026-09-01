@@ -1,0 +1,97 @@
+{
+  "scenario_id": "SYNTH-010",
+  "title": "Pioneer Facilities Services Termination",
+  "ground_truth_version": "1.0",
+  "answers": {
+    "Q001": {
+      "task_id": "SYNTH-010-Q001",
+      "expected": "60 days",
+      "supporting_refs": [
+        "amendment:1"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q002": {
+      "task_id": "SYNTH-010-Q002",
+      "expected": "Termination notice 90->60 days; per-incident credit 2%->5%; cap stays 10%; schedule renaming non-material",
+      "supporting_refs": [
+        "agreement:4",
+        "agreement:5",
+        "amendment:1",
+        "amendment:2",
+        "amendment:3"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q003": {
+      "task_id": "SYNTH-010-Q003",
+      "expected": "No",
+      "supporting_refs": [
+        "amendment:3"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q004": {
+      "task_id": "SYNTH-010-Q004",
+      "expected": "October 4, 2026",
+      "supporting_refs": [
+        "termination:Notice"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q005": {
+      "task_id": "SYNTH-010-Q005",
+      "expected": "$3,400",
+      "supporting_refs": [
+        "agreement:2",
+        "amendment:2"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q006": {
+      "task_id": "SYNTH-010-Q006",
+      "expected": "10%",
+      "supporting_refs": [
+        "incident_log:Incidents",
+        "amendment:2"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q007": {
+      "task_id": "SYNTH-010-Q007",
+      "expected": "$6,800",
+      "supporting_refs": [
+        "agreement:2",
+        "amendment:2",
+        "incident_log:Incidents"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q008": {
+      "task_id": "SYNTH-010-Q008",
+      "expected": "ABSTAIN / cannot determine; invoice shows no credit but does not prove none was later issued",
+      "supporting_refs": [
+        "invoice:Invoice"
+      ],
+      "verdict_logic": "must_abstain"
+    },
+    "Q009": {
+      "task_id": "SYNTH-010-Q009",
+      "expected": "10%",
+      "supporting_refs": [
+        "agreement:5",
+        "amendment:2"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q010": {
+      "task_id": "SYNTH-010-Q010",
+      "expected": "$68,000",
+      "supporting_refs": [
+        "agreement:2",
+        "invoice:Invoice"
+      ],
+      "verdict_logic": "must_answer"
+    }
+  }
+}

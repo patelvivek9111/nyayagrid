@@ -1,0 +1,52 @@
+{
+  "label": "PERF_BASELINE_P2",
+  "capturedAt": "2026-08-19T14:38:43.288Z",
+  "doesNotOverwrite": "PERF_BASELINE_P1",
+  "p1CapturedAt": "2026-08-19T14:16:46.947Z",
+  "environment": {
+    "host": "Vivek",
+    "platform": "win32",
+    "arch": "x64",
+    "cpus": 20,
+    "cpuModel": "12th Gen Intel(R) Core(TM) i7-12700H",
+    "totalMemMb": 16055,
+    "freeMemMb": 1579,
+    "node": "v22.14.0",
+    "note": "Local laptop numbers. Not a production SLA. Upload accept samples are in-process enqueue serialization, not MinIO+HTTP."
+  },
+  "httpContract": {
+    "uploadStatus": 202,
+    "pipelineOnRequest": false,
+    "intelligenceOnRequest": false,
+    "durableEnqueue": "inngest.send nyayagrid/document.malware_scan with event id = document.ingest:{versionId}"
+  },
+  "uploadAcceptInProcessMs": {
+    "n": 30,
+    "min": 0.0005999999998493877,
+    "max": 0.04529999999999745,
+    "p50": 0.0008000000000265572,
+    "p95": 0.008499999999912689,
+    "p99": 0.04529999999999745,
+    "mean": 0
+  },
+  "backgroundRuntime": {
+    "ingestRetries": 4,
+    "intelligenceRetries": 4,
+    "ingestConcurrencyGlobal": 3,
+    "ingestConcurrencyPerOrganization": 2,
+    "intelligenceConcurrencyGlobal": 2,
+    "intelligenceConcurrencyPerOrganization": 1
+  },
+  "dbPoolMaxUnchanged": 10,
+  "orchestration20Docs": {
+    "documents": 20,
+    "workerLimit": 3,
+    "peakInFlight": 3,
+    "elapsedMs": 114,
+    "note": "Local orchestration only; Inngest enforces the same per-function limits in production."
+  },
+  "serialChunkInserts": "unchanged P1",
+  "retrievalIndexes": "unchanged P1",
+  "openaiAdapterRetry": "unchanged; ingest retries via Inngest on thrown 429/timeout",
+  "residualFailureWindow": "Document rows are committed before inngest.send. If send throws, the route marks the document failed and returns 503. If send succeeds and the worker never runs, the document stays uploaded/processing until retried."
+}

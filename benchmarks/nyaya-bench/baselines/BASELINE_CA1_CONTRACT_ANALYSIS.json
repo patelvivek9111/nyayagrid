@@ -1,0 +1,86 @@
+{
+  "label": "CA1",
+  "title": "Contract Analysis reliability after Phase 6L",
+  "mapsToAN1": [
+    "SYNTH-V2-001-AN001",
+    "SYNTH-V2-001-AN002",
+    "SYNTH-V2-001-AN005",
+    "SYNTH-V2-001-AN006",
+    "SYNTH-V2-001-AN013",
+    "SYNTH-V2-001-AN016"
+  ],
+  "an1NotOverwritten": true,
+  "da1NotCombined": true,
+  "liveRunDir": "benchmarks/nyaya-bench/reports/runs/2026-08-19T13-23-03-813Z",
+  "executionMode": "contract",
+  "benchmarkKind": "NYAYA_CONTRACT",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "freeze": "FREEZE_CONTRACT_ANALYSIS",
+  "nextPhase": "A. Analysis Integration / Evidence Matrix Reliability",
+  "config": {
+    "gitCommitRecordedOnRun": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini",
+    "promptVersion": "contract-analysis-v2",
+    "graderVersion": "ca1-2026-08-19"
+  },
+  "counts": {
+    "pass": 17,
+    "needs_work": 0,
+    "fail": 1,
+    "infrastructure": 0,
+    "notApplicable": 0,
+    "criticalFails": 0
+  },
+  "contract": {
+    "tasks": 18,
+    "pass": 17,
+    "fail": 1,
+    "infrastructure": 0,
+    "critical": 0,
+    "materialRecall": 1,
+    "materialPrecision": 1,
+    "numericAccuracy": 1,
+    "operativeSourceAccuracy": 1,
+    "amendmentAccuracy": 1,
+    "missingEvidenceAccuracy": 1,
+    "decoyFalsePositiveRate": 0,
+    "provenanceAccuracy": 1,
+    "supportingSpanAccuracy": 1,
+    "negationAccuracy": 1,
+    "duplicateNoiseRate": 0,
+    "summaryAlignment": 1,
+    "proposedStatusAccuracy": 1
+  },
+  "performance": {
+    "model": "gpt-4o-mini",
+    "modelCallsPerTask": 1,
+    "parseRetryCount": 0,
+    "medianLatencyMs": 15891,
+    "p95LatencyMs": 19845,
+    "maxLatencyMs": 19956,
+    "findingsPerDocumentAvg": 8.39,
+    "rejectedNoSource": 0,
+    "rejectedBadSpan": 0,
+    "duplicateSuppressed": 0,
+    "normalizedCount": 0,
+    "extraRetrievalCalls": 0
+  },
+  "remainingFail": {
+    "taskId": "SYNTH-V2-001-CA012",
+    "taxonomy": "provenance",
+    "critical": false,
+    "note": "Notice and liability spans are clause-scoped. CA012 failed because a legitimate Parties finding's span contains 'Parties and Purpose', which the overlay treated as a forbidden header phrase. Not score-chased."
+  },
+  "askNyaya": {
+    "proposedContractFindingsEnterAskNyaya": false
+  },
+  "an1Mapping": {
+    "AN001": "CA001 pass (45-day notice captured)",
+    "AN002": "CA002 pass (Amendment 1 30-day notice)",
+    "AN005": "CA008 pass (missing exhibit not invented)",
+    "AN006": "CA009 pass (email not controlling)",
+    "AN013_AN016": "CA017/CA018 pass; 6J proposed leakage 0 (regression only)"
+  }
+}

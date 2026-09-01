@@ -1,0 +1,16 @@
+{
+  "phase": "6T-CORPUS-1",
+  "parserVersion": "corpus1-v1",
+  "states": [
+    { "code": "PA", "bundleFile": "pa.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "NJ", "bundleFile": "nj.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "NY", "bundleFile": "ny.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "DE", "bundleFile": "de.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "CA", "bundleFile": "ca.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "TX", "bundleFile": "tx.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "FL", "bundleFile": "fl.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "IL", "bundleFile": "il.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "MA", "bundleFile": "ma.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "VA", "bundleFile": "va.json", "practiceAreas": ["contract", "employment", "civil"] }
+  ]
+}

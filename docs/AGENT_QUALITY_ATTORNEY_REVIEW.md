@@ -12,7 +12,7 @@ An automated suite passing with no human sign-off is **not** evidence of Harvey-
    EVAL_LIVE=1 OPENAI_API_KEY=... EVAL_LIVE_MODEL=gpt-4o-mini EVAL_EXPORT_REVIEW=1 npm run eval:ai:live
    ```
 
-   Packets land under `docs/agent-quality-review/exports-live/` (question/input, full output, cited sources).
+   Packets land under gitignored `docs/agent-quality-review/exports-live/` (question/input, full output, cited sources). Historical packets were removed from the repo; rates remain in [`AGENT_QUALITY_TRACKER.md`](./AGENT_QUALITY_TRACKER.md).
 
 2. Reviewer role (pick one; do not upgrade the label):
 
@@ -44,7 +44,7 @@ An automated suite passing with no human sign-off is **not** evidence of Harvey-
 | Date | 2026-08-14 |
 | Provider / model | OpenAI `gpt-4o-mini` (pinned via `EVAL_LIVE_MODEL=gpt-4o-mini`; chat alias as of this date — API did not return a dated snapshot id) |
 | Budget | In-process cap `EVAL_LIVE_MAX_USD=0.75` / `EVAL_LIVE_MAX_TOKENS=200000`. Actual: 59 requests, 23,289 tokens, **~$0.0068**. OpenAI *account* spend limit is not settable from this repo — confirm a project cap in the OpenAI dashboard separately. |
-| Export folder | [`docs/agent-quality-review/exports-live/`](./agent-quality-review/exports-live/) |
+| Export folder | Removed from repo. Rates in [`AGENT_QUALITY_TRACKER.md`](./AGENT_QUALITY_TRACKER.md). |
 | Scoring scale | pass / needs-work / fail |
 | Section B close-out? | **No.** This is Layer 1 only. |
 
@@ -130,7 +130,7 @@ These are engineering gaps from this operator pass. They do **not** close or ope
 | Date | 2026-08-14 (evening remasure after schema/QA-06/prompt/question-echo fixes) |
 | Provider / model | OpenAI `gpt-4o-mini` (pinned via `EVAL_LIVE_MODEL=gpt-4o-mini`) |
 | Budget | Same in-process cap `EVAL_LIVE_MAX_USD=0.75` / `EVAL_LIVE_MAX_TOKENS=200000`. Actual: 59 requests, 26,538 tokens, **~$0.0068**. |
-| Export folder | [`docs/agent-quality-review/exports-live-remeasure/`](./agent-quality-review/exports-live-remeasure/) — **files later mock-clobbered**; rates in this section still stand |
+| Export folder | Removed from repo (was later mock-clobbered). Rates in this section still stand. |
 | Scoring scale | pass / needs-work / fail |
 | Section B close-out? | **No.** This is still Layer 1 only. |
 
@@ -206,7 +206,7 @@ Live 2 measured the filed fixes. Remaining gaps:
 | Date | 2026-08-14 (night; after imprecise-date filter, question-overlap ranking, `EVAL_LIVE_REPEATS=3`) |
 | Provider / model | OpenAI `gpt-4o-mini` (pinned via `EVAL_LIVE_MODEL=gpt-4o-mini`) |
 | Budget | Same in-process cap. Case Q&A + contradiction: 177 requests, 82,124 tokens, **~$0.0205**. Contract-compare live summaries were a separate 2×3 pass (plus a second 2×3 after the cite-denominator fix so summaries could be exported). Still well under $0.75. |
-| Export folder | [`docs/agent-quality-review/exports-live-3/`](./agent-quality-review/exports-live-3/) · CC: [`exports-live-3/contract-compare/`](./agent-quality-review/exports-live-3/contract-compare/) |
+| Export folder | Removed from repo. Rates in [`AGENT_QUALITY_TRACKER.md`](./AGENT_QUALITY_TRACKER.md). |
 | Scoring scale | pass / needs-work / fail |
 | Section B close-out? | **No.** This is still Layer 1 only. Contradiction meeting the numeric bar does not close Section B. |
 

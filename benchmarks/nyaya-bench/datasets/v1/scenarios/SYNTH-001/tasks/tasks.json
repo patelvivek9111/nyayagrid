@@ -1,0 +1,82 @@
+[
+  {
+    "task_id": "SYNTH-001-Q001",
+    "scenario_id": "SYNTH-001",
+    "category": "case_qa",
+    "prompt": "What is the current monthly base rent as of August 2026?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q001"
+  },
+  {
+    "task_id": "SYNTH-001-Q002",
+    "scenario_id": "SYNTH-001",
+    "category": "case_qa",
+    "prompt": "How much termination notice is currently required?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q002"
+  },
+  {
+    "task_id": "SYNTH-001-Q003",
+    "scenario_id": "SYNTH-001",
+    "category": "case_qa",
+    "prompt": "Who is responsible for routine HVAC maintenance?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q003"
+  },
+  {
+    "task_id": "SYNTH-001-Q004",
+    "scenario_id": "SYNTH-001",
+    "category": "insufficient",
+    "prompt": "What is the dollar amount of the tenant insurance deductible?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q004"
+  },
+  {
+    "task_id": "SYNTH-001-Q005",
+    "scenario_id": "SYNTH-001",
+    "category": "timeline",
+    "prompt": "When did the HVAC meeting occur?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q005"
+  },
+  {
+    "task_id": "SYNTH-001-Q006",
+    "scenario_id": "SYNTH-001",
+    "category": "false_contradiction",
+    "prompt": "Do the July 9 email and Daniel Cho deposition contradict each other about when the HVAC meeting occurred?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q006"
+  },
+  {
+    "task_id": "SYNTH-001-Q007",
+    "scenario_id": "SYNTH-001",
+    "category": "contract_compare",
+    "prompt": "What substantive changes did Amendment 1 make to rent and notice?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q007"
+  },
+  {
+    "task_id": "SYNTH-001-Q008",
+    "scenario_id": "SYNTH-001",
+    "category": "numeric",
+    "prompt": "How much rent did the landlord say it received for July?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q008"
+  },
+  {
+    "task_id": "SYNTH-001-Q009",
+    "scenario_id": "SYNTH-001",
+    "category": "case_qa",
+    "prompt": "What termination date did the tenant propose in its August 1 notice?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q009"
+  },
+  {
+    "task_id": "SYNTH-001-Q010",
+    "scenario_id": "SYNTH-001",
+    "category": "reasoning",
+    "prompt": "Based only on the supplied documents, did the tenant agree that the rooftop HVAC unit required full replacement?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q010"
+  }
+]

@@ -19,3 +19,7 @@ test-results
 playwright-report
 blob-report
 playwright/.cache
+benchmarks/nyaya-bench/reports/runs/
+benchmarks/nyaya-bench/model-routing/runs/
+benchmarks/nyaya-bench/**/*.zip
+docs/agent-quality-review/

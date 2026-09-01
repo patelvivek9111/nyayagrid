@@ -3,7 +3,23 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { ProfessionalShell } from "@/components/shell";
 import { useActiveOrganization } from "@/components/use-active-organization";
-import { Badge, Button, Panel } from "@nyayagrid/ui";
+import { Button } from "@nyayagrid/ui";
+import { IntelligenceDialog } from "@/components/ux/case-intelligence";
+import {
+  FirmEmpty,
+  FirmError,
+  FirmNotice,
+  FirmPageHeader,
+  FirmRow,
+  FirmStatusText,
+  FirmTabs,
+} from "@/components/ux/firm-workspace";
+import {
+  deletionStatusLabel,
+  formatShortDate,
+  holdScopeLabel,
+  holdStatusLabel,
+} from "@/lib/firm-workspace-ux";
 
 type HoldRow = {
   id: string;
@@ -29,6 +45,9 @@ export default function CompliancePage() {
   const [trains, setTrains] = useState(false);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [tab, setTab] = useState("holds");
+  const [holdOpen, setHoldOpen] = useState(false);
+  const [deletionOpen, setDeletionOpen] = useState(false);
 
   async function load(orgId: string) {
     const [complianceRes, consentRes, mattersRes] = await Promise.all([
@@ -39,7 +58,8 @@ export default function CompliancePage() {
     const compliance = await complianceRes.json();
     const consent = await consentRes.json();
     const mattersData = await mattersRes.json();
-    if (!complianceRes.ok) throw new Error(compliance?.error?.message ?? "Failed to load compliance");
+    if (!complianceRes.ok)
+      throw new Error(compliance?.error?.message ?? "Failed to load compliance");
     setHolds(compliance.holds ?? []);
     setDeletions(compliance.deletionRequests ?? []);
     if (consentRes.ok) {
@@ -71,6 +91,7 @@ export default function CompliancePage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error?.message ?? "Failed to place hold");
       setReason("");
+      setHoldOpen(false);
       await load(organizationId);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed");
@@ -116,6 +137,7 @@ export default function CompliancePage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error?.message ?? "Failed to request deletion");
+      setDeletionOpen(false);
       await load(organizationId);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed");
@@ -179,20 +201,175 @@ export default function CompliancePage() {
     }
   }
 
-  return (
-    <ProfessionalShell title="Holds & privacy">
-      <p className="mb-4 text-sm text-ink/70">
-        Legal holds block deletion. Audit export is per case (no document text). Training consent is
-        recorded separately and does <span className="font-semibold">not</span> enable training in
-        this build. SSO and a signed DPA remain operator/counsel work.
-      </p>
-      {error ? <p className="mb-4 text-sm text-[var(--ng-danger)]">{error}</p> : null}
+  const activeHolds = holds.filter((hold) => !hold.releasedAt).length;
+  const matterTitle = (id: string | null) =>
+    id ? (matters.find((matter) => matter.id === id)?.title ?? null) : null;
 
-      <div className="space-y-4">
-        <Panel title="Legal hold">
-          <form className="mb-3 flex flex-col gap-2" onSubmit={placeHold}>
+  return (
+    <ProfessionalShell>
+      <FirmPageHeader
+        title="Holds & privacy"
+        description="What data is protected, exportable, or pending deletion."
+        actions={
+          <Button type="button" disabled={!organizationId} onClick={() => setHoldOpen(true)}>
+            + Place legal hold
+          </Button>
+        }
+      />
+      <div className="mt-4">
+        <FirmNotice>
+          Legal holds block deletion. Training consent is recorded separately and does not enable
+          training in this build. SSO and a signed DPA remain operator/counsel work.
+        </FirmNotice>
+      </div>
+      {error ? (
+        <div className="mt-4">
+          <FirmError message={error} />
+        </div>
+      ) : null}
+
+      <div className="mt-6 space-y-4">
+        <FirmTabs
+          value={tab}
+          onChange={setTab}
+          options={[
+            { id: "holds", label: "Legal holds", count: activeHolds },
+            { id: "deletions", label: "Deletion requests" },
+            { id: "exports", label: "Exports" },
+            { id: "privacy", label: "Training & privacy" },
+            { id: "subprocessors", label: "Subprocessors" },
+          ]}
+        />
+
+        {tab === "holds" ? (
+          holds.length === 0 ? (
+            <FirmEmpty
+              title="No active legal holds."
+              description="A hold preserves records and blocks deletion for the selected scope until it is released."
+            />
+          ) : (
+            <ul className="space-y-2">
+              {holds.map((hold) => (
+                <li key={hold.id}>
+                  <FirmRow
+                    title={holdScopeLabel(hold.matterId, matterTitle(hold.matterId))}
+                    subtitle={`Reason: ${hold.reason}`}
+                    status={<FirmStatusText>{holdStatusLabel(hold.releasedAt)}</FirmStatusText>}
+                    actions={
+                      !hold.releasedAt ? (
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          disabled={busy}
+                          onClick={() => releaseHold(hold.id)}
+                        >
+                          Release
+                        </Button>
+                      ) : null
+                    }
+                  />
+                </li>
+              ))}
+            </ul>
+          )
+        ) : null}
+
+        {tab === "deletions" ? (
+          <div className="space-y-3">
+            <Button
+              type="button"
+              variant="secondary"
+              disabled={!organizationId}
+              onClick={() => setDeletionOpen(true)}
+            >
+              Request deletion
+            </Button>
+            {deletions.length === 0 ? (
+              <FirmEmpty
+                title="No deletion requests."
+                description="Active holds reject new deletion requests. Archive and deletion semantics are unchanged."
+              />
+            ) : (
+              <ul className="space-y-2">
+                {deletions.map((row) => (
+                  <li key={row.id}>
+                    <FirmRow
+                      title={row.workspace === "organization" ? "Whole organization" : "Case scope"}
+                      subtitle={formatShortDate(row.createdAt) || row.id.slice(0, 8)}
+                      status={<FirmStatusText>{deletionStatusLabel(row.status)}</FirmStatusText>}
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ) : null}
+
+        {tab === "exports" ? (
+          <div className="space-y-3 rounded-xl border border-line bg-white/80 p-4">
+            <p className="text-sm text-ink/70">
+              Organization metadata export. Original document text and files are not included. Case
+              activity logs remain on each case Home.
+            </p>
+            <Button type="button" onClick={exportOrg}>
+              Download organization metadata export
+            </Button>
+          </div>
+        ) : null}
+
+        {tab === "privacy" ? (
+          <div className="space-y-3 rounded-xl border border-line bg-white/80 p-4">
+            <p className="text-sm text-ink/70">
+              Recorded consent: <FirmStatusText>{consented ? "Recorded" : "None"}</FirmStatusText>
+              {" · "}
+              Product training pipeline: <FirmStatusText>{trains ? "On" : "Off"}</FirmStatusText>
+            </p>
+            <p className="text-xs text-ink/55">
+              Consent does not mean training is enabled. Recording consent here does not turn on a
+              training pipeline.
+            </p>
+            <div className="flex flex-wrap gap-2">
+              <Button type="button" disabled={busy || consented} onClick={recordConsent}>
+                Record separate consent
+              </Button>
+              <Button
+                type="button"
+                variant="secondary"
+                disabled={busy || !consented}
+                onClick={withdrawConsent}
+              >
+                Withdraw
+              </Button>
+            </div>
+          </div>
+        ) : null}
+
+        {tab === "subprocessors" ? (
+          <div className="rounded-xl border border-line bg-white/80 p-4 text-sm">
+            <p className="text-ink/70">
+              The public subprocessor list is a draft. It does not imply an executed DPA.
+            </p>
+            <a
+              className="mt-3 inline-block text-sm font-semibold text-accent underline"
+              href="/subprocessors"
+            >
+              View draft subprocessors
+            </a>
+          </div>
+        ) : null}
+      </div>
+
+      <IntelligenceDialog
+        open={holdOpen}
+        title="Place legal hold"
+        description="A hold preserves records and blocks deletion until it is released."
+        onClose={() => setHoldOpen(false)}
+      >
+        <form className="flex flex-col gap-3" onSubmit={placeHold}>
+          <label className="text-sm font-semibold">
+            Scope
             <select
-              className="rounded border border-line px-2 py-1.5 text-sm"
+              className="mt-1 block w-full rounded border border-line px-2 py-1.5 font-normal"
               value={matterId}
               onChange={(e) => setMatterId(e.target.value)}
             >
@@ -203,95 +380,50 @@ export default function CompliancePage() {
                 </option>
               ))}
             </select>
+          </label>
+          <label className="text-sm font-semibold">
+            Reason
             <input
-              className="rounded border border-line px-2 py-1.5 text-sm"
-              placeholder="Reason (required to place a hold)"
+              className="mt-1 block w-full rounded border border-line px-2 py-1.5 font-normal"
+              placeholder="Reason (required)"
               value={reason}
               onChange={(e) => setReason(e.target.value)}
               required
             />
-            <div className="flex flex-wrap gap-2">
-              <Button type="submit" disabled={busy}>
-                Place hold
-              </Button>
-              <Button type="button" variant="secondary" disabled={busy} onClick={requestDeletion}>
-                Request deletion
-              </Button>
-            </div>
-          </form>
-          {holds.length === 0 ? (
-            <p className="text-sm text-ink/70">No holds recorded.</p>
-          ) : (
-            <ul className="space-y-2 text-sm">
-              {holds.map((hold) => (
-                <li key={hold.id} className="rounded border border-line px-3 py-2">
-                  <div className="flex justify-between gap-2">
-                    <span>{hold.reason}</span>
-                    <Badge>{hold.releasedAt ? "released" : "active"}</Badge>
-                  </div>
-                  {!hold.releasedAt ? (
-                    <Button
-                      type="button"
-                      variant="secondary"
-                      className="mt-2"
-                      disabled={busy}
-                      onClick={() => releaseHold(hold.id)}
-                    >
-                      Release
-                    </Button>
-                  ) : null}
-                </li>
+          </label>
+          <Button type="submit" disabled={busy}>
+            Place hold
+          </Button>
+        </form>
+      </IntelligenceDialog>
+
+      <IntelligenceDialog
+        open={deletionOpen}
+        title="Request deletion"
+        description="Active holds reject new requests. This does not change archive or deletion semantics."
+        onClose={() => setDeletionOpen(false)}
+      >
+        <div className="flex flex-col gap-3">
+          <label className="text-sm font-semibold">
+            Scope
+            <select
+              className="mt-1 block w-full rounded border border-line px-2 py-1.5 font-normal"
+              value={matterId}
+              onChange={(e) => setMatterId(e.target.value)}
+            >
+              <option value="">Whole organization</option>
+              {matters.map((matter) => (
+                <option key={matter.id} value={matter.id}>
+                  {matter.title}
+                </option>
               ))}
-            </ul>
-          )}
-        </Panel>
-
-        <Panel title="Deletion requests">
-          {deletions.length === 0 ? (
-            <p className="text-sm text-ink/70">None yet. Active holds reject new requests.</p>
-          ) : (
-            <ul className="space-y-1 text-sm">
-              {deletions.map((row) => (
-                <li key={row.id} className="flex justify-between gap-2">
-                  <span>{row.id.slice(0, 8)}</span>
-                  <Badge>{row.status}</Badge>
-                </li>
-              ))}
-            </ul>
-          )}
-        </Panel>
-
-        <Panel title="Exports">
-          <div className="flex flex-wrap gap-2">
-            <Button type="button" onClick={exportOrg}>
-              Download organization metadata export
-            </Button>
-            <a className="ng-button ng-button-secondary text-sm" href="/subprocessors">
-              Subprocessors (draft)
-            </a>
-          </div>
-          <p className="mt-2 text-xs text-ink/50">
-            Case activity logs: open a case Home and choose Download activity log. Original files
-            are not included.
-          </p>
-        </Panel>
-
-        <Panel title="Model-training consent">
-          <p className="mb-2 text-sm text-ink/70">
-            Default: no consent. Product training pipeline:{" "}
-            <Badge>{trains ? "on" : "off"}</Badge>. Recorded consent:{" "}
-            <Badge>{consented ? "recorded" : "none"}</Badge>.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            <Button type="button" disabled={busy || consented} onClick={recordConsent}>
-              Record separate consent
-            </Button>
-            <Button type="button" variant="secondary" disabled={busy || !consented} onClick={withdrawConsent}>
-              Withdraw
-            </Button>
-          </div>
-        </Panel>
-      </div>
+            </select>
+          </label>
+          <Button type="button" disabled={busy} onClick={requestDeletion}>
+            Request deletion
+          </Button>
+        </div>
+      </IntelligenceDialog>
     </ProfessionalShell>
   );
 }

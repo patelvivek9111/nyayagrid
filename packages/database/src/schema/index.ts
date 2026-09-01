@@ -8,6 +8,7 @@ import {
   jsonb,
   integer,
   boolean,
+  date,
   pgEnum,
   customType,
 } from "drizzle-orm/pg-core";
@@ -78,6 +79,12 @@ export const intelligenceOriginEnum = pgEnum("intelligence_origin", ["ai", "manu
 export const matterEntityTypeEnum = pgEnum("matter_entity_type", ["person", "organization"]);
 export const deadlineDateKindEnum = pgEnum("deadline_date_kind", ["explicit", "inferred"]);
 export const confidenceLevelEnum = pgEnum("confidence_level", ["low", "medium", "high"]);
+
+/** User-supplied Case jurisdiction metadata. Not a determination that this law governs every issue. */
+export type MatterRelatedJurisdiction = {
+  stateCode?: string | null;
+  courtId?: string | null;
+};
 export const intelligenceRunStatusEnum = pgEnum("intelligence_run_status", [
   "queued",
   "running",
@@ -273,8 +280,24 @@ export const matters = pgTable(
     title: text("title").notNull(),
     description: text("description"),
     practiceArea: text("practice_area"),
+    /** Legacy free-text display. Prefer structured jurisdiction columns below. */
     jurisdiction: text("jurisdiction"),
+    /** Legacy free-text court display. Prefer courtId. */
     court: text("court"),
+    jurisdictionMode: text("jurisdiction_mode"),
+    primaryState: text("primary_state"),
+    forumType: text("forum_type"),
+    courtId: text("court_id"),
+    courtName: text("court_name"),
+    federalDistrict: text("federal_district"),
+    federalCircuit: text("federal_circuit"),
+    governingLawState: text("governing_law_state"),
+    choiceOfLawStatus: text("choice_of_law_status"),
+    asOfDate: date("as_of_date"),
+    relatedJurisdictions: jsonb("related_jurisdictions")
+      .$type<MatterRelatedJurisdiction[]>()
+      .default([]),
+    jurisdictionSource: text("jurisdiction_source"),
     status: matterStatusEnum("status").notNull().default("open"),
     openedAt: timestamp("opened_at", { withTimezone: true }).defaultNow().notNull(),
     closedAt: timestamp("closed_at", { withTimezone: true }),

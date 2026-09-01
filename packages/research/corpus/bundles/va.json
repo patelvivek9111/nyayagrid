@@ -1,0 +1,57 @@
+[
+  {
+    "title": "Va. Code § 8.2-725 — Statute of limitations in contracts for sale",
+    "shortTitle": "Va. UCC § 8.2-725",
+    "authorityType": "statute",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Code § 8.2-725",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "va-ucc-8-2-725",
+    "canonicalSourceUrl": "https://law.lis.virginia.gov/vacode/title8.2/chapter2/section8.2-725/",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["contract", "commercial", "civil"],
+    "content": "Va. Code § 8.2-725\n\n§ 8.2-725. Statute of limitations in contracts for sale.\n\n(1) An action for breach of any contract for sale must be commenced within four years after the cause of action has accrued. By the original agreement the parties may reduce the period of limitation to not less than one year but may not extend it.\n\n(2) A cause of action accrues when the breach occurs, regardless of the aggrieved party's lack of knowledge of the breach.",
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "ucc_article_2_limitations" }
+  },
+  {
+    "title": "Va. Code § 40.1-28.10 — Payment of wages",
+    "shortTitle": "Va. Code § 40.1-28.10",
+    "authorityType": "statute",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Code § 40.1-28.10",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "va-labor-40-1-28-10",
+    "canonicalSourceUrl": "https://law.lis.virginia.gov/vacode/title40.1/chapter3/section40.1-28.10/",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["employment"],
+    "content": "Va. Code § 40.1-28.10\n\nEvery employer shall pay all wages or salaries due on regular paydays designated in advance by the employer.",
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "wage_payment" }
+  },
+  {
+    "title": "Kell v. Commonwealth, 228 Va. 11 (1984)",
+    "shortTitle": "Kell v. Commonwealth",
+    "authorityType": "case",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "court": "Supreme Court of Virginia",
+    "courtId": "st-va-high",
+    "courtLevel": "state_high",
+    "citation": "228 Va. 11",
+    "decisionDate": "1984-01-27",
+    "publicationStatus": "published",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "va-kell-v-commonwealth-228-va-11",
+    "canonicalSourceUrl": "https://www.courtlistener.com/opinion/1242010/kell-v-commonwealth/",
+    "bundleSourceClass": "PRIMARY_PUBLIC_REPOSITORY",
+    "bundleQualityTier": "TIER_2_TRUSTED_PUBLIC",
+    "bundlePracticeAreas": ["civil", "criminal"],
+    "content": "Kell v. Commonwealth, 228 Va. 11 (1984).\n\nThe Supreme Court of Virginia addressed the standard for reviewing a criminal conviction. The court reaffirmed that an appellate court reviews the trial court's interpretation of law de novo and factual findings for clear error.",
+    "sourceMetadata": {
+      "retrievalMethod": "public_repository_snapshot",
+      "repository": "courtlistener",
+      "excerptNote": "Excerpt summarizing holding; full opinion at canonical URL."
+    }
+  }
+]

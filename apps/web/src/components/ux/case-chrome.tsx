@@ -3,14 +3,21 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import type { MouseEvent, ReactNode } from "react";
-import { cx } from "@nyayagrid/ui";
+import { Button, cx } from "@nyayagrid/ui";
 import { useMatterChrome } from "@/components/use-matter-chrome";
+import { compactJurisdictionHeaderLine, isJurisdictionUnset } from "@/lib/case-jurisdiction";
+import { humanizeKey } from "@/lib/plain-labels";
 
 /** Primary Case objects — always visible. `hint` is the plain-language line under the tabs. */
-const CASE_TABS = [
+export const CASE_TABS = [
   { segment: "", label: "Home", hint: "Overview of this case" },
   { segment: "chats", label: "Chats", hint: "Ask Nyaya about the files in this case" },
   { segment: "documents", label: "Documents", hint: "Original files you uploaded" },
+  {
+    segment: "review",
+    label: "Review",
+    hint: "Suggested intelligence waiting for a human decision",
+  },
   { segment: "timeline", label: "Timeline", hint: "What happened, in order" },
   { segment: "evidence", label: "Evidence", hint: "Proof tied to a source" },
   { segment: "people", label: "People", hint: "Who is involved" },
@@ -20,14 +27,13 @@ const CASE_TABS = [
 ] as const;
 
 /**
- * Work-surface subnav (IA choice for §6): Draft / Research / Analysis / Review live here
- * rather than crowding the primary Case tabs. Work remains the attorney command hub.
+ * Work-surface subnav. Draft / Research / Analysis stay here.
+ * Review is a primary Case tab so suggested intelligence is hard to miss.
  */
-const CASE_WORK_SURFACES = [
+export const CASE_WORK_SURFACES = [
   { segment: "draft", label: "Draft", hint: "Write a document" },
   { segment: "research", label: "Research", hint: "Look up legal sources" },
   { segment: "analysis", label: "Analysis", hint: "Review a contract or deposition" },
-  { segment: "review", label: "Review", hint: "Check what Nyaya found in the files" },
 ] as const;
 
 function tabActive(pathname: string, base: string, segment: string) {
@@ -74,22 +80,56 @@ function CaseNavLink({
 }
 
 export function CaseHeader({ subtitle }: { subtitle?: string | null }) {
-  const { title, matter, loading } = useMatterChrome();
+  const { title, matter, loading, clientDisplayName, jurisdictionContext, openCaseDetails } =
+    useMatterChrome();
+  const jurisdictionLine = compactJurisdictionHeaderLine(jurisdictionContext);
+  const jurisdictionMissing = isJurisdictionUnset(jurisdictionContext);
+
   return (
     <div className="mb-1">
       <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-accent">Case</p>
-      <h1 className="font-display text-2xl text-ink md:text-3xl">{loading ? "Loading…" : title}</h1>
-      {subtitle || matter?.status ? (
-        <p className="mt-1 text-sm text-ink/60">
-          {[subtitle, matter?.status].filter(Boolean).join(" · ")}
+      <h1 className="font-display text-2xl text-ink md:text-3xl" suppressHydrationWarning>
+        {loading ? "Loading…" : title}
+      </h1>
+      {clientDisplayName ? (
+        <p className="mt-1 text-sm text-ink/70">
+          {clientDisplayName}
+          <span className="ml-1.5 text-xs uppercase tracking-wide text-ink/45">Client</span>
         </p>
       ) : null}
+      {!loading ? (
+        <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-ink/60">
+          <span className="min-w-0 truncate">{jurisdictionLine}</span>
+          {jurisdictionMissing ? (
+            <button
+              type="button"
+              className="shrink-0 font-semibold text-accent underline"
+              onClick={openCaseDetails}
+            >
+              Add jurisdiction
+            </button>
+          ) : null}
+        </div>
+      ) : null}
+      <div className="mt-2 flex flex-wrap items-center gap-2">
+        <Button type="button" variant="secondary" onClick={openCaseDetails}>
+          Case details
+        </Button>
+        {subtitle || matter?.status ? (
+          <p className="text-sm text-ink/55">
+            {[subtitle, matter?.status ? humanizeKey(matter.status) : null]
+              .filter(Boolean)
+              .join(" · ")}
+          </p>
+        ) : null}
+      </div>
     </div>
   );
 }
 
 export function CaseTabs({ matterId }: { matterId: string }) {
   const pathname = usePathname();
+  const { reviewPendingCount } = useMatterChrome();
   const base = `/app/cases/${matterId}`;
   const segment = pathname.slice(base.length).replace(/^\//, "").split("/")[0] ?? "";
   const activeTab =
@@ -124,14 +164,25 @@ export function CaseTabs({ matterId }: { matterId: string }) {
               )}
             >
               {tab.label}
+              {tab.segment === "review" && reviewPendingCount > 0 ? (
+                <span
+                  className="ml-1.5 inline-flex min-w-5 items-center justify-center rounded-full bg-amber-100 px-1.5 text-[10px] font-bold text-amber-900"
+                  aria-label={`${reviewPendingCount} items waiting for review`}
+                >
+                  {reviewPendingCount}
+                </span>
+              ) : null}
             </CaseNavLink>
           );
         })}
       </nav>
       <nav
-        className="mt-1 flex gap-1 overflow-x-auto pb-px"
+        className="mt-1 flex flex-wrap items-center gap-1 overflow-x-auto pb-px"
         aria-label="Case work surfaces"
       >
+        <span className="px-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-ink/40">
+          Work
+        </span>
         {CASE_WORK_SURFACES.map((tab) => {
           const href = `${base}/${tab.segment}`;
           const active = tabActive(pathname, base, tab.segment);
@@ -143,7 +194,9 @@ export function CaseTabs({ matterId }: { matterId: string }) {
               title={tab.hint}
               className={cx(
                 "whitespace-nowrap rounded-md px-3 py-1.5 text-xs font-semibold transition",
-                active ? "bg-accent-soft text-accent" : "text-ink/55 hover:bg-black/[0.03] hover:text-ink",
+                active
+                  ? "bg-accent-soft text-accent"
+                  : "text-ink/55 hover:bg-black/[0.03] hover:text-ink",
               )}
             >
               {tab.label}

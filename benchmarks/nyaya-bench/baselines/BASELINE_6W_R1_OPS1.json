@@ -1,0 +1,22 @@
+{
+  "id": "BASELINE_6W_R1_OPS1",
+  "generatedAt": "2026-08-27T09:45:00.000Z",
+  "trackA": {
+    "r010RootCause": "D+C: Other State enacted law was classified unknown because the jurisdiction label is not a USPS code, so hierarchy did not forbid controlling prose; the model echoed the question.",
+    "r014RootCause": "F+E: unretrieved UUIDs were dropped from published fields but still copied onto snapshot.fabricatedAuthorityIds, which the grader treats as a final citation leak.",
+    "fixes": [
+      "classify unrecognized non-federal enacted jurisdiction labels as out_of_jurisdiction",
+      "deterministic rewriteUnsupportedControllingClaims after synthesis",
+      "fabricatedAuthorityIds = published remaining unsourced ids only",
+      "frozen harness parses suite JSON criticalFails independently of exit 0",
+      "Clerk-missing createAuthProviderFromEnv returns UnavailableAuthProvider (401 path) instead of throw/500"
+    ]
+  },
+  "trackB": {
+    "clerk": "BLOCKED — HUMAN EXTERNAL ACTION REQUIRED",
+    "inngestCloud": "BLOCKED — HUMAN EXTERNAL ACTION REQUIRED (INNGEST_DEV set; local keys only)",
+    "redis": "EXTERNAL",
+    "smtp": "EXTERNAL — use Clerk-managed invites"
+  },
+  "featureAgents": { "staging": false, "production": false }
+}

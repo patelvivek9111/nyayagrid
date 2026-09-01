@@ -2,7 +2,7 @@ import {
   getConversation,
   getOrCreateCaseConversation,
 } from "@nyayagrid/workspaces";
-import { requireUser } from "@/lib/auth";
+import { requireProfessorUser } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
 type Params = { params: Promise<{ caseId: string }> };
@@ -13,7 +13,7 @@ type Params = { params: Promise<{ caseId: string }> };
 export async function GET(request: Request, { params }: Params) {
   try {
     const { caseId } = await params;
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireProfessorUser(request.headers);
     const conversation = await getOrCreateCaseConversation({
       db,
       userId: user.id,

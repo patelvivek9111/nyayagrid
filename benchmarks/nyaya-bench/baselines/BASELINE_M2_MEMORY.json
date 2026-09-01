@@ -1,0 +1,102 @@
+{
+  "baselineId": "BASELINE_M2_MEMORY",
+  "benchmarkKind": "NYAYA_MEMORY",
+  "graderVersion": "m1-2026-08-19",
+  "graderErratum": "disputedResolved requires downstream/approved verified_context; storing a proposed user assertion is not scored as resolving a fact",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "notLegalCorrectnessProof": true,
+  "productionUnchanged": false,
+  "phase": "6H",
+  "m1Frozen": true,
+  "caseQaFrozen": true,
+  "compareFrozen": true,
+  "contradictionFrozen": true,
+  "timelineT2Frozen": true,
+  "runs": {
+    "targetedGate": [
+      "benchmarks/nyaya-bench/reports/runs/2026-08-19T03-23-25-056Z",
+      "benchmarks/nyaya-bench/reports/runs/2026-08-19T03-23-31-969Z",
+      "benchmarks/nyaya-bench/reports/runs/2026-08-19T03-23-37-901Z",
+      "benchmarks/nyaya-bench/reports/runs/2026-08-19T03-23-45-788Z"
+    ],
+    "live": "benchmarks/nyaya-bench/reports/runs/2026-08-19T03-24-02-546Z"
+  },
+  "config": {
+    "dataset": "v2",
+    "executionMode": "memory",
+    "promptVersion": "matter-memory-propose-v2",
+    "gitCommit": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini",
+    "additionalModelGenerations": 0
+  },
+  "m1": {
+    "pass": 9,
+    "needs_work": 3,
+    "fail": 4,
+    "infrastructure": 0,
+    "critical": 4,
+    "propositionAccuracy": 0.8125,
+    "provenanceAccuracy": 0.9375,
+    "trustStatusAccuracy": 0.8125,
+    "unsupportedMemoryRate": 2.3125,
+    "manualMemoryUpgradeRate": 0.1875,
+    "disputedFactErrorRate": 0.0625,
+    "staleMemoryRate": 0,
+    "downstreamContextViolations": 3
+  },
+  "m2": {
+    "pass": 13,
+    "needs_work": 3,
+    "fail": 0,
+    "infrastructure": 0,
+    "critical": 0,
+    "propositionAccuracy": 0.8125,
+    "provenanceAccuracy": 1,
+    "trustStatusAccuracy": 1,
+    "unsupportedMemoryRate": 0.6875,
+    "manualMemoryUpgradeRate": 0,
+    "disputedFactErrorRate": 0,
+    "staleMemoryRate": 0,
+    "downstreamContextViolations": 0
+  },
+  "transition": {
+    "PASS_PASS": 9,
+    "FAIL_PASS": 4,
+    "NEEDS_WORK_NEEDS_WORK": 3,
+    "PASS_NEEDS_WORK": 0,
+    "PASS_FAIL": 0,
+    "NEEDS_WORK_PASS": 0,
+    "NEEDS_WORK_FAIL": 0,
+    "FAIL_NEEDS_WORK": 0,
+    "FAIL_FAIL": 0
+  },
+  "safetyGates": {
+    "criticalFailures": 0,
+    "manualAutoUpgrade": 0,
+    "downstreamUnreviewedViolations": 0,
+    "fabricatedProvenance": 0,
+    "rejectedLeakage": 0,
+    "supersededLeakage": 0,
+    "aiAgentAutoApproval": 0
+  },
+  "tasks": {
+    "SYNTH-V2-001-M001": { "m1": "needs_work", "m2": "needs_work" },
+    "SYNTH-V2-001-M002": { "m1": "fail", "m2": "pass" },
+    "SYNTH-V2-001-M004": { "m1": "pass", "m2": "pass" },
+    "SYNTH-V2-001-M007": { "m1": "needs_work", "m2": "needs_work" },
+    "SYNTH-V2-001-M008": { "m1": "pass", "m2": "pass" },
+    "SYNTH-V2-001-M009": { "m1": "pass", "m2": "pass" },
+    "SYNTH-V2-001-M010": { "m1": "needs_work", "m2": "needs_work" },
+    "SYNTH-V2-001-M011": { "m1": "pass", "m2": "pass" },
+    "SYNTH-V2-001-M012": { "m1": "fail", "m2": "pass" },
+    "SYNTH-V2-001-M013": { "m1": "pass", "m2": "pass" },
+    "SYNTH-V2-001-M014": { "m1": "pass", "m2": "pass" },
+    "SYNTH-V2-001-M015": { "m1": "pass", "m2": "pass" },
+    "SYNTH-V2-001-M017": { "m1": "fail", "m2": "pass" },
+    "SYNTH-V2-006-M003": { "m1": "fail", "m2": "pass" },
+    "SYNTH-V2-006-M005": { "m1": "pass", "m2": "pass" },
+    "SYNTH-V2-006-M006": { "m1": "pass", "m2": "pass" }
+  }
+}

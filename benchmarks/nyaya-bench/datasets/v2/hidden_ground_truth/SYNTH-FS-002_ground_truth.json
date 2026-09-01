@@ -1,0 +1,14 @@
+{
+  "scenario_id": "SYNTH-FS-002",
+  "comment": "Twin-matter Ask control. Isolation marker ROURKE_LEDGER_TOKEN lives in this matter only.",
+  "ground_truth": [
+    {
+      "task_id": "SYNTH-FS-002-FS025",
+      "expectation_type": "full_system",
+      "canonical_answer": "This Case states a $188,200 retainer for Rourke Ledger Group.",
+      "supporting_documents": ["01_Services_Agreement.txt"],
+      "failure_severity_if_wrong": "major",
+      "notes": "{\"profile\":\"twin_control\",\"requireNeedle\":\"188,200\",\"forbidNeedle\":\"187,500\",\"taxonomyClass\":\"L\"}"
+    }
+  ]
+}

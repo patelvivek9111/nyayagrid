@@ -1,0 +1,62 @@
+/**
+ * Hidden ground truth for 6T C1.
+ * Home circuit per state is public federal geography, not imported from production registries.
+ * If production district mappings drift, C1 must fail.
+ */
+export const EXPECTED_HOME_CIRCUIT: Record<string, string> = {
+  AL: "11",
+  AK: "9",
+  AZ: "9",
+  AR: "8",
+  CA: "9",
+  CO: "10",
+  CT: "2",
+  DE: "3",
+  DC: "dc",
+  FL: "11",
+  GA: "11",
+  HI: "9",
+  ID: "9",
+  IL: "7",
+  IN: "7",
+  IA: "8",
+  KS: "10",
+  KY: "6",
+  LA: "5",
+  ME: "1",
+  MD: "4",
+  MA: "1",
+  MI: "6",
+  MN: "8",
+  MS: "5",
+  MO: "8",
+  MT: "9",
+  NE: "8",
+  NV: "9",
+  NH: "1",
+  NJ: "3",
+  NM: "10",
+  NY: "2",
+  NC: "4",
+  ND: "8",
+  OH: "6",
+  OK: "10",
+  OR: "9",
+  PA: "3",
+  RI: "1",
+  SC: "4",
+  SD: "8",
+  TN: "6",
+  TX: "5",
+  UT: "10",
+  VT: "2",
+  VA: "4",
+  WA: "9",
+  WV: "4",
+  WI: "7",
+  WY: "10",
+};
+
+export const PRACTICE_AREAS = ["Contract", "Employment", "Civil", "Criminal"] as const;
+
+export const BENCHMARK_VERSION = "6T-C1-2026-08-19";

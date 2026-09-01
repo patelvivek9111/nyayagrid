@@ -1,12 +1,12 @@
 import { compareCasesSchema } from "@nyayagrid/validation";
 import { compareStudentCases } from "@nyayagrid/workspaces";
-import { requireUser } from "@/lib/auth";
+import { requireProfessorUser } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 import { getAI } from "@/lib/infra";
 
 export async function POST(request: Request) {
   try {
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireProfessorUser(request.headers);
     const body = compareCasesSchema.parse(await request.json());
 
     const result = await compareStudentCases({

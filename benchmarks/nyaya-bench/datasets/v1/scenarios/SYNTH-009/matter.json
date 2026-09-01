@@ -1,0 +1,34 @@
+{
+  "scenario_id": "SYNTH-009",
+  "title": "Helio Robotics Confidentiality Dispute",
+  "matter_type": "NDA / IP",
+  "fictional": true,
+  "label": "SYNTH - FICTIONAL TEST DOCUMENT - NOT REAL CLIENT WORK",
+  "documents": [
+    {
+      "document_id": "nda",
+      "file": "documents/nda.pdf",
+      "title": "Mutual Confidentiality Agreement"
+    },
+    {
+      "document_id": "disclosure_log",
+      "file": "documents/disclosure_log.pdf",
+      "title": "Disclosure Log"
+    },
+    {
+      "document_id": "request",
+      "file": "documents/request.pdf",
+      "title": "Return/Destruction Request - July 1, 2026"
+    },
+    {
+      "document_id": "email_vector",
+      "file": "documents/email_vector.pdf",
+      "title": "Vector Email - July 8, 2026"
+    },
+    {
+      "document_id": "affidavit",
+      "file": "documents/affidavit.pdf",
+      "title": "Synthetic Declaration - Backup Administrator"
+    }
+  ]
+}

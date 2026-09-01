@@ -13,6 +13,16 @@ import {
   deadlineCandidateSources,
   documents,
   graphNodes,
+  graphEdges,
+  graphEdgeSources,
+  documentAnalyses,
+  documentAnalysisItems,
+  documentAnalysisSources,
+  analysisRuns,
+  analysisFindings,
+  analysisFindingSources,
+  redlineSuggestions,
+  matterMemories,
 } from "@nyayagrid/database";
 
 import { presentDeadlineForAttorney } from "./deadlines";
@@ -66,11 +76,92 @@ export async function getReviewQueueCounts(params: {
       ),
     );
 
+  const [graph] = await params.db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(graphEdges)
+    .where(
+      and(
+        eq(graphEdges.organizationId, params.organizationId),
+        eq(graphEdges.matterId, params.matterId),
+        eq(graphEdges.status, "proposed"),
+      ),
+    );
+
+  const proposedEvents = events?.count ?? 0;
+  const proposedFacts = facts?.count ?? 0;
+  const proposedEntities = entities?.count ?? 0;
+  const proposedDeadlines = deadlines?.count ?? 0;
+  const proposedGraphEdges = graph?.count ?? 0;
+
+  const [contractItems] = await params.db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(documentAnalysisItems)
+    .where(
+      and(
+        eq(documentAnalysisItems.organizationId, params.organizationId),
+        eq(documentAnalysisItems.matterId, params.matterId),
+        eq(documentAnalysisItems.status, "proposed"),
+      ),
+    );
+  const [findings] = await params.db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(analysisFindings)
+    .where(
+      and(
+        eq(analysisFindings.organizationId, params.organizationId),
+        eq(analysisFindings.matterId, params.matterId),
+        eq(analysisFindings.status, "proposed"),
+      ),
+    );
+  const [redlines] = await params.db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(redlineSuggestions)
+    .where(
+      and(
+        eq(redlineSuggestions.organizationId, params.organizationId),
+        eq(redlineSuggestions.matterId, params.matterId),
+        eq(redlineSuggestions.status, "proposed"),
+      ),
+    );
+
+  const pendingContractItems = contractItems?.count ?? 0;
+  const pendingFindings = findings?.count ?? 0;
+  const pendingRedlines = redlines?.count ?? 0;
+  const intelligencePendingCount =
+    proposedEvents + proposedFacts + proposedEntities + proposedDeadlines + proposedGraphEdges;
+  const analysisPendingCount = pendingContractItems + pendingFindings + pendingRedlines;
+
+  const [memories] = await params.db
+    .select({ count: sql<number>`count(*)::int` })
+    .from(matterMemories)
+    .where(
+      and(
+        eq(matterMemories.organizationId, params.organizationId),
+        eq(matterMemories.matterId, params.matterId),
+        eq(matterMemories.status, "proposed"),
+        isNull(matterMemories.supersededBy),
+      ),
+    );
+  const proposedMemories = memories?.count ?? 0;
+
   return {
-    proposedEvents: events?.count ?? 0,
-    proposedFacts: facts?.count ?? 0,
-    proposedEntities: entities?.count ?? 0,
-    proposedDeadlines: deadlines?.count ?? 0,
+    proposedEvents,
+    proposedFacts,
+    proposedEntities,
+    proposedDeadlines,
+    proposedGraphEdges,
+    intelligencePendingCount,
+    analysis: {
+      pendingContractItems,
+      pendingFindings,
+      pendingRedlines,
+      pendingCount: analysisPendingCount,
+    },
+    memory: {
+      proposedMemories,
+      pendingCount: proposedMemories,
+    },
+    pendingCount: intelligencePendingCount + analysisPendingCount + proposedMemories,
   };
 }
 
@@ -271,6 +362,52 @@ export async function listProposedIntelligence(params: {
           .from(deadlineCandidateSources)
           .where(inArray(deadlineCandidateSources.deadlineCandidateId, deadlineIds));
 
+  const graphEdgesProposed = await params.db
+    .select()
+    .from(graphEdges)
+    .where(
+      and(
+        eq(graphEdges.organizationId, params.organizationId),
+        eq(graphEdges.matterId, params.matterId),
+        eq(graphEdges.status, "proposed"),
+      ),
+    )
+    .orderBy(desc(graphEdges.createdAt));
+  const graphEdgeIds = graphEdgesProposed.map((e) => e.id);
+  const graphNodeIds = [
+    ...new Set(graphEdgesProposed.flatMap((e) => [e.fromNodeId, e.toNodeId])),
+  ];
+  const graphReviewNodes =
+    graphNodeIds.length === 0
+      ? []
+      : await params.db
+          .select()
+          .from(graphNodes)
+          .where(
+            and(
+              eq(graphNodes.organizationId, params.organizationId),
+              eq(graphNodes.matterId, params.matterId),
+              inArray(graphNodes.id, graphNodeIds),
+            ),
+          );
+  const graphNodeById = new Map(graphReviewNodes.map((n) => [n.id, n]));
+  const graphReviewSources =
+    graphEdgeIds.length === 0
+      ? []
+      : await params.db
+          .select()
+          .from(graphEdgeSources)
+          .where(inArray(graphEdgeSources.graphEdgeId, graphEdgeIds));
+  const graphDocIds = [...new Set(graphReviewSources.map((s) => s.documentId))];
+  const graphDocs =
+    graphDocIds.length === 0
+      ? []
+      : await params.db
+          .select({ id: documents.id, title: documents.title })
+          .from(documents)
+          .where(inArray(documents.id, graphDocIds));
+  const graphDocTitle = new Map(graphDocs.map((d) => [d.id, d.title]));
+
   return {
     events: events.map((e) => ({
       ...e,
@@ -289,6 +426,166 @@ export async function listProposedIntelligence(params: {
     deadlines: deadlines.map((d) => ({
       ...d,
       sources: deadlineSources.filter((s) => s.deadlineCandidateId === d.id),
+    })),
+    graphEdges: graphEdgesProposed.map((e) => ({
+      ...e,
+      fromName: graphNodeById.get(e.fromNodeId)?.displayName ?? "Unknown",
+      toName: graphNodeById.get(e.toNodeId)?.displayName ?? "Unknown",
+      sources: graphReviewSources
+        .filter((s) => s.graphEdgeId === e.id)
+        .map((s) => ({
+          id: s.id,
+          documentId: s.documentId,
+          documentTitle: graphDocTitle.get(s.documentId) ?? "Case document",
+          page: s.page,
+          supportingText: s.supportingText,
+        })),
+    })),
+  };
+}
+
+/** Proposed Analysis objects with an existing review action. Read-only; does not generate Analysis. */
+export async function listProposedAnalysisForReview(params: {
+  db: Database;
+  organizationId: string;
+  matterId: string;
+}) {
+  const contractItems = await params.db
+    .select({
+      id: documentAnalysisItems.id,
+      analysisId: documentAnalysisItems.analysisId,
+      category: documentAnalysisItems.category,
+      title: documentAnalysisItems.title,
+      summary: documentAnalysisItems.summary,
+      originalText: documentAnalysisItems.originalText,
+      explanation: documentAnalysisItems.explanation,
+      attention: documentAnalysisItems.attention,
+      status: documentAnalysisItems.status,
+      confidence: documentAnalysisItems.confidence,
+      documentId: documentAnalyses.documentId,
+    })
+    .from(documentAnalysisItems)
+    .innerJoin(documentAnalyses, eq(documentAnalyses.id, documentAnalysisItems.analysisId))
+    .where(
+      and(
+        eq(documentAnalysisItems.organizationId, params.organizationId),
+        eq(documentAnalysisItems.matterId, params.matterId),
+        eq(documentAnalysisItems.status, "proposed"),
+        eq(documentAnalyses.organizationId, params.organizationId),
+        eq(documentAnalyses.matterId, params.matterId),
+      ),
+    )
+    .orderBy(desc(documentAnalysisItems.createdAt));
+
+  const contractItemIds = contractItems.map((i) => i.id);
+  const contractSources =
+    contractItemIds.length === 0
+      ? []
+      : await params.db
+          .select()
+          .from(documentAnalysisSources)
+          .where(inArray(documentAnalysisSources.analysisItemId, contractItemIds));
+
+  const findings = await params.db
+    .select({
+      id: analysisFindings.id,
+      findingType: analysisFindings.findingType,
+      title: analysisFindings.title,
+      explanation: analysisFindings.explanation,
+      confidence: analysisFindings.confidence,
+      status: analysisFindings.status,
+      attention: analysisFindings.attention,
+      analysisRunId: analysisFindings.analysisRunId,
+      runType: analysisRuns.runType,
+      documentId: analysisRuns.documentId,
+    })
+    .from(analysisFindings)
+    .innerJoin(analysisRuns, eq(analysisRuns.id, analysisFindings.analysisRunId))
+    .where(
+      and(
+        eq(analysisFindings.organizationId, params.organizationId),
+        eq(analysisFindings.matterId, params.matterId),
+        eq(analysisFindings.status, "proposed"),
+        eq(analysisRuns.organizationId, params.organizationId),
+        eq(analysisRuns.matterId, params.matterId),
+      ),
+    )
+    .orderBy(desc(analysisFindings.createdAt));
+
+  const findingIds = findings.map((f) => f.id);
+  const findingSources =
+    findingIds.length === 0
+      ? []
+      : await params.db
+          .select()
+          .from(analysisFindingSources)
+          .where(inArray(analysisFindingSources.findingId, findingIds));
+
+  const redlines = await params.db
+    .select()
+    .from(redlineSuggestions)
+    .where(
+      and(
+        eq(redlineSuggestions.organizationId, params.organizationId),
+        eq(redlineSuggestions.matterId, params.matterId),
+        eq(redlineSuggestions.status, "proposed"),
+      ),
+    )
+    .orderBy(desc(redlineSuggestions.createdAt));
+
+  const docIds = [
+    ...new Set(
+      [
+        ...contractItems.map((i) => i.documentId),
+        ...contractSources.map((s) => s.documentId),
+        ...findings.map((f) => f.documentId),
+        ...findingSources.map((s) => s.documentId),
+        ...redlines.map((r) => r.documentId),
+      ].filter((id): id is string => Boolean(id)),
+    ),
+  ];
+  const docs =
+    docIds.length === 0
+      ? []
+      : await params.db
+          .select({ id: documents.id, title: documents.title })
+          .from(documents)
+          .where(inArray(documents.id, docIds));
+  const docTitle = new Map(docs.map((d) => [d.id, d.title]));
+
+  return {
+    contractItems: contractItems.map((item) => ({
+      ...item,
+      documentTitle: item.documentId ? (docTitle.get(item.documentId) ?? null) : null,
+      sources: contractSources
+        .filter((s) => s.analysisItemId === item.id)
+        .map((s) => ({
+          id: s.id,
+          documentId: s.documentId,
+          documentTitle: docTitle.get(s.documentId) ?? null,
+          page: s.page,
+          supportingText: s.supportingText,
+          segmentRef: s.segmentRef,
+        })),
+    })),
+    findings: findings.map((finding) => ({
+      ...finding,
+      documentTitle: finding.documentId ? (docTitle.get(finding.documentId) ?? null) : null,
+      sources: findingSources
+        .filter((s) => s.findingId === finding.id)
+        .map((s) => ({
+          id: s.id,
+          documentId: s.documentId,
+          documentTitle: docTitle.get(s.documentId) ?? null,
+          page: s.page,
+          supportingText: s.supportingText,
+          segmentRef: s.segmentRef,
+          side: s.side,
+        })),
+    })),
+    redlines: redlines.map((row) => ({
+      ...row,
+      documentTitle: docTitle.get(row.documentId) ?? null,
     })),
   };
 }

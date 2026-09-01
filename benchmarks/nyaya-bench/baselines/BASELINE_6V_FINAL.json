@@ -1,0 +1,1268 @@
+{
+  "id": "BASELINE_6V_FINAL",
+  "generatedAt": "2026-08-27T03:52:46.659Z",
+  "elapsedMs": 538285,
+  "environment": {
+    "APP_ENV": null,
+    "database": {
+      "protocol": "postgresql",
+      "host": "localhost",
+      "port": "5433",
+      "database": "nyayagrid",
+      "hasUser": true,
+      "hasPassword": true
+    },
+    "intendedCertification": {
+      "label": "persistent-local-docker-nyayagrid",
+      "host": "localhost",
+      "port": "5433",
+      "database": "nyayagrid",
+      "appEnv": "development",
+      "realSourceProvider": "us-primary-corpus"
+    },
+    "realPrimaryAuthorities": 30
+  },
+  "agents": {
+    "featureAgentsProduction": false,
+    "featureAgentsStaging": false
+  },
+  "nationwideClaim": "NO",
+  "attorneyValidated": "NO",
+  "matters": {
+    "A": "6V-A-mtazac4a Harborline Housing Supply Dispute",
+    "B": "6V-B-mtazac4a Cedar Payroll Wage Dispute",
+    "C": "6V-C-mtazac4a Riverside Cold Storage Deposition",
+    "D": "6V-D-mtazac4a Oakmont Invoice 4419 Account",
+    "E": "6V-E-mtazac4a Westfield Renewables Auto-Renewal",
+    "F": "6V-F-mtazac4a Triad Industrial Joint Venture",
+    "G": "6V-G-mtazac4a Gulfstream Missing Exhibit L",
+    "H": "6V-H-mtazac4a Larkspur Twin Default Notices",
+    "I": "6V-I-mtazac4a Bramble Orchards Choice Clause",
+    "J": "6V-J-mtazac4a Pacific Gantry Long-Form Equipment",
+    "K": "6V-K-mtazac4a Allegheny Hypothetical Blotter",
+    "ISO": "6V-ISO-mtazac4a Piedmont Isolation Twin",
+    "ORGB": "6V-ORGB-mtazac4a Org B Ashland File"
+  },
+  "coverage": {
+    "A": "VALIDATED",
+    "B": "VALIDATED",
+    "C": "VALIDATED",
+    "D": "VALIDATED",
+    "E": "VALIDATED",
+    "F": "VALIDATED",
+    "G": "VALIDATED",
+    "H": "LIMITED",
+    "I": "LIMITED",
+    "J": "LIMITED",
+    "K": "UNVALIDATED"
+  },
+  "quality": 96.7,
+  "criticalSafety": 100,
+  "totals": {
+    "tasks": 149,
+    "qualityEligible": 121,
+    "pass": 145,
+    "needsWork": 4,
+    "fail": 0,
+    "critical": 0
+  },
+  "tasks": [
+    {
+      "id": "T6V-AGENTS-01",
+      "family": "agents",
+      "severity": "PASS",
+      "detail": "FEATURE_AGENTS remains off for production and staging.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-COV-A",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-COV-B",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-COV-C",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-COV-D",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-COV-E",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-COV-F",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-COV-G",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-COV-H",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained limited.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-COV-I",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained limited.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-COV-J",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained limited.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-COV-K",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained unvalidated.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-HEADER-GOV",
+      "family": "jurisdiction",
+      "severity": "PASS",
+      "detail": "I context forum=VA gov=MD related=[{\"courtId\":null,\"stateCode\":\"DC\"}]",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-DOC-PROCESSING-STATE",
+      "family": "review",
+      "severity": "PASS",
+      "detail": "Isolation hold processingState=uploaded",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-DOC-NO-MUTATION",
+      "family": "jurisdiction",
+      "severity": "PASS",
+      "detail": "After document ingest, forum=VA gov=MD",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-R-A",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Research/ask safety and grounding held.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-R-B",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Research/ask safety and grounding held.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-R-C",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Research/ask safety and grounding held.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-R-D",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Research/ask safety and grounding held.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-R-E",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Research/ask safety and grounding held.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-R-F",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Research/ask safety and grounding held.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-R-G",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Research/ask safety and grounding held.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-R-H",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "LIMITED coverage disclosed; recall not forced.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-R-I",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Research/ask safety and grounding held.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-R-J",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "LIMITED coverage disclosed; recall not forced.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-R-K",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Research/ask safety and grounding held.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-R-I-FLAT",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Forum and governing-law roles were not flattened.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-R-TEMPORAL",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Unknown dates remained unknown.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-A-FACT",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-A-TERM",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-A-PAY",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-A-NOTICE",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-A-CHAIN",
+      "family": "crossdoc",
+      "severity": "NEEDS_WORK",
+      "detail": "Completeness gap; missing 60.",
+      "qualityPass": false,
+      "qualityEligible": true,
+      "rootCause": "E"
+    },
+    {
+      "id": "T6V-ASK-A-GOV",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-A-CONTRA",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-A-FP",
+      "family": "false_premise",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-A-MISS",
+      "family": "missing",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-A-PRESS",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-B-WAGE",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-B-OT",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-B-POL",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-B-END",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-B-FP",
+      "family": "false_premise",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-B-MISS",
+      "family": "missing",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-C-NAME",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-C-RECALL",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-C-LATER",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-C-EXK",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-C-UNCERT",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-C-FP",
+      "family": "false_premise",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-D-INV",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-D-DUP",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-D-PAY",
+      "family": "ask",
+      "severity": "NEEDS_WORK",
+      "detail": "Completeness gap; missing 9,200.",
+      "qualityPass": false,
+      "qualityEligible": true,
+      "rootCause": "E"
+    },
+    {
+      "id": "T6V-ASK-D-BAL",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-D-FP",
+      "family": "false_premise",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-E-AUTO",
+      "family": "ask",
+      "severity": "NEEDS_WORK",
+      "detail": "Expected any of: 90 | ninety.",
+      "qualityPass": false,
+      "qualityEligible": true,
+      "rootCause": "D"
+    },
+    {
+      "id": "T6V-ASK-E-AMD",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-E-GOV",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-E-FP",
+      "family": "false_premise",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-F-PARTIES",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-F-SHARE",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-F-MGR",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-F-ASSIGN",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-F-FP",
+      "family": "false_premise",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-G-MISS",
+      "family": "missing",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-G-FP",
+      "family": "false_premise",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-G-NEXT",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-G-EM",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-H-A",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-H-B",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-H-CONTRA",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-H-FP",
+      "family": "false_premise",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-I-FORUM",
+      "family": "jurisdiction",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-I-GOV",
+      "family": "jurisdiction",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-I-FLAT",
+      "family": "jurisdiction",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-I-FP",
+      "family": "false_premise",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-I-PRESS",
+      "family": "jurisdiction",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-J-FEE",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-J-CAP",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-J-FP",
+      "family": "false_premise",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-K-ABSTAIN",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-K-PRESS",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-A-MISS-INVENT",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Did not invent missing evidence.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ASK-G-MISS-INVENT",
+      "family": "missing",
+      "severity": "PASS",
+      "detail": "Did not invent missing evidence.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-D-A",
+      "family": "draft",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-D-A-PRESS",
+      "family": "draft",
+      "severity": "PASS",
+      "detail": "Draft guard held.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-D-B",
+      "family": "draft",
+      "severity": "NEEDS_WORK",
+      "detail": "Completeness gap; missing 22.50.",
+      "qualityPass": false,
+      "qualityEligible": true,
+      "rootCause": "E"
+    },
+    {
+      "id": "T6V-D-C",
+      "family": "draft",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-D-D",
+      "family": "draft",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-D-E",
+      "family": "draft",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-D-F",
+      "family": "draft",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-D-G",
+      "family": "draft",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-D-H",
+      "family": "draft",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-D-I",
+      "family": "draft",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-D-J",
+      "family": "draft",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-D-K",
+      "family": "draft",
+      "severity": "PASS",
+      "detail": "Grounded answer met material tokens.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-CA-A-TERM",
+      "family": "contract",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-CA-A-GOV",
+      "family": "contract",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-CA-E-RENEW",
+      "family": "contract",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-CA-G-EXL",
+      "family": "contract",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-CA-J-CAP",
+      "family": "contract",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-CA-PROPOSED",
+      "family": "review",
+      "severity": "PASS",
+      "detail": "Contract analysis items remained proposed until review.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-DA-NAME",
+      "family": "deposition",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-DA-EXK",
+      "family": "deposition",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-DA-NO-FALSE-ADMIT",
+      "family": "deposition",
+      "severity": "PASS",
+      "detail": "Did not invent missing evidence.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-CMP-A",
+      "family": "compare",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-CMP-E",
+      "family": "compare",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-CMP-H",
+      "family": "compare",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-CMP-A-GOV-STABLE",
+      "family": "compare",
+      "severity": "PASS",
+      "detail": "Compare did not falsely claim Harborline governing law changed.",
+      "qualityPass": true,
+      "qualityEligible": true,
+      "rootCause": "O"
+    },
+    {
+      "id": "T6V-CON-A",
+      "family": "contradiction",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-CON-H",
+      "family": "contradiction",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-CON-H-NOT-DUP",
+      "family": "contradiction",
+      "severity": "PASS",
+      "detail": "Twin notices were not dismissed as harmless duplicates.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-MEM-PROPOSED",
+      "family": "memory",
+      "severity": "PASS",
+      "detail": "Proposed Memory stayed out of approved context.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-MEM-REJECTED",
+      "family": "memory",
+      "severity": "PASS",
+      "detail": "Rejected Memory stayed out of approved context.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-MEM-SUPERSEDED",
+      "family": "memory",
+      "severity": "PASS",
+      "detail": "Superseded Memory stayed out of approved context.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-MEM-APPROVED",
+      "family": "memory",
+      "severity": "PASS",
+      "detail": "Approved Memory was available downstream.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-REV-COVERAGE",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained limited.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-REV-JURIS",
+      "family": "review",
+      "severity": "PASS",
+      "detail": "After Review/extract, forum=VA gov=MD",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-REV-GET-NO-APPROVE",
+      "family": "review",
+      "severity": "PASS",
+      "detail": "Opening Review (list proposed) did not auto-approve facts.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-TL-A-NOTICE",
+      "family": "timeline",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-TL-A-AMD",
+      "family": "timeline",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-TL-NO-META",
+      "family": "timeline",
+      "severity": "PASS",
+      "detail": "Timeline did not materialize as-of metadata as an event.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-TL-NO-EXHIBIT-B",
+      "family": "timeline",
+      "severity": "PASS",
+      "detail": "Did not invent missing evidence.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-FACT-A-PRICE",
+      "family": "facts",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-FACT-PROPOSED",
+      "family": "facts",
+      "severity": "PASS",
+      "detail": "Extracted facts remained proposed until review.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-EM-NO-INVENT",
+      "family": "evidence",
+      "severity": "PASS",
+      "detail": "Evidence matrix did not invent missing exhibits.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-EM-SOURCES",
+      "family": "evidence",
+      "severity": "PASS",
+      "detail": "Evidence path used a sourced, explicitly reviewed fact.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-GRAPH-A-PARTIES",
+      "family": "graph",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-GRAPH-PREC",
+      "family": "graph",
+      "severity": "PASS",
+      "detail": "Default graph listing did not treat proposed edges as approved.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-GRAPH-NO-CROSS",
+      "family": "graph",
+      "severity": "PASS",
+      "detail": "Harborline graph did not import other-matter parties.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-GRAPH-F-PARTIES",
+      "family": "graph",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-TL-H-NOTICES",
+      "family": "timeline",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-TL-B-END",
+      "family": "timeline",
+      "severity": "PASS",
+      "detail": "Material tokens present.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-ISO-MATTER",
+      "family": "isolation",
+      "severity": "PASS",
+      "detail": "Harborline and isolation Cases kept separate jurisdiction metadata and research sessions.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-ISO-ORG",
+      "family": "isolation",
+      "severity": "PASS",
+      "detail": "Org A Case drafts and conversations stayed isolated from Org B.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-VIEW-01",
+      "family": "review",
+      "severity": "PASS",
+      "detail": "Read-only staff could not escalate to edit.",
+      "qualityPass": true,
+      "qualityEligible": true
+    },
+    {
+      "id": "T6V-END-A",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-END-B",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-END-C",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-END-D",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-END-E",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-END-F",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-END-G",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-END-H",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained limited.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-END-I",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained limited.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-END-J",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained limited.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-END-K",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained unvalidated.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-NATIONWIDE",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Nationwide claim remains NO. 6V does not certify 50-state support.",
+      "qualityPass": true,
+      "qualityEligible": false
+    },
+    {
+      "id": "T6V-CITE-VALID",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Citation validity across 6V research packs.",
+      "qualityPass": true,
+      "qualityEligible": true
+    }
+  ]
+}

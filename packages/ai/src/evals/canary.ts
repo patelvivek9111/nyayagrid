@@ -25,7 +25,10 @@ function leaseTermPassage() {
 }
 
 function indemnityAndTermPassages() {
-  const retrieved = [...passagesByLabels("indemnity", "amendment"), ...passagesByLabels("lease_term")];
+  const retrieved = [
+    ...passagesByLabels("indemnity", "amendment"),
+    ...passagesByLabels("lease_term"),
+  ];
   const term = retrieved.find((p) => p.chunkId === "chunk_lease_term");
   if (!term) {
     throw new Error("golden lease_term passage missing from combined retrieval");
@@ -149,10 +152,106 @@ const falseConfidenceCanary: CanarySpec = {
   },
 };
 
+/**
+ * Activity-record citation offered as support for a stronger physical-entry claim.
+ */
+const evidenceOverclaimCanary: CanarySpec = {
+  id: "canary-evidence-overclaim",
+  description: "Badge ACCESS GRANTED cited for physical entry must fail faithfulness",
+  expectFailedDimension: "faithfulness",
+  run: () => {
+    const retrieved = [
+      {
+        chunkId: "chunk_eval_access_log",
+        documentId: "doc_eval_access_log",
+        documentVersionId: "docv_eval_access_log_1",
+        quote:
+          "Badge assigned to Alex Rivera — ACCESS GRANTED at 14:47. This log records badge activity; it does not independently prove who physically carried the badge.",
+      },
+    ];
+    const passage = retrieved[0]!;
+    return gradeCitedAnswer({
+      caseId: "canary-evidence-overclaim",
+      retrieved,
+      question: "At exactly what time did Alex Rivera physically enter the server room?",
+      rubric: {
+        expectEvidenceState: "partial",
+        mustIncludePhrases: ["ACCESS GRANTED"],
+        mustCiteChunkIds: ["chunk_eval_access_log"],
+        forbiddenPhrases: ["physically entered"],
+        expectNeedsMoreDocuments: true,
+      },
+      raw: {
+        answer: "Alex Rivera physically entered the server room at 14:47.",
+        sources: [
+          {
+            chunkId: passage.chunkId,
+            documentId: passage.documentId,
+            documentVersionId: passage.documentVersionId,
+            quote: passage.quote,
+          },
+        ],
+        assumptions: [],
+        unresolvedQuestions: [],
+        evidenceState: "grounded",
+      },
+    });
+  },
+};
+
+/**
+ * Explanatory answer that accepts an unsupported retroactivity premise.
+ */
+const falsePremiseAcceptCanary: CanarySpec = {
+  id: "canary-false-premise-accept",
+  description: "Invented retroactivity motive must fail faithfulness",
+  expectFailedDimension: "faithfulness",
+  run: () => {
+    const retrieved = [
+      {
+        chunkId: "chunk_eval_future_amend",
+        documentId: "doc_eval_future_amend",
+        documentVersionId: "docv_eval_future_amend_1",
+        quote: "This Amendment 2 becomes effective January 1, 2027.",
+      },
+    ];
+    const passage = retrieved[0]!;
+    return gradeCitedAnswer({
+      caseId: "canary-false-premise-accept",
+      retrieved,
+      question: "Explain why the parties made Amendment 2 retroactive to March 1, 2024.",
+      rubric: {
+        expectEvidenceState: "partial",
+        mustIncludePhrases: ["not support"],
+        mustCiteChunkIds: ["chunk_eval_future_amend"],
+        forbiddenPhrases: ["align with the original commencement"],
+        expectNeedsMoreDocuments: true,
+      },
+      raw: {
+        answer:
+          "The parties made Amendment 2 retroactive to align with the original commencement on March 1, 2024.",
+        sources: [
+          {
+            chunkId: passage.chunkId,
+            documentId: passage.documentId,
+            documentVersionId: passage.documentVersionId,
+            quote: passage.quote,
+          },
+        ],
+        assumptions: [],
+        unresolvedQuestions: [],
+        evidenceState: "grounded",
+      },
+    });
+  },
+};
+
 export const CANARY_CASES: CanarySpec[] = [
   inventedDateCanary,
   mismatchedCitationCanary,
   falseConfidenceCanary,
+  evidenceOverclaimCanary,
+  falsePremiseAcceptCanary,
 ];
 
 export type CanaryOutcome = {

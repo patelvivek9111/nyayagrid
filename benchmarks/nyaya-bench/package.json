@@ -1,0 +1,41 @@
+{
+  "name": "@nyayagrid/nyaya-bench",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./runner/index.ts",
+  "types": "./runner/index.ts",
+  "scripts": {
+    "bench": "tsx runner/cli.ts",
+    "bench:j1": "tsx runner/run-j1.ts",
+    "bench:6t": "tsx runner/t6t-inventory.ts && tsx runner/t6t-c1.ts && tsx runner/t6t-write-report.ts",
+    "bench:6t-corpus1": "tsx runner/t6t-corpus1.ts && tsx runner/t6t-inventory.ts && tsx runner/t6t-corpus1-report.ts",
+    "bench:6t-c2a": "tsx runner/t6t-c2a.ts && tsx runner/t6t-c2a-report.ts",
+    "bench:6u": "tsx runner/t6u.ts && tsx runner/t6u-report.ts",
+    "bench:6u-r1": "tsx runner/t6u.ts && tsx runner/t6u-r1-report.ts",
+    "bench:6v": "tsx runner/t6v.ts && tsx runner/t6v-report.ts",
+    "cert:models": "tsx model-routing/run-certification.ts",
+    "bench:replay": "tsx runner/cli.ts --replay",
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@nyayagrid/ai": "*",
+    "@nyayagrid/auth": "*",
+    "@nyayagrid/database": "*",
+    "@nyayagrid/documents": "*",
+    "@nyayagrid/intelligence": "*",
+    "@nyayagrid/jurisdiction": "*",
+    "@nyayagrid/permissions": "*",
+    "@nyayagrid/research": "*",
+    "@nyayagrid/agents": "*",
+    "@nyayagrid/search": "*",
+    "@nyayagrid/platform": "*"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "label": "DA1",
+  "title": "Deposition Analysis reliability after Phase 6K",
+  "mapsToAN1": ["SYNTH-V2-006-AN007", "SYNTH-V2-006-AN008", "SYNTH-V2-006-AN010"],
+  "an1NotOverwritten": true,
+  "liveRunDir": "benchmarks/nyaya-bench/reports/runs/2026-08-19T12-16-25-081Z",
+  "executionMode": "deposition",
+  "benchmarkKind": "NYAYA_DEPOSITION",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "freeze": "FREEZE_DEPOSITION_ANALYSIS",
+  "nextPhase": "Phase 6L — Contract Analysis Reliability",
+  "config": {
+    "gitCommitRecordedOnRun": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini",
+    "promptVersion": "deposition-analysis-v2",
+    "graderVersion": "da1-2026-08-19"
+  },
+  "counts": {
+    "pass": 15,
+    "needs_work": 0,
+    "fail": 1,
+    "infrastructure": 0,
+    "notApplicable": 0,
+    "criticalFails": 0
+  },
+  "deposition": {
+    "tasks": 16,
+    "pass": 15,
+    "fail": 1,
+    "infrastructure": 0,
+    "critical": 0,
+    "findingRecall": 0.75,
+    "findingPrecision": 1,
+    "admissionAccuracy": 1,
+    "denialAccuracy": 1,
+    "actorAccuracy": 1,
+    "contradictionAccuracy": 1,
+    "tensionAccuracy": 0,
+    "compatibleNonConflictAccuracy": 1,
+    "uncertaintyPreservation": 1,
+    "testimonyAttributionAccuracy": 1,
+    "provenanceAccuracy": 1,
+    "quoteSpanAccuracy": 1,
+    "unsupportedFindingRate": 0.0625,
+    "zeroFindingCorrectness": 1,
+    "schemaParseFailureRate": 0,
+    "persistenceSuccess": 1,
+    "proposedStatusAccuracy": 1
+  },
+  "performance": {
+    "modelCallsPerTask": 1,
+    "parseRetryCount": 0,
+    "medianLatencyMs": 8840,
+    "p95LatencyMs": 11713,
+    "maxLatencyMs": 12016,
+    "liveNormalizedCount": 0,
+    "rejectedMalformed": 0
+  },
+  "remainingFail": {
+    "taskId": "SYNTH-V2-006-DA004",
+    "taxonomy": "finding extraction",
+    "critical": false,
+    "note": "Testimony findings persisted; badge ACCESS GRANTED tension was not emitted. Not score-chased."
+  },
+  "askNyaya": {
+    "proposedDepositionFindingsEnterAskNyaya": false
+  }
+}

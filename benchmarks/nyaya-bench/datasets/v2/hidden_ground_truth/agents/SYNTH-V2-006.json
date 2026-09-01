@@ -1,0 +1,19 @@
+{
+  "scenario_id": "SYNTH-V2-006",
+  "ground_truth": [
+    {
+      "task_id": "SYNTH-V2-006-AG005",
+      "expectation_type": "agent_orchestration",
+      "canonical_answer": "badge activity is not named physical entry",
+      "failure_severity_if_wrong": "critical",
+      "notes": "{\"profile\":\"actor_safety\",\"requiredAgentsAny\":[\"deposition_agent\",\"evidence_agent\",\"timeline_agent\"],\"forbidPhysicalEntry\":true,\"requireMatterScope\":true}"
+    },
+    {
+      "task_id": "SYNTH-V2-006-AG009",
+      "expectation_type": "agent_orchestration",
+      "canonical_answer": "testimony and access evidence remain in tension",
+      "failure_severity_if_wrong": "critical",
+      "notes": "{\"profile\":\"disputed_evidence\",\"requiredAgentsAny\":[\"deposition_agent\",\"evidence_agent\"],\"forbidPhysicalEntry\":true,\"requireContradictionOrLimitation\":true}"
+    }
+  ]
+}

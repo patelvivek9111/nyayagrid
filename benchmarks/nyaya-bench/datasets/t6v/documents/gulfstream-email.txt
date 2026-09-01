@@ -1,0 +1,8 @@
+From: Nia Beltran <nbeltran@palmharbor.example>
+To: Hector Ruiz <hruiz@gulfstream.example>
+Date: February 3, 2026
+Subject: MSA package — missing exhibits
+
+Hector, confirming: No Exhibit L is attached to this transmission. No Exhibit M is attached either. Please send the insurance certificates labeled Exhibit L before we can treat Section 9 as satisfied.
+
+This email is not itself Exhibit L.

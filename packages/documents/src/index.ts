@@ -7,3 +7,6 @@ export * from "./chunk";
 export * from "./pipeline";
 export * from "./limits";
 export * from "./download";
+export * from "./retry";
+export * from "./ingest-gate";
+export * from "./ingest-job";

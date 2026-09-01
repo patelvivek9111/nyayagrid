@@ -64,14 +64,16 @@ export function WorkspaceSidebar({
 
   const sidebar = (
     <aside className="flex h-full w-[260px] shrink-0 flex-col border-r border-line bg-white/90">
-      <div className="border-b border-line px-4 py-4">
+      <div className="shrink-0 border-b border-line px-4 py-4">
         <Link href={brandHref} className="font-display text-xl text-ink">
           {brandTitle}
         </Link>
         <p className="mt-0.5 text-[10px] uppercase tracking-[0.16em] text-accent">{brandEyebrow}</p>
       </div>
-      <div className="flex-1 overflow-y-auto px-2 py-3">{children}</div>
-      {footer ? <div className="border-t border-line px-3 py-3">{footer}</div> : null}
+      <div className="min-h-0 flex-1 overflow-y-auto px-2 py-3">
+        {children}
+        {footer ? <div className="mt-3 border-t border-line px-1 pt-3">{footer}</div> : null}
+      </div>
     </aside>
   );
 
@@ -88,10 +90,8 @@ export function WorkspaceSidebar({
       </button>
       <div
         id={menuId}
-        className={cx(
-          "fixed inset-y-0 left-0 z-30 lg:static lg:block",
-          mobileOpen ? "block" : "hidden lg:block",
-        )}
+        data-open={mobileOpen ? "true" : "false"}
+        className="fixed inset-y-0 left-0 z-30 h-screen w-[260px] shrink-0 max-lg:data-[open=false]:hidden lg:sticky lg:top-0 lg:self-start"
       >
         {sidebar}
       </div>

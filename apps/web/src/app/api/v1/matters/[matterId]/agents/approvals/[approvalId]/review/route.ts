@@ -2,6 +2,7 @@ import { getApproval, reviewApproval } from "@nyayagrid/agents";
 import { reviewAgentApprovalSchema } from "@nyayagrid/validation";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { requireUser } from "@/lib/auth";
+import { assertFeatureEnabled } from "@/lib/features";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
 import { getEmbeddings } from "@/lib/infra";
 
@@ -15,6 +16,7 @@ export async function POST(request: Request, { params }: Params) {
   try {
     const { matterId, approvalId } = await params;
     const { db, user } = await requireUser(request.headers);
+    assertFeatureEnabled("agents");
     const { matter } = await requireMatterAccess(db, {
       userId: user.id,
       matterId,

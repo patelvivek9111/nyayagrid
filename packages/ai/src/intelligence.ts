@@ -1,6 +1,7 @@
 import { z } from "zod";
+import { inferTimelineDate } from "./timeline-date-precision";
 
-export const MATTER_INTELLIGENCE_PROMPT_VERSION = "matter-intelligence-extract-v2";
+export const MATTER_INTELLIGENCE_PROMPT_VERSION = "matter-intelligence-extract-v3";
 export const MATTER_SUMMARY_PROMPT_VERSION = "matter-summary-v1";
 
 export const datePrecisionSchema = z.enum([
@@ -93,8 +94,8 @@ export type ExtractionChunk = {
 };
 
 export type NormalizeIntelligenceOptions = {
-  /** When live models omit chunk ids, attach these authorized ids so proposals can still validate. */
   availableChunkIds?: string[];
+  availableChunks?: ExtractionChunk[];
 };
 
 function asRecord(value: unknown): Record<string, unknown> | null {
@@ -139,8 +140,9 @@ function isUuid(value: string): boolean {
 
 function normalizeSourceChunkIds(
   obj: Record<string, unknown>,
-  fallbackChunkIds: string[],
+  chunks: ExtractionChunk[],
 ): string[] {
+  const known = new Map(chunks.map((chunk) => [chunk.chunkId, chunk]));
   const candidates: string[] = [];
   const raw =
     obj.sourceChunkIds ?? obj.chunkIds ?? obj.chunks ?? obj.sources ?? obj.sourceRefs ?? obj.citations;
@@ -167,9 +169,51 @@ function normalizeSourceChunkIds(
     if (single) candidates.push(single);
   }
 
-  const uuids = [...new Set(candidates.filter(isUuid))];
-  if (uuids.length > 0) return uuids;
-  return fallbackChunkIds.filter(isUuid);
+  const exact = [...new Set(candidates.filter(isUuid))];
+  if (known.size > 0) {
+    const matched = exact.filter((id) => known.has(id));
+    if (matched.length > 0) return matched;
+  } else if (exact.length > 0) {
+    return exact;
+  }
+
+  const quotes = normalizeSourceQuotes(obj);
+  const overlapping: string[] = [];
+  for (const chunk of chunks) {
+    if (!chunk.content) continue;
+    for (const quote of quotes) {
+      const needle = quote.trim().slice(0, 80);
+      if (needle.length >= 12 && chunk.content.includes(needle)) {
+        overlapping.push(chunk.chunkId);
+        break;
+      }
+    }
+  }
+  if (overlapping.length > 0) return [...new Set(overlapping)];
+
+  const mentioned = [
+    ...quotes,
+    asNonEmptyString(obj.title) ?? "",
+    asNonEmptyString(obj.description) ?? "",
+  ]
+    .join(" ")
+    .match(/[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/gi);
+  if (mentioned) {
+    const nearby = [...new Set(mentioned.filter((id) => known.has(id)))];
+    if (nearby.length > 0) return nearby;
+  }
+
+  return [];
+}
+
+function chunksFromOptions(options: NormalizeIntelligenceOptions): ExtractionChunk[] {
+  if (options.availableChunks?.length) return options.availableChunks;
+  return (options.availableChunkIds ?? []).map((chunkId) => ({
+    chunkId,
+    documentId: "",
+    documentVersionId: "",
+    content: "",
+  }));
 }
 
 function normalizeSourceQuotes(obj: Record<string, unknown>): string[] {
@@ -214,7 +258,7 @@ function normalizeDatePrecision(
 
 function normalizeTimelineEvent(
   item: unknown,
-  fallbackChunkIds: string[],
+  chunks: ExtractionChunk[],
 ): Record<string, unknown> | null {
   const obj = asRecord(item);
   if (!obj) return null;
@@ -222,24 +266,43 @@ function normalizeTimelineEvent(
   const eventType =
     pickString(obj, ["eventType", "type", "category", "kind"]) ??
     (title ? slugifyFactKey(title) : undefined);
-  const sourceChunkIds = normalizeSourceChunkIds(obj, fallbackChunkIds);
+  const sourceChunkIds = normalizeSourceChunkIds(obj, chunks);
   if (!title || !eventType || sourceChunkIds.length === 0) return null;
+  const sourceQuotes = normalizeSourceQuotes(obj);
+  const description = pickString(obj, ["description", "details", "detail", "summary"]) ?? "";
+  const eventDate = pickString(obj, ["eventDate", "date", "occurredAt", "on"]) ?? null;
+  const eventDateEnd = pickString(obj, ["eventDateEnd", "endDate", "until"]) ?? null;
+  const chunkText = sourceChunkIds
+    .map((id) => chunks.find((chunk) => chunk.chunkId === id)?.content ?? "")
+    .join("\n");
+  const inferred = inferTimelineDate(
+    [sourceQuotes.join("\n"), description, chunkText].join("\n"),
+    eventDate,
+  );
+  const claimed = normalizeDatePrecision(obj.datePrecision);
+  const datePrecision =
+    claimed && claimed !== "exact"
+      ? claimed
+      : inferred.datePrecision !== "unknown"
+        ? inferred.datePrecision
+        : (claimed ?? "unknown");
   return {
     title,
-    description: pickString(obj, ["description", "details", "detail", "summary"]) ?? "",
+    description,
     eventType,
-    eventDate: pickString(obj, ["eventDate", "date", "occurredAt", "on"]) ?? null,
-    eventDateEnd: pickString(obj, ["eventDateEnd", "endDate", "until"]) ?? null,
-    datePrecision: normalizeDatePrecision(obj.datePrecision) ?? "unknown",
+    eventDate: inferred.eventDate ?? eventDate,
+    eventDateEnd: inferred.eventDateEnd ?? eventDateEnd,
+    datePrecision,
     actors: pickStringArray(obj, ["actors", "parties", "people"]),
     sourceChunkIds,
-    sourceQuotes: normalizeSourceQuotes(obj),
+    sourceQuotes,
     confidence: normalizeConfidence(obj.confidence) ?? "medium",
-    uncertaintyNotes: pickString(obj, ["uncertaintyNotes", "notes", "caveats"]) ?? null,
+    uncertaintyNotes:
+      pickString(obj, ["uncertaintyNotes", "notes", "caveats"]) ?? inferred.uncertaintyNotes,
   };
 }
 
-function normalizeFact(item: unknown, fallbackChunkIds: string[]): Record<string, unknown> | null {
+function normalizeFact(item: unknown, chunks: ExtractionChunk[]): Record<string, unknown> | null {
   const obj = asRecord(item);
   if (!obj) return null;
   const label = pickString(obj, ["label", "name", "title", "fact", "key"]);
@@ -247,7 +310,7 @@ function normalizeFact(item: unknown, fallbackChunkIds: string[]): Record<string
   const factKey =
     pickString(obj, ["factKey", "key", "slug", "id"]) ??
     (label ? slugifyFactKey(label) : undefined);
-  const sourceChunkIds = normalizeSourceChunkIds(obj, fallbackChunkIds);
+  const sourceChunkIds = normalizeSourceChunkIds(obj, chunks);
   if (!factKey || !label || !value || sourceChunkIds.length === 0) return null;
   return {
     factKey: factKey.slice(0, 120),
@@ -278,26 +341,15 @@ function inferEntityType(name: string, hinted?: string): "person" | "organizatio
     : "person";
 }
 
-function normalizeEntity(item: unknown, fallbackChunkIds: string[]): Record<string, unknown> | null {
+function normalizeEntity(item: unknown, chunks: ExtractionChunk[]): Record<string, unknown> | null {
   if (typeof item === "string") {
-    const displayName = item.trim();
-    if (!displayName || fallbackChunkIds.length === 0) return null;
-    return {
-      entityType: inferEntityType(displayName),
-      displayName,
-      aliases: [],
-      roles: [],
-      description: null,
-      sourceChunkIds: fallbackChunkIds,
-      sourceQuotes: [],
-      confidence: "medium",
-    };
+    return null;
   }
 
   const obj = asRecord(item);
   if (!obj) return null;
   const displayName = pickString(obj, ["displayName", "name", "entity", "title", "label"]);
-  const sourceChunkIds = normalizeSourceChunkIds(obj, fallbackChunkIds);
+  const sourceChunkIds = normalizeSourceChunkIds(obj, chunks);
   if (!displayName || sourceChunkIds.length === 0) return null;
   const entityTypeRaw = pickString(obj, ["entityType", "type", "kind"]);
   return {
@@ -314,12 +366,12 @@ function normalizeEntity(item: unknown, fallbackChunkIds: string[]): Record<stri
 
 function normalizeDeadline(
   item: unknown,
-  fallbackChunkIds: string[],
+  chunks: ExtractionChunk[],
 ): Record<string, unknown> | null {
   const obj = asRecord(item);
   if (!obj) return null;
   const title = pickString(obj, ["title", "name", "label", "deadline", "summary"]);
-  const sourceChunkIds = normalizeSourceChunkIds(obj, fallbackChunkIds);
+  const sourceChunkIds = normalizeSourceChunkIds(obj, chunks);
   if (!title || sourceChunkIds.length === 0) return null;
   const dateKindRaw = asNonEmptyString(obj.dateKind)?.toLowerCase();
   return {
@@ -346,7 +398,7 @@ export function normalizeMatterIntelligenceExtractionRaw(
   options: NormalizeIntelligenceOptions = {},
 ): unknown {
   const root = asRecord(raw) ?? {};
-  const fallbackChunkIds = (options.availableChunkIds ?? []).filter(isUuid);
+  const chunks = chunksFromOptions(options);
 
   const timelineRaw = Array.isArray(root.timelineEvents)
     ? root.timelineEvents
@@ -375,12 +427,12 @@ export function normalizeMatterIntelligenceExtractionRaw(
 
   return {
     timelineEvents: timelineRaw
-      .map((item) => normalizeTimelineEvent(item, fallbackChunkIds))
+      .map((item) => normalizeTimelineEvent(item, chunks))
       .filter(Boolean),
-    facts: factsRaw.map((item) => normalizeFact(item, fallbackChunkIds)).filter(Boolean),
-    entities: entitiesRaw.map((item) => normalizeEntity(item, fallbackChunkIds)).filter(Boolean),
+    facts: factsRaw.map((item) => normalizeFact(item, chunks)).filter(Boolean),
+    entities: entitiesRaw.map((item) => normalizeEntity(item, chunks)).filter(Boolean),
     deadlines: deadlinesRaw
-      .map((item) => normalizeDeadline(item, fallbackChunkIds))
+      .map((item) => normalizeDeadline(item, chunks))
       .filter(Boolean),
   };
 }
@@ -399,11 +451,18 @@ export function buildMatterIntelligenceSystemPrompt(): string {
     "You extract proposed matter intelligence from authorized document chunks only.",
     "Never invent facts, dates, names, deadlines, or citations.",
     "Every candidate MUST include sourceChunkIds using the exact chunkId UUIDs provided in Sources.",
+    "If you cannot identify a sourceChunkId UUID, omit the candidate. Never invent source ids and never treat the whole document as the source.",
     "Prefer explicit dates. Mark ambiguous deadlines as inferred.",
     "Return JSON only with keys: timelineEvents, facts, entities, deadlines.",
     "facts items MUST be objects: {factKey, label, value, sourceChunkIds, sourceQuotes?, confidence?}.",
     "entities items MUST be objects: {entityType:\"person\"|\"organization\", displayName, sourceChunkIds, roles?, aliases?, sourceQuotes?, confidence?} — never bare strings.",
-    "timelineEvents items MUST be objects: {title, eventType, sourceChunkIds, description?, eventDate?, actors?, sourceQuotes?, confidence?}.",
+    "timelineEvents items MUST be objects: {title, eventType, sourceChunkIds, eventDate?, eventDateEnd?, datePrecision, description?, actors?, sourceQuotes?, confidence?, uncertaintyNotes?}.",
+    "datePrecision MUST be one of exact, approximate, month, year, range, unknown.",
+    "Use exact only for a full explicit calendar date stated in the source. Do not upgrade around/near mid-/on or about/approximately to exact.",
+    "If a source contains multiple distinct dated events such as invoice issued, due date, remittance, and receipt, emit one timeline event per proposition. Do not collapse them.",
+    "Do not treat badge or access-log activity as a named person's physical act.",
+    "Do not title a denial as a positive entry event.",
+    "Do not calculate term-expiration dates from durations unless that calendar day is stated in the source.",
     "deadlines items MUST be objects: {title, sourceChunkIds, dueAt?, dateKind:\"explicit\"|\"inferred\", sourceQuotes?, confidence?}.",
     "If evidence is insufficient for a category, return an empty array for that category.",
   ].join(" ");

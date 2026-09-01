@@ -1,6 +1,6 @@
 import { ingestStudentCaseSchema } from "@nyayagrid/validation";
 import { ingestStudentCase, listStudentCases } from "@nyayagrid/workspaces";
-import { requireUser } from "@/lib/auth";
+import { requireProfessorUser } from "@/lib/features";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
 import { getEmbeddings, getStorage } from "@/lib/infra";
 
@@ -11,7 +11,7 @@ import { getEmbeddings, getStorage } from "@/lib/infra";
  */
 export async function GET(request: Request) {
   try {
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireProfessorUser(request.headers);
     const cases = await listStudentCases(db, user.id);
     return jsonOk({ cases });
   } catch (error) {
@@ -21,7 +21,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireProfessorUser(request.headers);
     const contentType = request.headers.get("content-type") ?? "";
 
     if (contentType.includes("multipart/form-data")) {

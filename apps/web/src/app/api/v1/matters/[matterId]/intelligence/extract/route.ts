@@ -4,6 +4,7 @@ import { requireMatterAccess, writeAuditEvent } from "@nyayagrid/permissions";
 import { extractMatterIntelligenceForReadyDocuments } from "@nyayagrid/intelligence";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonOk } from "@/lib/http";
+import { enforceRateLimit } from "@/lib/rate-limit";
 
 type Params = { params: Promise<{ matterId: string }> };
 
@@ -17,6 +18,12 @@ export async function POST(request: Request, { params }: Params) {
       minAccess: "edit",
       capability: "timeline.manage",
     });
+    const limited = await enforceRateLimit(request, {
+      endpointClass: "expensive_ai",
+      organizationId: matter.organizationId,
+      userId: user.id,
+    });
+    if (limited) return limited;
     const body = extractIntelligenceSchema.parse(await request.json().catch(() => ({})));
     const results = await extractMatterIntelligenceForReadyDocuments({
       db,

@@ -1,11 +1,16 @@
 import { z } from "zod";
 import { confidenceLevelSchema } from "./intelligence";
+import {
+  findDeterministicContradictionCandidates,
+  refineContradictionCandidates,
+  refineDepositionFindingClass,
+} from "./contradiction-semantics";
 
 export const DRAFT_GENERATION_PROMPT_VERSION = "draft-generation-v1";
-export const CONTRACT_ANALYSIS_PROMPT_VERSION = "contract-analysis-v1";
+export const CONTRACT_ANALYSIS_PROMPT_VERSION = "contract-analysis-v2";
 export const REDLINE_SUGGESTIONS_PROMPT_VERSION = "redline-suggestions-v1";
-export const DEPOSITION_ANALYSIS_PROMPT_VERSION = "deposition-analysis-v1";
-export const CONTRADICTION_ANALYSIS_PROMPT_VERSION = "contradiction-analysis-v2";
+export const DEPOSITION_ANALYSIS_PROMPT_VERSION = "deposition-analysis-v2";
+export const CONTRADICTION_ANALYSIS_PROMPT_VERSION = "contradiction-analysis-v3";
 export const DISCOVERY_CLASSIFICATION_PROMPT_VERSION = "discovery-classification-v1";
 
 export const analysisAttentionSchema = z.enum(["informational", "review", "high_attention"]);
@@ -28,6 +33,7 @@ export const contractAnalysisItemSchema = z.object({
   explanation: z.string().min(1).max(8000),
   attention: analysisAttentionSchema.default("informational"),
   sourceChunkIds: z.array(z.string().uuid()).min(1),
+  supportingQuotes: z.array(z.string().min(1).max(800)).max(8).optional().default([]),
 });
 
 export const contractAnalysisSchema = z.object({
@@ -54,12 +60,234 @@ export const depositionFindingSchema = z.object({
   confidence: confidenceLevelSchema.default("medium"),
   attention: analysisAttentionSchema.default("review"),
   sourceChunkIds: z.array(z.string().uuid()).min(1),
+  supportingQuotes: z.array(z.string().min(1).max(800)).max(8).optional().default([]),
 });
 
-export const depositionAnalysisSchema = z.object({
+const depositionAnalysisObjectSchema = z.object({
   summary: z.string().max(8000).optional().nullable(),
   findings: z.array(depositionFindingSchema).default([]),
 });
+
+/**
+ * Live models sometimes emit attention as "High"/"Medium" (confidence-shaped labels)
+ * instead of informational | review | high_attention.
+ *
+ * Mapping is representation-only:
+ * - high / high_attention → high_attention
+ * - medium / review → review (deposition default bucket)
+ * - low / informational → informational
+ *
+ * Unknown values are left unchanged so Zod can reject that finding.
+ */
+export function normalizeAnalysisAttention(value: unknown): unknown {
+  if (typeof value !== "string") return value;
+  const normalized = value
+    .toLowerCase()
+    .trim()
+    .replace(/[\s-]+/g, "_");
+  if (normalized === "high_attention" || normalized === "highattention" || normalized === "high") {
+    return "high_attention";
+  }
+  if (normalized === "review" || normalized === "medium" || normalized === "moderate") {
+    return "review";
+  }
+  if (
+    normalized === "informational" ||
+    normalized === "information" ||
+    normalized === "info" ||
+    normalized === "low"
+  ) {
+    return "informational";
+  }
+  return value;
+}
+
+function normalizeDepositionFindingType(value: unknown): unknown {
+  if (typeof value !== "string") return value;
+  const trimmed = value.trim();
+  if (!trimmed) return value;
+  return trimmed.toLowerCase().replace(/\s+/g, "_").slice(0, 120);
+}
+
+function asFindingList(value: unknown): unknown[] {
+  if (Array.isArray(value)) return value;
+  if (value && typeof value === "object") return [value];
+  return [];
+}
+
+function findingWasNormalized(raw: unknown, next: Record<string, unknown>): boolean {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return false;
+  const original = raw as Record<string, unknown>;
+  return (
+    original.confidence !== next.confidence ||
+    original.attention !== next.attention ||
+    original.findingType !== next.findingType
+  );
+}
+
+export function normalizeDepositionFindingCandidate(raw: unknown): unknown {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return raw;
+  const next = { ...(raw as Record<string, unknown>) };
+  if (next.findingType !== undefined) {
+    next.findingType = normalizeDepositionFindingType(next.findingType);
+  }
+  if (next.confidence !== undefined) {
+    next.confidence = normalizeConfidenceLevel(next.confidence);
+  }
+  if (next.attention !== undefined) {
+    next.attention = normalizeAnalysisAttention(next.attention);
+  }
+  if (next.supportingQuotes !== undefined && !Array.isArray(next.supportingQuotes)) {
+    next.supportingQuotes =
+      typeof next.supportingQuotes === "string" && next.supportingQuotes.trim()
+        ? [next.supportingQuotes]
+        : [];
+  }
+  return next;
+}
+
+export function normalizeDepositionRaw(raw: unknown): unknown {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return raw;
+  const obj = { ...(raw as Record<string, unknown>) };
+  obj.findings = asFindingList(obj.findings).map((finding) =>
+    normalizeDepositionFindingCandidate(finding),
+  );
+  return obj;
+}
+
+export type ParsedDepositionAnalysis = {
+  analysis: z.infer<typeof depositionAnalysisObjectSchema>;
+  rejectedMalformed: number;
+  normalizedCount: number;
+};
+
+/**
+ * Normalize representation variants, then keep only findings that match the
+ * canonical schema. One malformed row does not fail the envelope.
+ */
+export function parseDepositionAnalysis(raw: unknown): ParsedDepositionAnalysis {
+  const normalized = normalizeDepositionRaw(raw);
+  if (!normalized || typeof normalized !== "object" || Array.isArray(normalized)) {
+    return {
+      analysis: { summary: null, findings: [] },
+      rejectedMalformed: 1,
+      normalizedCount: 0,
+    };
+  }
+  const obj = normalized as Record<string, unknown>;
+  const incoming = asFindingList(obj.findings);
+  const originalIncoming = asFindingList(
+    raw && typeof raw === "object" && !Array.isArray(raw)
+      ? (raw as Record<string, unknown>).findings
+      : incoming,
+  );
+  const findings: z.infer<typeof depositionFindingSchema>[] = [];
+  let rejectedMalformed = 0;
+  let normalizedCount = 0;
+  incoming.forEach((candidate, index) => {
+    const parsed = depositionFindingSchema.safeParse(candidate);
+    if (!parsed.success) {
+      rejectedMalformed += 1;
+      return;
+    }
+    if (findingWasNormalized(originalIncoming[index], candidate as Record<string, unknown>)) {
+      normalizedCount += 1;
+    }
+    const refined = refineDepositionFindingClass(parsed.data);
+    if (refined.findingType !== parsed.data.findingType) {
+      normalizedCount += 1;
+    }
+    findings.push(refined);
+  });
+  const summary =
+    typeof obj.summary === "string"
+      ? obj.summary.slice(0, 8000)
+      : obj.summary === null
+        ? null
+        : undefined;
+  return {
+    analysis: { summary: summary ?? null, findings },
+    rejectedMalformed,
+    normalizedCount,
+  };
+}
+
+export const depositionAnalysisSchema = z.preprocess(
+  (raw) => parseDepositionAnalysis(raw).analysis,
+  depositionAnalysisObjectSchema,
+);
+
+function normalizeContractItemCandidate(raw: unknown): unknown {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return raw;
+  const next = { ...(raw as Record<string, unknown>) };
+  if (next.attention !== undefined) {
+    next.attention = normalizeAnalysisAttention(next.attention);
+  }
+  if (next.supportingQuotes !== undefined && !Array.isArray(next.supportingQuotes)) {
+    next.supportingQuotes =
+      typeof next.supportingQuotes === "string" && next.supportingQuotes.trim()
+        ? [next.supportingQuotes]
+        : [];
+  }
+  return next;
+}
+
+function contractItemWasNormalized(raw: unknown, next: Record<string, unknown>): boolean {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return false;
+  const original = raw as Record<string, unknown>;
+  return original.attention !== next.attention;
+}
+
+export type ParsedContractAnalysis = {
+  analysis: z.infer<typeof contractAnalysisSchema>;
+  rejectedMalformed: number;
+  normalizedCount: number;
+};
+
+/**
+ * Normalize attention representation variants, then keep only items that match
+ * the canonical schema. One malformed row does not fail the envelope.
+ */
+export function parseContractAnalysis(raw: unknown): ParsedContractAnalysis {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) {
+    return {
+      analysis: { summary: "Contract analysis could not be parsed from model output.", items: [] },
+      rejectedMalformed: 1,
+      normalizedCount: 0,
+    };
+  }
+  const obj = raw as Record<string, unknown>;
+  const incoming = asFindingList(obj.items);
+  const findings: z.infer<typeof contractAnalysisItemSchema>[] = [];
+  let rejectedMalformed = 0;
+  let normalizedCount = 0;
+  incoming.forEach((candidate, index) => {
+    const normalized = normalizeContractItemCandidate(candidate);
+    const parsed = contractAnalysisItemSchema.safeParse(normalized);
+    if (!parsed.success) {
+      rejectedMalformed += 1;
+      return;
+    }
+    if (
+      normalized &&
+      typeof normalized === "object" &&
+      !Array.isArray(normalized) &&
+      contractItemWasNormalized(incoming[index], normalized as Record<string, unknown>)
+    ) {
+      normalizedCount += 1;
+    }
+    findings.push(parsed.data);
+  });
+  const summary =
+    typeof obj.summary === "string" && obj.summary.trim()
+      ? obj.summary.slice(0, 8000)
+      : "Contract analysis produced no usable summary.";
+  return {
+    analysis: { summary, items: findings },
+    rejectedMalformed,
+    normalizedCount,
+  };
+}
 
 export const contradictionSideSchema = z.object({
   chunkIds: z.array(z.string().uuid()).min(1),
@@ -70,6 +298,7 @@ export const contradictionCandidateSchema = z.object({
   title: z.string().min(1).max(300),
   explanation: z.string().min(1).max(8000),
   confidence: confidenceLevelSchema.default("medium"),
+  relation: z.enum(["contradiction", "tension"]).optional(),
   sideA: contradictionSideSchema,
   sideB: contradictionSideSchema,
 });
@@ -99,6 +328,14 @@ export function normalizeContradictionRaw(raw: unknown): unknown {
     const next = { ...(candidate as Record<string, unknown>) };
     if (next.confidence !== undefined) {
       next.confidence = normalizeConfidenceLevel(next.confidence);
+    }
+    if (typeof next.relation === "string") {
+      const relation = next.relation.toLowerCase().trim();
+      if (relation === "contradiction" || relation === "tension") {
+        next.relation = relation;
+      } else {
+        delete next.relation;
+      }
     }
     return next;
   });
@@ -160,13 +397,47 @@ export function formatProfessionalChunks(chunks: ProfessionalChunk[]): string {
     .join("\n");
 }
 
+/** Round-robin by document so one long contract cannot crowd out related evidence. */
+export function selectRelatedChunksForDeposition(
+  chunks: ProfessionalChunk[],
+  limit = 32,
+): ProfessionalChunk[] {
+  if (chunks.length <= limit) return chunks;
+  const lists: ProfessionalChunk[][] = [];
+  const byDoc = new Map<string, ProfessionalChunk[]>();
+  for (const chunk of chunks) {
+    const list = byDoc.get(chunk.documentId) ?? [];
+    list.push(chunk);
+    byDoc.set(chunk.documentId, list);
+  }
+  for (const list of byDoc.values()) lists.push(list);
+  const selected: ProfessionalChunk[] = [];
+  let index = 0;
+  while (selected.length < limit) {
+    let added = false;
+    for (const list of lists) {
+      const chunk = list[index];
+      if (!chunk) continue;
+      selected.push(chunk);
+      added = true;
+      if (selected.length >= limit) break;
+    }
+    if (!added) break;
+    index += 1;
+  }
+  return selected;
+}
+
 export function buildDraftGenerationSystemPrompt(): string {
   return [
     "You generate legal draft content for authorized matter work using ONLY provided Sources and verified context.",
     "Never invent facts, citations, parties, dates, or legal conclusions.",
+    "Instructions are drafting goals, not evidence. Do not treat requested facts as true unless they appear in Sources.",
+    "Advocacy tone is allowed. Do not state physical entry, missing-exhibit contents, or admissions as established facts unless Sources contain those facts.",
     "Every factual assertion MUST cite one or more provided chunkIds.",
     "State assumptions explicitly when required facts are missing.",
     "This output is AI-generated and requires attorney review.",
+    "CaseJurisdictionMetadata, when present, is user Case metadata — not evidence and not verified governing law. Do not convert related jurisdictions into governing law.",
     "Return JSON only: {content, assertions:[{text,chunkIds}], assumptions:[]}.",
   ].join(" ");
 }
@@ -181,7 +452,9 @@ export function buildDraftGenerationUserPrompt(input: {
   return [
     `Matter: ${input.matterTitle}`,
     `Draft type: ${input.draftType}`,
-    input.instructions ? `Instructions: ${input.instructions}` : "",
+    input.instructions
+      ? `Instructions (drafting goals only; not Case facts):\n${input.instructions}`
+      : "",
     input.verifiedContext ? `Verified context:\n${input.verifiedContext}` : "",
     "Sources:",
     formatProfessionalChunks(input.chunks) || "(none)",
@@ -192,12 +465,22 @@ export function buildDraftGenerationUserPrompt(input: {
 
 export function buildContractAnalysisSystemPrompt(): string {
   return [
-    "You analyze contract documents for lawyers using ONLY provided Sources.",
-    "Never invent clauses, obligations, risks, or citations.",
-    "Each item MUST include category, title, originalText when available, explanation, attention, and sourceChunkIds.",
-    "attention must be informational, review, or high_attention.",
-    "Return JSON only: {summary, items:[{category,title,originalText,explanation,attention,sourceChunkIds}]}.",
-    "If evidence is insufficient, return a cautious summary and an empty items array.",
+    "You analyze THIS instrument only, using ONLY provided Sources.",
+    "Report what this document states. Do not treat it as the matter-wide current operative contract unless Sources include a later signed instrument and its effective date.",
+    "Never invent clauses, exhibits, schedules, amounts, dates, parties, or citations.",
+    "Copy legally meaningful numbers, durations, percentages, and dates from Sources into title and explanation (for example, days, dollar amounts, effective dates). Do not write a generic notice finding that omits the stated period.",
+    "originalText and supportingQuotes must be verbatim spans from Sources that support that item.",
+    "sourceChunkIds must identify the chunk containing that span. Do not cite an unrelated header chunk.",
+    "Preserve limiting language: not, except, unless, subject to, only if, may, shall, must, will not exceed.",
+    "If Sources are informal correspondence (email), findings may describe communication or belief, but must not treat the email as a signed or controlling contract instrument.",
+    "If a referenced exhibit or schedule is not in Sources, say it is missing or unavailable. Do not invent its contents from other clauses, emails, or other contracts.",
+    "Do not elevate spelling, formatting, headings, or exhibit-letter/renumbering-only changes as material legal risk.",
+    "One item per distinct obligation. Do not repeat the same proposition in different wording.",
+    "summary must reflect the items. If items exist, do not claim there are no significant terms. Do not invent claims absent from items.",
+    "Each item MUST include category, title, originalText, explanation, attention, sourceChunkIds, and optional supportingQuotes.",
+    "attention must be exactly informational, review, or high_attention.",
+    "Return JSON only: {summary, items:[{category,title,originalText,explanation,attention,sourceChunkIds,supportingQuotes}]}.",
+    "If evidence is insufficient, return a cautious summary and an empty items array rather than inventing findings.",
   ].join(" ");
 }
 
@@ -239,11 +522,23 @@ export function buildRedlineSuggestionsUserPrompt(input: {
 
 export function buildDepositionAnalysisSystemPrompt(): string {
   return [
-    "You analyze deposition transcripts for lawyers using ONLY provided Sources.",
-    "Never invent testimony, admissions, or impeachment points.",
-    "Each finding MUST include findingType, title, explanation, confidence, attention, and sourceChunkIds.",
-    "Return JSON only: {summary, findings:[{findingType,title,explanation,confidence,attention,sourceChunkIds}]}.",
-    "If evidence is insufficient, return a cautious summary and an empty findings array.",
+    "You analyze deposition transcripts for lawyers using ONLY provided Sources and Related matter evidence.",
+    "Never invent testimony, admissions, denials, quotes, dates, actors, or impeachment points.",
+    "Return no finding rather than inventing one. If nothing material is in the transcript, return findings:[].",
+    "Each finding MUST include findingType, title, explanation, confidence, attention, sourceChunkIds, and supportingQuotes.",
+    "findingType is a short label. Prefer one of admission, denial, inconsistency, tension, uncertainty, testimony_statement, credibility_issue, date_discrepancy when those labels fit. Other short labels are allowed. Do not invent a finding merely to fill a type.",
+    "confidence MUST be exactly one of the lowercase strings low, medium, or high — never a number, never High.",
+    "attention MUST be exactly informational, review, or high_attention — never High, Medium, or Low.",
+    "supportingQuotes MUST be copied verbatim from the cited chunk text and must actually support the finding. Do not quote document headers or boilerplate general provisions unless that text is the testimony.",
+    "Attribute testimony to the speaker (the witness testified / stated / admitted / denied). Testimony about an event is not an established matter fact that the event occurred.",
+    "Do not invert a denial into a positive fact.",
+    "Preserve uncertainty and approximation (I think, I believe, I do not recall, around, near, maybe). Do not convert uncertain or approximate testimony into an exact fact.",
+    "Use inconsistency only when two testimony propositions cannot reasonably both be true in the same scope, time, and context.",
+    "Use tension when evidence points in different directions but can coexist (for example, a denial of physical entry and a credential log for an assigned badge).",
+    "Recorded credential or system activity (badge, login, swipe, assigned access) is not independent proof of a named person's physical conduct. Do not assert that a named person physically performed the act, and do not assert that the person lied, solely from credential activity.",
+    "Do not treat paraphrase, rounding, on-or-about the same date, or imprecise restatements (for example near the middle of a month vs an exact date in that month, or around a date vs that date) as inconsistency or contradiction.",
+    "Do not treat unrelated contract or amendment differences as deposition findings unless they are genuinely about the testimony under analysis.",
+    "Return JSON only: {summary, findings:[{findingType,title,explanation,confidence,attention,sourceChunkIds,supportingQuotes}]}.",
   ].join(" ");
 }
 
@@ -251,12 +546,20 @@ export function buildDepositionAnalysisUserPrompt(input: {
   documentTitle: string;
   witnessName?: string | null;
   chunks: ProfessionalChunk[];
+  relatedChunks?: ProfessionalChunk[];
 }): string {
+  const related = input.relatedChunks?.length
+    ? [
+        "Related matter evidence (not testimony). Use only when it bears on the testimony. Do not flag unrelated contract or amendment differences as deposition findings.",
+        formatProfessionalChunks(input.relatedChunks),
+      ]
+    : [];
   return [
     `Transcript: ${input.documentTitle}`,
     input.witnessName ? `Witness: ${input.witnessName}` : "",
     "Sources:",
     formatProfessionalChunks(input.chunks) || "(none)",
+    ...related,
   ]
     .filter(Boolean)
     .join("\n");
@@ -264,13 +567,18 @@ export function buildDepositionAnalysisUserPrompt(input: {
 
 export function buildContradictionAnalysisSystemPrompt(): string {
   return [
-    "You identify potential contradictions across authorized matter Sources only.",
+    "You identify potential contradictions and evidentiary tensions across authorized matter Sources only.",
     "Never invent statements or conflicts.",
-    "Each candidate MUST include title, explanation, confidence, sideA, and sideB with chunkIds and summaries.",
+    "Each candidate MUST include title, explanation, confidence, relation, sideA, and sideB with chunkIds and summaries.",
     "confidence MUST be exactly one of the lowercase strings low, medium, or high — never a number, never High.",
-    "Do not treat paraphrase, rounding, on-or-about the same date, or imprecise restatements (for example end of February vs February 28) as contradictions. Return {candidates:[]} unless two sources cannot both be true.",
-    "Return JSON only: {candidates:[{title,explanation,confidence,sideA:{chunkIds,summary},sideB:{chunkIds,summary}}]}.",
-    "If no defensible contradictions exist, return {candidates:[]}.",
+    "relation MUST be exactly contradiction or tension.",
+    "Use contradiction only when two propositions cannot reasonably both be true in the same scope, time, and context.",
+    "Use tension when evidence points in different directions but does not logically prove an impossible conflict.",
+    "Recorded credential or system activity (badge, login, swipe, assigned access) is not independent proof of a named person's physical conduct. If testimony denies an act and a credential log records related activity, classify relation as tension.",
+    "Do not treat paraphrase, rounding, on-or-about the same date, or imprecise restatements (for example end of February vs February 28, or near the middle of a month vs an exact date in that month) as contradictions.",
+    "Do not treat sequenced contract amendments (an original term later replaced or superseded) as contradictions.",
+    "Return JSON only: {candidates:[{title,explanation,confidence,relation,sideA:{chunkIds,summary},sideB:{chunkIds,summary}}]}.",
+    "If no defensible contradiction or tension exists, return {candidates:[]}.",
   ].join(" ");
 }
 
@@ -362,23 +670,28 @@ export function mockContractAnalysis(userPrompt: string): ContractAnalysis {
   const items: ContractAnalysisItem[] = [];
   for (const chunk of chunks) {
     const lower = chunk.content.toLowerCase();
-    if (/terminat|liabil|indemn|confidential|payment|warrant/.test(lower)) {
-      const category = /terminat/.test(lower)
-        ? "termination"
-        : /indemn|liabil/.test(lower)
-          ? "risk_allocation"
-          : /confidential/.test(lower)
-            ? "confidentiality"
-            : /payment/.test(lower)
-              ? "payment"
-              : "general";
+    if (/terminat|liabil|indemn|confidential|payment|warrant|notice|insur|exhibit/.test(lower)) {
+      const category = /notice/.test(lower)
+        ? "notice"
+        : /terminat/.test(lower)
+          ? "termination"
+          : /indemn|liabil/.test(lower)
+            ? "risk_allocation"
+            : /confidential/.test(lower)
+              ? "confidentiality"
+              : /payment/.test(lower)
+                ? "payment"
+                : /insur/.test(lower)
+                  ? "insurance"
+                  : "general";
       items.push({
         category,
         title: `Review ${category.replace(/_/g, " ")} language`,
         originalText: chunk.content.slice(0, 500),
-        explanation: "Mock contract review item derived from source clause language.",
+        explanation: `Mock contract review item derived from source clause language. ${chunk.content.slice(0, 280)}`,
         attention: /indemn|liabil|terminat/.test(lower) ? "high_attention" : "review",
         sourceChunkIds: [chunk.chunkId],
+        supportingQuotes: [chunk.content.slice(0, 280)],
       });
     }
   }
@@ -427,6 +740,7 @@ export function mockDepositionAnalysis(userPrompt: string): DepositionAnalysis {
         confidence: "medium",
         attention: /admit|deny/.test(lower) ? "high_attention" : "review",
         sourceChunkIds: [chunk.chunkId],
+        supportingQuotes: [chunk.content.slice(0, 280)],
       });
     }
   }
@@ -443,7 +757,8 @@ const EXACT_CALENDAR_DATE =
   /\b((January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4})\b/gi;
 const CAM_TOKEN = /\bCAM\b/;
 const CAM_SEND_VERB = /\b(send|sent|emailed|uploaded|transmitted|transmission)\b/i;
-const CAM_NON_TRANSMITTAL = /\b(not a transmittal|prepared internally|estimated February CAM worksheet)\b/i;
+const CAM_NON_TRANSMITTAL =
+  /\b(not a transmittal|prepared internally|estimated February CAM worksheet)\b/i;
 
 function exactCalendarDates(text: string): string[] {
   const found = new Set<string>();
@@ -483,6 +798,7 @@ export function findExactCrossDocumentDateConflicts(
         explanation:
           "Two Case documents give different exact dates for when the CAM package was sent or uploaded. Both sides are presented; neither is treated as the true account.",
         confidence: "medium",
+        relation: "contradiction",
         sideA: { chunkIds: [a.chunkId], summary: a.content.slice(0, 400) },
         sideB: { chunkIds: [b.chunkId], summary: b.content.slice(0, 400) },
       });
@@ -509,59 +825,12 @@ export function mergeContradictionCandidates(
 export function mockContradictionCandidates(userPrompt: string): ContradictionCandidates {
   const chunks = extractProfessionalChunksFromPrompt(userPrompt);
   if (chunks.length < 2) return { candidates: [] };
-  const camConflicts = findExactCrossDocumentDateConflicts(chunks);
-  if (camConflicts.candidates.length > 0) return camConflicts;
-
-  const exactDates = (text: string): string[] => {
-    const re =
-      /\b((January|February|March|April|May|June|July|August|September|October|November|December)\s+\d{1,2},\s+\d{4})\b/gi;
-    const found = new Set<string>();
-    for (const match of text.matchAll(re)) {
-      found.add(match[1]!.toLowerCase());
-    }
-    return [...found];
-  };
-
-  const datesConflict = (a: string, b: string): boolean => {
-    const da = exactDates(a);
-    const db = exactDates(b);
-    if (da.length === 0 || db.length === 0) return false;
-    return da.some((d) => !db.includes(d)) && db.some((d) => !da.includes(d));
-  };
-
-  const polarityConflict = (a: string, b: string): boolean => {
-    const positive = /\b(signed|agreed|yes|confirmed)\b/i;
-    const negative = /\b(denied|never|unfinished)\b/i;
-    return (
-      (positive.test(a) && negative.test(b)) ||
-      (positive.test(b) && negative.test(a)) ||
-      (/\bbefore\b/i.test(a) && /\bafter\b/i.test(b)) ||
-      (/\bbefore\b/i.test(b) && /\bafter\b/i.test(a))
-    );
-  };
-
-  for (let i = 0; i < chunks.length; i += 1) {
-    for (let j = i + 1; j < chunks.length; j += 1) {
-      const a = chunks[i]!;
-      const b = chunks[j]!;
-      if (!datesConflict(a.content, b.content) && !polarityConflict(a.content, b.content)) {
-        continue;
-      }
-      return {
-        candidates: [
-          {
-            title: "Potential conflicting statements",
-            explanation:
-              "Mock contradiction candidate based on opposing language in two source chunks. Both sides are presented; neither is treated as the true account.",
-            confidence: "medium",
-            sideA: { chunkIds: [a.chunkId], summary: a.content.slice(0, 280) },
-            sideB: { chunkIds: [b.chunkId], summary: b.content.slice(0, 280) },
-          },
-        ],
-      };
-    }
-  }
-  return { candidates: [] };
+  const chunkTextById = new Map(chunks.map((chunk) => [chunk.chunkId, chunk.content]));
+  const merged = mergeContradictionCandidates(
+    findDeterministicContradictionCandidates(chunks),
+    findExactCrossDocumentDateConflicts(chunks).candidates,
+  );
+  return { candidates: refineContradictionCandidates(merged, chunkTextById) };
 }
 
 export function mockDiscoveryClassification(userPrompt: string): DiscoveryClassification {

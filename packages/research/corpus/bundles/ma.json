@@ -1,0 +1,57 @@
+[
+  {
+    "title": "M.G.L. c. 106, § 2-725 — Statute of limitations in contracts for sale",
+    "shortTitle": "Mass. UCC § 2-725",
+    "authorityType": "statute",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "M.G.L. c. 106, § 2-725",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-ucc-2-725",
+    "canonicalSourceUrl": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXV/Chapter106/Section2-725",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["contract", "commercial", "civil"],
+    "content": "M.G.L. c. 106, § 2-725\n\nSection 2-725. An action for breach of any contract for sale must be commenced within 4 years after the cause of action has accrued. By the original agreement the parties may reduce the period of limitation to not less than one year but may not extend it.\n\nA cause of action accrues when the breach occurs, regardless of the aggrieved party's lack of knowledge of the breach.",
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "ucc_article_2_limitations" }
+  },
+  {
+    "title": "M.G.L. c. 151, § 1 — Minimum fair wages",
+    "shortTitle": "M.G.L. c. 151, § 1",
+    "authorityType": "statute",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "M.G.L. c. 151, § 1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-labor-151-1",
+    "canonicalSourceUrl": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXXI/Chapter151/Section1",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["employment"],
+    "content": "M.G.L. c. 151, § 1\n\nEvery employer shall pay to each of his employees wages at a rate not less than the minimum fair wage rate established pursuant to section 2.",
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "minimum_wage" }
+  },
+  {
+    "title": "Papadopoulos v. Target Corp., 457 Mass. 368 (2010)",
+    "shortTitle": "Papadopoulos v. Target",
+    "authorityType": "case",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "court": "Massachusetts Supreme Judicial Court",
+    "courtId": "st-ma-high",
+    "courtLevel": "state_high",
+    "citation": "457 Mass. 368",
+    "decisionDate": "2010-07-09",
+    "publicationStatus": "published",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-papadopoulos-v-target-457-mass-368",
+    "canonicalSourceUrl": "https://www.courtlistener.com/opinion/2045557/papadopoulos-v-target-corp/",
+    "bundleSourceClass": "PRIMARY_PUBLIC_REPOSITORY",
+    "bundleQualityTier": "TIER_2_TRUSTED_PUBLIC",
+    "bundlePracticeAreas": ["civil"],
+    "content": "Papadopoulos v. Target Corp., 457 Mass. 368 (2010).\n\nThe Supreme Judicial Court abolished the distinction between natural and unnatural accumulations of snow and ice for premises liability purposes. A property owner owes a duty of reasonable care to lawful visitors to make reasonable efforts to protect against dangerous conditions on its property, including snow and ice.",
+    "sourceMetadata": {
+      "retrievalMethod": "public_repository_snapshot",
+      "repository": "courtlistener",
+      "excerptNote": "Excerpt summarizing holding; full opinion at canonical URL."
+    }
+  }
+]

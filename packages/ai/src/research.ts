@@ -5,7 +5,7 @@ export const QUERY_DECOMPOSITION_PROMPT_VERSION = "query-decomposition-v1";
 export const LEGAL_ISSUE_EXTRACTION_PROMPT_VERSION = "legal-issue-extraction-v1";
 export const AUTHORITY_RELEVANCE_EXPLANATION_PROMPT_VERSION = "authority-relevance-explanation-v1";
 export const AUTHORITY_SUMMARY_PROMPT_VERSION = "authority-summary-v1";
-export const RESEARCH_SYNTHESIS_PROMPT_VERSION = "research-synthesis-v1";
+export const RESEARCH_SYNTHESIS_PROMPT_VERSION = "research-synthesis-v3";
 export const CONTRARY_AUTHORITY_SEARCH_PROMPT_VERSION = "contrary-authority-search-v1";
 export const QUOTE_CANDIDATES_PROMPT_VERSION = "quote-candidates-v1";
 export const RESEARCH_MEMO_PROMPT_VERSION = "research-memo-v1";
@@ -18,6 +18,9 @@ export const RESEARCH_GROUNDING_RULES = [
   "If coverage is incomplete, state coverageWarnings clearly.",
   "Your training knowledge and external model memory are NOT legal sources.",
 ] as const;
+
+export const RESEARCH_OPERATIVE_RULE_INSTRUCTION =
+  "When a LegalAuthority passage labeled hierarchyRelationship=controlling directly answers the asked legal rule, state that supported rule in conciseAnswer and in legalPropositions, including any numeric period, threshold, or element that appears in the passage. Do not describe the source only in the abstract. If no provided passage supports the rule, do not invent it. Never treat a passage labeled persuasive, out_of_jurisdiction, or unknown as controlling.";
 
 export const relevanceTierSchema = z.enum([
   "highly_relevant",
@@ -160,19 +163,22 @@ export type ResearchAuthorityChunk = {
   court?: string | null;
   date?: string | null;
   content: string;
+  hierarchyRelationship?: string | null;
+  jurisdiction?: string | null;
+  temporalApplicability?: string | null;
 };
-
-function researchGroundingRulesText(): string {
-  return RESEARCH_GROUNDING_RULES.join(" ");
-}
 
 export function formatResearchAuthorityChunks(chunks: ResearchAuthorityChunk[]): string {
   return chunks
     .map(
       (c) =>
-        `- authorityId=${c.authorityId} | chunkId=${c.chunkId} | citation=${c.citation ?? "null"} | court=${c.court ?? "null"} | date=${c.date ?? "null"} | text=|${c.content}|`,
+        `- authorityId=${c.authorityId} | chunkId=${c.chunkId} | citation=${c.citation ?? "null"} | court=${c.court ?? "null"} | date=${c.date ?? "null"} | hierarchyRelationship=${c.hierarchyRelationship ?? "unknown"} | temporalApplicability=${c.temporalApplicability ?? "unknown"} | jurisdiction=${c.jurisdiction ?? "null"} | text=|${c.content}|`,
     )
     .join("\n");
+}
+
+function researchGroundingRulesText(): string {
+  return RESEARCH_GROUNDING_RULES.join(" ");
 }
 
 export function extractResearchAuthorityChunksFromPrompt(prompt: string): ResearchAuthorityChunk[] {
@@ -333,9 +339,15 @@ export function buildResearchSynthesisSystemPrompt(): string {
   return [
     "You synthesize legal research answers using ONLY provided LegalAuthority passages.",
     researchGroundingRulesText(),
+    RESEARCH_OPERATIVE_RULE_INSTRUCTION,
+    "Quote or closely paraphrase the operative words of that passage in conciseAnswer so the supported measure is explicit.",
+    "Write conciseAnswer as a complete attorney-facing research response, not a single sentence: issue, rule from the provided authorities, application, and caveats. Do not invent authorities or fill gaps with training knowledge.",
+    "When CaseJurisdictionMetadata records a governing law that differs from the forum and the question depends on substantive state law, name Forum and Governing law in conciseAnswer. Related jurisdictions are not governing law.",
     "Each legalProposition MUST include at least one authorityId from LegalAuthority.",
     "List supportingAuthorities, contraryAuthorities, distinctions, caveats, unresolvedIssues, and coverageWarnings.",
     "sources must map authorityId and optional chunkId, quote, and pinpoint from provided passages only.",
+    "If an authority is labeled hierarchyRelationship=persuasive, out_of_jurisdiction, or unknown, do not describe it as controlling or binding precedent.",
+    "Do not upgrade an authority to controlling because it is semantically relevant. Relationship labels in LegalAuthority are authoritative; do not infer hierarchy from training knowledge.",
     "Return JSON only matching the research synthesis schema.",
   ].join(" ");
 }
@@ -345,15 +357,19 @@ export function buildResearchSynthesisUserPrompt(input: {
   jurisdiction?: string | null;
   authorityChunks: ResearchAuthorityChunk[];
   matterContextSummary?: string | null;
+  jurisdictionContext?: string | null;
 }): string {
   return [
     `Research question: ${input.question}`,
+    "LegalAuthority:",
+    formatResearchAuthorityChunks(input.authorityChunks) || "(none)",
     input.jurisdiction ? `Jurisdiction: ${input.jurisdiction}` : "",
+    input.jurisdictionContext
+      ? `CaseJurisdictionMetadata:\n${input.jurisdictionContext}`
+      : "",
     input.matterContextSummary
       ? `MatterContext (issue framing only, not legal authority):\n${input.matterContextSummary}`
       : "",
-    "LegalAuthority:",
-    formatResearchAuthorityChunks(input.authorityChunks) || "(none)",
   ]
     .filter(Boolean)
     .join("\n");

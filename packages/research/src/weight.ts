@@ -1,3 +1,5 @@
+import { extractCitationsFromText } from "./citations";
+
 export type AuthorityWeightLabel = "potentially_binding" | "persuasive" | "unknown";
 
 export type AuthorityWeightInput = {
@@ -69,4 +71,96 @@ export function classifyAuthorityWeight(input: AuthorityWeightInput): AuthorityW
     label: "potentially_binding",
     reason: `Same jurisdiction (${input.authorityJurisdiction}) and a recorded court (${input.authorityCourt}). Binding force still requires attorney verification of court hierarchy and currentness.`,
   };
+}
+
+export type WeightGuardHit = {
+  citation?: string | null;
+  title?: string | null;
+  jurisdiction?: string | null;
+  hierarchyRelationship?: string | null;
+};
+
+const CONTROLLING_TAIL =
+  /is\s+(?:the\s+)?(?:controlling|binding)(?:\s+(?:authority|precedent|law))?\b/i;
+
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+function demoteControllingAfterNeedle(text: string, needle: string): string {
+  const trimmed = needle.replace(/\s+/g, " ").trim();
+  if (trimmed.length < 4) return text;
+  const re = new RegExp(`(${escapeRegExp(trimmed)})(\\s+)(${CONTROLLING_TAIL.source})`, "gi");
+  return text.replace(re, (full, cite: string, space: string, tail: string) => {
+    if (/\bis\s+not\b/i.test(tail)) return full;
+    return `${cite}${space}is not ${tail.replace(/^is\s+/i, "")}`;
+  });
+}
+
+function forumLabels(queryJurisdiction?: string | null, extra?: string[]): string[] {
+  return [queryJurisdiction, ...(extra ?? [])]
+    .map((value) => value?.replace(/\s+/g, " ").trim().toLowerCase())
+    .filter((value): value is string => Boolean(value));
+}
+
+const STOP_TOKENS = new Set(["code", "the", "of", "and", "act", "stat", "ann", "for", "a"]);
+
+function significantTokens(value: string): string[] {
+  return value
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter((token) => token.length >= 4 && !STOP_TOKENS.has(token));
+}
+
+function citationSharesForum(citation: string, labels: string[]): boolean {
+  const citeTokens = significantTokens(citation);
+  const forumTokens = labels.flatMap(significantTokens);
+  if (citeTokens.length === 0 || forumTokens.length === 0) return true;
+  return citeTokens.some((token) => forumTokens.includes(token));
+}
+
+function labelConflictsWithForum(authorityJurisdiction: string, labels: string[]): boolean {
+  const auth = authorityJurisdiction.replace(/\s+/g, " ").trim().toLowerCase();
+  if (!auth || labels.length === 0) return false;
+  if (labels.some((label) => label === auth || label.includes(auth) || auth.includes(label))) {
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Deterministic post-synthesis guard: an authority that is not classified controlling
+ * (or whose recorded jurisdiction conflicts with the query/forum) must not be described
+ * as controlling or binding. Relationship comes from jurisdiction architecture, not model prose.
+ */
+export function rewriteUnsupportedControllingClaims(params: {
+  text: string;
+  hits: WeightGuardHit[];
+  queryJurisdiction?: string | null;
+  forumLabels?: string[];
+}): string {
+  let text = params.text;
+  const labels = forumLabels(params.queryJurisdiction, params.forumLabels);
+  for (const hit of params.hits) {
+    const relationship = (hit.hierarchyRelationship ?? "unknown").toLowerCase();
+    const outOfWeight =
+      relationship === "persuasive" ||
+      relationship === "out_of_jurisdiction" ||
+      relationship === "unknown";
+    const jurisdictionConflict =
+      Boolean(hit.jurisdiction) && labelConflictsWithForum(hit.jurisdiction ?? "", labels);
+    if (!outOfWeight && !jurisdictionConflict) continue;
+    for (const needle of [hit.citation, hit.title, hit.jurisdiction]) {
+      if (needle) text = demoteControllingAfterNeedle(text, needle);
+    }
+  }
+  for (const parsed of extractCitationsFromText(text)) {
+    const raw = parsed.raw?.trim();
+    if (!raw) continue;
+    if (citationSharesForum(raw, labels) || citationSharesForum(parsed.reporter ?? "", labels)) {
+      continue;
+    }
+    text = demoteControllingAfterNeedle(text, raw);
+  }
+  return text;
 }

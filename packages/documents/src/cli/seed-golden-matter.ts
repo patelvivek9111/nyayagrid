@@ -50,6 +50,12 @@ function fixturesDir(): string {
 }
 
 async function main() {
+  const appEnv = (process.env.APP_ENV ?? "").trim().toLowerCase();
+  if (appEnv === "production" && process.env.ALLOW_PRODUCTION_SYNTHETIC_WRITE !== "1") {
+    throw new Error(
+      "seed:golden-matter refuses APP_ENV=production. Use a non-production database, or set ALLOW_PRODUCTION_SYNTHETIC_WRITE=1 after review.",
+    );
+  }
   const databaseUrl =
     process.env.DATABASE_URL ?? "postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid";
   if (!process.env.DATABASE_URL) {

@@ -1,0 +1,242 @@
+{
+  "comment": "Overlay only. Loaded in --mode evidence. Reuses V2 PDFs. Invokes getEvidenceIntelligence plus existing extract/review/analyze APIs. Does not score CA1, DA1, Compare, or Ask Nyaya.",
+  "tasks": [
+    {
+      "id": "SYNTH-V2-006-EM001",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "evidence",
+      "difficulty": "medium",
+      "prompt": "Load the evidence matrix with no intelligence extraction.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-006-EM002",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "Extract intelligence then load the matrix. Proposed timeline must not appear as verified evidence.",
+      "action": { "kind": "evidence_matrix", "extractIntelligence": true }
+    },
+    {
+      "id": "SYNTH-V2-006-EM003",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "Analyze the deposition then load the matrix. Proposed analysis must not appear as verified evidence.",
+      "action": {
+        "kind": "evidence_matrix",
+        "analyzeDeposition": true,
+        "documentPattern": "05_Deposition_Mercer"
+      }
+    },
+    {
+      "id": "SYNTH-V2-006-EM004",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "Detect contradictions then load the matrix. Proposed contradiction findings must not become established evidence.",
+      "action": { "kind": "evidence_matrix", "detectContradictions": true }
+    },
+    {
+      "id": "SYNTH-V2-006-EM005",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "Load the matrix. Badge or access activity must not establish named physical entry.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-006-EM006",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "Load the matrix. Invoice silence must not prove a universal negative.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-006-EM007",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "evidence",
+      "difficulty": "medium",
+      "prompt": "Dismiss contradiction findings then load the matrix.",
+      "action": { "kind": "evidence_matrix", "reviewContradiction": "dismissed" }
+    },
+    {
+      "id": "SYNTH-V2-006-EM008",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "evidence",
+      "difficulty": "medium",
+      "prompt": "Reject proposed timeline events then load the matrix.",
+      "action": { "kind": "evidence_matrix", "rejectTimeline": true }
+    },
+    {
+      "id": "SYNTH-V2-006-EM009",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "Approve remaining sourced facts and timeline events then inspect matrix provenance.",
+      "action": { "kind": "evidence_matrix", "approveFacts": true, "approveTimeline": true }
+    },
+    {
+      "id": "SYNTH-V2-006-EM010",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "After approval, badge activity still must not establish named physical entry in the matrix.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-006-EM011",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "Load the matrix. Tension must not be presented as a proven contradiction, and both sides of a dispute must remain distinguishable.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-006-EM012",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "evidence",
+      "difficulty": "medium",
+      "prompt": "Confirm the matrix does not auto-review remaining proposed intelligence.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-001-EM013",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "medium",
+      "prompt": "Load the evidence matrix with no intelligence extraction.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-001-EM014",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "Extract intelligence then load the matrix. Proposed facts must not masquerade as verified.",
+      "action": { "kind": "evidence_matrix", "extractIntelligence": true }
+    },
+    {
+      "id": "SYNTH-V2-001-EM015",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "medium",
+      "prompt": "Analyze the main agreement then load the matrix. Proposed contract analysis must not become verified evidence.",
+      "action": {
+        "kind": "evidence_matrix",
+        "analyzeContract": true,
+        "documentPattern": "01_Main_Agreement"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-EM016",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "medium",
+      "prompt": "Dismiss a contract analysis item then load the matrix.",
+      "action": {
+        "kind": "evidence_matrix",
+        "analyzeContract": true,
+        "documentPattern": "01_Main_Agreement",
+        "reviewAction": "dismissed"
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-EM017",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "Load the matrix. Informal email must not silently become controlling contract evidence.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-001-EM018",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "Load the matrix. A future-effective amendment must not be treated as currently operative without as-of semantics.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-001-EM019",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "Load the matrix. A missing exhibit must not produce fabricated evidence.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-001-EM020",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "medium",
+      "prompt": "Reject remaining proposed facts then load the matrix.",
+      "action": { "kind": "evidence_matrix", "rejectFacts": true }
+    },
+    {
+      "id": "SYNTH-V2-001-EM021",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "Approve sourced facts and timeline then inspect document and chunk provenance.",
+      "action": { "kind": "evidence_matrix", "approveFacts": true, "approveTimeline": true }
+    },
+    {
+      "id": "SYNTH-V2-001-EM022",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "Approved matrix rows must keep supporting spans that actually support the proposition.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-001-EM023",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "medium",
+      "prompt": "Numeric values in the matrix must remain attached to source-backed propositions.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-001-EM024",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "Evidence from one document version must not be attributed to another.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-001-EM025",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "hard",
+      "prompt": "Duplicate same-document links must not look like independent corroboration.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-001-EM026",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "medium",
+      "prompt": "Approximate or unknown dates must not be presented as exact verified dates without source support.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-001-EM027",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "medium",
+      "prompt": "Rejected or superseded intelligence must remain excluded from established evidence.",
+      "action": { "kind": "evidence_matrix" }
+    },
+    {
+      "id": "SYNTH-V2-001-EM028",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "evidence",
+      "difficulty": "medium",
+      "prompt": "The evidence matrix must not auto-approve remaining proposed intelligence.",
+      "action": { "kind": "evidence_matrix" }
+    }
+  ]
+}

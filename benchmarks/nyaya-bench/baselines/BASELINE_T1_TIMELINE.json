@@ -1,0 +1,89 @@
+{
+  "baselineId": "BASELINE_T1_TIMELINE",
+  "benchmarkKind": "NYAYA_TIMELINE",
+  "graderVersion": "t1-2026-08-19",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "notLegalCorrectnessProof": true,
+  "productionUnchanged": true,
+  "caseQaFrozen": true,
+  "compareFrozen": true,
+  "contradictionFrozen": true,
+  "measures": [
+    "extractMatterIntelligenceForDocument",
+    "proposed_timeline_events",
+    "datePrecision_field",
+    "actors",
+    "status_proposed_vs_verified",
+    "source_chunk_mapping",
+    "event_recall_on_T012_payment_chain"
+  ],
+  "doesNotMeasure": [
+    "case_qa",
+    "compare_engine",
+    "contradiction_engine",
+    "memory_subsystem",
+    "graph_subsystem",
+    "research_subsystem",
+    "draft_subsystem",
+    "agents",
+    "reject_reproposal_workflow",
+    "approximate_vs_exact_date_traps"
+  ],
+  "runs": {
+    "live": "benchmarks/nyaya-bench/reports/runs/2026-08-19T01-26-13-290Z"
+  },
+  "config": {
+    "dataset": "v2",
+    "executionMode": "timeline",
+    "promptVersion": "matter-intelligence-extract-v2",
+    "gitCommit": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini",
+    "embeddingProvider": "openai",
+    "startedAt": "2026-08-19T01:26:13.300Z",
+    "finishedAt": "2026-08-19T01:45:20.759Z"
+  },
+  "scope": {
+    "taggedTimelineTasks": 32,
+    "scoredT012": 16,
+    "notApplicableT025": 16,
+    "eventsExpected": 64,
+    "eventsProduced": 256,
+    "eventsMatched": 48
+  },
+  "timeline": {
+    "tasks": 16,
+    "notApplicable": 16,
+    "pass": 0,
+    "needs_work": 16,
+    "fail": 0,
+    "infrastructure": 0,
+    "criticalAutomated": 0,
+    "eventRecallTaskComplete": 0,
+    "eventRecallEventLevel": 0.75,
+    "eventPrecisionMean": 0.8571428571428572,
+    "dateAccuracyTaskComplete": 0,
+    "dateAccuracyMatchedEvents": 1,
+    "datePrecisionAccuracy": 0,
+    "actorAccuracyAutomated": 1,
+    "actorOverclaimAutomated": 0,
+    "provenanceFailures": 0,
+    "unsupportedEventTasks": 0,
+    "unsupportedEventCount": 0,
+    "duplicateCountAutomated": 16,
+    "allEventsProposed": true,
+    "allDatePrecisionUnknown": true,
+    "invoiceIssuanceMiss": 16,
+    "taxonomy": {
+      "TIMELINE_EVENT_EXTRACTION": 16
+    }
+  },
+  "manualReview": {
+    "invoiceDatePresentInSourceChunkButNotExtracted": 16,
+    "badgeExitListsAssignedPersonAsActor": 16,
+    "recordsRoomEntryTitleWithNegatingDescription": ["SYNTH-V2-006", "SYNTH-V2-007", "SYNTH-V2-014", "SYNTH-V2-015"],
+    "sameDayNonDuplicateInflatingPrecision": ["SYNTH-V2-004", "SYNTH-V2-008", "SYNTH-V2-012", "SYNTH-V2-016"],
+    "supportingTextLooksLikeChunkPrefix": 203
+  }
+}

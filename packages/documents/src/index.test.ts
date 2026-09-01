@@ -80,6 +80,19 @@ describe("text extraction and chunking", () => {
     const chunks = chunkSegments(result.segments);
     expect(chunks[0]?.content).toContain("Termination");
   });
+
+  it("rejects empty text instead of producing Ready-eligible chunks", async () => {
+    const extractor = new TxtExtractor();
+    const result = await extractor.extract({
+      buffer: Buffer.from("   \n\n  "),
+      contentType: "text/plain",
+      filename: "blank.txt",
+    });
+    expect(result.status).toBe("failed");
+    if (result.status === "failed") {
+      expect(result.reason).toMatch(/empty/i);
+    }
+  });
 });
 
 describe("malware scanning", () => {
@@ -250,6 +263,20 @@ describe("upload limits", () => {
     ).toThrow(/Archive/);
     expect(() =>
       rejectZipBombsOrArchives({ contentType: "application/pdf", filename: "brief.pdf" }),
+    ).not.toThrow();
+    expect(() =>
+      rejectZipBombsOrArchives({
+        contentType: "application/pdf",
+        filename: "malware.pdf",
+        buffer: Buffer.from([0x50, 0x4b, 0x03, 0x04, 0x00, 0x00]),
+      }),
+    ).toThrow(/Archive/);
+    expect(() =>
+      rejectZipBombsOrArchives({
+        contentType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        filename: "brief.docx",
+        buffer: Buffer.from([0x50, 0x4b, 0x03, 0x04, 0x00, 0x00]),
+      }),
     ).not.toThrow();
     expect(() =>
       rejectZipBombsOrArchives({

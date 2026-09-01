@@ -1,0 +1,956 @@
+{
+  "originalAnswerHashesUnchanged": true,
+  "hashMismatches": [],
+  "origAnswerCount": 500,
+  "a1AnswerCount": 500,
+  "origGradeCount": 500,
+  "a1GradeCount": 500,
+  "origCounts": {
+    "pass": 295,
+    "needs_work": 72,
+    "fail": 128,
+    "infrastructure": 5
+  },
+  "a1Counts": {
+    "pass": 350,
+    "needs_work": 66,
+    "fail": 79,
+    "infrastructure": 5
+  },
+  "passRateOrig": 0.59,
+  "passRateA1": 0.7,
+  "graderFalseFailuresCorrected": 54,
+  "graderFalsePassesCorrected": 12,
+  "needsWorkToPass": 13,
+  "needsWorkToFail": 0,
+  "criticalFailOrig": 67,
+  "criticalFailA1": 32,
+  "transitionsByKind": {
+    "fail->pass": 54,
+    "needs_work->pass": 13,
+    "pass->needs_work": 7,
+    "pass->fail": 5
+  },
+  "clusters": {
+    "T004_deductible": {
+      "tests": 16,
+      "original": {
+        "pass": 0,
+        "needs_work": 0,
+        "fail": 16,
+        "infrastructure": 0
+      },
+      "a1": {
+        "pass": 16,
+        "needs_work": 0,
+        "fail": 0,
+        "infrastructure": 0
+      },
+      "remainingFails": [],
+      "remainingNeedsWork": []
+    },
+    "T005_premise": {
+      "tests": 16,
+      "original": {
+        "pass": 16,
+        "needs_work": 0,
+        "fail": 0,
+        "infrastructure": 0
+      },
+      "a1": {
+        "pass": 16,
+        "needs_work": 0,
+        "fail": 0,
+        "infrastructure": 0
+      },
+      "remainingFails": [],
+      "remainingNeedsWork": []
+    },
+    "T011_false_contradiction": {
+      "tests": 16,
+      "original": {
+        "pass": 14,
+        "needs_work": 2,
+        "fail": 0,
+        "infrastructure": 0
+      },
+      "a1": {
+        "pass": 9,
+        "needs_work": 2,
+        "fail": 5,
+        "infrastructure": 0
+      },
+      "remainingFails": [
+        "SYNTH-V2-005-T011",
+        "SYNTH-V2-008-T011",
+        "SYNTH-V2-012-T011",
+        "SYNTH-V2-014-T011",
+        "SYNTH-V2-016-T011"
+      ],
+      "remainingNeedsWork": [
+        "SYNTH-V2-001-T011",
+        "SYNTH-V2-002-T011"
+      ]
+    },
+    "T019_quote_trap": {
+      "tests": 16,
+      "original": {
+        "pass": 1,
+        "needs_work": 12,
+        "fail": 3,
+        "infrastructure": 0
+      },
+      "a1": {
+        "pass": 16,
+        "needs_work": 0,
+        "fail": 0,
+        "infrastructure": 0
+      },
+      "remainingFails": [],
+      "remainingNeedsWork": []
+    },
+    "T020_retroactivity": {
+      "tests": 16,
+      "original": {
+        "pass": 0,
+        "needs_work": 1,
+        "fail": 14,
+        "infrastructure": 1
+      },
+      "a1": {
+        "pass": 1,
+        "needs_work": 0,
+        "fail": 14,
+        "infrastructure": 1
+      },
+      "remainingFails": [
+        "SYNTH-V2-001-T020",
+        "SYNTH-V2-002-T020",
+        "SYNTH-V2-003-T020",
+        "SYNTH-V2-004-T020",
+        "SYNTH-V2-005-T020",
+        "SYNTH-V2-006-T020",
+        "SYNTH-V2-007-T020",
+        "SYNTH-V2-008-T020",
+        "SYNTH-V2-010-T020",
+        "SYNTH-V2-011-T020",
+        "SYNTH-V2-013-T020",
+        "SYNTH-V2-014-T020",
+        "SYNTH-V2-015-T020",
+        "SYNTH-V2-016-T020"
+      ],
+      "remainingNeedsWork": []
+    },
+    "T023_entity": {
+      "tests": 16,
+      "original": {
+        "pass": 0,
+        "needs_work": 0,
+        "fail": 16,
+        "infrastructure": 0
+      },
+      "a1": {
+        "pass": 16,
+        "needs_work": 0,
+        "fail": 0,
+        "infrastructure": 0
+      },
+      "remainingFails": [],
+      "remainingNeedsWork": []
+    },
+    "T024_quote_proof": {
+      "tests": 16,
+      "original": {
+        "pass": 1,
+        "needs_work": 0,
+        "fail": 14,
+        "infrastructure": 1
+      },
+      "a1": {
+        "pass": 15,
+        "needs_work": 0,
+        "fail": 0,
+        "infrastructure": 1
+      },
+      "remainingFails": [],
+      "remainingNeedsWork": []
+    },
+    "T025_badge": {
+      "tests": 16,
+      "original": {
+        "pass": 0,
+        "needs_work": 0,
+        "fail": 16,
+        "infrastructure": 0
+      },
+      "a1": {
+        "pass": 0,
+        "needs_work": 0,
+        "fail": 16,
+        "infrastructure": 0
+      },
+      "remainingFails": [
+        "SYNTH-V2-001-T025",
+        "SYNTH-V2-002-T025",
+        "SYNTH-V2-003-T025",
+        "SYNTH-V2-004-T025",
+        "SYNTH-V2-005-T025",
+        "SYNTH-V2-006-T025",
+        "SYNTH-V2-007-T025",
+        "SYNTH-V2-008-T025",
+        "SYNTH-V2-009-T025",
+        "SYNTH-V2-010-T025",
+        "SYNTH-V2-011-T025",
+        "SYNTH-V2-012-T025",
+        "SYNTH-V2-013-T025",
+        "SYNTH-V2-014-T025",
+        "SYNTH-V2-015-T025",
+        "SYNTH-V2-016-T025"
+      ],
+      "remainingNeedsWork": []
+    },
+    "T010_tension": {
+      "tests": 16,
+      "original": {
+        "pass": 7,
+        "needs_work": 9,
+        "fail": 0,
+        "infrastructure": 0
+      },
+      "a1": {
+        "pass": 0,
+        "needs_work": 16,
+        "fail": 0,
+        "infrastructure": 0
+      },
+      "remainingFails": [],
+      "remainingNeedsWork": [
+        "SYNTH-V2-001-T010",
+        "SYNTH-V2-002-T010",
+        "SYNTH-V2-003-T010",
+        "SYNTH-V2-004-T010",
+        "SYNTH-V2-005-T010",
+        "SYNTH-V2-006-T010",
+        "SYNTH-V2-007-T010",
+        "SYNTH-V2-008-T010",
+        "SYNTH-V2-009-T010",
+        "SYNTH-V2-010-T010",
+        "SYNTH-V2-011-T010",
+        "SYNTH-V2-012-T010",
+        "SYNTH-V2-013-T010",
+        "SYNTH-V2-014-T010",
+        "SYNTH-V2-015-T010",
+        "SYNTH-V2-016-T010"
+      ]
+    },
+    "V1_Q008_silence": {
+      "tests": 2,
+      "original": {
+        "pass": 0,
+        "needs_work": 0,
+        "fail": 2,
+        "infrastructure": 0
+      },
+      "a1": {
+        "pass": 0,
+        "needs_work": 0,
+        "fail": 2,
+        "infrastructure": 0
+      },
+      "remainingFails": [
+        "SYNTH-008-Q008",
+        "SYNTH-010-Q008"
+      ],
+      "remainingNeedsWork": []
+    },
+    "V1_Q006": {
+      "tests": 9,
+      "original": {
+        "pass": 9,
+        "needs_work": 0,
+        "fail": 0,
+        "infrastructure": 0
+      },
+      "a1": {
+        "pass": 9,
+        "needs_work": 0,
+        "fail": 0,
+        "infrastructure": 0
+      },
+      "remainingFails": [],
+      "remainingNeedsWork": []
+    }
+  },
+  "metrics": {
+    "overall": {
+      "original": {
+        "pass": 295,
+        "needs_work": 72,
+        "fail": 128,
+        "infrastructure": 5
+      },
+      "corrected": {
+        "pass": 350,
+        "needs_work": 66,
+        "fail": 79,
+        "infrastructure": 5
+      }
+    },
+    "must_abstain": {
+      "original": {
+        "tests": 89,
+        "pass": 37,
+        "needs_work": 0,
+        "fail": 52,
+        "infrastructure": 0
+      },
+      "corrected": {
+        "tests": 90,
+        "pass": 71,
+        "needs_work": 0,
+        "fail": 18,
+        "infrastructure": 1
+      }
+    },
+    "challenge_premise": {
+      "original": {
+        "tests": 47,
+        "pass": 17,
+        "needs_work": 13,
+        "fail": 17,
+        "infrastructure": 0
+      },
+      "corrected": {
+        "tests": 48,
+        "pass": 33,
+        "needs_work": 0,
+        "fail": 14,
+        "infrastructure": 1
+      }
+    },
+    "not_contradiction": {
+      "original": {
+        "tests": 16,
+        "pass": 14,
+        "needs_work": 2,
+        "fail": 0,
+        "infrastructure": 0
+      },
+      "corrected": {
+        "tests": 16,
+        "pass": 9,
+        "needs_work": 2,
+        "fail": 5,
+        "infrastructure": 0
+      }
+    },
+    "entity_distinction": {
+      "original": {
+        "tests": 16,
+        "pass": 0,
+        "needs_work": 0,
+        "fail": 16,
+        "infrastructure": 0
+      },
+      "corrected": {
+        "tests": 16,
+        "pass": 16,
+        "needs_work": 0,
+        "fail": 0,
+        "infrastructure": 0
+      }
+    },
+    "quote": {
+      "original": {
+        "tests": 16,
+        "pass": 1,
+        "needs_work": 0,
+        "fail": 14,
+        "infrastructure": 1
+      },
+      "corrected": {
+        "tests": 16,
+        "pass": 15,
+        "needs_work": 0,
+        "fail": 0,
+        "infrastructure": 1
+      }
+    },
+    "numeric": {
+      "original": {
+        "tests": 28,
+        "pass": 13,
+        "needs_work": 7,
+        "fail": 8,
+        "infrastructure": 0
+      },
+      "corrected": {
+        "tests": 28,
+        "pass": 13,
+        "needs_work": 7,
+        "fail": 8,
+        "infrastructure": 0
+      }
+    },
+    "contract_compare": {
+      "original": {
+        "tests": 62,
+        "pass": 52,
+        "needs_work": 0,
+        "fail": 9,
+        "infrastructure": 1
+      },
+      "corrected": {
+        "tests": 62,
+        "pass": 52,
+        "needs_work": 0,
+        "fail": 9,
+        "infrastructure": 1
+      }
+    },
+    "false_contradiction_category": {
+      "original": {
+        "tests": 24,
+        "pass": 22,
+        "needs_work": 2,
+        "fail": 0,
+        "infrastructure": 0
+      },
+      "corrected": {
+        "tests": 24,
+        "pass": 17,
+        "needs_work": 2,
+        "fail": 5,
+        "infrastructure": 0
+      }
+    },
+    "contradiction_category": {
+      "original": {
+        "tests": 17,
+        "pass": 7,
+        "needs_work": 10,
+        "fail": 0,
+        "infrastructure": 0
+      },
+      "corrected": {
+        "tests": 17,
+        "pass": 0,
+        "needs_work": 17,
+        "fail": 0,
+        "infrastructure": 0
+      }
+    },
+    "timeline_category": {
+      "original": {
+        "tests": 39,
+        "pass": 22,
+        "needs_work": 0,
+        "fail": 17,
+        "infrastructure": 0
+      },
+      "corrected": {
+        "tests": 39,
+        "pass": 22,
+        "needs_work": 0,
+        "fail": 17,
+        "infrastructure": 0
+      }
+    },
+    "entity_category": {
+      "original": {
+        "tests": 16,
+        "pass": 0,
+        "needs_work": 0,
+        "fail": 16,
+        "infrastructure": 0
+      },
+      "corrected": {
+        "tests": 16,
+        "pass": 16,
+        "needs_work": 0,
+        "fail": 0,
+        "infrastructure": 0
+      }
+    },
+    "quote_category": {
+      "original": {
+        "tests": 16,
+        "pass": 1,
+        "needs_work": 0,
+        "fail": 14,
+        "infrastructure": 1
+      },
+      "corrected": {
+        "tests": 16,
+        "pass": 15,
+        "needs_work": 0,
+        "fail": 0,
+        "infrastructure": 1
+      }
+    },
+    "termination": {
+      "original": {
+        "tests": 32,
+        "pass": 32,
+        "needs_work": 0,
+        "fail": 0,
+        "infrastructure": 0
+      },
+      "corrected": {
+        "tests": 32,
+        "pass": 32,
+        "needs_work": 0,
+        "fail": 0,
+        "infrastructure": 0
+      }
+    }
+  },
+  "categoriesOrig": {
+    "adversarial": {
+      "tests": 32,
+      "pass": 1,
+      "needs_work": 13,
+      "fail": 17,
+      "infrastructure": 1
+    },
+    "case_qa": {
+      "tests": 87,
+      "pass": 70,
+      "needs_work": 3,
+      "fail": 13,
+      "infrastructure": 1
+    },
+    "citation": {
+      "tests": 16,
+      "pass": 9,
+      "needs_work": 2,
+      "fail": 5,
+      "infrastructure": 0
+    },
+    "contract_compare": {
+      "tests": 25,
+      "pass": 19,
+      "needs_work": 0,
+      "fail": 6,
+      "infrastructure": 0
+    },
+    "contract_decoy": {
+      "tests": 32,
+      "pass": 29,
+      "needs_work": 0,
+      "fail": 2,
+      "infrastructure": 1
+    },
+    "contradiction": {
+      "tests": 17,
+      "pass": 7,
+      "needs_work": 10,
+      "fail": 0,
+      "infrastructure": 0
+    },
+    "cross_document": {
+      "tests": 32,
+      "pass": 0,
+      "needs_work": 32,
+      "fail": 0,
+      "infrastructure": 0
+    },
+    "decoy": {
+      "tests": 5,
+      "pass": 4,
+      "needs_work": 0,
+      "fail": 1,
+      "infrastructure": 0
+    },
+    "email_reliability": {
+      "tests": 16,
+      "pass": 10,
+      "needs_work": 0,
+      "fail": 5,
+      "infrastructure": 1
+    },
+    "entity_resolution": {
+      "tests": 16,
+      "pass": 0,
+      "needs_work": 0,
+      "fail": 16,
+      "infrastructure": 0
+    },
+    "false_contradiction": {
+      "tests": 24,
+      "pass": 22,
+      "needs_work": 2,
+      "fail": 0,
+      "infrastructure": 0
+    },
+    "insufficient": {
+      "tests": 42,
+      "pass": 24,
+      "needs_work": 0,
+      "fail": 18,
+      "infrastructure": 0
+    },
+    "missing_exhibit": {
+      "tests": 32,
+      "pass": 28,
+      "needs_work": 0,
+      "fail": 4,
+      "infrastructure": 0
+    },
+    "numeric": {
+      "tests": 12,
+      "pass": 12,
+      "needs_work": 0,
+      "fail": 0,
+      "infrastructure": 0
+    },
+    "numeric_precision": {
+      "tests": 16,
+      "pass": 1,
+      "needs_work": 7,
+      "fail": 8,
+      "infrastructure": 0
+    },
+    "quote_accuracy": {
+      "tests": 16,
+      "pass": 1,
+      "needs_work": 0,
+      "fail": 14,
+      "infrastructure": 1
+    },
+    "reasoning": {
+      "tests": 9,
+      "pass": 4,
+      "needs_work": 3,
+      "fail": 2,
+      "infrastructure": 0
+    },
+    "termination": {
+      "tests": 32,
+      "pass": 32,
+      "needs_work": 0,
+      "fail": 0,
+      "infrastructure": 0
+    },
+    "timeline": {
+      "tests": 39,
+      "pass": 22,
+      "needs_work": 0,
+      "fail": 17,
+      "infrastructure": 0
+    }
+  },
+  "categoriesA1": {
+    "adversarial": {
+      "tests": 32,
+      "pass": 17,
+      "needs_work": 0,
+      "fail": 14,
+      "infrastructure": 1
+    },
+    "case_qa": {
+      "tests": 87,
+      "pass": 71,
+      "needs_work": 3,
+      "fail": 12,
+      "infrastructure": 1
+    },
+    "citation": {
+      "tests": 16,
+      "pass": 9,
+      "needs_work": 2,
+      "fail": 5,
+      "infrastructure": 0
+    },
+    "contract_compare": {
+      "tests": 25,
+      "pass": 19,
+      "needs_work": 0,
+      "fail": 6,
+      "infrastructure": 0
+    },
+    "contract_decoy": {
+      "tests": 32,
+      "pass": 29,
+      "needs_work": 0,
+      "fail": 2,
+      "infrastructure": 1
+    },
+    "contradiction": {
+      "tests": 17,
+      "pass": 0,
+      "needs_work": 17,
+      "fail": 0,
+      "infrastructure": 0
+    },
+    "cross_document": {
+      "tests": 32,
+      "pass": 0,
+      "needs_work": 32,
+      "fail": 0,
+      "infrastructure": 0
+    },
+    "decoy": {
+      "tests": 5,
+      "pass": 4,
+      "needs_work": 0,
+      "fail": 1,
+      "infrastructure": 0
+    },
+    "email_reliability": {
+      "tests": 16,
+      "pass": 10,
+      "needs_work": 0,
+      "fail": 5,
+      "infrastructure": 1
+    },
+    "entity_resolution": {
+      "tests": 16,
+      "pass": 16,
+      "needs_work": 0,
+      "fail": 0,
+      "infrastructure": 0
+    },
+    "false_contradiction": {
+      "tests": 24,
+      "pass": 17,
+      "needs_work": 2,
+      "fail": 5,
+      "infrastructure": 0
+    },
+    "insufficient": {
+      "tests": 42,
+      "pass": 40,
+      "needs_work": 0,
+      "fail": 2,
+      "infrastructure": 0
+    },
+    "missing_exhibit": {
+      "tests": 32,
+      "pass": 32,
+      "needs_work": 0,
+      "fail": 0,
+      "infrastructure": 0
+    },
+    "numeric": {
+      "tests": 12,
+      "pass": 12,
+      "needs_work": 0,
+      "fail": 0,
+      "infrastructure": 0
+    },
+    "numeric_precision": {
+      "tests": 16,
+      "pass": 1,
+      "needs_work": 7,
+      "fail": 8,
+      "infrastructure": 0
+    },
+    "quote_accuracy": {
+      "tests": 16,
+      "pass": 15,
+      "needs_work": 0,
+      "fail": 0,
+      "infrastructure": 1
+    },
+    "reasoning": {
+      "tests": 9,
+      "pass": 4,
+      "needs_work": 3,
+      "fail": 2,
+      "infrastructure": 0
+    },
+    "termination": {
+      "tests": 32,
+      "pass": 32,
+      "needs_work": 0,
+      "fail": 0,
+      "infrastructure": 0
+    },
+    "timeline": {
+      "tests": 39,
+      "pass": 22,
+      "needs_work": 0,
+      "fail": 17,
+      "infrastructure": 0
+    }
+  },
+  "passToWorseIds": [
+    {
+      "taskId": "SYNTH-V2-005-T010",
+      "from": "pass",
+      "to": "needs_work",
+      "category": "contradiction",
+      "origDetail": "Identified evidentiary tension.",
+      "a1Detail": "Identified evidentiary tension.",
+      "expectationType": "possible_contradiction",
+      "severity": "major"
+    },
+    {
+      "taskId": "SYNTH-V2-005-T011",
+      "from": "pass",
+      "to": "fail",
+      "category": "false_contradiction",
+      "origDetail": "Correctly treated the pair as compatible.",
+      "a1Detail": "Incorrectly asserted a contradiction.",
+      "expectationType": "not_contradiction",
+      "severity": "major"
+    },
+    {
+      "taskId": "SYNTH-V2-007-T010",
+      "from": "pass",
+      "to": "needs_work",
+      "category": "contradiction",
+      "origDetail": "Identified evidentiary tension.",
+      "a1Detail": "Identified evidentiary tension.",
+      "expectationType": "possible_contradiction",
+      "severity": "major"
+    },
+    {
+      "taskId": "SYNTH-V2-008-T011",
+      "from": "pass",
+      "to": "fail",
+      "category": "false_contradiction",
+      "origDetail": "Correctly treated the pair as compatible.",
+      "a1Detail": "Incorrectly asserted a contradiction.",
+      "expectationType": "not_contradiction",
+      "severity": "major"
+    },
+    {
+      "taskId": "SYNTH-V2-010-T010",
+      "from": "pass",
+      "to": "needs_work",
+      "category": "contradiction",
+      "origDetail": "Identified evidentiary tension.",
+      "a1Detail": "Identified evidentiary tension.",
+      "expectationType": "possible_contradiction",
+      "severity": "major"
+    },
+    {
+      "taskId": "SYNTH-V2-011-T010",
+      "from": "pass",
+      "to": "needs_work",
+      "category": "contradiction",
+      "origDetail": "Identified evidentiary tension.",
+      "a1Detail": "Identified evidentiary tension.",
+      "expectationType": "possible_contradiction",
+      "severity": "major"
+    },
+    {
+      "taskId": "SYNTH-V2-012-T011",
+      "from": "pass",
+      "to": "fail",
+      "category": "false_contradiction",
+      "origDetail": "Correctly treated the pair as compatible.",
+      "a1Detail": "Incorrectly asserted a contradiction.",
+      "expectationType": "not_contradiction",
+      "severity": "major"
+    },
+    {
+      "taskId": "SYNTH-V2-013-T010",
+      "from": "pass",
+      "to": "needs_work",
+      "category": "contradiction",
+      "origDetail": "Identified evidentiary tension.",
+      "a1Detail": "Identified evidentiary tension.",
+      "expectationType": "possible_contradiction",
+      "severity": "major"
+    },
+    {
+      "taskId": "SYNTH-V2-014-T010",
+      "from": "pass",
+      "to": "needs_work",
+      "category": "contradiction",
+      "origDetail": "Identified evidentiary tension.",
+      "a1Detail": "Identified evidentiary tension.",
+      "expectationType": "possible_contradiction",
+      "severity": "major"
+    },
+    {
+      "taskId": "SYNTH-V2-014-T011",
+      "from": "pass",
+      "to": "fail",
+      "category": "false_contradiction",
+      "origDetail": "Correctly treated the pair as compatible.",
+      "a1Detail": "Incorrectly asserted a contradiction.",
+      "expectationType": "not_contradiction",
+      "severity": "major"
+    },
+    {
+      "taskId": "SYNTH-V2-015-T010",
+      "from": "pass",
+      "to": "needs_work",
+      "category": "contradiction",
+      "origDetail": "Identified evidentiary tension.",
+      "a1Detail": "Identified evidentiary tension.",
+      "expectationType": "possible_contradiction",
+      "severity": "major"
+    },
+    {
+      "taskId": "SYNTH-V2-016-T011",
+      "from": "pass",
+      "to": "fail",
+      "category": "false_contradiction",
+      "origDetail": "Correctly treated the pair as compatible.",
+      "a1Detail": "Incorrectly asserted a contradiction.",
+      "expectationType": "not_contradiction",
+      "severity": "major"
+    }
+  ],
+  "failToPassIds": [
+    "SYNTH-006-Q009",
+    "SYNTH-V2-001-T004",
+    "SYNTH-V2-001-T023",
+    "SYNTH-V2-001-T024",
+    "SYNTH-V2-002-T004",
+    "SYNTH-V2-002-T019",
+    "SYNTH-V2-002-T023",
+    "SYNTH-V2-003-T004",
+    "SYNTH-V2-003-T023",
+    "SYNTH-V2-003-T024",
+    "SYNTH-V2-004-T004",
+    "SYNTH-V2-004-T023",
+    "SYNTH-V2-004-T024",
+    "SYNTH-V2-005-T004",
+    "SYNTH-V2-005-T023",
+    "SYNTH-V2-005-T024",
+    "SYNTH-V2-006-T004",
+    "SYNTH-V2-006-T023",
+    "SYNTH-V2-006-T024",
+    "SYNTH-V2-007-T004",
+    "SYNTH-V2-007-T023",
+    "SYNTH-V2-007-T024",
+    "SYNTH-V2-008-T004",
+    "SYNTH-V2-008-T015",
+    "SYNTH-V2-008-T023",
+    "SYNTH-V2-008-T024",
+    "SYNTH-V2-009-T004",
+    "SYNTH-V2-009-T016",
+    "SYNTH-V2-009-T023",
+    "SYNTH-V2-009-T024",
+    "SYNTH-V2-010-T004",
+    "SYNTH-V2-010-T023",
+    "SYNTH-V2-010-T024",
+    "SYNTH-V2-011-T004",
+    "SYNTH-V2-011-T023",
+    "SYNTH-V2-011-T024",
+    "SYNTH-V2-012-T004",
+    "SYNTH-V2-012-T023",
+    "SYNTH-V2-012-T024",
+    "SYNTH-V2-013-T004",
+    "SYNTH-V2-013-T019",
+    "SYNTH-V2-013-T023",
+    "SYNTH-V2-013-T024",
+    "SYNTH-V2-014-T004",
+    "SYNTH-V2-014-T023",
+    "SYNTH-V2-014-T024",
+    "SYNTH-V2-015-T004",
+    "SYNTH-V2-015-T015",
+    "SYNTH-V2-015-T019",
+    "SYNTH-V2-015-T023",
+    "SYNTH-V2-015-T024",
+    "SYNTH-V2-016-T004",
+    "SYNTH-V2-016-T016",
+    "SYNTH-V2-016-T023"
+  ]
+}

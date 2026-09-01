@@ -1,0 +1,78 @@
+[
+  {
+    "title": "N.Y. U.C.C. Law § 2-725 — Statute of limitations in contracts for sale",
+    "shortTitle": "N.Y. UCC § 2-725",
+    "authorityType": "statute",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "N.Y. U.C.C. Law § 2-725",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-ucc-2-725",
+    "canonicalSourceUrl": "https://www.nysenate.gov/legislation/laws/UCC/2-725",
+    "hierarchyPath": [
+      { "level": "article", "ref": "2", "label": "Sales" },
+      { "level": "section", "ref": "2-725", "label": "Statute of limitations in contracts for sale" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["contract", "commercial", "civil"],
+    "content": "N.Y. U.C.C. Law § 2-725\n\n§ 2-725. Statute of limitations in contracts for sale.\n\n(1) An action for breach of any contract for sale must be commenced within 4 years after the cause of action has accrued. By the original agreement the parties may reduce the period of limitations to not less than one year but may not extend it.\n\n(2) A cause of action accrues when the breach occurs, regardless of the aggrieved party's lack of knowledge of the breach. A breach of warranty occurs when tender of delivery is made, except that where a warranty explicitly extends to future performance of the goods and discovery of the breach must await the time of such performance the cause of action accrues when the breach is or should have been discovered.\n\n(3) Where an action commenced within the time limited by subsection (1) is so terminated as to leave available a remedy by another action for the same breach such other action may be commenced after the expiration of the time limited and within 6 months after the termination of the first action unless the termination resulted from voluntary discontinuance or from dismissal for failure or neglect to prosecute.\n\n(4) This section does not alter the law on tolling of the statute of limitations nor does it apply to causes of action which have accrued before this subtitle becomes effective.",
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "ucc_article_2_limitations" }
+  },
+  {
+    "title": "N.Y. Lab. Law § 198 — Minimum wage enforcement",
+    "shortTitle": "N.Y. Lab. Law § 198",
+    "authorityType": "statute",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "N.Y. Lab. Law § 198",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-labor-198",
+    "canonicalSourceUrl": "https://www.nysenate.gov/legislation/laws/LAB/198",
+    "hierarchyPath": [
+      { "level": "article", "ref": "19", "label": "Minimum Wage Act" },
+      { "level": "section", "ref": "198", "label": "Minimum wage enforcement" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["employment"],
+    "content": "N.Y. Lab. Law § 198\n\n§ 198. Minimum wage enforcement.\n\n1. No employer shall pay any person in his employ less than the wage rate applicable to such person under this article.\n\n2. An employer shall pay an employe for overtime at a wage of one and one-half times the employe's regular rate, as is prescribed in section six hundred fifty-two of this chapter.",
+    "sections": [
+      {
+        "sectionRef": "198",
+        "subsectionRef": "1",
+        "content": "No employer shall pay any person in his employ less than the wage rate applicable to such person under this article."
+      }
+    ],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "minimum_wage" }
+  },
+  {
+    "title": "MacPherson v. Buick Motor Co., 217 N.Y. 382 (1916)",
+    "shortTitle": "MacPherson v. Buick",
+    "authorityType": "case",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "court": "New York Court of Appeals",
+    "courtId": "st-ny-high",
+    "courtLevel": "state_high",
+    "citation": "217 N.Y. 382",
+    "decisionDate": "1916-03-14",
+    "publicationStatus": "published",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-macpherson-v-buick-217-ny-382",
+    "canonicalSourceUrl": "https://www.courtlistener.com/opinion/3594063/macpherson-v-buick-motor-co/",
+    "bundleSourceClass": "PRIMARY_PUBLIC_REPOSITORY",
+    "bundleQualityTier": "TIER_2_TRUSTED_PUBLIC",
+    "bundlePracticeAreas": ["civil", "commercial"],
+    "content": "MacPherson v. Buick Motor Co., 217 N.Y. 382 (1916).\n\nDefendant sold an automobile to a retail dealer. The retail dealer resold to the plaintiff. While plaintiff was in the car, it suddenly collapsed. He was thrown out and injured. One of the wheels was made of defective wood, and its spokes crumbled into fragments. The wheel was not made by the defendant; it was bought from another manufacturer. There is evidence, however, that its defects could have been discovered by reasonable inspection, and that inspection was omitted.\n\nIf the nature of a thing is such that it is reasonably certain to place life and limb in peril when negligently made, it is then a thing of danger. Its nature gives warning of the consequences to be expected. If to the element of danger there is added knowledge that the thing will be used by persons other than the purchaser, and used without new tests, then, irrespective of contract, the manufacturer of this thing of danger is under a duty to make it carefully.",
+    "opinionParts": [
+      {
+        "part": "majority",
+        "content": "If the nature of a thing is such that it is reasonably certain to place life and limb in peril when negligently made, it is then a thing of danger. If to the element of danger there is added knowledge that the thing will be used by persons other than the purchaser, and used without new tests, then, irrespective of contract, the manufacturer of this thing of danger is under a duty to make it carefully."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "public_repository_snapshot",
+      "repository": "courtlistener",
+      "excerptNote": "Verbatim excerpt from published Cardozo opinion."
+    }
+  }
+]

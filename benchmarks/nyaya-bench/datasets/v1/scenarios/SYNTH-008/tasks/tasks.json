@@ -1,0 +1,82 @@
+[
+  {
+    "task_id": "SYNTH-008-Q001",
+    "scenario_id": "SYNTH-008",
+    "category": "case_qa",
+    "prompt": "What fixed annual interest rate applies after July 1, 2026?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q001"
+  },
+  {
+    "task_id": "SYNTH-008-Q002",
+    "scenario_id": "SYNTH-008",
+    "category": "case_qa",
+    "prompt": "What is the modified maturity date?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q002"
+  },
+  {
+    "task_id": "SYNTH-008-Q003",
+    "scenario_id": "SYNTH-008",
+    "category": "decoy",
+    "prompt": "Is the borrower-name typo correction a material economic change?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q003"
+  },
+  {
+    "task_id": "SYNTH-008-Q004",
+    "scenario_id": "SYNTH-008",
+    "category": "contract_compare",
+    "prompt": "What substantive terms did the modification change?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q004"
+  },
+  {
+    "task_id": "SYNTH-008-Q005",
+    "scenario_id": "SYNTH-008",
+    "category": "case_qa",
+    "prompt": "What is the original principal amount?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q005"
+  },
+  {
+    "task_id": "SYNTH-008-Q006",
+    "scenario_id": "SYNTH-008",
+    "category": "case_qa",
+    "prompt": "What regular payment was due August 1, 2026?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q006"
+  },
+  {
+    "task_id": "SYNTH-008-Q007",
+    "scenario_id": "SYNTH-008",
+    "category": "timeline",
+    "prompt": "When did the borrower say it transmitted the August payment?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q007"
+  },
+  {
+    "task_id": "SYNTH-008-Q008",
+    "scenario_id": "SYNTH-008",
+    "category": "insufficient",
+    "prompt": "What was the loan\u2019s outstanding principal balance on August 3, 2026?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q008"
+  },
+  {
+    "task_id": "SYNTH-008-Q009",
+    "scenario_id": "SYNTH-008",
+    "category": "numeric",
+    "prompt": "What late-fee percentage is stated in the original note?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q009"
+  },
+  {
+    "task_id": "SYNTH-008-Q010",
+    "scenario_id": "SYNTH-008",
+    "category": "false_contradiction",
+    "prompt": "Does the August 3 email contradict the payment notice about the amount of the August payment?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q010"
+  }
+]

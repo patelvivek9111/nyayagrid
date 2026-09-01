@@ -1,6 +1,7 @@
 export * from "./provenance";
 export * from "./dedupe";
 export * from "./extract";
+export * from "./timeline-normalize";
 export * from "./review";
 export * from "./verified";
 export * from "./queries";
@@ -16,4 +17,5 @@ export * from "./evidence/index";
 export * from "./discovery/index";
 export * from "./draft/index";
 export * from "./analysis/contract";
+export * from "./analysis/contract-span";
 export * from "./analysis/compare";

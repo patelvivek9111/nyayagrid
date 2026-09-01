@@ -1,0 +1,87 @@
+[
+  {
+    "title": "13 Pa.C.S. § 2725 — Statute of limitations in contracts for sale",
+    "shortTitle": "Pa. UCC § 2725",
+    "authorityType": "statute",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "13 Pa.C.S. § 2725",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "pa-ucc-2725",
+    "canonicalSourceUrl": "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=13&div=0&chpt=27&sctn=25&subsctn=0",
+    "hierarchyPath": [
+      { "level": "title", "ref": "13", "label": "Commercial Code" },
+      { "level": "chapter", "ref": "27", "label": "Sales" },
+      { "level": "section", "ref": "2725", "label": "Statute of limitations in contracts for sale" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["contract", "commercial", "civil"],
+    "content": "13 Pa.C.S. § 2725\n\n§ 2725. Statute of limitations in contracts for sale.\n\n(1) An action for breach of any contract for sale must be commenced within 4 years after the cause of action has accrued. By the original agreement the parties may reduce the period of limitations to not less than one year but may not extend it.\n\n(2) A cause of action accrues when the breach occurs, regardless of the aggrieved party's lack of knowledge of the breach. A breach of warranty occurs when tender of delivery is made, except that where a warranty explicitly extends to future performance of the goods and discovery of the breach must await the time of such performance the cause of action accrues when the breach is or should have been discovered.\n\n(3) Where an action commenced within the time limited by subsection (1) is so terminated as to leave available a remedy by another action for the same breach such other action may be commenced after the expiration of the time limited and within 6 months after the termination of the first action unless the termination resulted from voluntary discontinuance or from dismissal for failure or neglect to prosecute.\n\n(4) This section does not alter the law on tolling of the statute of limitations nor does it apply to causes of action which have accrued before this subtitle becomes effective.",
+    "sections": [
+      {
+        "sectionRef": "2725",
+        "subsectionRef": "1",
+        "content": "An action for breach of any contract for sale must be commenced within 4 years after the cause of action has accrued. By the original agreement the parties may reduce the period of limitations to not less than one year but may not extend it."
+      }
+    ],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "ucc_article_2_limitations" }
+  },
+  {
+    "title": "43 P.S. § 333.103 — Minimum wage requirement",
+    "shortTitle": "Pa. Min. Wage § 333.103",
+    "authorityType": "statute",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "43 P.S. § 333.103",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "pa-min-wage-333-103",
+    "canonicalSourceUrl": "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=43&div=0&chpt=333&sctn=103&subsctn=0",
+    "hierarchyPath": [
+      { "level": "title", "ref": "43", "label": "Labor" },
+      { "level": "chapter", "ref": "333", "label": "Minimum Wages Act" },
+      { "level": "section", "ref": "103", "label": "Minimum wage requirement" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["employment"],
+    "content": "43 P.S. § 333.103\n\n§ 333.103. Minimum wage requirement.\n\n(a) General rule.--Every employer shall pay to each of his employes wages for all hours worked, which wages shall not be less than the minimum wage rate required by this act.\n\n(b) Tipped employes.--An employer may consider as part of the wages of a tipped employe the amount of tips received by the employe which are determined by the employe to be at least equal to 40% of the applicable minimum wage rate.",
+    "sections": [
+      {
+        "sectionRef": "333.103",
+        "subsectionRef": "a",
+        "content": "Every employer shall pay to each of his employes wages for all hours worked, which wages shall not be less than the minimum wage rate required by this act."
+      }
+    ],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "minimum_wage" }
+  },
+  {
+    "title": "Tincher v. Omega Flex, Inc., 104 A.3d 626 (Pa. 2014)",
+    "shortTitle": "Tincher v. Omega Flex",
+    "authorityType": "case",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "court": "Supreme Court of Pennsylvania",
+    "courtId": "st-pa-high",
+    "courtLevel": "state_high",
+    "citation": "104 A.3d 626",
+    "decisionDate": "2014-11-19",
+    "publicationStatus": "published",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "pa-tincher-v-omega-flex-104-a3d-626",
+    "canonicalSourceUrl": "https://www.courtlistener.com/opinion/2677670/tincher-v-omega-flex-inc/",
+    "bundleSourceClass": "PRIMARY_PUBLIC_REPOSITORY",
+    "bundleQualityTier": "TIER_2_TRUSTED_PUBLIC",
+    "bundlePracticeAreas": ["civil", "commercial"],
+    "content": "Tincher v. Omega Flex, Inc., 104 A.3d 626 (Pa. 2014).\n\nThe Supreme Court of Pennsylvania considered whether strict liability in tort under Section 402A of the Restatement (Second) of Torts applies to a claim involving a commercial/industrial product. The court held that strict liability under Section 402A applies only to products that meet the definition of \"consumer goods\" and that a commercial/industrial product such as corrugated stainless steel tubing used in a residential gas piping system may fall within that definition when supplied for ordinary consumer use.\n\nThe court reaffirmed that a manufacturer is subject to strict liability when it places a defective product into the stream of commerce and that the focus of the inquiry is on the expectations and uses of the ordinary consumer.",
+    "opinionParts": [
+      {
+        "part": "majority",
+        "content": "Strict liability under Section 402A of the Restatement (Second) of Torts applies when a manufacturer places a defective product into the stream of commerce. The inquiry focuses on whether the product is a consumer good and whether the defect made the product unreasonably dangerous."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "public_repository_snapshot",
+      "repository": "courtlistener",
+      "excerptNote": "Opening summary paragraphs from published opinion; full text at canonical URL."
+    }
+  }
+]

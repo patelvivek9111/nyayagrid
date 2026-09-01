@@ -98,6 +98,9 @@ export async function reviewTimelineEvent(params: {
     if (sources.length === 0) {
       throw new Error("Cannot approve a timeline event without source provenance");
     }
+    if (sources.some((source) => !source.supportingText?.trim())) {
+      throw new Error("Cannot approve a timeline event without a supporting source span");
+    }
   }
 
   const patch =

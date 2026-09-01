@@ -23,6 +23,7 @@
     "@nyayagrid/ai": "*",
     "@nyayagrid/documents": "*",
     "@nyayagrid/intelligence": "*",
+    "@nyayagrid/jurisdiction": "*",
     "@nyayagrid/jobs": "*",
     "@nyayagrid/platform": "*",
     "@nyayagrid/research": "*",

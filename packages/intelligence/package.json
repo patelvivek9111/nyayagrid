@@ -18,6 +18,7 @@
   "dependencies": {
     "@nyayagrid/ai": "*",
     "@nyayagrid/database": "*",
+    "@nyayagrid/jurisdiction": "*",
     "@nyayagrid/permissions": "*",
     "@nyayagrid/validation": "*",
     "drizzle-orm": "^0.45.2",

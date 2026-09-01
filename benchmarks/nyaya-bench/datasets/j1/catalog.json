@@ -1,0 +1,27 @@
+{
+  "id": "j1-2026-08-19",
+  "name": "Phase 6S Nyaya Jurisdiction architecture (J1)",
+  "note": "Deterministic architecture benchmark, not 50-state certification. Runnable via npm run bench:j1. J012/J015/J016 execute live askNyayaAboutMatter / generateDraft / executeAgentRun paths in phase6s.integration.test.ts (RUN_DB_TESTS=1).",
+  "tasks": [
+    { "id": "J001", "title": "state matter context" },
+    { "id": "J002", "title": "federal district derives circuit" },
+    { "id": "J003", "title": "wrong-state authority is not controlling" },
+    { "id": "J004", "title": "applicable circuit authority" },
+    { "id": "J005", "title": "U.S. Supreme Court relationship" },
+    { "id": "J006", "title": "unknown jurisdiction abstention" },
+    { "id": "J007", "title": "choice-of-law is not forum" },
+    { "id": "J008", "title": "multi-jurisdiction context" },
+    { "id": "J009", "title": "as-of date propagation" },
+    { "id": "J010", "title": "view-only cannot mutate" },
+    { "id": "J011", "title": "Case update audit" },
+    { "id": "J012", "title": "Ask receives jurisdiction context" },
+    { "id": "J013", "title": "Research ranks same-jurisdiction authority" },
+    { "id": "J014", "title": "Research labels persuasive / out-of-jurisdiction" },
+    { "id": "J015", "title": "Draft receives metadata, not evidence" },
+    { "id": "J016", "title": "Agents receive context while FEATURE_AGENTS remains off" },
+    { "id": "J017", "title": "coverage defaults UNVALIDATED" },
+    { "id": "J018", "title": "no cross-matter jurisdiction leak" },
+    { "id": "J019", "title": "no cross-org jurisdiction leak" },
+    { "id": "J020", "title": "invalid district/circuit combination rejected" }
+  ]
+}

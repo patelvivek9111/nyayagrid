@@ -238,6 +238,12 @@ export async function proposeDiscoveryClassification(params: {
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "discovery_classification",
+    routing: {
+      subsystem: "evidence",
+      strategy: "standard",
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+    },
     messages: [
       { role: "system", content: buildDiscoveryClassificationSystemPrompt() },
       {

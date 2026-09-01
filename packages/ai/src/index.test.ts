@@ -4,6 +4,7 @@ import path from "node:path";
 import {
   citedAnswerSchema,
   createAIProviderFromEnv,
+  createDirectProvider,
   MockAIProvider,
   MockEmbeddingProvider,
   validateCitedAnswerAgainstPassages,
@@ -201,6 +202,17 @@ describe("createAIProviderFromEnv", () => {
     delete process.env.AI_PROVIDER;
     expect(createAIProviderFromEnv().name).toBe("mock");
     if (previous) process.env.AI_PROVIDER = previous;
+  });
+});
+
+describe("createDirectProvider", () => {
+  it("refuses to construct an adapter when the key is missing", () => {
+    expect(() =>
+      createDirectProvider({
+        provider: "anthropic",
+        env: { ANTHROPIC_API_KEY: "" },
+      }),
+    ).toThrow(/ANTHROPIC_API_KEY is missing/);
   });
 });
 

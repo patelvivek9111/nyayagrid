@@ -18,7 +18,7 @@ describe("normalizeMatterIntelligenceExtractionRaw", () => {
             sources: [{ chunkId: CHUNK_A, quote: "30 days written notice" }],
           },
         ],
-        entities: ["Riverview Legal LLC", { name: "Northwind Logistics Inc.", type: "company" }],
+        entities: ["Riverview Legal LLC", { name: "Northwind Logistics Inc.", type: "company", chunkIds: [CHUNK_A] }],
         deadlines: [
           {
             label: "Late fee accrual",
@@ -48,7 +48,6 @@ describe("normalizeMatterIntelligenceExtractionRaw", () => {
       value: "30 days written notice",
     });
     expect(normalized.entities.map((e) => e.displayName)).toEqual([
-      "Riverview Legal LLC",
       "Northwind Logistics Inc.",
     ]);
     expect(normalized.entities[0]?.entityType).toBe("organization");
@@ -62,8 +61,8 @@ describe("normalizeMatterIntelligenceExtractionRaw", () => {
   it("parses rescued payloads through Zod", () => {
     const parsed = parseMatterIntelligenceExtraction(
       {
-        facts: [{ label: "Governing law", value: "Synthetic Jurisdiction" }],
-        entities: ["Acme Corp"],
+        facts: [{ label: "Governing law", value: "Synthetic Jurisdiction", sourceChunkIds: [CHUNK_A] }],
+        entities: [{ displayName: "Acme Corp", entityType: "organization", sourceChunkIds: [CHUNK_A] }],
         deadlines: [],
         timelineEvents: [],
       },
@@ -77,6 +76,86 @@ describe("normalizeMatterIntelligenceExtractionRaw", () => {
       entityType: "organization",
       sourceChunkIds: [CHUNK_A],
     });
+  });
+
+  it("does not attach every available chunk when the model omits source ids", () => {
+    const parsed = parseMatterIntelligenceExtraction(
+      {
+        timelineEvents: [
+          {
+            title: "Invoice issued",
+            eventType: "invoice",
+            description: "Invoice date 2026-10-01",
+          },
+        ],
+        facts: [{ label: "Governing law", value: "Synthetic Jurisdiction" }],
+        entities: ["Acme Corp"],
+        deadlines: [],
+      },
+      { availableChunkIds: [CHUNK_A, CHUNK_B] },
+    );
+    expect(parsed.timelineEvents).toEqual([]);
+    expect(parsed.facts).toEqual([]);
+    expect(parsed.entities).toEqual([]);
+  });
+
+  it("resolves omitted chunk ids from quote overlap, not from all chunks", () => {
+    const parsed = parseMatterIntelligenceExtraction(
+      {
+        timelineEvents: [
+          {
+            title: "Invoice issued",
+            eventType: "invoice_issued",
+            sourceQuotes: ["Invoice date 2026-10-01"],
+          },
+        ],
+      },
+      {
+        availableChunks: [
+          {
+            chunkId: CHUNK_A,
+            documentId: "doc-a",
+            documentVersionId: "ver-a",
+            content: "Invoice date 2026-10-01. Due date 2026-10-31.",
+          },
+          {
+            chunkId: CHUNK_B,
+            documentId: "doc-a",
+            documentVersionId: "ver-a",
+            content: "Unrelated deposition testimony about HVAC.",
+          },
+        ],
+      },
+    );
+    expect(parsed.timelineEvents[0]?.sourceChunkIds).toEqual([CHUNK_A]);
+    expect(parsed.timelineEvents[0]?.datePrecision).toBe("exact");
+  });
+
+  it("does not upgrade approximate source language to exact", () => {
+    const parsed = parseMatterIntelligenceExtraction(
+      {
+        timelineEvents: [
+          {
+            title: "Review meeting",
+            eventType: "meeting",
+            datePrecision: "exact",
+            sourceChunkIds: [CHUNK_A],
+            sourceQuotes: ["The review occurred near the middle of November 2026."],
+          },
+        ],
+      },
+      {
+        availableChunks: [
+          {
+            chunkId: CHUNK_A,
+            documentId: "doc-a",
+            documentVersionId: "ver-a",
+            content: "The review occurred near the middle of November 2026.",
+          },
+        ],
+      },
+    );
+    expect(parsed.timelineEvents[0]?.datePrecision).toBe("approximate");
   });
 
   it("drops unsavable items instead of throwing", () => {

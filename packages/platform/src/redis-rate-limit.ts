@@ -242,6 +242,14 @@ export class RedisRateLimiter implements RateLimitProvider {
   close(): void {
     this.connection.close();
   }
+
+  async ping(): Promise<void> {
+    const value = await this.connection.send(["PING"]);
+    const text = String(value ?? "").toUpperCase();
+    if (text !== "PONG") {
+      throw new Error("Redis PING did not return PONG");
+    }
+  }
 }
 
 export function createRedisRateLimiterFromEnv(
@@ -252,4 +260,21 @@ export function createRedisRateLimiterFromEnv(
     throw new Error("RATE_LIMIT_PROVIDER=redis requires REDIS_URL or REDIS_HOST");
   }
   return new RedisRateLimiter(target);
+}
+
+/** Readiness/ops ping. Does not log the URL or password. */
+export async function pingRedis(
+  env: Record<string, string | undefined> = process.env,
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  const target = parseRedisTarget(env);
+  if (!target) return { ok: false, error: "not_configured" };
+  const limiter = new RedisRateLimiter(target, { timeoutMs: 2000 });
+  try {
+    await limiter.ping();
+    limiter.close();
+    return { ok: true };
+  } catch {
+    limiter.close();
+    return { ok: false, error: "unreachable" };
+  }
 }

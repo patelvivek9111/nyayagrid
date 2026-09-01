@@ -3,7 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { cx } from "@nyayagrid/ui";
 import { useActiveOrganization } from "@/components/use-active-organization";
+import { useFeatureFlags } from "@/components/use-feature-flags";
+import { IntelligenceDialog } from "@/components/ux/case-intelligence";
+import { shouldShowWorkspaceSwitcher } from "@/lib/workspace-ux";
+import { SignOutControl } from "@/components/sign-out-control";
 import { WorkspaceNavLink, WorkspaceSidebar } from "./workspace-sidebar";
 
 type CaseRow = { id: string; title: string; matterNumber: string; status: string };
@@ -12,8 +17,13 @@ type ChatRow = { id: string; title: string };
 export function GlobalSidebar() {
   const pathname = usePathname();
   const { organizationId, organizations, selectOrganization, loading } = useActiveOrganization();
+  const { flags } = useFeatureFlags();
   const [cases, setCases] = useState<CaseRow[]>([]);
   const [chats, setChats] = useState<ChatRow[]>([]);
+  const [switchOpen, setSwitchOpen] = useState(false);
+
+  const activeOrg = organizations.find((o) => o.id === organizationId) ?? null;
+  const showWorkspaceSwitcher = shouldShowWorkspaceSwitcher(organizations.length);
 
   useEffect(() => {
     if (!organizationId) {
@@ -70,39 +80,116 @@ export function GlobalSidebar() {
       brandEyebrow="Professional"
       menuId="ng-global-sidebar"
       footer={
-        <div className="space-y-3">
-          {organizations.length > 0 ? (
-            <div>
-              <label className="mb-1 block text-[10px] font-semibold uppercase tracking-wide text-ink/45">
-                Firm
-              </label>
-              <select
-                className="w-full rounded-md border border-line bg-white px-2 py-1.5 text-xs"
-                value={organizationId}
-                onChange={(e) => selectOrganization(e.target.value)}
+        <div className="space-y-2.5">
+          {showWorkspaceSwitcher && activeOrg ? (
+            <button
+              type="button"
+              className="flex w-full items-center gap-2 rounded-md px-1 py-1 text-left transition hover:bg-black/[0.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              aria-label="Switch workspace"
+              aria-haspopup="dialog"
+              aria-expanded={switchOpen}
+              title={activeOrg.name}
+              onClick={() => setSwitchOpen(true)}
+            >
+              <span className="min-w-0 flex-1">
+                <span className="block text-[10px] font-semibold uppercase tracking-[0.14em] text-ink/45">
+                  Workspace
+                </span>
+                <span className="mt-0.5 block truncate text-[13px] font-medium text-ink">
+                  {activeOrg.name}
+                </span>
+              </span>
+              <svg
+                viewBox="0 0 16 16"
+                className="h-3.5 w-3.5 shrink-0 text-ink/35"
+                aria-hidden="true"
               >
-                {organizations.map((o) => (
-                  <option key={o.id} value={o.id}>
-                    {o.name}
-                  </option>
-                ))}
-              </select>
-            </div>
+                <path
+                  d="M4 6l4 4 4-4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          ) : !loading && organizations.length === 0 ? (
+            <Link
+              href="/app/onboarding"
+              className="block px-1 text-xs font-semibold text-accent underline"
+            >
+              Set up your workspace
+            </Link>
           ) : null}
-          <div className="space-y-1">
-            <p className="text-[10px] font-semibold uppercase tracking-wide text-ink/45">
+          <div
+            className={cx(showWorkspaceSwitcher && activeOrg ? "border-t border-line pt-2.5" : "")}
+          >
+            <p className="px-1 text-[10px] font-semibold uppercase tracking-[0.14em] text-ink/45">
               Other workspaces
             </p>
-            <Link href="/portal" className="block text-xs font-semibold text-ink/70 hover:text-ink">
-              Client view
-            </Link>
-            <Link href="/professor" className="block text-xs font-semibold text-ink/70 hover:text-ink">
-              Professor
-            </Link>
-            <Link href="/guide" className="block text-xs font-semibold text-ink/70 hover:text-ink">
-              Guide
-            </Link>
+            <div className="mt-1 flex flex-col">
+              <Link
+                href="/portal"
+                className="rounded-md px-1 py-0.5 text-xs text-ink/60 hover:bg-black/[0.03] hover:text-ink"
+              >
+                Client view
+              </Link>
+              {flags.professor ? (
+                <Link
+                  href="/professor"
+                  className="rounded-md px-1 py-0.5 text-xs text-ink/60 hover:bg-black/[0.03] hover:text-ink"
+                >
+                  Professor
+                </Link>
+              ) : null}
+              {flags.guide ? (
+                <Link
+                  href="/guide"
+                  className="rounded-md px-1 py-0.5 text-xs text-ink/60 hover:bg-black/[0.03] hover:text-ink"
+                >
+                  Guide
+                </Link>
+              ) : null}
+              <SignOutControl className="mt-1 rounded-md px-1 py-0.5 text-left text-xs font-semibold text-ink/70 hover:bg-black/[0.03] hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent" />
+            </div>
           </div>
+          <IntelligenceDialog
+            open={switchOpen}
+            title="Switch workspace"
+            description="Cases, clients, calendar, and billing stay inside the workspace you select."
+            onClose={() => setSwitchOpen(false)}
+          >
+            <ul className="space-y-0.5">
+              {organizations.map((org) => {
+                const selected = org.id === organizationId;
+                return (
+                  <li key={org.id}>
+                    <button
+                      type="button"
+                      className={cx(
+                        "flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm",
+                        selected
+                          ? "bg-accent-soft/70 font-medium text-ink"
+                          : "text-ink/80 hover:bg-black/[0.03] hover:text-ink",
+                      )}
+                      aria-pressed={selected}
+                      autoFocus={selected}
+                      onClick={() => {
+                        selectOrganization(org.id);
+                        setSwitchOpen(false);
+                      }}
+                    >
+                      <span className="truncate">{org.name}</span>
+                      {selected ? (
+                        <span className="ml-3 shrink-0 text-xs text-ink/55">Current</span>
+                      ) : null}
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </IntelligenceDialog>
         </div>
       }
     >
@@ -129,7 +216,12 @@ export function GlobalSidebar() {
           />
         ))
       )}
-      <WorkspaceNavLink href="/app/chats" label="All chats" indent active={pathname === "/app/chats"} />
+      <WorkspaceNavLink
+        href="/app/chats"
+        label="All chats"
+        indent
+        active={pathname === "/app/chats"}
+      />
 
       <div className="mb-1 mt-4 flex items-center justify-between px-2.5">
         <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-ink/45">Cases</p>
@@ -139,7 +231,12 @@ export function GlobalSidebar() {
       </div>
       {loading ? <p className="px-2.5 text-xs text-ink/40">Loading…</p> : null}
       {cases.length === 0 && !loading ? (
-        <p className="px-2.5 py-1 text-xs text-ink/40">No cases yet</p>
+        <Link
+          href="/app/cases/new"
+          className="block px-2.5 py-1 text-xs font-semibold text-accent hover:underline"
+        >
+          Create your first Case
+        </Link>
       ) : (
         cases.map((c) => (
           <WorkspaceNavLink
@@ -151,11 +248,19 @@ export function GlobalSidebar() {
           />
         ))
       )}
-      <WorkspaceNavLink href="/app/cases" label="All cases" indent active={pathname === "/app/cases"} />
+      <WorkspaceNavLink
+        href="/app/cases"
+        label="All cases"
+        indent
+        active={pathname === "/app/cases"}
+      />
 
       <div className="mt-4 space-y-0.5 border-t border-line pt-3">
-        <p className="mb-1 px-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-ink/45">
-          Firm
+        <p
+          className="mb-1 px-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-ink/45"
+          title="Practice operations"
+        >
+          Practice
         </p>
         <WorkspaceNavLink
           href="/app/clients"
@@ -166,7 +271,7 @@ export function GlobalSidebar() {
         <WorkspaceNavLink
           href="/app/calendar"
           label="Calendar"
-          title="Hearings and deadlines"
+          title="Upcoming deadlines and tasks"
           active={pathname.startsWith("/app/calendar")}
         />
         <WorkspaceNavLink

@@ -1,0 +1,70 @@
+[
+  {
+    "title": "Cal. Com. Code § 2725 — Statute of limitations in contracts for sale",
+    "shortTitle": "Cal. UCC § 2725",
+    "authorityType": "statute",
+    "jurisdiction": "California",
+    "authorityState": "CA",
+    "citation": "Cal. Com. Code § 2725",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ca-ucc-2725",
+    "canonicalSourceUrl": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=2725.&lawCode=COM",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["contract", "commercial", "civil"],
+    "content": "Cal. Com. Code § 2725\n\n2725. (a) An action for breach of any contract for sale must be commenced within four years after the cause of action has accrued. By the original agreement the parties may reduce the period of limitation to not less than one year but may not extend it.\n\n(b) A cause of action accrues when the breach occurs, regardless of the aggrieved party's lack of knowledge of the breach. A breach of warranty occurs when tender of delivery is made, except that where a warranty explicitly extends to future performance of the goods and discovery of the breach must await the time of such performance the cause of action accrues when the breach is or should have been discovered.",
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "ucc_article_2_limitations" }
+  },
+  {
+    "title": "Cal. Lab. Code § 510 — Day's work; overtime",
+    "shortTitle": "Cal. Lab. Code § 510",
+    "authorityType": "statute",
+    "jurisdiction": "California",
+    "authorityState": "CA",
+    "citation": "Cal. Lab. Code § 510",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ca-labor-510",
+    "canonicalSourceUrl": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=510.&lawCode=LAB",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["employment"],
+    "content": "Cal. Lab. Code § 510\n\n510. (a) Eight hours of labor constitutes a day's work. Any work in excess of eight hours in one workday and any work in excess of 40 hours in any one workweek and the first eight hours worked on the seventh day of work in any one workweek shall be compensated at the rate of no less than one and one-half times the regular rate of pay for an employee.",
+    "sections": [
+      {
+        "sectionRef": "510",
+        "subsectionRef": "a",
+        "content": "Eight hours of labor constitutes a day's work. Any work in excess of eight hours in one workday and any work in excess of 40 hours in any one workweek and the first eight hours worked on the seventh day of work in any one workweek shall be compensated at the rate of no less than one and one-half times the regular rate of pay for an employee."
+      }
+    ],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "overtime" }
+  },
+  {
+    "title": "Rowland v. Christian, 69 Cal. 2d 108 (1968)",
+    "shortTitle": "Rowland v. Christian",
+    "authorityType": "case",
+    "jurisdiction": "California",
+    "authorityState": "CA",
+    "court": "Supreme Court of California",
+    "courtId": "st-ca-high",
+    "courtLevel": "state_high",
+    "citation": "69 Cal. 2d 108",
+    "decisionDate": "1968-01-25",
+    "publicationStatus": "published",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ca-rowland-v-christian-69-cal-2d-108",
+    "canonicalSourceUrl": "https://www.courtlistener.com/opinion/1174976/rowland-v-christian/",
+    "bundleSourceClass": "PRIMARY_PUBLIC_REPOSITORY",
+    "bundleQualityTier": "TIER_2_TRUSTED_PUBLIC",
+    "bundlePracticeAreas": ["civil"],
+    "content": "Rowland v. Christian, 69 Cal. 2d 108 (1968).\n\nPlaintiff was injured when a water control valve in an apartment broke. The Supreme Court of California abandoned categorical exceptions to landowner duty and held that liability turns on whether the defendant's conduct foreseeably created an unreasonable risk of harm.\n\nThe court stated that whether a duty exists is a question of whether the plaintiff's interest is entitled to legal protection against the defendant's conduct, and that the determination requires balancing the foreseeability of harm, the degree of certainty of injury, and the burden of guarding against it.",
+    "opinionParts": [
+      {
+        "part": "majority",
+        "content": "Whether a duty exists requires balancing the foreseeability of harm, the degree of certainty of injury, the closeness of the connection between conduct and injury, and the burden of guarding against it."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "public_repository_snapshot",
+      "repository": "courtlistener",
+      "excerptNote": "Excerpt summarizing holding; full opinion at canonical URL."
+    }
+  }
+]

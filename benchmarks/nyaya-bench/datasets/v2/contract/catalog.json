@@ -1,0 +1,149 @@
+{
+  "comment": "Overlay only. Loaded in --mode contract. Reuses V2 PDFs. Invokes production analyzeContract. Does not score Compare, Contradiction, Deposition, or Ask Nyaya chat.",
+  "tasks": [
+    {
+      "id": "SYNTH-V2-001-CA001",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "medium",
+      "prompt": "Analyze the main agreement for material notice terms in this instrument.",
+      "action": { "kind": "analyze_contract", "documentPattern": "01_Main_Agreement" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA002",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "medium",
+      "prompt": "Analyze Amendment 1 for the notice term stated in this amendment.",
+      "action": { "kind": "analyze_contract", "documentPattern": "02_Amendment_1" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA003",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "medium",
+      "prompt": "Analyze the main agreement for the liability cap stated in this instrument.",
+      "action": { "kind": "analyze_contract", "documentPattern": "01_Main_Agreement" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA004",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "medium",
+      "prompt": "Analyze the main agreement for payment obligations stated in this instrument.",
+      "action": { "kind": "analyze_contract", "documentPattern": "01_Main_Agreement" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA005",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "medium",
+      "prompt": "Analyze the main agreement for termination terms stated in this instrument.",
+      "action": { "kind": "analyze_contract", "documentPattern": "01_Main_Agreement" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA006",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "hard",
+      "prompt": "Analyze Amendment 1 for the changed notice and liability terms stated in this signed amendment.",
+      "action": { "kind": "analyze_contract", "documentPattern": "02_Amendment_1" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA007",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "hard",
+      "prompt": "Analyze Amendment 2 for any future-effective date stated in this instrument.",
+      "action": { "kind": "analyze_contract", "documentPattern": "03_Amendment_2" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA008",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "hard",
+      "prompt": "Analyze the main agreement. Do not invent contents of exhibits that are not in Sources.",
+      "action": { "kind": "analyze_contract", "documentPattern": "01_Main_Agreement" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA009",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "hard",
+      "prompt": "Analyze the email chain. Informal email is not a signed controlling contract instrument.",
+      "action": { "kind": "analyze_contract", "documentPattern": "04_Email_Chain" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA010",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "medium",
+      "prompt": "Analyze the main agreement and preserve legally meaningful numbers in findings.",
+      "action": { "kind": "analyze_contract", "documentPattern": "01_Main_Agreement" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA011",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "medium",
+      "prompt": "Analyze the main agreement and inspect finding provenance.",
+      "action": { "kind": "analyze_contract", "documentPattern": "01_Main_Agreement" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA012",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "hard",
+      "prompt": "Analyze the main agreement. Supporting spans must support the finding they cite.",
+      "action": { "kind": "analyze_contract", "documentPattern": "01_Main_Agreement" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA013",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "hard",
+      "prompt": "Analyze the main agreement and preserve limiting language around the liability cap.",
+      "action": { "kind": "analyze_contract", "documentPattern": "01_Main_Agreement" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA014",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "hard",
+      "prompt": "Analyze Amendment 1. Spelling and exhibit-letter-only changes are not material legal risks.",
+      "action": { "kind": "analyze_contract", "documentPattern": "02_Amendment_1" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA015",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "medium",
+      "prompt": "Analyze the main agreement. Overlapping restatements of the same obligation should not multiply findings.",
+      "action": { "kind": "analyze_contract", "documentPattern": "01_Main_Agreement" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA016",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "medium",
+      "prompt": "Analyze the main agreement. The parent summary must align with structured items.",
+      "action": { "kind": "analyze_contract", "documentPattern": "01_Main_Agreement" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA017",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "medium",
+      "prompt": "Analyze Amendment 1 and confirm new findings remain proposed and do not enter Ask Nyaya as reviewed facts.",
+      "action": { "kind": "downstream_context", "documentPattern": "02_Amendment_1" }
+    },
+    {
+      "id": "SYNTH-V2-001-CA018",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "contract",
+      "difficulty": "medium",
+      "prompt": "Analyze then dismiss a contract item and check Ask Nyaya context.",
+      "action": { "kind": "review_contract_item", "documentPattern": "02_Amendment_1", "reviewAction": "dismissed" }
+    }
+  ]
+}

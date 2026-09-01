@@ -1,0 +1,114 @@
+{
+  "baselineId": "BASELINE_AN1_ANALYSIS",
+  "benchmarkKind": "NYAYA_ANALYSIS",
+  "graderVersion": "an1-2026-08-19",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "notLegalCorrectnessProof": true,
+  "productionUnchanged": true,
+  "phase": "6I",
+  "caseQaFrozen": true,
+  "compareFrozen": true,
+  "contradictionFrozen": true,
+  "timelineT2Frozen": true,
+  "memoryM2Frozen": true,
+  "measures": [
+    "analyzeContract_document_analyses_items_sources",
+    "analyzeDeposition_analysis_runs_findings",
+    "reviewAnalysisItem_reviewed_dismissed",
+    "duplicate_contract_idempotency_skip",
+    "getEvidenceIntelligence_evidence_matrix_view",
+    "loadProfessionalAnalysisContext",
+    "formatProfessionalAnalysisForPrompt",
+    "executionTarget_analysis_throw"
+  ],
+  "doesNotMeasure": [
+    "case_qa_engine",
+    "compare_engine_B2",
+    "contradiction_engine_B2",
+    "timeline_T2",
+    "memory_M2",
+    "graph_materialization",
+    "draft_engine_wording",
+    "AN004_decoy_owned_by_compare",
+    "AN009_tension_owned_by_contradiction"
+  ],
+  "runs": {
+    "livePersist": "benchmarks/nyaya-bench/reports/runs/2026-08-19T10-31-15-343Z",
+    "officialGrades": "benchmarks/nyaya-bench/reports/runs/2026-08-19T10-31-15-343Z"
+  },
+  "config": {
+    "dataset": "v2",
+    "executionMode": "analysis",
+    "scenarios": ["SYNTH-V2-001", "SYNTH-V2-006"],
+    "taskCount": 14,
+    "gitCommit": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  "counts": {
+    "scenarios": 2,
+    "tasks": 14,
+    "pass": 8,
+    "needs_work": 0,
+    "fail": 4,
+    "infrastructure": 2,
+    "critical": 2,
+    "criticalFailureFlag": 1
+  },
+  "metrics": {
+    "contract": {
+      "tasks": 10,
+      "materialRecall": 0.6667,
+      "materialPrecision": 0.6667,
+      "numericAccuracy": 1,
+      "operativeSourceAccuracy": 1,
+      "decoyFalsePositiveRate": 0
+    },
+    "deposition": {
+      "tasks": 1,
+      "scoredExcludingInfrastructure": 1,
+      "infrastructure": 2,
+      "admissionDenialAccuracy": null,
+      "actorAccuracy": 0,
+      "tensionConflictAccuracy": null,
+      "unsupportedConclusionRate": 0
+    },
+    "evidenceMatrix": {
+      "tasks": 1,
+      "propositionCoverage": 1,
+      "evidenceRoleAccuracy": null,
+      "crossDocumentAccuracy": null,
+      "note": "Read-only view over verified Timeline/Facts/Graph plus proposed+reviewed contradiction findings. No extract in this mode. Empty matrix on this run."
+    },
+    "provenancePresence": 1,
+    "unsupportedFindingRate": 0.0833,
+    "reviewStatusAccuracy": 0.9167,
+    "downstreamContextViolations": 1,
+    "duplicateNoiseRate": 0
+  },
+  "taxonomy": {
+    "ANALYSIS_FINDING_EXTRACTION": 1,
+    "ANALYSIS_REVIEW_LIFECYCLE": 2,
+    "ANALYSIS_DOWNSTREAM_TRUST": 1,
+    "INFRASTRUCTURE_FAILURE": 2
+  },
+  "executionTargetAnalysis": {
+    "executesAnalysis": false,
+    "executesGenerateDraft": false,
+    "behavior": "throws: executionTarget=analysis is not a single production engine"
+  },
+  "askNyayaProposedInjection": true,
+  "criticalFailures": [
+    {
+      "taskId": "SYNTH-V2-001-AN016",
+      "failureTaxonomy": "downstream trust boundary",
+      "detail": "Proposed contract summaries with proposedItems=25 entered Ask Nyaya under header Reviewed/available contract analyses without per-item review labels"
+    },
+    {
+      "taskId": "SYNTH-V2-006-AN008",
+      "failureTaxonomy": "review lifecycle",
+      "detail": "Deposition analysis persisted zero findings; status none. Actor-inference trap not exercised."
+    }
+  ]
+}

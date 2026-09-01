@@ -23,5 +23,13 @@ describe("organization isolation helpers", () => {
     expect(key).toBe("org/org_1/documents/doc_1/versions/ver_1/Contract.pdf");
     expect(() => assertStorageKeyBelongsToOrganization(key, "org_1")).not.toThrow();
     expect(() => assertStorageKeyBelongsToOrganization(key, "org_2")).toThrow(AuthorizationError);
+    const traversed = storageKeyForOrganization({
+      organizationId: "org_1",
+      documentId: "doc_1",
+      versionId: "ver_1",
+      filename: "../evil/payload.txt",
+    });
+    expect(traversed.split("/").includes("..")).toBe(false);
+    expect(traversed).toBe("org/org_1/documents/doc_1/versions/ver_1/.._evil_payload.txt");
   });
 });

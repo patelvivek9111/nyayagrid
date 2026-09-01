@@ -1,0 +1,36 @@
+{
+  "label": "G2",
+  "title": "Graph reliability after manual-write and neighborhood trust fixes",
+  "liveRunDir": "benchmarks/nyaya-bench/reports/runs/2026-08-19T15-43-10-288Z",
+  "executionMode": "graph",
+  "benchmarkKind": "NYAYA_GRAPH",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "productionUnchanged": false,
+  "graderVersion": "g1-2026-08-19",
+  "promptVersion": "graph-relationship-extract-v2",
+  "counts": {
+    "pass": 18,
+    "needs_work": 0,
+    "fail": 0,
+    "infrastructure": 0,
+    "criticalFails": 0
+  },
+  "g1RunDir": "benchmarks/nyaya-bench/reports/runs/2026-08-19T15-33-02-742Z",
+  "transitions": {
+    "pass_to_pass": 17,
+    "fail_to_pass": ["SYNTH-V2-001-G017"],
+    "regressions": []
+  },
+  "metrics": {
+    "edgePrecision": 1,
+    "actorAccuracy": 1,
+    "negationAccuracy": 1,
+    "temporalAccuracy": 1,
+    "provenanceAccuracy": 1,
+    "wrongDocumentRate": 0,
+    "unsupportedEdgeRate": 0,
+    "proposedToVerifiedLeakageRate": 0,
+    "rejectedEdgeLeakageRate": 0
+  }
+}

@@ -50,6 +50,19 @@ export function containsEditorialTreatmentClaim(value: string | null | undefined
 }
 
 /**
+ * NyayaGrid does not independently verify treatment. Strip unsourced editorial conclusions
+ * from generated prose so they cannot reach the user as current-law claims.
+ */
+export function rewriteUnsourcedEditorialTreatment(text: string, sourced = false): string {
+  if (!text || sourced || !containsEditorialTreatmentClaim(text)) return text;
+  return text
+    .replace(/\b(has been|was) overruled\b/gi, "has no verified overruling in this corpus")
+    .replace(/\bis still good law\b/gi, "does not have verified current treatment in this corpus")
+    .replace(/\bis good law\b/gi, "does not have verified current treatment in this corpus")
+    .replace(/\bis still valid\b/gi, "does not have verified current treatment in this corpus");
+}
+
+/**
  * Guard for any treatment text that reaches a user: editorial conclusions are only allowed when
  * they came from a source that reported them.
  */

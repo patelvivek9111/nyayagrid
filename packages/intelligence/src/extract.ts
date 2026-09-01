@@ -32,6 +32,14 @@ import {
   parseOptionalDate,
   resolveValidatedSources,
 } from "./provenance";
+import {
+  extractDatedEventPropositionsFromChunks,
+  matchesRejectedTimelineEvent,
+  mergeTimelineProposals,
+  normalizeTimelineProposal,
+  sourceTextForEvent,
+  type RejectedTimelineMemory,
+} from "./timeline-normalize";
 
 export const INTELLIGENCE_RUN_KIND = "matter_intelligence_v1";
 
@@ -73,8 +81,8 @@ export async function extractMatterIntelligenceForDocument(params: {
       ),
     )
     .limit(1);
-  if (!doc || doc.processingState !== "ready") {
-    throw new Error("Document must be ready before matter intelligence extraction");
+  if (!doc || (doc.processingState !== "ready" && doc.processingState !== "indexed")) {
+    throw new Error("Document must be indexed or ready before matter intelligence extraction");
   }
 
   let run = existingRun;
@@ -132,6 +140,12 @@ export async function extractMatterIntelligenceForDocument(params: {
     const generation = await ai.generate({
       temperature: 0,
       schemaName: "matter_intelligence_extraction",
+      routing: {
+        subsystem: "timeline",
+        strategy: "standard",
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+      },
       messages: [
         { role: "system", content: buildMatterIntelligenceSystemPrompt() },
         { role: "user", content: buildMatterIntelligenceUserPrompt(extractionChunks) },
@@ -145,19 +159,14 @@ export async function extractMatterIntelligenceForDocument(params: {
       raw = { timelineEvents: [], facts: [], entities: [], deadlines: [] };
     }
     const parsed = parseMatterIntelligenceExtraction(raw, {
+      availableChunks: extractionChunks,
       availableChunkIds: extractionChunks.map((chunk) => chunk.chunkId),
     });
 
-    const allChunkIds = [
-      ...parsed.timelineEvents.flatMap((e) => e.sourceChunkIds),
-      ...parsed.facts.flatMap((f) => f.sourceChunkIds),
-      ...parsed.entities.flatMap((e) => e.sourceChunkIds),
-      ...parsed.deadlines.flatMap((d) => d.sourceChunkIds),
-    ];
     const authorized = await loadAuthorizedChunks(params.db, {
       organizationId: params.organizationId,
       matterId: params.matterId,
-      chunkIds: allChunkIds,
+      chunkIds: extractionChunks.map((chunk) => chunk.chunkId),
     });
 
     const existingEvents = await params.db
@@ -171,23 +180,79 @@ export async function extractMatterIntelligenceForDocument(params: {
         ),
       );
 
+    const rejectedRows = await params.db
+      .select()
+      .from(timelineEvents)
+      .where(
+        and(
+          eq(timelineEvents.organizationId, params.organizationId),
+          eq(timelineEvents.matterId, params.matterId),
+          eq(timelineEvents.status, "rejected"),
+        ),
+      );
+    const rejectedIds = rejectedRows.map((row) => row.id);
+    const rejectedSources =
+      rejectedIds.length === 0
+        ? []
+        : await params.db
+            .select()
+            .from(timelineEventSources)
+            .where(inArray(timelineEventSources.timelineEventId, rejectedIds));
+    const rejectedVersions = new Map<string, string[]>();
+    for (const source of rejectedSources) {
+      const list = rejectedVersions.get(source.timelineEventId) ?? [];
+      list.push(source.documentVersionId);
+      rejectedVersions.set(source.timelineEventId, list);
+    }
+    const rejectedMemory: RejectedTimelineMemory[] = rejectedRows.map((row) => ({
+      title: row.title,
+      description: row.description,
+      eventType: row.eventType,
+      eventDate: row.eventDate,
+      documentVersionIds: rejectedVersions.get(row.id) ?? [],
+    }));
+
+    const deterministic = extractDatedEventPropositionsFromChunks(extractionChunks);
+    const mergedEvents = mergeTimelineProposals(parsed.timelineEvents, deterministic)
+      .map((event) => {
+        const sourceText = sourceTextForEvent(event, extractionChunks);
+        return normalizeTimelineProposal(event, sourceText);
+      })
+      .filter((event): event is NonNullable<typeof event> => Boolean(event));
+
     let createdEvents = 0;
-    let mergedEvents = 0;
+    let mergedEventCount = 0;
     let rejectedNoSource = 0;
     let createdFacts = 0;
     let createdEntities = 0;
     let createdDeadlines = 0;
 
-    for (const proposal of parsed.timelineEvents) {
+    for (const proposal of mergedEvents) {
       const sources = resolveValidatedSources({
         organizationId: params.organizationId,
         matterId: params.matterId,
         sourceChunkIds: proposal.sourceChunkIds,
-        sourceQuotes: proposal.sourceQuotes,
+        sourceQuotes: proposal.sourceQuotes ?? [],
         authorized,
+        event: {
+          title: proposal.title,
+          description: proposal.description,
+          eventDate: proposal.eventDate ?? null,
+        },
       });
       if (sources.length === 0) {
         rejectedNoSource += 1;
+        continue;
+      }
+      if (
+        matchesRejectedTimelineEvent(
+          {
+            ...proposal,
+            documentVersionIds: [...new Set(sources.map((source) => source.documentVersionId))],
+          },
+          rejectedMemory,
+        )
+      ) {
         continue;
       }
       const eventDate = parseOptionalDate(proposal.eventDate);
@@ -221,7 +286,7 @@ export async function extractMatterIntelligenceForDocument(params: {
             })
             .onConflictDoNothing();
         }
-        mergedEvents += 1;
+        mergedEventCount += 1;
         continue;
       }
 
@@ -235,11 +300,11 @@ export async function extractMatterIntelligenceForDocument(params: {
           eventType: proposal.eventType,
           eventDate,
           eventDateEnd,
-          datePrecision: proposal.datePrecision,
+          datePrecision: proposal.datePrecision ?? "unknown",
           status: "proposed",
-          confidence: proposal.confidence,
+          confidence: proposal.confidence ?? "medium",
           origin: "ai",
-          actors: proposal.actors,
+          actors: proposal.actors ?? [],
           uncertaintyNotes: proposal.uncertaintyNotes ?? null,
           dedupeKey: buildTimelineDedupeKey({
             eventType: proposal.eventType,
@@ -268,6 +333,7 @@ export async function extractMatterIntelligenceForDocument(params: {
         sourceChunkIds: proposal.sourceChunkIds,
         sourceQuotes: proposal.sourceQuotes,
         authorized,
+        event: { title: proposal.label, description: proposal.value },
       });
       if (sources.length === 0) {
         rejectedNoSource += 1;
@@ -331,6 +397,7 @@ export async function extractMatterIntelligenceForDocument(params: {
         sourceChunkIds: proposal.sourceChunkIds,
         sourceQuotes: proposal.sourceQuotes,
         authorized,
+        event: { title: proposal.displayName, description: proposal.description },
       });
       if (sources.length === 0) {
         rejectedNoSource += 1;
@@ -411,6 +478,7 @@ export async function extractMatterIntelligenceForDocument(params: {
         sourceChunkIds: proposal.sourceChunkIds,
         sourceQuotes: proposal.sourceQuotes,
         authorized,
+        event: { title: proposal.title, description: proposal.description, eventDate: proposal.dueAt ?? null },
       });
       if (sources.length === 0) {
         rejectedNoSource += 1;
@@ -470,7 +538,7 @@ export async function extractMatterIntelligenceForDocument(params: {
 
     const stats = {
       createdEvents,
-      mergedEvents,
+      mergedEvents: mergedEventCount,
       createdFacts,
       createdEntities,
       createdDeadlines,

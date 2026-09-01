@@ -1,0 +1,29 @@
+{
+  "scenario_id": "SYNTH-008",
+  "title": "Summit Retail Commercial Loan",
+  "matter_type": "Commercial Loan",
+  "fictional": true,
+  "label": "SYNTH - FICTIONAL TEST DOCUMENT - NOT REAL CLIENT WORK",
+  "documents": [
+    {
+      "document_id": "note",
+      "file": "documents/note.pdf",
+      "title": "Promissory Note"
+    },
+    {
+      "document_id": "modification",
+      "file": "documents/modification.pdf",
+      "title": "Loan Modification Agreement"
+    },
+    {
+      "document_id": "payment_notice",
+      "file": "documents/payment_notice.pdf",
+      "title": "Payment Notice - August 2026"
+    },
+    {
+      "document_id": "email",
+      "file": "documents/email.pdf",
+      "title": "Borrower Email - August 3, 2026"
+    }
+  ]
+}

@@ -4,9 +4,13 @@ import {
   collectConfigWarnings,
   collectProductionConfigProblems,
   getAppEnv,
+  isAuthorityHttpImportEnabled,
+  assertNotProductionDataTarget,
   isDevelopment,
+  isExplicitLocalDevAuthAllowed,
   isProductionLike,
   isTestEnv,
+  isWeakInngestSigningKey,
   resolveAppEnvDetailed,
   summarizeConfig,
   validateConfigForEnv,
@@ -37,6 +41,9 @@ const SAFE_PRODUCTION_ENV: EnvSource = {
   REDIS_URL: "redis://127.0.0.1:6379",
   DATABASE_URL: "postgresql://user:pass@host:5432/db",
   S3_BUCKET: "nyayagrid-prod-documents",
+  INNGEST_SIGNING_KEY: "signkey-prod-nyayagrid-not-a-placeholder",
+  INNGEST_EVENT_KEY: "eventkey-prod-nyayagrid-not-a-placeholder",
+  NEXT_PUBLIC_APP_URL: "https://app.example.com",
 };
 
 describe("resolveAppEnvDetailed / getAppEnv", () => {
@@ -269,10 +276,22 @@ describe("validateConfigForEnv", () => {
     expect(result.appEnv).toBe("production");
   });
 
-  it("reports staging problems as advisory instead of throwing", () => {
-    const result = validateConfigForEnv({ APP_ENV: "staging" });
+  it("reports staging problems as advisory instead of throwing when Clerk is configured", async () => {
+    const result = validateConfigForEnv({
+      APP_ENV: "staging",
+      AUTH_PROVIDER: "clerk",
+      CLERK_SECRET_KEY: "sk",
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "pk",
+      CLERK_WEBHOOK_SECRET: "whsec",
+    });
     expect(result.appEnv).toBe("staging");
     expect(result.problems.length).toBeGreaterThan(0);
+  });
+
+  it("throws when staging uses AUTH_PROVIDER=dev", () => {
+    expect(() => validateConfigForEnv({ APP_ENV: "staging", AUTH_PROVIDER: "dev" })).toThrow(
+      ConfigurationError,
+    );
   });
 
   it("reports no problems for development/test (they are supposed to run the mock stand-ins)", () => {
@@ -294,5 +313,78 @@ describe("collectConfigWarnings / summarizeConfig", () => {
     expect(serialized).not.toContain("postgresql://");
     expect(summary.databaseConfigured).toBe(true);
     expect(summary.storageBucketConfigured).toBe(true);
+  });
+});
+
+describe("P0 security gates", () => {
+  it("allows DevAuth only when APP_ENV is explicitly development or the process is test", () => {
+    expect(isExplicitLocalDevAuthAllowed({ APP_ENV: "development" })).toBe(true);
+    expect(isExplicitLocalDevAuthAllowed({ NODE_ENV: "test" })).toBe(true);
+    expect(isExplicitLocalDevAuthAllowed({ NODE_ENV: "development" })).toBe(false);
+    expect(isExplicitLocalDevAuthAllowed({ APP_ENV: "staging", AUTH_PROVIDER: "dev" })).toBe(false);
+    expect(isExplicitLocalDevAuthAllowed({ APP_ENV: "production" })).toBe(false);
+  });
+
+  it("treats missing/local Inngest signing keys as weak", () => {
+    expect(isWeakInngestSigningKey(undefined)).toBe(true);
+    expect(isWeakInngestSigningKey("local")).toBe(true);
+    expect(isWeakInngestSigningKey("short")).toBe(true);
+    expect(isWeakInngestSigningKey("signkey-prod-nyayagrid-not-a-placeholder")).toBe(false);
+  });
+
+  it("flags weak Inngest signing configuration as a production blocker", () => {
+    const problems = collectProductionConfigProblems({
+      ...SAFE_PRODUCTION_ENV,
+      INNGEST_SIGNING_KEY: "local",
+    });
+    expect(problems.some((p) => p.includes("INNGEST_SIGNING_KEY"))).toBe(true);
+  });
+
+  it("requires Inngest for production because ingest is asynchronous", () => {
+    const problems = collectProductionConfigProblems({
+      ...SAFE_PRODUCTION_ENV,
+      INNGEST_DISABLED: "1",
+    });
+    expect(problems.some((p) => p.includes("INNGEST_DISABLED"))).toBe(true);
+  });
+
+  it("rejects Professor, Agents, and authority HTTP import on the professional beta profile", () => {
+    expect(
+      collectProductionConfigProblems({ ...SAFE_PRODUCTION_ENV, FEATURE_PROFESSOR: "1" }).some((p) =>
+        p.includes("FEATURE_PROFESSOR"),
+      ),
+    ).toBe(true);
+    expect(
+      collectProductionConfigProblems({ ...SAFE_PRODUCTION_ENV, FEATURE_AGENTS: "1" }).some((p) =>
+        p.includes("FEATURE_AGENTS"),
+      ),
+    ).toBe(true);
+    expect(
+      collectProductionConfigProblems({
+        ...SAFE_PRODUCTION_ENV,
+        ALLOW_AUTHORITY_HTTP_IMPORT: "1",
+      }).some((p) => p.includes("ALLOW_AUTHORITY_HTTP_IMPORT")),
+    ).toBe(true);
+  });
+
+  it("refuses synthetic writers against APP_ENV=production", () => {
+    expect(() =>
+      assertNotProductionDataTarget("nyaya-bench", { APP_ENV: "production" }),
+    ).toThrow(ConfigurationError);
+    expect(() =>
+      assertNotProductionDataTarget("nyaya-bench", {
+        APP_ENV: "production",
+        ALLOW_PRODUCTION_SYNTHETIC_WRITE: "1",
+      }),
+    ).not.toThrow();
+  });
+
+  it("disables HTTP authority import in production unless explicitly allowed", () => {
+    expect(isAuthorityHttpImportEnabled({ APP_ENV: "production" })).toBe(false);
+    expect(isAuthorityHttpImportEnabled({ APP_ENV: "staging" })).toBe(false);
+    expect(isAuthorityHttpImportEnabled({ APP_ENV: "development" })).toBe(true);
+    expect(
+      isAuthorityHttpImportEnabled({ APP_ENV: "production", ALLOW_AUTHORITY_HTTP_IMPORT: "1" }),
+    ).toBe(true);
   });
 });

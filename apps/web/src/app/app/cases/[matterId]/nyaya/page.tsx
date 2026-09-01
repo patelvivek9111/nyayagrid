@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState, type FormEvent } from "react"
 import { useParams } from "next/navigation";
 import { Button, Panel, Badge } from "@nyayagrid/ui";
 import { openMatterDocument } from "@/lib/document-open";
+import { useFeatureFlags } from "@/components/use-feature-flags";
+import { ExecutionStrategyControl, type ExecutionStrategyValue } from "@/components/ux/execution-strategy-control";
 
 type Citation = {
   chunkId?: string;
@@ -92,6 +94,8 @@ function statusTone(status: string): string {
 export default function MatterNyayaPage() {
   const params = useParams<{ matterId: string }>();
   const matterId = params.matterId;
+  const { flags } = useFeatureFlags();
+  const agentsOn = flags.agents;
   const [tab, setTab] = useState<"ask" | "task">("ask");
   const [message, setMessage] = useState("");
 
@@ -103,6 +107,8 @@ export default function MatterNyayaPage() {
   const [sourceText, setSourceText] = useState("");
   const [sourceDocumentId, setSourceDocumentId] = useState<string | null>(null);
   const [asking, setAsking] = useState(false);
+  const [executionStrategy, setExecutionStrategy] = useState<ExecutionStrategyValue>("auto");
+  const [modelId, setModelId] = useState<string | undefined>(undefined);
 
   // Run Task state
   const [goal, setGoal] = useState("");
@@ -117,11 +123,11 @@ export default function MatterNyayaPage() {
 
   useEffect(() => {
     const runId = new URLSearchParams(window.location.search).get("runId");
-    if (runId) {
+    if (runId && agentsOn) {
       setTab("task");
       setCurrentRunId(runId);
     }
-  }, []);
+  }, [agentsOn]);
 
   const loadRuns = useCallback(async () => {
     try {
@@ -176,7 +182,13 @@ export default function MatterNyayaPage() {
       const res = await fetch(`/api/v1/matters/${matterId}/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question, conversationId, mode: "ask" }),
+        body: JSON.stringify({
+          question,
+          conversationId,
+          mode: "ask",
+          executionStrategy,
+          modelId,
+        }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error?.message ?? "Ask failed");
@@ -341,13 +353,15 @@ export default function MatterNyayaPage() {
         <Button variant={tab === "ask" ? "primary" : "secondary"} onClick={() => setTab("ask")}>
           Ask Nyaya
         </Button>
-        <Button variant={tab === "task" ? "primary" : "secondary"} onClick={() => setTab("task")}>
-          Start a longer task
-        </Button>
+        {agentsOn ? (
+          <Button variant={tab === "task" ? "primary" : "secondary"} onClick={() => setTab("task")}>
+            Start a longer task
+          </Button>
+        ) : null}
       </div>
       {message ? <p className="mb-3 text-sm text-accent">{message}</p> : null}
 
-      {tab === "ask" ? (
+      {tab === "ask" || !agentsOn ? (
         <>
           <Panel title="Ask Nyaya">
             <p className="mb-3 text-sm text-ink/70">
@@ -361,6 +375,13 @@ export default function MatterNyayaPage() {
                 onChange={(e) => setQuestion(e.target.value)}
                 placeholder="Ask a question about the files in this case…"
                 required
+              />
+              <ExecutionStrategyControl
+                subsystem="ask"
+                value={executionStrategy}
+                onChange={setExecutionStrategy}
+                modelId={modelId}
+                onModelChange={setModelId}
               />
               <Button type="submit" disabled={asking}>
                 {asking ? "Retrieving…" : "Ask Nyaya"}

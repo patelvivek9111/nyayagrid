@@ -4,7 +4,15 @@
  * Coverage target: ≥30 cases including `partial`, QA-06 (verified intel without doc cites),
  * and ≥5 adversarial traps. See docs/AGENT_QUALITY.md.
  */
-import { buildNyayaSystemPrompt, buildNyayaSystemPromptWithIntelligence, buildNyayaUserPrompt } from "../index";
+import {
+  buildNyayaSystemPrompt,
+  buildNyayaSystemPromptWithIntelligence,
+  buildNyayaUserPrompt,
+} from "../index";
+import {
+  assessRetrievedEvidenceDeterministic,
+  formatEvidenceAssessmentForPrompt,
+} from "../evidence-assessment";
 import type { GroundingPassage } from "../index";
 import { passagesByLabels } from "./golden-matter";
 import type { GradedCase } from "./grade";
@@ -182,8 +190,7 @@ export const GRADED_CASES: GradedCase[] = [
     id: "golden-cam-date-conflict",
     description:
       "Issue-spotting: multi-hop CAM send-date conflict across deposition + PM email — surface both dates",
-    question:
-      "When was the February CAM package sent, and do the Case documents agree?",
+    question: "When was the February CAM package sent, and do the Case documents agree?",
     retrieved: passagesByLabels("cam"),
     rubric: {
       expectEvidenceState: "grounded",
@@ -198,8 +205,7 @@ export const GRADED_CASES: GradedCase[] = [
     id: "golden-cam-date-conflict-incomplete",
     description:
       "Issue-spotting: only deposition retrieved — must not invent the conflicting March 3 email date",
-    question:
-      "When was the February CAM package sent, and do the Case documents agree?",
+    question: "When was the February CAM package sent, and do the Case documents agree?",
     retrieved: passagesByLabels("contradiction_side_a"),
     rubric: {
       expectEvidenceState: "grounded",
@@ -598,6 +604,357 @@ export const GRADED_CASES: GradedCase[] = [
       expectNeedsMoreDocuments: false,
     },
   },
+  {
+    id: "golden-access-log-limitation",
+    description: "System record establishes badge activity, not the named person's physical entry",
+    question: "At exactly what time did Alex Rivera physically enter the server room?",
+    retrieved: [
+      {
+        chunkId: "chunk_access_log",
+        documentId: "doc_access_log",
+        documentVersionId: "docv_access_log_1",
+        page: 1,
+        quote:
+          "Badge assigned to Alex Rivera — ACCESS GRANTED at 14:47. This log records badge activity; it does not independently prove who physically carried the badge.",
+      },
+    ],
+    rubric: {
+      expectEvidenceState: "partial",
+      mustIncludePhrases: ["ACCESS GRANTED", "does not independently prove"],
+      mustCiteChunkIds: ["chunk_access_log"],
+      forbiddenPhrases: ["physically entered the server"],
+      requireVerbatimQuotes: true,
+      expectNeedsMoreDocuments: true,
+    },
+  },
+  {
+    id: "golden-false-premise-future-effective",
+    description: "Question assumes a future-effective amendment is retroactive",
+    question: "Explain why the parties made Amendment 2 retroactive to March 1, 2024.",
+    retrieved: [
+      {
+        chunkId: "chunk_future_amend",
+        documentId: "doc_future_amend",
+        documentVersionId: "docv_future_amend_1",
+        page: 1,
+        quote: "This Amendment 2 becomes effective January 1, 2027.",
+      },
+    ],
+    rubric: {
+      expectEvidenceState: "partial",
+      mustIncludePhrases: ["not support", "January 1, 2027"],
+      mustCiteChunkIds: ["chunk_future_amend"],
+      forbiddenPhrases: ["align with the original commencement"],
+      requireVerbatimQuotes: true,
+      expectNeedsMoreDocuments: true,
+    },
+  },
+  {
+    id: "golden-invoice-silence-not-proof",
+    description: "Absence of a credit on one invoice is not proof none was ever issued",
+    question: "Did the vendor ever issue a service credit?",
+    retrieved: [
+      {
+        chunkId: "chunk_invoice_silence",
+        documentId: "doc_invoice",
+        documentVersionId: "docv_invoice_1",
+        page: 1,
+        quote: "This invoice does not reflect any service credit.",
+      },
+    ],
+    rubric: {
+      expectEvidenceState: "partial",
+      mustIncludePhrases: ["this invoice", "does not"],
+      mustCiteChunkIds: ["chunk_invoice_silence"],
+      forbiddenPhrases: ["no credit was ever issued", "never issued a service credit"],
+      requireVerbatimQuotes: true,
+      expectNeedsMoreDocuments: true,
+    },
+  },
+  {
+    id: "golden-email-vs-signed-amendment",
+    description: "Informal email recollection does not control over a signed in-force amendment",
+    question: "What notice period does the signed agreement require?",
+    retrieved: [
+      {
+        chunkId: "chunk_email_recollection",
+        documentId: "doc_email_recollection",
+        documentVersionId: "docv_email_recollection_1",
+        page: 1,
+        quote: "I think the notice period is 60 days.",
+      },
+      {
+        chunkId: "chunk_signed_notice",
+        documentId: "doc_signed_amendment",
+        documentVersionId: "docv_signed_amendment_1",
+        page: 1,
+        quote:
+          "Section 4 is amended to require thirty (30) days' written notice, effective immediately.",
+      },
+    ],
+    rubric: {
+      expectEvidenceState: "grounded",
+      mustIncludePhrases: ["thirty (30)"],
+      mustCiteChunkIds: ["chunk_signed_notice"],
+      forbiddenChunkIds: ["chunk_email_recollection"],
+      forbiddenPhrases: ["I think"],
+      requireVerbatimQuotes: true,
+      expectNeedsMoreDocuments: false,
+    },
+  },
+  {
+    id: "golden-supersession-effective-amendment",
+    description: "Currently effective amendment replaces the original notice term",
+    question: "What notice period is currently operative under the executed instruments?",
+    retrieved: [
+      {
+        chunkId: "chunk_original_notice",
+        documentId: "doc_base_agreement",
+        documentVersionId: "docv_base_agreement_1",
+        page: 4,
+        quote: "Notice shall be sixty (60) days.",
+      },
+      {
+        chunkId: "chunk_effective_amend",
+        documentId: "doc_notice_amendment",
+        documentVersionId: "docv_notice_amendment_1",
+        page: 1,
+        quote:
+          "Section 4 is deleted and replaced: notice shall be thirty (30) days, effective immediately.",
+      },
+    ],
+    rubric: {
+      expectEvidenceState: "grounded",
+      mustIncludePhrases: ["thirty (30)"],
+      mustCiteChunkIds: ["chunk_effective_amend"],
+      forbiddenPhrases: ["currently sixty"],
+      requireVerbatimQuotes: true,
+      expectNeedsMoreDocuments: false,
+    },
+  },
+  {
+    id: "golden-future-effective-current-term",
+    description: "Signed but not-yet-effective amendment does not replace the current term",
+    question: "What notice period does the contract currently require?",
+    retrieved: [
+      {
+        chunkId: "chunk_current_notice",
+        documentId: "doc_base_notice",
+        documentVersionId: "docv_base_notice_1",
+        page: 4,
+        quote: "Notice shall be sixty (60) days.",
+      },
+      {
+        chunkId: "chunk_not_yet_effective",
+        documentId: "doc_future_notice",
+        documentVersionId: "docv_future_notice_1",
+        page: 1,
+        quote:
+          "Amendment 2 is signed and becomes effective January 1, 2027; thereafter notice shall be forty-five (45) days.",
+      },
+    ],
+    rubric: {
+      expectEvidenceState: "grounded",
+      mustIncludePhrases: ["sixty (60)", "not yet effective"],
+      mustCiteChunkIds: ["chunk_current_notice"],
+      forbiddenPhrases: ["currently forty-five", "currently 45"],
+      requireVerbatimQuotes: true,
+      expectNeedsMoreDocuments: false,
+    },
+  },
+  {
+    id: "golden-future-effective-future-term",
+    description: "Question date after a future-effective amendment uses the later term",
+    question: "What notice period will apply on January 2, 2027?",
+    retrieved: [
+      {
+        chunkId: "chunk_current_notice_future_q",
+        documentId: "doc_base_notice_future_q",
+        documentVersionId: "docv_base_notice_future_q_1",
+        page: 4,
+        quote: "Notice shall be sixty (60) days.",
+      },
+      {
+        chunkId: "chunk_future_notice_future_q",
+        documentId: "doc_future_notice_future_q",
+        documentVersionId: "docv_future_notice_future_q_1",
+        page: 1,
+        quote:
+          "This amendment is signed and becomes effective January 1, 2027; thereafter notice shall be forty-five (45) days.",
+      },
+    ],
+    rubric: {
+      expectEvidenceState: "grounded",
+      mustIncludePhrases: ["forty-five (45)", "January 1, 2027"],
+      mustCiteChunkIds: ["chunk_future_notice_future_q"],
+      forbiddenPhrases: ["cannot answer", "insufficient"],
+      requireVerbatimQuotes: true,
+      expectNeedsMoreDocuments: false,
+    },
+  },
+  {
+    id: "golden-corroborated-actor-inference",
+    description: "Activity record plus independent visual evidence may support the actor claim",
+    question: "Did Priya Shah personally use the credential at the loading dock?",
+    retrieved: [
+      {
+        chunkId: "chunk_dock_log",
+        documentId: "doc_dock_log",
+        documentVersionId: "docv_dock_log_1",
+        page: 1,
+        quote: "Credential assigned to Priya Shah — ACCESS GRANTED at 09:12 at Dock B.",
+      },
+      {
+        chunkId: "chunk_dock_video",
+        documentId: "doc_dock_video",
+        documentVersionId: "docv_dock_video_1",
+        page: 1,
+        quote: "Loading-dock video shows Priya Shah used the credential at Dock B at 09:12.",
+      },
+    ],
+    rubric: {
+      expectEvidenceState: "grounded",
+      mustIncludePhrases: ["Priya Shah", "credential"],
+      mustCiteChunkIds: ["chunk_dock_video"],
+      forbiddenPhrases: ["does not independently prove"],
+      requireVerbatimQuotes: true,
+      expectNeedsMoreDocuments: false,
+    },
+  },
+  {
+    id: "golden-qualifier-preserve-approximately",
+    description: "Source hedge language must survive into the answer",
+    question: "When did delivery occur?",
+    retrieved: [
+      {
+        chunkId: "chunk_approx_delivery",
+        documentId: "doc_delivery_note",
+        documentVersionId: "docv_delivery_note_1",
+        page: 1,
+        quote: "Delivery occurred on or about approximately March 12, 2026.",
+      },
+    ],
+    rubric: {
+      expectEvidenceState: "grounded",
+      mustIncludePhrases: ["approximately"],
+      mustCiteChunkIds: ["chunk_approx_delivery"],
+      forbiddenPhrases: ["exactly March 12"],
+      requireVerbatimQuotes: true,
+      expectNeedsMoreDocuments: false,
+    },
+  },
+  {
+    id: "golden-compatible-approx-exact-date",
+    description: "Approximate mid-month language is compatible with an exact date in that month",
+    question: 'Is "near the middle of November" inconsistent with the meeting date 2026-11-10?',
+    retrieved: [
+      {
+        chunkId: "chunk_approx_meeting",
+        documentId: "doc_depo_meeting",
+        documentVersionId: "docv_depo_meeting_1",
+        page: 1,
+        quote:
+          "Q. When was the pricing issue discussed? A. Near the middle of November, at the review meeting.",
+      },
+      {
+        chunkId: "chunk_exact_meeting",
+        documentId: "doc_minutes_meeting",
+        documentVersionId: "docv_minutes_meeting_1",
+        page: 1,
+        quote: "The review meeting was held on 2026-11-10.",
+      },
+    ],
+    rubric: {
+      expectEvidenceState: "grounded",
+      mustIncludePhrases: ["compatible"],
+      forbiddenPhrases: ["is inconsistent", "creates a contradiction"],
+      requireVerbatimQuotes: true,
+      expectNeedsMoreDocuments: false,
+    },
+  },
+  {
+    id: "golden-named-exhibit-missing",
+    description: "A named exhibit that is not retrieved cannot be answered from another amount",
+    question: "What exact amount appears in Exhibit Z - Cost Reconciliation?",
+    retrieved: [
+      {
+        chunkId: "chunk_other_invoice",
+        documentId: "doc_invoice_other",
+        documentVersionId: "docv_invoice_other_1",
+        page: 1,
+        quote: "Invoice INV-2606: Amount due $132,500.",
+      },
+    ],
+    rubric: {
+      expectEvidenceState: "insufficient",
+      forbiddenPhrases: ["$132,500"],
+      mustIncludePhrases: ["not established"],
+      requireVerbatimQuotes: false,
+      expectNeedsMoreDocuments: true,
+    },
+  },
+  {
+    id: "golden-guardrail-states-operative-days",
+    description: "Source-role arbitration still states the operative numeric term",
+    question:
+      "An internal email says the contract still says 60 days. Should that be treated as the current contractual requirement?",
+    retrieved: [
+      {
+        chunkId: "chunk_email_sixty",
+        documentId: "doc_email_sixty",
+        documentVersionId: "docv_email_sixty_1",
+        page: 1,
+        quote: "I think the contract still says 60 days.",
+      },
+      {
+        chunkId: "chunk_signed_thirty",
+        documentId: "doc_signed_thirty",
+        documentVersionId: "docv_signed_thirty_1",
+        page: 1,
+        quote:
+          "Section 4 is deleted and replaced: notice shall be thirty (30) days, effective immediately.",
+      },
+    ],
+    rubric: {
+      expectEvidenceState: "grounded",
+      mustIncludePhrases: ["30 days"],
+      mustCiteChunkIds: ["chunk_signed_thirty"],
+      forbiddenPhrases: ["currently 60"],
+      requireVerbatimQuotes: true,
+      expectNeedsMoreDocuments: false,
+    },
+  },
+  {
+    id: "golden-evidentiary-tension-testimony-log",
+    description:
+      "Testimony denying entry versus badge ACCESS GRANTED is tension, not compatibility or physical proof",
+    question:
+      "Does the witness testimony about entering the records room conflict with other supplied evidence?",
+    retrieved: [
+      {
+        chunkId: "chunk_depo_entry",
+        documentId: "doc_depo_entry",
+        documentVersionId: "docv_depo_entry_1",
+        page: 1,
+        quote:
+          "Q. Did you enter the records room that day? A. No. I never entered the records room on 2026-11-10.",
+      },
+      {
+        chunkId: "chunk_log_entry",
+        documentId: "doc_log_entry",
+        documentVersionId: "docv_log_entry_1",
+        page: 1,
+        quote: "2026-11-10 14:47 - Badge assigned to the witness - Records Room - ACCESS GRANTED.",
+      },
+    ],
+    rubric: {
+      expectEvidenceState: "grounded",
+      mustIncludePhrases: ["tension"],
+      forbiddenPhrases: ["physically entered the records room", "difference of precision"],
+      requireVerbatimQuotes: true,
+      expectNeedsMoreDocuments: false,
+    },
+  },
 ];
 
 /** Prompt pairs for running graded cases through an AIProvider.
@@ -612,6 +969,7 @@ export function gradedCaseToPrompt(testCase: GradedCase): {
     Boolean(testCase.verifiedIntelligence?.trim()) ||
     Boolean(testCase.verifiedGraph?.trim()) ||
     Boolean(testCase.verifiedMemory?.trim());
+  const assessment = assessRetrievedEvidenceDeterministic(testCase.question, testCase.retrieved);
   return {
     systemPrompt: hasVerified ? buildNyayaSystemPromptWithIntelligence() : buildNyayaSystemPrompt(),
     userPrompt: buildNyayaUserPrompt(
@@ -620,6 +978,8 @@ export function gradedCaseToPrompt(testCase: GradedCase): {
       testCase.verifiedIntelligence,
       testCase.verifiedGraph,
       testCase.verifiedMemory,
+      undefined,
+      assessment ? formatEvidenceAssessmentForPrompt(assessment) : null,
     ),
   };
 }

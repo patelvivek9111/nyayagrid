@@ -1,0 +1,29 @@
+{
+  "scenario_id": "SYNTH-006",
+  "title": "Lumen IP License Royalty Dispute",
+  "matter_type": "License Agreement",
+  "fictional": true,
+  "label": "SYNTH - FICTIONAL TEST DOCUMENT - NOT REAL CLIENT WORK",
+  "documents": [
+    {
+      "document_id": "license",
+      "file": "documents/license.pdf",
+      "title": "Technology License Agreement"
+    },
+    {
+      "document_id": "amendment",
+      "file": "documents/amendment.pdf",
+      "title": "Royalty Amendment"
+    },
+    {
+      "document_id": "report",
+      "file": "documents/report.pdf",
+      "title": "Q2 2026 Royalty Report"
+    },
+    {
+      "document_id": "email",
+      "file": "documents/email.pdf",
+      "title": "Email - Royalty Report - July 18, 2026"
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 import { updateStudentNoteSchema } from "@nyayagrid/validation";
 import { deleteStudentNote, updateStudentNote } from "@nyayagrid/workspaces";
-import { requireUser } from "@/lib/auth";
+import { requireProfessorUser } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
 type Params = { params: Promise<{ noteId: string }> };
@@ -8,7 +8,7 @@ type Params = { params: Promise<{ noteId: string }> };
 export async function PATCH(request: Request, { params }: Params) {
   try {
     const { noteId } = await params;
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireProfessorUser(request.headers);
     const body = updateStudentNoteSchema.parse(await request.json());
     const note = await updateStudentNote({
       db,
@@ -25,7 +25,7 @@ export async function PATCH(request: Request, { params }: Params) {
 export async function DELETE(request: Request, { params }: Params) {
   try {
     const { noteId } = await params;
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireProfessorUser(request.headers);
     const result = await deleteStudentNote({ db, userId: user.id, noteId });
     return jsonOk(result);
   } catch (error) {

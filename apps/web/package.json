@@ -19,6 +19,7 @@
     "@nyayagrid/documents": "*",
     "@nyayagrid/intelligence": "*",
     "@nyayagrid/jobs": "*",
+    "@nyayagrid/jurisdiction": "*",
     "@nyayagrid/observability": "*",
     "@nyayagrid/permissions": "*",
     "@nyayagrid/platform": "*",

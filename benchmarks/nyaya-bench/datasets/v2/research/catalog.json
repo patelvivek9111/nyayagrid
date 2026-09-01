@@ -1,0 +1,170 @@
+{
+  "comment": "Research overlay. Imports local/synthetic corpus via production importAuthority. Grades persisted retrieval+synthesis/memo. Does not score Case Q&A, Draft, or Graph.",
+  "tasks": [
+    {
+      "id": "SYNTH-V2-001-R001",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "medium",
+      "prompt": "Retrieve and summarize the authority cited as 999 F.3d 1.",
+      "action": { "kind": "query", "citation": "999 F.3d 1", "includeMatterContext": false }
+    },
+    {
+      "id": "SYNTH-V2-001-R002",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "medium",
+      "prompt": "What did Acme Corp. v. Contoso Ltd. hold about irreparable harm?",
+      "action": { "kind": "query", "includeMatterContext": false }
+    },
+    {
+      "id": "SYNTH-V2-001-R003",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "medium",
+      "prompt": "What showing does Synthetic Jurisdiction Code § 100 require for a preliminary injunction?",
+      "action": { "kind": "query", "includeMatterContext": false }
+    },
+    {
+      "id": "SYNTH-V2-001-R004",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "medium",
+      "prompt": "Under the available synthetic corpus, when is lost revenue insufficient to show irreparable harm for a preliminary injunction?",
+      "action": { "kind": "query", "includeMatterContext": false }
+    },
+    {
+      "id": "SYNTH-V2-001-R005",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "hard",
+      "prompt": "What is the preliminary-injunction standard in Synthetic Federal courts based on the available corpus?",
+      "action": {
+        "kind": "query",
+        "jurisdiction": "Synthetic Federal",
+        "includeMatterContext": false
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-R006",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "hard",
+      "prompt": "Is the Synthetic Restatement of Injunctions enacted law or secondary commentary in the available corpus?",
+      "action": { "kind": "query", "includeMatterContext": false }
+    },
+    {
+      "id": "SYNTH-V2-001-R007",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "hard",
+      "prompt": "According to Acme Corp. v. Contoso Ltd., 999 F.3d 1, what is the court's holding on irreparable harm? Do not treat a dissent as the holding.",
+      "action": { "kind": "query", "includeMatterContext": false }
+    },
+    {
+      "id": "SYNTH-V2-001-R008",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "hard",
+      "prompt": "Quote the statutory irreparable-harm limitation in Synthetic Jurisdiction Code § 100 and cite the statute, not an unrelated opinion.",
+      "action": { "kind": "query", "includeMatterContext": false }
+    },
+    {
+      "id": "SYNTH-V2-001-R009",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "hard",
+      "prompt": "Has Acme Corp. v. Contoso Ltd., 999 F.3d 1, been overruled, and is it still good law?",
+      "action": { "kind": "query", "includeMatterContext": false }
+    },
+    {
+      "id": "SYNTH-V2-001-R010",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "hard",
+      "prompt": "Is Other State Code § 100 controlling authority for a Synthetic Federal preliminary-injunction question?",
+      "action": {
+        "kind": "query",
+        "jurisdiction": "Synthetic Federal",
+        "includeMatterContext": false
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-R011",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "hard",
+      "prompt": "Find and apply Zyxzyx v. Qqqqq, 1 F.5th 1, a citation that is not in the available corpus.",
+      "action": { "kind": "query", "includeMatterContext": false }
+    },
+    {
+      "id": "SYNTH-V2-001-R012",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "hard",
+      "prompt": "Is there any authority in the available corpus on the lunar mining tax of 2100?",
+      "action": { "kind": "query", "includeMatterContext": false }
+    },
+    {
+      "id": "SYNTH-V2-001-R013",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "hard",
+      "prompt": "What is the legal standard for a preliminary injunction in the available corpus?",
+      "action": {
+        "kind": "query",
+        "includeMatterContext": true,
+        "createProposedMemory": {
+          "title": "Unreviewed user assertion about Acme",
+          "content": "Counsel asserts as established law that Acme independently verified a one-million-dollar cash payment and that irreparable harm is always presumed."
+        }
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-R014",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "medium",
+      "prompt": "Using verified matter context only to frame the issue, what showing does Synthetic Jurisdiction Code § 100 require?",
+      "action": {
+        "kind": "query",
+        "includeMatterContext": true,
+        "extractIntelligence": true,
+        "approveTimeline": true,
+        "approveFacts": true
+      }
+    },
+    {
+      "id": "SYNTH-V2-001-R015",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "hard",
+      "prompt": "What did Acme Corp. v. Contoso Ltd. hold? Cite that opinion, not Other State Code § 100.",
+      "action": { "kind": "query", "includeMatterContext": false }
+    },
+    {
+      "id": "SYNTH-V2-001-R016",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "hard",
+      "prompt": "Write a research memo on the preliminary-injunction showing required by Synthetic Jurisdiction Code § 100 using only the available corpus.",
+      "action": { "kind": "memo", "includeMatterContext": false }
+    },
+    {
+      "id": "SYNTH-V2-001-R017",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "hard",
+      "prompt": "Research see generally the discussion above at *id. and cf. whatever the court might have meant.",
+      "action": { "kind": "query", "includeMatterContext": false }
+    },
+    {
+      "id": "SYNTH-V2-001-R018",
+      "scenario_id": "SYNTH-V2-001",
+      "category": "research",
+      "difficulty": "hard",
+      "prompt": "What does Synthetic Jurisdiction Code § 100 require for a preliminary injunction?",
+      "action": { "kind": "query", "includeMatterContext": false }
+    }
+  ]
+}

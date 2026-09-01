@@ -9,12 +9,14 @@ import {
   DRAFT_GENERATION_PROMPT_VERSION,
   type AIProvider,
   type ProfessionalChunk,
+  type RoutingMode,
 } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
 import { loadAuthorizedChunks } from "../provenance";
 import { formatVerifiedIntelligenceForPrompt, loadVerifiedMatterIntelligence } from "../verified";
 import { loadVerifiedGraphContext } from "../graph/index";
 import { formatActiveMemoryForPrompt, retrieveActiveMatterMemories } from "../memory/index";
+import { resolveMatterJurisdictionContext } from "@nyayagrid/jurisdiction";
 import {
   DRAFT_LEGAL_AUTHORITY_INSTRUCTION,
   formatDraftLegalAuthorityContext,
@@ -27,9 +29,32 @@ import {
   classifyDraftAssertions,
   countAssertionsByProvenance,
   extractUnresolvedPlaceholders,
+  applySourceLimitationGuard,
+  neutralizeUnsupportedQuotes,
+  normalizeDraftGenerationRaw,
   withInsufficientSourceAssumption,
   type ClassifiedDraftAssertion,
 } from "./helpers";
+
+const HIGH_STAKES_DRAFTS = new Set([
+  "complaint",
+  "motion",
+  "brief",
+  "discovery_request",
+  "settlement_agreement",
+]);
+
+function groundedDraftBody(
+  content: string,
+  chunks: ProfessionalChunk[],
+  extraSource = "",
+): string {
+  const sourceText = [chunks.map((chunk) => chunk.content).join("\n"), extraSource]
+    .filter((part) => part.trim())
+    .join("\n\n");
+  if (!sourceText.trim()) return content;
+  return neutralizeUnsupportedQuotes(applySourceLimitationGuard(content, sourceText), sourceText);
+}
 
 async function loadMatterTitle(
   db: Database,
@@ -94,8 +119,14 @@ async function buildDraftVerifiedContext(params: {
     question: params.instructions ?? undefined,
     limit: 8,
   });
+  const jurisdiction = await resolveMatterJurisdictionContext({
+    db: params.db,
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+  });
 
   return [
+    jurisdiction?.promptBlock ?? "",
     formatVerifiedIntelligenceForPrompt(verified),
     graph.text,
     formatActiveMemoryForPrompt(memories),
@@ -248,6 +279,8 @@ export async function generateDraft(params: {
   ai?: AIProvider;
   /** Include the matter's saved legal authorities as LEGAL_AUTHORITY context. Defaults to true. */
   includeLegalAuthority?: boolean;
+  executionStrategy?: RoutingMode;
+  modelId?: string;
 }) {
   const ai = params.ai ?? createAIProviderFromEnv();
   const matterTitle = await loadMatterTitle(params.db, params.organizationId, params.matterId);
@@ -276,6 +309,17 @@ export async function generateDraft(params: {
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "draft_generation",
+    routing: {
+      subsystem: "draft",
+      strategy: params.executionStrategy ?? "auto",
+      modelId: params.modelId,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      userId: params.userId,
+      promptVersion: DRAFT_GENERATION_PROMPT_VERSION,
+      draftType: params.draftType,
+      riskSignals: HIGH_STAKES_DRAFTS.has(params.draftType) ? ["high_stakes_draft"] : undefined,
+    },
     messages: [
       { role: "system", content: buildDraftGenerationSystemPrompt() },
       {
@@ -299,7 +343,7 @@ export async function generateDraft(params: {
   } catch {
     raw = { content: generation.text, assertions: [], assumptions: [] };
   }
-  const parsed = draftGenerationSchema.parse(raw);
+  const parsed = draftGenerationSchema.parse(normalizeDraftGenerationRaw(raw));
 
   const honesty = withInsufficientSourceAssumption({
     chunkCount: chunks.length,
@@ -313,7 +357,10 @@ export async function generateDraft(params: {
     authorityContext,
   });
   const content = appendResearchDisclaimerIfNeeded(
-    appendExternalResearchNoteIfNeeded(parsed.content, honesty.assumptions),
+    appendExternalResearchNoteIfNeeded(
+      groundedDraftBody(parsed.content, chunks, [verifiedContext, authorityBlock].filter(Boolean).join("\n\n")),
+      honesty.assumptions,
+    ),
     {
       savedAuthorityCount: authorityContext.authorityIds.length,
       legalAuthorityAssertionCount: counts.LEGAL_AUTHORITY,
@@ -608,6 +655,15 @@ export async function transformDraftSection(params: {
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "draft_generation",
+    routing: {
+      subsystem: "draft",
+      strategy: "standard",
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      userId: params.userId,
+      promptVersion: DRAFT_GENERATION_PROMPT_VERSION,
+      draftType: existing.draft.draftType,
+    },
     messages: [
       { role: "system", content: buildDraftGenerationSystemPrompt() },
       {
@@ -629,7 +685,7 @@ export async function transformDraftSection(params: {
   } catch {
     raw = { content: generation.text, assertions: [], assumptions: [] };
   }
-  const parsed = draftGenerationSchema.parse(raw);
+  const parsed = draftGenerationSchema.parse(normalizeDraftGenerationRaw(raw));
 
   const honesty = withInsufficientSourceAssumption({
     chunkCount: chunks.length,
@@ -643,7 +699,10 @@ export async function transformDraftSection(params: {
     authorityContext,
   });
   const content = appendResearchDisclaimerIfNeeded(
-    appendExternalResearchNoteIfNeeded(parsed.content, honesty.assumptions),
+    appendExternalResearchNoteIfNeeded(
+      groundedDraftBody(parsed.content, chunks, [verifiedContext, authorityBlock].filter(Boolean).join("\n\n")),
+      honesty.assumptions,
+    ),
     {
       savedAuthorityCount: authorityContext.authorityIds.length,
       legalAuthorityAssertionCount: counts.LEGAL_AUTHORITY,
@@ -760,6 +819,9 @@ export {
   needsResearchDisclaimer,
   scoreComparisonSummaryAgainstDiffs,
   extractUnresolvedPlaceholders,
+  neutralizeUnsupportedQuotes,
+  applySourceLimitationGuard,
+  normalizeDraftGenerationRaw,
   validateDraftAssertions,
   withInsufficientSourceAssumption,
   COMPARISON_SUMMARY_MISALIGN_NOTE,

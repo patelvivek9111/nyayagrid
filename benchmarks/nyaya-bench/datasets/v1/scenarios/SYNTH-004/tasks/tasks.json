@@ -1,0 +1,82 @@
+[
+  {
+    "task_id": "SYNTH-004-Q001",
+    "scenario_id": "SYNTH-004",
+    "category": "case_qa",
+    "prompt": "What is Maya Torres\u2019s current annual base salary?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q001"
+  },
+  {
+    "task_id": "SYNTH-004-Q002",
+    "scenario_id": "SYNTH-004",
+    "category": "case_qa",
+    "prompt": "What is her current target bonus percentage?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q002"
+  },
+  {
+    "task_id": "SYNTH-004-Q003",
+    "scenario_id": "SYNTH-004",
+    "category": "contract_compare",
+    "prompt": "What did the Compensation Addendum change?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q003"
+  },
+  {
+    "task_id": "SYNTH-004-Q004",
+    "scenario_id": "SYNTH-004",
+    "category": "case_qa",
+    "prompt": "What termination notice period does the agreement require?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q004"
+  },
+  {
+    "task_id": "SYNTH-004-Q005",
+    "scenario_id": "SYNTH-004",
+    "category": "timeline",
+    "prompt": "What effective termination date appears in the July 15 notice?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q005"
+  },
+  {
+    "task_id": "SYNTH-004-Q006",
+    "scenario_id": "SYNTH-004",
+    "category": "insufficient",
+    "prompt": "How many hours of unused PTO does Maya have?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q006"
+  },
+  {
+    "task_id": "SYNTH-004-Q007",
+    "scenario_id": "SYNTH-004",
+    "category": "false_contradiction",
+    "prompt": "Does the HR email contradict the addendum about salary or target bonus?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q007"
+  },
+  {
+    "task_id": "SYNTH-004-Q008",
+    "scenario_id": "SYNTH-004",
+    "category": "reasoning",
+    "prompt": "Did the HR email remove the board-approval condition for the bonus?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q008"
+  },
+  {
+    "task_id": "SYNTH-004-Q009",
+    "scenario_id": "SYNTH-004",
+    "category": "numeric",
+    "prompt": "What would 20% of the stated $195,000 base salary equal mathematically, without asserting it is owed?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q009"
+  },
+  {
+    "task_id": "SYNTH-004-Q010",
+    "scenario_id": "SYNTH-004",
+    "category": "case_qa",
+    "prompt": "Does the employment agreement impose confidentiality obligations after employment ends?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q010"
+  }
+]

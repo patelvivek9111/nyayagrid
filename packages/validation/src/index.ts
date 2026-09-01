@@ -15,7 +15,7 @@ export const createOrganizationSchema = z.object({
 
 export const inviteMembershipSchema = z.object({
   email: z.string().email(),
-  roleKey: z.string().min(1),
+  roleKey: z.enum(["lawyer", "staff", "client_guest"]),
 });
 
 export const acceptOrganizationInviteSchema = z.object({
@@ -85,6 +85,25 @@ export const updateClientSchema = createClientSchema
     status: z.enum(["active", "archived"]).optional(),
   });
 
+export const jurisdictionModeSchema = z.enum([
+  "state",
+  "federal",
+  "multi_jurisdiction",
+  "unknown",
+]);
+export const forumTypeSchema = z.enum(["state", "federal", "administrative", "other"]);
+export const choiceOfLawStatusSchema = z.enum([
+  "none_known",
+  "possible",
+  "stated",
+  "disputed",
+  "unknown",
+]);
+export const relatedJurisdictionSchema = z.object({
+  stateCode: z.string().trim().min(2).max(2).optional().nullable(),
+  courtId: z.string().trim().min(1).max(80).optional().nullable(),
+});
+
 export const createMatterSchema = z.object({
   organizationId: z.string().uuid(),
   clientId: z.string().uuid(),
@@ -95,6 +114,18 @@ export const createMatterSchema = z.object({
   jurisdiction: z.string().trim().max(120).optional().nullable(),
   court: z.string().trim().max(200).optional().nullable(),
   status: z.enum(["intake", "open", "active", "on_hold", "closed", "archived"]).optional(),
+  forumType: forumTypeSchema.optional().nullable(),
+  primaryState: z.string().trim().max(40).optional().nullable(),
+  courtId: z.string().trim().max(80).optional().nullable(),
+  federalCircuit: z.string().trim().max(16).optional().nullable(),
+  governingLawState: z.string().trim().max(40).optional().nullable(),
+  choiceOfLawStatus: choiceOfLawStatusSchema.optional().nullable(),
+  asOfDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional()
+    .nullable(),
+  relatedJurisdictions: z.array(relatedJurisdictionSchema).max(20).optional(),
 });
 
 export const updateMatterSchema = createMatterSchema
@@ -108,6 +139,8 @@ export const askNyayaSchema = z.object({
 
 export const agentModeSchema = z.enum(["ask", "task", "auto"]);
 
+export const executionStrategySchema = z.enum(["auto", "fast", "deep"]);
+
 /** Ask-or-task entry point: `mode` controls whether the request is routed as Q&A, a forced agent
  * run, or auto-classified. Defaults to "auto" so existing ask-only callers keep working. */
 export const askOrTaskSchema = z.object({
@@ -115,6 +148,12 @@ export const askOrTaskSchema = z.object({
   conversationId: z.string().uuid().optional().nullable(),
   mode: agentModeSchema.optional(),
   execute: z.boolean().optional(),
+  executionStrategy: executionStrategySchema.optional(),
+  modelId: z
+    .string()
+    .trim()
+    .regex(/^[a-z]+:[A-Za-z0-9._-]+$/, "modelId must be provider:modelId")
+    .optional(),
 });
 
 export const runAgentTaskSchema = z.object({
@@ -408,6 +447,12 @@ export const generateDraftSchema = z.object({
   draftType: draftTypeSchema,
   instructions: z.string().trim().max(4000).optional(),
   documentIds: z.array(z.string().uuid()).optional(),
+  executionStrategy: executionStrategySchema.optional(),
+  modelId: z
+    .string()
+    .trim()
+    .regex(/^[a-z]+:[A-Za-z0-9._-]+$/)
+    .optional(),
 });
 
 export const saveDraftVersionSchema = z.object({
@@ -530,6 +575,12 @@ export const runResearchQuerySchema = z.object({
   filters: researchSearchFiltersSchema.optional(),
   limit: z.number().int().min(1).max(50).optional(),
   includeMatterContext: z.boolean().optional(),
+  executionStrategy: executionStrategySchema.optional(),
+  modelId: z
+    .string()
+    .trim()
+    .regex(/^[a-z]+:[A-Za-z0-9._-]+$/)
+    .optional(),
 });
 
 export const summarizeAuthoritySchema = z.object({

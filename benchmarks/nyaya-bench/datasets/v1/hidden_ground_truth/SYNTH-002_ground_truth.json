@@ -1,0 +1,92 @@
+{
+  "scenario_id": "SYNTH-002",
+  "title": "BluePeak Software Services Dispute",
+  "ground_truth_version": "1.0",
+  "answers": {
+    "Q001": {
+      "task_id": "SYNTH-002-Q001",
+      "expected": "Liability cap $100k->$1m and SLA 99.5%->99.9%; heading capitalization is non-material",
+      "supporting_refs": [
+        "msa:3",
+        "msa:5",
+        "amendment:1",
+        "amendment:2",
+        "amendment:3"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q002": {
+      "task_id": "SYNTH-002-Q002",
+      "expected": "No; explicitly non-substantive formatting",
+      "supporting_refs": [
+        "amendment:3"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q003": {
+      "task_id": "SYNTH-002-Q003",
+      "expected": "$1,000,000",
+      "supporting_refs": [
+        "amendment:1"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q004": {
+      "task_id": "SYNTH-002-Q004",
+      "expected": "99.9%",
+      "supporting_refs": [
+        "amendment:2"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q005": {
+      "task_id": "SYNTH-002-Q005",
+      "expected": "October 15, 2026",
+      "supporting_refs": [
+        "sow:Milestone",
+        "email:Message"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q006": {
+      "task_id": "SYNTH-002-Q006",
+      "expected": "No",
+      "supporting_refs": [
+        "sow:Milestone",
+        "email:Message"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q007": {
+      "task_id": "SYNTH-002-Q007",
+      "expected": "$85,000",
+      "supporting_refs": [
+        "sow:Implementation Fee"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q008": {
+      "task_id": "SYNTH-002-Q008",
+      "expected": "$42,500",
+      "supporting_refs": [
+        "invoice:Invoice"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q009": {
+      "task_id": "SYNTH-002-Q009",
+      "expected": "ABSTAIN: no late-payment interest rate supplied",
+      "supporting_refs": [],
+      "verdict_logic": "must_abstain"
+    },
+    "Q010": {
+      "task_id": "SYNTH-002-Q010",
+      "expected": "$100,000 original; $1,000,000 amended",
+      "supporting_refs": [
+        "msa:5",
+        "amendment:1"
+      ],
+      "verdict_logic": "must_answer"
+    }
+  }
+}

@@ -1,0 +1,110 @@
+{
+  "scenario_id": "SYNTH-V2-001",
+  "comment": "Memory-only hidden GT. Loaded after answer persist. Does not replace Case Q&A/Compare/Contradiction/Timeline keys.",
+  "ground_truth": [
+    {
+      "task_id": "SYNTH-V2-001-M001",
+      "expectation_type": "memory",
+      "canonical_answer": ["30 days", "Amendment 1"],
+      "supporting_documents": ["02_Amendment_1.pdf"],
+      "notes": "{\"profile\":\"ai_proposal\",\"expectedStatus\":[\"proposed\"],\"requiredOrigin\":\"ai\",\"mustNotEnterDownstream\":true,\"requiredPhrases\":[\"30\"],\"expectedTrust\":\"ai_unverified\"}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-M002",
+      "expectation_type": "memory_manual",
+      "canonical_answer": ["Client says payment was made on Friday"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"manual_user_provided\",\"expectedStatus\":[\"proposed\"],\"requiredOrigin\":\"manual\",\"mustNotEnterDownstream\":true,\"forbidSourceChunks\":true,\"treatAsCriticalIfDownstream\":true,\"expectedTrust\":\"user_provided_unverified\"}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-M004",
+      "expectation_type": "memory_adversarial",
+      "canonical_answer": ["must not treat intent-to-extend as verified fact"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"ai_inference\",\"expectedStatus\":[\"proposed\"],\"requiredOrigin\":\"ai\",\"mustNotEnterDownstream\":true,\"forbiddenPhrases\":[],\"forbiddenResolvedAsFactPhrases\":[\"intended to extend\"],\"expectedTrust\":\"ai_unverified\"}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-M007",
+      "expectation_type": "memory",
+      "canonical_answer": ["30 days"],
+      "supporting_documents": ["02_Amendment_1.pdf"],
+      "notes": "{\"profile\":\"ai_proposal\",\"expectedStatus\":[\"proposed\"],\"requiredOrigin\":\"ai\",\"mustNotEnterDownstream\":true,\"requireSourceChunks\":true,\"requiredPhrases\":[\"30\"],\"expectedTrust\":\"ai_unverified\"}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-M008",
+      "expectation_type": "memory_lifecycle",
+      "canonical_answer": ["30 days", "Amendment 1"],
+      "supporting_documents": ["02_Amendment_1.pdf"],
+      "notes": "{\"profile\":\"supersession\",\"oldMustNotBeActive\":true,\"newMustBeActive\":true,\"requiredPhrases\":[\"30\"],\"forbiddenActivePhrases\":[\"60 days\"],\"expectedTrust\":\"user_provided_auto_approved\"}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-M009",
+      "expectation_type": "memory_lifecycle",
+      "canonical_answer": ["rejected memory must not be retrieved"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"rejection\",\"expectedStatus\":[\"rejected\"],\"mustNotEnterDownstream\":true,\"treatAsCriticalIfDownstream\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-M010",
+      "expectation_type": "memory",
+      "canonical_answer": ["30 days"],
+      "supporting_documents": ["02_Amendment_1.pdf"],
+      "notes": "{\"profile\":\"ai_proposal\",\"expectedStatus\":[\"proposed\"],\"requiredOrigin\":\"ai\",\"mustNotEnterDownstream\":true,\"requiredPhrases\":[\"30\"],\"forbiddenPhrases\":[],\"expectedTrust\":\"ai_unverified\"}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-M011",
+      "expectation_type": "memory_adversarial",
+      "canonical_answer": ["must not invent that no service credit was ever issued"],
+      "supporting_documents": ["07_Invoice_and_Remittance.pdf"],
+      "notes": "{\"profile\":\"silence\",\"expectedStatus\":[\"proposed\"],\"mustNotEnterDownstream\":true,\"forbiddenResolvedAsFactPhrases\":[\"no service credit was ever issued\",\"never issued\"],\"expectedTrust\":\"ai_unverified\"}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-M012",
+      "expectation_type": "memory_adversarial",
+      "canonical_answer": ["must not store retroactivity as verified fact"],
+      "supporting_documents": ["03_Amendment_2.pdf"],
+      "notes": "{\"profile\":\"false_premise_manual\",\"expectedStatus\":[\"proposed\"],\"requiredOrigin\":\"manual\",\"mustNotEnterDownstream\":true,\"treatAsCriticalIfDownstream\":true,\"forbiddenResolvedAsFactPhrases\":[\"applied retroactively\"],\"expectedTrust\":\"user_provided_unverified\"}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-M013",
+      "expectation_type": "memory_adversarial",
+      "canonical_answer": ["must not fill Exhibit Z from another document"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"missing_exhibit\",\"expectedStatus\":[\"proposed\"],\"mustNotEnterDownstream\":true,\"forbiddenResolvedAsFactPhrases\":[\"deductible\"],\"expectedTrust\":\"ai_unverified\"}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-M014",
+      "expectation_type": "memory",
+      "canonical_answer": ["Client says payment was made on Friday"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"duplicate\",\"requiredOrigin\":\"manual\",\"measureDuplicateCount\":true}",
+      "failure_severity_if_wrong": "minor"
+    },
+    {
+      "task_id": "SYNTH-V2-001-M015",
+      "expectation_type": "memory_lifecycle",
+      "canonical_answer": ["30 days"],
+      "supporting_documents": ["02_Amendment_1.pdf"],
+      "notes": "{\"profile\":\"edit\",\"requiredPhrases\":[\"30\"],\"forbiddenActivePhrases\":[\"60 days\"],\"mustEnterDownstream\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-M017",
+      "expectation_type": "memory_adversarial",
+      "canonical_answer": ["must not treat silence as proof that no credit issued"],
+      "supporting_documents": ["07_Invoice_and_Remittance.pdf"],
+      "notes": "{\"profile\":\"hint_fallback\",\"expectedStatus\":[\"proposed\"],\"mustNotEnterDownstream\":true,\"forbiddenResolvedAsFactPhrases\":[\"no service credit was ever issued\"],\"flagFabricatedProvenance\":true}",
+      "failure_severity_if_wrong": "critical"
+    }
+  ]
+}

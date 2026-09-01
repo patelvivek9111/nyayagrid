@@ -1,0 +1,47 @@
+{
+  "id": "nyaya-four-provider-cert-v1",
+  "frozenAt": "2026-09-01",
+  "routerRegistryVersion": "nyaya-registry-v1",
+  "certificationRulesVersion": "nyaya-cert-rules-v1",
+  "graderVersionNyayaBench": "a1-2026-08-18",
+  "temperature": 0,
+  "strategy": "standard",
+  "sampling": "temperature-0-no-latest-alias",
+  "hiddenGroundTruth": "unchanged",
+  "historicalBaselines": "do-not-overwrite",
+  "agents": "OFF",
+  "promptVersions": {
+    "ask": "nyaya-matter-qa-v11",
+    "contradiction": "contradiction-analysis-v3",
+    "compare": "compare-summary-v4",
+    "draft": "draft-generation-v1",
+    "contract": "contract-analysis-v2",
+    "deposition": "deposition-analysis-v2",
+    "research": "research-synthesis-v3",
+    "timeline": "matter-intelligence-extract-v3",
+    "graph": "graph-relationship-extract-v2",
+    "memory": "matter-memory-propose-v2"
+  },
+  "pinnedModelIds": {
+    "openai": "gpt-4o-mini",
+    "anthropic": "claude-sonnet-4-5-20250929",
+    "xai": "grok-3",
+    "google": "gemini-2.5-flash"
+  },
+  "inProcessAskContradiction": {
+    "dataset": "packages/ai golden fixtures (synthetic)",
+    "askTasks": 51,
+    "contradictionTasks": 26,
+    "matters": 1
+  },
+  "nyayaBenchV2": {
+    "dataset": "benchmarks/nyaya-bench/datasets/v2",
+    "requiresDatabase": true,
+    "requiresLiveProvider": true
+  },
+  "bars": {
+    "materialQualityAutoPct": 90,
+    "preferredQualityPct": 95,
+    "criticalSafetyPct": 100
+  }
+}

@@ -18,8 +18,26 @@ import { memberships, organizationInvites, organizations, roles, users } from "@
 import { writeAuditEvent } from "@nyayagrid/permissions";
 import { sendInviteEmail, type EmailProvider } from "@nyayagrid/platform";
 
-const INVITE_TOKEN_BYTES = 32;
-export const INVITE_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000;
+export const INVITEABLE_ROLE_KEYS = ["lawyer", "staff", "client_guest"] as const;
+export type InviteableRoleKey = (typeof INVITEABLE_ROLE_KEYS)[number];
+
+export function isInviteableRoleKey(roleKey: string): roleKey is InviteableRoleKey {
+  return (INVITEABLE_ROLE_KEYS as readonly string[]).includes(roleKey);
+}
+
+export function assertInviteableRoleKey(roleKey: string): InviteableRoleKey {
+  if (!isInviteableRoleKey(roleKey)) {
+    throw new InviteError(
+      "ROLE_NOT_INVITEABLE",
+      `Role "${roleKey}" cannot be invited through the organization invitation flow`,
+    );
+  }
+  return roleKey;
+}
+
+export function normalizeInviteEmail(email: string): string {
+  return email.trim().toLowerCase();
+}
 
 export class InviteError extends Error {
   readonly code: string;
@@ -33,6 +51,9 @@ export class InviteError extends Error {
 function hashInviteToken(token: string): string {
   return createHash("sha256").update(token).digest("hex");
 }
+
+const INVITE_TOKEN_BYTES = 32;
+export const INVITE_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000;
 
 /** Public row shape: never carries `tokenHash`, which is the whole point of hashing it. */
 export type OrganizationInviteView = {
@@ -95,7 +116,7 @@ export async function createOrganizationInvite(
   params: CreateOrganizationInviteParams,
 ): Promise<CreateOrganizationInviteResult> {
   const { db } = params;
-  const email = params.email.trim().toLowerCase();
+  const email = normalizeInviteEmail(params.email);
 
   const [organization] = await db
     .select()
@@ -108,6 +129,7 @@ export async function createOrganizationInvite(
   if (!role || role.organizationId !== params.organizationId) {
     throw new InviteError("NOT_FOUND", "Role not found in this organization");
   }
+  assertInviteableRoleKey(role.key);
 
   const token = randomBytes(INVITE_TOKEN_BYTES).toString("base64url");
   const tokenHash = hashInviteToken(token);
@@ -208,6 +230,19 @@ export async function acceptOrganizationInvite(
     throw new InviteError("ALREADY_ACCEPTED", "This invite has already been accepted");
   if (invite.expiresAt.getTime() < Date.now()) {
     throw new InviteError("EXPIRED", "This invite has expired");
+  }
+
+  const [actor] = await params.db
+    .select({ email: users.email })
+    .from(users)
+    .where(eq(users.id, params.userId))
+    .limit(1);
+  if (!actor) throw new InviteError("INTERNAL", "Authenticated user was not found");
+  if (normalizeInviteEmail(actor.email) !== normalizeInviteEmail(invite.email)) {
+    throw new InviteError(
+      "EMAIL_MISMATCH",
+      "This invitation was issued to a different email address",
+    );
   }
 
   const result = await params.db.transaction(async (tx) => {

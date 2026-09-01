@@ -13,6 +13,7 @@ import {
   type AgentToolCall,
 } from "@nyayagrid/database";
 import { AuthorizationError, writeAuditEvent } from "@nyayagrid/permissions";
+import { resolveMatterJurisdictionContext } from "@nyayagrid/jurisdiction";
 import type { AIProvider, AgentIntent, EmbeddingProvider } from "@nyayagrid/ai";
 import type { AgentRegistry, NyayaAgent } from "./agent";
 import { createActionProposal } from "./approvals";
@@ -237,6 +238,7 @@ function createStepToolInvoker(params: {
   counters: BudgetCounters;
   ai?: AIProvider;
   embeddings?: EmbeddingProvider;
+  caseJurisdictionContext?: import("@nyayagrid/jurisdiction").MatterJurisdictionContext | null;
 }): ToolInvoker {
   const allowedSet = new Set(params.allowed);
 
@@ -277,6 +279,9 @@ function createStepToolInvoker(params: {
             stepRecordId: params.stepRecordId,
             ...(params.ai ? { ai: params.ai } : {}),
             ...(params.embeddings ? { embeddings: params.embeddings } : {}),
+            ...(params.caseJurisdictionContext
+              ? { caseJurisdictionContext: params.caseJurisdictionContext }
+              : {}),
           },
           toolName,
           input,
@@ -412,6 +417,14 @@ export async function executeAgentRun(
     userId: params.userId,
   });
 
+  const caseJurisdictionContext = detail.run.matterId
+    ? await resolveMatterJurisdictionContext({
+        db: params.db,
+        organizationId: params.organizationId,
+        matterId: detail.run.matterId,
+      })
+    : null;
+
   const budgets = resolveBudgets(detail.run.budgets ?? null);
   const counters: BudgetCounters = {
     toolCalls: detail.toolCalls.length,
@@ -520,6 +533,7 @@ export async function executeAgentRun(
       counters,
       ...(params.ai ? { ai: params.ai } : {}),
       ...(params.embeddings ? { embeddings: params.embeddings } : {}),
+      ...(caseJurisdictionContext ? { caseJurisdictionContext } : {}),
     });
 
     const ctx: AgentExecutionContext = {
@@ -537,6 +551,7 @@ export async function executeAgentRun(
       tools: invoker,
       ...(params.ai ? { ai: params.ai } : {}),
       ...(params.embeddings ? { embeddings: params.embeddings } : {}),
+      ...(caseJurisdictionContext ? { caseJurisdictionContext } : {}),
     };
 
     try {

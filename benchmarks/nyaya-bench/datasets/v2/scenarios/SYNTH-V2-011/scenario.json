@@ -1,0 +1,17 @@
+{
+  "scenario_id": "SYNTH-V2-011",
+  "name": "Orchid Retail Distribution",
+  "domain": "Distribution",
+  "synthetic": true,
+  "documents": [
+    "01_Main_Agreement.pdf",
+    "02_Amendment_1.pdf",
+    "03_Amendment_2.pdf",
+    "04_Email_Chain.pdf",
+    "05_Deposition_Mercer.pdf",
+    "06_Access_Log.pdf",
+    "07_Invoice_and_Remittance.pdf",
+    "08_Meeting_Minutes.pdf"
+  ],
+  "task_count": 25
+}

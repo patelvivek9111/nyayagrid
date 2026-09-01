@@ -156,6 +156,48 @@ function isTruthyFlag(value: string | undefined): boolean {
 }
 
 /**
+ * DevAuth is allowed only in an *explicit* local/test environment. A missing APP_ENV that happens
+ * to default to "development" is not enough — that is the internet-facing footgun.
+ */
+export function isExplicitLocalDevAuthAllowed(env: EnvSource = process.env): boolean {
+  const { appEnv, source } = resolveAppEnvDetailed(env);
+  if (appEnv === "test") return true;
+  return appEnv === "development" && source === "APP_ENV";
+}
+
+const WEAK_INNGEST_SECRETS = new Set(["local", "test", "changeme", "placeholder", "secret", "inngest"]);
+
+export function isWeakInngestSigningKey(value: string | undefined): boolean {
+  if (!value) return true;
+  const trimmed = value.trim();
+  if (trimmed.length < 16) return true;
+  return WEAK_INNGEST_SECRETS.has(trimmed.toLowerCase());
+}
+
+/**
+ * HTTP authority import writes the shared global corpus. Off in staging/production unless an
+ * operator sets ALLOW_AUTHORITY_HTTP_IMPORT=1. Local/test keep it for owners seeding a corpus.
+ */
+export function isAuthorityHttpImportEnabled(env: EnvSource = process.env): boolean {
+  if (isTruthyFlag(read(env, "ALLOW_AUTHORITY_HTTP_IMPORT"))) return true;
+  const appEnv = getAppEnv(env);
+  return appEnv === "development" || appEnv === "test";
+}
+
+export function assertNotProductionDataTarget(
+  commandName: string,
+  env: EnvSource = process.env,
+): void {
+  if (getAppEnv(env) !== "production") return;
+  if (isTruthyFlag(read(env, "ALLOW_PRODUCTION_SYNTHETIC_WRITE"))) {
+    return;
+  }
+  throw new ConfigurationError(
+    `${commandName} refuses APP_ENV=production. Point it at a non-production database, or set ALLOW_PRODUCTION_SYNTHETIC_WRITE=1 only after an explicit operator review.`,
+  );
+}
+
+/**
  * Everything that must be true before this configuration may serve real client matters.
  *
  * Pure and environment-independent so a readiness endpoint can ask "what still blocks production?"
@@ -197,6 +239,19 @@ export function collectProductionConfigProblems(env: EnvSource = process.env): s
     );
   } else if (resolveAiProvider(env) === "openai" && !read(env, "OPENAI_API_KEY")) {
     problems.push("AI_PROVIDER=openai requires OPENAI_API_KEY.");
+  } else if (resolveAiProvider(env) === "anthropic" && !read(env, "ANTHROPIC_API_KEY")) {
+    problems.push("AI_PROVIDER=anthropic requires ANTHROPIC_API_KEY.");
+  } else if (resolveAiProvider(env) === "xai" && !read(env, "XAI_API_KEY")) {
+    problems.push("AI_PROVIDER=xai requires XAI_API_KEY.");
+  } else if (
+    resolveAiProvider(env) === "google" &&
+    !read(env, "GOOGLE_GENERATIVE_AI_API_KEY") &&
+    !read(env, "GEMINI_API_KEY") &&
+    !read(env, "GOOGLE_API_KEY")
+  ) {
+    problems.push(
+      "AI_PROVIDER=google requires GOOGLE_GENERATIVE_AI_API_KEY (or GEMINI_API_KEY / GOOGLE_API_KEY).",
+    );
   }
 
   if (resolveEmbeddingProvider(env) === "mock") {
@@ -272,6 +327,63 @@ export function collectProductionConfigProblems(env: EnvSource = process.env): s
   }
   if (!read(env, "S3_BUCKET")) {
     problems.push("S3_BUCKET is required for document storage.");
+  }
+  if (!read(env, "NEXT_PUBLIC_APP_URL")) {
+    problems.push("NEXT_PUBLIC_APP_URL is required so invite and webhook callbacks have a public origin.");
+  }
+
+  if (isTruthyFlag(read(env, "ALLOW_MINIO_IN_PRODUCTION"))) {
+    const access = read(env, "S3_ACCESS_KEY_ID") ?? "";
+    const secret = read(env, "S3_SECRET_ACCESS_KEY") ?? "";
+    const endpoint = read(env, "S3_ENDPOINT") ?? "";
+    if (
+      access === "nyayagrid" ||
+      secret === "nyayagridsecret" ||
+      endpoint.includes("localhost") ||
+      endpoint.includes("127.0.0.1")
+    ) {
+      problems.push(
+        "ALLOW_MINIO_IN_PRODUCTION is set with docker-compose default credentials or a localhost endpoint. Point production MinIO at a private, backed-up cluster with unique credentials.",
+      );
+    }
+  }
+
+  if (isTruthyFlag(read(env, "INNGEST_DISABLED"))) {
+    problems.push(
+      "INNGEST_DISABLED=1. Document upload processing is asynchronous and requires Inngest. Unset INNGEST_DISABLED and configure INNGEST_SIGNING_KEY plus INNGEST_EVENT_KEY.",
+    );
+  } else {
+    if (isTruthyFlag(read(env, "INNGEST_DEV"))) {
+      problems.push(
+        "INNGEST_DEV is set. Dev signing must not run on an internet-facing deployment.",
+      );
+    }
+    if (isWeakInngestSigningKey(read(env, "INNGEST_SIGNING_KEY"))) {
+      problems.push(
+        "INNGEST_SIGNING_KEY is missing, empty, 'local', or otherwise weak. Set a real Inngest signing key.",
+      );
+    }
+    if (isWeakInngestSigningKey(read(env, "INNGEST_EVENT_KEY"))) {
+      problems.push(
+        "INNGEST_EVENT_KEY is missing, empty, 'local', or otherwise weak. Set the Inngest event key issued for this app.",
+      );
+    }
+  }
+
+  if (isTruthyFlag(read(env, "FEATURE_PROFESSOR")) && !isTruthyFlag(read(env, "ALLOW_PROFESSOR_IN_PRODUCTION"))) {
+    problems.push(
+      "FEATURE_PROFESSOR is enabled. Professional controlled beta keeps Nyaya Professor off. Unset FEATURE_PROFESSOR or set ALLOW_PROFESSOR_IN_PRODUCTION=1 only for a dedicated student cluster.",
+    );
+  }
+  if (isTruthyFlag(read(env, "FEATURE_AGENTS")) && !isTruthyFlag(read(env, "ALLOW_AGENTS_IN_PRODUCTION"))) {
+    problems.push(
+      "FEATURE_AGENTS is enabled. Agent reliability is not proven for beta. Unset FEATURE_AGENTS.",
+    );
+  }
+  if (isTruthyFlag(read(env, "ALLOW_AUTHORITY_HTTP_IMPORT"))) {
+    problems.push(
+      "ALLOW_AUTHORITY_HTTP_IMPORT is enabled. Shared-corpus HTTP import stays off on the professional beta cluster.",
+    );
   }
 
   return problems;
@@ -394,6 +506,15 @@ export function validateConfigForEnv(env: EnvSource = process.env): ConfigValida
     for (const warning of warnings) logger.warn(warning, { appEnv });
     logger.info("Configuration validated", { ...summary });
     return { appEnv, appEnvSource: source, summary, problems: [], warnings };
+  }
+
+  if (appEnv === "staging" && resolveAuthProvider(env) === "dev") {
+    throw new ConfigurationError(
+      "Refusing to start: staging cannot use AUTH_PROVIDER=dev on an internet-facing host",
+      [
+        "AUTH_PROVIDER resolves to dev. Staging must use AUTH_PROVIDER=clerk. Use APP_ENV=development with AUTH_PROVIDER=dev only for local development.",
+      ],
+    );
   }
 
   const problems = appEnv === "staging" ? collectProductionConfigProblems(env) : [];

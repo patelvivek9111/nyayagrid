@@ -3,27 +3,54 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { Badge, Button, Panel } from "@nyayagrid/ui";
+import { Button } from "@nyayagrid/ui";
 import {
-  ConflictingEvidenceBadge,
-  SuggestedBadge,
-  VerifiedBadge,
   EmptyState,
+  ErrorState,
+  IntelligenceDialog,
+  IntelligenceHeader,
+  IntelligenceInspector,
+  FilterChipBar,
+  LoadingState,
+  RelatedList,
   SourceDrawer,
+  TrustStatus,
   type SourceDrawerItem,
 } from "@/components/ux";
-import { formatMatterCalendarDate } from "@/lib/matter-dates";
+import { humanizeKey } from "@/lib/plain-labels";
+import {
+  askNyayaHref,
+  filterTimelineEvents,
+  formatTimelineDateLine,
+  formatTimelineDateCertainty,
+  groupTimelineEventsByDate,
+  isDisputedTimelineEvent,
+  sourceCountLabel,
+  trustStatusFromRecord,
+  userFacingLoadError,
+  type TimelineEventLike,
+  type TimelineFilter,
+} from "@/lib/case-intelligence-ux";
+
+const EVENT_TYPE_OPTIONS = [
+  { value: "manual_note", label: "Note" },
+  { value: "communication", label: "Communication" },
+  { value: "deadline", label: "Deadline" },
+  { value: "meeting", label: "Meeting" },
+  { value: "testimony", label: "Testimony" },
+];
 
 export default function MatterTimelinePage() {
   const params = useParams<{ matterId: string }>();
   const matterId = params.matterId;
   const [relatedFindingFilter, setRelatedFindingFilter] = useState<string | null>(null);
-  const [events, setEvents] = useState<any[]>([]);
-  const [proposed, setProposed] = useState<any[]>([]);
-  const [view, setView] = useState<"verified" | "suggested">("verified");
+  const [events, setEvents] = useState<TimelineEventLike[]>([]);
+  const [proposed, setProposed] = useState<TimelineEventLike[]>([]);
+  const [filter, setFilter] = useState<TimelineFilter>("all");
   const [error, setError] = useState("");
-  const [typeFilter, setTypeFilter] = useState("");
-  const [selected, setSelected] = useState<any | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [selected, setSelected] = useState<TimelineEventLike | null>(null);
+  const [addOpen, setAddOpen] = useState(false);
   const [manualTitle, setManualTitle] = useState("");
   const [manualType, setManualType] = useState("manual_note");
   const [manualDate, setManualDate] = useState("");
@@ -42,15 +69,18 @@ export default function MatterTimelinePage() {
     ]);
     const timelineJson = await timelineRes.json();
     const proposedJson = await proposedRes.json();
-    if (!timelineRes.ok) throw new Error(timelineJson?.error?.message ?? "Failed to load timeline");
+    if (!timelineRes.ok) throw new Error(userFacingLoadError("timeline", timelineRes.status));
     setEvents(timelineJson.events ?? []);
-    if (proposedRes.ok) {
-      setProposed(proposedJson.events ?? []);
-    }
+    if (proposedRes.ok) setProposed(proposedJson.events ?? []);
   }
 
   useEffect(() => {
-    load().catch((err) => setError(err.message));
+    setLoading(true);
+    load()
+      .catch((err) =>
+        setError(err instanceof Error ? err.message : userFacingLoadError("timeline")),
+      )
+      .finally(() => setLoading(false));
   }, [matterId]);
 
   useEffect(() => {
@@ -58,8 +88,7 @@ export default function MatterTimelinePage() {
     if (!eventId) return;
     const match = events.find((e) => e.id === eventId) ?? proposed.find((e) => e.id === eventId);
     if (!match) return;
-    if (proposed.some((e) => e.id === match.id)) setView("suggested");
-    else setView("verified");
+    if (proposed.some((e) => e.id === match.id)) setFilter("suggested");
     setSelected(match);
   }, [events, proposed]);
 
@@ -69,26 +98,21 @@ export default function MatterTimelinePage() {
       events.find((e) => (e.relatedFindingIds ?? []).includes(relatedFindingFilter)) ??
       proposed.find((e) => (e.relatedFindingIds ?? []).includes(relatedFindingFilter));
     if (match) {
-      if (proposed.some((e) => e.id === match.id)) setView("suggested");
-      else setView("verified");
+      if (proposed.some((e) => e.id === match.id)) setFilter("suggested");
       setSelected(match);
     }
   }, [relatedFindingFilter, events, proposed]);
 
-  const filtered = useMemo(() => {
-    let list = typeFilter ? events.filter((e) => e.eventType === typeFilter) : events;
+  const visible = useMemo(() => {
+    let list = filterTimelineEvents(events, proposed, filter);
     if (relatedFindingFilter) {
       list = list.filter((e) => (e.relatedFindingIds ?? []).includes(relatedFindingFilter));
     }
     return list;
-  }, [events, typeFilter, relatedFindingFilter]);
+  }, [events, proposed, filter, relatedFindingFilter]);
 
-  const filteredProposed = useMemo(() => {
-    if (!relatedFindingFilter) return proposed;
-    return proposed.filter((e) => (e.relatedFindingIds ?? []).includes(relatedFindingFilter));
-  }, [proposed, relatedFindingFilter]);
-
-  const eventTypes = useMemo(() => [...new Set(events.map((e) => e.eventType))].sort(), [events]);
+  const grouped = useMemo(() => groupTimelineEventsByDate(visible), [visible]);
+  const selectedIsSuggested = selected ? proposed.some((e) => e.id === selected.id) : false;
 
   async function createManual(e: FormEvent) {
     e.preventDefault();
@@ -105,11 +129,12 @@ export default function MatterTimelinePage() {
     });
     const json = await res.json();
     if (!res.ok) {
-      setError(json?.error?.message ?? "Failed to create event");
+      setError(json?.error?.message ?? "We couldn't add that event. Try again.");
       return;
     }
     setManualTitle("");
     setManualDate("");
+    setAddOpen(false);
     await load();
   }
 
@@ -124,249 +149,283 @@ export default function MatterTimelinePage() {
     });
     const json = await res.json();
     if (!res.ok) {
-      setError(json?.error?.message ?? "Review failed");
+      setError(json?.error?.message ?? "We couldn't complete that review. Try again.");
       return;
     }
+    setSelected(null);
     await load();
   }
 
+  function openSources(event: TimelineEventLike) {
+    setDrawerItems(
+      (event.sources ?? []).map((s: any, i: number) => ({
+        id: s.id ?? `src-${i}`,
+        title: s.documentTitle ?? "Source",
+        classLabel: "Matter Evidence",
+        quote: s.quote ?? s.excerpt ?? s.supportingText,
+        documentId: s.documentId,
+      })),
+    );
+    setDrawerOpen(true);
+  }
+
+  if (loading) return <LoadingState label="Loading timeline…" />;
+
   return (
-    <>
-      {error ? <p className="mb-3 text-sm text-[var(--ng-danger)]">{error}</p> : null}
-      <p className="mb-4 rounded-lg border border-line bg-white px-4 py-3 text-sm text-ink/70">
-        Suggested events stay <SuggestedBadge /> until you verify them. Nyaya extracts proposed
-        chronology on{" "}
-        <Link href={`/app/cases/${matterId}/review`} className="font-semibold text-accent underline">
-          Review
-        </Link>
-        ; verify them here after they appear as Suggestions. Conflicting document accounts are
-        reviewed as dual-sided findings on{" "}
+    <div className="space-y-4">
+      <IntelligenceHeader
+        title="Timeline"
+        description="What happened, in order. Suggested events stay separate until you verify them. Nyaya does not collapse conflicting accounts into one date."
+        actions={
+          <Button type="button" onClick={() => setAddOpen(true)}>
+            + Add event
+          </Button>
+        }
+      />
+      {error ? <ErrorState message={error} onRetry={() => load().catch(() => undefined)} /> : null}
+      {relatedFindingFilter ? (
+        <p className="text-xs text-ink/60">
+          Showing events linked to a conflict.{" "}
+          <Link
+            href={`/app/cases/${matterId}/timeline`}
+            className="font-semibold text-accent underline"
+          >
+            Clear filter
+          </Link>
+        </p>
+      ) : null}
+      <FilterChipBar
+        value={filter}
+        onChange={(id) => setFilter(id as TimelineFilter)}
+        options={[
+          { id: "all", label: "All", count: events.length },
+          { id: "communications", label: "Communications" },
+          { id: "deadlines", label: "Deadlines" },
+          { id: "disputed", label: "Disputed" },
+          { id: "suggested", label: "Suggested", count: proposed.length },
+        ]}
+      />
+      <p className="text-xs text-ink/55">
+        Conflicting document accounts stay dual-sided on{" "}
         <Link
           href={`/app/cases/${matterId}/evidence`}
           className="font-semibold text-accent underline"
         >
           Evidence
         </Link>
-        — Nyaya does not collapse them into one timeline “truth,” even when both sides link here.
+        . Nyaya does not collapse them into one timeline.
       </p>
-      {relatedFindingFilter ? (
-        <p className="mb-3 text-xs text-ink/60">
-          Filtered to events related to a contradiction finding.{" "}
-          <Link href={`/app/cases/${matterId}/timeline`} className="text-accent underline">
-            Clear filter
-          </Link>
-        </p>
-      ) : null}
-      <div className="mb-4 flex flex-wrap items-center gap-2">
-        <button
-          type="button"
-          className={`rounded-md border px-3 py-1.5 text-sm font-semibold ${
-            view === "verified" ? "border-accent bg-accent-soft/50" : "border-line bg-white"
-          }`}
-          onClick={() => setView("verified")}
-        >
-          Verified
-        </button>
-        <button
-          type="button"
-          className={`rounded-md border px-3 py-1.5 text-sm font-semibold ${
-            view === "suggested" ? "border-accent bg-accent-soft/50" : "border-line bg-white"
-          }`}
-          onClick={() => setView("suggested")}
-        >
-          Suggestions ({filteredProposed.length})
-        </button>
-      </div>
 
-      {view === "verified" ? (
-        <>
-          <div className="mb-4 flex flex-wrap items-center gap-3">
-            <label className="text-sm">
-              Event type{" "}
-              <select
-                className="ml-2 rounded border border-line bg-white px-2 py-1"
-                value={typeFilter}
-                onChange={(e) => setTypeFilter(e.target.value)}
-              >
-                <option value="">All</option>
-                {eventTypes.map((type) => (
-                  <option key={type} value={type}>
-                    {type}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <Badge>{filtered.length} verified events</Badge>
-          </div>
-          <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
-            <Panel title="Chronology">
-              {filtered.length === 0 ? (
-                <EmptyState
-                  title="No verified events yet"
-                  description="Nyaya can analyze uploaded documents for timeline suggestions."
-                />
-              ) : (
-                <ol className="space-y-4">
-                  {filtered.map((event) => (
-                    <li key={event.id} className="border-l-2 border-accent/40 pl-4">
-                      <button
-                        className="text-left"
-                        onClick={() => setSelected(event)}
-                        type="button"
-                      >
-                        <div className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-wide text-ink/60">
-                          <span>
-                            {event.eventDate
-                              ? formatMatterCalendarDate(event.eventDate)
-                              : "Date unknown"}{" "}
-                            · {event.datePrecision}
-                            {event.origin ? ` · source: ${event.origin}` : ""}
-                          </span>
-                          <VerifiedBadge />
-                          {(event.relatedFindingIds ?? []).length > 0 ? (
-                            <ConflictingEvidenceBadge>Linked conflict</ConflictingEvidenceBadge>
-                          ) : null}
-                        </div>
-                        <div className="font-semibold">{event.title}</div>
-                        <div className="text-sm text-ink/70">{event.eventType}</div>
-                      </button>
-                    </li>
-                  ))}
-                </ol>
-              )}
-            </Panel>
-            <Panel title="Event detail">
-              {!selected ? (
-                <p className="text-sm text-ink/70">Select an event.</p>
-              ) : (
-                <div className="space-y-2 text-sm">
-                  <VerifiedBadge />
-                  <p className="font-semibold">{selected.title}</p>
-                  <p className="text-ink/70">{selected.description || "No description"}</p>
-                  {(selected.relatedFindingIds ?? []).length > 0 ? (
-                    <p className="text-xs text-ink/60">
-                      Related contradiction finding(s) stay dual-sided on{" "}
-                      <Link
-                        href={`/app/cases/${matterId}/evidence`}
-                        className="font-semibold text-accent underline"
-                      >
-                        Evidence
-                      </Link>
-                      . This event is not an auto-resolved “truth.”
-                    </p>
-                  ) : null}
-                  <Button
-                    type="button"
-                    variant="secondary"
-                    onClick={() => {
-                      setDrawerItems(
-                        (selected.sources ?? []).map((s: any, i: number) => ({
-                          id: s.id ?? `src-${i}`,
-                          title: s.documentTitle ?? "Source",
-                          classLabel: "Matter Evidence",
-                        quote: s.quote ?? s.excerpt ?? s.supportingText,
-                        documentId: s.documentId,
-                      })),
-                      );
-                      setDrawerOpen(true);
-                    }}
-                  >
-                    Inspect sources
+      <div className={selected ? "grid gap-4 lg:grid-cols-[minmax(0,1fr)_22rem]" : undefined}>
+        <div>
+          {visible.length === 0 && filter !== "suggested" && events.length === 0 ? (
+            <EmptyState
+              title="No verified events yet."
+              description="Your verified timeline will appear here as events are confirmed."
+              action={
+                proposed.length > 0 ? (
+                  <Button type="button" variant="secondary" onClick={() => setFilter("suggested")}>
+                    Review suggestions ({proposed.length})
                   </Button>
-                </div>
-              )}
-            </Panel>
-          </div>
-          <div className="mt-4">
-            <Panel title="Add manual event">
-              <form className="flex flex-col gap-3" onSubmit={createManual}>
-                <input
-                  className="rounded border border-line px-3 py-2"
-                  value={manualTitle}
-                  onChange={(e) => setManualTitle(e.target.value)}
-                  placeholder="Event title"
-                  required
-                />
-                <input
-                  className="rounded border border-line px-3 py-2"
-                  value={manualType}
-                  onChange={(e) => setManualType(e.target.value)}
-                />
-                <input
-                  type="date"
-                  className="rounded border border-line px-3 py-2"
-                  value={manualDate}
-                  onChange={(e) => setManualDate(e.target.value)}
-                />
-                <Button type="submit">Add event</Button>
-              </form>
-            </Panel>
-          </div>
-        </>
-      ) : (
-        <Panel title="Suggestions">
-          {filteredProposed.length === 0 ? (
-            <p className="text-sm text-ink/60">No timeline suggestions pending review.</p>
+                ) : (
+                  <Link
+                    href={`/app/cases/${matterId}/review`}
+                    className="text-sm font-semibold text-accent underline"
+                  >
+                    Open Review
+                  </Link>
+                )
+              }
+            />
+          ) : visible.length === 0 ? (
+            <EmptyState
+              title={
+                filter === "suggested"
+                  ? "No timeline suggestions pending review."
+                  : "No events match this filter."
+              }
+              description={
+                filter === "suggested"
+                  ? "Nyaya can suggest chronology after documents are processed. Suggestions stay unconfirmed until you verify them."
+                  : "Try another filter, or add an event."
+              }
+            />
           ) : (
-            <ul className="space-y-3">
-              {filteredProposed.map((event) => (
-                <li
-                  key={event.id}
-                  className="rounded-lg border border-amber-700/20 bg-amber-50/40 p-3"
-                >
-                  <div className="flex flex-wrap items-center gap-2">
-                    <SuggestedBadge />
-                    {(event.relatedFindingIds ?? []).length > 0 ? (
-                      <ConflictingEvidenceBadge>Linked conflict</ConflictingEvidenceBadge>
-                    ) : null}
-                    <span className="text-sm font-semibold">{event.title}</span>
-                  </div>
-                  <p className="mt-1 text-xs text-ink/60">
-                    {event.eventDate
-                      ? formatMatterCalendarDate(event.eventDate)
-                      : "Date unknown"}{" "}
-                    · {event.datePrecision}
-                    {event.origin ? ` · source: ${event.origin}` : ""}
+            <ol className="relative space-y-6 border-l border-accent/30 pl-5">
+              {grouped.map((group) => (
+                <li key={group.key}>
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.14em] text-ink/45">
+                    {group.label}
                   </p>
-                  {(event.relatedFindingIds ?? []).length > 0 ? (
-                    <p className="mt-1 text-xs text-ink/55">
-                      Linked to Evidence conflict(s) — sides remain separate until human review.
-                    </p>
-                  ) : null}
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    <Button type="button" onClick={() => reviewEvent(event.id, "approve")}>
+                  <ul className="space-y-2">
+                    {group.events.map((event) => {
+                      const suggested = proposed.some((p) => p.id === event.id);
+                      const disputed = isDisputedTimelineEvent(event);
+                      const sources = (event.sources ?? []).length;
+                      return (
+                        <li key={event.id}>
+                          <button
+                            type="button"
+                            className={`w-full rounded-lg border px-3 py-2.5 text-left ${
+                              selected?.id === event.id
+                                ? "border-accent bg-accent-soft/40"
+                                : suggested
+                                  ? "border-amber-700/20 bg-amber-50/40"
+                                  : "border-line bg-white hover:bg-accent-soft/20"
+                            }`}
+                            onClick={() => setSelected(event)}
+                          >
+                            <div className="flex flex-wrap items-center gap-2">
+                              <span className="text-sm font-semibold text-ink">{event.title}</span>
+                              <TrustStatus
+                                kind={trustStatusFromRecord({
+                                  status: suggested ? "proposed" : (event.status ?? "approved"),
+                                  disputed,
+                                })}
+                              />
+                            </div>
+                            {event.description ? (
+                              <p className="mt-1 line-clamp-2 text-sm text-ink/70">
+                                {event.description}
+                              </p>
+                            ) : null}
+                            <p className="mt-1 text-xs text-ink/55">
+                              {humanizeKey(event.eventType)}
+                              {sources ? ` · ${sources} source${sources === 1 ? "" : "s"}` : ""}
+                            </p>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </li>
+              ))}
+            </ol>
+          )}
+        </div>
+
+        <IntelligenceInspector
+          open={Boolean(selected)}
+          title={selected?.title ?? "Event"}
+          subtitle={selected ? formatTimelineDateLine(selected) : undefined}
+          status={
+            selected ? (
+              <TrustStatus
+                kind={trustStatusFromRecord({
+                  status: selectedIsSuggested ? "proposed" : (selected.status ?? "approved"),
+                  disputed: isDisputedTimelineEvent(selected),
+                })}
+              />
+            ) : undefined
+          }
+          onClose={() => setSelected(null)}
+          actions={
+            selected ? (
+              <>
+                <Button type="button" variant="secondary" onClick={() => openSources(selected)}>
+                  {sourceCountLabel((selected.sources ?? []).length)}
+                </Button>
+                <Link
+                  href={`/app/cases/${matterId}/evidence`}
+                  className="inline-flex items-center rounded-md border border-line px-4 py-2 text-sm font-semibold"
+                >
+                  View evidence
+                </Link>
+                <Link
+                  href={askNyayaHref(matterId)}
+                  className="inline-flex items-center rounded-md border border-line px-4 py-2 text-sm font-semibold"
+                >
+                  Ask Nyaya about this
+                </Link>
+              </>
+            ) : null
+          }
+        >
+          {selected ? (
+            <>
+              <p className="text-ink/80">{selected.description || "No additional description."}</p>
+              <RelatedList heading="Date certainty">
+                <p>{formatTimelineDateCertainty(selected)}</p>
+              </RelatedList>
+              {isDisputedTimelineEvent(selected) ? (
+                <p className="text-xs text-ink/60">
+                  Linked conflict stays dual-sided on Evidence. This event is not an auto-resolved
+                  account.
+                </p>
+              ) : null}
+              {selectedIsSuggested ? (
+                <div className="space-y-2">
+                  <label className="block text-xs text-ink/60">
+                    Rejection reason
+                    <input
+                      className="mt-1 w-full rounded border border-line px-3 py-2 text-sm text-ink"
+                      value={rejectReason}
+                      onChange={(e) => setRejectReason(e.target.value)}
+                    />
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    <Button type="button" onClick={() => reviewEvent(selected.id, "approve")}>
                       Verify
                     </Button>
-                    <label className="flex min-w-[12rem] flex-1 flex-col gap-1 text-xs text-ink/60">
-                      Rejection reason
-                      <input
-                        className="rounded border border-line px-2 py-1 text-sm text-ink"
-                        value={rejectReason}
-                        onChange={(e) => setRejectReason(e.target.value)}
-                        placeholder="Required when rejecting, like Review facts"
-                      />
-                    </label>
                     <Button
                       type="button"
                       variant="secondary"
-                      onClick={() => reviewEvent(event.id, "reject")}
+                      onClick={() => reviewEvent(selected.id, "reject")}
                     >
-                      Reject
+                      Dismiss
                     </Button>
                     <Link
-                      href={`/app/cases/${matterId}/evidence`}
+                      href={`/app/cases/${matterId}/review`}
                       className="self-center text-xs font-semibold text-accent underline"
                     >
-                      View on Evidence
+                      Open Review
                     </Link>
                   </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </Panel>
-      )}
+                </div>
+              ) : null}
+            </>
+          ) : null}
+        </IntelligenceInspector>
+      </div>
+
+      <IntelligenceDialog
+        open={addOpen}
+        title="Add event"
+        description="Manual events are recorded as verified immediately."
+        onClose={() => setAddOpen(false)}
+      >
+        <form className="flex flex-col gap-3" onSubmit={createManual}>
+          <input
+            className="rounded border border-line px-3 py-2 text-sm"
+            value={manualTitle}
+            onChange={(e) => setManualTitle(e.target.value)}
+            placeholder="What happened?"
+            required
+            aria-label="Event title"
+          />
+          <select
+            className="rounded border border-line px-3 py-2 text-sm"
+            value={manualType}
+            onChange={(e) => setManualType(e.target.value)}
+            aria-label="Event type"
+          >
+            {EVENT_TYPE_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+          <input
+            type="date"
+            className="rounded border border-line px-3 py-2 text-sm"
+            value={manualDate}
+            onChange={(e) => setManualDate(e.target.value)}
+            aria-label="Event date"
+          />
+          <Button type="submit">Save event</Button>
+        </form>
+      </IntelligenceDialog>
       <SourceDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} items={drawerItems} />
-    </>
+    </div>
   );
 }

@@ -1,0 +1,50 @@
+[
+  {
+    "provider": "openai",
+    "modelId": "unresolved",
+    "result": "BLOCKED_EXTERNAL",
+    "normalized": false,
+    "structuredOk": false,
+    "usageCaptured": false,
+    "modelCaptured": false,
+    "timeoutWorks": false,
+    "latencyMs": null,
+    "errorClass": "BLOCKED_EXTERNAL"
+  },
+  {
+    "provider": "anthropic",
+    "modelId": "unresolved",
+    "result": "BLOCKED_EXTERNAL",
+    "normalized": false,
+    "structuredOk": false,
+    "usageCaptured": false,
+    "modelCaptured": false,
+    "timeoutWorks": false,
+    "latencyMs": null,
+    "errorClass": "BLOCKED_EXTERNAL"
+  },
+  {
+    "provider": "xai",
+    "modelId": "unresolved",
+    "result": "BLOCKED_EXTERNAL",
+    "normalized": false,
+    "structuredOk": false,
+    "usageCaptured": false,
+    "modelCaptured": false,
+    "timeoutWorks": false,
+    "latencyMs": null,
+    "errorClass": "BLOCKED_EXTERNAL"
+  },
+  {
+    "provider": "google",
+    "modelId": "unresolved",
+    "result": "BLOCKED_EXTERNAL",
+    "normalized": false,
+    "structuredOk": false,
+    "usageCaptured": false,
+    "modelCaptured": false,
+    "timeoutWorks": false,
+    "latencyMs": null,
+    "errorClass": "BLOCKED_EXTERNAL"
+  }
+]

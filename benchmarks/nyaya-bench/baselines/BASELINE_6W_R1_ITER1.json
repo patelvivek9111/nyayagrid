@@ -1,0 +1,9 @@
+{
+  "id": "BASELINE_6W_R1_ITER1",
+  "generatedAt": "2026-08-27T09:49:00.000Z",
+  "iteration": 1,
+  "r010": "PASS on live Research R1 rerun",
+  "r014": "PASS on live Research R1 rerun",
+  "newCritical": "R009 treatment overclaim after iteration 1",
+  "iteration2Plan": "rewriteUnsourcedEditorialTreatment for unsourced overruled/good-law claims"
+}

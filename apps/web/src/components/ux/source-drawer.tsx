@@ -163,11 +163,13 @@ export function ReviewSuggestionCard({
   detail,
   counts,
   href,
+  actionLabel = "Review suggestions →",
 }: {
   title: string;
   detail?: string;
   counts?: string[];
   href: string;
+  actionLabel?: string;
 }) {
   return (
     <a
@@ -183,7 +185,7 @@ export function ReviewSuggestionCard({
           ))}
         </ul>
       ) : null}
-      <p className="mt-2 text-xs font-semibold text-accent">Review suggestions →</p>
+      <p className="mt-2 text-xs font-semibold text-accent">{actionLabel} →</p>
     </a>
   );
 }

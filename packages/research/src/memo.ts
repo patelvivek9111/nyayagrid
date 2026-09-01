@@ -21,6 +21,7 @@ import {
   type ResearchMemo,
 } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
+import { loadMatterJurisdictionForResearch, labelResearchHits } from "./jurisdiction-layer";
 import type { AuthoritySearchFilters, LegalAuthorityProvider } from "./provider";
 import { loadAuthorizedAuthorityChunks } from "./context";
 import { ensureResearchSession, type ResearchSession } from "./sessions";
@@ -36,6 +37,8 @@ import {
   type AuthorityRetrieverLike,
   type ResearchHit,
 } from "./synthesize";
+import { rewriteUnsupportedControllingClaims } from "./weight";
+import { rewriteUnsourcedEditorialTreatment } from "./treatment";
 
 export const MEMO_UNSUPPORTED_SHORT_ANSWER =
   "No retrieved legal authority supports a short answer to this question; the memo records the gap instead of asserting a rule.";
@@ -47,6 +50,7 @@ export type MemoValidation = {
   memo: ResearchMemo;
   grounded: boolean;
   droppedPropositions: Array<{ text: string; reason: string; unknownAuthorityIds: string[] }>;
+  droppedUnsupportedAuthorityIds: string[];
   fabricatedAuthorityIds: string[];
   unknownChunkIds: string[];
   /** Authority-chunk citations kept per proposition, in the same order as memo.propositions. */
@@ -87,6 +91,7 @@ export function validateMemoAgainstRetrieval(
       ]),
       grounded: false,
       droppedPropositions: [],
+      droppedUnsupportedAuthorityIds: [],
       fabricatedAuthorityIds: [],
       unknownChunkIds: [],
       propositionChunkIds: [],
@@ -137,6 +142,12 @@ export function validateMemoAgainstRetrieval(
     );
   }
 
+  const publishedIds = new Set<string>([
+    ...applicable.known,
+    ...propositions.flatMap((row) => row.authorityIds),
+  ]);
+  const remainingUnsourced = [...publishedIds].filter((id) => !index.authorityIds.has(id));
+
   return {
     memo: {
       ...memo,
@@ -151,7 +162,8 @@ export function validateMemoAgainstRetrieval(
     },
     grounded,
     droppedPropositions,
-    fabricatedAuthorityIds: [...fabricated],
+    droppedUnsupportedAuthorityIds: [...fabricated],
+    fabricatedAuthorityIds: remainingUnsourced,
     unknownChunkIds: [...unknownChunkIds],
     propositionChunkIds,
     schemaValid: true,
@@ -315,6 +327,14 @@ export async function generateResearchMemo(
   let matterChunks: ProfessionalChunk[] = [];
   let concepts: string[] = [];
 
+  const jurisdictionLayer = await loadMatterJurisdictionForResearch({
+    db: params.db,
+    organizationId: params.organizationId,
+    matterId,
+    question,
+  });
+  extraWarnings.push(...jurisdictionLayer.warnings);
+
   if (matterId) {
     const [matter] = await params.db
       .select({ title: matters.title })
@@ -362,19 +382,23 @@ export async function generateResearchMemo(
     provider: params.provider,
   });
 
-  const hits = await retrieveResearchAuthorities({
-    search,
-    filters,
-    limit,
-    queries: [
-      { text: question, origin: "primary" },
-      ...concepts.map((concept) => ({
-        text: concept,
-        origin: "concept" as const,
-        limit: Math.max(4, Math.floor(limit / 2)),
-      })),
-    ],
-  });
+  const hits = labelResearchHits(
+    jurisdictionLayer.context,
+    await retrieveResearchAuthorities({
+      search,
+      filters,
+      limit,
+      searchOptions: jurisdictionLayer.searchOptions,
+      queries: [
+        { text: question, origin: "primary" },
+        ...concepts.map((concept) => ({
+          text: concept,
+          origin: "concept" as const,
+          limit: Math.max(4, Math.floor(limit / 2)),
+        })),
+      ],
+    }),
+  ).slice(0, limit);
 
   const chunkTexts = await loadAuthorizedAuthorityChunks({
     db: params.db,
@@ -385,6 +409,12 @@ export async function generateResearchMemo(
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "research_memo",
+    routing: {
+      subsystem: "research",
+      strategy: "standard",
+      organizationId: params.organizationId,
+      matterId: matterId ?? undefined,
+    },
     messages: [
       { role: "system", content: buildResearchMemoSystemPrompt() },
       {
@@ -400,6 +430,9 @@ export async function generateResearchMemo(
             court: hit.court,
             date: hit.decisionDate,
             content: chunkTexts.get(hit.chunkId)?.content ?? hit.snippet,
+            hierarchyRelationship: hit.hierarchyRelationship ?? "unknown",
+            jurisdiction: hit.jurisdiction,
+            temporalApplicability: hit.temporalApplicability ?? "unknown",
           })),
         }),
       },
@@ -413,13 +446,39 @@ export async function generateResearchMemo(
     raw = null;
   }
 
-  const validated = validateMemoAgainstRetrieval(raw, index, question);
+  const validatedRaw = validateMemoAgainstRetrieval(raw, index, question);
+  const forumLabels = [
+    filters.jurisdiction,
+    jurisdictionLayer.context?.primaryState,
+    jurisdictionLayer.context?.governingLawState,
+  ].filter((value): value is string => Boolean(value));
+  const guard = (text: string) =>
+    rewriteUnsourcedEditorialTreatment(
+      rewriteUnsupportedControllingClaims({
+        text,
+        hits,
+        queryJurisdiction: filters.jurisdiction ?? null,
+        forumLabels,
+      }),
+    );
+  const validated = {
+    ...validatedRaw,
+    memo: {
+      ...validatedRaw.memo,
+      shortAnswer: guard(validatedRaw.memo.shortAnswer),
+      analysis: guard(validatedRaw.memo.analysis),
+      conclusion: guard(validatedRaw.memo.conclusion),
+    },
+  };
   const coverageWarnings = buildCoverageWarnings({
     hitCount: hits.length,
     authorityCount: index.authorityIds.size,
     contrarySearchPerformed: false,
     jurisdictionFilter: filters.jurisdiction ?? null,
     jurisdictionFilters: session.jurisdictionFilters ?? [],
+    jurisdictionKnown: Boolean(
+      jurisdictionLayer.context && jurisdictionLayer.context.jurisdictionMode !== "unknown",
+    ),
     extra: [
       ...validated.memo.coverageWarnings,
       ...extraWarnings,

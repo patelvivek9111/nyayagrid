@@ -108,7 +108,7 @@ Written numeric bars ([`AGENT_QUALITY.md`](./AGENT_QUALITY.md)): 0% false-confid
 
 ### To-do
 
-- [x] Run `EVAL_EXPORT_REVIEW=1 npm run eval:ai:live` against `OpenAIProvider` (pinned model, budget cap). Packets: `docs/agent-quality-review/exports-live/` (live 1), remasure rates in the tracker (live 2 files were later mock-clobbered), `docs/agent-quality-review/exports-live-3/` (live 3, including contract-compare summaries under `contract-compare/`).
+- [x] Run `EVAL_EXPORT_REVIEW=1 npm run eval:ai:live` against `OpenAIProvider` (pinned model, budget cap). Live rates are recorded in [`AGENT_QUALITY_TRACKER.md`](./AGENT_QUALITY_TRACKER.md). Export packets are gitignored and not kept in the repo.
 - [x] Record live rates in the Section A table (three `gpt-4o-mini` runs, 2026-08-14; live 3 is the first with min/mean/max. Case Q&A still misses. Live 2 prompt/snapshot **unknown** — not a config baseline. Live 5 contract-compare n=16×3 is the first workflow-level live compare number).
 - [ ] Blind review by someone with legal judgment who **did not write the code**. Score each: pass / needs-work / fail on (1) would I have caught this, (2) wrong or missing, (3) send to client with light edit vs rewrite.
 - [ ] Fill [`AGENT_QUALITY_ATTORNEY_REVIEW.md`](./AGENT_QUALITY_ATTORNEY_REVIEW.md): reviewer, date, per-item scores.

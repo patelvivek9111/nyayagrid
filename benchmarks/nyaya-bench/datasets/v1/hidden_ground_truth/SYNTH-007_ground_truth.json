@@ -1,0 +1,87 @@
+{
+  "scenario_id": "SYNTH-007",
+  "title": "Redwood Design Partners Dispute",
+  "ground_truth_version": "1.0",
+  "answers": {
+    "Q001": {
+      "task_id": "SYNTH-007-Q001",
+      "expected": "40%",
+      "supporting_refs": [
+        "agreement:1"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q002": {
+      "task_id": "SYNTH-007-Q002",
+      "expected": "Above $100,000",
+      "supporting_refs": [
+        "agreement:2"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q003": {
+      "task_id": "SYNTH-007-Q003",
+      "expected": "Yes; Avery says Jordan approved before signing; Jordan says he did not",
+      "supporting_refs": [
+        "email_avery:Message",
+        "dep_jordan:Testimony"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q004": {
+      "task_id": "SYNTH-007-Q004",
+      "expected": "Avery Lin",
+      "supporting_refs": [
+        "bank_doc:Authorization"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q005": {
+      "task_id": "SYNTH-007-Q005",
+      "expected": "May 12, 2026",
+      "supporting_refs": [
+        "bank_doc:Loan"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q006": {
+      "task_id": "SYNTH-007-Q006",
+      "expected": "No",
+      "supporting_refs": [
+        "minutes:Notes"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q007": {
+      "task_id": "SYNTH-007-Q007",
+      "expected": "ABSTAIN: interest rate not supplied",
+      "supporting_refs": [],
+      "verdict_logic": "must_abstain"
+    },
+    "Q008": {
+      "task_id": "SYNTH-007-Q008",
+      "expected": "In proportion to ownership unless both agree otherwise in writing",
+      "supporting_refs": [
+        "agreement:3"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q009": {
+      "task_id": "SYNTH-007-Q009",
+      "expected": "60%",
+      "supporting_refs": [
+        "agreement:1"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q010": {
+      "task_id": "SYNTH-007-Q010",
+      "expected": "No; documents establish conflicting accounts but do not prove which is true",
+      "supporting_refs": [
+        "email_avery:Message",
+        "dep_jordan:Testimony"
+      ],
+      "verdict_logic": "must_answer"
+    }
+  }
+}

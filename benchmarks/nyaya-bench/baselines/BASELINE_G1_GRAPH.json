@@ -1,0 +1,32 @@
+{
+  "label": "G1",
+  "title": "Graph reliability against unchanged production",
+  "liveRunDir": "benchmarks/nyaya-bench/reports/runs/2026-08-19T15-33-02-742Z",
+  "executionMode": "graph",
+  "benchmarkKind": "NYAYA_GRAPH",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "productionUnchanged": true,
+  "graderVersion": "g1-2026-08-19",
+  "promptVersion": "graph-relationship-extract-v2",
+  "counts": {
+    "pass": 17,
+    "needs_work": 0,
+    "fail": 1,
+    "infrastructure": 0,
+    "criticalFails": 1
+  },
+  "criticalTasks": ["SYNTH-V2-001-G017"],
+  "criticalCause": "createManualGraphEdge auto-approved unsourced manual edges (storage treated as verification)",
+  "metrics": {
+    "edgePrecision": 1,
+    "actorAccuracy": 1,
+    "negationAccuracy": 1,
+    "temporalAccuracy": 1,
+    "provenanceAccuracy": 1,
+    "wrongDocumentRate": 0,
+    "unsupportedEdgeRate": 0,
+    "proposedToVerifiedLeakageRate": 0,
+    "rejectedEdgeLeakageRate": 0
+  }
+}

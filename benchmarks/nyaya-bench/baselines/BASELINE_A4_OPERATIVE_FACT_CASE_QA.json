@@ -1,0 +1,159 @@
+{
+  "baselineId": "BASELINE_A4_OPERATIVE_FACT_CASE_QA",
+  "benchmarkKind": "NYAYA_CASE_QA",
+  "graderVersion": "a1-2026-08-18",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "notLegalCorrectnessProof": true,
+  "promptVersion": "nyaya-matter-qa-v11",
+  "measures": [
+    "pdf_ingestion",
+    "chunking",
+    "embeddings",
+    "retrieval",
+    "askNyayaAboutMatter",
+    "answer_grounding",
+    "case_qa_citations",
+    "operative_fact_selection",
+    "source_role_arbitration",
+    "temporal_contract_resolution",
+    "contradiction_classification",
+    "abstention_invariant"
+  ],
+  "doesNotMeasure": [
+    "agents",
+    "timeline_subsystem",
+    "memory_subsystem",
+    "graph_subsystem",
+    "research_subsystem",
+    "draft_subsystem",
+    "contract_compare_workflow",
+    "contradiction_engine"
+  ],
+  "comparedTo": "BASELINE_A3_STRUCTURED_EVIDENCE_CASE_QA",
+  "runs": {
+    "v1": "benchmarks/nyaya-bench/reports/runs/2026-08-18T18-56-43-265Z",
+    "v2": "benchmarks/nyaya-bench/reports/runs/2026-08-18T19-01-22-384Z",
+    "targetedGate": [
+      "benchmarks/nyaya-bench/reports/runs/2026-08-18T18-49-53-835Z",
+      "benchmarks/nyaya-bench/reports/runs/2026-08-18T18-51-39-987Z",
+      "benchmarks/nyaya-bench/reports/runs/2026-08-18T18-53-05-934Z",
+      "benchmarks/nyaya-bench/reports/runs/2026-08-18T18-54-19-433Z"
+    ]
+  },
+  "config": {
+    "gitCommit": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "workingTree": "dirty — Phase 5A operative-fact selection uncommitted",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini-2024-07-18",
+    "embeddingProvider": "openai",
+    "promptVersion": "nyaya-matter-qa-v11",
+    "assessment": "deterministic operative-fact selection; LLM assessor not invoked",
+    "graderVersion": "a1-2026-08-18",
+    "openaiRecalled": true,
+    "gradersUnchanged": true,
+    "fixturesUnchanged": true,
+    "baselineA3Preserved": true
+  },
+  "counts": {
+    "expected": 500,
+    "executed": 500,
+    "pass": 391,
+    "needs_work": 64,
+    "fail": 45,
+    "infrastructure": 0,
+    "criticalFails": 1,
+    "passRateExpected": 0.782,
+    "foldedUserPresentation": {
+      "pass": 391,
+      "needsWork": 109,
+      "failCritical": 1
+    },
+    "v1": {
+      "total": 100,
+      "pass": 83,
+      "needs_work": 8,
+      "fail": 9,
+      "infrastructure": 0,
+      "criticalFails": 1,
+      "passRate": 0.83
+    },
+    "v2": {
+      "total": 400,
+      "pass": 308,
+      "needs_work": 56,
+      "fail": 36,
+      "infrastructure": 0,
+      "criticalFails": 0,
+      "passRate": 0.77
+    }
+  },
+  "comparisonToA3": {
+    "pass": { "a3": 376, "a4": 391, "delta": 15 },
+    "needs_work": { "a3": 68, "a4": 64, "delta": -4 },
+    "fail": { "a3": 56, "a4": 45, "delta": -11 },
+    "infrastructure": { "a3": 0, "a4": 0, "delta": 0 },
+    "criticalFails": { "a3": 3, "a4": 1, "delta": -2 },
+    "passRateExpected": { "a3": 0.752, "a4": 0.782, "deltaPp": 3.0 },
+    "passToFail": { "a2ToA3": 25, "a3ToA4": 9 }
+  },
+  "transitions": {
+    "PASS → PASS": 355,
+    "PASS → NEEDS_WORK": 12,
+    "PASS → FAIL": 9,
+    "NEEDS_WORK → PASS": 5,
+    "NEEDS_WORK → NEEDS_WORK": 47,
+    "NEEDS_WORK → FAIL": 16,
+    "FAIL → PASS": 31,
+    "FAIL → NEEDS_WORK": 5,
+    "FAIL → FAIL": 20
+  },
+  "passToFail": {
+    "T014": [
+      "SYNTH-V2-001-T014",
+      "SYNTH-V2-003-T014",
+      "SYNTH-V2-004-T014",
+      "SYNTH-V2-005-T014",
+      "SYNTH-V2-009-T014",
+      "SYNTH-V2-016-T014"
+    ],
+    "T006": ["SYNTH-V2-013-T006"],
+    "T008": ["SYNTH-V2-006-T008"],
+    "V1": ["SYNTH-003-Q006"]
+  },
+  "clusters": {
+    "t025Badge": { "a3": { "pass": 16, "fail": 0 }, "a4": { "pass": 16, "fail": 0 } },
+    "t020Retroactivity": {
+      "a3": { "pass": 12, "needs_work": 4, "fail": 0, "criticalFail": 0 },
+      "a4": { "pass": 11, "needs_work": 5, "fail": 0, "criticalFail": 0 }
+    },
+    "t002CurrentNotice": { "a3": { "pass": 6, "fail": 10 }, "a4": { "pass": 16, "fail": 0 } },
+    "t003FutureNotice": { "a3": { "pass": 15, "fail": 1 }, "a4": { "pass": 16, "fail": 0 } },
+    "t011FalseContradiction": { "a3": { "pass": 8, "fail": 7 }, "a4": { "pass": 16, "fail": 0 } },
+    "t021Termination": { "a3": { "pass": 9, "fail": 7 }, "a4": { "pass": 16, "fail": 0 } },
+    "t015Abstention": { "a3": { "pass": 14, "fail": 2, "criticalFail": 2 }, "a4": { "pass": 16, "fail": 0 } },
+    "t014EmailVsContract": { "a3": { "pass": 11, "fail": 5 }, "a4": { "pass": 6, "fail": 10 } },
+    "t010GenuineTension": { "a3": { "pass": 0, "needs_work": 16, "fail": 0 }, "a4": { "pass": 0, "needs_work": 0, "fail": 16 } },
+    "t013Citations": { "a3": { "pass": 10, "needs_work": 2, "fail": 4 }, "a4": { "pass": 8, "needs_work": 8, "fail": 0 } },
+    "t006Numeric": { "a3": { "pass": 1, "fail": 8 }, "a4": { "pass": 0, "fail": 9 } }
+  },
+  "remainingCritical": [
+    {
+      "id": "SYNTH-010-Q008",
+      "detail": "Treated silence or an original figure as proof of the asked fact."
+    }
+  ],
+  "performance": {
+    "a3": { "medianLatencyMs": 2788, "p95LatencyMs": 5108 },
+    "a4": {
+      "medianLatencyMs": 2708,
+      "p95LatencyMs": 4713,
+      "medianAssessmentMs": 0,
+      "p95AssessmentMs": 1,
+      "triggered": 174,
+      "triggerRate": 0.348,
+      "extraModelCallsProduction": 0,
+      "sources": { "skipped": 326, "deterministic": 174 }
+    }
+  }
+}

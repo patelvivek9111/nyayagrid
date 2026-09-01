@@ -1,11 +1,11 @@
 import { saveStudentItemSchema, studentSavedItemTypeSchema } from "@nyayagrid/validation";
 import { listSavedItems, saveItem } from "@nyayagrid/workspaces";
-import { requireUser } from "@/lib/auth";
+import { requireProfessorUser } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
 export async function GET(request: Request) {
   try {
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireProfessorUser(request.headers);
     const url = new URL(request.url);
     const itemTypeRaw = url.searchParams.get("itemType");
     const parsedType = itemTypeRaw ? studentSavedItemTypeSchema.safeParse(itemTypeRaw) : null;
@@ -22,7 +22,7 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireProfessorUser(request.headers);
     const body = saveStudentItemSchema.parse(await request.json());
     const item = await saveItem({ db, userId: user.id, input: body });
     return jsonOk({ item }, { status: 201 });

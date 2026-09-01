@@ -11,8 +11,7 @@ import {
 } from "./index";
 
 describe("quote fidelity (AGENT_QUALITY QA-02)", () => {
-  const source =
-    "The lease term commences on January 1, 2024 and expires on December 31, 2026.";
+  const source = "The lease term commences on January 1, 2024 and expires on December 31, 2026.";
 
   it("accepts typography-normalized verbatim quotes", () => {
     const result = validateQuoteAgainstText(
@@ -151,18 +150,91 @@ describe("normalizeCitedAnswerRaw (live JSON shape)", () => {
     expect(parsed.sources[0]?.documentVersionId).toBe("docv_lease_1");
   });
 
-  it("still requires document ids when passages are not provided", () => {
-    expect(() =>
-      citedAnswerSchema.parse(
-        normalizeCitedAnswerRaw({
+  it("coerces a string-shaped sources[0] using retrieved passages", () => {
+    const passages = [
+      {
+        chunkId: "chunk_lease_rent",
+        documentId: "doc_lease",
+        documentVersionId: "docv_lease_1",
+        quote: "Tenant shall pay Base Rent of four thousand dollars ($4,000).",
+      },
+    ];
+    const parsed = citedAnswerSchema.parse(
+      normalizeCitedAnswerRaw(
+        {
           answer: "$4,000",
-          sources: [{ chunkId: "chunk_lease_rent", quote: "four thousand dollars ($4,000)" }],
+          sources: ["chunk_lease_rent"],
           assumptions: [],
           unresolvedQuestions: [],
           evidenceState: "grounded",
-        }),
+        },
+        passages,
       ),
-    ).toThrow();
+    );
+    expect(parsed.sources[0]?.documentId).toBe("doc_lease");
+    expect(parsed.sources[0]?.chunkId).toBe("chunk_lease_rent");
+    expect(parsed.sources[0]?.quote).toContain("$4,000");
+  });
+
+  it("coerces a quote-only source and a missing documentId via quote overlap", () => {
+    const passages = [
+      {
+        chunkId: "chunk_notice",
+        documentId: "doc_msa",
+        documentVersionId: "docv_msa_1",
+        quote: "Notice shall be sixty (60) days.",
+      },
+    ];
+    const parsed = citedAnswerSchema.parse(
+      normalizeCitedAnswerRaw(
+        {
+          answer: "60 days",
+          sources: [{ quote: "Notice shall be sixty (60) days." }],
+          assumptions: [],
+          unresolvedQuestions: [],
+          evidenceState: "grounded",
+        },
+        passages,
+      ),
+    );
+    expect(parsed.sources[0]?.documentId).toBe("doc_msa");
+    expect(parsed.sources[0]?.chunkId).toBe("chunk_notice");
+  });
+
+  it("drops malformed sources instead of throwing when passages cannot complete them", () => {
+    const parsed = citedAnswerSchema.parse(
+      normalizeCitedAnswerRaw({
+        answer: "$4,000",
+        sources: [{ chunkId: "chunk_lease_rent", quote: "four thousand dollars ($4,000)" }],
+        assumptions: [],
+        unresolvedQuestions: [],
+        evidenceState: "grounded",
+      }),
+    );
+    expect(parsed.sources).toEqual([]);
+  });
+
+  it("does not throw when live sources[0] is a string and passages can complete it", () => {
+    const passages = [
+      {
+        chunkId: "chunk_lease_rent",
+        documentId: "doc_lease",
+        documentVersionId: "docv_lease_1",
+        quote: "Tenant shall pay Base Rent of four thousand dollars ($4,000).",
+      },
+    ];
+    const result = validateCitedAnswerAgainstPassages(
+      {
+        answer: "The monthly base rent is $4,000.",
+        sources: ["chunk_lease_rent"],
+        assumptions: [],
+        unresolvedQuestions: [],
+        evidenceState: "grounded",
+      },
+      passages,
+    );
+    expect(result.answer.evidenceState).toBe("grounded");
+    expect(result.answer.sources[0]?.documentId).toBe("doc_lease");
   });
 });
 
@@ -207,6 +279,8 @@ describe("Nyaya / contradiction prompt contracts", () => {
   it("requires a string answer and decoy-resistant citation", () => {
     const prompt = buildNyayaSystemPrompt();
     expect(prompt).toMatch(/answer MUST be a single string/i);
+    expect(prompt).toMatch(/complete attorney-facing response/i);
+    expect(prompt).toMatch(/keep the refusal clear and short/i);
     expect(prompt).toMatch(/near-miss decoy/i);
     expect(prompt).toMatch(/descending relevance/i);
     expect(prompt).toMatch(/Worked example \(SYNTH/i);

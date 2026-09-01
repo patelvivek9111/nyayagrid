@@ -67,10 +67,21 @@ function looksLikeZipArchive(buffer: Buffer): boolean {
   );
 }
 
+function isSupportedDocx(contentType: string, filename: string): boolean {
+  const lowerName = filename.toLowerCase();
+  const normalizedType = (contentType.split(";")[0] ?? contentType).trim().toLowerCase();
+  return (
+    lowerName.endsWith(".docx") ||
+    normalizedType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+  );
+}
+
 /**
- * Phase 9 does not support archive uploads at all (no zip-bomb / nested-archive handling yet).
+ * Phase 9 does not support generic archive uploads (no zip-bomb / nested-archive handling yet).
  * Rejects by declared MIME type, filename extension, and zip magic bytes so a relabeled archive
- * cannot slip through. Pass `allowArchives: true` only once archive extraction is implemented.
+ * cannot slip through. OOXML `.docx` is ZIP-based and is an allowed professional upload type, so
+ * zip magic is ignored for recognized DOCX files. Pass `allowArchives: true` only once archive
+ * extraction is implemented.
  */
 export function rejectZipBombsOrArchives(params: {
   contentType: string;
@@ -82,7 +93,9 @@ export function rejectZipBombsOrArchives(params: {
   const lowerName = params.filename.toLowerCase();
   const isArchiveExtension = ARCHIVE_EXTENSIONS.some((ext) => lowerName.endsWith(ext));
   const isArchiveMime = ARCHIVE_MIME_TYPES.has(params.contentType.toLowerCase());
-  const isArchiveMagic = params.buffer ? looksLikeZipArchive(params.buffer) : false;
+  const allowZipMagic = isSupportedDocx(params.contentType, params.filename);
+  const isArchiveMagic =
+    Boolean(params.buffer) && looksLikeZipArchive(params.buffer!) && !allowZipMagic;
   if (isArchiveExtension || isArchiveMime || isArchiveMagic) {
     throw new UploadLimitError(
       "ARCHIVE_NOT_ALLOWED",

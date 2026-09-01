@@ -8,6 +8,7 @@ import type {
   AgentSourceRef,
 } from "@nyayagrid/database";
 import type { AIProvider, EmbeddingProvider } from "@nyayagrid/ai";
+import type { MatterJurisdictionContext } from "@nyayagrid/jurisdiction";
 import type { AgentIntent } from "@nyayagrid/ai";
 
 export type {
@@ -125,6 +126,7 @@ export type AgentRuntime = {
   matterId?: string | null;
   ai?: AIProvider;
   embeddings?: EmbeddingProvider;
+  caseJurisdictionContext?: MatterJurisdictionContext | null;
 };
 
 export type AgentExecutionContext = AgentRuntime & {

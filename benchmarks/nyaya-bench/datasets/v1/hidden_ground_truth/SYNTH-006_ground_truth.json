@@ -1,0 +1,95 @@
+{
+  "scenario_id": "SYNTH-006",
+  "title": "Lumen IP License Royalty Dispute",
+  "ground_truth_version": "1.0",
+  "answers": {
+    "Q001": {
+      "task_id": "SYNTH-006-Q001",
+      "expected": "5%",
+      "supporting_refs": [
+        "amendment:1"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q002": {
+      "task_id": "SYNTH-006-Q002",
+      "expected": "$120,000",
+      "supporting_refs": [
+        "report:Sales",
+        "amendment:1"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q003": {
+      "task_id": "SYNTH-006-Q003",
+      "expected": "United States, Canada, Mexico",
+      "supporting_refs": [
+        "license:3",
+        "amendment:2"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q004": {
+      "task_id": "SYNTH-006-Q004",
+      "expected": "No",
+      "supporting_refs": [
+        "amendment:3"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q005": {
+      "task_id": "SYNTH-006-Q005",
+      "expected": "Royalty 4%->5% effective Jan 1, 2026; Mexico added; renumbering non-material",
+      "supporting_refs": [
+        "license:2",
+        "license:3",
+        "amendment:1",
+        "amendment:2",
+        "amendment:3"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q006": {
+      "task_id": "SYNTH-006-Q006",
+      "expected": "20 days",
+      "supporting_refs": [
+        "license:4"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q007": {
+      "task_id": "SYNTH-006-Q007",
+      "expected": "No",
+      "supporting_refs": [
+        "report:Sales",
+        "report:Royalty",
+        "email:Message"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q008": {
+      "task_id": "SYNTH-006-Q008",
+      "expected": "ABSTAIN: Q1 sales not supplied",
+      "supporting_refs": [],
+      "verdict_logic": "must_abstain"
+    },
+    "Q009": {
+      "task_id": "SYNTH-006-Q009",
+      "expected": "15 days",
+      "supporting_refs": [
+        "license:5"
+      ],
+      "verdict_logic": "must_answer"
+    },
+    "Q010": {
+      "task_id": "SYNTH-006-Q010",
+      "expected": "Yes; 5% of $2.4m = $120,000",
+      "supporting_refs": [
+        "amendment:1",
+        "report:Sales",
+        "report:Royalty"
+      ],
+      "verdict_logic": "must_answer"
+    }
+  }
+}

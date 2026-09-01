@@ -53,7 +53,7 @@ describe("persistent Case Q&A prompt layout", () => {
 
 describe("conservatism worked example", () => {
   it("is present in the matter-qa system prompt used by the 13 cases", () => {
-    expect(NYAYA_PROMPT_VERSION).toBe("nyaya-matter-qa-v7");
+    expect(NYAYA_PROMPT_VERSION).toBe("nyaya-matter-qa-v11");
     expect(buildNyayaSystemPrompt()).toContain(NYAYA_WORKED_EXAMPLE_MARKER);
     expect(buildNyayaSystemPrompt()).toContain(NYAYA_AMENDMENT_EXAMPLE_MARKER);
     expect(buildNyayaSystemPrompt()).toContain(NYAYA_AMENDMENT_HEDGE_EXAMPLE_MARKER);
@@ -77,7 +77,9 @@ describe("conservatism worked example", () => {
     expect(rows.find((r) => r.caseId === "golden-partial-hedge-indemnity")?.evidenceState).toBe(
       "partial",
     );
-    expect(rows.find((r) => r.caseId === "golden-partial-hedge-term")?.evidenceState).toBe("partial");
+    expect(rows.find((r) => r.caseId === "golden-partial-hedge-term")?.evidenceState).toBe(
+      "partial",
+    );
   });
 
   it("returns QA-05 indemnity to partial while indemnity-with-amendment stays grounded", async () => {
@@ -151,7 +153,9 @@ describe("conservatism worked example", () => {
 
   it("refuses the 13 when the worked example is stripped from the system prompt", async () => {
     const provider = new ConservatismProbeProvider();
-    const testCase = GRADED_CASES.find((c) => c.id === "golden-adv-similar-clause-rent-vs-late-fee")!;
+    const testCase = GRADED_CASES.find(
+      (c) => c.id === "golden-adv-similar-clause-rent-vs-late-fee",
+    )!;
     const { userPrompt } = gradedCaseToPrompt(testCase);
     const result = await provider.generate({
       messages: [

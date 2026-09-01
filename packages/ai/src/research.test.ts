@@ -3,6 +3,7 @@ import {
   authorityRelevanceExplanationSchema,
   buildQueryDecompositionSystemPrompt,
   buildResearchSynthesisSystemPrompt,
+  buildResearchSynthesisUserPrompt,
   extractResearchAuthorityChunksFromPrompt,
   formatResearchAuthorityChunks,
   legalPropositionSchema,
@@ -13,6 +14,7 @@ import {
   mockResearchSynthesis,
   mockQuoteCandidates,
   queryDecompositionSchema,
+  RESEARCH_OPERATIVE_RULE_INSTRUCTION,
   researchMemoSchema,
   researchSynthesisSchema,
   type ResearchAuthorityChunk,
@@ -40,6 +42,24 @@ const matterChunk: ProfessionalChunk = {
 };
 
 describe("research schemas", () => {
+  it("asks synthesis for a complete attorney-facing conciseAnswer", () => {
+    expect(buildResearchSynthesisSystemPrompt()).toMatch(
+      /complete attorney-facing research response/i,
+    );
+    expect(buildResearchSynthesisSystemPrompt()).toContain(RESEARCH_OPERATIVE_RULE_INSTRUCTION);
+  });
+
+  it("places LegalAuthority before MatterContext so the controlling passage is not buried", () => {
+    const prompt = buildResearchSynthesisUserPrompt({
+      question: "What notice period applies in Illinois?",
+      jurisdictionContext: "Forum: Illinois",
+      matterContextSummary: "Long matter graph and memory block.",
+      authorityChunks: [authorityChunk],
+    });
+    expect(prompt.indexOf("LegalAuthority:")).toBeLessThan(prompt.indexOf("MatterContext"));
+    expect(prompt.indexOf("LegalAuthority:")).toBeGreaterThan(prompt.indexOf("Research question:"));
+  });
+
   it("rejects a legal proposition with no authority ids", () => {
     expect(() =>
       legalPropositionSchema.parse({

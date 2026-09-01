@@ -1,0 +1,6 @@
+{
+  "id": "t6t-c1-2026-08-19",
+  "name": "Phase 6T 50-state jurisdiction certification C1",
+  "note": "Deterministic routing/hierarchy/temporal/abstention suite over all 50 states + DC. Corpus-backed retrieval is graded only where mapped US-state authorities exist. Run: npm run bench:6t. Hidden GT is not loaded by production.",
+  "practiceAreas": ["Contract", "Employment", "Civil", "Criminal"]
+}

@@ -204,6 +204,7 @@ export {
   RedisRateLimiter,
   createRedisRateLimiterFromEnv,
   parseRedisTarget,
+  pingRedis,
 } from "./redis-rate-limit";
 
 const globalForRateLimit = globalThis as unknown as { __nyayagridRateLimiter?: RateLimitProvider };

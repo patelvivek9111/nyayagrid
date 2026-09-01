@@ -29,11 +29,20 @@ export function SuggestedBadge({ children = "Suggested by Nyaya" }: { children?:
   );
 }
 
-export function ConflictingEvidenceBadge({
-  children = "Conflicting evidence",
-}: {
-  children?: ReactNode;
-}) {
+export function NeedsReviewBadge({ children = "Needs review" }: { children?: ReactNode }) {
+  return (
+    <span
+      className={cx(
+        "inline-flex items-center rounded border border-amber-700/25 bg-amber-50 px-2 py-0.5",
+        "text-[11px] font-semibold uppercase tracking-wide text-amber-800",
+      )}
+    >
+      {children}
+    </span>
+  );
+}
+
+export function DisputedBadge({ children = "Disputed" }: { children?: ReactNode }) {
   return (
     <span
       className={cx(
@@ -46,12 +55,29 @@ export function ConflictingEvidenceBadge({
   );
 }
 
-/** Case Q&A honesty label — grounded | partial | insufficient */
-export function EvidenceStateBadge({
-  state,
+export function ArchivedBadge({ children = "Archived" }: { children?: ReactNode }) {
+  return (
+    <span
+      className={cx(
+        "inline-flex items-center rounded border border-line bg-black/[0.03] px-2 py-0.5",
+        "text-[11px] font-semibold uppercase tracking-wide text-ink/65",
+      )}
+    >
+      {children}
+    </span>
+  );
+}
+
+export function ConflictingEvidenceBadge({
+  children = "Conflicting evidence",
 }: {
-  state?: string | null;
+  children?: ReactNode;
 }) {
+  return <DisputedBadge>{children}</DisputedBadge>;
+}
+
+/** Case Q&A honesty label — grounded | partial | insufficient */
+export function EvidenceStateBadge({ state }: { state?: string | null }) {
   const normalized = (state ?? "").toLowerCase().trim();
   if (normalized === "grounded") {
     return <VerifiedBadge>Grounded in Case sources</VerifiedBadge>;
@@ -94,12 +120,28 @@ export function EmptyState({
 
 export function LoadingState({ label = "Loading…" }: { label?: string }) {
   return (
-    <p className="text-sm text-ink/60" suppressHydrationWarning>
-      {label}
-    </p>
+    <div className="space-y-3" role="status" aria-live="polite" aria-label={label}>
+      <p className="sr-only">{label}</p>
+      <div className="h-4 w-48 animate-pulse rounded bg-black/[0.06]" />
+      <div className="h-16 animate-pulse rounded-lg border border-line bg-white/70" />
+      <div className="h-16 animate-pulse rounded-lg border border-line bg-white/70" />
+      <div className="h-16 animate-pulse rounded-lg border border-line bg-white/70" />
+    </div>
   );
 }
 
-export function ErrorState({ message }: { message: string }) {
-  return <p className="text-sm text-[var(--ng-danger)]">{message}</p>;
+export function ErrorState({ message, onRetry }: { message: string; onRetry?: () => void }) {
+  return (
+    <div
+      className="rounded-lg border border-[var(--ng-danger)]/20 bg-red-50/60 px-4 py-3 text-sm text-[var(--ng-danger)]"
+      role="alert"
+    >
+      <p>{message}</p>
+      {onRetry ? (
+        <button type="button" className="mt-2 font-semibold underline" onClick={onRetry}>
+          Try again
+        </button>
+      ) : null}
+    </div>
+  );
 }

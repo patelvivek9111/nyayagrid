@@ -1,0 +1,79 @@
+{
+  "name": "NYAYA-BENCH Synthetic Test Set V1",
+  "version": "1.0",
+  "synthetic_only": true,
+  "scenario_count": 10,
+  "task_count": 100,
+  "scenarios": [
+    {
+      "id": "SYNTH-001",
+      "title": "Harbor Point Lease Dispute",
+      "matter_type": "Commercial Lease",
+      "documents": 6,
+      "tasks": 10
+    },
+    {
+      "id": "SYNTH-002",
+      "title": "BluePeak Software Services Dispute",
+      "matter_type": "Software MSA",
+      "documents": 5,
+      "tasks": 10
+    },
+    {
+      "id": "SYNTH-003",
+      "title": "Cedar Station Construction Payment Dispute",
+      "matter_type": "Construction Contract",
+      "documents": 6,
+      "tasks": 10
+    },
+    {
+      "id": "SYNTH-004",
+      "title": "Aster Labs Employment Separation",
+      "matter_type": "Employment Agreement",
+      "documents": 5,
+      "tasks": 10
+    },
+    {
+      "id": "SYNTH-005",
+      "title": "Orion Components Supply Dispute",
+      "matter_type": "Supply Agreement",
+      "documents": 5,
+      "tasks": 10
+    },
+    {
+      "id": "SYNTH-006",
+      "title": "Lumen IP License Royalty Dispute",
+      "matter_type": "License Agreement",
+      "documents": 4,
+      "tasks": 10
+    },
+    {
+      "id": "SYNTH-007",
+      "title": "Redwood Design Partners Dispute",
+      "matter_type": "Partnership Agreement",
+      "documents": 5,
+      "tasks": 10
+    },
+    {
+      "id": "SYNTH-008",
+      "title": "Summit Retail Commercial Loan",
+      "matter_type": "Commercial Loan",
+      "documents": 4,
+      "tasks": 10
+    },
+    {
+      "id": "SYNTH-009",
+      "title": "Helio Robotics Confidentiality Dispute",
+      "matter_type": "NDA / IP",
+      "documents": 5,
+      "tasks": 10
+    },
+    {
+      "id": "SYNTH-010",
+      "title": "Pioneer Facilities Services Termination",
+      "matter_type": "Services Agreement",
+      "documents": 5,
+      "tasks": 10
+    }
+  ]
+}

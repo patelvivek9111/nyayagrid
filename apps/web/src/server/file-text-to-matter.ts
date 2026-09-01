@@ -1,9 +1,10 @@
 import { randomUUID } from "node:crypto";
 import type { Database } from "@nyayagrid/database";
 import { documents, documentVersions } from "@nyayagrid/database";
-import { processDocumentPipeline, sha256Buffer } from "@nyayagrid/documents";
+import { ingestIdempotencyKey, sha256Buffer } from "@nyayagrid/documents";
 import { storageKeyForOrganization, writeAuditEvent } from "@nyayagrid/permissions";
-import { getEmbeddings, getMalwareScanner, getStorage } from "@/lib/infra";
+import { getStorage } from "@/lib/infra";
+import { enqueueDocumentIngest } from "@/server/document-ingest";
 
 export async function filePlainTextToMatter(params: {
   db: Database;
@@ -72,20 +73,14 @@ export async function filePlainTextToMatter(params: {
     metadata: { filename: params.filename, sha256: hash },
   });
 
-  await processDocumentPipeline(
-    {
-      db: params.db,
-      storage,
-      scanner: getMalwareScanner(),
-      embeddings: getEmbeddings(),
-    },
-    {
-      organizationId: params.organizationId,
-      matterId: params.matterId,
-      documentId,
-      documentVersionId: versionId,
-    },
-  );
+  await enqueueDocumentIngest({
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    documentId,
+    documentVersionId: versionId,
+    userId: params.userId,
+    idempotencyKey: ingestIdempotencyKey(versionId),
+  });
 
   return { documentId, versionId };
 }

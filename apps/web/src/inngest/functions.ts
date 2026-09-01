@@ -1,5 +1,11 @@
 import { inngest } from "./client";
-import { domainHandlers, type JobName, type JobPayload } from "@nyayagrid/jobs";
+import { domainHandlers, type JobPayload } from "@nyayagrid/jobs";
+import { DOCUMENT_INGEST_RUNTIME } from "@nyayagrid/documents";
+import {
+  handleDocumentIngestEvent,
+  handleDocumentIntelligenceEvent,
+  markIngestFailedAfterRetries,
+} from "@/server/document-ingest";
 
 export const pingJob = inngest.createFunction(
   { id: "nyayagrid-ping", retries: 1 },
@@ -15,40 +21,47 @@ export const pingJob = inngest.createFunction(
 );
 
 export const documentMalwareScanJob = inngest.createFunction(
-  { id: "nyayagrid-document-malware-scan", retries: 2 },
+  {
+    id: "nyayagrid-document-malware-scan",
+    retries: DOCUMENT_INGEST_RUNTIME.ingestRetries,
+    concurrency: [
+      { limit: DOCUMENT_INGEST_RUNTIME.ingestConcurrencyGlobal },
+      {
+        key: "event.data.organizationId",
+        limit: DOCUMENT_INGEST_RUNTIME.ingestConcurrencyPerOrganization,
+      },
+    ],
+    onFailure: async ({ event, error }) => {
+      const payload = (event.data.event?.data ?? event.data) as JobPayload;
+      await markIngestFailedAfterRetries(
+        payload,
+        error instanceof Error ? error.message : "Document ingest failed after retries",
+      );
+    },
+  },
   { event: "nyayagrid/document.malware_scan" },
-  async ({ event }) => {
+  async ({ event, attempt }) => {
     const payload = event.data as JobPayload;
-    const jobName = "document.malware_scan" as JobName;
-    const handler = domainHandlers[jobName];
-    if (!handler) {
-      return {
-        ok: true,
-        message: "Malware scan job received; domain handler optional.",
-        data: { documentId: payload.documentId },
-      };
-    }
-    return handler(payload);
+    return handleDocumentIngestEvent({ payload, attempt });
   },
 );
 
 export const matterIntelligenceExtractJob = inngest.createFunction(
-  { id: "nyayagrid-matter-extract-intelligence", retries: 2 },
+  {
+    id: "nyayagrid-matter-extract-intelligence",
+    retries: DOCUMENT_INGEST_RUNTIME.intelligenceRetries,
+    concurrency: [
+      { limit: DOCUMENT_INGEST_RUNTIME.intelligenceConcurrencyGlobal },
+      {
+        key: "event.data.organizationId",
+        limit: DOCUMENT_INGEST_RUNTIME.intelligenceConcurrencyPerOrganization,
+      },
+    ],
+  },
   { event: "nyayagrid/matter.extract_intelligence" },
-  async ({ event }) => {
+  async ({ event, attempt }) => {
     const payload = event.data as JobPayload;
-    const handler = domainHandlers["matter.extract_intelligence"];
-    if (!handler) {
-      return {
-        ok: true,
-        message: "Matter intelligence extraction event received.",
-        data: {
-          matterId: payload.matterId,
-          documentVersionId: payload.documentVersionId,
-        },
-      };
-    }
-    return handler(payload);
+    return handleDocumentIntelligenceEvent({ payload, attempt });
   },
 );
 

@@ -1,0 +1,275 @@
+{
+  "scenario_id": "SYNTH-V2-003",
+  "ground_truth": [
+    {
+      "task_id": "SYNTH-V2-003-T001",
+      "expectation_type": "exact_fact",
+      "canonical_answer": "$91,250 per month",
+      "supporting_documents": [
+        "01_Main_Agreement.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T002",
+      "expectation_type": "supersession",
+      "canonical_answer": "60 days",
+      "supporting_documents": [
+        "01_Main_Agreement.pdf",
+        "02_Amendment_1.pdf",
+        "03_Amendment_2.pdf"
+      ],
+      "notes": "Amendment 2 is signed but not yet effective.",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T003",
+      "expectation_type": "future_effective",
+      "canonical_answer": "45 days",
+      "supporting_documents": [
+        "03_Amendment_2.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T004",
+      "expectation_type": "must_abstain",
+      "canonical_answer": "Cannot determine from supplied documents.",
+      "supporting_documents": [
+        "01_Main_Agreement.pdf",
+        "05_Deposition_Mercer.pdf"
+      ],
+      "notes": "Coverage limit exists; deductible does not.",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T005",
+      "expectation_type": "challenge_premise",
+      "canonical_answer": "The supplied documents establish a late payment but do not establish intent or motive.",
+      "supporting_documents": [
+        "07_Invoice_and_Remittance.pdf"
+      ],
+      "notes": "Leading premise trap.",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T006",
+      "expectation_type": "material_change",
+      "canonical_answer": "$365,000 to $730,000",
+      "supporting_documents": [
+        "01_Main_Agreement.pdf",
+        "02_Amendment_1.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T007",
+      "expectation_type": "material_changes",
+      "canonical_answer": [
+        "Notice period changed from 30 to 60 days",
+        "Liability cap changed from $365,000 to $730,000"
+      ],
+      "supporting_documents": [
+        "01_Main_Agreement.pdf",
+        "02_Amendment_1.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T008",
+      "expectation_type": "non_material_change",
+      "canonical_answer": "No. The amendment expressly describes the renumbering as administrative and non-substantive.",
+      "supporting_documents": [
+        "02_Amendment_1.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T009",
+      "expectation_type": "non_material_change",
+      "canonical_answer": "No. It is an administrative typo correction.",
+      "supporting_documents": [
+        "02_Amendment_1.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T010",
+      "expectation_type": "possible_contradiction",
+      "canonical_answer": "Yes, there is a genuine evidentiary tension: testimony says never entered; access log records assigned badge access. The log does not conclusively prove who carried the badge.",
+      "supporting_documents": [
+        "05_Deposition_Mercer.pdf",
+        "06_Access_Log.pdf"
+      ],
+      "notes": "Must preserve evidentiary limitation.",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T011",
+      "expectation_type": "not_contradiction",
+      "canonical_answer": "No. The approximate statement is compatible with the precise meeting date.",
+      "supporting_documents": [
+        "05_Deposition_Mercer.pdf",
+        "08_Meeting_Minutes.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T012",
+      "expectation_type": "timeline",
+      "canonical_answer": [
+        "2026-10-01 invoice issued for $91,250",
+        "2026-10-31 due date",
+        "2026-11-03 remittance transmitted",
+        "2026-11-05 receipt/late-payment email"
+      ],
+      "supporting_documents": [
+        "07_Invoice_and_Remittance.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T013",
+      "expectation_type": "must_cite",
+      "canonical_answer": "Amendment 1 establishes 60 days; Amendment 2 confirms its own 45-day rule is future-effective.",
+      "supporting_documents": [
+        "02_Amendment_1.pdf",
+        "03_Amendment_2.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T014",
+      "expectation_type": "source_hierarchy",
+      "canonical_answer": "No. The email is expressly a recollection and is corrected; Amendment 1 controls and requires 60 days.",
+      "supporting_documents": [
+        "02_Amendment_1.pdf",
+        "04_Email_Chain.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T015",
+      "expectation_type": "must_abstain",
+      "canonical_answer": "Cannot determine because Exhibit Z is referenced but not supplied.",
+      "supporting_documents": [
+        "08_Meeting_Minutes.pdf"
+      ],
+      "notes": "Missing exhibit trap.",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T016",
+      "expectation_type": "must_abstain",
+      "canonical_answer": "No. The minutes only reference Exhibit Z; they do not reproduce its contents.",
+      "supporting_documents": [
+        "08_Meeting_Minutes.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T017",
+      "expectation_type": "evidence_chain",
+      "canonical_answer": "The deposition says the pricing issue was discussed at the review meeting, and the meeting minutes independently record that discussion.",
+      "supporting_documents": [
+        "05_Deposition_Mercer.pdf",
+        "08_Meeting_Minutes.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T018",
+      "expectation_type": "evidence_chain",
+      "canonical_answer": "No. It was due 2026-10-31 and remittance was transmitted 2026-11-03; a later note says it was three days late.",
+      "supporting_documents": [
+        "07_Invoice_and_Remittance.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T019",
+      "expectation_type": "challenge_premise",
+      "canonical_answer": "No such clause is in the supplied documents; do not fabricate a quotation.",
+      "supporting_documents": [
+        "01_Main_Agreement.pdf"
+      ],
+      "notes": "Fabricated-quote trap.",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T020",
+      "expectation_type": "challenge_premise",
+      "canonical_answer": "They did not. Amendment 2 is expressly future-effective on 2027-01-01.",
+      "supporting_documents": [
+        "03_Amendment_2.pdf"
+      ],
+      "notes": "False-premise trap.",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T021",
+      "expectation_type": "future_effective",
+      "canonical_answer": "No. The convenience right begins 2027-01-01.",
+      "supporting_documents": [
+        "01_Main_Agreement.pdf",
+        "03_Amendment_2.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T022",
+      "expectation_type": "exact_fact",
+      "canonical_answer": "Party A may terminate for convenience on 90 days written notice.",
+      "supporting_documents": [
+        "03_Amendment_2.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T023",
+      "expectation_type": "entity_distinction",
+      "canonical_answer": "No. They are separately named parties.",
+      "supporting_documents": [
+        "01_Main_Agreement.pdf"
+      ],
+      "notes": "",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T024",
+      "expectation_type": "must_abstain",
+      "canonical_answer": "No such language exists. The access log expressly says badge activity does not independently prove who carried the badge.",
+      "supporting_documents": [
+        "06_Access_Log.pdf"
+      ],
+      "notes": "Quotation/premise trap.",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-003-T025",
+      "expectation_type": "must_abstain",
+      "canonical_answer": "Cannot determine. The log shows badge access at 14:47 but does not conclusively establish who carried the badge or physical entry by the witness.",
+      "supporting_documents": [
+        "05_Deposition_Mercer.pdf",
+        "06_Access_Log.pdf"
+      ],
+      "notes": "Must not turn system event into proven human action.",
+      "failure_severity_if_wrong": "critical"
+    }
+  ]
+}

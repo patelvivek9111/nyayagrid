@@ -2,6 +2,7 @@ import { cancelAgentRun, getAgentRun } from "@nyayagrid/agents";
 import { cancelAgentRunSchema } from "@nyayagrid/validation";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { requireUser } from "@/lib/auth";
+import { assertFeatureEnabled } from "@/lib/features";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
 
 type Params = { params: Promise<{ matterId: string; runId: string }> };
@@ -11,6 +12,7 @@ export async function POST(request: Request, { params }: Params) {
   try {
     const { matterId, runId } = await params;
     const { db, user } = await requireUser(request.headers);
+    assertFeatureEnabled("agents");
     const { matter } = await requireMatterAccess(db, {
       userId: user.id,
       matterId,

@@ -63,10 +63,11 @@ export function ChatComposer({
       {caseChip ? <div className="mb-2 flex flex-wrap gap-2">{caseChip}</div> : null}
       <div className="rounded-xl border border-line bg-white shadow-sm focus-within:border-accent/40">
         <textarea
-          className="min-h-[88px] w-full resize-y rounded-t-xl border-0 bg-transparent px-4 py-3 text-sm outline-none"
+          className="min-h-[72px] w-full resize-y rounded-t-xl border-0 bg-transparent px-4 py-3 text-sm outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
+          aria-label={placeholder}
           disabled={disabled || busy}
           rows={3}
         />

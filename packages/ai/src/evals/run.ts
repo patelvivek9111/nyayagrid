@@ -18,6 +18,8 @@ import {
   validateCitedAnswerAgainstPassages,
   validateQuoteAgainstText,
   NYAYA_PROMPT_VERSION,
+  assessRetrievedEvidenceDeterministic,
+  constrainCitedAnswer,
   type AIProvider,
 } from "../index";
 import { CONTRADICTION_ANALYSIS_PROMPT_VERSION } from "../professional";
@@ -43,10 +45,7 @@ import {
   decoyContractCompareCases,
   evaluateStressHarness,
 } from "./stress";
-import {
-  MOCK_GRADED_BASELINES,
-  findBaselineRegressions,
-} from "./baselines";
+import { MOCK_GRADED_BASELINES, findBaselineRegressions } from "./baselines";
 import {
   EvalBudgetTracker,
   generateWithEvalTimeout,
@@ -95,7 +94,7 @@ async function generate(
       throw new Error(blocked);
     }
   }
-  const request = { messages, temperature: LIVE_EVAL_TEMPERATURE as const };
+  const request = { messages, temperature: LIVE_EVAL_TEMPERATURE };
   const result = ctx.live
     ? await generateWithEvalTimeout(ctx.provider, request, ctx.timeoutMs)
     : await ctx.provider.generate(request);
@@ -112,8 +111,8 @@ async function generate(
         promptVersionCaseQa: NYAYA_PROMPT_VERSION,
         promptVersionContradiction: CONTRADICTION_ANALYSIS_PROMPT_VERSION,
         requestedModel: ctx.requestedModel ?? "(unknown)",
-        resolvedModel: ctx.resolvedModel,
-        systemFingerprint: ctx.systemFingerprint,
+        resolvedModel: ctx.resolvedModel ?? "(unknown)",
+        systemFingerprint: ctx.systemFingerprint ?? "(none)",
         rerank: EVAL_CASE_QA_RERANK,
         temperature: LIVE_EVAL_TEMPERATURE,
       }),
@@ -247,6 +246,12 @@ async function runGradedCase(
       };
     }
 
+    const assessment = assessRetrievedEvidenceDeterministic(testCase.question, testCase.retrieved);
+    if (assessment) {
+      const validated = validateCitedAnswerAgainstPassages(raw, testCase.retrieved);
+      raw = constrainCitedAnswer(validated.answer, assessment, testCase.retrieved);
+    }
+
     const grade = gradeCitedAnswer({
       caseId: testCase.id,
       raw,
@@ -264,7 +269,9 @@ async function runGradedCase(
     if (shouldLogRecallDebug(process.env, ctx.live)) {
       console.log(
         formatRecallDebugLine(diagnoseCaseRecall(testCase), {
-          citedChunkIds: (grade.answer?.sources ?? []).map((s) => s.chunkId).filter(Boolean),
+          citedChunkIds: (grade.answer?.sources ?? [])
+            .map((s) => s.chunkId)
+            .filter((id): id is string => Boolean(id)),
           evidenceState: grade.answer?.evidenceState,
         }),
       );
@@ -299,9 +306,7 @@ async function runGradedCase(
         description: testCase.description,
         input: testCase.question,
         output: grade.answer?.answer ?? JSON.stringify(raw, null, 2),
-        sources: (grade.answer?.sources ?? [])
-          .map((s) => `- ${s.chunkId}: ${s.quote}`)
-          .join("\n"),
+        sources: (grade.answer?.sources ?? []).map((s) => `- ${s.chunkId}: ${s.quote}`).join("\n"),
         evidenceState: grade.answer?.evidenceState,
       },
     };
@@ -602,7 +607,8 @@ async function runStress(): Promise<void> {
 async function main() {
   const live = process.argv.includes("--live");
   const stress = process.argv.includes("--stress");
-  const exportReview = process.argv.includes("--export-review") || process.env.EVAL_EXPORT_REVIEW === "1";
+  const exportReview =
+    process.argv.includes("--export-review") || process.env.EVAL_EXPORT_REVIEW === "1";
   const liveConfig = resolveLiveEvalConfig();
 
   if (stress && live) {
@@ -718,7 +724,9 @@ async function main() {
     process.exitCode = 1;
     return;
   }
-  console.log(`All ${canaries.length} canary(ies) failed as expected (grader can detect bad answers).\n`);
+  console.log(
+    `All ${canaries.length} canary(ies) failed as expected (grader can detect bad answers).\n`,
+  );
 
   if (scope.runCaseQa && shouldLogRecallDebug(process.env, live)) {
     console.log(`${formatRecallDebugSummary(diagnosePersistentCaseQaFails())}\n`);
@@ -778,9 +786,7 @@ async function main() {
       process.env.EVAL_EXPORT_DIR?.trim() ||
       join(
         REPO_ROOT,
-        live
-          ? "docs/agent-quality-review/exports-live"
-          : "docs/agent-quality-review/exports-mock",
+        live ? "docs/agent-quality-review/exports-live" : "docs/agent-quality-review/exports-mock",
       );
     if (!live && /live/i.test(dir)) {
       console.error(

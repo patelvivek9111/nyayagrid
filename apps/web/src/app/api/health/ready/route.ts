@@ -1,19 +1,20 @@
 import { NextResponse } from "next/server";
 import { sql } from "@nyayagrid/database";
 import { withTimeout } from "@nyayagrid/observability";
+import { pingRedis, resolveRateLimitProvider } from "@nyayagrid/platform";
 import { getConfigBootstrapResult } from "@/lib/bootstrap";
 import { getDb } from "@/lib/db";
 import { publicDatabaseError } from "@/lib/health";
 import { getStorage } from "@/lib/infra";
 
 /**
- * Readiness probe. The database check is load-bearing: if it fails, we return 503 so the load
- * balancer stops routing traffic here. Storage and config are reported as soft/advisory checks.
- * No check ever includes secret values — only provider names, booleans, and a sanitized status.
+ * Readiness: safe to serve beta traffic.
+ * Liveness stays at /api/health/live and does not touch dependencies.
+ * OpenAI is never probed here (cost/outage coupling).
  */
 export async function GET() {
   const checks: Record<string, unknown> = {};
-  let databaseOk = true;
+  let ready = true;
   const config = getConfigBootstrapResult();
 
   try {
@@ -21,7 +22,7 @@ export async function GET() {
     await withTimeout(db.execute(sql`select 1`), 2000, "database health check");
     checks.database = "ok";
   } catch (error) {
-    databaseOk = false;
+    ready = false;
     checks.database = "error";
     checks.databaseError = publicDatabaseError(error, config.appEnv);
   }
@@ -32,19 +33,41 @@ export async function GET() {
     checks.storage = "ok";
   } catch {
     checks.storage = "degraded";
+    if (config.appEnv === "production" || config.appEnv === "staging") {
+      ready = false;
+    }
   }
 
-  checks.config = config.problems.length === 0 ? "ok" : "warnings";
+  if (resolveRateLimitProvider() === "redis") {
+    const redis = await pingRedis();
+    checks.redis = redis.ok ? "ok" : "error";
+    if (!redis.ok) ready = false;
+  } else {
+    checks.redis = "not_required";
+  }
+
+  const ingestDisabled = ["1", "true", "yes", "on"].includes(
+    (process.env.INNGEST_DISABLED ?? "").trim().toLowerCase(),
+  );
+  checks.ingest = ingestDisabled ? "disabled" : "configured";
+  if (ingestDisabled && (config.appEnv === "production" || config.appEnv === "staging")) {
+    ready = false;
+  }
+
+  checks.config = config.problems.length === 0 ? "ok" : "unsafe";
   checks.appEnv = config.appEnv;
   checks.providers = config.summary;
   if (config.problems.length > 0) {
     checks.configProblems = config.problems;
+    if (config.appEnv === "production" || config.appEnv === "staging") {
+      ready = false;
+    }
   }
   if (config.warnings.length > 0) {
     checks.configWarnings = config.warnings;
   }
 
-  if (!databaseOk) {
+  if (!ready) {
     return NextResponse.json({ ok: false, checks }, { status: 503 });
   }
   return NextResponse.json({ ok: true, checks });

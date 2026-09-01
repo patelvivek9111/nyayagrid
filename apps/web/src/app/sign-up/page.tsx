@@ -1,23 +1,41 @@
-import { redirect } from "next/navigation";
-import { PageHeader, Panel } from "@nyayagrid/ui";
+import Link from "next/link";
+import { USER_FACING_AUTH } from "@nyayagrid/auth/user-facing";
+import { AuthShell } from "@/components/ux/auth-shell";
+import { clerkHostedSignUpUrl, isClerkPublishableConfigured } from "@/lib/auth-return";
 
 export default function SignUpPage() {
-  const destination = process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL;
-  if (destination && !destination.startsWith("/sign-up")) {
-    redirect(destination);
-  }
+  const hosted = clerkHostedSignUpUrl();
+  const available = Boolean(hosted && isClerkPublishableConfigured());
+
   return (
-    <main className="mx-auto flex min-h-screen max-w-xl flex-col gap-6 px-6 py-16">
-      <PageHeader
-        eyebrow="NyayaGrid"
-        title="Create an account"
-        description="Sign-up is hosted by Clerk when AUTH_PROVIDER=clerk."
-      />
-      <Panel title="Clerk is not configured for this process">
-        <p className="text-sm text-ink/70">
-          Set <code>NEXT_PUBLIC_CLERK_SIGN_UP_URL</code> to your Clerk Account Portal sign-up URL.
+    <AuthShell
+      title="Create an account"
+      description="NyayaGrid is invitation-only for professional workspaces. Sign in if you already have an account, or accept an invitation from your firm."
+    >
+      {available && hosted ? (
+        <p>
+          <Link
+            href={hosted}
+            className="inline-flex min-h-11 items-center justify-center rounded-md bg-accent px-4 text-sm font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          >
+            Continue
+          </Link>
         </p>
-      </Panel>
-    </main>
+      ) : (
+        <p className="rounded-md border border-line bg-white px-3 py-3 text-sm text-ink/80" role="alert">
+          {USER_FACING_AUTH.unavailable}
+        </p>
+      )}
+      <p className="text-sm text-ink/60">
+        Already invited?{" "}
+        <Link className="font-semibold text-accent underline" href="/sign-in">
+          Sign in
+        </Link>
+        {" · "}
+        <Link className="font-semibold text-accent underline" href="/invites/accept">
+          Accept invitation
+        </Link>
+      </p>
+    </AuthShell>
   );
 }

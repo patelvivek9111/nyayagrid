@@ -418,6 +418,11 @@ const DOCTRINE_PATTERNS = [
   /\bunder\s+§/i,
   /§\s*\d/,
   /\bcan (we|i|they|plaintiff|defendant) (sue|recover|enjoin|compel)\b/i,
+  /\bunder (the )?(governing |recorded )?law\b/i,
+  /\b(limitations? period|time[- ]bar)\b/i,
+  /\baction.{0,80}commenced\b/i,
+  /\bsentencing\b/i,
+  /\bcriminal[- ]law\b/i,
 ];
 
 /**

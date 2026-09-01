@@ -1,0 +1,133 @@
+{
+  "comment": "Overlay only. Loaded in --mode deposition. Reuses V2 PDFs. Invokes production analyzeDeposition. Does not score Contract Analysis, Compare, Contradiction, or Ask Nyaya chat.",
+  "tasks": [
+    {
+      "id": "SYNTH-V2-006-DA001",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "medium",
+      "prompt": "Analyze the deposition for clear admissions in the testimony.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "05_Deposition_Mercer" }
+    },
+    {
+      "id": "SYNTH-V2-006-DA002",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "medium",
+      "prompt": "Analyze the deposition for clear denials in the testimony.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "05_Deposition_Mercer" }
+    },
+    {
+      "id": "SYNTH-V2-006-DA003",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "hard",
+      "prompt": "Identify any direct contradiction between two sworn testimony propositions. Do not invent one.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "05_Deposition_Mercer" }
+    },
+    {
+      "id": "SYNTH-V2-006-DA004",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "hard",
+      "prompt": "Analyze the deposition against related matter evidence for evidentiary tension, not established contradiction.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "05_Deposition_Mercer" }
+    },
+    {
+      "id": "SYNTH-V2-006-DA005",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "hard",
+      "prompt": "Analyze the deposition without inferring a named person's physical conduct from credential or system activity.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "05_Deposition_Mercer" }
+    },
+    {
+      "id": "SYNTH-V2-006-DA006",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "hard",
+      "prompt": "Analyze approximate versus exact dates in the testimony. Compatible dates are not inconsistencies.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "05_Deposition_Mercer" }
+    },
+    {
+      "id": "SYNTH-V2-006-DA007",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "medium",
+      "prompt": "Analyze uncertain recollection in the testimony and preserve that uncertainty.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "05_Deposition_Mercer" }
+    },
+    {
+      "id": "SYNTH-V2-006-DA008",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "medium",
+      "prompt": "Analyze the testimony while preserving speaker attribution. Testimony is not a verified matter fact.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "05_Deposition_Mercer" }
+    },
+    {
+      "id": "SYNTH-V2-006-DA009",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "hard",
+      "prompt": "Analyze the deposition. Unrelated contract or amendment differences are not testimony inconsistencies.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "05_Deposition_Mercer" }
+    },
+    {
+      "id": "SYNTH-V2-006-DA010",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "medium",
+      "prompt": "Analyze the deposition and inspect finding provenance.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "05_Deposition_Mercer" }
+    },
+    {
+      "id": "SYNTH-V2-006-DA011",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "medium",
+      "prompt": "Analyze the deposition. Supporting quotes must actually support each finding.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "05_Deposition_Mercer" }
+    },
+    {
+      "id": "SYNTH-V2-006-DA012",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "hard",
+      "prompt": "Analyze the deposition for admissions and denials even if the model emits harmless schema variants.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "05_Deposition_Mercer" }
+    },
+    {
+      "id": "SYNTH-V2-006-DA013",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "hard",
+      "prompt": "Analyze the deposition. One malformed finding must not erase valid findings.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "05_Deposition_Mercer" }
+    },
+    {
+      "id": "SYNTH-V2-006-DA014",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "medium",
+      "prompt": "Analyze this file as a deposition transcript. If it contains no testimony, return no findings.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "07_Invoice_and_Remittance" }
+    },
+    {
+      "id": "SYNTH-V2-006-DA015",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "medium",
+      "prompt": "Analyze the deposition for material admissions, denials, or evidentiary tension.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "05_Deposition_Mercer" }
+    },
+    {
+      "id": "SYNTH-V2-006-DA016",
+      "scenario_id": "SYNTH-V2-006",
+      "category": "deposition",
+      "difficulty": "medium",
+      "prompt": "Analyze the deposition and confirm new findings remain proposed and do not enter Ask Nyaya as reviewed facts.",
+      "action": { "kind": "analyze_deposition", "documentPattern": "05_Deposition_Mercer" }
+    }
+  ]
+}

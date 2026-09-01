@@ -1,0 +1,73 @@
+{
+  "baselineId": "2026-08-18-openai-gpt-4o-mini",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "notLegalCorrectnessProof": true,
+  "config": {
+    "gitCommit": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "workingTree": "dirty: uncommitted nyaya-bench runner, nyaya-matter-qa-v8, and related files",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini-2024-07-18",
+    "openaiModelEnv": "gpt-4o-mini",
+    "embeddingProvider": "openai",
+    "promptVersion": "nyaya-matter-qa-v8",
+    "v1Dataset": "NYAYA-BENCH Synthetic Test Set V1 (10 matters, 50 PDFs, 100 tests)",
+    "v2Dataset": "NYAYA-BENCH TEST SET V2 (16 matters, 128 PDFs, 400 tests)",
+    "startedAt": "2026-08-18T03:14:16.869Z",
+    "finishedAt": "2026-08-18T03:45:37.709Z"
+  },
+  "runs": {
+    "v1": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-14-16-862Z",
+    "v2": "benchmarks/nyaya-bench/reports/runs/2026-08-18T03-20-13-556Z"
+  },
+  "counts": {
+    "expected": 500,
+    "executed": 500,
+    "infrastructure": 5,
+    "pass": 295,
+    "needs_work": 72,
+    "fail": 128,
+    "passRateExpected": 0.59,
+    "v1": {
+      "total": 100,
+      "pass": 80,
+      "needs_work": 7,
+      "fail": 13,
+      "infrastructure": 0,
+      "passRate": 0.8
+    },
+    "v2": {
+      "total": 400,
+      "pass": 215,
+      "needs_work": 65,
+      "fail": 115,
+      "infrastructure": 5,
+      "passRate": 0.5375
+    }
+  },
+  "automatedSeverity": {
+    "criticalFail": 67,
+    "criticalNeedsWork": 13,
+    "majorNonPass": 120,
+    "note": "Automated severity follows hidden-key failure_severity_if_wrong. Manual audit found a large grader-false-fail cluster inside must_abstain/challenge_premise."
+  },
+  "auditedCriticalProductFailures": {
+    "badgeLogTreatedAsPhysicalEntry": { "pattern": "V2 T025", "count": 15 },
+    "falseRetroactivityPremiseAccepted": { "pattern": "V2 T020", "count": 15 },
+    "v1OverclaimFromSilence": { "ids": ["SYNTH-008-Q008", "SYNTH-010-Q008"], "count": 2 }
+  },
+  "infrastructureTaskIds": [
+    "SYNTH-V2-005-T002",
+    "SYNTH-V2-008-T008",
+    "SYNTH-V2-009-T020",
+    "SYNTH-V2-014-T014",
+    "SYNTH-V2-016-T024"
+  ],
+  "infrastructureCause": "Case Q&A citation schema validation failed (missing/invalid source.documentId, documentVersionId, or chunkId). Counted as infrastructure, not AI pass.",
+  "runnerInfraFixesThisSession": [
+    "CLI loads repo .env so AI_PROVIDER=openai is used (unset env would default to mock)",
+    "Postgres client is closed after the run so the process exits",
+    "Matter numbers include full runId to avoid org-unique collisions on the same calendar day",
+    "Per-task/per-matter errors are persisted as INFRASTRUCTURE instead of aborting the suite"
+  ]
+}

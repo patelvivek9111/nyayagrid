@@ -314,7 +314,7 @@ describe.runIf(runDbTests)("phase 4 graph + memory integration", () => {
     const eventNode = nodes.find((n) => n.canonicalEntityId === eventId)!;
     const orgNode = nodes.find((n) => n.displayName === "Acme Corp")!;
 
-    await createManualGraphEdge({
+    const manual = await createManualGraphEdge({
       db,
       organizationId: orgId,
       matterId,
@@ -323,6 +323,15 @@ describe.runIf(runDbTests)("phase 4 graph + memory integration", () => {
       toNodeId: orgNode.id,
       relationshipType: "works_for",
       label: "Jordan works for Acme",
+    });
+    expect(manual.status).toBe("proposed");
+    await reviewGraphEdge({
+      db,
+      organizationId: orgId,
+      matterId,
+      edgeId: manual.id,
+      userId: ownerId,
+      action: "approve",
     });
 
     const extracted = await extractGraphRelationshipCandidates({

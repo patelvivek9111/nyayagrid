@@ -70,6 +70,11 @@ export function rankByQuestionOverlap<T extends { quote?: string; content?: stri
   return [...items].sort((left, right) => {
     const leftScore = questionOverlapScore(question, left.quote ?? left.content ?? "");
     const rightScore = questionOverlapScore(question, right.quote ?? right.content ?? "");
-    return rightScore - leftScore;
+    if (rightScore !== leftScore) return rightScore - leftScore;
+    const leftId =
+      left && typeof left === "object" && "chunkId" in left ? String(left.chunkId ?? "") : "";
+    const rightId =
+      right && typeof right === "object" && "chunkId" in right ? String(right.chunkId ?? "") : "";
+    return leftId.localeCompare(rightId);
   });
 }

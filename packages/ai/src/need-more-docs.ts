@@ -3,6 +3,8 @@
  * rather than pretending the retrieved set is complete.
  */
 
+import { extractNamedInstrument } from "./operative-facts";
+
 export function assessNeedMoreDocuments(params: {
   evidenceState: string;
   retrievedCount: number;
@@ -42,13 +44,42 @@ export function assessNeedMoreDocuments(params: {
   return { needsMoreDocuments, reasons: needsMoreDocuments ? reasons : [] };
 }
 
+const MISSING_INSTRUMENT_RE =
+  /not (available|attached|among|in the (case|file|uploaded|retrieved))|do not include|was not found|is missing/i;
+
+export function ensureMissingInstrumentDisclosure(
+  question: string,
+  answer: string,
+  sourceText: string,
+): string {
+  const named = extractNamedInstrument(question);
+  if (!named) return answer;
+  if (MISSING_INSTRUMENT_RE.test(answer)) return answer;
+  const compactNamed = named.toLowerCase().replace(/[^a-z0-9]+/g, "");
+  const compactSource = sourceText.toLowerCase().replace(/[^a-z0-9]+/g, "");
+  const mentioned = Boolean(compactNamed && compactSource.includes(compactNamed));
+  const mentionIsDenial =
+    /no exhibit [a-z0-9]+ is attached|exhibit [a-z0-9]+ is not (attached|among|available|in the)|does not attach a non-compete|draft not for execution|unsigned draft header.{0,40}superseded|superseded .{0,40}executed/i.test(
+      sourceText,
+    );
+  if (mentioned && !mentionIsDenial) return answer;
+  return `${answer.trim()}\n\n${named} is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.`;
+}
+
 /** Expand a matter question for a second retrieval hop (multi-hop). */
 export function buildFollowUpRetrievalQuery(question: string): string | null {
   const q = question.trim();
   if (q.length < 8) return null;
 
   const expansions: string[] = [];
-  if (/amendment|indemnit/i.test(q)) expansions.push("amendment indemnity");
+  if (/\boriginal\b/i.test(q) && /\b(cap|liability|amount|price)\b/i.test(q)) {
+    expansions.push("original aggregate liability cap main agreement");
+  }
+  if (/\bindemnit/i.test(q) || (/amendment/i.test(q) && !/\b(cap|liability cap)\b/i.test(q))) {
+    expansions.push("amendment indemnity");
+  } else if (/amendment/i.test(q)) {
+    expansions.push("amendment liability cap");
+  }
   if (/cam|reconcile|common area/i.test(q)) expansions.push("CAM reconciliation package");
   if (/deposit|deposition|transcript/i.test(q)) expansions.push("deposition transcript testimony");
   if (/notice|terminat/i.test(q)) expansions.push("termination notice");

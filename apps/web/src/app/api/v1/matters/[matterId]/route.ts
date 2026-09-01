@@ -20,6 +20,14 @@ import {
 } from "@nyayagrid/intelligence";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonOk } from "@/lib/http";
+import {
+  applyMatterJurisdictionInput,
+  existingJurisdictionFromMatter,
+  jurisdictionColumnsFromNormalized,
+  jurisdictionInputFromBody,
+  resolveMatterJurisdictionContext,
+  uiJurisdictionContract,
+} from "@nyayagrid/jurisdiction";
 
 type Params = { params: Promise<{ matterId: string }> };
 
@@ -221,8 +229,17 @@ export async function GET(request: Request, { params }: Params) {
       .sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime())
       .slice(0, 8);
 
+    const jurisdictionContext = await resolveMatterJurisdictionContext({
+      db,
+      organizationId: matter.organizationId,
+      matterId,
+    });
+
     return jsonOk({
       matter,
+      jurisdictionContext: jurisdictionContext
+        ? uiJurisdictionContract(jurisdictionContext)
+        : null,
       client: clientRows[0] ?? null,
       recentDocuments,
       recentNotes,
@@ -255,10 +272,20 @@ export async function PATCH(request: Request, { params }: Params) {
       capability: "matters.edit",
     });
     const body = updateMatterSchema.parse(await request.json());
+    const jurisdiction = jurisdictionColumnsFromNormalized(
+      applyMatterJurisdictionInput(
+        jurisdictionInputFromBody(body),
+        existingJurisdictionFromMatter(matter),
+      ),
+    );
     const [updated] = await db
       .update(matters)
       .set({
-        ...body,
+        title: body.title ?? matter.title,
+        description: body.description === undefined ? matter.description : body.description,
+        status: body.status ?? matter.status,
+        matterNumber: body.matterNumber ?? matter.matterNumber,
+        ...jurisdiction,
         closedAt:
           body.status === "closed" || body.status === "archived" ? new Date() : matter.closedAt,
         updatedAt: new Date(),
@@ -272,9 +299,27 @@ export async function PATCH(request: Request, { params }: Params) {
       action: "matter.updated",
       targetType: "matter",
       targetId: matterId,
-      metadata: { status: body.status },
+      metadata: {
+        status: body.status,
+        primaryState: updated?.primaryState ?? null,
+        courtId: updated?.courtId ?? null,
+        forumType: updated?.forumType ?? null,
+        governingLawState: updated?.governingLawState ?? null,
+        asOfDate: updated?.asOfDate ?? null,
+        choiceOfLawStatus: updated?.choiceOfLawStatus ?? null,
+      },
     });
-    return jsonOk({ matter: updated });
+    const jurisdictionContext = updated
+      ? await resolveMatterJurisdictionContext({
+          db,
+          organizationId: matter.organizationId,
+          matterId,
+        })
+      : null;
+    return jsonOk({
+      matter: updated,
+      jurisdictionContext: jurisdictionContext ? uiJurisdictionContract(jurisdictionContext) : null,
+    });
   } catch (error) {
     return handleRouteError(error);
   }

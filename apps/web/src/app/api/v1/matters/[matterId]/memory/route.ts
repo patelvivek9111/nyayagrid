@@ -71,15 +71,17 @@ export async function POST(request: Request, { params }: Params) {
           organizationId: matter.organizationId,
           matterId,
           userId: user.id,
-          memoryType: "verified_context",
+          memoryType: "other",
           title: body.hint.trim().slice(0, 80),
           content: body.hint.trim(),
           importance: "normal",
           origin: "ai",
           status: "proposed",
-          sourceType: "ai_proposal",
+          sourceType: "attorney_hint",
           sourceReference: {
-            rationale: "Recorded from the attorney hint so the suggestion can be reviewed.",
+            rationale:
+              "Recorded from the attorney hint as an unverified suggestion with no document provenance.",
+            chunkIds: [],
           },
         });
         return jsonOk({ ...result, proposals: [memory] }, { status: 201 });
@@ -103,9 +105,8 @@ export async function POST(request: Request, { params }: Params) {
       organizationId: matter.organizationId,
       matterId,
       userId: user.id,
-      origin: "manual",
-      status: "approved",
       ...body,
+      origin: "manual",
     });
     return jsonOk({ memory }, { status: 201 });
   } catch (error) {

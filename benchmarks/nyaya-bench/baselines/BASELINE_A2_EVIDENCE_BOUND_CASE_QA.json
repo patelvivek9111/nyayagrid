@@ -1,0 +1,151 @@
+{
+  "baselineId": "BASELINE_A2_EVIDENCE_BOUND_CASE_QA",
+  "benchmarkKind": "NYAYA_CASE_QA",
+  "graderVersion": "a1-2026-08-18",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "notLegalCorrectnessProof": true,
+  "promptVersion": "nyaya-matter-qa-v9",
+  "measures": [
+    "pdf_ingestion",
+    "chunking",
+    "embeddings",
+    "retrieval",
+    "askNyayaAboutMatter",
+    "answer_grounding",
+    "case_qa_citations",
+    "evidence_bound_reasoning",
+    "false_premise_resistance"
+  ],
+  "doesNotMeasure": [
+    "agents",
+    "timeline_subsystem",
+    "memory_subsystem",
+    "graph_subsystem",
+    "research_subsystem",
+    "draft_subsystem",
+    "contract_compare_workflow",
+    "contradiction_engine"
+  ],
+  "comparedTo": "BASELINE_A1_CORRECTED_CASE_QA",
+  "runs": {
+    "v1": "benchmarks/nyaya-bench/reports/runs/2026-08-18T11-35-07-966Z",
+    "v2": "benchmarks/nyaya-bench/reports/runs/2026-08-18T11-40-00-604Z",
+    "sample": "benchmarks/nyaya-bench/reports/runs/2026-08-18T11-31-59-471Z",
+    "graphSmoke": "benchmarks/nyaya-bench/reports/runs/smoke-subsystems-2026-08-18T11-31-00-951Z"
+  },
+  "config": {
+    "gitCommit": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "workingTree": "dirty — nyaya-matter-qa-v9 and graph extraction contract uncommitted",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini-2024-07-18",
+    "embeddingProvider": "openai",
+    "promptVersion": "nyaya-matter-qa-v9",
+    "graderVersion": "a1-2026-08-18",
+    "openaiRecalled": true,
+    "gradersUnchanged": true,
+    "fixturesUnchanged": true
+  },
+  "counts": {
+    "expected": 500,
+    "executed": 500,
+    "pass": 351,
+    "needs_work": 68,
+    "fail": 77,
+    "infrastructure": 4,
+    "criticalFails": 28,
+    "passRateExpected": 0.702,
+    "foldedUserPresentation": {
+      "pass": 351,
+      "needsWork": 121,
+      "failCritical": 28,
+      "note": "Needs Work folds official needs_work + non-critical fail + infrastructure, matching the A.1 brief presentation of 350 / 118 / 32."
+    },
+    "v1": {
+      "total": 100,
+      "pass": 84,
+      "needs_work": 7,
+      "fail": 9,
+      "infrastructure": 0,
+      "criticalFails": 1,
+      "passRate": 0.84
+    },
+    "v2": {
+      "total": 400,
+      "pass": 267,
+      "needs_work": 61,
+      "fail": 68,
+      "infrastructure": 4,
+      "criticalFails": 27,
+      "passRate": 0.6675
+    }
+  },
+  "comparisonToA1": {
+    "pass": { "a1": 350, "a2": 351, "delta": 1 },
+    "needs_work": { "a1": 66, "a2": 68, "delta": 2 },
+    "fail": { "a1": 79, "a2": 77, "delta": -2 },
+    "infrastructure": { "a1": 5, "a2": 4, "delta": -1 },
+    "criticalFails": { "a1": 32, "a2": 28, "delta": -4 },
+    "passRateExpected": { "a1": 0.7, "a2": 0.702, "deltaPp": 0.2 }
+  },
+  "transitions": {
+    "PASS → PASS": 317,
+    "PASS → NEEDS_WORK": 6,
+    "PASS → FAIL": 25,
+    "PASS → INFRA": 2,
+    "NEEDS_WORK → PASS": 3,
+    "NEEDS_WORK → NEEDS_WORK": 62,
+    "NEEDS_WORK → FAIL": 0,
+    "NEEDS_WORK → INFRA": 1,
+    "FAIL → PASS": 27,
+    "FAIL → NEEDS_WORK": 0,
+    "FAIL → FAIL": 51,
+    "FAIL → INFRA": 1,
+    "INFRA → PASS": 4,
+    "INFRA → FAIL": 1,
+    "INFRA → INFRA": 0
+  },
+  "clusters": {
+    "t025Badge": {
+      "a1": { "pass": 0, "fail": 16, "criticalFail": 16 },
+      "a2": { "pass": 3, "fail": 13, "criticalFail": 13 },
+      "overclaimPhysicalEntryA2": 7,
+      "assertedDeterminationWithoutLimitationA2": 6
+    },
+    "t020Retroactivity": {
+      "a1": { "pass": 1, "fail": 14, "infra": 1 },
+      "a2": { "pass": 1, "fail": 14, "infra": 1 },
+      "a1Pass": "SYNTH-V2-012-T020",
+      "a2Pass": "SYNTH-V2-010-T020"
+    },
+    "v1Silence": {
+      "a1Fail": ["SYNTH-008-Q008", "SYNTH-010-Q008"],
+      "a2Pass": ["SYNTH-008-Q008"],
+      "a2Fail": ["SYNTH-010-Q008"]
+    },
+    "t002CurrentNotice": {
+      "a1": { "pass": 8, "fail": 7, "infra": 1 },
+      "a2": { "pass": 6, "fail": 10, "infra": 0 }
+    }
+  },
+  "expectationTallies": {
+    "must_abstain": {
+      "a1": { "n": 90, "pass": 71, "fail": 18, "infra": 1 },
+      "a2": { "n": 88, "pass": 74, "fail": 14, "infra": 0 }
+    },
+    "challenge_premise": {
+      "a1": { "n": 48, "pass": 33, "fail": 14, "infra": 1 },
+      "a2": { "n": 47, "pass": 33, "fail": 14, "infra": 0 }
+    },
+    "not_contradiction": {
+      "a1": { "n": 16, "pass": 9, "fail": 5, "needs_work": 2 },
+      "a2": { "n": 16, "pass": 13, "fail": 2, "needs_work": 1 }
+    }
+  },
+  "graphSmoke": {
+    "ok": true,
+    "graphExtractFailed": false,
+    "tag": "SMOKE_OK",
+    "note": "No verified graph nodes after ingest; extractor skipped the LLM instead of throwing on non-UUID IDs / numeric confidence."
+  }
+}

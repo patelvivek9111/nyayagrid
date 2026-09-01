@@ -33,6 +33,7 @@ export type ContradictionCase = {
   forbiddenChunkIds?: string[];
   /** If true, any emitted candidate is false-confidence. */
   expectNoCandidates?: boolean;
+  expectRelation?: "contradiction" | "tension";
 };
 
 export const CX_CHUNK_DEPO = "aaaaaaaa-bbbb-4ccc-8ddd-111111111111";
@@ -49,6 +50,16 @@ export const CX_CHUNK_ROUND_B = "dddd4444-eeee-4fff-8aaa-131313131313";
 export const CX_CHUNK_SYN_A = "eeee5555-ffff-4aaa-8bbb-141414141414";
 export const CX_CHUNK_SYN_B = "ffff6666-aaaa-4bbb-8ccc-151515151515";
 export const CX_CHUNK_ABOUT = "aaaa7777-bbbb-4ccc-8ddd-161616161616";
+export const CX_CHUNK_TENSION_DEPO = "aaaa8888-bbbb-4ccc-8ddd-171717171717";
+export const CX_CHUNK_TENSION_LOG = "bbbb8888-cccc-4ddd-8eee-181818181818";
+export const CX_CHUNK_DIRECT_A = "cccc8888-dddd-4eee-8fff-191919191919";
+export const CX_CHUNK_DIRECT_B = "dddd8888-eeee-4fff-8aaa-202020202020";
+export const CX_CHUNK_DATE_A = "eeee8888-ffff-4aaa-8bbb-212121212121";
+export const CX_CHUNK_DATE_B = "ffff8888-aaaa-4bbb-8ccc-222222222222";
+export const CX_CHUNK_SEQ_A = "aaaa9999-bbbb-4ccc-8ddd-232323232323";
+export const CX_CHUNK_SEQ_B = "bbbb9999-cccc-4ddd-8eee-242424242424";
+export const CX_CHUNK_ACTOR_A = "cccc9999-dddd-4eee-8fff-252525252525";
+export const CX_CHUNK_ACTOR_B = "dddd9999-eeee-4fff-8aaa-262626262626";
 
 const DEPO_CAM: ProfessionalChunk = {
   chunkId: CX_CHUNK_DEPO,
@@ -402,6 +413,130 @@ export const CONTRADICTION_CASES: ContradictionCase[] = [
     expectNoCandidates: true,
     expectCandidateCount: 0,
     forbiddenChunkIds: [CX_CHUNK_DECOY_NOTICE],
+  },
+  {
+    id: "cx-tension-badge-vs-testimony",
+    description: "Assigned-badge ACCESS GRANTED versus a physical-entry denial is tension",
+    kind: "generate",
+    chunks: [
+      {
+        chunkId: CX_CHUNK_TENSION_DEPO,
+        documentId: "doc_depo_entry",
+        documentVersionId: "docv_depo_entry_1",
+        page: 20,
+        content: "A. No. I never entered the records room that day.",
+      },
+      {
+        chunkId: CX_CHUNK_TENSION_LOG,
+        documentId: "doc_access_log",
+        documentVersionId: "docv_log_1",
+        page: 1,
+        content: "14:47 - Badge assigned to the witness - Records Room - ACCESS GRANTED.",
+      },
+    ],
+    expectCandidateCount: 1,
+    expectRelation: "tension",
+    mustIncludeSideChunkIds: [CX_CHUNK_TENSION_DEPO, CX_CHUNK_TENSION_LOG],
+  },
+  {
+    id: "cx-direct-entered-vs-did-not",
+    description: "Same-actor entered versus did not enter is a contradiction",
+    kind: "generate",
+    chunks: [
+      {
+        chunkId: CX_CHUNK_DIRECT_A,
+        documentId: "doc_statement_a",
+        documentVersionId: "docv_a_1",
+        page: 1,
+        content: "I entered the room at 3 PM.",
+      },
+      {
+        chunkId: CX_CHUNK_DIRECT_B,
+        documentId: "doc_statement_b",
+        documentVersionId: "docv_b_1",
+        page: 1,
+        content: "I did not enter the room that day.",
+      },
+    ],
+    expectCandidateCount: 1,
+    expectRelation: "contradiction",
+    mustIncludeSideChunkIds: [CX_CHUNK_DIRECT_A, CX_CHUNK_DIRECT_B],
+  },
+  {
+    id: "cx-compatible-date-precision",
+    description: "Near mid-November is compatible with an exact November date",
+    kind: "generate",
+    trapKind: "false_positive",
+    shouldRefuse: true,
+    chunks: [
+      {
+        chunkId: CX_CHUNK_DATE_A,
+        documentId: "doc_depo_date",
+        documentVersionId: "docv_depo_date_1",
+        page: 8,
+        content: "A. The pricing issue was discussed near the middle of November, at the review meeting.",
+      },
+      {
+        chunkId: CX_CHUNK_DATE_B,
+        documentId: "doc_minutes",
+        documentVersionId: "docv_minutes_1",
+        page: 1,
+        content: "The review meeting was held on 2026-11-10.",
+      },
+    ],
+    expectNoCandidates: true,
+    expectCandidateCount: 0,
+  },
+  {
+    id: "cx-sequential-amendment-not-contradiction",
+    description: "Original 60-day notice versus later 30-day amendment is sequential, not a contradiction",
+    kind: "generate",
+    trapKind: "false_positive",
+    shouldRefuse: true,
+    chunks: [
+      {
+        chunkId: CX_CHUNK_SEQ_A,
+        documentId: "doc_agreement",
+        documentVersionId: "docv_ag_1",
+        page: 4,
+        content: "The original agreement requires 60 days written notice unless amended.",
+      },
+      {
+        chunkId: CX_CHUNK_SEQ_B,
+        documentId: "doc_amendment",
+        documentVersionId: "docv_am_1",
+        page: 1,
+        content:
+          "Amendment 1 is effective on a later date. Formal notice now requires 30 days written notice.",
+      },
+    ],
+    expectNoCandidates: true,
+    expectCandidateCount: 0,
+  },
+  {
+    id: "cx-wrong-actor-not-contradiction",
+    description: "One person's denial versus another person's credential activity is not a contradiction",
+    kind: "generate",
+    trapKind: "false_positive",
+    shouldRefuse: true,
+    chunks: [
+      {
+        chunkId: CX_CHUNK_ACTOR_A,
+        documentId: "doc_depo_alice",
+        documentVersionId: "docv_alice_1",
+        page: 12,
+        content: "Alice Nguyen testified: I never entered the records room.",
+      },
+      {
+        chunkId: CX_CHUNK_ACTOR_B,
+        documentId: "doc_log_robert",
+        documentVersionId: "docv_robert_1",
+        page: 1,
+        content: "Badge assigned to Robert Chen — Records Room — ACCESS GRANTED.",
+      },
+    ],
+    expectNoCandidates: true,
+    expectCandidateCount: 0,
   },
 ];
 

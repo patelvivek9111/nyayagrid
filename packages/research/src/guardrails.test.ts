@@ -5,6 +5,7 @@ import {
   TREATMENT_UNVERIFIED_NOTICE,
   assertTreatmentClaimIsSourced,
   getTreatmentDisplay,
+  rewriteUnsourcedEditorialTreatment,
 } from "./treatment";
 import {
   SYNTHETIC_FABRICATED_QUOTE,
@@ -115,5 +116,14 @@ describe("getTreatmentDisplay", () => {
   it("blocks editorial treatment conclusions that no source reported", () => {
     expect(() => assertTreatmentClaimIsSourced("This decision was overruled", false)).toThrow();
     expect(() => assertTreatmentClaimIsSourced("This decision was overruled", true)).not.toThrow();
+  });
+
+  it("rewrites unsourced good-law and overruling claims without using original R009 wording", () => {
+    const rewritten = rewriteUnsourcedEditorialTreatment(
+      "Has Northgate v. Harbor been overruled, and is it still good law?",
+    );
+    expect(rewritten.toLowerCase()).not.toMatch(/\bis still good law\b/);
+    expect(rewritten.toLowerCase()).not.toMatch(/\bwas overruled\b/);
+    expect(rewritten.toLowerCase()).not.toMatch(/\bhas been overruled\b/);
   });
 });

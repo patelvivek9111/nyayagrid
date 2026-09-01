@@ -1,0 +1,117 @@
+{
+  "baselineId": "BASELINE_M1_MEMORY",
+  "benchmarkKind": "NYAYA_MEMORY",
+  "graderVersion": "m1-2026-08-19",
+  "attorneyReviewed": false,
+  "syntheticOnly": true,
+  "notLegalCorrectnessProof": true,
+  "productionUnchanged": true,
+  "phase": "6G",
+  "caseQaFrozen": true,
+  "compareFrozen": true,
+  "contradictionFrozen": true,
+  "timelineT2Frozen": true,
+  "measures": [
+    "createMatterMemory_manual_auto_approve",
+    "proposeMatterMemories_status_proposed",
+    "hint_fallback_verified_context",
+    "retrieveActiveMatterMemories",
+    "formatActiveMemoryForPrompt",
+    "supersede_reject_edit_lifecycle",
+    "duplicate_manual_create",
+    "ask_nyaya_draft_research_agent_eligibility"
+  ],
+  "doesNotMeasure": [
+    "case_qa_engine",
+    "compare_engine",
+    "contradiction_engine",
+    "timeline_extract",
+    "graph_materialization",
+    "draft_engine_wording",
+    "per_task_matter_isolation",
+    "expiresAt_document_change_staleness"
+  ],
+  "runs": {
+    "livePersist": "benchmarks/nyaya-bench/reports/runs/2026-08-19T02-53-05-072Z",
+    "officialGrades": "benchmarks/nyaya-bench/reports/runs/regrade-A1-2026-08-19T02-54-44-462Z"
+  },
+  "config": {
+    "dataset": "v2",
+    "executionMode": "memory",
+    "scenarios": ["SYNTH-V2-001", "SYNTH-V2-006"],
+    "taskCount": 16,
+    "gitCommit": "ea3be8784fbe7c560348d63ab75b7f1fe0d32e62",
+    "aiProvider": "openai",
+    "model": "gpt-4o-mini"
+  },
+  "counts": {
+    "scenarios": 2,
+    "tasks": 16,
+    "pass": 9,
+    "needs_work": 3,
+    "fail": 4,
+    "infrastructure": 0,
+    "critical": 4
+  },
+  "liveFirstPassCounts": {
+    "pass": 4,
+    "needs_work": 8,
+    "fail": 4,
+    "note": "Empty propose tasks were initially graded against leftover auto-approved manuals on the shared matter. Official grades isolate createdIds."
+  },
+  "metrics": {
+    "propositionAccuracy": 0.8125,
+    "provenanceAccuracy": 0.9375,
+    "trustStatusAccuracy": 0.8125,
+    "unsupportedMemoryRate": 2.3125,
+    "manualMemoryUpgradeRate": 0.1875,
+    "disputedFactErrorRate": 0.0625,
+    "staleMemoryRate": 0,
+    "downstreamContextViolations": 3
+  },
+  "taxonomy": {
+    "MEMORY_PROPOSITION": 3,
+    "MEMORY_MANUAL_SEMANTICS": 3,
+    "MEMORY_DISPUTE": 1
+  },
+  "criticalFailures": [
+    {
+      "taskId": "SYNTH-V2-001-M002",
+      "failureTaxonomy": "manual-memory semantics",
+      "detail": "User-provided memory auto-promoted. status=approved origin=manual enteredDownstream=true formattedVerifiedHeader=true"
+    },
+    {
+      "taskId": "SYNTH-V2-001-M012",
+      "failureTaxonomy": "manual-memory semantics",
+      "detail": "User-provided memory auto-promoted. status=approved origin=manual enteredDownstream=true formattedVerifiedHeader=true"
+    },
+    {
+      "taskId": "SYNTH-V2-001-M017",
+      "failureTaxonomy": "dispute handling",
+      "detail": "Hint stored as verified_context with first-chunk provenance: no service credit was ever issued"
+    },
+    {
+      "taskId": "SYNTH-V2-006-M003",
+      "failureTaxonomy": "manual-memory semantics",
+      "detail": "User-provided memory auto-promoted. status=approved origin=manual enteredDownstream=true formattedVerifiedHeader=true"
+    }
+  ],
+  "tasks": {
+    "SYNTH-V2-001-M001": { "verdict": "needs_work", "createdCount": 0, "failureTaxonomy": "proposition extraction" },
+    "SYNTH-V2-001-M002": { "verdict": "fail", "createdCount": 1, "criticalFailure": true, "failureTaxonomy": "manual-memory semantics" },
+    "SYNTH-V2-001-M004": { "verdict": "pass", "createdCount": 0 },
+    "SYNTH-V2-001-M007": { "verdict": "needs_work", "createdCount": 0, "failureTaxonomy": "proposition extraction" },
+    "SYNTH-V2-001-M008": { "verdict": "pass", "createdCount": 2 },
+    "SYNTH-V2-001-M009": { "verdict": "pass", "createdCount": 1 },
+    "SYNTH-V2-001-M010": { "verdict": "needs_work", "createdCount": 0, "failureTaxonomy": "proposition extraction" },
+    "SYNTH-V2-001-M011": { "verdict": "pass", "createdCount": 0 },
+    "SYNTH-V2-001-M012": { "verdict": "fail", "createdCount": 1, "criticalFailure": true, "failureTaxonomy": "manual-memory semantics" },
+    "SYNTH-V2-001-M013": { "verdict": "pass", "createdCount": 0 },
+    "SYNTH-V2-001-M014": { "verdict": "pass", "createdCount": 2 },
+    "SYNTH-V2-001-M015": { "verdict": "pass", "createdCount": 1 },
+    "SYNTH-V2-001-M017": { "verdict": "fail", "createdCount": 1, "criticalFailure": true, "failureTaxonomy": "dispute handling" },
+    "SYNTH-V2-006-M003": { "verdict": "fail", "createdCount": 1, "criticalFailure": true, "failureTaxonomy": "manual-memory semantics" },
+    "SYNTH-V2-006-M005": { "verdict": "pass", "createdCount": 0 },
+    "SYNTH-V2-006-M006": { "verdict": "pass", "createdCount": 0 }
+  }
+}

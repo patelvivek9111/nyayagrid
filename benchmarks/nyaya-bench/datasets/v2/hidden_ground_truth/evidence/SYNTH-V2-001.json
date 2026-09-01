@@ -1,0 +1,134 @@
+{
+  "scenario_id": "SYNTH-V2-001",
+  "comment": "Evidence-matrix overlay hidden GT for contract-matter integration. Isolated from CA1/AN1.",
+  "ground_truth": [
+    {
+      "task_id": "SYNTH-V2-001-EM013",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["no fabricated matrix issues without verified extraction"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"empty_matrix\",\"expectZeroIssues\":true,\"forbidAutoReview\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-EM014",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["proposed facts must not appear as verified evidence"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"proposed_facts\",\"forbidProposedInMatrix\":true,\"forbidAutoReview\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-EM015",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["proposed contract analysis must not become verified evidence"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"proposed_analysis\",\"forbidProposedInMatrix\":true,\"forbidAutoReview\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-EM016",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["dismissed contract analysis excluded"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"dismissed\",\"forbidDismissedInMatrix\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-EM017",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["email is not controlling contract evidence"],
+      "supporting_documents": ["04_Email_Chain.pdf"],
+      "notes": "{\"profile\":\"informal_source\",\"forbiddenResolvedAsFactPhrases\":[\"controlling amendment\",\"email is the signed contract\",\"operative notice is 45\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-EM018",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["future-effective amendment is not silently current"],
+      "supporting_documents": ["03_Amendment_2.pdf"],
+      "notes": "{\"profile\":\"future_effective\",\"forbiddenResolvedAsFactPhrases\":[\"currently 45 days after amendment 2\",\"amendment 2 is now in force\"]}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-EM019",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["missing exhibit contents must not be invented"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"missing_exhibit\",\"forbiddenResolvedAsFactPhrases\":[\"exhibit z requires\",\"exhibit z deductible\",\"exhibit z provides\"]}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-EM020",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["rejected facts excluded"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"rejected\",\"forbidRejectedInMatrix\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-EM021",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["approved source evidence should expose documentId and chunkId"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"provenance\",\"requireProvenanceFields\":true,\"forbidProposedInMatrix\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-EM022",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["supporting span supports the proposition"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"supporting_span\",\"requireQuoteOverlap\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-EM023",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["numeric values stay with sourced propositions"],
+      "supporting_documents": ["01_Main_Agreement.pdf"],
+      "notes": "{\"profile\":\"numeric\",\"requireQuoteOverlap\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-EM024",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["no wrong-document attribution"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"wrong_document\",\"forbidWrongDocumentAttribution\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-EM025",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["same-document event links are not independent corroboration"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"duplicate_corroboration\",\"forbidIndependentCorroborationIllusion\":true}",
+      "failure_severity_if_wrong": "major"
+    },
+    {
+      "task_id": "SYNTH-V2-001-EM026",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["approximate dates must not be over-precisely verified without source"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"uncertainty\",\"forbiddenResolvedAsFactPhrases\":[\"exactly midnight\",\"precisely 00:00\"]}",
+      "failure_severity_if_wrong": "minor"
+    },
+    {
+      "task_id": "SYNTH-V2-001-EM027",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["rejected intelligence stays excluded"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"rejected\",\"forbidRejectedInMatrix\":true}",
+      "failure_severity_if_wrong": "critical"
+    },
+    {
+      "task_id": "SYNTH-V2-001-EM028",
+      "expectation_type": "evidence_matrix",
+      "canonical_answer": ["matrix does not auto-approve proposed intelligence"],
+      "supporting_documents": [],
+      "notes": "{\"profile\":\"auto_review\",\"forbidAutoReview\":true}",
+      "failure_severity_if_wrong": "critical"
+    }
+  ]
+}

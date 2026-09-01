@@ -1,11 +1,4 @@
-import {
-  and,
-  eq,
-  type Database,
-  documents,
-  documentVersions,
-  documentChunks,
-} from "@nyayagrid/database";
+import { and, eq, type Database, documents, documentVersions, documentChunks } from "@nyayagrid/database";
 import type { DocumentProcessingState } from "@nyayagrid/validation";
 import type { EmbeddingProvider } from "@nyayagrid/ai";
 import {
@@ -27,6 +20,7 @@ import {
   rejectZipBombsOrArchives,
   withTimeout,
 } from "./limits";
+import { isRetryableProcessingError } from "./retry";
 
 export type ProcessDocumentInput = {
   organizationId: string;
@@ -119,10 +113,21 @@ export async function processDocumentPipeline(
   let state = doc.processingState as DocumentProcessingState;
 
   try {
+    if (state === "chunking" || state === "embedding") {
+      await setState(deps.db, doc.id, state, "extracting_text");
+      state = "extracting_text";
+    }
+    if (state === "indexed") {
+      await setState(deps.db, doc.id, state, "ready");
+      return { ok: true, state: "ready", message: "Document ready" };
+    }
+
     assertUploadSizeAllowed(version.byteSize);
+    const objectBytes = await deps.storage.getObject(version.storageKey);
     rejectZipBombsOrArchives({
       contentType: version.contentType,
       filename: version.originalFilename,
+      buffer: objectBytes,
     });
 
     if (state === "uploaded") {
@@ -136,7 +141,7 @@ export async function processDocumentPipeline(
           key: version.storageKey,
           contentType: version.contentType,
           byteSize: version.byteSize,
-          getContent: () => deps.storage.getObject(version.storageKey),
+          getContent: async () => objectBytes,
         }),
         DEFAULT_SCAN_TIMEOUT_MS,
         "malware scan",
@@ -179,7 +184,7 @@ export async function processDocumentPipeline(
     }
 
     if (state === "extracting_text") {
-      const bytes = await deps.storage.getObject(version.storageKey);
+      const bytes = objectBytes;
       const extraction = await withTimeout(
         extractor.extract({
           buffer: bytes,
@@ -271,6 +276,9 @@ export async function processDocumentPipeline(
 
     return { ok: true, state, message: `No-op at state ${state}` };
   } catch (error) {
+    if (isRetryableProcessingError(error)) {
+      throw error;
+    }
     const message = error instanceof Error ? error.message : "Processing failed";
     try {
       await deps.db

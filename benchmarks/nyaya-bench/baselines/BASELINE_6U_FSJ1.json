@@ -1,0 +1,399 @@
+{
+  "id": "BASELINE_6U_FSJ1",
+  "generatedAt": "2026-08-20T15:56:02.634Z",
+  "elapsedMs": 122585,
+  "environment": {
+    "APP_ENV": null,
+    "database": {
+      "protocol": "postgresql",
+      "host": "localhost",
+      "port": "5433",
+      "database": "nyayagrid",
+      "hasUser": true,
+      "hasPassword": true
+    },
+    "intendedCertification": {
+      "label": "persistent-local-docker-nyayagrid",
+      "host": "localhost",
+      "port": "5433",
+      "database": "nyayagrid",
+      "appEnv": "development",
+      "realSourceProvider": "us-primary-corpus"
+    },
+    "realPrimaryAuthorities": 30
+  },
+  "agents": {
+    "featureAgentsProduction": true,
+    "featureAgentsStaging": true,
+    "certifiedByState": false
+  },
+  "nationwideClaim": "NO",
+  "attorneyValidated": "NO",
+  "matters": {
+    "A": "6U-A-mt1paevn",
+    "B": "6U-B-mt1paevn",
+    "C": "6U-C-mt1paevn",
+    "D": "6U-D-mt1paevn",
+    "E": "6U-E-mt1paevn",
+    "F": "6U-F-mt1paevn"
+  },
+  "coverage": {
+    "paContract": "VALIDATED",
+    "caContract": "LIMITED",
+    "paCriminal": "UNVALIDATED",
+    "nyEmployment": "VALIDATED"
+  },
+  "processingState": "uploaded",
+  "quality": 76.6,
+  "criticalSafety": 0,
+  "totals": {
+    "tasks": 47,
+    "pass": 36,
+    "needsWork": 10,
+    "fail": 1,
+    "critical": 0
+  },
+  "tasks": [
+    {
+      "id": "T6U-AGENTS-01",
+      "family": "agents",
+      "severity": "PASS",
+      "detail": "FEATURE_AGENTS remains off in production and staging defaults.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-COV-PA-CONTRACT",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-COV-CA-CONTRACT",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained limited.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-COV-PA-CRIMINAL",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained unvalidated.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-HEADER-PA",
+      "family": "ux",
+      "severity": "PASS",
+      "detail": "PA header summary=PA · Pennsylvania Supreme Court · Contract",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-HEADER-GOV",
+      "family": "ux",
+      "severity": "PASS",
+      "detail": "C context forum=PA gov=DE related=[{\"courtId\":null,\"stateCode\":\"NJ\"}]",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-DOC-PROCESSING-STATE",
+      "family": "documents",
+      "severity": "PASS",
+      "detail": "Hold memo processingState=uploaded",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-DOC-META",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-DOC-NO-MUTATION",
+      "family": "documents",
+      "severity": "PASS",
+      "detail": "After NJ-law document, forum=PA gov=DE",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-R-A",
+      "family": "research",
+      "severity": "NEEDS_WORK",
+      "detail": "Expected token retrieved but not clearly synthesized.",
+      "qualityPass": false,
+      "rootCause": "F"
+    },
+    {
+      "id": "T6U-R-B",
+      "family": "research",
+      "severity": "NEEDS_WORK",
+      "detail": "Expected token retrieved but not clearly synthesized.",
+      "qualityPass": false,
+      "rootCause": "F"
+    },
+    {
+      "id": "T6U-R-C",
+      "family": "research",
+      "severity": "NEEDS_WORK",
+      "detail": "Expected token retrieved but not clearly synthesized.",
+      "qualityPass": false,
+      "rootCause": "F"
+    },
+    {
+      "id": "T6U-R-D",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Abstained or disclosed UNVALIDATED coverage.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-R-E",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Research/Ask stayed inside jurisdiction and coverage bounds.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-R-F",
+      "family": "research",
+      "severity": "NEEDS_WORK",
+      "detail": "Expected token retrieved but not clearly synthesized.",
+      "qualityPass": false,
+      "rootCause": "F"
+    },
+    {
+      "id": "T6U-R-MULTI",
+      "family": "multi-jurisdiction",
+      "severity": "NEEDS_WORK",
+      "detail": "Did not clearly keep PA forum and DE governing law distinct.",
+      "qualityPass": false,
+      "rootCause": "A"
+    },
+    {
+      "id": "T6U-R-GOV-DE",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Delaware UCC present for governing-law limitations question.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-R-TEMPORAL",
+      "family": "research",
+      "severity": "PASS",
+      "detail": "Unknown dates remained unknown.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-ASK-A",
+      "family": "ask",
+      "severity": "NEEDS_WORK",
+      "detail": "Expected token retrieved but not clearly synthesized.",
+      "qualityPass": false,
+      "rootCause": "F"
+    },
+    {
+      "id": "T6U-ASK-B",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Research/Ask stayed inside jurisdiction and coverage bounds.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-ASK-C",
+      "family": "multi-jurisdiction",
+      "severity": "NEEDS_WORK",
+      "detail": "Did not clearly keep PA forum and DE governing law distinct.",
+      "qualityPass": false,
+      "rootCause": "A"
+    },
+    {
+      "id": "T6U-ASK-D",
+      "family": "ask",
+      "severity": "NEEDS_WORK",
+      "detail": "Did not clearly limit an UNVALIDATED question.",
+      "qualityPass": false,
+      "rootCause": "C"
+    },
+    {
+      "id": "T6U-ASK-E",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Research/Ask stayed inside jurisdiction and coverage bounds.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-ASK-MISSING",
+      "family": "ask",
+      "severity": "NEEDS_WORK",
+      "detail": "Did not clearly limit an UNVALIDATED question.",
+      "qualityPass": false,
+      "rootCause": "C"
+    },
+    {
+      "id": "T6U-ASK-PROCESSING",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Ask did not claim a still-processing document was reviewed.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-ASK-WRONG-STATE",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Research/Ask stayed inside jurisdiction and coverage bounds.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-ASK-COVERAGE",
+      "family": "ask",
+      "severity": "NEEDS_WORK",
+      "detail": "Did not clearly limit an UNVALIDATED question.",
+      "qualityPass": false,
+      "rootCause": "C"
+    },
+    {
+      "id": "T6U-ASK-MISSING-INVENT",
+      "family": "ask",
+      "severity": "PASS",
+      "detail": "Ask did not invent Exhibit Q.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-D-A",
+      "family": "draft",
+      "severity": "PASS",
+      "detail": "Draft preserved source-limitation and jurisdiction honesty.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-D-B",
+      "family": "draft",
+      "severity": "PASS",
+      "detail": "Draft preserved source-limitation and jurisdiction honesty.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-D-C",
+      "family": "draft",
+      "severity": "PASS",
+      "detail": "Draft preserved source-limitation and jurisdiction honesty.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-D-D",
+      "family": "draft",
+      "severity": "PASS",
+      "detail": "Draft preserved source-limitation and jurisdiction honesty.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-D-PRESSURE",
+      "family": "draft",
+      "severity": "FAIL",
+      "detail": "Draft upgraded unknown dates to current law.",
+      "qualityPass": false,
+      "rootCause": "H",
+      "criticalClass": "current-law-overclaim"
+    },
+    {
+      "id": "T6U-D-MULTI",
+      "family": "multi-jurisdiction",
+      "severity": "PASS",
+      "detail": "Forum and governing law remained distinct.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-MEM-PROPOSED",
+      "family": "memory",
+      "severity": "PASS",
+      "detail": "Proposed Memory stayed out of approved context.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-REV-COVERAGE",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-REV-JURIS",
+      "family": "review",
+      "severity": "PASS",
+      "detail": "After Review/extract, forum=PA gov=DE",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-AN-NO-AUTO-GOV",
+      "family": "analysis",
+      "severity": "PASS",
+      "detail": "Analysis did not auto-update governingLawState.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-TL-NO-META",
+      "family": "timeline",
+      "severity": "PASS",
+      "detail": "Timeline did not materialize as-of metadata as an event.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-GRAPH-RELATED",
+      "family": "graph",
+      "severity": "PASS",
+      "detail": "Graph did not upgrade related NJ into controlling law.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-ISO-MATTER",
+      "family": "isolation",
+      "severity": "PASS",
+      "detail": "PA and DE Cases kept separate jurisdiction metadata and research sessions.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-ISO-ORG",
+      "family": "isolation",
+      "severity": "PASS",
+      "detail": "Org A Case jurisdiction, drafts, and conversations stayed isolated from Org B.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-VIEW-01",
+      "family": "permissions",
+      "severity": "PASS",
+      "detail": "View-only user cannot mutate jurisdiction (matters.edit denied).",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-END-PA-CONTRACT",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained supported.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-END-CA-CONTRACT",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained limited.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-END-PA-CRIMINAL",
+      "family": "coverage",
+      "severity": "PASS",
+      "detail": "Coverage remained unvalidated.",
+      "qualityPass": true
+    },
+    {
+      "id": "T6U-NATIONWIDE",
+      "family": "scope",
+      "severity": "PASS",
+      "detail": "Nationwide claim remains NO. 6U does not certify 50-state support.",
+      "qualityPass": true
+    }
+  ]
+}

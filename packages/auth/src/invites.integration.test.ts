@@ -97,7 +97,7 @@ describe.runIf(runDbTests)("organization invites integration", () => {
   });
 
   it("accepts a pending invite exactly once, creating one membership with the invited role", async () => {
-    const inviteeEmail = `accept_${suffix}@example.nyayagrid.local`;
+    const inviteeEmail = `invite_invitee_${suffix}@example.nyayagrid.local`;
     const { token, inviteId } = await createOrganizationInvite({
       db,
       organizationId,
@@ -133,7 +133,7 @@ describe.runIf(runDbTests)("organization invites integration", () => {
   });
 
   it("refuses to revoke an accepted invite and is idempotent revoking a pending one", async () => {
-    const acceptedEmail = `revoke_accepted_${suffix}@example.nyayagrid.local`;
+    const acceptedEmail = `invite_accepted_user_${suffix}@example.nyayagrid.local`;
     const accepted = await createOrganizationInvite({
       db,
       organizationId,

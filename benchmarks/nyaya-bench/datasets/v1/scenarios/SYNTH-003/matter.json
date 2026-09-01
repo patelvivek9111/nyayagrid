@@ -1,0 +1,39 @@
+{
+  "scenario_id": "SYNTH-003",
+  "title": "Cedar Station Construction Payment Dispute",
+  "matter_type": "Construction Contract",
+  "fictional": true,
+  "label": "SYNTH - FICTIONAL TEST DOCUMENT - NOT REAL CLIENT WORK",
+  "documents": [
+    {
+      "document_id": "contract",
+      "file": "documents/contract.pdf",
+      "title": "Construction Agreement"
+    },
+    {
+      "document_id": "change_order",
+      "file": "documents/change_order.pdf",
+      "title": "Change Order CO-014"
+    },
+    {
+      "document_id": "schedule",
+      "file": "documents/schedule.pdf",
+      "title": "Schedule Update - August 5, 2026"
+    },
+    {
+      "document_id": "invoice",
+      "file": "documents/invoice.pdf",
+      "title": "Progress Application 08"
+    },
+    {
+      "document_id": "email_pm",
+      "file": "documents/email_pm.pdf",
+      "title": "Email - Project Manager - August 6, 2026"
+    },
+    {
+      "document_id": "field_report",
+      "file": "documents/field_report.pdf",
+      "title": "Daily Field Report - August 7, 2026"
+    }
+  ]
+}

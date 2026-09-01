@@ -1,6 +1,6 @@
 import { generateCaseBriefSchema } from "@nyayagrid/validation";
 import { generateCaseBrief } from "@nyayagrid/workspaces";
-import { requireUser } from "@/lib/auth";
+import { requireProfessorUser } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 import { getAI } from "@/lib/infra";
 
@@ -9,7 +9,7 @@ type Params = { params: Promise<{ caseId: string }> };
 export async function POST(request: Request, { params }: Params) {
   try {
     const { caseId } = await params;
-    const { db, user } = await requireUser(request.headers);
+    const { db, user } = await requireProfessorUser(request.headers);
     const body = generateCaseBriefSchema.parse(await request.json().catch(() => ({})));
 
     const result = await generateCaseBrief({

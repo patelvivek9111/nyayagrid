@@ -1,0 +1,82 @@
+[
+  {
+    "task_id": "SYNTH-006-Q001",
+    "scenario_id": "SYNTH-006",
+    "category": "case_qa",
+    "prompt": "What royalty rate applies in Q2 2026?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q001"
+  },
+  {
+    "task_id": "SYNTH-006-Q002",
+    "scenario_id": "SYNTH-006",
+    "category": "numeric",
+    "prompt": "What royalty amount corresponds to $2.4 million Net Sales at 5%?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q002"
+  },
+  {
+    "task_id": "SYNTH-006-Q003",
+    "scenario_id": "SYNTH-006",
+    "category": "case_qa",
+    "prompt": "What countries are currently in the Territory?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q003"
+  },
+  {
+    "task_id": "SYNTH-006-Q004",
+    "scenario_id": "SYNTH-006",
+    "category": "decoy",
+    "prompt": "Did renumbering the audit section materially change the audit right?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q004"
+  },
+  {
+    "task_id": "SYNTH-006-Q005",
+    "scenario_id": "SYNTH-006",
+    "category": "contract_compare",
+    "prompt": "What substantive changes did the Royalty Amendment make?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q005"
+  },
+  {
+    "task_id": "SYNTH-006-Q006",
+    "scenario_id": "SYNTH-006",
+    "category": "case_qa",
+    "prompt": "How many days after quarter end are royalty reports due?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q006"
+  },
+  {
+    "task_id": "SYNTH-006-Q007",
+    "scenario_id": "SYNTH-006",
+    "category": "false_contradiction",
+    "prompt": "Does the July 18 email conflict with the Q2 royalty report?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q007"
+  },
+  {
+    "task_id": "SYNTH-006-Q008",
+    "scenario_id": "SYNTH-006",
+    "category": "insufficient",
+    "prompt": "What were Q1 2026 Net Sales?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q008"
+  },
+  {
+    "task_id": "SYNTH-006-Q009",
+    "scenario_id": "SYNTH-006",
+    "category": "case_qa",
+    "prompt": "How much notice is required for an audit?",
+    "difficulty": "medium",
+    "ground_truth_ref": "Q009"
+  },
+  {
+    "task_id": "SYNTH-006-Q010",
+    "scenario_id": "SYNTH-006",
+    "category": "reasoning",
+    "prompt": "Is the Q2 reported royalty mathematically consistent with the amended rate and reported Net Sales?",
+    "difficulty": "hard",
+    "ground_truth_ref": "Q010"
+  }
+]

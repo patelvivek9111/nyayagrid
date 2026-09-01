@@ -1,0 +1,17 @@
+{
+  "scenario_id": "SYNTH-FS-001",
+  "name": "Harborwell Archive Services",
+  "domain": "Commercial Services",
+  "synthetic": true,
+  "overlay_only": true,
+  "documents": [
+    "01_Services_Agreement.txt",
+    "02_Notice_Amendment.txt",
+    "03_Badge_Assignment.txt",
+    "04_Access_Register.txt",
+    "05_Calderon_Interview.txt",
+    "06_Fee_Statement.txt",
+    "07_Internal_Counsel_Note.txt",
+    "08_Vendor_Email.txt"
+  ]
+}
