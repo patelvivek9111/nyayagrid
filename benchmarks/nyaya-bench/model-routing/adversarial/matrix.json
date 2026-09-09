@@ -1,0 +1,1249 @@
+{
+  "gateId": "nyaya-router-adversarial-v1",
+  "total": 161,
+  "pass": 161,
+  "critical": 0,
+  "families": {
+    "routing": {
+      "PASS": 15,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 15
+    },
+    "fallback": {
+      "PASS": 118,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 118
+    },
+    "policy": {
+      "PASS": 9,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 9
+    },
+    "risk": {
+      "PASS": 2,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 2
+    },
+    "retrieval": {
+      "PASS": 1,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 1
+    },
+    "prompt_injection": {
+      "PASS": 5,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 5
+    },
+    "citations": {
+      "PASS": 1,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 1
+    },
+    "jurisdiction": {
+      "PASS": 1,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 1
+    },
+    "approved_intelligence": {
+      "PASS": 1,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 1
+    },
+    "structured_output": {
+      "PASS": 1,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 1
+    },
+    "cost": {
+      "PASS": 1,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 1
+    },
+    "latency": {
+      "PASS": 1,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 1
+    },
+    "concurrency": {
+      "PASS": 1,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 1
+    },
+    "audit": {
+      "PASS": 2,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 2
+    },
+    "kill_switches": {
+      "PASS": 1,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 1
+    },
+    "config": {
+      "PASS": 1,
+      "NEEDS WORK": 0,
+      "FAIL": 0,
+      "CRITICAL": 0,
+      "total": 1
+    }
+  },
+  "scenarios": [
+    {
+      "id": "fallback-contract-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai timeout → openai"
+    },
+    {
+      "id": "fallback-contract-hard-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai hard-timeout → openai"
+    },
+    {
+      "id": "fallback-contract-dns-transport",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai dns-transport → openai"
+    },
+    {
+      "id": "fallback-contract-429",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai 429 → openai"
+    },
+    {
+      "id": "fallback-contract-500",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai 500 → openai"
+    },
+    {
+      "id": "fallback-contract-502",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai 502 → openai"
+    },
+    {
+      "id": "fallback-contract-503",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai 503 → openai"
+    },
+    {
+      "id": "fallback-contract-malformed-json",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai malformed-json → openai"
+    },
+    {
+      "id": "fallback-contract-empty",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai empty → openai"
+    },
+    {
+      "id": "fallback-contract-truncated",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai truncated → openai"
+    },
+    {
+      "id": "fallback-evidence-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai timeout → xai"
+    },
+    {
+      "id": "fallback-evidence-hard-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai hard-timeout → xai"
+    },
+    {
+      "id": "fallback-evidence-dns-transport",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai dns-transport → xai"
+    },
+    {
+      "id": "fallback-evidence-429",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 429 → xai"
+    },
+    {
+      "id": "fallback-evidence-500",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 500 → xai"
+    },
+    {
+      "id": "fallback-evidence-502",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 502 → xai"
+    },
+    {
+      "id": "fallback-evidence-503",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 503 → xai"
+    },
+    {
+      "id": "fallback-evidence-malformed-json",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai malformed-json → xai"
+    },
+    {
+      "id": "fallback-evidence-empty",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai empty → xai"
+    },
+    {
+      "id": "fallback-evidence-truncated",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai truncated → xai"
+    },
+    {
+      "id": "fallback-compare-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai timeout → xai"
+    },
+    {
+      "id": "fallback-compare-hard-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai hard-timeout → xai"
+    },
+    {
+      "id": "fallback-compare-dns-transport",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai dns-transport → xai"
+    },
+    {
+      "id": "fallback-compare-429",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 429 → xai"
+    },
+    {
+      "id": "fallback-compare-500",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 500 → xai"
+    },
+    {
+      "id": "fallback-compare-502",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 502 → xai"
+    },
+    {
+      "id": "fallback-compare-503",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 503 → xai"
+    },
+    {
+      "id": "fallback-compare-malformed-json",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai malformed-json → xai"
+    },
+    {
+      "id": "fallback-compare-empty",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai empty → xai"
+    },
+    {
+      "id": "fallback-compare-truncated",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai truncated → xai"
+    },
+    {
+      "id": "fallback-contradiction-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai timeout → google"
+    },
+    {
+      "id": "fallback-contradiction-hard-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai hard-timeout → google"
+    },
+    {
+      "id": "fallback-contradiction-dns-transport",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai dns-transport → google"
+    },
+    {
+      "id": "fallback-contradiction-429",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai 429 → google"
+    },
+    {
+      "id": "fallback-contradiction-500",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai 500 → google"
+    },
+    {
+      "id": "fallback-contradiction-502",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai 502 → google"
+    },
+    {
+      "id": "fallback-contradiction-503",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai 503 → google"
+    },
+    {
+      "id": "fallback-contradiction-malformed-json",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai malformed-json → google"
+    },
+    {
+      "id": "fallback-contradiction-empty",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai empty → google"
+    },
+    {
+      "id": "fallback-contradiction-truncated",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xai truncated → google"
+    },
+    {
+      "id": "fallback-timeline-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai timeout → xai"
+    },
+    {
+      "id": "fallback-timeline-hard-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai hard-timeout → xai"
+    },
+    {
+      "id": "fallback-timeline-dns-transport",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai dns-transport → xai"
+    },
+    {
+      "id": "fallback-timeline-429",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 429 → xai"
+    },
+    {
+      "id": "fallback-timeline-500",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 500 → xai"
+    },
+    {
+      "id": "fallback-timeline-502",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 502 → xai"
+    },
+    {
+      "id": "fallback-timeline-503",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 503 → xai"
+    },
+    {
+      "id": "fallback-timeline-malformed-json",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai malformed-json → xai"
+    },
+    {
+      "id": "fallback-timeline-empty",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai empty → xai"
+    },
+    {
+      "id": "fallback-timeline-truncated",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai truncated → xai"
+    },
+    {
+      "id": "fallback-graph-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai timeout → xai"
+    },
+    {
+      "id": "fallback-graph-hard-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai hard-timeout → xai"
+    },
+    {
+      "id": "fallback-graph-dns-transport",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai dns-transport → xai"
+    },
+    {
+      "id": "fallback-graph-429",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 429 → xai"
+    },
+    {
+      "id": "fallback-graph-500",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 500 → xai"
+    },
+    {
+      "id": "fallback-graph-502",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 502 → xai"
+    },
+    {
+      "id": "fallback-graph-503",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 503 → xai"
+    },
+    {
+      "id": "fallback-graph-malformed-json",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai malformed-json → xai"
+    },
+    {
+      "id": "fallback-graph-empty",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai empty → xai"
+    },
+    {
+      "id": "fallback-graph-truncated",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai truncated → xai"
+    },
+    {
+      "id": "fallback-memory-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai timeout → xai"
+    },
+    {
+      "id": "fallback-memory-hard-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai hard-timeout → xai"
+    },
+    {
+      "id": "fallback-memory-dns-transport",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai dns-transport → xai"
+    },
+    {
+      "id": "fallback-memory-429",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 429 → xai"
+    },
+    {
+      "id": "fallback-memory-500",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 500 → xai"
+    },
+    {
+      "id": "fallback-memory-502",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 502 → xai"
+    },
+    {
+      "id": "fallback-memory-503",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai 503 → xai"
+    },
+    {
+      "id": "fallback-memory-malformed-json",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai malformed-json → xai"
+    },
+    {
+      "id": "fallback-memory-empty",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai empty → xai"
+    },
+    {
+      "id": "fallback-memory-truncated",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai truncated → xai"
+    },
+    {
+      "id": "no-fallback-ask-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-ask-hard-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-ask-dns-transport",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-ask-429",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-ask-500",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-ask-502",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-ask-503",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-ask-malformed-json",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-ask-empty",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-ask-truncated",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-research-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-research-hard-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-research-dns-transport",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-research-429",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-research-500",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-research-502",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-research-503",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-research-malformed-json",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-research-empty",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-research-truncated",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-draft-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-draft-hard-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-draft-dns-transport",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-draft-429",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-draft-500",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-draft-502",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-draft-503",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-draft-malformed-json",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-draft-empty",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-draft-truncated",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-deposition-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-deposition-hard-timeout",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-deposition-dns-transport",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-deposition-429",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-deposition-500",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-deposition-502",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-deposition-503",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-deposition-malformed-json",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-deposition-empty",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "no-fallback-deposition-truncated",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "safe unavailable; no CANDIDATE/LIMITED"
+    },
+    {
+      "id": "cascade-contract",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "calls=2"
+    },
+    {
+      "id": "cascade-evidence",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "calls=2"
+    },
+    {
+      "id": "cascade-compare",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "calls=2"
+    },
+    {
+      "id": "cascade-contradiction",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "calls=2"
+    },
+    {
+      "id": "cascade-timeline",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "calls=2"
+    },
+    {
+      "id": "cascade-graph",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "calls=2"
+    },
+    {
+      "id": "cascade-memory",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "calls=2"
+    },
+    {
+      "id": "circuit-lifecycle-recovery",
+      "family": "routing",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "half-open allows a single probe; certification unchanged"
+    },
+    {
+      "id": "circuit-no-cert-bleed",
+      "family": "routing",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "Ask/Contract share grok-3 health; openai remains HEALTHY; cert intact"
+    },
+    {
+      "id": "circuit-blocks-after-threshold",
+      "family": "routing",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "in-flight burst may complete; subsequent selects skip open circuit"
+    },
+    {
+      "id": "cert-bypass-manual-openai:gpt-4o-mini-ask",
+      "family": "routing",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "server reject"
+    },
+    {
+      "id": "cert-bypass-manual-google:gemini-3.6-flash-ask",
+      "family": "routing",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "server reject"
+    },
+    {
+      "id": "cert-bypass-manual-anthropic:claude-sonnet-4-5-20250929-timeline",
+      "family": "routing",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "server reject"
+    },
+    {
+      "id": "cert-bypass-manual-openai:does-not-exist-ask",
+      "family": "routing",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "server reject"
+    },
+    {
+      "id": "cert-bypass-fallback-ask",
+      "family": "routing",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "no CANDIDATE/LIMITED Ask fallback"
+    },
+    {
+      "id": "deep-ineligible-ask",
+      "family": "routing",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "degrades to Standard; no CANDIDATE verifier"
+    },
+    {
+      "id": "deep-eligible-contradiction",
+      "family": "routing",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "xAI primary + Gemini verifier"
+    },
+    {
+      "id": "env-pref-contract-quality-wins",
+      "family": "routing",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "tie-break only; Grok quality dominates"
+    },
+    {
+      "id": "score-safety-health-over-pref",
+      "family": "routing",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "CANDIDATE ineligible; HEALTHY VALIDATED outranks DEGRADED ACTIVE on health"
+    },
+    {
+      "id": "registry-no-alias-drift",
+      "family": "routing",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "grok-4-latest stays CANDIDATE"
+    },
+    {
+      "id": "model-removal-no-substitution",
+      "family": "routing",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "MODEL unknown refused"
+    },
+    {
+      "id": "policy-org-a",
+      "family": "policy",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "allow all validated"
+    },
+    {
+      "id": "policy-org-b-ask",
+      "family": "policy",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "Ask unavailable"
+    },
+    {
+      "id": "policy-org-b-research",
+      "family": "policy",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "no LIMITED"
+    },
+    {
+      "id": "policy-org-c",
+      "family": "policy",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "OpenAI only"
+    },
+    {
+      "id": "policy-org-d",
+      "family": "policy",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "openai+xai"
+    },
+    {
+      "id": "policy-org-e",
+      "family": "policy",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "Gemini block vs dual block"
+    },
+    {
+      "id": "policy-contradiction-gemini-fallback",
+      "family": "policy",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "validated Gemini"
+    },
+    {
+      "id": "policy-isolation",
+      "family": "policy",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "no bleed"
+    },
+    {
+      "id": "health-plus-policy",
+      "family": "policy",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "Grok open + OpenAI blocked → unavailable"
+    },
+    {
+      "id": "risk-under-over",
+      "family": "risk",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "judge/amendment not LOW; tenant name LOW"
+    },
+    {
+      "id": "strategy-selection",
+      "family": "risk",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "Fast/Standard/Deep"
+    },
+    {
+      "id": "disagreement-no-majority",
+      "family": "routing",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "never majority vote"
+    },
+    {
+      "id": "citation-membership",
+      "family": "citations",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "invented and wrong span dropped"
+    },
+    {
+      "id": "prompt-injection-authority",
+      "family": "prompt_injection",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "treated as document content in user prompt"
+    },
+    {
+      "id": "prompt-injection-email",
+      "family": "prompt_injection",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "treated as document content in user prompt"
+    },
+    {
+      "id": "prompt-injection-deposition",
+      "family": "prompt_injection",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "treated as document content in user prompt"
+    },
+    {
+      "id": "prompt-injection-memory",
+      "family": "prompt_injection",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "treated as document content in user prompt"
+    },
+    {
+      "id": "prompt-injection-document",
+      "family": "prompt_injection",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "injection stays user/source content"
+    },
+    {
+      "id": "secret-exfiltration",
+      "family": "audit",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "no env secrets in audit or messages"
+    },
+    {
+      "id": "fallback-context-integrity",
+      "family": "fallback",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "context preserved"
+    },
+    {
+      "id": "approved-intelligence",
+      "family": "approved_intelligence",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "approved_only + QA-06 cap"
+    },
+    {
+      "id": "source-role-retrieval",
+      "family": "retrieval",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "conflict + weak retrieval"
+    },
+    {
+      "id": "jurisdiction-models-do-not-vote",
+      "family": "jurisdiction",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "hierarchy metadata is not majority-voted; disagreement engine is evidence-only"
+    },
+    {
+      "id": "malformed-and-bomb",
+      "family": "structured_output",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "bounded parse"
+    },
+    {
+      "id": "cost-call-budget",
+      "family": "cost",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "worst-case 4 model calls × 3 HTTP = 12; isolated child retries 0"
+    },
+    {
+      "id": "latency-timeout-cancel",
+      "family": "latency",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "20ms timeout; abort honored"
+    },
+    {
+      "id": "concurrency-isolation",
+      "family": "concurrency",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "no mixed audit org"
+    },
+    {
+      "id": "kill-switches",
+      "family": "kill_switches",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "per-request env; no restart required"
+    },
+    {
+      "id": "config-fail-closed",
+      "family": "config",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "denyAll + mock staging + unknown schema + agents"
+    },
+    {
+      "id": "audit-integrity",
+      "family": "audit",
+      "verdict": "PASS",
+      "critical": false,
+      "detail": "ids only"
+    }
+  ]
+}

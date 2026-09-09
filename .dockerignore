@@ -12,6 +12,9 @@ docs
 .env
 .env.*
 !.env.example
+tmp
+benchmarks
+agent-transcripts
 .vscode
 .cursor
 .cursorrules

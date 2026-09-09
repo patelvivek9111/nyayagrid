@@ -4,9 +4,9 @@ import {
   buildMemoryProposalSystemPrompt,
 } from "./graph-memory";
 
-describe("memory proposal prompt v2", () => {
+describe("memory proposal prompt v3", () => {
   it("forbids treating hints, silence, and badge activity as verified facts", () => {
-    expect(MEMORY_PROPOSAL_PROMPT_VERSION).toBe("matter-memory-propose-v2");
+    expect(MEMORY_PROPOSAL_PROMPT_VERSION).toBe("matter-memory-propose-v3");
     const prompt = buildMemoryProposalSystemPrompt();
     expect(prompt).toMatch(/hint is not evidence/i);
     expect(prompt).toMatch(/ACCESS GRANTED/i);

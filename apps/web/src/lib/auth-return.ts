@@ -71,8 +71,25 @@ export function clerkContinueHref(hostedSignInUrl: string, returnTo: string, app
   return url.toString();
 }
 
-export function clerkSignOutHref(hostedSignInUrl: string | null, appOrigin: string): string {
+export function clerkSignOutHref(
+  hostedSignInUrl: string | null,
+  appOrigin: string,
+  env: PublicEnv = process.env,
+): string {
   const after = new URL("/sign-in", appOrigin).toString();
+  const explicit = env.NEXT_PUBLIC_CLERK_SIGN_OUT_URL?.trim();
+  if (explicit && !explicit.startsWith("/")) {
+    try {
+      const url = new URL(explicit);
+      if (url.protocol === "https:" || url.protocol === "http:") {
+        url.search = "";
+        url.searchParams.set("redirect_url", after);
+        return url.toString();
+      }
+    } catch {
+      // fall through to the hosted sign-in derivation
+    }
+  }
   if (!hostedSignInUrl) return "/sign-in";
   try {
     const url = new URL(hostedSignInUrl);

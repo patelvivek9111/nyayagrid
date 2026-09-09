@@ -159,6 +159,8 @@ export type LegalProposition = z.infer<typeof legalPropositionSchema>;
 export type ResearchAuthorityChunk = {
   authorityId: string;
   chunkId: string;
+  name?: string | null;
+  authorityType?: string | null;
   citation?: string | null;
   court?: string | null;
   date?: string | null;
@@ -170,10 +172,15 @@ export type ResearchAuthorityChunk = {
 
 export function formatResearchAuthorityChunks(chunks: ResearchAuthorityChunk[]): string {
   return chunks
-    .map(
-      (c) =>
-        `- authorityId=${c.authorityId} | chunkId=${c.chunkId} | citation=${c.citation ?? "null"} | court=${c.court ?? "null"} | date=${c.date ?? "null"} | hierarchyRelationship=${c.hierarchyRelationship ?? "unknown"} | temporalApplicability=${c.temporalApplicability ?? "unknown"} | jurisdiction=${c.jurisdiction ?? "null"} | text=|${c.content}|`,
-    )
+    .map((c) => {
+      const controlling =
+        c.hierarchyRelationship === "controlling" || c.hierarchyRelationship === "potentially_binding"
+          ? "controlling_or_potentially_binding"
+          : c.hierarchyRelationship === "persuasive" || c.hierarchyRelationship === "out_of_jurisdiction"
+            ? "persuasive_or_nonbinding"
+            : "unknown";
+      return `- authorityId=${c.authorityId} | name=${c.name ?? "null"} | authorityType=${c.authorityType ?? "null"} | chunkId=${c.chunkId} | citation=${c.citation ?? "null"} | court=${c.court ?? "null"} | date=${c.date ?? "null"} | hierarchyRelationship=${c.hierarchyRelationship ?? "unknown"} | controllingOrPersuasive=${controlling} | temporalApplicability=${c.temporalApplicability ?? "unknown"} | jurisdiction=${c.jurisdiction ?? "null"} | text=|${c.content}|`;
+    })
     .join("\n");
 }
 

@@ -13,8 +13,8 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
   MockAIProvider,
-  OpenAIProvider,
   citedAnswerSchema,
+  createDirectProvider,
   validateCitedAnswerAgainstPassages,
   validateQuoteAgainstText,
   NYAYA_PROMPT_VERSION,
@@ -22,6 +22,7 @@ import {
   constrainCitedAnswer,
   type AIProvider,
 } from "../index";
+import { loadCanonicalLocalEnv } from "../load-local-env";
 import { CONTRADICTION_ANALYSIS_PROMPT_VERSION } from "../professional";
 import { EVAL_CASES, type EvalCase } from "./fixtures";
 import { GRADED_CASES, gradedCaseToPrompt, EVAL_CASE_QA_RERANK } from "./graded-cases";
@@ -65,6 +66,7 @@ import { formatRepeatVarianceReport, summarizeRepeatVariance } from "./variance"
 import { writeReviewExport, type ReviewExportItem } from "./export-review";
 
 const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../../..");
+loadCanonicalLocalEnv({ repoRoot: REPO_ROOT });
 
 type EvalOutcome = {
   name: string;
@@ -634,10 +636,13 @@ async function main() {
   }
 
   const provider: AIProvider = live
-    ? new OpenAIProvider({
-        apiKey: liveConfig.apiKey!,
-        model: liveConfig.model,
-      })
+    ? createDirectProvider({
+        provider: liveConfig.provider,
+        env: {
+          ...process.env,
+          ...(liveConfig.provider === "openai" ? { OPENAI_MODEL: liveConfig.model } : {}),
+        },
+      }).provider
     : new MockAIProvider();
 
   const budget = live ? new EvalBudgetTracker(liveConfig) : null;

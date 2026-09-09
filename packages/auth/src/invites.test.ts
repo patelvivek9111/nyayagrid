@@ -76,6 +76,44 @@ describe("createOrganizationInvite", () => {
       }),
     ).rejects.toMatchObject({ code: "ROLE_NOT_INVITEABLE" });
   });
+
+  it("still returns the one-time token when invite email delivery throws", async () => {
+    const inviteRow = {
+      id: "inv_1",
+      organizationId: "org_1",
+      email: "person@example.com",
+      roleId: "role_1",
+      invitedByUserId: "user_1",
+      expiresAt: new Date(),
+      createdAt: new Date(),
+    };
+    const tx = {
+      update: vi.fn(() => chain([])),
+      insert: vi.fn(() => chain([inviteRow])),
+    };
+    const db = fakeDb(
+      [[ORG_ROW], [{ ...ROLE_ROW, key: "staff" }], [{ name: "Ada" }]],
+      {
+      transaction: vi.fn(async (fn: (inner: typeof tx) => Promise<unknown>) => fn(tx)),
+    });
+    const emailProvider = {
+      name: "smtp",
+      send: vi.fn(async () => {
+        throw new Error("smtp_down");
+      }),
+    };
+    const result = await createOrganizationInvite({
+      db,
+      organizationId: "org_1",
+      email: "person@example.com",
+      roleId: "role_1",
+      invitedByUserId: "user_1",
+      emailProvider,
+    });
+    expect(result.inviteId).toBe("inv_1");
+    expect(result.token.length).toBeGreaterThan(16);
+    expect(emailProvider.send).toHaveBeenCalledTimes(1);
+  });
 });
 
 describe("acceptOrganizationInvite", () => {

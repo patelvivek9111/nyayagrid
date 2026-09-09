@@ -2,6 +2,8 @@
  * Lexical question–passage overlap used to rerank an already-retrieved set so
  * the answering chunk outranks a near-miss decoy. Does not drop passages.
  */
+import { exactDatesEqual, extractExactDates } from "./imprecise-date";
+
 const STOPWORDS = new Set([
   "a",
   "an",
@@ -47,6 +49,22 @@ function bigrams(tokens: string[]): string[] {
   return grams;
 }
 
+const DATE_ROLE_RE =
+  /\b(commenc(?:e|es|ed|ing|ement)|effective date|expir(?:e|es|ed|ation)|execut(?:e|ed|ion))\b/i;
+
+function dateRoleAlignment(question: string, passageText: string): number {
+  if (!DATE_ROLE_RE.test(question)) return 0;
+  const hasRole = DATE_ROLE_RE.test(passageText);
+  if (hasRole) return 8;
+  const questionDates = extractExactDates(question);
+  const passageDates = extractExactDates(passageText);
+  const sharesAskedDate = questionDates.some((asked) =>
+    passageDates.some((have) => exactDatesEqual(asked, have)),
+  );
+  if (sharesAskedDate) return -6;
+  return 0;
+}
+
 export function questionOverlapScore(question: string, passageText: string): number {
   const qTokens = tokenize(question);
   const pTokens = tokenize(passageText);
@@ -60,6 +78,7 @@ export function questionOverlapScore(question: string, passageText: string): num
   for (const gram of bigrams(qTokens)) {
     if (passageBigrams.has(gram)) score += 2;
   }
+  score += dateRoleAlignment(question, passageText);
   return score;
 }
 

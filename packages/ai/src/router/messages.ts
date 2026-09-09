@@ -5,6 +5,20 @@ export type NormalizedPrompt = {
   messages: Array<{ role: "user" | "assistant"; content: string }>;
 };
 
+export type AnthropicTextBlock = { type: "text"; text: string };
+
+/**
+ * Strip transport-illegal characters that some providers reject with HTTP 400
+ * (NUL, non-characters, unpaired surrogates). Does not change legal content.
+ */
+export function sanitizeMessageContent(text: string): string {
+  return text
+    .replace(/\u0000/g, "")
+    .replace(/[\uFFFE\uFFFF]/g, "")
+    .replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])/g, "\uFFFD")
+    .replace(/(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g, "\uFFFD");
+}
+
 /**
  * Split OpenAI-style messages into a system block plus turn messages.
  * Safety/system instructions must not be dropped when an SDK wants system separately.
@@ -13,11 +27,12 @@ export function normalizePromptMessages(messages: AiMessage[]): NormalizedPrompt
   const systemParts: string[] = [];
   const turns: Array<{ role: "user" | "assistant"; content: string }> = [];
   for (const message of messages) {
+    const content = sanitizeMessageContent(message.content);
     if (message.role === "system") {
-      if (message.content.trim()) systemParts.push(message.content);
+      if (content.trim()) systemParts.push(content);
       continue;
     }
-    turns.push({ role: message.role, content: message.content });
+    turns.push({ role: message.role, content });
   }
   return {
     system: systemParts.join("\n\n"),
@@ -53,16 +68,30 @@ export function toGoogleContents(messages: AiMessage[]): {
 }
 
 export function toAnthropicBody(messages: AiMessage[]): {
-  system?: string;
-  messages: Array<{ role: "user" | "assistant"; content: string }>;
+  system?: AnthropicTextBlock[];
+  messages: Array<{ role: "user" | "assistant"; content: AnthropicTextBlock[] }>;
 } {
   const { system, messages: turns } = normalizePromptMessages(messages);
+  const nonempty = turns.filter((turn) => turn.content.trim().length > 0);
+  const merged: Array<{ role: "user" | "assistant"; content: string }> = [];
+  for (const turn of nonempty) {
+    const last = merged[merged.length - 1];
+    if (last && last.role === turn.role) {
+      last.content = `${last.content}\n\n${turn.content}`;
+    } else {
+      merged.push({ role: turn.role, content: turn.content });
+    }
+  }
+  if (merged[0]?.role === "assistant") {
+    merged.unshift({ role: "user", content: "(context continues)" });
+  }
   const ensured =
-    turns.length > 0
-      ? turns
-      : [{ role: "user" as const, content: "" }];
+    merged.length > 0 ? merged : [{ role: "user" as const, content: "(no user content)" }];
   return {
-    system: system || undefined,
-    messages: ensured,
+    system: system ? [{ type: "text", text: system }] : undefined,
+    messages: ensured.map((turn) => ({
+      role: turn.role,
+      content: [{ type: "text" as const, text: turn.content }],
+    })),
   };
 }

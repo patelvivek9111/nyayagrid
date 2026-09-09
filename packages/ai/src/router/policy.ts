@@ -17,8 +17,19 @@ function parseList(raw: string | undefined): ProviderId[] {
 }
 
 export function resolveEnvProviderPolicy(env: EnvSource = process.env): ProviderPolicy {
+  const rawAllowed = env.NYAYA_ALLOWED_PROVIDERS?.trim();
+  const allowed = parseList(rawAllowed);
+  if (rawAllowed && allowed.length === 0) {
+    return {
+      allowedProviders: [],
+      blockedProviders: parseList(
+        [env.NYAYA_BLOCKED_PROVIDERS, env.NYAYA_DISABLED_PROVIDERS].filter(Boolean).join(","),
+      ),
+      denyAll: true,
+    };
+  }
   return {
-    allowedProviders: parseList(env.NYAYA_ALLOWED_PROVIDERS),
+    allowedProviders: allowed,
     blockedProviders: parseList(
       [env.NYAYA_BLOCKED_PROVIDERS, env.NYAYA_DISABLED_PROVIDERS].filter(Boolean).join(","),
     ),
@@ -39,13 +50,18 @@ export function mergeProviderPolicy(
       ...(orgPolicy?.blockedProviders ?? []),
     ]),
   ];
-  return { allowedProviders: allowed, blockedProviders: blocked };
+  return {
+    allowedProviders: allowed,
+    blockedProviders: blocked,
+    denyAll: Boolean(envPolicy.denyAll || orgPolicy?.denyAll),
+  };
 }
 
 export function isProviderAllowed(
   provider: string,
   policy: ProviderPolicy,
 ): boolean {
+  if (policy.denyAll) return false;
   const blocked = policy.blockedProviders ?? [];
   if (blocked.includes(provider as ProviderId)) return false;
   const allowed = policy.allowedProviders ?? [];

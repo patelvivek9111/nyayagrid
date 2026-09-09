@@ -35,6 +35,10 @@ import {
   resolveMemoryCreateConfidence,
   resolveMemoryCreateStatus,
 } from "./trust";
+import {
+  extractGroundedMemoryCandidates,
+  selectMemoryProposalChunks,
+} from "./candidates";
 
 const ACTIVE = ["approved", "edited_and_approved"] as const;
 
@@ -446,7 +450,7 @@ export async function proposeMatterMemories(params: {
     organizationId: params.organizationId,
     matterId: params.matterId,
   });
-  const sourceChunks = await params.db
+  const sourceChunkRows = await params.db
     .select({
       id: documentChunks.id,
       content: documentChunks.content,
@@ -458,7 +462,16 @@ export async function proposeMatterMemories(params: {
         eq(documentChunks.matterId, params.matterId),
       ),
     )
-    .limit(12);
+    .limit(80);
+  const sourceChunks = selectMemoryProposalChunks(
+    params.question ?? params.hint,
+    sourceChunkRows,
+    12,
+  );
+  const groundedCandidates = extractGroundedMemoryCandidates({
+    question: params.question,
+    chunks: sourceChunks,
+  });
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "matter_memory_proposal",
@@ -478,6 +491,11 @@ export async function proposeMatterMemories(params: {
           hint: params.hint,
           verifiedContext: formatVerifiedIntelligenceForPrompt(verified),
           chunks: sourceChunks.map((c) => ({ chunkId: c.id, content: c.content })),
+          groundedCandidates: groundedCandidates.map((c) => ({
+            title: c.title,
+            content: c.content,
+            sourceChunkId: c.sourceChunkId,
+          })),
         }),
       },
     ],
@@ -533,6 +551,40 @@ export async function proposeMatterMemories(params: {
       },
     });
     created.push(memory);
+  }
+
+  if (created.length === 0) {
+    for (const candidate of groundedCandidates.slice(0, 3)) {
+      const chunkIds = filterSupportingMemoryChunkIds({
+        title: candidate.title,
+        content: candidate.content,
+        claimedChunkIds: [candidate.sourceChunkId],
+        chunks: sourceChunks.map((chunk) => ({ id: chunk.id, content: chunk.content })),
+      });
+      if (chunkIds.length === 0) continue;
+      const memory = await createMatterMemory({
+        db: params.db,
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        userId: params.userId,
+        memoryType: "other",
+        title: candidate.title,
+        content: candidate.content,
+        importance: "normal",
+        origin: "ai",
+        status: "proposed",
+        confidence: "medium",
+        sourceType: "ai_proposal",
+        sourceReference: {
+          promptVersion: MEMORY_PROPOSAL_PROMPT_VERSION,
+          rationale: "Deterministic source-backed candidate; not approved.",
+          provider: generation.provider,
+          model: generation.model,
+          chunkIds,
+        },
+      });
+      created.push(memory);
+    }
   }
 
   if (created.length === 0 && params.hint?.trim()) {

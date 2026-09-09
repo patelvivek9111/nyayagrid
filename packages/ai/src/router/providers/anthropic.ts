@@ -1,6 +1,6 @@
 import type { AiGenerateRequest, AiGenerateResult, AIProvider } from "../../provider-contract";
 import { ProviderError } from "../errors";
-import { fetchProviderWithRetry } from "../http";
+import { fetchProviderWithRetry, requestAbortSignal, readResponseJson } from "../http";
 import { toAnthropicBody } from "../messages";
 
 const DEFAULT_BASE = "https://api.anthropic.com";
@@ -47,11 +47,11 @@ export class AnthropicProvider implements AIProvider {
           ...(system ? { system } : {}),
           messages,
         }),
-        signal: request.signal,
+        signal: requestAbortSignal(request),
       },
       { provider: this.name, fetchImpl: this.config.fetchImpl },
     );
-    const data = (await response.json()) as {
+    const data = (await readResponseJson(response, request.signal)) as {
       model?: string;
       stop_reason?: string;
       content?: Array<{ type?: string; text?: string }>;

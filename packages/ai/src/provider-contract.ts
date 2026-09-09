@@ -68,6 +68,11 @@ export type RiskSignal =
 export type ProviderPolicy = {
   allowedProviders?: ProviderId[];
   blockedProviders?: ProviderId[];
+  /**
+   * Fail-closed: no provider may run. Set when an allowed-provider list is present
+   * but contains no known providers (unknown-only / empty-after-parse).
+   */
+  denyAll?: boolean;
 };
 
 export type RouterRequestContext = {

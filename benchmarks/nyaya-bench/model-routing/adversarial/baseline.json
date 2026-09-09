@@ -1,0 +1,36 @@
+{
+  "gateId": "nyaya-router-adversarial-v1",
+  "recordedFrom": "quality-phase-checkpoint.json autoAskR3 / mixed Auto closeout",
+  "ask": {
+    "pass": 51,
+    "total": 51,
+    "critical": 0,
+    "materialQualityPct": 100,
+    "criticalSafetyPct": 100,
+    "p50Ms": 5391,
+    "p95Ms": 7290,
+    "provider": "xai",
+    "modelPin": "grok-3"
+  },
+  "safetyFloor": {
+    "pass": 8,
+    "total": 8,
+    "critical": 0,
+    "materialQualityPct": 100,
+    "criticalSafetyPct": 100
+  },
+  "mixedAuto": {
+    "pass": 190,
+    "total": 192,
+    "needsWork": 1,
+    "fail": 1,
+    "critical": 0,
+    "materialQualityPct": 98.96,
+    "criticalSafetyPct": 100
+  },
+  "promptVersionAsk": "nyaya-matter-qa-v11",
+  "registryVersion": "nyaya-registry-v1",
+  "certificationRulesVersion": "nyaya-cert-rules-v1",
+  "auditVersion": "nyaya-routing-audit-v1",
+  "featureAgents": "OFF"
+}

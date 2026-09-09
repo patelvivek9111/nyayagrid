@@ -11,6 +11,7 @@
  */
 import { createLogger } from "@nyayagrid/observability";
 import { getAppEnv, type EnvSource } from "./config";
+import { sendSmtpMessage, SmtpTransportError } from "./smtp-transport";
 
 const logger = createLogger("platform.email");
 
@@ -71,16 +72,16 @@ export type SmtpEmailConfig = {
   from: EmailAddress;
   username?: string;
   password?: string;
+  /** Implicit TLS from connect (port 465). */
   secure: boolean;
+  /** Upgrade with STARTTLS after EHLO (port 587). Ignored when `secure` is true. */
+  startTls: boolean;
 };
 
 /**
- * Configuration-complete SMTP adapter with no transport yet.
- *
- * It validates and reports what is missing at construction time so a deployment fails at startup
- * rather than at the moment someone tries to invite a colleague. `send` throws until a real SMTP
- * client is wired in; it deliberately does not pretend to deliver, because a silently swallowed
- * invite is indistinguishable from a delivered one.
+ * Configuration-complete SMTP adapter. Port 465 uses implicit TLS; port 587 uses STARTTLS.
+ * Failures throw (invites are not silently swallowed). Timeouts are bounded. Credentials and
+ * message bodies are never logged.
  */
 export class SmtpEmailProvider implements EmailProvider {
   readonly name = "smtp";
@@ -91,33 +92,60 @@ export class SmtpEmailProvider implements EmailProvider {
     if (missing.length > 0) {
       throw new Error(`SmtpEmailProvider requires ${missing.join(", ")}`);
     }
-    this.config = config;
+    this.config = {
+      ...config,
+      startTls: config.startTls ?? !config.secure,
+    };
   }
 
   async send(message: EmailMessage): Promise<EmailSendResult> {
-    logger.error("SMTP transport is not implemented", { to: message.to });
-    throw new Error(
-      "SmtpEmailProvider has no transport yet. Implement it before enabling EMAIL_PROVIDER=smtp.",
-    );
+    try {
+      const sent = await sendSmtpMessage(this.config, message);
+      logger.info("SMTP message accepted", { provider: this.name, delivered: true });
+      return {
+        provider: this.name,
+        delivered: true,
+        providerMessageId: sent.providerMessageId,
+      };
+    } catch (error) {
+      const kind = error instanceof SmtpTransportError ? error.kind : "protocol";
+      logger.error("SMTP send failed", { provider: this.name, kind });
+      throw new SmtpTransportError(
+        kind,
+        error instanceof SmtpTransportError ? error.message : "SMTP send failed",
+      );
+    }
   }
+}
+
+function resolveSmtpSecure(env: Record<string, string | undefined>, port: number): boolean {
+  const raw = env.SMTP_SECURE?.trim().toLowerCase();
+  if (raw === "1" || raw === "true" || raw === "yes" || raw === "on") return true;
+  if (raw === "0" || raw === "false" || raw === "no" || raw === "off") return false;
+  return port === 465;
 }
 
 export function createEmailProviderFromEnv(env: EnvSource = process.env): EmailProvider {
   const configured = env.EMAIL_PROVIDER?.trim().toLowerCase() ?? "console";
   if (configured === "smtp") {
     const port = Number(env.SMTP_PORT);
+    const resolvedPort = Number.isFinite(port) ? port : 0;
+    const secure = resolveSmtpSecure(env, resolvedPort);
     return new SmtpEmailProvider({
       host: env.SMTP_HOST ?? "",
-      port: Number.isFinite(port) ? port : 0,
+      port: resolvedPort,
       from: env.EMAIL_FROM ?? "",
       username: env.SMTP_USERNAME,
       password: env.SMTP_PASSWORD,
-      secure: (env.SMTP_SECURE ?? "1") !== "0",
+      secure,
+      startTls: !secure,
     });
   }
   if (configured === "console") return new ConsoleEmailProvider(env);
   throw new Error(`EMAIL_PROVIDER=${configured} is not implemented. Use "smtp" or "console".`);
 }
+
+export { SmtpTransportError } from "./smtp-transport";
 
 export type InviteEmailParams = {
   to: EmailAddress;

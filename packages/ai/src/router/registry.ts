@@ -8,6 +8,7 @@ import type {
   ProviderId,
 } from "../provider-contract";
 import { CERTIFICATION_SUBSYSTEMS } from "../provider-contract";
+import { CERTIFICATION_EVIDENCE, type CertificationEvidence } from "./certification-evidence";
 
 export const MODEL_REGISTRY_VERSION = "nyaya-registry-v1";
 
@@ -88,7 +89,7 @@ export const PINNED_MODEL_IDS = {
   openaiStrong: "gpt-4o",
   anthropic: "claude-sonnet-4-5-20250929",
   xai: "grok-3",
-  google: "gemini-2.5-flash",
+  google: "gemini-3.6-flash",
   mock: "mock-1",
 } as const;
 
@@ -110,6 +111,51 @@ export function resolvePinnedModelId(
   }
   if (provider === "mock") return PINNED_MODEL_IDS.mock;
   return "fake-1";
+}
+
+export function overlayRegistryEvidence(
+  registry: ModelRegistryEntry[],
+  evidence: CertificationEvidence = CERTIFICATION_EVIDENCE,
+): ModelRegistryEntry[] {
+  if (!evidence.applied || evidence.models.length === 0) return registry;
+  const measuredProviders = new Set(evidence.models.map((model) => model.provider));
+  return registry.map((entry) => {
+    const match = evidence.models.find(
+      (model) => model.provider === entry.provider && model.modelId === entry.modelId,
+    );
+    if (!match) {
+      if (entry.provider === "mock" || entry.provider === "fake") return entry;
+      if (!measuredProviders.has(entry.provider)) return entry;
+      return {
+        ...entry,
+        status: "CANDIDATE",
+        certification: candidate(),
+        notes: `Unmeasured ${entry.provider} sibling after ${evidence.benchmarkId}. Remains CANDIDATE.`,
+      };
+    }
+    const certification = { ...entry.certification, ...match.certification };
+    for (const [subsystem, route] of Object.entries(evidence.preferredAuto)) {
+      if (
+        route &&
+        route.provider === entry.provider &&
+        route.modelId === entry.modelId &&
+        (certification[subsystem as CertificationSubsystem] === "VALIDATED" ||
+          certification[subsystem as CertificationSubsystem] === "ACTIVE")
+      ) {
+        certification[subsystem as CertificationSubsystem] = "ACTIVE";
+      }
+    }
+    return {
+      ...entry,
+      status: match.status,
+      certification,
+      qualityScore: match.qualityScore,
+      safetyScore: match.safetyScore,
+      citationReliability: match.citationReliability,
+      structuredReliability: match.structuredReliability,
+      notes: match.notes,
+    };
+  });
 }
 
 function entry(params: Omit<ModelRegistryEntry, "id">): ModelRegistryEntry {
@@ -153,7 +199,7 @@ export function buildDefaultModelRegistry(env: EnvSource = process.env): ModelRe
     registerOpenAi(openaiPrimary, `OpenAI ${openaiPrimary}`);
   }
 
-  return [
+  const entries = [
     ...openaiModels.values(),
     entry({
       provider: "anthropic",
@@ -224,6 +270,7 @@ export function buildDefaultModelRegistry(env: EnvSource = process.env): ModelRe
       notes: "Test/development fixture only. Never a production legal engine.",
     }),
   ];
+  return overlayRegistryEvidence(entries);
 }
 
 export function getRegistryEntry(
@@ -265,4 +312,21 @@ export function isAutoEligible(
 ): boolean {
   const status = entry.certification[subsystem];
   return status === "VALIDATED" || status === "ACTIVE";
+}
+
+/** Independent-provider count used for Deep eligibility. Health is ignored. */
+export function countAutoEligibleProviders(
+  registry: ModelRegistryEntry[],
+  subsystem: CertificationSubsystem,
+): number {
+  return new Set(
+    registry
+      .filter(
+        (entry) =>
+          entry.provider !== "mock" &&
+          entry.provider !== "fake" &&
+          isAutoEligible(entry, subsystem),
+      )
+      .map((entry) => entry.provider),
+  ).size;
 }

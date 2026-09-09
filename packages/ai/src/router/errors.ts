@@ -100,14 +100,44 @@ export function classifyThrownError(provider: string, error: unknown): ProviderE
       retryable: true,
     });
   }
-  if (status === 401 || status === 403 || /invalid api key|unauthorized/i.test(message)) {
+  if (status === 401 || status === 403 || /invalid api key|unauthorized|permission.?denied/i.test(message)) {
     return new ProviderError({ provider, code: "auth", message, status, retryable: false });
+  }
+  if (
+    /insufficient_quota|quota exceeded|billing|resource.?exhausted|spend limit/i.test(message)
+  ) {
+    return new ProviderError({
+      provider,
+      code: "unavailable",
+      message,
+      status,
+      retryable: false,
+    });
+  }
+  if (
+    status === 404 ||
+    /model.?not.?found|does not exist|not available to|not found for api version/i.test(message)
+  ) {
+    return new ProviderError({
+      provider,
+      code: "unavailable",
+      message,
+      status: status ?? 404,
+      retryable: false,
+    });
   }
   if (status && status >= 500) {
     return new ProviderError({ provider, code: "server_error", message, status, retryable: true });
   }
   if (/missing content|malformed|invalid json|parse/i.test(message)) {
     return new ProviderError({ provider, code: "malformed", message, retryable: true });
+  }
+  if (
+    /enotfound|econnrefused|econnreset|etimedout|enetunreach|network|fetch failed|socket hang up|dns/i.test(
+      message,
+    )
+  ) {
+    return new ProviderError({ provider, code: "unavailable", message, retryable: true });
   }
   return new ProviderError({
     provider,
@@ -116,4 +146,44 @@ export function classifyThrownError(provider: string, error: unknown): ProviderE
     status,
     retryable: false,
   });
+}
+
+/** Certification/smoke taxonomy. Never a substitute for throwing the raw secret. */
+export type CredentialFailureClass =
+  | "ABSENT"
+  | "INVALID_CREDENTIAL"
+  | "MODEL_UNAVAILABLE"
+  | "QUOTA_OR_BILLING"
+  | "RATE_LIMIT"
+  | "TIMEOUT"
+  | "HARD_TIMEOUT"
+  | "SERVER_ERROR"
+  | "MALFORMED"
+  | "UNKNOWN";
+
+export function classifyCredentialFailure(
+  error: unknown,
+  provider: string,
+): CredentialFailureClass {
+  const classified = classifyThrownError(provider, error);
+  const message = classified.message;
+  if (/PROVIDER_HARD_TIMEOUT/i.test(message) || (classified.code === "aborted" && /hard/i.test(message))) {
+    return "HARD_TIMEOUT";
+  }
+  if (classified.code === "auth") return "INVALID_CREDENTIAL";
+  if (/insufficient_quota|quota exceeded|billing|resource.?exhausted|spend limit/i.test(message)) {
+    return "QUOTA_OR_BILLING";
+  }
+  if (
+    classified.status === 404 ||
+    /model.?not.?found|does not exist|not available to|not found for api version/i.test(message)
+  ) {
+    return "MODEL_UNAVAILABLE";
+  }
+  if (classified.code === "rate_limit") return "RATE_LIMIT";
+  if (classified.code === "timeout" || classified.code === "aborted") return "TIMEOUT";
+  if (classified.code === "server_error") return "SERVER_ERROR";
+  if (classified.code === "malformed") return "MALFORMED";
+  if (classified.code === "unavailable") return "MODEL_UNAVAILABLE";
+  return "UNKNOWN";
 }

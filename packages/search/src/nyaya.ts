@@ -24,6 +24,8 @@ import {
   type ResearchAuthorityChunk,
   type RiskSignal,
   type RoutingMode,
+  namedInstrumentFromQuestion,
+  instrumentMentionedInText,
 } from "@nyayagrid/ai";
 import {
   formatVerifiedIntelligenceForPrompt,
@@ -399,6 +401,8 @@ export async function askNyayaAboutMatter(params: {
         governingLawState: jurisdictionContext?.governingLawState,
         choiceOfLawDistinct: jurisdictionContext?.choiceOfLawDistinctFromForum,
         retrievedCount: passages.length,
+        question: params.question,
+        passageText: passages.map((p) => `${p.documentId} ${p.quote}`).join("\n"),
       }),
     },
     messages: [
@@ -667,6 +671,8 @@ function askRiskSignals(params: {
   governingLawState?: string | null;
   choiceOfLawDistinct?: boolean;
   retrievedCount: number;
+  question?: string;
+  passageText?: string;
 }): RiskSignal[] {
   const signals: RiskSignal[] = [];
   if (params.coverage === "limited") signals.push("limited_coverage");
@@ -674,6 +680,10 @@ function askRiskSignals(params: {
   if (params.relatedCount > 0 || params.choiceOfLawDistinct) signals.push("multiple_jurisdictions");
   if (!params.governingLawState) signals.push("missing_governing_law");
   if (params.retrievedCount < 2) signals.push("weak_retrieval");
+  const named = namedInstrumentFromQuestion(params.question ?? "");
+  if (named && !instrumentMentionedInText(named, params.passageText ?? "")) {
+    signals.push("missing_exhibit");
+  }
   return signals;
 }
 

@@ -1,26 +1,20 @@
 import {
   createMalwareScannerFromEnv,
   createOcrProviderFromEnv,
-  createStorageProviderFromEnv,
 } from "@nyayagrid/documents";
 import { createAIProviderFromEnv, createEmbeddingProviderFromEnv } from "@nyayagrid/ai";
 import { InMemoryJobDispatcher, domainHandlers } from "@nyayagrid/jobs";
 import { PostgresHybridRetriever } from "@nyayagrid/search";
 import type { AgentBudgets } from "@nyayagrid/agents";
 import { getDb } from "./db";
+import { getStorage } from "./storage";
+
+export { getStorage };
 
 const globalForInfra = globalThis as unknown as {
-  __ngStorage?: ReturnType<typeof createStorageProviderFromEnv>;
   __ngJobs?: InMemoryJobDispatcher;
   __ngRetriever?: PostgresHybridRetriever;
 };
-
-export function getStorage() {
-  if (!globalForInfra.__ngStorage) {
-    globalForInfra.__ngStorage = createStorageProviderFromEnv();
-  }
-  return globalForInfra.__ngStorage;
-}
 
 export function getMalwareScanner() {
   return createMalwareScannerFromEnv();

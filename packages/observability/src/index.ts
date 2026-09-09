@@ -3,7 +3,20 @@ export type LogLevel = "debug" | "info" | "warn" | "error";
 export type LogFields = Record<string, string | number | boolean | null | undefined>;
 
 const SENSITIVE_KEY_PATTERN =
-  /(password|secret|token|authorization|api[_-]?key|cookie|prompt|document[_-]?text|matter[_-]?text|content|body)/i;
+  /(password|secret|token|authorization|api[_-]?key|cookie|session|clerk|smtp|database[_-]?url|redis[_-]?url|dsn|connection[_-]?string|prompt|document[_-]?text|matter[_-]?text|content|body|verification[_-]?code)/i;
+
+/** Strips connection strings, bearer tokens, and key-shaped secrets from log text. */
+export function redactLogText(value: string): string {
+  return value
+    .replace(/[a-z][a-z0-9+.-]*:\/\/[^\s'"]+/gi, "[redacted]")
+    .replace(/\bBearer\s+\S+/gi, "Bearer [redacted]")
+    .replace(/\b(?:sk|pk)_(?:live|test)_[A-Za-z0-9]+/g, "[redacted]")
+    .replace(/\bsk-[A-Za-z0-9_-]{8,}/g, "[redacted]")
+    .replace(
+      /\b(?:CLERK_SECRET_KEY|DATABASE_URL|REDIS_URL|S3_SECRET_ACCESS_KEY|SMTP_PASSWORD|OPENAI_API_KEY|ANTHROPIC_API_KEY|XAI_API_KEY)=[^\s'"]+/gi,
+      "[redacted]",
+    );
+}
 
 function sanitizeFields(fields?: LogFields): LogFields | undefined {
   if (!fields) return undefined;
@@ -13,7 +26,7 @@ function sanitizeFields(fields?: LogFields): LogFields | undefined {
       out[key] = "[redacted]";
       continue;
     }
-    out[key] = value;
+    out[key] = typeof value === "string" ? redactLogText(value) : value;
   }
   return out;
 }
@@ -36,7 +49,7 @@ export function createLogger(scope: string) {
       ts: new Date().toISOString(),
       level: at,
       scope,
-      message,
+      message: redactLogText(message),
       ...sanitizeFields(fields),
     };
     const line = JSON.stringify(payload);

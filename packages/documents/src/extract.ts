@@ -1,5 +1,4 @@
 import mammoth from "mammoth";
-import { PDFParse } from "pdf-parse";
 
 export type ExtractedSegment = {
   text: string;
@@ -132,6 +131,10 @@ export class PdfNativeExtractor implements TextExtractor {
     contentType: string;
     filename: string;
   }): Promise<ExtractionResult> {
+    // pdf-parse loads pdfjs, which throws `DOMMatrix is not defined` in Node if evaluated
+    // at import time. Defer until a PDF is actually extracted so Inngest handshake and
+    // other non-PDF routes can load `@nyayagrid/documents` safely.
+    const { PDFParse } = await import("pdf-parse");
     const parser = new PDFParse({ data: params.buffer });
     try {
       const textResult = await parser.getText();

@@ -172,13 +172,33 @@ export function impreciseWindowCoversDate(
   return exact.day >= start && exact.day <= end;
 }
 
-function datesEqual(a: ExactCalendarDate, b: ExactCalendarDate): boolean {
+export function exactDatesEqual(a: ExactCalendarDate, b: ExactCalendarDate): boolean {
   return a.month === b.month && a.day === b.day && a.year === b.year;
+}
+
+const MONTH_NAMES = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+] as const;
+
+/** Format an extracted calendar date as a month-name legal date. */
+export function formatExactCalendarDate(date: ExactCalendarDate): string {
+  return `${MONTH_NAMES[date.month] ?? "January"} ${date.day}, ${date.year}`;
 }
 
 function hasConflictingExactDates(a: ExactCalendarDate[], b: ExactCalendarDate[]): boolean {
   if (a.length === 0 || b.length === 0) return false;
-  return a.some((left) => b.some((right) => !datesEqual(left, right)));
+  return a.some((left) => b.some((right) => !exactDatesEqual(left, right)));
 }
 
 /**

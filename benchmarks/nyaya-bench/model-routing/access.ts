@@ -69,6 +69,7 @@ export function inventoryProviderAccess(params: {
     ".env",
     ".env.local",
     "apps/web/.env",
+    "apps/web/.env.local",
     "benchmarks/nyaya-bench/.env",
   ];
   const dotenv: Record<string, KeyState> = {};

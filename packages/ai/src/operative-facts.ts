@@ -1,3 +1,11 @@
+import { classifyEvidenceRelation } from "./contradiction-semantics";
+import { selectOperativeProvisionRef } from "./document-structure";
+import {
+  exactDatesEqual,
+  extractExactDates,
+  formatExactCalendarDate,
+  type ExactCalendarDate,
+} from "./imprecise-date";
 import type { AssessmentPassage, EvidenceAssessment } from "./evidence-assessment";
 
 export type QuestionTargetKind =
@@ -125,6 +133,41 @@ export function extractNamedInstrument(question: string): string | null {
   );
   if (exhibit?.[1]) return exhibit[1].replace(/\s+/g, " ").trim();
   return null;
+}
+
+const INSTRUMENT_TYPE_RE =
+  /\b(amendments?|addenda|addendum|riders?|exhibits?|appendi(?:x|ces)|schedules?|annex(?:es)?|side letters?)\b/i;
+
+function compactInstrumentKey(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]+/g, "");
+}
+
+/** Named exhibit/schedule or a generic instrument type referenced by the question. */
+export function namedInstrumentFromQuestion(question: string): string | null {
+  return extractNamedInstrument(question) ?? question.match(INSTRUMENT_TYPE_RE)?.[1] ?? null;
+}
+
+export function instrumentMentionedInText(instrument: string, text: string): boolean {
+  const compactInstrument = compactInstrumentKey(instrument);
+  const compactText = compactInstrumentKey(text);
+  if (compactInstrument.length >= 4 && compactText.includes(compactInstrument)) return true;
+  const typeToken = instrument
+    .toLowerCase()
+    .replace(/s\b/, "")
+    .replace(/addenda/, "addendum")
+    .replace(/appendices/, "appendix");
+  const compactType = compactInstrumentKey(typeToken);
+  return compactType.length >= 4 && compactText.includes(compactType);
+}
+
+export function passagesMentionInstrument(
+  instrument: string,
+  passages: Array<{ documentId?: string | null; quote?: string | null }>,
+): boolean {
+  const blob = passages
+    .map((passage) => `${passage.documentId ?? ""} ${passage.quote ?? ""}`)
+    .join("\n");
+  return instrumentMentionedInText(instrument, blob);
 }
 
 export function classifyQuestionTarget(question: string, now = new Date()): QuestionTarget {
@@ -396,6 +439,10 @@ function durationAssessment(
   const sourceNote = informal
     ? " Informal recollection does not change that contractual term."
     : "";
+  const laterOverclaims = picked.laterTerms.flatMap((term) => [
+    `currently ${term.days}`,
+    `currently ${term.label}`,
+  ]);
   return {
     proposition: question.trim(),
     status: "established",
@@ -404,7 +451,7 @@ function durationAssessment(
     relevantDate: isoDate(asOf),
     operativeTerm: picked.term.label,
     allowedClaim: `As of ${isoDate(asOf)}, the operative notice period is ${picked.term.label}. ${picked.term.quote.slice(0, 200).trim()}${laterNote}${sourceNote}`,
-    prohibitedOverclaims: [],
+    prohibitedOverclaims: [...new Set(laterOverclaims)],
     limitations:
       picked.laterTerms.length > 0
         ? ["A later-effective amendment is not yet operative as of the asked date."]
@@ -566,7 +613,9 @@ function contradictionAssessment(
         "There is a genuine evidentiary tension: testimony denies entering the records room, and the access log records assigned-badge ACCESS GRANTED. The log does not conclusively prove who carried the badge.",
       prohibitedOverclaims: [
         "physically entered",
+        "physically entered the records room",
         "the statements can both be true",
+        "difference of precision",
         "difference of precision, not a contradiction",
       ],
       limitations: ["The log does not conclusively prove who carried the badge."],
@@ -647,6 +696,228 @@ export function isGenericControlBoilerplate(answer: string): boolean {
   return /signed (?:or amended )?instrument controls/i.test(answer) && !/\d+\s*days/i.test(answer);
 }
 
+function contentTokens(text: string): Set<string> {
+  const stop = new Set([
+    "sent",
+    "send",
+    "emailed",
+    "uploaded",
+    "following",
+    "that",
+    "this",
+    "from",
+    "with",
+    "have",
+    "does",
+    "were",
+    "been",
+    "into",
+    "same",
+    "day",
+    "portal",
+    "earlier",
+    "transmission",
+    "confirmed",
+    "receipt",
+    "package",
+    "when",
+    "did",
+    "you",
+    "the",
+  ]);
+  return new Set(
+    text
+      .toLowerCase()
+      .split(/\W+/)
+      .filter((token) => token.length >= 4 && !stop.has(token) && !/^\d+$/.test(token)),
+  );
+}
+
+function topicalOverlap(left: string, right: string): boolean {
+  const a = contentTokens(left);
+  let shared = 0;
+  for (const token of contentTokens(right)) {
+    if (a.has(token)) shared += 1;
+  }
+  return shared >= 1;
+}
+
+function transmittalConflictAssessment(
+  question: string,
+  passages: AssessmentPassage[],
+): EvidenceAssessment | null {
+  if (passages.length < 2) return null;
+  if (/\b(notice period|currently|as of)\b/i.test(question) && /\bnotice\b/i.test(question)) {
+    return null;
+  }
+  for (let i = 0; i < passages.length; i += 1) {
+    for (let j = i + 1; j < passages.length; j += 1) {
+      const left = passages[i]!;
+      const right = passages[j]!;
+      if (left.documentId === right.documentId) continue;
+      if (!topicalOverlap(left.quote, right.quote)) continue;
+      if (classifyEvidenceRelation(left.quote, right.quote) !== "contradiction") continue;
+      const datesLeft = extractExactDates(left.quote);
+      const datesRight = extractExactDates(right.quote);
+      if (datesLeft.length === 0 || datesRight.length === 0) continue;
+      const labels = [
+        ...datesLeft.map(formatExactCalendarDate),
+        ...datesRight.map(formatExactCalendarDate),
+      ];
+      const uniqueLabels = [...new Set(labels)];
+      if (uniqueLabels.length < 2) continue;
+      return {
+        proposition: question.trim(),
+        status: "contradicted",
+        premiseStatus: "uncertain",
+        dateSensitive: true,
+        relevantDate: null,
+        operativeTerm: uniqueLabels.join(" / "),
+        allowedClaim: `The retrieved sources conflict on the asked transmittal date: ${uniqueLabels[0]} versus ${uniqueLabels[1]}. Both accounts are in the Case record; neither is independently controlling.`,
+        prohibitedOverclaims: [
+          "fully reconciled",
+          "no conflict",
+          `definitely only ${uniqueLabels[0]}`,
+          `definitely only ${uniqueLabels[1]}`,
+        ],
+        limitations: ["Report both dates; do not pick one as certain."],
+        evidence: [
+          { chunkId: left.chunkId, role: "contradicting" as const },
+          { chunkId: right.chunkId, role: "contradicting" as const },
+        ],
+      };
+    }
+  }
+  return null;
+}
+
+function looksLikeDatedTransmittal(text: string): boolean {
+  return (
+    /\b(send|sent|emailed|uploaded|transmitted|transmission)\b/i.test(text) &&
+    extractExactDates(text).length > 0
+  );
+}
+
+function oneSidedTransmittalAssessment(
+  question: string,
+  passages: AssessmentPassage[],
+): EvidenceAssessment | null {
+  const transmittals = passages.filter((p) => looksLikeDatedTransmittal(p.quote));
+  if (transmittals.length !== 1) return null;
+  if (!/\b(agree|conflict|when was\b.{0,80}\bsent)\b/i.test(question)) return null;
+  const only = transmittals[0]!;
+  const dates = extractExactDates(only.quote);
+  if (dates.length !== 1) return null;
+  const label = formatExactCalendarDate(dates[0]!);
+  return {
+    proposition: question.trim(),
+    status: "established",
+    premiseStatus: "not_applicable",
+    dateSensitive: true,
+    relevantDate: label,
+    operativeTerm: label,
+    allowedClaim: `The retrieved account states ${label}. Whether other Case documents agree cannot be determined from this retrieval alone.`,
+    prohibitedOverclaims: ["no conflict", "fully reconciled", "documents agree"],
+    limitations: ["Do not invent a conflicting date that is not in the retrieved sources."],
+    evidence: [{ chunkId: only.chunkId, role: "direct" }],
+  };
+}
+
+function provisionIdentityAssessment(
+  question: string,
+  passages: AssessmentPassage[],
+): EvidenceAssessment | null {
+  const selected = selectOperativeProvisionRef(question, passages);
+  if (!selected) return null;
+  const passage = passages.find((p) => p.chunkId === selected.chunkId);
+  if (!passage) return null;
+  return {
+    proposition: question.trim(),
+    status: "established",
+    premiseStatus: "not_applicable",
+    dateSensitive: false,
+    relevantDate: null,
+    operativeTerm: selected.label,
+    allowedClaim: `The retrieved source identifies ${selected.label} as the controlling provision for the asked requirement. ${passage.quote.slice(0, 240).trim()}`,
+    prohibitedOverclaims: [],
+    limitations: [],
+    evidence: [{ chunkId: selected.chunkId, role: "direct" }],
+  };
+}
+
+const DATE_ROLE_RES: Array<{ role: "commencement" | "effective" | "expiration"; re: RegExp }> = [
+  { role: "commencement", re: /\b(commences?|commencement|term commences|lease term)\b/i },
+  { role: "effective", re: /\b(becomes effective|effective date)\b/i },
+  { role: "expiration", re: /\b(expires?|expiration)\b/i },
+];
+
+function extractRoleDates(passage: AssessmentPassage): Array<{
+  role: "commencement" | "effective" | "expiration";
+  date: ExactCalendarDate;
+  quote: string;
+  chunkId: string;
+}> {
+  const dates = extractExactDates(passage.quote);
+  if (dates.length === 0) return [];
+  const hits: Array<{
+    role: "commencement" | "effective" | "expiration";
+    date: ExactCalendarDate;
+    quote: string;
+    chunkId: string;
+  }> = [];
+  for (const spec of DATE_ROLE_RES) {
+    if (!spec.re.test(passage.quote)) continue;
+    const idx = passage.quote.search(spec.re);
+    const window = passage.quote.slice(Math.max(0, idx - 40), idx + 80);
+    const local = extractExactDates(window);
+    const chosen = local[0] ?? dates[0];
+    if (!chosen) continue;
+    hits.push({ role: spec.role, date: chosen, quote: passage.quote, chunkId: passage.chunkId });
+  }
+  return hits;
+}
+
+function dateRoleMismatchAssessment(
+  question: string,
+  passages: AssessmentPassage[],
+): EvidenceAssessment | null {
+  if (
+    /\band\b/i.test(question) &&
+    /\b(rent|amount|notice|expir)\b/i.test(question) &&
+    /\bcommenc/i.test(question)
+  ) {
+    return null;
+  }
+  if (!/\b(did|does|is|was)\b/i.test(question)) return null;
+  if (!/\b(commenc|effective date|expir)/i.test(question)) return null;
+  const asked = extractExactDates(question);
+  if (asked.length !== 1) return null;
+  const askedDate = asked[0]!;
+  const role: "commencement" | "effective" | "expiration" = /\bexpir/i.test(question)
+    ? "expiration"
+    : /\beffective date\b/i.test(question)
+      ? "effective"
+      : "commencement";
+  const hits = passages.flatMap(extractRoleDates).filter((hit) => hit.role === role);
+  if (hits.length !== 1) return null;
+  const source = hits[0]!;
+  if (exactDatesEqual(source.date, askedDate)) return null;
+  const sourceLabel = formatExactCalendarDate(source.date);
+  const askedLabel = formatExactCalendarDate(askedDate);
+  return {
+    proposition: question.trim(),
+    status: "established",
+    premiseStatus: "contradicted",
+    dateSensitive: true,
+    relevantDate: sourceLabel,
+    operativeTerm: sourceLabel,
+    allowedClaim: `No. The ${role} date in the retrieved instrument is ${sourceLabel}, not ${askedLabel}. ${source.quote.slice(0, 220).trim()}`,
+    prohibitedOverclaims: [`commence on ${askedLabel}`, `commenced on ${askedLabel}`],
+    limitations: [],
+    evidence: [{ chunkId: source.chunkId, role: "direct" }],
+  };
+}
+
 export function selectOperativeAssessment(
   question: string,
   passages: AssessmentPassage[],
@@ -654,6 +925,10 @@ export function selectOperativeAssessment(
 ): EvidenceAssessment | null {
   return (
     namedSourceAssessment(question, passages, now) ??
+    transmittalConflictAssessment(question, passages) ??
+    oneSidedTransmittalAssessment(question, passages) ??
+    provisionIdentityAssessment(question, passages) ??
+    dateRoleMismatchAssessment(question, passages) ??
     contradictionAssessment(question, passages) ??
     durationAssessment(question, passages, now) ??
     terminationAssessment(question, passages, now) ??

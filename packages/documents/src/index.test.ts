@@ -2,12 +2,15 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   assertNeverMarkedScannedWithoutScanner,
   assertPageCountAllowed,
+  assertStoredObjectMatchesDocumentVersion,
   assertUploadSizeAllowed,
   canTransitionDocumentState,
   chunkSegments,
   ClamAvMalwareScanner,
   createMalwareScannerFromEnv,
+  createStorageProviderFromEnv,
   DevelopmentMalwareScanner,
+  DocumentDownloadError,
   enforceProductionScanPolicy,
   InMemoryStorageProvider,
   mapMalwareResultToProcessingState,
@@ -60,6 +63,36 @@ describe("document processing states", () => {
 
   it("hashes content", () => {
     expect(sha256Buffer(Buffer.from("hello"))).toHaveLength(64);
+  });
+
+  it("selects the s3 provider from runtime env keys, not build-time member access", () => {
+    const keys = [
+      "APP_ENV",
+      "STORAGE_PROVIDER",
+      "S3_ENDPOINT",
+      "S3_ACCESS_KEY_ID",
+      "S3_SECRET_ACCESS_KEY",
+      "S3_BUCKET",
+      "S3_REGION",
+      "S3_FORCE_PATH_STYLE",
+    ] as const;
+    const previous = Object.fromEntries(keys.map((key) => [key, process.env[key]]));
+    process.env.APP_ENV = "staging";
+    process.env.STORAGE_PROVIDER = "s3";
+    process.env.S3_ENDPOINT = "https://example.r2.cloudflarestorage.com";
+    process.env.S3_ACCESS_KEY_ID = "runtime-key";
+    process.env.S3_SECRET_ACCESS_KEY = "runtime-secret";
+    process.env.S3_BUCKET = "runtime-bucket";
+    process.env.S3_REGION = "auto";
+    process.env.S3_FORCE_PATH_STYLE = "true";
+    try {
+      expect(createStorageProviderFromEnv().name).toBe("aws-s3");
+    } finally {
+      for (const key of keys) {
+        if (previous[key] === undefined) delete process.env[key];
+        else process.env[key] = previous[key];
+      }
+    }
   });
 });
 
@@ -237,6 +270,72 @@ describe("signed downloads and content disposition", () => {
     await expect(storage.getSignedDownloadUrl({ key: "org/x/does-not-exist" })).rejects.toThrow(
       /not found/,
     );
+  });
+
+  it("unique version keys keep the original object addressable after a later version is stored", async () => {
+    const storage = new InMemoryStorageProvider();
+    const v1Key = "org/org_a/documents/doc_1/versions/ver_1/notice.txt";
+    const v2Key = "org/org_a/documents/doc_1/versions/ver_2/notice.txt";
+    const original = Buffer.from("original-bytes");
+    const later = Buffer.from("later-bytes");
+    await storage.putObject({
+      key: v1Key,
+      body: original,
+      contentType: "text/plain",
+      metadata: { sha256: sha256Buffer(original) },
+    });
+    await storage.putObject({
+      key: v2Key,
+      body: later,
+      contentType: "text/plain",
+      metadata: { sha256: sha256Buffer(later) },
+    });
+    expect(Buffer.from(await storage.getObject(v1Key)).equals(original)).toBe(true);
+    expect(Buffer.from(await storage.getObject(v2Key)).equals(later)).toBe(true);
+  });
+
+  it("metadata/object mismatch and missing objects fail closed", async () => {
+    const storage = new InMemoryStorageProvider();
+    const key = "org/org_a/documents/doc_1/versions/ver_1/notice.txt";
+    const body = Buffer.from("original-bytes");
+    await storage.putObject({
+      key,
+      body,
+      contentType: "text/plain",
+      metadata: { sha256: sha256Buffer(body) },
+    });
+    await expect(
+      assertStoredObjectMatchesDocumentVersion({
+        storage,
+        storageKey: key,
+        sha256: sha256Buffer(body),
+        byteSize: body.length,
+      }),
+    ).resolves.toBeUndefined();
+    await expect(
+      assertStoredObjectMatchesDocumentVersion({
+        storage,
+        storageKey: key,
+        sha256: "0".repeat(64),
+        byteSize: body.length,
+      }),
+    ).rejects.toMatchObject({ code: "OBJECT_MISMATCH" });
+    await expect(
+      assertStoredObjectMatchesDocumentVersion({
+        storage,
+        storageKey: key,
+        sha256: sha256Buffer(body),
+        byteSize: body.length + 1,
+      }),
+    ).rejects.toBeInstanceOf(DocumentDownloadError);
+    await expect(
+      assertStoredObjectMatchesDocumentVersion({
+        storage,
+        storageKey: "org/org_a/documents/doc_1/versions/ver_missing/notice.txt",
+        sha256: sha256Buffer(body),
+        byteSize: body.length,
+      }),
+    ).rejects.toMatchObject({ code: "NOT_FOUND" });
   });
 });
 

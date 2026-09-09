@@ -19,6 +19,7 @@
  *    adapters that do not exist yet, so production cannot boot until they are written.
  */
 import { createLogger } from "@nyayagrid/observability";
+import { parseRedisTarget } from "./redis-rate-limit";
 
 export const APP_ENVS = ["development", "test", "staging", "production"] as const;
 export type AppEnv = (typeof APP_ENVS)[number];
@@ -315,6 +316,10 @@ export function collectProductionConfigProblems(env: EnvSource = process.env): s
   } else if (rateLimitProvider === "redis") {
     if (!read(env, "REDIS_URL") && !read(env, "REDIS_HOST")) {
       problems.push("RATE_LIMIT_PROVIDER=redis requires REDIS_URL or REDIS_HOST.");
+    } else if (!parseRedisTarget(env)) {
+      problems.push(
+        "REDIS_URL is not a redis:// or rediss:// URL. Paste only the URL, not a redis-cli command or REST endpoint.",
+      );
     }
   } else {
     problems.push(
@@ -429,9 +434,35 @@ export function collectConfigWarnings(env: EnvSource = process.env): string[] {
 }
 
 /**
- * Throws when this process is production and any production requirement is unmet. A no-op
- * elsewhere: development is *supposed* to run the mock providers.
+ * Staging may boot with incomplete cloud resources (readiness then 503), but must not
+ * silently become a development replica: mock models, mock embeddings, ClamAV substitute,
+ * or Inngest dev signing.
  */
+export function collectStagingStandInProblems(env: EnvSource = process.env): string[] {
+  const problems: string[] = [];
+  if (resolveAiProvider(env) === "mock") {
+    problems.push(
+      "AI_PROVIDER resolves to mock. Staging must use a real model provider. Set AI_PROVIDER=openai (Router still selects certified routes).",
+    );
+  }
+  if (resolveEmbeddingProvider(env) === "mock") {
+    problems.push(
+      "EMBEDDING_PROVIDER resolves to mock. Staging retrieval must use real embeddings. Set EMBEDDING_PROVIDER=openai.",
+    );
+  }
+  if (resolveMalwareScanner(env) === "development") {
+    problems.push(
+      "MALWARE_SCANNER resolves to development. Staging must not use unscanned_development. Set MALWARE_SCANNER=clamav (or the production scanner) with a reachable scanner host.",
+    );
+  }
+  if (isTruthyFlag(read(env, "INNGEST_DEV"))) {
+    problems.push(
+      "INNGEST_DEV is set. Staging must use hosted Inngest (INNGEST_DEV unset) with real signing keys.",
+    );
+  }
+  return problems;
+}
+
 export function validateProductionConfig(env: EnvSource = process.env): void {
   if (getAppEnv(env) !== "production") return;
   const problems = collectProductionConfigProblems(env);
@@ -515,6 +546,16 @@ export function validateConfigForEnv(env: EnvSource = process.env): ConfigValida
         "AUTH_PROVIDER resolves to dev. Staging must use AUTH_PROVIDER=clerk. Use APP_ENV=development with AUTH_PROVIDER=dev only for local development.",
       ],
     );
+  }
+
+  if (appEnv === "staging") {
+    const standIns = collectStagingStandInProblems(env);
+    if (standIns.length > 0) {
+      throw new ConfigurationError(
+        "Refusing to start: staging cannot use development stand-ins",
+        standIns,
+      );
+    }
   }
 
   const problems = appEnv === "staging" ? collectProductionConfigProblems(env) : [];

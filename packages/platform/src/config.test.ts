@@ -207,6 +207,16 @@ describe("collectProductionConfigProblems", () => {
     );
   });
 
+  it("flags a redis-cli command pasted as REDIS_URL", () => {
+    const problems = collectProductionConfigProblems({
+      ...SAFE_PRODUCTION_ENV,
+      REDIS_URL: "redis-cli --tls -u redis://default:s3cret@example.upstash.io:6379",
+    });
+    expect(problems.some((p) => p.includes("REDIS_URL is not a redis:// or rediss:// URL"))).toBe(
+      true,
+    );
+  });
+
   it("flags MALWARE_SCANNER=clamav without CLAMAV_HOST and fixture mode", () => {
     const missingHost = collectProductionConfigProblems({
       ...SAFE_PRODUCTION_ENV,
@@ -276,13 +286,18 @@ describe("validateConfigForEnv", () => {
     expect(result.appEnv).toBe("production");
   });
 
-  it("reports staging problems as advisory instead of throwing when Clerk is configured", async () => {
+  it("reports staging problems as advisory instead of throwing when Clerk is configured and stand-ins are off", () => {
     const result = validateConfigForEnv({
       APP_ENV: "staging",
       AUTH_PROVIDER: "clerk",
       CLERK_SECRET_KEY: "sk",
       NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "pk",
       CLERK_WEBHOOK_SECRET: "whsec",
+      AI_PROVIDER: "openai",
+      OPENAI_API_KEY: "sk-openai-test",
+      EMBEDDING_PROVIDER: "openai",
+      MALWARE_SCANNER: "clamav",
+      CLAMAV_HOST: "clamav.example",
     });
     expect(result.appEnv).toBe("staging");
     expect(result.problems.length).toBeGreaterThan(0);
@@ -290,6 +305,33 @@ describe("validateConfigForEnv", () => {
 
   it("throws when staging uses AUTH_PROVIDER=dev", () => {
     expect(() => validateConfigForEnv({ APP_ENV: "staging", AUTH_PROVIDER: "dev" })).toThrow(
+      ConfigurationError,
+    );
+  });
+
+  it("throws when staging uses mock AI, mock embeddings, development malware, or Inngest dev", () => {
+    const clerkBase = {
+      APP_ENV: "staging",
+      AUTH_PROVIDER: "clerk",
+      CLERK_SECRET_KEY: "sk",
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: "pk",
+      CLERK_WEBHOOK_SECRET: "whsec",
+      AI_PROVIDER: "openai",
+      OPENAI_API_KEY: "sk-openai-test",
+      EMBEDDING_PROVIDER: "openai",
+      MALWARE_SCANNER: "clamav",
+      CLAMAV_HOST: "clamav.example",
+    };
+    expect(() => validateConfigForEnv({ ...clerkBase, AI_PROVIDER: "mock" })).toThrow(
+      ConfigurationError,
+    );
+    expect(() => validateConfigForEnv({ ...clerkBase, EMBEDDING_PROVIDER: "mock" })).toThrow(
+      ConfigurationError,
+    );
+    expect(() => validateConfigForEnv({ ...clerkBase, MALWARE_SCANNER: "development" })).toThrow(
+      ConfigurationError,
+    );
+    expect(() => validateConfigForEnv({ ...clerkBase, INNGEST_DEV: "1" })).toThrow(
       ConfigurationError,
     );
   });

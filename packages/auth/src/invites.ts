@@ -173,23 +173,27 @@ export async function createOrganizationInvite(
   });
 
   if (params.emailProvider) {
-    const [inviter] = await db
-      .select({ name: users.name })
-      .from(users)
-      .where(eq(users.id, params.invitedByUserId))
-      .limit(1);
-    const appUrl = (
-      params.appUrl ??
-      process.env.NEXT_PUBLIC_APP_URL ??
-      "http://localhost:3000"
-    ).replace(/\/+$/, "");
-    await sendInviteEmail(params.emailProvider, {
-      to: email,
-      organizationName: organization.name,
-      invitedByName: inviter?.name ?? null,
-      acceptUrl: `${appUrl}/invites/accept?token=${encodeURIComponent(token)}`,
-      expiresAt,
-    });
+    try {
+      const [inviter] = await db
+        .select({ name: users.name })
+        .from(users)
+        .where(eq(users.id, params.invitedByUserId))
+        .limit(1);
+      const appUrl = (
+        params.appUrl ??
+        process.env.NEXT_PUBLIC_APP_URL ??
+        "http://localhost:3000"
+      ).replace(/\/+$/, "");
+      await sendInviteEmail(params.emailProvider, {
+        to: email,
+        organizationName: organization.name,
+        invitedByName: inviter?.name ?? null,
+        acceptUrl: `${appUrl}/invites/accept?token=${encodeURIComponent(token)}`,
+        expiresAt,
+      });
+    } catch {
+      // Invite row + audit already committed. SMTP failure must not hide the one-time token.
+    }
   }
 
   return { inviteId: invite.id, token, expiresAt };

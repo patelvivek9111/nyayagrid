@@ -45,6 +45,11 @@ describe("Clerk UI configuration", () => {
     const signOut = clerkSignOutHref(hosted, "https://app.nyayagrid.example");
     expect(signOut).toContain("sign-out");
     expect(signOut).toContain("redirect_url=");
+    const explicit = clerkSignOutHref(hosted, "https://nyayagrid-staging.fly.dev", {
+      NEXT_PUBLIC_CLERK_SIGN_OUT_URL: "https://ethical-emu-7146.accounts.dev/sign-out",
+    });
+    expect(explicit.startsWith("https://ethical-emu-7146.accounts.dev/sign-out")).toBe(true);
+    expect(decodeURIComponent(explicit)).toContain("https://nyayagrid-staging.fly.dev/sign-in");
   });
 });
 

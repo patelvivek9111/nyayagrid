@@ -1,0 +1,56 @@
+{
+  "gateId": "nyaya-router-adversarial-v1",
+  "frozenAt": "2026-09-01",
+  "status": "pre-staging-router-release-candidate",
+  "routerVersion": "nyaya-router-v1.1",
+  "routingScoreVersion": "nyaya-routing-score-v2",
+  "registryVersion": "nyaya-registry-v1",
+  "auditVersion": "nyaya-routing-audit-v1",
+  "certificationOverlay": "nyaya-four-provider-cert-v1",
+  "certificationRulesVersion": "nyaya-cert-rules-v1",
+  "promptVersionAsk": "nyaya-matter-qa-v11",
+  "fallbackPolicy": {
+    "eligible": "VALIDATED_or_ACTIVE_only",
+    "ask": "none",
+    "research": "none",
+    "draft": "none",
+    "deposition": "none",
+    "contract": ["xai:grok-3", "openai:gpt-4o-mini"],
+    "evidence": ["openai:gpt-4o-mini", "xai:grok-3"],
+    "compare": ["openai:gpt-4o-mini", "xai:grok-3"],
+    "contradiction": ["xai:grok-3", "google:gemini-3.6-flash"],
+    "timeline": ["openai:gpt-4o-mini", "xai:grok-3"],
+    "graph": ["openai:gpt-4o-mini", "xai:grok-3"],
+    "memory": ["openai:gpt-4o-mini", "xai:grok-3"]
+  },
+  "ranking": {
+    "envPreference": "tie-break-only",
+    "activeOverlay": "outranks-validated-at-equal-health",
+    "health": "outranks-active-when-degraded-or-open"
+  },
+  "timeoutPolicy": {
+    "perAttemptMs": 30000,
+    "zeroOrInvalidTimeout": "default-30000",
+    "hardWatchdog": "cert-isolation-child-process"
+  },
+  "budgetPolicy": {
+    "fast": { "maxModelCalls": 1, "maxFallbackAttempts": 0, "maxVerifierCalls": 0 },
+    "standard": { "maxModelCalls": 2, "maxFallbackAttempts": 1, "maxVerifierCalls": 0 },
+    "deep": { "maxModelCalls": 4, "maxFallbackAttempts": 1, "maxVerifierCalls": 1 },
+    "httpRetriesProduct": 2,
+    "httpRetriesIsolatedCert": 0,
+    "unknownCost": "does-not-bypass-call-caps"
+  },
+  "killSwitches": {
+    "providers": "NYAYA_DISABLED_PROVIDERS",
+    "models": "NYAYA_DISABLED_MODELS",
+    "deep": "NYAYA_DISABLE_DEEP",
+    "dynamic": "per-request-env-object; process.env is startup unless injected"
+  },
+  "providerPolicy": {
+    "unknownAllowList": "denyAll",
+    "orgOverlay": "merge-blocked-union-allowed-org-wins-if-set"
+  },
+  "featureAgents": "OFF",
+  "healthState": "NOT_FROZEN"
+}

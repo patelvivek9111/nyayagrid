@@ -5,7 +5,6 @@ import { pingRedis, resolveRateLimitProvider } from "@nyayagrid/platform";
 import { getConfigBootstrapResult } from "@/lib/bootstrap";
 import { getDb } from "@/lib/db";
 import { publicDatabaseError } from "@/lib/health";
-import { getStorage } from "@/lib/infra";
 
 /**
  * Readiness: safe to serve beta traffic.
@@ -28,20 +27,32 @@ export async function GET() {
   }
 
   try {
+    const { getStorage } = await import("@/lib/storage");
     const storage = getStorage();
-    await withTimeout(storage.ensureBucket(), 2000, "storage health check");
+    await withTimeout(storage.ensureBucket(), 8000, "storage health check");
     checks.storage = "ok";
-  } catch {
+  } catch (error) {
     checks.storage = "degraded";
+    checks.storageError =
+      error instanceof Error
+        ? error.message.includes("timed out")
+          ? "timeout"
+          : error.name
+        : "error";
     if (config.appEnv === "production" || config.appEnv === "staging") {
       ready = false;
     }
   }
 
   if (resolveRateLimitProvider() === "redis") {
-    const redis = await pingRedis();
-    checks.redis = redis.ok ? "ok" : "error";
-    if (!redis.ok) ready = false;
+    try {
+      const redis = await pingRedis();
+      checks.redis = redis.ok ? "ok" : "error";
+      if (!redis.ok) ready = false;
+    } catch {
+      checks.redis = "error";
+      ready = false;
+    }
   } else {
     checks.redis = "not_required";
   }
@@ -56,6 +67,7 @@ export async function GET() {
 
   checks.config = config.problems.length === 0 ? "ok" : "unsafe";
   checks.appEnv = config.appEnv;
+  checks.featureAgents = process.env.FEATURE_AGENTS ?? "unset";
   checks.providers = config.summary;
   if (config.problems.length > 0) {
     checks.configProblems = config.problems;

@@ -33,7 +33,41 @@ const FTS_WEIGHT = 1.1;
 const EXACT_CITATION_BOOST = 0.75;
 const TITLE_EXACT_BOOST = 0.35;
 const TITLE_PARTIAL_BOOST = 0.15;
+const CASE_NAME_COVERAGE_BOOST = 0.55;
+const EXTRA_PARTY_PENALTY = 0.35;
 const SNIPPET_CHARS = 320;
+
+const TITLE_META_TOKENS = new Set([
+  "fed",
+  "cir",
+  "app",
+  "dist",
+  "synth",
+  "court",
+  "appeals",
+  "circuit",
+  "supreme",
+  "f3d",
+  "f2d",
+  "us",
+  "sct",
+  "code",
+  "stat",
+]);
+
+const CASE_NAME_STOP = new Set([
+  "what",
+  "did",
+  "does",
+  "hold",
+  "held",
+  "about",
+  "regarding",
+  "under",
+  "for",
+  "the",
+  "how",
+]);
 
 type ChunkRow = {
   chunk_id: string;
@@ -85,6 +119,113 @@ function queryTokens(text: string): string[] {
     .toLowerCase()
     .split(/[^a-z0-9]+/)
     .filter((token) => token.length > 3);
+}
+
+function partyTokens(text: string): string[] {
+  return text
+    .toLowerCase()
+    .split(/[^a-z0-9]+/)
+    .filter((token) => token.length >= 2 && !CASE_NAME_STOP.has(token) && !TITLE_META_TOKENS.has(token));
+}
+
+/** Distinctive party tokens from a "A v. B" style query, if present. */
+export function caseNameQueryTokens(query: string): string[] {
+  const parts = query.toLowerCase().split(/\sv\.?\s/);
+  if (parts.length < 2) return [];
+  const left = partyTokens(parts[0] ?? "").slice(-4);
+  const rightClause = (parts[1] ?? "").split(/\b(?:hold|held|about|regarding|concerning)\b/)[0] ?? "";
+  const right = partyTokens(rightClause).slice(0, 4);
+  return [...left, ...right];
+}
+
+function titleIdentityBoost(title: string, lowerQuery: string, tokens: string[]): number {
+  const lowerTitle = title.toLowerCase();
+  if (lowerQuery.includes(lowerTitle)) return TITLE_EXACT_BOOST;
+  const titleTokens = queryTokens(lowerTitle);
+  const overlap = titleTokens.filter((token) => tokens.includes(token)).length;
+  let boost = 0;
+  if (titleTokens.length > 0 && overlap >= Math.min(2, titleTokens.length)) {
+    boost += TITLE_PARTIAL_BOOST * (overlap / titleTokens.length);
+  }
+  const caseTokens = caseNameQueryTokens(lowerQuery);
+  if (caseTokens.length >= 2) {
+    const titleParty = new Set(partyTokens(lowerTitle).filter((token) => !/^\d+$/.test(token)));
+    const covered = caseTokens.filter((token) => titleParty.has(token)).length;
+    boost += CASE_NAME_COVERAGE_BOOST * (covered / caseTokens.length);
+    const extra = [...titleParty].filter(
+      (token) => !caseTokens.includes(token) && !/^\d+$/.test(token) && token.length > 3,
+    );
+    boost -= EXTRA_PARTY_PENALTY * extra.length;
+  }
+  return boost;
+}
+
+/** Exported for unit tests: identity ranking without a database. */
+export function authorityIdentityBoost(params: {
+  title: string;
+  shortTitle?: string | null;
+  citation?: string | null;
+  normalizedCitation?: string | null;
+  query: string;
+}): number {
+  const lowerQuery = params.query.toLowerCase();
+  const tokens = queryTokens(params.query);
+  const queryCitations = new Set(
+    extractCitationsFromText(params.query)
+      .map((citation) => citation.normalized)
+      .filter((value): value is string => Boolean(value)),
+  );
+  let boost = 0;
+  if (params.normalizedCitation && queryCitations.has(params.normalizedCitation)) {
+    boost += EXACT_CITATION_BOOST;
+  } else if (params.citation && lowerQuery.includes(params.citation.toLowerCase())) {
+    boost += EXACT_CITATION_BOOST;
+  }
+  const titles = [params.title, params.shortTitle].filter((value): value is string => Boolean(value));
+  let bestTitle = 0;
+  for (const title of titles) {
+    bestTitle = Math.max(bestTitle, titleIdentityBoost(title, lowerQuery, tokens));
+  }
+  return boost + bestTitle;
+}
+
+export function caseNameCoverage(title: string, query: string): number {
+  const caseTokens = caseNameQueryTokens(query);
+  if (caseTokens.length < 2) return 0;
+  const titleParty = new Set(partyTokens(title).filter((token) => !/^\d+$/.test(token)));
+  return caseTokens.filter((token) => titleParty.has(token)).length / caseTokens.length;
+}
+
+/**
+ * When the query names A v. B and an exact party match is in the hit set,
+ * drop weaker near-name competitors so they cannot occupy the citation list.
+ */
+export function suppressWeakerCaseNameHits<T extends { title: string }>(hits: T[], query: string): T[] {
+  const caseTokens = caseNameQueryTokens(query);
+  if (caseTokens.length < 2 || hits.length === 0) return hits;
+  const scores = hits.map((hit) => caseNameCoverage(hit.title, query));
+  const best = Math.max(...scores);
+  if (best < 1) return hits;
+  return hits.filter((_, index) => scores[index] === best);
+}
+
+export function diversifyAuthorityHits<T extends { authorityId: string; score: number }>(
+  hits: T[],
+  limit: number,
+): T[] {
+  const sorted = [...hits].sort((a, b) => b.score - a.score);
+  const first: T[] = [];
+  const rest: T[] = [];
+  const seen = new Set<string>();
+  for (const hit of sorted) {
+    if (!seen.has(hit.authorityId)) {
+      seen.add(hit.authorityId);
+      first.push(hit);
+    } else {
+      rest.push(hit);
+    }
+  }
+  return [...first, ...rest].slice(0, limit);
 }
 
 function buildSnippet(content: string, tokens: string[]): string {
@@ -315,7 +456,13 @@ export class AuthorityHybridRetriever {
     addRows(vectorRows, VECTOR_WEIGHT);
     addRows(ftsRows, FTS_WEIGHT);
 
-    const hits = [...merged.values()].sort((a, b) => b.score - a.score).slice(0, limit);
+    const hits = suppressWeakerCaseNameHits(
+      diversifyAuthorityHits(
+        [...merged.values()].sort((a, b) => b.score - a.score),
+        limit,
+      ),
+      trimmed,
+    );
     assertAuthorityHitsOnly(hits);
     await assertChunksBelongToAuthorityCorpus(
       this.db,
@@ -339,19 +486,11 @@ export class AuthorityHybridRetriever {
     }
 
     const titles = [row.title, row.short_title].filter((value): value is string => Boolean(value));
+    let bestTitle = 0;
     for (const title of titles) {
-      const lowerTitle = title.toLowerCase();
-      if (lowerQuery.includes(lowerTitle)) {
-        boost += TITLE_EXACT_BOOST;
-        break;
-      }
-      const titleTokens = queryTokens(lowerTitle);
-      const overlap = titleTokens.filter((token) => tokens.includes(token)).length;
-      if (titleTokens.length > 0 && overlap >= Math.min(2, titleTokens.length)) {
-        boost += TITLE_PARTIAL_BOOST;
-        break;
-      }
+      bestTitle = Math.max(bestTitle, titleIdentityBoost(title, lowerQuery, tokens));
     }
+    boost += bestTitle;
     const preferredStates = new Set(
       (options.preferredStateCodes ?? []).map((code) => code.toUpperCase()),
     );

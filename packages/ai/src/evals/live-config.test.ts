@@ -37,10 +37,22 @@ describe("live eval config", () => {
     } as NodeJS.ProcessEnv);
     expect(liveEvalSkipReason(config)).toBeNull();
     expect(config.model).toBe("gpt-4o-mini");
+    expect(config.provider).toBe("openai");
     expect(config.maxTokens).toBe(1000);
     expect(config.maxUsd).toBe(0.25);
     expect(config.timeoutMs).toBe(12_000);
     expect(config.repeats).toBe(1);
+  });
+
+  it("requires the matching provider key when EVAL_LIVE_PROVIDER is set", () => {
+    const config = resolveLiveEvalConfig({
+      EVAL_LIVE: "1",
+      EVAL_LIVE_PROVIDER: "anthropic",
+      OPENAI_API_KEY: "sk-openai-only",
+    } as NodeJS.ProcessEnv);
+    expect(config.provider).toBe("anthropic");
+    expect(liveEvalSkipReason(config)).toMatch(/ANTHROPIC_API_KEY/);
+    expect(JSON.stringify(config)).not.toContain("sk-openai-only");
   });
 
   it("reads EVAL_LIVE_REPEATS", () => {

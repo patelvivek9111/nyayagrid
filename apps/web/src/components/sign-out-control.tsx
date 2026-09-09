@@ -1,6 +1,6 @@
 "use client";
 
-import { ACTIVE_ORG_STORAGE_KEY, clerkHostedSignInUrl, clerkSignOutHref } from "@/lib/auth-return";
+import { ACTIVE_ORG_STORAGE_KEY } from "@/lib/auth-return";
 
 export function SignOutControl({ className }: { className?: string }) {
   function signOut() {
@@ -9,8 +9,7 @@ export function SignOutControl({ className }: { className?: string }) {
     } catch {
       // ignore quota / private mode
     }
-    const origin = window.location.origin;
-    window.location.assign(clerkSignOutHref(clerkHostedSignInUrl(), origin));
+    window.location.assign("/sign-out");
   }
 
   return (

@@ -1,8 +1,14 @@
 import { z } from "zod";
 import {
+  extractExactDates,
+  exactDatesEqual,
+} from "./imprecise-date";
+import {
   answerContainsOperativeValue,
   extractNamedInstrument,
   isGenericControlBoilerplate,
+  namedInstrumentFromQuestion,
+  passagesMentionInstrument,
   selectOperativeAssessment,
 } from "./operative-facts";
 
@@ -377,6 +383,47 @@ function isCausalQuestion(question: string): boolean {
   return /\bwhy did\b|\bexplain why\b|\bwhat caused\b|\bwhat made\b/i.test(question);
 }
 
+function asksCourtAssignmentIdentity(question: string): boolean {
+  return (
+    /\b(which judge|what judge|assigned judge|presiding judge|name of the judge)\b/i.test(
+      question,
+    ) ||
+    /\b(docket number|case number|civil action number|index number)\b/i.test(question) ||
+    /\bassigned to this (?:case|matter)\b/i.test(question)
+  );
+}
+
+function passagesIdentifyCourtAssignment(passages: AssessmentPassage[]): boolean {
+  return passages.some((passage) =>
+    /\b(?:hon(?:orable|\.)\s+[A-Z]|judge\s+[A-Z][a-z]+|presiding judge|docket\s*(?:no\.?|number|#)|case no\.|civil action no\.|index no\.)\b/i.test(
+      passage.quote,
+    ),
+  );
+}
+
+function missingCourtIdentityAssessment(
+  question: string,
+  passages: AssessmentPassage[],
+): EvidenceAssessment | null {
+  if (!asksCourtAssignmentIdentity(question)) return null;
+  if (passagesIdentifyCourtAssignment(passages)) return null;
+  return {
+    proposition: question.trim(),
+    status: "insufficient",
+    premiseStatus: "unsupported",
+    dateSensitive: false,
+    relevantDate: null,
+    operativeTerm: null,
+    allowedClaim:
+      "The retrieved sources do not identify an assigned judicial officer or a case filing number.",
+    prohibitedOverclaims: ["Hon.", "Honorable"],
+    limitations: [
+      "Do not supply a judicial officer, court assignment, or filing number from model memory.",
+    ],
+    evidence: [],
+  };
+}
+
 function isoDate(date: Date): string {
   return date.toISOString().slice(0, 10);
 }
@@ -503,6 +550,9 @@ export function assessRetrievedEvidenceDeterministic(
     }
   }
 
+  const missingCourtIdentity = missingCourtIdentityAssessment(question, passages);
+  if (missingCourtIdentity) return missingCourtIdentity;
+
   const operative = selectOperativeAssessment(question, passages, now);
   if (operative) return operative;
 
@@ -559,6 +609,24 @@ export function assessRetrievedEvidenceDeterministic(
   const amountFact = extractSingleAmountFact(question, passages);
   if (amountFact) return amountFact;
 
+  const missingInstrument = namedInstrumentFromQuestion(question);
+  if (missingInstrument && !passagesMentionInstrument(missingInstrument, passages)) {
+    return {
+      proposition: question.trim(),
+      status: "insufficient",
+      premiseStatus: "unsupported",
+      dateSensitive: false,
+      relevantDate: null,
+      operativeTerm: null,
+      allowedClaim: `The retrieved documents do not include the ${missingInstrument} needed to determine that. What that instrument would show is not established without it.`,
+      prohibitedOverclaims: [],
+      limitations: [
+        "Do not infer the missing instrument from a different document that happens to be retrieved.",
+      ],
+      evidence: [],
+    };
+  }
+
   const approx = passages.find((p) =>
     /\b(approximately|on or about|near the middle|about)\b/i.test(p.quote),
   );
@@ -586,9 +654,29 @@ export {
   classifyStatementRelation,
   selectOperativeAssessment,
   answerContainsOperativeValue,
+  namedInstrumentFromQuestion,
+  instrumentMentionedInText,
 } from "./operative-facts";
 
 export function formatEvidenceAssessmentForPrompt(assessment: EvidenceAssessment): string {
+  const supporting = assessment.evidence
+    .filter((item) => item.role === "direct" || item.role === "corroborating")
+    .map((item) => item.chunkId);
+  const challenging = assessment.evidence
+    .filter((item) => item.role === "contradicting" || item.role === "limiting")
+    .map((item) => item.chunkId);
+  const conflictType =
+    assessment.status === "contradicted"
+      ? "transmittal_or_fact_conflict"
+      : assessment.operativeTerm === "tension"
+        ? "evidentiary_tension"
+        : null;
+  const conflictStatus =
+    assessment.status === "contradicted"
+      ? "disputed"
+      : assessment.operativeTerm === "tension"
+        ? "tension"
+        : null;
   return [
     EVIDENCE_ASSESSMENT_MARKER,
     `proposition=${assessment.proposition}`,
@@ -597,6 +685,11 @@ export function formatEvidenceAssessmentForPrompt(assessment: EvidenceAssessment
     `dateSensitive=${assessment.dateSensitive}`,
     assessment.relevantDate ? `relevantDate=${assessment.relevantDate}` : null,
     assessment.operativeTerm ? `operativeTerm=${assessment.operativeTerm}` : null,
+    conflictStatus ? `conflictStatus=${conflictStatus}` : null,
+    conflictType ? `conflictType=${conflictType}` : null,
+    supporting.length ? `supportingSourceIds=${supporting.join(",")}` : null,
+    challenging.length ? `challengingSourceIds=${challenging.join(",")}` : null,
+    assessment.operativeTerm === "tension" ? `evidenceRelation=tension` : null,
     `allowedClaim=${assessment.allowedClaim}`,
     assessment.prohibitedOverclaims.length
       ? `prohibitedOverclaims=${assessment.prohibitedOverclaims.join(" | ")}`
@@ -605,7 +698,7 @@ export function formatEvidenceAssessmentForPrompt(assessment: EvidenceAssessment
     assessment.evidence.length
       ? `evidence=${assessment.evidence.map((e) => `${e.chunkId}:${e.role}`).join(", ")}`
       : null,
-    "These constraints are binding. Do not exceed allowedClaim. Do not assert prohibitedOverclaims. If premiseStatus is unsupported or contradicted, correct the premise and do not invent motives. If operativeTerm is set, state that value explicitly in the answer for the asked date — including a future date after an amendment's effective date. Do not replace a requested number, date, or amount with a generic statement that a signed instrument controls. If status is established or supported, answer; do not refuse. If status is not_established or insufficient, do not assert a positive determination.",
+    "These constraints are binding. Do not exceed allowedClaim. Do not assert prohibitedOverclaims. If premiseStatus is unsupported or contradicted, correct the premise and do not invent motives. If operativeTerm is set, state that value explicitly in the answer for the asked date — including a future date after an amendment's effective date. Do not replace a requested number, date, or amount with a generic statement that a signed instrument controls. If status is established or supported, answer; do not refuse. If status is not_established or insufficient, do not assert a positive determination. If status is contradicted or conflictStatus is disputed, report each supporting and challenging source; do not silently pick one.",
   ]
     .filter(Boolean)
     .join("\n");
@@ -838,9 +931,12 @@ export function constrainCitedAnswer<T extends ConstrainedAnswer>(
         answer.answer,
       ));
   const falseRefuse =
-    (assessment.status === "established" || assessment.status === "supported") &&
+    (assessment.status === "established" ||
+      assessment.status === "supported" ||
+      assessment.status === "contradicted") &&
     (/do not provide sufficient evidence/i.test(answer.answer) ||
       answer.evidenceState === "insufficient" ||
+      answer.evidenceState === "partial" ||
       isGenericControlBoilerplate(answer.answer)) &&
     Boolean(assessment.operativeTerm || assessment.allowedClaim);
   const missingOperative =
@@ -852,15 +948,20 @@ export function constrainCitedAnswer<T extends ConstrainedAnswer>(
     (answer.evidenceState === "grounded" || /\$[\d,]+/.test(answer.answer)) &&
     !/\b(do not|does not|not established|not include|not among)\b/i.test(answer.answer);
 
+  const unsourcedDate = extractExactDates(answer.answer).some(
+    (date) =>
+      !passages.some((passage) =>
+        extractExactDates(passage.quote).some((sourceDate) => exactDatesEqual(sourceDate, date)),
+      ),
+  );
   const shouldRewrite =
     Boolean(overclaimHit) ||
     premiseBroken ||
     falseRefuse ||
     abstentionViolation ||
-    (missingOperative &&
-      (isGenericControlBoilerplate(answer.answer) ||
-        answer.evidenceState === "insufficient" ||
-        Boolean(overclaimHit)));
+    missingOperative ||
+    (unsourcedDate &&
+      (assessment.status === "established" || assessment.status === "supported"));
 
   const chunkIds = assessment.evidence.map((item) => item.chunkId);
   const citedFromAssessment = (chunkIds.length ? chunkIds : [])
@@ -878,36 +979,50 @@ export function constrainCitedAnswer<T extends ConstrainedAnswer>(
   const mergedSources = citedFromAssessment.length > 0 ? citedFromAssessment : answer.sources;
 
   if (assessment.status === "not_established" || assessment.status === "insufficient") {
-    if (shouldRewrite) {
+    if (shouldRewrite || answer.evidenceState === "grounded" || answer.evidenceState === "partial") {
       const abstaining = /\b(not established|do not include|does not include|not among)\b/i.test(
         assessment.allowedClaim,
       );
       return {
         ...answer,
         answer: [assessment.allowedClaim, ...assessment.limitations].filter(Boolean).join(" "),
-        evidenceState: abstaining ? "insufficient" : "partial",
-        sources: mergedSources,
+        evidenceState: abstaining || assessment.status === "insufficient" ? "insufficient" : "partial",
+        sources: citedFromAssessment,
       };
-    }
-    if (answer.evidenceState === "grounded") {
-      return { ...answer, evidenceState: "partial", sources: mergedSources };
     }
     return answer;
   }
 
-  if (!shouldRewrite && missingOperative) {
-    return {
-      ...answer,
-      answer: `${assessment.allowedClaim} ${answer.answer}`.trim(),
-      evidenceState: "grounded",
-      sources: mergedSources.length > 0 ? mergedSources : answer.sources,
-    };
+  if (assessment.status === "contradicted") {
+    const requiredDates = extractExactDates(assessment.allowedClaim);
+    const answerDates = extractExactDates(answer.answer);
+    const missingConflictDate = requiredDates.some(
+      (needed) => !answerDates.some((have) => exactDatesEqual(have, needed)),
+    );
+    const pickedOne =
+      requiredDates.length >= 2 &&
+      /\b(no conflict|fully reconciled|definitely only)\b/i.test(answer.answer);
+    if (
+      shouldRewrite ||
+      missingConflictDate ||
+      pickedOne ||
+      answer.evidenceState !== "grounded"
+    ) {
+      return {
+        ...answer,
+        answer: [assessment.allowedClaim, ...assessment.limitations].filter(Boolean).join(" "),
+        evidenceState: "grounded",
+        sources: mergedSources.length > 0 ? mergedSources : answer.sources,
+      };
+    }
   }
 
   if (!shouldRewrite) return answer;
 
   const grounded =
-    assessment.status === "established" || assessment.status === "supported"
+    assessment.status === "established" ||
+    assessment.status === "supported" ||
+    assessment.status === "contradicted"
       ? "grounded"
       : "partial";
 

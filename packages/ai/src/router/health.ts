@@ -35,6 +35,7 @@ export const DEFAULT_CIRCUIT: CircuitBreakerConfig = {
 
 export class ProviderHealthTracker {
   private readonly buckets = new Map<string, Bucket>();
+  private readonly inflight = new Map<string, number>();
 
   constructor(private readonly config: CircuitBreakerConfig = DEFAULT_CIRCUIT) {}
 
@@ -90,7 +91,27 @@ export class ProviderHealthTracker {
 
   allowProbe(provider: string, modelId?: string, now = Date.now()): boolean {
     const state = this.state(provider, modelId, now);
-    return state !== "UNAVAILABLE";
+    if (state === "UNAVAILABLE") return false;
+    const id = this.key(provider, modelId);
+    const flying = this.inflight.get(id) ?? 0;
+    const bucket = this.buckets.get(id);
+    const halfOpen = Boolean(bucket?.halfOpen && bucket.openedAt != null);
+    if (halfOpen && flying >= 1) return false;
+    return true;
+  }
+
+  tryAcquire(provider: string, modelId?: string, now = Date.now()): boolean {
+    if (!this.allowProbe(provider, modelId, now)) return false;
+    const id = this.key(provider, modelId);
+    this.inflight.set(id, (this.inflight.get(id) ?? 0) + 1);
+    return true;
+  }
+
+  release(provider: string, modelId?: string): void {
+    const id = this.key(provider, modelId);
+    const next = Math.max(0, (this.inflight.get(id) ?? 0) - 1);
+    if (next === 0) this.inflight.delete(id);
+    else this.inflight.set(id, next);
   }
 
   snapshot(): Record<string, HealthState> {

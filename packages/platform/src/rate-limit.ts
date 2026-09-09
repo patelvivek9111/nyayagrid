@@ -203,6 +203,7 @@ export class RateLimitExceededError extends Error {
 export {
   RedisRateLimiter,
   createRedisRateLimiterFromEnv,
+  describeRedisTarget,
   parseRedisTarget,
   pingRedis,
 } from "./redis-rate-limit";

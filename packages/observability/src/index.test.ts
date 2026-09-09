@@ -4,6 +4,7 @@ import {
   CORRELATION_ID_HEADER,
   createLogger,
   createRequestLogger,
+  redactLogText,
   validateConfig,
   withCorrelationId,
   withTimeout,
@@ -19,6 +20,31 @@ describe("createLogger", () => {
     expect(line).toContain("org_1");
     expect(line).not.toContain("secret-value");
     spy.mockRestore();
+  });
+
+  it("redacts connection strings and provider keys in messages and reason fields", () => {
+    const spy = vi.spyOn(console, "error").mockImplementation(() => undefined);
+    const log = createLogger("test");
+    log.error("connect postgres://user:hunter2@db.example/nyaya failed", {
+      reason: "REDIS_URL=rediss://default:s3cret@example.upstash.io:6379",
+      authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.e30.sig",
+      databaseUrl: "postgres://should-not-appear",
+    });
+    const line = spy.mock.calls[0]?.[0] as string;
+    expect(line).toContain("[redacted]");
+    expect(line).not.toContain("hunter2");
+    expect(line).not.toContain("s3cret");
+    expect(line).not.toContain("postgres://");
+    expect(line).not.toContain("rediss://");
+    expect(line).not.toContain("eyJhbGciOi");
+    expect(line).not.toContain("should-not-appear");
+    spy.mockRestore();
+  });
+});
+
+describe("redactLogText", () => {
+  it("does not treat organization ids as secrets", () => {
+    expect(redactLogText("org_abc")).toBe("org_abc");
   });
 });
 

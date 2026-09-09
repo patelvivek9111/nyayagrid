@@ -1,0 +1,3009 @@
+{
+  "id": "nyaya-four-provider-cert-v1",
+  "generatedAt": "2026-09-01T18:29:57.253Z",
+  "overall": "NEEDS_WORK",
+  "reason": "Quality remediation measurements applied. Historical 6V/6W/C2A baselines unchanged.",
+  "registryVersion": "nyaya-registry-v1",
+  "previousGeneratedAt": "2026-09-01T18:23:52.372Z",
+  "qualityPhase": {
+    "criticals": {
+      "openaiAsk": [
+        {
+          "taskId": "golden-indemnity-missing-amendment",
+          "subsystem": "ask",
+          "verdict": "PASS",
+          "failureClass": null,
+          "passed": true,
+          "latencyMs": 3610,
+          "structuredOk": true,
+          "repeats": 1,
+          "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+        }
+      ],
+      "claudeAsk": [
+        {
+          "taskId": "golden-email-vs-signed-amendment",
+          "subsystem": "ask",
+          "verdict": "FAIL",
+          "failureClass": "PROVIDER_API",
+          "passed": false,
+          "latencyMs": 0,
+          "structuredOk": false,
+          "repeats": 2,
+          "details": "PROVIDER_QUOTA"
+        }
+      ],
+      "openaiCx": [
+        {
+          "taskId": "cx-sequential-amendment-not-contradiction",
+          "subsystem": "contradiction",
+          "verdict": "CRITICAL",
+          "failureClass": "FALSE_PREMISE",
+          "passed": false,
+          "latencyMs": 2376,
+          "structuredOk": true,
+          "repeats": 2,
+          "details": "expected 0 candidate(s), got 1; expected no candidates, got 1"
+        },
+        {
+          "taskId": "cx-wrong-actor-not-contradiction",
+          "subsystem": "contradiction",
+          "verdict": "CRITICAL",
+          "failureClass": "FALSE_PREMISE",
+          "passed": false,
+          "latencyMs": 2038,
+          "structuredOk": true,
+          "repeats": 2,
+          "details": "expected 0 candidate(s), got 1; expected no candidates, got 1"
+        }
+      ],
+      "claudeCx": [
+        {
+          "taskId": "cx-wrong-actor-not-contradiction",
+          "subsystem": "contradiction",
+          "verdict": "FAIL",
+          "failureClass": "PROVIDER_API",
+          "passed": false,
+          "latencyMs": 0,
+          "structuredOk": false,
+          "repeats": 2,
+          "details": "PROVIDER_QUOTA"
+        }
+      ]
+    },
+    "claudeProbe": {
+      "status": "PROVIDER_QUOTA",
+      "normalizedError": "anthropic request failed with status 400 type=invalid_request_error code=none msg=Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
+      "circuitState": "HEALTHY",
+      "classified": "anthropic request failed with status 400 type=invalid_request_error code=none msg=Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits."
+    },
+    "updatedAt": "2026-09-01T18:23:52.353Z",
+    "openaiAskRepeat2": [
+      {
+        "taskId": "golden-indemnity-missing-amendment",
+        "subsystem": "ask",
+        "verdict": "PASS",
+        "failureClass": null,
+        "passed": true,
+        "latencyMs": 1519,
+        "structuredOk": true,
+        "repeats": 1,
+        "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+      }
+    ],
+    "databaseReachable": true,
+    "claudeRetry": {
+      "skipped": true,
+      "reason": "probe did not return ok; keep DISABLED unless classified as fixed adapter defect",
+      "probe": {
+        "status": "PROVIDER_QUOTA",
+        "normalizedError": "anthropic request failed with status 400 type=invalid_request_error code=none msg=Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits.",
+        "circuitState": "HEALTHY",
+        "classified": "anthropic request failed with status 400 type=invalid_request_error code=none msg=Your credit balance is too low to access the Anthropic API. Please go to Plans & Billing to upgrade or purchase credits."
+      }
+    },
+    "deposition": {
+      "openai": {
+        "measurement": {
+          "subsystem": "deposition",
+          "provider": "openai",
+          "modelId": "gpt-4o-mini",
+          "tasksAttempted": 16,
+          "minTasksForCertification": 1,
+          "pass": 15,
+          "needsWork": 0,
+          "fail": 1,
+          "critical": 0,
+          "materialQualityPct": 93.75,
+          "criticalSafetyPct": 100,
+          "citationValidityPct": null,
+          "abstentionCorrectnessPct": null,
+          "structuredSuccessPct": null,
+          "latencyMedianMs": null,
+          "latencyP95Ms": null,
+          "estimatedCostKnown": false,
+          "hardTrustViolation": false,
+          "operationallyUnusable": false,
+          "incomplete": false
+        },
+        "status": "VALIDATED",
+        "runId": "2026-09-01T16-34-21-245Z"
+      },
+      "anthropic": {
+        "skipped": "PROVIDER_QUOTA"
+      },
+      "xai": {
+        "measurement": {
+          "subsystem": "deposition",
+          "provider": "xai",
+          "modelId": "grok-3",
+          "tasksAttempted": 16,
+          "minTasksForCertification": 1,
+          "pass": 11,
+          "needsWork": 0,
+          "fail": 5,
+          "critical": 0,
+          "materialQualityPct": 68.75,
+          "criticalSafetyPct": 100,
+          "citationValidityPct": null,
+          "abstentionCorrectnessPct": null,
+          "structuredSuccessPct": null,
+          "latencyMedianMs": null,
+          "latencyP95Ms": null,
+          "estimatedCostKnown": false,
+          "hardTrustViolation": false,
+          "operationallyUnusable": false,
+          "incomplete": false
+        },
+        "status": "LIMITED",
+        "runId": "2026-09-01T16-37-41-081Z"
+      },
+      "google": {
+        "measurement": {
+          "subsystem": "deposition",
+          "provider": "google",
+          "modelId": "gemini-3.6-flash",
+          "tasksAttempted": 12,
+          "minTasksForCertification": 1,
+          "pass": 11,
+          "needsWork": 0,
+          "fail": 1,
+          "critical": 0,
+          "materialQualityPct": 91.66666666666666,
+          "criticalSafetyPct": 100,
+          "citationValidityPct": null,
+          "abstentionCorrectnessPct": null,
+          "structuredSuccessPct": null,
+          "latencyMedianMs": null,
+          "latencyP95Ms": null,
+          "estimatedCostKnown": false,
+          "hardTrustViolation": false,
+          "operationallyUnusable": false,
+          "incomplete": false
+        },
+        "status": "VALIDATED",
+        "runId": "2026-09-01T16-40-40-211Z"
+      }
+    },
+    "geminiBench": {
+      "research": {
+        "measurement": {
+          "subsystem": "research",
+          "provider": "google",
+          "modelId": "gemini-3.6-flash",
+          "tasksAttempted": 0,
+          "minTasksForCertification": 1,
+          "pass": 0,
+          "needsWork": 0,
+          "fail": 0,
+          "critical": 0,
+          "materialQualityPct": null,
+          "criticalSafetyPct": null,
+          "citationValidityPct": null,
+          "abstentionCorrectnessPct": null,
+          "structuredSuccessPct": null,
+          "latencyMedianMs": null,
+          "latencyP95Ms": null,
+          "estimatedCostKnown": false,
+          "hardTrustViolation": false,
+          "operationallyUnusable": true,
+          "incomplete": true
+        },
+        "status": "DISABLED",
+        "runId": "2026-09-01T16-47-37-868Z"
+      },
+      "draft": {
+        "measurement": {
+          "subsystem": "draft",
+          "provider": "google",
+          "modelId": "gemini-3.6-flash",
+          "tasksAttempted": 0,
+          "minTasksForCertification": 1,
+          "pass": 0,
+          "needsWork": 0,
+          "fail": 0,
+          "critical": 0,
+          "materialQualityPct": null,
+          "criticalSafetyPct": null,
+          "citationValidityPct": null,
+          "abstentionCorrectnessPct": null,
+          "structuredSuccessPct": null,
+          "latencyMedianMs": null,
+          "latencyP95Ms": null,
+          "estimatedCostKnown": false,
+          "hardTrustViolation": false,
+          "operationallyUnusable": true,
+          "incomplete": true
+        },
+        "status": "DISABLED",
+        "runId": "2026-09-01T16-47-39-464Z"
+      },
+      "contract": {
+        "measurement": {
+          "subsystem": "contract",
+          "provider": "google",
+          "modelId": "gemini-3.6-flash",
+          "tasksAttempted": 0,
+          "minTasksForCertification": 1,
+          "pass": 0,
+          "needsWork": 0,
+          "fail": 0,
+          "critical": 0,
+          "materialQualityPct": null,
+          "criticalSafetyPct": null,
+          "citationValidityPct": null,
+          "abstentionCorrectnessPct": null,
+          "structuredSuccessPct": null,
+          "latencyMedianMs": null,
+          "latencyP95Ms": null,
+          "estimatedCostKnown": false,
+          "hardTrustViolation": false,
+          "operationallyUnusable": true,
+          "incomplete": true
+        },
+        "status": "DISABLED",
+        "runId": "2026-09-01T16-47-40-965Z"
+      },
+      "evidence": {
+        "measurement": {
+          "subsystem": "evidence",
+          "provider": "google",
+          "modelId": "gemini-3.6-flash",
+          "tasksAttempted": 13,
+          "minTasksForCertification": 1,
+          "pass": 13,
+          "needsWork": 0,
+          "fail": 0,
+          "critical": 0,
+          "materialQualityPct": 100,
+          "criticalSafetyPct": 100,
+          "citationValidityPct": null,
+          "abstentionCorrectnessPct": null,
+          "structuredSuccessPct": null,
+          "latencyMedianMs": null,
+          "latencyP95Ms": null,
+          "estimatedCostKnown": false,
+          "hardTrustViolation": false,
+          "operationallyUnusable": false,
+          "incomplete": false
+        },
+        "status": "VALIDATED",
+        "runId": "2026-09-01T16-47-42-111Z"
+      },
+      "compare": {
+        "measurement": {
+          "subsystem": "compare",
+          "provider": "google",
+          "modelId": "gemini-3.6-flash",
+          "tasksAttempted": 0,
+          "minTasksForCertification": 1,
+          "pass": 0,
+          "needsWork": 0,
+          "fail": 0,
+          "critical": 0,
+          "materialQualityPct": null,
+          "criticalSafetyPct": null,
+          "citationValidityPct": null,
+          "abstentionCorrectnessPct": null,
+          "structuredSuccessPct": null,
+          "latencyMedianMs": null,
+          "latencyP95Ms": null,
+          "estimatedCostKnown": false,
+          "hardTrustViolation": false,
+          "operationallyUnusable": true,
+          "incomplete": true
+        },
+        "status": "DISABLED",
+        "runId": "2026-09-01T16-47-43-723Z"
+      },
+      "timeline": {
+        "measurement": {
+          "subsystem": "timeline",
+          "provider": "google",
+          "modelId": "gemini-3.6-flash",
+          "tasksAttempted": 0,
+          "minTasksForCertification": 1,
+          "pass": 0,
+          "needsWork": 0,
+          "fail": 0,
+          "critical": 0,
+          "materialQualityPct": null,
+          "criticalSafetyPct": null,
+          "citationValidityPct": null,
+          "abstentionCorrectnessPct": null,
+          "structuredSuccessPct": null,
+          "latencyMedianMs": null,
+          "latencyP95Ms": null,
+          "estimatedCostKnown": false,
+          "hardTrustViolation": false,
+          "operationallyUnusable": true,
+          "incomplete": true
+        },
+        "status": "DISABLED",
+        "runId": "2026-09-01T16-47-44-754Z"
+      },
+      "graph": {
+        "measurement": {
+          "subsystem": "graph",
+          "provider": "google",
+          "modelId": "gemini-3.6-flash",
+          "tasksAttempted": 1,
+          "minTasksForCertification": 1,
+          "pass": 1,
+          "needsWork": 0,
+          "fail": 0,
+          "critical": 0,
+          "materialQualityPct": 100,
+          "criticalSafetyPct": 100,
+          "citationValidityPct": null,
+          "abstentionCorrectnessPct": null,
+          "structuredSuccessPct": null,
+          "latencyMedianMs": null,
+          "latencyP95Ms": null,
+          "estimatedCostKnown": false,
+          "hardTrustViolation": false,
+          "operationallyUnusable": false,
+          "incomplete": false
+        },
+        "status": "VALIDATED",
+        "runId": "2026-09-01T16-47-45-768Z"
+      },
+      "memory": {
+        "measurement": {
+          "subsystem": "memory",
+          "provider": "google",
+          "modelId": "gemini-3.6-flash",
+          "tasksAttempted": 6,
+          "minTasksForCertification": 1,
+          "pass": 6,
+          "needsWork": 0,
+          "fail": 0,
+          "critical": 0,
+          "materialQualityPct": 100,
+          "criticalSafetyPct": 100,
+          "citationValidityPct": null,
+          "abstentionCorrectnessPct": null,
+          "structuredSuccessPct": null,
+          "latencyMedianMs": null,
+          "latencyP95Ms": null,
+          "estimatedCostKnown": false,
+          "hardTrustViolation": false,
+          "operationallyUnusable": false,
+          "incomplete": false
+        },
+        "status": "VALIDATED",
+        "runId": "2026-09-01T16-47-47-117Z"
+      }
+    },
+    "deepReview": {
+      "ask": "skipped_single_validated_provider",
+      "results": [
+        {
+          "subsystem": "contract",
+          "primary": "xai",
+          "verifier": "openai",
+          "agreed": false,
+          "unresolved": true,
+          "evidenceWinner": "unresolved",
+          "usedMajorityVote": false
+        },
+        {
+          "subsystem": "evidence",
+          "primary": "openai",
+          "verifier": "xai",
+          "agreed": false,
+          "unresolved": true,
+          "evidenceWinner": "unresolved",
+          "usedMajorityVote": false
+        },
+        {
+          "subsystem": "compare",
+          "primary": "openai",
+          "verifier": "xai",
+          "agreed": false,
+          "unresolved": true,
+          "evidenceWinner": "unresolved",
+          "usedMajorityVote": false
+        },
+        {
+          "subsystem": "contradiction",
+          "primary": "xai",
+          "verifier": "google",
+          "agreed": false,
+          "unresolved": true,
+          "evidenceWinner": "unresolved",
+          "usedMajorityVote": false
+        },
+        {
+          "subsystem": "timeline",
+          "primary": "openai",
+          "verifier": "xai",
+          "agreed": false,
+          "unresolved": true,
+          "evidenceWinner": "unresolved",
+          "usedMajorityVote": false
+        },
+        {
+          "subsystem": "graph",
+          "primary": "openai",
+          "verifier": "xai",
+          "agreed": false,
+          "unresolved": true,
+          "evidenceWinner": "unresolved",
+          "usedMajorityVote": false
+        }
+      ]
+    },
+    "autoBenchmark": {
+      "materialQuality": 83.33333333333334,
+      "criticalSafety": 91.66666666666666,
+      "pass": 10,
+      "fail": 1,
+      "critical": 1,
+      "total": 12,
+      "providerDistribution": {
+        "xai": 12
+      },
+      "strategyDistribution": {
+        "fast": 12
+      },
+      "fallbackRate": 0,
+      "deepEscalationRate": 0,
+      "p50": 5260,
+      "p95": 7752,
+      "costKnown": false
+    },
+    "memoryR2": {
+      "openai": {
+        "measurement": {
+          "subsystem": "memory",
+          "provider": "openai",
+          "modelId": "gpt-4o-mini",
+          "tasksAttempted": 13,
+          "minTasksForCertification": 1,
+          "pass": 13,
+          "needsWork": 0,
+          "fail": 0,
+          "critical": 0,
+          "materialQualityPct": 100,
+          "criticalSafetyPct": 100,
+          "citationValidityPct": null,
+          "abstentionCorrectnessPct": null,
+          "structuredSuccessPct": null,
+          "latencyMedianMs": null,
+          "latencyP95Ms": null,
+          "estimatedCostKnown": false,
+          "hardTrustViolation": false,
+          "operationallyUnusable": false,
+          "incomplete": false
+        },
+        "status": "VALIDATED",
+        "runId": "2026-09-01T17-41-20-684Z"
+      },
+      "xai": {
+        "measurement": {
+          "subsystem": "memory",
+          "provider": "xai",
+          "modelId": "grok-3",
+          "tasksAttempted": 13,
+          "minTasksForCertification": 1,
+          "pass": 13,
+          "needsWork": 0,
+          "fail": 0,
+          "critical": 0,
+          "materialQualityPct": 100,
+          "criticalSafetyPct": 100,
+          "citationValidityPct": null,
+          "abstentionCorrectnessPct": null,
+          "structuredSuccessPct": null,
+          "latencyMedianMs": null,
+          "latencyP95Ms": null,
+          "estimatedCostKnown": false,
+          "hardTrustViolation": false,
+          "operationallyUnusable": false,
+          "incomplete": false
+        },
+        "status": "VALIDATED",
+        "runId": "2026-09-01T17-42-42-879Z"
+      }
+    },
+    "openaiAskVarianceR2": {
+      "repeats": [
+        [
+          {
+            "taskId": "golden-indemnity-missing-amendment",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 1631,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-empty-retrieval",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 944,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-false-rent-amount",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 819,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-invoice-silence-not-proof",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 1678,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-email-vs-signed-amendment",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 2140,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|citation_relevance:ok|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-future-effective-current-term",
+            "subsystem": "ask",
+            "verdict": "FAIL",
+            "failureClass": "MODEL_REASONING",
+            "passed": false,
+            "latencyMs": 1332,
+            "structuredOk": true,
+            "repeats": 2,
+            "details": "evidence_state:ok|faithfulness:fail|completeness:fail|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-named-exhibit-missing",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 1219,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+          }
+        ],
+        [
+          {
+            "taskId": "golden-indemnity-missing-amendment",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 2491,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-empty-retrieval",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 876,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-false-rent-amount",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 856,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-invoice-silence-not-proof",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 1646,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-email-vs-signed-amendment",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 2082,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|citation_relevance:ok|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-future-effective-current-term",
+            "subsystem": "ask",
+            "verdict": "FAIL",
+            "failureClass": "MODEL_REASONING",
+            "passed": false,
+            "latencyMs": 1534,
+            "structuredOk": true,
+            "repeats": 2,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:fail|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-named-exhibit-missing",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 930,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+          }
+        ],
+        [
+          {
+            "taskId": "golden-indemnity-missing-amendment",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 1182,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-empty-retrieval",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 812,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-false-rent-amount",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 684,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-invoice-silence-not-proof",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 1588,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-email-vs-signed-amendment",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 1963,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|citation_relevance:ok|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-future-effective-current-term",
+            "subsystem": "ask",
+            "verdict": "FAIL",
+            "failureClass": "MODEL_REASONING",
+            "passed": false,
+            "latencyMs": 1376,
+            "structuredOk": true,
+            "repeats": 2,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:fail|need_more_docs:ok"
+          },
+          {
+            "taskId": "golden-named-exhibit-missing",
+            "subsystem": "ask",
+            "verdict": "PASS",
+            "failureClass": null,
+            "passed": true,
+            "latencyMs": 828,
+            "structuredOk": true,
+            "repeats": 1,
+            "details": "evidence_state:ok|faithfulness:ok|completeness:ok|need_more_docs:ok"
+          }
+        ]
+      ]
+    },
+    "geminiCellsR2": {
+      "circuitOpen": false,
+      "cells": {
+        "research": {
+          "measurement": {
+            "subsystem": "research",
+            "provider": "google",
+            "modelId": "gemini-3.6-flash",
+            "tasksAttempted": 18,
+            "minTasksForCertification": 1,
+            "pass": 16,
+            "needsWork": 2,
+            "fail": 0,
+            "critical": 0,
+            "materialQualityPct": 88.88888888888889,
+            "criticalSafetyPct": 100,
+            "citationValidityPct": null,
+            "abstentionCorrectnessPct": null,
+            "structuredSuccessPct": null,
+            "latencyMedianMs": null,
+            "latencyP95Ms": null,
+            "estimatedCostKnown": false,
+            "hardTrustViolation": false,
+            "operationallyUnusable": false,
+            "incomplete": false
+          },
+          "status": "LIMITED",
+          "runId": "2026-09-01T17-45-45-036Z"
+        },
+        "draft": {
+          "measurement": {
+            "subsystem": "draft",
+            "provider": "google",
+            "modelId": "gemini-3.6-flash",
+            "tasksAttempted": 13,
+            "minTasksForCertification": 1,
+            "pass": 9,
+            "needsWork": 0,
+            "fail": 2,
+            "critical": 2,
+            "materialQualityPct": 69.23076923076923,
+            "criticalSafetyPct": 84.61538461538461,
+            "citationValidityPct": null,
+            "abstentionCorrectnessPct": null,
+            "structuredSuccessPct": null,
+            "latencyMedianMs": null,
+            "latencyP95Ms": null,
+            "estimatedCostKnown": false,
+            "hardTrustViolation": false,
+            "operationallyUnusable": false,
+            "incomplete": false
+          },
+          "status": "CANDIDATE",
+          "runId": "2026-09-01T17-56-19-058Z"
+        },
+        "contract": {
+          "measurement": {
+            "subsystem": "contract",
+            "provider": "google",
+            "modelId": "gemini-3.6-flash",
+            "tasksAttempted": 0,
+            "minTasksForCertification": 1,
+            "pass": 0,
+            "needsWork": 0,
+            "fail": 0,
+            "critical": 0,
+            "materialQualityPct": null,
+            "criticalSafetyPct": null,
+            "citationValidityPct": null,
+            "abstentionCorrectnessPct": null,
+            "structuredSuccessPct": null,
+            "latencyMedianMs": null,
+            "latencyP95Ms": null,
+            "estimatedCostKnown": false,
+            "hardTrustViolation": false,
+            "operationallyUnusable": false,
+            "incomplete": true
+          },
+          "status": "CANDIDATE",
+          "runId": "2026-09-01T18-03-34-778Z"
+        },
+        "deposition": {
+          "measurement": {
+            "subsystem": "deposition",
+            "provider": "google",
+            "modelId": "gemini-3.6-flash",
+            "tasksAttempted": 0,
+            "minTasksForCertification": 1,
+            "pass": 0,
+            "needsWork": 0,
+            "fail": 0,
+            "critical": 0,
+            "materialQualityPct": null,
+            "criticalSafetyPct": null,
+            "citationValidityPct": null,
+            "abstentionCorrectnessPct": null,
+            "structuredSuccessPct": null,
+            "latencyMedianMs": null,
+            "latencyP95Ms": null,
+            "estimatedCostKnown": false,
+            "hardTrustViolation": false,
+            "operationallyUnusable": false,
+            "incomplete": true
+          },
+          "status": "CANDIDATE",
+          "runId": "2026-09-01T18-03-36-484Z"
+        },
+        "evidence": {
+          "measurement": {
+            "subsystem": "evidence",
+            "provider": "google",
+            "modelId": "gemini-3.6-flash",
+            "tasksAttempted": 13,
+            "minTasksForCertification": 1,
+            "pass": 13,
+            "needsWork": 0,
+            "fail": 0,
+            "critical": 0,
+            "materialQualityPct": 100,
+            "criticalSafetyPct": 100,
+            "citationValidityPct": null,
+            "abstentionCorrectnessPct": null,
+            "structuredSuccessPct": null,
+            "latencyMedianMs": null,
+            "latencyP95Ms": null,
+            "estimatedCostKnown": false,
+            "hardTrustViolation": false,
+            "operationallyUnusable": false,
+            "incomplete": false
+          },
+          "status": "VALIDATED",
+          "runId": "2026-09-01T18-03-38-407Z"
+        },
+        "compare": {
+          "measurement": {
+            "subsystem": "compare",
+            "provider": "google",
+            "modelId": "gemini-3.6-flash",
+            "tasksAttempted": 0,
+            "minTasksForCertification": 1,
+            "pass": 0,
+            "needsWork": 0,
+            "fail": 0,
+            "critical": 0,
+            "materialQualityPct": null,
+            "criticalSafetyPct": null,
+            "citationValidityPct": null,
+            "abstentionCorrectnessPct": null,
+            "structuredSuccessPct": null,
+            "latencyMedianMs": null,
+            "latencyP95Ms": null,
+            "estimatedCostKnown": false,
+            "hardTrustViolation": false,
+            "operationallyUnusable": false,
+            "incomplete": true
+          },
+          "status": "CANDIDATE",
+          "runId": "2026-09-01T18-03-40-769Z"
+        },
+        "timeline": {
+          "measurement": {
+            "subsystem": "timeline",
+            "provider": "google",
+            "modelId": "gemini-3.6-flash",
+            "tasksAttempted": 0,
+            "minTasksForCertification": 1,
+            "pass": 0,
+            "needsWork": 0,
+            "fail": 0,
+            "critical": 0,
+            "materialQualityPct": null,
+            "criticalSafetyPct": null,
+            "citationValidityPct": null,
+            "abstentionCorrectnessPct": null,
+            "structuredSuccessPct": null,
+            "latencyMedianMs": null,
+            "latencyP95Ms": null,
+            "estimatedCostKnown": false,
+            "hardTrustViolation": false,
+            "operationallyUnusable": false,
+            "incomplete": true
+          },
+          "status": "CANDIDATE",
+          "runId": "2026-09-01T18-03-42-204Z"
+        },
+        "graph": {
+          "measurement": {
+            "subsystem": "graph",
+            "provider": "google",
+            "modelId": "gemini-3.6-flash",
+            "tasksAttempted": 1,
+            "minTasksForCertification": 1,
+            "pass": 1,
+            "needsWork": 0,
+            "fail": 0,
+            "critical": 0,
+            "materialQualityPct": 100,
+            "criticalSafetyPct": 100,
+            "citationValidityPct": null,
+            "abstentionCorrectnessPct": null,
+            "structuredSuccessPct": null,
+            "latencyMedianMs": null,
+            "latencyP95Ms": null,
+            "estimatedCostKnown": false,
+            "hardTrustViolation": false,
+            "operationallyUnusable": false,
+            "incomplete": false
+          },
+          "status": "VALIDATED",
+          "runId": "2026-09-01T18-03-43-683Z"
+        },
+        "memory": {
+          "measurement": {
+            "subsystem": "memory",
+            "provider": "google",
+            "modelId": "gemini-3.6-flash",
+            "tasksAttempted": 6,
+            "minTasksForCertification": 1,
+            "pass": 6,
+            "needsWork": 0,
+            "fail": 0,
+            "critical": 0,
+            "materialQualityPct": 100,
+            "criticalSafetyPct": 100,
+            "citationValidityPct": null,
+            "abstentionCorrectnessPct": null,
+            "structuredSuccessPct": null,
+            "latencyMedianMs": null,
+            "latencyP95Ms": null,
+            "estimatedCostKnown": false,
+            "hardTrustViolation": false,
+            "operationallyUnusable": false,
+            "incomplete": false
+          },
+          "status": "VALIDATED",
+          "runId": "2026-09-01T18-03-45-642Z"
+        }
+      }
+    },
+    "researchR2": {
+      "openai": {
+        "measurement": {
+          "subsystem": "research",
+          "provider": "openai",
+          "modelId": "gpt-4o-mini",
+          "tasksAttempted": 18,
+          "minTasksForCertification": 1,
+          "pass": 16,
+          "needsWork": 2,
+          "fail": 0,
+          "critical": 0,
+          "materialQualityPct": 88.88888888888889,
+          "criticalSafetyPct": 100,
+          "citationValidityPct": null,
+          "abstentionCorrectnessPct": null,
+          "structuredSuccessPct": null,
+          "latencyMedianMs": null,
+          "latencyP95Ms": null,
+          "estimatedCostKnown": false,
+          "hardTrustViolation": false,
+          "operationallyUnusable": false,
+          "incomplete": false
+        },
+        "status": "LIMITED",
+        "runId": "2026-09-01T18-11-33-100Z"
+      },
+      "xai": {
+        "measurement": {
+          "subsystem": "research",
+          "provider": "xai",
+          "modelId": "grok-3",
+          "tasksAttempted": 18,
+          "minTasksForCertification": 1,
+          "pass": 17,
+          "needsWork": 1,
+          "fail": 0,
+          "critical": 0,
+          "materialQualityPct": 94.44444444444444,
+          "criticalSafetyPct": 100,
+          "citationValidityPct": null,
+          "abstentionCorrectnessPct": null,
+          "structuredSuccessPct": null,
+          "latencyMedianMs": null,
+          "latencyP95Ms": null,
+          "estimatedCostKnown": false,
+          "hardTrustViolation": false,
+          "operationallyUnusable": false,
+          "incomplete": false
+        },
+        "status": "VALIDATED",
+        "runId": "2026-09-01T18-14-26-077Z"
+      },
+      "anthropic": {
+        "skipped": "PROVIDER_QUOTA"
+      }
+    },
+    "autoBenchmarkR2": {
+      "materialQuality": 86.27450980392157,
+      "criticalSafety": 100,
+      "pass": 44,
+      "fail": 7,
+      "critical": 0,
+      "total": 51,
+      "providerDistribution": {
+        "xai": 51
+      },
+      "strategyDistribution": {
+        "fast": 20,
+        "standard": 31
+      },
+      "fallbackRate": 0,
+      "deepEscalationRate": 0,
+      "p50": 5117,
+      "p95": 8285,
+      "costKnown": false,
+      "costPerTask": null,
+      "criticalTaskIds": [],
+      "tasks": [
+        {
+          "taskId": "golden-lease-commencement",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 3688,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-lease-expiration",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 8285,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-rent-amount",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 3624,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-rent-annual",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 8247,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-notice-period",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 6873,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-notice-section",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "fail",
+          "latencyMs": 4961,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-indemnity-missing-amendment",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "CRITICAL",
+          "routingReason": "Auto selected Standard because risk is CRITICAL; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 5584,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-indemnity-with-amendment",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 3706,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-unrelated-capital",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 4392,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-empty-retrieval",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 2092,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-cam-date-conflict",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "fail",
+          "latencyMs": 5801,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-cam-date-conflict-incomplete",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 6360,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-dispute-date",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 4776,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-invoice-request",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 8345,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-depo-receipt-same-day",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 7055,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-portal-upload-date",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 6211,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-late-fee",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 4311,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-renewal-notice",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 4637,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-cam-estimate-not-transmittal",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 5536,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-partial-hedge-indemnity",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 4775,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-partial-hedge-term",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 6432,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-qa06-intel-no-docs",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "fail",
+          "latencyMs": 2719,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-qa06-graph-no-docs",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "fail",
+          "latencyMs": 4247,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-qa06-memory-no-docs",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "fail",
+          "latencyMs": 3644,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-adv-near-miss-commencement",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "fail",
+          "latencyMs": 6412,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-adv-similar-clause-rent-vs-late-fee",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 4540,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-adv-combine-rent-and-term",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 4880,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-adv-notice-vs-renewal",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 6796,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-adv-near-miss-cam-worksheet",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 4390,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-adv-combine-notice-and-term",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 5846,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-false-rent-amount",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 4366,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-judge-not-in-record",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 6670,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-adv-combine-indemnity-and-rent",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 4496,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-adv-combine-dispute-and-late-fee",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 5226,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-adv-combine-renewal-and-expiration",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 5791,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-adv-near-miss-proposed-commencement",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 4657,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-adv-near-miss-term-sheet-rent",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 4962,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-adv-near-miss-ninety-day-draft",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 5025,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-access-log-limitation",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 7035,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-false-premise-future-effective",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 3886,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-invoice-silence-not-proof",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 6286,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-email-vs-signed-amendment",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 4758,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-supersession-effective-amendment",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "HIGH",
+          "routingReason": "Auto selected Standard because risk is HIGH; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 6049,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-future-effective-current-term",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "HIGH",
+          "routingReason": "Auto selected Standard because risk is HIGH; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 5117,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-future-effective-future-term",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 7358,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-corroborated-actor-inference",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "fast",
+          "riskLevel": "LOW",
+          "routingReason": "Auto selected Fast for low-risk Ask; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within fast budget",
+          "verdict": "pass",
+          "latencyMs": 6075,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-qualifier-preserve-approximately",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "NORMAL",
+          "routingReason": "Auto selected Standard as the default professional workflow; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 4167,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-compatible-approx-exact-date",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "HIGH",
+          "routingReason": "Auto selected Standard because risk is HIGH; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 4837,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-named-exhibit-missing",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "CRITICAL",
+          "routingReason": "Auto selected Standard because risk is CRITICAL; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 8086,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-guardrail-states-operative-days",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "HIGH",
+          "routingReason": "Auto selected Standard because risk is HIGH; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "pass",
+          "latencyMs": 8722,
+          "estimatedCostUsd": null
+        },
+        {
+          "taskId": "golden-evidentiary-tension-testimony-log",
+          "subsystem": "ask",
+          "provider": "xai",
+          "model": "grok-4.3",
+          "strategyRequested": "auto",
+          "strategySelected": "standard",
+          "riskLevel": "HIGH",
+          "routingReason": "Auto selected Standard because risk is HIGH; selected xai:grok-3; VALIDATED for ask; quality 0.9411764705882352; provider HEALTHY; within standard budget",
+          "verdict": "fail",
+          "latencyMs": 7644,
+          "estimatedCostUsd": null
+        }
+      ]
+    }
+  },
+  "access": {
+    "files": {
+      ".env": "EXISTS",
+      ".env.local": "ABSENT",
+      "apps/web/.env": "EXISTS",
+      "apps/web/.env.local": "ABSENT",
+      "benchmarks/nyaya-bench/.env": "ABSENT"
+    },
+    "dotenv": {
+      "OPENAI_API_KEY": "present",
+      "ANTHROPIC_API_KEY": "present",
+      "XAI_API_KEY": "present",
+      "GOOGLE_GENERATIVE_AI_API_KEY": "present"
+    },
+    "process": {
+      "OPENAI_API_KEY": "present",
+      "ANTHROPIC_API_KEY": "present",
+      "XAI_API_KEY": "present",
+      "GOOGLE_GENERATIVE_AI_API_KEY": "present",
+      "GEMINI_API_KEY": "absent",
+      "GOOGLE_API_KEY": "absent"
+    },
+    "databaseUrl": "present",
+    "providers": [
+      {
+        "provider": "openai",
+        "keyAvailable": true,
+        "modelId": "gpt-4o-mini",
+        "status": "AVAILABLE"
+      },
+      {
+        "provider": "anthropic",
+        "keyAvailable": true,
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "AVAILABLE"
+      },
+      {
+        "provider": "xai",
+        "keyAvailable": true,
+        "modelId": "grok-3",
+        "status": "AVAILABLE"
+      },
+      {
+        "provider": "google",
+        "keyAvailable": true,
+        "modelId": "gemini-3.6-flash",
+        "status": "AVAILABLE"
+      }
+    ],
+    "databaseReachable": true
+  },
+  "matrix": [
+    {
+      "subsystem": "ask",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "CANDIDATE",
+        "qualityPct": 84.31372549019608,
+        "criticalSafetyPct": 98.0392156862745,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 51,
+        "pass": 43,
+        "needsWork": 0,
+        "fail": 7,
+        "critical": 1,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": 84.31372549019608,
+        "criticalSafetyPct": 98.0392156862745,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 51,
+        "pass": 43,
+        "needsWork": 0,
+        "fail": 7,
+        "critical": 1,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "VALIDATED",
+        "qualityPct": 94.11764705882352,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 51,
+        "pass": 48,
+        "needsWork": 0,
+        "fail": 3,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "google": {
+        "modelId": "gemini-3.6-flash",
+        "status": "LIMITED",
+        "qualityPct": 70.58823529411765,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 51,
+        "pass": 36,
+        "needsWork": 0,
+        "fail": 15,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      }
+    },
+    {
+      "subsystem": "research",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "LIMITED",
+        "qualityPct": 88.88888888888889,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 18,
+        "pass": 16,
+        "needsWork": 2,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "LIMITED",
+        "qualityPct": 83.33333333333334,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 18,
+        "pass": 15,
+        "needsWork": 3,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "VALIDATED",
+        "qualityPct": 94.44444444444444,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 18,
+        "pass": 17,
+        "needsWork": 1,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "google": {
+        "modelId": "gemini-3.6-flash",
+        "status": "LIMITED",
+        "qualityPct": 88.88888888888889,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 18,
+        "pass": 16,
+        "needsWork": 2,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      }
+    },
+    {
+      "subsystem": "draft",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "CANDIDATE",
+        "qualityPct": 81.81818181818183,
+        "criticalSafetyPct": 90.9090909090909,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 22,
+        "pass": 18,
+        "needsWork": 0,
+        "fail": 2,
+        "critical": 2,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": 69.56521739130434,
+        "criticalSafetyPct": 86.95652173913044,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 23,
+        "pass": 16,
+        "needsWork": 0,
+        "fail": 4,
+        "critical": 3,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "VALIDATED",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 20,
+        "pass": 20,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "google": {
+        "modelId": "gemini-3.6-flash",
+        "status": "CANDIDATE",
+        "qualityPct": 69.23076923076923,
+        "criticalSafetyPct": 84.61538461538461,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 13,
+        "pass": 9,
+        "needsWork": 0,
+        "fail": 2,
+        "critical": 2,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      }
+    },
+    {
+      "subsystem": "contract",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "VALIDATED",
+        "qualityPct": 94.44444444444444,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 18,
+        "pass": 17,
+        "needsWork": 0,
+        "fail": 1,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": 38.095238095238095,
+        "criticalSafetyPct": 85.71428571428571,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 21,
+        "pass": 8,
+        "needsWork": 0,
+        "fail": 10,
+        "critical": 3,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "VALIDATED",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 18,
+        "pass": 18,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "google": {
+        "modelId": "gemini-3.6-flash",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 0,
+        "pass": 0,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      }
+    },
+    {
+      "subsystem": "deposition",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "VALIDATED",
+        "qualityPct": 93.75,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 16,
+        "pass": 15,
+        "needsWork": 0,
+        "fail": 1,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 0,
+        "pass": 0,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "LIMITED",
+        "qualityPct": 68.75,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 16,
+        "pass": 11,
+        "needsWork": 0,
+        "fail": 5,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "google": {
+        "modelId": "gemini-3.6-flash",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 0,
+        "pass": 0,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      }
+    },
+    {
+      "subsystem": "evidence",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "VALIDATED",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 16,
+        "pass": 16,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 13,
+        "pass": 13,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "VALIDATED",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 16,
+        "pass": 16,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "google": {
+        "modelId": "gemini-3.6-flash",
+        "status": "CANDIDATE",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 13,
+        "pass": 13,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      }
+    },
+    {
+      "subsystem": "compare",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "VALIDATED",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 3,
+        "pass": 3,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "DISABLED",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 0,
+        "pass": 0,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "VALIDATED",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 3,
+        "pass": 3,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "google": {
+        "modelId": "gemini-3.6-flash",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 0,
+        "pass": 0,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      }
+    },
+    {
+      "subsystem": "contradiction",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "CANDIDATE",
+        "qualityPct": 92.3076923076923,
+        "criticalSafetyPct": 92.3076923076923,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 26,
+        "pass": 24,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 2,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": 96.15384615384616,
+        "criticalSafetyPct": 96.15384615384616,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 26,
+        "pass": 25,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 1,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "VALIDATED",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 26,
+        "pass": 26,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "google": {
+        "modelId": "gemini-3.6-flash",
+        "status": "VALIDATED",
+        "qualityPct": 96.15384615384616,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 26,
+        "pass": 25,
+        "needsWork": 0,
+        "fail": 1,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      }
+    },
+    {
+      "subsystem": "timeline",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "VALIDATED",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 2,
+        "pass": 2,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "DISABLED",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 0,
+        "pass": 0,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "VALIDATED",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 2,
+        "pass": 2,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "google": {
+        "modelId": "gemini-3.6-flash",
+        "status": "CANDIDATE",
+        "qualityPct": null,
+        "criticalSafetyPct": null,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 0,
+        "pass": 0,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      }
+    },
+    {
+      "subsystem": "graph",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "VALIDATED",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 13,
+        "pass": 13,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 1,
+        "pass": 1,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "VALIDATED",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 13,
+        "pass": 13,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "google": {
+        "modelId": "gemini-3.6-flash",
+        "status": "CANDIDATE",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 1,
+        "pass": 1,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      }
+    },
+    {
+      "subsystem": "memory",
+      "openai": {
+        "modelId": "gpt-4o-mini",
+        "status": "VALIDATED",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 13,
+        "pass": 13,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "anthropic": {
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 6,
+        "pass": 6,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "xai": {
+        "modelId": "grok-3",
+        "status": "VALIDATED",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 13,
+        "pass": 13,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      },
+      "google": {
+        "modelId": "gemini-3.6-flash",
+        "status": "CANDIDATE",
+        "qualityPct": 100,
+        "criticalSafetyPct": 100,
+        "citationValidityPct": null,
+        "structuredSuccessPct": null,
+        "tasksAttempted": 6,
+        "pass": 6,
+        "needsWork": 0,
+        "fail": 0,
+        "critical": 0,
+        "latencyMedianMs": null,
+        "latencyP95Ms": null,
+        "access": "MEASURED"
+      }
+    }
+  ],
+  "preferredAuto": {
+    "ask": {
+      "provider": "xai",
+      "modelId": "grok-3",
+      "quality": 94.11764705882352
+    },
+    "research": {
+      "provider": "xai",
+      "modelId": "grok-3",
+      "quality": 94.44444444444444
+    },
+    "draft": {
+      "provider": "xai",
+      "modelId": "grok-3",
+      "quality": 100
+    },
+    "contract": {
+      "provider": "xai",
+      "modelId": "grok-3",
+      "quality": 100
+    },
+    "deposition": {
+      "provider": "openai",
+      "modelId": "gpt-4o-mini",
+      "quality": 93.75
+    },
+    "evidence": {
+      "provider": "openai",
+      "modelId": "gpt-4o-mini",
+      "quality": 100
+    },
+    "compare": {
+      "provider": "openai",
+      "modelId": "gpt-4o-mini",
+      "quality": 100
+    },
+    "contradiction": {
+      "provider": "xai",
+      "modelId": "grok-3",
+      "quality": 100
+    },
+    "timeline": {
+      "provider": "openai",
+      "modelId": "gpt-4o-mini",
+      "quality": 100
+    },
+    "graph": {
+      "provider": "openai",
+      "modelId": "gpt-4o-mini",
+      "quality": 100
+    },
+    "memory": {
+      "provider": "openai",
+      "modelId": "gpt-4o-mini",
+      "quality": 100
+    }
+  },
+  "fallbacks": {
+    "ask": [
+      {
+        "provider": "xai",
+        "modelId": "grok-3"
+      }
+    ],
+    "research": [
+      {
+        "provider": "xai",
+        "modelId": "grok-3"
+      }
+    ],
+    "draft": [
+      {
+        "provider": "xai",
+        "modelId": "grok-3"
+      }
+    ],
+    "contract": [
+      {
+        "provider": "xai",
+        "modelId": "grok-3"
+      },
+      {
+        "provider": "openai",
+        "modelId": "gpt-4o-mini"
+      }
+    ],
+    "deposition": [
+      {
+        "provider": "openai",
+        "modelId": "gpt-4o-mini"
+      }
+    ],
+    "evidence": [
+      {
+        "provider": "openai",
+        "modelId": "gpt-4o-mini"
+      },
+      {
+        "provider": "xai",
+        "modelId": "grok-3"
+      }
+    ],
+    "compare": [
+      {
+        "provider": "openai",
+        "modelId": "gpt-4o-mini"
+      },
+      {
+        "provider": "xai",
+        "modelId": "grok-3"
+      }
+    ],
+    "contradiction": [
+      {
+        "provider": "xai",
+        "modelId": "grok-3"
+      },
+      {
+        "provider": "google",
+        "modelId": "gemini-3.6-flash"
+      }
+    ],
+    "timeline": [
+      {
+        "provider": "openai",
+        "modelId": "gpt-4o-mini"
+      },
+      {
+        "provider": "xai",
+        "modelId": "grok-3"
+      }
+    ],
+    "graph": [
+      {
+        "provider": "openai",
+        "modelId": "gpt-4o-mini"
+      },
+      {
+        "provider": "xai",
+        "modelId": "grok-3"
+      }
+    ],
+    "memory": [
+      {
+        "provider": "openai",
+        "modelId": "gpt-4o-mini"
+      },
+      {
+        "provider": "xai",
+        "modelId": "grok-3"
+      }
+    ]
+  },
+  "evidence": {
+    "benchmarkId": "nyaya-four-provider-cert-v1",
+    "applied": true,
+    "preferredAuto": {
+      "ask": {
+        "provider": "xai",
+        "modelId": "grok-3"
+      },
+      "research": {
+        "provider": "xai",
+        "modelId": "grok-3"
+      },
+      "draft": {
+        "provider": "xai",
+        "modelId": "grok-3"
+      },
+      "contract": {
+        "provider": "xai",
+        "modelId": "grok-3"
+      },
+      "deposition": {
+        "provider": "openai",
+        "modelId": "gpt-4o-mini"
+      },
+      "evidence": {
+        "provider": "openai",
+        "modelId": "gpt-4o-mini"
+      },
+      "compare": {
+        "provider": "openai",
+        "modelId": "gpt-4o-mini"
+      },
+      "contradiction": {
+        "provider": "xai",
+        "modelId": "grok-3"
+      },
+      "timeline": {
+        "provider": "openai",
+        "modelId": "gpt-4o-mini"
+      },
+      "graph": {
+        "provider": "openai",
+        "modelId": "gpt-4o-mini"
+      },
+      "memory": {
+        "provider": "openai",
+        "modelId": "gpt-4o-mini"
+      }
+    },
+    "models": [
+      {
+        "provider": "openai",
+        "modelId": "gpt-4o-mini",
+        "aliases": [
+          "gpt-4o-mini",
+          "gpt-4o-mini-2024-07-18"
+        ],
+        "status": "VALIDATED",
+        "certification": {
+          "ask": "CANDIDATE",
+          "research": "LIMITED",
+          "draft": "CANDIDATE",
+          "contract": "VALIDATED",
+          "deposition": "ACTIVE",
+          "evidence": "ACTIVE",
+          "compare": "ACTIVE",
+          "contradiction": "CANDIDATE",
+          "timeline": "ACTIVE",
+          "graph": "ACTIVE",
+          "memory": "ACTIVE"
+        },
+        "qualityScore": 0.8431372549019608,
+        "safetyScore": 0.9803921568627451,
+        "citationReliability": null,
+        "structuredReliability": null,
+        "notes": "nyaya-four-provider-cert-v1 quality remediation measured openai.",
+        "benchmarkId": "nyaya-four-provider-cert-v1"
+      },
+      {
+        "provider": "anthropic",
+        "modelId": "claude-sonnet-4-5-20250929",
+        "status": "CANDIDATE",
+        "certification": {
+          "ask": "CANDIDATE",
+          "research": "LIMITED",
+          "draft": "CANDIDATE",
+          "contract": "CANDIDATE",
+          "deposition": "CANDIDATE",
+          "evidence": "CANDIDATE",
+          "compare": "DISABLED",
+          "contradiction": "CANDIDATE",
+          "timeline": "DISABLED",
+          "graph": "CANDIDATE",
+          "memory": "CANDIDATE"
+        },
+        "qualityScore": 0.8431372549019608,
+        "safetyScore": 0.9803921568627451,
+        "citationReliability": null,
+        "structuredReliability": null,
+        "notes": "nyaya-four-provider-cert-v1 quality remediation measured anthropic.",
+        "benchmarkId": "nyaya-four-provider-cert-v1"
+      },
+      {
+        "provider": "xai",
+        "modelId": "grok-3",
+        "status": "ACTIVE",
+        "certification": {
+          "ask": "ACTIVE",
+          "research": "ACTIVE",
+          "draft": "ACTIVE",
+          "contract": "ACTIVE",
+          "deposition": "LIMITED",
+          "evidence": "VALIDATED",
+          "compare": "VALIDATED",
+          "contradiction": "ACTIVE",
+          "timeline": "VALIDATED",
+          "graph": "VALIDATED",
+          "memory": "VALIDATED"
+        },
+        "qualityScore": 0.9411764705882352,
+        "safetyScore": 1,
+        "citationReliability": null,
+        "structuredReliability": null,
+        "notes": "nyaya-four-provider-cert-v1 quality remediation measured xai.",
+        "benchmarkId": "nyaya-four-provider-cert-v1"
+      },
+      {
+        "provider": "google",
+        "modelId": "gemini-3.6-flash",
+        "status": "VALIDATED",
+        "certification": {
+          "ask": "LIMITED",
+          "research": "LIMITED",
+          "draft": "CANDIDATE",
+          "contract": "CANDIDATE",
+          "deposition": "CANDIDATE",
+          "evidence": "CANDIDATE",
+          "compare": "CANDIDATE",
+          "contradiction": "VALIDATED",
+          "timeline": "CANDIDATE",
+          "graph": "CANDIDATE",
+          "memory": "CANDIDATE"
+        },
+        "qualityScore": 0.7058823529411765,
+        "safetyScore": 1,
+        "citationReliability": null,
+        "structuredReliability": null,
+        "notes": "nyaya-four-provider-cert-v1 quality remediation measured google.",
+        "benchmarkId": "nyaya-four-provider-cert-v1"
+      }
+    ]
+  },
+  "registryAfter": [
+    {
+      "id": "openai:gpt-4o-mini",
+      "provider": "openai",
+      "modelId": "gpt-4o-mini",
+      "status": "VALIDATED",
+      "certification": {
+        "ask": "CANDIDATE",
+        "research": "LIMITED",
+        "draft": "CANDIDATE",
+        "contract": "VALIDATED",
+        "deposition": "ACTIVE",
+        "evidence": "ACTIVE",
+        "compare": "ACTIVE",
+        "contradiction": "CANDIDATE",
+        "timeline": "ACTIVE",
+        "graph": "ACTIVE",
+        "memory": "ACTIVE"
+      },
+      "qualityScore": 0.8431372549019608,
+      "safetyScore": 0.9803921568627451,
+      "notes": "nyaya-four-provider-cert-v1 quality remediation measured openai."
+    },
+    {
+      "id": "openai:gpt-4o-mini-2024-07-18",
+      "provider": "openai",
+      "modelId": "gpt-4o-mini-2024-07-18",
+      "status": "VALIDATED",
+      "certification": {
+        "ask": "CANDIDATE",
+        "research": "LIMITED",
+        "draft": "CANDIDATE",
+        "contract": "VALIDATED",
+        "deposition": "ACTIVE",
+        "evidence": "ACTIVE",
+        "compare": "ACTIVE",
+        "contradiction": "CANDIDATE",
+        "timeline": "ACTIVE",
+        "graph": "ACTIVE",
+        "memory": "ACTIVE"
+      },
+      "qualityScore": 0.8431372549019608,
+      "safetyScore": 0.9803921568627451,
+      "notes": "nyaya-four-provider-cert-v1 quality remediation measured openai."
+    },
+    {
+      "id": "openai:gpt-4o",
+      "provider": "openai",
+      "modelId": "gpt-4o",
+      "status": "CANDIDATE",
+      "certification": {
+        "ask": "CANDIDATE",
+        "research": "CANDIDATE",
+        "draft": "CANDIDATE",
+        "contract": "CANDIDATE",
+        "deposition": "CANDIDATE",
+        "evidence": "CANDIDATE",
+        "compare": "CANDIDATE",
+        "contradiction": "CANDIDATE",
+        "timeline": "CANDIDATE",
+        "graph": "CANDIDATE",
+        "memory": "CANDIDATE"
+      },
+      "qualityScore": null,
+      "safetyScore": null,
+      "notes": "Unmeasured openai sibling after nyaya-four-provider-cert-v1. Remains CANDIDATE."
+    },
+    {
+      "id": "anthropic:claude-sonnet-4-5-20250929",
+      "provider": "anthropic",
+      "modelId": "claude-sonnet-4-5-20250929",
+      "status": "CANDIDATE",
+      "certification": {
+        "ask": "CANDIDATE",
+        "research": "LIMITED",
+        "draft": "CANDIDATE",
+        "contract": "CANDIDATE",
+        "deposition": "CANDIDATE",
+        "evidence": "CANDIDATE",
+        "compare": "DISABLED",
+        "contradiction": "CANDIDATE",
+        "timeline": "DISABLED",
+        "graph": "CANDIDATE",
+        "memory": "CANDIDATE"
+      },
+      "qualityScore": 0.8431372549019608,
+      "safetyScore": 0.9803921568627451,
+      "notes": "nyaya-four-provider-cert-v1 quality remediation measured anthropic."
+    },
+    {
+      "id": "xai:grok-3",
+      "provider": "xai",
+      "modelId": "grok-3",
+      "status": "ACTIVE",
+      "certification": {
+        "ask": "ACTIVE",
+        "research": "ACTIVE",
+        "draft": "ACTIVE",
+        "contract": "ACTIVE",
+        "deposition": "LIMITED",
+        "evidence": "VALIDATED",
+        "compare": "VALIDATED",
+        "contradiction": "ACTIVE",
+        "timeline": "VALIDATED",
+        "graph": "VALIDATED",
+        "memory": "VALIDATED"
+      },
+      "qualityScore": 0.9411764705882352,
+      "safetyScore": 1,
+      "notes": "nyaya-four-provider-cert-v1 quality remediation measured xai."
+    },
+    {
+      "id": "google:gemini-3.6-flash",
+      "provider": "google",
+      "modelId": "gemini-3.6-flash",
+      "status": "VALIDATED",
+      "certification": {
+        "ask": "LIMITED",
+        "research": "LIMITED",
+        "draft": "CANDIDATE",
+        "contract": "CANDIDATE",
+        "deposition": "CANDIDATE",
+        "evidence": "CANDIDATE",
+        "compare": "CANDIDATE",
+        "contradiction": "VALIDATED",
+        "timeline": "CANDIDATE",
+        "graph": "CANDIDATE",
+        "memory": "CANDIDATE"
+      },
+      "qualityScore": 0.7058823529411765,
+      "safetyScore": 1,
+      "notes": "nyaya-four-provider-cert-v1 quality remediation measured google."
+    },
+    {
+      "id": "mock:mock-1",
+      "provider": "mock",
+      "modelId": "mock-1",
+      "status": "VALIDATED",
+      "certification": {
+        "ask": "VALIDATED",
+        "research": "VALIDATED",
+        "draft": "VALIDATED",
+        "contract": "VALIDATED",
+        "deposition": "VALIDATED",
+        "evidence": "VALIDATED",
+        "compare": "VALIDATED",
+        "contradiction": "VALIDATED",
+        "timeline": "VALIDATED",
+        "graph": "VALIDATED",
+        "memory": "VALIDATED"
+      },
+      "qualityScore": null,
+      "safetyScore": null,
+      "notes": "Test/development fixture only. Never a production legal engine."
+    }
+  ],
+  "featureAgents": "OFF_DEFAULT",
+  "trustArchitectureChanged": false,
+  "nextPhase": "MODEL QUALITY REMEDIATION — TARGETED ROUND 2"
+}

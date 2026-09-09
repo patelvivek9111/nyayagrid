@@ -1,7 +1,7 @@
 import { createServer, type AddressInfo, type Server, type Socket } from "node:net";
 import { afterEach, describe, expect, it } from "vitest";
 import { checkEndpointRateLimit } from "./rate-limit";
-import { RedisRateLimiter, parseRedisTarget } from "./redis-rate-limit";
+import { RedisRateLimiter, parseRedisTarget, pingRedis } from "./redis-rate-limit";
 
 type RedisEntry = { value: number; expireAt?: number };
 
@@ -39,8 +39,13 @@ function startFakeRedis(options: { password?: string; failAfter?: number } = {})
           reply("-NOAUTH Authentication required.\r\n");
           continue;
         }
+        if (op === "PING") {
+          reply("+PONG\r\n");
+          continue;
+        }
         if (op === "AUTH") {
-          if (args[0] === options.password) {
+          const provided = args.length >= 2 ? args[1] : args[0];
+          if (provided === options.password) {
             authed = true;
             reply("+OK\r\n");
           } else {
@@ -134,6 +139,8 @@ describe("parseRedisTarget", () => {
       host: "127.0.0.1",
       port: 6380,
       password: "s3cret",
+      username: undefined,
+      tls: false,
     });
   });
 
@@ -142,11 +149,44 @@ describe("parseRedisTarget", () => {
       host: "redis.internal",
       port: 6379,
       password: undefined,
+      username: undefined,
+      tls: false,
     });
+  });
+
+  it("enables TLS for rediss:// and Upstash hosts", () => {
+    expect(parseRedisTarget({ REDIS_URL: "rediss://default:s3cret@example.upstash.io:6379" })).toEqual({
+      host: "example.upstash.io",
+      port: 6379,
+      password: "s3cret",
+      username: "default",
+      tls: true,
+    });
+    expect(parseRedisTarget({ REDIS_URL: "redis://default:s3cret@example.upstash.io:6379" })?.tls).toBe(
+      true,
+    );
+  });
+
+  it("returns null for redis-cli pastes and non-redis URLs without throwing", () => {
+    expect(
+      parseRedisTarget({
+        REDIS_URL: "redis-cli --tls -u redis://default:s3cret@example.upstash.io:6379",
+      }),
+    ).toBeNull();
+    expect(parseRedisTarget({ REDIS_URL: "https://example.upstash.io" })).toBeNull();
   });
 
   it("returns null when neither URL nor host is set", () => {
     expect(parseRedisTarget({})).toBeNull();
+  });
+});
+
+describe("pingRedis", () => {
+  it("does not throw or echo an invalid REDIS_URL", async () => {
+    const result = await pingRedis({
+      REDIS_URL: "redis-cli --tls -u redis://default:s3cret@example.upstash.io:6379",
+    });
+    expect(result).toEqual({ ok: false, error: "invalid_url" });
   });
 });
 
@@ -162,8 +202,8 @@ describe("RedisRateLimiter", () => {
   it("holds a limit across two limiter instances (shared store)", async () => {
     const server = await startFakeRedis();
     servers.push(server);
-    const a = new RedisRateLimiter({ host: "127.0.0.1", port: server.port });
-    const b = new RedisRateLimiter({ host: "127.0.0.1", port: server.port });
+    const a = new RedisRateLimiter({ host: "127.0.0.1", port: server.port, tls: false });
+    const b = new RedisRateLimiter({ host: "127.0.0.1", port: server.port, tls: false });
     limiters.push(a, b);
     const identity = { endpointClass: "auth" as const, ip: "203.0.113.9" };
     const overrides = { limit: 2, windowMs: 60_000 };
@@ -181,6 +221,7 @@ describe("RedisRateLimiter", () => {
       host: "127.0.0.1",
       port: server.port,
       password: "s3cret",
+      tls: false,
     });
     limiters.push(limiter);
     const decision = await limiter.checkRateLimit({
@@ -192,8 +233,72 @@ describe("RedisRateLimiter", () => {
     expect(decision.remaining).toBe(4);
   });
 
+  it("isolates counters by user and organization", async () => {
+    const server = await startFakeRedis();
+    servers.push(server);
+    const limiter = new RedisRateLimiter({ host: "127.0.0.1", port: server.port, tls: false });
+    limiters.push(limiter);
+    const overrides = { limit: 1, windowMs: 60_000 };
+
+    const userA = await checkEndpointRateLimit(
+      limiter,
+      { endpointClass: "ask_nyaya", userId: "user-a", organizationId: "org-1" },
+      overrides,
+    );
+    const userB = await checkEndpointRateLimit(
+      limiter,
+      { endpointClass: "ask_nyaya", userId: "user-b", organizationId: "org-1" },
+      overrides,
+    );
+    const userAAgain = await checkEndpointRateLimit(
+      limiter,
+      { endpointClass: "ask_nyaya", userId: "user-a", organizationId: "org-1" },
+      overrides,
+    );
+    expect(userA.allowed).toBe(true);
+    expect(userB.allowed).toBe(true);
+    expect(userAAgain.allowed).toBe(false);
+
+    const orgA = await checkEndpointRateLimit(
+      limiter,
+      { endpointClass: "upload", userId: "user-a", organizationId: "org-a" },
+      overrides,
+    );
+    const orgB = await checkEndpointRateLimit(
+      limiter,
+      { endpointClass: "upload", userId: "user-a", organizationId: "org-b" },
+      overrides,
+    );
+    expect(orgA.allowed).toBe(true);
+    expect(orgB.allowed).toBe(true);
+  });
+
+  it("authenticates with Redis ACL username + password", async () => {
+    const server = await startFakeRedis({ password: "s3cret" });
+    servers.push(server);
+    const limiter = new RedisRateLimiter({
+      host: "127.0.0.1",
+      port: server.port,
+      username: "default",
+      password: "s3cret",
+      tls: false,
+    });
+    limiters.push(limiter);
+    const decision = await limiter.checkRateLimit({
+      key: "auth:ip:198.51.100.9",
+      limit: 5,
+      windowMs: 60_000,
+    });
+    expect(decision.allowed).toBe(true);
+  });
+
   it("fails closed when Redis is unreachable", async () => {
-    const limiter = new RedisRateLimiter({ host: "127.0.0.1", port: 1, password: undefined });
+    const limiter = new RedisRateLimiter({
+      host: "127.0.0.1",
+      port: 1,
+      password: undefined,
+      tls: false,
+    });
     limiters.push(limiter);
     const decision = await limiter.checkRateLimit({
       key: "auth:ip:198.51.100.2",

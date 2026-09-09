@@ -7,7 +7,8 @@
   "types": "./src/index.ts",
   "exports": {
     ".": "./src/index.ts",
-    "./evals": "./src/evals/index.ts"
+    "./evals": "./src/evals/index.ts",
+    "./cert-transport": "./src/cert-transport/index.ts"
   },
   "scripts": {
     "lint": "tsc --noEmit",

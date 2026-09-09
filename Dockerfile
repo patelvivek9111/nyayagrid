@@ -49,10 +49,13 @@ ENV NEXT_TELEMETRY_DISABLED=1
 # node_modules) must be copied, not just the root node_modules directory.
 COPY --from=deps /app ./
 COPY . .
-# Ensure the standalone-copy step below always has a source directory, even though this repo does
-# not currently ship a public/ folder.
+# Never bake local dotenv / Inngest dev mode into a staging/production image.
+RUN find . -type f -name '.env*' ! -name '.env.example' -delete || true
+ENV INNGEST_DEV=
 RUN mkdir -p apps/web/public
 RUN npm run build -w @nyayagrid/web
+# Bundled migrator for Fly release_command. Never logs DATABASE_URL.
+RUN npx esbuild packages/database/src/migrate.ts --bundle --platform=node --format=cjs --outfile=/tmp/migrate.cjs
 
 # ---- runner: minimal runtime image, non-root user ----
 FROM node:20-alpine AS runner
@@ -61,6 +64,7 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
+ENV INNGEST_DEV=
 
 RUN addgroup --system --gid 1001 nodejs \
   && adduser --system --uid 1001 --ingroup nodejs nyayagrid
@@ -71,6 +75,9 @@ RUN addgroup --system --gid 1001 nodejs \
 COPY --from=builder --chown=nyayagrid:nodejs /app/apps/web/.next/standalone ./
 COPY --from=builder --chown=nyayagrid:nodejs /app/apps/web/.next/static ./apps/web/.next/static
 COPY --from=builder --chown=nyayagrid:nodejs /app/apps/web/public ./apps/web/public
+COPY --from=builder --chown=nyayagrid:nodejs /tmp/migrate.cjs ./migrate.cjs
+COPY --from=builder --chown=nyayagrid:nodejs /app/packages/database/drizzle ./packages/database/drizzle
+ENV MIGRATIONS_FOLDER=/app/packages/database/drizzle
 
 USER nyayagrid
 EXPOSE 3000

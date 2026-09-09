@@ -1,0 +1,16 @@
+{
+  "id": "nyaya-router-adversarial-v1",
+  "phase": "NYAYA ROUTER ADVERSARIAL RELIABILITY & MULTI-MODEL STRESS GATE",
+  "frozenAt": "2026-09-01",
+  "qualityBaselineSource": "benchmarks/nyaya-bench/model-routing/artifacts/quality-phase-checkpoint.json",
+  "qualityBaselineIds": {
+    "ask": "autoAskR3",
+    "safetyFloor": "safetyFloorR3",
+    "certification": "nyaya-four-provider-cert-v1"
+  },
+  "doNotOverwrite": [
+    "nyaya-four-provider-cert-v1",
+    "quality-phase-checkpoint.json",
+    "FOUR_PROVIDER_CERT.json"
+  ]
+}

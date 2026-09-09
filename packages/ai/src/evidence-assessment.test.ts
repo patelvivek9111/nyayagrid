@@ -489,4 +489,53 @@ describe("structured evidence assessment", () => {
     expect(constrained.answer.toLowerCase()).not.toMatch(/did not issue or pay a service credit/);
     expect(constrained.answer.toLowerCase()).toMatch(/does not prove|absence from this document/);
   });
+
+  it("treats a named instrument that is not in retrieval as insufficient, not lease-guessable", () => {
+    const passages = [
+      passage("chunk_lease_term", "The lease term commences on January 1, 2024.", "doc_lease"),
+    ];
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "How does the amendment change the indemnity obligation?",
+      passages,
+      NOW,
+    );
+    expect(assessment?.status).toBe("insufficient");
+    expect(assessment?.allowedClaim).toMatch(/do not include/i);
+    const constrained = constrainCitedAnswer(
+      {
+        answer: "The lease does not change indemnity; Section 9 still applies from the original term.",
+        evidenceState: "grounded" as const,
+        sources: [],
+      },
+      assessment!,
+      passages,
+    );
+    expect(constrained.evidenceState).toBe("insufficient");
+    expect(constrained.answer.toLowerCase()).toMatch(/do not include/);
+    const partialConstrained = constrainCitedAnswer(
+      {
+        answer: "The lease still governs indemnity in relevant part.",
+        evidenceState: "partial" as const,
+        sources: [],
+      },
+      assessment!,
+      passages,
+    );
+    expect(partialConstrained.evidenceState).toBe("insufficient");
+  });
+
+  it("does not flag a missing amendment when the amendment document is retrieved", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "How does the amendment change the indemnity obligation?",
+      [
+        passage(
+          "chunk_amend_indemnity",
+          "Section 9 (Indemnity) is deleted in its entirety and replaced with: Tenant shall indemnify Landlord only for third-party claims arising from Tenant's negligence.",
+          "doc_amendment",
+        ),
+      ],
+      NOW,
+    );
+    expect(assessment?.status).not.toBe("insufficient");
+  });
 });

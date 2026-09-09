@@ -2,7 +2,7 @@ import { z } from "zod";
 import { normalizeConfidenceLevel } from "./professional";
 
 export const GRAPH_RELATIONSHIP_PROMPT_VERSION = "graph-relationship-extract-v2";
-export const MEMORY_PROPOSAL_PROMPT_VERSION = "matter-memory-propose-v2";
+export const MEMORY_PROPOSAL_PROMPT_VERSION = "matter-memory-propose-v3";
 
 export const GRAPH_RELATIONSHIP_TYPES = [
   "works_for",
@@ -236,6 +236,7 @@ export function buildMemoryProposalUserPrompt(input: {
   verifiedContext: string;
   hint?: string | null;
   chunks?: Array<{ chunkId: string; content: string }>;
+  groundedCandidates?: Array<{ title: string; content: string; sourceChunkId: string }>;
 }): string {
   return [
     `Matter: ${input.matterTitle}`,
@@ -247,6 +248,14 @@ export function buildMemoryProposalUserPrompt(input: {
     ...(input.chunks?.length
       ? input.chunks.map((c) => `- chunkId=${c.chunkId} | text=|${c.content}|`)
       : ["(none)"]),
+    input.groundedCandidates?.length
+      ? [
+          "GroundedCandidateHints (source-backed extract only; propose if durable and still useful; never treat as approved):",
+          ...input.groundedCandidates.map(
+            (c) => `- sourceChunkId=${c.sourceChunkId} | title=${c.title} | text=|${c.content}|`,
+          ),
+        ].join("\n")
+      : "",
   ]
     .filter(Boolean)
     .join("\n");

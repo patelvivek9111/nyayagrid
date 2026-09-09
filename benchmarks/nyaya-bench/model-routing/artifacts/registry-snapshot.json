@@ -5,21 +5,21 @@
     "modelId": "gpt-4o-mini",
     "status": "VALIDATED",
     "certification": {
-      "ask": "VALIDATED",
-      "research": "VALIDATED",
-      "draft": "VALIDATED",
+      "ask": "CANDIDATE",
+      "research": "LIMITED",
+      "draft": "CANDIDATE",
       "contract": "VALIDATED",
-      "deposition": "VALIDATED",
-      "evidence": "VALIDATED",
-      "compare": "VALIDATED",
-      "contradiction": "VALIDATED",
-      "timeline": "VALIDATED",
-      "graph": "VALIDATED",
-      "memory": "VALIDATED"
+      "deposition": "CANDIDATE",
+      "evidence": "ACTIVE",
+      "compare": "ACTIVE",
+      "contradiction": "CANDIDATE",
+      "timeline": "ACTIVE",
+      "graph": "ACTIVE",
+      "memory": "LIMITED"
     },
-    "qualityScore": null,
-    "safetyScore": null,
-    "notes": "VALIDATED only as the historical OpenAI execution route. Snapshot quality scores remain unrated until the four-provider certification phase."
+    "qualityScore": 0.8431372549019608,
+    "safetyScore": 0.9803921568627451,
+    "notes": "nyaya-four-provider-cert-v1 measured openai. Unmeasured subsystems remain CANDIDATE."
   },
   {
     "id": "openai:gpt-4o-mini-2024-07-18",
@@ -27,43 +27,43 @@
     "modelId": "gpt-4o-mini-2024-07-18",
     "status": "VALIDATED",
     "certification": {
-      "ask": "VALIDATED",
-      "research": "VALIDATED",
-      "draft": "VALIDATED",
+      "ask": "CANDIDATE",
+      "research": "LIMITED",
+      "draft": "CANDIDATE",
       "contract": "VALIDATED",
-      "deposition": "VALIDATED",
-      "evidence": "VALIDATED",
-      "compare": "VALIDATED",
-      "contradiction": "VALIDATED",
-      "timeline": "VALIDATED",
-      "graph": "VALIDATED",
-      "memory": "VALIDATED"
+      "deposition": "CANDIDATE",
+      "evidence": "ACTIVE",
+      "compare": "ACTIVE",
+      "contradiction": "CANDIDATE",
+      "timeline": "ACTIVE",
+      "graph": "ACTIVE",
+      "memory": "LIMITED"
     },
-    "qualityScore": null,
-    "safetyScore": null,
-    "notes": "VALIDATED only as the historical OpenAI execution route. Snapshot quality scores remain unrated until the four-provider certification phase."
+    "qualityScore": 0.8431372549019608,
+    "safetyScore": 0.9803921568627451,
+    "notes": "nyaya-four-provider-cert-v1 measured openai. Unmeasured subsystems remain CANDIDATE."
   },
   {
     "id": "openai:gpt-4o",
     "provider": "openai",
     "modelId": "gpt-4o",
-    "status": "VALIDATED",
+    "status": "CANDIDATE",
     "certification": {
-      "ask": "VALIDATED",
-      "research": "VALIDATED",
-      "draft": "VALIDATED",
-      "contract": "VALIDATED",
-      "deposition": "VALIDATED",
-      "evidence": "VALIDATED",
-      "compare": "VALIDATED",
-      "contradiction": "VALIDATED",
-      "timeline": "VALIDATED",
-      "graph": "VALIDATED",
-      "memory": "VALIDATED"
+      "ask": "CANDIDATE",
+      "research": "CANDIDATE",
+      "draft": "CANDIDATE",
+      "contract": "CANDIDATE",
+      "deposition": "CANDIDATE",
+      "evidence": "CANDIDATE",
+      "compare": "CANDIDATE",
+      "contradiction": "CANDIDATE",
+      "timeline": "CANDIDATE",
+      "graph": "CANDIDATE",
+      "memory": "CANDIDATE"
     },
     "qualityScore": null,
     "safetyScore": null,
-    "notes": "VALIDATED only as the historical OpenAI execution route. Snapshot quality scores remain unrated until the four-provider certification phase."
+    "notes": "Unmeasured openai sibling after nyaya-four-provider-cert-v1. Remains CANDIDATE."
   },
   {
     "id": "anthropic:claude-sonnet-4-5-20250929",
@@ -72,50 +72,50 @@
     "status": "CANDIDATE",
     "certification": {
       "ask": "CANDIDATE",
-      "research": "CANDIDATE",
+      "research": "LIMITED",
       "draft": "CANDIDATE",
       "contract": "CANDIDATE",
       "deposition": "CANDIDATE",
       "evidence": "CANDIDATE",
-      "compare": "CANDIDATE",
+      "compare": "DISABLED",
       "contradiction": "CANDIDATE",
-      "timeline": "CANDIDATE",
+      "timeline": "DISABLED",
       "graph": "CANDIDATE",
       "memory": "CANDIDATE"
     },
-    "qualityScore": null,
-    "safetyScore": null,
-    "notes": "Adapter present. Not certified for Auto. Awaiting four-provider benchmark."
+    "qualityScore": 0.8431372549019608,
+    "safetyScore": 0.9803921568627451,
+    "notes": "nyaya-four-provider-cert-v1 measured anthropic. Unmeasured subsystems remain CANDIDATE."
   },
   {
     "id": "xai:grok-3",
     "provider": "xai",
     "modelId": "grok-3",
-    "status": "CANDIDATE",
+    "status": "ACTIVE",
     "certification": {
-      "ask": "CANDIDATE",
-      "research": "CANDIDATE",
-      "draft": "CANDIDATE",
-      "contract": "CANDIDATE",
+      "ask": "ACTIVE",
+      "research": "LIMITED",
+      "draft": "ACTIVE",
+      "contract": "ACTIVE",
       "deposition": "CANDIDATE",
-      "evidence": "CANDIDATE",
-      "compare": "CANDIDATE",
-      "contradiction": "CANDIDATE",
-      "timeline": "CANDIDATE",
-      "graph": "CANDIDATE",
-      "memory": "CANDIDATE"
+      "evidence": "VALIDATED",
+      "compare": "VALIDATED",
+      "contradiction": "ACTIVE",
+      "timeline": "VALIDATED",
+      "graph": "VALIDATED",
+      "memory": "LIMITED"
     },
-    "qualityScore": null,
-    "safetyScore": null,
-    "notes": "Adapter present. Not certified for Auto. Awaiting four-provider benchmark."
+    "qualityScore": 0.9411764705882352,
+    "safetyScore": 1,
+    "notes": "nyaya-four-provider-cert-v1 measured xai. Unmeasured subsystems remain CANDIDATE."
   },
   {
-    "id": "google:gemini-2.5-flash",
+    "id": "google:gemini-3.6-flash",
     "provider": "google",
-    "modelId": "gemini-2.5-flash",
+    "modelId": "gemini-3.6-flash",
     "status": "CANDIDATE",
     "certification": {
-      "ask": "CANDIDATE",
+      "ask": "LIMITED",
       "research": "CANDIDATE",
       "draft": "CANDIDATE",
       "contract": "CANDIDATE",
@@ -127,9 +127,9 @@
       "graph": "CANDIDATE",
       "memory": "CANDIDATE"
     },
-    "qualityScore": null,
-    "safetyScore": null,
-    "notes": "Adapter present. Not certified for Auto. Awaiting four-provider benchmark."
+    "qualityScore": 0.7058823529411765,
+    "safetyScore": 1,
+    "notes": "nyaya-four-provider-cert-v1 measured google. Unmeasured subsystems remain CANDIDATE."
   },
   {
     "id": "mock:mock-1",

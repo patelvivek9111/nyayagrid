@@ -4,7 +4,9 @@
  */
 import {
   createDirectProvider,
+  classifyCredentialFailure,
   parseJsonObject,
+  redactEnvSecrets,
   type DirectProviderId,
 } from "@nyayagrid/ai";
 
@@ -30,6 +32,7 @@ export type SmokeResult = {
   timeoutWorks: boolean;
   latencyMs: number | null;
   errorClass: string | null;
+  errorDetail?: string;
 };
 
 async function generateWithBudget(
@@ -71,7 +74,7 @@ export async function smokeProvider(params: {
     };
   }
 
-  const timeoutMs = params.timeoutMs ?? 25_000;
+  const timeoutMs = params.timeoutMs ?? 45_000;
   const started = Date.now();
   try {
     const { provider, modelId } = createDirectProvider({ provider: params.provider });
@@ -98,7 +101,7 @@ export async function smokeProvider(params: {
       errorClass: null,
     };
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
+    const message = redactEnvSecrets(error instanceof Error ? error.message : String(error));
     return {
       provider: params.provider,
       modelId: "unresolved",
@@ -109,7 +112,8 @@ export async function smokeProvider(params: {
       modelCaptured: false,
       timeoutWorks: false,
       latencyMs: Date.now() - started,
-      errorClass: message.slice(0, 180),
+      errorClass: classifyCredentialFailure(error, params.provider),
+      errorDetail: message.slice(0, 180),
     };
   }
 }

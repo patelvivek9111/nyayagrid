@@ -515,6 +515,8 @@ function toResearchAuthorityChunks(
   return hits.map((hit) => ({
     authorityId: hit.authorityId,
     chunkId: hit.chunkId,
+    name: hit.title,
+    authorityType: hit.authorityType,
     citation: hit.citation,
     court: hit.court,
     date: hit.decisionDate,

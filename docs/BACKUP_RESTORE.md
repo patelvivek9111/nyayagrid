@@ -1,11 +1,10 @@
 # Backup & Restore — NyayaGrid
 
-**Status: BLOCKER for managed production.** A local docker matched rehearsal exists
-(`npm run ops:backup-rehearse`) and restores to a new database `nyayagrid_restore_test`. No restore
-has been executed end-to-end against a production-shaped managed Postgres instance. Everything
-below is the intended procedure for that provider. Do not treat this document as evidence that
-cloud recovery works — treat it as the checklist to work through and verify before launch, then
-keep re-verifying on a schedule (see [Operations](./OPERATIONS.md)).
+**Status: staging Neon recovery rehearsed; production still plan-bounded.** Staging project
+`nyayagrid-staging` (Neon) has `history_retention_seconds=21600` (6-hour Free default). Isolated
+restore branches plus a PITR-from-timestamp rehearsal succeeded without overwriting the live
+branch; `pgvector` survived. PITR older than 6 hours is unavailable without a plan upgrade.
+Local docker matched rehearsal remains `npm run ops:backup-rehearse`.
 
 ## What needs to be backed up
 

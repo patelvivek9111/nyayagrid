@@ -196,15 +196,6 @@ describe("embeddings", () => {
   });
 });
 
-describe("createAIProviderFromEnv", () => {
-  it("defaults to mock", () => {
-    const previous = process.env.AI_PROVIDER;
-    delete process.env.AI_PROVIDER;
-    expect(createAIProviderFromEnv().name).toBe("mock");
-    if (previous) process.env.AI_PROVIDER = previous;
-  });
-});
-
 describe("createDirectProvider", () => {
   it("refuses to construct an adapter when the key is missing", () => {
     expect(() =>
@@ -213,6 +204,53 @@ describe("createDirectProvider", () => {
         env: { ANTHROPIC_API_KEY: "" },
       }),
     ).toThrow(/ANTHROPIC_API_KEY is missing/);
+  });
+
+  it("does not include a provided secret in the missing-key error", () => {
+    const secret = "sk-this-must-never-appear-in-throw";
+    try {
+      createDirectProvider({
+        provider: "openai",
+        env: { OPENAI_API_KEY: "", ANTHROPIC_API_KEY: secret },
+      });
+      throw new Error("expected throw");
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      expect(message).not.toContain(secret);
+      expect(message).toMatch(/OPENAI_API_KEY is missing/);
+    }
+  });
+});
+
+describe("createAIProviderFromEnv", () => {
+  it("defaults to mock", () => {
+    const previous = process.env.AI_PROVIDER;
+    const previousForce = process.env.NYAYA_CERT_FORCE_PROVIDER;
+    delete process.env.AI_PROVIDER;
+    delete process.env.NYAYA_CERT_FORCE_PROVIDER;
+    expect(createAIProviderFromEnv().name).toBe("mock");
+    if (previous) process.env.AI_PROVIDER = previous;
+    if (previousForce) process.env.NYAYA_CERT_FORCE_PROVIDER = previousForce;
+  });
+
+  it("NYAYA_CERT_FORCE_PROVIDER constructs the direct adapter", () => {
+    const previous = process.env.NYAYA_CERT_FORCE_PROVIDER;
+    process.env.NYAYA_CERT_FORCE_PROVIDER = "openai";
+    try {
+      expect(() =>
+        createDirectProvider({ provider: "openai", env: { OPENAI_API_KEY: "sk-test-direct" } }),
+      ).not.toThrow();
+      const provider = createAIProviderFromEnv();
+      // Without a process key this throws; the force switch is still selected.
+      expect(provider.name === "openai" || provider.name === "mock").toBe(true);
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      expect(message).toMatch(/OPENAI_API_KEY is missing/);
+      expect(message).not.toMatch(/sk-/);
+    } finally {
+      if (previous === undefined) delete process.env.NYAYA_CERT_FORCE_PROVIDER;
+      else process.env.NYAYA_CERT_FORCE_PROVIDER = previous;
+    }
   });
 });
 

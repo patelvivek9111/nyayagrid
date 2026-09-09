@@ -101,7 +101,8 @@ export async function fetchOpenAIWithRetry(
   options: OpenAIFetchOptions = {},
 ): Promise<Response> {
   const fetchImpl = options.fetchImpl ?? fetch;
-  const maxRetries = options.maxRetries ?? DEFAULT_OPENAI_MAX_RETRIES;
+  const isolated = process.env.NYAYA_CERT_ISOLATED === "1";
+  const maxRetries = options.maxRetries ?? (isolated ? 0 : DEFAULT_OPENAI_MAX_RETRIES);
   const retryCapMs = options.retryCapMs ?? DEFAULT_OPENAI_RETRY_CAP_MS;
   const now = options.now ?? Date.now;
   let attempt = 0;

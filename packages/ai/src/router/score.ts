@@ -85,8 +85,7 @@ export function scoreModel(params: {
   }
 
   const healthPoints = HEALTH_POINTS[health];
-  const preferredBonus = preferProvider && entry.provider === preferProvider ? 0.15 : 0;
-  const pinBonus = preferModelId && entry.modelId === preferModelId ? 0.5 : 0;
+  const certRank = entry.certification[subsystem] === "ACTIVE" ? 2 : 1;
   const rated = [
     entry.qualityScore,
     entry.safetyScore,
@@ -95,16 +94,18 @@ export function scoreModel(params: {
   ].filter((v): v is number => v != null);
   // Unrated validated models share a certification floor so Auto can still pick the
   // historical OpenAI route. They do not get fake quality points.
+  // Env preference and pin are tie-breaks in pickHighest — they must not swamp quality.
   const qualityFloor = rated.length > 0 ? rated.reduce((a, b) => a + b, 0) / rated.length : 0.5;
-  const total = qualityFloor + healthPoints + preferredBonus + pinBonus;
+  void preferProvider;
+  void preferModelId;
 
   return {
     modelId: entry.modelId,
     provider: entry.provider,
     eligible: true,
-    total,
+    total: qualityFloor,
     parts: {
-      certification: 1,
+      certification: certRank,
       health: healthPoints,
       quality: entry.qualityScore,
       safety: entry.safetyScore,
@@ -117,11 +118,56 @@ export function scoreModel(params: {
   };
 }
 
+export const ROUTING_SCORE_VERSION = "nyaya-routing-score-v2";
+
+export type PickHighestOptions = {
+  preferProvider?: string;
+  pinnedModelId?: (provider: string) => string | undefined;
+};
+
+function cmpNumber(b: number, a: number): number {
+  if (b > a) return 1;
+  if (b < a) return -1;
+  return 0;
+}
+
+/**
+ * Rank eligible Auto candidates.
+ * Safety and certification eligibility already excluded ineligible rows.
+ * Remaining order: health → ACTIVE over VALIDATED → quality floor → env preference → pin.
+ * Global safety/quality scores must not steal a subsystem's ACTIVE route.
+ * Cost and operator preference never outrank an ineligible or circuit-open model.
+ */
+export function compareRoutingScores(
+  a: RoutingScoreBreakdown,
+  b: RoutingScoreBreakdown,
+  options: PickHighestOptions = {},
+): number {
+  const health = cmpNumber(b.parts.health ?? -1, a.parts.health ?? -1);
+  if (health !== 0) return health;
+  const cert = cmpNumber(b.parts.certification ?? 0, a.parts.certification ?? 0);
+  if (cert !== 0) return cert;
+  const quality = cmpNumber(b.total ?? -1, a.total ?? -1);
+  if (quality !== 0) return quality;
+  const prefer = options.preferProvider;
+  if (prefer) {
+    const pref = Number(b.provider === prefer) - Number(a.provider === prefer);
+    if (pref !== 0) return pref;
+  }
+  const pinOf = options.pinnedModelId;
+  if (pinOf) {
+    const pin = Number(b.modelId === pinOf(b.provider)) - Number(a.modelId === pinOf(a.provider));
+    if (pin !== 0) return pin;
+  }
+  return 0;
+}
+
 export function pickHighest(
   scores: RoutingScoreBreakdown[],
+  options: PickHighestOptions = {},
 ): RoutingScoreBreakdown | null {
   const eligible = scores.filter((s) => s.eligible && s.total != null);
   if (eligible.length === 0) return null;
-  eligible.sort((a, b) => (b.total ?? 0) - (a.total ?? 0));
+  eligible.sort((a, b) => compareRoutingScores(a, b, options));
   return eligible[0] ?? null;
 }

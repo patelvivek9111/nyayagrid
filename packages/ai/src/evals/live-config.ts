@@ -85,6 +85,7 @@ export function resolveLiveEvalScope(
 
 export type LiveEvalConfig = {
   enabled: boolean;
+  provider: "openai" | "anthropic" | "xai" | "google";
   apiKey: string | null;
   model: string;
   timeoutMs: number;
@@ -95,6 +96,29 @@ export type LiveEvalConfig = {
   /** How many times to run each model-backed case. 1 = point estimate. */
   repeats: number;
 };
+
+function readProvider(env: NodeJS.ProcessEnv): LiveEvalConfig["provider"] {
+  const raw = env.EVAL_LIVE_PROVIDER?.trim().toLowerCase();
+  if (raw === "anthropic" || raw === "xai" || raw === "google" || raw === "openai") return raw;
+  return "openai";
+}
+
+function keyForProvider(
+  provider: LiveEvalConfig["provider"],
+  env: NodeJS.ProcessEnv,
+): string | null {
+  if (provider === "anthropic") return env.ANTHROPIC_API_KEY?.trim() || null;
+  if (provider === "xai") return env.XAI_API_KEY?.trim() || null;
+  if (provider === "google") {
+    return (
+      env.GOOGLE_GENERATIVE_AI_API_KEY?.trim() ||
+      env.GEMINI_API_KEY?.trim() ||
+      env.GOOGLE_API_KEY?.trim() ||
+      null
+    );
+  }
+  return env.OPENAI_API_KEY?.trim() || null;
+}
 
 function readPositiveNumber(raw: string | undefined, fallback: number): number {
   if (raw == null || raw.trim() === "") return fallback;
@@ -111,9 +135,11 @@ function readPositiveInteger(raw: string | undefined, fallback: number): number 
 export function resolveLiveEvalConfig(
   env: NodeJS.ProcessEnv = process.env,
 ): LiveEvalConfig {
+  const provider = readProvider(env);
   return {
     enabled: env.EVAL_LIVE === "1",
-    apiKey: env.OPENAI_API_KEY?.trim() ? env.OPENAI_API_KEY.trim() : null,
+    provider,
+    apiKey: keyForProvider(provider, env),
     model:
       env.EVAL_LIVE_MODEL?.trim() ||
       env.OPENAI_MODEL?.trim() ||
@@ -132,6 +158,9 @@ export function liveEvalSkipReason(config: LiveEvalConfig): string | null {
     return "EVAL_LIVE is not 1 (refusing to spend without an explicit opt-in).";
   }
   if (!config.apiKey) {
+    if (config.provider === "anthropic") return "ANTHROPIC_API_KEY is missing.";
+    if (config.provider === "xai") return "XAI_API_KEY is missing.";
+    if (config.provider === "google") return "GOOGLE_GENERATIVE_AI_API_KEY is missing.";
     return "OPENAI_API_KEY is missing.";
   }
   return null;

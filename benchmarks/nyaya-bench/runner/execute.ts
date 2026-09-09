@@ -11,6 +11,18 @@ import type { IngestedMatter } from "./ingest";
 import type { PersistedAnswer, PersistedCitation } from "../graders/types";
 import { executionTargetFor, type ExecutionMode, type ExecutionTarget } from "./routing";
 
+function routedIdentity(ai: ReturnType<typeof createAIProviderFromEnv>): {
+  provider: string;
+  model: string;
+} {
+  const audits = "lastAudits" in ai ? (ai as { lastAudits?: Array<{ provider?: string; model?: string }> }).lastAudits : undefined;
+  const last = audits?.at(-1);
+  return {
+    provider: last?.provider ?? ai.name,
+    model: last?.model ?? process.env.NYAYA_CERT_MODEL_ID ?? process.env.OPENAI_MODEL ?? "unknown",
+  };
+}
+
 export async function executeTask(params: {
   db: Database;
   scenario: BenchScenario;
@@ -40,7 +52,7 @@ export async function executeTask(params: {
       unresolvedQuestions: [],
       retrievedChunkIds: [],
       provider: ai.name,
-      model: process.env.OPENAI_MODEL ?? "unknown",
+      model: process.env.NYAYA_CERT_MODEL_ID ?? process.env.OPENAI_MODEL ?? "unknown",
       promptVersion: null,
       artifactId: null,
       conversationId: null,
@@ -59,6 +71,7 @@ export async function executeTask(params: {
       target,
       ai,
     });
+    const routed = routedIdentity(ai);
     return {
       dataset: params.scenario.dataset,
       scenarioId: params.scenario.scenarioId,
@@ -71,8 +84,8 @@ export async function executeTask(params: {
       assumptions: [],
       unresolvedQuestions: [],
       retrievedChunkIds: [],
-      provider: ai.name,
-      model: process.env.OPENAI_MODEL ?? "unknown",
+      provider: routed.provider,
+      model: routed.model,
       promptVersion: null,
       artifactId: null,
       conversationId: null,

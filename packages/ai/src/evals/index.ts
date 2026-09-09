@@ -1,3 +1,5 @@
+export { runAskContradictionCert } from "./run-cert";
+export type { CertSubsystemRun, CertTaskResult, CertTaskVerdict } from "./run-cert";
 export { GRADED_CASES, gradedCaseToPrompt, EVAL_CASE_QA_RERANK } from "./graded-cases";
 export {
   PERSISTENT_CASE_QA_FAIL_IDS,

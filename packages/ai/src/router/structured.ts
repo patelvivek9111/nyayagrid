@@ -2,7 +2,10 @@
  * Local structured-output validation. Provider "JSON mode" is never trusted alone.
  */
 
+export const MAX_STRUCTURED_TEXT_CHARS = 512_000;
+
 export function extractJsonText(raw: string): string | null {
+  if (raw.length > MAX_STRUCTURED_TEXT_CHARS) return null;
   const trimmed = raw.trim();
   if (!trimmed) return null;
   const fenced = trimmed.match(/```(?:json)?\s*([\s\S]*?)```/i);

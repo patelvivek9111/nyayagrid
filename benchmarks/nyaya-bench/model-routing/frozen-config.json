@@ -26,7 +26,7 @@
     "openai": "gpt-4o-mini",
     "anthropic": "claude-sonnet-4-5-20250929",
     "xai": "grok-3",
-    "google": "gemini-2.5-flash"
+    "google": "gemini-3.6-flash"
   },
   "inProcessAskContradiction": {
     "dataset": "packages/ai golden fixtures (synthetic)",

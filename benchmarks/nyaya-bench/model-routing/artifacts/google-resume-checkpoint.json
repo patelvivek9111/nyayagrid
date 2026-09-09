@@ -1,0 +1,186 @@
+{
+  "generatedAt": "2026-09-01T16:13:35.461Z",
+  "inProcess": {
+    "requestedModel": "gemini-3.6-flash",
+    "resolvedAsk": "gemini-3.6-flash",
+    "resolvedContradiction": "gemini-3.6-flash",
+    "smokeModel": "gemini-3.6-flash",
+    "ask": {
+      "pass": 36,
+      "needsWork": 0,
+      "fail": 15,
+      "critical": 0,
+      "qualityPct": 70.58823529411765,
+      "criticalSafetyPct": 100,
+      "structuredSuccessPct": 0,
+      "citationValidityPct": null,
+      "latencyMedianMs": null,
+      "latencyP95Ms": null,
+      "costUsd": null
+    },
+    "contradiction": {
+      "pass": 25,
+      "needsWork": 0,
+      "fail": 1,
+      "critical": 0,
+      "qualityPct": 96.15384615384616,
+      "criticalSafetyPct": 100,
+      "structuredSuccessPct": 100,
+      "latencyMedianMs": 8315
+    },
+    "askFailures": [
+      {
+        "taskId": "golden-lease-commencement",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      },
+      {
+        "taskId": "golden-rent-annual",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      },
+      {
+        "taskId": "golden-notice-section",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      },
+      {
+        "taskId": "golden-cam-date-conflict",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      },
+      {
+        "taskId": "golden-cam-date-conflict-incomplete",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      },
+      {
+        "taskId": "golden-dispute-date",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      },
+      {
+        "taskId": "golden-late-fee",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      },
+      {
+        "taskId": "golden-qa06-graph-no-docs",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      },
+      {
+        "taskId": "golden-adv-combine-indemnity-and-rent",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      },
+      {
+        "taskId": "golden-adv-combine-dispute-and-late-fee",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      },
+      {
+        "taskId": "golden-adv-combine-renewal-and-expiration",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      },
+      {
+        "taskId": "golden-adv-near-miss-proposed-commencement",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      },
+      {
+        "taskId": "golden-future-effective-current-term",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      },
+      {
+        "taskId": "golden-future-effective-future-term",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      },
+      {
+        "taskId": "golden-compatible-approx-exact-date",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      }
+    ],
+    "contradictionFailures": [
+      {
+        "taskId": "cx-cam-dual-sided-reversed",
+        "verdict": "FAIL",
+        "failureClass": "MODEL_REASONING",
+        "repeats": 1
+      }
+    ],
+    "circuitEvents": [
+      {
+        "provider": "google",
+        "modelId": "gemini-3.6-flash",
+        "state": "DEGRADED",
+        "hardHangs": 1,
+        "at": "2026-09-01T16:11:52.856Z"
+      }
+    ],
+    "hardTimeouts": 1
+  },
+  "ask": {
+    "subsystem": "ask",
+    "provider": "google",
+    "modelId": "gemini-3.6-flash",
+    "tasksAttempted": 51,
+    "minTasksForCertification": 51,
+    "pass": 36,
+    "needsWork": 0,
+    "fail": 15,
+    "critical": 0,
+    "materialQualityPct": 70.58823529411765,
+    "criticalSafetyPct": 100,
+    "citationValidityPct": null,
+    "abstentionCorrectnessPct": null,
+    "structuredSuccessPct": 0,
+    "latencyMedianMs": null,
+    "latencyP95Ms": null,
+    "estimatedCostKnown": false,
+    "hardTrustViolation": false,
+    "operationallyUnusable": false,
+    "incomplete": false
+  },
+  "contradiction": {
+    "subsystem": "contradiction",
+    "provider": "google",
+    "modelId": "gemini-3.6-flash",
+    "tasksAttempted": 26,
+    "minTasksForCertification": 26,
+    "pass": 25,
+    "needsWork": 0,
+    "fail": 1,
+    "critical": 0,
+    "materialQualityPct": 96.15384615384616,
+    "criticalSafetyPct": 100,
+    "citationValidityPct": 100,
+    "abstentionCorrectnessPct": null,
+    "structuredSuccessPct": 100,
+    "latencyMedianMs": 8315,
+    "latencyP95Ms": 26992,
+    "estimatedCostKnown": false,
+    "hardTrustViolation": false,
+    "operationallyUnusable": false,
+    "incomplete": false
+  }
+}

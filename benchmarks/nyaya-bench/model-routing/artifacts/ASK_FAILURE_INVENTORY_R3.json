@@ -1,0 +1,86 @@
+{
+  "round": 3,
+  "createdAt": "2026-09-01T18:55:00.000Z",
+  "startingAsk": {
+    "pass": 44,
+    "fail": 7,
+    "critical": 0,
+    "materialQualityPct": 86.3,
+    "criticalSafetyPct": 100
+  },
+  "failures": [
+    {
+      "task": "golden-notice-section",
+      "failureClass": "CONTEXT_ASSEMBLY",
+      "retrievalCorrect": true,
+      "contextCorrect": false,
+      "trustCorrect": false,
+      "modelError": true,
+      "rootCause": "Chunk location segmentRef=§12.2 was preserved but the in-text cross-reference Section 15 was flattened into undifferentiated quote text, so the model often omitted the provision identity the question asked for."
+    },
+    {
+      "task": "golden-cam-date-conflict",
+      "failureClass": "TRUST_POSTPROCESS",
+      "retrievalCorrect": true,
+      "contextCorrect": false,
+      "trustCorrect": false,
+      "modelError": true,
+      "rootCause": "Two valid transmittal accounts with conflicting exact dates existed, but Ask assessment only treated ISO date pairs as conflicts when the question used contradiction language. Month-name CAM dates were not propagated as a structured disputed packet, so synthesis picked one date."
+    },
+    {
+      "task": "golden-qa06-intel-no-docs",
+      "failureClass": "CONTEXT_ASSEMBLY",
+      "retrievalCorrect": true,
+      "contextCorrect": false,
+      "trustCorrect": false,
+      "modelError": true,
+      "rootCause": "Approved verified intelligence was in the prompt, but Auto grading omitted verifiedIntelligence so QA-06 partial-cap did not run. Empty Sources led the model to insufficient even though attorney-verified structured intelligence answered the fact."
+    },
+    {
+      "task": "golden-qa06-graph-no-docs",
+      "failureClass": "CONTEXT_ASSEMBLY",
+      "retrievalCorrect": true,
+      "contextCorrect": false,
+      "trustCorrect": false,
+      "modelError": true,
+      "rootCause": "Same QA-06 Auto grader omission for verified graph edges without document chunks."
+    },
+    {
+      "task": "golden-qa06-memory-no-docs",
+      "failureClass": "CONTEXT_ASSEMBLY",
+      "retrievalCorrect": true,
+      "contextCorrect": false,
+      "trustCorrect": false,
+      "modelError": true,
+      "rootCause": "Same QA-06 Auto grader omission for approved Matter Memory without document chunks."
+    },
+    {
+      "task": "golden-adv-near-miss-commencement",
+      "failureClass": "TRUST_POSTPROCESS",
+      "retrievalCorrect": true,
+      "contextCorrect": false,
+      "trustCorrect": false,
+      "modelError": true,
+      "rootCause": "Question asserted a near-miss commencement date. The retrieved instrument states a different commencement date-role, but Ask did not package date-role metadata or correct the false premise deterministically."
+    },
+    {
+      "task": "golden-evidentiary-tension-testimony-log",
+      "failureClass": "TRUST_POSTPROCESS",
+      "retrievalCorrect": true,
+      "contextCorrect": false,
+      "trustCorrect": true,
+      "modelError": true,
+      "rootCause": "Deterministic tension assessment existed, but constrain only rewrote when boilerplate/insufficient. Compatibility language such as difference of precision survived prepend, and the word tension was not forced into the answer."
+    },
+    {
+      "task": "golden-judge-not-in-record",
+      "failureClass": "TRUST_POSTPROCESS",
+      "retrievalCorrect": true,
+      "contextCorrect": true,
+      "trustCorrect": false,
+      "modelError": true,
+      "rootCause": "Ask had no deterministic court-assignment identity gate. A lease-rent retrieval can still be answered as grounded/partial from model memory (judge or filing number), which grades as CRITICAL false-confidence. Not in the original 7; surfaced as a safety-variance miss after Round 3 quality fixes.",
+      "observedIn": "autoAskR3-iteration3"
+    }
+  ]
+}

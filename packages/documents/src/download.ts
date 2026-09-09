@@ -1,6 +1,40 @@
 import { and, desc, eq, type Database, documents, documentVersions } from "@nyayagrid/database";
 import type { StorageProvider } from "./storage";
 
+export type StoredObjectMatchParams = {
+  storage: StorageProvider;
+  storageKey: string;
+  sha256: string;
+  byteSize: number;
+};
+
+/**
+ * Fails closed when the stored object is missing, the recorded size does not match,
+ * or object metadata sha256 disagrees with the document-version row. Unique per-version
+ * keys mean this check never relies on bucket versioning.
+ */
+export async function assertStoredObjectMatchesDocumentVersion(
+  params: StoredObjectMatchParams,
+): Promise<void> {
+  const head = await params.storage.headObject(params.storageKey);
+  if (!head) {
+    throw new DocumentDownloadError("NOT_FOUND", "Stored object is missing");
+  }
+  if (head.byteSize !== params.byteSize) {
+    throw new DocumentDownloadError(
+      "OBJECT_MISMATCH",
+      "Stored object size does not match document version metadata",
+    );
+  }
+  const metaSha = head.metadata.sha256 ?? head.metadata.Sha256;
+  if (metaSha && metaSha !== params.sha256) {
+    throw new DocumentDownloadError(
+      "OBJECT_MISMATCH",
+      "Stored object sha256 does not match document version metadata",
+    );
+  }
+}
+
 const DEFAULT_EXPIRES_SECONDS = 300;
 const MAX_EXPIRES_SECONDS = 3600;
 
@@ -207,6 +241,17 @@ export async function authorizeAndSignDocumentDownload(
   if (!version) {
     throw new DocumentDownloadError("NOT_FOUND", "Document version not found");
   }
+  const orgPrefix = `org/${params.organizationId}/`;
+  if (!version.storageKey.startsWith(orgPrefix)) {
+    throw new DocumentDownloadError("NOT_FOUND", "Document not found in scope");
+  }
+
+  await assertStoredObjectMatchesDocumentVersion({
+    storage: params.storage,
+    storageKey: version.storageKey,
+    sha256: version.sha256,
+    byteSize: version.byteSize,
+  });
 
   const signed = await signDocumentDownload({
     storage: params.storage,

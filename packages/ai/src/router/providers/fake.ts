@@ -13,6 +13,7 @@ export type FakeProviderBehavior =
 export class FakeProvider implements AIProvider {
   readonly name: string;
   calls = 0;
+  requests: AiGenerateRequest[] = [];
 
   constructor(
     private readonly options: {
@@ -26,13 +27,42 @@ export class FakeProvider implements AIProvider {
 
   async generate(request: AiGenerateRequest): Promise<AiGenerateResult> {
     this.calls += 1;
+    this.requests.push(request);
+    if (request.signal?.aborted) {
+      throw new ProviderError({
+        provider: this.name,
+        code: "aborted",
+        message: `${this.name} aborted`,
+        retryable: false,
+      });
+    }
     const behavior =
       typeof this.options.behavior === "function"
         ? this.options.behavior(request)
         : this.options.behavior;
     if (behavior.type === "timeout") {
       const delay = behavior.delayMs ?? 50;
-      await new Promise((resolve) => setTimeout(resolve, delay));
+      await new Promise<void>((resolve, reject) => {
+        const timer = setTimeout(resolve, delay);
+        const onAbort = () => {
+          clearTimeout(timer);
+          reject(
+            new ProviderError({
+              provider: this.name,
+              code: "aborted",
+              message: `${this.name} aborted`,
+              retryable: false,
+            }),
+          );
+        };
+        if (request.signal) {
+          if (request.signal.aborted) {
+            onAbort();
+            return;
+          }
+          request.signal.addEventListener("abort", onAbort, { once: true });
+        }
+      });
       throw new ProviderError({
         provider: this.name,
         code: "timeout",

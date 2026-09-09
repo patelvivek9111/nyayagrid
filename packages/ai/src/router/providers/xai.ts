@@ -1,6 +1,6 @@
 import type { AiGenerateRequest, AiGenerateResult, AIProvider } from "../../provider-contract";
 import { ProviderError } from "../errors";
-import { fetchProviderWithRetry } from "../http";
+import { fetchProviderWithRetry, requestAbortSignal, readResponseJson } from "../http";
 import { systemPlusUserMessages } from "../messages";
 
 const DEFAULT_BASE = "https://api.x.ai/v1";
@@ -42,11 +42,11 @@ export class XaiProvider implements AIProvider {
           temperature: request.temperature ?? 0,
           response_format: { type: "json_object" },
         }),
-        signal: request.signal,
+        signal: requestAbortSignal(request),
       },
       { provider: this.name, fetchImpl: this.config.fetchImpl },
     );
-    const data = (await response.json()) as {
+    const data = (await readResponseJson(response, request.signal)) as {
       model?: string;
       choices?: Array<{ message?: { content?: string }; finish_reason?: string }>;
       usage?: { prompt_tokens?: number; completion_tokens?: number };

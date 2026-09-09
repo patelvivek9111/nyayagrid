@@ -14,6 +14,7 @@ import { GoogleProvider } from "./router/providers/google";
 import { XaiProvider } from "./router/providers/xai";
 import { NyayaRouter } from "./router/router";
 import { resolvePinnedModelId } from "./router/registry";
+import { wrapIsolatedCertProvider } from "./cert-transport/isolated-provider";
 import type {
   DeadlineProposal,
   EntityProposal,
@@ -62,6 +63,7 @@ import {
   assessRetrievedEvidenceDeterministic,
   parseEvidenceAssessmentFromPrompt,
 } from "./evidence-assessment";
+import { formatGroundingSourceLine } from "./document-structure";
 
 export const EMBEDDING_DIMENSIONS = 384;
 export const NYAYA_PROMPT_VERSION = "nyaya-matter-qa-v11";
@@ -536,12 +538,16 @@ export class MockAIProvider implements AIProvider {
 
     const passages = extractPassagesFromPrompt(user);
     const verifiedBlock = user
-      .match(/VerifiedMatterIntelligence:([\s\S]*?)(?:\nSources:|$)/i)?.[1]
+      .match(
+        /VerifiedMatterIntelligence:([\s\S]*?)(?:\nVerifiedGraph:|\nVerifiedMemory:|\nProfessionalAnalysis:|\nEvidenceAssessment:|\nSources:|$)/i,
+      )?.[1]
       ?.trim();
     const graphBlock = user
-      .match(/VerifiedGraph:([\s\S]*?)(?:\nVerifiedMemory:|\nSources:|$)/i)?.[1]
+      .match(/VerifiedGraph:([\s\S]*?)(?:\nVerifiedMemory:|\nProfessionalAnalysis:|\nEvidenceAssessment:|\nSources:|$)/i)?.[1]
       ?.trim();
-    const memoryBlock = user.match(/VerifiedMemory:([\s\S]*?)(?:\nSources:|$)/i)?.[1]?.trim();
+    const memoryBlock = user
+      .match(/VerifiedMemory:([\s\S]*?)(?:\nProfessionalAnalysis:|\nEvidenceAssessment:|\nSources:|$)/i)?.[1]
+      ?.trim();
     const question = extractQuestionFromPrompt(user).toLowerCase();
 
     if (passages.length === 0 && !verifiedBlock && !graphBlock && !memoryBlock) {
@@ -1238,6 +1244,14 @@ function createNyayaProvidersFromEnv(
  */
 export function createAIProviderFromEnv(): AIProvider {
   const env = process.env;
+  const force = env.NYAYA_CERT_FORCE_PROVIDER?.trim().toLowerCase();
+  if (force === "openai" || force === "anthropic" || force === "xai" || force === "google") {
+    const { provider, modelId } = createDirectProvider({ provider: force, env });
+    if (env.NYAYA_CERT_ISOLATED === "1" || env.NYAYA_CERT_ISOLATE_GENERATE === "0") {
+      return provider;
+    }
+    return wrapIsolatedCertProvider({ inner: provider, providerId: force, modelId });
+  }
   const envProvider = env.AI_PROVIDER ?? "mock";
   if (envProvider === "openai" && !env.OPENAI_API_KEY) {
     throw new Error("AI_PROVIDER=openai requires OPENAI_API_KEY");
@@ -1302,22 +1316,26 @@ export function buildNyayaUserPrompt(
   professionalAnalysis?: string | null,
   evidenceAssessment?: string | null,
 ): string {
-  const sourceLines = passages.map(
-    (p) =>
-      `- chunkId=${p.chunkId} | documentId=${p.documentId} | documentVersionId=${p.documentVersionId} | page=${p.page ?? "null"} | segmentRef=${p.segmentRef ?? "null"} | quote=|${p.quote}|`,
-  );
+  const sourceLines = passages.map((p) => formatGroundingSourceLine(p));
   const verified = verifiedIntelligence?.trim()
-    ? `VerifiedMatterIntelligence:\n${verifiedIntelligence.trim()}\n\n`
+    ? `VerifiedMatterIntelligence:\ntrustBoundary=approved_only\nprovenance=structured_matter_intelligence_not_document_quote\n${verifiedIntelligence.trim()}\n\n`
     : "";
-  const graph = verifiedGraph?.trim() ? `VerifiedGraph:\n${verifiedGraph.trim()}\n\n` : "";
-  const memory = verifiedMemory?.trim() ? `VerifiedMemory:\n${verifiedMemory.trim()}\n\n` : "";
+  const graph = verifiedGraph?.trim()
+    ? `VerifiedGraph:\ntrustBoundary=approved_only\nprovenance=verified_graph_edge_not_document_quote\n${verifiedGraph.trim()}\n\n`
+    : "";
+  const memory = verifiedMemory?.trim()
+    ? `VerifiedMemory:\ntrustBoundary=approved_only\nprovenance=approved_matter_memory_not_document_quote\n${verifiedMemory.trim()}\n\n`
+    : "";
   const analysis = professionalAnalysis?.trim()
     ? `ProfessionalAnalysis:\n${professionalAnalysis.trim()}\n\n`
     : "";
   const qualifiers = formatSourceQualifierBlock(passages);
   const qualifierBlock = qualifiers ? `\n${qualifiers}` : "";
   const assessmentBlock = evidenceAssessment?.trim() ? `\n\n${evidenceAssessment.trim()}` : "";
-  return `${verified}${graph}${memory}${analysis}Question: ${question}\nSources:\n${sourceLines.join("\n") || "(none)"}${qualifierBlock}${assessmentBlock}`;
+  const emptySources = passages.length === 0
+    ? "\nMissingSourceIndicator: no source-document chunks were retrieved for this question.\n"
+    : "";
+  return `Question: ${question}\nSources:\n${sourceLines.join("\n") || "(none)"}${emptySources}${qualifierBlock}${assessmentBlock}\n\n${verified}${graph}${memory}${analysis}`.trim();
 }
 
 export function buildNyayaSystemPromptWithIntelligence(): string {
@@ -1363,10 +1381,7 @@ export function buildNyayaUserPromptWithResearch(
   professionalAnalysis?: string | null,
   evidenceAssessment?: string | null,
 ): string {
-  const sourceLines = passages.map(
-    (p) =>
-      `- chunkId=${p.chunkId} | documentId=${p.documentId} | documentVersionId=${p.documentVersionId} | page=${p.page ?? "null"} | segmentRef=${p.segmentRef ?? "null"} | quote=|${p.quote}|`,
-  );
+  const sourceLines = passages.map((p) => formatGroundingSourceLine(p));
   const verified = verifiedIntelligence?.trim()
     ? `VerifiedMatterIntelligence:\n${verifiedIntelligence.trim()}\n\n`
     : "";
@@ -1384,6 +1399,7 @@ export function buildNyayaUserPromptWithResearch(
   return `Question: ${question}\n${legal}MatterSources:\n${sourceLines.join("\n") || "(none)"}${qualifierBlock}${assessmentBlock}\n\n${verified}${graph}${memory}${analysis}`.trim();
 }
 
+export * from "./document-structure";
 export * from "./intelligence";
 export * from "./timeline-date-precision";
 export * from "./graph-memory";
@@ -1411,11 +1427,15 @@ export {
   RouterUnavailableError,
   RouterPolicyError,
   ROUTER_UNAVAILABLE_USER_MESSAGE,
+  classifyThrownError,
+  classifyCredentialFailure,
   classifyTask,
   classifyRisk,
+  deriveRiskSignalsFromRequest,
   selectStrategy,
   analyzeDisagreement,
   buildDefaultModelRegistry,
+  overlayRegistryEvidence,
   listValidatedRoutingOptions,
   isCertificationSubsystem,
   PINNED_MODEL_IDS,
@@ -1427,9 +1447,18 @@ export {
   blockedExternalMeasurement,
   providerApiKeyPresent,
   parseJsonObject,
+  CERTIFICATION_EVIDENCE,
+  estimateCostUsd,
+  NYAYA_ROUTER_VERSION,
 } from "./router";
-export type { DirectProviderId, SubsystemMeasurement } from "./router";
+export type { DirectProviderId, SubsystemMeasurement, CredentialFailureClass, ModelRegistryEntry, CertificationEvidence } from "./router";
 export type { RoutingOptions, RoutingOptionModel } from "./router";
+export {
+  loadCanonicalLocalEnv,
+  shouldLoadDeveloperDotenv,
+  redactEnvSecrets,
+  accessReportHasNoSecrets,
+} from "./load-local-env";
 export {
   GOLDEN_MATTER_ID,
   GOLDEN_PASSAGES,

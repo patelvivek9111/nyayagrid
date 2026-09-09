@@ -42,11 +42,9 @@ export function selectStrategy(params: {
   }
   if (requested === "fast") {
     if (params.risk === "CRITICAL" || params.risk === "HIGH") {
-      const selected: ExecutionStrategy =
-        params.risk === "CRITICAL" && !params.deepDisabled ? "deep" : "standard";
       return {
-        selected,
-        reason: `Fast requested but risk is ${params.risk}; escalated to ${selected}`,
+        selected: "standard",
+        reason: `Fast requested but risk is ${params.risk}; escalated to standard`,
         escalated: true,
       };
     }
@@ -55,22 +53,15 @@ export function selectStrategy(params: {
   if (requested === "standard") {
     if (params.risk === "CRITICAL" && !params.deepDisabled) {
       return {
-        selected: "deep",
-        reason: "Standard requested but risk is CRITICAL; escalated to Deep Review",
-        escalated: true,
+        selected: "standard",
+        reason: "Standard requested; Deep stays manual unless contradiction or user-requested Deep",
+        escalated: false,
       };
     }
     return { selected: "standard", reason: "user requested Standard", escalated: false };
   }
 
-  // AUTO
-  if ((params.risk === "CRITICAL" || params.risk === "HIGH") && !params.deepDisabled) {
-    return {
-      selected: "deep",
-      reason: `Auto selected Deep Review because risk is ${params.risk}`,
-      escalated: true,
-    };
-  }
+  // AUTO: Deep stays manual except contradiction. HIGH/CRITICAL leave Fast.
   if (params.subsystem === "contradiction" && !params.deepDisabled) {
     return {
       selected: "deep",
@@ -83,7 +74,10 @@ export function selectStrategy(params: {
   }
   return {
     selected: "standard",
-    reason: "Auto selected Standard as the default professional workflow",
-    escalated: false,
+    reason:
+      params.risk === "HIGH" || params.risk === "CRITICAL"
+        ? `Auto selected Standard because risk is ${params.risk}`
+        : "Auto selected Standard as the default professional workflow",
+    escalated: params.risk === "HIGH" || params.risk === "CRITICAL",
   };
 }

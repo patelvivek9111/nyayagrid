@@ -1,6 +1,6 @@
 import type { AiGenerateRequest, AiGenerateResult, AIProvider } from "../../provider-contract";
 import { ProviderError } from "../errors";
-import { fetchProviderWithRetry } from "../http";
+import { fetchProviderWithRetry, requestAbortSignal, readResponseJson } from "../http";
 import { toGoogleContents } from "../messages";
 
 const DEFAULT_BASE = "https://generativelanguage.googleapis.com/v1beta";
@@ -46,11 +46,11 @@ export class GoogleProvider implements AIProvider {
             responseMimeType: "application/json",
           },
         }),
-        signal: request.signal,
+        signal: requestAbortSignal(request),
       },
       { provider: this.name, fetchImpl: this.config.fetchImpl },
     );
-    const data = (await response.json()) as {
+    const data = (await readResponseJson(response, request.signal)) as {
       modelVersion?: string;
       candidates?: Array<{
         content?: { parts?: Array<{ text?: string }> };
