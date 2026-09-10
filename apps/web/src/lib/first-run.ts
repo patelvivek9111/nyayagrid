@@ -45,17 +45,15 @@ export function continueHref(params: {
 }
 
 /**
- * Generic `/app` Ask is unsafe before a Case exists (Nyaya will not read files).
- * Returning users with Cases keep `/app`.
+ * `/app` is general Ask. A Case is optional context, not a prerequisite.
+ * Only bounce users who cannot use the professional Ask surface.
  */
 export function genericAskRedirect(params: {
   organizationCount: number;
-  caseCount: number;
   roleKey: string | null;
 }): string | null {
   if (isClientGuestRole(params.roleKey)) return "/portal";
   if (params.organizationCount === 0) return "/app/onboarding";
-  if (params.caseCount === 0) return "/app/cases";
   return null;
 }
 

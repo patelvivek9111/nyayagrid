@@ -73,7 +73,7 @@ describe("First Case onboarding", () => {
     expect(appAsk).toContain("genericAskRedirect");
     expect(cases).toContain("isClientGuestRole");
     expect(cases).toContain('router.replace("/portal")');
-    expect(invite).toContain('href="/portal"');
+    expect(invite).toContain('href="/sign-in"');
   });
 
   it("M. onboarding does not alter Review semantics", () => {

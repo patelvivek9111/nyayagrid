@@ -43,24 +43,12 @@ export default function NewChatPage() {
 
   useEffect(() => {
     if (orgLoading || viewCap.loading) return;
-    if (organizations.length === 0) {
-      router.replace("/app/onboarding");
-      return;
-    }
-    if (!organizationId) return;
-    fetch(`/api/v1/matters?organizationId=${organizationId}`)
-      .then(async (res) => {
-        const data = await res.json();
-        const caseCount = res.ok ? (data.matters ?? []).length : 0;
-        const href = genericAskRedirect({
-          organizationCount: organizations.length,
-          caseCount,
-          roleKey: viewCap.roleKey,
-        });
-        if (href) router.replace(href);
-      })
-      .catch(() => undefined);
-  }, [orgLoading, viewCap.loading, viewCap.roleKey, organizations.length, organizationId, router]);
+    const href = genericAskRedirect({
+      organizationCount: organizations.length,
+      roleKey: viewCap.roleKey,
+    });
+    if (href) router.replace(href);
+  }, [orgLoading, viewCap.loading, viewCap.roleKey, organizations.length, router]);
 
   useEffect(() => {
     if (!organizationId) return;

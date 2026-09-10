@@ -73,31 +73,27 @@ describe("first-run routing", () => {
     expect(
       genericAskRedirect({
         organizationCount: 1,
-        caseCount: 0,
         roleKey: "client_guest",
       }),
     ).toBe("/portal");
   });
 
-  it("generic Ask is redirected before a Case exists", () => {
+  it("generic Ask stays available with a firm even before any Case exists", () => {
     expect(
       genericAskRedirect({
         organizationCount: 0,
-        caseCount: 0,
         roleKey: null,
       }),
     ).toBe("/app/onboarding");
     expect(
       genericAskRedirect({
         organizationCount: 1,
-        caseCount: 0,
         roleKey: "owner",
       }),
-    ).toBe("/app/cases");
+    ).toBeNull();
     expect(
       genericAskRedirect({
         organizationCount: 1,
-        caseCount: 2,
         roleKey: "lawyer",
       }),
     ).toBeNull();
