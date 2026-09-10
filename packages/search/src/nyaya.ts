@@ -1,5 +1,5 @@
 import type { Database } from "@nyayagrid/database";
-import { conversations, messages, aiArtifacts } from "@nyayagrid/database";
+import { conversations, messages, aiArtifacts, documents, documentVersions, and, eq, or, sql } from "@nyayagrid/database";
 import {
   assessNeedMoreDocuments,
   assessRetrievedEvidence,
@@ -9,6 +9,9 @@ import {
   buildNyayaUserPrompt,
   buildNyayaUserPromptWithResearch,
   constrainCitedAnswer,
+  constrainUnsupportedFraudPremise,
+  constrainUnsupportedStatusClaims,
+  constrainUnverifiedContradiction,
   createAIProviderFromEnv,
   ensureMissingInstrumentDisclosure,
   formatEvidenceAssessmentForPrompt,
@@ -26,6 +29,7 @@ import {
   type RoutingMode,
   namedInstrumentFromQuestion,
   instrumentMentionedInText,
+  instrumentMentionIsDenial,
 } from "@nyayagrid/ai";
 import {
   formatVerifiedIntelligenceForPrompt,
@@ -57,7 +61,7 @@ import {
   shouldAbstainForUnknownJurisdiction,
   UNKNOWN_JURISDICTION_ABSTENTION,
 } from "@nyayagrid/jurisdiction";
-import type { Retriever } from "./hybrid";
+import type { Retriever, RetrievalHit } from "./hybrid";
 
 /** Retrieval surface for the legal authority corpus; matter documents are never searched here. */
 export type NyayaAuthorityRetriever = {
@@ -73,6 +77,50 @@ export type NyayaAuthorityRetriever = {
 };
 
 const AUTHORITY_HIT_LIMIT = 6;
+
+async function loadAmendmentHits(params: {
+  db: Database;
+  retriever: Retriever;
+  organizationId: string;
+  matterId: string;
+}): Promise<RetrievalHit[]> {
+  const amendmentDocs = await params.db
+    .select({ id: documents.id })
+    .from(documents)
+    .innerJoin(documentVersions, eq(documentVersions.documentId, documents.id))
+    .where(
+      and(
+        eq(documents.organizationId, params.organizationId),
+        eq(documents.matterId, params.matterId),
+        or(
+          sql`${documents.title} ILIKE ${"%amend%"}`,
+          sql`${documentVersions.originalFilename} ILIKE ${"%amend%"}`,
+        ),
+      ),
+    );
+  const allowedDocumentIds = [...new Set(amendmentDocs.map((row) => row.id))];
+  if (allowedDocumentIds.length === 0) return [];
+  const morePromise = params.retriever.search({
+    text: "amendment convenience notice becomes effective deleted and replaced",
+    scope: {
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      workspace: "professional",
+      allowedDocumentIds,
+    },
+    limit: 6,
+  });
+  const loadedPromise = params.retriever.loadChunksByDocumentIds
+    ? params.retriever.loadChunksByDocumentIds({
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        documentIds: allowedDocumentIds,
+        limit: 8,
+      })
+    : Promise.resolve([] as RetrievalHit[]);
+  const [more, loaded] = await Promise.all([morePromise, loadedPromise]);
+  return [...more, ...loaded];
+}
 
 type NyayaLegalAuthorityContext = {
   /** Prompt text for the LegalAuthority block, or null when there is nothing to show. */
@@ -208,42 +256,101 @@ export async function askNyayaAboutMatter(params: {
   modelId?: string;
 }) {
   const ai = params.ai ?? createAIProviderFromEnv();
-  const primaryHits = await params.retriever.search({
+  const startedAsk = Date.now();
+  const timings: Record<string, number> = {};
+  const mark = (name: string, started: number) => {
+    timings[name] = Date.now() - started;
+  };
+  const professionalScope = {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    workspace: "professional" as const,
+  };
+  const followUpQuery = buildFollowUpRetrievalQuery(params.question);
+  const followUpDiffers = Boolean(followUpQuery && followUpQuery !== params.question.trim());
+  const noticeExpand =
+    /\bnotice\b/i.test(params.question) && /\b(on 20\d{2}-|will apply)\b/i.test(params.question);
+  const amendmentExpand =
+    /\b(on 20\d{2}-|will apply|supersed|modified provision)\b/i.test(params.question) &&
+    /\b(notice|terminat|amend|obligation|cap|provision)\b/i.test(params.question);
+  const conflictExpand = /\b(conflict|contradict|inconsistent)\b/i.test(params.question);
+
+  const retrievalStarted = Date.now();
+  const primaryPromise = params.retriever.search({
     text: params.question,
-    scope: {
-      organizationId: params.organizationId,
-      matterId: params.matterId,
-      workspace: "professional",
-    },
+    scope: professionalScope,
     limit: 8,
   });
+  const followParallelPromise = followUpDiffers
+    ? params.retriever.search({
+        text: followUpQuery!,
+        scope: professionalScope,
+        limit: 8,
+      })
+    : Promise.resolve([] as RetrievalHit[]);
+  const noticePromise = noticeExpand
+    ? params.retriever.search({
+        text: "amendment convenience notice becomes effective",
+        scope: professionalScope,
+        limit: 6,
+      })
+    : Promise.resolve([] as RetrievalHit[]);
+  const amendmentPromise = amendmentExpand
+    ? loadAmendmentHits(params)
+    : Promise.resolve([] as RetrievalHit[]);
+  const conflictPromise = conflictExpand
+    ? Promise.all([
+        params.retriever.search({
+          text: "deposition testimony meeting calendar date",
+          scope: professionalScope,
+          limit: 6,
+        }),
+        params.retriever.search({
+          text: "meeting minutes attendees dated",
+          scope: professionalScope,
+          limit: 6,
+        }),
+      ])
+    : Promise.resolve([[], []] as [RetrievalHit[], RetrievalHit[]]);
 
-  // Multi-hop: if retrieval is thin or the question names a doc type, expand once and merge.
+  const [primaryHits, followParallelHits, noticeHits, amendmentHits, conflictPair] = await Promise.all([
+    primaryPromise,
+    followParallelPromise,
+    noticePromise,
+    amendmentPromise,
+    conflictPromise,
+  ]);
+
   let usedFollowUpRetrieval = false;
   let hits = primaryHits;
-  const followUpQuery = buildFollowUpRetrievalQuery(params.question);
-  if (followUpQuery && (primaryHits.length < 3 || followUpQuery !== params.question.trim())) {
+  const merge = (extra: typeof primaryHits, cap: number) => {
+    if (extra.length === 0) return;
+    usedFollowUpRetrieval = true;
+    const seen = new Set(hits.map((h) => h.chunkId));
+    for (const hit of extra) {
+      if (seen.has(hit.chunkId)) continue;
+      seen.add(hit.chunkId);
+      hits.push(hit);
+      if (hits.length >= cap) break;
+    }
+  };
+
+  if (followUpDiffers) merge(followParallelHits, 12);
+  else if (followUpQuery && primaryHits.length < 3) {
     const secondaryHits = await params.retriever.search({
       text: followUpQuery,
-      scope: {
-        organizationId: params.organizationId,
-        matterId: params.matterId,
-        workspace: "professional",
-      },
+      scope: professionalScope,
       limit: 8,
     });
-    if (secondaryHits.length > 0) {
-      usedFollowUpRetrieval = true;
-      const seen = new Set(primaryHits.map((h) => h.chunkId));
-      hits = [...primaryHits];
-      for (const hit of secondaryHits) {
-        if (seen.has(hit.chunkId)) continue;
-        seen.add(hit.chunkId);
-        hits.push(hit);
-        if (hits.length >= 12) break;
-      }
-    }
+    merge(secondaryHits, 12);
   }
+  if (noticeExpand) merge(noticeHits, 14);
+  if (amendmentExpand) merge(amendmentHits, 16);
+  if (conflictExpand) {
+    merge(conflictPair[0], 14);
+    if (hits.length < 14) merge(conflictPair[1], 14);
+  }
+  mark("retrievalMs", retrievalStarted);
 
   const rankedHits = rankByQuestionOverlap(params.question, hits);
   const passages: GroundingPassage[] = rankedHits.map((hit) => ({
@@ -263,64 +370,56 @@ export async function askNyayaAboutMatter(params: {
     signal: assessmentAbort.signal,
   }).finally(() => clearTimeout(assessmentTimer));
 
-  let verifiedText: string | null = null;
-  let graphText: string | null = null;
-  let memoryText: string | null = null;
-  let analysisText: string | null = null;
-
-  if (params.includeVerifiedIntelligence !== false) {
-    const verified = await loadVerifiedMatterIntelligence({
+  const contextStarted = Date.now();
+  const [verifiedText, graphText, memoryText, analysisText, jurisdictionContext] = await Promise.all([
+    params.includeVerifiedIntelligence === false
+      ? Promise.resolve(null)
+      : loadVerifiedMatterIntelligence({
+          db: params.db,
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+        }).then((verified) => formatVerifiedIntelligenceForPrompt(verified) || null),
+    params.includeGraph === false
+      ? Promise.resolve(null)
+      : loadVerifiedGraphContext({
+          db: params.db,
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          question: params.question,
+          limit: 10,
+        }).then((graph) => graph.text || null),
+    params.includeMemory === false
+      ? Promise.resolve(null)
+      : retrieveActiveMatterMemories({
+          db: params.db,
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          question: params.question,
+          limit: 6,
+        }).then((memories) => formatActiveMemoryForPrompt(memories) || null),
+    params.includeProfessionalAnalysis === false
+      ? Promise.resolve(null)
+      : loadProfessionalAnalysisContext({
+          db: params.db,
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          question: params.question,
+          limit: 12,
+        }).then((analysis) => formatProfessionalAnalysisForPrompt(analysis) || null),
+    resolveMatterJurisdictionContext({
       db: params.db,
       organizationId: params.organizationId,
       matterId: params.matterId,
-    });
-    verifiedText = formatVerifiedIntelligenceForPrompt(verified) || null;
-  }
-
-  if (params.includeGraph !== false) {
-    const graph = await loadVerifiedGraphContext({
-      db: params.db,
-      organizationId: params.organizationId,
-      matterId: params.matterId,
-      question: params.question,
-      limit: 10,
-    });
-    graphText = graph.text || null;
-  }
-
-  if (params.includeMemory !== false) {
-    const memories = await retrieveActiveMatterMemories({
-      db: params.db,
-      organizationId: params.organizationId,
-      matterId: params.matterId,
-      question: params.question,
-      limit: 6,
-    });
-    memoryText = formatActiveMemoryForPrompt(memories) || null;
-  }
-
-  if (params.includeProfessionalAnalysis !== false) {
-    const analysis = await loadProfessionalAnalysisContext({
-      db: params.db,
-      organizationId: params.organizationId,
-      matterId: params.matterId,
-      question: params.question,
-      limit: 12,
-    });
-    analysisText = formatProfessionalAnalysisForPrompt(analysis) || null;
-  }
-
-  const jurisdictionContext = await resolveMatterJurisdictionContext({
-    db: params.db,
-    organizationId: params.organizationId,
-    matterId: params.matterId,
-  });
+    }),
+  ]);
+  mark("contextMs", contextStarted);
   const jurisdictionHints = preferredSearchHints(jurisdictionContext);
   const jurisdictionBlock = jurisdictionContext?.promptBlock?.trim()
     ? `${jurisdictionContext.promptBlock.trim()}\n\n`
     : "";
 
   const doctrineQuestion = looksLikeLegalDoctrineQuestion(params.question);
+  const authorityStarted = Date.now();
   const authority =
     params.includeLegalAuthority === false
       ? null
@@ -336,6 +435,7 @@ export async function askNyayaAboutMatter(params: {
           authorityLimit: params.authorityLimit,
           searchOptions: jurisdictionHints,
         });
+  mark("authorityMs", authorityStarted);
   const authorityText = authority?.text ?? null;
   const useResearchPrompt = Boolean(authorityText) || doctrineQuestion;
 
@@ -377,6 +477,7 @@ export async function askNyayaAboutMatter(params: {
     createdByUserId: params.userId,
   });
 
+  const generateStarted = Date.now();
   const generation = await ai.generate({
     temperature: 0,
     routing: {
@@ -437,7 +538,7 @@ export async function askNyayaAboutMatter(params: {
       },
     ],
   });
-
+  mark("generateMs", generateStarted);
   let raw: unknown;
   try {
     raw = JSON.parse(generation.text);
@@ -459,6 +560,46 @@ export async function askNyayaAboutMatter(params: {
       assessmentResult.assessment,
       passages,
     );
+  }
+  validated.answer = constrainUnsupportedStatusClaims(
+    validated.answer,
+    passages.map((p) => p.quote).join("\n"),
+  );
+  validated.answer = constrainUnsupportedFraudPremise(
+    validated.answer,
+    params.question,
+    passages.map((p) => p.quote).join("\n"),
+  );
+  validated.answer = constrainUnverifiedContradiction(
+    validated.answer,
+    params.question,
+    passages.map((p) => p.quote).join("\n"),
+  );
+  if (
+    /\b(on 20\d{2}-|will apply)\b/i.test(params.question) &&
+    /\bnotice\b/i.test(params.question)
+  ) {
+    const extra = passages.filter(
+      (passage) =>
+        /\bamendment\b/i.test(passage.quote) &&
+        /\bnotice\b/i.test(passage.quote) &&
+        !validated.answer.sources.some((source) => source.documentId === passage.documentId),
+    );
+    if (extra.length > 0) {
+      validated.answer = {
+        ...validated.answer,
+        sources: [
+          ...validated.answer.sources,
+          ...extra.slice(0, 2).map((passage) => ({
+            chunkId: passage.chunkId,
+            documentId: passage.documentId,
+            documentVersionId: passage.documentVersionId,
+            page: passage.page ?? undefined,
+            quote: passage.quote,
+          })),
+        ],
+      };
+    }
   }
   const rawAnswer = citedAnswerTextFromRaw(raw);
   validated.answer = applyQa06VerifiedIntelCap({
@@ -645,6 +786,11 @@ export async function askNyayaAboutMatter(params: {
     authorityResearchMissing: authorityMissingForDoctrine,
     authorityWarnings: authority?.warnings ?? [],
     authorityValidation,
+    timings: {
+      ...timings,
+      assessmentMs: assessmentResult.latencyMs,
+      totalMs: Date.now() - startedAsk,
+    },
   };
 }
 
@@ -681,7 +827,11 @@ function askRiskSignals(params: {
   if (!params.governingLawState) signals.push("missing_governing_law");
   if (params.retrievedCount < 2) signals.push("weak_retrieval");
   const named = namedInstrumentFromQuestion(params.question ?? "");
-  if (named && !instrumentMentionedInText(named, params.passageText ?? "")) {
+  if (
+    named &&
+    (!instrumentMentionedInText(named, params.passageText ?? "") ||
+      instrumentMentionIsDenial(named, params.passageText ?? ""))
+  ) {
     signals.push("missing_exhibit");
   }
   return signals;

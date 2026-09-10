@@ -47,6 +47,17 @@ describe("buildFollowUpRetrievalQuery", () => {
     expect(q).toMatch(/original aggregate liability cap/i);
     expect(q).not.toMatch(/amendment indemnity/i);
   });
+
+  it("expands contradiction and future-effective notice questions toward both source types", () => {
+    const conflict = buildFollowUpRetrievalQuery(
+      "Does Dana's testimony that the meeting was New Year's Day conflict with minutes dated 2026-01-01?",
+    );
+    expect(conflict).toMatch(/deposition testimony meeting date meeting minutes/i);
+    const notice = buildFollowUpRetrievalQuery(
+      "On 2026-10-02, assuming no later amendment, what convenience notice period will apply?",
+    );
+    expect(notice).toMatch(/amendment convenience notice effective date/i);
+  });
 });
 
 describe("golden graded cases (deterministic validator path)", () => {

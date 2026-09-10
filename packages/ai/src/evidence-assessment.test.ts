@@ -6,6 +6,7 @@ import {
   parseEvidenceAssessment,
   type AssessmentPassage,
 } from "./evidence-assessment";
+import { isAffirmativeForbiddenClaim } from "./claim-boundary";
 
 const NOW = new Date("2026-08-18T12:00:00.000Z");
 
@@ -536,6 +537,276 @@ describe("structured evidence assessment", () => {
       ],
       NOW,
     );
+    expect(assessment?.status).not.toBe("insufficient");
+  });
+
+  it("does not treat silence as an admission of liability", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "Because the vendor did not deny liability in the email, they admitted liability, correct?",
+      [
+        passage(
+          "chunk_email",
+          "Party email: we received the invoice. Silence in this agreement is not an admission of liability. Absence of a denial is not proof.",
+        ),
+      ],
+      NOW,
+    );
+    expect(assessment?.status).toBe("insufficient");
+    expect(assessment?.prohibitedOverclaims).toEqual(
+      expect.arrayContaining(["admitted liability", "admission of liability"]),
+    );
+    const constrained = constrainCitedAnswer(
+      {
+        answer: "Yes, they admitted liability by remaining silent.",
+        evidenceState: "grounded" as const,
+        sources: [],
+      },
+      assessment!,
+      [
+        passage(
+          "chunk_email",
+          "Party email: we received the invoice. Silence in this agreement is not an admission of liability.",
+        ),
+      ],
+    );
+    expect(constrained.evidenceState).toBe("insufficient");
+    expect(constrained.answer).not.toMatch(/they admitted liability/i);
+  });
+
+  it("treats badge-accepted logs as activity records, not physical entry", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "Did Morgan Hale physically enter the records room?",
+      [
+        passage(
+          "chunk_badge",
+          "Lobby-turnstile event: badge accepted for credential assigned to Morgan Hale at 11:03.",
+        ),
+      ],
+      NOW,
+    );
+    expect(assessment?.status).toBe("not_established");
+    expect(assessment?.prohibitedOverclaims).toEqual(expect.arrayContaining(["physically entered"]));
+  });
+
+  it("does not treat missing proof of receipt as proof of non-receipt", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "Prove that Dana Ruiz never received invoice KW-8801.",
+      [passage("chunk_email", "Invoice KW-8801 was received 12 days after the due date.")],
+      NOW,
+    );
+    expect(assessment?.status).toBe("insufficient");
+    expect(assessment?.allowedClaim).toMatch(/does not establish non-receipt/i);
+    const constrained = constrainCitedAnswer(
+      {
+        answer: "Dana Ruiz never received invoice KW-8801.",
+        evidenceState: "grounded" as const,
+        sources: [],
+      },
+      assessment!,
+      [passage("chunk_email", "Invoice KW-8801 was received 12 days after the due date.")],
+    );
+    expect(constrained.evidenceState).toBe("insufficient");
+    expect(isAffirmativeForbiddenClaim(constrained.answer, "never received")).toBe(false);
+  });
+
+  it("keeps affirmative non-receipt when a source states it", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "Prove that Dana Ruiz never received invoice KW-8801.",
+      [passage("chunk_aff", "Dana Ruiz never received invoice KW-8801. Delivery was refused.")],
+      NOW,
+    );
+    expect(assessment?.status).not.toBe("insufficient");
+  });
+
+  it("does not treat affirmative receipt as proof of non-receipt", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "Prove that Dana Ruiz never received invoice KW-8801.",
+      [passage("chunk_receipt", "Dana Ruiz received invoice KW-8801 on 2026-03-01.")],
+      NOW,
+    );
+    expect(assessment?.status).toBe("insufficient");
+    expect(assessment?.allowedClaim).toMatch(/does not establish non-receipt/i);
+  });
+
+  it("reports conflicting receipt evidence as contradicted rather than proven absence", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "Prove that Dana Ruiz never received invoice KW-8801.",
+      [
+        passage("chunk_receipt", "Dana Ruiz received invoice KW-8801 on 2026-03-01."),
+        passage("chunk_denial", "Dana Ruiz never received invoice KW-8801. Delivery was refused."),
+      ],
+      NOW,
+    );
+    expect(assessment?.status).toBe("contradicted");
+    expect(assessment?.allowedClaim).toMatch(/conflict|both|do not establish non-receipt/i);
+  });
+
+  it("allows analysis when Exhibit A itself is in the retrieved sources", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "Assume Exhibit A exists and quote the deductible from it.",
+      [passage("chunk_ex_a", "Exhibit A — Deductible. The deductible is $5,000.")],
+      NOW,
+    );
+    expect(assessment?.status).not.toBe("insufficient");
+    expect(assessment?.status).not.toBe("not_established");
+  });
+
+  it("does not treat a similarly named exhibit from another document as Exhibit A membership", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "Assume Exhibit A exists and quote the deductible from it.",
+      [passage("chunk_other", "Exhibit A-1 is a different schedule with its own deductible of $9.")],
+      NOW,
+    );
+    expect(["insufficient", "not_established"]).toContain(assessment?.status);
+  });
+
+  it("ignores a decoy mention of Exhibit A inside another document", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "Assume Exhibit A exists and quote the deductible from it.",
+      [
+        passage(
+          "chunk_decoy",
+          "Counsel will send Exhibit A later. This email is not Exhibit A.",
+        ),
+      ],
+      NOW,
+    );
+    expect(["insufficient", "not_established"]).toContain(assessment?.status);
+  });
+
+  it("uses a later amendment that changes the notice provision", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "On 2026-10-02, what convenience notice period will apply?",
+      [
+        passage("chunk_orig", "Section 4. Convenience notice shall be thirty (30) days."),
+        passage(
+          "chunk_amend",
+          "Amendment dated 2026-06-01 becomes effective 2026-10-01. Section 4 is deleted and replaced: notice shall be fifteen (15) days.",
+        ),
+      ],
+      NOW,
+    );
+    expect(assessment?.operativeTerm).toBe("15 days");
+  });
+
+  it("does not infer supersession when the amendment leaves the notice provision unchanged", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "On 2026-10-02, what convenience notice period will apply?",
+      [
+        passage("chunk_orig", "Section 4. Convenience notice shall be thirty (30) days."),
+        passage(
+          "chunk_amend",
+          "Amendment dated 2026-06-01 becomes effective 2026-10-01. Section 9 liability cap is increased. This amendment does not modify Section 4 notice.",
+        ),
+      ],
+      NOW,
+    );
+    expect(assessment?.operativeTerm).toBe("30 days");
+  });
+
+  it("prefers the latest effective amendment among multiple amendments", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "On 2026-10-02, what convenience notice period will apply?",
+      [
+        passage("chunk_orig", "Convenience notice shall be thirty (30) days."),
+        passage(
+          "chunk_first",
+          "First amendment becomes effective 2026-07-01. Notice shall be twenty (20) days.",
+        ),
+        passage(
+          "chunk_second",
+          "Second amendment becomes effective 2026-09-01. Notice shall be fifteen (15) days.",
+        ),
+      ],
+      NOW,
+    );
+    expect(assessment?.operativeTerm).toBe("15 days");
+  });
+
+  it("does not apply an expired amendment after its stated expiry", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "On 2026-10-02, what convenience notice period will apply?",
+      [
+        passage("chunk_orig", "Convenience notice shall be thirty (30) days."),
+        passage(
+          "chunk_expired",
+          "Temporary amendment becomes effective 2026-07-01 and expires 2026-09-01. Notice shall be ten (10) days.",
+        ),
+      ],
+      NOW,
+    );
+    expect(assessment?.operativeTerm).toBe("30 days");
+  });
+
+  it("does not pick a controlling term from conflicting undated amendment durations", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "What notice period currently applies as of August 2026?",
+      [
+        passage("chunk_a", "Amendment A: notice shall be fifteen (15) days, effective immediately."),
+        passage("chunk_b", "Amendment B: notice shall be forty-five (45) days, effective immediately."),
+      ],
+      NOW,
+    );
+    expect(assessment?.status === "contradicted" || assessment?.operativeTerm == null).toBe(true);
+  });
+
+  it("does not treat a denial that an exhibit is attached as exhibit membership", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "Assume Exhibit Q exists in the file and quote the deductible from it.",
+      [
+        passage(
+          "chunk_amend",
+          "This amendment does not attach Exhibit Q. No deductible appears in this packet.",
+        ),
+      ],
+      NOW,
+    );
+    expect(["insufficient", "not_established"]).toContain(assessment?.status);
+    expect(assessment?.allowedClaim).toMatch(/Exhibit Q/i);
+  });
+
+  it("rejects an unsupported why-did-they-defraud premise when only a late invoice is retrieved", () => {
+    const passages = [
+      passage(
+        "chunk_email",
+        "Invoice NB-NDA-03 was received 12 days after the due date. The email does not state motive, intent, or fraud. Helix Quant LLC requested a payment plan.",
+      ),
+    ];
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "Why did Helix Quant LLC intentionally defraud Nimbus Ledger Inc regarding invoice NB-NDA-03?",
+      passages,
+      NOW,
+    );
+    expect(assessment?.status).toBe("insufficient");
+    expect(assessment?.premiseStatus).toBe("unsupported");
+    expect(assessment?.allowedClaim).toMatch(/does not establish/i);
+    const constrained = constrainCitedAnswer(
+      {
+        answer:
+          "Helix Quant LLC requested a payment plan after invoice NB-NDA-03 was received 12 days late.",
+        evidenceState: "grounded" as const,
+        sources: [],
+      },
+      assessment!,
+      passages,
+    );
+    expect(constrained.evidenceState).toBe("insufficient");
+    expect(constrained.answer).toMatch(/does not establish/i);
+    expect(isAffirmativeForbiddenClaim(constrained.answer, "intentionally defraud")).toBe(false);
+  });
+
+  it("keeps an affirmative fraud-intent statement when a source states it", () => {
+    const assessment = assessRetrievedEvidenceDeterministic(
+      "Why did Helix Quant LLC intentionally defraud Nimbus Ledger Inc regarding invoice NB-NDA-03?",
+      [
+        passage(
+          "chunk_admit",
+          "Helix Quant LLC admitted it intentionally defrauded Nimbus Ledger Inc regarding invoice NB-NDA-03.",
+        ),
+      ],
+      NOW,
+    );
+    expect(assessment?.premiseStatus).not.toBe("unsupported");
     expect(assessment?.status).not.toBe("insufficient");
   });
 });

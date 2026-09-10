@@ -13,6 +13,14 @@ export function slugFromFirmName(name: string): string {
   return slug || "firm";
 }
 
+/** Safe for HTML `pattern` under Chrome unicodeSets (`v` flag). Hyphen must be escaped. */
+export const ORGANIZATION_SLUG_HTML_PATTERN = "[a-z0-9\\-]+";
+
+/** Lowercase URL slug while typing; drop characters the API will reject. */
+export function normalizeOrganizationSlugInput(raw: string): string {
+  return raw.toLowerCase().replace(/[^a-z0-9-]/g, "").slice(0, 64);
+}
+
 export function isClientGuestRole(roleKey: string | null | undefined): boolean {
   return roleKey === "client_guest";
 }

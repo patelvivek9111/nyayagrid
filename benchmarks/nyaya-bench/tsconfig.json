@@ -5,5 +5,5 @@
     "rootDir": ".",
     "noEmit": true
   },
-  "include": ["runner", "graders", "tests", "datasets"]
+  "include": ["runner", "graders", "tests", "datasets", "dogfood"]
 }

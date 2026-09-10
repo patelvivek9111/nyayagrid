@@ -1,0 +1,119 @@
+{
+  "id": "FW1_PILOT",
+  "mode": "pilot",
+  "datasetId": "fw1-full-matter-workflow",
+  "frozenAt": "2026-09-10T12:00:00.000Z",
+  "catalogFingerprint": "0a062593a0cebe9dff14034773f8dcd1637bae2968027518fed2408f1f09052f",
+  "graderVersion": "fw1-grade-2026-09-10",
+  "promptAsk": "nyaya-matter-qa-v11",
+  "router": "nyaya-router-v1.1",
+  "registry": "nyaya-registry-v1",
+  "overlay": "nyaya-four-provider-cert-v1",
+  "featureAgents": "0",
+  "requestedXaiModel": "grok-3",
+  "v31P95FlagMs": 17638,
+  "stats": {
+    "datasetId": "fw1-full-matter-workflow",
+    "matterCount": 12,
+    "workflowCount": 12,
+    "workflowSteps": 12,
+    "rubricCriteria": 11,
+    "minDocs": 24,
+    "maxDocs": 40,
+    "fingerprint": "0a062593a0cebe9dff14034773f8dcd1637bae2968027518fed2408f1f09052f",
+    "graderVersion": "fw1-grade-2026-09-10"
+  },
+  "estimate": {
+    "matters": 2,
+    "workflowCount": 2,
+    "documents": 50,
+    "estimatedRequests": 76,
+    "estimatedInputTokens": 177200,
+    "estimatedOutputTokens": 51800,
+    "estimatedCostUsd": 0.17,
+    "bufferUsd": 25
+  },
+  "summary": {
+    "graderVersion": "fw1-grade-2026-09-10",
+    "matterCount": 2,
+    "workflowCount": 2,
+    "rubricCriteriaCount": 11,
+    "criterionPassPct": 95.5,
+    "strictFullWorkflowPassPct": 50,
+    "criticalCount": 1,
+    "topFailureFamilies": [
+      {
+        "family": "contradiction_handling",
+        "count": 1
+      },
+      {
+        "family": "wrong_jurisdiction_controlling",
+        "count": 1
+      }
+    ],
+    "classification": "HOLD",
+    "steps": 12,
+    "classes": [
+      "fabricated_authority",
+      "fabricated_exhibit",
+      "unsupported_legal_determination",
+      "cross_org_leakage",
+      "wrong_jurisdiction_controlling",
+      "missing_evidence_as_existing",
+      "silent_incomplete_workflow"
+    ]
+  },
+  "latency": {
+    "stepP50Ms": 8998,
+    "stepP95Ms": 93518,
+    "workflowP50Ms": 206508,
+    "workflowP95Ms": 214169
+  },
+  "cost": {
+    "modelCalls": 50,
+    "retries": 0,
+    "inputTokens": 86657,
+    "outputTokens": 14613,
+    "estimatedUsd": 0.09,
+    "perMatterUsd": 0.05,
+    "fallbacks": 0
+  },
+  "routing": {
+    "providers": [
+      "xai"
+    ],
+    "models": [
+      "grok-4.3"
+    ]
+  },
+  "matters": [
+    {
+      "id": "FW-01",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [],
+      "workflowMs": 214169,
+      "modelCalls": 38,
+      "retries": 0,
+      "costUsd": 0.09,
+      "completed": true
+    },
+    {
+      "id": "FW-02",
+      "fullWorkflowPass": false,
+      "criterionPassCount": 10,
+      "critical": [
+        "wrong_jurisdiction_controlling"
+      ],
+      "families": [
+        "contradiction_handling"
+      ],
+      "workflowMs": 206508,
+      "modelCalls": 12,
+      "retries": 0,
+      "costUsd": 0,
+      "completed": true
+    }
+  ]
+}

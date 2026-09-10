@@ -7,6 +7,7 @@ import {
   buildDraftGenerationUserPrompt,
   draftGenerationSchema,
   DRAFT_GENERATION_PROMPT_VERSION,
+  constrainDraftUnsupportedClaims,
   type AIProvider,
   type ProfessionalChunk,
   type RoutingMode,
@@ -53,7 +54,10 @@ function groundedDraftBody(
     .filter((part) => part.trim())
     .join("\n\n");
   if (!sourceText.trim()) return content;
-  return neutralizeUnsupportedQuotes(applySourceLimitationGuard(content, sourceText), sourceText);
+  return constrainDraftUnsupportedClaims(
+    neutralizeUnsupportedQuotes(applySourceLimitationGuard(content, sourceText), sourceText),
+    sourceText,
+  );
 }
 
 async function loadMatterTitle(
@@ -283,32 +287,35 @@ export async function generateDraft(params: {
   modelId?: string;
 }) {
   const ai = params.ai ?? createAIProviderFromEnv();
-  const matterTitle = await loadMatterTitle(params.db, params.organizationId, params.matterId);
-  const verifiedContext = await buildDraftVerifiedContext({
-    db: params.db,
-    organizationId: params.organizationId,
-    matterId: params.matterId,
-    instructions: params.instructions,
-  });
-  const chunks = await loadDraftContextChunks({
-    db: params.db,
-    organizationId: params.organizationId,
-    matterId: params.matterId,
-    documentIds: params.documentIds,
-  });
-  const authorityContext =
+  const emptyAuthority = { items: [], authorityIds: [], authorityChunkIds: [], warnings: [] as string[] };
+  const [matterTitle, verifiedContext, chunks, authorityContext] = await Promise.all([
+    loadMatterTitle(params.db, params.organizationId, params.matterId),
+    buildDraftVerifiedContext({
+      db: params.db,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      instructions: params.instructions,
+    }),
+    loadDraftContextChunks({
+      db: params.db,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      documentIds: params.documentIds,
+    }),
     params.includeLegalAuthority === false
-      ? { items: [], authorityIds: [], authorityChunkIds: [], warnings: [] }
-      : await loadDraftLegalAuthorityContext({
+      ? Promise.resolve(emptyAuthority)
+      : loadDraftLegalAuthorityContext({
           db: params.db,
           organizationId: params.organizationId,
           matterId: params.matterId,
-        });
+        }),
+  ]);
   const authorityBlock = formatDraftLegalAuthorityContext(authorityContext);
 
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "draft_generation",
+    timeoutMs: 90_000,
     routing: {
       subsystem: "draft",
       strategy: params.executionStrategy ?? "auto",
@@ -619,28 +626,30 @@ export async function transformDraftSection(params: {
   );
   if (!current) throw new Error("Current draft version not found");
 
-  const matterTitle = await loadMatterTitle(params.db, params.organizationId, params.matterId);
-  const verifiedContext = await buildDraftVerifiedContext({
-    db: params.db,
-    organizationId: params.organizationId,
-    matterId: params.matterId,
-  });
-  const chunks = await loadDraftContextChunks({
-    db: params.db,
-    organizationId: params.organizationId,
-    matterId: params.matterId,
-    documentIds: Array.isArray(existing.draft.sourceContext?.documentIds)
-      ? (existing.draft.sourceContext.documentIds as string[])
-      : undefined,
-  });
-  const authorityContext =
+  const emptyAuthority = { items: [], authorityIds: [], authorityChunkIds: [], warnings: [] as string[] };
+  const [matterTitle, verifiedContext, chunks, authorityContext] = await Promise.all([
+    loadMatterTitle(params.db, params.organizationId, params.matterId),
+    buildDraftVerifiedContext({
+      db: params.db,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+    }),
+    loadDraftContextChunks({
+      db: params.db,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      documentIds: Array.isArray(existing.draft.sourceContext?.documentIds)
+        ? (existing.draft.sourceContext.documentIds as string[])
+        : undefined,
+    }),
     params.includeLegalAuthority === false
-      ? { items: [], authorityIds: [], authorityChunkIds: [], warnings: [] }
-      : await loadDraftLegalAuthorityContext({
+      ? Promise.resolve(emptyAuthority)
+      : loadDraftLegalAuthorityContext({
           db: params.db,
           organizationId: params.organizationId,
           matterId: params.matterId,
-        });
+        }),
+  ]);
   const authorityBlock = formatDraftLegalAuthorityContext(authorityContext);
 
   const transformInstructions = [
@@ -655,6 +664,7 @@ export async function transformDraftSection(params: {
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "draft_generation",
+    timeoutMs: 90_000,
     routing: {
       subsystem: "draft",
       strategy: "standard",

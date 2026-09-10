@@ -1,0 +1,28 @@
+{
+  "id": "nyaya-v3-1-ask-recert-v1",
+  "parentOverlay": "nyaya-four-provider-cert-v1",
+  "frozenOverlayUnchanged": true,
+  "requested": "grok-3",
+  "served": "grok-4.3",
+  "provider": "xai",
+  "subsystem": "ask",
+  "featureAgents": "0",
+  "evaluatedIdentity": "grok-4.3",
+  "contract": "xAI accepts grok-3 and returns response.model grok-4.3. Evaluated served identity is grok-4.3. Not a silent provider substitution.",
+  "identityEvidence": {
+    "source": "V3_1_RC1_MEASUREMENT_REPLAY.json",
+    "asksObserved": 283,
+    "providers": ["xai"],
+    "models": ["grok-4.3"],
+    "fallbackUses": 0
+  },
+  "liveRecert": {
+    "attemptedAt": "2026-09-09T16:48:00.000Z",
+    "status": "BLOCKED",
+    "httpStatus": 403,
+    "classifiedAs": "auth",
+    "reason": "xAI team credits exhausted or monthly spending limit reached. Live Ask recert and V3.1 post-remediation were not executed against the served model.",
+    "fallbackNotUsed": true
+  },
+  "recertifiedAt": "2026-09-09T16:50:00.000Z"
+}

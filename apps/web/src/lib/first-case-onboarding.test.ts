@@ -23,6 +23,8 @@ describe("First Case onboarding", () => {
     expect(onboarding).toContain('router.replace("/app/cases/new")');
     expect(onboarding).toContain("reloadOrganizations");
     expect(onboarding).toContain("selectOrganization");
+    expect(onboarding).toContain("ORGANIZATION_SLUG_HTML_PATTERN");
+    expect(onboarding).toContain("normalizeOrganizationSlugInput");
   });
 
   it("E. existing org skips the create-firm form", () => {

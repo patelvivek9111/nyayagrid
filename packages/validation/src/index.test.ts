@@ -23,9 +23,18 @@ describe("createOrganizationSchema", () => {
     expect(() =>
       createOrganizationSchema.parse({
         name: "Bad",
-        slug: "Bad Slug",
+        slug: "Bad Slug!",
       }),
     ).toThrow();
+  });
+
+  it("lowercases mixed-case short names so onboarding does not 400", () => {
+    const result = createOrganizationSchema.parse({
+      name: "Nyaya",
+      slug: "Vivek",
+      type: "solo",
+    });
+    expect(result.slug).toBe("vivek");
   });
 });
 

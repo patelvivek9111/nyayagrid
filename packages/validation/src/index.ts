@@ -8,9 +8,14 @@ export const createOrganizationSchema = z.object({
   slug: z
     .string()
     .trim()
-    .min(2)
-    .max(64)
-    .regex(/^[a-z0-9-]+$/, "Slug must be lowercase alphanumeric with hyphens"),
+    .transform((value) => value.toLowerCase().replace(/\s+/g, "-"))
+    .pipe(
+      z
+        .string()
+        .min(2)
+        .max(64)
+        .regex(/^[a-z0-9-]+$/, "Short name must be lowercase letters, numbers, and hyphens"),
+    ),
 });
 
 export const inviteMembershipSchema = z.object({

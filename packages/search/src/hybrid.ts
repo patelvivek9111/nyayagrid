@@ -31,6 +31,12 @@ export type RetrievalHit = {
 export interface Retriever {
   readonly name: string;
   search(query: RetrievalQuery): Promise<RetrievalHit[]>;
+  loadChunksByDocumentIds?(params: {
+    organizationId: string;
+    matterId: string;
+    documentIds: string[];
+    limit?: number;
+  }): Promise<RetrievalHit[]>;
 }
 
 export function assertHitsWithinScope(hits: RetrievalHit[], scope: RetrievalScope) {
@@ -65,6 +71,14 @@ export class PostgresHybridRetriever implements Retriever {
     }
 
     const limit = query.limit ?? 8;
+    const allowed = query.scope.allowedDocumentIds;
+    const allowedClause =
+      allowed && allowed.length > 0
+        ? sql`AND document_id IN (${sql.join(
+            allowed.map((id) => sql`${id}`),
+            sql`, `,
+          )})`
+        : sql``;
     const [embedding] = await this.embeddings.embed([query.text]);
     if (!embedding) return [];
 
@@ -89,8 +103,9 @@ export class PostgresHybridRetriever implements Retriever {
       score: number;
     };
 
-    const vectorRows = (await (this.db as unknown as { execute: (q: unknown) => Promise<Row[]> })
-      .execute(sql`
+    const exec = this.db as unknown as { execute: (q: unknown) => Promise<Row[]> };
+    const [vectorRows, ftsRows] = await Promise.all([
+      exec.execute(sql`
       SELECT
         id,
         document_id,
@@ -105,13 +120,12 @@ export class PostgresHybridRetriever implements Retriever {
       WHERE organization_id = ${query.scope.organizationId}
         AND matter_id = ${query.scope.matterId}
         AND embedding IS NOT NULL
+        ${allowedClause}
       ORDER BY embedding <=> ${vectorLiteral}::vector
       LIMIT ${limit}
-    `)) as Row[];
-
-    const ftsRows =
+    `),
       ftsQuery.length > 0
-        ? ((await (this.db as unknown as { execute: (q: unknown) => Promise<Row[]> }).execute(sql`
+        ? exec.execute(sql`
             SELECT
               id,
               document_id,
@@ -123,13 +137,15 @@ export class PostgresHybridRetriever implements Retriever {
               segment_ref,
               ts_rank(to_tsvector('english', content), to_tsquery('english', ${ftsQuery})) AS score
             FROM document_chunks
-            WHERE organization_id = ${query.scope.organizationId}
-              AND matter_id = ${query.scope.matterId}
-              AND to_tsvector('english', content) @@ to_tsquery('english', ${ftsQuery})
-            ORDER BY score DESC
-            LIMIT ${limit}
-          `)) as Row[])
-        : [];
+              WHERE organization_id = ${query.scope.organizationId}
+                AND matter_id = ${query.scope.matterId}
+                AND to_tsvector('english', content) @@ to_tsquery('english', ${ftsQuery})
+                ${allowedClause}
+              ORDER BY score DESC
+              LIMIT ${limit}
+          `)
+        : Promise.resolve([] as Row[]),
+    ]);
 
     const merged = new Map<string, RetrievalHit>();
     const addRows = (rows: Row[], weight: number) => {
@@ -162,6 +178,62 @@ export class PostgresHybridRetriever implements Retriever {
     assertHitsWithinScope(hits, query.scope);
     return hits;
   }
+
+  async loadChunksByDocumentIds(params: {
+    organizationId: string;
+    matterId: string;
+    documentIds: string[];
+    limit?: number;
+  }): Promise<RetrievalHit[]> {
+    if (params.documentIds.length === 0) return [];
+    const limit = params.limit ?? 8;
+    type Row = {
+      id: string;
+      document_id: string;
+      document_version_id: string;
+      organization_id: string;
+      matter_id: string;
+      content: string;
+      page_start: number | null;
+      segment_ref: string | null;
+    };
+    const rows = (await (this.db as unknown as { execute: (q: unknown) => Promise<Row[]> }).execute(sql`
+      SELECT
+        id,
+        document_id,
+        document_version_id,
+        organization_id,
+        matter_id,
+        content,
+        page_start,
+        segment_ref
+      FROM document_chunks
+      WHERE organization_id = ${params.organizationId}
+        AND matter_id = ${params.matterId}
+        AND document_id IN (${sql.join(
+          params.documentIds.map((id) => sql`${id}`),
+          sql`, `,
+        )})
+      LIMIT ${limit}
+    `)) as Row[];
+    const hits: RetrievalHit[] = rows.map((row) => ({
+      chunkId: row.id,
+      documentId: row.document_id,
+      documentVersionId: row.document_version_id,
+      organizationId: row.organization_id,
+      matterId: row.matter_id,
+      score: 1,
+      quote: row.content,
+      page: row.page_start,
+      segmentRef: row.segment_ref,
+    }));
+    assertHitsWithinScope(hits, {
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      workspace: "professional",
+    });
+    return hits;
+  }
 }
 
 /** In-memory retriever for unit tests without Postgres. */
@@ -174,9 +246,26 @@ export class InMemoryMatterRetriever implements Retriever {
       (c) =>
         c.organizationId === query.scope.organizationId &&
         c.matterId === query.scope.matterId &&
+        (!query.scope.allowedDocumentIds || query.scope.allowedDocumentIds.includes(c.documentId)) &&
         c.quote.toLowerCase().includes(query.text.toLowerCase().slice(0, 12)),
     );
     assertHitsWithinScope(hits, query.scope);
     return rankByQuestionOverlap(query.text, hits).slice(0, query.limit ?? 8);
+  }
+
+  async loadChunksByDocumentIds(params: {
+    organizationId: string;
+    matterId: string;
+    documentIds: string[];
+    limit?: number;
+  }): Promise<RetrievalHit[]> {
+    return this.chunks
+      .filter(
+        (c) =>
+          c.organizationId === params.organizationId &&
+          c.matterId === params.matterId &&
+          params.documentIds.includes(c.documentId),
+      )
+      .slice(0, params.limit ?? 8);
   }
 }

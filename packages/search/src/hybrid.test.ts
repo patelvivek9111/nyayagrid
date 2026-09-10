@@ -79,4 +79,38 @@ describe("retrieval scope", () => {
     expect(hits.every((hit) => hit.matterId === "matter_b")).toBe(true);
     expect(hits.some((hit) => hit.quote.includes(secret))).toBe(false);
   });
+
+  it("limits hits to allowedDocumentIds when provided", async () => {
+    const retriever = new InMemoryMatterRetriever([
+      {
+        chunkId: "c-agree",
+        documentId: "d-agree",
+        documentVersionId: "v-a",
+        organizationId: "org_a",
+        matterId: "m1",
+        score: 1,
+        quote: "termination clause requires thirty days notice until amended",
+      },
+      {
+        chunkId: "c-amend",
+        documentId: "d-amend",
+        documentVersionId: "v-b",
+        organizationId: "org_a",
+        matterId: "m1",
+        score: 1,
+        quote: "termination clause requires thirty days notice becomes fifteen",
+      },
+    ]);
+    const hits = await retriever.search({
+      text: "termination clause requires thirty",
+      scope: {
+        organizationId: "org_a",
+        matterId: "m1",
+        workspace: "professional",
+        allowedDocumentIds: ["d-amend"],
+      },
+    });
+    expect(hits).toHaveLength(1);
+    expect(hits[0]?.documentId).toBe("d-amend");
+  });
 });

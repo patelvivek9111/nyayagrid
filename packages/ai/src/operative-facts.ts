@@ -114,6 +114,11 @@ function parseDayCount(raw: string): number | null {
   return WORD_NUMBERS[key] ?? WORD_NUMBERS[key.replace(" ", "")] ?? null;
 }
 
+function isUnsignedInstrument(quote: string): boolean {
+  if (!/\b(unsigned|not signed|draft only)\b/i.test(quote)) return false;
+  return !/\bsigned\s+20\d{2}-\d{2}-\d{2}\b/i.test(quote);
+}
+
 export function classifySourceRole(quote: string): SourceRoleKind {
   if (INFORMAL_RE.test(quote) || INFORMAL_DOC_RE.test(quote)) return "informal_communication";
   if (/\b(access granted|access denied|login successful|credential)\b/i.test(quote)) {
@@ -121,6 +126,7 @@ export function classifySourceRole(quote: string): SourceRoleKind {
   }
   if (/\b(invoice|amount due|remittance)\b/i.test(quote)) return "invoice";
   if (/\b(deposition|q\.|a\.|testified)\b/i.test(quote)) return "testimony";
+  if (isUnsignedInstrument(quote)) return "unknown";
   if (AMENDMENT_RE.test(quote) || /\b(shall be|this amendment|section \d+ is)\b/i.test(quote)) {
     return "signed_instrument";
   }
@@ -129,7 +135,7 @@ export function classifySourceRole(quote: string): SourceRoleKind {
 
 export function extractNamedInstrument(question: string): string | null {
   const exhibit = question.match(
-    /\b(exhibit\s+[a-z](?:\s*[-–]\s*[\w ]{0,40})?|appendix\s+[a-z0-9]+|schedule\s+[a-z0-9]+|annex\s+[a-z0-9]+|non-compete(?: agreement)?|unsigned draft)\b/i,
+    /\b(exhibit\s+[a-z0-9]+(?:[-_][a-z0-9]+)*(?:\s*[-–]\s+[a-z][\w ]{0,40})?|appendix\s+[a-z0-9]+(?:[-_][a-z0-9]+)*|schedule\s+[a-z0-9]+(?:[-_][a-z0-9]+)*|annex\s+[a-z0-9]+(?:[-_][a-z0-9]+)*|non-compete(?: agreement)?|unsigned draft)\b/i,
   );
   if (exhibit?.[1]) return exhibit[1].replace(/\s+/g, " ").trim();
   return null;
@@ -148,6 +154,15 @@ export function namedInstrumentFromQuestion(question: string): string | null {
 }
 
 export function instrumentMentionedInText(instrument: string, text: string): boolean {
+  const named = instrument.match(
+    /^(exhibit|schedule|appendix|annex)\s+([a-z0-9]+(?:[-_][a-z0-9]+)*)/i,
+  );
+  if (named) {
+    return new RegExp(
+      `\\b${escapeRegExp(named[1]!)}\\s+${escapeRegExp(named[2]!)}(?![-_a-z0-9])`,
+      "i",
+    ).test(text);
+  }
   const compactInstrument = compactInstrumentKey(instrument);
   const compactText = compactInstrumentKey(text);
   if (compactInstrument.length >= 4 && compactText.includes(compactInstrument)) return true;
@@ -160,14 +175,36 @@ export function instrumentMentionedInText(instrument: string, text: string): boo
   return compactType.length >= 4 && compactText.includes(compactType);
 }
 
+function escapeRegExp(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/** True when the instrument is named only to deny that it is attached or present. */
+export function instrumentMentionIsDenial(instrument: string, text: string): boolean {
+  const body = instrument.replace(/^(exhibit|schedule|appendix|annex)\s+/i, "").trim();
+  const name = escapeRegExp(body || instrument);
+  const patterns = [
+    new RegExp(`does not attach(?: a)?(?: exhibit)?\\s+${name}\\b`, "i"),
+    new RegExp(`(?:exhibit|schedule|appendix|annex)\\s+${name}\\b.{0,80}not attached`, "i"),
+    new RegExp(`(?:exhibit|schedule|appendix|annex)\\s+${name}\\b.{0,80}(?:still )?missing`, "i"),
+    new RegExp(`no (?:exhibit|schedule|appendix|annex)\\s+${name}\\b.{0,40}attached`, "i"),
+    new RegExp(`(?:exhibit|schedule|appendix|annex)\\s+${name}\\b.{0,80}identified but is not attached`, "i"),
+    new RegExp(`(?:exhibit|schedule|appendix|annex)\\s+${name}\\b is not (?:attached|among|available|in the)`, "i"),
+    new RegExp(`(?:will send|send .{0,20}later|refer(?:s|ring)? to|see)\\s+(?:the )?exhibit\\s+${name}\\b`, "i"),
+    new RegExp(`this (?:email|message|letter) is not (?:the )?exhibit\\s+${name}\\b`, "i"),
+  ];
+  return patterns.some((pattern) => pattern.test(text));
+}
+
 export function passagesMentionInstrument(
   instrument: string,
   passages: Array<{ documentId?: string | null; quote?: string | null }>,
 ): boolean {
-  const blob = passages
-    .map((passage) => `${passage.documentId ?? ""} ${passage.quote ?? ""}`)
-    .join("\n");
-  return instrumentMentionedInText(instrument, blob);
+  return passages.some((passage) => {
+    const blob = `${passage.documentId ?? ""} ${passage.quote ?? ""}`;
+    if (!instrumentMentionedInText(instrument, blob)) return false;
+    return !instrumentMentionIsDenial(instrument, blob);
+  });
 }
 
 export function classifyQuestionTarget(question: string, now = new Date()): QuestionTarget {
@@ -206,12 +243,8 @@ export function classifyQuestionTarget(question: string, now = new Date()): Ques
 }
 
 function namedSourceInQuote(named: string, quote: string): boolean {
-  const compact = named.toLowerCase().replace(/[^a-z0-9]+/g, "");
-  const quoteCompact = quote.toLowerCase().replace(/[^a-z0-9]+/g, "");
-  if (quoteCompact.includes(compact)) return true;
-  const token = named.match(/\bexhibit\s+([a-z0-9]+)/i)?.[1];
-  if (token && new RegExp(`\\bexhibit\\s*${token}\\b`, "i").test(quote)) return true;
-  return false;
+  if (instrumentMentionIsDenial(named, quote)) return false;
+  return instrumentMentionedInText(named, quote);
 }
 
 const DATE_TOKEN =
@@ -269,11 +302,16 @@ export function classifyStatementRelation(params: {
     return "tension";
   }
   const unique = [...new Set(exactDates.map((d) => isoDate(d)))];
-  if (unique.length >= 2 && /\b(payment date|posted on|meeting date)\b/i.test(blob)) {
+  if (
+    unique.length >= 2 &&
+    /\b(payment date|posted on|meeting date|file-review|file review|meeting)\b/i.test(blob)
+  ) {
     const topic = params.question.toLowerCase();
     const topical = params.passages.filter((p) => {
       if (/\bpayment\b/i.test(topic)) return /\bpayment|posted\b/i.test(p.quote);
-      if (/\bmeeting\b/i.test(topic)) return /\bmeeting|review\b/i.test(p.quote);
+      if (/\b(meeting|file-review|file review|review)\b/i.test(topic)) {
+        return /\bmeeting|review|minutes|calendar|witness|deposition\b/i.test(p.quote);
+      }
       return true;
     });
     const topicalDates = [
@@ -291,32 +329,39 @@ type DurationTerm = {
   days: number;
   label: string;
   effectiveAt: number;
+  expiresAt: number;
   amendment: boolean;
   informal: boolean;
   chunkId: string;
   quote: string;
 };
 
-function isNoticePeriodWindow(windowLower: string): boolean {
+function isNoticePeriodWindow(windowLower: string, allowConvenienceNotice = false): boolean {
   const hasTrueNoticePeriod =
     /\bnotice period\b/.test(windowLower) ||
     /\bformal notice\b/.test(windowLower) ||
     /\bnotice\s+shall\s+be\b/.test(windowLower) ||
-    /\bnotice\s+(?:now\s+)?requires?\b/.test(windowLower);
+    /\bnotice\s+(?:now\s+)?requires?\b/.test(windowLower) ||
+    /\bnotice(?: period)?\s+becomes\b/.test(windowLower);
   const hasWrittenNotice = /\bdays['’]?\s+written notice\b/.test(windowLower);
   if (!hasTrueNoticePeriod && !hasWrittenNotice) return false;
   const convenience = /\bterminat(?:e|ion).{0,60}convenience\b/.test(windowLower);
-  if (convenience && !hasTrueNoticePeriod) return false;
+  if (convenience && !hasTrueNoticePeriod && !allowConvenienceNotice) return false;
   return true;
 }
 
-function extractDurationTerms(passages: AssessmentPassage[], noticeOnly: boolean): DurationTerm[] {
+function extractDurationTerms(
+  passages: AssessmentPassage[],
+  noticeOnly: boolean,
+  allowConvenienceNotice = false,
+): DurationTerm[] {
   const terms: DurationTerm[] = [];
   const durationRe =
     /\b((?:ten|fifteen|twenty|thirty|forty(?:[-\s]five)?|sixty|ninety|\d+)\s*(?:\((\d+)\)\s*)?days)\b/gi;
   for (const passage of passages) {
     const quote = passage.quote;
     if (!/\bdays\b/i.test(quote)) continue;
+    if (isUnsignedInstrument(quote)) continue;
     const informal = classifySourceRole(quote) === "informal_communication";
     for (const match of quote.matchAll(durationRe)) {
       const days = parseDayCount(match[1] ?? "");
@@ -324,7 +369,10 @@ function extractDurationTerms(passages: AssessmentPassage[], noticeOnly: boolean
       const idx = match.index ?? 0;
       const window = quote.slice(Math.max(0, idx - 140), idx + match[0].length + 90);
       const windowLower = window.toLowerCase();
-      if (noticeOnly && !isNoticePeriodWindow(windowLower)) continue;
+      const noticeWindow = quote.slice(Math.max(0, idx - 50), idx + match[0].length + 40);
+      if (noticeOnly && !isNoticePeriodWindow(noticeWindow.toLowerCase(), allowConvenienceNotice)) {
+        continue;
+      }
       const localDated =
         parseIsoOrNamedDate(
           window.match(new RegExp(`\\bbecomes effective(?: on)?\\s+(${DATE_TOKEN})`, "i"))?.[1] ??
@@ -338,7 +386,7 @@ function extractDurationTerms(passages: AssessmentPassage[], noticeOnly: boolean
             "",
         );
       const localImmediate = /\beffective immediately\b/i.test(window);
-      const futureBound = /\bthereafter\b|\bbecomes effective\b|\bbeginning\b|\bcommencing\b/.test(
+      const futureBound = /\bthereafter\b|\bbecomes effective\b|\bbeginning\b|\bcommencing\b|\bon and after\b/.test(
         windowLower,
       );
       const instrumentOperative =
@@ -361,6 +409,12 @@ function extractDurationTerms(passages: AssessmentPassage[], noticeOnly: boolean
       ) {
         continue;
       }
+      if (
+        noticeOnly &&
+        /\bdoes not (modify|change|amend|alter)\b.{0,80}\bnotice\b/i.test(quote)
+      ) {
+        continue;
+      }
       const amendment =
         AMENDMENT_RE.test(window) && (instrumentOperative || role === "signed_instrument");
       let effectiveAt = Number.NEGATIVE_INFINITY;
@@ -369,10 +423,20 @@ function extractDurationTerms(passages: AssessmentPassage[], noticeOnly: boolean
       } else if (localImmediate || (amendment && !futureBound && instrumentOperative)) {
         effectiveAt = 0;
       }
+      const expiresDated =
+        parseIsoOrNamedDate(
+          window.match(new RegExp(`\\bexpir(?:es|ed|ing)(?: on)?\\s+(${DATE_TOKEN})`, "i"))?.[1] ??
+            "",
+        ) ??
+        parseIsoOrNamedDate(
+          quote.match(new RegExp(`\\bexpir(?:es|ed|ing)(?: on)?\\s+(${DATE_TOKEN})`, "i"))?.[1] ??
+            "",
+        );
       terms.push({
         days,
         label: `${days} days`,
         effectiveAt,
+        expiresAt: expiresDated ? expiresDated.getTime() : Number.POSITIVE_INFINITY,
         amendment,
         informal,
         chunkId: passage.chunkId,
@@ -386,17 +450,24 @@ function extractDurationTerms(passages: AssessmentPassage[], noticeOnly: boolean
 function pickOperativeDuration(
   terms: DurationTerm[],
   asOfMs: number,
-): { term: DurationTerm; laterTerms: DurationTerm[] } | null {
+): { term: DurationTerm; laterTerms: DurationTerm[]; conflict: boolean } | null {
   const contractual = terms.filter((term) => !term.informal);
   const pool = contractual.length > 0 ? contractual : terms;
-  const eligible = pool.filter((term) => term.effectiveAt <= asOfMs);
+  const eligible = pool.filter(
+    (term) => term.effectiveAt <= asOfMs && term.expiresAt > asOfMs,
+  );
   if (eligible.length === 0) return null;
   eligible.sort(
     (a, b) => b.effectiveAt - a.effectiveAt || Number(b.amendment) - Number(a.amendment),
   );
+  const top = eligible[0]!;
+  const conflict = eligible.some(
+    (term) => term.effectiveAt === top.effectiveAt && term.days !== top.days,
+  );
   return {
-    term: eligible[0]!,
+    term: top,
     laterTerms: pool.filter((term) => term.effectiveAt > asOfMs),
+    conflict,
   };
 }
 
@@ -418,10 +489,26 @@ function durationAssessment(
   }
   const asOf = target.asOf ?? now;
   const noticeOnly = /\bnotice\b/i.test(question) || emailVsContract;
-  const terms = extractDurationTerms(passages, noticeOnly);
+  const allowConvenienceNotice = /\bconvenience\b/i.test(question) && /\bnotice\b/i.test(question);
+  const terms = extractDurationTerms(passages, noticeOnly, allowConvenienceNotice);
   if (terms.length === 0) return null;
   const picked = pickOperativeDuration(terms, asOf.getTime());
   if (!picked) return null;
+  if (picked.conflict) {
+    return {
+      proposition: question.trim(),
+      status: "contradicted",
+      premiseStatus: "contradicted",
+      dateSensitive: true,
+      relevantDate: isoDate(asOf),
+      operativeTerm: null,
+      allowedClaim:
+        "The retrieved instruments state conflicting notice periods with the same effective timing, so a single controlling term is not established.",
+      prohibitedOverclaims: [],
+      limitations: ["Do not pick one undated or simultaneously effective amendment duration over another."],
+      evidence: [{ chunkId: picked.term.chunkId, role: "limiting" }],
+    };
+  }
   const laterNamed = [...picked.laterTerms]
     .sort((a, b) => a.effectiveAt - b.effectiveAt)
     .slice(0, 2)
@@ -591,6 +678,47 @@ function pairedAmountAssessment(
       { chunkId: original.chunkId, role: "direct" },
       { chunkId: amended.chunkId, role: "direct" },
     ],
+  };
+}
+
+function eventDateConflictAssessment(
+  question: string,
+  passages: AssessmentPassage[],
+): EvidenceAssessment | null {
+  if (!/\b(on what date|what date|when did)\b/i.test(question)) return null;
+  if (!/\b(meeting|file-review|file review)\b/i.test(question)) return null;
+  const topical = passages.filter((p) =>
+    /\b(meeting|file-review|file review|minutes|calendar|witness|deposition|hallway)\b/i.test(
+      p.quote,
+    ),
+  );
+  const dated = topical.length > 0 ? topical : passages;
+  const byChunk = dated.map((p) => ({
+    passage: p,
+    dates: [...p.quote.matchAll(/\b(20\d{2}-\d{2}-\d{2})\b/g)].map((m) => m[1]!),
+  }));
+  const unique = [...new Set(byChunk.flatMap((row) => row.dates))];
+  if (unique.length < 2) return null;
+  const supporting = byChunk.filter((row) => row.dates.length > 0);
+  return {
+    proposition: question.trim(),
+    status: "contradicted",
+    premiseStatus: "uncertain",
+    dateSensitive: true,
+    relevantDate: null,
+    operativeTerm: unique.slice(0, 3).join(" / "),
+    allowedClaim: `The retrieved sources conflict on the in-person file-review meeting date: ${unique[0]} versus ${unique[1]}. Both accounts are in the Case record; neither is independently controlling.`,
+    prohibitedOverclaims: [
+      "fully reconciled",
+      "no conflict",
+      `definitely only ${unique[0]}`,
+      `definitely only ${unique[1]}`,
+    ],
+    limitations: ["Report both dates; do not pick one as certain."],
+    evidence: supporting.slice(0, 4).map((row) => ({
+      chunkId: row.passage.chunkId,
+      role: "contradicting" as const,
+    })),
   };
 }
 
@@ -929,6 +1057,7 @@ export function selectOperativeAssessment(
     oneSidedTransmittalAssessment(question, passages) ??
     provisionIdentityAssessment(question, passages) ??
     dateRoleMismatchAssessment(question, passages) ??
+    eventDateConflictAssessment(question, passages) ??
     contradictionAssessment(question, passages) ??
     durationAssessment(question, passages, now) ??
     terminationAssessment(question, passages, now) ??

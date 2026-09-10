@@ -1,0 +1,20 @@
+{
+  "frozenFrom": "V3_1_FINAL_RELEASE.json",
+  "sha256": "cec6cb3b3d3620f89f4cbdef651dcf7b4120abdf7790b89c6052334f59a24546",
+  "datasetId": "v3.1-hard-unseen",
+  "catalogFingerprint": "5b4d87f8e51b7ae0fb0a1b1f3e15dd2f43306a33dbb6dd876f76cc7006d09c29",
+  "graderVersion": "v3.1-grade-2026-09-09",
+  "eligible": 544,
+  "pass": 542,
+  "fail": 2,
+  "critical": 0,
+  "infra": 0,
+  "materialPct": 99.6,
+  "classification": "GO-CANDIDATE",
+  "requestedModel": "grok-3",
+  "servedModel": "grok-4.3",
+  "fallbacks": 0,
+  "featureAgents": "0",
+  "doNotRetune": true,
+  "frozenAt": "2026-09-10T12:00:00.000Z"
+}

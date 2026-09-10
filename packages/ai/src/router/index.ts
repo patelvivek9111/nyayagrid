@@ -57,6 +57,7 @@ export { providerApiKeyPresent, googleApiKeyFromEnv } from "./direct-provider";
 export type { DirectProviderId } from "./direct-provider";
 export type { SubsystemMeasurement } from "./certify";
 export { CERTIFICATION_EVIDENCE } from "./certification-evidence";
+export { ASK_SERVED_MODEL_RECERT } from "./ask-served-identity";
 export type { CertificationEvidence, CertificationEvidenceModel } from "./certification-evidence";
 export type { RoutingAuditRecord } from "./audit";
 export type { NormalizedClaim, DisagreementResult } from "./disagreement";

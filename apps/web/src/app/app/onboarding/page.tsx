@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { ProfessionalShell } from "@/components/shell";
 import { useActiveOrganization } from "@/components/use-active-organization";
 import { Button, Panel } from "@nyayagrid/ui";
-import { continueHref, slugFromFirmName } from "@/lib/first-run";
+import { continueHref, ORGANIZATION_SLUG_HTML_PATTERN, normalizeOrganizationSlugInput, slugFromFirmName } from "@/lib/first-run";
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -75,11 +75,16 @@ export default function OnboardingPage() {
       const response = await fetch("/api/v1/organizations", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, slug, type }),
+        body: JSON.stringify({ name, slug: normalizeOrganizationSlugInput(slug), type }),
       });
       const data = await response.json();
       if (!response.ok) {
-        setError(data?.error?.message ?? "Failed to create organization");
+        const details = data?.error?.details as { fieldErrors?: { slug?: string[] } } | undefined;
+        setError(
+          details?.fieldErrors?.slug?.[0] ??
+            data?.error?.message ??
+            "Failed to create organization",
+        );
         return;
       }
       const orgId = data.organization.id as string;
@@ -127,13 +132,16 @@ export default function OnboardingPage() {
               value={slug}
               onChange={(e) => {
                 setSlugTouched(true);
-                setSlug(e.target.value);
+                setSlug(normalizeOrganizationSlugInput(e.target.value));
               }}
-              pattern="[-a-z0-9]+"
+              pattern={ORGANIZATION_SLUG_HTML_PATTERN}
+              title="Lowercase letters, numbers, and hyphens"
+              autoComplete="off"
+              spellCheck={false}
               required
             />
             <span className="font-normal text-xs text-ink/55">
-              Letters, numbers, and hyphens only — used in the workspace URL.
+              Lowercase letters, numbers, and hyphens only — used in the workspace URL.
             </span>
           </label>
           <label className="flex flex-col gap-1 text-sm">

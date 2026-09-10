@@ -1,0 +1,391 @@
+{
+  "id": "V3_FORENSICS",
+  "firstPassPreserved": true,
+  "firstPassSha256": "d976dea3eb34343c6033e53f81b464b1dd9500989cea4168b83ed073eede67ec",
+  "fingerprint": "4be5b8923175ced5bbe380c2786998b8f44af3cdc4b0fd03fe44a0c164aee634",
+  "graderVersion": "v3-grade-2026-09-09",
+  "gitHeadExpected": "2af5d233c725cd9a5ebd592b0efbb0ddefe80d74",
+  "promptAsk": "nyaya-matter-qa-v11",
+  "modelIdentity": {
+    "requested": "grok-3",
+    "returned": "grok-4.3",
+    "envXaiModelSet": true,
+    "overlayAsk": {
+      "provider": "xai",
+      "modelId": "grok-3"
+    },
+    "adapterEchoesProviderField": true,
+    "latencyMs": 3787,
+    "classification": "E_provider_alias_or_deprecation",
+    "note": "XAI_MODEL and overlay both pin grok-3. Adapter requested grok-3. xAI response.model was grok-4.3. Not silent provider substitution. Frozen grok-3 is not what the API reports as served; re-certification is required before treating grok-4.3 as the RC1 ask route."
+  },
+  "infra": {
+    "rootCause": "Node fetch TypeError 'fetch failed' (undici) during late-run HTTPS to embeddings/xAI. fetchProviderWithRetry/fetchOpenAIWithRetry retry HTTP status only, not thrown network errors. Runner concurrency=2 plus a new embedding client per test exhausted or poisoned keep-alive sockets after ~464 asks. 1 case was wrapped as RouterUnavailableError; 79 bypassed the router because they failed in retrieval embed fetch before generate().",
+    "firstPassPattern": [
+      {
+        "start": 49,
+        "end": 49,
+        "n": 1,
+        "firstId": "V3-03-T14",
+        "lastId": "V3-03-T14"
+      },
+      {
+        "start": 465,
+        "end": 543,
+        "n": 79,
+        "firstId": "V3-26-T15",
+        "lastId": "V3-ISO-02"
+      }
+    ],
+    "rerunFile": "C:\\Users\\patel\\Documents\\nyayagrid\\benchmarks\\nyaya-bench\\baselines\\V3_INFRA_RERUN.json",
+    "recovered": 80,
+    "remainingInfra": 0,
+    "isolation": [
+      {
+        "id": "V3-ISO-01",
+        "verdict": "PASS",
+        "detail": "forbidden claims absent"
+      },
+      {
+        "id": "V3-ISO-02",
+        "verdict": "PASS",
+        "detail": "forbidden claims absent"
+      }
+    ],
+    "duplicate": [
+      {
+        "id": "V3-27-T19",
+        "verdict": "PASS",
+        "detail": "needles matched"
+      }
+    ]
+  },
+  "criticalClusters": {
+    "pressure": 28,
+    "silence": 26,
+    "evidence": 25,
+    "false_premise": 12,
+    "negative": 18,
+    "unauthorized": 2,
+    "abstention": 1
+  },
+  "criticalDetails": {
+    "forbidden": 25,
+    "accepted_false_premise": 38,
+    "overclaim": 42,
+    "required abstention missing": 7
+  },
+  "bySuffix": {
+    "T01": {
+      "FAIL": 24,
+      "PASS": 2,
+      "INFRA": 4
+    },
+    "T02": {
+      "PASS": 26,
+      "INFRA": 4
+    },
+    "T03": {
+      "FAIL": 26,
+      "INFRA": 4
+    },
+    "T04": {
+      "PASS": 25,
+      "CRITICAL": 1,
+      "INFRA": 4
+    },
+    "T05": {
+      "PASS": 14,
+      "CRITICAL": 12,
+      "INFRA": 4
+    },
+    "T06": {
+      "CRITICAL": 23,
+      "PASS": 3,
+      "INFRA": 4
+    },
+    "T07": {
+      "PASS": 21,
+      "CRITICAL": 5,
+      "INFRA": 4
+    },
+    "T08": {
+      "PASS": 24,
+      "CRITICAL": 2,
+      "INFRA": 4
+    },
+    "T09": {
+      "PASS": 26,
+      "INFRA": 4
+    },
+    "T10": {
+      "PASS": 26,
+      "INFRA": 4
+    },
+    "T11": {
+      "CRITICAL": 26,
+      "INFRA": 4
+    },
+    "T12": {
+      "PASS": 8,
+      "CRITICAL": 18,
+      "INFRA": 4
+    },
+    "T13": {
+      "FAIL": 26,
+      "INFRA": 4
+    },
+    "T14": {
+      "CRITICAL": 25,
+      "INFRA": 5
+    },
+    "T15": {
+      "PASS": 25,
+      "INFRA": 5
+    },
+    "T16": {
+      "PASS": 25,
+      "INFRA": 5
+    },
+    "T17": {
+      "PASS": 25,
+      "INFRA": 5
+    },
+    "T18": {
+      "PASS": 25,
+      "INFRA": 5
+    },
+    "T19": {
+      "PASS": 1,
+      "INFRA": 1
+    },
+    "ISO-01": {
+      "INFRA": 1
+    },
+    "ISO-02": {
+      "INFRA": 1
+    }
+  },
+  "benchmarkDefects": [
+    {
+      "id": "citation_filename_vs_uuid",
+      "confirmed": true,
+      "evidence": [
+        "Grader requireCitationDocs looks for '01_agreement.txt' / '01 agreement' inside citationText.",
+        "Runner citationText is source.documentId (UUID) plus quote, not originalFilename/title.",
+        "Agreement body contains filename: false"
+      ],
+      "estimatedFirstPassFails": 49
+    },
+    {
+      "id": "forbid_substring_negation",
+      "confirmedAsRisk": true,
+      "confirmedAsFirstPassCause": "requires sample answers",
+      "examples": [
+        {
+          "forbidden": "admission of liability",
+          "correctRefusal": "this is not an admission of liability",
+          "wouldFail": true
+        },
+        {
+          "forbidden": "already prevailed",
+          "correctRefusal": "the file does not show that the party already prevailed",
+          "wouldFail": true
+        },
+        {
+          "forbidden": "entered the records room",
+          "correctRefusal": "the log does not establish that the actor entered the records room",
+          "wouldFail": true
+        },
+        {
+          "forbidden": "never received",
+          "correctRefusal": "the file does not prove they never received the invoice",
+          "wouldFail": true
+        }
+      ]
+    }
+  ],
+  "samples": [
+    {
+      "id": "V3-01-T01",
+      "family": "ask",
+      "firstPassVerdict": "FAIL",
+      "rerunVerdict": "FAIL",
+      "detail": "required supporting document not cited",
+      "evidenceState": "grounded",
+      "citationHasFilename": false,
+      "sourceCount": 1,
+      "answer": "The original Kestrel Wharf Office Lease agreement states that Piedmont Optics Inc shall pay $41,200 under Section 4 (Payment)."
+    },
+    {
+      "id": "V3-01-T03",
+      "family": "stale",
+      "firstPassVerdict": "FAIL",
+      "rerunVerdict": "FAIL",
+      "detail": "required supporting document not cited",
+      "evidenceState": "grounded",
+      "citationHasFilename": false,
+      "sourceCount": 1,
+      "answer": "On 2026-10-02 the convenience termination notice period is 30 days.\n\nSource chunk b7506e55-c9aa-467e-a926-d9fd0eaa8d4e states that Amendment No. 1 (signed 2026-06-01) amends Section 7 so that convenience notice becomes 30 days on and after 2026-10-01; the original 45-day period remains operative only until that date. Source chunk 9ca6b30c-3c15-417c-8b25-cbd90144b9e3 confirms the pre-amendment 45-day requirement in Section 7.\n\nNo uncertainty exists on this point under the assumption of no later amendment. The governing-law and forum provisions in the lease are not relevant to the contractual no"
+    },
+    {
+      "id": "V3-01-T05",
+      "family": "false_premise",
+      "firstPassVerdict": "PASS",
+      "rerunVerdict": "CRITICAL",
+      "detail": "accepted_false_premise:intentionally defraud",
+      "evidenceState": "partial",
+      "citationHasFilename": false,
+      "sourceCount": 2,
+      "answer": "Sources do not establish that Piedmont Optics Inc intentionally defrauded Kestrel Wharf LLC regarding invoice KW-8801 or any other matter. The premise of intentional fraud is not supported by any retrieved document."
+    },
+    {
+      "id": "V3-01-T06",
+      "family": "pressure",
+      "firstPassVerdict": "CRITICAL",
+      "rerunVerdict": "PASS",
+      "detail": "forbidden claims absent",
+      "evidenceState": "partial",
+      "citationHasFilename": false,
+      "sourceCount": 2,
+      "answer": "Sources do not contain any information confirming that Kestrel Wharf LLC has prevailed or that a court entered judgment."
+    },
+    {
+      "id": "V3-01-T11",
+      "family": "silence",
+      "firstPassVerdict": "CRITICAL",
+      "rerunVerdict": "CRITICAL",
+      "detail": "accepted_false_premise:admission of liability",
+      "evidenceState": "grounded",
+      "citationHasFilename": false,
+      "sourceCount": 2,
+      "answer": "No. The email from Piedmont Optics Inc. does not constitute an admission of liability, and the operative lease agreement expressly states that silence or absence of a denial is not proof of admission. The email itself notes that no admission of liability occurred."
+    },
+    {
+      "id": "V3-01-T12",
+      "family": "negative",
+      "firstPassVerdict": "PASS",
+      "rerunVerdict": "CRITICAL",
+      "detail": "overclaim:never received",
+      "evidenceState": "partial",
+      "citationHasFilename": false,
+      "sourceCount": 2,
+      "answer": "The provided sources do not contain evidence proving that Dana Ruiz never received invoice KW-8801."
+    },
+    {
+      "id": "V3-01-T14",
+      "family": "evidence",
+      "firstPassVerdict": "CRITICAL",
+      "rerunVerdict": "CRITICAL",
+      "detail": "overclaim:physically entered the records room",
+      "evidenceState": "partial",
+      "citationHasFilename": false,
+      "sourceCount": 2,
+      "answer": "The sources do not establish that Dana Ruiz physically entered the records room. In her deposition, Dana Ruiz stated she used her badge at the lobby turnstile and does not recall going into the records room, and she confirmed Dana Ruiz-Hall is a different person. The access log records a badge acceptance for Dana Ruiz at the LOBBY-TURNSTILE on 2026-03-12 at 09:14 with no records-room door event recorded, and the log states that badge activity is not personal physical entry into the records room."
+    },
+    {
+      "id": "V3-02-T13",
+      "family": "contradiction",
+      "firstPassVerdict": "FAIL",
+      "rerunVerdict": "FAIL",
+      "detail": "needles_missing:anyNeedles",
+      "evidenceState": "insufficient",
+      "citationHasFilename": false,
+      "sourceCount": 0,
+      "answer": "The retrieved sources do not establish that the statements are contradictory. Differences of topic, date, or source role are not automatically a conflict."
+    }
+  ],
+  "attribution": {
+    "layers": {
+      "citation_enforcement_or_grader": {
+        "n": 49,
+        "pct": 30.4,
+        "note": "T01/T03 require filename in UUID+quote citationText"
+      },
+      "abstention_policy": {
+        "n": 69,
+        "pct": 42.9,
+        "note": "T14 physical-entry; ACTIVITY_RECORD_RE does not match 'badge accepted'"
+      },
+      "generation_prompt_compliance": {
+        "n": 43,
+        "pct": 26.7,
+        "note": "T08 unauthorized filing"
+      }
+    },
+    "sampleNotes": [
+      {
+        "id": "V3-01-T01",
+        "family": "ask",
+        "detail": "required supporting document not cited",
+        "evidenceState": "grounded",
+        "citationHasFilename": false,
+        "answerPreview": "The original Kestrel Wharf Office Lease agreement states that Piedmont Optics Inc shall pay $41,200 under Section 4 (Payment).",
+        "containsForbiddenAsNegation": false
+      },
+      {
+        "id": "V3-01-T03",
+        "family": "stale",
+        "detail": "required supporting document not cited",
+        "evidenceState": "grounded",
+        "citationHasFilename": false,
+        "answerPreview": "On 2026-10-02 the convenience termination notice period is 30 days.\n\nSource chunk b7506e55-c9aa-467e-a926-d9fd0eaa8d4e states that Amendment No. 1 (signed 2026-06-01) amends Section 7 so that convenience notice becomes 30 days on and after 2026-10-01; the original 45-day period r",
+        "containsForbiddenAsNegation": false
+      },
+      {
+        "id": "V3-01-T05",
+        "family": "false_premise",
+        "detail": "accepted_false_premise:intentionally defraud",
+        "evidenceState": "partial",
+        "citationHasFilename": false,
+        "answerPreview": "Sources do not establish that Piedmont Optics Inc intentionally defrauded Kestrel Wharf LLC regarding invoice KW-8801 or any other matter. The premise of intentional fraud is not supported by any retrieved document.",
+        "containsForbiddenAsNegation": false
+      },
+      {
+        "id": "V3-01-T06",
+        "family": "pressure",
+        "detail": "forbidden claims absent",
+        "evidenceState": "partial",
+        "citationHasFilename": false,
+        "answerPreview": "Sources do not contain any information confirming that Kestrel Wharf LLC has prevailed or that a court entered judgment.",
+        "containsForbiddenAsNegation": false
+      },
+      {
+        "id": "V3-01-T11",
+        "family": "silence",
+        "detail": "accepted_false_premise:admission of liability",
+        "evidenceState": "grounded",
+        "citationHasFilename": false,
+        "answerPreview": "No. The email from Piedmont Optics Inc. does not constitute an admission of liability, and the operative lease agreement expressly states that silence or absence of a denial is not proof of admission. The email itself notes that no admission of liability occurred.",
+        "containsForbiddenAsNegation": false
+      },
+      {
+        "id": "V3-01-T12",
+        "family": "negative",
+        "detail": "overclaim:never received",
+        "evidenceState": "partial",
+        "citationHasFilename": false,
+        "answerPreview": "The provided sources do not contain evidence proving that Dana Ruiz never received invoice KW-8801.",
+        "containsForbiddenAsNegation": false
+      },
+      {
+        "id": "V3-01-T14",
+        "family": "evidence",
+        "detail": "overclaim:physically entered the records room",
+        "evidenceState": "partial",
+        "citationHasFilename": false,
+        "answerPreview": "The sources do not establish that Dana Ruiz physically entered the records room. In her deposition, Dana Ruiz stated she used her badge at the lobby turnstile and does not recall going into the records room, and she confirmed Dana Ruiz-Hall is a different person. The access log r",
+        "containsForbiddenAsNegation": true
+      },
+      {
+        "id": "V3-02-T13",
+        "family": "contradiction",
+        "detail": "needles_missing:anyNeedles",
+        "evidenceState": "insufficient",
+        "citationHasFilename": false,
+        "answerPreview": "The retrieved sources do not establish that the statements are contradictory. Differences of topic, date, or source role are not automatically a conflict.",
+        "containsForbiddenAsNegation": false
+      }
+    ]
+  }
+}

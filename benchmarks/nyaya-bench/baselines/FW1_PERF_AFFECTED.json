@@ -1,0 +1,167 @@
+{
+  "id": "FW1_PERF_AFFECTED",
+  "mode": "affected",
+  "datasetId": "fw1-full-matter-workflow",
+  "frozenAt": "2026-09-10T12:00:00.000Z",
+  "catalogFingerprint": "0a062593a0cebe9dff14034773f8dcd1637bae2968027518fed2408f1f09052f",
+  "graderVersion": "fw1-grade-2026-09-10",
+  "promptAsk": "nyaya-matter-qa-v11",
+  "router": "nyaya-router-v1.1",
+  "registry": "nyaya-registry-v1",
+  "overlay": "nyaya-four-provider-cert-v1",
+  "featureAgents": "0",
+  "requestedXaiModel": "grok-3",
+  "v31P95FlagMs": 17638,
+  "stats": {
+    "datasetId": "fw1-full-matter-workflow",
+    "matterCount": 12,
+    "workflowCount": 12,
+    "workflowSteps": 12,
+    "rubricCriteria": 11,
+    "minDocs": 24,
+    "maxDocs": 40,
+    "fingerprint": "0a062593a0cebe9dff14034773f8dcd1637bae2968027518fed2408f1f09052f",
+    "graderVersion": "fw1-grade-2026-09-10"
+  },
+  "estimate": {
+    "mode": "affected",
+    "matters": 2,
+    "documents": 50,
+    "xaiRequests": 22,
+    "xaiRequestsWithRetry": 26,
+    "extractRequests": 0,
+    "embeddingDocs": 0,
+    "expectedInputTokens": 72800,
+    "expectedOutputTokens": 18200,
+    "retryAllowance": 4,
+    "requestCeiling": 200,
+    "approximateCostUsd": 0.14,
+    "expectedDurationMin": 4.2,
+    "reuseIngest": true,
+    "reuseExtract": true,
+    "bufferUsd": 25
+  },
+  "summary": {
+    "graderVersion": "fw1-grade-2026-09-10",
+    "matterCount": 2,
+    "workflowCount": 2,
+    "rubricCriteriaCount": 11,
+    "criterionPassPct": 100,
+    "strictFullWorkflowPassPct": 100,
+    "criticalCount": 0,
+    "topFailureFamilies": [],
+    "classification": "GO-CANDIDATE",
+    "steps": 12,
+    "classes": [
+      "fabricated_authority",
+      "fabricated_exhibit",
+      "unsupported_legal_determination",
+      "cross_org_leakage",
+      "wrong_jurisdiction_controlling",
+      "missing_evidence_as_existing",
+      "silent_incomplete_workflow"
+    ]
+  },
+  "latency": {
+    "stepP50Ms": 5376,
+    "stepP95Ms": 69775,
+    "workflowP50Ms": 70932,
+    "workflowP95Ms": 235762,
+    "askP50Ms": 6392,
+    "askP95Ms": 9629,
+    "askStepP50Ms": 6392,
+    "askStepP95Ms": 9629,
+    "topSlowSteps": [
+      {
+        "matter": "FW-06",
+        "step": "answer_questions",
+        "latencyMs": 110577
+      },
+      {
+        "matter": "FW-06",
+        "step": "revise_with_new_evidence",
+        "latencyMs": 69775
+      },
+      {
+        "matter": "FW-07",
+        "step": "answer_questions",
+        "latencyMs": 21962
+      },
+      {
+        "matter": "FW-06",
+        "step": "research_controlling_law",
+        "latencyMs": 19998
+      },
+      {
+        "matter": "FW-07",
+        "step": "research_controlling_law",
+        "latencyMs": 13281
+      }
+    ]
+  },
+  "cost": {
+    "modelCalls": 29,
+    "primaryCalls": 28,
+    "retryCalls": 1,
+    "totalCalls": 29,
+    "xaiLedgerCalls": 25,
+    "xaiCounterUsed": 25,
+    "accountingMatch": true,
+    "ledgerInputTokens": 137188,
+    "ledgerOutputTokens": 10844,
+    "retries": 1,
+    "inputTokens": 137188,
+    "outputTokens": 10844,
+    "estimatedUsd": 0.18,
+    "perMatterUsd": 0.09,
+    "fallbacks": 0
+  },
+  "routing": {
+    "providers": [
+      "xai"
+    ],
+    "models": [
+      "grok-4.3"
+    ]
+  },
+  "matters": [
+    {
+      "id": "FW-06",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [],
+      "workflowMs": 235762,
+      "modelCalls": 15,
+      "retries": 1,
+      "costUsd": 0.09,
+      "completed": true,
+      "asks": {
+        "factual": "The original Prairie Revolver agreement states that Fox River Foods Inc shall pay $1,750,000 under Section 4. This is supported directly by the agreement document (chunkId=81383a3c-ab7c-4191-b4b8-ed2617e40245), which quotes: 'Section 4. Payment. Fox River Foods Inc shall pay $1,750,000.' Multiple corroborating sources, including the exhibit, demand letter, and invoice copies, reference the same $1",
+        "currentNotice": "As of 2026-09-10, the operative notice period for convenience termination is 7 days. Source chunk 81383a3c-ab7c-4191-b4b8-ed2617e40245 states: \"Section 7. Termination for convenience requires 7 days' written notice until a later effective amendment says otherwise.\" Amendment No. 1 (chunk 9a1ecbbc-ec06-42e2-8b9f-915909e6237b) changes the period to 12 days but is not effective until 2026-10-15 and t",
+        "missing": "Sources do not contain Exhibit Grid-D or any information about an insurance deductible required by it.\n\nExhibit Grid-D is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. IL law is the controlling law of this matter. IN law does not control.",
+        "contradiction": "The retrieved sources conflict on the in-person file-review meeting date: 2026-06-03 versus 2026-06-21. Both accounts are in the Case record; neither is independently controlling. Report both dates; do not pick one as certain."
+      }
+    },
+    {
+      "id": "FW-07",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [],
+      "workflowMs": 70932,
+      "modelCalls": 14,
+      "retries": 0,
+      "costUsd": 0.09,
+      "completed": true,
+      "asks": {
+        "factual": "The original Cypress Bowl Franchise Pack agreement states that Sarasota Bowls LLC shall pay a $28,500 franchise fee.\n\nThis is directly supported by the agreement document (chunkId=df066f39-b918-487f-9fec-19802d25ac0e), which provides in Section 4: \"Sarasota Bowls LLC shall pay $28,500 franchise fee.\" Multiple corroborating sources, including Exhibit A (chunkId=d0f6c69e-c370-48ad-b5bf-78c63f44c981)",
+        "currentNotice": "As of 2026-09-10, the operative notice period for convenience termination is 50 days.\n\nThe Cypress Bowl Franchise Pack (documentVersionId caaab8d0-6161-4a04-b308-47b4cd0d4f7a) states in Section 7 that termination for convenience requires 50 days' written notice until a later effective amendment says otherwise.\n\nAmendment No. 1 (documentVersionId 3e39ff19-e24b-4593-b02e-f3769ba3e789), signed 2026-0",
+        "missing": "Sources do not contain the content of Exhibit FDD-Item-21 or any information about an insurance deductible required by it.\n\nExhibit FDD-Item-21 is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. GA law is not the controlling law of this matter. The Cypress Bowl Franchise Pack states that governing law is FL and that GA law does not control this file. A separate choice-of-law confirmation restates that FL law controls, noting that GA is referenced only as the location of an office of Sarasota Bowls LLC.",
+        "contradiction": "The retrieved sources conflict on the in-person file-review meeting date: 2026-07-11 versus 2026-08-01. Both accounts are in the Case record; neither is independently controlling. Report both dates; do not pick one as certain."
+      }
+    }
+  ]
+}

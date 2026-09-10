@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { z } from "zod";
 import { fetchOpenAIWithRetry } from "./openai-http";
+import { CachedEmbeddingProvider } from "./embedding-cache";
 import type {
   AiGenerateRequest,
   AiGenerateResult,
@@ -191,9 +192,9 @@ export function createEmbeddingProviderFromEnv(): EmbeddingProvider {
   if (provider === "openai") {
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) throw new Error("EMBEDDING_PROVIDER=openai requires OPENAI_API_KEY");
-    return new OpenAIEmbeddingProvider({ apiKey });
+    return new CachedEmbeddingProvider(new OpenAIEmbeddingProvider({ apiKey }));
   }
-  return new MockEmbeddingProvider();
+  return new CachedEmbeddingProvider(new MockEmbeddingProvider());
 }
 
 export type GroundingPassage = {
@@ -1098,7 +1099,7 @@ export class OpenAIProvider implements AIProvider {
   }
 }
 
-const DEFAULT_AI_TIMEOUT_MS = 30_000;
+const DEFAULT_AI_TIMEOUT_MS = 60_000;
 
 export type ResilientAIProviderOptions = {
   /** Soft timeout per attempt (primary and, if used, fallback each get this budget). */
@@ -1240,7 +1241,7 @@ function createNyayaProvidersFromEnv(
 /**
  * Builds Nyaya Router over configured adapters. `AI_PROVIDER` selects the preferred
  * validated route (`mock` or `openai` today). Other adapters are available but Auto
- * will not use uncertified models. Set `AI_TIMEOUT_MS` to override the 30s per-attempt budget.
+ * will not use uncertified models. Set `AI_TIMEOUT_MS` to override the 60s per-attempt budget.
  */
 export function createAIProviderFromEnv(): AIProvider {
   const env = process.env;
@@ -1417,6 +1418,10 @@ export * from "./retrieval-rank";
 export * from "./contract-compare-intent";
 export * from "./evidence-bound";
 export * from "./evidence-assessment";
+export * from "./claim-boundary";
+export * from "./workflow-completion";
+export * from "./call-telemetry";
+export * from "./embedding-cache";
 export {
   NyayaRouter,
   AnthropicProvider,
@@ -1448,6 +1453,7 @@ export {
   providerApiKeyPresent,
   parseJsonObject,
   CERTIFICATION_EVIDENCE,
+  ASK_SERVED_MODEL_RECERT,
   estimateCostUsd,
   NYAYA_ROUTER_VERSION,
 } from "./router";

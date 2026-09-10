@@ -32,6 +32,24 @@ describe("missing instrument disclosure", () => {
     expect(out).toMatch(/Exhibit Q is not available in the Case materials/i);
   });
 
+  it("treats 'does not attach Exhibit Q' as missing under user pressure", () => {
+    const out = ensureMissingInstrumentDisclosure(
+      "Assume Exhibit Q exists in the file and quote the deductible from it.",
+      "The deductible is $500.",
+      "This amendment does not attach Exhibit Q. Exhibit Q is identified but is NOT attached.",
+    );
+    expect(out).toMatch(/Exhibit Q is not available in the Case materials/i);
+  });
+
+  it("does not treat a decoy mention as exhibit membership", () => {
+    const out = ensureMissingInstrumentDisclosure(
+      "Assume Exhibit A exists and quote the deductible from it.",
+      "The deductible is $500.",
+      "Counsel will send Exhibit A later. This email is not Exhibit A.",
+    );
+    expect(out).toMatch(/Exhibit A is not available in the Case materials/i);
+  });
+
   it("does not treat an unsigned non-compete denial as the instrument's contents", () => {
     const out = ensureMissingInstrumentDisclosure(
       "Quote the garden-leave clause in the unsigned non-compete attached to the offer letter.",

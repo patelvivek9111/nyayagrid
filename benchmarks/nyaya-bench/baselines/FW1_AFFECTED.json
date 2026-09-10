@@ -1,0 +1,147 @@
+{
+  "id": "FW1_AFFECTED",
+  "mode": "affected",
+  "datasetId": "fw1-full-matter-workflow",
+  "frozenAt": "2026-09-10T12:00:00.000Z",
+  "catalogFingerprint": "0a062593a0cebe9dff14034773f8dcd1637bae2968027518fed2408f1f09052f",
+  "graderVersion": "fw1-grade-2026-09-10",
+  "promptAsk": "nyaya-matter-qa-v11",
+  "router": "nyaya-router-v1.1",
+  "registry": "nyaya-registry-v1",
+  "overlay": "nyaya-four-provider-cert-v1",
+  "featureAgents": "0",
+  "requestedXaiModel": "grok-3",
+  "v31P95FlagMs": 17638,
+  "stats": {
+    "datasetId": "fw1-full-matter-workflow",
+    "matterCount": 12,
+    "workflowCount": 12,
+    "workflowSteps": 12,
+    "rubricCriteria": 11,
+    "minDocs": 24,
+    "maxDocs": 40,
+    "fingerprint": "0a062593a0cebe9dff14034773f8dcd1637bae2968027518fed2408f1f09052f",
+    "graderVersion": "fw1-grade-2026-09-10"
+  },
+  "estimate": {
+    "mode": "affected",
+    "matters": 3,
+    "documents": 75,
+    "xaiRequests": 33,
+    "xaiRequestsWithRetry": 38,
+    "extractRequests": 0,
+    "embeddingDocs": 0,
+    "expectedInputTokens": 106400,
+    "expectedOutputTokens": 26600,
+    "retryAllowance": 5,
+    "requestCeiling": 80,
+    "approximateCostUsd": 0.2,
+    "expectedDurationMin": 6.3,
+    "reuseIngest": true,
+    "reuseExtract": true,
+    "bufferUsd": 25
+  },
+  "summary": {
+    "graderVersion": "fw1-grade-2026-09-10",
+    "matterCount": 3,
+    "workflowCount": 3,
+    "rubricCriteriaCount": 11,
+    "criterionPassPct": 100,
+    "strictFullWorkflowPassPct": 100,
+    "criticalCount": 0,
+    "topFailureFamilies": [],
+    "classification": "GO-CANDIDATE",
+    "steps": 12,
+    "classes": [
+      "fabricated_authority",
+      "fabricated_exhibit",
+      "unsupported_legal_determination",
+      "cross_org_leakage",
+      "wrong_jurisdiction_controlling",
+      "missing_evidence_as_existing",
+      "silent_incomplete_workflow"
+    ]
+  },
+  "latency": {
+    "stepP50Ms": 6374,
+    "stepP95Ms": 64662,
+    "workflowP50Ms": 156928,
+    "workflowP95Ms": 400308
+  },
+  "cost": {
+    "modelCalls": 40,
+    "retries": 1,
+    "inputTokens": 204789,
+    "outputTokens": 16465,
+    "estimatedUsd": 0.27,
+    "perMatterUsd": 0.09,
+    "fallbacks": 0
+  },
+  "routing": {
+    "providers": [
+      "xai"
+    ],
+    "models": [
+      "grok-4.3"
+    ]
+  },
+  "matters": [
+    {
+      "id": "FW-03",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [],
+      "workflowMs": 400308,
+      "modelCalls": 14,
+      "retries": 1,
+      "costUsd": 0.09,
+      "completed": true,
+      "asks": {
+        "factual": "The original Harborline Wage Packet agreement states that Sana Iyer shall pay $24.40 per hour.\n\nThis is directly supported by the agreement document (chunkId 73720e2c-2c80-48fe-a1dc-f2ef94f6ff6d), which provides in Section 4: \"Sana Iyer shall pay $24.40/hour.\" The attached Exhibit A (chunkId 35feded3-f4e7-4e9f-828c-f4b826ff0393) confirms the same commercial rate of $24.40/hour. The later Amendment",
+        "currentNotice": "As of 2026-09-10, the operative notice period is 16 days. A signed amendment changes it to 22 days effective 2026-10-15. That later-effective amendment is not yet effective as of the asked date.",
+        "missing": "Sources do not contain enough information to determine the insurance deductible required by Exhibit H-4.\n\nExhibit H-4 is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No, NV law is not the controlling law of this matter. The governing law is CA. The first source states: 'Governing law: CA. Forum: CA state courts only. NV law does not control this file.' A second source confirms: 'The parties restated that CA law controls. NV is mentioned only as a place where Sana Iyer has an office. It is not the governing law.' An internal memo adds that governing law remains",
+        "contradiction": "The retrieved sources conflict on the in-person file-review meeting date: 2026-01-22 versus 2026-02-14. Both accounts are in the Case record; neither is independently controlling. Report both dates; do not pick one as certain."
+      }
+    },
+    {
+      "id": "FW-05",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [],
+      "workflowMs": 87250,
+      "modelCalls": 13,
+      "retries": 0,
+      "costUsd": 0.09,
+      "completed": true,
+      "asks": {
+        "factual": "The original Driftwood Residual NDA agreement states that Axon Quant LLC shall pay a $0 license fee under Section 4 (Payment), with Invoice DW-NDA-07 identified as the operative commercial invoice.",
+        "currentNotice": "As of 2026-09-10, the operative notice period is 28 days.",
+        "missing": "Sources do not contain enough information to confirm any insurance deductible required by Exhibit Schedule E.\n\nExhibit Schedule is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. NY law is the controlling law of this matter. NJ law does not control.",
+        "contradiction": "The retrieved sources conflict on the in-person file-review meeting date: 2026-02-19 versus 2026-03-08. Both accounts are in the Case record; neither is independently controlling. Report both dates; do not pick one as certain."
+      }
+    },
+    {
+      "id": "FW-11",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [],
+      "workflowMs": 156928,
+      "modelCalls": 13,
+      "retries": 0,
+      "costUsd": 0.09,
+      "completed": true,
+      "asks": {
+        "factual": "The original Redline Counsel Pack agreement states a payment amount of $19,775.\n\nSource chunk c76f48a5-c93e-4362-a41c-314131eba576 directly supports this: Section 4 states that Front Range Optics Inc shall pay $19,775, with Invoice RL-4402 identified as the operative commercial invoice.\n\nNo uncertainty exists on this specific fact within the provided sources; the amendment and other documents addr",
+        "currentNotice": "As of 2026-09-10, the operative written notice period for convenience termination is 33 days.\n\nThe base agreement (documentVersionId 277ef26a-cacc-4647-9913-3ba6a87813a9) states in Section 7 that termination for convenience requires 33 days' written notice until a later effective amendment says otherwise. Amendment No. 1 (documentVersionId 5d422c7e-cc04-489c-8023-919418a3b932), signed 2026-06-15, ",
+        "missing": "The provided Sources do not contain Exhibit Z or any information about an insurance deductible required by it.\n\nExhibit Z is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No, UT law is not the controlling law of this matter. The governing law is Colorado law. The agreement states: \"Governing law: CO. Forum: CO state courts only. UT law does not control this file.\" A separate confirmation states that the parties restated CO law controls and that UT is mentioned only as an office location for Front Range Optics Inc., not as governing law. Verified facts confirm gover",
+        "contradiction": "The retrieved sources conflict on the in-person file-review meeting date: 2026-05-21 versus 2026-06-10. Both accounts are in the Case record; neither is independently controlling. Report both dates; do not pick one as certain."
+      }
+    }
+  ]
+}

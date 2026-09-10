@@ -4,6 +4,8 @@ import {
   continueHref,
   genericAskRedirect,
   isClientGuestRole,
+  ORGANIZATION_SLUG_HTML_PATTERN,
+  normalizeOrganizationSlugInput,
   shouldSkipFirmCreation,
   slugFromFirmName,
 } from "./first-run";
@@ -108,5 +110,10 @@ describe("first-run routing", () => {
   it("slug helper does not invent sample firm names", () => {
     expect(slugFromFirmName("Patel Law")).toBe("patel-law");
     expect(slugFromFirmName("")).toBe("firm");
+  });
+
+  it("normalizes mixed-case short names and uses a unicodeSets-safe HTML pattern", () => {
+    expect(normalizeOrganizationSlugInput("Vivek")).toBe("vivek");
+    expect(ORGANIZATION_SLUG_HTML_PATTERN).toBe("[a-z0-9\\-]+");
   });
 });

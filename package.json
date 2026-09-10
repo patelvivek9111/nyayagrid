@@ -38,6 +38,7 @@
     "bench:6u": "npm run bench:6u -w @nyayagrid/nyaya-bench",
     "bench:6u-r1": "npm run bench:6u-r1 -w @nyayagrid/nyaya-bench",
     "bench:6v": "npm run bench:6v -w @nyayagrid/nyaya-bench",
+    "bench:fw1": "npm run bench:fw1 -w @nyayagrid/nyaya-bench --",
     "perf:baseline": "npm run perf:offline -w @nyayagrid/perf-baseline",
     "perf:baseline:p2": "npm run perf:p2 -w @nyayagrid/perf-baseline",
     "docker:up": "docker compose up -d",

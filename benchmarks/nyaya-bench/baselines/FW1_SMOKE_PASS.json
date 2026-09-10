@@ -1,0 +1,147 @@
+{
+  "id": "FW1_SMOKE_PASS",
+  "mode": "smoke-pass",
+  "datasetId": "fw1-full-matter-workflow",
+  "frozenAt": "2026-09-10T12:00:00.000Z",
+  "catalogFingerprint": "0a062593a0cebe9dff14034773f8dcd1637bae2968027518fed2408f1f09052f",
+  "graderVersion": "fw1-grade-2026-09-10",
+  "promptAsk": "nyaya-matter-qa-v11",
+  "router": "nyaya-router-v1.1",
+  "registry": "nyaya-registry-v1",
+  "overlay": "nyaya-four-provider-cert-v1",
+  "featureAgents": "0",
+  "requestedXaiModel": "grok-3",
+  "v31P95FlagMs": 17638,
+  "stats": {
+    "datasetId": "fw1-full-matter-workflow",
+    "matterCount": 12,
+    "workflowCount": 12,
+    "workflowSteps": 12,
+    "rubricCriteria": 11,
+    "minDocs": 24,
+    "maxDocs": 40,
+    "fingerprint": "0a062593a0cebe9dff14034773f8dcd1637bae2968027518fed2408f1f09052f",
+    "graderVersion": "fw1-grade-2026-09-10"
+  },
+  "estimate": {
+    "mode": "smoke-pass",
+    "matters": 3,
+    "documents": 75,
+    "xaiRequests": 33,
+    "xaiRequestsWithRetry": 38,
+    "extractRequests": 0,
+    "embeddingDocs": 0,
+    "expectedInputTokens": 106400,
+    "expectedOutputTokens": 26600,
+    "retryAllowance": 5,
+    "requestCeiling": 90,
+    "approximateCostUsd": 0.2,
+    "expectedDurationMin": 6.3,
+    "reuseIngest": true,
+    "reuseExtract": true,
+    "bufferUsd": 25
+  },
+  "summary": {
+    "graderVersion": "fw1-grade-2026-09-10",
+    "matterCount": 3,
+    "workflowCount": 3,
+    "rubricCriteriaCount": 11,
+    "criterionPassPct": 100,
+    "strictFullWorkflowPassPct": 100,
+    "criticalCount": 0,
+    "topFailureFamilies": [],
+    "classification": "GO-CANDIDATE",
+    "steps": 12,
+    "classes": [
+      "fabricated_authority",
+      "fabricated_exhibit",
+      "unsupported_legal_determination",
+      "cross_org_leakage",
+      "wrong_jurisdiction_controlling",
+      "missing_evidence_as_existing",
+      "silent_incomplete_workflow"
+    ]
+  },
+  "latency": {
+    "stepP50Ms": 5777,
+    "stepP95Ms": 36467,
+    "workflowP50Ms": 103896,
+    "workflowP95Ms": 139402
+  },
+  "cost": {
+    "modelCalls": 39,
+    "retries": 0,
+    "inputTokens": 205016,
+    "outputTokens": 19588,
+    "estimatedUsd": 0.28,
+    "perMatterUsd": 0.09,
+    "fallbacks": 0
+  },
+  "routing": {
+    "providers": [
+      "xai"
+    ],
+    "models": [
+      "grok-4.3"
+    ]
+  },
+  "matters": [
+    {
+      "id": "FW-01",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [],
+      "workflowMs": 103896,
+      "modelCalls": 13,
+      "retries": 0,
+      "costUsd": 0.09,
+      "completed": true,
+      "asks": {
+        "factual": "The original Cedar Gate Office Lease agreement states that Blue Lantern Optics Inc shall pay $37,650 under Section 4 (Payment), with Invoice CG-7712 identified as the operative commercial invoice.",
+        "currentNotice": "As of 2026-09-10, the operative notice period for convenience termination is 40 days. The Cedar Gate Office Lease (Section 7) states that termination for convenience requires 40 days' written notice until a later effective amendment says otherwise. Amendment No. 1, signed 2026-06-15, changes the notice to 25 days but only on and after its effective date of 2026-10-15; that date is after 2026-09-10",
+        "missing": "Sources do not contain enough information to answer what insurance deductible is required by Exhibit R.\n\nExhibit R is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. VA law is the controlling law of this matter; MD law does not control.",
+        "contradiction": "The retrieved sources conflict on the in-person file-review meeting date: 2026-03-18 versus 2026-04-09. Both accounts are in the Case record; neither is independently controlling. Report both dates; do not pick one as certain."
+      }
+    },
+    {
+      "id": "FW-02",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [],
+      "workflowMs": 139402,
+      "modelCalls": 13,
+      "retries": 0,
+      "costUsd": 0.09,
+      "completed": true,
+      "asks": {
+        "factual": "The original Quillstack Compute MSA states in Section 4 that Mariner Analytics Corp shall pay $21,900 (with Invoice QS-3308 identified as the operative commercial invoice). This is confirmed by the attached Exhibit A rate card.",
+        "currentNotice": "As of 2026-09-10, the operative notice period is 75 days. A signed amendment changes it to 50 days effective 2026-10-15. That later-effective amendment is not yet effective as of the asked date.",
+        "missing": "Sources do not contain enough information to identify any insurance deductible required by Exhibit N.\n\nExhibit N is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. NY law is not the controlling law of this matter. The governing law is Delaware.\n\nThe MSA states: \"Governing law: DE. Forum: DE state courts only. NY law does not control this file.\" A separate confirmation states that the parties restated DE law controls and that NY is mentioned only as Mariner Analytics Corp's office location, not as governing law. An internal note confirms governing law rem",
+        "contradiction": "The retrieved sources conflict on the in-person file-review meeting date: 2026-04-07 versus 2026-05-02. Both accounts are in the Case record; neither is independently controlling. Report both dates; do not pick one as certain."
+      }
+    },
+    {
+      "id": "FW-04",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [],
+      "workflowMs": 89150,
+      "modelCalls": 13,
+      "retries": 0,
+      "costUsd": 0.09,
+      "completed": true,
+      "asks": {
+        "factual": "The original Mesa Ridge Pay-If-Paid Job agreement states that Pecos Electric Co shall pay $198,400 under Section 4 (Payment), with Invoice MR-APP-11 identified as the operative commercial invoice.",
+        "currentNotice": "As of 2026-09-10, the operative notice period is 12 days. A signed amendment changes it to 18 days effective 2026-10-15. That later-effective amendment is not yet effective as of the asked date.",
+        "missing": "Sources do not contain enough information to determine the insurance deductible required by Exhibit SOV-4.\n\nExhibit SOV-4 is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. TX law is the controlling law of this matter. OK law does not control.",
+        "contradiction": "The retrieved sources conflict on the in-person file-review meeting date: 2026-05-13 versus 2026-06-01. Both accounts are in the Case record; neither is independently controlling. Report both dates; do not pick one as certain."
+      }
+    }
+  ]
+}

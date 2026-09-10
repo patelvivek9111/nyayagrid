@@ -111,6 +111,8 @@ export type AiGenerateRequest = {
   messages: AiMessage[];
   schemaName?: string;
   temperature?: number;
+  /** Per-attempt provider timeout. Defaults to the router/env timeout. */
+  timeoutMs?: number;
   /** Providers that support cancellation should pass this to `fetch`. */
   signal?: AbortSignal;
   routing?: RouterRequestContext;

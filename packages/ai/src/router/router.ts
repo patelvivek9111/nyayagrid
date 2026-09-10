@@ -51,6 +51,7 @@ import {
   ROUTING_AUDIT_VERSION,
   type RoutingAuditRecord,
 } from "./audit";
+import { LAST_AUDITS_RING, ProviderCallLedger } from "../call-telemetry";
 import {
   isModelKilled,
   isProductionLikeEnv,
@@ -59,7 +60,8 @@ import {
 } from "./kill-switch";
 import { defaultRouterMetrics, type RouterMetrics } from "./metrics";
 
-const DEFAULT_TIMEOUT_MS = 30_000;
+/** Per-attempt bound. Long drafts may pass a higher request.timeoutMs. */
+const DEFAULT_TIMEOUT_MS = 60_000;
 export const NYAYA_ROUTER_VERSION = "nyaya-router-v1.1";
 export const DEFAULT_ROUTER_TIMEOUT_MS = DEFAULT_TIMEOUT_MS;
 
@@ -93,6 +95,7 @@ function healthEventFromError(error: ProviderError): HealthEvent {
 export class NyayaRouter implements AIProvider {
   readonly name: string;
   readonly lastAudits: RoutingAuditRecord[] = [];
+  readonly callLedger = new ProviderCallLedger();
   private readonly providers: Partial<Record<ProviderId, AIProvider>>;
   private readonly registry: ModelRegistryEntry[];
   private readonly health: ProviderHealthTracker;
@@ -276,6 +279,27 @@ export class NyayaRouter implements AIProvider {
           message: "provider circuit open or half-open probe already in flight",
         });
       }
+      let recordedHttp = false;
+      const timeoutMs = request.timeoutMs ?? this.timeoutMs;
+      const recordAttempt = (params: { success: boolean; result?: AiGenerateResult; status?: string }) => {
+        this.callLedger.record({
+          runId,
+          correlationId: runId,
+          organizationId: routing.organizationId,
+          matterId: routing.matterId,
+          subsystem,
+          provider: entry.provider,
+          requestedModel: routing.modelId ?? entry.modelId,
+          servedModel: params.result?.model || entry.modelId,
+          inputTokens: params.result?.usage?.inputTokens ?? 0,
+          outputTokens: params.result?.usage?.outputTokens ?? 0,
+          latencyMs: Date.now() - started,
+          success: params.success,
+          fallbackCount: kind === "fallback" ? 1 : 0,
+          finalStatus: params.status ?? (params.success ? "ok" : "error"),
+          attemptKind: kind,
+        });
+      };
       try {
         const result = await generateWithTimeout(
           (signal) =>
@@ -283,9 +307,11 @@ export class NyayaRouter implements AIProvider {
               ...request,
               signal: request.signal ?? signal,
             }),
-          this.timeoutMs,
+          timeoutMs,
           request.signal,
         );
+        recordAttempt({ success: true, result });
+        recordedHttp = true;
         const parsed = parseJsonObject(result.text);
         if (!parsed.ok && request.schemaName) {
           throw new ProviderError({
@@ -316,6 +342,7 @@ export class NyayaRouter implements AIProvider {
         if (kind === "verifier") verificationLatencyMs += withMeta.latencyMs ?? 0;
         return withMeta;
       } catch (error) {
+        if (!recordedHttp) recordAttempt({ success: false, status: "error" });
         const normalized = classifyThrownError(entry.provider, error);
         this.health.record(entry.provider, healthEventFromError(normalized), entry.modelId);
         throw normalized;
@@ -666,7 +693,7 @@ export class NyayaRouter implements AIProvider {
       throw new Error("Routing audit attempted to store a secret or content key");
     }
     this.lastAudits.push(audit);
-    if (this.lastAudits.length > 50) this.lastAudits.shift();
+    if (this.lastAudits.length > LAST_AUDITS_RING) this.lastAudits.shift();
     this.onAudit?.(audit);
     return audit;
   }

@@ -1,0 +1,32 @@
+{
+  "datasetId": "v3.1-hard-unseen",
+  "matterCount": 30,
+  "testCount": 544,
+  "criticalCount": 333,
+  "families": {
+    "ask": 60,
+    "stale": 30,
+    "abstention": 30,
+    "false_premise": 30,
+    "pressure": 60,
+    "unauthorized": 30,
+    "jurisdiction": 31,
+    "authority": 30,
+    "silence": 30,
+    "negative": 30,
+    "contradiction": 30,
+    "evidence": 30,
+    "entity": 30,
+    "chronology": 30,
+    "venue": 30,
+    "injection": 30,
+    "duplicate": 1,
+    "isolation": 2
+  },
+  "fingerprint": "5b4d87f8e51b7ae0fb0a1b1f3e15dd2f43306a33dbb6dd876f76cc7006d09c29",
+  "parentDataset": "v3-hard-unseen",
+  "graderVersion": "v3.1-grade-2026-09-09",
+  "frozenAt": "2026-09-09T16:00:00.000Z",
+  "parent": "v3-hard-unseen",
+  "rc1MustNotChange": true
+}

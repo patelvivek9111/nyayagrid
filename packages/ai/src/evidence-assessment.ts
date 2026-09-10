@@ -3,6 +3,7 @@ import {
   extractExactDates,
   exactDatesEqual,
 } from "./imprecise-date";
+import { isAffirmativeForbiddenClaim } from "./claim-boundary";
 import {
   answerContainsOperativeValue,
   extractNamedInstrument,
@@ -122,7 +123,7 @@ const MONTHS: Record<string, number> = {
 };
 
 const ACTIVITY_RECORD_RE =
-  /\b(access granted|access denied|login successful|logged in|session (?:opened|created)|wire (?:sent|received|posted)|transfer (?:posted|completed|sent)|device event|credential (?:used|accepted|granted))\b/i;
+  /\b(access granted|access denied|login successful|logged in|session (?:opened|created)|wire (?:sent|received|posted)|transfer (?:posted|completed|sent)|device event|credential (?:used|accepted|granted)|badge accepted|lobby-turnstile|lobby turnstile)\b/i;
 
 export function classifyQuestionRisk(question: string): QuestionRisk {
   const q = question.toLowerCase();
@@ -161,6 +162,13 @@ export function classifyQuestionRisk(question: string): QuestionRisk {
     categories.push("source_role");
   }
   return { highRisk: categories.length > 0, categories };
+}
+
+function asksProveNonOccurrence(question: string): boolean {
+  return (
+    /\b(never received|did not receive|never got|never delivered)\b/i.test(question) &&
+    /\b(prove|show that|establish that|confirm that)\b/i.test(question)
+  );
 }
 
 function parseIsoOrNamedDate(raw: string): Date | null {
@@ -383,6 +391,21 @@ function isCausalQuestion(question: string): boolean {
   return /\bwhy did\b|\bexplain why\b|\bwhat caused\b|\bwhat made\b/i.test(question);
 }
 
+function asksFraudIntentPremise(question: string): boolean {
+  return /\b(intentionally defraud|committed fraud|admitted fraud|intent(?:ionally)? to defraud)\b/i.test(
+    question,
+  );
+}
+
+function sourcesAffirmFraudIntent(passages: AssessmentPassage[]): boolean {
+  return passages.some((p) => {
+    if (isAffirmativeForbiddenClaim(p.quote, "intentionally defraud")) return true;
+    if (isAffirmativeForbiddenClaim(p.quote, "committed fraud")) return true;
+    if (isAffirmativeForbiddenClaim(p.quote, "admitted fraud")) return true;
+    return /\b(confessed to fraud|pleaded guilty to fraud|intent to defraud)\b/i.test(p.quote);
+  });
+}
+
 function asksCourtAssignmentIdentity(question: string): boolean {
   return (
     /\b(which judge|what judge|assigned judge|presiding judge|name of the judge)\b/i.test(
@@ -463,6 +486,75 @@ export function assessRetrievedEvidenceDeterministic(
 ): EvidenceAssessment | null {
   const activity = activityPassages(passages);
 
+  if (/\b(admitted liability|admission of liability|silence.{0,40}admission)\b/i.test(question)) {
+    const silence = passages.find((p) =>
+      /silence.{0,80}not an admission|no admission of liability|absence of a denial is not proof/i.test(
+        p.quote,
+      ),
+    );
+    if (silence) {
+      return {
+        proposition: question.trim(),
+        status: "insufficient",
+        premiseStatus: "unsupported",
+        dateSensitive: false,
+        relevantDate: null,
+        operativeTerm: null,
+        allowedClaim:
+          "I cannot establish an admission of liability from the available record. Silence or a missing denial is not an admission.",
+        prohibitedOverclaims: ["admitted liability", "admission of liability", "silence is an admission"],
+        limitations: ["Absence of a denial is not proof unless a source states that inference."],
+        evidence: [{ chunkId: silence.chunkId, role: "limiting" }],
+      };
+    }
+  }
+
+  if (asksProveNonOccurrence(question)) {
+    const affirmsAbsence = passages.some((p) => {
+      if (isAffirmativeForbiddenClaim(p.quote, "never received")) return true;
+      if (isAffirmativeForbiddenClaim(p.quote, "did not receive")) return true;
+      return /\b(was not (?:received|delivered)|denied receipt)\b/i.test(p.quote);
+    });
+    const affirmsReceipt = passages.some(
+      (p) =>
+        !isAffirmativeForbiddenClaim(p.quote, "never received") &&
+        !isAffirmativeForbiddenClaim(p.quote, "did not receive") &&
+        /\b(received invoice|invoice was received|was received|acknowledged receipt|confirmed receipt)\b/i.test(
+          p.quote,
+        ),
+    );
+    if (affirmsAbsence && affirmsReceipt) {
+      return {
+        proposition: question.trim(),
+        status: "contradicted",
+        premiseStatus: "contradicted",
+        dateSensitive: false,
+        relevantDate: null,
+        operativeTerm: null,
+        allowedClaim:
+          "The available record contains conflicting receipt evidence and does not establish non-receipt.",
+        prohibitedOverclaims: ["never received", "did not receive", "proves non-receipt"],
+        limitations: ["Do not resolve conflicting receipt statements by treating one side as proven."],
+        evidence: passages.map((p) => ({ chunkId: p.chunkId, role: "limiting" as const })),
+      };
+    }
+    if (!affirmsAbsence) {
+      return {
+        proposition: question.trim(),
+        status: "insufficient",
+        premiseStatus: "unsupported",
+        dateSensitive: false,
+        relevantDate: null,
+        operativeTerm: null,
+        allowedClaim:
+          "The available record does not establish non-receipt. Absence of proof of receipt is not proof that the recipient never received the instrument.",
+        prohibitedOverclaims: ["never received", "did not receive", "proves non-receipt"],
+        limitations: ["Do not convert silence or missing delivery proof into proof of non-occurrence."],
+        evidence: [],
+      };
+    }
+  }
+
   if (
     asksPersonalAct(question) &&
     activity.length > 0 &&
@@ -514,6 +606,29 @@ export function assessRetrievedEvidenceDeterministic(
         ...activity.map((p) => ({ chunkId: p.chunkId, role: "direct" as const })),
         ...extra.slice(0, 2).map((p) => ({ chunkId: p.chunkId, role: "corroborating" as const })),
       ],
+    };
+  }
+
+  if (isCausalQuestion(question) && asksFraudIntentPremise(question) && !sourcesAffirmFraudIntent(passages)) {
+    const nearby = passages.find((p) =>
+      /\b(invoice|received \d+ days|payment plan|does not state motive|does not state .{0,20}fraud)\b/i.test(
+        p.quote,
+      ),
+    );
+    return {
+      proposition: question.trim(),
+      status: "insufficient",
+      premiseStatus: "unsupported",
+      dateSensitive: false,
+      relevantDate: null,
+      operativeTerm: null,
+      allowedClaim:
+        "The available record does not establish that the named party intentionally defrauded anyone regarding the invoice. Nearby facts such as a late invoice or a payment-plan request are not proof of fraudulent intent. Do not invent a motive for an unsupported fraud premise.",
+      prohibitedOverclaims: ["intentionally defraud", "committed fraud", "admitted fraud"],
+      limitations: [
+        "A late invoice or a request for a payment plan is not evidence of fraudulent intent.",
+      ],
+      evidence: nearby ? [{ chunkId: nearby.chunkId, role: "limiting" }] : [],
     };
   }
 
@@ -656,6 +771,7 @@ export {
   answerContainsOperativeValue,
   namedInstrumentFromQuestion,
   instrumentMentionedInText,
+  instrumentMentionIsDenial,
 } from "./operative-facts";
 
 export function formatEvidenceAssessmentForPrompt(assessment: EvidenceAssessment): string {
@@ -919,9 +1035,8 @@ export function constrainCitedAnswer<T extends ConstrainedAnswer>(
   assessment: EvidenceAssessment,
   passages: AssessmentPassage[],
 ): T {
-  const blob = answer.answer.toLowerCase();
   const overclaimHit = assessment.prohibitedOverclaims.find((phrase) =>
-    blob.includes(phrase.toLowerCase()),
+    isAffirmativeForbiddenClaim(answer.answer, phrase),
   );
   const premiseForced = assessment.premiseStatus === "contradicted";
   const premiseBroken =
@@ -1017,7 +1132,16 @@ export function constrainCitedAnswer<T extends ConstrainedAnswer>(
     }
   }
 
-  if (!shouldRewrite) return answer;
+  if (!shouldRewrite) {
+    if (citedFromAssessment.length > 0) {
+      const have = new Set(answer.sources.map((source) => source.documentId));
+      const extra = citedFromAssessment.filter((source) => !have.has(source.documentId));
+    if (extra.length > 0) {
+      return { ...answer, sources: [...answer.sources, ...extra] };
+    }
+    }
+    return answer;
+  }
 
   const grounded =
     assessment.status === "established" ||

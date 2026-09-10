@@ -1,0 +1,340 @@
+{
+  "id": "FW1_CERT",
+  "mode": "full",
+  "datasetId": "fw1-full-matter-workflow",
+  "frozenAt": "2026-09-10T12:00:00.000Z",
+  "catalogFingerprint": "0a062593a0cebe9dff14034773f8dcd1637bae2968027518fed2408f1f09052f",
+  "graderVersion": "fw1-grade-2026-09-10",
+  "promptAsk": "nyaya-matter-qa-v11",
+  "router": "nyaya-router-v1.1",
+  "registry": "nyaya-registry-v1",
+  "overlay": "nyaya-four-provider-cert-v1",
+  "featureAgents": "0",
+  "requestedXaiModel": "grok-3",
+  "v31P95FlagMs": 17638,
+  "stats": {
+    "datasetId": "fw1-full-matter-workflow",
+    "matterCount": 12,
+    "workflowCount": 12,
+    "workflowSteps": 12,
+    "rubricCriteria": 11,
+    "minDocs": 24,
+    "maxDocs": 40,
+    "fingerprint": "0a062593a0cebe9dff14034773f8dcd1637bae2968027518fed2408f1f09052f",
+    "graderVersion": "fw1-grade-2026-09-10"
+  },
+  "estimate": {
+    "matters": 12,
+    "workflowCount": 12,
+    "documents": 316,
+    "estimatedRequests": 472,
+    "estimatedInputTokens": 1098400,
+    "estimatedOutputTokens": 322000,
+    "estimatedCostUsd": 1.03,
+    "bufferUsd": 25
+  },
+  "summary": {
+    "graderVersion": "fw1-grade-2026-09-10",
+    "matterCount": 12,
+    "workflowCount": 12,
+    "rubricCriteriaCount": 11,
+    "criterionPassPct": 97.7,
+    "strictFullWorkflowPassPct": 75,
+    "criticalCount": 0,
+    "topFailureFamilies": [
+      {
+        "family": "stale_amendment",
+        "count": 4
+      },
+      {
+        "family": "completeness",
+        "count": 1
+      },
+      {
+        "family": "contradiction_handling",
+        "count": 1
+      },
+      {
+        "family": "unsupported_claims",
+        "count": 1
+      }
+    ],
+    "classification": "GO-CANDIDATE",
+    "steps": 12,
+    "classes": [
+      "fabricated_authority",
+      "fabricated_exhibit",
+      "unsupported_legal_determination",
+      "cross_org_leakage",
+      "wrong_jurisdiction_controlling",
+      "missing_evidence_as_existing",
+      "silent_incomplete_workflow"
+    ]
+  },
+  "latency": {
+    "stepP50Ms": 7148,
+    "stepP95Ms": 81151,
+    "workflowP50Ms": 195707,
+    "workflowP95Ms": 316365
+  },
+  "cost": {
+    "modelCalls": 50,
+    "retries": 0,
+    "inputTokens": 257010,
+    "outputTokens": 23874,
+    "estimatedUsd": 0.35,
+    "perMatterUsd": 0.03,
+    "fallbacks": 0
+  },
+  "routing": {
+    "providers": [
+      "xai"
+    ],
+    "models": [
+      "grok-4.3"
+    ]
+  },
+  "matters": [
+    {
+      "id": "FW-01",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [],
+      "workflowMs": 98959,
+      "modelCalls": 13,
+      "retries": 0,
+      "costUsd": 0.09,
+      "completed": true,
+      "asks": {
+        "factual": "The original Cedar Gate Office Lease states that Blue Lantern Optics Inc shall pay $37,650.\n\nSource chunk 2ce2e93e-2d68-4a19-9572-589c1133056d directly supports this: Section 4 provides that Blue Lantern Optics Inc shall pay $37,650, with Invoice CG-7712 identified as the operative commercial invoice. Supporting references in the same source and in chunk dedb93bd-20da-40de-806c-bf5c3bdc6407 (Exhib",
+        "currentNotice": "As of 2026-09-10, the currently operative written notice period for convenience termination is 40 days. The Cedar Gate Office Lease (chunk 2ce2e93e-2d68-4a19-9572-589c1133056d) states in Section 7 that termination for convenience requires 40 days' written notice until a later effective amendment says otherwise. Amendment No. 1 (chunk 01ed2a0c-7d67-409e-b93d-4afdf363f5b5), signed 2026-06-15, expres",
+        "missing": "Sources do not contain enough information to determine the insurance deductible required by Exhibit R.\n\nExhibit R is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. VA law is the controlling law of this matter. MD law does not control.",
+        "contradiction": "Sources present a direct conflict on the date of the in-person file-review meeting and do not establish a single date. Calendar invite, deposition of Elena Vos, and meeting minutes record 2026-03-18; unsigned witness statement and counsel notes record a conflict with 2026-04-09."
+      }
+    },
+    {
+      "id": "FW-02",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [],
+      "workflowMs": 105881,
+      "modelCalls": 13,
+      "retries": 0,
+      "costUsd": 0.09,
+      "completed": true,
+      "asks": {
+        "factual": "The original Quillstack Compute MSA states that Mariner Analytics Corp shall pay $21,900 under Section 4 (Payment), with Invoice QS-3308 identified as the operative commercial invoice.",
+        "currentNotice": "As of 2026-09-10 the currently operative written notice period for convenience termination is 75 days. Amendment No. 1 (signed 2026-06-15) changes the period to 50 days but only on and after its effective date of 2026-10-15; the original 75-day requirement therefore remains in force on 2026-09-10.",
+        "missing": "Sources do not contain enough information to state any insurance deductible required by Exhibit N.\n\nExhibit N is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. The governing law is Delaware. The MSA states: 'Governing law: DE. Forum: DE state courts only. NY law does not control this file.' A separate confirmation states that the parties restated DE law controls and that NY is mentioned only as Mariner Analytics Corp's office location, not as governing law. Internal notes also confirm governing law remains DE.",
+        "contradiction": "The sources present conflicting information on the date of the in-person file-review meeting. Multiple sources (calendar invite, meeting minutes, and deposition testimony of Owen Hale) record the date as 2026-04-07, while an unsigned witness statement records 2026-05-02. Counsel notes explicitly flag the unresolved meeting-date conflict between 2026-04-07 and 2026-05-02. The record therefore does "
+      }
+    },
+    {
+      "id": "FW-03",
+      "fullWorkflowPass": false,
+      "criterionPassCount": 10,
+      "critical": [],
+      "families": [
+        "completeness",
+        "stale_amendment"
+      ],
+      "workflowMs": 125775,
+      "modelCalls": 13,
+      "retries": 0,
+      "costUsd": 0.09,
+      "completed": true,
+      "asks": {
+        "factual": "The original Harborline Wage Packet agreement states that Sana Iyer shall pay $24.40/hour under Section 4 (Payment).",
+        "currentNotice": "As of 2026-09-10, the currently operative written notice period for convenience termination is 16 days. Amendment No. 1 (signed 2026-06-15) changes the period to 22 days, but that amendment is not effective until 2026-10-15. Until then, the original 16-day requirement from the Harborline Wage Packet remains in force.",
+        "missing": "Sources do not contain Exhibit H-4 or any information about an insurance deductible required by it.\n\nExhibit H-4 is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. NV law is not the controlling law of this matter. The governing law is CA. The first source states: 'Governing law: CA. Forum: CA state courts only. NV law does not control this file.' The second source states: 'The parties restated that CA law controls. NV is mentioned only as a place where Sana Iyer has an office. It is not the governing law.' The third source states: 'Governing law remains ",
+        "contradiction": "The sources do not establish a single confirmed date for the in-person file-review meeting. Multiple sources reference 2026-01-22 (deposition of Sana Iyer confirming calendar entry, calendar invite for lobby conference file review, and meeting minutes listing Sana Iyer as attendee), while other sources note a conflicting date of 2026-02-14 (unsigned hallway observer statement and counsel notes exp"
+      }
+    },
+    {
+      "id": "FW-04",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [
+        "stale_amendment"
+      ],
+      "workflowMs": 163755,
+      "modelCalls": 11,
+      "retries": 0,
+      "costUsd": 0.07,
+      "completed": true,
+      "asks": {
+        "factual": "The original Mesa Ridge Pay-If-Paid Job agreement states that Pecos Electric Co shall pay $198,400 under Section 4 (Payment), with Invoice MR-APP-11 identified as the operative commercial invoice.",
+        "currentNotice": "As of 2026-09-10 the currently operative written notice period for convenience termination is 12 days. Amendment No. 1 (signed 2026-06-15) changes the period to 18 days but is not effective until 2026-10-15; the base agreement therefore remains in force on the query date.",
+        "missing": "Sources do not contain enough information to determine any insurance deductible required by Exhibit SOV-4.\n\nExhibit SOV-4 is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. TX law controls this matter; OK law does not.",
+        "contradiction": "The provided Sources record a documented conflict on the date of the file-review meeting. Multiple Sources (calendar invite, meeting minutes, deposition testimony) state 2026-05-13, while an unsigned hallway-observer statement and counsel notes record a conflicting date of 2026-06-01. The VerifiedMatterIntelligence block explicitly flags the same date conflict and does not resolve it. No Source es"
+      }
+    },
+    {
+      "id": "FW-05",
+      "fullWorkflowPass": false,
+      "criterionPassCount": 10,
+      "critical": [],
+      "families": [
+        "contradiction_handling"
+      ],
+      "workflowMs": 92980,
+      "modelCalls": 0,
+      "retries": 0,
+      "costUsd": 0,
+      "completed": true,
+      "asks": {
+        "factual": "The original Driftwood Residual NDA states that Axon Quant LLC shall pay a $0 license fee.\n\nThis is directly supported by chunk d8ebb557-1639-412b-b803-52f77223a749, which quotes Section 4: \"Axon Quant LLC shall pay $0 license fee. Invoice DW-NDA-07 is the operative commercial invoice id.\"\n\nNo uncertainty exists on this specific point within the provided sources; the amendment and other documents ",
+        "currentNotice": "As of 2026-09-10, the currently operative written notice period for convenience termination is 28 days. The base agreement (chunk d8ebb557-1639-412b-b803-52f77223a749) states that termination for convenience requires 28 days' written notice until a later effective amendment says otherwise. Amendment No. 1 (chunk 12bf8f0f-eb03-427f-bbe2-23466b7a6127) was signed 2026-06-15 but is not effective until",
+        "missing": "Sources do not contain the content of Exhibit Schedule E or any information about an insurance deductible required by it.\n\nExhibit Schedule is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. NY law is the controlling law of this matter. NJ law does not control.",
+        "contradiction": "The available matter documents do not provide sufficient evidence to answer this question."
+      }
+    },
+    {
+      "id": "FW-06",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [
+        "stale_amendment"
+      ],
+      "workflowMs": 239561,
+      "modelCalls": 0,
+      "retries": 0,
+      "costUsd": 0,
+      "completed": true,
+      "asks": {
+        "factual": "The original Prairie Revolver agreement states that Fox River Foods Inc shall pay $1,750,000 under Section 4.",
+        "currentNotice": "As of 2026-09-10 the operative convenience-termination notice period is 7 days' written notice. Amendment No. 1 changes the period to 12 days but does not become effective until 2026-10-15.",
+        "missing": "Sources do not contain Exhibit Grid-D or any information about an insurance deductible required by it.\n\nExhibit Grid-D is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. IL law is the controlling law of this matter. IN law does not control.",
+        "contradiction": "Sources conflict on the date of the in-person file-review meeting. The calendar invite, deposition of Mina Cho, and meeting minutes all reference 2026-06-03. An unsigned witness statement references 2026-06-21. Counsel notes explicitly record the meeting-date conflict between 2026-06-03 and 2026-06-21."
+      }
+    },
+    {
+      "id": "FW-07",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [],
+      "workflowMs": 195707,
+      "modelCalls": 0,
+      "retries": 0,
+      "costUsd": 0,
+      "completed": true,
+      "asks": {
+        "factual": "The original Cypress Bowl Franchise Pack agreement states a franchise fee payment amount of $28,500.\n\nThis is directly supported by the original agreement (chunkId=df066f39-b918-487f-9fec-19802d25ac0e), which provides in Section 4: \"Sarasota Bowls LLC shall pay $28,500 franchise fee.\" The same amount is confirmed in the attached Exhibit A (chunkId=d0f6c69e-c370-48ad-b5bf-78c63f44c981) as the rate ",
+        "currentNotice": "As of 2026-09-10, the currently operative written notice period for convenience termination is 50 days. Amendment No. 1 (chunkId 3ebf842d-5812-4102-b658-b954b856a56a) states that the change to 80 days applies only on and after its effective date of 2026-10-15; until then the original 50-day notice remains operative. The base agreement (chunkId df066f39-b918-487f-9fec-19802d25ac0e) confirms Section",
+        "missing": "Sources do not contain the content of Exhibit FDD-Item-21 or any insurance deductible amount required by it.\n\nExhibit FDD-Item-21 is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. Florida law is the controlling law of this matter; Georgia law does not control.",
+        "contradiction": "The Sources do not establish a single confirmed date for the in-person file-review meeting. Multiple Sources record 2026-07-11 (meeting minutes, deposition testimony of Hugo Nair, and calendar invite), while one unsigned witness statement records 2026-08-01 and explicitly conflicts with the other records. Counsel notes also flag the unresolved 2026-07-11 vs. 2026-08-01 conflict."
+      }
+    },
+    {
+      "id": "FW-08",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [
+        "stale_amendment"
+      ],
+      "workflowMs": 198719,
+      "modelCalls": 0,
+      "retries": 0,
+      "costUsd": 0,
+      "completed": true,
+      "asks": {
+        "factual": "The original Oakmont Binder Review agreement states that Keystone Clinics LLC shall pay $64,200 under Section 4 (Payment), with Invoice OM-CLM-44 identified as the operative commercial invoice.",
+        "currentNotice": "As of 2026-09-10, the currently operative written notice period for convenience termination is 20 days. The base agreement (documentVersionId f3fa9f55-ccd9-4d4d-a3ad-a444c4829f06) states that termination for convenience requires 20 days' written notice until a later effective amendment says otherwise. Amendment No. 1 (documentVersionId 5cae1b7a-e1e4-479c-b0e5-04b2ab3c2205), signed 2026-06-15, prov",
+        "missing": "The available matter documents do not provide sufficient evidence to answer this question.\n\nExhibit ISO-8 is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No, OH law is not the controlling law of this matter. The governing law is PA. The first source states: 'Governing law: PA. Forum: PA state courts only. OH law does not control this file.' The second source states: 'The parties restated that PA law controls. OH is mentioned only as a place where Keystone Clinics LLC has an office. It is not the governing law.' The third source states: 'Governing l",
+        "contradiction": "Sources conflict on the date of the in-person file-review meeting. Meeting minutes, deposition testimony of Priel Shah, and calendar invite record 2026-03-04. Counsel notes and an unsigned hallway-observer statement record a conflict with 2026-03-29. The log of badge activity at the lobby turnstile on 2026-03-04 does not independently establish physical presence in the records room or resolve the "
+      }
+    },
+    {
+      "id": "FW-09",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [],
+      "workflowMs": 230969,
+      "modelCalls": 0,
+      "retries": 0,
+      "costUsd": 0,
+      "completed": true,
+      "asks": {
+        "factual": "The original Rivermark Supply Dispute agreement states that Cascade Kitchens Inc shall pay $88,125 under Section 4 (Payment), with Invoice RV-PO-902 identified as the operative commercial invoice. This is confirmed by the attached Exhibit A rate card and multiple corroborating documents in the packet. The Amendment No. 1 (signed 2026-06-15, effective 2026-10-15) does not alter the payment amount. ",
+        "currentNotice": "As of 2026-09-10, the operative written notice period for convenience termination is 30 days. The signed Amendment No. 1 (chunk 8a09d0b6-8c27-4610-af50-c6472d58ba60) states that the change to 45 days takes effect only on and after 2026-10-15; until that date the original 30-day notice remains operative. The base agreement (chunk 788e2170-2046-49a0-a070-2328ecaeacf7) confirms the 30-day requirement",
+        "missing": "Sources do not contain the content of Exhibit QA-12 or any information about an insurance deductible required by it.\n\nExhibit QA-12 is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No, OR law is not the controlling law of this matter. The governing law is WA. The agreement states: 'Governing law: WA. Forum: WA state courts only. OR law does not control this file.' Multiple boilerplate provisions and a choice-of-law confirmation restate that WA law controls, noting that OR is mentioned only as the location of an office for Cascade Kitchens Inc. VerifiedMatterIntelligence conf",
+        "contradiction": "Sources conflict on the date of the in-person file-review meeting and do not establish a single settled date. Deposition testimony, calendar invite, and meeting minutes report 2026-04-16 (lobby conference, Dara Bell attendee). An unsigned witness statement reports 2026-05-05. Counsel notes explicitly flag the 2026-04-16 vs 2026-05-05 conflict."
+      }
+    },
+    {
+      "id": "FW-10",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [],
+      "workflowMs": 236150,
+      "modelCalls": 0,
+      "retries": 0,
+      "costUsd": 0,
+      "completed": true,
+      "asks": {
+        "factual": "The original Stonewell License File agreement states that Harborchip LLC shall pay a $12,800 royalty under Section 4, with Invoice SW-LIC-19 identified as the operative commercial invoice. This is confirmed by the attached Exhibit A rate card, which references the same $12,800 royalty commercial amount. The Amendment No. 1 (signed 2026-06-15, effective 2026-10-15) addresses only the termination no",
+        "currentNotice": "As of 2026-09-10, the currently operative written notice period for convenience termination is 35 days.",
+        "missing": "The available matter documents do not provide sufficient evidence to answer this question.\n\nExhibit Claim-Chart-B is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. CT law is not the controlling law of this matter. The Stonewell License File states: 'Governing law: MA. Forum: MA state courts only. CT law does not control this file.' A separate confirmation states that the parties restated MA law controls and that CT is mentioned only as Harborchip LLC's office location. VerifiedMatterIntelligence records confirm governingLaw: MA law controls and officeLoc",
+        "contradiction": "Sources present a direct conflict on the date of the in-person file-review meeting and do not resolve it. Minutes, calendar invite, and deposition excerpt record 2026-08-06; an unsigned hallway-observer statement records 2026-08-27; counsel notes explicitly flag the unresolved 2026-08-06 vs 2026-08-27 conflict. The deposition further states the attendee used a lobby-turnstile badge but does not re"
+      }
+    },
+    {
+      "id": "FW-11",
+      "fullWorkflowPass": false,
+      "criterionPassCount": 10,
+      "critical": [],
+      "families": [
+        "unsupported_claims"
+      ],
+      "workflowMs": 211240,
+      "modelCalls": 0,
+      "retries": 0,
+      "costUsd": 0,
+      "completed": true,
+      "asks": {
+        "factual": "The original Redline Counsel Pack agreement states that Front Range Optics Inc shall pay $19,775 under Section 4 (Payment), with Invoice RL-4402 as the operative commercial invoice id.",
+        "currentNotice": "As of 2026-09-10 the currently operative written notice period for convenience termination is 33 days.",
+        "missing": "Sources do not contain enough information to state any insurance deductible required by Exhibit Z.\n\nExhibit Z is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. UT law is not the controlling law of this matter. The governing law is Colorado law. The agreement states: \"Governing law: CO. Forum: CO state courts only. UT law does not control this file.\" A separate confirmation states that the parties restated CO law controls and that UT is mentioned only as the location of an office of Front Range Optics Inc. VerifiedMatterIntelligence confirms governing",
+        "contradiction": "The sources present a conflict on the date of the in-person file-review meeting and do not establish a single date. Multiple sources record 2026-05-21 (calendar invite, deposition of Nico Patel, meeting minutes listing Nico Patel as attendee). Other sources record or note a conflict with 2026-06-10 (unsigned witness statement of hallway observer; counsel notes explicitly flag the 2026-05-21 vs 202"
+      }
+    },
+    {
+      "id": "FW-12",
+      "fullWorkflowPass": true,
+      "criterionPassCount": 11,
+      "critical": [],
+      "families": [],
+      "workflowMs": 316365,
+      "modelCalls": 0,
+      "retries": 0,
+      "costUsd": 0,
+      "completed": true,
+      "asks": {
+        "factual": "The original Quayside Ledger Isolation agreement states that Narragansett Quant LLC shall pay $9,400 under Section 4.\n\nSource chunk 0479fd0b-b6d0-42ad-bd42-4dcbf467e4ba directly quotes Section 4 of the agreement establishing this payment obligation, with Invoice QL-ISO-01 identified as the operative invoice. Supporting references to the same $9,400 amount appear in the attached Exhibit A (chunk 60",
+        "currentNotice": "As of 2026-09-10 the operative convenience-termination notice period is 27 days' written notice.",
+        "missing": "Sources do not contain enough information to determine any insurance deductible required by Exhibit Iso-K.\n\nExhibit Iso-K is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.",
+        "jurisdiction": "No. The governing law of this matter is RI, not MA. The agreement expressly states that RI law controls and that MA law does not control this file. MA is referenced only as the location of an office of Narragansett Quant LLC.",
+        "contradiction": "The provided sources present a direct conflict on the date of the in-person file-review meeting. Multiple sources (calendar invite, meeting minutes, and deposition testimony of Tess Quay) state or confirm the date as 2026-02-03, with the deposition noting badge use at the lobby turnstile but no recollection of entering the records room. An unsigned witness statement states the meeting occurred on "
+      }
+    }
+  ]
+}

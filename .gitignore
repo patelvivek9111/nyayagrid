@@ -23,3 +23,6 @@ benchmarks/nyaya-bench/reports/runs/
 benchmarks/nyaya-bench/model-routing/runs/
 benchmarks/nyaya-bench/**/*.zip
 docs/agent-quality-review/
+benchmarks/nyaya-bench/dogfood/dist/
+benchmarks/nyaya-bench/dogfood/completed/*_reviews.csv
+benchmarks/nyaya-bench/dogfood/completed/*_issues.csv

@@ -3,7 +3,7 @@
  * rather than pretending the retrieved set is complete.
  */
 
-import { extractNamedInstrument } from "./operative-facts";
+import { extractNamedInstrument, instrumentMentionIsDenial } from "./operative-facts";
 
 export function assessNeedMoreDocuments(params: {
   evidenceState: string;
@@ -58,11 +58,11 @@ export function ensureMissingInstrumentDisclosure(
   const compactNamed = named.toLowerCase().replace(/[^a-z0-9]+/g, "");
   const compactSource = sourceText.toLowerCase().replace(/[^a-z0-9]+/g, "");
   const mentioned = Boolean(compactNamed && compactSource.includes(compactNamed));
-  const mentionIsDenial =
-    /no exhibit [a-z0-9]+ is attached|exhibit [a-z0-9]+ is not (attached|among|available|in the)|does not attach a non-compete|draft not for execution|unsigned draft header.{0,40}superseded|superseded .{0,40}executed/i.test(
+  const legacyDenial =
+    /does not attach a non-compete|draft not for execution|unsigned draft header.{0,40}superseded|superseded .{0,40}executed/i.test(
       sourceText,
     );
-  if (mentioned && !mentionIsDenial) return answer;
+  if (mentioned && !instrumentMentionIsDenial(named, sourceText) && !legacyDenial) return answer;
   return `${answer.trim()}\n\n${named} is not available in the Case materials currently accessible. What that instrument would show cannot be concluded without it.`;
 }
 
@@ -83,6 +83,12 @@ export function buildFollowUpRetrievalQuery(question: string): string | null {
   if (/cam|reconcile|common area/i.test(q)) expansions.push("CAM reconciliation package");
   if (/deposit|deposition|transcript/i.test(q)) expansions.push("deposition transcript testimony");
   if (/notice|terminat/i.test(q)) expansions.push("termination notice");
+  if (/\b(on 20\d{2}-|will apply|as of)\b/i.test(q) && /\bnotice\b/i.test(q)) {
+    expansions.push("amendment convenience notice effective date");
+  }
+  if (/\b(conflict|contradict|inconsistent)\b/i.test(q)) {
+    expansions.push("deposition testimony meeting date meeting minutes");
+  }
   if (/rent|payment|installment/i.test(q)) expansions.push("base rent payment");
 
   if (expansions.length === 0) {

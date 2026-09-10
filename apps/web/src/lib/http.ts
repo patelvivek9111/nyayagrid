@@ -97,7 +97,8 @@ export function handleRouteError(error: unknown) {
     return jsonError(error.code, ROUTER_UNAVAILABLE_USER_MESSAGE, 503);
   }
   if (error instanceof ZodError) {
-    return jsonError("VALIDATION_ERROR", "Invalid request", 400, error.flatten());
+    const first = error.issues[0]?.message?.trim();
+    return jsonError("VALIDATION_ERROR", first || "Invalid request", 400, error.flatten());
   }
   logger.error("Unhandled route error", {
     name: error instanceof Error ? error.name : "unknown",

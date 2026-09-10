@@ -1,0 +1,15 @@
+{
+  "datasetId": "fw1-full-matter-workflow",
+  "matterCount": 12,
+  "workflowCount": 12,
+  "workflowSteps": 12,
+  "rubricCriteria": 11,
+  "minDocs": 24,
+  "maxDocs": 40,
+  "fingerprint": "0a062593a0cebe9dff14034773f8dcd1637bae2968027518fed2408f1f09052f",
+  "graderVersion": "fw1-grade-2026-09-10",
+  "frozenAt": "2026-09-10T12:00:00.000Z",
+  "parent": "none",
+  "v31Frozen": true,
+  "doNotRetuneV31": true
+}
