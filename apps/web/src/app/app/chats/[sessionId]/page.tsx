@@ -13,6 +13,7 @@ import {
   SourceMarker,
 } from "@/components/ux";
 import type { SourceDrawerItem } from "@/components/ux";
+import { researchTurnAnswer } from "@/lib/research-chat";
 
 export default function GeneralChatPage() {
   const params = useParams<{ sessionId: string }>();
@@ -47,10 +48,14 @@ export default function GeneralChatPage() {
             queryText?: string;
             question?: string;
             answer?: string;
-            synthesis?: { answer?: string };
+            synthesis?: { conciseAnswer?: string; answer?: string };
           }) => {
             const userText = q.queryText ?? q.question;
-            const answerText = q.synthesis?.answer ?? q.answer;
+            const answerText =
+              q.synthesis?.conciseAnswer?.trim() ||
+              q.synthesis?.answer?.trim() ||
+              q.answer?.trim() ||
+              "";
             const rows: Array<{ id: string; role: "user" | "assistant"; content: string }> = [];
             if (userText) rows.push({ id: `${q.id}-u`, role: "user", content: userText });
             if (answerText) rows.push({ id: `${q.id}-a`, role: "assistant", content: answerText });
@@ -99,11 +104,7 @@ export default function GeneralChatPage() {
         {
           id: `a-${Date.now()}`,
           role: "assistant",
-          content:
-            data.synthesis?.answer ??
-            (sources.length === 0
-              ? "I couldn't find enough verified authority to answer that confidently."
-              : "See sources for potentially relevant authority."),
+          content: researchTurnAnswer(data),
           sources,
         },
       ]);

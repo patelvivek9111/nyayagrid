@@ -5,6 +5,8 @@ import type { ResearchProposition } from "@nyayagrid/database";
 import {
   AUTHORITY_SUMMARY_PROMPT_VERSION,
   RESEARCH_SYNTHESIS_PROMPT_VERSION,
+  GENERAL_ASK_BOUNDARY_PROMPT_VERSION,
+  buildGeneralAskBoundaryAnswer,
   authoritySummarySchema,
   buildAuthoritySummarySystemPrompt,
   buildAuthoritySummaryUserPrompt,
@@ -68,6 +70,9 @@ export const UNSUPPORTED_SYNTHESIS_ANSWER =
 
 export const NO_CORPUS_SYNTHESIS_ANSWER =
   "No legal authority passages were retrieved for this question. Authoritative legal research has not been performed and model training knowledge is not a legal source.";
+
+export const GENERAL_ASK_BOUNDARY_WARNING =
+  "This turn was not run as Nyaya Research. No legal-authority corpus search was performed.";
 
 export type ResearchQueryOrigin = "primary" | "concept" | "contrary";
 
@@ -766,6 +771,105 @@ const MAX_CONCEPT_QUERIES = 3;
 const MAX_CONTRARY_QUERIES = 2;
 const DEFAULT_HIT_LIMIT = 12;
 
+const EMPTY_SYNTHESIS_VALIDATION: Omit<SynthesisValidation, "synthesis"> = {
+  grounded: false,
+  droppedPropositions: [],
+  droppedSources: [],
+  droppedUnsupportedAuthorityIds: [],
+  fabricatedAuthorityIds: [],
+  unknownChunkIds: [],
+  rejectedQuotes: [],
+  schemaValid: true,
+};
+
+async function persistGeneralAskBoundary(params: {
+  db: Database;
+  organizationId: string;
+  userId: string;
+  session: ResearchSession;
+  question: string;
+  answer: string;
+}): Promise<RunResearchQueryResult> {
+  const coverageWarnings = [GENERAL_ASK_BOUNDARY_WARNING];
+  const synthesis = emptySynthesis(params.answer, coverageWarnings);
+  const [queryRow] = await params.db
+    .insert(researchQueries)
+    .values({
+      organizationId: params.organizationId,
+      sessionId: params.session.id,
+      queryText: params.question,
+      normalizedQuery: params.question.toLowerCase().replace(/\s+/g, " ").trim(),
+      filters: { generalAskBoundary: true },
+      createdByUserId: params.userId,
+    })
+    .returning();
+  if (!queryRow) throw new Error("Failed to persist research query");
+
+  const [artifact] = await params.db
+    .insert(researchArtifacts)
+    .values({
+      organizationId: params.organizationId,
+      sessionId: params.session.id,
+      matterId: null,
+      artifactType: "synthesis",
+      issue: params.question,
+      answer: params.answer,
+      propositions: [],
+      supportingAuthorities: [],
+      contraryAuthorities: [],
+      jurisdictionAssumptions: [],
+      coverageWarnings,
+      provider: "none",
+      model: "deterministic",
+      promptVersion: GENERAL_ASK_BOUNDARY_PROMPT_VERSION,
+      createdByUserId: params.userId,
+    })
+    .returning();
+
+  await writeAuditEvent(params.db, {
+    organizationId: params.organizationId,
+    actorUserId: params.userId,
+    matterId: null,
+    action: "research.query_executed",
+    targetType: "research_query",
+    targetId: queryRow.id,
+    metadata: {
+      sessionId: params.session.id,
+      artifactId: artifact?.id ?? null,
+      questionChars: params.question.length,
+      hitCount: 0,
+      authorityCount: 0,
+      conceptQueryCount: 0,
+      contrarySearchPerformed: false,
+      grounded: false,
+      propositionCount: 0,
+      droppedPropositionCount: 0,
+      fabricatedAuthorityIdCount: 0,
+      rejectedQuoteCount: 0,
+      usedMatterContext: false,
+      generalAskBoundary: true,
+      provider: "none",
+      model: "deterministic",
+      promptVersion: GENERAL_ASK_BOUNDARY_PROMPT_VERSION,
+    },
+  });
+
+  return {
+    session: params.session,
+    queryId: queryRow.id,
+    artifactId: artifact?.id ?? null,
+    synthesis,
+    hits: [],
+    coverageWarnings,
+    grounded: false,
+    validation: EMPTY_SYNTHESIS_VALIDATION,
+    usedMatterContext: false,
+    contrarySearchPerformed: false,
+    provider: "none",
+    model: "deterministic",
+  };
+}
+
 /**
  * Run one legal research question end to end.
  *
@@ -795,6 +899,20 @@ export async function runResearchQuery(
     authorityTypeFilters: params.filters?.authorityType ? [params.filters.authorityType] : [],
   });
   const matterId = params.matterId ?? session.matterId ?? null;
+
+  if (!matterId) {
+    const boundaryAnswer = buildGeneralAskBoundaryAnswer(question);
+    if (boundaryAnswer) {
+      return persistGeneralAskBoundary({
+        db: params.db,
+        organizationId: params.organizationId,
+        userId: params.userId,
+        session,
+        question,
+        answer: boundaryAnswer,
+      });
+    }
+  }
 
   const sessionJurisdiction = (session.jurisdictionFilters ?? [])[0];
   const sessionAuthorityType = (session.authorityTypeFilters ?? [])[0];

@@ -1419,6 +1419,7 @@ export * from "./contract-compare-intent";
 export * from "./evidence-bound";
 export * from "./evidence-assessment";
 export * from "./claim-boundary";
+export * from "./general-ask-boundary";
 export * from "./workflow-completion";
 export * from "./call-telemetry";
 export * from "./embedding-cache";

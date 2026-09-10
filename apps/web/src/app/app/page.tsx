@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useActiveOrganization } from "@/components/use-active-organization";
 import { useFeatureFlags } from "@/components/use-feature-flags";
 import { genericAskRedirect } from "@/lib/first-run";
+import { researchTurnAnswer } from "@/lib/research-chat";
 import { useOrgCapability } from "@/components/use-org-capability";
 import {
   CaseChip,
@@ -161,12 +162,7 @@ export default function NewChatPage() {
             quote: h.snippet,
           }),
         );
-        const answerText =
-          data.synthesis?.answer ??
-          data.answer ??
-          (sources.length === 0
-            ? "I couldn't find enough verified authority in the research corpus to answer that confidently."
-            : "See sources for potentially relevant authority.");
+        const answerText = researchTurnAnswer(data);
         setTurns((prev) => [
           ...prev,
           {

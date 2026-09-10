@@ -1,6 +1,6 @@
-import { and, desc, eq } from "@nyayagrid/database";
+import { and, asc, desc, eq } from "@nyayagrid/database";
 import type { Database } from "@nyayagrid/database";
-import { researchArtifacts, researchSessions } from "@nyayagrid/database";
+import { researchArtifacts, researchQueries, researchSessions } from "@nyayagrid/database";
 import { writeAuditEvent } from "@nyayagrid/permissions";
 
 export type ResearchSession = typeof researchSessions.$inferSelect;
@@ -137,6 +137,66 @@ export async function getResearchSession(params: {
     )
     .limit(1);
   return session ?? null;
+}
+
+export type ResearchSessionTurn = {
+  id: string;
+  queryText: string;
+  answer: string | null;
+  createdAt: Date;
+};
+
+export async function listResearchSessionThread(params: {
+  db: Database;
+  organizationId: string;
+  sessionId: string;
+}): Promise<ResearchSessionTurn[]> {
+  const queries = await params.db
+    .select({
+      id: researchQueries.id,
+      queryText: researchQueries.queryText,
+      createdAt: researchQueries.createdAt,
+    })
+    .from(researchQueries)
+    .where(
+      and(
+        eq(researchQueries.organizationId, params.organizationId),
+        eq(researchQueries.sessionId, params.sessionId),
+      ),
+    )
+    .orderBy(asc(researchQueries.createdAt));
+
+  if (queries.length === 0) return [];
+
+  const artifacts = await params.db
+    .select({
+      issue: researchArtifacts.issue,
+      answer: researchArtifacts.answer,
+      createdAt: researchArtifacts.createdAt,
+    })
+    .from(researchArtifacts)
+    .where(
+      and(
+        eq(researchArtifacts.organizationId, params.organizationId),
+        eq(researchArtifacts.sessionId, params.sessionId),
+        eq(researchArtifacts.artifactType, "synthesis"),
+      ),
+    )
+    .orderBy(asc(researchArtifacts.createdAt));
+
+  const unused = [...artifacts];
+  return queries.map((query) => {
+    const matchIndex = unused.findIndex(
+      (artifact) => artifact.issue === query.queryText || artifact.issue === query.queryText.slice(0, 200),
+    );
+    const artifact = matchIndex >= 0 ? unused.splice(matchIndex, 1)[0] : unused.shift();
+    return {
+      id: query.id,
+      queryText: query.queryText,
+      answer: artifact?.answer ?? null,
+      createdAt: query.createdAt,
+    };
+  });
 }
 
 export async function archiveResearchSession(params: {
