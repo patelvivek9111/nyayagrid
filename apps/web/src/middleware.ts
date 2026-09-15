@@ -134,5 +134,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/app/:path*", "/app"],
+  matcher: ["/app/:path*", "/app", "/invites/accept"],
 };

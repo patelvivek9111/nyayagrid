@@ -6,6 +6,7 @@ import { useActiveOrganization } from "@/components/use-active-organization";
 import { useFeatureFlags } from "@/components/use-feature-flags";
 import { genericAskRedirect } from "@/lib/first-run";
 import { researchTurnAnswer } from "@/lib/research-chat";
+import { refreshClerkSessionKeepAlive } from "@/components/clerk-session-keep-alive";
 import { useOrgCapability } from "@/components/use-org-capability";
 import {
   CaseChip,
@@ -173,6 +174,7 @@ export default function NewChatPage() {
             sources,
           },
         ]);
+        await refreshClerkSessionKeepAlive();
         router.replace(`/app/chats/${sid}`);
       }
     } catch (err) {

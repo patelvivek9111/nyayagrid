@@ -104,6 +104,8 @@ export type CreateOrganizationInviteResult = {
    */
   token: string;
   expiresAt: Date;
+  /** True only when SMTP (or another provider) accepted the invite message. */
+  emailDelivered: boolean;
 };
 
 /**
@@ -172,6 +174,7 @@ export async function createOrganizationInvite(
     metadata: { email, roleId: params.roleId },
   });
 
+  let emailDelivered = false;
   if (params.emailProvider) {
     try {
       const [inviter] = await db
@@ -191,12 +194,13 @@ export async function createOrganizationInvite(
         acceptUrl: `${appUrl}/invites/accept?token=${encodeURIComponent(token)}`,
         expiresAt,
       });
+      emailDelivered = true;
     } catch {
       // Invite row + audit already committed. SMTP failure must not hide the one-time token.
     }
   }
 
-  return { inviteId: invite.id, token, expiresAt };
+  return { inviteId: invite.id, token, expiresAt, emailDelivered };
 }
 
 export type AcceptOrganizationInviteParams = {

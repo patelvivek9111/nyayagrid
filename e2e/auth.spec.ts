@@ -28,7 +28,7 @@ test.describe("Auth contract", () => {
 
   test("sign-up is invitation-first and has no developer copy", async ({ page }) => {
     await page.goto("/sign-up");
-    await expect(page.getByRole("heading", { name: "Create an account" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Invitation only" })).toBeVisible();
     await expect(page.getByText(/invitation-only/i)).toBeVisible();
     await expect(page.getByText(/AUTH_PROVIDER|NEXT_PUBLIC_CLERK/i)).toHaveCount(0);
   });

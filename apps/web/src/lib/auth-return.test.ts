@@ -1,8 +1,11 @@
 import { describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import {
   clerkContinueHref,
   clerkHostedSignInUrl,
   clerkSignOutHref,
+  inviteAcceptReturnPath,
   isClerkUiConfigured,
   safeAuthReturnTo,
   unauthenticatedProfessionalRedirect,
@@ -86,5 +89,54 @@ describe("unauthenticatedProfessionalRedirect", () => {
         pathnameWithSearch: "https://evil.example/phish",
       }),
     ).toEqual({ returnTo: "/app", reason: "session" });
+    expect(
+      unauthenticatedProfessionalRedirect({
+        authProvider: "clerk",
+        sessionPresent: false,
+        pathnameWithSearch: "/invites/accept?token=invite-example",
+      }),
+    ).toEqual({ returnTo: "/invites/accept?token=invite-example", reason: "session" });
+  });
+});
+
+describe("inviteAcceptReturnPath", () => {
+  it("resumes acceptance with the invite query and does not invent a token", () => {
+    expect(inviteAcceptReturnPath("abc+def")).toBe("/invites/accept?token=abc%2Bdef");
+    expect(inviteAcceptReturnPath("  ")).toBe("/invites/accept");
+    expect(clerkContinueHref(
+      "https://accounts.example.clerk.accounts.dev/sign-in",
+      inviteAcceptReturnPath("abc"),
+      "https://staging.nyayagrid.com",
+    )).toContain("redirect_url=");
+    expect(
+      decodeURIComponent(
+        clerkContinueHref(
+          "https://accounts.example.clerk.accounts.dev/sign-in",
+          inviteAcceptReturnPath("abc"),
+          "https://staging.nyayagrid.com",
+        ),
+      ),
+    ).toContain("https://staging.nyayagrid.com/invites/accept?token=abc");
+  });
+});
+
+describe("sign-up page is invitation-only", () => {
+  it("does not link Clerk hosted public registration", () => {
+    const src = readFileSync(resolve(__dirname, "../app/sign-up/page.tsx"), "utf8");
+    expect(src).toContain("Invitation only");
+    expect(src).toContain("/invites/accept");
+    expect(src).not.toContain("clerkHostedSignUpUrl");
+    expect(src).not.toContain("Continue");
+  });
+});
+
+describe("invite accept page resumes after Clerk", () => {
+  it("posts the query token after authentication and keeps a 401 returnTo", () => {
+    const src = readFileSync(resolve(__dirname, "../app/invites/accept/page.tsx"), "utf8");
+    expect(src).toContain("inviteAcceptReturnPath");
+    expect(src).toContain('fetch("/api/v1/invites/accept"');
+    expect(src).toContain("autoStarted");
+    expect(src).toContain("res.status === 401");
+    expect(src).not.toContain("requireUser");
   });
 });

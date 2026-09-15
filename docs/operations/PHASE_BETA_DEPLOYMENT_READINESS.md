@@ -158,6 +158,8 @@ Production requires Redis. Outage: limiter **denies** (fail closed, 429), not fa
 
 Production requires ClamAV + host, rejects fixture mode. Scan timeout 30s; blocked files never chunk/embed. If ClamAV is down, processing fails closed (not `ready`). Compose image needs a long start_period for signatures.
 
+Staging Fly scanner runbook: [CLAMAV_STAGING.md](./CLAMAV_STAGING.md).
+
 ---
 
 ## 14. Auth / Clerk
@@ -286,6 +288,8 @@ Also: `npm run beta:stuck-documents`.
 **READY AFTER P0 OPS FIXES**
 
 Code and config gates can host a 3–8 firm beta **after** Inngest Cloud is wired, Clerk is used for identity/invites, and backups exist on the real provider. It is not “operations ready” while SMTP cannot send and restore is unproven.
+
+Design-partner private preview runbook: [DESIGN_PARTNER_BETA.md](./DESIGN_PARTNER_BETA.md). Human legal review remains READY-FOR-HUMAN-REVIEW.
 
 ---
 

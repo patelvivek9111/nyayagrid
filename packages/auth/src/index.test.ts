@@ -61,6 +61,29 @@ describe("DevAuthProvider", () => {
     expect(await provider.getIdentity(new Headers())).toBeNull();
   });
 
+  it("issues the default identity on staging when ALLOW_STAGING_DEV_AUTH is set", async () => {
+    vi.stubEnv("APP_ENV", "staging");
+    vi.stubEnv("AUTH_PROVIDER", "dev");
+    vi.stubEnv("ALLOW_STAGING_DEV_AUTH", "1");
+    const provider = new DevAuthProvider({
+      userId: "dev_user_owner",
+      email: "owner@example.nyayagrid.local",
+      name: "Dev Owner",
+    });
+    expect(await provider.getIdentity(new Headers())).toEqual({
+      subject: "dev_user_owner",
+      email: "owner@example.nyayagrid.local",
+      name: "Dev Owner",
+    });
+    expect(
+      await provider.getIdentity(new Headers({ "x-nyayagrid-dev-user": "attacker" })),
+    ).toEqual({
+      subject: "dev_user_owner",
+      email: "owner@example.nyayagrid.local",
+      name: "Dev Owner",
+    });
+  });
+
   it("refuses DevAuth when APP_ENV is missing even if NODE_ENV is development", async () => {
     vi.unstubAllEnvs();
     vi.stubEnv("NODE_ENV", "development");
@@ -128,6 +151,13 @@ describe("ClerkAuthProvider", () => {
     vi.stubEnv("CLERK_SECRET_KEY", "");
     vi.stubEnv("NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY", "");
     expect(createAuthProviderFromEnv().name).toBe("unavailable");
+  });
+
+  it("uses DevAuth on staging only with ALLOW_STAGING_DEV_AUTH", () => {
+    vi.stubEnv("APP_ENV", "staging");
+    vi.stubEnv("AUTH_PROVIDER", "dev");
+    vi.stubEnv("ALLOW_STAGING_DEV_AUTH", "1");
+    expect(createAuthProviderFromEnv().name).toBe("dev");
   });
 });
 

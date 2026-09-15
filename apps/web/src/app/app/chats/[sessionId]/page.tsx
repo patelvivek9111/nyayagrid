@@ -14,6 +14,7 @@ import {
 } from "@/components/ux";
 import type { SourceDrawerItem } from "@/components/ux";
 import { researchTurnAnswer } from "@/lib/research-chat";
+import { refreshClerkSessionKeepAlive } from "@/components/clerk-session-keep-alive";
 
 export default function GeneralChatPage() {
   const params = useParams<{ sessionId: string }>();
@@ -108,6 +109,7 @@ export default function GeneralChatPage() {
           sources,
         },
       ]);
+      await refreshClerkSessionKeepAlive();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed");
     } finally {

@@ -1,31 +1,27 @@
 import Link from "next/link";
-import { USER_FACING_AUTH } from "@nyayagrid/auth/user-facing";
+import { redirect } from "next/navigation";
 import { AuthShell } from "@/components/ux/auth-shell";
-import { clerkHostedSignUpUrl, isClerkPublishableConfigured } from "@/lib/auth-return";
 
+export const dynamic = "force-dynamic";
+
+/**
+ * Public Clerk hosted registration is not offered for the private design-partner preview.
+ * Operators still must disable public sign-up in the Clerk dashboard; this page does not link it.
+ */
 export default function SignUpPage() {
-  const hosted = clerkHostedSignUpUrl();
-  const available = Boolean(hosted && isClerkPublishableConfigured());
+  if ((process.env.AUTH_PROVIDER ?? "dev") !== "clerk") {
+    redirect("/app");
+  }
 
   return (
     <AuthShell
-      title="Create an account"
-      description="NyayaGrid is invitation-only for professional workspaces. Sign in if you already have an account, or accept an invitation from your firm."
+      title="Invitation only"
+      description="This private preview does not offer public registration. Use the invitation your firm sent, then sign in."
     >
-      {available && hosted ? (
-        <p>
-          <Link
-            href={hosted}
-            className="inline-flex min-h-11 items-center justify-center rounded-md bg-accent px-4 text-sm font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
-          >
-            Continue
-          </Link>
-        </p>
-      ) : (
-        <p className="rounded-md border border-line bg-white px-3 py-3 text-sm text-ink/80" role="alert">
-          {USER_FACING_AUTH.unavailable}
-        </p>
-      )}
+      <p className="rounded-md border border-line bg-white px-3 py-3 text-sm text-ink/80">
+        Ask your firm administrator or NyayaGrid operator for an invitation. Self-service signup is
+        not available on this environment.
+      </p>
       <p className="text-sm text-ink/60">
         Already invited?{" "}
         <Link className="font-semibold text-accent underline" href="/sign-in">

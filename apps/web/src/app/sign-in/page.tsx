@@ -1,5 +1,6 @@
 import { headers } from "next/headers";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { USER_FACING_AUTH } from "@nyayagrid/auth/user-facing";
 import { AuthShell } from "@/components/ux/auth-shell";
 import {
@@ -8,6 +9,8 @@ import {
   isClerkUiConfigured,
   safeAuthReturnTo,
 } from "@/lib/auth-return";
+
+export const dynamic = "force-dynamic";
 
 function firstQuery(
   value: string | string[] | undefined,
@@ -35,6 +38,9 @@ export default async function SignInPage({
 }: {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
+  if ((process.env.AUTH_PROVIDER ?? "dev") !== "clerk") {
+    redirect("/app");
+  }
   const query = await searchParams;
   const returnTo = safeAuthReturnTo(firstQuery(query.returnTo));
   const notice = noticeForReason(firstQuery(query.reason));

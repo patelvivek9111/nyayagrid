@@ -4,6 +4,8 @@
 
 This pack is for practicing lawyers or legally qualified reviewers. It is **not** a quality-gate substitute for V3.1 or FW1. Automated scores already exist; this pack tests whether the product is understandable, cautious, source-traceable, and useful in realistic work.
 
+Design-partner sessions use [forms/beta-sessions.csv](./forms/beta-sessions.csv) plus this rubric. Operator notes: [docs/operations/DESIGN_PARTNER_BETA.md](../../../docs/operations/DESIGN_PARTNER_BETA.md).
+
 Do not treat an engineering self-score as attorney review. Do not manufacture PASS.
 
 FEATURE_AGENTS=0. Synthetic / public-test material only. No real client files.

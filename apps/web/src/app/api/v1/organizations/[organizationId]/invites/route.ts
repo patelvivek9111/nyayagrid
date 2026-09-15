@@ -36,7 +36,7 @@ export async function POST(request: Request, { params }: Params) {
     });
 
     const body = inviteMembershipSchema.parse(await request.json());
-    const { inviteId, token, expiresAt } = await inviteMemberByRoleKey({
+    const { inviteId, token, expiresAt, emailDelivered } = await inviteMemberByRoleKey({
       db,
       organizationId,
       email: body.email,
@@ -49,14 +49,16 @@ export async function POST(request: Request, { params }: Params) {
       userId: user.id,
       kind: "invite",
       title: "Invitation created",
-      body: `Invite sent to ${body.email} as ${body.roleKey}. Deliver the token now — it is shown once.`,
+      body: emailDelivered
+        ? `Invite created for ${body.email} as ${body.roleKey}. SMTP accepted the message. A one-time fallback link is shown once in Settings.`
+        : `Invite created for ${body.email} as ${body.roleKey}. Email was not delivered. Use the one-time Settings link over a private channel — it is shown once.`,
       href: "/app/settings",
     });
 
     // The token is returned exactly once, here — it cannot be recovered from the database
     // afterward (only its hash is stored). Callers must deliver it now (email and/or this
     // response) or revoke and re-invite.
-    return jsonOk({ inviteId, token, expiresAt }, { status: 201 });
+    return jsonOk({ inviteId, token, expiresAt, emailDelivered }, { status: 201 });
   } catch (error) {
     return handleRouteError(error);
   }

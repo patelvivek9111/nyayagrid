@@ -2,6 +2,7 @@ import { and, desc, eq } from "drizzle-orm";
 import { conversations, messages } from "@nyayagrid/database";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { requireUser } from "@/lib/auth";
+import { conversationListPreview } from "@/lib/conversation-list-preview";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
 type Params = { params: Promise<{ matterId: string }> };
@@ -40,16 +41,17 @@ export async function GET(request: Request, { params }: Params) {
 
     const withPreview = await Promise.all(
       rows.map(async (row) => {
-        const [last] = await db
+        const recent = await db
           .select({ content: messages.content, role: messages.role })
           .from(messages)
           .where(eq(messages.conversationId, row.id))
           .orderBy(desc(messages.createdAt))
-          .limit(1);
+          .limit(20);
+        const snippet = conversationListPreview(recent);
         return {
           ...row,
-          preview: last?.content?.slice(0, 160) ?? null,
-          lastRole: last?.role ?? null,
+          preview: snippet.preview,
+          lastRole: snippet.lastRole,
         };
       }),
     );

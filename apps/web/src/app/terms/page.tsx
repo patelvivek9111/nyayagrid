@@ -6,9 +6,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * Placeholder legal page. The prose below is a structural draft only — it names the sections a
- * real Terms of Service needs, not language that has been reviewed by counsel. Do not treat this
- * as binding, and do not remove the draft notice until an attorney has signed off on real text.
+ * Placeholder legal page. Counsel has not approved a Terms of Service. The preview notice is
+ * operational product status, not a lawyer-reviewed contract. Do not treat this page as binding.
  */
 export default function TermsPage() {
   return (
@@ -16,13 +15,31 @@ export default function TermsPage() {
       <PageHeader
         eyebrow="Legal"
         title="Terms of Service"
-        description="Placeholder terms outlining the sections a production agreement will cover."
+        description="Draft only. Counsel has not approved these terms. The preview notice below describes how this private environment is offered today."
       />
-      <Badge>Draft — pending attorney review</Badge>
+      <Badge>Draft — pending attorney review · not a binding agreement</Badge>
+      <Panel title="Private design-partner preview">
+        <p className="text-sm text-ink/70">
+          NyayaGrid is offered here as a private, invite-only design-partner preview. It is not a
+          public launch and not general availability. The service may change during this preview.
+          Multi-step AI agents are off. NyayaGrid does not provide autonomous legal representation
+          and does not send, file, sign, or submit work without a human.
+        </p>
+        <p className="mt-3 text-sm text-ink/70">
+          Outputs require professional review. Research coverage is not exhaustive and is not a
+          Westlaw or Lexis equivalent. You are responsible for checking cited sources before relying
+          on, filing, or sending any result. Handling of confidential information follows the
+          product controls described in the{" "}
+          <a className="font-semibold text-accent underline" href="/ai-disclosure">
+            AI Disclosure
+          </a>{" "}
+          and Privacy pages — not a counsel-approved confidentiality agreement on this page.
+        </p>
+      </Panel>
       <Panel title="1. Acceptance of terms">
         <p className="text-sm text-ink/70">
           Placeholder. This section will describe who may use NyayaGrid, how these terms are
-          accepted, and what happens when they change.
+          accepted, and what happens when they change. It is not in force until counsel signs off.
         </p>
       </Panel>
       <Panel title="2. Description of service">
@@ -59,7 +76,8 @@ export default function TermsPage() {
       <Panel title="6. Limitation of liability">
         <p className="text-sm text-ink/70">
           Placeholder. Standard limitation-of-liability and disclaimer-of-warranties language will
-          go here after review by counsel qualified in the relevant jurisdiction(s).
+          go here after review by counsel qualified in the relevant jurisdiction(s). This page does
+          not currently state a limitation of liability.
         </p>
       </Panel>
       <Panel title="7. Governing law and disputes">

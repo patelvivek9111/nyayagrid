@@ -186,8 +186,9 @@ export default function ResearchHomePage() {
       />
       <div className="mt-4">
         <FirmNotice>
-          Current treatment has not been independently verified. NyayaGrid research covers only
-          authorities imported into this corpus — it is not a comprehensive survey of the law.
+          Current treatment has not been independently verified. Research searches only authorities
+          imported into this workspace. It is not a Westlaw or Lexis equivalent, and a miss here is
+          not proof that no authority exists.
         </FirmNotice>
       </div>
       {loading ? <p className="mt-4 text-sm text-ink/55">Loading…</p> : null}

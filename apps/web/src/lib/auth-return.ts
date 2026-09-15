@@ -105,7 +105,14 @@ export function clerkSignOutHref(
 
 export const ACTIVE_ORG_STORAGE_KEY = "nyayagrid.activeOrganizationId";
 
-/** Clerk-mode gate for `/app`. DevAuth does not redirect. */
+/** Path Clerk should return to after sign-in so invite acceptance can resume. */
+export function inviteAcceptReturnPath(token: string | null | undefined): string {
+  const trimmed = token?.trim() ?? "";
+  if (!trimmed) return "/invites/accept";
+  return `/invites/accept?token=${encodeURIComponent(trimmed)}`;
+}
+
+/** Clerk-mode gate for `/app` and `/invites/accept`. DevAuth does not redirect. */
 export function unauthenticatedProfessionalRedirect(input: {
   authProvider: string | undefined;
   sessionPresent: boolean;

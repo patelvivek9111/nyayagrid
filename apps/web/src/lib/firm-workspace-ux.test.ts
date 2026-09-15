@@ -177,11 +177,15 @@ describe("firm workspace pages stay presentation-only", () => {
     expect(inbox).toContain("does not send mail");
     expect(inbox).toContain("/file");
     expect(research).toContain("/query?organizationId=");
-    expect(research).toContain("not a comprehensive survey");
+    expect(research).toContain("not a Westlaw or Lexis equivalent");
     expect(research).not.toContain("shouldShowWorkspaceSwitcher");
     expect(settings).toContain("`/api/v1/organizations/${orgId}/members`");
     expect(settings).toContain("Assign to case");
     expect(settings).toContain('access: "read"');
+    expect(settings).toContain("/invites/${inviteId}/revoke");
+    expect(settings).not.toContain('value="owner"');
+    expect(settings).toContain("emailDelivered");
+    expect(settings).toContain("Do not paste it in Slack");
     expect(holds).toContain("`/api/v1/organizations/${orgId}/compliance`");
     expect(holds).toContain("+ Place legal hold");
     expect(holds).toContain("does not enable");

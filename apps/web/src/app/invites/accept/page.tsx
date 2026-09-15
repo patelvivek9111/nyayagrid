@@ -1,12 +1,12 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Button } from "@nyayagrid/ui";
 import { userFacingInviteMessage } from "@nyayagrid/auth/user-facing";
 import { AuthShell } from "@/components/ux/auth-shell";
-import { safeAuthReturnTo } from "@/lib/auth-return";
+import { inviteAcceptReturnPath, safeAuthReturnTo } from "@/lib/auth-return";
 
 export default function AcceptInvitePage() {
   const router = useRouter();
@@ -17,9 +17,10 @@ export default function AcceptInvitePage() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const autoStarted = useRef(false);
 
-  async function accept(event: FormEvent) {
-    event.preventDefault();
+  async function submitToken(nextToken: string) {
+    const trimmed = nextToken.trim();
     setBusy(true);
     setError("");
     setMessage("");
@@ -27,13 +28,11 @@ export default function AcceptInvitePage() {
       const res = await fetch("/api/v1/invites/accept", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token }),
+        body: JSON.stringify({ token: trimmed }),
       });
       const data = await res.json();
       if (res.status === 401) {
-        const returnTo = safeAuthReturnTo(
-          `/invites/accept${token.trim() ? `?token=${encodeURIComponent(token.trim())}` : ""}`,
-        );
+        const returnTo = safeAuthReturnTo(inviteAcceptReturnPath(trimmed));
         router.replace(`/sign-in?returnTo=${encodeURIComponent(returnTo)}&reason=session`);
         return;
       }
@@ -48,6 +47,21 @@ export default function AcceptInvitePage() {
     } finally {
       setBusy(false);
     }
+  }
+
+  useEffect(() => {
+    if (autoStarted.current) return;
+    const fromQuery = new URLSearchParams(window.location.search).get("token")?.trim() ?? "";
+    if (!fromQuery) return;
+    autoStarted.current = true;
+    void submitToken(fromQuery);
+    // Resume after Clerk: middleware has already established the session on this path.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function accept(event: FormEvent) {
+    event.preventDefault();
+    await submitToken(token);
   }
 
   return (
@@ -89,7 +103,10 @@ export default function AcceptInvitePage() {
       </form>
       <p className="text-sm text-ink/60">
         Need to sign in first?{" "}
-        <Link className="font-semibold text-accent underline" href="/sign-in">
+        <Link
+          className="font-semibold text-accent underline"
+          href={`/sign-in?returnTo=${encodeURIComponent(safeAuthReturnTo(inviteAcceptReturnPath(token)))}&reason=session`}
+        >
           Sign in
         </Link>
       </p>

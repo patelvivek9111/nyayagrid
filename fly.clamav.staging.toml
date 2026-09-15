@@ -1,0 +1,43 @@
+# Staging ClamAV — private 6PN only. Do not attach a public IP or HTTP service.
+#
+# Topology: exactly one Launch machine in process group "app".
+# The original scanner (d897051f792498) was ungrouped (`fly machine run`).
+# `fly deploy` only updates Launch/"app" machines. Deploying while the only
+# scanner is ungrouped CREATES A SECOND VM. After the one-time handoff to an
+# "app" machine, destroy the ungrouped VM. Always deploy with --ha=false.
+# Runbook: docs/operations/CLAMAV_STAGING.md
+#
+# Required size: shared-cpu-2x / 4096 MB. clamd was OOM-killed at 2 GB.
+# Do not shrink below 4 GB unless a later measurement proves it is safe.
+app = "nyayagrid-clamav-staging"
+primary_region = "iad"
+
+[build]
+  dockerfile = "ops/clamav/Dockerfile"
+
+[env]
+  CLAMD_CONF_TCPAddr = "::"
+  CLAMD_CONF_TCPSocket = "3310"
+
+[processes]
+  app = ""
+
+[[vm]]
+  size = "shared-cpu-2x"
+  memory = "4096mb"
+  memory_mb = 4096
+  processes = ["app"]
+
+[[restart]]
+  policy = "always"
+  processes = ["app"]
+
+# TCP 3310 must fail when clamd is dead. A live container is not health.
+[[checks]]
+  name = "clamd"
+  type = "tcp"
+  port = 3310
+  interval = "15s"
+  timeout = "5s"
+  grace_period = "8m"
+  processes = ["app"]

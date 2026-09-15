@@ -50,7 +50,7 @@ export async function POST(request: Request, { params }: Params) {
     });
 
     const body = inviteMembershipSchema.parse(await request.json());
-    const { inviteId, token, expiresAt } = await inviteMemberByRoleKey({
+    const { inviteId, token, expiresAt, emailDelivered } = await inviteMemberByRoleKey({
       db,
       organizationId,
       email: body.email,
@@ -61,7 +61,7 @@ export async function POST(request: Request, { params }: Params) {
     // The token is returned exactly once — see @nyayagrid/auth's createOrganizationInvite. Prefer
     // POST /api/v1/organizations/[organizationId]/invites for new integrations; this endpoint is
     // kept for backward compatibility with existing member-invite callers.
-    return jsonOk({ status: "invited", inviteId, token, expiresAt }, { status: 201 });
+    return jsonOk({ status: "invited", inviteId, token, expiresAt, emailDelivered }, { status: 201 });
   } catch (error) {
     return handleRouteError(error);
   }

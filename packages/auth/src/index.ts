@@ -1,7 +1,7 @@
 import { eq } from "drizzle-orm";
 import type { Database } from "@nyayagrid/database";
 import { users } from "@nyayagrid/database";
-import { isExplicitLocalDevAuthAllowed } from "@nyayagrid/platform";
+import { isDevAuthAllowed, isExplicitLocalDevAuthAllowed } from "@nyayagrid/platform";
 
 /**
  * Authentication identity only.
@@ -31,23 +31,31 @@ export class DevAuthProvider implements AuthProvider {
   ) {}
 
   async getIdentity(requestHeaders: Headers): Promise<AuthIdentity | null> {
-    if (!isExplicitLocalDevAuthAllowed()) {
-      return null;
-    }
-    const override = requestHeaders.get("x-nyayagrid-dev-user");
-    if (override === "anonymous") return null;
-    if (override) {
+    if (isExplicitLocalDevAuthAllowed()) {
+      const override = requestHeaders.get("x-nyayagrid-dev-user");
+      if (override === "anonymous") return null;
+      if (override) {
+        return {
+          subject: override,
+          email: `${override}@example.nyayagrid.local`,
+          name: override,
+        };
+      }
       return {
-        subject: override,
-        email: `${override}@example.nyayagrid.local`,
-        name: override,
+        subject: this.config.userId,
+        email: this.config.email,
+        name: this.config.name,
       };
     }
-    return {
-      subject: this.config.userId,
-      email: this.config.email,
-      name: this.config.name,
-    };
+    if (isDevAuthAllowed()) {
+      // Staging testing opt-in: default identity only. Never trust the spoof header on a public host.
+      return {
+        subject: this.config.userId,
+        email: this.config.email,
+        name: this.config.name,
+      };
+    }
+    return null;
   }
 }
 
@@ -103,7 +111,7 @@ export function createAuthProviderFromEnv(options?: {
     }
     return new ClerkAuthProvider(options.resolveClerkSession);
   }
-  if (!isExplicitLocalDevAuthAllowed()) {
+  if (!isDevAuthAllowed()) {
     return new UnavailableAuthProvider();
   }
   return new DevAuthProvider({

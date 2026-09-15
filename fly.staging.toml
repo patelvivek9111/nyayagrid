@@ -1,7 +1,8 @@
 # NyayaGrid staging on Fly.io. Not production.
 # App is created with `fly apps create`; first deploy waits until Clerk, DB, and
-# other required secrets exist. Do not set AUTH_PROVIDER=dev, AI_PROVIDER=mock,
-# EMBEDDING_PROVIDER=mock, MALWARE_SCANNER=development, or INNGEST_DEV here.
+# other required secrets exist. Do not set AI_PROVIDER=mock, EMBEDDING_PROVIDER=mock,
+# MALWARE_SCANNER=development, or INNGEST_DEV here. AUTH_PROVIDER=dev is refused at boot
+# unless ALLOW_STAGING_DEV_AUTH=1 is also set (temporary testing only).
 
 app = "nyayagrid-staging"
 primary_region = "iad"

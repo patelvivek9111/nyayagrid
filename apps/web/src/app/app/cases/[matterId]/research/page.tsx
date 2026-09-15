@@ -185,7 +185,8 @@ export default function MatterResearchPage() {
       <p className="mb-4 rounded border border-line bg-accent-soft/30 px-3 py-2 text-xs text-ink/80">
         Current treatment has not been independently verified. Legal authority passages below are
         distinct from this matter&apos;s own facts, timeline, and documents — matter context is used
-        only to formulate the research question, never as a source of law.
+        only to formulate the research question, never as a source of law. This corpus is not a
+        Westlaw or Lexis equivalent; a miss is not proof that no authority exists.
       </p>
 
       <div className="grid gap-4 lg:grid-cols-2">

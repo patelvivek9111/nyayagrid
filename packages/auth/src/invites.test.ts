@@ -112,6 +112,42 @@ describe("createOrganizationInvite", () => {
     });
     expect(result.inviteId).toBe("inv_1");
     expect(result.token.length).toBeGreaterThan(16);
+    expect(result.emailDelivered).toBe(false);
+    expect(emailProvider.send).toHaveBeenCalledTimes(1);
+  });
+
+  it("marks emailDelivered when the provider accepts the message", async () => {
+    const inviteRow = {
+      id: "inv_2",
+      organizationId: "org_1",
+      email: "person@example.com",
+      roleId: "role_1",
+      invitedByUserId: "user_1",
+      expiresAt: new Date(),
+      createdAt: new Date(),
+    };
+    const tx = {
+      update: vi.fn(() => chain([])),
+      insert: vi.fn(() => chain([inviteRow])),
+    };
+    const db = fakeDb(
+      [[ORG_ROW], [{ ...ROLE_ROW, key: "staff" }], [{ name: "Ada" }]],
+      {
+      transaction: vi.fn(async (fn: (inner: typeof tx) => Promise<unknown>) => fn(tx)),
+    });
+    const emailProvider = {
+      name: "smtp",
+      send: vi.fn(async () => ({ provider: "smtp", delivered: true })),
+    };
+    const result = await createOrganizationInvite({
+      db,
+      organizationId: "org_1",
+      email: "person@example.com",
+      roleId: "role_1",
+      invitedByUserId: "user_1",
+      emailProvider,
+    });
+    expect(result.emailDelivered).toBe(true);
     expect(emailProvider.send).toHaveBeenCalledTimes(1);
   });
 });

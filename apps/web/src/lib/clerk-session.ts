@@ -1,5 +1,6 @@
 import { createClerkClient } from "@clerk/backend";
 import type { ClerkSession } from "@nyayagrid/auth";
+import { USER_FACING_AUTH } from "@nyayagrid/auth/user-facing";
 
 type ClerkUserRecord = {
   primaryEmailAddressId: string | null;
@@ -10,7 +11,13 @@ type ClerkUserRecord = {
 
 export type ClerkRequestAuthState = {
   status: string;
+  headers?: Headers;
   toAuth: () => { userId: string | null } | null;
+};
+
+export type ClerkBrowserSessionRefresh = {
+  status: "signed-in" | "signed-out" | "handshake" | "unavailable";
+  headers: Headers;
 };
 
 export type ClerkSessionDeps = {
@@ -99,4 +106,59 @@ export async function resolveClerkSession(
   } catch {
     return { userId: null };
   }
+}
+
+/** Copy Clerk Set-Cookie onto a response so a keep-alive can rotate a short-lived session JWT. */
+export function appendClerkAuthHeaders(from: Headers | undefined, to: Headers): void {
+  if (!from) return;
+  const setCookies = typeof from.getSetCookie === "function" ? from.getSetCookie() : [];
+  if (setCookies.length > 0) {
+    for (const cookie of setCookies) {
+      to.append("Set-Cookie", cookie);
+    }
+    return;
+  }
+  from.forEach((value, key) => {
+    if (key.toLowerCase() === "set-cookie") to.append("Set-Cookie", value);
+  });
+}
+
+/**
+ * Re-run Clerk authenticateRequest so refreshed session cookies can be written.
+ * Handshake is not treated as signed-out; the browser must reload to finish it.
+ */
+export async function refreshClerkBrowserSession(
+  requestHeaders: Headers,
+  deps: ClerkSessionDeps | null = createClerkSessionDeps(),
+): Promise<ClerkBrowserSessionRefresh> {
+  if (!deps) return { status: "unavailable", headers: new Headers() };
+  try {
+    const state = await deps.authenticateRequest(clerkRequestFromHeaders(requestHeaders));
+    const headers = state.headers instanceof Headers ? state.headers : new Headers();
+    if (state.status === "handshake") return { status: "handshake", headers };
+    if (state.status === "signed-in") return { status: "signed-in", headers };
+    return { status: "signed-out", headers };
+  } catch {
+    return { status: "unavailable", headers: new Headers() };
+  }
+}
+
+export function sessionKeepAliveResponse(refresh: ClerkBrowserSessionRefresh): Response {
+  if (refresh.status === "signed-in") {
+    const response = new Response(JSON.stringify({ ok: true, provider: "clerk" }), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    });
+    appendClerkAuthHeaders(refresh.headers, response.headers);
+    return response;
+  }
+  const code = refresh.status === "handshake" ? "CLERK_HANDSHAKE" : "UNAUTHENTICATED";
+  const message =
+    refresh.status === "handshake" ? "Refreshing your session." : USER_FACING_AUTH.unauthenticated;
+  const response = new Response(JSON.stringify({ error: { code, message } }), {
+    status: 401,
+    headers: { "content-type": "application/json" },
+  });
+  appendClerkAuthHeaders(refresh.headers, response.headers);
+  return response;
 }

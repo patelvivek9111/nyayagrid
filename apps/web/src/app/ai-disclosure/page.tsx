@@ -6,9 +6,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * Placeholder legal page. Explains, in plain language, how AI is actually used in the product
- * today (grounded Q&A, drafting assistance, extraction) so it stays accurate as features change.
- * The commitments below are structural placeholders pending attorney review, not final policy.
+ * Operational disclosure for professional users. Counsel has not signed a final Terms of Service.
+ * Keep this page accurate to product behavior; do not claim certifications NyayaGrid does not have.
  */
 export default function AiDisclosurePage() {
   return (
@@ -18,49 +17,51 @@ export default function AiDisclosurePage() {
         title="AI Disclosure"
         description="How NyayaGrid uses AI, what it can and cannot do, and why a human must review its output."
       />
-      <Badge>Draft — pending attorney review</Badge>
-      <Panel title="1. AI is an assistant, not counsel">
+      <Badge>Private preview — pending attorney-reviewed terms</Badge>
+      <Panel title="1. NyayaGrid assists legal professionals">
         <p className="text-sm text-ink/70">
-          Placeholder. Nyaya (the Professional workspace assistant), Nyaya Professor and Nyaya Guide
-          generate drafts, summaries and answers to help a person do legal work faster. None of them
-          are a lawyer, none of them provide legal advice, and none of their output should be relied
-          upon, filed or communicated to a client without review by a qualified human.
+          NyayaGrid is an attorney-assistance workspace. Nyaya drafts, summarizes, and answers from
+          retrieved sources to help lawyers, staff, and other qualified users move a matter forward.
+          It is not autonomous counsel, not a filing system, and not a substitute for professional
+          judgment. Output remains draft work product until a qualified person reviews it.
         </p>
       </Panel>
-      <Panel title="2. Answers are grounded in your documents">
+      <Panel title="2. Review sources before you rely on a conclusion">
         <p className="text-sm text-ink/70">
-          Placeholder. When Nyaya answers a question about a matter, it is instructed to answer only
-          from the documents retrieved for that matter and to say so explicitly when the available
-          documents do not contain enough information — rather than filling the gap from the
-          model&apos;s general training data.
+          Important conclusions should be checked against the cited source, not accepted because the
+          prose sounds professional. Case Ask is instructed to stay inside retrieved matter files
+          and to label answers as grounded, partial, or insufficient. When evidence is missing or
+          conflicted, Nyaya should abstain or present both accounts. Do not treat silence in the
+          file — or a miss in research — as proof that a fact or authority does not exist.
         </p>
       </Panel>
-      <Panel title="3. Human review of agent actions">
+      <Panel title="3. Research coverage">
         <p className="text-sm text-ink/70">
-          Placeholder. Multi-step AI agent runs propose a plan and require explicit approval before
-          taking actions that write to a matter, and every AI-generated artifact is labeled as such
-          in the product.
+          Nyaya Research searches the legal authorities imported into this workspace. Coverage is
+          not exhaustive and is not a Westlaw or Lexis equivalent. Current treatment is not
+          independently verified. Use Research as a starting point against this corpus, then verify
+          controlling authority in the sources you would ordinarily use.
         </p>
       </Panel>
-      <Panel title="4. Model providers and data handling">
+      <Panel title="4. Agents">
         <p className="text-sm text-ink/70">
-          When <code>AI_PROVIDER=openai</code>, NyayaGrid sends retrieved excerpts to OpenAI chat
-          completions with <code>store: false</code>. Usage accounting stores token counts and
-          identifiers only — prompt and document text keys are stripped. Customer data is not used
-          to train NyayaGrid or provider models unless a separate training-consent record is filed;
-          this build still has no training pipeline even if consent is recorded.
+          Multi-step AI agents are off for this private preview. Nyaya does not send, file, sign, or
+          submit work without a human.
         </p>
       </Panel>
-      <Panel title="5. Usage accounting">
+      <Panel title="5. Model providers and data handling">
         <p className="text-sm text-ink/70">
-          Placeholder. NyayaGrid records which AI capability was used, by whom, and roughly how many
-          tokens it consumed, for billing and reliability purposes. It does not retain the prompt or
-          response text in that accounting record.
+          Retrieved excerpts may be sent to configured model providers for the requested task.
+          Usage accounting stores token counts and identifiers — not prompt or document text.
+          Customer data is not used to train NyayaGrid models unless a separate training-consent
+          record is filed. This preview is not marketed as CJIS-ready or prosecutor-certified.
         </p>
       </Panel>
       <Panel title="6. Reporting a problem">
         <p className="text-sm text-ink/70">
-          Placeholder contact details for reporting an inaccurate or unexpected AI response.
+          Tell your NyayaGrid contact immediately if you see fabricated authority or exhibits,
+          material unsupported facts, or any sign that one case or organization&apos;s material
+          appeared in another. Use the design-partner session form for other product feedback.
         </p>
       </Panel>
     </main>

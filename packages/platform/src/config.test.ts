@@ -8,6 +8,7 @@ import {
   assertNotProductionDataTarget,
   isDevelopment,
   isExplicitLocalDevAuthAllowed,
+  isStagingDevAuthAllowed,
   isProductionLike,
   isTestEnv,
   isWeakInngestSigningKey,
@@ -99,6 +100,33 @@ describe("collectProductionConfigProblems", () => {
       AUTH_PROVIDER: undefined,
     });
     expect(problems.some((p) => p.includes("AUTH_PROVIDER resolves to dev"))).toBe(true);
+  });
+
+  it("does not treat staging testing DevAuth as a production blocker", () => {
+    const problems = collectProductionConfigProblems({
+      APP_ENV: "staging",
+      AUTH_PROVIDER: "dev",
+      ALLOW_STAGING_DEV_AUTH: "1",
+      AI_PROVIDER: "openai",
+      OPENAI_API_KEY: "sk-openai-test",
+      EMBEDDING_PROVIDER: "openai",
+      MALWARE_SCANNER: "clamav",
+      CLAMAV_HOST: "clamav.example",
+      STORAGE_PROVIDER: "s3",
+      S3_BUCKET: "nyayagrid-staging-documents",
+      EMAIL_PROVIDER: "smtp",
+      SMTP_HOST: "smtp.example.com",
+      SMTP_PORT: "587",
+      EMAIL_FROM: "noreply@example.com",
+      BILLING_PROVIDER: "database",
+      RATE_LIMIT_PROVIDER: "redis",
+      REDIS_URL: "redis://127.0.0.1:6379",
+      DATABASE_URL: "postgresql://user:pass@host:5432/db",
+      INNGEST_SIGNING_KEY: "signkey-prod-nyayagrid-not-a-placeholder",
+      INNGEST_EVENT_KEY: "eventkey-prod-nyayagrid-not-a-placeholder",
+      NEXT_PUBLIC_APP_URL: "https://staging.example.com",
+    });
+    expect(problems.some((p) => p.includes("AUTH_PROVIDER resolves to dev"))).toBe(false);
   });
 
   it("flags AUTH_PROVIDER=clerk missing its keys", () => {
@@ -309,6 +337,33 @@ describe("validateConfigForEnv", () => {
     );
   });
 
+  it("boots staging AUTH_PROVIDER=dev only with ALLOW_STAGING_DEV_AUTH", () => {
+    const result = validateConfigForEnv({
+      APP_ENV: "staging",
+      AUTH_PROVIDER: "dev",
+      ALLOW_STAGING_DEV_AUTH: "1",
+      AI_PROVIDER: "openai",
+      OPENAI_API_KEY: "sk-openai-test",
+      EMBEDDING_PROVIDER: "openai",
+      MALWARE_SCANNER: "clamav",
+      CLAMAV_HOST: "clamav.example",
+    });
+    expect(result.appEnv).toBe("staging");
+    expect(result.summary.authProvider).toBe("dev");
+    expect(result.problems.some((p) => p.includes("AUTH_PROVIDER resolves to dev"))).toBe(false);
+    expect(result.warnings.some((w) => w.includes("Staging DevAuth is enabled"))).toBe(true);
+  });
+
+  it("still refuses production AUTH_PROVIDER=dev even with ALLOW_STAGING_DEV_AUTH", () => {
+    expect(() =>
+      validateConfigForEnv({
+        ...SAFE_PRODUCTION_ENV,
+        AUTH_PROVIDER: "dev",
+        ALLOW_STAGING_DEV_AUTH: "1",
+      }),
+    ).toThrow(ConfigurationError);
+  });
+
   it("throws when staging uses mock AI, mock embeddings, development malware, or Inngest dev", () => {
     const clerkBase = {
       APP_ENV: "staging",
@@ -365,6 +420,31 @@ describe("P0 security gates", () => {
     expect(isExplicitLocalDevAuthAllowed({ NODE_ENV: "development" })).toBe(false);
     expect(isExplicitLocalDevAuthAllowed({ APP_ENV: "staging", AUTH_PROVIDER: "dev" })).toBe(false);
     expect(isExplicitLocalDevAuthAllowed({ APP_ENV: "production" })).toBe(false);
+  });
+
+  it("allows staging DevAuth only with AUTH_PROVIDER=dev and ALLOW_STAGING_DEV_AUTH", () => {
+    expect(isStagingDevAuthAllowed({ APP_ENV: "staging", AUTH_PROVIDER: "dev" })).toBe(false);
+    expect(
+      isStagingDevAuthAllowed({
+        APP_ENV: "staging",
+        AUTH_PROVIDER: "dev",
+        ALLOW_STAGING_DEV_AUTH: "1",
+      }),
+    ).toBe(true);
+    expect(
+      isStagingDevAuthAllowed({
+        APP_ENV: "staging",
+        AUTH_PROVIDER: "clerk",
+        ALLOW_STAGING_DEV_AUTH: "1",
+      }),
+    ).toBe(false);
+    expect(
+      isStagingDevAuthAllowed({
+        APP_ENV: "production",
+        AUTH_PROVIDER: "dev",
+        ALLOW_STAGING_DEV_AUTH: "1",
+      }),
+    ).toBe(false);
   });
 
   it("treats missing/local Inngest signing keys as weak", () => {

@@ -37,14 +37,17 @@ type NotificationRow = {
 export default function SettingsPage() {
   const { organizationId } = useActiveOrganization();
   const [email, setEmail] = useState("");
-  const [roleKey, setRoleKey] = useState("client_guest");
+  const [roleKey, setRoleKey] = useState("lawyer");
   const [invites, setInvites] = useState<InviteRow[]>([]);
   const [members, setMembers] = useState<MemberRow[]>([]);
   const [matters, setMatters] = useState<MatterRow[]>([]);
   const [notifications, setNotifications] = useState<NotificationRow[]>([]);
   const [assignUserId, setAssignUserId] = useState("");
   const [assignMatterId, setAssignMatterId] = useState("");
-  const [lastToken, setLastToken] = useState<string | null>(null);
+  const [lastInvite, setLastInvite] = useState<{
+    token: string;
+    emailDelivered: boolean;
+  } | null>(null);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [tab, setTab] = useState("members");
@@ -80,7 +83,7 @@ export default function SettingsPage() {
     if (!organizationId) return;
     setBusy(true);
     setError("");
-    setLastToken(null);
+    setLastInvite(null);
     try {
       const res = await fetch(`/api/v1/organizations/${organizationId}/invites`, {
         method: "POST",
@@ -89,7 +92,12 @@ export default function SettingsPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error?.message ?? "Invite failed");
-      setLastToken(data.token ?? null);
+      if (typeof data.token === "string" && data.token.length > 0) {
+        setLastInvite({
+          token: data.token,
+          emailDelivered: data.emailDelivered === true,
+        });
+      }
       setEmail("");
       await load(organizationId);
     } catch (err) {
@@ -111,6 +119,25 @@ export default function SettingsPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error?.message ?? "Assign failed");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function revokeInvite(inviteId: string) {
+    if (!organizationId) return;
+    setBusy(true);
+    setError("");
+    try {
+      const res = await fetch(
+        `/api/v1/organizations/${organizationId}/invites/${inviteId}/revoke`,
+        { method: "POST" },
+      );
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error?.message ?? "Revoke failed");
+      await load(organizationId);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed");
     } finally {
@@ -235,6 +262,17 @@ export default function SettingsPage() {
                   <FirmRow
                     title={inviteRow.email}
                     status={<FirmStatusText>{inviteStatusLabel(inviteRow)}</FirmStatusText>}
+                    actions={
+                      !inviteRow.acceptedAt && !inviteRow.revokedAt ? (
+                        <Button
+                          type="button"
+                          disabled={busy}
+                          onClick={() => revokeInvite(inviteRow.id)}
+                        >
+                          Revoke
+                        </Button>
+                      ) : null
+                    }
                   />
                 </li>
               ))}
@@ -281,19 +319,32 @@ export default function SettingsPage() {
             onChange={(e) => setRoleKey(e.target.value)}
             aria-label="Role"
           >
-            <option value="client_guest">Client guest</option>
             <option value="lawyer">Lawyer</option>
             <option value="staff">Staff</option>
-            <option value="owner">Organization owner</option>
+            <option value="client_guest">Client guest</option>
           </select>
           <Button type="submit" disabled={busy}>
             Create invite
           </Button>
         </form>
-        {lastToken ? (
-          <p className="mt-3 break-all rounded border border-line bg-accent-soft/40 px-3 py-2 text-xs">
-            Invite token (shown once): {lastToken}. Accept at <code>/invites/accept?token=…</code>
-          </p>
+        {lastInvite ? (
+          <div className="mt-3 space-y-2 rounded border border-line bg-accent-soft/40 px-3 py-2 text-xs">
+            <p>
+              {lastInvite.emailDelivered
+                ? "SMTP accepted the invite email. A one-time fallback link is shown here once."
+                : "Invite email was not delivered. Use this one-time accept link."}
+            </p>
+            <p>
+              Send it only to the invited address over a private channel. Do not paste it in Slack,
+              SMS, or a public chat. If it is lost, revoke the invitation and create a new one. This
+              link cannot be recovered after you leave this dialog.
+            </p>
+            <p className="break-all font-mono">
+              {typeof window !== "undefined"
+                ? `${window.location.origin}/invites/accept?token=${encodeURIComponent(lastInvite.token)}`
+                : `/invites/accept?token=${encodeURIComponent(lastInvite.token)}`}
+            </p>
+          </div>
         ) : null}
       </IntelligenceDialog>
     </ProfessionalShell>

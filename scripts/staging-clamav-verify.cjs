@@ -162,6 +162,21 @@ async function main() {
     report.eicarError = safeError(error);
   }
 
+  try {
+    await ping("127.0.0.1", 3310);
+    report.failClosed = "unexpected-open";
+  } catch (error) {
+    const code = error && error.code ? String(error.code) : "";
+    report.failClosed =
+      code === "ECONNREFUSED" ||
+      code === "ENOTFOUND" ||
+      code === "EHOSTUNREACH" ||
+      /timeout/i.test(String(error && error.message ? error.message : error))
+        ? "refused"
+        : "error";
+    report.failClosedError = safeError(error);
+  }
+
   report.ok =
     report.clamavHostClass === "fly-internal" &&
     report.clamavFixture === "missing" &&
@@ -169,7 +184,8 @@ async function main() {
     report.ping === "ok" &&
     report.defsLoaded === true &&
     report.clean === "ok" &&
-    report.eicar === "detected";
+    report.eicar === "detected" &&
+    report.failClosed === "refused";
 
   console.log(JSON.stringify(report));
   if (!report.ok) process.exit(1);

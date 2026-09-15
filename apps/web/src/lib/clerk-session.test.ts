@@ -2,9 +2,12 @@ import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
+  appendClerkAuthHeaders,
   clerkRequestFromHeaders,
+  refreshClerkBrowserSession,
   resolveClerkSession,
   resolveClerkSessionFromState,
+  sessionKeepAliveResponse,
 } from "./clerk-session";
 
 const source = readFileSync(resolve(__dirname, "clerk-session.ts"), "utf8");
@@ -143,5 +146,60 @@ describe("resolveClerkSession", () => {
   it("returns unauthenticated when Clerk keys are missing", async () => {
     const session = await resolveClerkSession(new Headers({ authorization: "Bearer x" }), null);
     expect(session.userId).toBeNull();
+  });
+});
+
+describe("Clerk session keep-alive refresh", () => {
+  it("copies Set-Cookie on a signed-in refresh and does not log it", async () => {
+    const clerkHeaders = new Headers();
+    clerkHeaders.append("Set-Cookie", "__session=rotated; Path=/; HttpOnly; Secure");
+    const refresh = await refreshClerkBrowserSession(
+      new Headers({ host: "staging.nyayagrid.com", cookie: "__session=old" }),
+      {
+        authenticateRequest: async () => ({
+          status: "signed-in",
+          headers: clerkHeaders,
+          toAuth: () => ({ userId: "user_abc" }),
+        }),
+        getUser: async () => user,
+      },
+    );
+    expect(refresh.status).toBe("signed-in");
+    const response = sessionKeepAliveResponse(refresh);
+    expect(response.status).toBe(200);
+    const cookies =
+      typeof response.headers.getSetCookie === "function"
+        ? response.headers.getSetCookie()
+        : [response.headers.get("set-cookie")];
+    expect(cookies.some((cookie) => cookie?.startsWith("__session=rotated"))).toBe(true);
+    expect(source).toContain("appendClerkAuthHeaders");
+    expect(source).not.toContain("console.log");
+  });
+
+  it("does not treat handshake as a signed-out session", async () => {
+    const refresh = await refreshClerkBrowserSession(
+      new Headers({ host: "staging.nyayagrid.com" }),
+      {
+        authenticateRequest: async () => ({
+          status: "handshake",
+          headers: new Headers(),
+          toAuth: () => null,
+        }),
+        getUser: async () => user,
+      },
+    );
+    expect(refresh.status).toBe("handshake");
+    const response = sessionKeepAliveResponse(refresh);
+    expect(response.status).toBe(401);
+    const body = (await response.json()) as { error: { code: string } };
+    expect(body.error.code).toBe("CLERK_HANDSHAKE");
+  });
+
+  it("forwards Set-Cookie from a lone header when getSetCookie is empty", () => {
+    const from = new Headers();
+    from.set("Set-Cookie", "__session=one; Path=/");
+    const to = new Headers();
+    appendClerkAuthHeaders(from, to);
+    expect(to.get("set-cookie")).toContain("__session=one");
   });
 });

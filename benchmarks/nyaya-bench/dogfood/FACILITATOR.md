@@ -4,6 +4,8 @@
 
 READY-FOR-HUMAN-REVIEW. No attorney scores are in `completed/` yet. Do not declare DOGFOOD PASS.
 
+Design-partner onboarding and session capture: `docs/operations/DESIGN_PARTNER_BETA.md`. Session rows go in `forms/beta-sessions.csv`. Qualified reviewers still use `reviews.csv` / `issues.csv` and `dogfood:aggregate`.
+
 ## Do not send reviewers
 
 - `datasets/**/hidden_ground_truth/`

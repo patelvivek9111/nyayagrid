@@ -135,11 +135,49 @@ describe("professional middleware", () => {
   });
 
   it("I. API Bearer behavior is not a middleware cookie requirement", () => {
-    expect(config.matcher).toEqual(["/app/:path*", "/app"]);
+    expect(config.matcher).toEqual(["/app/:path*", "/app", "/invites/accept"]);
     expect(config.matcher.join(" ")).not.toContain("/api");
     expect(clerkSessionSource).toContain("authenticateRequest");
     expect(clerkSessionSource).toContain("bearer ");
     expect(middlewareSource).not.toContain("authorization");
+  });
+
+  it("sends an unauthenticated invite link through Clerk and preserves the invite query", async () => {
+    const response = await runProfessionalMiddleware(
+      request("/invites/accept?token=invite-example"),
+      {
+        authProvider: "clerk",
+        authenticate: async () => clerkAuth("signed-out"),
+      },
+    );
+    expect(response.status).toBe(307);
+    const location = response.headers.get("location") ?? "";
+    expect(location).toContain("/sign-in?");
+    expect(decodeURIComponent(location)).toContain("/invites/accept?token=invite-example");
+    expect(decodeURIComponent(location)).not.toContain("__clerk");
+  });
+
+  it("allows a signed-in invite recipient through so acceptance can resume", async () => {
+    const response = await runProfessionalMiddleware(request("/invites/accept?token=invite-example"), {
+      authProvider: "clerk",
+      authenticate: async () => clerkAuth("signed-in"),
+    });
+    expect(response.headers.get("x-middleware-next")).toBe("1");
+    expect(response.headers.get("location")).toBeNull();
+  });
+
+  it("does not copy handshake tokens into invite returnTo", async () => {
+    const response = await runProfessionalMiddleware(
+      request("/invites/accept?token=invite-example&__clerk_handshake=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.payload.sig"),
+      {
+        authProvider: "clerk",
+        authenticate: async () => clerkAuth("signed-out"),
+      },
+    );
+    const location = decodeURIComponent(response.headers.get("location") ?? "");
+    expect(location).toContain("/invites/accept?token=invite-example");
+    expect(location).not.toContain("__clerk_handshake");
+    expect(location).not.toContain("eyJ");
   });
 
   it("J. FEATURE_AGENTS remains 0", () => {

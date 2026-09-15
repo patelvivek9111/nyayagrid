@@ -166,6 +166,21 @@ export function isExplicitLocalDevAuthAllowed(env: EnvSource = process.env): boo
   return appEnv === "development" && source === "APP_ENV";
 }
 
+/**
+ * Temporary staging-only DevAuth. Requires AUTH_PROVIDER=dev and ALLOW_STAGING_DEV_AUTH.
+ * Production never qualifies. Anyone who can load the staging host becomes the default identity.
+ */
+export function isStagingDevAuthAllowed(env: EnvSource = process.env): boolean {
+  if (getAppEnv(env) !== "staging") return false;
+  if (resolveAuthProvider(env) !== "dev") return false;
+  return isTruthyFlag(read(env, "ALLOW_STAGING_DEV_AUTH"));
+}
+
+/** Local/test DevAuth, or the explicit staging testing opt-in. */
+export function isDevAuthAllowed(env: EnvSource = process.env): boolean {
+  return isExplicitLocalDevAuthAllowed(env) || isStagingDevAuthAllowed(env);
+}
+
 const WEAK_INNGEST_SECRETS = new Set(["local", "test", "changeme", "placeholder", "secret", "inngest"]);
 
 export function isWeakInngestSigningKey(value: string | undefined): boolean {
@@ -215,7 +230,7 @@ export function collectProductionConfigProblems(env: EnvSource = process.env): s
   }
 
   const authProvider = resolveAuthProvider(env);
-  if (authProvider === "dev") {
+  if (authProvider === "dev" && !isStagingDevAuthAllowed(env)) {
     problems.push(
       "AUTH_PROVIDER resolves to dev. DevAuthProvider accepts an identity from the x-nyayagrid-dev-user request header and must never front client data. Set AUTH_PROVIDER=clerk.",
     );
@@ -416,6 +431,11 @@ export function collectConfigWarnings(env: EnvSource = process.env): string[] {
         "ALLOW_MINIO_IN_PRODUCTION is set: object storage durability, encryption and backup are yours to operate.",
       );
     }
+    if (isStagingDevAuthAllowed(env)) {
+      warnings.push(
+        "Staging DevAuth is enabled. Anyone who can load this host is the default local identity. Unset ALLOW_STAGING_DEV_AUTH and set AUTH_PROVIDER=clerk after testing.",
+      );
+    }
     return warnings;
   }
 
@@ -540,11 +560,17 @@ export function validateConfigForEnv(env: EnvSource = process.env): ConfigValida
   }
 
   if (appEnv === "staging" && resolveAuthProvider(env) === "dev") {
-    throw new ConfigurationError(
-      "Refusing to start: staging cannot use AUTH_PROVIDER=dev on an internet-facing host",
-      [
-        "AUTH_PROVIDER resolves to dev. Staging must use AUTH_PROVIDER=clerk. Use APP_ENV=development with AUTH_PROVIDER=dev only for local development.",
-      ],
+    if (!isStagingDevAuthAllowed(env)) {
+      throw new ConfigurationError(
+        "Refusing to start: staging cannot use AUTH_PROVIDER=dev on an internet-facing host",
+        [
+          "AUTH_PROVIDER resolves to dev. Staging must use AUTH_PROVIDER=clerk, or set ALLOW_STAGING_DEV_AUTH=1 only for a temporary testing window. Use APP_ENV=development with AUTH_PROVIDER=dev for local development.",
+        ],
+      );
+    }
+    logger.warn(
+      "Staging DevAuth is enabled. Anyone who can load this host is the default local identity. Unset ALLOW_STAGING_DEV_AUTH and set AUTH_PROVIDER=clerk after testing.",
+      { appEnv },
     );
   }
 
