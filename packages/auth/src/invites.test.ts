@@ -5,6 +5,7 @@ import {
   createOrganizationInvite,
   InviteError,
   listOrganizationInvites,
+  lookupLiveOrganizationInviteByToken,
   revokeOrganizationInvite,
 } from "./invites";
 
@@ -223,6 +224,76 @@ describe("acceptOrganizationInvite", () => {
     await expect(
       acceptOrganizationInvite({ db, token: "t", userId: "user_1" }),
     ).rejects.toMatchObject({ code: "EMAIL_MISMATCH" });
+  });
+
+  it("creates membership only for the invited organization", async () => {
+    const inviteRow = {
+      id: "inv_1",
+      organizationId: "org_a",
+      email: "invitee@example.com",
+      roleId: "role_lawyer",
+      revokedAt: null,
+      acceptedAt: null,
+      expiresAt: new Date(Date.now() + 60_000),
+    };
+    const insert = vi.fn(() => chain([{ id: "mem_1" }]));
+    const update = vi.fn(() => chain([]));
+    const tx = { select: vi.fn(() => chain([])), insert, update };
+    const db = fakeDb(
+      [[inviteRow], [{ email: "invitee@example.com" }]],
+      {
+        transaction: vi.fn(async (fn: (inner: typeof tx) => Promise<unknown>) => fn(tx)),
+      },
+    );
+    const result = await acceptOrganizationInvite({ db, token: "t", userId: "user_1" });
+    expect(result.organizationId).toBe("org_a");
+    expect(result.roleId).toBe("role_lawyer");
+    expect(result.membershipCreated).toBe(true);
+    expect(result.membershipId).toBe("mem_1");
+    expect(insert).toHaveBeenCalled();
+  });
+});
+
+describe("lookupLiveOrganizationInviteByToken", () => {
+  it("returns a pending invite without the token hash", async () => {
+    const db = fakeDb([
+      [
+        {
+          id: "inv_1",
+          organizationId: "org_1",
+          email: "invitee@example.com",
+          roleId: "role_1",
+          expiresAt: new Date(Date.now() + 60_000),
+          acceptedAt: null,
+          revokedAt: null,
+          invitedByUserId: "user_1",
+          createdAt: new Date(),
+          tokenHash: "must-not-leak",
+        },
+      ],
+    ]);
+    const view = await lookupLiveOrganizationInviteByToken(db, "live-token");
+    expect(view.id).toBe("inv_1");
+    expect(view.email).toBe("invitee@example.com");
+    expect(view).not.toHaveProperty("tokenHash");
+  });
+
+  it("rejects invalid, consumed, and expired tokens before Clerk signup starts", async () => {
+    await expect(lookupLiveOrganizationInviteByToken(fakeDb([[]]), "missing")).rejects.toMatchObject({
+      code: "NOT_FOUND",
+    });
+    await expect(
+      lookupLiveOrganizationInviteByToken(
+        fakeDb([[{ id: "inv_1", revokedAt: null, acceptedAt: new Date(), expiresAt: new Date(Date.now() + 1000) }]]),
+        "used",
+      ),
+    ).rejects.toMatchObject({ code: "ALREADY_ACCEPTED" });
+    await expect(
+      lookupLiveOrganizationInviteByToken(
+        fakeDb([[{ id: "inv_1", revokedAt: null, acceptedAt: null, expiresAt: new Date(Date.now() - 1000) }]]),
+        "old",
+      ),
+    ).rejects.toMatchObject({ code: "EXPIRED" });
   });
 });
 

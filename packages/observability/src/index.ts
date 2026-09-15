@@ -12,6 +12,7 @@ export function redactLogText(value: string): string {
     .replace(/\bBearer\s+\S+/gi, "Bearer [redacted]")
     .replace(/\b(?:sk|pk)_(?:live|test)_[A-Za-z0-9]+/g, "[redacted]")
     .replace(/\bsk-[A-Za-z0-9_-]{8,}/g, "[redacted]")
+    .replace(/([?&](?:token|__clerk_ticket)=)[^&\s'"]+/gi, "$1[redacted]")
     .replace(
       /\b(?:CLERK_SECRET_KEY|DATABASE_URL|REDIS_URL|S3_SECRET_ACCESS_KEY|SMTP_PASSWORD|OPENAI_API_KEY|ANTHROPIC_API_KEY|XAI_API_KEY)=[^\s'"]+/gi,
       "[redacted]",

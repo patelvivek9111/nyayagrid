@@ -67,7 +67,7 @@ export default function AcceptInvitePage() {
   return (
     <AuthShell
       title="Accept invitation"
-      description="Sign in with the email your firm invited, then confirm this invitation to join the workspace."
+      description="Use the email your firm invited. If you are new, you will create an account with that email, then this invitation is accepted automatically."
     >
       {error ? (
         <p id="invite-error" className="text-sm text-[var(--ng-danger)]" role="alert">
@@ -107,7 +107,7 @@ export default function AcceptInvitePage() {
           className="font-semibold text-accent underline"
           href={`/sign-in?returnTo=${encodeURIComponent(safeAuthReturnTo(inviteAcceptReturnPath(token)))}&reason=session`}
         >
-          Sign in
+          Sign in or create account
         </Link>
       </p>
     </AuthShell>

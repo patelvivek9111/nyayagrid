@@ -71,6 +71,53 @@ export function clerkContinueHref(hostedSignInUrl: string, returnTo: string, app
   return url.toString();
 }
 
+/** Token from a safe invite returnTo. Never logs the value; callers must not either. */
+export function inviteTokenFromReturnTo(returnTo: string | null | undefined): string | null {
+  const path = safeAuthReturnTo(returnTo);
+  if (!path.startsWith("/invites/accept")) return null;
+  try {
+    const url = new URL(path, "https://nyayagrid.invalid");
+    const token = url.searchParams.get("token")?.trim() ?? "";
+    return token || null;
+  } catch {
+    return null;
+  }
+}
+
+export type InviteAuthActions = {
+  signInHref: string;
+  createAccountHref: string | null;
+};
+
+/**
+ * Existing Clerk users sign in. Users without a Clerk account use the application invitation
+ * ticket URL (restricted mode). Public hosted sign-up is never returned.
+ */
+export function buildInviteAuthActions(input: {
+  hostedSignInUrl: string;
+  appOrigin: string;
+  returnTo: string;
+  clerkUserExists: boolean;
+  clerkInvitationUrl: string | null;
+}): InviteAuthActions {
+  const signInHref = clerkContinueHref(input.hostedSignInUrl, input.returnTo, input.appOrigin);
+  if (input.clerkUserExists) return { signInHref, createAccountHref: null };
+  const invitationUrl = input.clerkInvitationUrl?.trim() ?? "";
+  if (!invitationUrl) return { signInHref, createAccountHref: null };
+  try {
+    const parsed = new URL(invitationUrl);
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
+      return { signInHref, createAccountHref: null };
+    }
+  } catch {
+    return { signInHref, createAccountHref: null };
+  }
+  return {
+    signInHref,
+    createAccountHref: clerkContinueHref(invitationUrl, input.returnTo, input.appOrigin),
+  };
+}
+
 export function clerkSignOutHref(
   hostedSignInUrl: string | null,
   appOrigin: string,

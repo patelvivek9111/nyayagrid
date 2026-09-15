@@ -46,6 +46,16 @@ describe("redactLogText", () => {
   it("does not treat organization ids as secrets", () => {
     expect(redactLogText("org_abc")).toBe("org_abc");
   });
+
+  it("redacts invite and Clerk ticket query values", () => {
+    expect(redactLogText("/invites/accept?token=super-secret-invite")).toBe(
+      "/invites/accept?token=[redacted]",
+    );
+    expect(redactLogText("https://accounts.example/sign-up?__clerk_ticket=abc.def")).toBe(
+      "[redacted]",
+    );
+    expect(redactLogText("/sign-up?__clerk_ticket=abc.def")).toBe("/sign-up?__clerk_ticket=[redacted]");
+  });
 });
 
 describe("withCorrelationId", () => {

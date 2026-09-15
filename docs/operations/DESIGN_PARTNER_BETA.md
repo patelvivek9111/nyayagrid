@@ -29,26 +29,11 @@ Record pilots in `docs/operations/design-partners.csv` (`program=design_partner`
 
 ## Clerk dashboard (required for invite-only)
 
-**Verified 2026-09-15:** Clerk Frontend API `user_settings.sign_up.mode` is still **`public`**. Hosted Account Portal `https://accounts.staging.nyayagrid.com/sign-up` still shows **Create your account**.
+**Access mode:** Invite-only (`restricted`) on the production Clerk instance for `staging.nyayagrid.com`. Do not switch back to Open / `public`.
 
-This cannot be changed from the NyayaGrid repo or Clerk Backend API on the current plan:
-
-- `PATCH /v1/instance` with `sign_up_mode` is a no-op (204, mode stays `public`).
-- Empty allowlist (`PATCH /v1/instance/restrictions` `{ allowlist: true }`) returns **402** (`app:allowlist` is a paid feature).
-- `npx clerk config patch` requires `clerk auth login` to claim the application (human OAuth). Do not do that from CI or Fly SSH.
-
-**Human-only action (do this before Firm #1):**
-
-1. Open the Clerk Dashboard for the **production** instance that serves `staging.nyayagrid.com` (publishable key `pk_live_…`, Account Portal `accounts.staging.nyayagrid.com`).
-2. Go to **Configure → Access mode** (also linked as User & authentication → Restrictions / Access mode).
-3. Select **Invite-only** (API value `restricted`). Do **not** choose Waitlist.
-4. Save.
-5. Confirm: `https://accounts.staging.nyayagrid.com/sign-up` no longer offers uncontrolled registration (invitation required / sign-up hidden). Existing users can still **Sign in**.
-6. Operator-created users (Dashboard or Backend API) and Clerk invitations remain the way new people get an account. NyayaGrid organization invites still bind an already-authenticated Clerk user to a firm.
+New invited people who do not yet have a Clerk account create one through a **Clerk application invitation ticket**, issued only after NyayaGrid validates a live organization invite token. Public `/sign-up` in the product stays invitation-only copy and does not link hosted registration. Direct Account Portal sign-up without a ticket must remain blocked.
 
 Do not remap NyayaGrid users by email. `users.authSubject` is the Clerk user id. Do not import local DevAuth identities.
-
-`/sign-up` in the product does not link hosted Clerk registration. Until Access mode is Invite-only, the Account Portal URL remains a public signup path.
 
 ## Create a design-partner organization
 
@@ -73,7 +58,7 @@ Inviteable roles: **lawyer**, **staff**, **client_guest**. Organization owner ca
    - Do **not** paste the link in Slack, SMS, email to a group, tickets, or logs.
    - If the link is lost or leaked: Revoke, then create a new invite. The old token cannot be recovered from the database.
 
-Accept path: the recipient opens the email link (`/invites/accept?token=…`) while logged out. Middleware sends them to `/sign-in` with `returnTo` preserved (handshake tokens stripped). After Clerk sign-in they return to `/invites/accept` and the page auto-submits. They should not need to open `/app` first. Email mismatch fails safely. Expired, revoked, or already-accepted tokens fail safely and cannot be reused. Do not paste tokens into tickets.
+Accept path: the recipient opens the email link (`/invites/accept?token=…`) while logged out. Middleware sends them to `/sign-in` with `returnTo` preserved (handshake tokens stripped). If they already have a Clerk account they Continue (sign in). If they do not, **Create account** uses a Clerk application invitation for the invited email only, then Clerk returns to `/invites/accept` and the page auto-submits. They should not need to open `/app` first or paste the token. Email mismatch fails safely. Expired, revoked, or already-accepted tokens fail safely and cannot be reused. Do not paste tokens into tickets.
 
 ## Failed invite email
 

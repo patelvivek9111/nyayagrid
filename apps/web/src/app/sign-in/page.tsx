@@ -1,14 +1,18 @@
 import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { USER_FACING_AUTH } from "@nyayagrid/auth/user-facing";
+import { InviteError, lookupLiveOrganizationInviteByToken, USER_FACING_AUTH, userFacingInviteMessage } from "@nyayagrid/auth";
 import { AuthShell } from "@/components/ux/auth-shell";
 import {
+  buildInviteAuthActions,
   clerkContinueHref,
   clerkHostedSignInUrl,
+  inviteTokenFromReturnTo,
   isClerkUiConfigured,
   safeAuthReturnTo,
 } from "@/lib/auth-return";
+import { resolveClerkInvitedSignupFromEnv } from "@/lib/clerk-invitations";
+import { getDb } from "@/lib/db";
 
 export const dynamic = "force-dynamic";
 
@@ -43,17 +47,42 @@ export default async function SignInPage({
   }
   const query = await searchParams;
   const returnTo = safeAuthReturnTo(firstQuery(query.returnTo));
-  const notice = noticeForReason(firstQuery(query.reason));
+  let notice = noticeForReason(firstQuery(query.reason));
   const hosted = clerkHostedSignInUrl();
   const configured = isClerkUiConfigured();
   const headerList = await headers();
+  const origin = appOriginFromHeaders(headerList);
   const continueHref =
-    configured && hosted ? clerkContinueHref(hosted, returnTo, appOriginFromHeaders(headerList)) : null;
+    configured && hosted ? clerkContinueHref(hosted, returnTo, origin) : null;
+  let createAccountHref: string | null = null;
+  const inviteToken = configured && hosted ? inviteTokenFromReturnTo(returnTo) : null;
+
+  if (inviteToken && hosted) {
+    try {
+      const invite = await lookupLiveOrganizationInviteByToken(getDb(), inviteToken);
+      const clerkState = await resolveClerkInvitedSignupFromEnv(invite.email);
+      createAccountHref = buildInviteAuthActions({
+        hostedSignInUrl: hosted,
+        appOrigin: origin,
+        returnTo,
+        clerkUserExists: clerkState.clerkUserExists,
+        clerkInvitationUrl: clerkState.invitationUrl,
+      }).createAccountHref;
+    } catch (error) {
+      if (error instanceof InviteError) {
+        notice = userFacingInviteMessage(error.code);
+      }
+    }
+  }
 
   return (
     <AuthShell
       title="Sign in"
-      description="Use the account your firm invited. After you sign in, you’ll return to your workspace."
+      description={
+        inviteToken
+          ? "Use the email your firm invited. If you do not have an account yet, create one with that same email."
+          : "Use the account your firm invited. After you sign in, you’ll return to your workspace."
+      }
       notice={notice}
     >
       {continueHref ? (
@@ -70,6 +99,16 @@ export default async function SignInPage({
           {USER_FACING_AUTH.unavailable}
         </p>
       )}
+      {createAccountHref ? (
+        <p className="text-sm text-ink/80">
+          New to NyayaGrid?{" "}
+          <Link className="font-semibold text-accent underline" href={createAccountHref}>
+            Create account
+          </Link>
+          {" "}
+          with the invited email. Public registration is not available.
+        </p>
+      ) : null}
       <p className="text-sm text-ink/60">
         Have an invitation?{" "}
         <Link className="font-semibold text-accent underline" href="/invites/accept">

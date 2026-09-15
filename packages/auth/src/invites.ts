@@ -52,6 +52,44 @@ function hashInviteToken(token: string): string {
   return createHash("sha256").update(token).digest("hex");
 }
 
+function assertLiveInvite(
+  invite: typeof organizationInvites.$inferSelect | undefined,
+): typeof organizationInvites.$inferSelect {
+  if (!invite) throw new InviteError("NOT_FOUND", "Invite not found");
+  if (invite.revokedAt) throw new InviteError("REVOKED", "This invite has been revoked");
+  if (invite.acceptedAt) {
+    throw new InviteError("ALREADY_ACCEPTED", "This invite has already been accepted");
+  }
+  if (invite.expiresAt.getTime() < Date.now()) {
+    throw new InviteError("EXPIRED", "This invite has expired");
+  }
+  return invite;
+}
+
+async function loadInviteByToken(
+  db: Database,
+  token: string,
+): Promise<typeof organizationInvites.$inferSelect | undefined> {
+  const tokenHash = hashInviteToken(token);
+  const [invite] = await db
+    .select()
+    .from(organizationInvites)
+    .where(eq(organizationInvites.tokenHash, tokenHash))
+    .limit(1);
+  return invite;
+}
+
+/**
+ * Resolves a still-usable invite from the one-time token. Used to start Clerk invited signup
+ * without accepting membership. Throws the same codes as accept for consumed/invalid tokens.
+ */
+export async function lookupLiveOrganizationInviteByToken(
+  db: Database,
+  token: string,
+): Promise<OrganizationInviteView> {
+  return toInviteView(assertLiveInvite(await loadInviteByToken(db, token)));
+}
+
 const INVITE_TOKEN_BYTES = 32;
 export const INVITE_EXPIRY_MS = 7 * 24 * 60 * 60 * 1000;
 
@@ -226,19 +264,7 @@ export type AcceptOrganizationInviteResult = {
 export async function acceptOrganizationInvite(
   params: AcceptOrganizationInviteParams,
 ): Promise<AcceptOrganizationInviteResult> {
-  const tokenHash = hashInviteToken(params.token);
-  const [invite] = await params.db
-    .select()
-    .from(organizationInvites)
-    .where(eq(organizationInvites.tokenHash, tokenHash))
-    .limit(1);
-  if (!invite) throw new InviteError("NOT_FOUND", "Invite not found");
-  if (invite.revokedAt) throw new InviteError("REVOKED", "This invite has been revoked");
-  if (invite.acceptedAt)
-    throw new InviteError("ALREADY_ACCEPTED", "This invite has already been accepted");
-  if (invite.expiresAt.getTime() < Date.now()) {
-    throw new InviteError("EXPIRED", "This invite has expired");
-  }
+  const invite = assertLiveInvite(await loadInviteByToken(params.db, params.token));
 
   const [actor] = await params.db
     .select({ email: users.email })

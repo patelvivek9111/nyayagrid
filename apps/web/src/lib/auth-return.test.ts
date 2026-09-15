@@ -6,6 +6,7 @@ import {
   clerkHostedSignInUrl,
   clerkSignOutHref,
   inviteAcceptReturnPath,
+  inviteTokenFromReturnTo,
   isClerkUiConfigured,
   safeAuthReturnTo,
   unauthenticatedProfessionalRedirect,
@@ -103,6 +104,8 @@ describe("inviteAcceptReturnPath", () => {
   it("resumes acceptance with the invite query and does not invent a token", () => {
     expect(inviteAcceptReturnPath("abc+def")).toBe("/invites/accept?token=abc%2Bdef");
     expect(inviteAcceptReturnPath("  ")).toBe("/invites/accept");
+    expect(inviteTokenFromReturnTo(inviteAcceptReturnPath("abc+def"))).toBe("abc+def");
+    expect(inviteTokenFromReturnTo("/app")).toBeNull();
     expect(clerkContinueHref(
       "https://accounts.example.clerk.accounts.dev/sign-in",
       inviteAcceptReturnPath("abc"),
@@ -130,6 +133,17 @@ describe("sign-up page is invitation-only", () => {
   });
 });
 
+describe("sign-in page offers invited Clerk signup only with a live invite", () => {
+  it("builds create-account from a Clerk invitation ticket, not public hosted sign-up", () => {
+    const src = readFileSync(resolve(__dirname, "../app/sign-in/page.tsx"), "utf8");
+    expect(src).toContain("lookupLiveOrganizationInviteByToken");
+    expect(src).toContain("resolveClerkInvitedSignupFromEnv");
+    expect(src).toContain("buildInviteAuthActions");
+    expect(src).toContain("Create account");
+    expect(src).not.toContain("clerkHostedSignUpUrl");
+  });
+});
+
 describe("invite accept page resumes after Clerk", () => {
   it("posts the query token after authentication and keeps a 401 returnTo", () => {
     const src = readFileSync(resolve(__dirname, "../app/invites/accept/page.tsx"), "utf8");
@@ -137,6 +151,7 @@ describe("invite accept page resumes after Clerk", () => {
     expect(src).toContain('fetch("/api/v1/invites/accept"');
     expect(src).toContain("autoStarted");
     expect(src).toContain("res.status === 401");
+    expect(src).toContain("Sign in or create account");
     expect(src).not.toContain("requireUser");
   });
 });
