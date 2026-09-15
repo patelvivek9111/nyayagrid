@@ -15,6 +15,7 @@ export function safeAuthReturnTo(raw: string | null | undefined): string {
   if (
     trimmed.startsWith("/app") ||
     trimmed.startsWith("/invites/accept") ||
+    trimmed.startsWith("/invites/resume") ||
     trimmed.startsWith("/portal") ||
     trimmed.startsWith("/professor")
   ) {
@@ -64,11 +65,78 @@ export function isClerkUiConfigured(env: PublicEnv = process.env): boolean {
   return Boolean(clerkHostedSignInUrl(env) && isClerkPublishableConfigured(env));
 }
 
-export function clerkContinueHref(hostedSignInUrl: string, returnTo: string, appOrigin: string): string {
-  const redirectUrl = new URL(safeAuthReturnTo(returnTo), appOrigin).toString();
-  const url = new URL(hostedSignInUrl);
+export const INVITE_RETURN_COOKIE = "ng_invite_return";
+export const INVITE_RESUME_PATH = "/invites/resume";
+export const INVITE_RETURN_COOKIE_MAX_AGE_SEC = 30 * 60;
+
+/**
+ * Account Portal after_sign_up is the site origin (`/`), which is not a professional
+ * handshake route. Clerk reads these query keys on hosted sign-up/sign-in; force beats
+ * the dropped `redirect_url` on `/sign-up/continue`.
+ */
+export function applyClerkAfterAuthRedirect(targetUrl: string, redirectUrl: string): string {
+  const url = new URL(targetUrl);
   url.searchParams.set("redirect_url", redirectUrl);
+  url.searchParams.set("sign_in_force_redirect_url", redirectUrl);
+  url.searchParams.set("sign_up_force_redirect_url", redirectUrl);
   return url.toString();
+}
+
+export function clerkContinueHref(hostedSignInUrl: string, returnTo: string, appOrigin: string): string {
+  return applyClerkAfterAuthRedirect(hostedSignInUrl, absoluteInviteResumeUrl(returnTo, appOrigin));
+}
+
+/**
+ * Absolute URL Clerk should return to after invited signup. Same-origin invite accept only.
+ * Callers must not log the value (it includes the invite token).
+ */
+export function absoluteInviteResumeUrl(returnTo: string, appOrigin: string): string {
+  return new URL(safeAuthReturnTo(returnTo), appOrigin).toString();
+}
+
+/** True when Clerk can be told to resume a live NyayaGrid invite after account creation. */
+export function isSafeInviteResumeUrl(url: string, appOrigin: string): boolean {
+  try {
+    const parsed = new URL(url);
+    const origin = new URL(appOrigin);
+    if (parsed.origin !== origin.origin) return false;
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return false;
+    return parsed.pathname === "/invites/accept" && Boolean(parsed.searchParams.get("token")?.trim());
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Clerk Account Portal origin only. Passing an app URL as invitation redirect_url starts Clerk's
+ * custom ticket flow and drops the hosted after-auth redirect.
+ */
+export function isClerkAccountPortalUrl(url: string, hostedSignInUrl: string): boolean {
+  try {
+    const parsed = new URL(url);
+    const hosted = new URL(hostedSignInUrl);
+    if (parsed.protocol !== "https:" && parsed.protocol !== "http:") return false;
+    return parsed.origin === hosted.origin;
+  } catch {
+    return false;
+  }
+}
+
+/** Path-only invite return stored in an httpOnly cookie. Never log the value. */
+export function inviteReturnCookieValue(returnTo: string | null | undefined): string | null {
+  const path = safeAuthReturnTo(returnTo);
+  if (!inviteTokenFromReturnTo(path)) return null;
+  return path;
+}
+
+export function inviteAuthContinueHref(
+  returnTo: string,
+  intent: "signin" | "signup",
+): string {
+  const params = new URLSearchParams();
+  params.set("returnTo", safeAuthReturnTo(returnTo));
+  params.set("intent", intent);
+  return `/invites/continue?${params.toString()}`;
 }
 
 /** Token from a safe invite returnTo. Never logs the value; callers must not either. */
@@ -95,6 +163,7 @@ export type InviteAuthActions = {
  */
 export function buildInviteAuthActions(input: {
   hostedSignInUrl: string;
+  hostedSignUpUrl?: string | null;
   appOrigin: string;
   returnTo: string;
   clerkUserExists: boolean;
@@ -104,17 +173,30 @@ export function buildInviteAuthActions(input: {
   if (input.clerkUserExists) return { signInHref, createAccountHref: null };
   const invitationUrl = input.clerkInvitationUrl?.trim() ?? "";
   if (!invitationUrl) return { signInHref, createAccountHref: null };
+  let ticketSource = invitationUrl;
   try {
     const parsed = new URL(invitationUrl);
     if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
       return { signInHref, createAccountHref: null };
+    }
+    const originHost = new URL(input.appOrigin).host;
+    if (parsed.host === originHost) {
+      const ticket = parsed.searchParams.get("__clerk_ticket")?.trim();
+      const hostedSignUp = input.hostedSignUpUrl?.trim() ?? "";
+      if (!ticket || !hostedSignUp) return { signInHref, createAccountHref: null };
+      const hosted = new URL(hostedSignUp);
+      if (hosted.protocol !== "https:" && hosted.protocol !== "http:") {
+        return { signInHref, createAccountHref: null };
+      }
+      hosted.searchParams.set("__clerk_ticket", ticket);
+      ticketSource = hosted.toString();
     }
   } catch {
     return { signInHref, createAccountHref: null };
   }
   return {
     signInHref,
-    createAccountHref: clerkContinueHref(invitationUrl, input.returnTo, input.appOrigin),
+    createAccountHref: clerkContinueHref(ticketSource, input.returnTo, input.appOrigin),
   };
 }
 

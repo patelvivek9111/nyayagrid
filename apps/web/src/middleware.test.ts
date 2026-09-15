@@ -135,7 +135,7 @@ describe("professional middleware", () => {
   });
 
   it("I. API Bearer behavior is not a middleware cookie requirement", () => {
-    expect(config.matcher).toEqual(["/app/:path*", "/app", "/invites/accept"]);
+    expect(config.matcher).toEqual(["/", "/app/:path*", "/app", "/invites/accept", "/invites/resume"]);
     expect(config.matcher.join(" ")).not.toContain("/api");
     expect(clerkSessionSource).toContain("authenticateRequest");
     expect(clerkSessionSource).toContain("bearer ");
@@ -166,6 +166,23 @@ describe("professional middleware", () => {
     expect(response.headers.get("location")).toBeNull();
   });
 
+  it("handshakes /invites/resume after Clerk invited signup so / is never the session landing pad", async () => {
+    const signedOut = await runProfessionalMiddleware(request("/invites/resume"), {
+      authProvider: "clerk",
+      authenticate: async () => clerkAuth("signed-out"),
+    });
+    expect(signedOut.status).toBe(307);
+    expect(decodeURIComponent(signedOut.headers.get("location") ?? "")).toContain(
+      "/sign-in?returnTo=/invites/resume",
+    );
+    const signedIn = await runProfessionalMiddleware(request("/invites/resume"), {
+      authProvider: "clerk",
+      authenticate: async () => clerkAuth("signed-in"),
+    });
+    expect(signedIn.headers.get("x-middleware-next")).toBe("1");
+    expect(config.matcher.join(" ")).not.toContain("/invites/continue");
+  });
+
   it("does not copy handshake tokens into invite returnTo", async () => {
     const response = await runProfessionalMiddleware(
       request("/invites/accept?token=invite-example&__clerk_handshake=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.payload.sig"),
@@ -178,6 +195,34 @@ describe("professional middleware", () => {
     expect(location).toContain("/invites/accept?token=invite-example");
     expect(location).not.toContain("__clerk_handshake");
     expect(location).not.toContain("eyJ");
+  });
+
+  it("handshakes public / without forcing sign-in, then resumes an invite cookie", async () => {
+    const signedOut = await runProfessionalMiddleware(request("/"), {
+      authProvider: "clerk",
+      authenticate: async () => clerkAuth("signed-out"),
+    });
+    expect(signedOut.headers.get("x-middleware-next")).toBe("1");
+    expect(signedOut.headers.get("location")).toBeNull();
+
+    const handshakeHeaders = new Headers();
+    handshakeHeaders.set("Location", "https://clerk.staging.nyayagrid.com/v1/client/handshake");
+    const handshake = await runProfessionalMiddleware(request("/"), {
+      authProvider: "clerk",
+      authenticate: async () => clerkAuth("handshake", handshakeHeaders),
+    });
+    expect(handshake.status).toBe(307);
+    expect(handshake.headers.get("location")).toContain("/v1/client/handshake");
+
+    const withInvite = await runProfessionalMiddleware(
+      request("/", { cookie: "ng_invite_return=/invites/accept?token=invite-example" }),
+      {
+        authProvider: "clerk",
+        authenticate: async () => clerkAuth("signed-in"),
+      },
+    );
+    expect(withInvite.status).toBe(307);
+    expect(withInvite.headers.get("location")).toBe("https://staging.nyayagrid.com/invites/resume");
   });
 
   it("J. FEATURE_AGENTS remains 0", () => {

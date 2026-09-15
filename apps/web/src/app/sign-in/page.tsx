@@ -1,13 +1,13 @@
-import { headers } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { InviteError, lookupLiveOrganizationInviteByToken, USER_FACING_AUTH, userFacingInviteMessage } from "@nyayagrid/auth";
 import { AuthShell } from "@/components/ux/auth-shell";
 import {
-  buildInviteAuthActions,
-  clerkContinueHref,
   clerkHostedSignInUrl,
+  clerkHostedSignUpUrl,
+  inviteAuthContinueHref,
   inviteTokenFromReturnTo,
+  isClerkAccountPortalUrl,
   isClerkUiConfigured,
   safeAuthReturnTo,
 } from "@/lib/auth-return";
@@ -22,13 +22,6 @@ function firstQuery(
   if (typeof value === "string") return value;
   if (Array.isArray(value) && typeof value[0] === "string") return value[0];
   return null;
-}
-
-function appOriginFromHeaders(headerList: Headers): string {
-  const proto = headerList.get("x-forwarded-proto") ?? "http";
-  const host = headerList.get("x-forwarded-host") ?? headerList.get("host");
-  if (host) return `${proto}://${host}`;
-  return process.env.NEXT_PUBLIC_APP_URL?.replace(/\/+$/, "") ?? "http://127.0.0.1:3000";
 }
 
 function noticeForReason(reason: string | null): string | null {
@@ -50,24 +43,21 @@ export default async function SignInPage({
   let notice = noticeForReason(firstQuery(query.reason));
   const hosted = clerkHostedSignInUrl();
   const configured = isClerkUiConfigured();
-  const headerList = await headers();
-  const origin = appOriginFromHeaders(headerList);
-  const continueHref =
-    configured && hosted ? clerkContinueHref(hosted, returnTo, origin) : null;
+  const continueHref = configured && hosted ? inviteAuthContinueHref(returnTo, "signin") : null;
   let createAccountHref: string | null = null;
   const inviteToken = configured && hosted ? inviteTokenFromReturnTo(returnTo) : null;
 
   if (inviteToken && hosted) {
     try {
       const invite = await lookupLiveOrganizationInviteByToken(getDb(), inviteToken);
-      const clerkState = await resolveClerkInvitedSignupFromEnv(invite.email);
-      createAccountHref = buildInviteAuthActions({
-        hostedSignInUrl: hosted,
-        appOrigin: origin,
-        returnTo,
-        clerkUserExists: clerkState.clerkUserExists,
-        clerkInvitationUrl: clerkState.invitationUrl,
-      }).createAccountHref;
+      const portal = clerkHostedSignUpUrl();
+      const clerkState = await resolveClerkInvitedSignupFromEnv(
+        invite.email,
+        portal && isClerkAccountPortalUrl(portal, hosted) ? portal : undefined,
+      );
+      if (!clerkState.clerkUserExists) {
+        createAccountHref = inviteAuthContinueHref(returnTo, "signup");
+      }
     } catch (error) {
       if (error instanceof InviteError) {
         notice = userFacingInviteMessage(error.code);

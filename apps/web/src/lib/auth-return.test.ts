@@ -2,12 +2,17 @@ import { describe, expect, it } from "vitest";
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
+  absoluteInviteResumeUrl,
   clerkContinueHref,
   clerkHostedSignInUrl,
   clerkSignOutHref,
   inviteAcceptReturnPath,
+  inviteAuthContinueHref,
+  inviteReturnCookieValue,
   inviteTokenFromReturnTo,
+  isClerkAccountPortalUrl,
   isClerkUiConfigured,
+  isSafeInviteResumeUrl,
   safeAuthReturnTo,
   unauthenticatedProfessionalRedirect,
 } from "./auth-return";
@@ -16,6 +21,7 @@ describe("safeAuthReturnTo", () => {
   it("allows in-app paths and rejects open redirects", () => {
     expect(safeAuthReturnTo("/app/cases/abc/documents")).toBe("/app/cases/abc/documents");
     expect(safeAuthReturnTo("/invites/accept?token=x")).toBe("/invites/accept?token=x");
+    expect(safeAuthReturnTo("/invites/resume")).toBe("/invites/resume");
     expect(safeAuthReturnTo("https://evil.example/phish")).toBe("/app");
     expect(safeAuthReturnTo("//evil.example")).toBe("/app");
     expect(safeAuthReturnTo("/sign-in")).toBe("/app");
@@ -44,6 +50,8 @@ describe("Clerk UI configuration", () => {
     const hosted = "https://accounts.example.clerk.accounts.dev/sign-in";
     const continueHref = clerkContinueHref(hosted, "/app/cases/m1", "https://app.nyayagrid.example");
     expect(continueHref).toContain("redirect_url=");
+    expect(continueHref).toContain("sign_up_force_redirect_url=");
+    expect(continueHref).toContain("sign_in_force_redirect_url=");
     expect(decodeURIComponent(continueHref)).toContain("https://app.nyayagrid.example/app/cases/m1");
     expect(continueHref).not.toMatch(/sk_|whsec_/);
     const signOut = clerkSignOutHref(hosted, "https://app.nyayagrid.example");
@@ -120,6 +128,29 @@ describe("inviteAcceptReturnPath", () => {
         ),
       ),
     ).toContain("https://staging.nyayagrid.com/invites/accept?token=abc");
+    const resume = absoluteInviteResumeUrl(
+      inviteAcceptReturnPath("abc"),
+      "https://staging.nyayagrid.com",
+    );
+    expect(isSafeInviteResumeUrl(resume, "https://staging.nyayagrid.com")).toBe(true);
+    expect(isSafeInviteResumeUrl("https://evil.example/invites/accept?token=abc", "https://staging.nyayagrid.com")).toBe(false);
+    expect(isSafeInviteResumeUrl("https://staging.nyayagrid.com/app", "https://staging.nyayagrid.com")).toBe(false);
+    expect(inviteReturnCookieValue("/invites/accept?token=abc")).toBe("/invites/accept?token=abc");
+    expect(inviteReturnCookieValue("/app")).toBeNull();
+    expect(inviteAuthContinueHref("/invites/accept?token=abc", "signup")).toContain("/invites/continue?");
+    expect(inviteAuthContinueHref("/invites/accept?token=abc", "signup")).toContain("intent=signup");
+    expect(
+      isClerkAccountPortalUrl(
+        "https://accounts.example.com/sign-up",
+        "https://accounts.example.com/sign-in",
+      ),
+    ).toBe(true);
+    expect(
+      isClerkAccountPortalUrl(
+        "https://staging.nyayagrid.com/invites/accept?token=abc",
+        "https://accounts.example.com/sign-in",
+      ),
+    ).toBe(false);
   });
 });
 
@@ -138,9 +169,16 @@ describe("sign-in page offers invited Clerk signup only with a live invite", () 
     const src = readFileSync(resolve(__dirname, "../app/sign-in/page.tsx"), "utf8");
     expect(src).toContain("lookupLiveOrganizationInviteByToken");
     expect(src).toContain("resolveClerkInvitedSignupFromEnv");
-    expect(src).toContain("buildInviteAuthActions");
+    expect(src).toContain("inviteAuthContinueHref");
     expect(src).toContain("Create account");
-    expect(src).not.toContain("clerkHostedSignUpUrl");
+    expect(src).toContain("isClerkAccountPortalUrl");
+    const continueSrc = readFileSync(resolve(__dirname, "../app/invites/continue/route.ts"), "utf8");
+    expect(continueSrc).toContain("INVITE_RETURN_COOKIE");
+    expect(continueSrc).toContain("INVITE_RESUME_PATH");
+    expect(continueSrc).not.toMatch(/console\.(log|info|debug|warn|error)/);
+    const resumeSrc = readFileSync(resolve(__dirname, "../app/invites/resume/route.ts"), "utf8");
+    expect(resumeSrc).toContain("inviteReturnCookieValue");
+    expect(resumeSrc).toContain("INVITE_RETURN_COOKIE");
   });
 });
 

@@ -13,7 +13,7 @@ export type ClerkInvitationRecord = {
 export type ClerkInvitationClient = {
   listUsersByEmail: (email: string) => Promise<{ id: string }[]>;
   listPendingInvitations: () => Promise<ClerkInvitationRecord[]>;
-  createInvitation: (email: string) => Promise<{ url: string | null }>;
+  createInvitation: (email: string, redirectUrl?: string) => Promise<{ url: string | null }>;
 };
 
 /**
@@ -23,10 +23,15 @@ export type ClerkInvitationClient = {
 export async function resolveClerkInvitedSignup(
   email: string,
   client: ClerkInvitationClient,
+  redirectUrl?: string,
 ): Promise<{ clerkUserExists: boolean; invitationUrl: string | null }> {
   const normalized = normalizeInviteEmail(email);
   const users = await client.listUsersByEmail(normalized);
   if (users.length > 0) return { clerkUserExists: true, invitationUrl: null };
+
+  const resumeUrl = redirectUrl?.trim() || undefined;
+  const created = await client.createInvitation(normalized, resumeUrl);
+  if (created.url) return { clerkUserExists: false, invitationUrl: created.url };
 
   const pending = await client.listPendingInvitations();
   const existing = pending.find(
@@ -35,10 +40,7 @@ export async function resolveClerkInvitedSignup(
       normalizeInviteEmail(row.emailAddress) === normalized &&
       Boolean(row.url),
   );
-  if (existing?.url) return { clerkUserExists: false, invitationUrl: existing.url };
-
-  const created = await client.createInvitation(normalized);
-  return { clerkUserExists: false, invitationUrl: created.url };
+  return { clerkUserExists: false, invitationUrl: existing?.url ?? null };
 }
 
 type ClerkJson = Record<string, unknown>;
@@ -90,7 +92,7 @@ export function createBackendClerkInvitationClient(
         status: typeof row.status === "string" ? row.status : "pending",
       }));
     },
-    async createInvitation(email) {
+    async createInvitation(email, redirectUrl) {
       const result = await clerkFetch(
         "/v1/invitations",
         {
@@ -100,6 +102,7 @@ export function createBackendClerkInvitationClient(
             notify: false,
             ignore_existing: true,
             expires_in_days: 7,
+            ...(redirectUrl ? { redirect_url: redirectUrl } : {}),
           },
         },
         secretKey,
@@ -116,11 +119,16 @@ export function createBackendClerkInvitationClient(
 
 export async function resolveClerkInvitedSignupFromEnv(
   email: string,
+  redirectUrl?: string,
 ): Promise<{ clerkUserExists: boolean; invitationUrl: string | null }> {
   const secretKey = process.env.CLERK_SECRET_KEY?.trim();
   if (!secretKey) return { clerkUserExists: false, invitationUrl: null };
   try {
-    return await resolveClerkInvitedSignup(email, createBackendClerkInvitationClient(secretKey));
+    return await resolveClerkInvitedSignup(
+      email,
+      createBackendClerkInvitationClient(secretKey),
+      redirectUrl,
+    );
   } catch {
     logger.warn("Clerk invited signup lookup failed");
     return { clerkUserExists: false, invitationUrl: null };

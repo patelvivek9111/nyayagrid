@@ -1,6 +1,11 @@
 import { createClerkClient } from "@clerk/backend";
 import { NextResponse, type NextRequest } from "next/server";
-import { unauthenticatedProfessionalRedirect } from "./lib/auth-return";
+import {
+  INVITE_RESUME_PATH,
+  INVITE_RETURN_COOKIE,
+  inviteReturnCookieValue,
+  unauthenticatedProfessionalRedirect,
+} from "./lib/auth-return";
 
 export type ClerkBrowserAuthStatus = "signed-in" | "signed-out" | "handshake";
 
@@ -115,6 +120,21 @@ export async function runProfessionalMiddleware(
   if (clerk?.status === "handshake") {
     return clerkHandshakeResponse(clerk.headers);
   }
+
+  // Public `/` must stay reachable, but Clerk after-signup currently lands here.
+  // Run handshake above; if a session exists and invite return intent is set, resume it.
+  if (request.nextUrl.pathname === "/") {
+    if (clerk?.status === "signed-in") {
+      if (inviteReturnCookieValue(request.cookies.get(INVITE_RETURN_COOKIE)?.value)) {
+        const response = NextResponse.redirect(new URL(INVITE_RESUME_PATH, request.url));
+        copyClerkHeaders(clerk.headers, response.headers);
+        return response;
+      }
+      return signedInResponse(clerk.headers);
+    }
+    return NextResponse.next();
+  }
+
   if (clerk?.status === "signed-in") {
     return signedInResponse(clerk.headers);
   }
@@ -134,5 +154,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/app/:path*", "/app", "/invites/accept"],
+  matcher: ["/", "/app/:path*", "/app", "/invites/accept", "/invites/resume"],
 };
