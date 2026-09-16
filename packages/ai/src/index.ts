@@ -65,6 +65,7 @@ import {
   parseEvidenceAssessmentFromPrompt,
 } from "./evidence-assessment";
 import { formatGroundingSourceLine } from "./document-structure";
+import { assertNoSilentWebTools } from "./provider-web-guard";
 
 export const EMBEDDING_DIMENSIONS = 384;
 export const NYAYA_PROMPT_VERSION = "nyaya-matter-qa-v11";
@@ -1034,15 +1035,20 @@ export function buildOpenAIChatCompletionsBody(params: {
   model: string;
   messages: AiGenerateRequest["messages"];
   temperature?: number;
+  stream?: boolean;
 }) {
-  return {
+  const body = {
     model: params.model,
     messages: params.messages,
     temperature: params.temperature ?? 0,
     response_format: { type: "json_object" as const },
     /** Do not persist customer prompts in OpenAI storage / training pipelines. */
     store: false,
+    ...(params.stream ? { stream: true } : {}),
   };
+  // Fail closed: never silently attach web/search tools on the Ask generate path.
+  assertNoSilentWebTools({ provider: "openai", body });
+  return body;
 }
 
 export class OpenAIProvider implements AIProvider {
@@ -1423,6 +1429,10 @@ export * from "./general-ask-boundary";
 export * from "./workflow-completion";
 export * from "./call-telemetry";
 export * from "./embedding-cache";
+export * from "./source-scope";
+export * from "./ask-stream-events";
+export * from "./provider-web-guard";
+export * from "./web-research";
 export {
   NyayaRouter,
   AnthropicProvider,

@@ -32,6 +32,25 @@ export async function POST(request: Request, { params }: Params) {
     });
     if (!session) return jsonError("NOT_FOUND", "Research session not found", 404);
 
+    // Explicit source boundary: Research session is legal corpus by default.
+    // Web is never implied. Case context only when explicitly requested via
+    // sourceScope=case_plus_legal or includeMatterContext.
+    const sourceScope = body.sourceScope ?? (body.includeMatterContext ? "case_plus_legal" : "legal_research");
+    if (sourceScope === "web") {
+      return jsonError(
+        "VALIDATION_ERROR",
+        "Web Research is not available on the legal research session endpoint; use Ask with sourceScope=web",
+        400,
+      );
+    }
+    if (sourceScope === "case") {
+      return jsonError(
+        "VALIDATION_ERROR",
+        "Case-only Ask belongs on the matter Ask endpoint; research sessions use legal_research or case_plus_legal",
+        400,
+      );
+    }
+
     const result = await runResearchQuery({
       db,
       organizationId,
@@ -41,14 +60,29 @@ export async function POST(request: Request, { params }: Params) {
       question: body.queryText,
       filters: body.filters,
       limit: body.limit,
-      includeMatterContext: body.includeMatterContext,
+      includeMatterContext:
+        sourceScope === "case_plus_legal" ? true : body.includeMatterContext === true,
       executionStrategy: body.executionStrategy,
       modelId: body.modelId,
       embeddings:
         process.env.EMBEDDING_PROVIDER === "openai" ? undefined : new MockEmbeddingProvider(),
       ai: process.env.AI_PROVIDER === "openai" ? undefined : new MockAIProvider(),
     });
-    return jsonOk(result, { status: 201 });
+    return jsonOk(
+      {
+        ...result,
+        sourceScope,
+        provenance: {
+          sourceScope,
+          headline: sourceScope === "case_plus_legal" ? "Case + Legal research" : "Legal research",
+          detail:
+            sourceScope === "case_plus_legal"
+              ? "NyayaGrid authorities with optional case context · No external web sources"
+              : "NyayaGrid authorities · No general web sources",
+        },
+      },
+      { status: 201 },
+    );
   } catch (error) {
     return handleRouteError(error);
   }

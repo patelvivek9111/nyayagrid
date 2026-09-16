@@ -18,6 +18,8 @@ export type RoutingAuditRecord = {
   runId: string;
   /** Customer action id shared across nested model calls for one user action. */
   usageActionId?: string;
+  /** Explicit source boundary (case / legal_research / web / case_plus_legal). */
+  sourceScope?: "case" | "legal_research" | "web" | "case_plus_legal";
   organizationId?: string;
   userId?: string;
   matterId?: string;

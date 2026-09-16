@@ -3,14 +3,17 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import type { AskStreamEvent, ProvenanceSummary, SourceScope } from "@nyayagrid/ai";
 import { Button } from "@nyayagrid/ui";
 import {
+  AskProgress,
   CaseChip,
   ChatComposer,
   EvidenceStateBadge,
   ErrorState,
   IntelligenceHeader,
   LoadingState,
+  ProvenanceBadge,
   SourceDrawer,
   SourceMarker,
   type SourceDrawerItem,
@@ -29,36 +32,121 @@ type ChatTurn = {
   unresolvedQuestions?: string[];
   artifactId?: string;
   needsMoreDocuments?: boolean;
+  provenance?: ProvenanceSummary;
 };
 
 function sourcesFromAnswer(sources: any[] | undefined): SourceDrawerItem[] {
-  return (sources ?? []).map((s: any, i: number) => ({
-    id: s.chunkId || `s-${i}`,
-    chunkId: s.chunkId || undefined,
-    documentId: s.documentId || undefined,
-    title: s.documentTitle || "Case document",
-    classLabel: "Case evidence",
-    subtitle: [s.page != null ? `Page ${s.page}` : null, s.segmentRef || s.paragraph || null]
-      .filter(Boolean)
-      .join(" · "),
-    quote: s.quote,
-    quoteVerified: Boolean(s.quote),
-  }));
+  return (sources ?? []).map((s: any, i: number) => {
+    const category =
+      s.category === "web" || String(s.documentId ?? "").startsWith("web:")
+        ? "web"
+        : s.category === "legal_authority"
+          ? "legal_authority"
+          : "case_evidence";
+    return {
+      id: s.chunkId || `s-${i}`,
+      chunkId: s.chunkId || undefined,
+      documentId: s.documentId || undefined,
+      title: s.documentTitle || (category === "web" ? "Web source" : "Case document"),
+      classLabel:
+        category === "web"
+          ? "Web"
+          : category === "legal_authority"
+            ? "Legal authority"
+            : "Case evidence",
+      category,
+      subtitle: [s.page != null ? `Page ${s.page}` : null, s.segmentRef || s.paragraph || null]
+        .filter(Boolean)
+        .join(" · "),
+      quote: s.quote,
+      quoteVerified: Boolean(s.quote) && category === "case_evidence",
+      url: s.url,
+      retrievedAt: s.retrievedAt,
+    };
+  });
 }
 
 function sourcesFromCitations(citations: any[] | undefined, messageId: string): SourceDrawerItem[] {
-  return (citations ?? []).map((c: any, i: number) => ({
-    id: c.chunkId || `${messageId}-${i}`,
-    chunkId: c.chunkId || undefined,
-    documentId: c.documentId || undefined,
-    title: "Case document",
-    classLabel: "Case evidence",
-    subtitle: [c.page != null ? `Page ${c.page}` : null, c.segmentRef || null]
-      .filter(Boolean)
-      .join(" · "),
-    quote: c.quote,
-    quoteVerified: Boolean(c.quote),
-  }));
+  return (citations ?? []).map((c: any, i: number) => {
+    const category =
+      c.category === "web" || String(c.documentId ?? "").startsWith("web:")
+        ? "web"
+        : c.category === "legal_authority"
+          ? "legal_authority"
+          : "case_evidence";
+    return {
+      id: c.chunkId || `${messageId}-${i}`,
+      chunkId: c.chunkId || undefined,
+      documentId: c.documentId || undefined,
+      title: category === "web" ? "Web source" : "Case document",
+      classLabel:
+        category === "web"
+          ? "Web"
+          : category === "legal_authority"
+            ? "Legal authority"
+            : "Case evidence",
+      category,
+      subtitle: [c.page != null ? `Page ${c.page}` : null, c.segmentRef || null]
+        .filter(Boolean)
+        .join(" · "),
+      quote: c.quote,
+      quoteVerified: Boolean(c.quote) && category === "case_evidence",
+      url: c.url,
+      retrievedAt: c.retrievedAt,
+    };
+  });
+}
+
+function streamSourceToDrawerItem(source: AskStreamEvent & { type: "source_added" }): SourceDrawerItem {
+  const s = source.source;
+  return {
+    id: s.id,
+    title: s.title,
+    classLabel:
+      s.category === "web"
+        ? "Web"
+        : s.category === "legal_authority"
+          ? "Legal authority"
+          : "Case evidence",
+    category: s.category,
+    subtitle: s.subtitle,
+    quote: s.quote,
+    chunkId: s.chunkId,
+    documentId: s.documentId,
+    url: s.url,
+    retrievedAt: s.retrievedAt,
+    href: s.url,
+  };
+}
+
+async function consumeAskSse(
+  res: Response,
+  onEvent: (event: AskStreamEvent) => void,
+): Promise<void> {
+  if (!res.body) throw new Error(USER_FACING_ASK_ERROR);
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buffer += decoder.decode(value, { stream: true });
+    const parts = buffer.split("\n\n");
+    buffer = parts.pop() ?? "";
+    for (const part of parts) {
+      const lines = part.split("\n");
+      let dataLine = "";
+      for (const line of lines) {
+        if (line.startsWith("data: ")) dataLine = line.slice(6);
+      }
+      if (!dataLine) continue;
+      try {
+        onEvent(JSON.parse(dataLine) as AskStreamEvent);
+      } catch {
+        /* ignore malformed SSE chunks */
+      }
+    }
+  }
 }
 
 export default function CaseChatThreadPage() {
@@ -71,6 +159,10 @@ export default function CaseChatThreadPage() {
   const [title, setTitle] = useState("Chat");
   const [question, setQuestion] = useState("");
   const [busy, setBusy] = useState(false);
+  const [sourceScope, setSourceScope] = useState<SourceScope>("case");
+  const [streamEvents, setStreamEvents] = useState<AskStreamEvent[]>([]);
+  const [liveAnswer, setLiveAnswer] = useState("");
+  const [continueToken, setContinueToken] = useState<string | null>(null);
   const [turns, setTurns] = useState<ChatTurn[]>([]);
   const [conversations, setConversations] = useState<
     Array<{ id: string; title: string | null; preview?: string | null }>
@@ -79,6 +171,8 @@ export default function CaseChatThreadPage() {
   const [drawerItems, setDrawerItems] = useState<SourceDrawerItem[]>([]);
   const [drawerActiveId, setDrawerActiveId] = useState<string | undefined>();
   const threadRef = useRef<HTMLDivElement>(null);
+  const abortRef = useRef<AbortController | null>(null);
+  const lastQuestionRef = useRef("");
 
   useEffect(() => {
     setLoading(true);
@@ -110,6 +204,7 @@ export default function CaseChatThreadPage() {
                 : undefined,
               artifactId: art?.id,
               needsMoreDocuments: Boolean(validation.needsMoreDocuments),
+              provenance: validation.provenance as ProvenanceSummary | undefined,
             } satisfies ChatTurn;
           }),
         );
@@ -125,7 +220,7 @@ export default function CaseChatThreadPage() {
   }, [matterId, conversationId]);
 
   async function enrichSource(item: SourceDrawerItem) {
-    if (!item.chunkId) return item;
+    if (!item.chunkId || item.category === "web") return item;
     try {
       const res = await fetch(`/api/v1/matters/${matterId}/citations/${item.chunkId}`);
       const data = await res.json();
@@ -156,50 +251,147 @@ export default function CaseChatThreadPage() {
     setDrawerItems(enriched);
   }
 
-  async function send() {
-    if (!question.trim()) return;
+  function stopGenerating() {
+    abortRef.current?.abort();
+  }
+
+  async function send(opts?: { continueToken?: string | null; questionOverride?: string }) {
+    const q = (opts?.questionOverride ?? question).trim();
+    if (!q && !opts?.continueToken) return;
+    const text = q || lastQuestionRef.current;
+    if (!text.trim()) return;
+
     setBusy(true);
     setError("");
-    const q = question.trim();
-    setQuestion("");
-    setTurns((prev) => [...prev, { id: `u-${Date.now()}`, role: "user", content: q }]);
+    setStreamEvents([]);
+    setLiveAnswer("");
+    setContinueToken(null);
+    lastQuestionRef.current = text;
+    if (!opts?.continueToken) {
+      setQuestion("");
+      setTurns((prev) => [...prev, { id: `u-${Date.now()}`, role: "user", content: text }]);
+    }
+
+    const controller = new AbortController();
+    abortRef.current = controller;
+    const liveSources: SourceDrawerItem[] = [];
+    let provenance: ProvenanceSummary | undefined;
+    let finalAnswer = "";
+    let artifactId: string | undefined;
+    let evidenceState: string | undefined;
+    let assumptions: string[] | undefined;
+    let unresolvedQuestions: string[] | undefined;
+    let needsMoreDocuments = false;
+
     try {
       const res = await fetch(`/api/v1/matters/${matterId}/ask`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: q, conversationId, mode: "ask" }),
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error?.message ?? USER_FACING_ASK_ERROR);
-      if (data.run || data.mode === "task") {
-        router.push(`/app/cases/${matterId}/work`);
-        return;
-      }
-      const qa = data.qa ?? data;
-      const answer = qa.answer;
-      const sources = sourcesFromAnswer(answer?.sources);
-      const validation = (qa.artifact?.validation ?? {}) as Record<string, unknown>;
-      setTurns((prev) => [
-        ...prev,
-        {
-          id: qa.artifact?.id ?? `a-${Date.now()}`,
-          role: "assistant",
-          content: answer?.answer ?? "No answer returned.",
-          evidenceState: answer?.evidenceState,
-          sources: sources.length ? sources : undefined,
-          assumptions: answer?.assumptions,
-          unresolvedQuestions: answer?.unresolvedQuestions,
-          artifactId: qa.artifact?.id,
-          needsMoreDocuments: Boolean(qa.needsMoreDocuments ?? validation.needsMoreDocuments),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "text/event-stream",
         },
-      ]);
+        signal: controller.signal,
+        body: JSON.stringify({
+          question: text,
+          conversationId,
+          mode: "ask",
+          sourceScope,
+          stream: true,
+          ...(opts?.continueToken ? { continueToken: opts.continueToken } : {}),
+        }),
+      });
+
+      const contentType = res.headers.get("content-type") ?? "";
+      if (!res.ok) {
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error?.message ?? USER_FACING_ASK_ERROR);
+      }
+
+      if (contentType.includes("text/event-stream")) {
+        await consumeAskSse(res, (event) => {
+          setStreamEvents((prev) => [...prev, event]);
+          if (event.type === "text_delta") {
+            setLiveAnswer((prev) => prev + event.text);
+            finalAnswer += event.text;
+          }
+          if (event.type === "source_added") {
+            const item = streamSourceToDrawerItem(event);
+            liveSources.push(item);
+            setDrawerItems([...liveSources]);
+            setDrawerOpen(true);
+          }
+          if (event.type === "provenance_ready") {
+            provenance = event.provenance;
+          }
+          if (event.type === "generation_completed") {
+            finalAnswer = event.answer;
+            artifactId = event.artifactId;
+            provenance = event.provenance;
+          }
+          if (event.type === "continue_available") {
+            setContinueToken(event.continueToken);
+          }
+          if (event.type === "generation_failed") {
+            setError(event.message || USER_FACING_ASK_ERROR);
+          }
+        });
+      } else {
+        const data = await res.json();
+        if (data.run || data.mode === "task") {
+          router.push(`/app/cases/${matterId}/work`);
+          return;
+        }
+        const qa = data.qa ?? data;
+        const answer = qa.answer;
+        finalAnswer = answer?.answer ?? "No answer returned.";
+        evidenceState = answer?.evidenceState;
+        assumptions = answer?.assumptions;
+        unresolvedQuestions = answer?.unresolvedQuestions;
+        artifactId = qa.artifact?.id;
+        provenance = qa.provenance ?? qa.artifact?.validation?.provenance;
+        needsMoreDocuments = Boolean(qa.needsMoreDocuments);
+        liveSources.push(...sourcesFromAnswer(answer?.sources));
+      }
+
+      if (finalAnswer || liveSources.length || provenance) {
+        setTurns((prev) => [
+          ...prev,
+          {
+            id: artifactId ?? `a-${Date.now()}`,
+            role: "assistant",
+            content: finalAnswer || liveAnswer || "[Generation stopped]",
+            evidenceState,
+            sources: liveSources.length ? liveSources : undefined,
+            assumptions,
+            unresolvedQuestions,
+            artifactId,
+            needsMoreDocuments,
+            provenance,
+          },
+        ]);
+      }
       requestAnimationFrame(() => {
         threadRef.current?.scrollTo({ top: threadRef.current.scrollHeight, behavior: "smooth" });
       });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed");
+      if (controller.signal.aborted) {
+        setTurns((prev) => [
+          ...prev,
+          {
+            id: `stopped-${Date.now()}`,
+            role: "assistant",
+            content: liveAnswer || "[Generation stopped]",
+            sources: liveSources.length ? liveSources : undefined,
+          },
+        ]);
+      } else {
+        setError(err instanceof Error ? err.message : "Failed");
+      }
     } finally {
+      abortRef.current = null;
       setBusy(false);
+      setLiveAnswer("");
+      setStreamEvents([]);
     }
   }
 
@@ -274,6 +466,11 @@ export default function CaseChatThreadPage() {
                     <EvidenceStateBadge state={t.evidenceState} />
                   </div>
                 ) : null}
+                {t.role === "assistant" && t.provenance ? (
+                  <div className="mb-2">
+                    <ProvenanceBadge provenance={t.provenance} />
+                  </div>
+                ) : null}
                 <p className="whitespace-pre-wrap">{t.content}</p>
                 {isInsufficient(t.evidenceState) ? (
                   <p className="mt-2 rounded border border-line bg-black/[0.02] px-3 py-2 text-xs text-ink/65">
@@ -344,14 +541,42 @@ export default function CaseChatThreadPage() {
                 ) : null}
               </div>
             ))}
+            {busy ? (
+              <div className="mr-4 space-y-2 rounded-lg border border-line bg-white px-4 py-3 text-sm shadow-sm">
+                <AskProgress events={streamEvents} />
+                {liveAnswer ? (
+                  <p className="whitespace-pre-wrap text-ink/80">{liveAnswer}</p>
+                ) : null}
+              </div>
+            ) : null}
+            {continueToken && !busy ? (
+              <div className="flex items-center gap-2">
+                <Button
+                  type="button"
+                  variant="secondary"
+                  onClick={() => void send({ continueToken, questionOverride: lastQuestionRef.current })}
+                >
+                  Continue generating
+                </Button>
+              </div>
+            ) : null}
           </div>
           <div className="sticky bottom-0 border-t border-line bg-white p-3">
             <ChatComposer
               value={question}
               onChange={setQuestion}
-              onSubmit={send}
+              onSubmit={() => void send()}
               busy={busy}
               placeholder="Ask Nyaya about this Case…"
+              sourceScope={sourceScope}
+              onSourceScopeChange={setSourceScope}
+              stopSlot={
+                busy ? (
+                  <Button type="button" variant="ghost" onClick={stopGenerating}>
+                    Stop generating
+                  </Button>
+                ) : null
+              }
             />
           </div>
         </div>
@@ -361,7 +586,7 @@ export default function CaseChatThreadPage() {
         onClose={() => setDrawerOpen(false)}
         items={drawerItems}
         activeId={drawerActiveId}
-        title="Case sources"
+        title="Sources"
       />
     </div>
   );

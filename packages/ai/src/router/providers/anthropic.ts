@@ -2,10 +2,29 @@ import type { AiGenerateRequest, AiGenerateResult, AIProvider } from "../../prov
 import { ProviderError } from "../errors";
 import { fetchProviderWithRetry, requestAbortSignal, readResponseJson } from "../http";
 import { toAnthropicBody } from "../messages";
+import { assertNoSilentWebTools } from "../../provider-web-guard";
 
 const DEFAULT_BASE = "https://api.anthropic.com";
 const ANTHROPIC_VERSION = "2023-06-01";
 const DEFAULT_MAX_TOKENS = 4096;
+
+export function buildAnthropicMessagesBody(params: {
+  model: string;
+  messages: AiGenerateRequest["messages"];
+  temperature?: number;
+  maxTokens?: number;
+}) {
+  const { system, messages } = toAnthropicBody(params.messages);
+  const body = {
+    model: params.model,
+    max_tokens: params.maxTokens ?? DEFAULT_MAX_TOKENS,
+    temperature: params.temperature ?? 0,
+    ...(system ? { system } : {}),
+    messages,
+  };
+  assertNoSilentWebTools({ provider: "anthropic", body });
+  return body;
+}
 
 export class AnthropicProvider implements AIProvider {
   readonly name = "anthropic";
@@ -29,7 +48,6 @@ export class AnthropicProvider implements AIProvider {
         message: "Anthropic model id is not configured",
       });
     }
-    const { system, messages } = toAnthropicBody(request.messages);
     const baseUrl = this.config.baseUrl ?? DEFAULT_BASE;
     const response = await fetchProviderWithRetry(
       `${baseUrl}/v1/messages`,
@@ -40,13 +58,13 @@ export class AnthropicProvider implements AIProvider {
           "anthropic-version": ANTHROPIC_VERSION,
           "content-type": "application/json",
         },
-        body: JSON.stringify({
-          model,
-          max_tokens: DEFAULT_MAX_TOKENS,
-          temperature: request.temperature ?? 0,
-          ...(system ? { system } : {}),
-          messages,
-        }),
+        body: JSON.stringify(
+          buildAnthropicMessagesBody({
+            model,
+            messages: request.messages,
+            temperature: request.temperature,
+          }),
+        ),
         signal: requestAbortSignal(request),
       },
       { provider: this.name, fetchImpl: this.config.fetchImpl },

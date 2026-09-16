@@ -5,10 +5,14 @@ import { useParams } from "next/navigation";
 import { Button, cx } from "@nyayagrid/ui";
 import { openMatterDocument } from "@/lib/document-open";
 
+export type SourceDrawerCategory = "case_evidence" | "legal_authority" | "web";
+
 export type SourceDrawerItem = {
   id: string;
   title: string;
   classLabel: string;
+  /** Explicit category for grouping. Web must never appear under Case evidence. */
+  category?: SourceDrawerCategory;
   subtitle?: string;
   quote?: string;
   href?: string;
@@ -16,7 +20,25 @@ export type SourceDrawerItem = {
   quoteVerified?: boolean;
   chunkId?: string;
   documentId?: string;
+  url?: string;
+  retrievedAt?: string;
 };
+
+const CATEGORY_ORDER: SourceDrawerCategory[] = ["case_evidence", "legal_authority", "web"];
+
+const CATEGORY_HEADINGS: Record<SourceDrawerCategory, string> = {
+  case_evidence: "Case evidence",
+  legal_authority: "Legal authorities",
+  web: "Web",
+};
+
+function resolveCategory(item: SourceDrawerItem): SourceDrawerCategory {
+  if (item.category) return item.category;
+  const label = item.classLabel.toLowerCase();
+  if (label.includes("web") || item.url || item.documentId?.startsWith("web:")) return "web";
+  if (label.includes("legal") || label.includes("authority")) return "legal_authority";
+  return "case_evidence";
+}
 
 export function SourceDrawer({
   open,
@@ -70,60 +92,87 @@ export function SourceDrawer({
         </div>
         <div className="flex-1 overflow-y-auto p-4">
           {children}
-          {items?.map((item, i) => (
-            <article
-              key={item.id}
-              className={cx(
-                "mb-3 rounded-lg border border-line p-3 text-sm",
-                activeId === item.id && "border-accent bg-accent-soft/30",
-              )}
-            >
-              <p className="text-[10px] font-semibold uppercase tracking-wide text-ink/45">
-                Source {i + 1} · {item.classLabel}
-              </p>
-              <h3 className="mt-1 font-semibold text-ink">{item.title}</h3>
-              {item.subtitle ? <p className="mt-0.5 text-xs text-ink/55">{item.subtitle}</p> : null}
-              {item.quote ? (
-                <blockquote className="mt-2 border-l-2 border-line pl-3 text-ink/75">
-                  {item.quote}
-                </blockquote>
-              ) : null}
-              {item.quoteVerified ? (
-                <p className="mt-1 text-[10px] font-semibold uppercase tracking-wide text-accent">
-                  Verbatim in cited chunk
-                </p>
-              ) : null}
-              {item.documentId && matterId ? (
-                <div className="mt-2 flex flex-wrap gap-3">
-                  <button
-                    type="button"
-                    className="text-xs font-semibold text-accent underline"
-                    onClick={() => {
-                      void openOriginal(item.documentId!, "inline");
-                    }}
+          {CATEGORY_ORDER.map((category) => {
+            const group = (items ?? []).filter((item) => resolveCategory(item) === category);
+            if (group.length === 0) return null;
+            return (
+              <section key={category} className="mb-4">
+                <h3 className="mb-2 text-[11px] font-semibold uppercase tracking-wide text-ink/45">
+                  {CATEGORY_HEADINGS[category]}
+                </h3>
+                {group.map((item, i) => (
+                  <article
+                    key={item.id}
+                    className={cx(
+                      "mb-3 rounded-lg border border-line p-3 text-sm",
+                      activeId === item.id && "border-accent bg-accent-soft/30",
+                    )}
                   >
-                    Open original
-                  </button>
-                  <button
-                    type="button"
-                    className="text-xs font-semibold text-accent underline"
-                    onClick={() => {
-                      void openOriginal(item.documentId!, "attachment");
-                    }}
-                  >
-                    Download
-                  </button>
-                </div>
-              ) : item.href ? (
-                <a
-                  href={item.href}
-                  className="mt-2 inline-block text-xs font-semibold text-accent underline"
-                >
-                  Open document
-                </a>
-              ) : null}
-            </article>
-          ))}
+                    <p className="text-[10px] font-semibold uppercase tracking-wide text-ink/45">
+                      Source {i + 1} · {item.classLabel || CATEGORY_HEADINGS[category]}
+                    </p>
+                    <h4 className="mt-1 font-semibold text-ink">{item.title}</h4>
+                    {item.subtitle ? (
+                      <p className="mt-0.5 text-xs text-ink/55">{item.subtitle}</p>
+                    ) : null}
+                    {item.retrievedAt ? (
+                      <p className="mt-0.5 text-[10px] text-ink/45">
+                        Retrieved {new Date(item.retrievedAt).toLocaleDateString()}
+                      </p>
+                    ) : null}
+                    {item.quote ? (
+                      <blockquote className="mt-2 border-l-2 border-line pl-3 text-ink/75">
+                        {item.quote}
+                      </blockquote>
+                    ) : null}
+                    {item.quoteVerified ? (
+                      <p className="mt-1 text-[10px] font-semibold uppercase tracking-wide text-accent">
+                        Verbatim in cited chunk
+                      </p>
+                    ) : null}
+                    {category === "web" && (item.url || item.href) ? (
+                      <a
+                        href={item.url || item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-block text-xs font-semibold text-accent underline"
+                      >
+                        Open web source
+                      </a>
+                    ) : item.documentId && matterId && category === "case_evidence" ? (
+                      <div className="mt-2 flex flex-wrap gap-3">
+                        <button
+                          type="button"
+                          className="text-xs font-semibold text-accent underline"
+                          onClick={() => {
+                            void openOriginal(item.documentId!, "inline");
+                          }}
+                        >
+                          Open original
+                        </button>
+                        <button
+                          type="button"
+                          className="text-xs font-semibold text-accent underline"
+                          onClick={() => {
+                            void openOriginal(item.documentId!, "attachment");
+                          }}
+                        >
+                          Download
+                        </button>
+                      </div>
+                    ) : item.href ? (
+                      <a
+                        href={item.href}
+                        className="mt-2 inline-block text-xs font-semibold text-accent underline"
+                      >
+                        Open document
+                      </a>
+                    ) : null}
+                  </article>
+                ))}
+              </section>
+            );
+          })}
           {!children && (!items || items.length === 0) ? (
             <p className="text-sm text-ink/55">No sources for this item.</p>
           ) : null}

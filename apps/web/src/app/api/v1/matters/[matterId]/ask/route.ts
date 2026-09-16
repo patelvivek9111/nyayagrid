@@ -2,7 +2,9 @@ import { askOrTaskSchema } from "@nyayagrid/validation";
 import { requireMatterAccess, writeAuditEvent } from "@nyayagrid/permissions";
 import { NyayaOrchestrator } from "@nyayagrid/agents";
 import type { Database } from "@nyayagrid/database";
+import type { AskStreamListener, SourceScope } from "@nyayagrid/ai";
 import { isFeatureEnabled, recordUsage } from "@nyayagrid/platform";
+import { createAskSseResponse } from "@nyayagrid/search";
 import { requireUser } from "@/lib/auth";
 import { assertFeatureEnabled } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
@@ -21,6 +23,10 @@ async function answerDirectly(params: {
   conversationId?: string | null;
   executionStrategy?: "auto" | "fast" | "deep";
   modelId?: string;
+  sourceScope?: SourceScope;
+  signal?: AbortSignal;
+  onEvent?: AskStreamListener;
+  continueToken?: string;
 }) {
   const result = await askNyayaAboutMatter({
     db: params.db,
@@ -31,8 +37,13 @@ async function answerDirectly(params: {
     question: params.question,
     conversationId: params.conversationId,
     ai: getAI(),
+    embeddings: getEmbeddings(),
     executionStrategy: params.executionStrategy,
     modelId: params.modelId,
+    sourceScope: params.sourceScope ?? "case",
+    signal: params.signal,
+    onEvent: params.onEvent,
+    continueToken: params.continueToken,
   });
 
   await writeAuditEvent(params.db, {
@@ -46,6 +57,7 @@ async function answerDirectly(params: {
       evidenceState: result.answer.evidenceState,
       retrievedCount: result.retrieved.length,
       provider: result.artifact?.provider,
+      sourceScope: result.sourceScope ?? params.sourceScope ?? "case",
     },
   });
 
@@ -76,6 +88,10 @@ export async function POST(request: Request, { params }: Params) {
       assertFeatureEnabled("agents");
     }
     const mayCreateRun = agentsOn && mode !== "ask";
+    const sourceScope: SourceScope = body.sourceScope ?? "case";
+    const wantsStream =
+      body.stream === true ||
+      (request.headers.get("accept") ?? "").includes("text/event-stream");
 
     const { matter } = await requireMatterAccess(db, {
       userId: user.id,
@@ -94,6 +110,24 @@ export async function POST(request: Request, { params }: Params) {
     }
 
     if (mode === "ask" || !agentsOn) {
+      if (wantsStream) {
+        return createAskSseResponse(async (emit) => {
+          await answerDirectly({
+            db,
+            organizationId: matter.organizationId,
+            matterId,
+            userId: user.id,
+            question: body.question,
+            conversationId: body.conversationId,
+            executionStrategy: body.executionStrategy,
+            modelId: body.modelId,
+            sourceScope,
+            signal: request.signal,
+            onEvent: emit,
+            continueToken: body.continueToken,
+          });
+        });
+      }
       const qa = await answerDirectly({
         db,
         organizationId: matter.organizationId,
@@ -103,6 +137,9 @@ export async function POST(request: Request, { params }: Params) {
         conversationId: body.conversationId,
         executionStrategy: body.executionStrategy,
         modelId: body.modelId,
+        sourceScope,
+        signal: request.signal,
+        continueToken: body.continueToken,
       });
       return jsonOk({ mode: "qa", qa });
     }
@@ -122,6 +159,24 @@ export async function POST(request: Request, { params }: Params) {
     });
 
     if (outcome.mode === "qa") {
+      if (wantsStream) {
+        return createAskSseResponse(async (emit) => {
+          await answerDirectly({
+            db,
+            organizationId: matter.organizationId,
+            matterId,
+            userId: user.id,
+            question: body.question,
+            conversationId: body.conversationId,
+            executionStrategy: body.executionStrategy,
+            modelId: body.modelId,
+            sourceScope,
+            signal: request.signal,
+            onEvent: emit,
+            continueToken: body.continueToken,
+          });
+        });
+      }
       const qa = await answerDirectly({
         db,
         organizationId: matter.organizationId,
@@ -131,6 +186,9 @@ export async function POST(request: Request, { params }: Params) {
         conversationId: body.conversationId,
         executionStrategy: body.executionStrategy,
         modelId: body.modelId,
+        sourceScope,
+        signal: request.signal,
+        continueToken: body.continueToken,
       });
       return jsonOk({ mode: "qa", intent: outcome.intent, qa });
     }

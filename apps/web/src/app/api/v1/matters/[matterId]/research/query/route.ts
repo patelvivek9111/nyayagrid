@@ -3,7 +3,7 @@ import { requireMatterAccess } from "@nyayagrid/permissions";
 import { createResearchSession, listResearchSessions, runResearchQuery } from "@nyayagrid/research";
 import { MockAIProvider, MockEmbeddingProvider } from "@nyayagrid/ai";
 import { requireUser } from "@/lib/auth";
-import { handleRouteError, jsonOk } from "@/lib/http";
+import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
 
 type Params = { params: Promise<{ matterId: string }> };
 
@@ -45,6 +45,16 @@ export async function POST(request: Request, { params }: Params) {
       capability: "research.run",
     });
     const body = runResearchQuerySchema.parse(await request.json());
+    const sourceScope =
+      body.sourceScope ??
+      (body.includeMatterContext === false ? "legal_research" : "case_plus_legal");
+    if (sourceScope === "web") {
+      return jsonError(
+        "VALIDATION_ERROR",
+        "Web Research belongs on matter Ask with sourceScope=web",
+        400,
+      );
+    }
 
     const session = await getOrCreateDefaultSession({
       db,
@@ -56,6 +66,7 @@ export async function POST(request: Request, { params }: Params) {
 
     // Matter context (verified facts/graph/memory only — never raw matter documents) is loaded
     // internally by runResearchQuery when includeMatterContext is on and matterId is set.
+    // Web is never enabled on this corpus path.
     const result = await runResearchQuery({
       db,
       organizationId: matter.organizationId,
@@ -65,12 +76,26 @@ export async function POST(request: Request, { params }: Params) {
       question: body.queryText,
       filters: body.filters,
       limit: body.limit,
-      includeMatterContext: body.includeMatterContext !== false,
+      includeMatterContext: sourceScope === "case_plus_legal" || body.includeMatterContext === true,
+      executionStrategy: body.executionStrategy,
+      modelId: body.modelId,
       embeddings:
         process.env.EMBEDDING_PROVIDER === "openai" ? undefined : new MockEmbeddingProvider(),
       ai: process.env.AI_PROVIDER === "openai" ? undefined : new MockAIProvider(),
     });
-    return jsonOk({ ...result, sessionId: session.id }, { status: 201 });
+    return jsonOk(
+      {
+        ...result,
+        sessionId: session.id,
+        sourceScope,
+        provenance: {
+          sourceScope,
+          headline: sourceScope === "case_plus_legal" ? "Case + Legal research" : "Legal research",
+          detail: "NyayaGrid authorities · No general web sources",
+        },
+      },
+      { status: 201 },
+    );
   } catch (error) {
     return handleRouteError(error);
   }

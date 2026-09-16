@@ -91,6 +91,8 @@ export type RouterRequestContext = {
    * (per generate audit).
    */
   usageActionId?: string;
+  /** Explicit Ask/Research source boundary for telemetry (never inferred from prompt). */
+  sourceScope?: "case" | "legal_research" | "web" | "case_plus_legal";
   riskSignals?: RiskSignal[];
   /** Approximate input size in tokens (chars/4 if unknown). */
   contextTokensEstimate?: number;

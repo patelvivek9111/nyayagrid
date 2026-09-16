@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, type FormEvent, type ReactNode } from "react";
+import type { SourceScope } from "@nyayagrid/ai";
 import { Button, cx } from "@nyayagrid/ui";
+import { SourceScopeSelector } from "./source-scope-selector";
 
 export type CaseOption = { id: string; title: string; matterNumber?: string };
 
@@ -36,6 +38,9 @@ export function ChatComposer({
   onRunTask,
   cases = [],
   footer,
+  sourceScope,
+  onSourceScopeChange,
+  stopSlot,
 }: {
   value: string;
   onChange: (v: string) => void;
@@ -49,6 +54,10 @@ export function ChatComposer({
   onRunTask?: () => void;
   cases?: CaseOption[];
   footer?: ReactNode;
+  sourceScope?: SourceScope;
+  onSourceScopeChange?: (scope: SourceScope) => void;
+  /** Slot for Stop generating / Continue controls while busy. */
+  stopSlot?: ReactNode;
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -61,6 +70,15 @@ export function ChatComposer({
   return (
     <form onSubmit={handleSubmit} className="w-full">
       {caseChip ? <div className="mb-2 flex flex-wrap gap-2">{caseChip}</div> : null}
+      {sourceScope && onSourceScopeChange ? (
+        <div className="mb-2">
+          <SourceScopeSelector
+            value={sourceScope}
+            onChange={onSourceScopeChange}
+            disabled={disabled || busy}
+          />
+        </div>
+      ) : null}
       <div className="rounded-xl border border-line bg-white shadow-sm focus-within:border-accent/40">
         <textarea
           className="min-h-[72px] w-full resize-y rounded-t-xl border-0 bg-transparent px-4 py-3 text-sm outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent"
@@ -159,9 +177,12 @@ export function ChatComposer({
               </div>
             ) : null}
           </div>
-          <Button type="submit" disabled={disabled || busy || !value.trim()}>
-            {busy ? "Working…" : "Send"}
-          </Button>
+          <div className="flex items-center gap-2">
+            {stopSlot}
+            <Button type="submit" disabled={disabled || busy || !value.trim()}>
+              {busy ? "Working…" : "Send"}
+            </Button>
+          </div>
         </div>
       </div>
       {footer ? <div className="mt-2">{footer}</div> : null}

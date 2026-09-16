@@ -31,12 +31,11 @@ describe("usageActionId customer-action wiring", () => {
     expect(compare).toContain("usageActionId: newUsageActionId()");
   });
 
-  it("persists usageActionId from routing audits into ai_usage_events", () => {
-    const persist = read("apps/web/src/lib/persist-routing-usage.ts");
-    expect(persist).toContain("usageActionId: audit.usageActionId");
-    const usage = read("packages/platform/src/usage.ts");
-    expect(usage).toContain("usageActionId: event.usageActionId");
-    const schema = read("packages/database/src/schema/phase9.ts");
-    expect(schema).toContain('usageActionId: uuid("usage_action_id")');
+  it("streams reuse one usageActionId (no per-chunk customer actions)", () => {
+    const ask = read("packages/search/src/nyaya.ts");
+    const mintCount = (ask.match(/newUsageActionId\(\)/g) ?? []).length;
+    expect(mintCount).toBe(1);
+    expect(ask).toContain("One usageActionId for the whole customer Ask action");
+    expect(ask).toContain("sourceScope");
   });
 });

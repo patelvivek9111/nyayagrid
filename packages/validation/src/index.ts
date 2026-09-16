@@ -148,6 +148,15 @@ export const executionStrategySchema = z.enum(["auto", "fast", "deep"]);
 
 /** Ask-or-task entry point: `mode` controls whether the request is routed as Q&A, a forced agent
  * run, or auto-classified. Defaults to "auto" so existing ask-only callers keep working. */
+export const sourceScopeSchema = z.enum([
+  "case",
+  "legal_research",
+  "web",
+  "case_plus_legal",
+]);
+
+export type SourceScopeInput = z.infer<typeof sourceScopeSchema>;
+
 export const askOrTaskSchema = z.object({
   question: z.string().trim().min(3).max(4000),
   conversationId: z.string().uuid().optional().nullable(),
@@ -159,6 +168,15 @@ export const askOrTaskSchema = z.object({
     .trim()
     .regex(/^[a-z]+:[A-Za-z0-9._-]+$/, "modelId must be provider:modelId")
     .optional(),
+  /**
+   * Explicit source boundary. Never infer Web from prompt wording.
+   * Default for matter Ask is applied by the route (`case`) when omitted.
+   */
+  sourceScope: sourceScopeSchema.optional(),
+  /** Prefer SSE streaming transport when the client supports it. */
+  stream: z.boolean().optional(),
+  /** Resume generation after a safe interruption (validated server-side). */
+  continueToken: z.string().trim().min(8).max(200).optional(),
 });
 
 export const runAgentTaskSchema = z.object({
@@ -586,6 +604,9 @@ export const runResearchQuerySchema = z.object({
     .trim()
     .regex(/^[a-z]+:[A-Za-z0-9._-]+$/)
     .optional(),
+  /** Legal research defaults to legal_research; case_plus_legal when includeMatterContext. */
+  sourceScope: sourceScopeSchema.optional(),
+  stream: z.boolean().optional(),
 });
 
 export const summarizeAuthoritySchema = z.object({

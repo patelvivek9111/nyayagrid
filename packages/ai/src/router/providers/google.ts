@@ -2,8 +2,26 @@ import type { AiGenerateRequest, AiGenerateResult, AIProvider } from "../../prov
 import { ProviderError } from "../errors";
 import { fetchProviderWithRetry, requestAbortSignal, readResponseJson } from "../http";
 import { toGoogleContents } from "../messages";
+import { assertNoSilentWebTools } from "../../provider-web-guard";
 
 const DEFAULT_BASE = "https://generativelanguage.googleapis.com/v1beta";
+
+export function buildGoogleGenerateContentBody(params: {
+  messages: AiGenerateRequest["messages"];
+  temperature?: number;
+}) {
+  const { systemInstruction, contents } = toGoogleContents(params.messages);
+  const body = {
+    ...(systemInstruction ? { systemInstruction } : {}),
+    contents,
+    generationConfig: {
+      temperature: params.temperature ?? 0,
+      responseMimeType: "application/json",
+    },
+  };
+  assertNoSilentWebTools({ provider: "google", body });
+  return body;
+}
 
 export class GoogleProvider implements AIProvider {
   readonly name = "google";
@@ -27,7 +45,6 @@ export class GoogleProvider implements AIProvider {
         message: "Google model id is not configured",
       });
     }
-    const { systemInstruction, contents } = toGoogleContents(request.messages);
     const baseUrl = this.config.baseUrl ?? DEFAULT_BASE;
     const url = `${baseUrl}/models/${encodeURIComponent(model)}:generateContent`;
     const response = await fetchProviderWithRetry(
@@ -38,14 +55,12 @@ export class GoogleProvider implements AIProvider {
           "Content-Type": "application/json",
           "x-goog-api-key": this.config.apiKey,
         },
-        body: JSON.stringify({
-          ...(systemInstruction ? { systemInstruction } : {}),
-          contents,
-          generationConfig: {
-            temperature: request.temperature ?? 0,
-            responseMimeType: "application/json",
-          },
-        }),
+        body: JSON.stringify(
+          buildGoogleGenerateContentBody({
+            messages: request.messages,
+            temperature: request.temperature,
+          }),
+        ),
         signal: requestAbortSignal(request),
       },
       { provider: this.name, fetchImpl: this.config.fetchImpl },
