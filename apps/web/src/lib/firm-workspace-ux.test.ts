@@ -187,6 +187,7 @@ describe("firm workspace pages stay presentation-only", () => {
     expect(settings).toContain("Nyaya activity");
     expect(settings).toContain("{account.plan.name}");
     expect(settings).not.toContain("estimatedCostCents");
+    expect(settings).not.toContain('from "@nyayagrid/platform"');
     expect(settings).not.toContain("sk_");
     expect(settings).toContain("Assign to case");
     expect(settings).toContain('access: "read"');

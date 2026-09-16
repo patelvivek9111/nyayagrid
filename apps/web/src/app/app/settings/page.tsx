@@ -17,7 +17,7 @@ import {
 } from "@/components/ux/firm-workspace";
 import { SignOutControl } from "@/components/sign-out-control";
 import { inviteStatusLabel, roleLabel } from "@/lib/firm-workspace-ux";
-import { formatByteSize, formatTokenCount } from "@nyayagrid/platform";
+import { formatByteSize, formatTokenCount } from "@nyayagrid/platform/usage-format";
 
 type InviteRow = {
   id: string;
