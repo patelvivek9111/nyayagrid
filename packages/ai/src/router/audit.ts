@@ -17,6 +17,7 @@ export type RoutingAuditRecord = {
   auditVersion: typeof ROUTING_AUDIT_VERSION;
   runId: string;
   organizationId?: string;
+  userId?: string;
   matterId?: string;
   subsystem: RouterSubsystem;
   strategyRequested: RoutingMode;

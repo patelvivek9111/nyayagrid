@@ -8,6 +8,7 @@ import { FilterChipBar, IntelligenceDialog } from "@/components/ux/case-intellig
 import {
   FirmEmpty,
   FirmError,
+  FirmLoading,
   FirmNotice,
   FirmPageHeader,
   FirmRow,
@@ -33,6 +34,7 @@ export default function InboxPage() {
   const [fileMatterId, setFileMatterId] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [captureOpen, setCaptureOpen] = useState(false);
   const [tab, setTab] = useState("pending");
 
@@ -50,8 +52,14 @@ export default function InboxPage() {
   }
 
   useEffect(() => {
-    if (!organizationId) return;
-    load(organizationId).catch((err) => setError(err instanceof Error ? err.message : "Failed"));
+    if (!organizationId) {
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    load(organizationId)
+      .catch((err) => setError(err instanceof Error ? err.message : "Failed"))
+      .finally(() => setLoading(false));
   }, [organizationId]);
 
   async function capture(event: FormEvent) {
@@ -172,7 +180,9 @@ export default function InboxPage() {
           </label>
         ) : null}
 
-        {visible.length === 0 ? (
+        {loading ? (
+          <FirmLoading label="Loading inbox…" />
+        ) : visible.length === 0 ? (
           <FirmEmpty
             title={tab === "filed" ? "No filed emails yet." : "No captured emails yet."}
             description={

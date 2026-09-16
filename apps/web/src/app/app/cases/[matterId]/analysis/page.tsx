@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Badge, Button, Panel } from "@nyayagrid/ui";
+import { ErrorState } from "@/components/ux";
+import { humanizeKey } from "@/lib/plain-labels";
 
 type DocumentRow = {
   id: string;
@@ -14,6 +16,13 @@ type DocumentRow = {
 
 const TABS = ["contracts", "comparisons", "depositions", "evidence", "discovery"] as const;
 type Tab = (typeof TABS)[number];
+const TAB_LABELS: Record<Tab, string> = {
+  contracts: "Contracts",
+  comparisons: "Compare",
+  depositions: "Depositions",
+  evidence: "Evidence",
+  discovery: "Discovery",
+};
 
 async function fetchJson(input: string, init?: RequestInit) {
   const res = await fetch(input, {
@@ -21,7 +30,7 @@ async function fetchJson(input: string, init?: RequestInit) {
     headers: { "Content-Type": "application/json", ...(init?.headers ?? {}) },
   });
   const json = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(json?.error?.message ?? "Request failed");
+  if (!res.ok) throw new Error(json?.error?.message ?? "NyayaGrid could not complete this request.");
   return json;
 }
 
@@ -41,17 +50,28 @@ export default function MatterAnalysisPage() {
 
   return (
     <>
-      {error ? <p className="mb-3 text-sm text-[var(--ng-danger)]">{error}</p> : null}
-      <div className="mb-4 flex flex-wrap gap-2">
+      {error ? (
+        <div className="mb-3">
+          <ErrorState message={error} />
+        </div>
+      ) : null}
+      <p className="mb-3 text-sm text-ink/60">
+        Review contracts, depositions, and evidence for this case. Findings stay suggested until you
+        review them.
+      </p>
+      <div className="mb-4 flex flex-wrap gap-2" role="tablist" aria-label="Analysis views">
         {TABS.map((t) => (
           <button
             key={t}
+            type="button"
+            role="tab"
+            aria-selected={tab === t}
             onClick={() => setTab(t)}
-            className={`rounded-md border px-3 py-1.5 text-sm font-semibold capitalize ${
+            className={`rounded-md border px-3 py-1.5 text-sm font-semibold ${
               tab === t ? "border-accent bg-accent-soft/50" : "border-line bg-white"
             }`}
           >
-            {t}
+            {TAB_LABELS[t]}
           </button>
         ))}
       </div>
@@ -82,11 +102,12 @@ function DocumentSelect({
 }) {
   return (
     <select
+      aria-label="Case document"
       className="w-full rounded border border-line px-2 py-1.5 text-sm"
       value={value}
       onChange={(e) => onChange(e.target.value)}
     >
-      <option value="">Select document…</option>
+      <option value="">Select a document…</option>
       {documents.map((d) => (
         <option key={d.id} value={d.id} disabled={!d.latestVersionId}>
           {d.title} {d.latestVersionId ? "" : "(not ready)"}
@@ -216,38 +237,47 @@ function ContractsSection({
           <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink/60">
             Past analyses
           </p>
-          <ul className="space-y-2 text-sm">
-            {analyses.map((a) => (
-              <li key={a.id}>
-                <button
-                  className={`w-full rounded border px-2 py-1.5 text-left ${
-                    selected?.analysis.id === a.id
-                      ? "border-accent bg-accent-soft/50"
-                      : "border-line bg-white"
-                  }`}
-                  onClick={() => selectAnalysis(a.id)}
-                >
-                  {a.summary?.slice(0, 60) ?? "Contract analysis"}
-                </button>
-              </li>
-            ))}
-          </ul>
+          {analyses.length === 0 ? (
+            <p className="text-sm text-ink/60">
+              No contract analyses yet. Select a ready document to begin.
+            </p>
+          ) : (
+            <ul className="space-y-2 text-sm">
+              {analyses.map((a) => (
+                <li key={a.id}>
+                  <button
+                    type="button"
+                    className={`w-full rounded border px-2 py-1.5 text-left ${
+                      selected?.analysis.id === a.id
+                        ? "border-accent bg-accent-soft/50"
+                        : "border-line bg-white"
+                    }`}
+                    onClick={() => selectAnalysis(a.id)}
+                  >
+                    {a.summary?.slice(0, 60) ?? "Contract analysis"}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </Panel>
 
       <Panel title="Analysis items">
         {!selected ? (
-          <p className="text-sm text-ink/70">Select an analysis to view items.</p>
+          <p className="text-sm text-ink/70">
+            Select a past analysis, or run a new one, to review suggested items.
+          </p>
         ) : (
           <ul className="space-y-3 text-sm">
             {selected.items.map((item: any) => (
               <li key={item.id} className="rounded border border-line p-3">
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-semibold">{item.title}</span>
-                  <Badge>{item.attention}</Badge>
+                  <Badge>{humanizeKey(item.attention)}</Badge>
                 </div>
                 <p className="mt-1 text-xs uppercase tracking-wide text-ink/50">
-                  {item.category} · {item.status}
+                  {humanizeKey(item.category)} · {humanizeKey(item.status)}
                 </p>
                 {item.originalText ? (
                   <div className="mt-2 rounded bg-black/[0.03] p-2 text-xs">
@@ -283,7 +313,7 @@ function ContractsSection({
 
       <Panel title="Redline suggestions">
         {!selected ? (
-          <p className="text-sm text-ink/70">Select an analysis first.</p>
+          <p className="text-sm text-ink/70">Select an analysis to generate redline suggestions.</p>
         ) : (
           <div className="space-y-3">
             <Button disabled={busy} onClick={generateRedlines}>
@@ -293,7 +323,7 @@ function ContractsSection({
               {redlines.map((r) => (
                 <li key={r.id} className="rounded border border-line p-3">
                   <div className="flex items-center justify-between">
-                    <Badge>{r.status}</Badge>
+                    <Badge>{humanizeKey(r.status)}</Badge>
                   </div>
                   <div className="mt-2 text-xs">
                     <p className="font-semibold text-ink/60">Current</p>
@@ -408,29 +438,39 @@ function ComparisonsSection({
           <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink/60">
             Past comparisons
           </p>
-          <ul className="space-y-2 text-sm">
-            {comparisons.map((c) => (
-              <li key={c.comparison.id}>
-                <button
-                  className={`w-full rounded border px-2 py-1.5 text-left ${
-                    selected?.comparison.id === c.comparison.id
-                      ? "border-accent bg-accent-soft/50"
-                      : "border-line bg-white"
-                  }`}
-                  onClick={() => selectComparison(c.comparison.id)}
-                >
-                  {c.comparison.summary?.slice(0, 60) ?? "Comparison"} · {c.changes.length}{" "}
-                  change(s)
-                </button>
-              </li>
-            ))}
-          </ul>
+          {comparisons.length === 0 ? (
+            <p className="text-sm text-ink/60">
+              No comparisons yet. Select two ready documents to compare.
+            </p>
+          ) : (
+            <ul className="space-y-2 text-sm">
+              {comparisons.map((c) => (
+                <li key={c.comparison.id}>
+                  <button
+                    type="button"
+                    className={`w-full rounded border px-2 py-1.5 text-left ${
+                      selected?.comparison.id === c.comparison.id
+                        ? "border-accent bg-accent-soft/50"
+                        : "border-line bg-white"
+                    }`}
+                    onClick={() => selectComparison(c.comparison.id)}
+                  >
+                    {c.comparison.summary?.slice(0, 60) ?? "Comparison"} · {c.changes.length}{" "}
+                    change{c.changes.length === 1 ? "" : "s"}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </Panel>
 
       <Panel title="Changes">
         {!selected ? (
-          <p className="text-sm text-ink/70">Select a comparison to view changes.</p>
+          <p className="text-sm text-ink/70">
+            Select a comparison to review document changes. Diffs are deterministic; the summary is
+            a suggestion until you verify it.
+          </p>
         ) : (
           <div className="space-y-3">
             <div className="flex flex-wrap items-center gap-2">
@@ -464,8 +504,8 @@ function ComparisonsSection({
               {selected.changes.map((c: any) => (
                 <li key={c.id} className="rounded border border-line p-3">
                   <div className="flex items-center justify-between">
-                    <Badge>{c.changeType}</Badge>
-                    <Badge>{c.attention}</Badge>
+                    <Badge>{humanizeKey(c.changeType)}</Badge>
+                    <Badge>{humanizeKey(c.attention)}</Badge>
                   </div>
                   {c.oldText ? (
                     <p className="mt-2 text-xs">
@@ -576,7 +616,7 @@ function DepositionsSection({
         </div>
         <div className="mt-4 border-t border-line pt-3">
           <p className="mb-2 text-xs text-ink/70">
-            Detect contradictions across all matter documents (or scope to the selected document).
+            Detect contradictions across case documents (or scope to the selected document).
           </p>
           <Button disabled={busy} variant="secondary" onClick={detectContradictions}>
             Detect contradictions
@@ -586,17 +626,21 @@ function DepositionsSection({
 
       <Panel title="Findings">
         {findings.length === 0 ? (
-          <p className="text-sm text-ink/70">No findings yet.</p>
+          <p className="text-sm text-ink/70">
+            No findings yet. Analyze a deposition or detect contradictions to populate this list.
+            Findings stay suggested until you review them.
+          </p>
         ) : (
           <ul className="space-y-3 text-sm">
             {findings.map((f) => (
               <li key={f.id} className="rounded border border-line p-3">
                 <div className="flex items-center justify-between gap-2">
                   <span className="font-semibold">{f.title}</span>
-                  <Badge>{f.attention}</Badge>
+                  <Badge>{humanizeKey(f.attention)}</Badge>
                 </div>
                 <p className="text-xs uppercase tracking-wide text-ink/50">
-                  {f.findingType} · {f.confidence} confidence · {f.status}
+                  {humanizeKey(f.findingType)} · {humanizeKey(f.confidence)} confidence ·{" "}
+                  {humanizeKey(f.status)}
                 </p>
                 {f.explanation ? <p className="mt-1">{f.explanation}</p> : null}
                 {f.status === "proposed" ? (
@@ -689,7 +733,9 @@ function EvidenceSection({
 
       <Panel title="Evidence matrix">
         {data.evidenceMatrix.issues.length === 0 ? (
-          <p className="text-sm text-ink/70">No verified facts or events to map yet.</p>
+          <p className="text-sm text-ink/70">
+            No verified facts or events to map yet. Review Timeline and Evidence first.
+          </p>
         ) : (
           <ul className="space-y-3 text-sm">
             {data.evidenceMatrix.issues.map((issue: any) => (
@@ -867,7 +913,9 @@ function DiscoverySection({
           Show only pending review
         </label>
         {items.length === 0 ? (
-          <p className="text-sm text-ink/70">No documents in the discovery queue.</p>
+          <p className="text-sm text-ink/70">
+            No documents in the discovery queue. Upload case files to begin review.
+          </p>
         ) : (
           <ul className="space-y-3 text-sm">
             {items.map(({ document, reviewState }: any) => (

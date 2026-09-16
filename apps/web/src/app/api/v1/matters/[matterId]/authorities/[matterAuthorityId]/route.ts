@@ -31,7 +31,7 @@ export async function PATCH(request: Request, { params }: Params) {
         ),
       )
       .limit(1);
-    if (!link) return jsonError("NOT_FOUND", "Matter authority not found", 404);
+    if (!link) return jsonError("NOT_FOUND", "Saved authority not found", 404);
 
     const matterAuthority = await updateMatterAuthorityStatus({
       db,

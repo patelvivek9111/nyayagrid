@@ -73,7 +73,7 @@ describe("First Case onboarding", () => {
     expect(appAsk).toContain("genericAskRedirect");
     expect(cases).toContain("isClientGuestRole");
     expect(cases).toContain('router.replace("/portal")');
-    expect(invite).toContain('href="/sign-in"');
+    expect(invite).toContain("/sign-in?returnTo=");
   });
 
   it("M. onboarding does not alter Review semantics", () => {
@@ -105,7 +105,7 @@ describe("First Case onboarding", () => {
   });
 
   it("zero-Case empty state tells the lawyer to create a Case", () => {
-    expect(cases).toContain("No Cases yet");
+    expect(cases).toContain("No cases yet");
     expect(cases).toContain("Create your first Case to add documents");
   });
 });

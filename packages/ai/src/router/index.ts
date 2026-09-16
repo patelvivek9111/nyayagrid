@@ -60,4 +60,5 @@ export { CERTIFICATION_EVIDENCE } from "./certification-evidence";
 export { ASK_SERVED_MODEL_RECERT } from "./ask-served-identity";
 export type { CertificationEvidence, CertificationEvidenceModel } from "./certification-evidence";
 export type { RoutingAuditRecord } from "./audit";
+export { setRoutingAuditSink } from "./audit-sink";
 export type { NormalizedClaim, DisagreementResult } from "./disagreement";

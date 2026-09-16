@@ -2,6 +2,7 @@
 
 import { cx } from "@nyayagrid/ui";
 import type { ReactNode } from "react";
+import { sanitizeUserFacingError } from "@/lib/user-facing-error";
 
 export function VerifiedBadge({ children = "Verified" }: { children?: ReactNode }) {
   return (
@@ -136,7 +137,7 @@ export function ErrorState({ message, onRetry }: { message: string; onRetry?: ()
       className="rounded-lg border border-[var(--ng-danger)]/20 bg-red-50/60 px-4 py-3 text-sm text-[var(--ng-danger)]"
       role="alert"
     >
-      <p>{message}</p>
+      <p>{sanitizeUserFacingError(message)}</p>
       {onRetry ? (
         <button type="button" className="mt-2 font-semibold underline" onClick={onRetry}>
           Try again

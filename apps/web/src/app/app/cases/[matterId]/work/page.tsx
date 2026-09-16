@@ -103,7 +103,7 @@ export default function CaseWorkPage() {
     [deadlines],
   );
 
-  if (loading) return <LoadingState label="Loading work…" />;
+  if (loading) return <LoadingState label="Loading case work…" />;
 
   return (
     <div className="space-y-6">
@@ -289,7 +289,9 @@ export default function CaseWorkPage() {
           <div>
             <h3 className="text-sm font-semibold">Research memos</h3>
             {memos.length === 0 ? (
-              <p className="mt-2 text-sm text-ink/60">No research memos saved yet.</p>
+              <p className="mt-2 text-sm text-ink/60">
+                No research memos saved yet. Save a memo from Research to see it here.
+              </p>
             ) : (
               <ul className="mt-2 space-y-2 text-sm">
                 {memos.map((m) => (
@@ -311,7 +313,9 @@ export default function CaseWorkPage() {
           <div>
             <h3 className="text-sm font-semibold">Drafts</h3>
             {drafts.length === 0 ? (
-              <p className="mt-2 text-sm text-ink/60">No drafts yet.</p>
+              <p className="mt-2 text-sm text-ink/60">
+                No drafts yet. Open Draft to generate or import a document for this case.
+              </p>
             ) : (
               <ul className="mt-2 space-y-2 text-sm">
                 {drafts.slice(0, 8).map((d) => (

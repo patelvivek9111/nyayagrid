@@ -9,6 +9,7 @@ import { VerifiedBadge } from "@/components/ux/trust";
 import {
   FirmEmpty,
   FirmError,
+  FirmLoading,
   FirmNotice,
   FirmPageHeader,
   FirmRow,
@@ -28,16 +29,22 @@ export default function CalendarPage() {
   const [events, setEvents] = useState<FirmCalendarEvent[]>([]);
   const [error, setError] = useState("");
   const [filter, setFilter] = useState("all");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!organizationId) return;
+    if (!organizationId) {
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
     fetch(`/api/v1/calendar?organizationId=${organizationId}`)
       .then(async (res) => {
         const data = await res.json();
         if (!res.ok) throw new Error(data?.error?.message ?? "Failed to load calendar");
         setEvents(data.events ?? []);
       })
-      .catch((err) => setError(err instanceof Error ? err.message : "Failed to load"));
+      .catch((err) => setError(err instanceof Error ? err.message : "Failed to load"))
+      .finally(() => setLoading(false));
   }, [organizationId]);
 
   const visible = useMemo(() => filterCalendarEvents(events, filter), [events, filter]);
@@ -72,10 +79,12 @@ export default function CalendarPage() {
           ]}
         />
 
-        {visible.length === 0 ? (
+        {loading ? (
+          <FirmLoading label="Loading calendar…" />
+        ) : visible.length === 0 ? (
           <FirmEmpty
-            title="No upcoming dated work."
-            description="Verified deadlines and task due dates will appear here."
+            title="No upcoming dated work"
+            description="Verified deadlines and task due dates from a case appear here after review."
           />
         ) : (
           <div className="space-y-5">

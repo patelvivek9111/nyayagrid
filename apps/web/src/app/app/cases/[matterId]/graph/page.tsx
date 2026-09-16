@@ -299,7 +299,7 @@ export default function CaseGraphPage() {
       sources.map((s) => ({
         id: s.id,
         title: s.documentTitle ?? "Case document",
-        classLabel: "Matter Evidence",
+        classLabel: "Case evidence",
         subtitle: s.page != null ? `Page ${s.page}` : undefined,
         quote: s.supportingText,
         chunkId: s.chunkId,
@@ -309,7 +309,7 @@ export default function CaseGraphPage() {
     setDrawerOpen(true);
   }
 
-  if (loading) return <LoadingState label="Loading graph…" />;
+  if (loading) return <LoadingState label="Loading case connections…" />;
   if (error && nodes.length === 0 && proposedEdges.length === 0) {
     return <ErrorState message={error} />;
   }

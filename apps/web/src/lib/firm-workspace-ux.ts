@@ -241,7 +241,7 @@ export function holdScopeLabel(
   matterId: string | null | undefined,
   matterTitle?: string | null,
 ): string {
-  if (!matterId) return "Whole organization";
+  if (!matterId) return "Whole firm";
   return matterTitle?.trim() || "Case";
 }
 

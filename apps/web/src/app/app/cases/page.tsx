@@ -65,11 +65,11 @@ export default function CasesListPage() {
           </Link>
         ) : null}
       </div>
-      {orgLoading || loading ? <LoadingState /> : null}
+      {orgLoading || loading ? <LoadingState label="Loading cases…" /> : null}
       {error ? <ErrorState message={error} /> : null}
       {!loading && cases.length === 0 ? (
         <EmptyState
-          title="No Cases yet"
+          title="No cases yet"
           description={
             canCreate
               ? "Create your first Case to add documents and start working with Nyaya."

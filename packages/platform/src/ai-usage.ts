@@ -25,6 +25,8 @@ export type RecordUsageInput = {
   model: string;
   inputTokens?: number | null;
   outputTokens?: number | null;
+  /** Internal estimate only; never shown as a customer charge. */
+  estimatedCostCents?: number | null;
   latencyMs?: number | null;
   success?: boolean;
   errorMessage?: string | null;
@@ -87,6 +89,7 @@ export async function recordUsage(db: Database, input: RecordUsageInput) {
     model: input.model,
     inputTokens: input.inputTokens ?? undefined,
     outputTokens: input.outputTokens ?? undefined,
+    estimatedCostCents: input.estimatedCostCents,
     metadata,
   };
 

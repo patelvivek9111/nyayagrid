@@ -127,7 +127,7 @@ export const EXTERNAL_RESEARCH_NOTE =
   "[Note: External legal research is not enabled. Verify any legal authority references independently.]";
 
 export const RESEARCH_AUTHORITY_INCOMPLETE_NOTE =
-  "[Note: Legal research support for this draft is incomplete. Its legal propositions are not fully tied to authorities saved to this matter, and authority treatment has not been verified. Complete research and verify every citation before relying on this draft.]";
+  "[Note: Legal research support for this draft is incomplete. Its legal propositions are not fully tied to authorities saved to this case, and authority treatment has not been verified. Complete research and verify every citation before relying on this draft.]";
 
 export function buildContractAnalysisIdempotencyKey(documentVersionId: string): string {
   return `contract_analysis:${documentVersionId}`;

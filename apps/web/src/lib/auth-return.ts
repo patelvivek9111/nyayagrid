@@ -54,6 +54,23 @@ export function clerkHostedSignUpUrl(
   }
 }
 
+/** Clerk Account Portal user profile. Password, email, and devices stay on Clerk. */
+export function clerkHostedUserProfileUrl(
+  env: PublicEnv = process.env,
+): string | null {
+  const hosted = clerkHostedSignInUrl(env);
+  if (!hosted) return null;
+  try {
+    const url = new URL(hosted);
+    url.pathname = "/user";
+    url.search = "";
+    url.hash = "";
+    return url.toString();
+  } catch {
+    return null;
+  }
+}
+
 export function isClerkPublishableConfigured(
   env: PublicEnv = process.env,
 ): boolean {

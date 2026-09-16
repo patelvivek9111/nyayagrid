@@ -745,7 +745,7 @@ function MatterDocumentsPageInner() {
 
       {loading && docs.length === 0 ? <LoadingState label="Loading documents…" /> : null}
 
-      <Panel title="Matter documents">
+      <Panel title="Documents">
         <div className="mb-4 flex flex-col gap-3">
           <div className="flex flex-col gap-3 lg:flex-row lg:flex-wrap lg:items-end">
             <label className="block min-w-0 flex-1 text-xs font-semibold uppercase tracking-wide text-ink/60">

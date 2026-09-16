@@ -17,6 +17,7 @@ import {
 } from "@/components/ux";
 import { useMatterChrome } from "@/components/use-matter-chrome";
 import { userFacingLoadError } from "@/lib/case-intelligence-ux";
+import { USER_FACING_ASK_ERROR } from "@/lib/user-facing-error";
 
 type ChatTurn = {
   id: string;
@@ -36,7 +37,7 @@ function sourcesFromAnswer(sources: any[] | undefined): SourceDrawerItem[] {
     chunkId: s.chunkId || undefined,
     documentId: s.documentId || undefined,
     title: s.documentTitle || "Case document",
-    classLabel: "Matter Evidence",
+    classLabel: "Case evidence",
     subtitle: [s.page != null ? `Page ${s.page}` : null, s.segmentRef || s.paragraph || null]
       .filter(Boolean)
       .join(" · "),
@@ -51,7 +52,7 @@ function sourcesFromCitations(citations: any[] | undefined, messageId: string): 
     chunkId: c.chunkId || undefined,
     documentId: c.documentId || undefined,
     title: "Case document",
-    classLabel: "Matter Evidence",
+    classLabel: "Case evidence",
     subtitle: [c.page != null ? `Page ${c.page}` : null, c.segmentRef || null]
       .filter(Boolean)
       .join(" · "),
@@ -169,7 +170,7 @@ export default function CaseChatThreadPage() {
         body: JSON.stringify({ question: q, conversationId, mode: "ask" }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data?.error?.message ?? "Ask failed");
+      if (!res.ok) throw new Error(data?.error?.message ?? USER_FACING_ASK_ERROR);
       if (data.run || data.mode === "task") {
         router.push(`/app/cases/${matterId}/work`);
         return;
@@ -252,7 +253,7 @@ export default function CaseChatThreadPage() {
             <span className="text-sm font-semibold text-ink">{title}</span>
           </div>
           <div ref={threadRef} className="flex-1 space-y-3 overflow-y-auto px-4 py-3">
-            {loading ? <LoadingState /> : null}
+            {loading ? <LoadingState label="Loading conversation…" /> : null}
             {!loading && turns.length === 0 ? (
               <p className="text-sm text-ink/55">Start a conversation about this case.</p>
             ) : null}

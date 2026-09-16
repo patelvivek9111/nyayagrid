@@ -55,7 +55,7 @@ export async function POST(request: Request) {
       capability: "matters.edit",
     });
     if (matter.organizationId !== body.organizationId) {
-      return jsonError("FORBIDDEN", "Matter is not in this organization", 403);
+      return jsonError("FORBIDDEN", "That case is not in this firm.", 403);
     }
 
     const [entry] = await db

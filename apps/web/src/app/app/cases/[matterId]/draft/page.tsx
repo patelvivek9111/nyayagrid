@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
 import { Badge, Button, Panel } from "@nyayagrid/ui";
 import { EmptyState, ErrorState, LoadingState, SuggestedBadge } from "@/components/ux";
+import { humanizeKey } from "@/lib/plain-labels";
 import { ExecutionStrategyControl, type ExecutionStrategyValue } from "@/components/ux/execution-strategy-control";
 
 const DRAFT_TYPES = [
@@ -306,8 +307,8 @@ export default function CaseDraftPage() {
                   >
                     <div className="font-semibold">{d.title}</div>
                     <div className="text-xs text-ink/60">
-                      {d.draftType} · v{d.currentVersionNumber} · {d.status}
-                      {d.aiGenerated ? " · AI" : ""}
+                      {d.draftType} · v{d.currentVersionNumber} · {humanizeKey(d.status)}
+                      {d.aiGenerated ? " · Nyaya draft" : ""}
                     </div>
                   </button>
                 </li>

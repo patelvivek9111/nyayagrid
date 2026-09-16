@@ -51,6 +51,7 @@ import {
   ROUTING_AUDIT_VERSION,
   type RoutingAuditRecord,
 } from "./audit";
+import { emitRoutingAudit } from "./audit-sink";
 import { LAST_AUDITS_RING, ProviderCallLedger } from "../call-telemetry";
 import {
   isModelKilled,
@@ -684,6 +685,7 @@ export class NyayaRouter implements AIProvider {
       auditVersion: ROUTING_AUDIT_VERSION,
       modelRegistryVersion: MODEL_REGISTRY_VERSION,
       organizationId: record.organizationId ?? record.routing.organizationId,
+      userId: record.userId ?? record.routing.userId,
       matterId: record.matterId ?? record.routing.matterId,
       promptVersion: record.promptVersion ?? record.routing.promptVersion,
       retrievalIds: record.retrievalIds ?? record.routing.retrievalIds,
@@ -695,6 +697,7 @@ export class NyayaRouter implements AIProvider {
     this.lastAudits.push(audit);
     if (this.lastAudits.length > LAST_AUDITS_RING) this.lastAudits.shift();
     this.onAudit?.(audit);
+    emitRoutingAudit(audit);
     return audit;
   }
 }

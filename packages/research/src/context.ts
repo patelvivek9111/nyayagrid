@@ -195,7 +195,7 @@ export async function loadMatterLegalAuthorityContext(params: {
   items.sort((a, b) => statusRank(a.status) - statusRank(b.status));
 
   if (items.length === 0) {
-    warnings.push("No legal authorities have been saved to this matter.");
+    warnings.push("No legal authorities have been saved to this case.");
   }
 
   return {

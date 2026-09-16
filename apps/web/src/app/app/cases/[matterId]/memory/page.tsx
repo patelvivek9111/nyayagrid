@@ -265,7 +265,7 @@ export default function CaseMemoryPage() {
       memory.sources.map((s) => ({
         id: s.id,
         title: s.documentTitle,
-        classLabel: "Matter Evidence",
+        classLabel: "Case evidence",
         subtitle: s.page != null ? `Page ${s.page}` : undefined,
         quote: s.supportingText,
         chunkId: s.chunkId,
@@ -275,7 +275,7 @@ export default function CaseMemoryPage() {
     setDrawerOpen(true);
   }
 
-  if (loading) return <LoadingState label="Loading memory…" />;
+  if (loading) return <LoadingState label="Loading case memory…" />;
 
   return (
     <div className="space-y-4">
@@ -333,6 +333,16 @@ export default function CaseMemoryPage() {
                   : filter === "suggested"
                     ? "Nyaya may suggest durable context, but nothing is saved without your approval."
                     : "Previous versions and archived items will appear here."
+              }
+              action={
+                filter === "suggested" ? (
+                  <Link
+                    href={`/app/cases/${matterId}/review`}
+                    className="text-sm font-semibold text-accent underline"
+                  >
+                    Open Review
+                  </Link>
+                ) : undefined
               }
             />
           ) : grouped ? (

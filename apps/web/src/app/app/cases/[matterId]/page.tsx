@@ -138,11 +138,11 @@ export default function CaseHomePage() {
     try {
       const res = await fetch(`/api/v1/matters/${matterId}/summary`, { method: "POST" });
       await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error("We couldn't refresh the matter summary. Try again.");
+      if (!res.ok) throw new Error("We couldn't refresh the case summary. Try again.");
       await load();
     } catch (err) {
       setError(
-        err instanceof Error ? err.message : "We couldn't refresh the matter summary. Try again.",
+        err instanceof Error ? err.message : "We couldn't refresh the case summary. Try again.",
       );
     } finally {
       setBusy(false);
@@ -226,7 +226,7 @@ export default function CaseHomePage() {
     <div className="space-y-5">
       <IntelligenceHeader
         title="Home"
-        description="What is happening in this matter, what needs attention, and what to do next."
+        description="What is happening in this case, what needs attention, and what to do next."
         actions={
           <OverflowMenu label="More">
             <Button type="button" variant="ghost" onClick={openCaseDetails}>
@@ -379,7 +379,7 @@ export default function CaseHomePage() {
       {summary ? (
         <section className="rounded-xl border border-line bg-white/80 p-4">
           <div className="mb-2 flex flex-wrap items-center gap-2">
-            <h3 className="font-display text-lg text-ink">Matter summary</h3>
+            <h3 className="font-display text-lg text-ink">Case summary</h3>
             <TrustStatus kind="suggested" />
             <span className="text-xs text-ink/50">Not attorney-authored</span>
           </div>
@@ -399,7 +399,7 @@ export default function CaseHomePage() {
       <div className="grid gap-4 lg:grid-cols-2">
         <CompactSection title="Key facts">
           {(verified?.facts ?? []).length === 0 ? (
-            <p className="text-sm text-ink/55">No verified facts yet.</p>
+            <p className="text-sm text-ink/55">No verified facts yet. Confirm suggestions in Review.</p>
           ) : (
             <ul className="space-y-2 text-sm">
               {verified.facts.slice(0, 6).map((fact) => (
@@ -510,7 +510,7 @@ export default function CaseHomePage() {
           linkLabel="Open People"
         >
           {(verified?.entities ?? []).length === 0 ? (
-            <p className="text-sm text-ink/55">No verified people yet.</p>
+            <p className="text-sm text-ink/55">No verified people yet. Add or confirm names from documents.</p>
           ) : (
             <ul className="space-y-1 text-sm">
               {verified.entities.slice(0, 4).map((entity) => (
@@ -527,7 +527,7 @@ export default function CaseHomePage() {
           linkLabel="Open Documents"
         >
           {(recentDocuments ?? []).length === 0 ? (
-            <p className="text-sm text-ink/55">No documents yet.</p>
+            <p className="text-sm text-ink/55">No documents yet. Upload files to ground Ask, Timeline, and Evidence.</p>
           ) : (
             <ul className="space-y-1 text-sm">
               {recentDocuments.slice(0, 4).map((doc) => (
@@ -611,7 +611,7 @@ export default function CaseHomePage() {
         linkLabel="Open Chats"
       >
         {chats.length === 0 ? (
-          <p className="text-sm text-ink/55">No Case chats yet.</p>
+          <p className="text-sm text-ink/55">No Case chats yet. Ask Nyaya from Chats.</p>
         ) : (
           <ul className="space-y-2 text-sm">
             {chats.slice(0, 4).map((chat) => (

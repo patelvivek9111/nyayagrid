@@ -22,7 +22,6 @@ async function answerDirectly(params: {
   executionStrategy?: "auto" | "fast" | "deep";
   modelId?: string;
 }) {
-  const startedAt = Date.now();
   const result = await askNyayaAboutMatter({
     db: params.db,
     retriever: getRetriever(),
@@ -48,20 +47,6 @@ async function answerDirectly(params: {
       retrievedCount: result.retrieved.length,
       provider: result.artifact?.provider,
     },
-  });
-
-  // Token counts are 0 for the mock provider; a real provider's usage is captured by
-  // askNyayaAboutMatter's underlying AIProvider.generate() call and reflected on the artifact.
-  await recordUsage(params.db, {
-    organizationId: params.organizationId,
-    userId: params.userId,
-    matterId: params.matterId,
-    feature: "nyaya.ask",
-    provider: result.artifact?.provider ?? "unknown",
-    model: result.artifact?.model ?? "unknown",
-    latencyMs: Date.now() - startedAt,
-    success: result.answer.evidenceState !== "insufficient",
-    metadata: { evidenceState: result.answer.evidenceState },
   });
 
   return result;

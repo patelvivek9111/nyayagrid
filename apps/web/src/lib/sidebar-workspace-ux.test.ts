@@ -30,8 +30,11 @@ describe("Sidebar workspace switcher presentation", () => {
     expect(sidebar).toContain('href="/app/billing"');
     expect(sidebar).toContain('href="/app/inbox"');
     expect(sidebar).toContain('href="/app/research"');
+    expect(sidebar).toContain('useOrgCapability(organizationId, "compliance.manage")');
     expect(sidebar).toContain('href="/app/compliance"');
+    expect(sidebar).toContain("complianceCap.allowed");
     expect(sidebar).toContain('href="/app/settings"');
+    expect(sidebar).toContain('aria-label="Create a case"');
   });
 
   it("keeps active org in local storage and membership-scoped GET /organizations", () => {

@@ -55,7 +55,7 @@ export async function POST(request: Request) {
       capability: "matters.edit",
     });
     if (matter.organizationId !== body.organizationId) {
-      return jsonError("FORBIDDEN", "Matter is not in this organization", 403);
+      return jsonError("FORBIDDEN", "That case is not in this firm.", 403);
     }
 
     const billed = await db.select({ timeEntryId: invoiceLineItems.timeEntryId }).from(invoiceLineItems);
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
       );
 
     if (posted.length === 0) {
-      return jsonError("VALIDATION_ERROR", "No unbilled posted time on this matter", 400);
+      return jsonError("VALIDATION_ERROR", "No unbilled posted time on this case", 400);
     }
 
     const invoiceNumber = `SYNTH-INV-${Date.now().toString(36).toUpperCase()}`;

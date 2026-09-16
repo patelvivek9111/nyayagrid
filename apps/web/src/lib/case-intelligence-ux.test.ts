@@ -360,6 +360,7 @@ describe("shared Case Intelligence language", () => {
       expect(page).not.toContain("Create approved edge");
       expect(page).not.toContain("Failed to fetch graph materialization");
       expect(page).not.toContain("Inspect both sides");
+      expect(page).not.toContain("Matter Evidence");
     }
   });
 });
@@ -369,5 +370,6 @@ describe("auth-aware load errors", () => {
     expect(userFacingLoadError("home", 401)).toMatch(/sign in/i);
     expect(userFacingLoadError("review", 403)).toMatch(/access/i);
     expect(userFacingLoadError("documents", 500)).toMatch(/couldn't load documents/i);
+    expect(userFacingLoadError("home")).toMatch(/this case/i);
   });
 });

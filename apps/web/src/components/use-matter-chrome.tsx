@@ -70,7 +70,7 @@ export function MatterChromeProvider({
     }
     const res = await fetch(`/api/v1/matters/${matterId}/chrome`);
     const data = await res.json();
-    if (!res.ok) throw new Error(data?.error?.message ?? "Failed to load matter");
+    if (!res.ok) throw new Error(data?.error?.message ?? "We couldn't load this case.");
     setMatter(data.matter as MatterChrome);
     setClientDisplayName(data.client?.displayName ?? null);
     setOrganizationId(data.organizationId ?? null);
@@ -100,7 +100,7 @@ export function MatterChromeProvider({
       .catch((err) => {
         if (!cancelled) {
           setMatter(null);
-          setError(err instanceof Error ? err.message : "Failed to load matter");
+          setError(err instanceof Error ? err.message : "We couldn't load this case.");
         }
       })
       .finally(() => {

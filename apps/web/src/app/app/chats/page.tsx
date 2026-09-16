@@ -38,7 +38,7 @@ export default function ChatsListPage() {
       <p className="mb-4 text-sm text-ink/60">
         General chats are not tied to a case, so Nyaya will not read your case files here.
       </p>
-      {loading ? <LoadingState /> : null}
+      {loading ? <LoadingState label="Loading chats…" /> : null}
       {error ? <ErrorState message={error} /> : null}
       {!loading && sessions.length === 0 ? (
         <EmptyState

@@ -8,6 +8,7 @@ import { IntelligenceDialog } from "@/components/ux/case-intelligence";
 import {
   FirmEmpty,
   FirmError,
+  FirmLoading,
   FirmNotice,
   FirmPageHeader,
   FirmRow,
@@ -37,6 +38,7 @@ export default function TimePage() {
   const [minutes, setMinutes] = useState("6");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [addOpen, setAddOpen] = useState(false);
   const [suggestOpen, setSuggestOpen] = useState(false);
 
@@ -54,8 +56,14 @@ export default function TimePage() {
   }
 
   useEffect(() => {
-    if (!organizationId) return;
-    load(organizationId).catch((err) => setError(err instanceof Error ? err.message : "Failed"));
+    if (!organizationId) {
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    load(organizationId)
+      .catch((err) => setError(err instanceof Error ? err.message : "Failed"))
+      .finally(() => setLoading(false));
   }, [organizationId]);
 
   useEffect(() => {
@@ -194,7 +202,9 @@ export default function TimePage() {
           ]}
         />
 
-        {entries.length === 0 ? (
+        {loading ? (
+          <FirmLoading label="Loading time entries…" />
+        ) : entries.length === 0 ? (
           <FirmEmpty
             title="No time entries yet."
             description="Record work on a case, or create a suggested entry from a case chat. Suggestions are not posted until you confirm them."

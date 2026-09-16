@@ -161,7 +161,7 @@ export default function MatterTimelinePage() {
       (event.sources ?? []).map((s: any, i: number) => ({
         id: s.id ?? `src-${i}`,
         title: s.documentTitle ?? "Source",
-        classLabel: "Matter Evidence",
+        classLabel: "Case evidence",
         quote: s.quote ?? s.excerpt ?? s.supportingText,
         documentId: s.documentId,
       })),

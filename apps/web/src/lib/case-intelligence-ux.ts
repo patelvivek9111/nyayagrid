@@ -340,7 +340,7 @@ export function userFacingLoadError(
   if (kind === "evidence") return "We couldn't load case evidence. Try again.";
   if (kind === "people") return "We couldn't load people and organizations. Try again.";
   if (kind === "graph") return "We couldn't load the case graph. Try again.";
-  if (kind === "home") return "We couldn't load this matter. Try again.";
+  if (kind === "home") return "We couldn't load this case. Try again.";
   if (kind === "chats") return "We couldn't load this conversation. Try again.";
   if (kind === "documents") return "We couldn't load documents. Try again.";
   if (kind === "review") return "We couldn't load the review queue. Try again.";

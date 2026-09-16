@@ -4,6 +4,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Badge, Button, Panel } from "@nyayagrid/ui";
+import { ErrorState } from "@/components/ux";
 
 type MatterAuthorityItem = {
   id: string;
@@ -180,13 +181,12 @@ export default function MatterResearchPage() {
 
   return (
     <>
-      {error ? <p className="mb-3 text-sm text-[var(--ng-danger)]">{error}</p> : null}
+      {error ? <ErrorState message={error} /> : null}
 
       <p className="mb-4 rounded border border-line bg-accent-soft/30 px-3 py-2 text-xs text-ink/80">
-        Current treatment has not been independently verified. Legal authority passages below are
-        distinct from this matter&apos;s own facts, timeline, and documents — matter context is used
-        only to formulate the research question, never as a source of law. This corpus is not a
-        Westlaw or Lexis equivalent; a miss is not proof that no authority exists.
+        Current treatment has not been independently verified. Retrieved authorities are not this
+        case&apos;s own files. This corpus is not a Westlaw or Lexis equivalent; a miss is not
+        proof that no authority exists.
       </p>
 
       <div className="grid gap-4 lg:grid-cols-2">
@@ -194,12 +194,13 @@ export default function MatterResearchPage() {
           <form className="mb-3 flex gap-2" onSubmit={askQuestion}>
             <input
               className="flex-1 rounded border border-line px-2 py-1.5 text-sm"
-              placeholder="Research question for this matter"
+              placeholder="Research question for this case"
+              aria-label="Research question"
               value={question}
               onChange={(e) => setQuestion(e.target.value)}
             />
             <Button type="submit" disabled={busy}>
-              {busy ? "Running…" : "Ask"}
+              {busy ? "Researching…" : "Ask"}
             </Button>
           </form>
 
@@ -255,9 +256,12 @@ export default function MatterResearchPage() {
           )}
         </Panel>
 
-        <Panel title="Saved matter authorities">
+        <Panel title="Saved authorities">
           {matterAuthorities.length === 0 ? (
-            <p className="text-sm text-ink/70">No authorities saved to this matter yet.</p>
+            <p className="text-sm text-ink/70">
+              No authorities saved to this case yet. Save a retrieved source to keep it with this
+              case.
+            </p>
           ) : (
             <ul className="space-y-2 text-sm">
               {matterAuthorities.map((item) => (

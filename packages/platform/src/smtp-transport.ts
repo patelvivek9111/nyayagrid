@@ -245,6 +245,39 @@ function upgradeTls(socket: Socket, host: string, timeoutMs: number): Promise<TL
   });
 }
 
+function formatFromHeader(from: string): string {
+  const trimmed = from.trim();
+  if (trimmed.includes("<")) return trimmed;
+  return `NyayaGrid <${trimmed}>`;
+}
+
+function serializeMime(message: EmailMessage): string {
+  if (!message.html?.trim()) {
+    return [
+      "Content-Type: text/plain; charset=utf-8",
+      "Content-Transfer-Encoding: 8bit",
+      "",
+      encodeDotLines(message.text),
+    ].join("\r\n");
+  }
+  const boundary = `nyayagrid-${randomUUID()}`;
+  return [
+    `Content-Type: multipart/alternative; boundary="${boundary}"`,
+    "",
+    `--${boundary}`,
+    "Content-Type: text/plain; charset=utf-8",
+    "Content-Transfer-Encoding: 8bit",
+    "",
+    encodeDotLines(message.text),
+    `--${boundary}`,
+    "Content-Type: text/html; charset=utf-8",
+    "Content-Transfer-Encoding: 8bit",
+    "",
+    encodeDotLines(message.html),
+    `--${boundary}--`,
+  ].join("\r\n");
+}
+
 export async function sendSmtpMessage(
   config: SmtpEmailConfig,
   message: EmailMessage,
@@ -253,15 +286,13 @@ export async function sendSmtpMessage(
   const timeoutMs = options.timeoutMs ?? DEFAULT_TIMEOUT_MS;
   const messageId = `<${randomUUID()}@nyayagrid>`;
   const raw = [
-    `From: ${config.from}`,
+    `From: ${formatFromHeader(config.from)}`,
     `To: ${message.to}`,
     `Subject: ${message.subject.replace(/\r?\n/g, " ")}`,
     `Date: ${new Date().toUTCString()}`,
     `Message-ID: ${messageId}`,
     "MIME-Version: 1.0",
-    "Content-Type: text/plain; charset=utf-8",
-    "",
-    encodeDotLines(message.text),
+    serializeMime(message),
   ].join("\r\n");
 
   const connection = await SmtpConnection.open(config, timeoutMs);

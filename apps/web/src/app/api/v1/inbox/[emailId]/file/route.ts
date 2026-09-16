@@ -31,7 +31,7 @@ export async function POST(request: Request, { params }: Params) {
       capability: "documents.upload",
     });
     if (matter.organizationId !== existing.organizationId) {
-      return jsonError("FORBIDDEN", "Matter is not in this organization", 403);
+      return jsonError("FORBIDDEN", "That case is not in this firm.", 403);
     }
 
     const text = `From: ${existing.fromAddress}\nSubject: ${existing.subject}\n\n${existing.body}`;

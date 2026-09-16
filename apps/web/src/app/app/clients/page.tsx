@@ -115,7 +115,7 @@ export default function ClientsPage() {
     <ProfessionalShell>
       <FirmPageHeader
         title="Clients"
-        description="People and companies this workspace represents, and the cases linked to them."
+        description="People and companies this firm represents, and the cases linked to them."
         actions={
           <Button type="button" disabled={!organizationId} onClick={() => setCreateOpen(true)}>
             + New client

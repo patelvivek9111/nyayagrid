@@ -26,6 +26,7 @@ import { estimateCostUsd } from "./pricing";
 import { budgetFor } from "./budget";
 import { listValidatedRoutingOptions } from "./options";
 import { auditHasNoSecrets } from "./audit";
+import { setRoutingAuditSink } from "./audit-sink";
 
 function allCert(status: ModelLifecycle): ModelRegistryEntry["certification"] {
   return Object.fromEntries(CERTIFICATION_SUBSYSTEMS.map((s) => [s, status])) as ModelRegistryEntry["certification"];
@@ -261,6 +262,41 @@ describe("NyayaRouter certification and policy", () => {
     });
     expect(router.lastAudits.at(-1)?.strategySelected).toBe("standard");
     expect(router.lastAudits.at(-1)?.riskLevel).toBe("CRITICAL");
+  });
+
+  it("copies userId onto the audit and notifies the usage sink once per generate", async () => {
+    const openai = new FakeProvider({
+      name: "openai",
+      model: "gpt-4o-mini",
+      behavior: { type: "json", payload: { ok: true } },
+    });
+    const seen: string[] = [];
+    setRoutingAuditSink((record) => {
+      seen.push(record.userId ?? "");
+    });
+    try {
+      const router = new NyayaRouter({
+        envProvider: "openai",
+        env: { AI_PROVIDER: "openai" },
+        providers: { openai },
+        registry: [entry({ provider: "openai", modelId: "gpt-4o-mini" })],
+        health: new ProviderHealthTracker(),
+      });
+      await router.generate({
+        ...ping,
+        routing: {
+          subsystem: "ask",
+          organizationId: "org-1",
+          userId: "user-1",
+          strategy: "standard",
+        },
+      });
+      expect(router.lastAudits.at(-1)?.userId).toBe("user-1");
+      expect(seen).toEqual(["user-1"]);
+      expect(JSON.stringify(router.lastAudits.at(-1))).not.toMatch(/prompt|sk-/i);
+    } finally {
+      setRoutingAuditSink(undefined);
+    }
   });
 
   it("will not Auto-select a CANDIDATE Claude route for Research", async () => {

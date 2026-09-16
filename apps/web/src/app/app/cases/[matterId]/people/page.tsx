@@ -257,7 +257,7 @@ export default function CasePeoplePage() {
       (entity.sources ?? []).map((s) => ({
         id: s.id,
         title: s.documentTitle ?? "Case document",
-        classLabel: "Matter Evidence",
+        classLabel: "Case evidence",
         subtitle: s.page != null ? `Page ${s.page}` : undefined,
         quote: s.supportingText ?? undefined,
         chunkId: s.chunkId,

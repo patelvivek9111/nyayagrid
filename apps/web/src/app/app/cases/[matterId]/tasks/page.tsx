@@ -212,7 +212,7 @@ export default function CaseTasksPage() {
       deadline.sources.map((s) => ({
         id: s.id,
         title: s.documentTitle,
-        classLabel: "Matter Evidence",
+        classLabel: "Case evidence",
         subtitle: s.page != null ? `Page ${s.page}` : undefined,
         quote: s.supportingText,
         chunkId: s.chunkId,

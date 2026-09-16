@@ -136,9 +136,10 @@ describe("firm workspace presentation helpers", () => {
 
   it("uses lawyer-facing access and hold labels", () => {
     expect(roleLabel("client_guest")).toBe("Client guest");
+    expect(roleLabel("owner")).toBe("Firm owner");
     expect(inviteStatusLabel({ acceptedAt: null, revokedAt: null })).toBe("Pending");
     expect(holdStatusLabel(null)).toBe("Active");
-    expect(holdScopeLabel(null)).toBe("Whole organization");
+    expect(holdScopeLabel(null)).toBe("Whole firm");
     expect(researchSessionKindLabel("m1")).toBe("Linked to case");
     expect(researchSessionKindLabel(null)).toBe("Firm research");
     expect(authorityRelationshipLabel("controlling")).toBe("Controlling");
@@ -165,7 +166,7 @@ describe("firm workspace pages stay presentation-only", () => {
     expect(clients).toContain("+ New client");
     expect(clients).not.toContain("shouldShowWorkspaceSwitcher");
     expect(calendar).toContain("`/api/v1/calendar?organizationId=${organizationId}`");
-    expect(calendar).toContain("No upcoming dated work.");
+    expect(calendar).toContain("No upcoming dated work");
     expect(time).toContain("`/api/v1/time-entries?organizationId=${orgId}`");
     expect(time).toContain("+ Add time entry");
     expect(time).toContain("/api/v1/time-entries/suggest");
@@ -180,6 +181,13 @@ describe("firm workspace pages stay presentation-only", () => {
     expect(research).toContain("not a Westlaw or Lexis equivalent");
     expect(research).not.toContain("shouldShowWorkspaceSwitcher");
     expect(settings).toContain("`/api/v1/organizations/${orgId}/members`");
+    expect(settings).toContain("`/api/v1/organizations/${orgId}/account`");
+    expect(settings).toContain("`/api/v1/organizations/${orgId}/usage?period=${period}&scope=${scope}`");
+    expect(settings).toContain("My account");
+    expect(settings).toContain("Nyaya activity");
+    expect(settings).toContain("{account.plan.name}");
+    expect(settings).not.toContain("estimatedCostCents");
+    expect(settings).not.toContain("sk_");
     expect(settings).toContain("Assign to case");
     expect(settings).toContain('access: "read"');
     expect(settings).toContain("/invites/${inviteId}/revoke");
@@ -189,6 +197,21 @@ describe("firm workspace pages stay presentation-only", () => {
     expect(holds).toContain("`/api/v1/organizations/${orgId}/compliance`");
     expect(holds).toContain("+ Place legal hold");
     expect(holds).toContain("does not enable");
+  });
+
+  it("keeps account and usage APIs metadata-only", () => {
+    const account = src("src/app/api/v1/organizations/[organizationId]/account/route.ts");
+    const usage = src("src/app/api/v1/organizations/[organizationId]/usage/route.ts");
+    const persist = src("src/lib/persist-routing-usage.ts");
+    expect(account).toContain("clerkHostedUserProfileUrl");
+    expect(account).not.toContain("accountManagedBy");
+    expect(account).toContain("designPartnerPlanPresentation");
+    expect(usage).toContain("summarizeOrganizationUsage");
+    expect(usage).toContain('has("organization.manage")');
+    expect(usage).not.toContain("estimatedCostCents");
+    expect(persist).toContain("fallbackCount");
+    expect(persist).not.toContain("retrievalIds");
+    expect(persist).not.toContain("jurisdictionSummary");
   });
 
   it("does not change Agents gating", () => {

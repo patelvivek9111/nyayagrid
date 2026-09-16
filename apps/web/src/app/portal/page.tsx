@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useEffect, useState, type FormEvent } from "react";
-import { Badge, Button, PageHeader, Panel } from "@nyayagrid/ui";
+import { Button, PageHeader, Panel } from "@nyayagrid/ui";
+import { ErrorState } from "@/components/ux";
+import { USER_FACING_ASK_ERROR } from "@/lib/user-facing-error";
 
 type OrgRow = { id: string; name: string };
 type MatterRow = { id: string; title: string; matterNumber: string };
@@ -23,7 +25,7 @@ export default function PortalPage() {
     fetch("/api/v1/organizations")
       .then(async (res) => {
         const data = await res.json();
-        if (!res.ok) throw new Error(data?.error?.message ?? "Failed to load organizations");
+        if (!res.ok) throw new Error(data?.error?.message ?? "We couldn't load firms. Try again.");
         const orgs = data.organizations ?? [];
         setOrganizations(orgs);
         if (orgs[0]?.id) setOrganizationId(orgs[0].id);
@@ -68,13 +70,13 @@ export default function PortalPage() {
         body: JSON.stringify({ question, mode: "ask", execute: false }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data?.error?.message ?? "Ask failed");
-      const text =
-        data.qa?.answer?.text ??
-        data.qa?.answer ??
-        data.qa?.artifact?.content ??
-        JSON.stringify(data.qa ?? data, null, 2);
-      setAnswer(typeof text === "string" ? text : JSON.stringify(text, null, 2));
+      if (!res.ok) throw new Error(data?.error?.message ?? USER_FACING_ASK_ERROR);
+      const text = data.qa?.answer?.text ?? data.qa?.answer ?? data.qa?.artifact?.content;
+      if (typeof text === "string" && text.trim()) {
+        setAnswer(text);
+      } else {
+        setAnswer("Nyaya could not produce an answer from the available case files.");
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed");
     } finally {
@@ -99,13 +101,17 @@ export default function PortalPage() {
         <PageHeader
           eyebrow="NyayaGrid"
           title="Your cases"
-          description="Documents and limited Ask for matters you have been assigned. This is not a student or public workspace."
+          description="Documents and limited Ask for cases you have been assigned. This is not a student or public workspace."
         />
-        {error ? <p className="mb-4 text-sm text-[var(--ng-danger)]">{error}</p> : null}
+        {error ? (
+          <div className="mb-4">
+            <ErrorState message={error} />
+          </div>
+        ) : null}
 
         <div className="mb-4 grid gap-3 md:grid-cols-2">
           <label className="text-sm font-semibold">
-            Organization
+            Firm
             <select
               className="mt-1 block w-full rounded border border-line px-2 py-1.5 text-sm font-normal"
               value={organizationId}
@@ -145,7 +151,7 @@ export default function PortalPage() {
               <ul className="space-y-2 text-sm">
                 {documents.map((document) => (
                   <li key={document.id} className="rounded border border-line px-3 py-2">
-                    {document.title} <Badge>view</Badge>
+                    {document.title}
                   </li>
                 ))}
               </ul>

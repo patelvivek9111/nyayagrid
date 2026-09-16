@@ -17,6 +17,7 @@ import {
   type SourceDrawerItem,
   ErrorState,
 } from "@/components/ux";
+import { USER_FACING_ASK_ERROR } from "@/lib/user-facing-error";
 
 type ChatTurn = {
   id: string;
@@ -106,7 +107,7 @@ export default function NewChatPage() {
           }),
         });
         const data = await res.json();
-        if (!res.ok) throw new Error(data?.error?.message ?? "Ask failed");
+        if (!res.ok) throw new Error(data?.error?.message ?? USER_FACING_ASK_ERROR);
 
         if (data.mode === "task" || data.run) {
           router.push(`/app/cases/${selectedCase.id}/work`);

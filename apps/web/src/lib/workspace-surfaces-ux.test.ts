@@ -22,6 +22,8 @@ describe("Home / Chats / Documents / Review workspace UX", () => {
     expect(home).toContain("+ Add note");
     expect(home).toContain("taskStatusLabel");
     expect(home).toContain("activityKindLabel");
+    expect(home).toContain("Case summary");
+    expect(home).not.toContain("Matter summary");
     expect(home).not.toContain("AI Insights");
   });
 
@@ -55,5 +57,19 @@ describe("Home / Chats / Documents / Review workspace UX", () => {
     expect(review).toContain("Side B");
     expect(review).toContain("Refresh case intelligence");
     expect(review).not.toContain("Run extraction");
+  });
+
+  it("Analysis uses professional tab labels and Case language", () => {
+    const analysis = src("src/app/app/cases/[matterId]/analysis/page.tsx");
+    expect(analysis).toContain('contracts: "Contracts"');
+    expect(analysis).toContain('comparisons: "Compare"');
+    expect(analysis).toContain("Findings stay suggested until you");
+    expect(analysis).not.toContain("all matter documents");
+  });
+
+  it("Research keeps saved authorities in Case language", () => {
+    const research = src("src/app/app/cases/[matterId]/research/page.tsx");
+    expect(research).toContain("Saved authorities");
+    expect(research).not.toContain("Saved matter authorities");
   });
 });

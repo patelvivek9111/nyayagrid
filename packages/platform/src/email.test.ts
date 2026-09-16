@@ -3,7 +3,9 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   ConsoleEmailProvider,
   SmtpEmailProvider,
+  buildInviteEmail,
   createEmailProviderFromEnv,
+  formatInviteExpiry,
   sendInviteEmail,
 } from "./email";
 import { SmtpTransportError } from "./smtp-transport";
@@ -112,6 +114,37 @@ function startFakeSmtp(options: { password?: string } = {}): Promise<{
   });
 }
 
+describe("buildInviteEmail", () => {
+  const params = {
+    to: "member@example.com",
+    organizationName: "Hale & Patel LLP",
+    invitedByName: "Jordan Hale",
+    acceptUrl: "https://staging.nyayagrid.com/invites/accept?token=synth-token-value",
+    expiresAt: new Date("2026-09-22T16:23:39.270Z"),
+  };
+
+  it("uses professional copy, a human expiry, and matching HTML", () => {
+    const message = buildInviteEmail(params);
+    expect(message.subject).toBe("Jordan Hale invited you to Hale & Patel LLP");
+    expect(message.text).toContain("Jordan Hale invited you to join Hale & Patel LLP on NyayaGrid.");
+    expect(message.text).toContain("Accept invitation:");
+    expect(message.text).toContain(formatInviteExpiry(params.expiresAt));
+    expect(message.text).not.toContain("expires at 2026-09-22T");
+    expect(message.html).toContain("You're invited");
+    expect(message.html).toContain("Accept invitation");
+    expect(message.html).toContain('href="https://staging.nyayagrid.com/invites/accept?token=synth-token-value"');
+    expect(message.html).toContain("Hale &amp; Patel LLP");
+    expect(message.html).toContain("<strong>Jordan Hale</strong>");
+  });
+
+  it("still works when the inviter name is missing", () => {
+    const message = buildInviteEmail({ ...params, invitedByName: null });
+    expect(message.subject).toBe("You're invited to join Hale & Patel LLP");
+    expect(message.text.startsWith("You've been invited to join Hale & Patel LLP")).toBe(true);
+    expect(message.html).toContain("You've been invited to join");
+  });
+});
+
 describe("createEmailProviderFromEnv", () => {
   it("selects SMTP and uses STARTTLS (not implicit TLS) on port 587", () => {
     const provider = createEmailProviderFromEnv({
@@ -198,6 +231,9 @@ describe("SmtpEmailProvider", () => {
     expect(consoleOutput).not.toContain("synth-token-value");
     expect(consoleOutput).not.toContain("/invites/accept");
     expect(server.messages.some((msg) => msg.includes("synth-token-value"))).toBe(true);
+    expect(server.messages.some((msg) => msg.includes("multipart/alternative"))).toBe(true);
+    expect(server.messages.some((msg) => msg.includes("text/html"))).toBe(true);
+    expect(server.messages.some((msg) => msg.includes("NyayaGrid <noreply@example.com>"))).toBe(true);
   });
 
   it("fails closed on unreachable SMTP without marking delivered", async () => {

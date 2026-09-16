@@ -434,7 +434,7 @@ function IssueCard({
             [...supporting, ...contrary].map((s, i) => ({
               id: `${issue.issueKey ?? "issue"}-${i}`,
               title: "Source",
-              classLabel: "Matter Evidence",
+              classLabel: "Case evidence",
               quote: s.rationale,
               documentId: s.documentId ?? undefined,
             })),

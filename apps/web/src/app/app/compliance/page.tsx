@@ -294,7 +294,7 @@ export default function CompliancePage() {
                 {deletions.map((row) => (
                   <li key={row.id}>
                     <FirmRow
-                      title={row.workspace === "organization" ? "Whole organization" : "Case scope"}
+                      title={row.workspace === "organization" ? "Whole firm" : "Case scope"}
                       subtitle={formatShortDate(row.createdAt) || row.id.slice(0, 8)}
                       status={<FirmStatusText>{deletionStatusLabel(row.status)}</FirmStatusText>}
                     />
@@ -373,7 +373,7 @@ export default function CompliancePage() {
               value={matterId}
               onChange={(e) => setMatterId(e.target.value)}
             >
-              <option value="">Whole organization</option>
+              <option value="">Whole firm</option>
               {matters.map((matter) => (
                 <option key={matter.id} value={matter.id}>
                   {matter.title}
@@ -411,7 +411,7 @@ export default function CompliancePage() {
               value={matterId}
               onChange={(e) => setMatterId(e.target.value)}
             >
-              <option value="">Whole organization</option>
+              <option value="">Whole firm</option>
               {matters.map((matter) => (
                 <option key={matter.id} value={matter.id}>
                   {matter.title}

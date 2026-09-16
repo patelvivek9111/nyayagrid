@@ -102,7 +102,7 @@ export async function loadDraftLegalAuthorityContext(params: {
       items: [],
       authorityIds: [],
       authorityChunkIds: [],
-      warnings: ["No legal authorities have been saved to this matter."],
+  warnings: ["No legal authorities have been saved to this case."],
     };
   }
 

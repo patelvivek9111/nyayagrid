@@ -5,6 +5,7 @@ import {
   absoluteInviteResumeUrl,
   clerkContinueHref,
   clerkHostedSignInUrl,
+  clerkHostedUserProfileUrl,
   clerkSignOutHref,
   inviteAcceptReturnPath,
   inviteAuthContinueHref,
@@ -44,6 +45,11 @@ describe("Clerk UI configuration", () => {
       }),
     ).toBe(false);
     expect(clerkHostedSignInUrl({ NEXT_PUBLIC_CLERK_SIGN_IN_URL: "not a url" })).toBeNull();
+    expect(
+      clerkHostedUserProfileUrl({
+        NEXT_PUBLIC_CLERK_SIGN_IN_URL: "https://accounts.staging.nyayagrid.com/sign-in",
+      }),
+    ).toBe("https://accounts.staging.nyayagrid.com/user");
   });
 
   it("builds continue and sign-out URLs without leaking secrets", () => {

@@ -86,7 +86,7 @@ const LABELS: Record<string, string> = {
   filed: "Filed",
   discarded: "Discarded",
   released: "Released",
-  owner: "Organization owner",
+  owner: "Firm owner",
   lawyer: "Lawyer",
   staff: "Staff",
   client_guest: "Client guest",

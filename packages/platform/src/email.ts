@@ -156,23 +156,127 @@ export type InviteEmailParams = {
   expiresAt: Date;
 };
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+export function formatInviteExpiry(expiresAt: Date): string {
+  return new Intl.DateTimeFormat("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: "UTC",
+    timeZoneName: "short",
+  }).format(expiresAt);
+}
+
 export function buildInviteEmail(params: InviteEmailParams): EmailMessage {
-  const inviter = params.invitedByName ? `${params.invitedByName} ` : "";
-  const expires = params.expiresAt.toISOString();
-  return {
-    to: params.to,
-    subject: `You have been invited to ${params.organizationName} on NyayaGrid`,
-    text: [
-      `${inviter}invited you to join ${params.organizationName} on NyayaGrid.`,
-      "",
-      `Accept the invitation: ${params.acceptUrl}`,
-      "",
-      `This link works once and expires at ${expires}.`,
-      "It is tied to this email address, so sign in with it to accept.",
-      "",
-      "If you were not expecting this invitation, ignore this message and the link will expire unused.",
-    ].join("\n"),
-  };
+  const org = params.organizationName.trim() || "a NyayaGrid workspace";
+  const inviter = params.invitedByName?.trim() || "";
+  const expires = formatInviteExpiry(params.expiresAt);
+  const subject = inviter ? `${inviter} invited you to ${org}` : `You're invited to join ${org}`;
+  const greeting = inviter
+    ? `${inviter} invited you to join ${org} on NyayaGrid.`
+    : `You've been invited to join ${org} on NyayaGrid.`;
+  const text = [
+    greeting,
+    "",
+    "NyayaGrid is the workspace your firm uses for matters, documents, and legal work.",
+    "",
+    `Accept invitation: ${params.acceptUrl}`,
+    "",
+    "Use this email address to sign in or create your account. The invitation can be used once and expires on " +
+      `${expires}.`,
+    "",
+    "If you were not expecting this, you can ignore this email. The invitation will expire unused.",
+    "",
+    "— NyayaGrid",
+  ].join("\n");
+
+  const orgHtml = escapeHtml(org);
+  const inviterHtml = escapeHtml(inviter);
+  const acceptHref = escapeHtml(params.acceptUrl);
+  const expiresHtml = escapeHtml(expires);
+  const leadHtml = inviter
+    ? `<strong>${inviterHtml}</strong> invited you to join <strong>${orgHtml}</strong> on NyayaGrid.`
+    : `You've been invited to join <strong>${orgHtml}</strong> on NyayaGrid.`;
+
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${escapeHtml(subject)}</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f1ea;color:#14212b;font-family:'Segoe UI',Source Sans 3,Helvetica,Arial,sans-serif;">
+  <div style="display:none;max-height:0;overflow:hidden;opacity:0;">
+    Accept your invitation to ${orgHtml}. This link is single-use.
+  </div>
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f1ea;padding:32px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#ffffff;border:1px solid #cfc7ba;border-radius:8px;overflow:hidden;">
+          <tr>
+            <td style="height:4px;background:#1f4b3a;font-size:0;line-height:0;">&nbsp;</td>
+          </tr>
+          <tr>
+            <td style="padding:28px 32px 8px;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#1f4b3a;font-weight:700;">
+              NyayaGrid
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 32px 8px;font-size:24px;line-height:1.3;font-weight:650;color:#14212b;">
+              You're invited
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 32px 20px;font-size:16px;line-height:1.55;color:#14212b;">
+              ${leadHtml}
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 32px 24px;font-size:15px;line-height:1.55;color:#3a4a54;">
+              NyayaGrid is the workspace your firm uses for matters, documents, and legal work.
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 32px 28px;">
+              <a href="${acceptHref}" style="display:inline-block;background:#1f4b3a;color:#ffffff;text-decoration:none;font-size:15px;font-weight:650;padding:12px 20px;border-radius:6px;">
+                Accept invitation
+              </a>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 32px 8px;font-size:13px;line-height:1.55;color:#5b6770;">
+              Use this email address to sign in or create your account. This invitation can be used once and expires on ${expiresHtml}.
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:0 32px 28px;font-size:13px;line-height:1.55;color:#5b6770;">
+              If the button does not work, copy and paste this link into your browser:<br>
+              <a href="${acceptHref}" style="color:#1f4b3a;word-break:break-all;">${acceptHref}</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:16px 32px 24px;border-top:1px solid #cfc7ba;font-size:12px;line-height:1.5;color:#7a7368;">
+              If you were not expecting this, you can ignore this email. The invitation will expire unused.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
+
+  return { to: params.to, subject, text, html };
 }
 
 export async function sendInviteEmail(

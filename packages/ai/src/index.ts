@@ -1457,8 +1457,9 @@ export {
   ASK_SERVED_MODEL_RECERT,
   estimateCostUsd,
   NYAYA_ROUTER_VERSION,
+  setRoutingAuditSink,
 } from "./router";
-export type { DirectProviderId, SubsystemMeasurement, CredentialFailureClass, ModelRegistryEntry, CertificationEvidence } from "./router";
+export type { DirectProviderId, SubsystemMeasurement, CredentialFailureClass, ModelRegistryEntry, CertificationEvidence, RoutingAuditRecord } from "./router";
 export type { RoutingOptions, RoutingOptionModel } from "./router";
 export {
   loadCanonicalLocalEnv,

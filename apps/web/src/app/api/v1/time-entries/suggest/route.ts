@@ -28,7 +28,9 @@ export async function POST(request: Request) {
         ),
       )
       .limit(1);
-    if (!conversation) return jsonError("NOT_FOUND", "Conversation not found on this matter", 404);
+    if (!conversation) {
+      return jsonError("NOT_FOUND", "Conversation not found on this case", 404);
+    }
 
     const [lastMessage] = await db
       .select()
@@ -38,7 +40,7 @@ export async function POST(request: Request) {
       .limit(1);
 
     const description = [
-      conversation.title?.trim() || "Matter chat",
+      conversation.title?.trim() || "Case chat",
       lastMessage?.content ? lastMessage.content.slice(0, 280) : null,
     ]
       .filter(Boolean)

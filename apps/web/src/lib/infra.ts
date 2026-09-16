@@ -1,13 +1,13 @@
-import {
-  createMalwareScannerFromEnv,
-  createOcrProviderFromEnv,
-} from "@nyayagrid/documents";
+import { createMalwareScannerFromEnv, createOcrProviderFromEnv } from "@nyayagrid/documents";
 import { createAIProviderFromEnv, createEmbeddingProviderFromEnv } from "@nyayagrid/ai";
 import { InMemoryJobDispatcher, domainHandlers } from "@nyayagrid/jobs";
 import { PostgresHybridRetriever } from "@nyayagrid/search";
 import type { AgentBudgets } from "@nyayagrid/agents";
 import { getDb } from "./db";
 import { getStorage } from "./storage";
+import { registerRoutingUsagePersistence } from "./persist-routing-usage";
+
+registerRoutingUsagePersistence();
 
 export { getStorage };
 

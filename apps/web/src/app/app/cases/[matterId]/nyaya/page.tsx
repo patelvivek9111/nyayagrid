@@ -3,9 +3,11 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
 import { Button, Panel, Badge } from "@nyayagrid/ui";
+import { EvidenceStateBadge } from "@/components/ux";
 import { openMatterDocument } from "@/lib/document-open";
 import { useFeatureFlags } from "@/components/use-feature-flags";
 import { ExecutionStrategyControl, type ExecutionStrategyValue } from "@/components/ux/execution-strategy-control";
+import { USER_FACING_ASK_ERROR } from "@/lib/user-facing-error";
 
 type Citation = {
   chunkId?: string;
@@ -191,12 +193,12 @@ export default function MatterNyayaPage() {
         }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data?.error?.message ?? "Ask failed");
+      if (!res.ok) throw new Error(data?.error?.message ?? USER_FACING_ASK_ERROR);
       setConversationId(data.qa.conversationId);
       setHistory((prev) => [data.qa, ...prev]);
       setQuestion("");
     } catch (err) {
-      setMessage(err instanceof Error ? err.message : "Ask failed");
+      setMessage(err instanceof Error ? err.message : USER_FACING_ASK_ERROR);
     } finally {
       setAsking(false);
     }
@@ -401,10 +403,7 @@ export default function MatterNyayaPage() {
                       className="rounded border border-line p-3 text-sm"
                     >
                       <div className="mb-2 flex flex-wrap gap-2">
-                        <Badge>{item.answer.evidenceState}</Badge>
-                        <Badge>
-                          {item.artifact.provider}/{item.artifact.model}
-                        </Badge>
+                        <EvidenceStateBadge state={item.answer.evidenceState} />
                       </div>
                       <p className="whitespace-pre-wrap">{item.answer.answer}</p>
                       <div className="mt-3 space-y-2">
@@ -522,7 +521,7 @@ export default function MatterNyayaPage() {
           {taskAnswer ? (
             <Panel title="Direct answer" className="mt-4">
               <div className="mb-2 flex flex-wrap gap-2">
-                <Badge>{taskAnswer.answer.evidenceState}</Badge>
+                <EvidenceStateBadge state={taskAnswer.answer.evidenceState} />
               </div>
               <p className="whitespace-pre-wrap text-sm">{taskAnswer.answer.answer}</p>
             </Panel>

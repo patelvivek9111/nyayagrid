@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { cx } from "@nyayagrid/ui";
 import { useActiveOrganization } from "@/components/use-active-organization";
 import { useFeatureFlags } from "@/components/use-feature-flags";
+import { useOrgCapability } from "@/components/use-org-capability";
 import { IntelligenceDialog } from "@/components/ux/case-intelligence";
 import { shouldShowWorkspaceSwitcher } from "@/lib/workspace-ux";
 import { SignOutControl } from "@/components/sign-out-control";
@@ -18,6 +19,7 @@ export function GlobalSidebar() {
   const pathname = usePathname();
   const { organizationId, organizations, selectOrganization, loading } = useActiveOrganization();
   const { flags } = useFeatureFlags();
+  const complianceCap = useOrgCapability(organizationId, "compliance.manage");
   const [cases, setCases] = useState<CaseRow[]>([]);
   const [chats, setChats] = useState<ChatRow[]>([]);
   const [switchOpen, setSwitchOpen] = useState(false);
@@ -225,11 +227,16 @@ export function GlobalSidebar() {
 
       <div className="mb-1 mt-4 flex items-center justify-between px-2.5">
         <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-ink/45">Cases</p>
-        <Link href="/app/cases/new" className="text-xs font-semibold text-accent hover:underline">
-          +
+        <Link
+          href="/app/cases/new"
+          className="text-xs font-semibold text-accent hover:underline"
+          title="Create a case"
+          aria-label="Create a case"
+        >
+          New
         </Link>
       </div>
-      {loading ? <p className="px-2.5 text-xs text-ink/40">Loading…</p> : null}
+      {loading ? <p className="px-2.5 text-xs text-ink/40">Loading cases…</p> : null}
       {cases.length === 0 && !loading ? (
         <Link
           href="/app/cases/new"
@@ -304,16 +311,18 @@ export function GlobalSidebar() {
           title="Search legal sources"
           active={pathname.startsWith("/app/research")}
         />
-        <WorkspaceNavLink
-          href="/app/compliance"
-          label="Holds & privacy"
-          title="Legal holds, exports, and training consent"
-          active={pathname.startsWith("/app/compliance")}
-        />
+        {complianceCap.allowed ? (
+          <WorkspaceNavLink
+            href="/app/compliance"
+            label="Holds & privacy"
+            title="Legal holds, exports, and training consent"
+            active={pathname.startsWith("/app/compliance")}
+          />
+        ) : null}
         <WorkspaceNavLink
           href="/app/settings"
           label="Settings"
-          title="Team, invites, and notifications"
+          title="Account, firm, and usage"
           active={pathname.startsWith("/app/settings")}
         />
       </div>

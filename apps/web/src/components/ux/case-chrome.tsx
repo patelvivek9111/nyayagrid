@@ -89,7 +89,7 @@ export function CaseHeader({ subtitle }: { subtitle?: string | null }) {
     <div className="mb-1">
       <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-accent">Case</p>
       <h1 className="font-display text-2xl text-ink md:text-3xl" suppressHydrationWarning>
-        {loading ? "Loading…" : title}
+        {loading ? "Loading case…" : title}
       </h1>
       {clientDisplayName ? (
         <p className="mt-1 text-sm text-ink/70">

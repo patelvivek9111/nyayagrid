@@ -13,6 +13,7 @@ import {
 } from "@/components/ux";
 import { useFeatureFlags } from "@/components/use-feature-flags";
 import { userFacingLoadError } from "@/lib/case-intelligence-ux";
+import { USER_FACING_ASK_ERROR } from "@/lib/user-facing-error";
 import { SUGGESTED_CHAT_PROMPTS } from "@/lib/workspace-ux";
 
 type Conv = { id: string; title: string | null; updatedAt: string; preview?: string | null };
@@ -56,7 +57,7 @@ export default function CaseChatsPage() {
         body: JSON.stringify({ question: text, mode: runTask ? "task" : "ask" }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data?.error?.message ?? "Ask failed");
+      if (!res.ok) throw new Error(data?.error?.message ?? USER_FACING_ASK_ERROR);
       if (data.run || data.mode === "task") {
         router.push(`/app/cases/${matterId}/work`);
         return;
@@ -97,7 +98,7 @@ export default function CaseChatsPage() {
     <div className="space-y-4">
       <IntelligenceHeader
         title="Case Chats"
-        description="Conversations stay tied to this Case. Nyaya answers from the files in this matter."
+        description="Conversations stay tied to this Case. Nyaya answers from the files you uploaded here."
         actions={
           <Button
             type="button"
@@ -117,7 +118,7 @@ export default function CaseChatsPage() {
           </p>
           {loading ? (
             <div className="p-3">
-              <LoadingState />
+              <LoadingState label="Loading conversations…" />
             </div>
           ) : null}
           {!loading && conversations.length === 0 ? (
@@ -180,12 +181,14 @@ export default function CaseChatsPage() {
         </div>
       </div>
       {error ? <ErrorState message={error} /> : null}
-      <Link
-        href={`/app/cases/${matterId}/nyaya`}
-        className="inline-block text-sm font-semibold text-accent underline"
-      >
-        Ask Nyaya about this case
-      </Link>
+      {flags.agents ? (
+        <Link
+          href={`/app/cases/${matterId}/nyaya`}
+          className="inline-block text-sm font-semibold text-accent underline"
+        >
+          Longer tasks
+        </Link>
+      ) : null}
     </div>
   );
 }

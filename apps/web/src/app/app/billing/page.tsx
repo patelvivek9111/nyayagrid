@@ -8,6 +8,7 @@ import { Button } from "@nyayagrid/ui";
 import {
   FirmEmpty,
   FirmError,
+  FirmLoading,
   FirmNotice,
   FirmPageHeader,
   FirmRow,
@@ -31,6 +32,7 @@ export default function BillingPage() {
   const [matterId, setMatterId] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   async function load(orgId: string) {
     const [mattersRes, invoicesRes] = await Promise.all([
@@ -46,8 +48,14 @@ export default function BillingPage() {
   }
 
   useEffect(() => {
-    if (!organizationId) return;
-    load(organizationId).catch((err) => setError(err instanceof Error ? err.message : "Failed"));
+    if (!organizationId) {
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    load(organizationId)
+      .catch((err) => setError(err instanceof Error ? err.message : "Failed"))
+      .finally(() => setLoading(false));
   }, [organizationId]);
 
   async function createDraft() {
@@ -136,7 +144,9 @@ export default function BillingPage() {
           </Button>
         </div>
 
-        {invoices.length === 0 ? (
+        {loading ? (
+          <FirmLoading label="Loading invoices…" />
+        ) : invoices.length === 0 ? (
           <FirmEmpty
             title="No invoices yet."
             description="Posted time can be used to create a draft invoice."
