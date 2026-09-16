@@ -30,6 +30,8 @@ export type AiUsageEventInput = {
   /** Omit to derive it from the token counts; pass null to record no estimate. */
   estimatedCostCents?: number | null;
   agentRunId?: string | null;
+  /** Shared across every model-call row for one customer-facing action. */
+  usageActionId?: string | null;
   metadata?: Record<string, unknown>;
 };
 
@@ -122,6 +124,7 @@ export async function recordAiUsageEvent(db: Database, event: AiUsageEventInput)
       embeddingTokens,
       estimatedCostCents,
       agentRunId: event.agentRunId ?? null,
+      usageActionId: event.usageActionId ?? null,
       metadata: sanitizeUsageMetadata(event.metadata),
     })
     .returning();

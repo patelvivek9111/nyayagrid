@@ -1458,6 +1458,8 @@ export {
   estimateCostUsd,
   NYAYA_ROUTER_VERSION,
   setRoutingAuditSink,
+  newRunId,
+  newUsageActionId,
 } from "./router";
 export type { DirectProviderId, SubsystemMeasurement, CredentialFailureClass, ModelRegistryEntry, CertificationEvidence, RoutingAuditRecord } from "./router";
 export type { RoutingOptions, RoutingOptionModel } from "./router";

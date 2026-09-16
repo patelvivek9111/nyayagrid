@@ -16,6 +16,8 @@ export const ROUTING_AUDIT_VERSION = "nyaya-routing-audit-v1";
 export type RoutingAuditRecord = {
   auditVersion: typeof ROUTING_AUDIT_VERSION;
   runId: string;
+  /** Customer action id shared across nested model calls for one user action. */
+  usageActionId?: string;
   organizationId?: string;
   userId?: string;
   matterId?: string;
@@ -72,4 +74,11 @@ export function newRunId(): string {
   const cryptoObj = globalThis.crypto as { randomUUID?: () => string } | undefined;
   if (cryptoObj?.randomUUID) return cryptoObj.randomUUID();
   return `run_${Date.now().toString(36)}_${Math.random().toString(36).slice(2)}`;
+}
+
+/** Stable id for one customer-facing AI action (Ask, Research, Draft, …). */
+export function newUsageActionId(): string {
+  const cryptoObj = globalThis.crypto as { randomUUID?: () => string } | undefined;
+  if (cryptoObj?.randomUUID) return cryptoObj.randomUUID();
+  return `ua_${Date.now().toString(36)}_${Math.random().toString(36).slice(2)}`;
 }

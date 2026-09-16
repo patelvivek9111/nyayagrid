@@ -20,6 +20,7 @@ import {
   createAIProviderFromEnv,
   createEmbeddingProviderFromEnv,
   legalIssueExtractionSchema,
+  newUsageActionId,
   researchSynthesisSchema,
   type AIProvider,
   type AuthoritySummary,
@@ -662,6 +663,10 @@ export async function extractSearchConcepts(params: {
   matterTitle: string;
   question: string;
   matterContextText?: string | null;
+  organizationId?: string;
+  userId?: string;
+  matterId?: string | null;
+  usageActionId?: string;
 }): Promise<{ concepts: string[]; jurisdictionCaveats: string[]; coverageWarnings: string[] }> {
   const basePrompt = buildLegalIssueExtractionUserPrompt({
     matterTitle: params.matterTitle,
@@ -675,7 +680,14 @@ export async function extractSearchConcepts(params: {
   const generation = await params.ai.generate({
     temperature: 0,
     schemaName: "legal_issue_extraction",
-    routing: { subsystem: "research", strategy: "fast" },
+    routing: {
+      subsystem: "research",
+      strategy: "fast",
+      organizationId: params.organizationId,
+      userId: params.userId,
+      matterId: params.matterId ?? undefined,
+      usageActionId: params.usageActionId,
+    },
     messages: [
       { role: "system", content: buildLegalIssueExtractionSystemPrompt() },
       { role: "user", content: userPrompt },
@@ -708,11 +720,22 @@ export async function generateContraryQueries(params: {
   question: string;
   proposition?: string | null;
   authorityIds?: string[];
+  organizationId?: string;
+  userId?: string;
+  matterId?: string | null;
+  usageActionId?: string;
 }): Promise<string[]> {
   const generation = await params.ai.generate({
     temperature: 0,
     schemaName: "contrary_authority_search",
-    routing: { subsystem: "research", strategy: "fast" },
+    routing: {
+      subsystem: "research",
+      strategy: "fast",
+      organizationId: params.organizationId,
+      userId: params.userId,
+      matterId: params.matterId ?? undefined,
+      usageActionId: params.usageActionId,
+    },
     messages: [
       { role: "system", content: buildContraryAuthoritySearchSystemPrompt() },
       {
@@ -887,6 +910,7 @@ export async function runResearchQuery(
   const ai = params.ai ?? createAIProviderFromEnv();
   const embeddings = params.embeddings ?? createEmbeddingProviderFromEnv();
   const limit = params.limit ?? DEFAULT_HIT_LIMIT;
+  const usageActionId = newUsageActionId();
 
   const session = await ensureResearchSession({
     db: params.db,
@@ -949,6 +973,10 @@ export async function runResearchQuery(
       matterTitle,
       question,
       matterContextText,
+      organizationId: params.organizationId,
+      userId: params.userId,
+      matterId,
+      usageActionId,
     });
     concepts = extraction.concepts.slice(0, MAX_CONCEPT_QUERIES);
     extraWarnings.push(...extraction.coverageWarnings, ...extraction.jurisdictionCaveats);
@@ -984,6 +1012,10 @@ export async function runResearchQuery(
       ai,
       question,
       authorityIds: [...new Set(primaryHits.map((hit) => hit.authorityId))].slice(0, 10),
+      organizationId: params.organizationId,
+      userId: params.userId,
+      matterId,
+      usageActionId,
     });
     if (contraryQueries.length > 0) {
       contrarySearchPerformed = true;
@@ -1030,6 +1062,7 @@ export async function runResearchQuery(
       organizationId: params.organizationId,
       matterId: params.matterId ?? undefined,
       userId: params.userId,
+      usageActionId,
       promptVersion: RESEARCH_SYNTHESIS_PROMPT_VERSION,
       retrievalIds: hits.map((hit) => hit.chunkId),
       authorityIds: hits.map((hit) => hit.authorityId),
@@ -1336,7 +1369,14 @@ export async function summarizeAuthority(params: {
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "authority_summary",
-    routing: { subsystem: "research", strategy: "standard" },
+    routing: {
+      subsystem: "research",
+      strategy: "standard",
+      organizationId: params.organizationId ?? undefined,
+      userId: params.userId,
+      matterId: params.matterId ?? undefined,
+      usageActionId: newUsageActionId(),
+    },
     messages: [
       { role: "system", content: buildAuthoritySummarySystemPrompt() },
       {

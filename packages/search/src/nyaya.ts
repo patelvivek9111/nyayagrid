@@ -16,6 +16,7 @@ import {
   ensureMissingInstrumentDisclosure,
   formatEvidenceAssessmentForPrompt,
   formatResearchAuthorityChunks,
+  newUsageActionId,
   NYAYA_PROMPT_VERSION,
   validateCitedAnswerAgainstPassages,
   applyQa06VerifiedIntelCap,
@@ -478,6 +479,7 @@ export async function askNyayaAboutMatter(params: {
   });
 
   const generateStarted = Date.now();
+  const usageActionId = newUsageActionId();
   const generation = await ai.generate({
     temperature: 0,
     routing: {
@@ -487,6 +489,7 @@ export async function askNyayaAboutMatter(params: {
       organizationId: params.organizationId,
       matterId: params.matterId,
       userId: params.userId,
+      usageActionId,
       promptVersion: NYAYA_PROMPT_VERSION,
       retrievalIds: passages.map((p) => p.chunkId),
       evidenceChunkIds: passages.map((p) => p.chunkId),

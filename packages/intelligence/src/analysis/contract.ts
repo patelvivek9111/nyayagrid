@@ -18,6 +18,7 @@ import {
   buildRedlineSuggestionsUserPrompt,
   redlineSuggestionsSchema,
   REDLINE_SUGGESTIONS_PROMPT_VERSION,
+  newUsageActionId,
   type AIProvider,
   type ProfessionalChunk,
 } from "@nyayagrid/ai";
@@ -147,6 +148,7 @@ export async function analyzeContract(params: {
       organizationId: params.organizationId,
       matterId: params.matterId,
       userId: params.userId,
+      usageActionId: newUsageActionId(),
     },
     messages: [
       { role: "system", content: buildContractAnalysisSystemPrompt() },
@@ -513,6 +515,7 @@ export async function generateRedlineSuggestions(params: {
       organizationId: params.organizationId,
       matterId: params.matterId,
       userId: params.userId,
+      usageActionId: newUsageActionId(),
     },
     messages: [
       { role: "system", content: buildRedlineSuggestionsSystemPrompt() },

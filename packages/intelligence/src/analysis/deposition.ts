@@ -24,6 +24,7 @@ import {
   selectRelatedChunksForDeposition,
   findDeterministicContradictionCandidates,
   refineContradictionCandidates,
+  newUsageActionId,
   type AIProvider,
   type ProfessionalChunk,
 } from "@nyayagrid/ai";
@@ -127,6 +128,7 @@ export async function analyzeDeposition(params: {
       organizationId: params.organizationId,
       matterId: params.matterId,
       userId: params.userId,
+      usageActionId: newUsageActionId(),
     },
     messages: [
       { role: "system", content: buildDepositionAnalysisSystemPrompt() },
@@ -356,6 +358,7 @@ export async function detectContradictionCandidates(params: {
       organizationId: params.organizationId,
       matterId: params.matterId,
       userId: params.userId,
+      usageActionId: newUsageActionId(),
       riskSignals: ["contradiction_request"],
     },
     messages: [

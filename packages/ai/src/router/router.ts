@@ -687,6 +687,7 @@ export class NyayaRouter implements AIProvider {
       organizationId: record.organizationId ?? record.routing.organizationId,
       userId: record.userId ?? record.routing.userId,
       matterId: record.matterId ?? record.routing.matterId,
+      usageActionId: record.usageActionId ?? record.routing.usageActionId,
       promptVersion: record.promptVersion ?? record.routing.promptVersion,
       retrievalIds: record.retrievalIds ?? record.routing.retrievalIds,
       jurisdictionSummary: record.jurisdictionSummary ?? record.routing.jurisdictionSummary,

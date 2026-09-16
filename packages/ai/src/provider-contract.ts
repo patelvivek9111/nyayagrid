@@ -85,6 +85,12 @@ export type RouterRequestContext = {
   matterId?: string;
   userId?: string;
   runId?: string;
+  /**
+   * Customer-facing usage action id. Generated once at the user-action boundary and shared by
+   * every nested/retry/fallback model call belonging to that action. Distinct from `runId`
+   * (per generate audit).
+   */
+  usageActionId?: string;
   riskSignals?: RiskSignal[];
   /** Approximate input size in tokens (chars/4 if unknown). */
   contextTokensEstimate?: number;

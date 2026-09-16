@@ -23,9 +23,11 @@ export function persistRoutingAudit(audit: RoutingAuditRecord): void {
     estimatedCostCents: estimatedCostCentsFromAudit(audit),
     latencyMs: audit.latencyMs,
     success: audit.finalStatus === "ok",
+    usageActionId: audit.usageActionId ?? null,
     metadata: {
       fallbackCount: audit.fallbacks.length,
       finalStatus: audit.finalStatus,
+      runId: audit.runId,
     },
   });
 }

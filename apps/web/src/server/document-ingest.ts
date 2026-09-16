@@ -12,7 +12,7 @@ import {
   type IngestIdentity,
 } from "@nyayagrid/documents";
 import { extractMatterIntelligenceForDocument } from "@nyayagrid/intelligence";
-import { MockAIProvider } from "@nyayagrid/ai";
+import { MockAIProvider, newUsageActionId } from "@nyayagrid/ai";
 import { recordUsage } from "@nyayagrid/platform";
 import { getAI, getEmbeddings, getMalwareScanner, getStorage } from "@/lib/infra";
 import { getDb } from "@/lib/db";
@@ -120,6 +120,7 @@ export async function handleDocumentIngestEvent(params: { payload: JobPayload; a
       outputTokens: 0,
       success: true,
       latencyMs: Date.now() - startedAt,
+      usageActionId: newUsageActionId(),
       metadata: {
         stage: result.state ?? "ready",
       },

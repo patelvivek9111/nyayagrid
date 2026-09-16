@@ -1,6 +1,9 @@
 /**
  * Customer-facing usage rollups from `ai_usage_events` plus org inventory counts.
  * Metadata only: no prompts, document text, or provider dollar charges.
+ *
+ * Customer counters count USER ACTIONS (distinct usageActionId), not raw model calls.
+ * Token totals always sum every model-call row.
  */
 import { and, count, eq, gte, inArray, lt } from "drizzle-orm";
 import {
@@ -34,12 +37,17 @@ export type UsagePeriod = {
 export type FeatureUsageCounts = Record<UsageFeatureKey, number>;
 
 export type AiUsageSummary = {
+  /** Customer-facing action count (distinct usageActionId, or one per legacy row). */
   modelRequests: number;
+  /** Internal: every persisted model-call / usage row. */
+  modelCalls: number;
   inputTokens: number;
   outputTokens: number;
   embeddingTokens: number;
   totalTokens: number;
   byFeature: FeatureUsageCounts;
+  /** True when any row lacks usageActionId (pre-grouping history). */
+  hasLegacyActions: boolean;
 };
 
 export type MemberUsageRow = {
@@ -108,33 +116,91 @@ export function classifyUsageFeature(capability: string, feature?: string | null
   return "other";
 }
 
-export function summarizeAiEventRows(
-  rows: Array<{
-    capability: string;
-    inputTokens: number;
-    outputTokens: number;
-    embeddingTokens: number;
-    metadata?: Record<string, unknown> | null;
-  }>,
-): AiUsageSummary {
+export type AiUsageEventRowInput = {
+  capability: string;
+  inputTokens: number;
+  outputTokens: number;
+  embeddingTokens: number;
+  usageActionId?: string | null;
+  metadata?: Record<string, unknown> | null;
+};
+
+/**
+ * Successful customer attempts only. Failed / blocked / unavailable calls stay in
+ * modelCalls + tokens for internal telemetry but do not inflate headline usage.
+ */
+export function isSuccessfulCustomerUsageRow(row: AiUsageEventRowInput): boolean {
+  const meta = row.metadata ?? {};
+  if (meta.success === false) return false;
+  if (typeof meta.finalStatus === "string" && meta.finalStatus !== "ok") return false;
+  return true;
+}
+
+function resolveUsageActionKey(row: AiUsageEventRowInput, index: number): string {
+  if (typeof row.usageActionId === "string" && row.usageActionId.trim()) {
+    return `action:${row.usageActionId.trim()}`;
+  }
+  const metaId = row.metadata?.usageActionId;
+  if (typeof metaId === "string" && metaId.trim()) {
+    return `action:${metaId.trim()}`;
+  }
+  return `legacy:${index}`;
+}
+
+export function summarizeAiEventRows(rows: AiUsageEventRowInput[]): AiUsageSummary {
   const byFeature: FeatureUsageCounts = { ...EMPTY_FEATURE_COUNTS };
   let inputTokens = 0;
   let outputTokens = 0;
   let embeddingTokens = 0;
-  for (const row of rows) {
-    const feature = typeof row.metadata?.feature === "string" ? row.metadata.feature : null;
-    byFeature[classifyUsageFeature(row.capability, feature)] += 1;
+  let hasLegacyActions = false;
+
+  type ActionAgg = {
+    feature: UsageFeatureKey;
+    countable: boolean;
+  };
+  const actions = new Map<string, ActionAgg>();
+
+  rows.forEach((row, index) => {
     inputTokens += row.inputTokens;
     outputTokens += row.outputTokens;
     embeddingTokens += row.embeddingTokens;
+
+    const key = resolveUsageActionKey(row, index);
+    if (key.startsWith("legacy:")) hasLegacyActions = true;
+
+    const feature = classifyUsageFeature(
+      row.capability,
+      typeof row.metadata?.feature === "string" ? row.metadata.feature : null,
+    );
+    const existing = actions.get(key);
+    const success = isSuccessfulCustomerUsageRow(row);
+    if (!existing) {
+      actions.set(key, { feature, countable: success });
+    } else {
+      if (success) existing.countable = true;
+      // Prefer a non-other feature if a later successful call is more specific.
+      if (success && existing.feature === "other" && feature !== "other") {
+        existing.feature = feature;
+      }
+    }
+  });
+
+  let modelRequests = 0;
+  for (const action of actions.values()) {
+    if (!action.countable) continue;
+    modelRequests += 1;
+    byFeature[action.feature] += 1;
   }
+
   return {
-    modelRequests: rows.length,
+    modelRequests,
+    modelCalls: rows.length,
     inputTokens,
     outputTokens,
     embeddingTokens,
     totalTokens: inputTokens + outputTokens + embeddingTokens,
     byFeature,
+    hasLegacyActions,
   };
 }
 
@@ -146,6 +212,7 @@ type AiEventRow = {
   inputTokens: number;
   outputTokens: number;
   embeddingTokens: number;
+  usageActionId: string | null;
   metadata: Record<string, unknown> | null;
 };
 
@@ -166,10 +233,21 @@ async function loadAiEvents(
       inputTokens: aiUsageEvents.inputTokens,
       outputTokens: aiUsageEvents.outputTokens,
       embeddingTokens: aiUsageEvents.embeddingTokens,
+      usageActionId: aiUsageEvents.usageActionId,
       metadata: aiUsageEvents.metadata,
     })
     .from(aiUsageEvents)
     .where(and(...filters));
+}
+
+function completenessMessage(ai: AiUsageSummary): string {
+  if (ai.modelCalls > 0 && ai.totalTokens === 0) {
+    return "Counts include recorded activity in this period only. Token totals were not stored for these calls.";
+  }
+  if (ai.hasLegacyActions) {
+    return "Counts include recorded activity in this period only. Earlier months may be incomplete. Historical usage before action grouping may count each model call as an action.";
+  }
+  return "Counts include recorded activity in this period only. Earlier months may be incomplete. Nyaya activity is one count per user action; nested model calls, retries, and fallbacks inside an action are not extra requests.";
 }
 
 export async function summarizeOrganizationUsage(
@@ -193,10 +271,7 @@ export async function summarizeOrganizationUsage(
     end: bounds.end,
   });
   const ai = summarizeAiEventRows(events);
-  const completeness =
-    ai.modelRequests > 0 && ai.totalTokens === 0
-      ? "Counts include recorded activity in this period only. Token totals were not stored for these calls."
-      : "Counts include recorded activity in this period only. Earlier months may be incomplete. Nyaya activity is feature usage; retries inside a call are not extra requests.";
+  const completeness = completenessMessage(ai);
 
   let byMember: MemberUsageRow[] | undefined;
   if (params.includeMemberBreakdown && !params.userId) {

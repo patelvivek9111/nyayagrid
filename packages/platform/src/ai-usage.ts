@@ -30,6 +30,8 @@ export type RecordUsageInput = {
   latencyMs?: number | null;
   success?: boolean;
   errorMessage?: string | null;
+  /** Groups nested model calls for one customer action. */
+  usageActionId?: string | null;
   metadata?: Record<string, unknown>;
 };
 
@@ -78,6 +80,7 @@ export async function recordUsage(db: Database, input: RecordUsageInput) {
     metadata.latencyMs = input.latencyMs;
   if (input.success !== undefined) metadata.success = input.success;
   if (input.errorMessage) metadata.errorMessage = input.errorMessage;
+  if (input.usageActionId) metadata.usageActionId = input.usageActionId;
 
   const event: AiUsageEventInput = {
     organizationId: input.organizationId,
@@ -90,6 +93,7 @@ export async function recordUsage(db: Database, input: RecordUsageInput) {
     inputTokens: input.inputTokens ?? undefined,
     outputTokens: input.outputTokens ?? undefined,
     estimatedCostCents: input.estimatedCostCents,
+    usageActionId: input.usageActionId,
     metadata,
   };
 

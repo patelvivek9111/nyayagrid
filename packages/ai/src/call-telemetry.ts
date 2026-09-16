@@ -10,6 +10,7 @@ export const LAST_AUDITS_RING = 50;
 export type ProviderCallRecord = {
   runId: string;
   correlationId: string;
+  usageActionId?: string;
   organizationId?: string;
   matterId?: string;
   subsystem: string;
@@ -44,6 +45,7 @@ export function callRecordFromAudit(
   return {
     runId: audit.runId,
     correlationId: audit.runId,
+    usageActionId: audit.usageActionId,
     organizationId: audit.organizationId,
     matterId: audit.matterId,
     subsystem: audit.subsystem,

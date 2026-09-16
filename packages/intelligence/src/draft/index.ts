@@ -8,6 +8,7 @@ import {
   draftGenerationSchema,
   DRAFT_GENERATION_PROMPT_VERSION,
   constrainDraftUnsupportedClaims,
+  newUsageActionId,
   type AIProvider,
   type ProfessionalChunk,
   type RoutingMode,
@@ -312,6 +313,7 @@ export async function generateDraft(params: {
   ]);
   const authorityBlock = formatDraftLegalAuthorityContext(authorityContext);
 
+  const usageActionId = newUsageActionId();
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "draft_generation",
@@ -323,6 +325,7 @@ export async function generateDraft(params: {
       organizationId: params.organizationId,
       matterId: params.matterId,
       userId: params.userId,
+      usageActionId,
       promptVersion: DRAFT_GENERATION_PROMPT_VERSION,
       draftType: params.draftType,
       riskSignals: HIGH_STAKES_DRAFTS.has(params.draftType) ? ["high_stakes_draft"] : undefined,
@@ -661,6 +664,7 @@ export async function transformDraftSection(params: {
     .filter(Boolean)
     .join("\n\n");
 
+  const usageActionId = newUsageActionId();
   const generation = await ai.generate({
     temperature: 0,
     schemaName: "draft_generation",
@@ -671,6 +675,7 @@ export async function transformDraftSection(params: {
       organizationId: params.organizationId,
       matterId: params.matterId,
       userId: params.userId,
+      usageActionId,
       promptVersion: DRAFT_GENERATION_PROMPT_VERSION,
       draftType: existing.draft.draftType,
     },

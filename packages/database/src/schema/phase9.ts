@@ -144,6 +144,11 @@ export const aiUsageEvents = pgTable(
     embeddingTokens: integer("embedding_tokens").notNull().default(0),
     estimatedCostCents: integer("estimated_cost_cents"),
     agentRunId: uuid("agent_run_id").references(() => agentRuns.id, { onDelete: "set null" }),
+    /**
+     * Customer-facing action id. One user action (Ask, Research, Draft, …) may write multiple
+     * model-call rows that share this id. Null on legacy rows written before action grouping.
+     */
+    usageActionId: uuid("usage_action_id"),
     metadata: jsonb("metadata")
       .$type<Record<string, unknown>>()
       .notNull()
@@ -156,6 +161,7 @@ export const aiUsageEvents = pgTable(
     index("ai_usage_events_created_at_idx").on(table.createdAt),
     index("ai_usage_events_matter_idx").on(table.matterId),
     index("ai_usage_events_agent_run_idx").on(table.agentRunId),
+    index("ai_usage_events_usage_action_idx").on(table.usageActionId),
   ],
 );
 

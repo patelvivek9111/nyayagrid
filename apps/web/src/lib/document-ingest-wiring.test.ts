@@ -45,6 +45,8 @@ describe("async document ingest wiring", () => {
     expect(ingest).toContain('feature: "document.processing"');
     expect(ingest).toContain("recordUsage");
     expect(ingest).toContain("result.ok && !result.skipped");
+    expect(ingest).toContain("usageActionId");
+    expect(ingest).toContain("newUsageActionId");
   });
 
   it("Playwright starts Inngest with the Next.js app", () => {

@@ -6,7 +6,7 @@ import {
   documentComparisonChanges,
   documents,
 } from "@nyayagrid/database";
-import { createAIProviderFromEnv, type AIProvider } from "@nyayagrid/ai";
+import { createAIProviderFromEnv, newUsageActionId, type AIProvider } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
 import {
   applyComparisonSummaryAlignmentPolicy,
@@ -68,6 +68,7 @@ export async function generateComparisonSummaryFromDiffs(params: {
   organizationId?: string;
   matterId?: string;
   userId?: string;
+  usageActionId?: string;
 }): Promise<{
   summary: string;
   provider: string;
@@ -106,6 +107,7 @@ export async function generateComparisonSummaryFromDiffs(params: {
       organizationId: params.organizationId,
       matterId: params.matterId,
       userId: params.userId,
+      usageActionId: params.usageActionId,
     },
     messages: [
       {
@@ -218,6 +220,7 @@ export async function compareDocuments(params: {
       organizationId: params.organizationId,
       matterId: params.matterId,
       userId: params.userId,
+      usageActionId: newUsageActionId(),
     });
     if (aiSummary) {
       summary = aiSummary.summary;
