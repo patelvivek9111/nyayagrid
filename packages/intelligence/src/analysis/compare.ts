@@ -65,6 +65,9 @@ export async function generateComparisonSummaryFromDiffs(params: {
   documentATitle: string;
   documentBTitle: string;
   changes: DiffChange[];
+  organizationId?: string;
+  matterId?: string;
+  userId?: string;
 }): Promise<{
   summary: string;
   provider: string;
@@ -97,7 +100,13 @@ export async function generateComparisonSummaryFromDiffs(params: {
   const generation = await params.ai.generate({
     temperature: 0,
     schemaName: "document_comparison_summary",
-    routing: { subsystem: "compare", strategy: "standard" },
+    routing: {
+      subsystem: "compare",
+      strategy: "standard",
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      userId: params.userId,
+    },
     messages: [
       {
         role: "system",
@@ -206,6 +215,9 @@ export async function compareDocuments(params: {
       documentATitle: sideA.document.title,
       documentBTitle: sideB.document.title,
       changes: diffs,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      userId: params.userId,
     });
     if (aiSummary) {
       summary = aiSummary.summary;

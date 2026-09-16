@@ -146,6 +146,7 @@ export async function analyzeContract(params: {
       strategy: "standard",
       organizationId: params.organizationId,
       matterId: params.matterId,
+      userId: params.userId,
     },
     messages: [
       { role: "system", content: buildContractAnalysisSystemPrompt() },
@@ -511,6 +512,7 @@ export async function generateRedlineSuggestions(params: {
       strategy: "standard",
       organizationId: params.organizationId,
       matterId: params.matterId,
+      userId: params.userId,
     },
     messages: [
       { role: "system", content: buildRedlineSuggestionsSystemPrompt() },

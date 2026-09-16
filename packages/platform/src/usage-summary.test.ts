@@ -29,11 +29,26 @@ describe("classifyUsageFeature", () => {
     expect(classifyUsageFeature("extraction", "analysis.compare")).toBe("compare");
     expect(classifyUsageFeature("extraction", "extraction.analysis")).toBe("analysis");
     expect(classifyUsageFeature("embeddings", "embedding")).toBe("processing");
+    expect(classifyUsageFeature("qa", "document.processing")).toBe("processing");
     expect(classifyUsageFeature("guide", "guide.ask")).toBe("other");
   });
 });
 
 describe("summarizeAiEventRows", () => {
+  it("counts one customer feature row per persisted model audit, including fallback metadata", () => {
+    const summary = summarizeAiEventRows([
+      {
+        capability: "qa",
+        inputTokens: 100,
+        outputTokens: 20,
+        embeddingTokens: 0,
+        metadata: { feature: "nyaya.ask", fallbackCount: 1, finalStatus: "ok" },
+      },
+    ]);
+    expect(summary.modelRequests).toBe(1);
+    expect(summary.byFeature.ask).toBe(1);
+  });
+
   it("counts model calls and tokens without inventing cost", () => {
     const summary = summarizeAiEventRows([
       {

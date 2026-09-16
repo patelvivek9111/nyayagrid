@@ -40,6 +40,13 @@ describe("async document ingest wiring", () => {
     expect(route).toContain('processingState: "failed"');
   });
 
+  it("records one document.processing usage event after successful ingest", () => {
+    const ingest = source("src/server/document-ingest.ts");
+    expect(ingest).toContain('feature: "document.processing"');
+    expect(ingest).toContain("recordUsage");
+    expect(ingest).toContain("result.ok && !result.skipped");
+  });
+
   it("Playwright starts Inngest with the Next.js app", () => {
     const pw = readFileSync(resolve(webRoot, "../../playwright.config.ts"), "utf8");
     expect(pw).toContain("scripts/e2e-inngest-dev.mjs");

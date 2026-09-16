@@ -13,6 +13,7 @@ import {
 } from "@nyayagrid/documents";
 import { extractMatterIntelligenceForDocument } from "@nyayagrid/intelligence";
 import { MockAIProvider } from "@nyayagrid/ai";
+import { recordUsage } from "@nyayagrid/platform";
 import { getAI, getEmbeddings, getMalwareScanner, getStorage } from "@/lib/infra";
 import { getDb } from "@/lib/db";
 import { inngest } from "@/inngest/client";
@@ -104,6 +105,26 @@ export async function handleDocumentIngestEvent(params: { payload: JobPayload; a
     ok: result.ok,
     elapsedMs: Date.now() - startedAt,
   });
+
+  // One customer-facing Document processing event per successful ingest (not per embedding batch).
+  if (result.ok && !result.skipped && params.payload.userId && identity.organizationId) {
+    const embeddings = getEmbeddings();
+    await recordUsage(getDb(), {
+      organizationId: identity.organizationId,
+      userId: params.payload.userId,
+      matterId: identity.matterId ?? null,
+      feature: "document.processing",
+      provider: embeddings.name,
+      model: embeddings.model,
+      inputTokens: 0,
+      outputTokens: 0,
+      success: true,
+      latencyMs: Date.now() - startedAt,
+      metadata: {
+        stage: result.state ?? "ready",
+      },
+    });
+  }
 
   if (result.shouldExtractIntelligence && identity.documentVersionId) {
     await enqueueDocumentIntelligence({

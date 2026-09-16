@@ -126,6 +126,7 @@ export async function analyzeDeposition(params: {
       strategy: "standard",
       organizationId: params.organizationId,
       matterId: params.matterId,
+      userId: params.userId,
     },
     messages: [
       { role: "system", content: buildDepositionAnalysisSystemPrompt() },
@@ -354,6 +355,7 @@ export async function detectContradictionCandidates(params: {
       strategy: "auto",
       organizationId: params.organizationId,
       matterId: params.matterId,
+      userId: params.userId,
       riskSignals: ["contradiction_request"],
     },
     messages: [
