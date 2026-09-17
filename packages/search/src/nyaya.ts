@@ -168,6 +168,8 @@ async function loadNyayaLegalAuthorityContext(params: {
   matterId: string;
   question: string;
   doctrineQuestion: boolean;
+  /** When true (explicit Legal Research / Case+Legal), always search the shared corpus. */
+  forceCorpusSearch?: boolean;
   embeddings?: EmbeddingProvider;
   authorityRetriever?: NyayaAuthorityRetriever;
   authorityFilters?: AuthoritySearchFilters;
@@ -193,7 +195,9 @@ async function loadNyayaLegalAuthorityContext(params: {
   const warnings = [...saved.warnings];
 
   const shouldSearchCorpus =
-    (params.doctrineQuestion || saved.items.length > 0) &&
+    (params.doctrineQuestion ||
+      params.forceCorpusSearch ||
+      saved.items.length > 0) &&
     Boolean(params.authorityRetriever ?? params.embeddings);
 
   let corpusHits: AuthoritySearchHit[] = [];
@@ -759,6 +763,16 @@ export async function askNyayaAboutMatter(params: {
       : "";
 
     const doctrineQuestion = looksLikeLegalDoctrineQuestion(params.question);
+    const questionStateHints = preferredStatesFromQuestion(params.question);
+    const searchOptions = {
+      preferredStateCodes: [
+        ...new Set([
+          ...(jurisdictionHints.preferredStateCodes ?? []),
+          ...questionStateHints,
+        ]),
+      ],
+      preferredCircuitIds: jurisdictionHints.preferredCircuitIds ?? [],
+    };
     const authorityStarted = Date.now();
     emit({
       type: "amendment_check_started",
@@ -773,11 +787,12 @@ export async function askNyayaAboutMatter(params: {
             matterId: params.matterId,
             question: params.question,
             doctrineQuestion,
+            forceCorpusSearch: flags.legalCorpusEnabled,
             embeddings: params.embeddings,
             authorityRetriever: params.authorityRetriever,
             authorityFilters: params.authorityFilters,
             authorityLimit: params.authorityLimit,
-            searchOptions: jurisdictionHints,
+            searchOptions,
           });
     mark("authorityMs", authorityStarted);
     const authorityText = authority?.text ?? null;
@@ -1401,6 +1416,30 @@ function amendmentExpandLabel(question: string): boolean {
     /\b(on 20\d{2}-|will apply|supersed|modified provision)\b/i.test(question) &&
     /\b(notice|terminat|amend|obligation|cap|provision)\b/i.test(question)
   );
+}
+
+/** Extract explicit US state mentions from a question for soft jurisdiction boosts. */
+export function preferredStatesFromQuestion(question: string): string[] {
+  const found = new Set<string>();
+  // Full names only — postal abbreviations collide with citation tokens (e.g. Pa.C.S.).
+  const fullNames: Array<[RegExp, string]> = [
+    [/\bpennsylvania\b/i, "PA"],
+    [/\bnew jersey\b/i, "NJ"],
+    [/\bnew york\b/i, "NY"],
+    [/\bdelaware\b/i, "DE"],
+    [/\bcalifornia\b/i, "CA"],
+    [/\btexas\b/i, "TX"],
+    [/\bflorida\b/i, "FL"],
+    [/\billinois\b/i, "IL"],
+    [/\bmassachusetts\b/i, "MA"],
+    [/\bvirginia\b/i, "VA"],
+    [/\bfederal\b/i, "US"],
+    [/\bunited states\b/i, "US"],
+  ];
+  for (const [re, code] of fullNames) {
+    if (re.test(question)) found.add(code);
+  }
+  return [...found];
 }
 
 export async function getChunkCitation(params: {

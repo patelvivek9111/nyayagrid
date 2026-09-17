@@ -6,3 +6,4 @@ export * from "./batch-import";
 export * from "./inventory";
 export * from "./bundles";
 export * from "./db-identity";
+export * from "./coverage-matrix";

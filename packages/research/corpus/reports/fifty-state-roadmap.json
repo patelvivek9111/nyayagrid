@@ -1,0 +1,818 @@
+{
+  "waves": [
+    {
+      "id": "wave1",
+      "name": "Harden existing federal + 10-state seed",
+      "jurisdictions": [
+        "US",
+        "CA",
+        "DE",
+        "FL",
+        "IL",
+        "MA",
+        "NJ",
+        "NY",
+        "PA",
+        "TX",
+        "VA"
+      ],
+      "focus": [
+        "idempotent import",
+        "citation normalization",
+        "jurisdiction-aware retrieval",
+        "honest corpus-miss copy",
+        "hierarchy ranking seeds"
+      ],
+      "status": "in_progress"
+    },
+    {
+      "id": "wave2",
+      "name": "Next high-priority design-partner states",
+      "jurisdictions": [
+        "AL",
+        "AK",
+        "AZ",
+        "AR",
+        "CO",
+        "CT",
+        "GA",
+        "HI",
+        "ID",
+        "IN"
+      ],
+      "focus": [
+        "official statute snapshots",
+        "high-court opinions",
+        "provenance URLs"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "wave3",
+      "name": "Remaining state primary-law seed",
+      "jurisdictions": [
+        "IA",
+        "KS",
+        "KY",
+        "LA",
+        "ME",
+        "MD",
+        "MI",
+        "MN",
+        "MS",
+        "MO",
+        "MT",
+        "NE",
+        "NV",
+        "NH",
+        "NM",
+        "NC",
+        "ND",
+        "OH",
+        "OK",
+        "OR"
+      ],
+      "focus": [
+        "statutes + high court",
+        "normalized authorityState/courtId"
+      ],
+      "status": "planned"
+    },
+    {
+      "id": "wave4",
+      "name": "Regulations + deeper appellate / federal circuit-district",
+      "jurisdictions": [
+        "US",
+        "RI",
+        "SC",
+        "SD",
+        "TN",
+        "UT",
+        "VT",
+        "WA",
+        "WV",
+        "WI",
+        "WY",
+        "DC"
+      ],
+      "focus": [
+        "eCFR / state regs",
+        "circuit opinions",
+        "refreshability metadata"
+      ],
+      "status": "planned"
+    }
+  ],
+  "perJurisdictionStatus": [
+    {
+      "jurisdiction": "US",
+      "coverageClass": "seed_corpus",
+      "importerStatus": "repeatable_import",
+      "normalizationStatus": "seed_normalized",
+      "hierarchyStatus": "partial",
+      "currentnessStatus": "partial_unknown_ok",
+      "benchmarkStatus": "seed_validation_set",
+      "sourceCandidates": [
+        "uscode.house.gov",
+        "archives.gov founding documents",
+        "courtlistener.com (public SCOTUS)",
+        "govinfo.gov (future)",
+        "ecfr.gov (future)"
+      ]
+    },
+    {
+      "jurisdiction": "AL",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "AK",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "AZ",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "AR",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "CA",
+      "coverageClass": "seed_corpus",
+      "importerStatus": "repeatable_import",
+      "normalizationStatus": "seed_normalized",
+      "hierarchyStatus": "partial",
+      "currentnessStatus": "partial_unknown_ok",
+      "benchmarkStatus": "seed_validation_set",
+      "sourceCandidates": [
+        "ca.json"
+      ]
+    },
+    {
+      "jurisdiction": "CO",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "CT",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "DE",
+      "coverageClass": "seed_corpus",
+      "importerStatus": "repeatable_import",
+      "normalizationStatus": "seed_normalized",
+      "hierarchyStatus": "partial",
+      "currentnessStatus": "partial_unknown_ok",
+      "benchmarkStatus": "seed_validation_set",
+      "sourceCandidates": [
+        "de.json"
+      ]
+    },
+    {
+      "jurisdiction": "FL",
+      "coverageClass": "seed_corpus",
+      "importerStatus": "repeatable_import",
+      "normalizationStatus": "seed_normalized",
+      "hierarchyStatus": "partial",
+      "currentnessStatus": "partial_unknown_ok",
+      "benchmarkStatus": "seed_validation_set",
+      "sourceCandidates": [
+        "fl.json"
+      ]
+    },
+    {
+      "jurisdiction": "GA",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "HI",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "ID",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "IL",
+      "coverageClass": "seed_corpus",
+      "importerStatus": "repeatable_import",
+      "normalizationStatus": "seed_normalized",
+      "hierarchyStatus": "partial",
+      "currentnessStatus": "partial_unknown_ok",
+      "benchmarkStatus": "seed_validation_set",
+      "sourceCandidates": [
+        "il.json"
+      ]
+    },
+    {
+      "jurisdiction": "IN",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "IA",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "KS",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "KY",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "LA",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "ME",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "MD",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "MA",
+      "coverageClass": "seed_corpus",
+      "importerStatus": "repeatable_import",
+      "normalizationStatus": "seed_normalized",
+      "hierarchyStatus": "partial",
+      "currentnessStatus": "partial_unknown_ok",
+      "benchmarkStatus": "seed_validation_set",
+      "sourceCandidates": [
+        "ma.json"
+      ]
+    },
+    {
+      "jurisdiction": "MI",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "MN",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "MS",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "MO",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "MT",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "NE",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "NV",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "NH",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "NJ",
+      "coverageClass": "seed_corpus",
+      "importerStatus": "repeatable_import",
+      "normalizationStatus": "seed_normalized",
+      "hierarchyStatus": "partial",
+      "currentnessStatus": "partial_unknown_ok",
+      "benchmarkStatus": "seed_validation_set",
+      "sourceCandidates": [
+        "nj.json"
+      ]
+    },
+    {
+      "jurisdiction": "NM",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "NY",
+      "coverageClass": "seed_corpus",
+      "importerStatus": "repeatable_import",
+      "normalizationStatus": "seed_normalized",
+      "hierarchyStatus": "partial",
+      "currentnessStatus": "partial_unknown_ok",
+      "benchmarkStatus": "seed_validation_set",
+      "sourceCandidates": [
+        "ny.json"
+      ]
+    },
+    {
+      "jurisdiction": "NC",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "ND",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "OH",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "OK",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "OR",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "PA",
+      "coverageClass": "seed_corpus",
+      "importerStatus": "repeatable_import",
+      "normalizationStatus": "seed_normalized",
+      "hierarchyStatus": "partial",
+      "currentnessStatus": "partial_unknown_ok",
+      "benchmarkStatus": "seed_validation_set",
+      "sourceCandidates": [
+        "pa.json"
+      ]
+    },
+    {
+      "jurisdiction": "RI",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "SC",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "SD",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "TN",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "TX",
+      "coverageClass": "seed_corpus",
+      "importerStatus": "repeatable_import",
+      "normalizationStatus": "seed_normalized",
+      "hierarchyStatus": "partial",
+      "currentnessStatus": "partial_unknown_ok",
+      "benchmarkStatus": "seed_validation_set",
+      "sourceCandidates": [
+        "tx.json"
+      ]
+    },
+    {
+      "jurisdiction": "UT",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "VT",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "VA",
+      "coverageClass": "seed_corpus",
+      "importerStatus": "repeatable_import",
+      "normalizationStatus": "seed_normalized",
+      "hierarchyStatus": "partial",
+      "currentnessStatus": "partial_unknown_ok",
+      "benchmarkStatus": "seed_validation_set",
+      "sourceCandidates": [
+        "va.json"
+      ]
+    },
+    {
+      "jurisdiction": "WA",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "WV",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "WI",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "WY",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    },
+    {
+      "jurisdiction": "DC",
+      "coverageClass": "no_corpus",
+      "importerStatus": "not_started",
+      "normalizationStatus": "absent",
+      "hierarchyStatus": "absent",
+      "currentnessStatus": "absent",
+      "benchmarkStatus": "not_started",
+      "sourceCandidates": [
+        "official legislature site",
+        "official judiciary opinions",
+        "courtlistener public"
+      ]
+    }
+  ]
+}

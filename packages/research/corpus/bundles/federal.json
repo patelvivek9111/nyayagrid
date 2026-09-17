@@ -1,0 +1,90 @@
+[
+  {
+    "title": "28 U.S.C. § 1331 — Federal question",
+    "shortTitle": "28 U.S.C. § 1331",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1331",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1331",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1331&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "1331", "label": "Federal question" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "procedure"],
+    "content": "28 U.S.C. § 1331\n\n§ 1331. Federal question\n\nThe district courts shall have original jurisdiction of all civil actions arising under the Constitution, laws, or treaties of the United States.",
+    "sections": [
+      {
+        "sectionRef": "1331",
+        "content": "The district courts shall have original jurisdiction of all civil actions arising under the Constitution, laws, or treaties of the United States."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "statuteTopic": "federal_question_jurisdiction",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "U.S. Const. art. VI, cl. 2 — Supremacy Clause",
+    "shortTitle": "U.S. Const. art. VI, cl. 2",
+    "authorityType": "constitution",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "U.S. Const. art. VI, cl. 2",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-const-art-vi-cl-2",
+    "canonicalSourceUrl": "https://www.archives.gov/founding-docs/constitution-transcript",
+    "hierarchyPath": [
+      { "level": "article", "ref": "VI", "label": "Article VI" },
+      { "level": "clause", "ref": "2", "label": "Supremacy Clause" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "constitutional"],
+    "content": "U.S. Const. art. VI, cl. 2\n\nThis Constitution, and the Laws of the United States which shall be made in Pursuance thereof; and all Treaties made, or which shall be made, under the Authority of the United States, shall be the supreme Law of the Land; and the Judges in every State shall be bound thereby, any Thing in the Constitution or Laws of any State to the Contrary notwithstanding.",
+    "sections": [
+      {
+        "sectionRef": "art-VI-cl-2",
+        "content": "This Constitution, and the Laws of the United States which shall be made in Pursuance thereof; and all Treaties made, or which shall be made, under the Authority of the United States, shall be the supreme Law of the Land; and the Judges in every State shall be bound thereby, any Thing in the Constitution or Laws of any State to the Contrary notwithstanding."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_primary_text_snapshot",
+      "sourceOwner": "National Archives"
+    }
+  },
+  {
+    "title": "Marbury v. Madison, 5 U.S. (1 Cranch) 137 (1803)",
+    "shortTitle": "Marbury v. Madison",
+    "authorityType": "case",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "court": "Supreme Court of the United States",
+    "courtId": "us-scotus",
+    "courtLevel": "scotus",
+    "citation": "5 U.S. 137",
+    "decisionDate": "1803-02-24",
+    "publicationStatus": "published",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-marbury-v-madison-5-us-137",
+    "canonicalSourceUrl": "https://www.courtlistener.com/opinion/84759/marbury-v-madison/",
+    "bundleSourceClass": "PRIMARY_PUBLIC_REPOSITORY",
+    "bundleQualityTier": "TIER_2_TRUSTED_PUBLIC",
+    "bundlePracticeAreas": ["federal", "constitutional"],
+    "content": "Marbury v. Madison, 5 U.S. (1 Cranch) 137 (1803).\n\nThe Supreme Court of the United States held that it is emphatically the province and duty of the judicial department to say what the law is. The Court concluded that a law repugnant to the Constitution is void, and that courts as well as other departments are bound by that instrument.\n\nThe opinion establishes the foundational principle of judicial review of congressional legislation for constitutionality. NyayaGrid has not independently verified subsequent treatment of this historical opinion.",
+    "opinionParts": [
+      {
+        "part": "majority",
+        "content": "It is emphatically the province and duty of the judicial department to say what the law is. A law repugnant to the Constitution is void."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "public_repository_snapshot",
+      "repository": "courtlistener",
+      "excerptNote": "Historical summary excerpt; full text at canonical URL. Subsequent treatment not verified."
+    }
+  }
+]

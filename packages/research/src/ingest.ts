@@ -289,7 +289,62 @@ export async function importAuthority(
         .limit(1)
     : [];
 
+  const structured = structuredAuthorityFields({
+    court: input.court,
+    jurisdiction: input.jurisdiction,
+    courtId: input.courtId,
+    authorityState: input.authorityState,
+    federalCircuit: input.federalCircuit,
+    courtLevel: input.courtLevel,
+  });
+
   if (existing && latestVersion && latestVersion.sha256 === sha256) {
+    const needsMetaRepair =
+      existing.authorityState !== structured.authorityState ||
+      existing.courtId !== (structured.courtId ?? null) ||
+      existing.courtLevel !== (structured.courtLevel ?? null) ||
+      existing.federalCircuit !== (structured.federalCircuit ?? null) ||
+      (normalizedCitation != null && existing.normalizedCitation !== normalizedCitation);
+
+    if (needsMetaRepair) {
+      const [repaired] = await db
+        .update(legalAuthorities)
+        .set({
+          courtId: structured.courtId,
+          authorityState: structured.authorityState,
+          federalCircuit: structured.federalCircuit,
+          courtLevel: structured.courtLevel,
+          ...(normalizedCitation != null ? { normalizedCitation } : {}),
+          updatedAt: new Date(),
+        })
+        .where(eq(legalAuthorities.id, existing.id))
+        .returning();
+      await writeAuditEvent(db, {
+        organizationId: params.actor?.organizationId ?? null,
+        actorUserId: params.actor?.userId ?? null,
+        action: "legal_authority.metadata_repaired",
+        targetType: "legal_authority",
+        targetId: existing.id,
+        metadata: {
+          sourceProvider: input.sourceProvider,
+          sourceExternalId: input.sourceExternalId,
+          repaired: {
+            authorityState: structured.authorityState,
+            courtId: structured.courtId,
+            courtLevel: structured.courtLevel,
+            normalizedCitation,
+          },
+        },
+      });
+      return {
+        authority: repaired ?? existing,
+        version: latestVersion,
+        chunkCount: await countChunksForVersion(db, latestVersion.id),
+        citationCount: 0,
+        skipped: true,
+      };
+    }
+
     await writeAuditEvent(db, {
       organizationId: params.actor?.organizationId ?? null,
       actorUserId: params.actor?.userId ?? null,
@@ -312,14 +367,6 @@ export async function importAuthority(
     };
   }
 
-  const structured = structuredAuthorityFields({
-    court: input.court,
-    jurisdiction: input.jurisdiction,
-    courtId: input.courtId,
-    authorityState: input.authorityState,
-    federalCircuit: input.federalCircuit,
-    courtLevel: input.courtLevel,
-  });
   const authorityValues = {
     authorityType: input.authorityType,
     jurisdiction: input.jurisdiction ?? null,

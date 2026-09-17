@@ -5,6 +5,23 @@ import { listUsStates, normalizeStateCode } from "@nyayagrid/jurisdiction";
 import { isSyntheticBenchSource, US_PRIMARY_CORPUS_PROVIDER } from "./source-classes";
 import type { QualityTier } from "./quality-tier";
 
+export type CorpusCoverageClass = "no_corpus" | "seed_corpus" | "limited_corpus" | "broader_corpus";
+
+export function classifyJurisdictionCoverage(params: {
+  authorityCount: number;
+  statuteCount: number;
+  caseCount: number;
+  regulationCount: number;
+}): CorpusCoverageClass {
+  const { authorityCount, statuteCount, caseCount, regulationCount } = params;
+  if (authorityCount === 0) return "no_corpus";
+  if (authorityCount <= 5 && regulationCount === 0) return "seed_corpus";
+  if (authorityCount <= 25 || (statuteCount > 0 && caseCount > 0 && regulationCount === 0)) {
+    return "limited_corpus";
+  }
+  return "broader_corpus";
+}
+
 export type CorpusInventoryRow = {
   id: string;
   authorityType: string;
@@ -22,11 +39,13 @@ export type CorpusInventoryRow = {
   metadata: Record<string, unknown> | null;
 };
 
-function asState(row: CorpusInventoryRow): string | null {
-  return (
-    (row.authorityState ? normalizeStateCode(row.authorityState) : null) ??
-    (row.jurisdiction ? normalizeStateCode(row.jurisdiction) : null)
-  );
+function asJurisdiction(row: CorpusInventoryRow): string | null {
+  const raw = row.authorityState?.trim() || row.jurisdiction?.trim() || null;
+  if (!raw) return null;
+  const upper = raw.toUpperCase();
+  if (upper === "US" || upper === "USA" || upper === "FEDERAL") return "US";
+  if (/united\s+states/i.test(raw)) return "US";
+  return normalizeStateCode(raw);
 }
 
 function tierFromRow(row: CorpusInventoryRow): QualityTier | null {
@@ -47,6 +66,17 @@ export type StateCorpusSummary = {
   effectiveDateCoveragePercent: number;
   withCanonicalUrlPercent: number;
   tierDistribution: Record<string, number>;
+  coverageClass: CorpusCoverageClass;
+};
+
+export type FederalCorpusSummary = {
+  authorityCount: number;
+  statuteCount: number;
+  caseCount: number;
+  constitutionCount: number;
+  regulationCount: number;
+  scotusCount: number;
+  coverageClass: CorpusCoverageClass;
 };
 
 export type CorpusInventory = {
@@ -66,7 +96,13 @@ export type CorpusInventory = {
   versionCount: number;
   sourceProviders: Record<string, number>;
   states: Record<string, StateCorpusSummary>;
+  federal: FederalCorpusSummary;
   unmappedRealCount: number;
+  coverageWaveHint: {
+    wave1SupportedStates: string[];
+    wave1Federal: boolean;
+    remainingNoCorpusStates: number;
+  };
 };
 
 export async function buildCorpusInventory(db: Database): Promise<CorpusInventory> {
@@ -134,10 +170,10 @@ export async function buildCorpusInventory(db: Database): Promise<CorpusInventor
   const chunkCount = chunkRow?.count ?? 0;
   const versionCount = versionRow?.count ?? 0;
 
-  const states = [...listUsStates().map((s) => s.code), "DC"];
+  const states = [...listUsStates().map((s) => s.code)];
   const byState: Record<string, StateCorpusSummary> = Object.fromEntries(
     states.map((code) => {
-      const authorities = realRows.filter((row) => asState(row) === code);
+      const authorities = realRows.filter((row) => asJurisdiction(row) === code);
       const normalized = authorities.filter(
         (row) => row.courtId || row.authorityState || row.courtLevel,
       );
@@ -148,15 +184,18 @@ export async function buildCorpusInventory(db: Database): Promise<CorpusInventor
         const tier = tierFromRow(row) ?? "unknown";
         tiers[tier] = (tiers[tier] ?? 0) + 1;
       }
+      const statuteCount = authorities.filter((row) => row.authorityType === "statute").length;
+      const caseCount = authorities.filter((row) => row.authorityType === "case").length;
+      const regulationCount = authorities.filter((row) => row.authorityType === "regulation").length;
       return [
         code,
         {
           state: code,
           authorityCount: authorities.length,
           realPrimaryCount: authorities.length,
-          statuteCount: authorities.filter((row) => row.authorityType === "statute").length,
-          caseCount: authorities.filter((row) => row.authorityType === "case").length,
-          regulationCount: authorities.filter((row) => row.authorityType === "regulation").length,
+          statuteCount,
+          caseCount,
+          regulationCount,
           stateHighCount: authorities.filter((row) => row.courtLevel === "state_high").length,
           stateAppellateCount: authorities.filter((row) => row.courtLevel === "state_appellate").length,
           normalizedMetadataPercent:
@@ -172,10 +211,39 @@ export async function buildCorpusInventory(db: Database): Promise<CorpusInventor
               ? 0
               : Math.round((withUrl.length / authorities.length) * 1000) / 10,
           tierDistribution: tiers,
+          coverageClass: classifyJurisdictionCoverage({
+            authorityCount: authorities.length,
+            statuteCount,
+            caseCount,
+            regulationCount,
+          }),
         },
       ];
     }),
   );
+
+  const federalRows = realRows.filter((row) => asJurisdiction(row) === "US" || row.authorityState === "US");
+  const federal: FederalCorpusSummary = {
+    authorityCount: federalRows.length,
+    statuteCount: federalRows.filter((row) => row.authorityType === "statute").length,
+    caseCount: federalRows.filter((row) => row.authorityType === "case").length,
+    constitutionCount: federalRows.filter((row) => row.authorityType === "constitution").length,
+    regulationCount: federalRows.filter((row) => row.authorityType === "regulation").length,
+    scotusCount: federalRows.filter(
+      (row) => row.courtLevel === "scotus" || row.courtId === "us-scotus",
+    ).length,
+    coverageClass: classifyJurisdictionCoverage({
+      authorityCount: federalRows.length,
+      statuteCount: federalRows.filter((row) => row.authorityType === "statute").length,
+      caseCount: federalRows.filter((row) => row.authorityType === "case").length,
+      regulationCount: federalRows.filter((row) => row.authorityType === "regulation").length,
+    }),
+  };
+
+  const wave1SupportedStates = Object.values(byState)
+    .filter((s) => s.coverageClass !== "no_corpus")
+    .map((s) => s.state)
+    .sort();
 
   return {
     generatedAt: new Date().toISOString(),
@@ -194,6 +262,13 @@ export async function buildCorpusInventory(db: Database): Promise<CorpusInventor
     versionCount: versionCount ?? 0,
     sourceProviders,
     states: byState,
-    unmappedRealCount: realRows.filter((row) => !asState(row)).length,
+    federal,
+    unmappedRealCount: realRows.filter((row) => !asJurisdiction(row)).length,
+    coverageWaveHint: {
+      wave1SupportedStates,
+      wave1Federal: federal.authorityCount > 0,
+      remainingNoCorpusStates: Object.values(byState).filter((s) => s.coverageClass === "no_corpus")
+        .length,
+    },
   };
 }

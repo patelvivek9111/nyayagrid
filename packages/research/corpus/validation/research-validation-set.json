@@ -1,0 +1,106 @@
+{
+  "phase": "legal-research-corpus-audit",
+  "description": "Bounded Legal Research validation queries against curated public seed corpus. Not exhaustive.",
+  "cases": [
+    {
+      "id": "exact-pa-statute",
+      "query": "What is the limitations period under 42 Pa.C.S. § 5525 for written contracts under seal in Pennsylvania?",
+      "sourceScope": "legal_research",
+      "expect": {
+        "minAuthorities": 1,
+        "citationContains": "42 Pa.C.S. § 5525",
+        "authorityState": "PA",
+        "noWeb": true
+      }
+    },
+    {
+      "id": "exact-federal-statute",
+      "query": "Does 28 U.S.C. § 1331 grant federal question jurisdiction to district courts?",
+      "sourceScope": "legal_research",
+      "expect": {
+        "minAuthorities": 1,
+        "citationContains": "28 U.S.C. § 1331",
+        "authorityState": "US",
+        "noWeb": true
+      }
+    },
+    {
+      "id": "exact-case-tincher",
+      "query": "Tincher v. Omega Flex, 104 A.3d 626 — what did the Pennsylvania Supreme Court hold about strict liability?",
+      "sourceScope": "legal_research",
+      "expect": {
+        "minAuthorities": 1,
+        "citationContains": "104 A.3d 626",
+        "authorityState": "PA",
+        "noWeb": true
+      }
+    },
+    {
+      "id": "issue-pa-limitations",
+      "query": "What is the Pennsylvania statute of limitations for breach of a written contract under seal?",
+      "sourceScope": "legal_research",
+      "expect": {
+        "minAuthorities": 1,
+        "preferredAuthorityState": "PA",
+        "noWeb": true
+      }
+    },
+    {
+      "id": "cross-state-ucc",
+      "query": "Compare the UCC Article 2 statute of limitations for contracts for sale in Pennsylvania and New Jersey.",
+      "sourceScope": "legal_research",
+      "expect": {
+        "minAuthorities": 1,
+        "noWeb": true
+      }
+    },
+    {
+      "id": "hierarchy-pa",
+      "query": "In Pennsylvania product liability and related civil appeals, how should Pennsylvania Supreme Court authority relate to Superior Court authority?",
+      "sourceScope": "legal_research",
+      "expect": {
+        "preferCourtLevel": "state_high",
+        "authorityState": "PA",
+        "noWeb": true
+      }
+    },
+    {
+      "id": "nonexistent-citation",
+      "query": "What does 999 Z.Z.Z. § 0001 say about unicorn trusts in Atlantis?",
+      "sourceScope": "legal_research",
+      "expect": {
+        "corpusMiss": true,
+        "noFabricatedAuthority": true,
+        "noWeb": true
+      }
+    },
+    {
+      "id": "ambiguous-citation",
+      "query": "What does section 100 of the code provide?",
+      "sourceScope": "legal_research",
+      "expect": {
+        "noWeb": true,
+        "allowLowConfidence": true
+      }
+    },
+    {
+      "id": "corpus-miss-obscure",
+      "query": "What is the current Wyoming regulation governing geothermal well bonding schedules for private ranch operations?",
+      "sourceScope": "legal_research",
+      "expect": {
+        "corpusMiss": true,
+        "noWeb": true,
+        "honestLimitationCopy": true
+      }
+    },
+    {
+      "id": "cross-jurisdiction-distractor",
+      "query": "Under Pennsylvania law, what is the four-year contract limitation — do not rely on California authorities.",
+      "sourceScope": "legal_research",
+      "expect": {
+        "preferredAuthorityState": "PA",
+        "noWeb": true
+      }
+    }
+  ]
+}

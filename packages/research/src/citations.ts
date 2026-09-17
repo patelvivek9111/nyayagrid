@@ -154,11 +154,79 @@ export class RegulatoryCitationParser implements CitationParser {
   }
 }
 
+/** Pennsylvania Consolidated Statutes and similar compiled-statute forms (e.g. 42 Pa.C.S. § 5525). */
+export class StateCompiledStatuteParser implements CitationParser {
+  readonly name = "state-compiled-statute";
+  readonly type: CitationKind = "statute";
+  readonly pattern =
+    /\b(\d{1,3})\s+(Pa\.?\s*C\.?\s*S\.?(?:\s*Ann\.?)?|N\.?J\.?\s*S\.?A\.?|N\.?Y\.?\s*(?:C\.?L\.?S\.?|Consol\.)|Cal\.?\s*(?:Civ\.?\s*)?Code|Tex\.?\s*(?:Bus\.?\s*&?\s*Com\.?\s*)?Code|Fla\.?\s*Stat\.?(?:\s*Ann\.?)?|Ill\.?\s*Comp\.?\s*Stat\.?|Mass\.?\s*Gen\.?\s*Laws|Va\.?\s*Code\s*Ann\.?|Del\.?\s*Code\s*Ann\.?)\s*§+\s*(\d[\w.\-]*)/gi;
+
+  build(match: RegExpMatchArray): ParsedCitation | null {
+    const title = toInt(match[1]);
+    const codeRaw = match[2];
+    const section = match[3];
+    if (title === null || !codeRaw || !section) return null;
+    const code = collapseWhitespace(codeRaw.replace(/\s+/g, " "));
+    const canonicalCode = canonicalizeStateCodeLabel(code);
+    return {
+      raw: match[0],
+      normalized: `${title} ${canonicalCode} § ${section}`,
+      reporter: canonicalCode,
+      volume: title,
+      section,
+      type: "statute",
+      parser: this.name,
+      confidence: "high",
+    };
+  }
+}
+
+function canonicalizeStateCodeLabel(code: string): string {
+  const compact = code.replace(/\s+/g, " ").trim();
+  if (/^Pa\.?\s*C\.?\s*S/i.test(compact)) return "Pa.C.S.";
+  if (/^N\.?J\.?\s*S\.?A/i.test(compact)) return "N.J.S.A.";
+  if (/^N\.?Y/i.test(compact)) return "N.Y. C.L.S.";
+  if (/^Cal/i.test(compact)) return "Cal. Civ. Code";
+  if (/^Tex/i.test(compact)) return "Tex. Bus. & Com. Code";
+  if (/^Fla/i.test(compact)) return "Fla. Stat.";
+  if (/^Ill/i.test(compact)) return "Ill. Comp. Stat.";
+  if (/^Mass/i.test(compact)) return "Mass. Gen. Laws";
+  if (/^Va/i.test(compact)) return "Va. Code Ann.";
+  if (/^Del/i.test(compact)) return "Del. Code Ann.";
+  return compact;
+}
+
+export class AtlanticReporterParser implements CitationParser {
+  readonly name = "atlantic-reporter";
+  readonly type: CitationKind = "case";
+  readonly pattern = /\b(\d{1,4})\s+A\.(?:\s?(2d|3d))?\s+(\d{1,4})\b/g;
+
+  build(match: RegExpMatchArray): ParsedCitation | null {
+    const volume = toInt(match[1]);
+    const page = toInt(match[3]);
+    if (volume === null || page === null) return null;
+    const series = match[2];
+    const reporter = series ? `A.${series}` : "A.";
+    return {
+      raw: match[0],
+      normalized: `${volume} ${reporter} ${page}`,
+      reporter,
+      volume,
+      page,
+      type: "case",
+      parser: this.name,
+      confidence: "high",
+    };
+  }
+}
+
 export const DEFAULT_CITATION_PARSERS: CitationParser[] = [
+  new StateCompiledStatuteParser(),
   new StatuteCitationParser(),
   new RegulatoryCitationParser(),
   new USReportsParser(),
   new FederalReporterParser(),
+  new AtlanticReporterParser(),
 ];
 
 type CitationMatch = {

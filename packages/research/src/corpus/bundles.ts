@@ -18,6 +18,14 @@ const bundleExtraSchema = z.object({
 const manifestSchema = z.object({
   phase: z.string(),
   parserVersion: z.string(),
+  federalBundles: z
+    .array(
+      z.object({
+        bundleFile: z.string(),
+        practiceAreas: z.array(z.string()).optional(),
+      }),
+    )
+    .optional(),
   states: z.array(
     z.object({
       code: z.string().length(2),
@@ -53,6 +61,15 @@ export async function loadInitialBatchAuthorities(): Promise<{
 }> {
   const manifest = await loadCorpusManifest();
   const authorities: CorpusBundleAuthority[] = [];
+  for (const federal of manifest.federalBundles ?? []) {
+    const bundle = await loadCorpusBundle(federal.bundleFile);
+    authorities.push(
+      ...bundle.map((entry) => ({
+        ...entry,
+        bundlePracticeAreas: entry.bundlePracticeAreas ?? federal.practiceAreas,
+      })),
+    );
+  }
   for (const state of manifest.states) {
     const bundle = await loadCorpusBundle(state.bundleFile);
     authorities.push(

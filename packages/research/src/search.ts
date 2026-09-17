@@ -497,13 +497,39 @@ export class AuthorityHybridRetriever {
     if (preferredStates.size > 0) {
       const state = (row.authority_state ?? "").toUpperCase();
       if (state && preferredStates.has(state)) boost += 0.45;
-      else if (state && !preferredStates.has(state) && row.court_level !== "scotus") boost -= 0.3;
+      else if (state && !preferredStates.has(state) && !isFederalApexCourt(row.court_level)) {
+        boost -= 0.3;
+      }
     }
     const preferredCircuits = new Set(options.preferredCircuitIds ?? []);
     if (preferredCircuits.size > 0 && row.federal_circuit && preferredCircuits.has(row.federal_circuit)) {
       boost += 0.3;
     }
-    if (row.court_level === "scotus") boost += 0.55;
+    boost += courtHierarchyBoost(row.court_level);
     return boost;
+  }
+}
+
+function isFederalApexCourt(courtLevel: string | null): boolean {
+  return courtLevel === "scotus";
+}
+
+/** Soft hierarchy preference — not a binding-law claim. */
+function courtHierarchyBoost(courtLevel: string | null): number {
+  switch (courtLevel) {
+    case "scotus":
+      return 0.55;
+    case "circuit":
+      return 0.35;
+    case "state_high":
+      return 0.4;
+    case "district":
+      return 0.2;
+    case "state_appellate":
+      return 0.25;
+    case "state_trial":
+      return 0.1;
+    default:
+      return 0;
   }
 }

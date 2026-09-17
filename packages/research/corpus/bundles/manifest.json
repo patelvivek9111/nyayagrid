@@ -1,6 +1,7 @@
 {
   "phase": "6T-CORPUS-1",
-  "parserVersion": "corpus1-v1",
+  "parserVersion": "corpus1-v2",
+  "federalBundles": [{ "bundleFile": "federal.json", "practiceAreas": ["federal", "constitutional", "civil"] }],
   "states": [
     { "code": "PA", "bundleFile": "pa.json", "practiceAreas": ["contract", "employment", "civil"] },
     { "code": "NJ", "bundleFile": "nj.json", "practiceAreas": ["contract", "employment", "civil"] },

@@ -83,5 +83,66 @@
       "repository": "courtlistener",
       "excerptNote": "Opening summary paragraphs from published opinion; full text at canonical URL."
     }
+  },
+  {
+    "title": "42 Pa.C.S. § 5525 — Four year limitation",
+    "shortTitle": "42 Pa.C.S. § 5525",
+    "authorityType": "statute",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "42 Pa.C.S. § 5525",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "pa-42-pac-s-5525",
+    "canonicalSourceUrl": "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=42&div=0&chpt=55&sctn=25&subsctn=0",
+    "hierarchyPath": [
+      { "level": "title", "ref": "42", "label": "Judiciary and Judicial Procedure" },
+      { "level": "chapter", "ref": "55", "label": "Limitation of Time" },
+      { "level": "section", "ref": "5525", "label": "Four year limitation" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["contract", "civil"],
+    "content": "42 Pa.C.S. § 5525\n\n§ 5525. Four year limitation.\n\n(a) General rule.--Except as provided in subsection (b), the following actions and proceedings must be commenced within four years:\n\n(1) An action upon a contract, under seal or otherwise, for the sale, construction or furnishing of tangible personal property or fixtures.\n\n(2) Any action to recover damages for injury to person or property which is founded on negligent, intentional, or otherwise tortious conduct or any other action or proceeding sounding in tort, including deceit or fraud, except an action for defamation.\n\n(3) An action upon an express contract not founded upon an instrument in writing.\n\n(4) An action upon a contract implied in law, except an action founded upon a sealed instrument.\n\n(5) An action upon a written contract under seal or upon a bond or other instrument under seal.\n\n(6) An action upon any official bond of a public official, officer or employee.\n\n(7) An action upon a specialty.\n\n(8) An action under any act of Assembly creating liability where no period of limitation is otherwise provided.\n\n(b) Special provision.--An action to recover any liquidated damages or penalty under any act of Assembly shall be commenced within the period of time provided in such act of Assembly.",
+    "sections": [
+      {
+        "sectionRef": "5525",
+        "subsectionRef": "a",
+        "content": "Except as provided in subsection (b), the following actions and proceedings must be commenced within four years: (5) An action upon a written contract under seal or upon a bond or other instrument under seal."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "statuteTopic": "limitations_written_contract"
+    }
+  },
+  {
+    "title": "Stewart v. GGNSC-Canonsburg, L.P., 9 A.3d 215 (Pa. Super. 2010)",
+    "shortTitle": "Stewart v. GGNSC-Canonsburg",
+    "authorityType": "case",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "court": "Superior Court of Pennsylvania",
+    "courtId": "st-pa-super",
+    "courtLevel": "state_appellate",
+    "citation": "9 A.3d 215",
+    "decisionDate": "2010-11-04",
+    "publicationStatus": "published",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "pa-stewart-v-ggnsc-canonsburg-9-a3d-215",
+    "canonicalSourceUrl": "https://www.courtlistener.com/opinion/2552235/stewart-v-ggnsc-canonsburg-lp/",
+    "bundleSourceClass": "PRIMARY_PUBLIC_REPOSITORY",
+    "bundleQualityTier": "TIER_2_TRUSTED_PUBLIC",
+    "bundlePracticeAreas": ["civil", "commercial"],
+    "content": "Stewart v. GGNSC-Canonsburg, L.P., 9 A.3d 215 (Pa. Super. 2010).\n\nThe Superior Court of Pennsylvania reviewed whether an arbitration agreement in nursing-home admission paperwork was enforceable. The court affirmed the trial court's order denying preliminary objections seeking to compel arbitration, concluding the arbitration provision was unenforceable on the record presented.\n\nThis intermediate appellate opinion is retained in the NyayaGrid seed corpus to support court-hierarchy ranking relative to Pennsylvania Supreme Court authority. NyayaGrid has not independently verified subsequent treatment.",
+    "opinionParts": [
+      {
+        "part": "majority",
+        "content": "The Superior Court of Pennsylvania affirmed denial of preliminary objections seeking to compel arbitration, holding the arbitration provision unenforceable on the facts and agreement language before the court."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "public_repository_snapshot",
+      "repository": "courtlistener",
+      "excerptNote": "Hierarchy seed excerpt from published opinion; subsequent treatment not verified."
+    }
   }
 ]

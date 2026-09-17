@@ -1,5 +1,5 @@
 import { getCourtById } from "./registry";
-import { normalizeCourtId, normalizeStateCode } from "./normalize";
+import { normalizeCourtId, normalizeJurisdictionCode } from "./normalize";
 
 /** Persist structured authority court identity when import metadata can be matched uniquely. */
 export function structuredAuthorityFields(input: {
@@ -14,9 +14,9 @@ export function structuredAuthorityFields(input: {
     ? getCourtById(input.courtId)
     : getCourtById(normalizeCourtId(input.court));
   const authorityState =
-    (input.authorityState ? normalizeStateCode(input.authorityState) : null) ??
+    (input.authorityState ? normalizeJurisdictionCode(input.authorityState) : null) ??
     court?.state ??
-    (input.jurisdiction ? normalizeStateCode(input.jurisdiction) : null);
+    (input.jurisdiction ? normalizeJurisdictionCode(input.jurisdiction) : null);
   return {
     courtId: court?.id ?? input.courtId ?? null,
     authorityState,

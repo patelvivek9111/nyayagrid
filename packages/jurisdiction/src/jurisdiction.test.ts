@@ -15,6 +15,7 @@ import {
   listCourts,
   listUsStates,
   normalizeCourtId,
+  normalizeJurisdictionCode,
   normalizeStateCode,
   rankAuthoritiesForMatter,
   shouldAbstainForUnknownJurisdiction,
@@ -44,6 +45,10 @@ describe("state and court normalization", () => {
     expect(normalizeStateCode("Pennsylvania")).toBe("PA");
     expect(normalizeStateCode("pa")).toBe("PA");
     expect(normalizeStateCode("District of Columbia")).toBe("DC");
+    expect(normalizeJurisdictionCode("US")).toBe("US");
+    expect(normalizeJurisdictionCode("United States")).toBe("US");
+    expect(normalizeJurisdictionCode("federal")).toBe("US");
+    expect(normalizeJurisdictionCode("Pennsylvania")).toBe("PA");
   });
 
   it("maps EDPA aliases to one court and derives the Third Circuit", () => {

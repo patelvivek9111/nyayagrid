@@ -28,6 +28,22 @@ describe("parseCitation", () => {
       type: "regulation",
       confidence: "high",
     });
+    expect(parseCitation("42 Pa.C.S. § 5525")).toMatchObject({
+      normalized: "42 Pa.C.S. § 5525",
+      type: "statute",
+      confidence: "high",
+    });
+    expect(parseCitation("28 U.S.C. § 1331")).toMatchObject({
+      normalized: "28 U.S.C. § 1331",
+      type: "statute",
+      confidence: "high",
+    });
+    expect(parseCitation("104 A.3d 626")).toMatchObject({
+      normalized: "104 A.3d 626",
+      reporter: "A.3d",
+      type: "case",
+      confidence: "high",
+    });
   });
 
   it("extracts the reporter citation from a full case cite", () => {

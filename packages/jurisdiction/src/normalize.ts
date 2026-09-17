@@ -44,6 +44,22 @@ export function normalizeStateCode(value: string | null | undefined): string | n
   return code ?? null;
 }
 
+/** State USPS codes plus federal `US` for authority jurisdiction fields. */
+export function normalizeJurisdictionCode(value: string | null | undefined): string | null {
+  if (!value?.trim()) return null;
+  const key = canonKey(value);
+  if (
+    key === "us" ||
+    key === "usa" ||
+    key === "federal" ||
+    key === "unitedstates" ||
+    key === "unitedstatesofamerica"
+  ) {
+    return "US";
+  }
+  return normalizeStateCode(value);
+}
+
 /**
  * Map a court string to a canonical id only when the alias is unique.
  * Ambiguous historical strings return null and the original value must be kept.

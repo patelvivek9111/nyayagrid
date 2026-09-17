@@ -8,7 +8,9 @@ import { redactDatabaseUrl, summarizeCorpusCoverage } from "./db-identity";
 import { defaultQualityTierForSourceClass } from "./quality-tier";
 import { enrichCorpusAuthority } from "./provenance";
 import { syntheticCaseAuthority, SYNTHETIC_SOURCE_PROVIDER } from "../fixtures";
-import { loadCorpusManifest, UCC_2725_BODY } from "./bundles";
+import { loadCorpusManifest, UCC_2725_BODY, loadInitialBatchAuthorities } from "./bundles";
+import { buildBundleCoverageMatrix, buildFiftyStateRoadmap } from "./coverage-matrix";
+import { classifyJurisdictionCoverage } from "./inventory";
 
 describe("corpus source classes", () => {
   it("separates synthetic fixtures from real primary corpus", () => {
@@ -97,5 +99,35 @@ describe("corpus bundles", () => {
 
   it("includes uniform UCC 2-725 body text", () => {
     expect(UCC_2725_BODY).toContain("4 years after the cause of action has accrued");
+  });
+
+  it("loads federal + PA seed authorities and builds coverage matrix", async () => {
+    const { authorities, manifest } = await loadInitialBatchAuthorities();
+    expect(manifest.federalBundles?.length).toBeGreaterThan(0);
+    expect(authorities.some((a) => a.citation === "28 U.S.C. § 1331")).toBe(true);
+    expect(authorities.some((a) => a.citation === "42 Pa.C.S. § 5525")).toBe(true);
+    expect(authorities.some((a) => a.courtLevel === "scotus")).toBe(true);
+    expect(authorities.some((a) => a.courtLevel === "state_appellate")).toBe(true);
+
+    const matrix = await buildBundleCoverageMatrix();
+    expect(matrix.bundleAuthorityCount).toBe(authorities.length);
+    expect(matrix.federal.coverageClass).toBe("seed_corpus");
+    expect(matrix.summary.statesWithCorpus).toBe(10);
+    expect(matrix.summary.statesNoCorpus).toBeGreaterThan(35);
+    expect(matrix.honestClaims.length).toBeGreaterThan(0);
+
+    const pa = matrix.states.find((s) => s.jurisdiction === "PA");
+    expect(pa?.statutesPresent).toBe(true);
+    expect(pa?.highCourtCasesPresent).toBe(true);
+    expect(pa?.intermediateAppellateCasesPresent).toBe(true);
+    expect(pa?.coverageClass).toMatch(/seed_corpus|limited_corpus/);
+
+    const roadmap = buildFiftyStateRoadmap(matrix);
+    expect(roadmap.waves[0]?.id).toBe("wave1");
+    expect(roadmap.waves[0]?.jurisdictions).toContain("US");
+    expect(roadmap.waves[0]?.jurisdictions).toContain("PA");
+    expect(classifyJurisdictionCoverage({ authorityCount: 0, statuteCount: 0, caseCount: 0, regulationCount: 0 })).toBe(
+      "no_corpus",
+    );
   });
 });

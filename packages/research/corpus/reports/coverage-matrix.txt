@@ -1,0 +1,41 @@
+# NyayaGrid legal corpus coverage (seed bundles)
+
+Generated: 2026-09-17T14:34:46.390Z
+Phase: 6T-CORPUS-1 / parser corpus1-v2
+Bundle authorities: 35
+
+## Federal (US)
+- class: seed_corpus
+- count: 3
+- statutes: true
+- SCOTUS cases: true
+- circuit: false
+- district: false
+- regulations/CFR: false
+- constitution: true
+
+## States
+- CA: seed_corpus (n=3; statutes=true; high=true; app=false)
+- DE: seed_corpus (n=3; statutes=true; high=true; app=false)
+- FL: seed_corpus (n=3; statutes=true; high=true; app=false)
+- IL: seed_corpus (n=3; statutes=true; high=true; app=false)
+- MA: seed_corpus (n=3; statutes=true; high=true; app=false)
+- NJ: seed_corpus (n=3; statutes=true; high=true; app=false)
+- NY: seed_corpus (n=3; statutes=true; high=true; app=false)
+- PA: seed_corpus (n=5; statutes=true; high=true; app=true)
+- TX: seed_corpus (n=3; statutes=true; high=true; app=false)
+- VA: seed_corpus (n=3; statutes=true; high=true; app=false)
+
+No-corpus states: 41
+
+## Honest claims
+- Curated public primary-law seed — not exhaustive 50-state coverage.
+- No Shepard's/KeyCite-equivalent negative-treatment system.
+- Currentness metadata is partial; missing dates remain UNKNOWN.
+- No paid Westlaw/Lexis content.
+
+## Roadmap waves
+- wave1 [in_progress]: Harden existing federal + 10-state seed — US, CA, DE, FL, IL, MA, NJ, NY, PA, TX, VA
+- wave2 [planned]: Next high-priority design-partner states — AL, AK, AZ, AR, CO, CT, GA, HI, ID, IN
+- wave3 [planned]: Remaining state primary-law seed — IA, KS, KY, LA, ME, MD, MI, MN, MS, MO, MT, NE, NV, NH, NM, NC, ND, OH, OK, OR
+- wave4 [planned]: Regulations + deeper appellate / federal circuit-district — US, RI, SC, SD, TN, UT, VT, WA, WV, WI, WY, DC

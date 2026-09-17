@@ -115,8 +115,10 @@ describe("source-scoped abstention copy", () => {
 
   it("Legal abstention references legal corpus", () => {
     const copy = getSourceScopedAbstentionCopy("legal_research");
-    expect(copy.answer).toMatch(/legal-authority corpus/i);
+    expect(copy.answer).toMatch(/legal corpus/i);
+    expect(copy.answer).toMatch(/jurisdiction/i);
     expect(copy.answer).not.toMatch(/matter documents|case documents/i);
+    expect(copy.unresolvedFallback).toMatch(/corpus limitation/i);
     expect(copy.clientInsufficientHint).not.toMatch(/this Case/i);
   });
 
@@ -145,7 +147,7 @@ describe("source-scoped abstention copy", () => {
       /matter documents/i,
     );
     expect(ensureSourceScopedAbstentionAnswer(stock, "legal_research", "insufficient")).toMatch(
-      /legal-authority corpus/i,
+      /legal corpus/i,
     );
     expect(ensureSourceScopedAbstentionAnswer(stock, "case", "insufficient")).toMatch(
       /case materials/i,

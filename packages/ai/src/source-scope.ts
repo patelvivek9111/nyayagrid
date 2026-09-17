@@ -198,8 +198,9 @@ export function getSourceScopedAbstentionCopy(sourceScope: SourceScope): SourceS
     case "legal_research":
       return {
         answer:
-          "I did not find sufficient support in the configured NyayaGrid legal-authority corpus.",
-        unresolvedFallback: "No sufficiently relevant authority was found in the configured legal corpus.",
+          "I did not find a sufficiently relevant authority in the configured NyayaGrid legal corpus for this jurisdiction.",
+        unresolvedFallback:
+          "No sufficiently relevant authority was found in the configured NyayaGrid legal corpus. This is a corpus limitation, not a finding that no law exists.",
         clientInsufficientHint:
           "I could not verify that from the configured legal corpus. Record jurisdiction or refine the question, then ask again.",
       };
