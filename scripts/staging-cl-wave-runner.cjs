@@ -136,8 +136,15 @@ for (const item of plan) {
     unmappedCourts: parsed?.unmappedCourts ?? null,
     sample: parsed?.sample ?? null,
     reason: parsed?.reason ?? null,
+    parseError: parsed?.parseError ?? false,
   });
   writeStatus("running");
+
+  // Inter-court pause to respect CourtListener rate limits
+  const pauseMs = Number(process.env.CL_COURT_PAUSE_MS || 8000);
+  if (pauseMs > 0) {
+    Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, pauseMs);
+  }
 }
 
 writeStatus("done");
