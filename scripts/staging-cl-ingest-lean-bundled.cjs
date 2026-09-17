@@ -3067,13 +3067,11 @@ async function main() {
   let treatmentSignals = 0;
   const pageSize = Math.min(maxItems, 50);
   const params = new URLSearchParams({
-    type: "o",
-    q: "*",
     court: clCourt,
-    order_by: "dateFiled desc",
+    order_by: "-id",
     page_size: String(pageSize)
   });
-  const searchRes = await clFetch(`${CL_BASE}/search/?${params}`, clKey, rateMs, counters);
+  const searchRes = await clFetch(`${CL_BASE}/opinions/?${params}`, clKey, rateMs, counters);
   if (!searchRes.ok) {
     console.log(
       JSON.stringify({
@@ -3081,7 +3079,8 @@ async function main() {
         reason: `discover_http_${searchRes.status}`,
         clCourt,
         mappedCourt: mappedCourt?.courtId ?? null,
-        apiCalls: counters.apiCalls
+        apiCalls: counters.apiCalls,
+        discoverPath: "opinions"
       })
     );
     process.exit(1);
@@ -3105,16 +3104,22 @@ async function main() {
     }
     const sourceExternalId = `cl-opinion-${id}`;
     try {
-      const opRes = await clFetch(`${CL_BASE}/opinions/${id}/`, clKey, rateMs, counters);
-      fetched += 1;
-      if (!opRes.ok) {
-        quarantined.push({
-          sourceExternalId,
-          reason: `fetch_http_${opRes.status}`
-        });
-        continue;
+      const listText = pickText(hit);
+      let raw = hit;
+      if (listText.length < 200) {
+        const opRes = await clFetch(`${CL_BASE}/opinions/${id}/`, clKey, rateMs, counters);
+        fetched += 1;
+        if (!opRes.ok) {
+          quarantined.push({
+            sourceExternalId,
+            reason: `fetch_http_${opRes.status}`
+          });
+          continue;
+        }
+        raw = await opRes.json();
+      } else {
+        fetched += 1;
       }
-      const raw = await opRes.json();
       const retrievedAt = (/* @__PURE__ */ new Date()).toISOString();
       const result = parseOpinion(
         sourceExternalId,

@@ -1081,16 +1081,14 @@ async function main() {
   let citationEdges = 0;
   let treatmentSignals = 0;
 
-  // Discover
+  // Discover via opinions list (lighter than /search/; top-level id).
   const pageSize = Math.min(maxItems, 50);
   const params = new URLSearchParams({
-    type: "o",
-    q: "*",
     court: clCourt,
-    order_by: "dateFiled desc",
+    order_by: "-id",
     page_size: String(pageSize),
   });
-  const searchRes = await clFetch(`${CL_BASE}/search/?${params}`, clKey, rateMs, counters);
+  const searchRes = await clFetch(`${CL_BASE}/opinions/?${params}`, clKey, rateMs, counters);
   if (!searchRes.ok) {
     console.log(
       JSON.stringify({
@@ -1099,6 +1097,7 @@ async function main() {
         clCourt,
         mappedCourt: mappedCourt?.courtId ?? null,
         apiCalls: counters.apiCalls,
+        discoverPath: "opinions",
       }),
     );
     process.exit(1);
@@ -1112,7 +1111,7 @@ async function main() {
     if (id) searchById.set(id, hit);
   }
 
-  // Fetch + parse
+  // Fetch + parse (skip extra GET when list payload already has usable text)
   for (const hit of hits) {
     const id = resolveOpinionId(hit);
     if (!id) {
@@ -1124,16 +1123,22 @@ async function main() {
     }
     const sourceExternalId = `cl-opinion-${id}`;
     try {
-      const opRes = await clFetch(`${CL_BASE}/opinions/${id}/`, clKey, rateMs, counters);
-      fetched += 1;
-      if (!opRes.ok) {
-        quarantined.push({
-          sourceExternalId,
-          reason: `fetch_http_${opRes.status}`,
-        });
-        continue;
+      const listText = pickText(hit);
+      let raw: ClSearchHit = hit;
+      if (listText.length < 200) {
+        const opRes = await clFetch(`${CL_BASE}/opinions/${id}/`, clKey, rateMs, counters);
+        fetched += 1;
+        if (!opRes.ok) {
+          quarantined.push({
+            sourceExternalId,
+            reason: `fetch_http_${opRes.status}`,
+          });
+          continue;
+        }
+        raw = (await opRes.json()) as ClSearchHit;
+      } else {
+        fetched += 1;
       }
-      const raw = (await opRes.json()) as ClSearchHit;
       const retrievedAt = new Date().toISOString();
       const result = parseOpinion(
         sourceExternalId,
