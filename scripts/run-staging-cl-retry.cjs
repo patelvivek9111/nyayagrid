@@ -1,6 +1,7 @@
 /**
- * Retry remaining Wave 2 courts after 429s (slower rate + inter-court pause).
+ * Continue Wave 2 remaining courts after machine /tmp wipe.
  * Usage: node scripts/run-staging-cl-retry.cjs <sha>
+ * Skips courts already present when CL_SKIP_PRESENT=1 (default).
  */
 const { spawnSync } = require("node:child_process");
 const fs = require("node:fs");
@@ -12,7 +13,7 @@ const APP = "nyayagrid-staging";
 const leanUrl = `https://raw.githubusercontent.com/patelvivek9111/nyayagrid/${sha}/scripts/staging-cl-ingest-lean-bundled.cjs`;
 const runnerUrl = `https://raw.githubusercontent.com/patelvivek9111/nyayagrid/${sha}/scripts/staging-cl-wave-runner.cjs`;
 
-const RETRY_PLAN = [
+const FULL_PLAN = [
   { court: "ca8", max: 15 },
   { court: "ca9", max: 15 },
   { court: "ca10", max: 15 },
@@ -40,6 +41,10 @@ const RETRY_PLAN = [
   { court: "del", max: 15 },
 ];
 
+// Courts already confirmed in DB from prior partial wave
+const DONE = new Set(["ca8"]);
+const RETRY_PLAN = FULL_PLAN.filter((p) => !DONE.has(p.court));
+
 function flyExec(command, timeoutSec = 120) {
   return spawnSync(
     "flyctl",
@@ -59,12 +64,11 @@ const planB64 = Buffer.from(JSON.stringify(RETRY_PLAN), "utf8").toString("base64
 
 console.log(
   JSON.stringify({
-    phase: "cooldown_30s",
-    reason: "respect_cl_rate_limit",
+    phase: "start",
     retryCourts: RETRY_PLAN.length,
+    skipped: [...DONE],
   }),
 );
-sleep(30_000);
 
 const dl = flyExec(
   `node -e "Promise.all([fetch('${leanUrl}').then(r=>{if(!r.ok)throw new Error('lean_'+r.status);return r.text()}),fetch('${runnerUrl}').then(r=>{if(!r.ok)throw new Error('runner_'+r.status);return r.text()})]).then(([lean,runner])=>{require('fs').writeFileSync('/tmp/staging-cl-ingest-lean-bundled.cjs',lean);require('fs').writeFileSync('/tmp/staging-cl-wave-runner.cjs',runner);require('fs').writeFileSync('/tmp/cl-wave-plan.json',Buffer.from('${planB64}','base64').toString('utf8')); console.log(JSON.stringify({downloaded:true,leanBytes:lean.length,planCourts:${RETRY_PLAN.length}}))}).catch(e=>{console.log(JSON.stringify({ok:false,err:String(e.message||e)}));process.exit(1)})"`,
@@ -75,22 +79,25 @@ process.stderr.write((dl.stderr || "").slice(0, 800));
 if (dl.status !== 0) process.exit(dl.status ?? 1);
 
 const start = flyExec(
-  `node -e "const fs=require('fs');const {spawn}=require('child_process');fs.writeFileSync('/tmp/cl-wave-results.json',JSON.stringify({status:'starting',at:new Date().toISOString()}));const out=fs.openSync('/tmp/cl-wave-retry.log','w');const err=fs.openSync('/tmp/cl-wave-retry.err','w');const env={...process.env,CL_RATE_MS:'1500',CL_COURT_PAUSE_MS:'12000'};const child=spawn(process.execPath,['/tmp/staging-cl-wave-runner.cjs'],{detached:true,stdio:['ignore',out,err],env});child.unref();console.log(JSON.stringify({ok:true,started:true,pid:child.pid,rateMs:1500,pauseMs:12000}))"`,
+  `node -e "const fs=require('fs');const {spawn}=require('child_process');fs.writeFileSync('/tmp/cl-wave-results.json',JSON.stringify({status:'starting',at:new Date().toISOString(),results:[]}));const out=fs.openSync('/tmp/cl-wave-retry.log','w');const err=fs.openSync('/tmp/cl-wave-retry.err','w');const env={...process.env,CL_RATE_MS:'1500',CL_COURT_PAUSE_MS:'10000'};const child=spawn(process.execPath,['/tmp/staging-cl-wave-runner.cjs'],{detached:true,stdio:['ignore',out,err],env});child.unref();console.log(JSON.stringify({ok:true,started:true,pid:child.pid}))"`,
   90,
 );
 process.stdout.write(start.stdout || "");
 process.stderr.write((start.stderr || "").slice(0, 800));
 if (start.status !== 0) process.exit(start.status ?? 1);
 
-const maxPolls = 200;
+const maxPolls = 240;
 for (let i = 0; i < maxPolls; i++) {
   sleep(20_000);
   const poll = flyExec(
-    `node -e "const fs=require('fs');let parsed=null;try{parsed=JSON.parse(fs.readFileSync('/tmp/cl-wave-results.json','utf8'))}catch(e){parsed={status:'unreadable'}}const err=fs.existsSync('/tmp/cl-wave-retry.err')?fs.readFileSync('/tmp/cl-wave-retry.err','utf8').slice(-800):''; const last=(parsed.results&&parsed.results.length)?parsed.results[parsed.results.length-1]:null; console.log(JSON.stringify({i:${i},status:parsed.status,completed:parsed.completed,total:parsed.total,done:parsed.status==='done',lastCourt:last&&last.court,lastOk:last&&last.ok,lastImported:last&&last.imported,lastReason:last&&last.reason,errTail:err}))"`,
+    `node -e "const fs=require('fs'); let parsed={status:'missing'}; try{ const raw=fs.readFileSync('/tmp/cl-wave-results.json','utf8'); parsed=JSON.parse(raw);}catch(e){ parsed={status:'unreadable',err:String(e.message||e).slice(0,120)}; } const err=fs.existsSync('/tmp/cl-wave-retry.err')?fs.readFileSync('/tmp/cl-wave-retry.err','utf8').slice(-500):''; const last=(parsed.results&&parsed.results.length)?parsed.results[parsed.results.length-1]:null; const importedSum=(parsed.results||[]).reduce((s,x)=>s+(Number(x.imported)||0),0); console.log(JSON.stringify({i:${i},status:parsed.status,completed:parsed.completed,total:parsed.total,done:parsed.status==='done',lastCourt:last&&last.court,lastOk:last&&last.ok,lastImported:last&&last.imported,lastReason:last&&last.reason,importedSum,errTail:err}))"`,
     90,
   );
   const line = (poll.stdout || "").trim().split("\n").pop() || "{}";
   console.log(line);
+  if ((poll.stderr || "").includes("408") || (poll.stderr || "").includes("failed to exec")) {
+    console.log(JSON.stringify({ warn: "fly_exec_issue", stderr: (poll.stderr || "").slice(0, 200) }));
+  }
   try {
     const p = JSON.parse(line);
     if (p.done) {
@@ -99,12 +106,8 @@ for (let i = 0; i < maxPolls; i++) {
         90,
       );
       process.stdout.write(full.stdout || "");
-      // Write local summary for reporting
       try {
-        fs.writeFileSync(
-          path.join(__dirname, "cl-wave-retry-results.json"),
-          full.stdout || "{}",
-        );
+        fs.writeFileSync(path.join(__dirname, "cl-wave-retry-results.json"), full.stdout || "{}");
       } catch {
         // ignore
       }

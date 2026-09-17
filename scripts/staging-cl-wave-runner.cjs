@@ -134,9 +134,9 @@ for (const item of plan) {
     treatmentSignals: parsed?.treatmentSignals ?? null,
     apiCalls: parsed?.apiCalls ?? null,
     unmappedCourts: parsed?.unmappedCourts ?? null,
-    sample: parsed?.sample ?? null,
     reason: parsed?.reason ?? null,
     parseError: parsed?.parseError ?? false,
+    // omit sample payloads to keep /tmp results JSON small/stable
   });
   writeStatus("running");
 
