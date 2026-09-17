@@ -30,6 +30,8 @@ export type AuthoritySearchHit = {
   citation: string | null;
   normalizedCitation?: string | null;
   sourceProvider?: string | null;
+  /** Official / imported canonical URL when present (never a general Web search result). */
+  canonicalSourceUrl?: string | null;
   authorityType: string;
   jurisdiction: string | null;
   court: string | null;

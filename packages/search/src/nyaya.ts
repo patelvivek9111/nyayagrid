@@ -149,6 +149,8 @@ type NyayaLegalAuthorityContext = {
   authorityIds: Set<string>;
   chunkIds: Set<string>;
   sourceTexts: string[];
+  /** Retained corpus hits used for customer-facing Legal Research sources. */
+  corpusHits: AuthoritySearchHit[];
   savedAuthorityCount: number;
   corpusHitCount: number;
   corpusSearchPerformed: boolean;
@@ -250,6 +252,7 @@ async function loadNyayaLegalAuthorityContext(params: {
     authorityIds,
     chunkIds,
     sourceTexts,
+    corpusHits,
     savedAuthorityCount: saved.items.length,
     corpusHitCount: corpusHits.length,
     corpusSearchPerformed: shouldSearchCorpus,
@@ -797,7 +800,38 @@ export async function askNyayaAboutMatter(params: {
     mark("authorityMs", authorityStarted);
     const authorityText = authority?.text ?? null;
     if (authority) {
+      const emitted = new Set<string>();
+      for (const hit of authority.corpusHits.slice(0, 12)) {
+        if (emitted.has(hit.authorityId)) continue;
+        emitted.add(hit.authorityId);
+        const citation = hit.normalizedCitation ?? hit.citation ?? null;
+        const title = citation?.trim() || hit.title?.trim() || "Legal authority";
+        const subtitle = [
+          hit.court?.trim() || null,
+          hit.jurisdiction?.trim() || hit.authorityState?.trim() || null,
+          hit.sourceProvider?.trim() || null,
+          hit.decisionDate?.trim() || hit.effectiveStart?.trim() || null,
+        ]
+          .filter(Boolean)
+          .join(" · ");
+        emit({
+          type: "source_added",
+          source: {
+            id: hit.authorityId,
+            category: "legal_authority",
+            title,
+            subtitle: subtitle || undefined,
+            url: hit.canonicalSourceUrl?.trim() || undefined,
+            chunkId: hit.chunkId,
+            authorityId: hit.authorityId,
+            quote: hit.snippet?.trim() || undefined,
+          },
+          at: nowIso(),
+        });
+      }
       for (const authorityId of [...authority.authorityIds].slice(0, 12)) {
+        if (emitted.has(authorityId)) continue;
+        emitted.add(authorityId);
         emit({
           type: "source_added",
           source: {

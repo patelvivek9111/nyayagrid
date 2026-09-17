@@ -139,6 +139,15 @@ export function SourceDrawer({
                       >
                         Open web source
                       </a>
+                    ) : category === "legal_authority" && (item.url || item.href) ? (
+                      <a
+                        href={item.url || item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-2 inline-block text-xs font-semibold text-accent underline"
+                      >
+                        Open canonical source
+                      </a>
                     ) : item.documentId && matterId && category === "case_evidence" ? (
                       <div className="mt-2 flex flex-wrap gap-3">
                         <button

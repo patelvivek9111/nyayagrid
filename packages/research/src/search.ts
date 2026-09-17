@@ -115,6 +115,7 @@ type ChunkRow = {
   federal_circuit: string | null;
   court_level: string | null;
   source_provider: string | null;
+  canonical_source_url: string | null;
   score: number | string | null;
 };
 
@@ -494,7 +495,8 @@ export class AuthorityHybridRetriever {
       a.court_id,
       a.federal_circuit,
       a.court_level,
-      a.source_provider
+      a.source_provider,
+      a.canonical_source_url
     `;
 
     const execute = (statement: unknown) =>
@@ -555,6 +557,7 @@ export class AuthorityHybridRetriever {
           citation: row.citation,
           normalizedCitation: row.normalized_citation,
           sourceProvider: row.source_provider,
+          canonicalSourceUrl: row.canonical_source_url,
           authorityType: row.authority_type,
           jurisdiction: row.jurisdiction,
           court: row.court,

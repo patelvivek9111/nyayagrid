@@ -44,11 +44,18 @@ function sourcesFromAnswer(sources: any[] | undefined): SourceDrawerItem[] {
         : s.category === "legal_authority"
           ? "legal_authority"
           : "case_evidence";
+    const legalTitle =
+      category === "legal_authority"
+        ? s.documentTitle || s.title || s.citation || s.normalizedCitation || "Legal authority"
+        : null;
     return {
       id: s.chunkId || `s-${i}`,
       chunkId: s.chunkId || undefined,
       documentId: s.documentId || undefined,
-      title: s.documentTitle || (category === "web" ? "Web source" : "Case document"),
+      title:
+        legalTitle ||
+        s.documentTitle ||
+        (category === "web" ? "Web source" : "Case document"),
       classLabel:
         category === "web"
           ? "Web"
@@ -56,12 +63,19 @@ function sourcesFromAnswer(sources: any[] | undefined): SourceDrawerItem[] {
             ? "Legal authority"
             : "Case evidence",
       category,
-      subtitle: [s.page != null ? `Page ${s.page}` : null, s.segmentRef || s.paragraph || null]
+      subtitle: [
+        category === "legal_authority"
+          ? [s.court, s.jurisdiction, s.sourceProvider].filter(Boolean).join(" · ") || null
+          : null,
+        s.page != null ? `Page ${s.page}` : null,
+        s.segmentRef || s.paragraph || null,
+      ]
         .filter(Boolean)
         .join(" · "),
       quote: s.quote,
       quoteVerified: Boolean(s.quote) && category === "case_evidence",
-      url: s.url,
+      url: s.url || s.canonicalSourceUrl,
+      href: s.url || s.canonicalSourceUrl,
       retrievedAt: s.retrievedAt,
     };
   });
@@ -75,11 +89,17 @@ function sourcesFromCitations(citations: any[] | undefined, messageId: string): 
         : c.category === "legal_authority"
           ? "legal_authority"
           : "case_evidence";
+    const legalTitle =
+      category === "legal_authority"
+        ? c.title || c.citation || c.normalizedCitation || "Legal authority"
+        : null;
     return {
       id: c.chunkId || `${messageId}-${i}`,
       chunkId: c.chunkId || undefined,
       documentId: c.documentId || undefined,
-      title: category === "web" ? "Web source" : "Case document",
+      title:
+        legalTitle ||
+        (category === "web" ? "Web source" : "Case document"),
       classLabel:
         category === "web"
           ? "Web"
@@ -87,12 +107,19 @@ function sourcesFromCitations(citations: any[] | undefined, messageId: string): 
             ? "Legal authority"
             : "Case evidence",
       category,
-      subtitle: [c.page != null ? `Page ${c.page}` : null, c.segmentRef || null]
+      subtitle: [
+        category === "legal_authority"
+          ? [c.court, c.jurisdiction, c.sourceProvider].filter(Boolean).join(" · ") || null
+          : null,
+        c.page != null ? `Page ${c.page}` : null,
+        c.segmentRef || null,
+      ]
         .filter(Boolean)
         .join(" · "),
       quote: c.quote,
       quoteVerified: Boolean(c.quote) && category === "case_evidence",
-      url: c.url,
+      url: c.url || c.canonicalSourceUrl,
+      href: c.url || c.canonicalSourceUrl,
       retrievedAt: c.retrievedAt,
     };
   });
@@ -574,12 +601,15 @@ export default function CaseChatThreadPage() {
                     >
                       View source
                     </button>
-                    <Link
-                      href={`/app/cases/${matterId}/evidence`}
-                      className="text-xs font-semibold text-accent underline"
-                    >
-                      View evidence
-                    </Link>
+                    {(t.provenance?.sourceScope ?? "case") !== "legal_research" &&
+                    (t.provenance?.sourceScope ?? "case") !== "web" ? (
+                      <Link
+                        href={`/app/cases/${matterId}/evidence`}
+                        className="text-xs font-semibold text-accent underline"
+                      >
+                        View evidence
+                      </Link>
+                    ) : null}
                   </div>
                 ) : null}
               </div>
