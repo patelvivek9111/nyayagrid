@@ -308,7 +308,17 @@ type ClSearchHit = {
   html?: string;
   html_with_citations?: string;
   snippet?: string;
+  /** Search API nests opinion ids under opinions[].id (no top-level id). */
+  opinions?: Array<{ id?: number | string; type?: string }>;
 };
+
+/** Resolve CourtListener opinion id from search or opinions-list payloads. */
+function resolveOpinionId(hit: ClSearchHit): string | null {
+  if (hit.id != null && String(hit.id).trim() !== "") return String(hit.id);
+  const nested = hit.opinions?.find((o) => o?.id != null);
+  if (nested?.id != null) return String(nested.id);
+  return null;
+}
 
 type ParsedOpinion = {
   sourceExternalId: string;
@@ -1096,15 +1106,18 @@ async function main() {
   discovered = hits.length;
   const searchById = new Map<string, ClSearchHit>();
   for (const hit of hits) {
-    const id = String(hit.id ?? "");
+    const id = resolveOpinionId(hit);
     if (id) searchById.set(id, hit);
   }
 
   // Fetch + parse
   for (const hit of hits) {
-    const id = String(hit.id ?? "");
+    const id = resolveOpinionId(hit);
     if (!id) {
-      quarantined.push({ sourceExternalId: "cl-unknown", reason: "missing_opinion_id" });
+      quarantined.push({
+        sourceExternalId: hit.cluster_id != null ? `cl-cluster-${hit.cluster_id}` : "cl-unknown",
+        reason: "missing_opinion_id",
+      });
       continue;
     }
     const sourceExternalId = `cl-opinion-${id}`;

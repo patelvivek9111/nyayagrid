@@ -2419,6 +2419,12 @@ var CL_COURT_MAP = {
     jurisdiction: "DE"
   }
 };
+function resolveOpinionId(hit) {
+  if (hit.id != null && String(hit.id).trim() !== "") return String(hit.id);
+  const nested = hit.opinions?.find((o) => o?.id != null);
+  if (nested?.id != null) return String(nested.id);
+  return null;
+}
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -3088,13 +3094,16 @@ async function main() {
   discovered = hits.length;
   const searchById = /* @__PURE__ */ new Map();
   for (const hit of hits) {
-    const id = String(hit.id ?? "");
+    const id = resolveOpinionId(hit);
     if (id) searchById.set(id, hit);
   }
   for (const hit of hits) {
-    const id = String(hit.id ?? "");
+    const id = resolveOpinionId(hit);
     if (!id) {
-      quarantined.push({ sourceExternalId: "cl-unknown", reason: "missing_opinion_id" });
+      quarantined.push({
+        sourceExternalId: hit.cluster_id != null ? `cl-cluster-${hit.cluster_id}` : "cl-unknown",
+        reason: "missing_opinion_id"
+      });
       continue;
     }
     const sourceExternalId = `cl-opinion-${id}`;

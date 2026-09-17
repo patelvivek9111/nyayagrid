@@ -144,7 +144,12 @@ export function createCourtListenerAdapter(
         next?: string | null;
       };
       const items: AdapterDiscoverItem[] = (body.results ?? []).map((hit) => {
-        const id = String(hit.id ?? hit.cluster_id ?? "");
+        const nested = (hit as ClSearchHit & { opinions?: Array<{ id?: number | string }> }).opinions;
+        const opinionId =
+          hit.id ??
+          nested?.find((o) => o?.id != null)?.id ??
+          hit.cluster_id;
+        const id = String(opinionId ?? "");
         return {
           sourceExternalId: id ? `cl-opinion-${id}` : `cl-unknown-${Math.random()}`,
           canonicalUrl: absoluteUrl("https://www.courtlistener.com", hit.absolute_url),
