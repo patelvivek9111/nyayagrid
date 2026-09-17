@@ -5,6 +5,7 @@
  * Usage:
  *   npx tsx packages/research/src/cli/courtlistener-ingest.ts --jurisdiction US --max 25
  *   npx tsx packages/research/src/cli/courtlistener-ingest.ts --jurisdiction PA --max 20 --dry-run
+ *   npx tsx packages/research/src/cli/courtlistener-ingest.ts --cl-court ca3 --max 20
  */
 import { createDb } from "@nyayagrid/database";
 import { createEmbeddingProviderFromEnv } from "@nyayagrid/ai";
@@ -27,21 +28,22 @@ function hasFlag(flag: string): boolean {
   return process.argv.includes(flag);
 }
 
-/** Map CourtListener court ids onto NyayaGrid court registry when known. */
+/** Map CourtListener court ids onto NyayaGrid court registry when known (hyphenated federal ids). */
 const CL_TO_NYAYA: Record<string, { courtId: string; courtLevel: string; authorityState: string }> = {
   scotus: { courtId: "us-scotus", courtLevel: "scotus", authorityState: "US" },
-  ca1: { courtId: "us-ca1", courtLevel: "circuit", authorityState: "US" },
-  ca2: { courtId: "us-ca2", courtLevel: "circuit", authorityState: "US" },
-  ca3: { courtId: "us-ca3", courtLevel: "circuit", authorityState: "US" },
-  ca4: { courtId: "us-ca4", courtLevel: "circuit", authorityState: "US" },
-  ca5: { courtId: "us-ca5", courtLevel: "circuit", authorityState: "US" },
-  ca6: { courtId: "us-ca6", courtLevel: "circuit", authorityState: "US" },
-  ca7: { courtId: "us-ca7", courtLevel: "circuit", authorityState: "US" },
-  ca8: { courtId: "us-ca8", courtLevel: "circuit", authorityState: "US" },
-  ca9: { courtId: "us-ca9", courtLevel: "circuit", authorityState: "US" },
-  ca10: { courtId: "us-ca10", courtLevel: "circuit", authorityState: "US" },
-  ca11: { courtId: "us-ca11", courtLevel: "circuit", authorityState: "US" },
-  cadc: { courtId: "us-cadc", courtLevel: "circuit", authorityState: "US" },
+  ca1: { courtId: "us-ca-1", courtLevel: "circuit", authorityState: "US" },
+  ca2: { courtId: "us-ca-2", courtLevel: "circuit", authorityState: "US" },
+  ca3: { courtId: "us-ca-3", courtLevel: "circuit", authorityState: "US" },
+  ca4: { courtId: "us-ca-4", courtLevel: "circuit", authorityState: "US" },
+  ca5: { courtId: "us-ca-5", courtLevel: "circuit", authorityState: "US" },
+  ca6: { courtId: "us-ca-6", courtLevel: "circuit", authorityState: "US" },
+  ca7: { courtId: "us-ca-7", courtLevel: "circuit", authorityState: "US" },
+  ca8: { courtId: "us-ca-8", courtLevel: "circuit", authorityState: "US" },
+  ca9: { courtId: "us-ca-9", courtLevel: "circuit", authorityState: "US" },
+  ca10: { courtId: "us-ca-10", courtLevel: "circuit", authorityState: "US" },
+  ca11: { courtId: "us-ca-11", courtLevel: "circuit", authorityState: "US" },
+  cadc: { courtId: "us-ca-dc", courtLevel: "circuit", authorityState: "US" },
+  cafc: { courtId: "us-ca-fed", courtLevel: "circuit", authorityState: "US" },
   cal: { courtId: "st-ca-high", courtLevel: "state_high", authorityState: "CA" },
   calctapp: { courtId: "st-ca-app", courtLevel: "state_appellate", authorityState: "CA" },
   ny: { courtId: "st-ny-high", courtLevel: "state_high", authorityState: "NY" },
@@ -85,12 +87,8 @@ async function main() {
     apiKey,
     rateLimitMs: 400,
     jurisdictionCode: clCourt ? undefined : jurisdiction,
+    clCourtId: clCourt ?? undefined,
   });
-
-  // If explicit CL court id provided, temporarily patch discover via jurisdiction map.
-  if (clCourt) {
-    (COURT_ID_MAP as Record<string, string>)[`_tmp_${jurisdiction.toLowerCase()}`] = clCourt;
-  }
 
   const checkpoint = emptyCheckpoint("courtlistener");
   const db = dryRun ? null : createDb(process.env.DATABASE_URL!);
@@ -104,29 +102,35 @@ async function main() {
     maxItems,
     persist: dryRun
       ? undefined
-      : async (record) => {
-          const rawCourt = String(record.courtId ?? record.sourceMetadata?.court_id ?? "").toLowerCase();
-          const mapped = CL_TO_NYAYA[rawCourt];
-          if (rawCourt && !mapped) unmappedCourts.add(rawCourt);
-          if (mapped) {
-            const court = getCourtById(mapped.courtId);
-            record.courtId = mapped.courtId;
-            record.courtLevel = mapped.courtLevel;
-            record.authorityState = mapped.authorityState;
-            record.jurisdiction =
-              mapped.authorityState === "US" ? "United States" : record.jurisdiction ?? mapped.authorityState;
-            if (court?.officialName) record.court = court.officialName;
+      : async (records) => {
+          let imported = 0;
+          let skipped = 0;
+          for (const record of records) {
+            const rawCourt = String(
+              record.courtId ?? record.sourceMetadata?.court_id ?? "",
+            ).toLowerCase();
+            const mapped = CL_TO_NYAYA[rawCourt];
+            if (rawCourt && !mapped) unmappedCourts.add(rawCourt);
+            if (mapped) {
+              const court = getCourtById(mapped.courtId);
+              record.courtId = mapped.courtId;
+              record.courtLevel = mapped.courtLevel;
+              record.authorityState = mapped.authorityState;
+              record.jurisdiction =
+                mapped.authorityState === "US"
+                  ? "United States"
+                  : record.jurisdiction ?? mapped.authorityState;
+              if (court?.name) record.court = court.name;
+            }
+            const result = await importAuthority({
+              db: db!,
+              embeddings: embeddings!,
+              input: record,
+            });
+            if (result.skipped) skipped += 1;
+            else imported += 1;
           }
-          const result = await importAuthority({
-            db: db!,
-            embeddings: embeddings!,
-            input: record,
-          });
-          return {
-            imported: !result.skipped,
-            skipped: Boolean(result.skipped),
-            authorityId: result.authority.id,
-          };
+          return { imported, skipped };
         },
   });
 

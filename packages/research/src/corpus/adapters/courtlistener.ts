@@ -36,6 +36,8 @@ export type CourtListenerAdapterOptions = {
   rateLimitMs?: number;
   /** Optional jurisdiction filter (USPS / US); maps via COURT_ID_MAP. */
   jurisdictionCode?: string;
+  /** Explicit CourtListener court id (e.g. scotus, ca3, cal). Overrides jurisdiction map. */
+  clCourtId?: string;
 };
 
 function sleep(ms: number): Promise<void> {
@@ -97,9 +99,11 @@ export function createCourtListenerAdapter(
   const baseUrl = (options.baseUrl ?? DEFAULT_BASE).replace(/\/$/, "");
   const apiKey = options.apiKey?.trim() || undefined;
   const rateLimitMs = options.rateLimitMs ?? 350;
-  const courtId = options.jurisdictionCode
-    ? COURT_ID_MAP[options.jurisdictionCode.trim().toLowerCase()]
-    : undefined;
+  const courtId =
+    options.clCourtId?.trim() ||
+    (options.jurisdictionCode
+      ? COURT_ID_MAP[options.jurisdictionCode.trim().toLowerCase()]
+      : undefined);
 
   const adapter: LegalSourceAdapter = {
     name: "courtlistener",
@@ -118,9 +122,11 @@ export function createCourtListenerAdapter(
       const params = new URLSearchParams({
         page_size: String(Math.min(Math.max(limit, 1), 50)),
         type: "o",
-        order_by: "score desc",
+        order_by: "dateFiled desc",
       });
       if (courtId) params.set("court", courtId);
+      // Empty query with court filter lists recent opinions for that court.
+      params.set("q", "*");
       if (cursor) params.set("cursor", cursor);
 
       await sleep(rateLimitMs);
