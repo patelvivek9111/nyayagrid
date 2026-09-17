@@ -6,7 +6,7 @@ const { spawnSync } = require("node:child_process");
 const fs = require("node:fs");
 const path = require("node:path");
 
-const sha = process.argv[2] || "58f4f362edffdbaf15fda8c16c6b731aeba022b9";
+const sha = process.argv[2] || "7e5895cb2126436e7b62d2b5c76efc087f308779";
 const MACHINE = "811d3e3f522648";
 const APP = "nyayagrid-staging";
 const leanUrl = `https://raw.githubusercontent.com/patelvivek9111/nyayagrid/${sha}/scripts/staging-cl-ingest-lean-bundled.cjs`;
@@ -59,12 +59,12 @@ const planB64 = Buffer.from(JSON.stringify(RETRY_PLAN), "utf8").toString("base64
 
 console.log(
   JSON.stringify({
-    phase: "cooldown_90s",
+    phase: "cooldown_30s",
     reason: "respect_cl_rate_limit",
     retryCourts: RETRY_PLAN.length,
   }),
 );
-sleep(90_000);
+sleep(30_000);
 
 const dl = flyExec(
   `node -e "Promise.all([fetch('${leanUrl}').then(r=>{if(!r.ok)throw new Error('lean_'+r.status);return r.text()}),fetch('${runnerUrl}').then(r=>{if(!r.ok)throw new Error('runner_'+r.status);return r.text()})]).then(([lean,runner])=>{require('fs').writeFileSync('/tmp/staging-cl-ingest-lean-bundled.cjs',lean);require('fs').writeFileSync('/tmp/staging-cl-wave-runner.cjs',runner);require('fs').writeFileSync('/tmp/cl-wave-plan.json',Buffer.from('${planB64}','base64').toString('utf8')); console.log(JSON.stringify({downloaded:true,leanBytes:lean.length,planCourts:${RETRY_PLAN.length}}))}).catch(e=>{console.log(JSON.stringify({ok:false,err:String(e.message||e)}));process.exit(1)})"`,
