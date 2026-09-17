@@ -1082,6 +1082,8 @@ export async function askNyayaAboutMatter(params: {
       validated.answer.evidenceState !== "grounded" &&
       passages.length === 0 &&
       !flags.webEnabled &&
+      flags.caseRetrievalEnabled &&
+      !flags.legalCorpusEnabled &&
       !validated.answer.unresolvedQuestions.some((q) => /document|upload|source/i.test(q))
     ) {
       validated.answer.unresolvedQuestions = [
@@ -1095,8 +1097,9 @@ export async function askNyayaAboutMatter(params: {
       retrievedCount: flags.webEnabled ? passages.length : passages.length,
       unresolvedQuestions: validated.answer.unresolvedQuestions,
       question: params.question,
+      sourceScope: flags.sourceScope,
     });
-    if (needMore.needsMoreDocuments && !flags.webEnabled) {
+    if (needMore.needsMoreDocuments && !flags.webEnabled && flags.caseRetrievalEnabled) {
       for (const reason of needMore.reasons) {
         if (!validated.answer.assumptions.includes(reason)) {
           validated.answer.assumptions.push(reason);
@@ -1275,7 +1278,7 @@ export async function askNyayaAboutMatter(params: {
           unverifiedQuoteCount: authorityValidation?.unverifiedQuotes.length ?? 0,
           assumptions: validated.answer.assumptions,
           unresolvedQuestions: validated.answer.unresolvedQuestions,
-          needsMoreDocuments: needMore.needsMoreDocuments && !flags.webEnabled,
+          needsMoreDocuments: needMore.needsMoreDocuments && !flags.webEnabled && flags.caseRetrievalEnabled,
           needMoreDocumentReasons: flags.webEnabled ? [] : needMore.reasons,
           usedFollowUpRetrieval,
           evidenceAssessmentStatus: assessmentResult.assessment?.status ?? "skipped",
@@ -1418,7 +1421,7 @@ function amendmentExpandLabel(question: string): boolean {
   );
 }
 
-/** Extract explicit US state mentions from a question for soft jurisdiction boosts. */
+/** Extract explicit US state / federal mentions from a question for soft jurisdiction boosts. */
 export function preferredStatesFromQuestion(question: string): string[] {
   const found = new Set<string>();
   // Full names only — postal abbreviations collide with citation tokens (e.g. Pa.C.S.).
@@ -1433,6 +1436,24 @@ export function preferredStatesFromQuestion(question: string): string[] {
     [/\billinois\b/i, "IL"],
     [/\bmassachusetts\b/i, "MA"],
     [/\bvirginia\b/i, "VA"],
+    [/\bwyoming\b/i, "WY"],
+    [/\bmontana\b/i, "MT"],
+    [/\balaska\b/i, "AK"],
+    [/\bhawaii\b/i, "HI"],
+    [/\bohio\b/i, "OH"],
+    [/\bgeorgia\b/i, "GA"],
+    [/\bnorth carolina\b/i, "NC"],
+    [/\bsouth carolina\b/i, "SC"],
+    [/\bcolorado\b/i, "CO"],
+    [/\barizona\b/i, "AZ"],
+    [/\bwashington\b/i, "WA"],
+    [/\boregon\b/i, "OR"],
+    [/\bnichigan\b/i, "MI"],
+    [/\bminnesota\b/i, "MN"],
+    [/\bwisconsin\b/i, "WI"],
+    [/\bindiana\b/i, "IN"],
+    [/\bmaryland\b/i, "MD"],
+    [/\bconnecticut\b/i, "CT"],
     [/\bfederal\b/i, "US"],
     [/\bunited states\b/i, "US"],
   ];

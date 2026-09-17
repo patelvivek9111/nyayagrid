@@ -1,0 +1,31 @@
+{
+  "phase": "legal-research-closeout-miss",
+  "description": "Deterministic corpus-miss expectations after retainAuthorityHits. Seed corpus only.",
+  "cases": [
+    {
+      "id": "miss-unsupported-state",
+      "query": "Wyoming geothermal well bonding schedules for private ranch operations",
+      "expectRetained": 0
+    },
+    {
+      "id": "miss-regulation",
+      "query": "What does 21 C.F.R. section 314.50 require for new drug applications?",
+      "expectRetained": 0
+    },
+    {
+      "id": "miss-nonexistent-citation",
+      "query": "What does 999 Z.Z.Z. section 0001 say about unicorn trusts?",
+      "expectRetained": 0
+    },
+    {
+      "id": "miss-obscure-doctrine",
+      "query": "doctrine of anticipatory repudiation under Montana commercial code article 2A leases",
+      "expectRetained": 0
+    },
+    {
+      "id": "miss-ambiguous",
+      "query": "What does section 100 of the code provide?",
+      "expectRetained": 0
+    }
+  ]
+}

@@ -511,7 +511,9 @@ export default function CaseChatThreadPage() {
                     }
                   </p>
                 ) : null}
-                {t.needsMoreDocuments ? (
+                {t.needsMoreDocuments &&
+                (t.provenance?.sourceScope ?? "case") !== "legal_research" &&
+                (t.provenance?.sourceScope ?? "case") !== "web" ? (
                   <p className="mt-2 rounded border border-amber-700/25 bg-amber-50/70 px-3 py-2 text-xs text-ink/75">
                     <span className="font-semibold">Need more documents.</span> This answer may be
                     incomplete without additional Case files.{" "}
@@ -521,6 +523,14 @@ export default function CaseChatThreadPage() {
                     >
                       Open Documents
                     </Link>
+                  </p>
+                ) : null}
+                {isInsufficient(t.evidenceState) &&
+                t.provenance?.sourceScope === "legal_research" &&
+                (t.provenance.counts.authoritySourceCount ?? 0) === 0 ? (
+                  <p className="mt-2 rounded border border-amber-700/25 bg-amber-50/70 px-3 py-2 text-xs text-ink/75">
+                    <span className="font-semibold">Need more legal authority.</span> The configured
+                    NyayaGrid legal corpus did not return sufficient authority for this question.
                   </p>
                 ) : null}
                 {t.assumptions && t.assumptions.length > 0 ? (

@@ -1,6 +1,32 @@
 import { describe, expect, it } from "vitest";
-import { ensureMissingInstrumentDisclosure } from "./need-more-docs";
+import { assessNeedMoreDocuments, ensureMissingInstrumentDisclosure } from "./need-more-docs";
 import { buildNyayaSystemPromptWithResearch, buildNyayaUserPromptWithResearch } from "./index";
+
+describe("assessNeedMoreDocuments", () => {
+  it("never asks for Case documents in Legal Research mode", () => {
+    const out = assessNeedMoreDocuments({
+      evidenceState: "insufficient",
+      retrievedCount: 0,
+      unresolvedQuestions: ["Which Case document should be uploaded?"],
+      question: "42 Pa.C.S. § 5525",
+      sourceScope: "legal_research",
+    });
+    expect(out.needsMoreDocuments).toBe(false);
+    expect(out.reasons).toEqual([]);
+  });
+
+  it("still flags Case mode insufficient answers", () => {
+    const out = assessNeedMoreDocuments({
+      evidenceState: "insufficient",
+      retrievedCount: 0,
+      unresolvedQuestions: [],
+      question: "What is the rent?",
+      sourceScope: "case",
+    });
+    expect(out.needsMoreDocuments).toBe(true);
+    expect(out.reasons.join(" ")).toMatch(/Case/i);
+  });
+});
 
 describe("missing instrument disclosure", () => {
   it("states an unseen Exhibit R is unavailable when it is not in sources", () => {

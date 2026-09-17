@@ -26,6 +26,8 @@ export type AuthoritySearchOptions = {
   queryJurisdiction?: string | null;
   preferredStateCodes?: string[];
   preferredCircuitIds?: string[];
+  /** When false, skip customer-facing retain thresholds (debug only). Default true. */
+  applyRetainThreshold?: boolean;
 };
 
 const VECTOR_WEIGHT = 1;
@@ -36,6 +38,26 @@ const TITLE_PARTIAL_BOOST = 0.15;
 const CASE_NAME_COVERAGE_BOOST = 0.55;
 const EXTRA_PARTY_PENALTY = 0.35;
 const SNIPPET_CHARS = 320;
+
+/**
+ * Hybrid score = (vector cosine-sim * 1.0 | OR | ts_rank * 1.1) + boosts.
+ * Vector component is roughly 0–1 (1 - cosine distance).
+ * FTS ts_rank is typically small (~0.0–0.2) before the 1.1 weight.
+ * Boosts: exact citation +0.75; title identity up to ~0.9; preferred state +0.45;
+ * out-of-preferred −0.3; hierarchy 0.1–0.25 when in preferred jurisdiction.
+ *
+ * Retention (customer-facing) is separate from raw ranking — see retainAuthorityHits.
+ */
+export const AUTHORITY_RETAIN_THRESHOLDS = {
+  /** Absolute floor for non-citation hits. */
+  minScore: 0.42,
+  /** When no preferred jurisdiction and no exact citation, top score must clear this or miss. */
+  missTopFloorNoPreferred: 0.95,
+  /** Keep hits within this gap of the best retained in-scope score. */
+  relativeGap: 0.35,
+  /** Out-of-preferred-jurisdiction hits must clear this (avoids SCOTUS distractors). */
+  outOfJurisdictionFloor: 0.95,
+} as const;
 
 const TITLE_META_TOKENS = new Set([
   "fed",
@@ -92,6 +114,7 @@ type ChunkRow = {
   court_id: string | null;
   federal_circuit: string | null;
   court_level: string | null;
+  source_provider: string | null;
   score: number | string | null;
 };
 
@@ -226,6 +249,101 @@ export function diversifyAuthorityHits<T extends { authorityId: string; score: n
     }
   }
   return [...first, ...rest].slice(0, limit);
+}
+
+function queryCitationKeys(query: string): { normalized: Set<string>; lowerQuery: string } {
+  const normalized = new Set(
+    extractCitationsFromText(query)
+      .map((citation) => citation.normalized)
+      .filter((value): value is string => Boolean(value)),
+  );
+  return { normalized, lowerQuery: query.toLowerCase() };
+}
+
+export function isExactCitationAuthorityHit(
+  hit: Pick<AuthoritySearchHit, "citation" | "normalizedCitation">,
+  query: string,
+): boolean {
+  const { normalized, lowerQuery } = queryCitationKeys(query);
+  if (hit.normalizedCitation && normalized.has(hit.normalizedCitation)) return true;
+  if (hit.citation && lowerQuery.includes(hit.citation.toLowerCase())) return true;
+  return false;
+}
+
+function isSyntheticHit(hit: Pick<AuthoritySearchHit, "sourceProvider" | "citation" | "title">): boolean {
+  const provider = hit.sourceProvider ?? "";
+  if (provider === "synthetic-fixtures" || provider.includes("nyaya-bench")) return true;
+  const blob = `${hit.citation ?? ""} ${hit.title}`.toLowerCase();
+  return /\bsynthetic\b|\bsynth\./i.test(blob);
+}
+
+/**
+ * Customer-facing retain filter. Raw hybrid ranks may still contain weak distractors;
+ * this drops them so Legal Research provenance and the source drawer stay trustworthy.
+ *
+ * Rules (measured against seed-corpus score distributions):
+ * 1. Exact citation matches always survive.
+ * 2. Synthetic bench authorities never survive.
+ * 3. With preferred jurisdictions: require an in-jurisdiction hit ≥ minScore; drop foreign
+ *    hits unless they clear outOfJurisdictionFloor (prevents SCOTUS/Marbury distractors).
+ * 4. Without preferred jurisdictions: require top ≥ missTopFloorNoPreferred or miss.
+ * 5. Retain peers within relativeGap of the best retained in-scope score.
+ */
+export function retainAuthorityHits(
+  hits: AuthoritySearchHit[],
+  query: string,
+  options: Pick<AuthoritySearchOptions, "preferredStateCodes" | "limit"> = {},
+): AuthoritySearchHit[] {
+  const limit = options.limit ?? 10;
+  const thresholds = AUTHORITY_RETAIN_THRESHOLDS;
+  const preferred = new Set(
+    (options.preferredStateCodes ?? []).map((code) => code.toUpperCase()).filter(Boolean),
+  );
+
+  const cleaned = hits.filter((hit) => !isSyntheticHit(hit));
+  if (cleaned.length === 0) return [];
+
+  const exact = cleaned.filter((hit) => isExactCitationAuthorityHit(hit, query));
+  if (exact.length > 0) {
+    const bestExact = Math.max(...exact.map((hit) => hit.score));
+    const retained = cleaned.filter(
+      (hit) =>
+        isExactCitationAuthorityHit(hit, query) ||
+        (hit.score >= bestExact - thresholds.relativeGap && hit.score >= thresholds.minScore),
+    );
+    return diversifyAuthorityHits(retained, limit);
+  }
+
+  if (preferred.size > 0) {
+    const inJurisdiction = cleaned.filter((hit) => {
+      const state = (hit.authorityState ?? "").toUpperCase();
+      return state && preferred.has(state);
+    });
+    const bestIn = inJurisdiction.length > 0 ? Math.max(...inJurisdiction.map((h) => h.score)) : 0;
+    if (bestIn < thresholds.minScore) {
+      return [];
+    }
+    const retained = cleaned.filter((hit) => {
+      const state = (hit.authorityState ?? "").toUpperCase();
+      if (state && preferred.has(state)) {
+        return hit.score >= thresholds.minScore && hit.score >= bestIn - thresholds.relativeGap;
+      }
+      return (
+        hit.score >= thresholds.outOfJurisdictionFloor &&
+        hit.score >= bestIn - 0.1
+      );
+    });
+    return diversifyAuthorityHits(retained, limit);
+  }
+
+  const top = cleaned[0]!.score;
+  if (top < thresholds.missTopFloorNoPreferred) {
+    return [];
+  }
+  const retained = cleaned.filter(
+    (hit) => hit.score >= thresholds.minScore && hit.score >= top - thresholds.relativeGap,
+  );
+  return diversifyAuthorityHits(retained, limit);
 }
 
 function buildSnippet(content: string, tokens: string[]): string {
@@ -375,7 +493,8 @@ export class AuthorityHybridRetriever {
       a.authority_state,
       a.court_id,
       a.federal_circuit,
-      a.court_level
+      a.court_level,
+      a.source_provider
     `;
 
     const execute = (statement: unknown) =>
@@ -434,6 +553,8 @@ export class AuthorityHybridRetriever {
           chunkId: row.chunk_id,
           title: row.title,
           citation: row.citation,
+          normalizedCitation: row.normalized_citation,
+          sourceProvider: row.source_provider,
           authorityType: row.authority_type,
           jurisdiction: row.jurisdiction,
           court: row.court,
@@ -456,13 +577,20 @@ export class AuthorityHybridRetriever {
     addRows(vectorRows, VECTOR_WEIGHT);
     addRows(ftsRows, FTS_WEIGHT);
 
-    const hits = suppressWeakerCaseNameHits(
+    const ranked = suppressWeakerCaseNameHits(
       diversifyAuthorityHits(
         [...merged.values()].sort((a, b) => b.score - a.score),
-        limit,
+        limit * 2,
       ),
       trimmed,
     );
+    const hits =
+      options.applyRetainThreshold === false
+        ? diversifyAuthorityHits(ranked, limit)
+        : retainAuthorityHits(ranked, trimmed, {
+            preferredStateCodes: options.preferredStateCodes,
+            limit,
+          });
     assertAuthorityHitsOnly(hits);
     await assertChunksBelongToAuthorityCorpus(
       this.db,
@@ -494,8 +622,8 @@ export class AuthorityHybridRetriever {
     const preferredStates = new Set(
       (options.preferredStateCodes ?? []).map((code) => code.toUpperCase()),
     );
+    const state = (row.authority_state ?? "").toUpperCase();
     if (preferredStates.size > 0) {
-      const state = (row.authority_state ?? "").toUpperCase();
       if (state && preferredStates.has(state)) boost += 0.45;
       else if (state && !preferredStates.has(state) && !isFederalApexCourt(row.court_level)) {
         boost -= 0.3;
@@ -505,7 +633,15 @@ export class AuthorityHybridRetriever {
     if (preferredCircuits.size > 0 && row.federal_circuit && preferredCircuits.has(row.federal_circuit)) {
       boost += 0.3;
     }
-    boost += courtHierarchyBoost(row.court_level);
+    // Hierarchy soft boost only within preferred jurisdiction (or when no preference).
+    // Prevents SCOTUS/Marbury from dominating unrelated state/miss queries.
+    const hierarchyEligible =
+      preferredStates.size === 0 ||
+      (state && preferredStates.has(state)) ||
+      (state === "US" && preferredStates.has("US"));
+    if (hierarchyEligible) {
+      boost += courtHierarchyBoost(row.court_level);
+    }
     return boost;
   }
 }
@@ -518,17 +654,17 @@ function isFederalApexCourt(courtLevel: string | null): boolean {
 function courtHierarchyBoost(courtLevel: string | null): number {
   switch (courtLevel) {
     case "scotus":
-      return 0.55;
-    case "circuit":
-      return 0.35;
-    case "state_high":
-      return 0.4;
-    case "district":
-      return 0.2;
-    case "state_appellate":
       return 0.25;
+    case "circuit":
+      return 0.2;
+    case "state_high":
+      return 0.25;
+    case "district":
+      return 0.12;
+    case "state_appellate":
+      return 0.15;
     case "state_trial":
-      return 0.1;
+      return 0.08;
     default:
       return 0;
   }

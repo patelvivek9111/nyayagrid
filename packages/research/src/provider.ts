@@ -28,6 +28,8 @@ export type AuthoritySearchHit = {
   chunkId: string;
   title: string;
   citation: string | null;
+  normalizedCitation?: string | null;
+  sourceProvider?: string | null;
   authorityType: string;
   jurisdiction: string | null;
   court: string | null;

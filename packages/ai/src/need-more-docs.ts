@@ -1,16 +1,24 @@
+import { extractNamedInstrument, instrumentMentionIsDenial } from "./operative-facts";
+import type { SourceScope } from "./source-scope";
+
 /**
  * Detect when Case Q&A should ask the user for additional documents
  * rather than pretending the retrieved set is complete.
  */
-
-import { extractNamedInstrument, instrumentMentionIsDenial } from "./operative-facts";
 
 export function assessNeedMoreDocuments(params: {
   evidenceState: string;
   retrievedCount: number;
   unresolvedQuestions: string[];
   question?: string;
+  /** When legal_research, never ask for Case documents. */
+  sourceScope?: SourceScope;
 }): { needsMoreDocuments: boolean; reasons: string[] } {
+  const scope = params.sourceScope ?? "case";
+  if (scope === "legal_research" || scope === "web") {
+    return { needsMoreDocuments: false, reasons: [] };
+  }
+
   const reasons: string[] = [];
   const state = params.evidenceState.toLowerCase();
   const unresolved = params.unresolvedQuestions.join(" ").toLowerCase();
