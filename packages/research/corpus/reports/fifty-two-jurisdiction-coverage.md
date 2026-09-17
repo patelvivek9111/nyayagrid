@@ -1,6 +1,6 @@
 # 52-jurisdiction primary-law coverage
 
-Generated: 2026-09-17T16:22:52.576Z
+Generated: 2026-09-17T17:35:24.456Z
 Authorities in bundles: 186
 Entries: 52 (US + 50 states + DC)
 

@@ -1,6 +1,6 @@
 # NyayaGrid legal corpus coverage (seed bundles)
 
-Generated: 2026-09-17T16:19:20.519Z
+Generated: 2026-09-17T17:35:23.184Z
 Phase: 50S-EXPANSION-1 / parser corpus1-v3
 Bundle authorities: 186
 

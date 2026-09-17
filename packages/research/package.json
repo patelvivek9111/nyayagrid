@@ -15,7 +15,8 @@
     "research:import": "tsx src/cli/import.ts",
     "research:corpus-import": "tsx src/cli/corpus-import.ts",
     "research:corpus-coverage": "tsx src/cli/corpus-coverage.ts",
-    "research:fifty-two-coverage": "tsx src/cli/fifty-two-coverage.ts"
+    "research:fifty-two-coverage": "tsx src/cli/fifty-two-coverage.ts",
+    "research:courtlistener-ingest": "tsx src/cli/courtlistener-ingest.ts"
   },
   "dependencies": {
     "@nyayagrid/ai": "*",
