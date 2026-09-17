@@ -1315,7 +1315,7 @@ export async function askNyayaAboutMatter(params: {
       provenance,
       sourceScope,
       usageActionId,
-      needsMoreDocuments: needMore.needsMoreDocuments && !flags.webEnabled,
+      needsMoreDocuments: needMore.needsMoreDocuments && !flags.webEnabled && flags.caseRetrievalEnabled,
       needMoreDocumentReasons: flags.webEnabled ? [] : needMore.reasons,
       usedFollowUpRetrieval,
       usedVerifiedIntelligence: Boolean(verifiedText),
