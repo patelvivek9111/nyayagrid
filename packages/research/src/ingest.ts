@@ -72,6 +72,16 @@ export const importAuthorityInputSchema = z
       )
       .optional(),
     treatmentStatus: z.enum(["unknown", "source_reported"]).optional(),
+    currentnessStatus: z
+      .enum([
+        "unknown",
+        "current_as_of_source_date",
+        "current_verified_from_source",
+        "historical",
+        "superseded",
+      ])
+      .optional(),
+    lastCheckedAt: z.string().datetime().nullish(),
     courtId: z.string().nullish(),
     authorityState: z.string().nullish(),
     federalCircuit: z.string().nullish(),
@@ -387,6 +397,8 @@ export async function importAuthority(
     sourceExternalId: input.sourceExternalId,
     canonicalSourceUrl: input.canonicalSourceUrl ?? null,
     treatmentStatus: input.treatmentStatus ?? ("unknown" as const),
+    currentnessStatus: input.currentnessStatus ?? ("unknown" as const),
+    lastCheckedAt: input.lastCheckedAt ? new Date(input.lastCheckedAt) : null,
     hierarchyPath: input.hierarchyPath ?? [],
     metadata: input.metadata ?? {},
   };

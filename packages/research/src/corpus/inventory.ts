@@ -15,11 +15,12 @@ export function classifyJurisdictionCoverage(params: {
 }): CorpusCoverageClass {
   const { authorityCount, statuteCount, caseCount, regulationCount } = params;
   if (authorityCount === 0) return "no_corpus";
-  if (authorityCount <= 5 && regulationCount === 0) return "seed_corpus";
-  if (authorityCount <= 25 || (statuteCount > 0 && caseCount > 0 && regulationCount === 0)) {
-    return "limited_corpus";
-  }
-  return "broader_corpus";
+  // One–few curated docs is always seed, even if a regulation snippet exists.
+  if (authorityCount <= 5) return "seed_corpus";
+  // "Broader" requires material multi-type depth — never claim it for shallow curated batches.
+  const multiType = statuteCount > 0 && caseCount > 0 && regulationCount > 0;
+  if (authorityCount > 100 && multiType) return "broader_corpus";
+  return "limited_corpus";
 }
 
 export type CorpusInventoryRow = {

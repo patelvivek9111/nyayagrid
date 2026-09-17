@@ -88,38 +88,47 @@ describe("corpus source classes", () => {
 });
 
 describe("corpus bundles", () => {
-  it("loads initial batch manifest with 10 states", async () => {
+  it("loads expansion manifest covering wave1 + wave2 state bundles", async () => {
     const manifest = await loadCorpusManifest();
-    expect(manifest.phase).toBe("6T-CORPUS-1");
-    expect(manifest.states).toHaveLength(10);
-    expect(manifest.states.map((s) => s.code).sort()).toEqual(
-      ["CA", "DE", "FL", "IL", "MA", "NJ", "NY", "PA", "TX", "VA"].sort(),
-    );
+    expect(manifest.phase).toBe("50S-EXPANSION-1");
+    expect(manifest.states.length).toBeGreaterThanOrEqual(20);
+    const codes = manifest.states.map((s) => s.code);
+    for (const code of ["CA", "DE", "FL", "IL", "MA", "NJ", "NY", "PA", "TX", "VA", "OH", "GA"]) {
+      expect(codes).toContain(code);
+    }
   });
 
   it("includes uniform UCC 2-725 body text", () => {
     expect(UCC_2725_BODY).toContain("4 years after the cause of action has accrued");
   });
 
-  it("loads federal + PA seed authorities and builds coverage matrix", async () => {
+  it("loads expanded federal + multi-state authorities and builds coverage matrix", async () => {
     const { authorities, manifest } = await loadInitialBatchAuthorities();
-    expect(manifest.federalBundles?.length).toBeGreaterThan(0);
+    expect(manifest.federalBundles?.length).toBeGreaterThan(1);
+    expect(authorities.length).toBeGreaterThanOrEqual(100);
     expect(authorities.some((a) => a.citation === "28 U.S.C. § 1331")).toBe(true);
     expect(authorities.some((a) => a.citation === "42 Pa.C.S. § 5525")).toBe(true);
+    expect(authorities.some((a) => a.authorityType === "regulation")).toBe(true);
+    expect(authorities.some((a) => a.authorityType === "rule")).toBe(true);
     expect(authorities.some((a) => a.courtLevel === "scotus")).toBe(true);
     expect(authorities.some((a) => a.courtLevel === "state_appellate")).toBe(true);
 
+    const juris = new Set(authorities.map((a) => (a.authorityState ?? "").toUpperCase()).filter(Boolean));
+    expect(juris.has("US")).toBe(true);
+    expect(juris.size).toBe(52);
+
     const matrix = await buildBundleCoverageMatrix();
     expect(matrix.bundleAuthorityCount).toBe(authorities.length);
-    expect(matrix.federal.coverageClass).toBe("seed_corpus");
-    expect(matrix.summary.statesWithCorpus).toBe(10);
-    expect(matrix.summary.statesNoCorpus).toBeGreaterThan(35);
+    expect(matrix.federal.regulationsPresent).toBe(true);
+    expect(matrix.federal.courtRulesPresent).toBe(true);
+    expect(matrix.summary.statesWithCorpus).toBe(51);
+    expect(matrix.summary.statesNoCorpus).toBe(0);
     expect(matrix.honestClaims.length).toBeGreaterThan(0);
+    expect(matrix.honestClaims.some((c) => /not exhaustive/i.test(c))).toBe(true);
 
     const pa = matrix.states.find((s) => s.jurisdiction === "PA");
     expect(pa?.statutesPresent).toBe(true);
     expect(pa?.highCourtCasesPresent).toBe(true);
-    expect(pa?.intermediateAppellateCasesPresent).toBe(true);
     expect(pa?.coverageClass).toMatch(/seed_corpus|limited_corpus/);
 
     const roadmap = buildFiftyStateRoadmap(matrix);

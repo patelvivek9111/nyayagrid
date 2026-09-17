@@ -1,0 +1,142 @@
+[
+  {
+    "title": "Fed. R. Civ. P. 1 — Scope and Purpose",
+    "shortTitle": "FRCP 1",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Civ. P. 1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frcp-1",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-civil-procedure/rule-1-scope-and-purpose",
+    "hierarchyPath": [
+      { "level": "rules", "ref": "FRCP", "label": "Federal Rules of Civil Procedure" },
+      { "level": "rule", "ref": "1", "label": "Scope and Purpose" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "procedure"],
+    "content": "Fed. R. Civ. P. 1\n\nRule 1. Scope and Purpose\n\nThese rules govern the procedure in all civil actions and proceedings in the United States district courts, except as stated in Rule 81. They should be construed, administered, and employed by the court and the parties to secure the just, speedy, and inexpensive determination of every action and proceeding.",
+    "sections": [{ "sectionRef": "1", "content": "These rules govern the procedure in all civil actions and proceedings in the United States district courts, except as stated in Rule 81. They should be construed, administered, and employed by the court and the parties to secure the just, speedy, and inexpensive determination of every action and proceeding." }],
+    "sourceMetadata": { "retrievalMethod": "official_rules_snapshot", "statuteTopic": "frcp_scope", "sourceOwner": "Judicial Conference of the United States" }
+  },
+  {
+    "title": "Fed. R. Civ. P. 8 — General Rules of Pleading",
+    "shortTitle": "FRCP 8",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Civ. P. 8",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frcp-8",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-civil-procedure/rule-8-general-rules-pleading",
+    "hierarchyPath": [
+      { "level": "rules", "ref": "FRCP", "label": "Federal Rules of Civil Procedure" },
+      { "level": "rule", "ref": "8", "label": "General Rules of Pleading" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "procedure"],
+    "content": "Fed. R. Civ. P. 8\n\nRule 8. General Rules of Pleading\n\n(a) Claim for Relief. A pleading that states a claim for relief must contain:\n\n(1) a short and plain statement of the grounds for the court's jurisdiction, unless the court already has jurisdiction and the claim needs no new jurisdictional support;\n\n(2) a short and plain statement of the claim showing that the pleader is entitled to relief; and\n\n(3) a demand for the relief sought, which may include relief in the alternative or different types of relief.",
+    "sections": [{ "sectionRef": "8", "subsectionRef": "a", "content": "A pleading that states a claim for relief must contain a short and plain statement of the grounds for jurisdiction, a short and plain statement of the claim showing entitlement to relief, and a demand for the relief sought." }],
+    "sourceMetadata": { "retrievalMethod": "official_rules_snapshot", "statuteTopic": "pleading", "sourceOwner": "Judicial Conference of the United States" }
+  },
+  {
+    "title": "Fed. R. Civ. P. 12 — Defenses and Objections",
+    "shortTitle": "FRCP 12",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frcp-12",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-civil-procedure/rule-12-defenses-and-objections-when-and-how-presented-motions",
+    "hierarchyPath": [
+      { "level": "rules", "ref": "FRCP", "label": "Federal Rules of Civil Procedure" },
+      { "level": "rule", "ref": "12", "label": "Defenses and Objections" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "procedure"],
+    "content": "Fed. R. Civ. P. 12\n\nRule 12. Defenses and Objections: When and How Presented; Motions for Judgment on the Pleadings; Consolidating Motions; Waiving Defenses; Pretrial Hearing\n\n(b) How to Present Defenses. Every defense to a claim for relief in any pleading must be asserted in the responsive pleading if one is required. But a party may assert the following defenses by motion:\n\n(1) lack of subject-matter jurisdiction;\n\n(2) lack of personal jurisdiction;\n\n(3) improper venue;\n\n(4) insufficient process;\n\n(5) insufficient service of process;\n\n(6) failure to state a claim upon which relief can be granted; and\n\n(7) failure to join a party under Rule 19.",
+    "sections": [{ "sectionRef": "12", "subsectionRef": "b", "content": "A party may assert lack of subject-matter jurisdiction, lack of personal jurisdiction, improper venue, insufficient process, insufficient service of process, failure to state a claim, and failure to join a party under Rule 19 by motion." }],
+    "sourceMetadata": { "retrievalMethod": "official_rules_snapshot", "statuteTopic": "12b6_motion", "sourceOwner": "Judicial Conference of the United States" }
+  },
+  {
+    "title": "Fed. R. Civ. P. 56 — Summary Judgment",
+    "shortTitle": "FRCP 56",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frcp-56",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-civil-procedure/rule-56-summary-judgment",
+    "hierarchyPath": [
+      { "level": "rules", "ref": "FRCP", "label": "Federal Rules of Civil Procedure" },
+      { "level": "rule", "ref": "56", "label": "Summary Judgment" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "procedure"],
+    "content": "Fed. R. Civ. P. 56\n\nRule 56. Summary Judgment\n\n(a) Purpose. The court should state in an order or opinion whether a motion for summary judgment is granted or denied and should state the legal ground for its decision.\n\n(c) Procedures.\n\n(1) Supporting Factual Positions. A party asserting that a fact cannot be or is genuinely disputed must support the assertion by:\n\n(A) citing to particular parts of materials in the record, including depositions, documents, electronically stored information, affidavits or declarations, stipulations, admissions, interrogatory answers, or other materials; or\n\n(B) showing that the materials cited do not establish the absence or presence of a genuine dispute, or that an adverse party cannot produce admissible evidence to support the fact.",
+    "sections": [{ "sectionRef": "56", "subsectionRef": "c-1", "content": "A party asserting that a fact cannot be or is genuinely disputed must support the assertion by citing particular parts of materials in the record or showing that the materials cited do not establish the absence or presence of a genuine dispute." }],
+    "sourceMetadata": { "retrievalMethod": "official_rules_snapshot", "statuteTopic": "summary_judgment", "sourceOwner": "Judicial Conference of the United States" }
+  },
+  {
+    "title": "Fed. R. Evid. 401 — Test for Relevant Evidence",
+    "shortTitle": "FRE 401",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-fre-401",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-evidence/rule-401-test-relevant-evidence",
+    "hierarchyPath": [
+      { "level": "rules", "ref": "FRE", "label": "Federal Rules of Evidence" },
+      { "level": "rule", "ref": "401", "label": "Test for Relevant Evidence" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "evidence"],
+    "content": "Fed. R. Evid. 401\n\nRule 401. Test for Relevant Evidence\n\nEvidence is relevant if:\n\n(a) it has any tendency to make a fact more or less probable than it would be without the evidence; and\n\n(b) the fact is of consequence in determining the action.",
+    "sections": [{ "sectionRef": "401", "content": "Evidence is relevant if it has any tendency to make a fact more or less probable than it would be without the evidence, and the fact is of consequence in determining the action." }],
+    "sourceMetadata": { "retrievalMethod": "official_rules_snapshot", "statuteTopic": "relevance", "sourceOwner": "Judicial Conference of the United States" }
+  },
+  {
+    "title": "Fed. R. Evid. 402 — General Admissibility of Relevant Evidence",
+    "shortTitle": "FRE 402",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Evid. 402",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-fre-402",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-evidence/rule-402-general-admissibility-relevant-evidence",
+    "hierarchyPath": [
+      { "level": "rules", "ref": "FRE", "label": "Federal Rules of Evidence" },
+      { "level": "rule", "ref": "402", "label": "General Admissibility of Relevant Evidence" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "evidence"],
+    "content": "Fed. R. Evid. 402\n\nRule 402. General Admissibility of Relevant Evidence\n\nRelevant evidence is admissible unless any of the following provides otherwise:\n\n(a) the United States Constitution;\n\n(b) a federal statute;\n\n(c) these rules; or\n\n(d) other rules prescribed by the Supreme Court.\n\nIrrelevant evidence is not admissible.",
+    "sections": [{ "sectionRef": "402", "content": "Relevant evidence is admissible unless the Constitution, a federal statute, these rules, or other rules prescribed by the Supreme Court provide otherwise. Irrelevant evidence is not admissible." }],
+    "sourceMetadata": { "retrievalMethod": "official_rules_snapshot", "statuteTopic": "admissibility", "sourceOwner": "Judicial Conference of the United States" }
+  },
+  {
+    "title": "Fed. R. Evid. 702 — Testimony by Expert Witnesses",
+    "shortTitle": "FRE 702",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Evid. 702",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-fre-702",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-evidence/rule-702-testimony-expert-witnesses",
+    "hierarchyPath": [
+      { "level": "rules", "ref": "FRE", "label": "Federal Rules of Evidence" },
+      { "level": "rule", "ref": "702", "label": "Testimony by Expert Witnesses" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "evidence"],
+    "content": "Fed. R. Evid. 702\n\nRule 702. Testimony by Expert Witnesses\n\nA witness who is qualified as an expert by knowledge, skill, experience, training, or education may testify in the form of an opinion or otherwise if the proponent demonstrates to the court that it is more likely than not that:\n\n(a) the expert's scientific, technical, or other specialized knowledge will help the trier of fact to understand the evidence or to determine a fact in issue;\n\n(b) the testimony is based on sufficient facts or data;\n\n(c) the testimony is the product of reliable principles and methods; and\n\n(d) the expert's opinion reflects a reliable application of the principles and methods to the facts of the case.",
+    "sections": [{ "sectionRef": "702", "content": "A qualified expert may testify if the proponent demonstrates that the expert's knowledge will help the trier of fact, the testimony is based on sufficient facts or data, the testimony is the product of reliable principles and methods, and the opinion reflects a reliable application of those principles and methods." }],
+    "sourceMetadata": { "retrievalMethod": "official_rules_snapshot", "statuteTopic": "expert_testimony", "sourceOwner": "Judicial Conference of the United States" }
+  }
+]

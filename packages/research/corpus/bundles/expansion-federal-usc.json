@@ -1,0 +1,502 @@
+[
+  {
+    "title": "28 U.S.C. § 1332 — Diversity of citizenship; amount in controversy; costs",
+    "shortTitle": "28 U.S.C. § 1332",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1332",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1332",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1332&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "1332", "label": "Diversity of citizenship" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "jurisdiction"],
+    "content": "28 U.S.C. § 1332\n\n§ 1332. Diversity of citizenship; amount in controversy; costs\n\n(a) The district courts shall have original jurisdiction of all civil actions where the matter in controversy exceeds the sum or value of $75,000, exclusive of interest and costs, and is between—\n\n(1) citizens of different States;\n\n(2) citizens of a State and citizens or subjects of a foreign state, except that the district courts shall not have original jurisdiction under this subsection when the foreign state plaintiff is a citizen of a foreign state of which any defendant is also a citizen and the action does not involve an amount in controversy exceeding $75,000, exclusive of interest and costs;\n\n(3) citizens of different States and in which citizens or subjects of a foreign state are additional parties; and\n\n(4) a foreign state, defined in section 1603(a) of this title, as plaintiff and citizens of a State or of different States.",
+    "sections": [{ "sectionRef": "1332", "subsectionRef": "a", "content": "The district courts shall have original jurisdiction of all civil actions where the matter in controversy exceeds the sum or value of $75,000, exclusive of interest and costs, and is between citizens of different States or other qualifying parties." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "diversity_jurisdiction", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "28 U.S.C. § 1441 — Removal of civil actions",
+    "shortTitle": "28 U.S.C. § 1441",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1441",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1441",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1441&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "1441", "label": "Removal of civil actions" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "procedure"],
+    "content": "28 U.S.C. § 1441\n\n§ 1441. Removal of civil actions\n\n(a) Except as otherwise expressly provided by Act of Congress, any civil action brought in a State court of which the district courts of the United States have original jurisdiction, may be removed by the defendant or the defendants, to the district court of the United States for the district and division embracing the place where such action is pending.",
+    "sections": [{ "sectionRef": "1441", "subsectionRef": "a", "content": "Except as otherwise expressly provided by Act of Congress, any civil action brought in a State court of which the district courts of the United States have original jurisdiction, may be removed by the defendant or the defendants, to the district court of the United States for the district and division embracing the place where such action is pending." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "removal", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "28 U.S.C. § 1391 — Venue generally",
+    "shortTitle": "28 U.S.C. § 1391",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1391",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1391",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1391&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "1391", "label": "Venue generally" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "procedure"],
+    "content": "28 U.S.C. § 1391\n\n§ 1391. Venue generally\n\n(b) A civil action may be brought in—\n\n(1) a judicial district in which any defendant resides, if all defendants are residents of the State in which the district is located;\n\n(2) a judicial district in which a substantial part of the events or omissions giving rise to the claim occurred, or a substantial part of property that is the subject of the action is situated; or\n\n(3) if there is no district in which an action may otherwise be brought as provided in this section, any judicial district in which any defendant is subject to the court's personal jurisdiction with respect to such action.",
+    "sections": [{ "sectionRef": "1391", "subsectionRef": "b", "content": "A civil action may be brought in a judicial district where any defendant resides (if all defendants reside in that state), where a substantial part of the events occurred, or where personal jurisdiction exists if no other venue applies." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "venue", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "42 U.S.C. § 1983 — Civil action for deprivation of rights",
+    "shortTitle": "42 U.S.C. § 1983",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "42 U.S.C. § 1983",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-42-usc-1983",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title42-section1983&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "42", "label": "The Public Health and Welfare" },
+      { "level": "section", "ref": "1983", "label": "Civil action for deprivation of rights" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "constitutional"],
+    "content": "42 U.S.C. § 1983\n\n§ 1983. Civil action for deprivation of rights\n\nEvery person who, under color of any statute, ordinance, regulation, custom, or usage, of any State or Territory or the District of Columbia, subjects, or causes to be subjected, any citizen of the United States or other person within the jurisdiction thereof to the deprivation of any rights, privileges, or immunities secured by the Constitution and laws, shall be liable to the party injured in an action at law, suit in equity, or other proper proceeding for redress, except that in any action brought against a judicial officer for an act or omission taken in such officer's judicial capacity, injunctive relief shall not be granted unless a declaratory decree was violated or declaratory relief was unavailable.",
+    "sections": [{ "sectionRef": "1983", "content": "Every person who, under color of any statute, ordinance, regulation, custom, or usage, of any State or Territory or the District of Columbia, subjects, or causes to be subjected, any citizen of the United States or other person within the jurisdiction thereof to the deprivation of any rights, privileges, or immunities secured by the Constitution and laws, shall be liable to the party injured in an action at law, suit in equity, or other proper proceeding for redress." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "civil_rights", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "15 U.S.C. § 1 — Trusts, etc., in restraint of trade illegal; penalty",
+    "shortTitle": "15 U.S.C. § 1",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "15 U.S.C. § 1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-15-usc-1",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title15-section1&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "15", "label": "Commerce and Trade" },
+      { "level": "section", "ref": "1", "label": "Sherman Act § 1" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "antitrust", "commercial"],
+    "content": "15 U.S.C. § 1\n\n§ 1. Trusts, etc., in restraint of trade illegal; penalty\n\nEvery contract, combination in the form of trust or otherwise, or conspiracy, in restraint of trade or commerce among the several States, or with foreign nations, is declared to be illegal. Every person who shall make any contract or engage in any combination or conspiracy hereby declared to be illegal shall be deemed guilty of a felony, and, on conviction thereof, shall be punished by fine not exceeding $100,000,000 if a corporation, or, if any other person, $1,000,000, or by imprisonment not exceeding 10 years, or by both said punishments, in the discretion of the court.",
+    "sections": [{ "sectionRef": "1", "content": "Every contract, combination in the form of trust or otherwise, or conspiracy, in restraint of trade or commerce among the several States, or with foreign nations, is declared to be illegal." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "sherman_act", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "5 U.S.C. § 552 — Public information; agency rules, opinions, orders, records, and proceedings",
+    "shortTitle": "5 U.S.C. § 552",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "5 U.S.C. § 552",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-5-usc-552",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title5-section552&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "5", "label": "Government Organization and Employees" },
+      { "level": "section", "ref": "552", "label": "Freedom of Information Act" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "administrative"],
+    "content": "5 U.S.C. § 552\n\n§ 552. Public information; agency rules, opinions, orders, records, and proceedings\n\n(a) Each agency shall make available to the public information as follows:\n\n(1) Each agency shall separately state and currently publish in the Federal Register for the guidance of the public—\n\n(A) descriptions of its central and field organization and the established places at which, the employees (and in the case of a uniformed service, the members) from whom, and the methods whereby, the public may obtain information, make submittals or requests, or obtain decisions;\n\n(B) statements of the general course and method by which its functions are channeled and determined, including the nature and requirements of all formal and informal procedures available;\n\n(C) rules of procedure, descriptions of forms available or the places at which forms may be obtained, and instructions as to the scope and contents of all papers, reports, or examinations;\n\n(D) substantive rules of general applicability adopted as authorized by law, and statements of general policy or interpretations of general applicability formulated and adopted by the agency; and\n\n(E) each amendment, revision, or repeal of the foregoing.",
+    "sections": [{ "sectionRef": "552", "subsectionRef": "a", "content": "Each agency shall make available to the public information including rules of general applicability, policy statements, and agency organization published in the Federal Register." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "foia", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "28 U.S.C. § 1367 — Supplemental jurisdiction",
+    "shortTitle": "28 U.S.C. § 1367",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1367",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1367",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1367&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "1367", "label": "Supplemental jurisdiction" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "jurisdiction"],
+    "content": "28 U.S.C. § 1367\n\n§ 1367. Supplemental jurisdiction\n\n(a) Except as provided in subsections (b) and (c) or as expressly provided otherwise by Federal statute, in any civil action of which the district courts have original jurisdiction, the district courts shall have supplemental jurisdiction over all other claims that are so related to claims in the action within such original jurisdiction that they form part of the same case or controversy under Article III of the United States Constitution. Such supplemental jurisdiction shall include claims that involve the joinder or intervention of additional parties.",
+    "sections": [{ "sectionRef": "1367", "subsectionRef": "a", "content": "In any civil action of which the district courts have original jurisdiction, the district courts shall have supplemental jurisdiction over all other claims that are so related to claims in the action within such original jurisdiction that they form part of the same case or controversy under Article III." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "supplemental_jurisdiction", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "28 U.S.C. § 1404 — Change of venue",
+    "shortTitle": "28 U.S.C. § 1404",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1404",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1404",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1404&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "1404", "label": "Change of venue" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "procedure"],
+    "content": "28 U.S.C. § 1404\n\n§ 1404. Change of venue\n\n(a) For the convenience of parties and witnesses, in the interest of justice, a district court may transfer any civil action to any other district or division where it might have been brought or to any district or division to which all parties have consented.",
+    "sections": [{ "sectionRef": "1404", "subsectionRef": "a", "content": "For the convenience of parties and witnesses, in the interest of justice, a district court may transfer any civil action to any other district or division where it might have been brought or to any district or division to which all parties have consented." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "transfer_of_venue", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "28 U.S.C. § 1446 — Procedure for removal of civil actions",
+    "shortTitle": "28 U.S.C. § 1446",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1446",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1446",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1446&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "1446", "label": "Procedure for removal" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "procedure"],
+    "content": "28 U.S.C. § 1446\n\n§ 1446. Procedure for removal of civil actions\n\n(b)(1) A notice of removal of a civil action or proceeding shall be filed within 30 days after the receipt by the defendant, through service or otherwise, of a copy of the initial pleading setting forth the claim for relief upon which such action or proceeding is based, or within 30 days after service of summons on such initial pleading, if such initial pleading is then required to be served on the defendant, whichever period is shorter.",
+    "sections": [{ "sectionRef": "1446", "subsectionRef": "b-1", "content": "A notice of removal of a civil action or proceeding shall be filed within 30 days after the receipt by the defendant of a copy of the initial pleading setting forth the claim for relief, or within 30 days after service of summons on such initial pleading, whichever period is shorter." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "removal_procedure", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "28 U.S.C. § 1447 — Remand",
+    "shortTitle": "28 U.S.C. § 1447",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1447",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1447",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1447&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "1447", "label": "Remand" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "procedure"],
+    "content": "28 U.S.C. § 1447\n\n§ 1447. Remand\n\n(c)(1) A motion to remand the case on the basis of any defect other than lack of subject matter jurisdiction must be made within 30 days after the filing of the notice of removal under section 1446(a).",
+    "sections": [{ "sectionRef": "1447", "subsectionRef": "c-1", "content": "A motion to remand the case on the basis of any defect other than lack of subject matter jurisdiction must be made within 30 days after the filing of the notice of removal." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "remand", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "28 U.S.C. § 1291 — Final decisions of district courts",
+    "shortTitle": "28 U.S.C. § 1291",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1291",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1291",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1291&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "1291", "label": "Final decisions of district courts" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "appellate"],
+    "content": "28 U.S.C. § 1291\n\n§ 1291. Final decisions of district courts\n\nThe courts of appeals (other than the United States Court of Appeals for the Federal Circuit) shall have jurisdiction of appeals from all final decisions of the district courts of the United States, the United States District Court for the District of the Canal Zone, the District Court of Guam, and the District Court of the Virgin Islands, except where a direct review may be had in the Supreme Court.",
+    "sections": [{ "sectionRef": "1291", "content": "The courts of appeals shall have jurisdiction of appeals from all final decisions of the district courts of the United States, except where a direct review may be had in the Supreme Court." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "appellate_jurisdiction", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "42 U.S.C. § 1981 — Equal rights under the law",
+    "shortTitle": "42 U.S.C. § 1981",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "42 U.S.C. § 1981",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-42-usc-1981",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title42-section1981&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "42", "label": "The Public Health and Welfare" },
+      { "level": "section", "ref": "1981", "label": "Equal rights under the law" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "employment"],
+    "content": "42 U.S.C. § 1981\n\n§ 1981. Equal rights under the law\n\n(a) Statement of equal rights\n\nAll persons within the jurisdiction of the United States shall have the same right in every State and Territory to make and enforce contracts, to sue, be parties, give evidence, and to the full and equal benefit of all laws and proceedings for the security of persons and property as is enjoyed by white citizens, and shall be subject to like punishment, pains, penalties, taxes, licenses, and exactions of every kind, and to no other.",
+    "sections": [{ "sectionRef": "1981", "subsectionRef": "a", "content": "All persons within the jurisdiction of the United States shall have the same right in every State and Territory to make and enforce contracts, to sue, be parties, give evidence, and to the full and equal benefit of all laws and proceedings for the security of persons and property as is enjoyed by white citizens." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "equal_rights", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "42 U.S.C. § 2000e-2 — Unlawful employment practices",
+    "shortTitle": "42 U.S.C. § 2000e-2",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "42 U.S.C. § 2000e-2",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-42-usc-2000e-2",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title42-section2000e-2&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "42", "label": "The Public Health and Welfare" },
+      { "level": "section", "ref": "2000e-2", "label": "Title VII unlawful employment practices" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "employment"],
+    "content": "42 U.S.C. § 2000e-2\n\n§ 2000e-2. Unlawful employment practices\n\n(a) Employer practices\n\nIt shall be an unlawful employment practice for an employer—\n\n(1) to fail or refuse to hire or to discharge any individual, or otherwise to discriminate against any individual with respect to his compensation, terms, conditions, or privileges of employment, because of such individual's race, color, religion, sex, or national origin; or\n\n(2) to limit, segregate, or classify his employees or applicants for employment in any way which would deprive or tend to deprive any individual of employment opportunities or otherwise adversely affect his status as an employee, because of such individual's race, color, religion, sex, or national origin.",
+    "sections": [{ "sectionRef": "2000e-2", "subsectionRef": "a", "content": "It shall be an unlawful employment practice for an employer to fail or refuse to hire or to discharge any individual, or otherwise to discriminate against any individual with respect to compensation, terms, conditions, or privileges of employment, because of race, color, religion, sex, or national origin." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "title_vii", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "9 U.S.C. § 2 — Validity, irrevocability, and enforcement of agreements to arbitrate",
+    "shortTitle": "9 U.S.C. § 2",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "9 U.S.C. § 2",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-9-usc-2",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title9-section2&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "9", "label": "Arbitration" },
+      { "level": "section", "ref": "2", "label": "Validity of arbitration agreements" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "commercial", "civil"],
+    "content": "9 U.S.C. § 2\n\n§ 2. Validity, irrevocability, and enforcement of agreements to arbitrate\n\nA written provision in any maritime transaction or a contract evidencing a transaction involving commerce to settle by arbitration a controversy thereafter arising out of such contract or transaction, or the refusal to perform the whole or any part thereof, or an agreement in writing to submit to arbitration an existing controversy arising out of such a contract, transaction, or refusal, shall be valid, irrevocable, and enforceable, save upon such grounds as exist at law or in equity for the revocation of any contract.",
+    "sections": [{ "sectionRef": "2", "content": "A written provision in a contract evidencing a transaction involving commerce to settle by arbitration a controversy thereafter arising out of such contract shall be valid, irrevocable, and enforceable, save upon such grounds as exist at law or in equity for the revocation of any contract." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "federal_arbitration_act", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "28 U.S.C. § 1652 — State laws as rules of decision",
+    "shortTitle": "28 U.S.C. § 1652",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1652",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1652",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1652&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "1652", "label": "Rules of Decision Act" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil"],
+    "content": "28 U.S.C. § 1652\n\n§ 1652. State laws as rules of decision\n\nThe laws of the several states, except where the Constitution or treaties of the United States or Acts of Congress otherwise require or provide, shall be regarded as rules of decision in civil actions in the courts of the United States, in cases where they apply.",
+    "sections": [{ "sectionRef": "1652", "content": "The laws of the several states, except where the Constitution or treaties of the United States or Acts of Congress otherwise require or provide, shall be regarded as rules of decision in civil actions in the courts of the United States, in cases where they apply." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "rules_of_decision", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "28 U.S.C. § 2412 — Fees and other expenses",
+    "shortTitle": "28 U.S.C. § 2412",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 2412",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-2412",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section2412&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "2412", "label": "Fees and other expenses" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil"],
+    "content": "28 U.S.C. § 2412\n\n§ 2412. Fees and other expenses\n\n(b)(1) Except as otherwise specifically authorized by statute, a judgment for costs, as enumerated in section 1920 of this title, may be awarded to the prevailing party in any civil action brought by or against the United States or any agency or any official of the United States acting in his official capacity in any court having jurisdiction of such action.",
+    "sections": [{ "sectionRef": "2412", "subsectionRef": "b-1", "content": "Except as otherwise specifically authorized by statute, a judgment for costs may be awarded to the prevailing party in any civil action brought by or against the United States in any court having jurisdiction of such action." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "attorneys_fees", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "15 U.S.C. § 15 — Suits by persons injured; amount of recovery",
+    "shortTitle": "15 U.S.C. § 15",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "15 U.S.C. § 15",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-15-usc-15",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title15-section15&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "15", "label": "Commerce and Trade" },
+      { "level": "section", "ref": "15", "label": "Private antitrust actions" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "antitrust", "commercial"],
+    "content": "15 U.S.C. § 15\n\n§ 15. Suits by persons injured; amount of recovery\n\n(a) Amount of recovery; prejudgment interest\n\nAny person who shall be injured in his business or property by reason of anything forbidden in the antitrust laws may sue therefor in any district court of the United States in the district in which the defendant resides or is found or has an agent, without respect to the amount in controversy, and shall recover threefold the damages by him sustained, and the cost of suit, including a reasonable attorney's fee.",
+    "sections": [{ "sectionRef": "15", "subsectionRef": "a", "content": "Any person injured in his business or property by reason of anything forbidden in the antitrust laws may sue and shall recover threefold the damages by him sustained, and the cost of suit, including a reasonable attorney's fee." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "antitrust_private_action", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "28 U.S.C. § 1335 — Interpleader",
+    "shortTitle": "28 U.S.C. § 1335",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1335",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1335",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1335&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "1335", "label": "Interpleader" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "jurisdiction"],
+    "content": "28 U.S.C. § 1335\n\n§ 1335. Interpleader\n\n(a) The district courts shall have original jurisdiction of any civil action of interpleader or in the nature of interpleader filed by any person, firm, or corporation, association, or society having in its custody or possession money or property of a value of $500 or more, or having issued a note, bond, certificate, policy of insurance or other instrument of value or evidence of debt in the sum or value of $500 or more, or providing for the delivery or payment or the loan of money or property of a value or aggregate value of $500 or more, to one or more persons.",
+    "sections": [{ "sectionRef": "1335", "subsectionRef": "a", "content": "The district courts shall have original jurisdiction of any civil action of interpleader filed by any person, firm, or corporation having in its custody or possession money or property of a value of $500 or more subject to conflicting claims." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "interpleader", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "28 U.S.C. § 1406 — Cure or waiver of defects",
+    "shortTitle": "28 U.S.C. § 1406",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1406",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1406",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1406&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "1406", "label": "Cure or waiver of defects" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "procedure"],
+    "content": "28 U.S.C. § 1406\n\n§ 1406. Cure or waiver of defects\n\n(a) The district court of a district in which is filed a case laying venue in the wrong division or district shall dismiss, or if it be in the interest of justice, transfer such case to any district or division in which it could have been brought.",
+    "sections": [{ "sectionRef": "1406", "subsectionRef": "a", "content": "The district court of a district in which is filed a case laying venue in the wrong division or district shall dismiss, or if it be in the interest of justice, transfer such case to any district or division in which it could have been brought." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "venue_defects", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "28 U.S.C. § 2462 — Time for commencing proceedings",
+    "shortTitle": "28 U.S.C. § 2462",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 2462",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-2462",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section2462&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "2462", "label": "Time for commencing proceedings" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil"],
+    "content": "28 U.S.C. § 2462\n\n§ 2462. Time for commencing proceedings\n\nExcept as otherwise provided by Act of Congress, an action, suit or proceeding for the enforcement of any civil fine, penalty, or forfeiture, pecuniary or otherwise, shall not be entertained unless commenced within five years from the date when the claim first accrued under the Act of Congress pursuant to which the proceedings is brought.",
+    "sections": [{ "sectionRef": "2462", "content": "An action for the enforcement of any civil fine, penalty, or forfeiture shall not be entertained unless commenced within five years from the date when the claim first accrued." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "limitations", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "11 U.S.C. § 362 — Automatic stay",
+    "shortTitle": "11 U.S.C. § 362",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "11 U.S.C. § 362",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-11-usc-362",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title11-section362&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "11", "label": "Bankruptcy" },
+      { "level": "section", "ref": "362", "label": "Automatic stay" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "bankruptcy"],
+    "content": "11 U.S.C. § 362\n\n§ 362. Automatic stay\n\n(a) Except as provided in subsection (b) of this section, a petition filed under section 301, 302, or 303 of this title, or an application filed under section 5(a)(3) of the Securities Investor Protection Act of 1970, operates as a stay, applicable to all entities, of—\n\n(1) the commencement or continuation, including the issuance or employment of process, of a judicial, administrative, or other action or proceeding against the debtor that was or could have been commenced before the commencement of the case under this title, or to recover a claim against the debtor that arose before the commencement of the case under this title.",
+    "sections": [{ "sectionRef": "362", "subsectionRef": "a-1", "content": "A bankruptcy petition operates as a stay of the commencement or continuation of a judicial, administrative, or other action or proceeding against the debtor that was or could have been commenced before the commencement of the case." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "automatic_stay", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "47 U.S.C. § 230 — Protection for private blocking and screening of offensive material",
+    "shortTitle": "47 U.S.C. § 230",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "47 U.S.C. § 230(c)(1)",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-47-usc-230-c1",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title47-section230&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "47", "label": "Telecommunications" },
+      { "level": "section", "ref": "230", "label": "Section 230 immunity" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil", "technology"],
+    "content": "47 U.S.C. § 230\n\n§ 230. Protection for private blocking and screening of offensive material\n\n(c) Protection for \"Good Samaritan\" blocking and screening of offensive material\n\n(1) Treatment of publisher or speaker\n\nNo provider or user of an interactive computer service shall be treated as the publisher or speaker of any information provided by another information content provider.",
+    "sections": [{ "sectionRef": "230", "subsectionRef": "c-1", "content": "No provider or user of an interactive computer service shall be treated as the publisher or speaker of any information provided by another information content provider." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "section_230_immunity", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "18 U.S.C. § 1001 — Statements or entries generally",
+    "shortTitle": "18 U.S.C. § 1001",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "18 U.S.C. § 1001",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-18-usc-1001",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title18-section1001&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "18", "label": "Crimes and Criminal Procedure" },
+      { "level": "section", "ref": "1001", "label": "False statements" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal"],
+    "content": "18 U.S.C. § 1001\n\n§ 1001. Statements or entries generally\n\n(a) Except as otherwise provided in this section, whoever, in any matter within the jurisdiction of the executive, legislative, or judicial branch of the Government of the United States, knowingly and willfully—\n\n(1) falsifies, conceals, or covers up by any trick, scheme, or device a material fact;\n\n(2) makes any materially false, fictitious, or fraudulent statement or representation; or\n\n(3) makes or uses any false writing or document knowing the same to contain any materially false, fictitious, or fraudulent statement or entry;\n\nshall be fined under this title, imprisoned not more than 5 years or, if the offense involves international or domestic terrorism, imprisoned not more than 8 years, or both.",
+    "sections": [{ "sectionRef": "1001", "subsectionRef": "a", "content": "Whoever, in any matter within the jurisdiction of the Government of the United States, knowingly and willfully makes any materially false, fictitious, or fraudulent statement or representation shall be fined or imprisoned." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "false_statements", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "28 U.S.C. § 517 — Intervention by United States",
+    "shortTitle": "28 U.S.C. § 517",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 517",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-517",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section517&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "517", "label": "Intervention by United States" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "civil"],
+    "content": "28 U.S.C. § 517\n\n§ 517. Intervention by United States\n\nWhenever the United States is a party to a civil action in a district court, or when any officer of the United States is a party to a civil action in a district court in his official capacity, the United States may intervene in such action upon certification of the Attorney General that in his judgment the intervention is necessary to protect the interests of the United States.",
+    "sections": [{ "sectionRef": "517", "content": "Whenever the United States is a party to a civil action in a district court, the United States may intervene upon certification of the Attorney General that intervention is necessary to protect the interests of the United States." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "federal_intervention", "sourceOwner": "Office of the Law Revision Counsel" }
+  },
+  {
+    "title": "28 U.S.C. § 1292 — Interlocutory decisions",
+    "shortTitle": "28 U.S.C. § 1292",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1292",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1292",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1292&num=0&edition=prelim",
+    "hierarchyPath": [
+      { "level": "title", "ref": "28", "label": "Judiciary and Judicial Procedure" },
+      { "level": "section", "ref": "1292", "label": "Interlocutory decisions" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "appellate"],
+    "content": "28 U.S.C. § 1292\n\n§ 1292. Interlocutory decisions\n\n(a) Except as provided in subsections (c) and (d) of this section, the courts of appeals shall have jurisdiction of appeals from:\n\n(1) Interlocutory orders of the district courts of the United States, the United States District Court for the District of the Canal Zone, the District Court of Guam, and the District Court of the Virgin Islands, or of the judges thereof, granting, continuing, modifying, refusing or dissolving injunctions, or refusing to dissolve or modify injunctions, except where a direct review may be had in the Supreme Court.",
+    "sections": [{ "sectionRef": "1292", "subsectionRef": "a-1", "content": "The courts of appeals shall have jurisdiction of appeals from interlocutory orders granting, continuing, modifying, refusing or dissolving injunctions." }],
+    "sourceMetadata": { "retrievalMethod": "official_codification_snapshot", "statuteTopic": "interlocutory_appeals", "sourceOwner": "Office of the Law Revision Counsel" }
+  }
+]

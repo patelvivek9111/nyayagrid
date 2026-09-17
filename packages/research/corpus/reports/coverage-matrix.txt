@@ -1,41 +1,83 @@
 # NyayaGrid legal corpus coverage (seed bundles)
 
-Generated: 2026-09-17T14:34:46.390Z
-Phase: 6T-CORPUS-1 / parser corpus1-v2
-Bundle authorities: 35
+Generated: 2026-09-17T16:19:20.519Z
+Phase: 50S-EXPANSION-1 / parser corpus1-v3
+Bundle authorities: 186
 
 ## Federal (US)
-- class: seed_corpus
-- count: 3
+- class: limited_corpus
+- count: 63
 - statutes: true
 - SCOTUS cases: true
 - circuit: false
 - district: false
-- regulations/CFR: false
+- regulations/CFR: true
 - constitution: true
 
 ## States
-- CA: seed_corpus (n=3; statutes=true; high=true; app=false)
-- DE: seed_corpus (n=3; statutes=true; high=true; app=false)
-- FL: seed_corpus (n=3; statutes=true; high=true; app=false)
-- IL: seed_corpus (n=3; statutes=true; high=true; app=false)
-- MA: seed_corpus (n=3; statutes=true; high=true; app=false)
-- NJ: seed_corpus (n=3; statutes=true; high=true; app=false)
-- NY: seed_corpus (n=3; statutes=true; high=true; app=false)
-- PA: seed_corpus (n=5; statutes=true; high=true; app=true)
-- TX: seed_corpus (n=3; statutes=true; high=true; app=false)
-- VA: seed_corpus (n=3; statutes=true; high=true; app=false)
+- AL: seed_corpus (n=1; statutes=true; high=false; app=false)
+- AK: seed_corpus (n=1; statutes=true; high=false; app=false)
+- AZ: seed_corpus (n=3; statutes=true; high=true; app=false)
+- AR: seed_corpus (n=1; statutes=true; high=false; app=false)
+- CA: limited_corpus (n=6; statutes=true; high=true; app=false)
+- CO: seed_corpus (n=3; statutes=true; high=true; app=false)
+- CT: seed_corpus (n=3; statutes=true; high=true; app=false)
+- DE: limited_corpus (n=6; statutes=true; high=true; app=false)
+- FL: limited_corpus (n=6; statutes=true; high=true; app=false)
+- GA: seed_corpus (n=3; statutes=true; high=true; app=false)
+- HI: seed_corpus (n=1; statutes=true; high=false; app=false)
+- ID: seed_corpus (n=1; statutes=true; high=false; app=false)
+- IL: limited_corpus (n=6; statutes=true; high=true; app=false)
+- IN: seed_corpus (n=1; statutes=true; high=false; app=false)
+- IA: seed_corpus (n=1; statutes=true; high=false; app=false)
+- KS: seed_corpus (n=1; statutes=true; high=false; app=false)
+- KY: seed_corpus (n=1; statutes=true; high=false; app=false)
+- LA: seed_corpus (n=1; statutes=true; high=false; app=false)
+- ME: seed_corpus (n=1; statutes=true; high=false; app=false)
+- MD: seed_corpus (n=3; statutes=true; high=true; app=false)
+- MA: limited_corpus (n=6; statutes=true; high=true; app=false)
+- MI: seed_corpus (n=3; statutes=true; high=true; app=false)
+- MN: seed_corpus (n=1; statutes=true; high=false; app=false)
+- MS: seed_corpus (n=1; statutes=true; high=false; app=false)
+- MO: seed_corpus (n=1; statutes=true; high=false; app=false)
+- MT: seed_corpus (n=1; statutes=true; high=false; app=false)
+- NE: seed_corpus (n=1; statutes=true; high=false; app=false)
+- NV: seed_corpus (n=1; statutes=true; high=false; app=false)
+- NH: seed_corpus (n=1; statutes=true; high=false; app=false)
+- NJ: limited_corpus (n=6; statutes=true; high=true; app=false)
+- NM: seed_corpus (n=1; statutes=true; high=false; app=false)
+- NY: limited_corpus (n=6; statutes=true; high=true; app=false)
+- NC: seed_corpus (n=3; statutes=true; high=true; app=false)
+- ND: seed_corpus (n=1; statutes=true; high=false; app=false)
+- OH: seed_corpus (n=3; statutes=true; high=true; app=false)
+- OK: seed_corpus (n=1; statutes=true; high=false; app=false)
+- OR: seed_corpus (n=1; statutes=true; high=false; app=false)
+- PA: limited_corpus (n=8; statutes=true; high=true; app=true)
+- RI: seed_corpus (n=1; statutes=true; high=false; app=false)
+- SC: seed_corpus (n=1; statutes=true; high=false; app=false)
+- SD: seed_corpus (n=1; statutes=true; high=false; app=false)
+- TN: seed_corpus (n=1; statutes=true; high=false; app=false)
+- TX: limited_corpus (n=6; statutes=true; high=true; app=false)
+- UT: seed_corpus (n=1; statutes=true; high=false; app=false)
+- VT: seed_corpus (n=1; statutes=true; high=false; app=false)
+- VA: limited_corpus (n=6; statutes=true; high=true; app=false)
+- WA: seed_corpus (n=3; statutes=true; high=true; app=false)
+- WV: seed_corpus (n=1; statutes=true; high=false; app=false)
+- WI: seed_corpus (n=3; statutes=true; high=true; app=false)
+- WY: seed_corpus (n=1; statutes=true; high=false; app=false)
+- DC: seed_corpus (n=1; statutes=true; high=false; app=false)
 
-No-corpus states: 41
+No-corpus states: 0
 
 ## Honest claims
-- Curated public primary-law seed — not exhaustive 50-state coverage.
+- Curated public primary-law expansion — not exhaustive 50-state coverage.
 - No Shepard's/KeyCite-equivalent negative-treatment system.
 - Currentness metadata is partial; missing dates remain UNKNOWN.
 - No paid Westlaw/Lexis content.
+- CourtListener live bulk import requires API key; bundles may use public snapshots.
 
 ## Roadmap waves
-- wave1 [in_progress]: Harden existing federal + 10-state seed — US, CA, DE, FL, IL, MA, NJ, NY, PA, TX, VA
-- wave2 [planned]: Next high-priority design-partner states — AL, AK, AZ, AR, CO, CT, GA, HI, ID, IN
-- wave3 [planned]: Remaining state primary-law seed — IA, KS, KY, LA, ME, MD, MI, MN, MS, MO, MT, NE, NV, NH, NM, NC, ND, OH, OK, OR
-- wave4 [planned]: Regulations + deeper appellate / federal circuit-district — US, RI, SC, SD, TN, UT, VT, WA, WV, WI, WY, DC
+- wave1 [in_progress]: Harden existing federal + 10-state seed — US, AL, AK, AZ, AR, CA, CO, CT, DE, FL, GA, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NM, NY, NC, ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VT, VA, WA, WV, WI, WY, DC
+- wave2 [planned]: Next high-priority design-partner states — 
+- wave3 [planned]: Remaining state primary-law seed — 
+- wave4 [planned]: Regulations + deeper appellate / federal circuit-district — US

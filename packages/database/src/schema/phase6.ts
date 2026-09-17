@@ -43,6 +43,14 @@ export const authorityTreatmentStatusEnum = pgEnum("authority_treatment_status",
   "unknown",
   "source_reported",
 ]);
+/** Conservative currentness labels — never imply Shepard's/KeyCite-level status. */
+export const authorityCurrentnessStatusEnum = pgEnum("authority_currentness_status", [
+  "unknown",
+  "current_as_of_source_date",
+  "current_verified_from_source",
+  "historical",
+  "superseded",
+]);
 export const authorityRelationshipTypeEnum = pgEnum("authority_relationship_type", [
   "cites",
   "interprets",
@@ -101,6 +109,12 @@ export const legalAuthorities = pgTable(
     canonicalSourceUrl: text("canonical_source_url"),
     ingestionStatus: authorityIngestionStatusEnum("ingestion_status").notNull().default("pending"),
     treatmentStatus: authorityTreatmentStatusEnum("treatment_status").notNull().default("unknown"),
+    /** Conservative currentness — never claim Shepard's/KeyCite equivalence. */
+    currentnessStatus: authorityCurrentnessStatusEnum("currentness_status")
+      .notNull()
+      .default("unknown"),
+    /** Last time an importer verified this row against its source (nullable until checked). */
+    lastCheckedAt: timestamp("last_checked_at", { withTimezone: true }),
     hierarchyPath: jsonb("hierarchy_path").$type<AuthorityHierarchyNode[]>().default([]),
     metadata: jsonb("metadata").$type<Record<string, unknown>>().default({}),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
@@ -114,6 +128,7 @@ export const legalAuthorities = pgTable(
     index("legal_authorities_normalized_citation_idx").on(table.normalizedCitation),
     index("legal_authorities_jurisdiction_idx").on(table.jurisdiction),
     index("legal_authorities_type_idx").on(table.authorityType),
+    index("legal_authorities_currentness_idx").on(table.currentnessStatus),
   ],
 );
 

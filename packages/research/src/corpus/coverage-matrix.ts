@@ -15,6 +15,7 @@ export type JurisdictionCoverageRow = {
   intermediateAppellateCasesPresent: boolean;
   trialCasesPresent: boolean;
   regulationsPresent: boolean;
+  courtRulesPresent: boolean;
   constitutionPresent: boolean;
   courtHierarchyMetadataPresent: boolean;
   canonicalProvenancePresent: boolean;
@@ -39,6 +40,7 @@ export type CorpusCoverageMatrix = {
     limited: number;
     broader: number;
     regulationsAnywhere: boolean;
+    courtRulesAnywhere: boolean;
     circuitCourtsPresent: boolean;
     districtCourtsPresent: boolean;
     cfrPresent: boolean;
@@ -55,6 +57,7 @@ function emptyStateRow(code: string): JurisdictionCoverageRow {
     intermediateAppellateCasesPresent: false,
     trialCasesPresent: false,
     regulationsPresent: false,
+    courtRulesPresent: false,
     constitutionPresent: false,
     courtHierarchyMetadataPresent: false,
     canonicalProvenancePresent: false,
@@ -75,6 +78,7 @@ function summarizeAuthorities(
   const statutes = authorities.filter((a) => a.authorityType === "statute");
   const cases = authorities.filter((a) => a.authorityType === "case");
   const regulations = authorities.filter((a) => a.authorityType === "regulation");
+  const courtRules = authorities.filter((a) => a.authorityType === "rule");
   const constitution = authorities.filter((a) => a.authorityType === "constitution");
   const high = cases.filter(
     (a) => a.courtLevel === "state_high" || a.courtLevel === "scotus",
@@ -95,6 +99,7 @@ function summarizeAuthorities(
     notes.push("Seed corpus only — not meaningful full-jurisdiction coverage.");
   }
   if (regulations.length === 0) notes.push("No regulations in seed.");
+  if (courtRules.length === 0) notes.push("No court rules in seed.");
   if (kind === "federal" && !cases.some((a) => a.courtLevel === "circuit")) {
     notes.push("No U.S. Courts of Appeals opinions in seed.");
   }
@@ -109,6 +114,7 @@ function summarizeAuthorities(
     intermediateAppellateCasesPresent: appellate.length > 0,
     trialCasesPresent: trial.length > 0,
     regulationsPresent: regulations.length > 0,
+    courtRulesPresent: courtRules.length > 0,
     constitutionPresent: constitution.length > 0,
     courtHierarchyMetadataPresent: hierarchy.length > 0,
     canonicalProvenancePresent: provenance.length === authorities.length && authorities.length > 0,
@@ -157,15 +163,17 @@ export function buildCoverageMatrixFromAuthorities(
       limited: [...states, federal].filter((r) => r.coverageClass === "limited_corpus").length,
       broader: [...states, federal].filter((r) => r.coverageClass === "broader_corpus").length,
       regulationsAnywhere: [...states, federal].some((r) => r.regulationsPresent),
+      courtRulesAnywhere: [...states, federal].some((r) => r.courtRulesPresent),
       circuitCourtsPresent: federal.intermediateAppellateCasesPresent,
       districtCourtsPresent: federal.trialCasesPresent,
       cfrPresent: federal.regulationsPresent,
     },
     honestClaims: [
-      "Curated public primary-law seed — not exhaustive 50-state coverage.",
+      "Curated public primary-law expansion — not exhaustive 50-state coverage.",
       "No Shepard's/KeyCite-equivalent negative-treatment system.",
       "Currentness metadata is partial; missing dates remain UNKNOWN.",
       "No paid Westlaw/Lexis content.",
+      "CourtListener live bulk import requires API key; bundles may use public snapshots.",
     ],
   };
 }

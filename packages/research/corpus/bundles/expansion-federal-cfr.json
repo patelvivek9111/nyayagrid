@@ -1,0 +1,317 @@
+[
+  {
+    "title": "29 CFR § 541.100 — General rule for executive employees",
+    "shortTitle": "29 CFR § 541.100",
+    "authorityType": "regulation",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "29 CFR § 541.100",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-29-cfr-541-100",
+    "canonicalSourceUrl": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-V/subchapter-A/part-541/subpart-B/section-541.100",
+    "hierarchyPath": [
+      { "level": "title", "ref": "29", "label": "Labor" },
+      { "level": "part", "ref": "541", "label": "Defining and Delimiting the Exemptions" },
+      { "level": "section", "ref": "541.100", "label": "Executive exemption" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "employment"],
+    "content": "29 CFR § 541.100\n\n§ 541.100 General rule for executive employees.\n\n(a) The term \"employee employed in a bona fide executive capacity\" in section 13(a)(1) of the Act shall mean any employee:\n\n(1) Compensated on a salary basis at not less than the level set forth in § 541.600;\n\n(2) Whose primary duty is management of the enterprise in which the employee is employed or of a customarily recognized department or subdivision thereof;\n\n(3) Who customarily and regularly directs the work of two or more other employees; and\n\n(4) Who has the authority to hire or fire other employees or whose suggestions and recommendations as to the hiring, firing, advancement, promotion or any other change of status of other employees are given particular weight.",
+    "sections": [{ "sectionRef": "541.100", "subsectionRef": "a", "content": "The term employee employed in a bona fide executive capacity means any employee compensated on a salary basis whose primary duty is management, who customarily directs the work of two or more employees, and who has hiring or firing authority or whose recommendations are given particular weight." }],
+    "sourceMetadata": { "retrievalMethod": "official_ecfr_snapshot", "statuteTopic": "flsa_executive_exemption", "sourceOwner": "U.S. Department of Labor" }
+  },
+  {
+    "title": "29 CFR § 541.200 — General rule for administrative employees",
+    "shortTitle": "29 CFR § 541.200",
+    "authorityType": "regulation",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "29 CFR § 541.200",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-29-cfr-541-200",
+    "canonicalSourceUrl": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-V/subchapter-A/part-541/subpart-C/section-541.200",
+    "hierarchyPath": [
+      { "level": "title", "ref": "29", "label": "Labor" },
+      { "level": "part", "ref": "541", "label": "Defining and Delimiting the Exemptions" },
+      { "level": "section", "ref": "541.200", "label": "Administrative exemption" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "employment"],
+    "content": "29 CFR § 541.200\n\n§ 541.200 General rule for administrative employees.\n\n(a) The term \"employee employed in a bona fide administrative capacity\" in section 13(a)(1) of the Act shall mean any employee:\n\n(1) Compensated on a salary or fee basis at not less than the level set forth in § 541.600;\n\n(2) Whose primary duty is the performance of office or non-manual work directly related to the management or general business operations of the employer or the employer's customers; and\n\n(3) Whose primary duty includes the exercise of discretion and independent judgment with respect to matters of significance.",
+    "sections": [{ "sectionRef": "541.200", "subsectionRef": "a", "content": "The administrative exemption applies to employees whose primary duty is office or non-manual work directly related to management or general business operations and includes the exercise of discretion and independent judgment with respect to matters of significance." }],
+    "sourceMetadata": { "retrievalMethod": "official_ecfr_snapshot", "statuteTopic": "flsa_administrative_exemption", "sourceOwner": "U.S. Department of Labor" }
+  },
+  {
+    "title": "29 CFR § 778.107 — Regular rate",
+    "shortTitle": "29 CFR § 778.107",
+    "authorityType": "regulation",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "29 CFR § 778.107",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-29-cfr-778-107",
+    "canonicalSourceUrl": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-V/subchapter-A/part-778/subpart-B/section-778.107",
+    "hierarchyPath": [
+      { "level": "title", "ref": "29", "label": "Labor" },
+      { "level": "part", "ref": "778", "label": "Overtime Compensation" },
+      { "level": "section", "ref": "778.107", "label": "Regular rate" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "employment"],
+    "content": "29 CFR § 778.107\n\n§ 778.107 Regular rate.\n\nThe \"regular rate\" of pay under the Act cannot be left to a declaration by the parties as to what is to be treated as the regular rate for an employee; it must be drawn from what happens under the employment contract. The regular rate is an actual fact.",
+    "sections": [{ "sectionRef": "778.107", "content": "The regular rate of pay under the Act cannot be left to a declaration by the parties as to what is to be treated as the regular rate for an employee; it must be drawn from what happens under the employment contract. The regular rate is an actual fact." }],
+    "sourceMetadata": { "retrievalMethod": "official_ecfr_snapshot", "statuteTopic": "overtime_regular_rate", "sourceOwner": "U.S. Department of Labor" }
+  },
+  {
+    "title": "29 CFR § 825.112 — Serious health condition",
+    "shortTitle": "29 CFR § 825.112",
+    "authorityType": "regulation",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "29 CFR § 825.112",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-29-cfr-825-112",
+    "canonicalSourceUrl": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-V/subchapter-C/part-825/subpart-A/section-825.112",
+    "hierarchyPath": [
+      { "level": "title", "ref": "29", "label": "Labor" },
+      { "level": "part", "ref": "825", "label": "Family and Medical Leave" },
+      { "level": "section", "ref": "825.112", "label": "Serious health condition" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "employment"],
+    "content": "29 CFR § 825.112\n\n§ 825.112 Serious health condition.\n\n(a) For purposes of FMLA leave, a serious health condition entitling an employee to FMLA leave means an illness, injury, impairment or physical or mental condition that involves inpatient care as defined in § 825.114 or continuing treatment by a health care provider as defined in § 825.115.",
+    "sections": [{ "sectionRef": "825.112", "subsectionRef": "a", "content": "For purposes of FMLA leave, a serious health condition means an illness, injury, impairment or physical or mental condition that involves inpatient care or continuing treatment by a health care provider." }],
+    "sourceMetadata": { "retrievalMethod": "official_ecfr_snapshot", "statuteTopic": "fmla_serious_health_condition", "sourceOwner": "U.S. Department of Labor" }
+  },
+  {
+    "title": "29 CFR § 1601.1 — Purpose",
+    "shortTitle": "29 CFR § 1601.1",
+    "authorityType": "regulation",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "29 CFR § 1601.1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-29-cfr-1601-1",
+    "canonicalSourceUrl": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XIV/part-1601/section-1601.1",
+    "hierarchyPath": [
+      { "level": "title", "ref": "29", "label": "Labor" },
+      { "level": "part", "ref": "1601", "label": "Procedural Regulations" },
+      { "level": "section", "ref": "1601.1", "label": "Purpose" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "employment"],
+    "content": "29 CFR § 1601.1\n\n§ 1601.1 Purpose.\n\nThe Equal Employment Opportunity Commission is charged with the administration of title VII of the Civil Rights Act of 1964, as amended, the Equal Pay Act of 1963, the Age Discrimination in Employment Act of 1967, and title I of the Americans with Disabilities Act of 1990. These parts set forth the Commission's procedures for the enforcement of these statutes.",
+    "sections": [{ "sectionRef": "1601.1", "content": "The Equal Employment Opportunity Commission is charged with the administration of title VII, the Equal Pay Act, the Age Discrimination in Employment Act, and title I of the Americans with Disabilities Act." }],
+    "sourceMetadata": { "retrievalMethod": "official_ecfr_snapshot", "statuteTopic": "eeoc_procedures", "sourceOwner": "Equal Employment Opportunity Commission" }
+  },
+  {
+    "title": "29 CFR § 1630.2(r) — Direct threat",
+    "shortTitle": "29 CFR § 1630.2(r)",
+    "authorityType": "regulation",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "29 CFR § 1630.2(r)",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-29-cfr-1630-2-r",
+    "canonicalSourceUrl": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XIV/part-1630/subpart-A/section-1630.2",
+    "hierarchyPath": [
+      { "level": "title", "ref": "29", "label": "Labor" },
+      { "level": "part", "ref": "1630", "label": "Regulations to Implement the ADA" },
+      { "level": "section", "ref": "1630.2(r)", "label": "Direct threat" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "employment"],
+    "content": "29 CFR § 1630.2\n\n§ 1630.2 Definitions.\n\n(r) Direct threat means a significant risk of substantial harm to the health or safety of the individual or others that cannot be eliminated or reduced by reasonable accommodation. The determination that an individual poses a direct threat shall be based on an individualized assessment of the individual's present ability to safely perform the essential functions of the job.",
+    "sections": [{ "sectionRef": "1630.2", "subsectionRef": "r", "content": "Direct threat means a significant risk of substantial harm to the health or safety of the individual or others that cannot be eliminated or reduced by reasonable accommodation, based on an individualized assessment." }],
+    "sourceMetadata": { "retrievalMethod": "official_ecfr_snapshot", "statuteTopic": "ada_direct_threat", "sourceOwner": "Equal Employment Opportunity Commission" }
+  },
+  {
+    "title": "29 CFR § 570.2 — Oppressive child labor",
+    "shortTitle": "29 CFR § 570.2",
+    "authorityType": "regulation",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "29 CFR § 570.2",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-29-cfr-570-2",
+    "canonicalSourceUrl": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-V/subchapter-A/part-570/subpart-A/section-570.2",
+    "hierarchyPath": [
+      { "level": "title", "ref": "29", "label": "Labor" },
+      { "level": "part", "ref": "570", "label": "Child Labor Regulations" },
+      { "level": "section", "ref": "570.2", "label": "Oppressive child labor" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "employment"],
+    "content": "29 CFR § 570.2\n\n§ 570.2 Oppressive child labor.\n\nOppressive child labor means employment of a minor in an occupation for which the age of the employee renders him/her ineligible for the unlimited hours of employment, as provided by statute or regulation.",
+    "sections": [{ "sectionRef": "570.2", "content": "Oppressive child labor means employment of a minor in an occupation for which the age of the employee renders him/her ineligible for the unlimited hours of employment, as provided by statute or regulation." }],
+    "sourceMetadata": { "retrievalMethod": "official_ecfr_snapshot", "statuteTopic": "child_labor", "sourceOwner": "U.S. Department of Labor" }
+  },
+  {
+    "title": "29 CFR § 1910.1200(b)(1) — Purpose of Hazard Communication Standard",
+    "shortTitle": "29 CFR § 1910.1200(b)(1)",
+    "authorityType": "regulation",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "29 CFR § 1910.1200(b)(1)",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-29-cfr-1910-1200-b1",
+    "canonicalSourceUrl": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-XVII/part-1910/subpart-Z/section-1910.1200",
+    "hierarchyPath": [
+      { "level": "title", "ref": "29", "label": "Labor" },
+      { "level": "part", "ref": "1910", "label": "Occupational Safety and Health Standards" },
+      { "level": "section", "ref": "1910.1200", "label": "Hazard Communication" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "employment", "safety"],
+    "content": "29 CFR § 1910.1200\n\n§ 1910.1200 Hazard Communication.\n\n(b) Purpose.\n\n(1) The purpose of this section is to ensure that the hazards of all chemicals produced or imported are classified, and that information concerning the classified hazards is transmitted to employers and employees.",
+    "sections": [{ "sectionRef": "1910.1200", "subsectionRef": "b-1", "content": "The purpose of this section is to ensure that the hazards of all chemicals produced or imported are classified, and that information concerning the classified hazards is transmitted to employers and employees." }],
+    "sourceMetadata": { "retrievalMethod": "official_ecfr_snapshot", "statuteTopic": "hazcom", "sourceOwner": "Occupational Safety and Health Administration" }
+  },
+  {
+    "title": "29 CFR § 825.100 — Purpose of FMLA",
+    "shortTitle": "29 CFR § 825.100",
+    "authorityType": "regulation",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "29 CFR § 825.100",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-29-cfr-825-100",
+    "canonicalSourceUrl": "https://www.ecfr.gov/current/title-29/subtitle-B/chapter-V/subchapter-C/part-825/subpart-A/section-825.100",
+    "hierarchyPath": [
+      { "level": "title", "ref": "29", "label": "Labor" },
+      { "level": "part", "ref": "825", "label": "Family and Medical Leave" },
+      { "level": "section", "ref": "825.100", "label": "Purpose" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "employment"],
+    "content": "29 CFR § 825.100\n\n§ 825.100 Purpose of FMLA.\n\nThe FMLA entitles eligible employees of covered employers to take unpaid, job-protected leave for specified family and medical reasons with continuation of group health insurance coverage under the same terms and conditions as if the employee had not taken leave.",
+    "sections": [{ "sectionRef": "825.100", "content": "The FMLA entitles eligible employees of covered employers to take unpaid, job-protected leave for specified family and medical reasons with continuation of group health insurance coverage under the same terms and conditions as if the employee had not taken leave." }],
+    "sourceMetadata": { "retrievalMethod": "official_ecfr_snapshot", "statuteTopic": "fmla_purpose", "sourceOwner": "U.S. Department of Labor" }
+  },
+  {
+    "title": "16 CFR § 260.1 — Purpose and scope of Green Guides",
+    "shortTitle": "16 CFR § 260.1",
+    "authorityType": "regulation",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "16 CFR § 260.1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-16-cfr-260-1",
+    "canonicalSourceUrl": "https://www.ecfr.gov/current/title-16/chapter-I/subchapter-C/part-260/section-260.1",
+    "hierarchyPath": [
+      { "level": "title", "ref": "16", "label": "Commercial Practices" },
+      { "level": "part", "ref": "260", "label": "Guides for the Use of Environmental Marketing Claims" },
+      { "level": "section", "ref": "260.1", "label": "Purpose and scope" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "commercial"],
+    "content": "16 CFR § 260.1\n\n§ 260.1 Purpose and scope.\n\n(a) These guides set forth the Federal Trade Commission's current views about environmental claims. The guides help marketers avoid making environmental marketing claims that are unfair or deceptive under Section 5 of the FTC Act.",
+    "sections": [{ "sectionRef": "260.1", "subsectionRef": "a", "content": "These guides set forth the Federal Trade Commission's current views about environmental claims and help marketers avoid making environmental marketing claims that are unfair or deceptive under Section 5 of the FTC Act." }],
+    "sourceMetadata": { "retrievalMethod": "official_ecfr_snapshot", "statuteTopic": "green_guides", "sourceOwner": "Federal Trade Commission" }
+  },
+  {
+    "title": "16 CFR § 255.1 — Purpose of Endorsement Guides",
+    "shortTitle": "16 CFR § 255.1",
+    "authorityType": "regulation",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "16 CFR § 255.1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-16-cfr-255-1",
+    "canonicalSourceUrl": "https://www.ecfr.gov/current/title-16/chapter-I/subchapter-B/part-255/section-255.1",
+    "hierarchyPath": [
+      { "level": "title", "ref": "16", "label": "Commercial Practices" },
+      { "level": "part", "ref": "255", "label": "Guides Concerning Use of Endorsements and Testimonials in Advertising" },
+      { "level": "section", "ref": "255.1", "label": "Purpose and definitions" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "commercial"],
+    "content": "16 CFR § 255.1\n\n§ 255.1 Purpose and definitions.\n\n(a) Purpose. These guides provide the basis for voluntary compliance with the law by advertisers and endorsers. Endorsements must reflect the honest opinions, findings, beliefs, or experience of the endorser.",
+    "sections": [{ "sectionRef": "255.1", "subsectionRef": "a", "content": "These guides provide the basis for voluntary compliance with the law by advertisers and endorsers. Endorsements must reflect the honest opinions, findings, beliefs, or experience of the endorser." }],
+    "sourceMetadata": { "retrievalMethod": "official_ecfr_snapshot", "statuteTopic": "endorsement_guides", "sourceOwner": "Federal Trade Commission" }
+  },
+  {
+    "title": "16 CFR § 435.1 — Purpose of Franchise Rule",
+    "shortTitle": "16 CFR § 435.1",
+    "authorityType": "regulation",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "16 CFR § 435.1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-16-cfr-435-1",
+    "canonicalSourceUrl": "https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-435/section-435.1",
+    "hierarchyPath": [
+      { "level": "title", "ref": "16", "label": "Commercial Practices" },
+      { "level": "part", "ref": "435", "label": "Disclosure Requirements and Prohibitions Concerning Franchising" },
+      { "level": "section", "ref": "435.1", "label": "Purpose" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "commercial"],
+    "content": "16 CFR § 435.1\n\n§ 435.1 Purpose.\n\nThe purpose of this part is to prevent deceptive and unfair practices in the sale of franchises by requiring franchisors to provide prospective franchisees with the material information they need in order to weigh the risks and benefits of purchasing a franchise.",
+    "sections": [{ "sectionRef": "435.1", "content": "The purpose of this part is to prevent deceptive and unfair practices in the sale of franchises by requiring franchisors to provide prospective franchisees with the material information they need in order to weigh the risks and benefits of purchasing a franchise." }],
+    "sourceMetadata": { "retrievalMethod": "official_ecfr_snapshot", "statuteTopic": "franchise_rule", "sourceOwner": "Federal Trade Commission" }
+  },
+  {
+    "title": "16 CFR § 603.1 — Scope of Fair Credit Reporting Act regulations",
+    "shortTitle": "16 CFR § 603.1",
+    "authorityType": "regulation",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "16 CFR § 603.1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-16-cfr-603-1",
+    "canonicalSourceUrl": "https://www.ecfr.gov/current/title-16/chapter-I/subchapter-F/part-603/section-603.1",
+    "hierarchyPath": [
+      { "level": "title", "ref": "16", "label": "Commercial Practices" },
+      { "level": "part", "ref": "603", "label": "Definitions and Rules of Construction" },
+      { "level": "section", "ref": "603.1", "label": "Scope" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "commercial"],
+    "content": "16 CFR § 603.1\n\n§ 603.1 Scope.\n\nThis subchapter implements the Fair Credit Reporting Act (FCRA), 15 U.S.C. 1681 et seq., which regulates consumer reporting agencies, users of consumer reports, and furnishers of information to consumer reporting agencies.",
+    "sections": [{ "sectionRef": "603.1", "content": "This subchapter implements the Fair Credit Reporting Act, which regulates consumer reporting agencies, users of consumer reports, and furnishers of information to consumer reporting agencies." }],
+    "sourceMetadata": { "retrievalMethod": "official_ecfr_snapshot", "statuteTopic": "fcra", "sourceOwner": "Federal Trade Commission" }
+  },
+  {
+    "title": "16 CFR § 681.1 — Purpose of Identity Theft Red Flags Rule",
+    "shortTitle": "16 CFR § 681.1",
+    "authorityType": "regulation",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "16 CFR § 681.1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-16-cfr-681-1",
+    "canonicalSourceUrl": "https://www.ecfr.gov/current/title-16/chapter-I/subchapter-F/part-681/section-681.1",
+    "hierarchyPath": [
+      { "level": "title", "ref": "16", "label": "Commercial Practices" },
+      { "level": "part", "ref": "681", "label": "Identity Theft Red Flags Rule" },
+      { "level": "section", "ref": "681.1", "label": "Purpose" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "commercial"],
+    "content": "16 CFR § 681.1\n\n§ 681.1 Purpose.\n\nThis part implements sections 114 and 315 of the Fair and Accurate Credit Transactions Act of 2003, which require financial institutions and creditors to develop and implement a written Identity Theft Prevention Program to detect, prevent, and mitigate identity theft in connection with covered accounts.",
+    "sections": [{ "sectionRef": "681.1", "content": "This part requires financial institutions and creditors to develop and implement a written Identity Theft Prevention Program to detect, prevent, and mitigate identity theft in connection with covered accounts." }],
+    "sourceMetadata": { "retrievalMethod": "official_ecfr_snapshot", "statuteTopic": "identity_theft_red_flags", "sourceOwner": "Federal Trade Commission" }
+  },
+  {
+    "title": "16 CFR § 310.1 — Purpose of Telemarketing Sales Rule",
+    "shortTitle": "16 CFR § 310.1",
+    "authorityType": "regulation",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "16 CFR § 310.1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-16-cfr-310-1",
+    "canonicalSourceUrl": "https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-310/section-310.1",
+    "hierarchyPath": [
+      { "level": "title", "ref": "16", "label": "Commercial Practices" },
+      { "level": "part", "ref": "310", "label": "Telemarketing Sales Rule" },
+      { "level": "section", "ref": "310.1", "label": "Purpose" }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": ["federal", "commercial"],
+    "content": "16 CFR § 310.1\n\n§ 310.1 Purpose.\n\nThis part implements the Telemarketing and Consumer Fraud and Abuse Prevention Act, 15 U.S.C. 6101-6108. The Rule prohibits deceptive and abusive telemarketing acts or practices and requires telemarketers to make specific disclosures of material information.",
+    "sections": [{ "sectionRef": "310.1", "content": "This part implements the Telemarketing and Consumer Fraud and Abuse Prevention Act. The Rule prohibits deceptive and abusive telemarketing acts or practices and requires telemarketers to make specific disclosures of material information." }],
+    "sourceMetadata": { "retrievalMethod": "official_ecfr_snapshot", "statuteTopic": "telemarketing_sales_rule", "sourceOwner": "Federal Trade Commission" }
+  }
+]

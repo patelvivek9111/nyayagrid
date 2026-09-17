@@ -1,0 +1,1679 @@
+{
+  "generatedAt": "2026-09-17T16:22:52.576Z",
+  "phase": "50S-EXPANSION-1",
+  "parserVersion": "corpus1-v3",
+  "bundleAuthorityCount": 186,
+  "entryCount": 52,
+  "summary": {
+    "limited": 11,
+    "seed": 41,
+    "noCorpus": 0,
+    "broader": 0,
+    "withRegulations": 1,
+    "withCourtRules": 1
+  },
+  "honestClaims": [
+    "Curated public primary-law expansion — not exhaustive 50-state coverage.",
+    "No Shepard's/KeyCite-equivalent negative-treatment system.",
+    "Currentness metadata is partial; missing dates remain UNKNOWN.",
+    "No paid Westlaw/Lexis content.",
+    "CourtListener live bulk import requires API key; bundles may use public snapshots."
+  ],
+  "jurisdictions": [
+    {
+      "code": "US",
+      "displayName": "United States (Federal)",
+      "type": "federal",
+      "corpusStatus": "limited_corpus",
+      "authorityCount": 63,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": true,
+      "courtRules": true,
+      "constitution": true,
+      "importerStatus": "ready",
+      "statuteSource": "https://uscode.house.gov/",
+      "caseSource": "https://www.supremecourt.gov/",
+      "regulationSource": "https://www.ecfr.gov/",
+      "ruleSource": "https://www.uscourts.gov/rules-policies",
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "usc_house"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of the United States",
+      "notes": [
+        "No U.S. Courts of Appeals opinions in seed.",
+        "No U.S. District Court opinions in seed.",
+        "Federal adapters ready for USC (House), eCFR, CourtListener, and US Courts rules entry points.",
+        "Seed/limited corpus only — not comprehensive federal coverage."
+      ]
+    },
+    {
+      "code": "AL",
+      "displayName": "Alabama",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://alison.legislature.state.al.us/",
+      "caseSource": "https://judicial.alabama.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of Alabama",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "AK",
+      "displayName": "Alaska",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.akleg.gov/",
+      "caseSource": "https://courts.alaska.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Alaska Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "AZ",
+      "displayName": "Arizona",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 3,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://www.azleg.gov/",
+      "caseSource": "https://www.azcourts.gov/",
+      "regulationSource": "https://apps.azsos.gov/public_services/CodeTitle.htm",
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Arizona Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "AR",
+      "displayName": "Arkansas",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.arkleg.state.ar.us/",
+      "caseSource": "https://www.arcourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Arkansas Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "CA",
+      "displayName": "California",
+      "type": "state",
+      "corpusStatus": "limited_corpus",
+      "authorityCount": 6,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://leginfo.legislature.ca.gov/",
+      "caseSource": "https://www.courts.ca.gov/",
+      "regulationSource": "https://oal.ca.gov/publications/ccr/",
+      "ruleSource": "https://www.courts.ca.gov/rules.htm",
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of California",
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "CO",
+      "displayName": "Colorado",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 3,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://leg.colorado.gov/",
+      "caseSource": "https://www.courts.state.co.us/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Colorado Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "CT",
+      "displayName": "Connecticut",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 3,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://www.cga.ct.gov/",
+      "caseSource": "https://www.jud.ct.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Connecticut Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "DE",
+      "displayName": "Delaware",
+      "type": "state",
+      "corpusStatus": "limited_corpus",
+      "authorityCount": 6,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://delcode.delaware.gov/",
+      "caseSource": "https://courts.delaware.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of Delaware",
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "Delaware has no general intermediate appellate court of last resort below the Supreme Court."
+      ]
+    },
+    {
+      "code": "FL",
+      "displayName": "Florida",
+      "type": "state",
+      "corpusStatus": "limited_corpus",
+      "authorityCount": 6,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://www.flsenate.gov/Laws/Statutes",
+      "caseSource": "https://www.flcourts.gov/",
+      "regulationSource": "https://www.flrules.org/",
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of Florida",
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "GA",
+      "displayName": "Georgia",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 3,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://www.legis.ga.gov/",
+      "caseSource": "https://www.gasupreme.us/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of Georgia",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "HI",
+      "displayName": "Hawaii",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.capitol.hawaii.gov/",
+      "caseSource": "https://www.courts.state.hi.us/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of Hawaii",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "ID",
+      "displayName": "Idaho",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://legislature.idaho.gov/",
+      "caseSource": "https://isc.idaho.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Idaho Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "IL",
+      "displayName": "Illinois",
+      "type": "state",
+      "corpusStatus": "limited_corpus",
+      "authorityCount": 6,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://www.ilga.gov/",
+      "caseSource": "https://www.illinoiscourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of Illinois",
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "IN",
+      "displayName": "Indiana",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://iga.in.gov/",
+      "caseSource": "https://www.in.gov/courts/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Indiana Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "IA",
+      "displayName": "Iowa",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.legis.iowa.gov/",
+      "caseSource": "https://www.iowacourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Iowa Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "KS",
+      "displayName": "Kansas",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.kslegislature.gov/",
+      "caseSource": "https://www.kscourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Kansas Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "KY",
+      "displayName": "Kentucky",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://legislature.ky.gov/",
+      "caseSource": "https://kycourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Kentucky Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "LA",
+      "displayName": "Louisiana",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.legis.la.gov/",
+      "caseSource": "https://www.lasc.org/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Louisiana Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "ME",
+      "displayName": "Maine",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://legislature.maine.gov/",
+      "caseSource": "https://www.courts.maine.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Maine Supreme Judicial Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "MD",
+      "displayName": "Maryland",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 3,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://mgaleg.maryland.gov/",
+      "caseSource": "https://www.mdcourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of Maryland",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "MA",
+      "displayName": "Massachusetts",
+      "type": "state",
+      "corpusStatus": "limited_corpus",
+      "authorityCount": 6,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://malegislature.gov/Laws/GeneralLaws",
+      "caseSource": "https://www.mass.gov/orgs/massachusetts-court-system",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Massachusetts Supreme Judicial Court",
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "MI",
+      "displayName": "Michigan",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 3,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://www.legislature.mi.gov/",
+      "caseSource": "https://www.courts.michigan.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Michigan Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "MN",
+      "displayName": "Minnesota",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.revisor.mn.gov/statutes/",
+      "caseSource": "https://www.mncourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Minnesota Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "MS",
+      "displayName": "Mississippi",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.legislature.ms.gov/",
+      "caseSource": "https://courts.ms.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of Mississippi",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "MO",
+      "displayName": "Missouri",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.mo.gov/government/legislative/",
+      "caseSource": "https://www.courts.mo.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of Missouri",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "MT",
+      "displayName": "Montana",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://leg.mt.gov/",
+      "caseSource": "https://courts.mt.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Montana Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "NE",
+      "displayName": "Nebraska",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://nebraskalegislature.gov/",
+      "caseSource": "https://supremecourt.nebraska.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Nebraska Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "NV",
+      "displayName": "Nevada",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.leg.state.nv.us/",
+      "caseSource": "https://nvcourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of Nevada",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "NH",
+      "displayName": "New Hampshire",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.gencourt.state.nh.us/",
+      "caseSource": "https://www.courts.nh.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "New Hampshire Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "NJ",
+      "displayName": "New Jersey",
+      "type": "state",
+      "corpusStatus": "limited_corpus",
+      "authorityCount": 6,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://www.njleg.state.nj.us/",
+      "caseSource": "https://www.njcourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of New Jersey",
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "NM",
+      "displayName": "New Mexico",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.nmlegis.gov/",
+      "caseSource": "https://www.nmcourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "New Mexico Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "NY",
+      "displayName": "New York",
+      "type": "state",
+      "corpusStatus": "limited_corpus",
+      "authorityCount": 6,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://public.leginfo.state.ny.us/",
+      "caseSource": "https://www.nycourts.gov/",
+      "regulationSource": "https://www.dos.ny.gov/info/nycrr.html",
+      "ruleSource": "https://ww2.nycourts.gov/rules/index.shtml",
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "New York Court of Appeals",
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "NC",
+      "displayName": "North Carolina",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 3,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://www.ncleg.gov/",
+      "caseSource": "https://www.nccourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of North Carolina",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "ND",
+      "displayName": "North Dakota",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.ndlegis.gov/",
+      "caseSource": "https://www.ndcourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "North Dakota Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "OH",
+      "displayName": "Ohio",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 3,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://www.legislature.ohio.gov/",
+      "caseSource": "https://www.supremecourt.ohio.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of Ohio",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "OK",
+      "displayName": "Oklahoma",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.oklegislature.gov/",
+      "caseSource": "https://www.oscn.net/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Oklahoma Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "OR",
+      "displayName": "Oregon",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.oregonlegislature.gov/",
+      "caseSource": "https://www.courts.oregon.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Oregon Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "PA",
+      "displayName": "Pennsylvania",
+      "type": "state",
+      "corpusStatus": "limited_corpus",
+      "authorityCount": 8,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": true,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://www.legis.state.pa.us/",
+      "caseSource": "https://www.pacourts.us/",
+      "regulationSource": null,
+      "ruleSource": "https://www.pacourts.us/rules-and-procedures",
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of Pennsylvania",
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "RI",
+      "displayName": "Rhode Island",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.rilegislature.gov/",
+      "caseSource": "https://www.courts.ri.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Rhode Island Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "SC",
+      "displayName": "South Carolina",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.scstatehouse.gov/",
+      "caseSource": "https://www.sccourts.org/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "South Carolina Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "SD",
+      "displayName": "South Dakota",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://sdlegislature.gov/",
+      "caseSource": "https://ujs.sd.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "South Dakota Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "TN",
+      "displayName": "Tennessee",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.capitol.tn.gov/",
+      "caseSource": "https://www.tncourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Tennessee Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "TX",
+      "displayName": "Texas",
+      "type": "state",
+      "corpusStatus": "limited_corpus",
+      "authorityCount": 6,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://statutes.capitol.texas.gov/",
+      "caseSource": "https://www.txcourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of Texas",
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "UT",
+      "displayName": "Utah",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://le.utah.gov/",
+      "caseSource": "https://www.utcourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Utah Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "VT",
+      "displayName": "Vermont",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://legislature.vermont.gov/",
+      "caseSource": "https://www.vermontjudiciary.org/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Vermont Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "VA",
+      "displayName": "Virginia",
+      "type": "state",
+      "corpusStatus": "limited_corpus",
+      "authorityCount": 6,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://law.lis.virginia.gov/",
+      "caseSource": "https://www.vacourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of Virginia",
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "WA",
+      "displayName": "Washington",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 3,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://app.leg.wa.gov/RCW/",
+      "caseSource": "https://www.courts.wa.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Washington Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "WV",
+      "displayName": "West Virginia",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.wvlegislature.gov/",
+      "caseSource": "https://www.courtswv.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Supreme Court of Appeals of West Virginia",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "WI",
+      "displayName": "Wisconsin",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 3,
+      "statutes": true,
+      "casesHigh": true,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "configured",
+      "statuteSource": "https://docs.legis.wisconsin.gov/statutes",
+      "caseSource": "https://www.wicourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Wisconsin Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "WY",
+      "displayName": "Wyoming",
+      "type": "state",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://www.wyoleg.gov/",
+      "caseSource": "https://www.courts.state.wy.us/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "Wyoming Supreme Court",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    },
+    {
+      "code": "DC",
+      "displayName": "District of Columbia",
+      "type": "district",
+      "corpusStatus": "seed_corpus",
+      "authorityCount": 1,
+      "statutes": true,
+      "casesHigh": false,
+      "casesAppellate": false,
+      "regulations": false,
+      "courtRules": false,
+      "constitution": false,
+      "importerStatus": "planned",
+      "statuteSource": "https://code.dccouncil.gov/",
+      "caseSource": "https://www.dccourts.gov/",
+      "regulationSource": null,
+      "ruleSource": null,
+      "caseAdapters": [
+        "courtlistener"
+      ],
+      "statuteAdapters": [
+        "state_statute"
+      ],
+      "courtMapping": true,
+      "highestCourt": "District of Columbia Court of Appeals",
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed.",
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage."
+      ]
+    }
+  ]
+}

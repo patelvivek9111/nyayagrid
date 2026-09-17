@@ -1,0 +1,60 @@
+{
+  "version": "corpus1-v3",
+  "phase": "50S-EXPANSION-1",
+  "providers": [
+    {
+      "name": "us-primary-corpus",
+      "url": "https://github.com/nyayagrid/nyayagrid/tree/main/packages/research/corpus",
+      "publicOfficial": false,
+      "retrievalMethod": "curated_bundle_snapshot",
+      "licenseNotes": "NyayaGrid curated primary-law excerpts compiled from official public-domain sources. Each authority record includes canonicalSourceUrl pointing to the authoritative origin.",
+      "adapterName": "corpus-bundle-import",
+      "allowedStoredFields": ["title", "shortTitle", "authorityType", "jurisdiction", "authorityState", "citation", "sourceProvider", "sourceExternalId", "canonicalSourceUrl", "hierarchyPath", "bundleSourceClass", "bundleQualityTier", "bundlePracticeAreas", "content", "sections", "opinionParts", "court", "courtId", "courtLevel", "decisionDate", "publicationStatus", "sourceMetadata"]
+    },
+    {
+      "name": "uscode.house.gov",
+      "url": "https://uscode.house.gov/",
+      "publicOfficial": true,
+      "retrievalMethod": "official_codification_snapshot",
+      "licenseNotes": "United States Code as published by the Office of the Law Revision Counsel. Federal statutory text is public domain.",
+      "adapterName": "usc-official-fetch",
+      "allowedStoredFields": ["title", "citation", "canonicalSourceUrl", "content", "sections", "hierarchyPath", "sourceMetadata"]
+    },
+    {
+      "name": "ecfr.gov",
+      "url": "https://www.ecfr.gov/",
+      "publicOfficial": true,
+      "retrievalMethod": "official_ecfr_snapshot",
+      "licenseNotes": "Electronic Code of Federal Regulations maintained by the Office of the Federal Register and GPO. Federal regulatory text is public domain.",
+      "adapterName": "ecfr-official-fetch",
+      "allowedStoredFields": ["title", "citation", "canonicalSourceUrl", "content", "sections", "hierarchyPath", "sourceMetadata"]
+    },
+    {
+      "name": "uscourts.gov",
+      "url": "https://www.uscourts.gov/forms-rules/current-rules",
+      "publicOfficial": true,
+      "retrievalMethod": "official_rules_snapshot",
+      "licenseNotes": "Federal Rules of Civil Procedure and Evidence as published by the U.S. Courts. Rule text is public domain.",
+      "adapterName": "uscourts-rules-fetch",
+      "allowedStoredFields": ["title", "citation", "canonicalSourceUrl", "content", "sections", "hierarchyPath", "sourceMetadata"]
+    },
+    {
+      "name": "courtlistener.com",
+      "url": "https://www.courtlistener.com/",
+      "publicOfficial": false,
+      "retrievalMethod": "public_repository_snapshot",
+      "licenseNotes": "Free Law Project public repository of court opinions. NyayaGrid stores short holding paraphrase excerpts only, not copyrighted headnotes. Full opinions remain at canonical URL.",
+      "adapterName": "courtlistener-opinion-fetch",
+      "allowedStoredFields": ["title", "citation", "canonicalSourceUrl", "content", "opinionParts", "court", "courtId", "courtLevel", "decisionDate", "publicationStatus", "sourceMetadata"]
+    },
+    {
+      "name": "state-legislature-sites",
+      "url": "https://www.ncsl.org/legislators-staff/legislators/legislative-websites",
+      "publicOfficial": true,
+      "retrievalMethod": "official_codification_snapshot",
+      "licenseNotes": "Official state codification websites (e.g., legis.state.pa.us, leginfo.legislature.ca.gov, mgaleg.maryland.gov). State statutory text is generally public domain; verify per-state copyright notices where applicable.",
+      "adapterName": "state-statute-fetch",
+      "allowedStoredFields": ["title", "citation", "canonicalSourceUrl", "content", "sections", "hierarchyPath", "sourceMetadata", "authorityState", "jurisdiction"]
+    }
+  ]
+}

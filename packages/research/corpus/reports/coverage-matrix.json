@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-09-17T14:34:46.390Z",
-  "parserVersion": "corpus1-v2",
-  "phase": "6T-CORPUS-1",
-  "bundleAuthorityCount": 35,
+  "generatedAt": "2026-09-17T16:19:20.519Z",
+  "parserVersion": "corpus1-v3",
+  "phase": "50S-EXPANSION-1",
+  "bundleAuthorityCount": 186,
   "federal": {
     "jurisdiction": "US",
     "kind": "federal",
@@ -10,19 +10,24 @@
     "highCourtCasesPresent": true,
     "intermediateAppellateCasesPresent": false,
     "trialCasesPresent": false,
-    "regulationsPresent": false,
+    "regulationsPresent": true,
+    "courtRulesPresent": true,
     "constitutionPresent": true,
     "courtHierarchyMetadataPresent": true,
     "canonicalProvenancePresent": true,
     "currentnessMetadataPresent": true,
-    "authorityCount": 3,
-    "coverageClass": "seed_corpus",
+    "authorityCount": 63,
+    "coverageClass": "limited_corpus",
     "sourceBundleFiles": [
-      "federal.json"
+      "federal.json",
+      "expansion-federal-usc.json",
+      "expansion-federal-cfr.json",
+      "expansion-federal-rules.json",
+      "expansion-federal-cases.json",
+      "expansion-wave1-deepen.json",
+      "expansion-wave3-seeds.json"
     ],
     "notes": [
-      "Seed corpus only — not meaningful full-jurisdiction coverage.",
-      "No regulations in seed.",
       "No U.S. Courts of Appeals opinions in seed.",
       "No U.S. District Court opinions in seed."
     ]
@@ -31,77 +36,91 @@
     {
       "jurisdiction": "AL",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "AK",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "AZ",
       "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
+      "statutesPresent": true,
+      "highCourtCasesPresent": true,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
+      "courtHierarchyMetadataPresent": true,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": true,
+      "authorityCount": 3,
+      "coverageClass": "seed_corpus",
+      "sourceBundleFiles": [
+        "az.json"
+      ],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "AR",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
@@ -112,6 +131,30 @@
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
+      "constitutionPresent": false,
+      "courtHierarchyMetadataPresent": true,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": true,
+      "authorityCount": 6,
+      "coverageClass": "limited_corpus",
+      "sourceBundleFiles": [
+        "ca.json"
+      ],
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed."
+      ]
+    },
+    {
+      "jurisdiction": "CO",
+      "kind": "state",
+      "statutesPresent": true,
+      "highCourtCasesPresent": true,
+      "intermediateAppellateCasesPresent": false,
+      "trialCasesPresent": false,
+      "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": true,
       "canonicalProvenancePresent": true,
@@ -119,49 +162,36 @@
       "authorityCount": 3,
       "coverageClass": "seed_corpus",
       "sourceBundleFiles": [
-        "ca.json"
+        "co.json"
       ],
       "notes": [
         "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed."
-      ]
-    },
-    {
-      "jurisdiction": "CO",
-      "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
-      "intermediateAppellateCasesPresent": false,
-      "trialCasesPresent": false,
-      "regulationsPresent": false,
-      "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
-      "notes": [
-        "No authorities in curated seed bundles."
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "CT",
       "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
+      "statutesPresent": true,
+      "highCourtCasesPresent": true,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
+      "courtHierarchyMetadataPresent": true,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": true,
+      "authorityCount": 3,
+      "coverageClass": "seed_corpus",
+      "sourceBundleFiles": [
+        "ct.json"
+      ],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
@@ -172,18 +202,19 @@
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": true,
       "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": true,
-      "authorityCount": 3,
-      "coverageClass": "seed_corpus",
+      "authorityCount": 6,
+      "coverageClass": "limited_corpus",
       "sourceBundleFiles": [
         "de.json"
       ],
       "notes": [
-        "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed."
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
@@ -194,6 +225,30 @@
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
+      "constitutionPresent": false,
+      "courtHierarchyMetadataPresent": true,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": true,
+      "authorityCount": 6,
+      "coverageClass": "limited_corpus",
+      "sourceBundleFiles": [
+        "fl.json"
+      ],
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed."
+      ]
+    },
+    {
+      "jurisdiction": "GA",
+      "kind": "state",
+      "statutesPresent": true,
+      "highCourtCasesPresent": true,
+      "intermediateAppellateCasesPresent": false,
+      "trialCasesPresent": false,
+      "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": true,
       "canonicalProvenancePresent": true,
@@ -201,68 +256,56 @@
       "authorityCount": 3,
       "coverageClass": "seed_corpus",
       "sourceBundleFiles": [
-        "fl.json"
+        "ga.json"
       ],
       "notes": [
         "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed."
-      ]
-    },
-    {
-      "jurisdiction": "GA",
-      "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
-      "intermediateAppellateCasesPresent": false,
-      "trialCasesPresent": false,
-      "regulationsPresent": false,
-      "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
-      "notes": [
-        "No authorities in curated seed bundles."
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "HI",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "ID",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
@@ -273,6 +316,162 @@
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
+      "constitutionPresent": false,
+      "courtHierarchyMetadataPresent": true,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": true,
+      "authorityCount": 6,
+      "coverageClass": "limited_corpus",
+      "sourceBundleFiles": [
+        "il.json"
+      ],
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed."
+      ]
+    },
+    {
+      "jurisdiction": "IN",
+      "kind": "state",
+      "statutesPresent": true,
+      "highCourtCasesPresent": false,
+      "intermediateAppellateCasesPresent": false,
+      "trialCasesPresent": false,
+      "regulationsPresent": false,
+      "courtRulesPresent": false,
+      "constitutionPresent": false,
+      "courtHierarchyMetadataPresent": false,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": false,
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
+      "sourceBundleFiles": [],
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
+      ]
+    },
+    {
+      "jurisdiction": "IA",
+      "kind": "state",
+      "statutesPresent": true,
+      "highCourtCasesPresent": false,
+      "intermediateAppellateCasesPresent": false,
+      "trialCasesPresent": false,
+      "regulationsPresent": false,
+      "courtRulesPresent": false,
+      "constitutionPresent": false,
+      "courtHierarchyMetadataPresent": false,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": false,
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
+      "sourceBundleFiles": [],
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
+      ]
+    },
+    {
+      "jurisdiction": "KS",
+      "kind": "state",
+      "statutesPresent": true,
+      "highCourtCasesPresent": false,
+      "intermediateAppellateCasesPresent": false,
+      "trialCasesPresent": false,
+      "regulationsPresent": false,
+      "courtRulesPresent": false,
+      "constitutionPresent": false,
+      "courtHierarchyMetadataPresent": false,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": false,
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
+      "sourceBundleFiles": [],
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
+      ]
+    },
+    {
+      "jurisdiction": "KY",
+      "kind": "state",
+      "statutesPresent": true,
+      "highCourtCasesPresent": false,
+      "intermediateAppellateCasesPresent": false,
+      "trialCasesPresent": false,
+      "regulationsPresent": false,
+      "courtRulesPresent": false,
+      "constitutionPresent": false,
+      "courtHierarchyMetadataPresent": false,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": false,
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
+      "sourceBundleFiles": [],
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
+      ]
+    },
+    {
+      "jurisdiction": "LA",
+      "kind": "state",
+      "statutesPresent": true,
+      "highCourtCasesPresent": false,
+      "intermediateAppellateCasesPresent": false,
+      "trialCasesPresent": false,
+      "regulationsPresent": false,
+      "courtRulesPresent": false,
+      "constitutionPresent": false,
+      "courtHierarchyMetadataPresent": false,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": false,
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
+      "sourceBundleFiles": [],
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
+      ]
+    },
+    {
+      "jurisdiction": "ME",
+      "kind": "state",
+      "statutesPresent": true,
+      "highCourtCasesPresent": false,
+      "intermediateAppellateCasesPresent": false,
+      "trialCasesPresent": false,
+      "regulationsPresent": false,
+      "courtRulesPresent": false,
+      "constitutionPresent": false,
+      "courtHierarchyMetadataPresent": false,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": false,
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
+      "sourceBundleFiles": [],
+      "notes": [
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
+      ]
+    },
+    {
+      "jurisdiction": "MD",
+      "kind": "state",
+      "statutesPresent": true,
+      "highCourtCasesPresent": true,
+      "intermediateAppellateCasesPresent": false,
+      "trialCasesPresent": false,
+      "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": true,
       "canonicalProvenancePresent": true,
@@ -280,144 +479,12 @@
       "authorityCount": 3,
       "coverageClass": "seed_corpus",
       "sourceBundleFiles": [
-        "il.json"
+        "md.json"
       ],
       "notes": [
         "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed."
-      ]
-    },
-    {
-      "jurisdiction": "IN",
-      "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
-      "intermediateAppellateCasesPresent": false,
-      "trialCasesPresent": false,
-      "regulationsPresent": false,
-      "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
-      "notes": [
-        "No authorities in curated seed bundles."
-      ]
-    },
-    {
-      "jurisdiction": "IA",
-      "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
-      "intermediateAppellateCasesPresent": false,
-      "trialCasesPresent": false,
-      "regulationsPresent": false,
-      "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
-      "notes": [
-        "No authorities in curated seed bundles."
-      ]
-    },
-    {
-      "jurisdiction": "KS",
-      "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
-      "intermediateAppellateCasesPresent": false,
-      "trialCasesPresent": false,
-      "regulationsPresent": false,
-      "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
-      "notes": [
-        "No authorities in curated seed bundles."
-      ]
-    },
-    {
-      "jurisdiction": "KY",
-      "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
-      "intermediateAppellateCasesPresent": false,
-      "trialCasesPresent": false,
-      "regulationsPresent": false,
-      "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
-      "notes": [
-        "No authorities in curated seed bundles."
-      ]
-    },
-    {
-      "jurisdiction": "LA",
-      "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
-      "intermediateAppellateCasesPresent": false,
-      "trialCasesPresent": false,
-      "regulationsPresent": false,
-      "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
-      "notes": [
-        "No authorities in curated seed bundles."
-      ]
-    },
-    {
-      "jurisdiction": "ME",
-      "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
-      "intermediateAppellateCasesPresent": false,
-      "trialCasesPresent": false,
-      "regulationsPresent": false,
-      "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
-      "notes": [
-        "No authorities in curated seed bundles."
-      ]
-    },
-    {
-      "jurisdiction": "MD",
-      "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
-      "intermediateAppellateCasesPresent": false,
-      "trialCasesPresent": false,
-      "regulationsPresent": false,
-      "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
-      "notes": [
-        "No authorities in curated seed bundles."
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
@@ -428,6 +495,30 @@
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
+      "constitutionPresent": false,
+      "courtHierarchyMetadataPresent": true,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": true,
+      "authorityCount": 6,
+      "coverageClass": "limited_corpus",
+      "sourceBundleFiles": [
+        "ma.json"
+      ],
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed."
+      ]
+    },
+    {
+      "jurisdiction": "MI",
+      "kind": "state",
+      "statutesPresent": true,
+      "highCourtCasesPresent": true,
+      "intermediateAppellateCasesPresent": false,
+      "trialCasesPresent": false,
+      "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": true,
       "canonicalProvenancePresent": true,
@@ -435,163 +526,166 @@
       "authorityCount": 3,
       "coverageClass": "seed_corpus",
       "sourceBundleFiles": [
-        "ma.json"
+        "mi.json"
       ],
       "notes": [
         "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed."
-      ]
-    },
-    {
-      "jurisdiction": "MI",
-      "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
-      "intermediateAppellateCasesPresent": false,
-      "trialCasesPresent": false,
-      "regulationsPresent": false,
-      "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
-      "notes": [
-        "No authorities in curated seed bundles."
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "MN",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "MS",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "MO",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "MT",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "NE",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "NV",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "NH",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
@@ -602,37 +696,41 @@
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": true,
       "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": true,
-      "authorityCount": 3,
-      "coverageClass": "seed_corpus",
+      "authorityCount": 6,
+      "coverageClass": "limited_corpus",
       "sourceBundleFiles": [
         "nj.json"
       ],
       "notes": [
-        "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed."
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "NM",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
@@ -643,6 +741,30 @@
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
+      "constitutionPresent": false,
+      "courtHierarchyMetadataPresent": true,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": true,
+      "authorityCount": 6,
+      "coverageClass": "limited_corpus",
+      "sourceBundleFiles": [
+        "ny.json"
+      ],
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed."
+      ]
+    },
+    {
+      "jurisdiction": "NC",
+      "kind": "state",
+      "statutesPresent": true,
+      "highCourtCasesPresent": true,
+      "intermediateAppellateCasesPresent": false,
+      "trialCasesPresent": false,
+      "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": true,
       "canonicalProvenancePresent": true,
@@ -650,106 +772,102 @@
       "authorityCount": 3,
       "coverageClass": "seed_corpus",
       "sourceBundleFiles": [
-        "ny.json"
+        "nc.json"
       ],
       "notes": [
         "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed."
-      ]
-    },
-    {
-      "jurisdiction": "NC",
-      "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
-      "intermediateAppellateCasesPresent": false,
-      "trialCasesPresent": false,
-      "regulationsPresent": false,
-      "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
-      "notes": [
-        "No authorities in curated seed bundles."
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "ND",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "OH",
       "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
+      "statutesPresent": true,
+      "highCourtCasesPresent": true,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
+      "courtHierarchyMetadataPresent": true,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": true,
+      "authorityCount": 3,
+      "coverageClass": "seed_corpus",
+      "sourceBundleFiles": [
+        "oh.json"
+      ],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "OK",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "OR",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
@@ -760,94 +878,107 @@
       "intermediateAppellateCasesPresent": true,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": true,
       "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": true,
-      "authorityCount": 5,
-      "coverageClass": "seed_corpus",
+      "authorityCount": 8,
+      "coverageClass": "limited_corpus",
       "sourceBundleFiles": [
         "pa.json"
       ],
       "notes": [
-        "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed."
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "RI",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "SC",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "SD",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "TN",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
@@ -858,56 +989,63 @@
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": true,
       "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": true,
-      "authorityCount": 3,
-      "coverageClass": "seed_corpus",
+      "authorityCount": 6,
+      "coverageClass": "limited_corpus",
       "sourceBundleFiles": [
         "tx.json"
       ],
       "notes": [
-        "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed."
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "UT",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "VT",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
@@ -918,6 +1056,30 @@
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
+      "constitutionPresent": false,
+      "courtHierarchyMetadataPresent": true,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": true,
+      "authorityCount": 6,
+      "coverageClass": "limited_corpus",
+      "sourceBundleFiles": [
+        "va.json"
+      ],
+      "notes": [
+        "No regulations in seed.",
+        "No court rules in seed."
+      ]
+    },
+    {
+      "jurisdiction": "WA",
+      "kind": "state",
+      "statutesPresent": true,
+      "highCourtCasesPresent": true,
+      "intermediateAppellateCasesPresent": false,
+      "trialCasesPresent": false,
+      "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": true,
       "canonicalProvenancePresent": true,
@@ -925,124 +1087,122 @@
       "authorityCount": 3,
       "coverageClass": "seed_corpus",
       "sourceBundleFiles": [
-        "va.json"
+        "wa.json"
       ],
       "notes": [
         "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed."
-      ]
-    },
-    {
-      "jurisdiction": "WA",
-      "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
-      "intermediateAppellateCasesPresent": false,
-      "trialCasesPresent": false,
-      "regulationsPresent": false,
-      "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
-      "notes": [
-        "No authorities in curated seed bundles."
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "WV",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "WI",
       "kind": "state",
-      "statutesPresent": false,
-      "highCourtCasesPresent": false,
+      "statutesPresent": true,
+      "highCourtCasesPresent": true,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
-      "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
-      "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
-      "sourceBundleFiles": [],
+      "courtHierarchyMetadataPresent": true,
+      "canonicalProvenancePresent": true,
+      "currentnessMetadataPresent": true,
+      "authorityCount": 3,
+      "coverageClass": "seed_corpus",
+      "sourceBundleFiles": [
+        "wi.json"
+      ],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "WY",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     },
     {
       "jurisdiction": "DC",
       "kind": "state",
-      "statutesPresent": false,
+      "statutesPresent": true,
       "highCourtCasesPresent": false,
       "intermediateAppellateCasesPresent": false,
       "trialCasesPresent": false,
       "regulationsPresent": false,
+      "courtRulesPresent": false,
       "constitutionPresent": false,
       "courtHierarchyMetadataPresent": false,
-      "canonicalProvenancePresent": false,
+      "canonicalProvenancePresent": true,
       "currentnessMetadataPresent": false,
-      "authorityCount": 0,
-      "coverageClass": "no_corpus",
+      "authorityCount": 1,
+      "coverageClass": "seed_corpus",
       "sourceBundleFiles": [],
       "notes": [
-        "No authorities in curated seed bundles."
+        "Seed corpus only — not meaningful full-jurisdiction coverage.",
+        "No regulations in seed.",
+        "No court rules in seed."
       ]
     }
   ],
   "summary": {
-    "statesWithCorpus": 10,
-    "statesNoCorpus": 41,
-    "seed": 11,
-    "limited": 0,
+    "statesWithCorpus": 51,
+    "statesNoCorpus": 0,
+    "seed": 41,
+    "limited": 11,
     "broader": 0,
-    "regulationsAnywhere": false,
+    "regulationsAnywhere": true,
+    "courtRulesAnywhere": true,
     "circuitCourtsPresent": false,
     "districtCourtsPresent": false,
-    "cfrPresent": false
+    "cfrPresent": true
   },
   "honestClaims": [
-    "Curated public primary-law seed — not exhaustive 50-state coverage.",
+    "Curated public primary-law expansion — not exhaustive 50-state coverage.",
     "No Shepard's/KeyCite-equivalent negative-treatment system.",
     "Currentness metadata is partial; missing dates remain UNKNOWN.",
-    "No paid Westlaw/Lexis content."
+    "No paid Westlaw/Lexis content.",
+    "CourtListener live bulk import requires API key; bundles may use public snapshots."
   ]
 }

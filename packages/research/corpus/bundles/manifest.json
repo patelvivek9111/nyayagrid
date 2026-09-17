@@ -1,7 +1,15 @@
 {
-  "phase": "6T-CORPUS-1",
-  "parserVersion": "corpus1-v2",
-  "federalBundles": [{ "bundleFile": "federal.json", "practiceAreas": ["federal", "constitutional", "civil"] }],
+  "phase": "50S-EXPANSION-1",
+  "parserVersion": "corpus1-v3",
+  "federalBundles": [
+    { "bundleFile": "federal.json", "practiceAreas": ["federal", "constitutional", "civil"] },
+    { "bundleFile": "expansion-federal-usc.json", "practiceAreas": ["federal", "civil", "jurisdiction", "procedure"] },
+    { "bundleFile": "expansion-federal-cfr.json", "practiceAreas": ["federal", "employment", "commercial", "regulation"] },
+    { "bundleFile": "expansion-federal-rules.json", "practiceAreas": ["federal", "civil", "procedure", "evidence"] },
+    { "bundleFile": "expansion-federal-cases.json", "practiceAreas": ["federal", "civil", "constitutional", "administrative"] },
+    { "bundleFile": "expansion-wave1-deepen.json", "practiceAreas": ["civil", "tort", "employment", "commercial"] },
+    { "bundleFile": "expansion-wave3-seeds.json", "practiceAreas": ["civil"] }
+  ],
   "states": [
     { "code": "PA", "bundleFile": "pa.json", "practiceAreas": ["contract", "employment", "civil"] },
     { "code": "NJ", "bundleFile": "nj.json", "practiceAreas": ["contract", "employment", "civil"] },
@@ -12,6 +20,16 @@
     { "code": "FL", "bundleFile": "fl.json", "practiceAreas": ["contract", "employment", "civil"] },
     { "code": "IL", "bundleFile": "il.json", "practiceAreas": ["contract", "employment", "civil"] },
     { "code": "MA", "bundleFile": "ma.json", "practiceAreas": ["contract", "employment", "civil"] },
-    { "code": "VA", "bundleFile": "va.json", "practiceAreas": ["contract", "employment", "civil"] }
+    { "code": "VA", "bundleFile": "va.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "OH", "bundleFile": "oh.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "GA", "bundleFile": "ga.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "NC", "bundleFile": "nc.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "WA", "bundleFile": "wa.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "CO", "bundleFile": "co.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "AZ", "bundleFile": "az.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "MI", "bundleFile": "mi.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "MD", "bundleFile": "md.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "CT", "bundleFile": "ct.json", "practiceAreas": ["contract", "employment", "civil"] },
+    { "code": "WI", "bundleFile": "wi.json", "practiceAreas": ["contract", "employment", "civil"] }
   ]
 }
