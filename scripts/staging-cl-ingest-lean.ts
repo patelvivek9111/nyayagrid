@@ -1081,15 +1081,51 @@ async function main() {
   let citationEdges = 0;
   let treatmentSignals = 0;
 
-  // Discover via opinions list (lighter than /search/; top-level id).
+  // Discover: prefer opinions list (cluster__docket__court); fall back to search.
   const pageSize = Math.min(maxItems, 50);
-  const params = new URLSearchParams({
-    court: clCourt,
+  let discoverPath: "opinions" | "search" = "opinions";
+  let hits: ClSearchHit[] = [];
+
+  const opinionsParams = new URLSearchParams({
+    cluster__docket__court: clCourt,
     order_by: "-id",
     page_size: String(pageSize),
   });
-  const searchRes = await clFetch(`${CL_BASE}/opinions/?${params}`, clKey, rateMs, counters);
-  if (!searchRes.ok) {
+  let searchRes = await clFetch(
+    `${CL_BASE}/opinions/?${opinionsParams}`,
+    clKey,
+    rateMs,
+    counters,
+  );
+  if (searchRes.ok) {
+    const body = (await searchRes.json()) as { results?: ClSearchHit[] };
+    hits = (body.results ?? []).slice(0, maxItems);
+  } else if (searchRes.status === 400 || searchRes.status === 404) {
+    discoverPath = "search";
+    const searchParams = new URLSearchParams({
+      type: "o",
+      q: "*",
+      court: clCourt,
+      order_by: "dateFiled desc",
+      page_size: String(pageSize),
+    });
+    searchRes = await clFetch(`${CL_BASE}/search/?${searchParams}`, clKey, rateMs, counters);
+    if (!searchRes.ok) {
+      console.log(
+        JSON.stringify({
+          ok: false,
+          reason: `discover_http_${searchRes.status}`,
+          clCourt,
+          mappedCourt: mappedCourt?.courtId ?? null,
+          apiCalls: counters.apiCalls,
+          discoverPath,
+        }),
+      );
+      process.exit(1);
+    }
+    const body = (await searchRes.json()) as { results?: ClSearchHit[] };
+    hits = (body.results ?? []).slice(0, maxItems);
+  } else {
     console.log(
       JSON.stringify({
         ok: false,
@@ -1097,13 +1133,11 @@ async function main() {
         clCourt,
         mappedCourt: mappedCourt?.courtId ?? null,
         apiCalls: counters.apiCalls,
-        discoverPath: "opinions",
+        discoverPath,
       }),
     );
     process.exit(1);
   }
-  const searchBody = (await searchRes.json()) as { results?: ClSearchHit[] };
-  const hits = (searchBody.results ?? []).slice(0, maxItems);
   discovered = hits.length;
   const searchById = new Map<string, ClSearchHit>();
   for (const hit of hits) {
