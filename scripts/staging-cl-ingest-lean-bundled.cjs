@@ -2561,12 +2561,9 @@ function extractTreatmentSignals(content) {
 }
 async function clFetch(url, apiKey, rateMs, counters) {
   let last = null;
-  for (let attempt = 0; attempt < 4; attempt++) {
-    if (attempt === 0 || last?.status === 429) {
-      await sleep(attempt === 0 ? rateMs : rateMs * Math.pow(2, attempt));
-    } else {
-      await sleep(rateMs);
-    }
+  for (let attempt = 0; attempt < 8; attempt++) {
+    const wait = attempt === 0 ? rateMs : last?.status === 429 ? Math.min(rateMs * Math.pow(2, attempt) + Math.floor(Math.random() * 500), 6e4) : rateMs;
+    await sleep(wait);
     counters.apiCalls += 1;
     last = await fetch(url, {
       headers: {
@@ -3154,30 +3151,26 @@ async function main() {
   }));
   if (proofMode) {
     console.log(
-      JSON.stringify(
-        {
-          ok: true,
-          proofMode: true,
-          clCourt,
-          mappedCourt: mappedCourt?.courtId ?? null,
-          discovered,
-          fetched,
-          parsed: parsed.length,
-          quarantined: quarantined.length,
-          imported: 0,
-          skipped: 0,
-          failed,
-          unmappedCourts: [...unmappedCourts].sort(),
-          sample,
-          citationEdges: 0,
-          treatmentSignals,
-          apiCalls: counters.apiCalls,
-          featureAgents: process.env.FEATURE_AGENTS ?? null,
-          quarantineSample: quarantined.slice(0, 5)
-        },
-        null,
-        2
-      )
+      JSON.stringify({
+        ok: true,
+        proofMode: true,
+        clCourt,
+        mappedCourt: mappedCourt?.courtId ?? null,
+        discovered,
+        fetched,
+        parsed: parsed.length,
+        quarantined: quarantined.length,
+        imported: 0,
+        skipped: 0,
+        failed,
+        unmappedCourts: [...unmappedCourts].sort(),
+        sample,
+        citationEdges: 0,
+        treatmentSignals,
+        apiCalls: counters.apiCalls,
+        featureAgents: process.env.FEATURE_AGENTS ?? null,
+        quarantineSample: quarantined.slice(0, 5)
+      })
     );
     return;
   }
@@ -3210,30 +3203,26 @@ async function main() {
       }
     }
     console.log(
-      JSON.stringify(
-        {
-          ok: true,
-          proofMode: false,
-          clCourt,
-          mappedCourt: mappedCourt?.courtId ?? null,
-          discovered,
-          fetched,
-          parsed: parsed.length,
-          quarantined: quarantined.length,
-          imported,
-          skipped,
-          failed,
-          unmappedCourts: [...unmappedCourts].sort(),
-          sample,
-          citationEdges,
-          treatmentSignals,
-          apiCalls: counters.apiCalls,
-          featureAgents: process.env.FEATURE_AGENTS ?? null,
-          quarantineSample: quarantined.slice(0, 10)
-        },
-        null,
-        2
-      )
+      JSON.stringify({
+        ok: true,
+        proofMode: false,
+        clCourt,
+        mappedCourt: mappedCourt?.courtId ?? null,
+        discovered,
+        fetched,
+        parsed: parsed.length,
+        quarantined: quarantined.length,
+        imported,
+        skipped,
+        failed,
+        unmappedCourts: [...unmappedCourts].sort(),
+        sample,
+        citationEdges,
+        treatmentSignals,
+        apiCalls: counters.apiCalls,
+        featureAgents: process.env.FEATURE_AGENTS ?? null,
+        quarantineSample: quarantined.slice(0, 10)
+      })
     );
   } finally {
     await sql.end({ timeout: 5 });

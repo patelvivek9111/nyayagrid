@@ -99,8 +99,18 @@ for (const item of plan) {
   const out = (r.stdout || "").trim();
   let parsed = null;
   try {
-    const lines = out.split("\n").filter(Boolean);
-    parsed = JSON.parse(lines[lines.length - 1] || "{}");
+    // Prefer full stdout (single-line JSON). Fall back to last {...} block.
+    try {
+      parsed = JSON.parse(out);
+    } catch {
+      const start = out.lastIndexOf("{");
+      const end = out.lastIndexOf("}");
+      if (start >= 0 && end > start) {
+        parsed = JSON.parse(out.slice(start, end + 1));
+      } else {
+        throw new Error("no_json");
+      }
+    }
   } catch {
     parsed = {
       ok: false,

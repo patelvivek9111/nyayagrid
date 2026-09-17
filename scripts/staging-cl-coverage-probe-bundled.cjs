@@ -2198,8 +2198,8 @@ async function main() {
       from legal_authorities
       where source_provider = 'courtlistener'
         and (
-          source_metadata::text ilike '%treatmentSignals%'
-          and source_metadata::text not ilike '%"treatmentSignals":[]%'
+          coalesce(metadata::text, '') ilike '%treatmentSignals%'
+          and coalesce(metadata::text, '') not ilike '%"treatmentSignals":[]%'
         )
     `;
     const chunks = await sql`
