@@ -40,8 +40,8 @@ function flyExec(command, timeoutSec = 120) {
   );
 }
 
-// Small batches (≤40) and proof runs: synchronous exec with generous timeout.
-const useSync = proof === "1" || maxNum <= 40;
+// Proof / tiny batches only: Fly machine exec 408s on longer sync runs.
+const useSync = proof === "1" || maxNum <= 5;
 
 if (useSync) {
   const downloadAndRun = `node -e "fetch('${url}').then(r=>{if(!r.ok)throw new Error('http_'+r.status);return r.text()}).then(t=>{require('fs').writeFileSync('/tmp/staging-cl-ingest-lean-bundled.cjs',t); console.log(JSON.stringify({downloaded:true,bytes:t.length,sha:'${sha}',clCourt:'${clCourt}',max:${maxNum},proof:'${proof}'})); const {spawnSync}=require('child_process'); const r=spawnSync('node',['-e',\\\"process.env.CL_COURT='${clCourt}';process.env.CL_MAX='${max}';process.env.CL_PROOF='${proof}';require('/tmp/staging-cl-ingest-lean-bundled.cjs')\\\"],{encoding:'utf8',env:process.env,maxBuffer:32*1024*1024}); process.stdout.write(r.stdout||''); process.stderr.write((r.stderr||'').slice(0,4000)); process.exit(r.status||0)}).catch(e=>{console.log(JSON.stringify({ok:false,err:String(e.message||e)})); process.exit(1)})"`;
