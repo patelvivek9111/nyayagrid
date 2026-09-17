@@ -1773,6 +1773,49 @@ export function validateCitedAnswerAgainstPassages(
     return true;
   });
 
+  // Legal Research and Web scopes intentionally have zero Case passages. Do not force a
+  // corpus/Web miss solely because Case grounding passages are empty — authority/web
+  // grounding is checked on separate paths.
+  if (sourceScope === "legal_research" || sourceScope === "web") {
+    const modelInsufficient =
+      parsed.evidenceState === "insufficient" || !parsed.answer.trim();
+    if (modelInsufficient) {
+      return {
+        answer: {
+          answer: ensureSourceScopedAbstentionAnswer(
+            parsed.answer || abstention.answer,
+            sourceScope,
+            "insufficient",
+          ),
+          sources: [],
+          assumptions: parsed.assumptions,
+          unresolvedQuestions:
+            parsed.unresolvedQuestions.length > 0
+              ? parsed.unresolvedQuestions
+              : [abstention.unresolvedFallback],
+          evidenceState: "insufficient",
+        },
+        rejectedCitations,
+      };
+    }
+    return {
+      answer: {
+        ...parsed,
+        sources: [],
+        answer: ensureSourceScopedAbstentionAnswer(
+          parsed.answer,
+          sourceScope,
+          parsed.evidenceState,
+        ),
+        evidenceState:
+          parsed.evidenceState === "insufficient" || parsed.evidenceState === "partial"
+            ? "partial"
+            : "grounded",
+      },
+      rejectedCitations,
+    };
+  }
+
   if (passages.length === 0 || sources.length === 0) {
     return {
       answer: {

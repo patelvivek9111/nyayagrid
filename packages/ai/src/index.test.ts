@@ -137,6 +137,24 @@ describe("citation validation", () => {
     expect(result.answer.answer).not.toMatch(/matter documents|case documents|documents in this case/i);
   });
 
+  it("Legal Research keeps a grounded answer when Case passages are intentionally empty", () => {
+    const result = validateCitedAnswerAgainstPassages(
+      {
+        answer:
+          "Under 42 Pa.C.S. § 5525, an action upon a written contract under seal must generally be commenced within four years.",
+        sources: [],
+        assumptions: [],
+        unresolvedQuestions: [],
+        evidenceState: "grounded",
+      },
+      [],
+      { sourceScope: "legal_research" },
+    );
+    expect(result.answer.evidenceState).toBe("grounded");
+    expect(result.answer.answer).toMatch(/42 Pa\.C\.S\. § 5525/);
+    expect(result.answer.answer).not.toMatch(/sufficiently relevant authority/i);
+  });
+
   it("rejects fabricated quotes even when chunkId is real (QA-02)", () => {
     const result = validateCitedAnswerAgainstPassages(
       {
