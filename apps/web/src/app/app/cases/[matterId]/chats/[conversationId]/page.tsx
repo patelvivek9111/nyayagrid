@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import type { AskStreamEvent, ProvenanceSummary, SourceScope } from "@nyayagrid/ai";
-import { getSourceScopedAbstentionCopy } from "@nyayagrid/ai";
+import { getSourceScopedAbstentionCopy } from "@nyayagrid/ai/source-scope";
 import { Button } from "@nyayagrid/ui";
 import {
   AskProgress,
