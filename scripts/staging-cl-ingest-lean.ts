@@ -310,6 +310,8 @@ type ClSearchHit = {
   snippet?: string;
   /** Search API nests opinion ids under opinions[].id (no top-level id). */
   opinions?: Array<{ id?: number | string; type?: string }>;
+  /** Opinion detail often points at cluster URL or id for case metadata. */
+  cluster?: string | number | { id?: number | string };
 };
 
 /** Resolve CourtListener opinion id from search or opinions-list payloads. */
@@ -318,6 +320,77 @@ function resolveOpinionId(hit: ClSearchHit): string | null {
   const nested = hit.opinions?.find((o) => o?.id != null);
   if (nested?.id != null) return String(nested.id);
   return null;
+}
+
+function resolveClusterId(hit: ClSearchHit): string | null {
+  if (hit.cluster_id != null && String(hit.cluster_id).trim() !== "") {
+    return String(hit.cluster_id);
+  }
+  const c = hit.cluster;
+  if (typeof c === "number") return String(c);
+  if (typeof c === "string") {
+    const m = c.match(/\/clusters\/(\d+)\/?/);
+    if (m?.[1]) return m[1];
+    if (/^\d+$/.test(c.trim())) return c.trim();
+  }
+  if (c && typeof c === "object" && c.id != null) return String(c.id);
+  return null;
+}
+
+type ClusterMeta = {
+  case_name?: string;
+  caseName?: string;
+  citation?: string[] | string;
+  citations?: Array<{ cite?: string } | string>;
+  date_filed?: string;
+  docket_number?: string | null;
+  docketNumber?: string | null;
+  absolute_url?: string;
+  docket?: string | { docket_number?: string | null };
+};
+
+async function enrichFromCluster(
+  hit: ClSearchHit,
+  clKey: string,
+  rateMs: number,
+  counters: { apiCalls: number },
+): Promise<ClSearchHit> {
+  const hasCite = Boolean(pickCitation(hit));
+  const hasDocket = Boolean(hit.docket_number || hit.docketNumber);
+  if (hasCite || hasDocket) return hit;
+  const clusterId = resolveClusterId(hit);
+  if (!clusterId) return hit;
+  const res = await clFetch(`${CL_BASE}/clusters/${clusterId}/`, clKey, rateMs, counters);
+  if (!res.ok) return hit;
+  const cluster = (await res.json()) as ClusterMeta;
+  const cites: string[] = [];
+  if (Array.isArray(cluster.citation)) cites.push(...cluster.citation.map(String));
+  else if (typeof cluster.citation === "string" && cluster.citation.trim()) cites.push(cluster.citation);
+  if (Array.isArray(cluster.citations)) {
+    for (const c of cluster.citations) {
+      if (typeof c === "string" && c.trim()) cites.push(c);
+      else if (c && typeof c === "object" && c.cite) cites.push(String(c.cite));
+    }
+  }
+  let docket =
+    cluster.docket_number != null
+      ? String(cluster.docket_number)
+      : cluster.docketNumber != null
+        ? String(cluster.docketNumber)
+        : null;
+  if (!docket && cluster.docket && typeof cluster.docket === "object") {
+    docket = cluster.docket.docket_number != null ? String(cluster.docket.docket_number) : null;
+  }
+  return {
+    ...hit,
+    case_name: hit.case_name ?? hit.caseName ?? cluster.case_name ?? cluster.caseName,
+    citation: cites.length > 0 ? cites : hit.citation,
+    date_filed: hit.date_filed ?? hit.dateFiled ?? cluster.date_filed,
+    docket_number: hit.docket_number ?? hit.docketNumber ?? docket,
+    absolute_url: hit.absolute_url ?? cluster.absolute_url,
+    cluster_id: clusterId,
+    ...(typeof cluster.docket === "string" ? { docket: cluster.docket } : {}),
+  } as ClSearchHit;
 }
 
 type ParsedOpinion = {
@@ -1172,6 +1245,27 @@ async function main() {
         raw = (await opRes.json()) as ClSearchHit;
       } else {
         fetched += 1;
+      }
+      raw = await enrichFromCluster(raw, clKey, rateMs, counters);
+      // Cluster.docket is often a URL — follow once when still missing docket/citation.
+      if (!pickCitation(raw) && !(raw.docket_number || raw.docketNumber)) {
+        const docketRef = (raw as ClSearchHit & { docket?: string | { docket_number?: string } }).docket;
+        const docketUrl =
+          typeof docketRef === "string" && docketRef.includes("/dockets/")
+            ? docketRef
+            : null;
+        if (docketUrl) {
+          const abs = docketUrl.startsWith("http")
+            ? docketUrl
+            : `https://www.courtlistener.com${docketUrl.startsWith("/") ? "" : "/"}${docketUrl}`;
+          const dRes = await clFetch(abs, clKey, rateMs, counters);
+          if (dRes.ok) {
+            const docketBody = (await dRes.json()) as { docket_number?: string | null };
+            if (docketBody.docket_number) {
+              raw = { ...raw, docket_number: String(docketBody.docket_number) };
+            }
+          }
+        }
       }
       const retrievedAt = new Date().toISOString();
       const result = parseOpinion(

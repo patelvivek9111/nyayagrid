@@ -2425,6 +2425,53 @@ function resolveOpinionId(hit) {
   if (nested?.id != null) return String(nested.id);
   return null;
 }
+function resolveClusterId(hit) {
+  if (hit.cluster_id != null && String(hit.cluster_id).trim() !== "") {
+    return String(hit.cluster_id);
+  }
+  const c = hit.cluster;
+  if (typeof c === "number") return String(c);
+  if (typeof c === "string") {
+    const m = c.match(/\/clusters\/(\d+)\/?/);
+    if (m?.[1]) return m[1];
+    if (/^\d+$/.test(c.trim())) return c.trim();
+  }
+  if (c && typeof c === "object" && c.id != null) return String(c.id);
+  return null;
+}
+async function enrichFromCluster(hit, clKey, rateMs, counters) {
+  const hasCite = Boolean(pickCitation(hit));
+  const hasDocket = Boolean(hit.docket_number || hit.docketNumber);
+  if (hasCite || hasDocket) return hit;
+  const clusterId = resolveClusterId(hit);
+  if (!clusterId) return hit;
+  const res = await clFetch(`${CL_BASE}/clusters/${clusterId}/`, clKey, rateMs, counters);
+  if (!res.ok) return hit;
+  const cluster = await res.json();
+  const cites = [];
+  if (Array.isArray(cluster.citation)) cites.push(...cluster.citation.map(String));
+  else if (typeof cluster.citation === "string" && cluster.citation.trim()) cites.push(cluster.citation);
+  if (Array.isArray(cluster.citations)) {
+    for (const c of cluster.citations) {
+      if (typeof c === "string" && c.trim()) cites.push(c);
+      else if (c && typeof c === "object" && c.cite) cites.push(String(c.cite));
+    }
+  }
+  let docket = cluster.docket_number != null ? String(cluster.docket_number) : cluster.docketNumber != null ? String(cluster.docketNumber) : null;
+  if (!docket && cluster.docket && typeof cluster.docket === "object") {
+    docket = cluster.docket.docket_number != null ? String(cluster.docket.docket_number) : null;
+  }
+  return {
+    ...hit,
+    case_name: hit.case_name ?? hit.caseName ?? cluster.case_name ?? cluster.caseName,
+    citation: cites.length > 0 ? cites : hit.citation,
+    date_filed: hit.date_filed ?? hit.dateFiled ?? cluster.date_filed,
+    docket_number: hit.docket_number ?? hit.docketNumber ?? docket,
+    absolute_url: hit.absolute_url ?? cluster.absolute_url,
+    cluster_id: clusterId,
+    ...typeof cluster.docket === "string" ? { docket: cluster.docket } : {}
+  };
+}
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -3152,6 +3199,21 @@ async function main() {
         raw = await opRes.json();
       } else {
         fetched += 1;
+      }
+      raw = await enrichFromCluster(raw, clKey, rateMs, counters);
+      if (!pickCitation(raw) && !(raw.docket_number || raw.docketNumber)) {
+        const docketRef = raw.docket;
+        const docketUrl = typeof docketRef === "string" && docketRef.includes("/dockets/") ? docketRef : null;
+        if (docketUrl) {
+          const abs = docketUrl.startsWith("http") ? docketUrl : `https://www.courtlistener.com${docketUrl.startsWith("/") ? "" : "/"}${docketUrl}`;
+          const dRes = await clFetch(abs, clKey, rateMs, counters);
+          if (dRes.ok) {
+            const docketBody = await dRes.json();
+            if (docketBody.docket_number) {
+              raw = { ...raw, docket_number: String(docketBody.docket_number) };
+            }
+          }
+        }
       }
       const retrievedAt = (/* @__PURE__ */ new Date()).toISOString();
       const result = parseOpinion(
