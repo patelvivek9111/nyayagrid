@@ -3,6 +3,8 @@ import { describe, expect, it } from "vitest";
 import {
   assertSourceScopeInvariants,
   buildProvenanceSummary,
+  ensureSourceScopedAbstentionAnswer,
+  getSourceScopedAbstentionCopy,
   resolveSourceScopeFlags,
   SourceScopeViolationError,
   type SourceScope,
@@ -100,5 +102,66 @@ describe("source scope invariants", () => {
     const a = createHash("sha256").update(q).digest("hex").slice(0, 24);
     const b = createHash("sha256").update(q).digest("hex").slice(0, 24);
     expect(a).toBe(b);
+  });
+});
+
+describe("source-scoped abstention copy", () => {
+  it("Case abstention references case materials", () => {
+    const copy = getSourceScopedAbstentionCopy("case");
+    expect(copy.answer).toMatch(/case materials/i);
+    expect(copy.answer).not.toMatch(/web sources/i);
+    expect(copy.clientInsufficientHint).toMatch(/documents available in this case/i);
+  });
+
+  it("Legal abstention references legal corpus", () => {
+    const copy = getSourceScopedAbstentionCopy("legal_research");
+    expect(copy.answer).toMatch(/legal-authority corpus/i);
+    expect(copy.answer).not.toMatch(/matter documents|case documents/i);
+    expect(copy.clientInsufficientHint).not.toMatch(/this Case/i);
+  });
+
+  it("Web abstention references Web sources and never matter/case documents", () => {
+    const copy = getSourceScopedAbstentionCopy("web");
+    expect(copy.answer).toMatch(/Web sources/i);
+    expect(copy.answer).not.toMatch(/matter documents|case documents|documents in this case/i);
+    expect(copy.clientInsufficientHint).not.toMatch(
+      /matter documents|case documents|documents in this case|this Case/i,
+    );
+    expect(copy.unresolvedFallback).toMatch(/Web sources/i);
+  });
+
+  it("Case + Legal abstention references both selected categories", () => {
+    const copy = getSourceScopedAbstentionCopy("case_plus_legal");
+    expect(copy.answer).toMatch(/case materials/i);
+    expect(copy.answer).toMatch(/legal authorities/i);
+    expect(copy.answer).not.toMatch(/web sources/i);
+  });
+
+  it("rewrites stock matter-document abstention for Web and Legal", () => {
+    const stock =
+      "The available matter documents do not provide sufficient evidence to answer this question.";
+    expect(ensureSourceScopedAbstentionAnswer(stock, "web", "insufficient")).toMatch(/Web sources/i);
+    expect(ensureSourceScopedAbstentionAnswer(stock, "web", "insufficient")).not.toMatch(
+      /matter documents/i,
+    );
+    expect(ensureSourceScopedAbstentionAnswer(stock, "legal_research", "insufficient")).toMatch(
+      /legal-authority corpus/i,
+    );
+    expect(ensureSourceScopedAbstentionAnswer(stock, "case", "insufficient")).toMatch(
+      /case materials/i,
+    );
+  });
+
+  it("preserves sourceScope on provenance labels while abstention is rewritten", () => {
+    const webProv = buildProvenanceSummary({
+      sourceScope: "web",
+      caseSourceCount: 0,
+      authoritySourceCount: 0,
+      webSourceCount: 3,
+      webRetrievedAt: "2026-09-17T12:00:00.000Z",
+    });
+    expect(webProv.sourceScope).toBe("web");
+    expect(webProv.headline).toBe("Web research");
+    expect(getSourceScopedAbstentionCopy(webProv.sourceScope).answer).not.toMatch(/matter documents/i);
   });
 });

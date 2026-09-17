@@ -182,3 +182,84 @@ export const SOURCE_CATEGORY_LABELS = {
 } as const;
 
 export type SourceCategory = keyof typeof SOURCE_CATEGORY_LABELS;
+
+/** Trusted user-facing abstention / insufficient-evidence copy keyed by sourceScope. */
+export type SourceScopedAbstentionCopy = {
+  /** Primary answer body when evidence is insufficient. */
+  answer: string;
+  /** Fallback unresolved-question line. */
+  unresolvedFallback: string;
+  /** Secondary client hint under an insufficient answer. */
+  clientInsufficientHint: string;
+};
+
+export function getSourceScopedAbstentionCopy(sourceScope: SourceScope): SourceScopedAbstentionCopy {
+  switch (sourceScope) {
+    case "legal_research":
+      return {
+        answer:
+          "I did not find sufficient support in the configured NyayaGrid legal-authority corpus.",
+        unresolvedFallback: "No sufficiently relevant authority was found in the configured legal corpus.",
+        clientInsufficientHint:
+          "I could not verify that from the configured legal corpus. Record jurisdiction or refine the question, then ask again.",
+      };
+    case "web":
+      return {
+        answer: "I did not find sufficient support in the Web sources retrieved for this research.",
+        unresolvedFallback: "The retrieved Web sources do not establish that conclusion.",
+        clientInsufficientHint:
+          "I could not verify that from the Web sources reviewed. Try a more specific public-information question.",
+      };
+    case "case_plus_legal":
+      return {
+        answer:
+          "The available case materials and legal authorities do not provide sufficient support for that conclusion.",
+        unresolvedFallback:
+          "Insufficient support in retrieved case materials and legal authorities.",
+        clientInsufficientHint:
+          "I could not find enough support in the selected case materials and legal authorities. Upload documents or refine the question, then ask again.",
+      };
+    case "case":
+    default:
+      return {
+        answer: "The available case materials do not support that conclusion.",
+        unresolvedFallback: "Insufficient evidence in retrieved case sources.",
+        clientInsufficientHint:
+          "I could not find enough support in the documents available in this case. Upload or point me at relevant documents, then ask again.",
+      };
+  }
+}
+
+const CASE_MATTER_DOC_ABSTENTION_RE =
+  /\b(matter documents|case documents|documents in this (?:case|matter)|verified evidence in this [Cc]ase)\b/i;
+
+/**
+ * Replace stock Case/matter abstention wording when it does not match the active sourceScope.
+ * Does not alter grounded answers that merely mention documents in context.
+ */
+export function ensureSourceScopedAbstentionAnswer(
+  answer: string,
+  sourceScope: SourceScope,
+  evidenceState?: string,
+): string {
+  const copy = getSourceScopedAbstentionCopy(sourceScope);
+  const stockMatter =
+    /the available matter documents do not provide sufficient evidence/i.test(answer) ||
+    /the available case materials do not support that conclusion/i.test(answer);
+  if (stockMatter) return copy.answer;
+  if (
+    evidenceState === "insufficient" &&
+    sourceScope === "web" &&
+    CASE_MATTER_DOC_ABSTENTION_RE.test(answer)
+  ) {
+    return copy.answer;
+  }
+  if (
+    evidenceState === "insufficient" &&
+    sourceScope === "legal_research" &&
+    CASE_MATTER_DOC_ABSTENTION_RE.test(answer)
+  ) {
+    return copy.answer;
+  }
+  return answer;
+}

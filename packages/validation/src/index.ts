@@ -176,7 +176,12 @@ export const askOrTaskSchema = z.object({
   /** Prefer SSE streaming transport when the client supports it. */
   stream: z.boolean().optional(),
   /** Resume generation after a safe interruption (validated server-side). */
-  continueToken: z.string().trim().min(8).max(200).optional(),
+  continueToken: z.string().trim().min(8).max(4_000).optional(),
+});
+
+/** Soft-cancel an in-flight streaming Ask without tearing down the SSE socket. */
+export const cancelAskStreamSchema = z.object({
+  conversationId: z.string().uuid(),
 });
 
 export const runAgentTaskSchema = z.object({
@@ -184,6 +189,7 @@ export const runAgentTaskSchema = z.object({
   execute: z.boolean().optional(),
   conversationId: z.string().uuid().optional().nullable(),
 });
+
 
 export const reviewAgentApprovalSchema = z.object({
   action: z.enum(["approve", "edit_and_approve", "reject"]),

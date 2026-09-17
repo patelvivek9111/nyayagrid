@@ -4,7 +4,13 @@ import { NyayaOrchestrator } from "@nyayagrid/agents";
 import type { Database } from "@nyayagrid/database";
 import type { AskStreamListener, SourceScope } from "@nyayagrid/ai";
 import { isFeatureEnabled, recordUsage } from "@nyayagrid/platform";
-import { createAskSseResponse } from "@nyayagrid/search";
+import {
+  askRunKey,
+  beginAskRun,
+  createAskSseResponse,
+  endAskRun,
+  mergeAbortSignals,
+} from "@nyayagrid/search";
 import { requireUser } from "@/lib/auth";
 import { assertFeatureEnabled } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
@@ -28,41 +34,54 @@ async function answerDirectly(params: {
   onEvent?: AskStreamListener;
   continueToken?: string;
 }) {
-  const result = await askNyayaAboutMatter({
-    db: params.db,
-    retriever: getRetriever(),
+  const conversationKey = params.conversationId?.trim() || "pending";
+  const runKey = askRunKey({
     organizationId: params.organizationId,
     matterId: params.matterId,
+    conversationId: conversationKey,
     userId: params.userId,
-    question: params.question,
-    conversationId: params.conversationId,
-    ai: getAI(),
-    embeddings: getEmbeddings(),
-    executionStrategy: params.executionStrategy,
-    modelId: params.modelId,
-    sourceScope: params.sourceScope ?? "case",
-    signal: params.signal,
-    onEvent: params.onEvent,
-    continueToken: params.continueToken,
   });
+  const runController = beginAskRun(runKey);
+  try {
+    const result = await askNyayaAboutMatter({
+      db: params.db,
+      retriever: getRetriever(),
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      userId: params.userId,
+      question: params.question,
+      conversationId: params.conversationId,
+      ai: getAI(),
+      embeddings: getEmbeddings(),
+      executionStrategy: params.executionStrategy,
+      modelId: params.modelId,
+      sourceScope: params.sourceScope ?? "case",
+      signal: mergeAbortSignals(params.signal, runController.signal),
+      onEvent: params.onEvent,
+      continueToken: params.continueToken,
+    });
 
-  await writeAuditEvent(params.db, {
-    organizationId: params.organizationId,
-    actorUserId: params.userId,
-    matterId: params.matterId,
-    action: "nyaya.ask",
-    targetType: "ai_artifact",
-    targetId: result.artifact?.id,
-    metadata: {
-      evidenceState: result.answer.evidenceState,
-      retrievedCount: result.retrieved.length,
-      provider: result.artifact?.provider,
-      sourceScope: result.sourceScope ?? params.sourceScope ?? "case",
-    },
-  });
+    await writeAuditEvent(params.db, {
+      organizationId: params.organizationId,
+      actorUserId: params.userId,
+      matterId: params.matterId,
+      action: "nyaya.ask",
+      targetType: "ai_artifact",
+      targetId: result.artifact?.id,
+      metadata: {
+        evidenceState: result.answer.evidenceState,
+        retrievedCount: result.retrieved.length,
+        provider: result.artifact?.provider,
+        sourceScope: result.sourceScope ?? params.sourceScope ?? "case",
+      },
+    });
 
-  return result;
+    return result;
+  } finally {
+    endAskRun(runKey, runController);
+  }
 }
+
 
 /**
  * Ask-or-task entry point. `mode: "ask"` always answers directly (the classic Nyaya Q&A path).

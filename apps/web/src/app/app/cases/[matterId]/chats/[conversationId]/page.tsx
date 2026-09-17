@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import type { AskStreamEvent, ProvenanceSummary, SourceScope } from "@nyayagrid/ai";
+import { getSourceScopedAbstentionCopy } from "@nyayagrid/ai";
 import { Button } from "@nyayagrid/ui";
 import {
   AskProgress,
@@ -172,6 +173,7 @@ export default function CaseChatThreadPage() {
   const [drawerActiveId, setDrawerActiveId] = useState<string | undefined>();
   const threadRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
+  const hardAbortTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastQuestionRef = useRef("");
 
   useEffect(() => {
@@ -251,9 +253,31 @@ export default function CaseChatThreadPage() {
     setDrawerItems(enriched);
   }
 
-  function stopGenerating() {
-    abortRef.current?.abort();
+  function clearHardAbortTimer() {
+    if (hardAbortTimerRef.current) {
+      clearTimeout(hardAbortTimerRef.current);
+      hardAbortTimerRef.current = null;
+    }
   }
+
+  function stopGenerating() {
+    // Soft-cancel: abort generation on the server without tearing down the SSE
+    // socket, so generation_stopped + continue_available can still arrive.
+    void fetch(`/api/v1/matters/${matterId}/ask/cancel`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ conversationId }),
+    }).catch(() => {
+      /* best-effort; fall back to hard abort below */
+    });
+    clearHardAbortTimer();
+    // Hard abort remains a last-resort fallback if soft-cancel never lands.
+    hardAbortTimerRef.current = setTimeout(() => {
+      hardAbortTimerRef.current = null;
+      abortRef.current?.abort();
+    }, 8_000);
+  }
+
 
   async function send(opts?: { continueToken?: string | null; questionOverride?: string }) {
     const q = (opts?.questionOverride ?? question).trim();
@@ -282,6 +306,7 @@ export default function CaseChatThreadPage() {
     let assumptions: string[] | undefined;
     let unresolvedQuestions: string[] | undefined;
     let needsMoreDocuments = false;
+    let wasStopped = false;
 
     try {
       const res = await fetch(`/api/v1/matters/${matterId}/ask`, {
@@ -329,7 +354,12 @@ export default function CaseChatThreadPage() {
             provenance = event.provenance;
           }
           if (event.type === "continue_available") {
+            clearHardAbortTimer();
             setContinueToken(event.continueToken);
+          }
+          if (event.type === "generation_stopped") {
+            clearHardAbortTimer();
+            wasStopped = true;
           }
           if (event.type === "generation_failed") {
             setError(event.message || USER_FACING_ASK_ERROR);
@@ -353,14 +383,14 @@ export default function CaseChatThreadPage() {
         liveSources.push(...sourcesFromAnswer(answer?.sources));
       }
 
-      if (finalAnswer || liveSources.length || provenance) {
+      if (finalAnswer || liveSources.length || provenance || wasStopped) {
         setTurns((prev) => [
           ...prev,
           {
             id: artifactId ?? `a-${Date.now()}`,
             role: "assistant",
             content: finalAnswer || liveAnswer || "[Generation stopped]",
-            evidenceState,
+            evidenceState: wasStopped ? "insufficient" : evidenceState,
             sources: liveSources.length ? liveSources : undefined,
             assumptions,
             unresolvedQuestions,
@@ -388,6 +418,7 @@ export default function CaseChatThreadPage() {
         setError(err instanceof Error ? err.message : "Failed");
       }
     } finally {
+      clearHardAbortTimer();
       abortRef.current = null;
       setBusy(false);
       setLiveAnswer("");
@@ -474,8 +505,10 @@ export default function CaseChatThreadPage() {
                 <p className="whitespace-pre-wrap">{t.content}</p>
                 {isInsufficient(t.evidenceState) ? (
                   <p className="mt-2 rounded border border-line bg-black/[0.02] px-3 py-2 text-xs text-ink/65">
-                    I couldn&apos;t find enough verified evidence in this Case to answer that
-                    confidently. Upload or point me at relevant documents, then ask again.
+                    {
+                      getSourceScopedAbstentionCopy(t.provenance?.sourceScope ?? "case")
+                        .clientInsufficientHint
+                    }
                   </p>
                 ) : null}
                 {t.needsMoreDocuments ? (

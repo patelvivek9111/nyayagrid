@@ -190,7 +190,7 @@ export function chunkAnswerForStreaming(answer: string, chunkSize = 48): string[
 }
 
 export const askContinueContextSchema = z.object({
-  continueToken: z.string().min(8).max(200),
+  continueToken: z.string().min(8).max(64),
   sourceScope: z.enum(["case", "legal_research", "web", "case_plus_legal"]),
   questionFingerprint: z.string().min(8).max(128),
   passageChunkIds: z.array(z.string()).max(40),

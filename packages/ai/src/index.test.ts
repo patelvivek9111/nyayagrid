@@ -116,6 +116,25 @@ describe("citation validation", () => {
     );
     expect(result.answer.evidenceState).toBe("insufficient");
     expect(result.rejectedCitations).toBe(1);
+    expect(result.answer.answer).toMatch(/case materials/i);
+    expect(result.answer.answer).not.toMatch(/matter documents/i);
+  });
+
+  it("Web scope abstention never references matter documents", () => {
+    const result = validateCitedAnswerAgainstPassages(
+      {
+        answer: "The available matter documents do not provide sufficient evidence to answer this question.",
+        sources: [],
+        assumptions: [],
+        unresolvedQuestions: [],
+        evidenceState: "insufficient",
+      },
+      [],
+      { sourceScope: "web" },
+    );
+    expect(result.answer.evidenceState).toBe("insufficient");
+    expect(result.answer.answer).toMatch(/Web sources/i);
+    expect(result.answer.answer).not.toMatch(/matter documents|case documents|documents in this case/i);
   });
 
   it("rejects fabricated quotes even when chunkId is real (QA-02)", () => {

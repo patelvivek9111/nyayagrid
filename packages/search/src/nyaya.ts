@@ -22,6 +22,7 @@ import {
   ensureMissingInstrumentDisclosure,
   formatEvidenceAssessmentForPrompt,
   formatResearchAuthorityChunks,
+  getSourceScopedAbstentionCopy,
   newUsageActionId,
   nowIso,
   NYAYA_PROMPT_VERSION,
@@ -335,14 +336,24 @@ export function categorizeAskSource(params: {
   return "case_evidence";
 }
 
-function isAbortError(error: unknown): boolean {
-  return (
-    (error instanceof Error && (error.name === "AbortError" || /cancelled|aborted/i.test(error.message))) ||
-    (typeof error === "object" &&
-      error !== null &&
-      "name" in error &&
-      (error as { name?: string }).name === "AbortError")
-  );
+function isAbortError(error: unknown, signal?: AbortSignal): boolean {
+  if (signal?.aborted) return true;
+  if (typeof DOMException !== "undefined" && error instanceof DOMException && error.name === "AbortError") {
+    return true;
+  }
+  if (error instanceof Error) {
+    if (error.name === "AbortError" || error.name === "APIUserAbortError") return true;
+    if (/cancel|abort/i.test(error.message)) return true;
+  }
+  if (
+    typeof error === "object" &&
+    error !== null &&
+    "name" in error &&
+    /Abort|Cancel/i.test(String((error as { name?: string }).name ?? ""))
+  ) {
+    return true;
+  }
+  return false;
 }
 
 export async function askNyayaAboutMatter(params: {
@@ -953,10 +964,9 @@ export async function askNyayaAboutMatter(params: {
     try {
       raw = JSON.parse(generation.text);
     } catch {
+      const abstention = getSourceScopedAbstentionCopy(sourceScope);
       raw = {
-        answer: flags.webEnabled
-          ? "The retrieved web sources do not provide sufficient evidence to answer this question."
-          : "The available matter documents do not provide sufficient evidence to answer this question.",
+        answer: abstention.answer,
         sources: [],
         assumptions: [],
         unresolvedQuestions: ["Model returned non-JSON output"],
@@ -965,7 +975,7 @@ export async function askNyayaAboutMatter(params: {
     }
 
     emit({ type: "citation_check_started", at: nowIso() });
-    const validated = validateCitedAnswerAgainstPassages(raw, passages);
+    const validated = validateCitedAnswerAgainstPassages(raw, passages, { sourceScope });
     if (assessmentResult.assessment) {
       validated.answer = constrainCitedAnswer(
         validated.answer,
@@ -1306,7 +1316,7 @@ export async function askNyayaAboutMatter(params: {
       },
     };
   } catch (error) {
-    if (isAbortError(error)) {
+    if (isAbortError(error, params.signal)) {
       const continueToken = mintAskContinueToken({
         sourceScope,
         question: params.question,
@@ -1372,7 +1382,9 @@ export async function askNyayaAboutMatter(params: {
       if (passages.length > 0 || webResearch) {
         emit({ type: "continue_available", continueToken, at: nowIso() });
       }
-      throw error;
+      const abort = new Error("Ask cancelled");
+      abort.name = "AbortError";
+      throw abort;
     }
     emit({
       type: "generation_failed",

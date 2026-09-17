@@ -51,6 +51,11 @@ import { mockCaseBrief, mockCaseComparison, mockProfessorAnswer } from "./profes
 import { mockConsultationPacket, mockGuideAnswer, mockGuideDocumentExplanation } from "./guide";
 import { validateQuoteAgainstText } from "./quotes";
 import {
+  ensureSourceScopedAbstentionAnswer,
+  getSourceScopedAbstentionCopy,
+  type SourceScope,
+} from "./source-scope";
+import {
   NYAYA_EVIDENCE_BOUND_RULES,
   NYAYA_EVIDENCE_BOUND_WORKED_EXAMPLE,
   NYAYA_FUTURE_EFFECTIVE_WORKED_EXAMPLE,
@@ -553,9 +558,11 @@ export class MockAIProvider implements AIProvider {
     const question = extractQuestionFromPrompt(user).toLowerCase();
 
     if (passages.length === 0 && !verifiedBlock && !graphBlock && !memoryBlock) {
+      const webMode = /ExternalWebSources/i.test(user);
       return jsonResult({
-        answer:
-          "The available matter documents do not provide sufficient evidence to answer this question.",
+        answer: webMode
+          ? "I did not find sufficient support in the Web sources retrieved for this research."
+          : "The available case materials do not support that conclusion.",
         sources: [],
         assumptions: [],
         unresolvedQuestions: [extractQuestionFromPrompt(user)],
@@ -587,9 +594,11 @@ export class MockAIProvider implements AIProvider {
       );
 
     if (chosen.length === 0 && !usesVerified && !usesGraph && !usesMemory) {
+      const webMode = /ExternalWebSources/i.test(user);
       return jsonResult({
-        answer:
-          "The available matter documents do not provide sufficient evidence to answer this question.",
+        answer: webMode
+          ? "I did not find sufficient support in the Web sources retrieved for this research."
+          : "The available case materials do not support that conclusion.",
         sources: [],
         assumptions: [],
         unresolvedQuestions: [extractQuestionFromPrompt(user)],
@@ -1705,20 +1714,25 @@ function asStringList(value: unknown): string[] {
 export function validateCitedAnswerAgainstPassages(
   raw: unknown,
   passages: GroundingPassage[],
+  options?: { sourceScope?: SourceScope },
 ): {
   answer: CitedAnswer;
   rejectedCitations: number;
 } {
+  const sourceScope = options?.sourceScope ?? "case";
+  const abstention = getSourceScopedAbstentionCopy(sourceScope);
   const parsedResult = citedAnswerSchema.safeParse(normalizeCitedAnswerRaw(raw, passages));
   if (!parsedResult.success) {
     return {
       answer: {
-        answer:
-          citedAnswerTextFromRaw(raw) ||
-          "The available matter documents do not provide sufficient evidence to answer this question.",
+        answer: ensureSourceScopedAbstentionAnswer(
+          citedAnswerTextFromRaw(raw) || abstention.answer,
+          sourceScope,
+          "insufficient",
+        ),
         sources: [],
         assumptions: ["The model returned a citation payload that could not be normalized."],
-        unresolvedQuestions: ["Insufficient evidence in retrieved matter sources."],
+        unresolvedQuestions: [abstention.unresolvedFallback],
         evidenceState: "insufficient",
       },
       rejectedCitations: 0,
@@ -1762,14 +1776,13 @@ export function validateCitedAnswerAgainstPassages(
   if (passages.length === 0 || sources.length === 0) {
     return {
       answer: {
-        answer:
-          "The available matter documents do not provide sufficient evidence to answer this question.",
+        answer: abstention.answer,
         sources: [],
         assumptions: parsed.assumptions,
         unresolvedQuestions:
           parsed.unresolvedQuestions.length > 0
             ? parsed.unresolvedQuestions
-            : ["Insufficient evidence in retrieved matter sources."],
+            : [abstention.unresolvedFallback],
         evidenceState: "insufficient",
       },
       rejectedCitations,
@@ -1780,6 +1793,11 @@ export function validateCitedAnswerAgainstPassages(
     answer: {
       ...parsed,
       sources,
+      answer: ensureSourceScopedAbstentionAnswer(
+        parsed.answer,
+        sourceScope,
+        parsed.evidenceState,
+      ),
       evidenceState:
         parsed.evidenceState === "insufficient" || parsed.evidenceState === "partial"
           ? "partial"
