@@ -827,7 +827,11 @@ async function main() {
   };
 
   if (!proofMode) {
-    sql = postgres(databaseUrl!, { max: 3, ssl: "require" });
+    sql = postgres(databaseUrl!, {
+      max: 3,
+      ssl: "require",
+      onnotice: () => undefined,
+    });
     await ensureJobTable(sql);
     job = await loadOrCreateJob(sql, clCourt, mapped, targetMax, batchSize);
     for (const id of asIdList(job.completed_external_ids)) completed.add(id);

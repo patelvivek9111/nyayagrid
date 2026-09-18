@@ -2787,7 +2787,11 @@ async function main() {
     process.exit(exitCode);
   };
   if (!proofMode) {
-    sql = src_default(databaseUrl, { max: 3, ssl: "require" });
+    sql = src_default(databaseUrl, {
+      max: 3,
+      ssl: "require",
+      onnotice: () => void 0
+    });
     await ensureJobTable(sql);
     job = await loadOrCreateJob(sql, clCourt, mapped, targetMax, batchSize);
     for (const id of asIdList(job.completed_external_ids)) completed.add(id);
