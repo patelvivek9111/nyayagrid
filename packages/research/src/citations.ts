@@ -260,7 +260,7 @@ export class StateCourtRulesCitationParser implements CitationParser {
   readonly name = "state-court-rules";
   readonly type: CitationKind = "rule";
   readonly pattern =
-    /\b(?:Pa\.?\s*R\.?\s*C\.?\s*P\.?\s*([\d.]+)|Fla\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Va\.?\s*Sup\.?\s*Ct\.?\s*R\.?\s*([\d.:]+)|Cal\.?\s*Rules?\s+of\s+Court(?:\s*,?\s*rule)?\s*([\d.]+)|Tex\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\dA-Za-z.]+)|Mass\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|N\.?\s*J\.?\s*Ct\.?\s*R\.?\s*([\d.:\-]+)|Ill\.?\s*S\.?\s*Ct\.?\s*R\.?\s*([\d.]+)|Del\.?\s*Super\.?\s*Ct\.?\s*Civ\.?\s*R\.?\s*([\d.]+)|Ohio\s+Civ\.?\s*R\.?\s*([\d.]+)|Wash\.?\s*CR\s*([\d.]+)|Md\.?\s*Rule\s*([\d.\-]+)|C\.?\s*R\.?\s*C\.?\s*P\.?\s*([\d.]+)|MCR\s*([\d.]+)|N\.?\s*C\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|N\.?\s*C\.?\s*R\.?\s*Evid\.?\s*([\d.]+)|Ariz\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Ariz\.?\s*R\.?\s*Evid\.?\s*([\d.]+)|Conn\.?\s*Practice\s+Book\s*§?\s*([\d.\-]+)|Conn\.?\s*Code\s+Evid\.?\s*§?\s*([\d.\-]+)|Wis\.?\s*Stat\.?\s*§?\s*(802\.0[68]|904\.01)|Ind\.?\s*Trial\s+R\.?\s*([\d.]+)|Minn\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Or\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Ga\.?\s*Unif\.?\s*Super\.?\s*Ct\.?\s*R\.?\s*([\d.]+))\b/gi;
+    /\b(?:Pa\.?\s*R\.?\s*C\.?\s*P\.?\s*([\d.]+)|Fla\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Va\.?\s*Sup\.?\s*Ct\.?\s*R\.?\s*([\d.:]+)|Cal\.?\s*Rules?\s+of\s+Court(?:\s*,?\s*rule)?\s*([\d.]+)|Tex\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\dA-Za-z.]+)|Mass\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|N\.?\s*J\.?\s*Ct\.?\s*R\.?\s*([\d.:\-]+)|Ill\.?\s*S\.?\s*Ct\.?\s*R\.?\s*([\d.]+)|Del\.?\s*Super\.?\s*Ct\.?\s*Civ\.?\s*R\.?\s*([\d.]+)|Ohio\s+Civ\.?\s*R\.?\s*([\d.]+)|Wash\.?\s*CR\s*([\d.]+)|Md\.?\s*Rule\s*([\d.\-]+)|C\.?\s*R\.?\s*C\.?\s*P\.?\s*([\d.]+)|MCR\s*([\d.]+)|N\.?\s*C\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|N\.?\s*C\.?\s*R\.?\s*Evid\.?\s*([\d.]+)|Ariz\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Ariz\.?\s*R\.?\s*Evid\.?\s*([\d.]+)|Conn\.?\s*Practice\s+Book\s*§?\s*([\d.\-]+)|Conn\.?\s*Code\s+Evid\.?\s*§?\s*([\d.\-]+)|Wis\.?\s*Stat\.?\s*§?\s*(802\.0[68]|904\.01)|Ind\.?\s*Trial\s+R\.?\s*([\d.]+)|Minn\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Or\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Ga\.?\s*Unif\.?\s*Super\.?\s*Ct\.?\s*R\.?\s*([\d.]+)|Ala\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Alaska\s+R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Ark\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Haw\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Idaho\s+R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Iowa\s+R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Ky\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|La\.?\s*Code\s+Civ\.?\s*Proc\.?\s*art\.?\s*([\d.]+)|Me\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Miss\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Mo\.?\s*Sup\.?\s*Ct\.?\s*R\.?\s*([\d.]+)|Mont\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Nev\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|N\.?\s*H\.?\s*Super\.?\s*Ct\.?\s*R\.?\s*([\d.]+)|N\.?\s*M\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.\-]+)|N\.?\s*D\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|R\.?\s*I\.?\s*Super\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|S\.?\s*C\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Tenn\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Utah\s+R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Vt\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|W\.?\s*Va\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Wyo\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|D\.?\s*C\.?\s*Super\.?\s*Ct\.?\s*Civ\.?\s*R\.?\s*([\d.]+))\b/gi;
 
   build(match: RegExpMatchArray): ParsedCitation | null {
     const specs: Array<{ idx: number; normalized: (s: string) => string; reporter: string }> = [
@@ -289,6 +289,30 @@ export class StateCourtRulesCitationParser implements CitationParser {
       { idx: 23, normalized: (s) => `Minn. R. Civ. P. ${s}`, reporter: "Minn. R. Civ. P." },
       { idx: 24, normalized: (s) => `Or. R. Civ. P. ${s}`, reporter: "Or. R. Civ. P." },
       { idx: 25, normalized: (s) => `Ga. Unif. Super. Ct. R. ${s}`, reporter: "Ga. Unif. Super. Ct. R." },
+      { idx: 26, normalized: (s) => `Ala. R. Civ. P. ${s}`, reporter: "Ala. R. Civ. P." },
+      { idx: 27, normalized: (s) => `Alaska R. Civ. P. ${s}`, reporter: "Alaska R. Civ. P." },
+      { idx: 28, normalized: (s) => `Ark. R. Civ. P. ${s}`, reporter: "Ark. R. Civ. P." },
+      { idx: 29, normalized: (s) => `Haw. R. Civ. P. ${s}`, reporter: "Haw. R. Civ. P." },
+      { idx: 30, normalized: (s) => `Idaho R. Civ. P. ${s}`, reporter: "Idaho R. Civ. P." },
+      { idx: 31, normalized: (s) => `Iowa R. Civ. P. ${s}`, reporter: "Iowa R. Civ. P." },
+      { idx: 32, normalized: (s) => `Ky. R. Civ. P. ${s}`, reporter: "Ky. R. Civ. P." },
+      { idx: 33, normalized: (s) => `La. Code Civ. Proc. art. ${s}`, reporter: "La. Code Civ. Proc." },
+      { idx: 34, normalized: (s) => `Me. R. Civ. P. ${s}`, reporter: "Me. R. Civ. P." },
+      { idx: 35, normalized: (s) => `Miss. R. Civ. P. ${s}`, reporter: "Miss. R. Civ. P." },
+      { idx: 36, normalized: (s) => `Mo. Sup. Ct. R. ${s}`, reporter: "Mo. Sup. Ct. R." },
+      { idx: 37, normalized: (s) => `Mont. R. Civ. P. ${s}`, reporter: "Mont. R. Civ. P." },
+      { idx: 38, normalized: (s) => `Nev. R. Civ. P. ${s}`, reporter: "Nev. R. Civ. P." },
+      { idx: 39, normalized: (s) => `N.H. Super. Ct. R. ${s}`, reporter: "N.H. Super. Ct. R." },
+      { idx: 40, normalized: (s) => `N.M. R. Civ. P. ${s}`, reporter: "N.M. R. Civ. P." },
+      { idx: 41, normalized: (s) => `N.D. R. Civ. P. ${s}`, reporter: "N.D. R. Civ. P." },
+      { idx: 42, normalized: (s) => `R.I. Super. R. Civ. P. ${s}`, reporter: "R.I. Super. R. Civ. P." },
+      { idx: 43, normalized: (s) => `S.C. R. Civ. P. ${s}`, reporter: "S.C. R. Civ. P." },
+      { idx: 44, normalized: (s) => `Tenn. R. Civ. P. ${s}`, reporter: "Tenn. R. Civ. P." },
+      { idx: 45, normalized: (s) => `Utah R. Civ. P. ${s}`, reporter: "Utah R. Civ. P." },
+      { idx: 46, normalized: (s) => `Vt. R. Civ. P. ${s}`, reporter: "Vt. R. Civ. P." },
+      { idx: 47, normalized: (s) => `W. Va. R. Civ. P. ${s}`, reporter: "W. Va. R. Civ. P." },
+      { idx: 48, normalized: (s) => `Wyo. R. Civ. P. ${s}`, reporter: "Wyo. R. Civ. P." },
+      { idx: 49, normalized: (s) => `D.C. Super. Ct. Civ. R. ${s}`, reporter: "D.C. Super. Ct. Civ. R." },
     ];
     for (const spec of specs) {
       const value = match[spec.idx];

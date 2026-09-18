@@ -1,0 +1,3313 @@
+[
+  {
+    "title": "Ariz. Rev. Stat. § 47-2314 — Implied warranty; merchantability",
+    "shortTitle": "Ariz. Rev. Stat. § 47-2314",
+    "authorityType": "statute",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "Ariz. Rev. Stat. § 47-2314",
+    "normalizedCitation": "Ariz. Rev. Stat. § 47-2314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "az-ars-47-2314",
+    "canonicalSourceUrl": "https://www.azleg.gov/arsDetail/?title=47",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "47-2314",
+        "label": "Ariz. Rev. Stat. § 47-2314"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "commercial"
+    ],
+    "content": "Ariz. Rev. Stat. § 47-2314\n\nA. Unless excluded or modified (§ 47-2316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind.\n\nB. Goods to be merchantable must be at least such as:\n\n1. Pass without objection in the trade under the contract description; and\n\n3. Are fit for the ordinary purposes for which such goods are used.",
+    "sections": [
+      {
+        "sectionRef": "47-2314",
+        "content": "Arizona UCC implies a merchantability warranty when the seller is a merchant of goods of that kind."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "Arizona Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ariz. Rev. Stat. § 33-1368 — Noncompliance with rental agreement by tenant",
+    "shortTitle": "Ariz. Rev. Stat. § 33-1368",
+    "authorityType": "statute",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "Ariz. Rev. Stat. § 33-1368",
+    "normalizedCitation": "Ariz. Rev. Stat. § 33-1368",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "az-ars-33-1368",
+    "canonicalSourceUrl": "https://www.azleg.gov/arsDetail/?title=33",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "33-1368",
+        "label": "Ariz. Rev. Stat. § 33-1368"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "property"
+    ],
+    "content": "Ariz. Rev. Stat. § 33-1368\n\nA. Except as provided in this chapter, if there is a material noncompliance by the tenant with the rental agreement or a noncompliance with § 33-1341 materially affecting health and safety, the landlord may deliver a written notice to the tenant specifying the acts and omissions constituting the breach and that the rental agreement will terminate upon a date not less than ten days after receipt of the notice if the breach is not remedied.",
+    "sections": [
+      {
+        "sectionRef": "33-1368",
+        "content": "Arizona landlords may terminate for material tenant noncompliance after written notice allowing at least ten days to cure."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "landlord_tenant",
+      "sourceOwner": "Arizona Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ariz. Rev. Stat. § 12-401 — Venue",
+    "shortTitle": "Ariz. Rev. Stat. § 12-401",
+    "authorityType": "statute",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "Ariz. Rev. Stat. § 12-401",
+    "normalizedCitation": "Ariz. Rev. Stat. § 12-401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "az-ars-12-401",
+    "canonicalSourceUrl": "https://www.azleg.gov/arsDetail/?title=12",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "12-401",
+        "label": "Ariz. Rev. Stat. § 12-401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure"
+    ],
+    "content": "Ariz. Rev. Stat. § 12-401\n\nNo person shall be sued out of the county in which he resides, except:\n\n1. When a civil action is commenced against a railroad company, it may be brought in any county through or into which the railroad runs.\n\n14. When the foundation of the action is a crime, offense or trespass for which an action in damages may lie, the action may be brought in the county in which the crime, offense or trespass was committed or in the county in which the defendant or any of the several defendants reside.",
+    "sections": [
+      {
+        "sectionRef": "12-401",
+        "content": "Arizona venue generally lies in the county of the defendant's residence, with statutory exceptions."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "venue",
+      "sourceOwner": "Arizona Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ariz. Rev. Stat. § 12-2201 — Competency of witnesses",
+    "shortTitle": "Ariz. Rev. Stat. § 12-2201",
+    "authorityType": "statute",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "Ariz. Rev. Stat. § 12-2201",
+    "normalizedCitation": "Ariz. Rev. Stat. § 12-2201",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "az-ars-12-2201",
+    "canonicalSourceUrl": "https://www.azleg.gov/arsDetail/?title=12",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "12-2201",
+        "label": "Ariz. Rev. Stat. § 12-2201"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Ariz. Rev. Stat. § 12-2201\n\nA. Every person is competent to be a witness except as otherwise provided by statute or rule.\n\nB. This section does not affect the competency of a witness under any other statute or rule of evidence.",
+    "sections": [
+      {
+        "sectionRef": "12-2201",
+        "content": "Arizona provides that every person is competent to be a witness except as otherwise provided by statute or rule."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Arizona Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ariz. Rev. Stat. § 18-552 — Notification of security system breach",
+    "shortTitle": "Ariz. Rev. Stat. § 18-552",
+    "authorityType": "statute",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "Ariz. Rev. Stat. § 18-552",
+    "normalizedCitation": "Ariz. Rev. Stat. § 18-552",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "az-ars-18-552",
+    "canonicalSourceUrl": "https://www.azleg.gov/arsDetail/?title=18",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "18-552",
+        "label": "Ariz. Rev. Stat. § 18-552"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "Ariz. Rev. Stat. § 18-552\n\nA. When a person that conducts business in this state and that owns or licenses unencrypted and unredacted computerized personal information becomes aware of a security system breach, that person shall conduct an investigation to promptly determine whether there has been a security system breach.\n\nB. If the investigation determines that there has been a security system breach, the person shall notify the individuals affected.",
+    "sections": [
+      {
+        "sectionRef": "18-552",
+        "content": "Arizona requires investigation and notification following a security system breach involving personal information."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Arizona Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Colo. Rev. Stat. § 4-2-314 — Implied warranty: merchantability",
+    "shortTitle": "Colo. Rev. Stat. § 4-2-314",
+    "authorityType": "statute",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "Colo. Rev. Stat. § 4-2-314",
+    "normalizedCitation": "Colo. Rev. Stat. § 4-2-314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "co-crs-4-2-314",
+    "canonicalSourceUrl": "https://leg.colorado.gov/sites/default/files/images/olls/crs2024-title-04.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CO",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "4-2-314",
+        "label": "Colo. Rev. Stat. § 4-2-314"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "commercial"
+    ],
+    "content": "Colo. Rev. Stat. § 4-2-314\n\n(1) Unless excluded or modified (section 4-2-316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind.\n\n(2) Goods to be merchantable must be at least such as:\n\n(a) Pass without objection in the trade under the contract description; and\n\n(c) Are fit for the ordinary purposes for which such goods are used.",
+    "sections": [
+      {
+        "sectionRef": "4-2-314",
+        "content": "Colorado UCC implies merchantability when the seller is a merchant of goods of that kind."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "Colorado General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Colo. Rev. Stat. § 13-40-104 — Forcible entry and detainer; when maintainable",
+    "shortTitle": "Colo. Rev. Stat. § 13-40-104",
+    "authorityType": "statute",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "Colo. Rev. Stat. § 13-40-104",
+    "normalizedCitation": "Colo. Rev. Stat. § 13-40-104",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "co-crs-13-40-104",
+    "canonicalSourceUrl": "https://leg.colorado.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CO",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "13-40-104",
+        "label": "Colo. Rev. Stat. § 13-40-104"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "property"
+    ],
+    "content": "Colo. Rev. Stat. § 13-40-104\n\n(1) A person is entitled to the remedy of forcible entry and detainer when:\n\n(a) The person is entitled to the possession of lands, tenements, or other real property and an unlawful entry or detention has been made thereon;\n\n(d) A tenant fails to pay rent when due and remains in possession after demand.",
+    "sections": [
+      {
+        "sectionRef": "13-40-104",
+        "content": "Colorado FED remedy is available for unlawful detention including nonpayment of rent after demand."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "landlord_tenant",
+      "sourceOwner": "Colorado General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Colo. Rev. Stat. § 13-1-124 — Jurisdiction of courts",
+    "shortTitle": "Colo. Rev. Stat. § 13-1-124",
+    "authorityType": "statute",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "Colo. Rev. Stat. § 13-1-124",
+    "normalizedCitation": "Colo. Rev. Stat. § 13-1-124",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "co-crs-13-1-124",
+    "canonicalSourceUrl": "https://leg.colorado.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CO",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "13-1-124",
+        "label": "Colo. Rev. Stat. § 13-1-124"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure"
+    ],
+    "content": "Colo. Rev. Stat. § 13-1-124\n\n(1) Engaging in any act enumerated in this section by any person, whether or not a resident of this state, either in person or by an agent, submits such person to the jurisdiction of the courts of this state concerning any cause of action arising from:\n\n(a) The transaction of any business within this state;\n\n(b) The commission of a tortious act within this state;",
+    "sections": [
+      {
+        "sectionRef": "13-1-124",
+        "content": "Colorado long-arm statute reaches nonresidents who transact business or commit tortious acts in the state."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "personal_jurisdiction",
+      "sourceOwner": "Colorado General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Colo. Rev. Stat. § 13-25-127 — Competency of witnesses",
+    "shortTitle": "Colo. Rev. Stat. § 13-25-127",
+    "authorityType": "statute",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "Colo. Rev. Stat. § 13-25-127",
+    "normalizedCitation": "Colo. Rev. Stat. § 13-25-127",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "co-crs-13-25-127",
+    "canonicalSourceUrl": "https://leg.colorado.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CO",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "13-25-127",
+        "label": "Colo. Rev. Stat. § 13-25-127"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Colo. Rev. Stat. § 13-25-127\n\nAll persons, without exception, other than those specified in sections 13-90-101 to 13-90-108, may be witnesses. Neither parties nor other persons who have an interest in the event of an action or proceeding are excluded.",
+    "sections": [
+      {
+        "sectionRef": "13-25-127",
+        "content": "Colorado generally treats all persons as competent witnesses except as otherwise provided by statute."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Colorado General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Colo. Rev. Stat. § 6-1-716 — Notification of security breach",
+    "shortTitle": "Colo. Rev. Stat. § 6-1-716",
+    "authorityType": "statute",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "Colo. Rev. Stat. § 6-1-716",
+    "normalizedCitation": "Colo. Rev. Stat. § 6-1-716",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "co-crs-6-1-716",
+    "canonicalSourceUrl": "https://leg.colorado.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CO",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "6-1-716",
+        "label": "Colo. Rev. Stat. § 6-1-716"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "Colo. Rev. Stat. § 6-1-716\n\n(2) A covered entity that maintains computerized data that includes personal identifying information shall, when it becomes aware of a breach of the security of the system, conduct in good faith a prompt investigation to determine the likelihood that personal identifying information has been or will be misused.\n\n(3) If the investigation determines that misuse has occurred or is likely to occur, the covered entity shall give notice to affected Colorado residents.",
+    "sections": [
+      {
+        "sectionRef": "6-1-716",
+        "content": "Colorado requires investigation and notice to residents after a security breach involving personal identifying information."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Colorado General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Conn. Gen. Stat. § 42a-2-314 — Implied warranty: merchantability",
+    "shortTitle": "Conn. Gen. Stat. § 42a-2-314",
+    "authorityType": "statute",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Gen. Stat. § 42a-2-314",
+    "normalizedCitation": "Conn. Gen. Stat. § 42a-2-314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ct-cgs-42a-2-314",
+    "canonicalSourceUrl": "https://www.cga.ct.gov/current/pub/chap_720.htm",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "42a-2-314",
+        "label": "Conn. Gen. Stat. § 42a-2-314"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "commercial"
+    ],
+    "content": "Conn. Gen. Stat. § 42a-2-314\n\n(1) Unless excluded or modified as provided in section 42a-2-316, a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind.\n\n(2) Goods to be merchantable must be at least such as (a) pass without objection in the trade under the contract description; and (c) are fit for the ordinary purposes for which such goods are used.",
+    "sections": [
+      {
+        "sectionRef": "42a-2-314",
+        "content": "Connecticut UCC implies merchantability for merchant sellers of goods of that kind."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "Connecticut General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Conn. Gen. Stat. § 47a-15 — Noncompliance by tenant",
+    "shortTitle": "Conn. Gen. Stat. § 47a-15",
+    "authorityType": "statute",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Gen. Stat. § 47a-15",
+    "normalizedCitation": "Conn. Gen. Stat. § 47a-15",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ct-cgs-47a-15",
+    "canonicalSourceUrl": "https://www.cga.ct.gov/current/pub/chap_832.htm",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "47a-15",
+        "label": "Conn. Gen. Stat. § 47a-15"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "property"
+    ],
+    "content": "Conn. Gen. Stat. § 47a-15\n\nPrior to the commencement of a summary process action, except in the case where the landlord elects to proceed under sections 47a-23 to 47a-23b, inclusive, the landlord shall deliver a written notice to the tenant specifying the acts or omissions constituting the breach and that the rental agreement shall terminate upon a date not less than fifteen days after receipt of the notice if the breach is not remedied.",
+    "sections": [
+      {
+        "sectionRef": "47a-15",
+        "content": "Connecticut landlords must deliver written cure notice before most summary process actions for tenant breach."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "landlord_tenant",
+      "sourceOwner": "Connecticut General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Conn. Gen. Stat. § 52-59b — Jurisdiction over nonresident",
+    "shortTitle": "Conn. Gen. Stat. § 52-59b",
+    "authorityType": "statute",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Gen. Stat. § 52-59b",
+    "normalizedCitation": "Conn. Gen. Stat. § 52-59b",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ct-cgs-52-59b",
+    "canonicalSourceUrl": "https://www.cga.ct.gov/current/pub/chap_896.htm",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "52-59b",
+        "label": "Conn. Gen. Stat. § 52-59b"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure"
+    ],
+    "content": "Conn. Gen. Stat. § 52-59b\n\n(a) As to a cause of action arising from any of the acts enumerated in this section, a court may exercise personal jurisdiction over any nonresident individual, or foreign partnership, or foreign voluntary association, or foreign corporation that:\n\n(1) Transacts any business within the state;\n\n(2) Commits a tortious act within the state;",
+    "sections": [
+      {
+        "sectionRef": "52-59b",
+        "content": "Connecticut long-arm jurisdiction reaches nonresidents who transact business or commit tortious acts in the state."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "personal_jurisdiction",
+      "sourceOwner": "Connecticut General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Conn. Gen. Stat. § 52-145 — Competency of witnesses",
+    "shortTitle": "Conn. Gen. Stat. § 52-145",
+    "authorityType": "statute",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Gen. Stat. § 52-145",
+    "normalizedCitation": "Conn. Gen. Stat. § 52-145",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ct-cgs-52-145",
+    "canonicalSourceUrl": "https://www.cga.ct.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "52-145",
+        "label": "Conn. Gen. Stat. § 52-145"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Conn. Gen. Stat. § 52-145\n\nNo person shall be disqualified as a witness in any action by reason of interest in the event of the action as a party or otherwise, or by reason of the person's conviction of crime.",
+    "sections": [
+      {
+        "sectionRef": "52-145",
+        "content": "Connecticut does not disqualify witnesses solely for interest in the action or conviction of crime."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Connecticut General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Conn. Gen. Stat. § 36a-701b — Breach of security",
+    "shortTitle": "Conn. Gen. Stat. § 36a-701b",
+    "authorityType": "statute",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Gen. Stat. § 36a-701b",
+    "normalizedCitation": "Conn. Gen. Stat. § 36a-701b",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ct-cgs-36a-701b",
+    "canonicalSourceUrl": "https://www.cga.ct.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "36a-701b",
+        "label": "Conn. Gen. Stat. § 36a-701b"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "Conn. Gen. Stat. § 36a-701b\n\n(b) Any person who conducts business in this state, and who, in the course of such business, owns, licenses or maintains computerized data that includes personal information, shall provide notice of any breach of security following discovery or notification of the breach to any resident of this state whose personal information was, or is reasonably believed to have been, accessed by an unauthorized person.",
+    "sections": [
+      {
+        "sectionRef": "36a-701b",
+        "content": "Connecticut requires notice to residents after a security breach involving personal information."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Connecticut General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ga. Code Ann. § 11-2-314 — ucc_merchantability",
+    "shortTitle": "Ga. Code Ann. § 11-2-314",
+    "authorityType": "statute",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Code Ann. § 11-2-314",
+    "normalizedCitation": "Ga. Code Ann. § 11-2-314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ga-ocga-11-2-314",
+    "canonicalSourceUrl": "https://www.legis.ga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "GA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "11-2-314",
+        "label": "Ga. Code Ann. § 11-2-314"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "commercial"
+    ],
+    "content": "Ga. Code Ann. § 11-2-314\n\n(1) Unless excluded or modified (Code Section 11-2-316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind.",
+    "sections": [
+      {
+        "sectionRef": "11-2-314",
+        "content": "UCC merchantability warranty for merchant sellers."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "Georgia General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ga. Code Ann. § 44-7-50 — landlord_tenant",
+    "shortTitle": "Ga. Code Ann. § 44-7-50",
+    "authorityType": "statute",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Code Ann. § 44-7-50",
+    "normalizedCitation": "Ga. Code Ann. § 44-7-50",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ga-ocga-44-7-50",
+    "canonicalSourceUrl": "https://www.legis.ga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "GA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "44-7-50",
+        "label": "Ga. Code Ann. § 44-7-50"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "property"
+    ],
+    "content": "Ga. Code Ann. § 44-7-50\n\n(a) In all cases where a tenant holds possession of lands or tenements over and beyond the term for which they were rented or leased to him or fails to pay the rent when due, the landlord may demand possession.",
+    "sections": [
+      {
+        "sectionRef": "44-7-50",
+        "content": "Demand for possession available for holdover or unpaid rent."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "landlord_tenant",
+      "sourceOwner": "Georgia General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ga. Code Ann. § 9-10-91 — personal_jurisdiction",
+    "shortTitle": "Ga. Code Ann. § 9-10-91",
+    "authorityType": "statute",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Code Ann. § 9-10-91",
+    "normalizedCitation": "Ga. Code Ann. § 9-10-91",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ga-ocga-9-10-91",
+    "canonicalSourceUrl": "https://www.legis.ga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "GA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "9-10-91",
+        "label": "Ga. Code Ann. § 9-10-91"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure"
+    ],
+    "content": "Ga. Code Ann. § 9-10-91\n\nA court of this state may exercise personal jurisdiction over any nonresident as to a cause of action arising from any of the acts, omissions, ownership, use, or possession enumerated in this Code section, in the same manner as if he or she were a resident of this state, if in person or through an agent, he or she:\n\n(1) Transacts any business within this state;\n\n(2) Commits a tortious act or omission within this state;",
+    "sections": [
+      {
+        "sectionRef": "9-10-91",
+        "content": "Georgia long-arm reaches nonresidents who transact business or commit torts in the state."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "personal_jurisdiction",
+      "sourceOwner": "Georgia General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ga. Code Ann. § 24-6-601 — evidence_relevance",
+    "shortTitle": "Ga. Code Ann. § 24-6-601",
+    "authorityType": "statute",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Code Ann. § 24-6-601",
+    "normalizedCitation": "Ga. Code Ann. § 24-6-601",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ga-ocga-24-6-601",
+    "canonicalSourceUrl": "https://www.legis.ga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "GA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "24-6-601",
+        "label": "Ga. Code Ann. § 24-6-601"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Ga. Code Ann. § 24-6-601\n\nEvery person is competent to be a witness except as otherwise provided in this chapter.",
+    "sections": [
+      {
+        "sectionRef": "24-6-601",
+        "content": "Every person is competent to be a witness except as otherwise provided."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Georgia General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ga. Code Ann. § 10-1-912 — data_breach",
+    "shortTitle": "Ga. Code Ann. § 10-1-912",
+    "authorityType": "statute",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Code Ann. § 10-1-912",
+    "normalizedCitation": "Ga. Code Ann. § 10-1-912",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ga-ocga-10-1-912",
+    "canonicalSourceUrl": "https://www.legis.ga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "GA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "10-1-912",
+        "label": "Ga. Code Ann. § 10-1-912"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "Ga. Code Ann. § 10-1-912\n\n(a) Any information broker or data collector that maintains computerized data that includes personal information of individuals shall give notice of any breach of the security of the system following discovery or notification of the breach in the security of the data to any resident of this state whose unencrypted personal information was, or is reasonably believed to have been, acquired by an unauthorized person.",
+    "sections": [
+      {
+        "sectionRef": "10-1-912",
+        "content": "Georgia requires breach notice to residents whose personal information may have been acquired."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Georgia General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "La. Civ. Code art. 2524 — implied_warranty",
+    "shortTitle": "La. Civ. Code art. 2524",
+    "authorityType": "statute",
+    "jurisdiction": "Louisiana",
+    "authorityState": "LA",
+    "citation": "La. Civ. Code art. 2524",
+    "normalizedCitation": "La. Civ. Code art. 2524",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "la-cc-2524",
+    "canonicalSourceUrl": "https://www.legis.la.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "LA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "2524",
+        "label": "La. Civ. Code art. 2524"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "commercial"
+    ],
+    "content": "La. Civ. Code art. 2524\n\nThe thing sold must be reasonably fit for its ordinary use.\n\nWhen the seller has reason to know the particular use the buyer intends for the thing, or the buyer's particular purpose for the thing, and that the buyer is relying on the seller's skill or judgment, the thing sold must be fit for the buyer's intended use or for his particular purpose.",
+    "sections": [
+      {
+        "sectionRef": "2524",
+        "content": "Louisiana warranty of fitness for ordinary and particular use."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "implied_warranty",
+      "sourceOwner": "Louisiana State Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "La. R.S. § 12:91 — director_duties",
+    "shortTitle": "La. R.S. § 12:91",
+    "authorityType": "statute",
+    "jurisdiction": "Louisiana",
+    "authorityState": "LA",
+    "citation": "La. R.S. § 12:91",
+    "normalizedCitation": "La. R.S. § 12:91",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "la-rs-12-91",
+    "canonicalSourceUrl": "https://www.legis.la.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "LA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "12:91",
+        "label": "La. R.S. § 12:91"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "corporations"
+    ],
+    "content": "La. R.S. § 12:91\n\nA. Officers and directors shall be deemed to stand in a fiduciary relation to the corporation and its shareholders, and shall discharge the duties of their respective positions in good faith, and with that diligence, care, judgment and skill which ordinarily prudent men would exercise under similar circumstances in like positions.",
+    "sections": [
+      {
+        "sectionRef": "12:91",
+        "content": "Louisiana directors and officers owe fiduciary duties of good faith and care."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "Louisiana State Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "La. Code Evid. art. 401 — evidence_relevance",
+    "shortTitle": "La. Code Evid. art. 401",
+    "authorityType": "statute",
+    "jurisdiction": "Louisiana",
+    "authorityState": "LA",
+    "citation": "La. Code Evid. art. 401",
+    "normalizedCitation": "La. Code Evid. art. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "la-ce-401",
+    "canonicalSourceUrl": "https://www.legis.la.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "LA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "401",
+        "label": "La. Code Evid. art. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "La. Code Evid. art. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Louisiana defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Louisiana State Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "La. R.S. § 51:3074 — data_breach",
+    "shortTitle": "La. R.S. § 51:3074",
+    "authorityType": "statute",
+    "jurisdiction": "Louisiana",
+    "authorityState": "LA",
+    "citation": "La. R.S. § 51:3074",
+    "normalizedCitation": "La. R.S. § 51:3074",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "la-rs-51-3074",
+    "canonicalSourceUrl": "https://www.legis.la.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "LA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "51:3074",
+        "label": "La. R.S. § 51:3074"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "La. R.S. § 51:3074\n\nA. Any person that conducts business in the state or that owns or licenses computerized data that includes personal information, or any agency that owns or licenses computerized data that includes personal information, shall, following discovery of a breach in the security of the system containing such data, notify any resident of the state whose personal information was, or is reasonably believed to have been, acquired by an unauthorized person.",
+    "sections": [
+      {
+        "sectionRef": "51:3074",
+        "content": "Louisiana requires breach notification to affected residents."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Louisiana State Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "La. R.S. § 49:950 — administrative_procedure",
+    "shortTitle": "La. R.S. § 49:950",
+    "authorityType": "statute",
+    "jurisdiction": "Louisiana",
+    "authorityState": "LA",
+    "citation": "La. R.S. § 49:950",
+    "normalizedCitation": "La. R.S. § 49:950",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "la-rs-49-950",
+    "canonicalSourceUrl": "https://www.legis.la.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "LA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "49:950",
+        "label": "La. R.S. § 49:950"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "La. R.S. § 49:950\n\nThis Chapter may be cited as the Administrative Procedure Act.",
+    "sections": [
+      {
+        "sectionRef": "49:950",
+        "content": "Louisiana Administrative Procedure Act citation provision."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Louisiana State Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Md. Code Ann., Com. Law § 2-314 — ucc_merchantability",
+    "shortTitle": "Md. Code Ann., Com. Law § 2-314",
+    "authorityType": "statute",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "Md. Code Ann., Com. Law § 2-314",
+    "normalizedCitation": "Md. Code Ann., Com. Law § 2-314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "md-cl-2-314",
+    "canonicalSourceUrl": "https://mgaleg.maryland.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MD",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "2-314",
+        "label": "Md. Code Ann., Com. Law § 2-314"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "commercial"
+    ],
+    "content": "Md. Code Ann., Com. Law § 2-314\n\n(1) Unless excluded or modified (§ 2-316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind.",
+    "sections": [
+      {
+        "sectionRef": "2-314",
+        "content": "Maryland UCC merchantability warranty."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "Maryland General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Md. Code Ann., Real Prop. § 8-402 — landlord_tenant",
+    "shortTitle": "Md. Code Ann., Real Prop. § 8-402",
+    "authorityType": "statute",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "Md. Code Ann., Real Prop. § 8-402",
+    "normalizedCitation": "Md. Code Ann., Real Prop. § 8-402",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "md-rp-8-402",
+    "canonicalSourceUrl": "https://mgaleg.maryland.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MD",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "8-402",
+        "label": "Md. Code Ann., Real Prop. § 8-402"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "property"
+    ],
+    "content": "Md. Code Ann., Real Prop. § 8-402\n\n(a) A landlord may make complaint in writing to the District Court that a tenant holds over beyond the expiration of the lease, or that a tenant fails to pay rent.",
+    "sections": [
+      {
+        "sectionRef": "8-402",
+        "content": "Maryland landlord may complain for holdover or unpaid rent."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "landlord_tenant",
+      "sourceOwner": "Maryland General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Md. Code Ann., Cts. & Jud. Proc. § 6-103 — personal_jurisdiction",
+    "shortTitle": "Md. Code Ann., Cts. & Jud. Proc. § 6-103",
+    "authorityType": "statute",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "Md. Code Ann., Cts. & Jud. Proc. § 6-103",
+    "normalizedCitation": "Md. Code Ann., Cts. & Jud. Proc. § 6-103",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "md-cjp-6-103",
+    "canonicalSourceUrl": "https://mgaleg.maryland.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MD",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "6-103",
+        "label": "Md. Code Ann., Cts. & Jud. Proc. § 6-103"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure"
+    ],
+    "content": "Md. Code Ann., Cts. & Jud. Proc. § 6-103\n\n(b) A court may exercise personal jurisdiction over a person who directly or by an agent:\n\n(1) Transacts any business or performs any character of work or service in the State;\n\n(3) Causes tortious injury in the State by an act or omission in the State;",
+    "sections": [
+      {
+        "sectionRef": "6-103",
+        "content": "Maryland long-arm statute."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "personal_jurisdiction",
+      "sourceOwner": "Maryland General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Md. Code Ann., Cts. & Jud. Proc. § 9-101 — evidence_relevance",
+    "shortTitle": "Md. Code Ann., Cts. & Jud. Proc. § 9-101",
+    "authorityType": "statute",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "Md. Code Ann., Cts. & Jud. Proc. § 9-101",
+    "normalizedCitation": "Md. Code Ann., Cts. & Jud. Proc. § 9-101",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "md-cjp-9-101",
+    "canonicalSourceUrl": "https://mgaleg.maryland.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MD",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "9-101",
+        "label": "Md. Code Ann., Cts. & Jud. Proc. § 9-101"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Md. Code Ann., Cts. & Jud. Proc. § 9-101\n\nExcept as otherwise provided by law, every person is competent to be a witness.",
+    "sections": [
+      {
+        "sectionRef": "9-101",
+        "content": "Maryland general witness competency."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Maryland General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Md. Code Ann., Com. Law § 14-3504 — data_breach",
+    "shortTitle": "Md. Code Ann., Com. Law § 14-3504",
+    "authorityType": "statute",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "Md. Code Ann., Com. Law § 14-3504",
+    "normalizedCitation": "Md. Code Ann., Com. Law § 14-3504",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "md-cl-14-3504",
+    "canonicalSourceUrl": "https://mgaleg.maryland.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MD",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "14-3504",
+        "label": "Md. Code Ann., Com. Law § 14-3504"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "Md. Code Ann., Com. Law § 14-3504\n\n(b) A business that owns or licenses computerized data that includes personal information of an individual residing in the State shall conduct in good faith a reasonable and prompt investigation to determine the likelihood that personal information of the individual has been or will be misused as a result of the breach of security.",
+    "sections": [
+      {
+        "sectionRef": "14-3504",
+        "content": "Maryland requires investigation after a security breach involving personal information."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Maryland General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Mich. Comp. Laws § 445.903 — consumer_protection",
+    "shortTitle": "Mich. Comp. Laws § 445.903",
+    "authorityType": "statute",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "Mich. Comp. Laws § 445.903",
+    "normalizedCitation": "Mich. Comp. Laws § 445.903",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mi-mcl-445-903",
+    "canonicalSourceUrl": "https://www.legislature.mi.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MI",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "445.903",
+        "label": "Mich. Comp. Laws § 445.903"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer"
+    ],
+    "content": "Mich. Comp. Laws § 445.903\n\n(1) Unfair, unconscionable, or deceptive methods, acts, or practices in the conduct of trade or commerce are unlawful and are defined as follows:\n\n(a) Causing a probability of confusion or misunderstanding as to the source, sponsorship, approval, or certification of goods or services.",
+    "sections": [
+      {
+        "sectionRef": "445.903",
+        "content": "Michigan Consumer Protection Act unfair practices."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "consumer_protection",
+      "sourceOwner": "Michigan Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Mich. Comp. Laws § 554.139 — landlord_tenant",
+    "shortTitle": "Mich. Comp. Laws § 554.139",
+    "authorityType": "statute",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "Mich. Comp. Laws § 554.139",
+    "normalizedCitation": "Mich. Comp. Laws § 554.139",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mi-mcl-554-139",
+    "canonicalSourceUrl": "https://www.legislature.mi.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MI",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "554.139",
+        "label": "Mich. Comp. Laws § 554.139"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "property"
+    ],
+    "content": "Mich. Comp. Laws § 554.139\n\n(1) In every lease or license of residential premises, the lessor or licensor covenants:\n\n(a) That the premises and all common areas are fit for the use intended by the parties.\n\n(b) To keep the premises in reasonable repair during the term of the lease or license.",
+    "sections": [
+      {
+        "sectionRef": "554.139",
+        "content": "Michigan residential implied covenants of habitability and repair."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "landlord_tenant",
+      "sourceOwner": "Michigan Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Mich. Comp. Laws § 600.705 — personal_jurisdiction",
+    "shortTitle": "Mich. Comp. Laws § 600.705",
+    "authorityType": "statute",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "Mich. Comp. Laws § 600.705",
+    "normalizedCitation": "Mich. Comp. Laws § 600.705",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mi-mcl-600-705",
+    "canonicalSourceUrl": "https://www.legislature.mi.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MI",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "600.705",
+        "label": "Mich. Comp. Laws § 600.705"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure"
+    ],
+    "content": "Mich. Comp. Laws § 600.705\n\nThe existence of any of the following relationships between an individual or his agent and the state shall constitute a sufficient basis of jurisdiction to enable a court of record of this state to exercise limited personal jurisdiction over the individual and to enable the court to render personal judgments against the individual or his representative arising out of an act which creates any of the following relationships:\n\n(1) The transaction of any business within the state.\n\n(2) The doing or causing an act to be done, or causing the consequences of an act to occur, in the state resulting in an action for tort.",
+    "sections": [
+      {
+        "sectionRef": "600.705",
+        "content": "Michigan limited personal jurisdiction bases."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "personal_jurisdiction",
+      "sourceOwner": "Michigan Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Mich. Comp. Laws § 600.2159 — evidence_relevance",
+    "shortTitle": "Mich. Comp. Laws § 600.2159",
+    "authorityType": "statute",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "Mich. Comp. Laws § 600.2159",
+    "normalizedCitation": "Mich. Comp. Laws § 600.2159",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mi-mcl-600-2159",
+    "canonicalSourceUrl": "https://www.legislature.mi.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MI",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "600.2159",
+        "label": "Mich. Comp. Laws § 600.2159"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Mich. Comp. Laws § 600.2159\n\nNo person shall be excluded from giving evidence in any action or proceeding by reason of crime or interest, except as otherwise provided by law.",
+    "sections": [
+      {
+        "sectionRef": "600.2159",
+        "content": "Michigan generally does not exclude witnesses for crime or interest."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Michigan Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Mich. Comp. Laws § 445.72 — data_breach",
+    "shortTitle": "Mich. Comp. Laws § 445.72",
+    "authorityType": "statute",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "Mich. Comp. Laws § 445.72",
+    "normalizedCitation": "Mich. Comp. Laws § 445.72",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mi-mcl-445-72",
+    "canonicalSourceUrl": "https://www.legislature.mi.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MI",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "445.72",
+        "label": "Mich. Comp. Laws § 445.72"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "Mich. Comp. Laws § 445.72\n\n(1) Unless the person or agency determines that the security breach has not or is not likely to cause substantial loss or injury to, or result in identity theft with respect to, 1 or more residents of this state, a person or agency that owns or licenses data that are included in a database that discovers a security breach shall provide a notice of the security breach to each resident of this state who meets 1 or more of the following:\n\n(a) That resident's unencrypted and unredacted personal information was accessed and acquired by an unauthorized person.",
+    "sections": [
+      {
+        "sectionRef": "445.72",
+        "content": "Michigan security breach notice to residents."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Michigan Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "N.C. Gen. Stat. § 75-1.1 — consumer_protection",
+    "shortTitle": "N.C. Gen. Stat. § 75-1.1",
+    "authorityType": "statute",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "N.C. Gen. Stat. § 75-1.1",
+    "normalizedCitation": "N.C. Gen. Stat. § 75-1.1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nc-gs-75-1.1",
+    "canonicalSourceUrl": "https://www.ncleg.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NC",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "75-1.1",
+        "label": "N.C. Gen. Stat. § 75-1.1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer"
+    ],
+    "content": "N.C. Gen. Stat. § 75-1.1\n\n(a) Unfair methods of competition in or affecting commerce, and unfair or deceptive acts or practices in or affecting commerce, are declared unlawful.",
+    "sections": [
+      {
+        "sectionRef": "75-1.1",
+        "content": "North Carolina UDTPA."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "consumer_protection",
+      "sourceOwner": "North Carolina General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "N.C. Gen. Stat. § 42-3 — landlord_tenant",
+    "shortTitle": "N.C. Gen. Stat. § 42-3",
+    "authorityType": "statute",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "N.C. Gen. Stat. § 42-3",
+    "normalizedCitation": "N.C. Gen. Stat. § 42-3",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nc-gs-42-3",
+    "canonicalSourceUrl": "https://www.ncleg.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NC",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "42-3",
+        "label": "N.C. Gen. Stat. § 42-3"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "property"
+    ],
+    "content": "N.C. Gen. Stat. § 42-3\n\nIn all verbal or written leases of real property of any kind in which is fixed a definite time for the termination of the tenancy, there is implied a condition of forfeiture for nonpayment of the rent reserved.",
+    "sections": [
+      {
+        "sectionRef": "42-3",
+        "content": "North Carolina implied forfeiture for nonpayment of rent."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "landlord_tenant",
+      "sourceOwner": "North Carolina General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "N.C. Gen. Stat. § 1-75.4 — personal_jurisdiction",
+    "shortTitle": "N.C. Gen. Stat. § 1-75.4",
+    "authorityType": "statute",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "N.C. Gen. Stat. § 1-75.4",
+    "normalizedCitation": "N.C. Gen. Stat. § 1-75.4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nc-gs-1-75.4",
+    "canonicalSourceUrl": "https://www.ncleg.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NC",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "1-75.4",
+        "label": "N.C. Gen. Stat. § 1-75.4"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure"
+    ],
+    "content": "N.C. Gen. Stat. § 1-75.4\n\nA court of this State having jurisdiction of the subject matter has jurisdiction over a person served in an action pursuant to Rule 4(j), Rule 4(j1), or Rule 4(j3) of the Rules of Civil Procedure under any of the following circumstances:\n\n(1) Local Presence or Status. — In any action, whether the claim arises within or without this State, in which a claim is asserted against a party who when service of process is made:\n\na. Is a natural person present within this State; or\n\n(4) Local Injury; Foreign Act. — In any action claiming injury to person or property within this State arising out of an act or omission outside this State by the defendant.",
+    "sections": [
+      {
+        "sectionRef": "1-75.4",
+        "content": "North Carolina personal jurisdiction statute."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "personal_jurisdiction",
+      "sourceOwner": "North Carolina General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "N.C. Gen. Stat. § 8C-1, Rule 601 — evidence_relevance",
+    "shortTitle": "N.C. Gen. Stat. § 8C-1, Rule 601",
+    "authorityType": "statute",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "N.C. Gen. Stat. § 8C-1, Rule 601",
+    "normalizedCitation": "N.C. Gen. Stat. § 8C-1, Rule 601",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nc-gs-8c-601",
+    "canonicalSourceUrl": "https://www.ncleg.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NC",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "601",
+        "label": "N.C. Gen. Stat. § 8C-1, Rule 601"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "N.C. Gen. Stat. § 8C-1, Rule 601\n\nEvery person is competent to be a witness except as otherwise provided in these rules.",
+    "sections": [
+      {
+        "sectionRef": "601",
+        "content": "North Carolina witness competency."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "North Carolina General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "N.C. Gen. Stat. § 75-65 — data_breach",
+    "shortTitle": "N.C. Gen. Stat. § 75-65",
+    "authorityType": "statute",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "N.C. Gen. Stat. § 75-65",
+    "normalizedCitation": "N.C. Gen. Stat. § 75-65",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nc-gs-75-65",
+    "canonicalSourceUrl": "https://www.ncleg.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NC",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "75-65",
+        "label": "N.C. Gen. Stat. § 75-65"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "N.C. Gen. Stat. § 75-65\n\n(a) Any business that owns or licenses personal information of residents of North Carolina or any business that conducts business in North Carolina that owns or licenses personal information in any form (whether computerized, paper, or otherwise) shall provide notice to the affected person that there has been a security breach following discovery or notification of the breach.",
+    "sections": [
+      {
+        "sectionRef": "75-65",
+        "content": "North Carolina security breach notification."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "North Carolina General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ohio Rev. Code § 1345.02 — consumer_protection",
+    "shortTitle": "Ohio Rev. Code § 1345.02",
+    "authorityType": "statute",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio Rev. Code § 1345.02",
+    "normalizedCitation": "Ohio Rev. Code § 1345.02",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "oh-orc-1345-02",
+    "canonicalSourceUrl": "https://codes.ohio.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "OH",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "1345.02",
+        "label": "Ohio Rev. Code § 1345.02"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer"
+    ],
+    "content": "Ohio Rev. Code § 1345.02\n\n(A) No supplier shall commit an unfair or deceptive act or practice in connection with a consumer transaction. Such an unfair or deceptive act or practice by a supplier violates this section whether it occurs before, during, or after the transaction.",
+    "sections": [
+      {
+        "sectionRef": "1345.02",
+        "content": "Ohio Consumer Sales Practices Act unfair or deceptive acts."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "consumer_protection",
+      "sourceOwner": "Ohio General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ohio Rev. Code § 5321.04 — landlord_tenant",
+    "shortTitle": "Ohio Rev. Code § 5321.04",
+    "authorityType": "statute",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio Rev. Code § 5321.04",
+    "normalizedCitation": "Ohio Rev. Code § 5321.04",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "oh-orc-5321-04",
+    "canonicalSourceUrl": "https://codes.ohio.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "OH",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "5321.04",
+        "label": "Ohio Rev. Code § 5321.04"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "property"
+    ],
+    "content": "Ohio Rev. Code § 5321.04\n\n(A) A landlord who is a party to a rental agreement shall do all of the following:\n\n(1) Comply with the requirements of all applicable building, housing, health, and safety codes that materially affect health and safety;\n\n(2) Make all repairs and do whatever is reasonably necessary to put and keep the premises in a fit and habitable condition;",
+    "sections": [
+      {
+        "sectionRef": "5321.04",
+        "content": "Ohio landlord duties of habitability and repair."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "landlord_tenant",
+      "sourceOwner": "Ohio General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ohio Rev. Code § 2307.382 — personal_jurisdiction",
+    "shortTitle": "Ohio Rev. Code § 2307.382",
+    "authorityType": "statute",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio Rev. Code § 2307.382",
+    "normalizedCitation": "Ohio Rev. Code § 2307.382",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "oh-orc-2307-382",
+    "canonicalSourceUrl": "https://codes.ohio.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "OH",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "2307.382",
+        "label": "Ohio Rev. Code § 2307.382"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure"
+    ],
+    "content": "Ohio Rev. Code § 2307.382\n\n(A) A court may exercise personal jurisdiction over a person who acts directly or by an agent, as to a cause of action arising from the person's:\n\n(1) Transacting any business in this state;\n\n(3) Causing tortious injury by an act or omission in this state;",
+    "sections": [
+      {
+        "sectionRef": "2307.382",
+        "content": "Ohio long-arm statute."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "personal_jurisdiction",
+      "sourceOwner": "Ohio General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ohio Rev. Code § 2317.01 — evidence_relevance",
+    "shortTitle": "Ohio Rev. Code § 2317.01",
+    "authorityType": "statute",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio Rev. Code § 2317.01",
+    "normalizedCitation": "Ohio Rev. Code § 2317.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "oh-orc-2317-01",
+    "canonicalSourceUrl": "https://codes.ohio.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "OH",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "2317.01",
+        "label": "Ohio Rev. Code § 2317.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Ohio Rev. Code § 2317.01\n\nAll persons are competent witnesses except those of unsound mind and children under ten years of age who appear incapable of receiving just impressions of the facts and transactions respecting which they are examined, or of relating them truly.",
+    "sections": [
+      {
+        "sectionRef": "2317.01",
+        "content": "Ohio general witness competency."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Ohio General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ohio Rev. Code § 1349.19 — data_breach",
+    "shortTitle": "Ohio Rev. Code § 1349.19",
+    "authorityType": "statute",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio Rev. Code § 1349.19",
+    "normalizedCitation": "Ohio Rev. Code § 1349.19",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "oh-orc-1349-19",
+    "canonicalSourceUrl": "https://codes.ohio.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "OH",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "1349.19",
+        "label": "Ohio Rev. Code § 1349.19"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "Ohio Rev. Code § 1349.19\n\n(B) Any person that owns or licenses computerized data that includes personal information shall disclose any breach of the security of the system, following its discovery or notification of the breach of the security of the system, to any resident of this state whose personal information was, or reasonably is believed to have been, accessed and acquired by an unauthorized person if the access and acquisition by the unauthorized person causes or reasonably is believed will cause a material risk of identity theft or other fraud to the resident.",
+    "sections": [
+      {
+        "sectionRef": "1349.19",
+        "content": "Ohio security breach disclosure to residents."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Ohio General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Wash. Rev. Code § 62A.2-314 — ucc_merchantability",
+    "shortTitle": "Wash. Rev. Code § 62A.2-314",
+    "authorityType": "statute",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "Wash. Rev. Code § 62A.2-314",
+    "normalizedCitation": "Wash. Rev. Code § 62A.2-314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wa-rcw-62a-2-314",
+    "canonicalSourceUrl": "https://app.leg.wa.gov/RCW/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "62A.2-314",
+        "label": "Wash. Rev. Code § 62A.2-314"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "commercial"
+    ],
+    "content": "Wash. Rev. Code § 62A.2-314\n\n(1) Unless excluded or modified (RCW 62A.2-316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind.",
+    "sections": [
+      {
+        "sectionRef": "62A.2-314",
+        "content": "Washington UCC merchantability."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "Washington State Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Wash. Rev. Code § 59.18.130 — landlord_tenant",
+    "shortTitle": "Wash. Rev. Code § 59.18.130",
+    "authorityType": "statute",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "Wash. Rev. Code § 59.18.130",
+    "normalizedCitation": "Wash. Rev. Code § 59.18.130",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wa-rcw-59-18-130",
+    "canonicalSourceUrl": "https://app.leg.wa.gov/RCW/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "59.18.130",
+        "label": "Wash. Rev. Code § 59.18.130"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "property"
+    ],
+    "content": "Wash. Rev. Code § 59.18.130\n\nEach tenant shall pay the rental amount at such times and in such amounts as provided for in the rental agreement or as otherwise provided by law and comply with all obligations imposed upon tenants by applicable provisions of all municipal, county, and state codes, statutes, ordinances, and regulations.",
+    "sections": [
+      {
+        "sectionRef": "59.18.130",
+        "content": "Washington Residential Landlord-Tenant Act tenant obligations."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "landlord_tenant",
+      "sourceOwner": "Washington State Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Wash. Rev. Code § 4.28.185 — personal_jurisdiction",
+    "shortTitle": "Wash. Rev. Code § 4.28.185",
+    "authorityType": "statute",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "Wash. Rev. Code § 4.28.185",
+    "normalizedCitation": "Wash. Rev. Code § 4.28.185",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wa-rcw-4-28-185",
+    "canonicalSourceUrl": "https://app.leg.wa.gov/RCW/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "4.28.185",
+        "label": "Wash. Rev. Code § 4.28.185"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure"
+    ],
+    "content": "Wash. Rev. Code § 4.28.185\n\n(1) Any person, whether or not a citizen or resident of this state, who in person or through an agent does any of the acts in this section, thereby submits said person, and, if an individual, his or her personal representative, to the jurisdiction of the courts of this state as to any cause of action arising from the doing of any of said acts:\n\n(a) The transaction of any business within this state;\n\n(b) The commission of a tortious act within this state;",
+    "sections": [
+      {
+        "sectionRef": "4.28.185",
+        "content": "Washington long-arm statute."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "personal_jurisdiction",
+      "sourceOwner": "Washington State Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Wash. Rev. Code § 5.60.020 — evidence_relevance",
+    "shortTitle": "Wash. Rev. Code § 5.60.020",
+    "authorityType": "statute",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "Wash. Rev. Code § 5.60.020",
+    "normalizedCitation": "Wash. Rev. Code § 5.60.020",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wa-rcw-5-60-020",
+    "canonicalSourceUrl": "https://app.leg.wa.gov/RCW/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "5.60.020",
+        "label": "Wash. Rev. Code § 5.60.020"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Wash. Rev. Code § 5.60.020\n\nEvery person of sound mind and discretion, except as hereinafter provided, may be a witness in any action, or proceeding.",
+    "sections": [
+      {
+        "sectionRef": "5.60.020",
+        "content": "Washington general witness competency."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Washington State Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Wash. Rev. Code § 19.255.010 — data_breach",
+    "shortTitle": "Wash. Rev. Code § 19.255.010",
+    "authorityType": "statute",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "Wash. Rev. Code § 19.255.010",
+    "normalizedCitation": "Wash. Rev. Code § 19.255.010",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wa-rcw-19-255-010",
+    "canonicalSourceUrl": "https://app.leg.wa.gov/RCW/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "19.255.010",
+        "label": "Wash. Rev. Code § 19.255.010"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "Wash. Rev. Code § 19.255.010\n\n(1) Any person or business that conducts business in this state and that owns or licenses data that includes personal information shall disclose any breach of the security of the system following discovery or notification of the breach in the security of the data to any resident of this state whose personal information was, or is reasonably believed to have been, acquired by an unauthorized person and the personal information was not secured.",
+    "sections": [
+      {
+        "sectionRef": "19.255.010",
+        "content": "Washington security breach disclosure."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Washington State Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Wis. Stat. § 402.314 — ucc_merchantability",
+    "shortTitle": "Wis. Stat. § 402.314",
+    "authorityType": "statute",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Stat. § 402.314",
+    "normalizedCitation": "Wis. Stat. § 402.314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wi-stat-402-314",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/statutes",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WI",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "402.314",
+        "label": "Wis. Stat. § 402.314"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "commercial"
+    ],
+    "content": "Wis. Stat. § 402.314\n\n(1) Unless excluded or modified as provided in s. 402.316, a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind.",
+    "sections": [
+      {
+        "sectionRef": "402.314",
+        "content": "Wisconsin UCC merchantability."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "Wisconsin Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Wis. Stat. § 704.17 — landlord_tenant",
+    "shortTitle": "Wis. Stat. § 704.17",
+    "authorityType": "statute",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Stat. § 704.17",
+    "normalizedCitation": "Wis. Stat. § 704.17",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wi-stat-704-17",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/statutes",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WI",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "704.17",
+        "label": "Wis. Stat. § 704.17"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "property"
+    ],
+    "content": "Wis. Stat. § 704.17\n\n(2) If a tenant under a lease for one year or less, or a year-to-year tenant, fails to pay any installment of rent when due, the tenancy is terminated if the landlord gives the tenant notice requiring the tenant to pay rent or vacate on or before a date at least 5 days after the giving of the notice.",
+    "sections": [
+      {
+        "sectionRef": "704.17",
+        "content": "Wisconsin rent default notice and termination."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "landlord_tenant",
+      "sourceOwner": "Wisconsin Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Wis. Stat. § 801.05 — personal_jurisdiction",
+    "shortTitle": "Wis. Stat. § 801.05",
+    "authorityType": "statute",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Stat. § 801.05",
+    "normalizedCitation": "Wis. Stat. § 801.05",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wi-stat-801-05",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/statutes",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WI",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "801.05",
+        "label": "Wis. Stat. § 801.05"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure"
+    ],
+    "content": "Wis. Stat. § 801.05\n\nA court of this state having jurisdiction of the subject matter has jurisdiction over a person served in an action pursuant to s. 801.11 under any of the following circumstances:\n\n(1) Local presence or status. In any action whether arising within or without this state, against a defendant who when the action is commenced:\n\n(a) Is a natural person present within this state when served; or\n\n(3) Local act or omission. In any action claiming injury to person or property within or without this state arising out of an act or omission within this state by the defendant.",
+    "sections": [
+      {
+        "sectionRef": "801.05",
+        "content": "Wisconsin personal jurisdiction statute."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "personal_jurisdiction",
+      "sourceOwner": "Wisconsin Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Wis. Stat. § 906.01 — evidence_relevance",
+    "shortTitle": "Wis. Stat. § 906.01",
+    "authorityType": "statute",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Stat. § 906.01",
+    "normalizedCitation": "Wis. Stat. § 906.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wi-stat-906-01",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/statutes",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WI",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "906.01",
+        "label": "Wis. Stat. § 906.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Wis. Stat. § 906.01\n\nEvery person is competent to be a witness except as otherwise provided in these rules.",
+    "sections": [
+      {
+        "sectionRef": "906.01",
+        "content": "Wisconsin witness competency."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Wisconsin Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Wis. Stat. § 134.98 — data_breach",
+    "shortTitle": "Wis. Stat. § 134.98",
+    "authorityType": "statute",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Stat. § 134.98",
+    "normalizedCitation": "Wis. Stat. § 134.98",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wi-stat-134-98",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/statutes",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WI",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "134.98",
+        "label": "Wis. Stat. § 134.98"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "Wis. Stat. § 134.98\n\n(2) If an entity whose principal place of business is located in this state or an entity that maintains personal information of a resident of this state knows that personal information in the entity's possession has been acquired by a person whom the entity has not authorized to acquire the personal information, the entity shall make reasonable efforts to notify each resident who is the subject of the personal information.",
+    "sections": [
+      {
+        "sectionRef": "134.98",
+        "content": "Wisconsin personal information acquisition notice."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Wisconsin Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "10 Del. C. § 4301 — Competency of witnesses",
+    "shortTitle": "10 Del. C. § 4301",
+    "authorityType": "statute",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "10 Del. C. § 4301",
+    "normalizedCitation": "10 Del. C. § 4301",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "de-10-4301",
+    "canonicalSourceUrl": "https://delcode.delaware.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "DE",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "4301",
+        "label": "10 Del. C. § 4301"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "10 Del. C. § 4301\n\nNo person shall be excluded from giving evidence in any action or proceeding by reason of crime or interest, except as otherwise provided by law.",
+    "sections": [
+      {
+        "sectionRef": "4301",
+        "content": "Delaware general witness competency."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Delaware General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "6 Del. C. § 12B-102 — Disclosure of breach of security",
+    "shortTitle": "6 Del. C. § 12B-102",
+    "authorityType": "statute",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "6 Del. C. § 12B-102",
+    "normalizedCitation": "6 Del. C. § 12B-102",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "de-6-12b-102",
+    "canonicalSourceUrl": "https://delcode.delaware.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "DE",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "12B-102",
+        "label": "6 Del. C. § 12B-102"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "6 Del. C. § 12B-102\n\n(a) Any person who conducts business in this State and who owns or licenses computerized data that includes personal information shall disclose any breach of security of the system following discovery or notification of the breach of security of the system to any resident of this State whose personal information was, or is reasonably believed to have been, acquired by an unauthorized person.",
+    "sections": [
+      {
+        "sectionRef": "12B-102",
+        "content": "Delaware security breach disclosure."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Delaware General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Fla. Stat. § 90.601 — General rule of competency",
+    "shortTitle": "Fla. Stat. § 90.601",
+    "authorityType": "statute",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. Stat. § 90.601",
+    "normalizedCitation": "Fla. Stat. § 90.601",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "fl-stat-90-601",
+    "canonicalSourceUrl": "http://www.leg.state.fl.us/statutes/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "FL",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "90.601",
+        "label": "Fla. Stat. § 90.601"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Fla. Stat. § 90.601\n\nEvery person is competent to be a witness, except as otherwise provided by statute.",
+    "sections": [
+      {
+        "sectionRef": "90.601",
+        "content": "Florida general witness competency."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Florida Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Fla. Stat. § 501.171 — Security of confidential personal information",
+    "shortTitle": "Fla. Stat. § 501.171",
+    "authorityType": "statute",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. Stat. § 501.171",
+    "normalizedCitation": "Fla. Stat. § 501.171",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "fl-stat-501-171",
+    "canonicalSourceUrl": "http://www.leg.state.fl.us/statutes/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "FL",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "501.171",
+        "label": "Fla. Stat. § 501.171"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "Fla. Stat. § 501.171\n\n(3) NOTICE TO INDIVIDUALS.—\n\n(a) A covered entity shall give notice to each individual in this state whose personal information was, or the covered entity reasonably believes to have been, accessed as a result of a breach.",
+    "sections": [
+      {
+        "sectionRef": "501.171",
+        "content": "Florida breach notice to individuals."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Florida Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "735 ILCS 5/8-101 — Competency of witnesses",
+    "shortTitle": "735 ILCS 5/8-101",
+    "authorityType": "statute",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "735 ILCS 5/8-101",
+    "normalizedCitation": "735 ILCS 5/8-101",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "il-735-5-8-101",
+    "canonicalSourceUrl": "https://www.ilga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "IL",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "8-101",
+        "label": "735 ILCS 5/8-101"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "735 ILCS 5/8-101\n\nEvery person is competent to be a witness except as otherwise provided by statute.",
+    "sections": [
+      {
+        "sectionRef": "8-101",
+        "content": "Illinois witness competency."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Illinois General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "815 ILCS 530/10 — Notice of breach",
+    "shortTitle": "815 ILCS 530/10",
+    "authorityType": "statute",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "815 ILCS 530/10",
+    "normalizedCitation": "815 ILCS 530/10",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "il-815-530-10",
+    "canonicalSourceUrl": "https://www.ilga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "IL",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "10",
+        "label": "815 ILCS 530/10"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "815 ILCS 530/10\n\n(a) Any data collector that owns or licenses personal information concerning an Illinois resident shall notify the resident at no charge that there has been a breach of the security of the system data following discovery or notification of the breach.",
+    "sections": [
+      {
+        "sectionRef": "10",
+        "content": "Illinois Personal Information Protection Act breach notice."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Illinois General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Mass. Gen. Laws ch. 233, § 20 — Competency of witnesses",
+    "shortTitle": "Mass. Gen. Laws ch. 233, § 20",
+    "authorityType": "statute",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "Mass. Gen. Laws ch. 233, § 20",
+    "normalizedCitation": "Mass. Gen. Laws ch. 233, § 20",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-gl-233-20",
+    "canonicalSourceUrl": "https://malegislature.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "20",
+        "label": "Mass. Gen. Laws ch. 233, § 20"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Mass. Gen. Laws ch. 233, § 20\n\nAny person of sufficient understanding, although a party, may testify in any civil or criminal proceeding.",
+    "sections": [
+      {
+        "sectionRef": "20",
+        "content": "Massachusetts witness competency."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Massachusetts Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Mass. Gen. Laws ch. 93H, § 3 — Notice of breach of security",
+    "shortTitle": "Mass. Gen. Laws ch. 93H, § 3",
+    "authorityType": "statute",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "Mass. Gen. Laws ch. 93H, § 3",
+    "normalizedCitation": "Mass. Gen. Laws ch. 93H, § 3",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-gl-93h-3",
+    "canonicalSourceUrl": "https://malegislature.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "3",
+        "label": "Mass. Gen. Laws ch. 93H, § 3"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "Mass. Gen. Laws ch. 93H, § 3\n\n(a) A person or agency that owns or licenses data that includes personal information about a resident of the commonwealth shall provide notice, as soon as practicable and without unreasonable delay, when such person or agency knows or has reason to know of a breach of security.",
+    "sections": [
+      {
+        "sectionRef": "3",
+        "content": "Massachusetts breach notice statute."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Massachusetts Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "N.J. Stat. Ann. § 2A:81-1 — Competency of witnesses",
+    "shortTitle": "N.J. Stat. Ann. § 2A:81-1",
+    "authorityType": "statute",
+    "jurisdiction": "New Jersey",
+    "authorityState": "NJ",
+    "citation": "N.J. Stat. Ann. § 2A:81-1",
+    "normalizedCitation": "N.J. Stat. Ann. § 2A:81-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nj-2a-81-1",
+    "canonicalSourceUrl": "https://www.njleg.state.nj.us/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NJ",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "2A:81-1",
+        "label": "N.J. Stat. Ann. § 2A:81-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "N.J. Stat. Ann. § 2A:81-1\n\nNo person offered as a witness in any action or proceeding shall be excluded by reason of having been convicted of crime, or by reason of interest, except as otherwise provided by law.",
+    "sections": [
+      {
+        "sectionRef": "2A:81-1",
+        "content": "New Jersey witness competency."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "New Jersey Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "N.J. Stat. Ann. § 56:8-163 — Disclosure of breach of security",
+    "shortTitle": "N.J. Stat. Ann. § 56:8-163",
+    "authorityType": "statute",
+    "jurisdiction": "New Jersey",
+    "authorityState": "NJ",
+    "citation": "N.J. Stat. Ann. § 56:8-163",
+    "normalizedCitation": "N.J. Stat. Ann. § 56:8-163",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nj-56-8-163",
+    "canonicalSourceUrl": "https://www.njleg.state.nj.us/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NJ",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "56:8-163",
+        "label": "N.J. Stat. Ann. § 56:8-163"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "N.J. Stat. Ann. § 56:8-163\n\na. Any business that conducts business in New Jersey, or any public entity that compiles or maintains computerized records that include personal information, shall disclose any breach of security of those computerized records following discovery or notification of the breach to any customer who is a resident of New Jersey whose personal information was, or is reasonably believed to have been, accessed by an unauthorized person.",
+    "sections": [
+      {
+        "sectionRef": "56:8-163",
+        "content": "New Jersey security breach disclosure."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "New Jersey Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "N.Y. C.P.L.R. 4512 — Competency of interested witness or spouse",
+    "shortTitle": "N.Y. C.P.L.R. 4512",
+    "authorityType": "statute",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "N.Y. C.P.L.R. 4512",
+    "normalizedCitation": "N.Y. C.P.L.R. 4512",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-cplr-4512",
+    "canonicalSourceUrl": "https://www.nysenate.gov/legislation/laws/CVP/4512",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NY",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "4512",
+        "label": "N.Y. C.P.L.R. 4512"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "N.Y. C.P.L.R. 4512\n\nExcept as otherwise expressly prescribed, a person shall not be excluded or excused from being a witness, by reason of his interest in the event of an action or proceeding or because he is a party or the spouse of a party.",
+    "sections": [
+      {
+        "sectionRef": "4512",
+        "content": "New York interested-witness competency."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "New York State Senate",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "N.Y. Gen. Bus. Law § 899-aa — Notification; person without valid authorization has acquired private information",
+    "shortTitle": "N.Y. Gen. Bus. Law § 899-aa",
+    "authorityType": "statute",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "N.Y. Gen. Bus. Law § 899-aa",
+    "normalizedCitation": "N.Y. Gen. Bus. Law § 899-aa",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-gbl-899-aa",
+    "canonicalSourceUrl": "https://www.nysenate.gov/legislation/laws/GBS/899-AA",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NY",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "899-aa",
+        "label": "N.Y. Gen. Bus. Law § 899-aa"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "N.Y. Gen. Bus. Law § 899-aa\n\n2. Any person or business which owns or licenses computerized data which includes private information shall disclose any breach of the security of the system following discovery or notification of the breach in the security of the system to any resident of New York state whose private information was, or is reasonably believed to have been, accessed or acquired by a person without valid authorization.",
+    "sections": [
+      {
+        "sectionRef": "899-aa",
+        "content": "New York SHIELD Act / breach notification."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "New York State Senate",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "42 Pa.C.S. § 5911 — Competency of witnesses generally",
+    "shortTitle": "42 Pa.C.S. § 5911",
+    "authorityType": "statute",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "42 Pa.C.S. § 5911",
+    "normalizedCitation": "42 Pa.C.S. § 5911",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "pa-42-5911",
+    "canonicalSourceUrl": "https://www.legis.state.pa.us/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "PA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "5911",
+        "label": "42 Pa.C.S. § 5911"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "42 Pa.C.S. § 5911\n\nExcept as otherwise provided by statute or by general rule, every person is competent to be a witness.",
+    "sections": [
+      {
+        "sectionRef": "5911",
+        "content": "Pennsylvania witness competency."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Pennsylvania General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "73 P.S. § 2303 — Notification of breach",
+    "shortTitle": "73 P.S. § 2303",
+    "authorityType": "statute",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "73 P.S. § 2303",
+    "normalizedCitation": "73 P.S. § 2303",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "pa-73-2303",
+    "canonicalSourceUrl": "https://www.legis.state.pa.us/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "PA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "2303",
+        "label": "73 P.S. § 2303"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "73 P.S. § 2303\n\n(a) General rule.—An entity that maintains, stores or manages computerized data that includes personal information shall provide notice of any breach of the security of the system following discovery of the breach of the security of the system to any resident of this Commonwealth whose unencrypted and unredacted personal information was or is reasonably believed to have been accessed and acquired by an unauthorized person.",
+    "sections": [
+      {
+        "sectionRef": "2303",
+        "content": "Pennsylvania Breach of Personal Information Notification Act."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Pennsylvania General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Tex. R. Evid. 601 — Competency to Testify in General",
+    "shortTitle": "Tex. R. Evid. 601",
+    "authorityType": "statute",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "Tex. R. Evid. 601",
+    "normalizedCitation": "Tex. R. Evid. 601",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tx-tre-601-stat",
+    "canonicalSourceUrl": "https://www.txcourts.gov/rules-forms/rules-standards/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "TX",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "601",
+        "label": "Tex. R. Evid. 601"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Tex. R. Evid. 601\n\n(a) In General. Every person is competent to be a witness unless these rules provide otherwise.",
+    "sections": [
+      {
+        "sectionRef": "601",
+        "content": "Texas Rules of Evidence general competency."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Supreme Court of Texas",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Tex. Bus. & Com. Code § 521.053 — Notification Required Following Breach of Security of Computerized Data",
+    "shortTitle": "Tex. Bus. & Com. Code § 521.053",
+    "authorityType": "statute",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "Tex. Bus. & Com. Code § 521.053",
+    "normalizedCitation": "Tex. Bus. & Com. Code § 521.053",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tx-buscom-521-053",
+    "canonicalSourceUrl": "https://statutes.capitol.texas.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "TX",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "521.053",
+        "label": "Tex. Bus. & Com. Code § 521.053"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "Tex. Bus. & Com. Code § 521.053\n\n(b) A person who conducts business in this state and owns or licenses computerized data that includes sensitive personal information shall disclose any breach of system security, after discovering or receiving notification of the breach, to any individual whose sensitive personal information was, or is reasonably believed to have been, acquired by an unauthorized person.",
+    "sections": [
+      {
+        "sectionRef": "521.053",
+        "content": "Texas breach notification statute."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Texas Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Va. Code Ann. § 8.01-396 — Competency of witnesses",
+    "shortTitle": "Va. Code Ann. § 8.01-396",
+    "authorityType": "statute",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Code Ann. § 8.01-396",
+    "normalizedCitation": "Va. Code Ann. § 8.01-396",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "va-code-8-01-396",
+    "canonicalSourceUrl": "https://law.lis.virginia.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "VA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "8.01-396",
+        "label": "Va. Code Ann. § 8.01-396"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Va. Code Ann. § 8.01-396\n\nNo person shall be incompetent to testify because of interest, or because of being a party, or because of being the husband or wife of a party.",
+    "sections": [
+      {
+        "sectionRef": "8.01-396",
+        "content": "Virginia witness competency."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Virginia General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Va. Code Ann. § 18.2-186.6 — Breach of personal information notification",
+    "shortTitle": "Va. Code Ann. § 18.2-186.6",
+    "authorityType": "statute",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Code Ann. § 18.2-186.6",
+    "normalizedCitation": "Va. Code Ann. § 18.2-186.6",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "va-code-18-2-186-6",
+    "canonicalSourceUrl": "https://law.lis.virginia.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "VA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "18.2-186.6",
+        "label": "Va. Code Ann. § 18.2-186.6"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "Va. Code Ann. § 18.2-186.6\n\nA. If unencrypted or unredacted personal information was or is reasonably believed to have been accessed and acquired by an unauthorized person and causes, or the individual or entity reasonably believes has caused or will cause, identity theft or another fraud to any resident of the Commonwealth, an individual or entity that owns or licenses computerized data that includes personal information shall disclose any breach of the security of the system following discovery or notification of the breach of the security of the system to the Office of the Attorney General and any affected resident of the Commonwealth without unreasonable delay.",
+    "sections": [
+      {
+        "sectionRef": "18.2-186.6",
+        "content": "Virginia personal information breach notification."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "Virginia General Assembly",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Cal. Gov. Code § 11500 — Administrative adjudication; definitions",
+    "shortTitle": "Cal. Gov. Code § 11500",
+    "authorityType": "statute",
+    "jurisdiction": "California",
+    "authorityState": "CA",
+    "citation": "Cal. Gov. Code § 11500",
+    "normalizedCitation": "Cal. Gov. Code § 11500",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ca-gov-11500",
+    "canonicalSourceUrl": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=GOV&sectionNum=11500",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "11500",
+        "label": "Cal. Gov. Code § 11500"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "Cal. Gov. Code § 11500\n\nUnless the provision or context otherwise requires, the definitions contained in this chapter govern the construction of this chapter.\n\n(a) \"Agency\" includes the state boards, commissions, and officers authorized by law to make adjudicative decisions.",
+    "sections": [
+      {
+        "sectionRef": "11500",
+        "content": "California APA chapter definitions for administrative adjudication."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "California Legislative Information",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "La. R.S. § 51:1405 — Unfair acts or practices",
+    "shortTitle": "La. R.S. § 51:1405",
+    "authorityType": "statute",
+    "jurisdiction": "Louisiana",
+    "authorityState": "LA",
+    "citation": "La. R.S. § 51:1405",
+    "normalizedCitation": "La. R.S. § 51:1405",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "la-rs-51-1405",
+    "canonicalSourceUrl": "https://www.legis.la.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "LA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "51:1405",
+        "label": "La. R.S. § 51:1405"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer"
+    ],
+    "content": "La. R.S. § 51:1405\\n\\nA. Unfair methods of competition and unfair or deceptive acts or practices in the conduct of any trade or commerce are hereby declared unlawful.",
+    "sections": [
+      {
+        "sectionRef": "51:1405",
+        "content": "Louisiana Unfair Trade Practices and Consumer Protection Law prohibits unfair or deceptive acts."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "consumer_protection",
+      "sourceOwner": "Louisiana State Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "La. C.C. art. 3499 — Personal action; ten years",
+    "shortTitle": "La. C.C. art. 3499",
+    "authorityType": "statute",
+    "jurisdiction": "Louisiana",
+    "authorityState": "LA",
+    "citation": "La. C.C. art. 3499",
+    "normalizedCitation": "La. C.C. art. 3499",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "la-cc-3499",
+    "canonicalSourceUrl": "https://www.legis.la.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "LA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "3499",
+        "label": "La. C.C. art. 3499"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil"
+    ],
+    "content": "La. C.C. art. 3499\\n\\nUnless otherwise provided by legislation, a personal action is subject to a liberative prescription of ten years.",
+    "sections": [
+      {
+        "sectionRef": "3499",
+        "content": "Louisiana general personal-action liberative prescription is ten years unless otherwise provided."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "statute_of_limitations",
+      "sourceOwner": "Louisiana State Legislature",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Cal. Civ. Code § 1798.82 — Customer records; breach disclosure",
+    "shortTitle": "Cal. Civ. Code § 1798.82",
+    "authorityType": "statute",
+    "jurisdiction": "California",
+    "authorityState": "CA",
+    "citation": "Cal. Civ. Code § 1798.82",
+    "normalizedCitation": "Cal. Civ. Code § 1798.82",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ca-civ-1798-82",
+    "canonicalSourceUrl": "https://leginfo.legislature.ca.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "1798.82",
+        "label": "Cal. Civ. Code § 1798.82"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy"
+    ],
+    "content": "Cal. Civ. Code § 1798.82\\n\\n(a) A person or business that conducts business in California, and that owns or licenses computerized data that includes personal information, shall disclose any breach of the security of the system following discovery or notification of the breach in the security of the data to any resident of California whose unencrypted personal information was, or is reasonably believed to have been, acquired by an unauthorized person.",
+    "sections": [
+      {
+        "sectionRef": "1798.82",
+        "content": "California requires disclosure of a security breach to affected California residents."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "data_breach",
+      "sourceOwner": "California Legislative Information",
+      "wave": "2H"
+    }
+  }
+]

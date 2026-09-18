@@ -1,0 +1,95 @@
+{
+  "generatedAt": "2026-09-18T13:10:00.000Z",
+  "wave": "2H",
+  "verdict": "PASS",
+  "queue": 2,
+  "transitionAllowed": false,
+  "nextSubStep": "Wait for CourtListener resume; execute CL deepen for federal CA11/CADC/CAFC/CA7/CA10 and Wave-1 state high courts. Parallel: remaining public-source regulation engineering (MA/AZ/RI/WV/NY/CT) and evidence/appellate rule deepen beyond Civ.P. 12/56.",
+  "staging": {
+    "app": "nyayagrid-staging",
+    "machine": "811d3e3f522648",
+    "healthReady": 200,
+    "featureAgents": "0",
+    "authProvider": "clerk"
+  },
+  "corpus": {
+    "before": { "total": 801, "statutes": 441, "regulations": 90, "rules": 99, "cases": 170 },
+    "after": { "total": 942, "statutes": 517, "regulations": 99, "rules": 155, "cases": 170 }
+  },
+  "thinStatuteStates": {
+    "AZ": { "subjectsBefore": "<6", "subjectsAfter": 8, "remainingGap": "licensing_admin_procedure; consumer optional" },
+    "CO": { "subjectsBefore": "<6", "subjectsAfter": 8, "remainingGap": "employment; licensing_admin_procedure" },
+    "CT": { "subjectsBefore": "<6", "subjectsAfter": 9, "remainingGap": "licensing_admin_procedure" },
+    "GA": { "subjectsBefore": "<6", "subjectsAfter": 9, "remainingGap": "licensing_admin_procedure" },
+    "LA": { "subjectsBefore": "<6", "subjectsAfter": 8, "remainingGap": "licensing already via APA; deepen consumer/limitations text as needed" },
+    "MD": { "subjectsBefore": "<6", "subjectsAfter": 9, "remainingGap": "licensing_admin_procedure" },
+    "MI": { "subjectsBefore": "<6", "subjectsAfter": 9, "remainingGap": "licensing_admin_procedure" },
+    "NC": { "subjectsBefore": "<6", "subjectsAfter": 9, "remainingGap": "licensing_admin_procedure" },
+    "OH": { "subjectsBefore": "<6", "subjectsAfter": 9, "remainingGap": "licensing_admin_procedure" },
+    "WA": { "subjectsBefore": "<6", "subjectsAfter": 8, "remainingGap": "consumer_protection; licensing_admin_procedure" },
+    "WI": { "subjectsBefore": "<6", "subjectsAfter": 8, "remainingGap": "consumer_protection; licensing_admin_procedure" },
+    "allMeetMinimum6": true
+  },
+  "wave1": {
+    "subjectCoverage": "all 10 jurisdictions >=8 meaningful families after 2H evidence/privacy/APA fills"
+  },
+  "courtRules": {
+    "jurisdictionsBefore": 24,
+    "jurisdictionsAfter": 52,
+    "rulesBefore": 99,
+    "rulesAfter": 155,
+    "newJurisdictions": ["AL","AK","AR","HI","ID","IA","KS","KY","LA","ME","MS","MO","MT","NE","NV","NH","NM","ND","OK","RI","SC","SD","TN","UT","VT","WV","WY","DC"],
+    "remainingWithoutRules": []
+  },
+  "regulations": {
+    "jurisdictionsBefore": 13,
+    "jurisdictionsAfter": 18,
+    "newPublicSources": ["MN revisor", "WI legis admin code", "GA SOS rules", "IN IAC", "OR OAR/BOLI"],
+    "newAdapters": ["MN","WI","GA","IN","OR configs on state_regulation platform family"],
+    "remainingExternalBlocks": ["CA CCR proprietary/unstable public mirror", "NJ N.J.A.C. incomplete public", "NY NYCRR engineering", "CT eRegulations engineering", "RI/WV/MA/AZ public-source engineering"]
+  },
+  "officialCaseSources": {
+    "jurisdictionsAudited": 52,
+    "reusablePlatforms": ["scotus_slip_opinions", "circuit_rss_family", "ny_slip_opinion_service", "state_judiciary_cms"],
+    "adaptersBuilt": 0,
+    "casesImported": 0,
+    "reason": "Audit-first; no fragile 52-scraper build. Prefer CL for historical depth when available."
+  },
+  "currentness": {
+    "current_as_of_source_date": 629,
+    "unknown": 311,
+    "lastCheckedCoverage": "757+/942 after import touches",
+    "refreshablePctNote": "bundle/hash-skip families connected; CL refresh blocked"
+  },
+  "duplicates": {
+    "suspects": ["15 U.S.C. § 45 x2", "29 U.S.C. § 206 x2", "N.Y. CPLR 3211 statute vs N.Y. C.P.L.R. 3211 rule"],
+    "confirmedDestructive": 0,
+    "fixed": 0,
+    "remaining": "punctuation/type variants — not destructive content corruption"
+  },
+  "provenance": {
+    "completePct": 100,
+    "missingFields": 0
+  },
+  "nationalRetrieval": {
+    "pass": 14,
+    "missExpected": 6,
+    "fail": 0,
+    "jurisdictionIsolation": "PASS",
+    "exactCitation": "PASS for present cites"
+  },
+  "coverage": {
+    "no_corpus": 0,
+    "seed": 0,
+    "limited": 52,
+    "broader": 0,
+    "broaderBlockers": ["B_requires_courtlistener"]
+  },
+  "clReadyToResume": true,
+  "courtListenerCalls": 0,
+  "cost": {
+    "httpFetchesExternal": 0,
+    "embeddings": 0,
+    "estimatedSpendUsd": 0
+  }
+}

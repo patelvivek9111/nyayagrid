@@ -1,0 +1,434 @@
+{
+  "generatedAt": "2026-09-18T12:59:57.129Z",
+  "phase": "50S-WAVE-2H",
+  "matrixType": "state_regulation_source_national",
+  "platformFamilies": [
+    "legislative_reference_bureau",
+    "sos_portal",
+    "lis_revisor",
+    "jcar_html",
+    "custom_html",
+    "ecfr",
+    "oal_ccr",
+    "dos_register",
+    "eregulations"
+  ],
+  "entries": [
+    {
+      "jurisdiction": "AL",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "AK",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "AZ",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": "https://apps.azsos.gov/public_services/Title_20/",
+      "platformFamily": "sos_portal",
+      "notes": null
+    },
+    {
+      "jurisdiction": "AR",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "CA",
+      "class": "E_proprietary_or_unstable",
+      "status": "external_proprietary_limitation",
+      "officialUrl": "https://oal.ca.gov/publications/ccr/",
+      "platformFamily": "oal_ccr",
+      "notes": "Official CCR often via Westlaw/Lexis browse; public OAL mirrors fragmented."
+    },
+    {
+      "jurisdiction": "CO",
+      "class": "B_ready_pdf",
+      "status": "ingested",
+      "officialUrl": "https://www.sos.state.co.us/CCR/",
+      "platformFamily": "sos_portal",
+      "notes": null
+    },
+    {
+      "jurisdiction": "CT",
+      "class": "D_source_unstable",
+      "status": "public_source_engineering",
+      "officialUrl": "https://eregulations.ct.gov/",
+      "platformFamily": "eregulations",
+      "notes": null
+    },
+    {
+      "jurisdiction": "DE",
+      "class": "B_ready_pdf",
+      "status": "ingested",
+      "officialUrl": "https://regulations.delaware.gov/",
+      "platformFamily": "sos_portal",
+      "notes": null
+    },
+    {
+      "jurisdiction": "DC",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "FL",
+      "class": "A_ready_structured",
+      "status": "ingested",
+      "officialUrl": "https://www.flrules.org/",
+      "platformFamily": "sos_portal",
+      "notes": null
+    },
+    {
+      "jurisdiction": "GA",
+      "class": "C_manual_but_official",
+      "status": "wave2h_ingested",
+      "officialUrl": "https://rules.sos.ga.gov/",
+      "platformFamily": "sos_portal",
+      "notes": null
+    },
+    {
+      "jurisdiction": "HI",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "ID",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "IL",
+      "class": "A_ready_structured",
+      "status": "ingested",
+      "officialUrl": "https://www.ilga.gov/commission/jcar/admincode/",
+      "platformFamily": "jcar_html",
+      "notes": null
+    },
+    {
+      "jurisdiction": "IN",
+      "class": "A_ready_structured",
+      "status": "wave2h_ingested",
+      "officialUrl": "http://iac.iga.in.gov/",
+      "platformFamily": "lis_revisor",
+      "notes": null
+    },
+    {
+      "jurisdiction": "IA",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "KS",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "KY",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "LA",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "ME",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "MD",
+      "class": "C_manual_but_official",
+      "status": "ingested",
+      "officialUrl": "https://dsd.maryland.gov/Pages/COMARHome.aspx",
+      "platformFamily": "custom_html",
+      "notes": null
+    },
+    {
+      "jurisdiction": "MA",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": "https://www.mass.gov/code-of-massachusetts-regulations-cmr",
+      "platformFamily": "custom_html",
+      "notes": null
+    },
+    {
+      "jurisdiction": "MI",
+      "class": "C_manual_but_official",
+      "status": "ingested",
+      "officialUrl": "https://www.michigan.gov/lara/",
+      "platformFamily": "custom_html",
+      "notes": null
+    },
+    {
+      "jurisdiction": "MN",
+      "class": "A_ready_structured",
+      "status": "wave2h_ingested",
+      "officialUrl": "https://www.revisor.mn.gov/rules/",
+      "platformFamily": "lis_revisor",
+      "notes": null
+    },
+    {
+      "jurisdiction": "MS",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "MO",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "MT",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "NE",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "NV",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "NH",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "NJ",
+      "class": "E_proprietary_or_unstable",
+      "status": "external_proprietary_limitation",
+      "officialUrl": "https://www.nj.gov/oal/",
+      "platformFamily": "none",
+      "notes": "N.J.A.C. public HTML incomplete vs proprietary publishers."
+    },
+    {
+      "jurisdiction": "NM",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "NY",
+      "class": "D_source_unstable",
+      "status": "public_source_engineering",
+      "officialUrl": "https://dos.ny.gov/state-register",
+      "platformFamily": "dos_register",
+      "notes": "NYCRR official compilation not stably machine-readable nationally."
+    },
+    {
+      "jurisdiction": "NC",
+      "class": "C_manual_but_official",
+      "status": "ingested",
+      "officialUrl": "https://www.oah.nc.gov/",
+      "platformFamily": "custom_html",
+      "notes": null
+    },
+    {
+      "jurisdiction": "ND",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "OH",
+      "class": "A_ready_structured",
+      "status": "ingested",
+      "officialUrl": "https://codes.ohio.gov/ohio-administrative-code/",
+      "platformFamily": "custom_html",
+      "notes": null
+    },
+    {
+      "jurisdiction": "OK",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "OR",
+      "class": "C_manual_but_official",
+      "status": "wave2h_ingested",
+      "officialUrl": "https://secure.sos.state.or.us/oard/",
+      "platformFamily": "sos_portal",
+      "notes": null
+    },
+    {
+      "jurisdiction": "PA",
+      "class": "A_ready_structured",
+      "status": "ingested",
+      "officialUrl": "https://www.pacodeandbulletin.gov/",
+      "platformFamily": "legislative_reference_bureau",
+      "notes": null
+    },
+    {
+      "jurisdiction": "RI",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": "https://rules.sos.ri.gov/",
+      "platformFamily": "sos_portal",
+      "notes": null
+    },
+    {
+      "jurisdiction": "SC",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "SD",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "TN",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "TX",
+      "class": "B_ready_pdf",
+      "status": "ingested",
+      "officialUrl": "https://www.sos.texas.gov/tac/",
+      "platformFamily": "sos_portal",
+      "notes": null
+    },
+    {
+      "jurisdiction": "UT",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "VT",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "VA",
+      "class": "A_ready_structured",
+      "status": "ingested",
+      "officialUrl": "https://law.lis.virginia.gov/admincode/",
+      "platformFamily": "lis_revisor",
+      "notes": null
+    },
+    {
+      "jurisdiction": "WA",
+      "class": "A_ready_structured",
+      "status": "ingested",
+      "officialUrl": "https://app.leg.wa.gov/WAC/",
+      "platformFamily": "lis_revisor",
+      "notes": null
+    },
+    {
+      "jurisdiction": "WV",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": "https://apps.sos.wv.gov/adlaw/csr/",
+      "platformFamily": "sos_portal",
+      "notes": null
+    },
+    {
+      "jurisdiction": "WI",
+      "class": "A_ready_structured",
+      "status": "wave2h_ingested",
+      "officialUrl": "https://docs.legis.wisconsin.gov/code/admin_code/",
+      "platformFamily": "lis_revisor",
+      "notes": null
+    },
+    {
+      "jurisdiction": "WY",
+      "class": "C_manual_but_official",
+      "status": "public_source_engineering",
+      "officialUrl": null,
+      "platformFamily": null,
+      "notes": "Official admin code likely exists via SOS/legislature; not yet adapter-configured."
+    },
+    {
+      "jurisdiction": "US",
+      "class": "A_ready_structured",
+      "status": "ingested",
+      "officialUrl": "https://www.ecfr.gov/",
+      "platformFamily": "ecfr",
+      "notes": null
+    }
+  ]
+}

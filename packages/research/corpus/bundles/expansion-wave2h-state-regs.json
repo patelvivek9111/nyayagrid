@@ -1,0 +1,270 @@
+[
+  {
+    "title": "Minn. R. 5200.0030 — Minimum wage rates",
+    "shortTitle": "Minn. R. 5200.0030",
+    "authorityType": "regulation",
+    "jurisdiction": "Minnesota",
+    "authorityState": "MN",
+    "citation": "Minn. R. 5200.0030",
+    "normalizedCitation": "Minn. R. 5200.0030",
+    "sourceExternalId": "mn-r-5200-0030",
+    "canonicalSourceUrl": "https://www.revisor.mn.gov/rules/5200.0030/",
+    "hierarchyPath": [
+      { "level": "chapter", "ref": "5200", "label": "Wage and Hour" },
+      { "level": "part", "ref": "5200.0030", "label": "Minimum wage rates" }
+    ],
+    "bundlePracticeAreas": ["employment", "regulation"],
+    "content": "Minn. R. 5200.0030\n\nSubpart 1. Rates. The minimum wage rates established under Minnesota Statutes, section 177.24, apply to employees covered by the Minnesota Fair Labor Standards Act.",
+    "sections": [{ "sectionRef": "5200.0030", "content": "Minnesota administrative minimum wage rates track Minn. Stat. § 177.24 for covered employees." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Minnesota Office of the Revisor of Statutes",
+      "platformFamily": "lis_revisor",
+      "wave": "2H"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Minn. R. 5200.0120 — Overtime",
+    "shortTitle": "Minn. R. 5200.0120",
+    "authorityType": "regulation",
+    "jurisdiction": "Minnesota",
+    "authorityState": "MN",
+    "citation": "Minn. R. 5200.0120",
+    "normalizedCitation": "Minn. R. 5200.0120",
+    "sourceExternalId": "mn-r-5200-0120",
+    "canonicalSourceUrl": "https://www.revisor.mn.gov/rules/5200.0120/",
+    "hierarchyPath": [
+      { "level": "chapter", "ref": "5200", "label": "Wage and Hour" },
+      { "level": "part", "ref": "5200.0120", "label": "Overtime" }
+    ],
+    "bundlePracticeAreas": ["employment", "regulation"],
+    "content": "Minn. R. 5200.0120\n\nSubpart 1. Overtime rate. An employer shall pay an employee for overtime work at a rate of at least one and one-half times the employee's regular rate of pay as provided by Minnesota Statutes, section 177.25.",
+    "sections": [{ "sectionRef": "5200.0120", "content": "Minnesota requires overtime at least one and one-half times the regular rate for covered overtime work." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "overtime",
+      "sourceOwner": "Minnesota Office of the Revisor of Statutes",
+      "platformFamily": "lis_revisor",
+      "wave": "2H"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Wis. Admin. Code DWD § 272.03 — Minimum rates",
+    "shortTitle": "Wis. Admin. Code DWD § 272.03",
+    "authorityType": "regulation",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Admin. Code DWD § 272.03",
+    "normalizedCitation": "Wis. Admin. Code DWD § 272.03",
+    "sourceExternalId": "wi-dwd-272-03",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/code/admin_code/dwd/270_279/272",
+    "hierarchyPath": [
+      { "level": "agency", "ref": "DWD", "label": "Department of Workforce Development" },
+      { "level": "chapter", "ref": "272", "label": "Minimum Wages" },
+      { "level": "section", "ref": "272.03", "label": "Minimum rates" }
+    ],
+    "bundlePracticeAreas": ["employment", "regulation"],
+    "content": "Wis. Admin. Code DWD § 272.03\n\n(1) Except as provided in sub. (2), the minimum wage that an employer shall pay to an employee shall be the rates set under s. 104.035, Stats.",
+    "sections": [{ "sectionRef": "272.03", "content": "Wisconsin DWD minimum wage rates follow Wis. Stat. § 104.035." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Wisconsin Legislature / DWD",
+      "platformFamily": "lis_revisor",
+      "wave": "2H"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Wis. Admin. Code DWD § 274.03 — Overtime",
+    "shortTitle": "Wis. Admin. Code DWD § 274.03",
+    "authorityType": "regulation",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Admin. Code DWD § 274.03",
+    "normalizedCitation": "Wis. Admin. Code DWD § 274.03",
+    "sourceExternalId": "wi-dwd-274-03",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/code/admin_code/dwd/270_279/274",
+    "hierarchyPath": [
+      { "level": "agency", "ref": "DWD", "label": "Department of Workforce Development" },
+      { "level": "chapter", "ref": "274", "label": "Hours of Work and Overtime" },
+      { "level": "section", "ref": "274.03", "label": "Overtime" }
+    ],
+    "bundlePracticeAreas": ["employment", "regulation"],
+    "content": "Wis. Admin. Code DWD § 274.03\n\n(1) Except as provided in s. DWD 274.04, each employer shall pay an employee for overtime at a rate of not less than one and one-half times the employee's regular rate of pay for all hours worked in excess of 40 hours per week.",
+    "sections": [{ "sectionRef": "274.03", "content": "Wisconsin generally requires overtime at one and one-half times the regular rate after 40 hours." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "overtime",
+      "sourceOwner": "Wisconsin Legislature / DWD",
+      "platformFamily": "lis_revisor",
+      "wave": "2H"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ga. Comp. R. & Regs. 300-2-3-.01 — Unemployment insurance claims",
+    "shortTitle": "Ga. Comp. R. & Regs. 300-2-3-.01",
+    "authorityType": "regulation",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Comp. R. & Regs. 300-2-3-.01",
+    "normalizedCitation": "Ga. Comp. R. & Regs. 300-2-3-.01",
+    "sourceExternalId": "ga-comp-r-300-2-3-01",
+    "canonicalSourceUrl": "https://rules.sos.ga.gov/",
+    "hierarchyPath": [
+      { "level": "department", "ref": "300", "label": "Labor" },
+      { "level": "chapter", "ref": "300-2-3", "label": "Claims" },
+      { "level": "rule", "ref": "300-2-3-.01", "label": "Claims filing" }
+    ],
+    "bundlePracticeAreas": ["employment", "regulation"],
+    "content": "Ga. Comp. R. & Regs. 300-2-3-.01\n\n(1) Claims for benefits shall be filed in accordance with regulations and procedures prescribed by the Commissioner.\n\n(2) A claimant shall register for work and file a claim for benefits as directed.",
+    "sections": [{ "sectionRef": "300-2-3-.01", "content": "Georgia unemployment claims must be filed under Department of Labor procedures." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "unemployment",
+      "sourceOwner": "Georgia Secretary of State / Rules and Regulations",
+      "platformFamily": "sos_portal",
+      "wave": "2H"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ga. Comp. R. & Regs. 300-7-1-.02 — Child labor",
+    "shortTitle": "Ga. Comp. R. & Regs. 300-7-1-.02",
+    "authorityType": "regulation",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Comp. R. & Regs. 300-7-1-.02",
+    "normalizedCitation": "Ga. Comp. R. & Regs. 300-7-1-.02",
+    "sourceExternalId": "ga-comp-r-300-7-1-02",
+    "canonicalSourceUrl": "https://rules.sos.ga.gov/",
+    "hierarchyPath": [
+      { "level": "department", "ref": "300", "label": "Labor" },
+      { "level": "chapter", "ref": "300-7-1", "label": "Child Labor" },
+      { "level": "rule", "ref": "300-7-1-.02", "label": "Definitions" }
+    ],
+    "bundlePracticeAreas": ["employment", "regulation"],
+    "content": "Ga. Comp. R. & Regs. 300-7-1-.02\n\n(1) \"Child\" means a person under eighteen years of age.\n\n(2) Employment of minors is subject to the restrictions of O.C.G.A. Title 39 and these Rules.",
+    "sections": [{ "sectionRef": "300-7-1-.02", "content": "Georgia child labor rules define child and reference Title 39 restrictions." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "child_labor",
+      "sourceOwner": "Georgia Secretary of State / Rules and Regulations",
+      "platformFamily": "sos_portal",
+      "wave": "2H"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "650 Ind. Admin. Code 15-1-1 — Definitions",
+    "shortTitle": "650 IAC 15-1-1",
+    "authorityType": "regulation",
+    "jurisdiction": "Indiana",
+    "authorityState": "IN",
+    "citation": "650 IAC 15-1-1",
+    "normalizedCitation": "650 IAC 15-1-1",
+    "sourceExternalId": "in-iac-650-15-1-1",
+    "canonicalSourceUrl": "http://iac.iga.in.gov/",
+    "hierarchyPath": [
+      { "level": "title", "ref": "650", "label": "Department of Labor" },
+      { "level": "article", "ref": "15", "label": "Wage and Hour" },
+      { "level": "rule", "ref": "15-1-1", "label": "Definitions" }
+    ],
+    "bundlePracticeAreas": ["employment", "regulation"],
+    "content": "650 IAC 15-1-1\n\nAuthority: IC 22-2-2\n\nSec. 1. The definitions in IC 22-2-2 and this rule apply throughout this article.",
+    "sections": [{ "sectionRef": "15-1-1", "content": "Indiana wage and hour administrative definitions incorporate IC 22-2-2." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "wage_payment",
+      "sourceOwner": "Indiana General Assembly / IAC",
+      "platformFamily": "lis_revisor",
+      "wave": "2H"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Or. Admin. R. 839-020-0010 — Definitions",
+    "shortTitle": "Or. Admin. R. 839-020-0010",
+    "authorityType": "regulation",
+    "jurisdiction": "Oregon",
+    "authorityState": "OR",
+    "citation": "Or. Admin. R. 839-020-0010",
+    "normalizedCitation": "Or. Admin. R. 839-020-0010",
+    "sourceExternalId": "or-oar-839-020-0010",
+    "canonicalSourceUrl": "https://secure.sos.state.or.us/oard/viewSingleRule.action?ruleVrsnRsn=123",
+    "hierarchyPath": [
+      { "level": "chapter", "ref": "839", "label": "Bureau of Labor and Industries" },
+      { "level": "division", "ref": "020", "label": "Wage and Hour" },
+      { "level": "rule", "ref": "839-020-0010", "label": "Definitions" }
+    ],
+    "bundlePracticeAreas": ["employment", "regulation"],
+    "content": "Or. Admin. R. 839-020-0010\n\nAs used in OAR 839-020-0000 through 839-020-1020, unless the context requires otherwise:\n\n(1) \"Employ\" includes to suffer or permit to work.\n\n(2) \"Employee\" means any individual employed by an employer.",
+    "sections": [{ "sectionRef": "839-020-0010", "content": "Oregon BOLI wage and hour definitions for employ and employee." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "wage_payment",
+      "sourceOwner": "Oregon Secretary of State / BOLI",
+      "platformFamily": "sos_portal",
+      "wave": "2H"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Or. Admin. R. 839-020-0030 — Minimum wage",
+    "shortTitle": "Or. Admin. R. 839-020-0030",
+    "authorityType": "regulation",
+    "jurisdiction": "Oregon",
+    "authorityState": "OR",
+    "citation": "Or. Admin. R. 839-020-0030",
+    "normalizedCitation": "Or. Admin. R. 839-020-0030",
+    "sourceExternalId": "or-oar-839-020-0030",
+    "canonicalSourceUrl": "https://secure.sos.state.or.us/oard/",
+    "hierarchyPath": [
+      { "level": "chapter", "ref": "839", "label": "Bureau of Labor and Industries" },
+      { "level": "division", "ref": "020", "label": "Wage and Hour" },
+      { "level": "rule", "ref": "839-020-0030", "label": "Minimum wage" }
+    ],
+    "bundlePracticeAreas": ["employment", "regulation"],
+    "content": "Or. Admin. R. 839-020-0030\n\n(1) Except as provided in ORS 653.020 and these rules, every employer shall pay to each employee wages at a rate not less than the applicable Oregon minimum wage.",
+    "sections": [{ "sectionRef": "839-020-0030", "content": "Oregon employers must pay the applicable Oregon minimum wage except as otherwise provided." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Oregon Secretary of State / BOLI",
+      "platformFamily": "sos_portal",
+      "wave": "2H"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  }
+]

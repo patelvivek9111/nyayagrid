@@ -1,0 +1,2522 @@
+[
+  {
+    "title": "Ala. R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "Ala. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Alabama",
+    "authorityState": "AL",
+    "citation": "Ala. R. Civ. P. 12",
+    "normalizedCitation": "Ala. R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "al-rule-12",
+    "canonicalSourceUrl": "https://judicial.alabama.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ala. R. Civ. P.",
+        "label": "Ala. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "Ala. R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Ala. R. Civ. P. 12\n\nDefenses and objections — every defense shall be asserted in the responsive pleading except defenses that may be made by motion including failure to state a claim.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections — every defense shall be asserted in the responsive pleading except defenses that may be made by motion including failure to state a claim."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Supreme Court of Alabama",
+      "ruleFamily": "Ala. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ala. R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "Ala. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Alabama",
+    "authorityState": "AL",
+    "citation": "Ala. R. Civ. P. 56",
+    "normalizedCitation": "Ala. R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "al-rule-56",
+    "canonicalSourceUrl": "https://judicial.alabama.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ala. R. Civ. P.",
+        "label": "Ala. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "Ala. R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Ala. R. Civ. P. 56\n\nSummary judgment — judgment shall be rendered if there is no genuine issue as to any material fact and the moving party is entitled to a judgment as a matter of law.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment — judgment shall be rendered if there is no genuine issue as to any material fact and the moving party is entitled to a judgment as a matter of law."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Supreme Court of Alabama",
+      "ruleFamily": "Ala. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Alaska R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "Alaska R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Alaska",
+    "authorityState": "AK",
+    "citation": "Alaska R. Civ. P. 12",
+    "normalizedCitation": "Alaska R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ak-rule-12",
+    "canonicalSourceUrl": "https://courts.alaska.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Alaska R. Civ. P.",
+        "label": "Alaska R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "Alaska R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Alaska R. Civ. P. 12\n\nDefenses and objections may be raised by motion including failure to state a claim upon which relief can be granted.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections may be raised by motion including failure to state a claim upon which relief can be granted."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Alaska Court System",
+      "ruleFamily": "Alaska R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Alaska R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "Alaska R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Alaska",
+    "authorityState": "AK",
+    "citation": "Alaska R. Civ. P. 56",
+    "normalizedCitation": "Alaska R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ak-rule-56",
+    "canonicalSourceUrl": "https://courts.alaska.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Alaska R. Civ. P.",
+        "label": "Alaska R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "Alaska R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Alaska R. Civ. P. 56\n\nSummary judgment if no genuine issue of material fact and movant entitled to judgment as a matter of law.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment if no genuine issue of material fact and movant entitled to judgment as a matter of law."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Alaska Court System",
+      "ruleFamily": "Alaska R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ark. R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "Ark. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Arkansas",
+    "authorityState": "AR",
+    "citation": "Ark. R. Civ. P. 12",
+    "normalizedCitation": "Ark. R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ar-rule-12",
+    "canonicalSourceUrl": "https://www.arcourts.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ark. R. Civ. P.",
+        "label": "Ark. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "Ark. R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Ark. R. Civ. P. 12\n\nDefenses and objections; failure to state facts upon which relief can be granted may be raised by motion.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections; failure to state facts upon which relief can be granted may be raised by motion."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Arkansas Judiciary",
+      "ruleFamily": "Ark. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ark. R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "Ark. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Arkansas",
+    "authorityState": "AR",
+    "citation": "Ark. R. Civ. P. 56",
+    "normalizedCitation": "Ark. R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ar-rule-56",
+    "canonicalSourceUrl": "https://www.arcourts.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ark. R. Civ. P.",
+        "label": "Ark. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "Ark. R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Ark. R. Civ. P. 56\n\nSummary judgment when no genuine issue as to any material fact.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment when no genuine issue as to any material fact."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Arkansas Judiciary",
+      "ruleFamily": "Ark. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Haw. R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "Haw. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Hawaii",
+    "authorityState": "HI",
+    "citation": "Haw. R. Civ. P. 12",
+    "normalizedCitation": "Haw. R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "hi-rule-12",
+    "canonicalSourceUrl": "https://www.courts.state.hi.us/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Haw. R. Civ. P.",
+        "label": "Haw. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "Haw. R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Haw. R. Civ. P. 12\n\nDefenses and objections including failure to state a claim upon which relief can be granted.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections including failure to state a claim upon which relief can be granted."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Hawaii State Judiciary",
+      "ruleFamily": "Haw. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Haw. R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "Haw. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Hawaii",
+    "authorityState": "HI",
+    "citation": "Haw. R. Civ. P. 56",
+    "normalizedCitation": "Haw. R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "hi-rule-56",
+    "canonicalSourceUrl": "https://www.courts.state.hi.us/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Haw. R. Civ. P.",
+        "label": "Haw. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "Haw. R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Haw. R. Civ. P. 56\n\nSummary judgment if no genuine issue as to any material fact.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment if no genuine issue as to any material fact."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Hawaii State Judiciary",
+      "ruleFamily": "Haw. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Idaho R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "Idaho R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Idaho",
+    "authorityState": "ID",
+    "citation": "Idaho R. Civ. P. 12",
+    "normalizedCitation": "Idaho R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "id-rule-12",
+    "canonicalSourceUrl": "https://isc.idaho.gov/idaho-court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Idaho R. Civ. P.",
+        "label": "Idaho R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "Idaho R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Idaho R. Civ. P. 12\n\nDefenses and objections; failure to state a claim upon which relief can be granted.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections; failure to state a claim upon which relief can be granted."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Idaho Supreme Court",
+      "ruleFamily": "Idaho R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Idaho R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "Idaho R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Idaho",
+    "authorityState": "ID",
+    "citation": "Idaho R. Civ. P. 56",
+    "normalizedCitation": "Idaho R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "id-rule-56",
+    "canonicalSourceUrl": "https://isc.idaho.gov/idaho-court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Idaho R. Civ. P.",
+        "label": "Idaho R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "Idaho R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Idaho R. Civ. P. 56\n\nSummary judgment standard — no genuine dispute as to any material fact.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment standard — no genuine dispute as to any material fact."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Idaho Supreme Court",
+      "ruleFamily": "Idaho R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Iowa R. Civ. P. 1.421 — Civil procedure",
+    "shortTitle": "Iowa R. Civ. P. 1.421",
+    "authorityType": "rule",
+    "jurisdiction": "Iowa",
+    "authorityState": "IA",
+    "citation": "Iowa R. Civ. P. 1.421",
+    "normalizedCitation": "Iowa R. Civ. P. 1.421",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ia-rule-1-421",
+    "canonicalSourceUrl": "https://www.iowacourts.gov/for-the-public/court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Iowa R. Civ. P.",
+        "label": "Iowa R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "1.421",
+        "label": "Iowa R. Civ. P. 1.421"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Iowa R. Civ. P. 1.421\n\nPre-answer motions including failure to state a claim upon which any relief may be granted.",
+    "sections": [
+      {
+        "sectionRef": "1.421",
+        "content": "Pre-answer motions including failure to state a claim upon which any relief may be granted."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Iowa Judicial Branch",
+      "ruleFamily": "Iowa R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Iowa R. Civ. P. 1.981 — Civil procedure",
+    "shortTitle": "Iowa R. Civ. P. 1.981",
+    "authorityType": "rule",
+    "jurisdiction": "Iowa",
+    "authorityState": "IA",
+    "citation": "Iowa R. Civ. P. 1.981",
+    "normalizedCitation": "Iowa R. Civ. P. 1.981",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ia-rule-1-981",
+    "canonicalSourceUrl": "https://www.iowacourts.gov/for-the-public/court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Iowa R. Civ. P.",
+        "label": "Iowa R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "1.981",
+        "label": "Iowa R. Civ. P. 1.981"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Iowa R. Civ. P. 1.981\n\nSummary judgment if no genuine issue as to any material fact.",
+    "sections": [
+      {
+        "sectionRef": "1.981",
+        "content": "Summary judgment if no genuine issue as to any material fact."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Iowa Judicial Branch",
+      "ruleFamily": "Iowa R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Kan. Stat. Ann. § 60-212 — Civil procedure",
+    "shortTitle": "Kan. Stat. Ann. § 60-212",
+    "authorityType": "rule",
+    "jurisdiction": "Kansas",
+    "authorityState": "KS",
+    "citation": "Kan. Stat. Ann. § 60-212",
+    "normalizedCitation": "Kan. Stat. Ann. § 60-212",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ks-rule-60-212",
+    "canonicalSourceUrl": "https://www.kscourts.org/Rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Kan. Stat. Ann. § 60",
+        "label": "Kan. Stat. Ann. § 60"
+      },
+      {
+        "level": "rule",
+        "ref": "60-212",
+        "label": "Kan. Stat. Ann. § 60-212"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Kan. Stat. Ann. § 60-212\n\nDefenses and objections; failure to state a claim upon which relief can be granted.",
+    "sections": [
+      {
+        "sectionRef": "60-212",
+        "content": "Defenses and objections; failure to state a claim upon which relief can be granted."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Kansas Judicial Branch",
+      "ruleFamily": "Kan. Stat. Ann. § 60",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Kan. Stat. Ann. § 60-256 — Civil procedure",
+    "shortTitle": "Kan. Stat. Ann. § 60-256",
+    "authorityType": "rule",
+    "jurisdiction": "Kansas",
+    "authorityState": "KS",
+    "citation": "Kan. Stat. Ann. § 60-256",
+    "normalizedCitation": "Kan. Stat. Ann. § 60-256",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ks-rule-60-256",
+    "canonicalSourceUrl": "https://www.kscourts.org/Rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Kan. Stat. Ann. § 60",
+        "label": "Kan. Stat. Ann. § 60"
+      },
+      {
+        "level": "rule",
+        "ref": "60-256",
+        "label": "Kan. Stat. Ann. § 60-256"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Kan. Stat. Ann. § 60-256\n\nSummary judgment when no genuine issue as to any material fact.",
+    "sections": [
+      {
+        "sectionRef": "60-256",
+        "content": "Summary judgment when no genuine issue as to any material fact."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Kansas Judicial Branch",
+      "ruleFamily": "Kan. Stat. Ann. § 60",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ky. R. Civ. P. 12.02 — Civil procedure",
+    "shortTitle": "Ky. R. Civ. P. 12.02",
+    "authorityType": "rule",
+    "jurisdiction": "Kentucky",
+    "authorityState": "KY",
+    "citation": "Ky. R. Civ. P. 12.02",
+    "normalizedCitation": "Ky. R. Civ. P. 12.02",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ky-rule-12-02",
+    "canonicalSourceUrl": "https://www.kycourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ky. R. Civ. P.",
+        "label": "Ky. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12.02",
+        "label": "Ky. R. Civ. P. 12.02"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Ky. R. Civ. P. 12.02\n\nDefenses and objections including failure to state a claim.",
+    "sections": [
+      {
+        "sectionRef": "12.02",
+        "content": "Defenses and objections including failure to state a claim."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Kentucky Court of Justice",
+      "ruleFamily": "Ky. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Ky. R. Civ. P. 56.03 — Civil procedure",
+    "shortTitle": "Ky. R. Civ. P. 56.03",
+    "authorityType": "rule",
+    "jurisdiction": "Kentucky",
+    "authorityState": "KY",
+    "citation": "Ky. R. Civ. P. 56.03",
+    "normalizedCitation": "Ky. R. Civ. P. 56.03",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ky-rule-56-03",
+    "canonicalSourceUrl": "https://www.kycourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ky. R. Civ. P.",
+        "label": "Ky. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56.03",
+        "label": "Ky. R. Civ. P. 56.03"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Ky. R. Civ. P. 56.03\n\nSummary judgment motion and proceedings.",
+    "sections": [
+      {
+        "sectionRef": "56.03",
+        "content": "Summary judgment motion and proceedings."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Kentucky Court of Justice",
+      "ruleFamily": "Ky. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "La. Code Civ. Proc. art. 927 — Civil procedure",
+    "shortTitle": "La. Code Civ. Proc. art. 927",
+    "authorityType": "rule",
+    "jurisdiction": "Louisiana",
+    "authorityState": "LA",
+    "citation": "La. Code Civ. Proc. art. 927",
+    "normalizedCitation": "La. Code Civ. Proc. art. 927",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "la-rule-art-927",
+    "canonicalSourceUrl": "https://www.lasc.org/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "La. Code Civ. Proc.",
+        "label": "La. Code Civ. Proc."
+      },
+      {
+        "level": "rule",
+        "ref": "art. 927",
+        "label": "La. Code Civ. Proc. art. 927"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "La. Code Civ. Proc. art. 927\n\nObjections raised by peremptory exception including no cause of action.",
+    "sections": [
+      {
+        "sectionRef": "art. 927",
+        "content": "Objections raised by peremptory exception including no cause of action."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Louisiana Supreme Court",
+      "ruleFamily": "La. Code Civ. Proc.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "La. Code Civ. Proc. art. 966 — Civil procedure",
+    "shortTitle": "La. Code Civ. Proc. art. 966",
+    "authorityType": "rule",
+    "jurisdiction": "Louisiana",
+    "authorityState": "LA",
+    "citation": "La. Code Civ. Proc. art. 966",
+    "normalizedCitation": "La. Code Civ. Proc. art. 966",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "la-rule-art-966",
+    "canonicalSourceUrl": "https://www.lasc.org/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "La. Code Civ. Proc.",
+        "label": "La. Code Civ. Proc."
+      },
+      {
+        "level": "rule",
+        "ref": "art. 966",
+        "label": "La. Code Civ. Proc. art. 966"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "La. Code Civ. Proc. art. 966\n\nMotion for summary judgment.",
+    "sections": [
+      {
+        "sectionRef": "art. 966",
+        "content": "Motion for summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Louisiana Supreme Court",
+      "ruleFamily": "La. Code Civ. Proc.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Me. R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "Me. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Maine",
+    "authorityState": "ME",
+    "citation": "Me. R. Civ. P. 12",
+    "normalizedCitation": "Me. R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "me-rule-12",
+    "canonicalSourceUrl": "https://www.courts.maine.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Me. R. Civ. P.",
+        "label": "Me. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "Me. R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Me. R. Civ. P. 12\n\nDefenses and objections; failure to state a claim.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections; failure to state a claim."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Maine Judicial Branch",
+      "ruleFamily": "Me. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Me. R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "Me. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Maine",
+    "authorityState": "ME",
+    "citation": "Me. R. Civ. P. 56",
+    "normalizedCitation": "Me. R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "me-rule-56",
+    "canonicalSourceUrl": "https://www.courts.maine.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Me. R. Civ. P.",
+        "label": "Me. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "Me. R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Me. R. Civ. P. 56\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Maine Judicial Branch",
+      "ruleFamily": "Me. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Miss. R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "Miss. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Mississippi",
+    "authorityState": "MS",
+    "citation": "Miss. R. Civ. P. 12",
+    "normalizedCitation": "Miss. R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ms-rule-12",
+    "canonicalSourceUrl": "https://courts.ms.gov/research/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Miss. R. Civ. P.",
+        "label": "Miss. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "Miss. R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Miss. R. Civ. P. 12\n\nDefenses and objections; failure to state a claim.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections; failure to state a claim."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Mississippi Judiciary",
+      "ruleFamily": "Miss. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Miss. R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "Miss. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Mississippi",
+    "authorityState": "MS",
+    "citation": "Miss. R. Civ. P. 56",
+    "normalizedCitation": "Miss. R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ms-rule-56",
+    "canonicalSourceUrl": "https://courts.ms.gov/research/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Miss. R. Civ. P.",
+        "label": "Miss. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "Miss. R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Miss. R. Civ. P. 56\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Mississippi Judiciary",
+      "ruleFamily": "Miss. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Mo. Sup. Ct. R. 55.27 — Civil procedure",
+    "shortTitle": "Mo. Sup. Ct. R. 55.27",
+    "authorityType": "rule",
+    "jurisdiction": "Missouri",
+    "authorityState": "MO",
+    "citation": "Mo. Sup. Ct. R. 55.27",
+    "normalizedCitation": "Mo. Sup. Ct. R. 55.27",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mo-rule-55-27",
+    "canonicalSourceUrl": "https://www.courts.mo.gov/page.jsp?id=667",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Mo. Sup. Ct. R.",
+        "label": "Mo. Sup. Ct. R."
+      },
+      {
+        "level": "rule",
+        "ref": "55.27",
+        "label": "Mo. Sup. Ct. R. 55.27"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Mo. Sup. Ct. R. 55.27\n\nDefenses and objections; failure to state a claim.",
+    "sections": [
+      {
+        "sectionRef": "55.27",
+        "content": "Defenses and objections; failure to state a claim."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Supreme Court of Missouri",
+      "ruleFamily": "Mo. Sup. Ct. R.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Mo. Sup. Ct. R. 74.04 — Civil procedure",
+    "shortTitle": "Mo. Sup. Ct. R. 74.04",
+    "authorityType": "rule",
+    "jurisdiction": "Missouri",
+    "authorityState": "MO",
+    "citation": "Mo. Sup. Ct. R. 74.04",
+    "normalizedCitation": "Mo. Sup. Ct. R. 74.04",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mo-rule-74-04",
+    "canonicalSourceUrl": "https://www.courts.mo.gov/page.jsp?id=667",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Mo. Sup. Ct. R.",
+        "label": "Mo. Sup. Ct. R."
+      },
+      {
+        "level": "rule",
+        "ref": "74.04",
+        "label": "Mo. Sup. Ct. R. 74.04"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Mo. Sup. Ct. R. 74.04\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "74.04",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Supreme Court of Missouri",
+      "ruleFamily": "Mo. Sup. Ct. R.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Mont. R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "Mont. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Montana",
+    "authorityState": "MT",
+    "citation": "Mont. R. Civ. P. 12",
+    "normalizedCitation": "Mont. R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mt-rule-12",
+    "canonicalSourceUrl": "https://courts.mt.gov/Courts/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Mont. R. Civ. P.",
+        "label": "Mont. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "Mont. R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Mont. R. Civ. P. 12\n\nDefenses and objections.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Montana Judicial Branch",
+      "ruleFamily": "Mont. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Mont. R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "Mont. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Montana",
+    "authorityState": "MT",
+    "citation": "Mont. R. Civ. P. 56",
+    "normalizedCitation": "Mont. R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mt-rule-56",
+    "canonicalSourceUrl": "https://courts.mt.gov/Courts/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Mont. R. Civ. P.",
+        "label": "Mont. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "Mont. R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Mont. R. Civ. P. 56\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Montana Judicial Branch",
+      "ruleFamily": "Mont. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Neb. Ct. R. Pldg. § 6-1112 — Civil procedure",
+    "shortTitle": "Neb. Ct. R. Pldg. § 6-1112",
+    "authorityType": "rule",
+    "jurisdiction": "Nebraska",
+    "authorityState": "NE",
+    "citation": "Neb. Ct. R. Pldg. § 6-1112",
+    "normalizedCitation": "Neb. Ct. R. Pldg. § 6-1112",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ne-rule--6-1112",
+    "canonicalSourceUrl": "https://supremecourt.nebraska.gov/supreme-court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Neb. Ct. R. Pldg.",
+        "label": "Neb. Ct. R. Pldg."
+      },
+      {
+        "level": "rule",
+        "ref": "§ 6-1112",
+        "label": "Neb. Ct. R. Pldg. § 6-1112"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Neb. Ct. R. Pldg. § 6-1112\n\nDefenses and objections; failure to state a claim.",
+    "sections": [
+      {
+        "sectionRef": "§ 6-1112",
+        "content": "Defenses and objections; failure to state a claim."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Nebraska Judicial Branch",
+      "ruleFamily": "Neb. Ct. R. Pldg.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Neb. Ct. R. Disc. § 6-1156 — Civil procedure",
+    "shortTitle": "Neb. Ct. R. Disc. § 6-1156",
+    "authorityType": "rule",
+    "jurisdiction": "Nebraska",
+    "authorityState": "NE",
+    "citation": "Neb. Ct. R. Disc. § 6-1156",
+    "normalizedCitation": "Neb. Ct. R. Disc. § 6-1156",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ne-rule--6-1156",
+    "canonicalSourceUrl": "https://supremecourt.nebraska.gov/supreme-court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Neb. Ct. R. Pldg.",
+        "label": "Neb. Ct. R. Pldg."
+      },
+      {
+        "level": "rule",
+        "ref": "§ 6-1156",
+        "label": "Neb. Ct. R. Disc. § 6-1156"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Neb. Ct. R. Disc. § 6-1156\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "§ 6-1156",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Nebraska Judicial Branch",
+      "ruleFamily": "Neb. Ct. R. Pldg.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Nev. R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "Nev. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Nevada",
+    "authorityState": "NV",
+    "citation": "Nev. R. Civ. P. 12",
+    "normalizedCitation": "Nev. R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nv-rule-12",
+    "canonicalSourceUrl": "https://nvcourts.gov/supreme/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Nev. R. Civ. P.",
+        "label": "Nev. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "Nev. R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Nev. R. Civ. P. 12\n\nDefenses and objections.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Nevada Judiciary",
+      "ruleFamily": "Nev. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Nev. R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "Nev. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Nevada",
+    "authorityState": "NV",
+    "citation": "Nev. R. Civ. P. 56",
+    "normalizedCitation": "Nev. R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nv-rule-56",
+    "canonicalSourceUrl": "https://nvcourts.gov/supreme/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Nev. R. Civ. P.",
+        "label": "Nev. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "Nev. R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Nev. R. Civ. P. 56\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Nevada Judiciary",
+      "ruleFamily": "Nev. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "N.H. Super. Ct. R. 9 — Civil procedure",
+    "shortTitle": "N.H. Super. Ct. R. 9",
+    "authorityType": "rule",
+    "jurisdiction": "New Hampshire",
+    "authorityState": "NH",
+    "citation": "N.H. Super. Ct. R. 9",
+    "normalizedCitation": "N.H. Super. Ct. R. 9",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nh-rule-9",
+    "canonicalSourceUrl": "https://www.courts.nh.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.H. Super. Ct. R.",
+        "label": "N.H. Super. Ct. R."
+      },
+      {
+        "level": "rule",
+        "ref": "9",
+        "label": "N.H. Super. Ct. R. 9"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "N.H. Super. Ct. R. 9\n\nMotions to dismiss for failure to state a claim.",
+    "sections": [
+      {
+        "sectionRef": "9",
+        "content": "Motions to dismiss for failure to state a claim."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "New Hampshire Judicial Branch",
+      "ruleFamily": "N.H. Super. Ct. R.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "N.H. Super. Ct. R. 12 — Civil procedure",
+    "shortTitle": "N.H. Super. Ct. R. 12",
+    "authorityType": "rule",
+    "jurisdiction": "New Hampshire",
+    "authorityState": "NH",
+    "citation": "N.H. Super. Ct. R. 12",
+    "normalizedCitation": "N.H. Super. Ct. R. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nh-rule-12",
+    "canonicalSourceUrl": "https://www.courts.nh.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.H. Super. Ct. R.",
+        "label": "N.H. Super. Ct. R."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "N.H. Super. Ct. R. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "N.H. Super. Ct. R. 12\n\nMotions for summary judgment.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Motions for summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "New Hampshire Judicial Branch",
+      "ruleFamily": "N.H. Super. Ct. R.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "N.M. R. Civ. P. 1-012 — Civil procedure",
+    "shortTitle": "N.M. R. Civ. P. 1-012",
+    "authorityType": "rule",
+    "jurisdiction": "New Mexico",
+    "authorityState": "NM",
+    "citation": "N.M. R. Civ. P. 1-012",
+    "normalizedCitation": "N.M. R. Civ. P. 1-012",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nm-rule-1-012",
+    "canonicalSourceUrl": "https://www.nmcourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.M. R. Civ. P.",
+        "label": "N.M. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "1-012",
+        "label": "N.M. R. Civ. P. 1-012"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "N.M. R. Civ. P. 1-012\n\nDefenses and objections.",
+    "sections": [
+      {
+        "sectionRef": "1-012",
+        "content": "Defenses and objections."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "New Mexico Courts",
+      "ruleFamily": "N.M. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "N.M. R. Civ. P. 1-056 — Civil procedure",
+    "shortTitle": "N.M. R. Civ. P. 1-056",
+    "authorityType": "rule",
+    "jurisdiction": "New Mexico",
+    "authorityState": "NM",
+    "citation": "N.M. R. Civ. P. 1-056",
+    "normalizedCitation": "N.M. R. Civ. P. 1-056",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nm-rule-1-056",
+    "canonicalSourceUrl": "https://www.nmcourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.M. R. Civ. P.",
+        "label": "N.M. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "1-056",
+        "label": "N.M. R. Civ. P. 1-056"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "N.M. R. Civ. P. 1-056\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "1-056",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "New Mexico Courts",
+      "ruleFamily": "N.M. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "N.D. R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "N.D. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "North Dakota",
+    "authorityState": "ND",
+    "citation": "N.D. R. Civ. P. 12",
+    "normalizedCitation": "N.D. R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nd-rule-12",
+    "canonicalSourceUrl": "https://www.ndcourts.gov/legal-resources/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.D. R. Civ. P.",
+        "label": "N.D. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "N.D. R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "N.D. R. Civ. P. 12\n\nDefenses and objections.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "North Dakota Courts",
+      "ruleFamily": "N.D. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "N.D. R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "N.D. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "North Dakota",
+    "authorityState": "ND",
+    "citation": "N.D. R. Civ. P. 56",
+    "normalizedCitation": "N.D. R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nd-rule-56",
+    "canonicalSourceUrl": "https://www.ndcourts.gov/legal-resources/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.D. R. Civ. P.",
+        "label": "N.D. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "N.D. R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "N.D. R. Civ. P. 56\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "North Dakota Courts",
+      "ruleFamily": "N.D. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Okla. Stat. tit. 12, § 2012 — Civil procedure",
+    "shortTitle": "Okla. Stat. tit. 12, § 2012",
+    "authorityType": "rule",
+    "jurisdiction": "Oklahoma",
+    "authorityState": "OK",
+    "citation": "Okla. Stat. tit. 12, § 2012",
+    "normalizedCitation": "Okla. Stat. tit. 12, § 2012",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ok-rule--2012",
+    "canonicalSourceUrl": "https://www.oscn.net/applications/oscn/index.asp?ftdb=STOKRU&level=1",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Okla. Stat. tit. 12",
+        "label": "Okla. Stat. tit. 12"
+      },
+      {
+        "level": "rule",
+        "ref": "§ 2012",
+        "label": "Okla. Stat. tit. 12, § 2012"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Okla. Stat. tit. 12, § 2012\n\nDefenses and objections; failure to state a claim.",
+    "sections": [
+      {
+        "sectionRef": "§ 2012",
+        "content": "Defenses and objections; failure to state a claim."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Oklahoma Courts",
+      "ruleFamily": "Okla. Stat. tit. 12",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Okla. Stat. tit. 12, § 2056 — Civil procedure",
+    "shortTitle": "Okla. Stat. tit. 12, § 2056",
+    "authorityType": "rule",
+    "jurisdiction": "Oklahoma",
+    "authorityState": "OK",
+    "citation": "Okla. Stat. tit. 12, § 2056",
+    "normalizedCitation": "Okla. Stat. tit. 12, § 2056",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ok-rule--2056",
+    "canonicalSourceUrl": "https://www.oscn.net/applications/oscn/index.asp?ftdb=STOKRU&level=1",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Okla. Stat. tit. 12",
+        "label": "Okla. Stat. tit. 12"
+      },
+      {
+        "level": "rule",
+        "ref": "§ 2056",
+        "label": "Okla. Stat. tit. 12, § 2056"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Okla. Stat. tit. 12, § 2056\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "§ 2056",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Oklahoma Courts",
+      "ruleFamily": "Okla. Stat. tit. 12",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "R.I. Super. R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "R.I. Super. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Rhode Island",
+    "authorityState": "RI",
+    "citation": "R.I. Super. R. Civ. P. 12",
+    "normalizedCitation": "R.I. Super. R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ri-rule-12",
+    "canonicalSourceUrl": "https://www.courts.ri.gov/Courts/SupremeCourt/Pages/Rules.aspx",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "R.I. Super. R. Civ. P.",
+        "label": "R.I. Super. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "R.I. Super. R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "R.I. Super. R. Civ. P. 12\n\nDefenses and objections.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Rhode Island Judiciary",
+      "ruleFamily": "R.I. Super. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "R.I. Super. R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "R.I. Super. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Rhode Island",
+    "authorityState": "RI",
+    "citation": "R.I. Super. R. Civ. P. 56",
+    "normalizedCitation": "R.I. Super. R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ri-rule-56",
+    "canonicalSourceUrl": "https://www.courts.ri.gov/Courts/SupremeCourt/Pages/Rules.aspx",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "R.I. Super. R. Civ. P.",
+        "label": "R.I. Super. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "R.I. Super. R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "R.I. Super. R. Civ. P. 56\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Rhode Island Judiciary",
+      "ruleFamily": "R.I. Super. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "S.C. R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "S.C. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "South Carolina",
+    "authorityState": "SC",
+    "citation": "S.C. R. Civ. P. 12",
+    "normalizedCitation": "S.C. R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "sc-rule-12",
+    "canonicalSourceUrl": "https://www.sccourts.org/courtOrders/displayRule.cfm",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "S.C. R. Civ. P.",
+        "label": "S.C. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "S.C. R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "S.C. R. Civ. P. 12\n\nDefenses and objections.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "South Carolina Judicial Department",
+      "ruleFamily": "S.C. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "S.C. R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "S.C. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "South Carolina",
+    "authorityState": "SC",
+    "citation": "S.C. R. Civ. P. 56",
+    "normalizedCitation": "S.C. R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "sc-rule-56",
+    "canonicalSourceUrl": "https://www.sccourts.org/courtOrders/displayRule.cfm",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "S.C. R. Civ. P.",
+        "label": "S.C. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "S.C. R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "S.C. R. Civ. P. 56\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "South Carolina Judicial Department",
+      "ruleFamily": "S.C. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "S.D. Codified Laws § 15-6-12 — Civil procedure",
+    "shortTitle": "S.D. Codified Laws § 15-6-12",
+    "authorityType": "rule",
+    "jurisdiction": "South Dakota",
+    "authorityState": "SD",
+    "citation": "S.D. Codified Laws § 15-6-12",
+    "normalizedCitation": "S.D. Codified Laws § 15-6-12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "sd-rule-15-6-12",
+    "canonicalSourceUrl": "https://ujs.sd.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "S.D. Codified Laws § 15-6",
+        "label": "S.D. Codified Laws § 15-6"
+      },
+      {
+        "level": "rule",
+        "ref": "15-6-12",
+        "label": "S.D. Codified Laws § 15-6-12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "S.D. Codified Laws § 15-6-12\n\nDefenses and objections.",
+    "sections": [
+      {
+        "sectionRef": "15-6-12",
+        "content": "Defenses and objections."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "South Dakota Unified Judicial System",
+      "ruleFamily": "S.D. Codified Laws § 15-6",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "S.D. Codified Laws § 15-6-56 — Civil procedure",
+    "shortTitle": "S.D. Codified Laws § 15-6-56",
+    "authorityType": "rule",
+    "jurisdiction": "South Dakota",
+    "authorityState": "SD",
+    "citation": "S.D. Codified Laws § 15-6-56",
+    "normalizedCitation": "S.D. Codified Laws § 15-6-56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "sd-rule-15-6-56",
+    "canonicalSourceUrl": "https://ujs.sd.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "S.D. Codified Laws § 15-6",
+        "label": "S.D. Codified Laws § 15-6"
+      },
+      {
+        "level": "rule",
+        "ref": "15-6-56",
+        "label": "S.D. Codified Laws § 15-6-56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "S.D. Codified Laws § 15-6-56\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "15-6-56",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "South Dakota Unified Judicial System",
+      "ruleFamily": "S.D. Codified Laws § 15-6",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Tenn. R. Civ. P. 12.02 — Civil procedure",
+    "shortTitle": "Tenn. R. Civ. P. 12.02",
+    "authorityType": "rule",
+    "jurisdiction": "Tennessee",
+    "authorityState": "TN",
+    "citation": "Tenn. R. Civ. P. 12.02",
+    "normalizedCitation": "Tenn. R. Civ. P. 12.02",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tn-rule-12-02",
+    "canonicalSourceUrl": "https://www.tncourts.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Tenn. R. Civ. P.",
+        "label": "Tenn. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12.02",
+        "label": "Tenn. R. Civ. P. 12.02"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Tenn. R. Civ. P. 12.02\n\nDefenses and objections; failure to state a claim.",
+    "sections": [
+      {
+        "sectionRef": "12.02",
+        "content": "Defenses and objections; failure to state a claim."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Tennessee Courts",
+      "ruleFamily": "Tenn. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Tenn. R. Civ. P. 56.04 — Civil procedure",
+    "shortTitle": "Tenn. R. Civ. P. 56.04",
+    "authorityType": "rule",
+    "jurisdiction": "Tennessee",
+    "authorityState": "TN",
+    "citation": "Tenn. R. Civ. P. 56.04",
+    "normalizedCitation": "Tenn. R. Civ. P. 56.04",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tn-rule-56-04",
+    "canonicalSourceUrl": "https://www.tncourts.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Tenn. R. Civ. P.",
+        "label": "Tenn. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56.04",
+        "label": "Tenn. R. Civ. P. 56.04"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Tenn. R. Civ. P. 56.04\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "56.04",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Tennessee Courts",
+      "ruleFamily": "Tenn. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Utah R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "Utah R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Utah",
+    "authorityState": "UT",
+    "citation": "Utah R. Civ. P. 12",
+    "normalizedCitation": "Utah R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ut-rule-12",
+    "canonicalSourceUrl": "https://www.utcourts.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Utah R. Civ. P.",
+        "label": "Utah R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "Utah R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Utah R. Civ. P. 12\n\nDefenses and objections.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Utah State Courts",
+      "ruleFamily": "Utah R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Utah R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "Utah R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Utah",
+    "authorityState": "UT",
+    "citation": "Utah R. Civ. P. 56",
+    "normalizedCitation": "Utah R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ut-rule-56",
+    "canonicalSourceUrl": "https://www.utcourts.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Utah R. Civ. P.",
+        "label": "Utah R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "Utah R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Utah R. Civ. P. 56\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Utah State Courts",
+      "ruleFamily": "Utah R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Vt. R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "Vt. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Vermont",
+    "authorityState": "VT",
+    "citation": "Vt. R. Civ. P. 12",
+    "normalizedCitation": "Vt. R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "vt-rule-12",
+    "canonicalSourceUrl": "https://www.vermontjudiciary.org/attorneys/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Vt. R. Civ. P.",
+        "label": "Vt. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "Vt. R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Vt. R. Civ. P. 12\n\nDefenses and objections.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Vermont Judiciary",
+      "ruleFamily": "Vt. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Vt. R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "Vt. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Vermont",
+    "authorityState": "VT",
+    "citation": "Vt. R. Civ. P. 56",
+    "normalizedCitation": "Vt. R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "vt-rule-56",
+    "canonicalSourceUrl": "https://www.vermontjudiciary.org/attorneys/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Vt. R. Civ. P.",
+        "label": "Vt. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "Vt. R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Vt. R. Civ. P. 56\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Vermont Judiciary",
+      "ruleFamily": "Vt. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "W. Va. R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "W. Va. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "West Virginia",
+    "authorityState": "WV",
+    "citation": "W. Va. R. Civ. P. 12",
+    "normalizedCitation": "W. Va. R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wv-rule-12",
+    "canonicalSourceUrl": "http://www.courtswv.gov/legal-community/court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "W. Va. R. Civ. P.",
+        "label": "W. Va. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "W. Va. R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "W. Va. R. Civ. P. 12\n\nDefenses and objections.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "West Virginia Judiciary",
+      "ruleFamily": "W. Va. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "W. Va. R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "W. Va. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "West Virginia",
+    "authorityState": "WV",
+    "citation": "W. Va. R. Civ. P. 56",
+    "normalizedCitation": "W. Va. R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wv-rule-56",
+    "canonicalSourceUrl": "http://www.courtswv.gov/legal-community/court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "W. Va. R. Civ. P.",
+        "label": "W. Va. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "W. Va. R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "W. Va. R. Civ. P. 56\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "West Virginia Judiciary",
+      "ruleFamily": "W. Va. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Wyo. R. Civ. P. 12 — Civil procedure",
+    "shortTitle": "Wyo. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Wyoming",
+    "authorityState": "WY",
+    "citation": "Wyo. R. Civ. P. 12",
+    "normalizedCitation": "Wyo. R. Civ. P. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wy-rule-12",
+    "canonicalSourceUrl": "https://www.courts.state.wy.us/court-rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Wyo. R. Civ. P.",
+        "label": "Wyo. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "Wyo. R. Civ. P. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Wyo. R. Civ. P. 12\n\nDefenses and objections.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Wyoming Judicial Branch",
+      "ruleFamily": "Wyo. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "Wyo. R. Civ. P. 56 — Civil procedure",
+    "shortTitle": "Wyo. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Wyoming",
+    "authorityState": "WY",
+    "citation": "Wyo. R. Civ. P. 56",
+    "normalizedCitation": "Wyo. R. Civ. P. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wy-rule-56",
+    "canonicalSourceUrl": "https://www.courts.state.wy.us/court-rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Wyo. R. Civ. P.",
+        "label": "Wyo. R. Civ. P."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "Wyo. R. Civ. P. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Wyo. R. Civ. P. 56\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Wyoming Judicial Branch",
+      "ruleFamily": "Wyo. R. Civ. P.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "D.C. Super. Ct. Civ. R. 12 — Civil procedure",
+    "shortTitle": "D.C. Super. Ct. Civ. R. 12",
+    "authorityType": "rule",
+    "jurisdiction": "District of Columbia",
+    "authorityState": "DC",
+    "citation": "D.C. Super. Ct. Civ. R. 12",
+    "normalizedCitation": "D.C. Super. Ct. Civ. R. 12",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "dc-rule-12",
+    "canonicalSourceUrl": "https://www.dccourts.gov/superior-court/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "D.C. Super. Ct. Civ. R.",
+        "label": "D.C. Super. Ct. Civ. R."
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "D.C. Super. Ct. Civ. R. 12"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "D.C. Super. Ct. Civ. R. 12\n\nDefenses and objections; failure to state a claim.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "content": "Defenses and objections; failure to state a claim."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "District of Columbia Courts",
+      "ruleFamily": "D.C. Super. Ct. Civ. R.",
+      "wave": "2H"
+    }
+  },
+  {
+    "title": "D.C. Super. Ct. Civ. R. 56 — Civil procedure",
+    "shortTitle": "D.C. Super. Ct. Civ. R. 56",
+    "authorityType": "rule",
+    "jurisdiction": "District of Columbia",
+    "authorityState": "DC",
+    "citation": "D.C. Super. Ct. Civ. R. 56",
+    "normalizedCitation": "D.C. Super. Ct. Civ. R. 56",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "dc-rule-56",
+    "canonicalSourceUrl": "https://www.dccourts.gov/superior-court/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "D.C. Super. Ct. Civ. R.",
+        "label": "D.C. Super. Ct. Civ. R."
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "D.C. Super. Ct. Civ. R. 56"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "D.C. Super. Ct. Civ. R. 56\n\nSummary judgment.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "content": "Summary judgment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T20:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "District of Columbia Courts",
+      "ruleFamily": "D.C. Super. Ct. Civ. R.",
+      "wave": "2H"
+    }
+  }
+]

@@ -1,0 +1,209 @@
+{
+  "generatedAt": "2026-09-18T12:59:57.129Z",
+  "phase": "50S-WAVE-2H",
+  "queue": 2,
+  "purpose": "Authoritative remaining blockers for Queue #2 close — Wave 2H PASS does not close #2.",
+  "byCategory": {
+    "INTERNALLY_SOLVABLE_NOW": [
+      "Continue curated statute subject fills for residual licensing/admin holes where official code is clear.",
+      "Expand evidence/appellate rule families for jurisdictions that only have Civ.P. Rule 12/56 curated.",
+      "Connect more lis_revisor/sos_portal regulation configs (MA, AZ, RI, WV) via curated snapshots.",
+      "Refresh/currentness backfill for newly imported rows after staging import.",
+      "National deterministic retrieval suite after import (exact cite + jurisdiction isolation)."
+    ],
+    "WAITING_FOR_COURTLISTENER": [
+      "Case depth to meet broader_corpus (>=20 cases including high-court/appellate) for all Wave-1 and national jurisdictions.",
+      "Federal deepen: CA11, CADC, CAFC, CA7, CA10 resume checkpoints.",
+      "Wave-1 state high-court/appellate case deepen: CA, DE, FL, IL, MA, NJ, NY, PA, TX, VA.",
+      "Citation resolve targets currently A_target_absent for many reporter cites without CL."
+    ],
+    "PUBLIC_SOURCE_ENGINEERING": [
+      "NYCRR / NY DOS register stable section ingestion.",
+      "CT eRegulations structured harvest.",
+      "CA OAL CCR public mirror strategy without proprietary browse wrappers.",
+      "Official case RSS normalizer family (circuits + SCOTUS slip) before bounded ingestion.",
+      "Per-state evidence/appellate rule PDF parsers beyond curated Civ.P. snapshots."
+    ],
+    "EXTERNAL_PROPRIETARY_LIMITATION": [
+      "CA CCR complete official text often gated behind commercial publishers.",
+      "NJ administrative code complete official machine text incomplete vs Lexis/Westlaw.",
+      "Some state admin codes lack stable public section URLs suitable for refresh hashing."
+    ],
+    "NO_RELIABLE_PUBLIC_SOURCE": [
+      "No jurisdiction with zero official judiciary presence recorded; residual F_not_found reserved for unverified territories only.",
+      "Historical full-text case bulk for most states without CL/PACER-class feeds remains unavailable from official free sources."
+    ]
+  },
+  "byJurisdiction": {
+    "AL": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "AK": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "AZ": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations",
+      "INTERNALLY_SOLVABLE_NOW:verify_subject_bundle_after_import"
+    ],
+    "AR": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "CA": [
+      "EXTERNAL_PROPRIETARY_LIMITATION:regulations",
+      "WAITING_FOR_COURTLISTENER:case_depth"
+    ],
+    "CO": [
+      "INTERNALLY_SOLVABLE_NOW:verify_subject_bundle_after_import"
+    ],
+    "CT": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations",
+      "INTERNALLY_SOLVABLE_NOW:verify_subject_bundle_after_import"
+    ],
+    "DE": [
+      "WAITING_FOR_COURTLISTENER:case_depth"
+    ],
+    "DC": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "FL": [
+      "WAITING_FOR_COURTLISTENER:case_depth"
+    ],
+    "GA": [
+      "INTERNALLY_SOLVABLE_NOW:verify_subject_bundle_after_import"
+    ],
+    "HI": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "ID": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "IL": [
+      "WAITING_FOR_COURTLISTENER:case_depth"
+    ],
+    "IN": [
+      "INTERNALLY_SOLVABLE_NOW:deepen_only"
+    ],
+    "IA": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "KS": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "KY": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "LA": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations",
+      "INTERNALLY_SOLVABLE_NOW:verify_subject_bundle_after_import"
+    ],
+    "ME": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "MD": [
+      "INTERNALLY_SOLVABLE_NOW:verify_subject_bundle_after_import"
+    ],
+    "MA": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations",
+      "WAITING_FOR_COURTLISTENER:case_depth"
+    ],
+    "MI": [
+      "INTERNALLY_SOLVABLE_NOW:verify_subject_bundle_after_import"
+    ],
+    "MN": [
+      "INTERNALLY_SOLVABLE_NOW:deepen_only"
+    ],
+    "MS": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "MO": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "MT": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "NE": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "NV": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "NH": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "NJ": [
+      "EXTERNAL_PROPRIETARY_LIMITATION:regulations",
+      "WAITING_FOR_COURTLISTENER:case_depth"
+    ],
+    "NM": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "NY": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations",
+      "WAITING_FOR_COURTLISTENER:case_depth",
+      "PUBLIC_SOURCE_ENGINEERING:court_rules"
+    ],
+    "NC": [
+      "INTERNALLY_SOLVABLE_NOW:verify_subject_bundle_after_import"
+    ],
+    "ND": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "OH": [
+      "INTERNALLY_SOLVABLE_NOW:verify_subject_bundle_after_import"
+    ],
+    "OK": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "OR": [
+      "INTERNALLY_SOLVABLE_NOW:deepen_only"
+    ],
+    "PA": [
+      "WAITING_FOR_COURTLISTENER:case_depth"
+    ],
+    "RI": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "SC": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "SD": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "TN": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "TX": [
+      "WAITING_FOR_COURTLISTENER:case_depth"
+    ],
+    "UT": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "VT": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "VA": [
+      "WAITING_FOR_COURTLISTENER:case_depth"
+    ],
+    "WA": [
+      "INTERNALLY_SOLVABLE_NOW:verify_subject_bundle_after_import"
+    ],
+    "WV": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "WI": [
+      "INTERNALLY_SOLVABLE_NOW:verify_subject_bundle_after_import"
+    ],
+    "WY": [
+      "PUBLIC_SOURCE_ENGINEERING:regulations"
+    ],
+    "US": [
+      "WAITING_FOR_COURTLISTENER:case_depth"
+    ]
+  },
+  "broaderCorpus": {
+    "countExpected": 0,
+    "dominantBlocker": "B_requires_courtlistener",
+    "criteriaUnchanged": true,
+    "note": "Criteria not lowered. Case depth remains the hard gate."
+  }
+}

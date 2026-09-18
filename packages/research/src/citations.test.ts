@@ -143,6 +143,39 @@ describe("parseCitation", () => {
       normalized: "Ohio Civ.R. 56",
       type: "rule",
     });
+    expect(parseCitation("Ala. R. Civ. P. 56")).toMatchObject({
+      normalized: "Ala. R. Civ. P. 56",
+      type: "rule",
+      confidence: "high",
+    });
+    expect(parseCitation("Alaska R. Civ. P. 12")).toMatchObject({
+      normalized: "Alaska R. Civ. P. 12",
+      type: "rule",
+    });
+    expect(parseCitation("D.C. Super. Ct. Civ. R. 12")).toMatchObject({
+      normalized: "D.C. Super. Ct. Civ. R. 12",
+      type: "rule",
+    });
+    expect(parseCitation("Tenn. R. Civ. P. 56.04")).toMatchObject({
+      normalized: "Tenn. R. Civ. P. 56.04",
+      type: "rule",
+    });
+    expect(parseCitation("W. Va. R. Civ. P. 56")).toMatchObject({
+      normalized: "W. Va. R. Civ. P. 56",
+      type: "rule",
+    });
+    expect(parseCitation("La. Code Civ. Proc. art. 966")).toMatchObject({
+      normalized: "La. Code Civ. Proc. art. 966",
+      type: "rule",
+    });
+  });
+
+  it("does not collide similarly numbered rules across jurisdictions", () => {
+    const ala = parseCitation("Ala. R. Civ. P. 12");
+    const alaska = parseCitation("Alaska R. Civ. P. 12");
+    expect(ala.normalized).not.toBe(alaska.normalized);
+    expect(ala.reporter).toBe("Ala. R. Civ. P.");
+    expect(alaska.reporter).toBe("Alaska R. Civ. P.");
   });
 });
 

@@ -142,6 +142,37 @@ export const WAVE1_STATE_REGULATION_CONFIGS: Record<string, StateRegulationSourc
     platformFamily: "custom_html",
     citationPattern: String.raw`\d+\s+NCAC\s+[\d.]+`,
   },
+  /** Wave 2H — additional official public admin-code hubs (config + curated import). */
+  MN: {
+    stateCode: "MN",
+    baseUrl: "https://www.revisor.mn.gov/rules/",
+    platformFamily: "lis_revisor",
+    citationPattern: String.raw`Minn\.?\s*R\.?\s*[\d.]+`,
+  },
+  WI: {
+    stateCode: "WI",
+    baseUrl: "https://docs.legis.wisconsin.gov/code/admin_code/",
+    platformFamily: "lis_revisor",
+    citationPattern: String.raw`Wis\.?\s*Admin\.?\s*Code\s+[A-Z]+\s*§\s*[\d.]+`,
+  },
+  GA: {
+    stateCode: "GA",
+    baseUrl: "https://rules.sos.ga.gov/",
+    platformFamily: "sos_portal",
+    citationPattern: String.raw`Ga\.?\s*Comp\.?\s*R\.?\s*&?\s*Regs\.?\s*[\d.\-]+`,
+  },
+  IN: {
+    stateCode: "IN",
+    baseUrl: "http://iac.iga.in.gov/",
+    platformFamily: "lis_revisor",
+    citationPattern: String.raw`\d+\s+IAC\s+[\d.\-]+`,
+  },
+  OR: {
+    stateCode: "OR",
+    baseUrl: "https://secure.sos.state.or.us/oard/",
+    platformFamily: "sos_portal",
+    citationPattern: String.raw`Or\.?\s*Admin\.?\s*R\.?\s*[\d.\-]+`,
+  },
 };
 
 export function createStateRegulationAdapter(

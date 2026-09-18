@@ -1,0 +1,10 @@
+{
+  "ok": true,
+  "wave": "2H",
+  "steps": [
+    { "out": "wave2h-import.json", "ok": true },
+    { "out": "wave2h-retrieval-smoke.json", "ok": true },
+    { "out": "wave2h-cl-resume-prep.json", "ok": true },
+    { "out": "wave2h-subject-audit.json", "ok": true }
+  ]
+}

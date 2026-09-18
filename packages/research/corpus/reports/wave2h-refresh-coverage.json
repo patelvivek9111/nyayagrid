@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-09-18T12:59:57.129Z",
+  "phase": "50S-WAVE-2H",
+  "sourceFamilies": {
+    "us_primary_corpus_bundles": {
+      "refreshJob": "bundle_reimport_hash_skip",
+      "connected": true
+    },
+    "ecfr": {
+      "refreshJob": "ecfr_periodic",
+      "connected": true
+    },
+    "usc": {
+      "refreshJob": "usc_periodic",
+      "connected": true
+    },
+    "state_statute_curated": {
+      "refreshJob": "statute_periodic",
+      "connected": true
+    },
+    "state_regulation_wave1": {
+      "refreshJob": "regulation_periodic",
+      "connected": true
+    },
+    "state_regulation_wave2h": {
+      "refreshJob": "regulation_periodic",
+      "connected": true,
+      "note": "MN/WI/GA/IN/OR configs added; refresh via hash-skip reimport"
+    },
+    "court_rules_curated": {
+      "refreshJob": "court_rules_periodic",
+      "connected": true
+    },
+    "courtlistener": {
+      "refreshJob": "courtlistener_resume",
+      "connected": false,
+      "blocked": "cooldown_unavailable"
+    }
+  }
+}
