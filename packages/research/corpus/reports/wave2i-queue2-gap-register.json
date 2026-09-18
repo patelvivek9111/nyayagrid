@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-09-18T13:30:00.000Z",
+  "phase": "50S-WAVE-2I",
+  "queue": 2,
+  "purpose": "Authoritative remaining blockers for Queue #2 — Wave 2I PASS does not close #2.",
+  "byCategory": {
+    "INTERNALLY_SOLVABLE_NOW": [
+      {
+        "item": "Statute subject deepen for seed/expansion states still below 6 families (≈30 jurisdictions)",
+        "jurisdictions": ["AL","AK","AR","HI","ID","IA","KS","KY","ME","MN","MS","MO","MT","NE","NV","NH","NM","ND","OK","OR","RI","SC","SD","TN","UT","VT","WV","WY","DC"],
+        "action": "Curated official APA/privacy/evidence/consumer fills mirroring Wave 2I thin/Wave-1 packs",
+        "effort": "1–2 engineering days",
+        "blockingDependency": "none"
+      },
+      {
+        "item": "NY/CT regulation public-source engineering (structured harvest)",
+        "jurisdictions": ["NY","CT"],
+        "action": "Adapter family for NYCRR/DOS register and CT eRegulations with curated first slices",
+        "effort": "2–4 days",
+        "blockingDependency": "stable section URL / ToS review"
+      },
+      {
+        "item": "Remaining unknown currentness on non-wave rows without retrievedAt",
+        "jurisdictions": ["multi"],
+        "action": "Bounded official re-fetch only where revision metadata exists; leave CL cases unknown until CL resume",
+        "effort": "1 day",
+        "blockingDependency": "source revision evidence"
+      }
+    ],
+    "WAITING_FOR_COURTLISTENER": [
+      "case_count_below_20 for essentially all states",
+      "no_high_or_appellate for ~31 jurisdictions",
+      "Federal deepen CA11/CADC/CAFC/CA7/CA10",
+      "Wave-1 high-court/appellate deepen",
+      "broader_corpus for states (US federal already meets hard gate in Wave 2I audit)"
+    ],
+    "PUBLIC_SOURCE_ENGINEERING": [
+      "NY NYCRR / DOS register",
+      "CT eRegulations",
+      "Deeper CMR/AAC/RICR/CSR section coverage beyond employment slices",
+      "Official case RSS normalizer (deferred adapters)"
+    ],
+    "EXTERNAL_PROPRIETARY_LIMITATION": [
+      "CA CCR complete official machine text",
+      "NJ N.J.A.C. complete public machine text"
+    ],
+    "NO_RELIABLE_PUBLIC_SOURCE": [
+      "Historical full-text state case bulk without CL/PACER-class feeds"
+    ]
+  }
+}

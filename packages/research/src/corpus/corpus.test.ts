@@ -90,9 +90,14 @@ describe("corpus source classes", () => {
 describe("corpus bundles", () => {
   it("loads expansion manifest covering wave1 + wave2 state bundles", async () => {
     const manifest = await loadCorpusManifest();
-    expect(["50S-EXPANSION-1", "50S-WAVE-2E", "50S-WAVE-2F", "50S-WAVE-2G", "50S-WAVE-2H"]).toContain(
-      manifest.phase,
-    );
+    expect([
+      "50S-EXPANSION-1",
+      "50S-WAVE-2E",
+      "50S-WAVE-2F",
+      "50S-WAVE-2G",
+      "50S-WAVE-2H",
+      "50S-WAVE-2I",
+    ]).toContain(manifest.phase);
     expect(manifest.states.length).toBeGreaterThanOrEqual(20);
     const codes = manifest.states.map((s) => s.code);
     for (const code of ["CA", "DE", "FL", "IL", "MA", "NJ", "NY", "PA", "TX", "VA", "OH", "GA"]) {

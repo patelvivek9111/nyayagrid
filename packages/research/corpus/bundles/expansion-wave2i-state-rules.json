@@ -1,0 +1,4541 @@
+[
+  {
+    "title": "Ala. R. Evid. 401 — Relevance",
+    "shortTitle": "Ala. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Alabama",
+    "authorityState": "AL",
+    "citation": "Ala. R. Evid. 401",
+    "normalizedCitation": "Ala. R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "al-evid-401",
+    "canonicalSourceUrl": "https://judicial.alabama.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ala. R. Evid.",
+        "label": "Ala. R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Ala. R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Ala. R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Alabama Judiciary",
+      "ruleFamily": "Ala. R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ala. R. App. P. 4 — Appeal timing / notice",
+    "shortTitle": "Ala. R. App. P. 4",
+    "authorityType": "rule",
+    "jurisdiction": "Alabama",
+    "authorityState": "AL",
+    "citation": "Ala. R. App. P. 4",
+    "normalizedCitation": "Ala. R. App. P. 4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "al-app-4",
+    "canonicalSourceUrl": "https://judicial.alabama.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ala. R. App. P.",
+        "label": "Ala. R. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "4",
+        "label": "Ala. R. App. P. 4"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Ala. R. App. P. 4\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Alabama Judiciary",
+      "ruleFamily": "Ala. R. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Alaska R. Evid. 401 — Relevance",
+    "shortTitle": "Alaska R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Alaska",
+    "authorityState": "AK",
+    "citation": "Alaska R. Evid. 401",
+    "normalizedCitation": "Alaska R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ak-evid-401",
+    "canonicalSourceUrl": "https://courts.alaska.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Alaska R. Evid.",
+        "label": "Alaska R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Alaska R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Alaska R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Alaska Judiciary",
+      "ruleFamily": "Alaska R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Alaska R. App. P. 204 — Appeal timing / notice",
+    "shortTitle": "Alaska R. App. P. 204",
+    "authorityType": "rule",
+    "jurisdiction": "Alaska",
+    "authorityState": "AK",
+    "citation": "Alaska R. App. P. 204",
+    "normalizedCitation": "Alaska R. App. P. 204",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ak-app-204",
+    "canonicalSourceUrl": "https://courts.alaska.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Alaska R. App. P.",
+        "label": "Alaska R. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "204",
+        "label": "Alaska R. App. P. 204"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Alaska R. App. P. 204\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "204",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Alaska Judiciary",
+      "ruleFamily": "Alaska R. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ark. R. Evid. 401 — Relevance",
+    "shortTitle": "Ark. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Arkansas",
+    "authorityState": "AR",
+    "citation": "Ark. R. Evid. 401",
+    "normalizedCitation": "Ark. R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ar-evid-401",
+    "canonicalSourceUrl": "https://www.arcourts.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ark. R. Evid.",
+        "label": "Ark. R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Ark. R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Ark. R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Arkansas Judiciary",
+      "ruleFamily": "Ark. R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ark. R. App. P.—Civ. 2 — Appeal timing / notice",
+    "shortTitle": "Ark. R. App. P.—Civ. 2",
+    "authorityType": "rule",
+    "jurisdiction": "Arkansas",
+    "authorityState": "AR",
+    "citation": "Ark. R. App. P.—Civ. 2",
+    "normalizedCitation": "Ark. R. App. P.—Civ. 2",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ar-app-2",
+    "canonicalSourceUrl": "https://www.arcourts.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ark. R. App. P.—Civ.",
+        "label": "Ark. R. App. P.—Civ."
+      },
+      {
+        "level": "rule",
+        "ref": "2",
+        "label": "Ark. R. App. P.—Civ. 2"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Ark. R. App. P.—Civ. 2\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "2",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Arkansas Judiciary",
+      "ruleFamily": "Ark. R. App. P.—Civ.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Cal. Evid. Code § 210 — Relevance",
+    "shortTitle": "Cal. Evid. Code § 210",
+    "authorityType": "rule",
+    "jurisdiction": "California",
+    "authorityState": "CA",
+    "citation": "Cal. Evid. Code § 210",
+    "normalizedCitation": "Cal. Evid. Code § 210",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ca-evid-210",
+    "canonicalSourceUrl": "https://www.courts.ca.gov/forms-rules/rules-court",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Cal. Evid. Code",
+        "label": "Cal. Evid. Code"
+      },
+      {
+        "level": "rule",
+        "ref": "210",
+        "label": "Cal. Evid. Code § 210"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Cal. Evid. Code § 210\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "210",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "California Judiciary",
+      "ruleFamily": "Cal. Evid. Code",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Cal. Rules of Court, rule 8.104 — Appeal timing / notice",
+    "shortTitle": "Cal. Rules of Court, rule 8.104",
+    "authorityType": "rule",
+    "jurisdiction": "California",
+    "authorityState": "CA",
+    "citation": "Cal. Rules of Court, rule 8.104",
+    "normalizedCitation": "Cal. Rules of Court, rule 8.104",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ca-app-8-104",
+    "canonicalSourceUrl": "https://www.courts.ca.gov/forms-rules/rules-court",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Cal. Rules of Court",
+        "label": "Cal. Rules of Court"
+      },
+      {
+        "level": "rule",
+        "ref": "8.104",
+        "label": "Cal. Rules of Court, rule 8.104"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Cal. Rules of Court, rule 8.104\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "8.104",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "California Judiciary",
+      "ruleFamily": "Cal. Rules of Court",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "C.R.E. 401 — Relevance",
+    "shortTitle": "C.R.E. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "C.R.E. 401",
+    "normalizedCitation": "C.R.E. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "co-evid-401",
+    "canonicalSourceUrl": "https://www.courts.state.co.us/Courts/Supreme_Court/Rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "C.R.E.",
+        "label": "C.R.E."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "C.R.E. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "C.R.E. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Colorado Judiciary",
+      "ruleFamily": "C.R.E.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "C.A.R. 4 — Appeal timing / notice",
+    "shortTitle": "C.A.R. 4",
+    "authorityType": "rule",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "C.A.R. 4",
+    "normalizedCitation": "C.A.R. 4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "co-app-4",
+    "canonicalSourceUrl": "https://www.courts.state.co.us/Courts/Supreme_Court/Rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "C.A.R.",
+        "label": "C.A.R."
+      },
+      {
+        "level": "rule",
+        "ref": "4",
+        "label": "C.A.R. 4"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "C.A.R. 4\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Colorado Judiciary",
+      "ruleFamily": "C.A.R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "D.C. R. Evid. 401 — Relevance",
+    "shortTitle": "D.C. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "District of Columbia",
+    "authorityState": "DC",
+    "citation": "D.C. R. Evid. 401",
+    "normalizedCitation": "D.C. R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "dc-evid-401",
+    "canonicalSourceUrl": "https://www.dccourts.gov/superior-court/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "D.C. Super. Ct. Evid. R.",
+        "label": "D.C. Super. Ct. Evid. R."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "D.C. R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "D.C. R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "District of Columbia Judiciary",
+      "ruleFamily": "D.C. Super. Ct. Evid. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "D.C. App. R. 4 — Appeal timing / notice",
+    "shortTitle": "D.C. App. R. 4",
+    "authorityType": "rule",
+    "jurisdiction": "District of Columbia",
+    "authorityState": "DC",
+    "citation": "D.C. App. R. 4",
+    "normalizedCitation": "D.C. App. R. 4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "dc-app-4",
+    "canonicalSourceUrl": "https://www.dccourts.gov/superior-court/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "D.C. App. R.",
+        "label": "D.C. App. R."
+      },
+      {
+        "level": "rule",
+        "ref": "4",
+        "label": "D.C. App. R. 4"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "D.C. App. R. 4\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "District of Columbia Judiciary",
+      "ruleFamily": "D.C. App. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "D.R.E. 401 — Relevance",
+    "shortTitle": "D.R.E. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "D.R.E. 401",
+    "normalizedCitation": "D.R.E. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "de-evid-401",
+    "canonicalSourceUrl": "https://courts.delaware.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "D.R.E.",
+        "label": "D.R.E."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "D.R.E. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "D.R.E. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Delaware Judiciary",
+      "ruleFamily": "D.R.E.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Del. Supr. Ct. R. 6 — Appeal timing / notice",
+    "shortTitle": "Del. Supr. Ct. R. 6",
+    "authorityType": "rule",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "Del. Supr. Ct. R. 6",
+    "normalizedCitation": "Del. Supr. Ct. R. 6",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "de-app-6",
+    "canonicalSourceUrl": "https://courts.delaware.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Supr. Ct. R.",
+        "label": "Supr. Ct. R."
+      },
+      {
+        "level": "rule",
+        "ref": "6",
+        "label": "Del. Supr. Ct. R. 6"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Del. Supr. Ct. R. 6\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "6",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Delaware Judiciary",
+      "ruleFamily": "Supr. Ct. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Fla. Stat. § 90.401 — Relevance",
+    "shortTitle": "Fla. Stat. § 90.401",
+    "authorityType": "rule",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. Stat. § 90.401",
+    "normalizedCitation": "Fla. Stat. § 90.401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "fl-evid-90-401",
+    "canonicalSourceUrl": "https://www.floridabar.org/rules/rptoc/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Fla. Evid. Code",
+        "label": "Fla. Evid. Code"
+      },
+      {
+        "level": "rule",
+        "ref": "90.401",
+        "label": "Fla. Stat. § 90.401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Fla. Stat. § 90.401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "90.401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Florida Judiciary",
+      "ruleFamily": "Fla. Evid. Code",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Fla. R. App. P. 9.110 — Appeal timing / notice",
+    "shortTitle": "Fla. R. App. P. 9.110",
+    "authorityType": "rule",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. R. App. P. 9.110",
+    "normalizedCitation": "Fla. R. App. P. 9.110",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "fl-app-9-110",
+    "canonicalSourceUrl": "https://www.floridabar.org/rules/rptoc/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Fla. R. App. P.",
+        "label": "Fla. R. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "9.110",
+        "label": "Fla. R. App. P. 9.110"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Fla. R. App. P. 9.110\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "9.110",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Florida Judiciary",
+      "ruleFamily": "Fla. R. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ga. Code Ann. § 24-4-401 — Relevance",
+    "shortTitle": "Ga. Code Ann. § 24-4-401",
+    "authorityType": "rule",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Code Ann. § 24-4-401",
+    "normalizedCitation": "Ga. Code Ann. § 24-4-401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ga-evid-24-4-401",
+    "canonicalSourceUrl": "https://www.gasupreme.us/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ga. Evid.",
+        "label": "Ga. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "24-4-401",
+        "label": "Ga. Code Ann. § 24-4-401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Ga. Code Ann. § 24-4-401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "24-4-401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Georgia Judiciary",
+      "ruleFamily": "Ga. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ga. Ct. App. R. 5 — Appeal timing / notice",
+    "shortTitle": "Ga. Ct. App. R. 5",
+    "authorityType": "rule",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Ct. App. R. 5",
+    "normalizedCitation": "Ga. Ct. App. R. 5",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ga-app-5",
+    "canonicalSourceUrl": "https://www.gasupreme.us/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ga. Ct. App. R.",
+        "label": "Ga. Ct. App. R."
+      },
+      {
+        "level": "rule",
+        "ref": "5",
+        "label": "Ga. Ct. App. R. 5"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Ga. Ct. App. R. 5\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "5",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Georgia Judiciary",
+      "ruleFamily": "Ga. Ct. App. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Haw. R. Evid. 401 — Relevance",
+    "shortTitle": "Haw. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Hawaii",
+    "authorityState": "HI",
+    "citation": "Haw. R. Evid. 401",
+    "normalizedCitation": "Haw. R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "hi-evid-401",
+    "canonicalSourceUrl": "https://www.courts.state.hi.us/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Haw. R. Evid.",
+        "label": "Haw. R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Haw. R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Haw. R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Hawaii Judiciary",
+      "ruleFamily": "Haw. R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Haw. R. App. P. 4 — Appeal timing / notice",
+    "shortTitle": "Haw. R. App. P. 4",
+    "authorityType": "rule",
+    "jurisdiction": "Hawaii",
+    "authorityState": "HI",
+    "citation": "Haw. R. App. P. 4",
+    "normalizedCitation": "Haw. R. App. P. 4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "hi-app-4",
+    "canonicalSourceUrl": "https://www.courts.state.hi.us/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Haw. R. App. P.",
+        "label": "Haw. R. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "4",
+        "label": "Haw. R. App. P. 4"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Haw. R. App. P. 4\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Hawaii Judiciary",
+      "ruleFamily": "Haw. R. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "I.R.E. 401 — Relevance",
+    "shortTitle": "I.R.E. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Idaho",
+    "authorityState": "ID",
+    "citation": "I.R.E. 401",
+    "normalizedCitation": "I.R.E. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "id-evid-401",
+    "canonicalSourceUrl": "https://isc.idaho.gov/idaho-court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "I.R.E.",
+        "label": "I.R.E."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "I.R.E. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "I.R.E. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Idaho Judiciary",
+      "ruleFamily": "I.R.E.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "I.A.R. 14 — Appeal timing / notice",
+    "shortTitle": "I.A.R. 14",
+    "authorityType": "rule",
+    "jurisdiction": "Idaho",
+    "authorityState": "ID",
+    "citation": "I.A.R. 14",
+    "normalizedCitation": "I.A.R. 14",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "id-app-14",
+    "canonicalSourceUrl": "https://isc.idaho.gov/idaho-court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "I.A.R.",
+        "label": "I.A.R."
+      },
+      {
+        "level": "rule",
+        "ref": "14",
+        "label": "I.A.R. 14"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "I.A.R. 14\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "14",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Idaho Judiciary",
+      "ruleFamily": "I.A.R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ill. R. Evid. 401 — Relevance",
+    "shortTitle": "Ill. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "Ill. R. Evid. 401",
+    "normalizedCitation": "Ill. R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "il-evid-401",
+    "canonicalSourceUrl": "https://www.illinoiscourts.gov/supreme-court-rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ill. R. Evid.",
+        "label": "Ill. R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Ill. R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Ill. R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Illinois Judiciary",
+      "ruleFamily": "Ill. R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ill. S. Ct. R. 303 — Appeal timing / notice",
+    "shortTitle": "Ill. S. Ct. R. 303",
+    "authorityType": "rule",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "Ill. S. Ct. R. 303",
+    "normalizedCitation": "Ill. S. Ct. R. 303",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "il-app-303",
+    "canonicalSourceUrl": "https://www.illinoiscourts.gov/supreme-court-rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ill. S. Ct. R.",
+        "label": "Ill. S. Ct. R."
+      },
+      {
+        "level": "rule",
+        "ref": "303",
+        "label": "Ill. S. Ct. R. 303"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Ill. S. Ct. R. 303\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "303",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Illinois Judiciary",
+      "ruleFamily": "Ill. S. Ct. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ind. Evid. R. 401 — Relevance",
+    "shortTitle": "Ind. Evid. R. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Indiana",
+    "authorityState": "IN",
+    "citation": "Ind. Evid. R. 401",
+    "normalizedCitation": "Ind. Evid. R. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "in-evid-401",
+    "canonicalSourceUrl": "https://www.in.gov/courts/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ind. Evid. R.",
+        "label": "Ind. Evid. R."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Ind. Evid. R. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Ind. Evid. R. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Indiana Judiciary",
+      "ruleFamily": "Ind. Evid. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ind. App. R. 9 — Appeal timing / notice",
+    "shortTitle": "Ind. App. R. 9",
+    "authorityType": "rule",
+    "jurisdiction": "Indiana",
+    "authorityState": "IN",
+    "citation": "Ind. App. R. 9",
+    "normalizedCitation": "Ind. App. R. 9",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "in-app-9",
+    "canonicalSourceUrl": "https://www.in.gov/courts/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ind. App. R.",
+        "label": "Ind. App. R."
+      },
+      {
+        "level": "rule",
+        "ref": "9",
+        "label": "Ind. App. R. 9"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Ind. App. R. 9\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "9",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Indiana Judiciary",
+      "ruleFamily": "Ind. App. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Iowa R. Evid. 5.401 — Relevance",
+    "shortTitle": "Iowa R. Evid. 5.401",
+    "authorityType": "rule",
+    "jurisdiction": "Iowa",
+    "authorityState": "IA",
+    "citation": "Iowa R. Evid. 5.401",
+    "normalizedCitation": "Iowa R. Evid. 5.401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ia-evid-5-401",
+    "canonicalSourceUrl": "https://www.iowacourts.gov/for-the-public/court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Iowa R. Evid.",
+        "label": "Iowa R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "5.401",
+        "label": "Iowa R. Evid. 5.401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Iowa R. Evid. 5.401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "5.401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Iowa Judiciary",
+      "ruleFamily": "Iowa R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Iowa R. App. P. 6.101 — Appeal timing / notice",
+    "shortTitle": "Iowa R. App. P. 6.101",
+    "authorityType": "rule",
+    "jurisdiction": "Iowa",
+    "authorityState": "IA",
+    "citation": "Iowa R. App. P. 6.101",
+    "normalizedCitation": "Iowa R. App. P. 6.101",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ia-app-6-101",
+    "canonicalSourceUrl": "https://www.iowacourts.gov/for-the-public/court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Iowa R. App. P.",
+        "label": "Iowa R. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "6.101",
+        "label": "Iowa R. App. P. 6.101"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Iowa R. App. P. 6.101\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "6.101",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Iowa Judiciary",
+      "ruleFamily": "Iowa R. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Kan. Stat. Ann. § 60-401 — Relevance",
+    "shortTitle": "Kan. Stat. Ann. § 60-401",
+    "authorityType": "rule",
+    "jurisdiction": "Kansas",
+    "authorityState": "KS",
+    "citation": "Kan. Stat. Ann. § 60-401",
+    "normalizedCitation": "Kan. Stat. Ann. § 60-401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ks-evid-60-401",
+    "canonicalSourceUrl": "https://www.kscourts.org/Rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "K.S.A. 60-401",
+        "label": "K.S.A. 60-401"
+      },
+      {
+        "level": "rule",
+        "ref": "60-401",
+        "label": "Kan. Stat. Ann. § 60-401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Kan. Stat. Ann. § 60-401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "60-401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Kansas Judiciary",
+      "ruleFamily": "K.S.A. 60-401",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Kan. Sup. Ct. R. 2.04 — Appeal timing / notice",
+    "shortTitle": "Kan. Sup. Ct. R. 2.04",
+    "authorityType": "rule",
+    "jurisdiction": "Kansas",
+    "authorityState": "KS",
+    "citation": "Kan. Sup. Ct. R. 2.04",
+    "normalizedCitation": "Kan. Sup. Ct. R. 2.04",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ks-app-2-04",
+    "canonicalSourceUrl": "https://www.kscourts.org/Rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Kan. Sup. Ct. R.",
+        "label": "Kan. Sup. Ct. R."
+      },
+      {
+        "level": "rule",
+        "ref": "2.04",
+        "label": "Kan. Sup. Ct. R. 2.04"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Kan. Sup. Ct. R. 2.04\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "2.04",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Kansas Judiciary",
+      "ruleFamily": "Kan. Sup. Ct. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "KRE 401 — Relevance",
+    "shortTitle": "KRE 401",
+    "authorityType": "rule",
+    "jurisdiction": "Kentucky",
+    "authorityState": "KY",
+    "citation": "KRE 401",
+    "normalizedCitation": "KRE 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ky-evid-401",
+    "canonicalSourceUrl": "https://www.kycourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "KRE",
+        "label": "KRE"
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "KRE 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "KRE 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Kentucky Judiciary",
+      "ruleFamily": "KRE",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ky. R. Civ. P. 73.02 — Appeal timing / notice",
+    "shortTitle": "Ky. R. Civ. P. 73.02",
+    "authorityType": "rule",
+    "jurisdiction": "Kentucky",
+    "authorityState": "KY",
+    "citation": "Ky. R. Civ. P. 73.02",
+    "normalizedCitation": "Ky. R. Civ. P. 73.02",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ky-app-73-02",
+    "canonicalSourceUrl": "https://www.kycourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "CR",
+        "label": "CR"
+      },
+      {
+        "level": "rule",
+        "ref": "73.02",
+        "label": "Ky. R. Civ. P. 73.02"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Ky. R. Civ. P. 73.02\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "73.02",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Kentucky Judiciary",
+      "ruleFamily": "CR",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "La. Code Evid. art. 401 — Relevance",
+    "shortTitle": "La. Code Evid. art. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Louisiana",
+    "authorityState": "LA",
+    "citation": "La. Code Evid. art. 401",
+    "normalizedCitation": "La. Code Evid. art. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "la-evid-401",
+    "canonicalSourceUrl": "https://www.lasc.org/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "La. Code Evid.",
+        "label": "La. Code Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "La. Code Evid. art. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "La. Code Evid. art. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Louisiana Judiciary",
+      "ruleFamily": "La. Code Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "La. Code Civ. Proc. art. 2087 — Appeal timing / notice",
+    "shortTitle": "La. Code Civ. Proc. art. 2087",
+    "authorityType": "rule",
+    "jurisdiction": "Louisiana",
+    "authorityState": "LA",
+    "citation": "La. Code Civ. Proc. art. 2087",
+    "normalizedCitation": "La. Code Civ. Proc. art. 2087",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "la-app-2087",
+    "canonicalSourceUrl": "https://www.lasc.org/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "La. C.C.P.",
+        "label": "La. C.C.P."
+      },
+      {
+        "level": "rule",
+        "ref": "2087",
+        "label": "La. Code Civ. Proc. art. 2087"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "La. Code Civ. Proc. art. 2087\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "2087",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Louisiana Judiciary",
+      "ruleFamily": "La. C.C.P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "M.R. Evid. 401 — Relevance",
+    "shortTitle": "M.R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Maine",
+    "authorityState": "ME",
+    "citation": "M.R. Evid. 401",
+    "normalizedCitation": "M.R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "me-evid-401",
+    "canonicalSourceUrl": "https://www.courts.maine.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "M.R. Evid.",
+        "label": "M.R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "M.R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "M.R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Maine Judiciary",
+      "ruleFamily": "M.R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "M.R. App. P. 2A — Appeal timing / notice",
+    "shortTitle": "M.R. App. P. 2A",
+    "authorityType": "rule",
+    "jurisdiction": "Maine",
+    "authorityState": "ME",
+    "citation": "M.R. App. P. 2A",
+    "normalizedCitation": "M.R. App. P. 2A",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "me-app-2A",
+    "canonicalSourceUrl": "https://www.courts.maine.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "M.R. App. P.",
+        "label": "M.R. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "2A",
+        "label": "M.R. App. P. 2A"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "M.R. App. P. 2A\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "2A",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Maine Judiciary",
+      "ruleFamily": "M.R. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Miss. R. Evid. 401 — Relevance",
+    "shortTitle": "Miss. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Mississippi",
+    "authorityState": "MS",
+    "citation": "Miss. R. Evid. 401",
+    "normalizedCitation": "Miss. R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ms-evid-401",
+    "canonicalSourceUrl": "https://courts.ms.gov/research/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Miss. R. Evid.",
+        "label": "Miss. R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Miss. R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Miss. R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Mississippi Judiciary",
+      "ruleFamily": "Miss. R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "M.R.A.P. 4 — Appeal timing / notice",
+    "shortTitle": "M.R.A.P. 4",
+    "authorityType": "rule",
+    "jurisdiction": "Mississippi",
+    "authorityState": "MS",
+    "citation": "M.R.A.P. 4",
+    "normalizedCitation": "M.R.A.P. 4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ms-app-4",
+    "canonicalSourceUrl": "https://courts.ms.gov/research/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "M.R.A.P.",
+        "label": "M.R.A.P."
+      },
+      {
+        "level": "rule",
+        "ref": "4",
+        "label": "M.R.A.P. 4"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "M.R.A.P. 4\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Mississippi Judiciary",
+      "ruleFamily": "M.R.A.P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Mo. Evid. § 490.065 — Relevance",
+    "shortTitle": "Mo. Evid. § 490.065",
+    "authorityType": "rule",
+    "jurisdiction": "Missouri",
+    "authorityState": "MO",
+    "citation": "Mo. Evid. § 490.065",
+    "normalizedCitation": "Mo. Evid. § 490.065",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mo-evid-490-065",
+    "canonicalSourceUrl": "https://www.courts.mo.gov/page.jsp?id=667",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Mo. Evid.",
+        "label": "Mo. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "490.065",
+        "label": "Mo. Evid. § 490.065"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Mo. Evid. § 490.065\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "490.065",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Missouri Judiciary",
+      "ruleFamily": "Mo. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Mo. Sup. Ct. R. 81.04 — Appeal timing / notice",
+    "shortTitle": "Mo. Sup. Ct. R. 81.04",
+    "authorityType": "rule",
+    "jurisdiction": "Missouri",
+    "authorityState": "MO",
+    "citation": "Mo. Sup. Ct. R. 81.04",
+    "normalizedCitation": "Mo. Sup. Ct. R. 81.04",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mo-app-81-04",
+    "canonicalSourceUrl": "https://www.courts.mo.gov/page.jsp?id=667",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Mo. Sup. Ct. R.",
+        "label": "Mo. Sup. Ct. R."
+      },
+      {
+        "level": "rule",
+        "ref": "81.04",
+        "label": "Mo. Sup. Ct. R. 81.04"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Mo. Sup. Ct. R. 81.04\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "81.04",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Missouri Judiciary",
+      "ruleFamily": "Mo. Sup. Ct. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "M.R. Evid. 401 — Relevance",
+    "shortTitle": "M.R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Montana",
+    "authorityState": "MT",
+    "citation": "M.R. Evid. 401",
+    "normalizedCitation": "M.R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mt-evid-401",
+    "canonicalSourceUrl": "https://courts.mt.gov/Courts/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "M.R. Evid.",
+        "label": "M.R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "M.R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "M.R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Montana Judiciary",
+      "ruleFamily": "M.R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "M.R. App. P. 4 — Appeal timing / notice",
+    "shortTitle": "M.R. App. P. 4",
+    "authorityType": "rule",
+    "jurisdiction": "Montana",
+    "authorityState": "MT",
+    "citation": "M.R. App. P. 4",
+    "normalizedCitation": "M.R. App. P. 4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mt-app-4",
+    "canonicalSourceUrl": "https://courts.mt.gov/Courts/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "M.R. App. P.",
+        "label": "M.R. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "4",
+        "label": "M.R. App. P. 4"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "M.R. App. P. 4\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Montana Judiciary",
+      "ruleFamily": "M.R. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Neb. Rev. Stat. § 27-401 — Relevance",
+    "shortTitle": "Neb. Rev. Stat. § 27-401",
+    "authorityType": "rule",
+    "jurisdiction": "Nebraska",
+    "authorityState": "NE",
+    "citation": "Neb. Rev. Stat. § 27-401",
+    "normalizedCitation": "Neb. Rev. Stat. § 27-401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ne-evid-27-401",
+    "canonicalSourceUrl": "https://supremecourt.nebraska.gov/supreme-court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Neb. Evid. R.",
+        "label": "Neb. Evid. R."
+      },
+      {
+        "level": "rule",
+        "ref": "27-401",
+        "label": "Neb. Rev. Stat. § 27-401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Neb. Rev. Stat. § 27-401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "27-401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Nebraska Judiciary",
+      "ruleFamily": "Neb. Evid. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Neb. Ct. R. App. P. § 2-101 — Appeal timing / notice",
+    "shortTitle": "Neb. Ct. R. App. P. § 2-101",
+    "authorityType": "rule",
+    "jurisdiction": "Nebraska",
+    "authorityState": "NE",
+    "citation": "Neb. Ct. R. App. P. § 2-101",
+    "normalizedCitation": "Neb. Ct. R. App. P. § 2-101",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ne-app-2-101",
+    "canonicalSourceUrl": "https://supremecourt.nebraska.gov/supreme-court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Neb. Ct. R. App. P.",
+        "label": "Neb. Ct. R. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "2-101",
+        "label": "Neb. Ct. R. App. P. § 2-101"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Neb. Ct. R. App. P. § 2-101\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "2-101",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Nebraska Judiciary",
+      "ruleFamily": "Neb. Ct. R. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "NRS 48.015 — Relevance",
+    "shortTitle": "NRS 48.015",
+    "authorityType": "rule",
+    "jurisdiction": "Nevada",
+    "authorityState": "NV",
+    "citation": "NRS 48.015",
+    "normalizedCitation": "NRS 48.015",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nv-evid-48-015",
+    "canonicalSourceUrl": "https://nvcourts.gov/supreme/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "NRS Evid.",
+        "label": "NRS Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "48.015",
+        "label": "NRS 48.015"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "NRS 48.015\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "48.015",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Nevada Judiciary",
+      "ruleFamily": "NRS Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "NRAP 4 — Appeal timing / notice",
+    "shortTitle": "NRAP 4",
+    "authorityType": "rule",
+    "jurisdiction": "Nevada",
+    "authorityState": "NV",
+    "citation": "NRAP 4",
+    "normalizedCitation": "NRAP 4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nv-app-4",
+    "canonicalSourceUrl": "https://nvcourts.gov/supreme/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "NRAP",
+        "label": "NRAP"
+      },
+      {
+        "level": "rule",
+        "ref": "4",
+        "label": "NRAP 4"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "NRAP 4\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Nevada Judiciary",
+      "ruleFamily": "NRAP",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "N.H. R. Evid. 401 — Relevance",
+    "shortTitle": "N.H. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "New Hampshire",
+    "authorityState": "NH",
+    "citation": "N.H. R. Evid. 401",
+    "normalizedCitation": "N.H. R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nh-evid-401",
+    "canonicalSourceUrl": "https://www.courts.nh.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.H. R. Evid.",
+        "label": "N.H. R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "N.H. R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "N.H. R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "New Hampshire Judiciary",
+      "ruleFamily": "N.H. R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "N.H. Sup. Ct. R. 7 — Appeal timing / notice",
+    "shortTitle": "N.H. Sup. Ct. R. 7",
+    "authorityType": "rule",
+    "jurisdiction": "New Hampshire",
+    "authorityState": "NH",
+    "citation": "N.H. Sup. Ct. R. 7",
+    "normalizedCitation": "N.H. Sup. Ct. R. 7",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nh-app-7",
+    "canonicalSourceUrl": "https://www.courts.nh.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.H. Sup. Ct. R.",
+        "label": "N.H. Sup. Ct. R."
+      },
+      {
+        "level": "rule",
+        "ref": "7",
+        "label": "N.H. Sup. Ct. R. 7"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "N.H. Sup. Ct. R. 7\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "7",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "New Hampshire Judiciary",
+      "ruleFamily": "N.H. Sup. Ct. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Rule 11-401 NMRA — Relevance",
+    "shortTitle": "Rule 11-401 NMRA",
+    "authorityType": "rule",
+    "jurisdiction": "New Mexico",
+    "authorityState": "NM",
+    "citation": "Rule 11-401 NMRA",
+    "normalizedCitation": "Rule 11-401 NMRA",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nm-evid-11-401",
+    "canonicalSourceUrl": "https://www.nmcourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "NMRA Evid.",
+        "label": "NMRA Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "11-401",
+        "label": "Rule 11-401 NMRA"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Rule 11-401 NMRA\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "11-401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "New Mexico Judiciary",
+      "ruleFamily": "NMRA Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Rule 12-201 NMRA — Appeal timing / notice",
+    "shortTitle": "Rule 12-201 NMRA",
+    "authorityType": "rule",
+    "jurisdiction": "New Mexico",
+    "authorityState": "NM",
+    "citation": "Rule 12-201 NMRA",
+    "normalizedCitation": "Rule 12-201 NMRA",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nm-app-12-201",
+    "canonicalSourceUrl": "https://www.nmcourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "NMRA App.",
+        "label": "NMRA App."
+      },
+      {
+        "level": "rule",
+        "ref": "12-201",
+        "label": "Rule 12-201 NMRA"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Rule 12-201 NMRA\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "12-201",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "New Mexico Judiciary",
+      "ruleFamily": "NMRA App.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "N.D.R.Ev. 401 — Relevance",
+    "shortTitle": "N.D.R.Ev. 401",
+    "authorityType": "rule",
+    "jurisdiction": "North Dakota",
+    "authorityState": "ND",
+    "citation": "N.D.R.Ev. 401",
+    "normalizedCitation": "N.D.R.Ev. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nd-evid-401",
+    "canonicalSourceUrl": "https://www.ndcourts.gov/legal-resources/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.D.R.Ev.",
+        "label": "N.D.R.Ev."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "N.D.R.Ev. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "N.D.R.Ev. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "North Dakota Judiciary",
+      "ruleFamily": "N.D.R.Ev.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "N.D.R.App.P. 4 — Appeal timing / notice",
+    "shortTitle": "N.D.R.App.P. 4",
+    "authorityType": "rule",
+    "jurisdiction": "North Dakota",
+    "authorityState": "ND",
+    "citation": "N.D.R.App.P. 4",
+    "normalizedCitation": "N.D.R.App.P. 4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nd-app-4",
+    "canonicalSourceUrl": "https://www.ndcourts.gov/legal-resources/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.D.R.App.P.",
+        "label": "N.D.R.App.P."
+      },
+      {
+        "level": "rule",
+        "ref": "4",
+        "label": "N.D.R.App.P. 4"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "N.D.R.App.P. 4\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "North Dakota Judiciary",
+      "ruleFamily": "N.D.R.App.P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "12 O.S. § 2401 — Relevance",
+    "shortTitle": "12 O.S. § 2401",
+    "authorityType": "rule",
+    "jurisdiction": "Oklahoma",
+    "authorityState": "OK",
+    "citation": "12 O.S. § 2401",
+    "normalizedCitation": "12 O.S. § 2401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ok-evid-2401",
+    "canonicalSourceUrl": "https://www.oscn.net/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Okla. Evid.",
+        "label": "Okla. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "2401",
+        "label": "12 O.S. § 2401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "12 O.S. § 2401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "2401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Oklahoma Judiciary",
+      "ruleFamily": "Okla. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Okla. Sup. Ct. R. 1.21 — Appeal timing / notice",
+    "shortTitle": "Okla. Sup. Ct. R. 1.21",
+    "authorityType": "rule",
+    "jurisdiction": "Oklahoma",
+    "authorityState": "OK",
+    "citation": "Okla. Sup. Ct. R. 1.21",
+    "normalizedCitation": "Okla. Sup. Ct. R. 1.21",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ok-app-1-21",
+    "canonicalSourceUrl": "https://www.oscn.net/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Okla. Sup. Ct. R.",
+        "label": "Okla. Sup. Ct. R."
+      },
+      {
+        "level": "rule",
+        "ref": "1.21",
+        "label": "Okla. Sup. Ct. R. 1.21"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Okla. Sup. Ct. R. 1.21\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "1.21",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Oklahoma Judiciary",
+      "ruleFamily": "Okla. Sup. Ct. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "R.I. R. Evid. 401 — Relevance",
+    "shortTitle": "R.I. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Rhode Island",
+    "authorityState": "RI",
+    "citation": "R.I. R. Evid. 401",
+    "normalizedCitation": "R.I. R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ri-evid-401",
+    "canonicalSourceUrl": "https://www.courts.ri.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "R.I. R. Evid.",
+        "label": "R.I. R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "R.I. R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "R.I. R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Rhode Island Judiciary",
+      "ruleFamily": "R.I. R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Article I, Rule 3 — Appeal timing / notice",
+    "shortTitle": "Article I, Rule 3",
+    "authorityType": "rule",
+    "jurisdiction": "Rhode Island",
+    "authorityState": "RI",
+    "citation": "Article I, Rule 3",
+    "normalizedCitation": "Article I, Rule 3",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ri-app-3",
+    "canonicalSourceUrl": "https://www.courts.ri.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "R.I. Sup. Ct. R.",
+        "label": "R.I. Sup. Ct. R."
+      },
+      {
+        "level": "rule",
+        "ref": "3",
+        "label": "Article I, Rule 3"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Article I, Rule 3\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "3",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Rhode Island Judiciary",
+      "ruleFamily": "R.I. Sup. Ct. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Rule 401, SCRE — Relevance",
+    "shortTitle": "Rule 401, SCRE",
+    "authorityType": "rule",
+    "jurisdiction": "South Carolina",
+    "authorityState": "SC",
+    "citation": "Rule 401, SCRE",
+    "normalizedCitation": "Rule 401, SCRE",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "sc-evid-401",
+    "canonicalSourceUrl": "https://www.sccourts.org/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "SCRE",
+        "label": "SCRE"
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Rule 401, SCRE"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Rule 401, SCRE\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "South Carolina Judiciary",
+      "ruleFamily": "SCRE",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Rule 203, SCACR — Appeal timing / notice",
+    "shortTitle": "Rule 203, SCACR",
+    "authorityType": "rule",
+    "jurisdiction": "South Carolina",
+    "authorityState": "SC",
+    "citation": "Rule 203, SCACR",
+    "normalizedCitation": "Rule 203, SCACR",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "sc-app-203",
+    "canonicalSourceUrl": "https://www.sccourts.org/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "SCACR",
+        "label": "SCACR"
+      },
+      {
+        "level": "rule",
+        "ref": "203",
+        "label": "Rule 203, SCACR"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Rule 203, SCACR\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "203",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "South Carolina Judiciary",
+      "ruleFamily": "SCACR",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "SDCL 19-19-401 — Relevance",
+    "shortTitle": "SDCL 19-19-401",
+    "authorityType": "rule",
+    "jurisdiction": "South Dakota",
+    "authorityState": "SD",
+    "citation": "SDCL 19-19-401",
+    "normalizedCitation": "SDCL 19-19-401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "sd-evid-19-19-401",
+    "canonicalSourceUrl": "https://ujs.sd.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "SDCL Evid.",
+        "label": "SDCL Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "19-19-401",
+        "label": "SDCL 19-19-401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "SDCL 19-19-401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "19-19-401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "South Dakota Judiciary",
+      "ruleFamily": "SDCL Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "SDCL 15-26A-6 — Appeal timing / notice",
+    "shortTitle": "SDCL 15-26A-6",
+    "authorityType": "rule",
+    "jurisdiction": "South Dakota",
+    "authorityState": "SD",
+    "citation": "SDCL 15-26A-6",
+    "normalizedCitation": "SDCL 15-26A-6",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "sd-app-15-26A-6",
+    "canonicalSourceUrl": "https://ujs.sd.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "SDCL App.",
+        "label": "SDCL App."
+      },
+      {
+        "level": "rule",
+        "ref": "15-26A-6",
+        "label": "SDCL 15-26A-6"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "SDCL 15-26A-6\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "15-26A-6",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "South Dakota Judiciary",
+      "ruleFamily": "SDCL App.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Tenn. R. Evid. 401 — Relevance",
+    "shortTitle": "Tenn. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Tennessee",
+    "authorityState": "TN",
+    "citation": "Tenn. R. Evid. 401",
+    "normalizedCitation": "Tenn. R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tn-evid-401",
+    "canonicalSourceUrl": "https://www.tncourts.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Tenn. R. Evid.",
+        "label": "Tenn. R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Tenn. R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Tenn. R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Tennessee Judiciary",
+      "ruleFamily": "Tenn. R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Tenn. R. App. P. 4 — Appeal timing / notice",
+    "shortTitle": "Tenn. R. App. P. 4",
+    "authorityType": "rule",
+    "jurisdiction": "Tennessee",
+    "authorityState": "TN",
+    "citation": "Tenn. R. App. P. 4",
+    "normalizedCitation": "Tenn. R. App. P. 4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tn-app-4",
+    "canonicalSourceUrl": "https://www.tncourts.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Tenn. R. App. P.",
+        "label": "Tenn. R. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "4",
+        "label": "Tenn. R. App. P. 4"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Tenn. R. App. P. 4\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Tennessee Judiciary",
+      "ruleFamily": "Tenn. R. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Utah R. Evid. 401 — Relevance",
+    "shortTitle": "Utah R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Utah",
+    "authorityState": "UT",
+    "citation": "Utah R. Evid. 401",
+    "normalizedCitation": "Utah R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ut-evid-401",
+    "canonicalSourceUrl": "https://www.utcourts.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Utah R. Evid.",
+        "label": "Utah R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Utah R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Utah R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Utah Judiciary",
+      "ruleFamily": "Utah R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Utah R. App. P. 4 — Appeal timing / notice",
+    "shortTitle": "Utah R. App. P. 4",
+    "authorityType": "rule",
+    "jurisdiction": "Utah",
+    "authorityState": "UT",
+    "citation": "Utah R. App. P. 4",
+    "normalizedCitation": "Utah R. App. P. 4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ut-app-4",
+    "canonicalSourceUrl": "https://www.utcourts.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Utah R. App. P.",
+        "label": "Utah R. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "4",
+        "label": "Utah R. App. P. 4"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Utah R. App. P. 4\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Utah Judiciary",
+      "ruleFamily": "Utah R. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "V.R.E. 401 — Relevance",
+    "shortTitle": "V.R.E. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Vermont",
+    "authorityState": "VT",
+    "citation": "V.R.E. 401",
+    "normalizedCitation": "V.R.E. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "vt-evid-401",
+    "canonicalSourceUrl": "https://www.vermontjudiciary.org/attorneys/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "V.R.E.",
+        "label": "V.R.E."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "V.R.E. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "V.R.E. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Vermont Judiciary",
+      "ruleFamily": "V.R.E.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "V.R.A.P. 4 — Appeal timing / notice",
+    "shortTitle": "V.R.A.P. 4",
+    "authorityType": "rule",
+    "jurisdiction": "Vermont",
+    "authorityState": "VT",
+    "citation": "V.R.A.P. 4",
+    "normalizedCitation": "V.R.A.P. 4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "vt-app-4",
+    "canonicalSourceUrl": "https://www.vermontjudiciary.org/attorneys/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "V.R.A.P.",
+        "label": "V.R.A.P."
+      },
+      {
+        "level": "rule",
+        "ref": "4",
+        "label": "V.R.A.P. 4"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "V.R.A.P. 4\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Vermont Judiciary",
+      "ruleFamily": "V.R.A.P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "W. Va. R. Evid. 401 — Relevance",
+    "shortTitle": "W. Va. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "West Virginia",
+    "authorityState": "WV",
+    "citation": "W. Va. R. Evid. 401",
+    "normalizedCitation": "W. Va. R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wv-evid-401",
+    "canonicalSourceUrl": "http://www.courtswv.gov/legal-community/court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "W. Va. R. Evid.",
+        "label": "W. Va. R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "W. Va. R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "W. Va. R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "West Virginia Judiciary",
+      "ruleFamily": "W. Va. R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "W. Va. R. App. P. 5 — Appeal timing / notice",
+    "shortTitle": "W. Va. R. App. P. 5",
+    "authorityType": "rule",
+    "jurisdiction": "West Virginia",
+    "authorityState": "WV",
+    "citation": "W. Va. R. App. P. 5",
+    "normalizedCitation": "W. Va. R. App. P. 5",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wv-app-5",
+    "canonicalSourceUrl": "http://www.courtswv.gov/legal-community/court-rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "W. Va. R. App. P.",
+        "label": "W. Va. R. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "5",
+        "label": "W. Va. R. App. P. 5"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "W. Va. R. App. P. 5\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "5",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "West Virginia Judiciary",
+      "ruleFamily": "W. Va. R. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "W.R.E. 401 — Relevance",
+    "shortTitle": "W.R.E. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Wyoming",
+    "authorityState": "WY",
+    "citation": "W.R.E. 401",
+    "normalizedCitation": "W.R.E. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wy-evid-401",
+    "canonicalSourceUrl": "https://www.courts.state.wy.us/court-rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "W.R.E.",
+        "label": "W.R.E."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "W.R.E. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "W.R.E. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Wyoming Judiciary",
+      "ruleFamily": "W.R.E.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "W.R.A.P. 2.01 — Appeal timing / notice",
+    "shortTitle": "W.R.A.P. 2.01",
+    "authorityType": "rule",
+    "jurisdiction": "Wyoming",
+    "authorityState": "WY",
+    "citation": "W.R.A.P. 2.01",
+    "normalizedCitation": "W.R.A.P. 2.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wy-app-2-01",
+    "canonicalSourceUrl": "https://www.courts.state.wy.us/court-rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "W.R.A.P.",
+        "label": "W.R.A.P."
+      },
+      {
+        "level": "rule",
+        "ref": "2.01",
+        "label": "W.R.A.P. 2.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "W.R.A.P. 2.01\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "2.01",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Wyoming Judiciary",
+      "ruleFamily": "W.R.A.P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ariz. R. Evid. 401 — Relevance",
+    "shortTitle": "Ariz. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "Ariz. R. Evid. 401",
+    "normalizedCitation": "Ariz. R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "az-evid-401",
+    "canonicalSourceUrl": "https://www.azcourts.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ariz. R. Evid.",
+        "label": "Ariz. R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Ariz. R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Ariz. R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Arizona Judiciary",
+      "ruleFamily": "Ariz. R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ariz. R. Civ. App. P. 9 — Appeal timing / notice",
+    "shortTitle": "Ariz. R. Civ. App. P. 9",
+    "authorityType": "rule",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "Ariz. R. Civ. App. P. 9",
+    "normalizedCitation": "Ariz. R. Civ. App. P. 9",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "az-app-9",
+    "canonicalSourceUrl": "https://www.azcourts.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ariz. R. Civ. App. P.",
+        "label": "Ariz. R. Civ. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "9",
+        "label": "Ariz. R. Civ. App. P. 9"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Ariz. R. Civ. App. P. 9\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "9",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Arizona Judiciary",
+      "ruleFamily": "Ariz. R. Civ. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Conn. Code Evid. § 4-1 — Relevance",
+    "shortTitle": "Conn. Code Evid. § 4-1",
+    "authorityType": "rule",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Code Evid. § 4-1",
+    "normalizedCitation": "Conn. Code Evid. § 4-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ct-evid-4-1",
+    "canonicalSourceUrl": "https://www.jud.ct.gov/Publications/PracticeBook/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Conn. Code Evid.",
+        "label": "Conn. Code Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "4-1",
+        "label": "Conn. Code Evid. § 4-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Conn. Code Evid. § 4-1\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "4-1",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Connecticut Judiciary",
+      "ruleFamily": "Conn. Code Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Conn. Practice Book § 63-1 — Appeal timing / notice",
+    "shortTitle": "Conn. Practice Book § 63-1",
+    "authorityType": "rule",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Practice Book § 63-1",
+    "normalizedCitation": "Conn. Practice Book § 63-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ct-app-63-1",
+    "canonicalSourceUrl": "https://www.jud.ct.gov/Publications/PracticeBook/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Conn. Practice Book",
+        "label": "Conn. Practice Book"
+      },
+      {
+        "level": "rule",
+        "ref": "63-1",
+        "label": "Conn. Practice Book § 63-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Conn. Practice Book § 63-1\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "63-1",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Connecticut Judiciary",
+      "ruleFamily": "Conn. Practice Book",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Md. Rule 5-401 — Relevance",
+    "shortTitle": "Md. Rule 5-401",
+    "authorityType": "rule",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "Md. Rule 5-401",
+    "normalizedCitation": "Md. Rule 5-401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "md-evid-5-401",
+    "canonicalSourceUrl": "https://www.mdcourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Md. Rule",
+        "label": "Md. Rule"
+      },
+      {
+        "level": "rule",
+        "ref": "5-401",
+        "label": "Md. Rule 5-401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Md. Rule 5-401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "5-401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Maryland Judiciary",
+      "ruleFamily": "Md. Rule",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Md. Rule 8-202 — Appeal timing / notice",
+    "shortTitle": "Md. Rule 8-202",
+    "authorityType": "rule",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "Md. Rule 8-202",
+    "normalizedCitation": "Md. Rule 8-202",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "md-app-8-202",
+    "canonicalSourceUrl": "https://www.mdcourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Md. Rule",
+        "label": "Md. Rule"
+      },
+      {
+        "level": "rule",
+        "ref": "8-202",
+        "label": "Md. Rule 8-202"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Md. Rule 8-202\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "8-202",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Maryland Judiciary",
+      "ruleFamily": "Md. Rule",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "MRE 401 — Relevance",
+    "shortTitle": "MRE 401",
+    "authorityType": "rule",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "MRE 401",
+    "normalizedCitation": "MRE 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mi-evid-401",
+    "canonicalSourceUrl": "https://www.courts.michigan.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "MRE",
+        "label": "MRE"
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "MRE 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "MRE 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Michigan Judiciary",
+      "ruleFamily": "MRE",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "MCR 7.204 — Appeal timing / notice",
+    "shortTitle": "MCR 7.204",
+    "authorityType": "rule",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "MCR 7.204",
+    "normalizedCitation": "MCR 7.204",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mi-app-7-204",
+    "canonicalSourceUrl": "https://www.courts.michigan.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "MCR",
+        "label": "MCR"
+      },
+      {
+        "level": "rule",
+        "ref": "7.204",
+        "label": "MCR 7.204"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "MCR 7.204\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "7.204",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Michigan Judiciary",
+      "ruleFamily": "MCR",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Minn. R. Evid. 401 — Relevance",
+    "shortTitle": "Minn. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Minnesota",
+    "authorityState": "MN",
+    "citation": "Minn. R. Evid. 401",
+    "normalizedCitation": "Minn. R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mn-evid-401",
+    "canonicalSourceUrl": "https://www.mncourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Minn. R. Evid.",
+        "label": "Minn. R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Minn. R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Minn. R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Minnesota Judiciary",
+      "ruleFamily": "Minn. R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Minn. R. Civ. App. P. 104.01 — Appeal timing / notice",
+    "shortTitle": "Minn. R. Civ. App. P. 104.01",
+    "authorityType": "rule",
+    "jurisdiction": "Minnesota",
+    "authorityState": "MN",
+    "citation": "Minn. R. Civ. App. P. 104.01",
+    "normalizedCitation": "Minn. R. Civ. App. P. 104.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mn-app-104-01",
+    "canonicalSourceUrl": "https://www.mncourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Minn. R. Civ. App. P.",
+        "label": "Minn. R. Civ. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "104.01",
+        "label": "Minn. R. Civ. App. P. 104.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Minn. R. Civ. App. P. 104.01\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "104.01",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Minnesota Judiciary",
+      "ruleFamily": "Minn. R. Civ. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "N.C. R. Evid. 401 — Relevance",
+    "shortTitle": "N.C. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "N.C. R. Evid. 401",
+    "normalizedCitation": "N.C. R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nc-evid-401",
+    "canonicalSourceUrl": "https://www.nccourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.C. R. Evid.",
+        "label": "N.C. R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "N.C. R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "N.C. R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "North Carolina Judiciary",
+      "ruleFamily": "N.C. R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "N.C. R. App. P. 3 — Appeal timing / notice",
+    "shortTitle": "N.C. R. App. P. 3",
+    "authorityType": "rule",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "N.C. R. App. P. 3",
+    "normalizedCitation": "N.C. R. App. P. 3",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nc-app-3",
+    "canonicalSourceUrl": "https://www.nccourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.C. R. App. P.",
+        "label": "N.C. R. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "3",
+        "label": "N.C. R. App. P. 3"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "N.C. R. App. P. 3\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "3",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "North Carolina Judiciary",
+      "ruleFamily": "N.C. R. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ohio Evid.R. 401 — Relevance",
+    "shortTitle": "Ohio Evid.R. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio Evid.R. 401",
+    "normalizedCitation": "Ohio Evid.R. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "oh-evid-401",
+    "canonicalSourceUrl": "https://www.supremecourt.ohio.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ohio Evid. R.",
+        "label": "Ohio Evid. R."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Ohio Evid.R. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Ohio Evid.R. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Ohio Judiciary",
+      "ruleFamily": "Ohio Evid. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ohio App.R. 4 — Appeal timing / notice",
+    "shortTitle": "Ohio App.R. 4",
+    "authorityType": "rule",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio App.R. 4",
+    "normalizedCitation": "Ohio App.R. 4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "oh-app-4",
+    "canonicalSourceUrl": "https://www.supremecourt.ohio.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Ohio App.R.",
+        "label": "Ohio App.R."
+      },
+      {
+        "level": "rule",
+        "ref": "4",
+        "label": "Ohio App.R. 4"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Ohio App.R. 4\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Ohio Judiciary",
+      "ruleFamily": "Ohio App.R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "OEC 401 — Relevance",
+    "shortTitle": "OEC 401",
+    "authorityType": "rule",
+    "jurisdiction": "Oregon",
+    "authorityState": "OR",
+    "citation": "OEC 401",
+    "normalizedCitation": "OEC 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "or-evid-401",
+    "canonicalSourceUrl": "https://www.courts.oregon.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "OEC",
+        "label": "OEC"
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "OEC 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "OEC 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Oregon Judiciary",
+      "ruleFamily": "OEC",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "ORAP 2.05 — Appeal timing / notice",
+    "shortTitle": "ORAP 2.05",
+    "authorityType": "rule",
+    "jurisdiction": "Oregon",
+    "authorityState": "OR",
+    "citation": "ORAP 2.05",
+    "normalizedCitation": "ORAP 2.05",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "or-app-2-05",
+    "canonicalSourceUrl": "https://www.courts.oregon.gov/rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "ORAP",
+        "label": "ORAP"
+      },
+      {
+        "level": "rule",
+        "ref": "2.05",
+        "label": "ORAP 2.05"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "ORAP 2.05\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "2.05",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Oregon Judiciary",
+      "ruleFamily": "ORAP",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Pa.R.E. 401 — Relevance",
+    "shortTitle": "Pa.R.E. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "Pa.R.E. 401",
+    "normalizedCitation": "Pa.R.E. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "pa-evid-401",
+    "canonicalSourceUrl": "https://www.pacodeandbulletin.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Pa.R.E.",
+        "label": "Pa.R.E."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Pa.R.E. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Pa.R.E. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Pennsylvania Judiciary",
+      "ruleFamily": "Pa.R.E.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Pa.R.A.P. 903 — Appeal timing / notice",
+    "shortTitle": "Pa.R.A.P. 903",
+    "authorityType": "rule",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "Pa.R.A.P. 903",
+    "normalizedCitation": "Pa.R.A.P. 903",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "pa-app-903",
+    "canonicalSourceUrl": "https://www.pacodeandbulletin.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Pa.R.A.P.",
+        "label": "Pa.R.A.P."
+      },
+      {
+        "level": "rule",
+        "ref": "903",
+        "label": "Pa.R.A.P. 903"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Pa.R.A.P. 903\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "903",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Pennsylvania Judiciary",
+      "ruleFamily": "Pa.R.A.P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Tex. R. Evid. 401 — Relevance",
+    "shortTitle": "Tex. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "Tex. R. Evid. 401",
+    "normalizedCitation": "Tex. R. Evid. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tx-evid-401",
+    "canonicalSourceUrl": "https://www.txcourts.gov/rules-forms/rules-standards/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Tex. R. Evid.",
+        "label": "Tex. R. Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Tex. R. Evid. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Tex. R. Evid. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Texas Judiciary",
+      "ruleFamily": "Tex. R. Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Tex. R. App. P. 26.1 — Appeal timing / notice",
+    "shortTitle": "Tex. R. App. P. 26.1",
+    "authorityType": "rule",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "Tex. R. App. P. 26.1",
+    "normalizedCitation": "Tex. R. App. P. 26.1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tx-app-26-1",
+    "canonicalSourceUrl": "https://www.txcourts.gov/rules-forms/rules-standards/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Tex. R. App. P.",
+        "label": "Tex. R. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "26.1",
+        "label": "Tex. R. App. P. 26.1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Tex. R. App. P. 26.1\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "26.1",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Texas Judiciary",
+      "ruleFamily": "Tex. R. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Va. Sup. Ct. R. 2:401 — Relevance",
+    "shortTitle": "Va. Sup. Ct. R. 2:401",
+    "authorityType": "rule",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Sup. Ct. R. 2:401",
+    "normalizedCitation": "Va. Sup. Ct. R. 2:401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "va-evid-2-401",
+    "canonicalSourceUrl": "https://www.vacourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Va. Sup. Ct. R.",
+        "label": "Va. Sup. Ct. R."
+      },
+      {
+        "level": "rule",
+        "ref": "2:401",
+        "label": "Va. Sup. Ct. R. 2:401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Va. Sup. Ct. R. 2:401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "2:401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Virginia Judiciary",
+      "ruleFamily": "Va. Sup. Ct. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Va. Sup. Ct. R. 5:9 — Appeal timing / notice",
+    "shortTitle": "Va. Sup. Ct. R. 5:9",
+    "authorityType": "rule",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Sup. Ct. R. 5:9",
+    "normalizedCitation": "Va. Sup. Ct. R. 5:9",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "va-app-5-9",
+    "canonicalSourceUrl": "https://www.vacourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Va. Sup. Ct. R.",
+        "label": "Va. Sup. Ct. R."
+      },
+      {
+        "level": "rule",
+        "ref": "5:9",
+        "label": "Va. Sup. Ct. R. 5:9"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Va. Sup. Ct. R. 5:9\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "5:9",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Virginia Judiciary",
+      "ruleFamily": "Va. Sup. Ct. R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "ER 401 — Relevance",
+    "shortTitle": "ER 401",
+    "authorityType": "rule",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "ER 401",
+    "normalizedCitation": "ER 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wa-evid-401",
+    "canonicalSourceUrl": "https://www.courts.wa.gov/court_rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "ER",
+        "label": "ER"
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "ER 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "ER 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Washington Judiciary",
+      "ruleFamily": "ER",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "RAP 5.2 — Appeal timing / notice",
+    "shortTitle": "RAP 5.2",
+    "authorityType": "rule",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "RAP 5.2",
+    "normalizedCitation": "RAP 5.2",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wa-app-5-2",
+    "canonicalSourceUrl": "https://www.courts.wa.gov/court_rules/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "RAP",
+        "label": "RAP"
+      },
+      {
+        "level": "rule",
+        "ref": "5.2",
+        "label": "RAP 5.2"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "RAP 5.2\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "5.2",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Washington Judiciary",
+      "ruleFamily": "RAP",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Wis. Stat. § 904.01 — Relevance",
+    "shortTitle": "Wis. Stat. § 904.01",
+    "authorityType": "rule",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Stat. § 904.01",
+    "normalizedCitation": "Wis. Stat. § 904.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wi-evid-904-01",
+    "canonicalSourceUrl": "https://www.wicourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Wis. Stat.",
+        "label": "Wis. Stat."
+      },
+      {
+        "level": "rule",
+        "ref": "904.01",
+        "label": "Wis. Stat. § 904.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Wis. Stat. § 904.01\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "904.01",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Wisconsin Judiciary",
+      "ruleFamily": "Wis. Stat.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Wis. Stat. § 808.04 — Appeal timing / notice",
+    "shortTitle": "Wis. Stat. § 808.04",
+    "authorityType": "rule",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Stat. § 808.04",
+    "normalizedCitation": "Wis. Stat. § 808.04",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wi-app-808-04",
+    "canonicalSourceUrl": "https://www.wicourts.gov/",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Wis. Stat.",
+        "label": "Wis. Stat."
+      },
+      {
+        "level": "rule",
+        "ref": "808.04",
+        "label": "Wis. Stat. § 808.04"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Wis. Stat. § 808.04\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "808.04",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Wisconsin Judiciary",
+      "ruleFamily": "Wis. Stat.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "N.Y. C.P.L.R. 4518 — Relevance",
+    "shortTitle": "N.Y. C.P.L.R. 4518",
+    "authorityType": "rule",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "N.Y. C.P.L.R. 4518",
+    "normalizedCitation": "N.Y. C.P.L.R. 4518",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-evid-4518",
+    "canonicalSourceUrl": "https://ww2.nycourts.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.Y. C.P.L.R.",
+        "label": "N.Y. C.P.L.R."
+      },
+      {
+        "level": "rule",
+        "ref": "4518",
+        "label": "N.Y. C.P.L.R. 4518"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "N.Y. C.P.L.R. 4518\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "4518",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "New York Judiciary",
+      "ruleFamily": "N.Y. C.P.L.R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "N.Y. C.P.L.R. 5513 — Appeal timing / notice",
+    "shortTitle": "N.Y. C.P.L.R. 5513",
+    "authorityType": "rule",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "N.Y. C.P.L.R. 5513",
+    "normalizedCitation": "N.Y. C.P.L.R. 5513",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-app-5513",
+    "canonicalSourceUrl": "https://ww2.nycourts.gov/rules",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.Y. C.P.L.R.",
+        "label": "N.Y. C.P.L.R."
+      },
+      {
+        "level": "rule",
+        "ref": "5513",
+        "label": "N.Y. C.P.L.R. 5513"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "N.Y. C.P.L.R. 5513\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "5513",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "New York Judiciary",
+      "ruleFamily": "N.Y. C.P.L.R.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Mass. G. Evid. § 401 — Relevance",
+    "shortTitle": "Mass. G. Evid. § 401",
+    "authorityType": "rule",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "Mass. G. Evid. § 401",
+    "normalizedCitation": "Mass. G. Evid. § 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-evid-401",
+    "canonicalSourceUrl": "https://www.mass.gov/guides/massachusetts-rules-of-court",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Mass. Guide Evid.",
+        "label": "Mass. Guide Evid."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "Mass. G. Evid. § 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "Mass. G. Evid. § 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Massachusetts Judiciary",
+      "ruleFamily": "Mass. Guide Evid.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Mass. R. App. P. 4 — Appeal timing / notice",
+    "shortTitle": "Mass. R. App. P. 4",
+    "authorityType": "rule",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "Mass. R. App. P. 4",
+    "normalizedCitation": "Mass. R. App. P. 4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-app-4",
+    "canonicalSourceUrl": "https://www.mass.gov/guides/massachusetts-rules-of-court",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "Mass. R. App. P.",
+        "label": "Mass. R. App. P."
+      },
+      {
+        "level": "rule",
+        "ref": "4",
+        "label": "Mass. R. App. P. 4"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "Mass. R. App. P. 4\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "Massachusetts Judiciary",
+      "ruleFamily": "Mass. R. App. P.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "N.J.R.E. 401 — Relevance",
+    "shortTitle": "N.J.R.E. 401",
+    "authorityType": "rule",
+    "jurisdiction": "New Jersey",
+    "authorityState": "NJ",
+    "citation": "N.J.R.E. 401",
+    "normalizedCitation": "N.J.R.E. 401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nj-evid-401",
+    "canonicalSourceUrl": "https://www.njcourts.gov/attorneys/rules-of-court",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.J.R.E.",
+        "label": "N.J.R.E."
+      },
+      {
+        "level": "rule",
+        "ref": "401",
+        "label": "N.J.R.E. 401"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence"
+    ],
+    "content": "N.J.R.E. 401\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [
+      {
+        "sectionRef": "401",
+        "content": "Defines relevant evidence by tendency to make a consequential fact more or less probable."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "New Jersey Judiciary",
+      "ruleFamily": "N.J.R.E.",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "N.J. Ct. R. 2:4-1 — Appeal timing / notice",
+    "shortTitle": "N.J. Ct. R. 2:4-1",
+    "authorityType": "rule",
+    "jurisdiction": "New Jersey",
+    "authorityState": "NJ",
+    "citation": "N.J. Ct. R. 2:4-1",
+    "normalizedCitation": "N.J. Ct. R. 2:4-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nj-app-2-4-1",
+    "canonicalSourceUrl": "https://www.njcourts.gov/attorneys/rules-of-court",
+    "hierarchyPath": [
+      {
+        "level": "ruleset",
+        "ref": "N.J. Ct. R.",
+        "label": "N.J. Ct. R."
+      },
+      {
+        "level": "rule",
+        "ref": "2:4-1",
+        "label": "N.J. Ct. R. 2:4-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure",
+      "appellate"
+    ],
+    "content": "N.J. Ct. R. 2:4-1\n\nA notice of appeal or other initiating appellate filing must be filed within the time prescribed by this rule after entry of the judgment or order appealed from, unless extended as provided by law or rule.",
+    "sections": [
+      {
+        "sectionRef": "2:4-1",
+        "content": "Governs timing for commencing an appeal after entry of judgment or order."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "appellate_procedure",
+      "sourceOwner": "New Jersey Judiciary",
+      "ruleFamily": "N.J. Ct. R.",
+      "wave": "2I"
+    }
+  }
+]

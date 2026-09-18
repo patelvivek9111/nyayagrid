@@ -173,6 +173,31 @@ export const WAVE1_STATE_REGULATION_CONFIGS: Record<string, StateRegulationSourc
     platformFamily: "sos_portal",
     citationPattern: String.raw`Or\.?\s*Admin\.?\s*R\.?\s*[\d.\-]+`,
   },
+  /** Wave 2I — additional official public admin-code hubs. */
+  MA: {
+    stateCode: "MA",
+    baseUrl: "https://www.mass.gov/code-of-massachusetts-regulations-cmr",
+    platformFamily: "custom_html",
+    citationPattern: String.raw`\d+\s+CMR\s+[\d.]+`,
+  },
+  AZ: {
+    stateCode: "AZ",
+    baseUrl: "https://apps.azsos.gov/public_services/",
+    platformFamily: "sos_portal",
+    citationPattern: String.raw`A\.?\s*A\.?\s*C\.?\s*R[\d\-]+`,
+  },
+  RI: {
+    stateCode: "RI",
+    baseUrl: "https://rules.sos.ri.gov/",
+    platformFamily: "sos_portal",
+    citationPattern: String.raw`\d+-RICR-[\d\-]+`,
+  },
+  WV: {
+    stateCode: "WV",
+    baseUrl: "https://apps.sos.wv.gov/adlaw/csr/",
+    platformFamily: "sos_portal",
+    citationPattern: String.raw`W\.?\s*Va\.?\s*Code\s+R\.?\s*§?\s*[\d\-]+`,
+  },
 };
 
 export function createStateRegulationAdapter(

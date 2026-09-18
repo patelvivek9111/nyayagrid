@@ -1,0 +1,1206 @@
+[
+  {
+    "title": "Ariz. Rev. Stat. § 41-1001 — Administrative procedure",
+    "shortTitle": "Ariz. Rev. Stat. § 41-1001",
+    "authorityType": "statute",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "Ariz. Rev. Stat. § 41-1001",
+    "normalizedCitation": "Ariz. Rev. Stat. § 41-1001",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "az-ars-41-1001",
+    "canonicalSourceUrl": "https://www.azleg.gov/arsDetail/?title=41",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "41-1001",
+        "label": "Ariz. Rev. Stat. § 41-1001"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "Ariz. Rev. Stat. § 41-1001\n\nIn this chapter, unless the context otherwise requires:\n\n1. \"Agency\" means any board, commission, department, officer or other administrative unit of this state, including the agency head and one or more members of the agency head or agency employees or other persons purporting to act by or on behalf of the agency.",
+    "sections": [
+      {
+        "sectionRef": "41-1001",
+        "content": "Arizona APA definition of agency."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Arizona Legislature",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Colo. Rev. Stat. § 24-4-101 — Administrative procedure",
+    "shortTitle": "Colo. Rev. Stat. § 24-4-101",
+    "authorityType": "statute",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "Colo. Rev. Stat. § 24-4-101",
+    "normalizedCitation": "Colo. Rev. Stat. § 24-4-101",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "co-crs-24-4-101",
+    "canonicalSourceUrl": "https://leg.colorado.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CO",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "24-4-101",
+        "label": "Colo. Rev. Stat. § 24-4-101"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "Colo. Rev. Stat. § 24-4-101\n\nThis article shall be known and may be cited as the \"State Administrative Procedure Act\".",
+    "sections": [
+      {
+        "sectionRef": "24-4-101",
+        "content": "Colorado APA short title."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Colorado General Assembly",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Conn. Gen. Stat. § 4-166 — Administrative procedure",
+    "shortTitle": "Conn. Gen. Stat. § 4-166",
+    "authorityType": "statute",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Gen. Stat. § 4-166",
+    "normalizedCitation": "Conn. Gen. Stat. § 4-166",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ct-cgs-4-166",
+    "canonicalSourceUrl": "https://www.cga.ct.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "4-166",
+        "label": "Conn. Gen. Stat. § 4-166"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "Conn. Gen. Stat. § 4-166\n\nAs used in this chapter:\n\n(1) \"Agency\" means each state board, commission, department or officer authorized by law to make regulations or to determine contested cases.",
+    "sections": [
+      {
+        "sectionRef": "4-166",
+        "content": "Connecticut UAPA agency definition."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Connecticut General Assembly",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ga. Code Ann. § 50-13-1 — Administrative procedure",
+    "shortTitle": "Ga. Code Ann. § 50-13-1",
+    "authorityType": "statute",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Code Ann. § 50-13-1",
+    "normalizedCitation": "Ga. Code Ann. § 50-13-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ga-ocga-50-13-1",
+    "canonicalSourceUrl": "https://www.legis.ga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "GA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "50-13-1",
+        "label": "Ga. Code Ann. § 50-13-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "Ga. Code Ann. § 50-13-1\n\nThis chapter shall be known and may be cited as the 'Georgia Administrative Procedure Act.'",
+    "sections": [
+      {
+        "sectionRef": "50-13-1",
+        "content": "Georgia APA citation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Georgia General Assembly",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "La. R.S. § 49:950 — Administrative procedure",
+    "shortTitle": "La. R.S. § 49:950",
+    "authorityType": "statute",
+    "jurisdiction": "Louisiana",
+    "authorityState": "LA",
+    "citation": "La. R.S. § 49:950",
+    "normalizedCitation": "La. R.S. § 49:950",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "la-rs-49-950-2i",
+    "canonicalSourceUrl": "https://www.legis.la.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "LA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "49:950",
+        "label": "La. R.S. § 49:950"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "La. R.S. § 49:950\n\nThis Chapter may be cited as the Administrative Procedure Act.",
+    "sections": [
+      {
+        "sectionRef": "49:950",
+        "content": "Louisiana APA citation (canonical)."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Louisiana State Legislature",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Md. Code Ann., State Gov't § 10-201 — Administrative procedure",
+    "shortTitle": "Md. Code Ann., State Gov't § 10-201",
+    "authorityType": "statute",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "Md. Code Ann., State Gov't § 10-201",
+    "normalizedCitation": "Md. Code Ann., State Gov't § 10-201",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "md-sg-10-201",
+    "canonicalSourceUrl": "https://mgaleg.maryland.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MD",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "10-201",
+        "label": "Md. Code Ann., State Gov't § 10-201"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "Md. Code Ann., State Gov't § 10-201\n\nThis subtitle may be cited as the Maryland Administrative Procedure Act.",
+    "sections": [
+      {
+        "sectionRef": "10-201",
+        "content": "Maryland APA citation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Maryland General Assembly",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Mich. Comp. Laws § 24.201 — Administrative procedure",
+    "shortTitle": "Mich. Comp. Laws § 24.201",
+    "authorityType": "statute",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "Mich. Comp. Laws § 24.201",
+    "normalizedCitation": "Mich. Comp. Laws § 24.201",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mi-mcl-24-201",
+    "canonicalSourceUrl": "https://www.legislature.mi.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MI",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "24.201",
+        "label": "Mich. Comp. Laws § 24.201"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "Mich. Comp. Laws § 24.201\n\nThis act shall be known and may be cited as the \"administrative procedures act of 1969\".",
+    "sections": [
+      {
+        "sectionRef": "24.201",
+        "content": "Michigan APA citation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Michigan Legislature",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "N.C. Gen. Stat. § 150B-1 — Administrative procedure",
+    "shortTitle": "N.C. Gen. Stat. § 150B-1",
+    "authorityType": "statute",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "N.C. Gen. Stat. § 150B-1",
+    "normalizedCitation": "N.C. Gen. Stat. § 150B-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nc-gs-150b-1",
+    "canonicalSourceUrl": "https://www.ncleg.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NC",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "150B-1",
+        "label": "N.C. Gen. Stat. § 150B-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "N.C. Gen. Stat. § 150B-1\n\n(a) This Chapter is the Administrative Procedure Act and shall be cited as such.",
+    "sections": [
+      {
+        "sectionRef": "150B-1",
+        "content": "North Carolina APA citation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "North Carolina General Assembly",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ohio Rev. Code § 119.01 — Administrative procedure",
+    "shortTitle": "Ohio Rev. Code § 119.01",
+    "authorityType": "statute",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio Rev. Code § 119.01",
+    "normalizedCitation": "Ohio Rev. Code § 119.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "oh-orc-119-01",
+    "canonicalSourceUrl": "https://codes.ohio.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "OH",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "119.01",
+        "label": "Ohio Rev. Code § 119.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "Ohio Rev. Code § 119.01\n\nAs used in sections 119.01 to 119.13 of the Revised Code:\n\n(A) \"Agency\" means, except as limited by this definition, any governmental entity that is subject to sections 119.01 to 119.13 of the Revised Code.",
+    "sections": [
+      {
+        "sectionRef": "119.01",
+        "content": "Ohio APA agency definition."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Ohio General Assembly",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Wash. Rev. Code § 34.05.001 — Administrative procedure",
+    "shortTitle": "Wash. Rev. Code § 34.05.001",
+    "authorityType": "statute",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "Wash. Rev. Code § 34.05.001",
+    "normalizedCitation": "Wash. Rev. Code § 34.05.001",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wa-rcw-34-05-001",
+    "canonicalSourceUrl": "https://app.leg.wa.gov/RCW/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "34.05.001",
+        "label": "Wash. Rev. Code § 34.05.001"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "Wash. Rev. Code § 34.05.001\n\nThis chapter may be known and cited as the administrative procedure act.",
+    "sections": [
+      {
+        "sectionRef": "34.05.001",
+        "content": "Washington APA citation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Washington State Legislature",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Wis. Stat. § 227.01 — Administrative procedure",
+    "shortTitle": "Wis. Stat. § 227.01",
+    "authorityType": "statute",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Stat. § 227.01",
+    "normalizedCitation": "Wis. Stat. § 227.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wi-stat-227-01",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/statutes",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WI",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "227.01",
+        "label": "Wis. Stat. § 227.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "Wis. Stat. § 227.01\n\nIn this chapter:\n\n(1) \"Agency\" means a board, commission, committee, department or officer in the state government, except the governor, a district attorney or a military or National Guard officer acting as such.",
+    "sections": [
+      {
+        "sectionRef": "227.01",
+        "content": "Wisconsin APA agency definition."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Wisconsin Legislature",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "29 Del. C. § 10101 — Administrative procedure",
+    "shortTitle": "29 Del. C. § 10101",
+    "authorityType": "statute",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "29 Del. C. § 10101",
+    "normalizedCitation": "29 Del. C. § 10101",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "de-29-10101",
+    "canonicalSourceUrl": "https://delcode.delaware.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "DE",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "10101",
+        "label": "29 Del. C. § 10101"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "29 Del. C. § 10101\n\nThis chapter shall be known and may be cited as the \"Administrative Procedures Act.\"",
+    "sections": [
+      {
+        "sectionRef": "10101",
+        "content": "Delaware APA citation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Delaware General Assembly",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Fla. Stat. § 120.50 — Administrative procedure",
+    "shortTitle": "Fla. Stat. § 120.50",
+    "authorityType": "statute",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. Stat. § 120.50",
+    "normalizedCitation": "Fla. Stat. § 120.50",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "fl-stat-120-50",
+    "canonicalSourceUrl": "http://www.leg.state.fl.us/statutes/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "FL",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "120.50",
+        "label": "Fla. Stat. § 120.50"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "Fla. Stat. § 120.50\n\nThis chapter may be cited as the \"Administrative Procedure Act.\"",
+    "sections": [
+      {
+        "sectionRef": "120.50",
+        "content": "Florida APA citation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Florida Legislature",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "5 ILCS 100/1-1 — Administrative procedure",
+    "shortTitle": "5 ILCS 100/1-1",
+    "authorityType": "statute",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "5 ILCS 100/1-1",
+    "normalizedCitation": "5 ILCS 100/1-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "il-5-100-1-1",
+    "canonicalSourceUrl": "https://www.ilga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "IL",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "1-1",
+        "label": "5 ILCS 100/1-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "5 ILCS 100/1-1\n\nThis Act may be cited as the Illinois Administrative Procedure Act.",
+    "sections": [
+      {
+        "sectionRef": "1-1",
+        "content": "Illinois APA citation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Illinois General Assembly",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Mass. Gen. Laws ch. 30A, § 1 — Administrative procedure",
+    "shortTitle": "Mass. Gen. Laws ch. 30A, § 1",
+    "authorityType": "statute",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "Mass. Gen. Laws ch. 30A, § 1",
+    "normalizedCitation": "Mass. Gen. Laws ch. 30A, § 1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-gl-30a-1",
+    "canonicalSourceUrl": "https://malegislature.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "1",
+        "label": "Mass. Gen. Laws ch. 30A, § 1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "Mass. Gen. Laws ch. 30A, § 1\n\nFor the purposes of this chapter:\n\n(1) \"Agency\" includes any department, board, commission, division or authority of the state government or subdivision of any of the foregoing.",
+    "sections": [
+      {
+        "sectionRef": "1",
+        "content": "Massachusetts APA agency definition."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Massachusetts Legislature",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "N.J. Stat. Ann. § 52:14B-1 — Administrative procedure",
+    "shortTitle": "N.J. Stat. Ann. § 52:14B-1",
+    "authorityType": "statute",
+    "jurisdiction": "New Jersey",
+    "authorityState": "NJ",
+    "citation": "N.J. Stat. Ann. § 52:14B-1",
+    "normalizedCitation": "N.J. Stat. Ann. § 52:14B-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nj-52-14b-1",
+    "canonicalSourceUrl": "https://www.njleg.state.nj.us/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NJ",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "52:14B-1",
+        "label": "N.J. Stat. Ann. § 52:14B-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "N.J. Stat. Ann. § 52:14B-1\n\nThis act shall be known and may be cited as the \"Administrative Procedure Act.\"",
+    "sections": [
+      {
+        "sectionRef": "52:14B-1",
+        "content": "New Jersey APA citation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "New Jersey Legislature",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "N.Y. A.P.A. § 100 — Administrative procedure",
+    "shortTitle": "N.Y. A.P.A. § 100",
+    "authorityType": "statute",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "N.Y. A.P.A. § 100",
+    "normalizedCitation": "N.Y. A.P.A. § 100",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-apa-100",
+    "canonicalSourceUrl": "https://www.nysenate.gov/legislation/laws/SAP/100",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NY",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "100",
+        "label": "N.Y. A.P.A. § 100"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "N.Y. A.P.A. § 100\n\nThis chapter shall be known and may be cited as the \"state administrative procedure act.\"",
+    "sections": [
+      {
+        "sectionRef": "100",
+        "content": "New York SAPA citation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "New York State Senate",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "2 Pa.C.S. § 101 — Administrative procedure",
+    "shortTitle": "2 Pa.C.S. § 101",
+    "authorityType": "statute",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "2 Pa.C.S. § 101",
+    "normalizedCitation": "2 Pa.C.S. § 101",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "pa-2-101",
+    "canonicalSourceUrl": "https://www.legis.state.pa.us/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "PA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "101",
+        "label": "2 Pa.C.S. § 101"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "2 Pa.C.S. § 101\n\nThis title shall be known and may be cited as the \"Administrative Agency Law.\"",
+    "sections": [
+      {
+        "sectionRef": "101",
+        "content": "Pennsylvania Administrative Agency Law citation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Pennsylvania General Assembly",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Tex. Gov't Code § 2001.001 — Administrative procedure",
+    "shortTitle": "Tex. Gov't Code § 2001.001",
+    "authorityType": "statute",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "Tex. Gov't Code § 2001.001",
+    "normalizedCitation": "Tex. Gov't Code § 2001.001",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tx-gov-2001-001",
+    "canonicalSourceUrl": "https://statutes.capitol.texas.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "TX",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "2001.001",
+        "label": "Tex. Gov't Code § 2001.001"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "Tex. Gov't Code § 2001.001\n\nThis chapter may be cited as the Administrative Procedure Act.",
+    "sections": [
+      {
+        "sectionRef": "2001.001",
+        "content": "Texas APA citation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Texas Legislature",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Va. Code Ann. § 2.2-4000 — Administrative procedure",
+    "shortTitle": "Va. Code Ann. § 2.2-4000",
+    "authorityType": "statute",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Code Ann. § 2.2-4000",
+    "normalizedCitation": "Va. Code Ann. § 2.2-4000",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "va-code-2-2-4000",
+    "canonicalSourceUrl": "https://law.lis.virginia.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "VA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "2.2-4000",
+        "label": "Va. Code Ann. § 2.2-4000"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative"
+    ],
+    "content": "Va. Code Ann. § 2.2-4000\n\nA. This chapter may be cited as the \"Administrative Process Act.\"",
+    "sections": [
+      {
+        "sectionRef": "2.2-4000",
+        "content": "Virginia APA citation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Virginia General Assembly",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Ariz. Rev. Stat. § 44-1522 — Unlawful practices",
+    "shortTitle": "Ariz. Rev. Stat. § 44-1522",
+    "authorityType": "statute",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "Ariz. Rev. Stat. § 44-1522",
+    "normalizedCitation": "Ariz. Rev. Stat. § 44-1522",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "az-ars-44-1522",
+    "canonicalSourceUrl": "https://www.azleg.gov/arsDetail/?title=44",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "44-1522",
+        "label": "Ariz. Rev. Stat. § 44-1522"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer"
+    ],
+    "content": "Ariz. Rev. Stat. § 44-1522\n\nA. The act, use or employment by any person of any deception, deceptive or unfair act or practice, fraud, false pretense, false promise, misrepresentation, or concealment, suppression or omission of any material fact with intent that others rely on such concealment, suppression or omission, in connection with the sale or advertisement of any merchandise whether or not any person has in fact been misled, deceived or damaged thereby, is declared to be an unlawful practice.",
+    "sections": [
+      {
+        "sectionRef": "44-1522",
+        "content": "Arizona Consumer Fraud Act prohibits deceptive or unfair acts in merchandise sales."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "consumer_protection",
+      "sourceOwner": "Arizona Legislature",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Colo. Rev. Stat. § 8-4-103 — Wage payment",
+    "shortTitle": "Colo. Rev. Stat. § 8-4-103",
+    "authorityType": "statute",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "Colo. Rev. Stat. § 8-4-103",
+    "normalizedCitation": "Colo. Rev. Stat. § 8-4-103",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "co-crs-8-4-103",
+    "canonicalSourceUrl": "https://leg.colorado.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CO",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "8-4-103",
+        "label": "Colo. Rev. Stat. § 8-4-103"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment"
+    ],
+    "content": "Colo. Rev. Stat. § 8-4-103\n\n(1) All wages or compensation earned by any employee in any employment shall be due and payable for regular pay periods of no greater duration than one calendar month or thirty days, whichever is longer.",
+    "sections": [
+      {
+        "sectionRef": "8-4-103",
+        "content": "Colorado requires earned wages payable at least monthly."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "wage_payment",
+      "sourceOwner": "Colorado General Assembly",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Wash. Rev. Code § 19.86.020 — Unfair competition and practices",
+    "shortTitle": "Wash. Rev. Code § 19.86.020",
+    "authorityType": "statute",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "Wash. Rev. Code § 19.86.020",
+    "normalizedCitation": "Wash. Rev. Code § 19.86.020",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wa-rcw-19-86-020",
+    "canonicalSourceUrl": "https://app.leg.wa.gov/RCW/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "19.86.020",
+        "label": "Wash. Rev. Code § 19.86.020"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer"
+    ],
+    "content": "Wash. Rev. Code § 19.86.020\n\nUnfair methods of competition and unfair or deceptive acts or practices in the conduct of any trade or commerce are hereby declared unlawful.",
+    "sections": [
+      {
+        "sectionRef": "19.86.020",
+        "content": "Washington Consumer Protection Act prohibits unfair or deceptive acts in trade or commerce."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "consumer_protection",
+      "sourceOwner": "Washington State Legislature",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Wis. Stat. § 100.20 — Methods of competition and trade practices",
+    "shortTitle": "Wis. Stat. § 100.20",
+    "authorityType": "statute",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Stat. § 100.20",
+    "normalizedCitation": "Wis. Stat. § 100.20",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wi-stat-100-20",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/statutes",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WI",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "100.20",
+        "label": "Wis. Stat. § 100.20"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer"
+    ],
+    "content": "Wis. Stat. § 100.20\n\n(1) Methods of competition in business and trade practices in business shall be fair. Unfair methods of competition in business and unfair trade practices in business are hereby prohibited.",
+    "sections": [
+      {
+        "sectionRef": "100.20",
+        "content": "Wisconsin prohibits unfair methods of competition and unfair trade practices."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "consumer_protection",
+      "sourceOwner": "Wisconsin Legislature",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "La. R.S. § 51:1405 — Unfair acts or practices",
+    "shortTitle": "La. R.S. § 51:1405",
+    "authorityType": "statute",
+    "jurisdiction": "Louisiana",
+    "authorityState": "LA",
+    "citation": "La. R.S. § 51:1405",
+    "normalizedCitation": "La. R.S. § 51:1405",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "la-rs-51-1405-2i",
+    "canonicalSourceUrl": "https://www.legis.la.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "LA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "51:1405",
+        "label": "La. R.S. § 51:1405"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer"
+    ],
+    "content": "La. R.S. § 51:1405\n\nA. Unfair methods of competition and unfair or deceptive acts or practices in the conduct of any trade or commerce are hereby declared unlawful.",
+    "sections": [
+      {
+        "sectionRef": "51:1405",
+        "content": "Louisiana UTPCPL prohibits unfair or deceptive acts."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "consumer_protection",
+      "sourceOwner": "Louisiana State Legislature",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "10 Del. C. § 3104 — Personal jurisdiction",
+    "shortTitle": "10 Del. C. § 3104",
+    "authorityType": "statute",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "10 Del. C. § 3104",
+    "normalizedCitation": "10 Del. C. § 3104",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "de-10-3104",
+    "canonicalSourceUrl": "https://delcode.delaware.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "DE",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "3104",
+        "label": "10 Del. C. § 3104"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure"
+    ],
+    "content": "10 Del. C. § 3104\n\n(c) As to a cause of action brought by any person arising from any of the acts enumerated in this section, a court may exercise personal jurisdiction over any nonresident, or a personal representative, who in person or through an agent:\n\n(1) Transacts any business or performs any character of work or service in the State;\n\n(3) Causes tortious injury in the State by an act or omission in the State;",
+    "sections": [
+      {
+        "sectionRef": "3104",
+        "content": "Delaware long-arm personal jurisdiction statute."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "personal_jurisdiction",
+      "sourceOwner": "Delaware General Assembly",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "Mass. Gen. Laws ch. 223A, § 3 — Personal jurisdiction",
+    "shortTitle": "Mass. Gen. Laws ch. 223A, § 3",
+    "authorityType": "statute",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "Mass. Gen. Laws ch. 223A, § 3",
+    "normalizedCitation": "Mass. Gen. Laws ch. 223A, § 3",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-gl-223a-3",
+    "canonicalSourceUrl": "https://malegislature.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MA",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "3",
+        "label": "Mass. Gen. Laws ch. 223A, § 3"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure"
+    ],
+    "content": "Mass. Gen. Laws ch. 223A, § 3\n\nA court may exercise personal jurisdiction over a person, who acts directly or by an agent, as to a cause of action in law or equity arising from the person's\n\n(a) transacting any business in this commonwealth;\n\n(c) causing tortious injury by an act or omission in this commonwealth;",
+    "sections": [
+      {
+        "sectionRef": "3",
+        "content": "Massachusetts long-arm statute."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "personal_jurisdiction",
+      "sourceOwner": "Massachusetts Legislature",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "N.J. Stat. Ann. § 2A:34-27 — Process; jurisdiction over nonresidents",
+    "shortTitle": "N.J. Stat. Ann. § 2A:34-27",
+    "authorityType": "statute",
+    "jurisdiction": "New Jersey",
+    "authorityState": "NJ",
+    "citation": "N.J. Stat. Ann. § 2A:34-27",
+    "normalizedCitation": "N.J. Stat. Ann. § 2A:34-27",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nj-2a-34-27",
+    "canonicalSourceUrl": "https://www.njleg.state.nj.us/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NJ",
+        "label": "Code"
+      },
+      {
+        "level": "section",
+        "ref": "2A:34-27",
+        "label": "N.J. Stat. Ann. § 2A:34-27"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "procedure"
+    ],
+    "content": "N.J. Stat. Ann. § 2A:34-27\n\nPersonal jurisdiction over a nonresident may be obtained under the New Jersey Court Rules by service consistent with due process and the long-arm provisions applicable to civil actions.",
+    "sections": [
+      {
+        "sectionRef": "2A:34-27",
+        "content": "New Jersey authorizes personal jurisdiction over nonresidents consistent with court rules and due process."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "personal_jurisdiction",
+      "sourceOwner": "New Jersey Legislature",
+      "wave": "2I"
+    }
+  }
+]

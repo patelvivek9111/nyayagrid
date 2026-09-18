@@ -1,0 +1,55 @@
+{
+  "generatedAt": "2026-09-18T13:30:00.000Z",
+  "wave": "2I",
+  "verdict": "PASS",
+  "queue": 2,
+  "transitionAllowed": false,
+  "nextSubStep": "Either deepen remaining seed-state statute subjects (internally solvable) OR resume CourtListener for case/high-court depth — dominant broader blocker for states.",
+  "staging": {
+    "app": "nyayagrid-staging",
+    "machine": "811d3e3f522648",
+    "healthReady": 200,
+    "featureAgents": "0",
+    "authProvider": "clerk"
+  },
+  "corpus": {
+    "before": { "total": 942, "statutes": 517, "regulations": 99, "rules": 155, "cases": 170 },
+    "after": { "total": 1075, "statutes": 543, "regulations": 107, "rules": 254, "cases": 170 }
+  },
+  "courtRules": {
+    "COMPLETE_CORE": 52,
+    "MISSING_EVIDENCE": 0,
+    "MISSING_APPELLATE": 0,
+    "MINIMAL_ONLY": 0,
+    "newRulesAdded": 99
+  },
+  "regulations": {
+    "jurisdictionsBefore": 18,
+    "jurisdictionsAfter": 22,
+    "new": ["MA", "AZ", "RI", "WV"],
+    "stillBlocked": ["CA CCR", "NJ N.J.A.C.", "NY NYCRR eng", "CT eReg eng"]
+  },
+  "currentness": {
+    "before": { "current_as_of_source_date": 631, "unknown": 311 },
+    "after": { "current_as_of_source_date": 889, "unknown": 186 },
+    "lastCheckedPct": 83,
+    "backfillRows": 125
+  },
+  "duplicates": {
+    "aliased": 7,
+    "remainingExactUnaliased": 0
+  },
+  "retrieval": {
+    "jurisdictionsTested": 52,
+    "exactCitePass": 52,
+    "subjectPass": 52,
+    "fail": 0
+  },
+  "broader": {
+    "count": 1,
+    "eligible": ["US"],
+    "dominantStateBlockers": ["case_count_below_20", "authority_count_below_or_eq_100", "statute_count_below_15"]
+  },
+  "clReadyToResume": true,
+  "courtListenerCalls": 0
+}

@@ -168,6 +168,14 @@ describe("parseCitation", () => {
       normalized: "La. Code Civ. Proc. art. 966",
       type: "rule",
     });
+    expect(parseCitation("Pa.R.E. 401")).toMatchObject({
+      normalized: "Pa.R.E. 401",
+      type: "rule",
+    });
+    expect(parseCitation("Pa.R.A.P. 903")).toMatchObject({
+      normalized: "Pa.R.A.P. 903",
+      type: "rule",
+    });
   });
 
   it("does not collide similarly numbered rules across jurisdictions", () => {

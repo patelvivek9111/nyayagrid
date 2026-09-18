@@ -1,0 +1,114 @@
+{
+  "ok": true,
+  "wave": "2I",
+  "before": {
+    "total": 942,
+    "cases": 170,
+    "statutes": 517,
+    "regulations": 99,
+    "rules": 155,
+    "last_checked": 759,
+    "with_currentness": 942,
+    "normalized": 817
+  },
+  "after": {
+    "total": 1075,
+    "cases": 170,
+    "statutes": 543,
+    "regulations": 107,
+    "rules": 254,
+    "rule_jurs": 52,
+    "reg_jurs": 22,
+    "last_checked": 892,
+    "with_currentness": 1075,
+    "normalized": 950,
+    "aliased_rows": 7
+  },
+  "import": {
+    "statutes": {
+      "imported": 26,
+      "skipped": 1,
+      "newVersion": 1
+    },
+    "rules": {
+      "imported": 99,
+      "skipped": 0,
+      "newVersion": 3
+    },
+    "regulations": {
+      "imported": 8,
+      "skipped": 0,
+      "newVersion": 0
+    }
+  },
+  "currentnessBefore": [
+    {
+      "status": "current_as_of_source_date",
+      "n": 631
+    },
+    {
+      "status": "unknown",
+      "n": 311
+    }
+  ],
+  "currentnessAfter": [
+    {
+      "status": "current_as_of_source_date",
+      "n": 889
+    },
+    {
+      "status": "unknown",
+      "n": 186
+    }
+  ],
+  "currentnessBackfill": 125,
+  "alias": {
+    "cplrPairs": 2,
+    "exactAliased": 6,
+    "aliased": [
+      {
+        "from": "48be0a2f-389e-4a06-90d2-6258ef217dc9",
+        "to": "2d73992d-4ced-4c2d-b330-2b969473b3bc",
+        "citation": "N.Y. C.P.L.R. 3211",
+        "type": "rule"
+      },
+      {
+        "from": "8c5d4640-5fb5-4d23-b818-8bcd94e471c8",
+        "to": "4d54e7e8-085f-4939-a0a9-13cfa1f46a94",
+        "citation": "15 U.S.C. § 45",
+        "type": "statute"
+      },
+      {
+        "from": "f9699557-023c-4960-8eab-a6b61f760a0e",
+        "to": "fe6c40a5-08f8-44ca-9a0a-55a27fa4b7f5",
+        "citation": "29 U.S.C. § 206",
+        "type": "statute"
+      },
+      {
+        "from": "1a03244e-3c13-4728-8957-72302aed29e5",
+        "to": "9a11fb0d-473e-4804-b5dc-c4eea276add6",
+        "citation": "Cal. Rules of Court, rule 8.104",
+        "type": "rule"
+      },
+      {
+        "from": "81623405-e5bd-4a1e-b563-b878aebec336",
+        "to": "bdd9b8d1-7c14-4eb8-8f36-04250ea6ccb5",
+        "citation": "La. R.S. § 49:950",
+        "type": "statute"
+      },
+      {
+        "from": "5b8e9a8e-cd38-49e9-a265-af9a51094c86",
+        "to": "5de8d225-4360-418b-a9e7-c204e57428d5",
+        "citation": "M.R. Evid. 401",
+        "type": "rule"
+      },
+      {
+        "from": "283fadbc-0591-493e-a2ba-6ae2189a1f80",
+        "to": "dd9651a7-a93b-4a7b-8d26-7bf6f3fcaacf",
+        "citation": "Wis. Stat. § 904.01",
+        "type": "rule"
+      }
+    ]
+  },
+  "remainingDupes": []
+}

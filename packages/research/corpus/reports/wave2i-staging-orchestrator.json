@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "wave": "2I",
+  "steps": [
+    {
+      "out": "wave2i-import.json",
+      "ok": true
+    },
+    {
+      "out": "wave2i-retrieval.json",
+      "ok": true
+    },
+    {
+      "out": "wave2i-audit.json",
+      "ok": true
+    },
+    {
+      "out": "wave2i-cl-resume-prep.json",
+      "ok": true
+    }
+  ]
+}

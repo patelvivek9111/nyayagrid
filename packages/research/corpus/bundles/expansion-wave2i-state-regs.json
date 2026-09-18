@@ -1,0 +1,362 @@
+[
+  {
+    "title": "454 CMR 27.03 — Minimum wage rate",
+    "shortTitle": "454 CMR 27.03",
+    "authorityType": "regulation",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "454 CMR 27.03",
+    "normalizedCitation": "454 CMR 27.03",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-cmr-454-27-03",
+    "canonicalSourceUrl": "https://www.mass.gov/regulations/454-CMR-2700-minimum-wage-and-overtime",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MA",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "27.03",
+        "label": "454 CMR 27.03"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "454 CMR 27.03\n\n(1) Except as otherwise provided in M.G.L. c. 151 or this regulation, every employer shall pay each employee wages at a rate not less than the Massachusetts minimum wage.",
+    "sections": [
+      {
+        "sectionRef": "27.03",
+        "content": "Massachusetts CMR minimum wage obligation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Massachusetts Executive Office of Labor and Workforce Development",
+      "platformFamily": "agency_cmr",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "454 CMR 27.04 — Overtime",
+    "shortTitle": "454 CMR 27.04",
+    "authorityType": "regulation",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "454 CMR 27.04",
+    "normalizedCitation": "454 CMR 27.04",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-cmr-454-27-04",
+    "canonicalSourceUrl": "https://www.mass.gov/regulations/454-CMR-2700-minimum-wage-and-overtime",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MA",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "27.04",
+        "label": "454 CMR 27.04"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "454 CMR 27.04\n\n(1) Except as otherwise provided, an employer shall pay an employee for overtime work at a rate of not less than one and one-half times the employee's regular rate.",
+    "sections": [
+      {
+        "sectionRef": "27.04",
+        "content": "Massachusetts overtime at one and one-half times the regular rate."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "overtime",
+      "sourceOwner": "Massachusetts Executive Office of Labor and Workforce Development",
+      "platformFamily": "agency_cmr",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "A.A.C. R20-5-1202 — Payment of wages",
+    "shortTitle": "A.A.C. R20-5-1202",
+    "authorityType": "regulation",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "A.A.C. R20-5-1202",
+    "normalizedCitation": "A.A.C. R20-5-1202",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "az-aac-r20-5-1202",
+    "canonicalSourceUrl": "https://apps.azsos.gov/public_services/Title_20/20-05.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "R20-5-1202",
+        "label": "A.A.C. R20-5-1202"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "A.A.C. R20-5-1202\n\nA. An employer shall pay wages due an employee in accordance with A.R.S. Title 23, Chapter 2, Article 7 and these rules.",
+    "sections": [
+      {
+        "sectionRef": "R20-5-1202",
+        "content": "Arizona administrative wage-payment rule incorporates Title 23."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "wage_payment",
+      "sourceOwner": "Arizona Secretary of State / Industrial Commission",
+      "platformFamily": "sos_portal",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "A.A.C. R20-5-1206 — Minimum wage",
+    "shortTitle": "A.A.C. R20-5-1206",
+    "authorityType": "regulation",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "A.A.C. R20-5-1206",
+    "normalizedCitation": "A.A.C. R20-5-1206",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "az-aac-r20-5-1206",
+    "canonicalSourceUrl": "https://apps.azsos.gov/public_services/Title_20/20-05.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "R20-5-1206",
+        "label": "A.A.C. R20-5-1206"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "A.A.C. R20-5-1206\n\nA. An employer shall pay each employee at least the minimum wage required by A.R.S. § 23-363.",
+    "sections": [
+      {
+        "sectionRef": "R20-5-1206",
+        "content": "Arizona administrative minimum wage tracks A.R.S. § 23-363."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Arizona Secretary of State / Industrial Commission",
+      "platformFamily": "sos_portal",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "260-RICR-30-05-1.3 — Minimum wage",
+    "shortTitle": "260-RICR-30-05-1.3",
+    "authorityType": "regulation",
+    "jurisdiction": "Rhode Island",
+    "authorityState": "RI",
+    "citation": "260-RICR-30-05-1.3",
+    "normalizedCitation": "260-RICR-30-05-1.3",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ri-ricr-260-30-05-1-3",
+    "canonicalSourceUrl": "https://rules.sos.ri.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "RI",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "1.3",
+        "label": "260-RICR-30-05-1.3"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "260-RICR-30-05-1.3\n\nA. Every employer shall pay to each of the employer's employees wages at a rate not less than the Rhode Island minimum wage established by statute.",
+    "sections": [
+      {
+        "sectionRef": "1.3",
+        "content": "Rhode Island administrative minimum wage rule."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Rhode Island Secretary of State / DLT",
+      "platformFamily": "sos_portal",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "260-RICR-30-05-3.4 — Payment of wages",
+    "shortTitle": "260-RICR-30-05-3.4",
+    "authorityType": "regulation",
+    "jurisdiction": "Rhode Island",
+    "authorityState": "RI",
+    "citation": "260-RICR-30-05-3.4",
+    "normalizedCitation": "260-RICR-30-05-3.4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ri-ricr-260-30-05-3-4",
+    "canonicalSourceUrl": "https://rules.sos.ri.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "RI",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "3.4",
+        "label": "260-RICR-30-05-3.4"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "260-RICR-30-05-3.4\n\nA. Wages shall be paid in accordance with R.I. Gen. Laws Title 28 and these regulations.",
+    "sections": [
+      {
+        "sectionRef": "3.4",
+        "content": "Rhode Island wage-payment administrative rule."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "wage_payment",
+      "sourceOwner": "Rhode Island Secretary of State / DLT",
+      "platformFamily": "sos_portal",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "W. Va. Code R. § 42-8-3 — Minimum wage",
+    "shortTitle": "W. Va. Code R. § 42-8-3",
+    "authorityType": "regulation",
+    "jurisdiction": "West Virginia",
+    "authorityState": "WV",
+    "citation": "W. Va. Code R. § 42-8-3",
+    "normalizedCitation": "W. Va. Code R. § 42-8-3",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wv-csr-42-8-3",
+    "canonicalSourceUrl": "https://apps.sos.wv.gov/adlaw/csr/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WV",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "42-8-3",
+        "label": "W. Va. Code R. § 42-8-3"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "W. Va. Code R. § 42-8-3\n\n3.1. Every employer shall pay to each of its employees wages at a rate not less than the minimum wage rate required by W. Va. Code § 21-5C-2.",
+    "sections": [
+      {
+        "sectionRef": "42-8-3",
+        "content": "West Virginia CSR minimum wage tracks W. Va. Code § 21-5C-2."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "West Virginia Secretary of State / Division of Labor",
+      "platformFamily": "sos_portal",
+      "wave": "2I"
+    }
+  },
+  {
+    "title": "W. Va. Code R. § 42-5-3 — Wage payment",
+    "shortTitle": "W. Va. Code R. § 42-5-3",
+    "authorityType": "regulation",
+    "jurisdiction": "West Virginia",
+    "authorityState": "WV",
+    "citation": "W. Va. Code R. § 42-5-3",
+    "normalizedCitation": "W. Va. Code R. § 42-5-3",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wv-csr-42-5-3",
+    "canonicalSourceUrl": "https://apps.sos.wv.gov/adlaw/csr/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WV",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "42-5-3",
+        "label": "W. Va. Code R. § 42-5-3"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "W. Va. Code R. § 42-5-3\n\n3.1. Employers shall pay wages due employees in accordance with W. Va. Code § 21-5-1 et seq. and this rule.",
+    "sections": [
+      {
+        "sectionRef": "42-5-3",
+        "content": "West Virginia CSR wage-payment rule."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T21:00:00.000Z",
+      "statuteTopic": "wage_payment",
+      "sourceOwner": "West Virginia Secretary of State / Division of Labor",
+      "platformFamily": "sos_portal",
+      "wave": "2I"
+    }
+  }
+]
