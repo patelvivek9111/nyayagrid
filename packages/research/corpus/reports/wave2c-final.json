@@ -1,0 +1,50 @@
+{
+  "wave": "2C",
+  "queue": 2,
+  "result": "PARTIAL",
+  "generatedAt": "2026-09-18T02:05:00.000Z",
+  "gitSha": "de5c9adade0684ac01447cf6da83be16718462e8",
+  "before": {
+    "total": 311,
+    "curated": 186,
+    "cl": 125,
+    "statutes": 118,
+    "regulations": 15,
+    "rules": 7,
+    "citationExtracted": 2104,
+    "citationResolved": 16
+  },
+  "after": {
+    "total": 497,
+    "curated": 372,
+    "cl": 125,
+    "statutes": 255,
+    "regulations": 46,
+    "rules": 25,
+    "cases": 170,
+    "citationExtracted": 2533,
+    "citationResolved": 76,
+    "currentAsOfSourceDate": 186,
+    "lastChecked": 311,
+    "normalizedCitations": 199,
+    "chunks": 1754,
+    "embeddings": 1754
+  },
+  "deltas": {
+    "authorities": 186,
+    "statutes": 137,
+    "regulations": 31,
+    "rules": 18,
+    "citationResolved": 60
+  },
+  "featureAgents": "0",
+  "courtListener": "frozen_no_bulk",
+  "notes": [
+    "CL cases preserved at 125; no CL bulk in Wave 2C",
+    "eCFR live fetch 31 new sections (1 deduped vs prior CFR bundle)",
+    "State regulation adapters remain manual_or_unimplemented except US eCFR",
+    "Citation resolve improved via case→statute/reg/rule cross-link deepen, not fuzzy matching",
+    "All 52 jurisdictions limited_corpus under objective criteria; broader_corpus not claimed",
+    "Legal Research generalWebEnabled remains false; FEATURE_AGENTS=0"
+  ]
+}
