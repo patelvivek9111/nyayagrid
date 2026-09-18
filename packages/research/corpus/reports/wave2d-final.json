@@ -1,0 +1,55 @@
+{
+  "wave": "2D",
+  "queue": 2,
+  "branch": "COURTLISTENER_BLOCKED",
+  "result": "PARTIAL",
+  "generatedAt": "2026-09-18T02:31:00.000Z",
+  "gitSha": "5419a980cc24d91327127d5e9dc34a20b543f427",
+  "clProbe": {
+    "status": 429,
+    "retryAfterSeconds": 59308,
+    "additionalCalls": 0
+  },
+  "before": {
+    "total": 497,
+    "curated": 372,
+    "cl": 125,
+    "statutes": 255,
+    "regulations": 46,
+    "rules": 25,
+    "citationResolved": 76,
+    "currentAsOf": 186,
+    "lastChecked": 311
+  },
+  "after": {
+    "total": 572,
+    "curated": 447,
+    "cl": 125,
+    "statutes": 295,
+    "regulations": 66,
+    "rules": 40,
+    "cases": 170,
+    "citationExtracted": 2533,
+    "citationResolved": 76,
+    "currentAsOf": 261,
+    "lastChecked": 386,
+    "normalized": 274,
+    "chunks": 2221,
+    "embeddings": 2221
+  },
+  "imported": {
+    "newAuthorities": 75,
+    "stateRegs": 20,
+    "stateRules": 15,
+    "thinStateStatutes": 40,
+    "errors": 0
+  },
+  "featureAgents": "0",
+  "notes": [
+    "Exactly one CL probe; no further CL calls",
+    "Skipped CA/NJ/NY admin codes (Westlaw/Lexis browse)",
+    "Reusable state_regulation adapter family for PA/FL/VA/DE/IL",
+    "Citation resolved unchanged this pass (no new exact case→state-reg matches in scanned opinions)",
+    "broader_corpus still not claimed"
+  ]
+}
