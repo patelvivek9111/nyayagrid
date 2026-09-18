@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@nyayagrid/ui";
+import { useMatterChrome } from "@/components/use-matter-chrome";
 
 type HistoryVersion = {
   id: string;
@@ -43,17 +44,25 @@ function formatTime(value: string) {
   return date.toLocaleString();
 }
 
+/**
+ * Recovery mutation controls fail closed.
+ * Prefer explicit `canRestore`; otherwise derive from matter chrome (false until proven).
+ */
 export function VersionHistoryPanel({
   matterId,
   objectType,
   objectId,
-  canRestore = true,
+  canRestore: canRestoreProp,
 }: {
   matterId: string;
   objectType: string;
   objectId: string | null;
   canRestore?: boolean;
 }) {
+  const { canRestore: chromeCanRestore } = useMatterChrome();
+  // Explicit prop wins; otherwise chrome (false until proven allowed).
+  const canRestore = canRestoreProp ?? chromeCanRestore;
+
   const [versions, setVersions] = useState<HistoryVersion[]>([]);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -81,7 +90,7 @@ export function VersionHistoryPanel({
   const current = versions.find((v) => v.current);
 
   async function restore(versionId: string, asNew = true) {
-    if (!objectId) return;
+    if (!objectId || !canRestore) return;
     setBusy(true);
     setError("");
     setConflict("");
@@ -114,7 +123,7 @@ export function VersionHistoryPanel({
   }
 
   async function undo() {
-    if (!objectId) return;
+    if (!objectId || !canRestore) return;
     setBusy(true);
     setError("");
     setConflict("");
@@ -191,13 +200,13 @@ export function VersionHistoryPanel({
           <p className="font-semibold">Newer changes exist</p>
           <p className="mt-1 text-ink/80">{conflict}</p>
           <p className="mt-1 text-xs text-ink/60">
-            Items changed after this action won't be overwritten.
+            Items changed after this action won&apos;t be overwritten.
           </p>
           <div className="mt-2 flex flex-wrap gap-2">
             <Button type="button" variant="secondary" disabled={busy || !compareFrom} onClick={compare}>
               View diff
             </Button>
-            {current ? (
+            {canRestore && current ? (
               <Button
                 type="button"
                 disabled={busy || !compareFrom}
@@ -223,20 +232,22 @@ export function VersionHistoryPanel({
             <p className="text-[11px] text-ink/50">{formatTime(version.createdAt)}</p>
             {version.current ? (
               <p className="mt-1 text-[11px] font-semibold text-accent">Current version</p>
-            ) : canRestore ? (
+            ) : (
               <div className="mt-1 flex flex-wrap gap-2">
-                <Button
-                  className="mt-1"
-                  variant="ghost"
-                  disabled={busy}
-                  onClick={() => {
-                    setCompareFrom(version.id);
-                    setCompareTo(current?.id ?? "");
-                    restore(version.id, true);
-                  }}
-                >
-                  Restore this version
-                </Button>
+                {canRestore ? (
+                  <Button
+                    className="mt-1"
+                    variant="ghost"
+                    disabled={busy}
+                    onClick={() => {
+                      setCompareFrom(version.id);
+                      setCompareTo(current?.id ?? "");
+                      restore(version.id, true);
+                    }}
+                  >
+                    Restore this version
+                  </Button>
+                ) : null}
                 <Button
                   className="mt-1"
                   variant="ghost"
@@ -250,7 +261,7 @@ export function VersionHistoryPanel({
                   Compare
                 </Button>
               </div>
-            ) : null}
+            )}
           </li>
         ))}
       </ul>
@@ -305,6 +316,7 @@ export function VersionHistoryPanel({
 }
 
 export function SessionRestoreControl({ matterId }: { matterId: string }) {
+  const { canRestore } = useMatterChrome();
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [preview, setPreview] = useState<Preview | null>(null);
   const [busy, setBusy] = useState(false);
@@ -312,6 +324,11 @@ export function SessionRestoreControl({ matterId }: { matterId: string }) {
   const storageKey = useMemo(() => `nyaya-work-session:${matterId}`, [matterId]);
 
   useEffect(() => {
+    if (!canRestore) {
+      setSessionId(null);
+      setPreview(null);
+      return;
+    }
     const existing = sessionStorage.getItem(storageKey);
     if (existing) {
       setSessionId(existing);
@@ -329,10 +346,10 @@ export function SessionRestoreControl({ matterId }: { matterId: string }) {
         setSessionId(json.session.id);
       })
       .catch((err: unknown) => setError(err instanceof Error ? err.message : "Could not start work session"));
-  }, [matterId, storageKey]);
+  }, [matterId, storageKey, canRestore]);
 
   async function loadPreview() {
-    if (!sessionId) return;
+    if (!sessionId || !canRestore) return;
     setBusy(true);
     setError("");
     try {
@@ -352,7 +369,7 @@ export function SessionRestoreControl({ matterId }: { matterId: string }) {
   }
 
   async function confirmRestore() {
-    if (!sessionId || !preview) return;
+    if (!sessionId || !preview || !canRestore) return;
     setBusy(true);
     setError("");
     try {
@@ -372,6 +389,18 @@ export function SessionRestoreControl({ matterId }: { matterId: string }) {
     } finally {
       setBusy(false);
     }
+  }
+
+  if (!canRestore) {
+    return (
+      <div className="rounded-lg border border-line bg-white p-3 text-sm">
+        <p className="font-semibold">Session restore</p>
+        <p className="mt-1 text-xs text-ink/60">
+          Restoring a work session requires edit access on this matter. You can still view version
+          history where available.
+        </p>
+      </div>
+    );
   }
 
   return (

@@ -6,7 +6,13 @@ import {
   LegalWorkIrreversibleError,
   LegalWorkLockedError,
 } from "./errors";
-import { approvalAfterRestore, canRestoreObject, isProtectedObjectType } from "./policy";
+import {
+  approvalAfterRestore,
+  canBulkRestore,
+  canRestoreObject,
+  isProtectedObjectType,
+} from "./policy";
+import { roleFromAccess } from "./index";
 import { diffPayloads, diffTextLines } from "./diff";
 import { MemoryLegalWorkStore } from "./store";
 import { detectOptimisticConflict, detectUndoConflict } from "./conflict";
@@ -680,5 +686,21 @@ describe("legal-work recovery", () => {
       },
       actorUserId: userA,
     })?.kind).toBe("newer_edit");
+  });
+
+  it("viewer policy: restore/bulk denied; editor/admin allowed for unlocked work", () => {
+    expect(canRestoreObject("viewer", "unlocked")).toBe(false);
+    expect(canRestoreObject("editor", "unlocked")).toBe(true);
+    expect(canRestoreObject("admin", "unlocked")).toBe(true);
+    expect(canBulkRestore("viewer")).toBe(false);
+    expect(canBulkRestore("editor")).toBe(true);
+    expect(roleFromAccess({ access: "read", capabilities: new Set() })).toBe("viewer");
+    expect(roleFromAccess({ access: "edit", capabilities: new Set() })).toBe("editor");
+    expect(
+      roleFromAccess({
+        access: "read",
+        capabilities: new Set(["organization.manage" as never]),
+      }),
+    ).toBe("admin");
   });
 });

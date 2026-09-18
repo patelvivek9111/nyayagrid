@@ -29,6 +29,9 @@ type MatterChromeValue = {
   organizationId: string | null;
   jurisdictionContext: UiJurisdictionContract | null;
   canEdit: boolean;
+  /** Recovery mutations (restore/undo/bulk/session). Fail-closed until chrome loads. */
+  canRestore: boolean;
+  matterAccess: "read" | "comment" | "edit" | "manage" | null;
   reviewPendingCount: number;
   canReview: boolean;
   canReviewAnalysis: boolean;
@@ -55,6 +58,10 @@ export function MatterChromeProvider({
     null,
   );
   const [canEdit, setCanEdit] = useState(false);
+  const [canRestore, setCanRestore] = useState(false);
+  const [matterAccess, setMatterAccess] = useState<
+    "read" | "comment" | "edit" | "manage" | null
+  >(null);
   const [reviewPendingCount, setReviewPendingCount] = useState(0);
   const [canReview, setCanReview] = useState(false);
   const [canReviewAnalysis, setCanReviewAnalysis] = useState(false);
@@ -76,6 +83,16 @@ export function MatterChromeProvider({
     setOrganizationId(data.organizationId ?? null);
     setJurisdictionContext((data.jurisdictionContext as UiJurisdictionContract | null) ?? null);
     setCanEdit(Boolean(data.canEdit));
+    // Fail closed: unknown/missing canRestore must not enable mutation controls.
+    setCanRestore(data.canRestore === true);
+    setMatterAccess(
+      data.matterAccess === "read" ||
+        data.matterAccess === "comment" ||
+        data.matterAccess === "edit" ||
+        data.matterAccess === "manage"
+        ? data.matterAccess
+        : null,
+    );
     setReviewPendingCount(
       typeof data.review?.pendingCount === "number" ? data.review.pendingCount : 0,
     );
@@ -127,6 +144,8 @@ export function MatterChromeProvider({
       organizationId,
       jurisdictionContext,
       canEdit,
+      canRestore,
+      matterAccess,
       reviewPendingCount,
       canReview,
       canReviewAnalysis,
@@ -146,6 +165,8 @@ export function MatterChromeProvider({
       organizationId,
       jurisdictionContext,
       canEdit,
+      canRestore,
+      matterAccess,
       reviewPendingCount,
       canReview,
       canReviewAnalysis,

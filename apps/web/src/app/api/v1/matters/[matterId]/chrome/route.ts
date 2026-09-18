@@ -17,12 +17,14 @@ export async function GET(request: Request, { params }: Params) {
   try {
     const { matterId } = await params;
     const { db, user } = await requireUser(request.headers);
-    const { matter, membership } = await requireMatterAccess(db, {
+    const { matter, membership, access } = await requireMatterAccess(db, {
       userId: user.id,
       matterId,
       minAccess: "read",
       capability: "matters.view",
     });
+    // Recovery mutations require matter edit+; fail closed when access is read-only.
+    const canRestore = access === "edit" || access === "manage";
     const canReview =
       membership.capabilities.has("timeline.manage") ||
       membership.capabilities.has("organization.manage");
@@ -71,6 +73,8 @@ export async function GET(request: Request, { params }: Params) {
       },
       canUpload: membership.capabilities.has("documents.upload"),
       canEdit: membership.capabilities.has("matters.edit"),
+      canRestore,
+      matterAccess: access,
     });
   } catch (error) {
     return handleRouteError(error);
