@@ -1,0 +1,33 @@
+{
+  "wave": "2B-resume",
+  "branch": "COURTLISTENER_BLOCKED",
+  "result": "RATE_LIMIT_WINDOW_REACHED",
+  "probedAt": "2026-09-18T02:34:00.000Z",
+  "probe": {
+    "endpoint": "GET /api/rest/v4/opinions/?cluster__docket__court=ca11&page_size=1",
+    "status": 429,
+    "retryAfterSeconds": 58010,
+    "retryAfterApproxHours": 16.1,
+    "additionalClCalls": 0
+  },
+  "corpusFrozen": {
+    "total": 572,
+    "curated": 447,
+    "cl": 125,
+    "cases": 170
+  },
+  "resumeOrderWhenOpen": [
+    "CA11",
+    "CADC",
+    "CAFC",
+    "deepen CA7",
+    "deepen CA10",
+    "Wave-1 high courts: CA DE FL IL MA NJ NY PA TX VA",
+    "Wave-1 intermediate appellate (bounded)"
+  ],
+  "notes": [
+    "Exactly one authenticated probe. Zero additional CourtListener calls.",
+    "No non-CL expansion launched this run per Wave 2B resume instructions.",
+    "Durable checkpoints and corpus_ingest_jobs remain intact for resume."
+  ]
+}
