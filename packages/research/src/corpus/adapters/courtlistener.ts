@@ -130,12 +130,24 @@ export function createCourtListenerAdapter(
       if (cursor) params.set("cursor", cursor);
 
       await sleep(rateLimitMs);
-      const res = await fetch(`${baseUrl}/search/?${params.toString()}`, {
+      let res = await fetch(`${baseUrl}/search/?${params.toString()}`, {
         headers: {
           Authorization: `Token ${apiKey}`,
           Accept: "application/json",
         },
       });
+      // Bounded 429 handling — respect Retry-After; no retry storm.
+      for (let attempt = 0; attempt < 4 && res.status === 429; attempt++) {
+        const ra = res.headers.get("retry-after");
+        const sec = ra && /^\d+$/.test(ra) ? Math.min(Number(ra), 120) : Math.min(2 ** (attempt + 1), 60);
+        await sleep(sec * 1000);
+        res = await fetch(`${baseUrl}/search/?${params.toString()}`, {
+          headers: {
+            Authorization: `Token ${apiKey}`,
+            Accept: "application/json",
+          },
+        });
+      }
       if (!res.ok) {
         return { items: [], nextCursor: undefined };
       }
