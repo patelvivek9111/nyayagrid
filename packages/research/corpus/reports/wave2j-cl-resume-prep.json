@@ -1,0 +1,36 @@
+{
+  "ok": true,
+  "wave": "2H",
+  "courtListenerHttpCalls": 0,
+  "tables": [
+    "corpus_ingest_jobs",
+    "corpus_refresh_jobs"
+  ],
+  "checkpointsFound": 0,
+  "jobsFound": 0,
+  "courtListenerCases": 125,
+  "federalTargets": [
+    "CA11",
+    "CADC",
+    "CAFC",
+    "CA7",
+    "CA10"
+  ],
+  "wave1Targets": [
+    "CA",
+    "DE",
+    "FL",
+    "IL",
+    "MA",
+    "NJ",
+    "NY",
+    "PA",
+    "TX",
+    "VA"
+  ],
+  "readyToResume": true,
+  "notes": [
+    "Read-only verification only — no CL probes or checkpoint mutations.",
+    "Resume when CL rate limits clear; do not duplicate restart without cursor review."
+  ]
+}

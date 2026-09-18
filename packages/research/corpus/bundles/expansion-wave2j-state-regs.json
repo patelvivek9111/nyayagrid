@@ -1,0 +1,278 @@
+[
+  {
+    "title": "12 NYCRR § 142-2.1 — Basic minimum hourly wage",
+    "shortTitle": "12 NYCRR § 142-2.1",
+    "authorityType": "regulation",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "12 NYCRR § 142-2.1",
+    "normalizedCitation": "12 NYCRR § 142-2.1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-nycrr-12-142-2-1",
+    "canonicalSourceUrl": "https://dol.ny.gov/system/files/documents/2021/03/part142.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NY",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "142-2.1",
+        "label": "12 NYCRR § 142-2.1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "12 NYCRR § 142-2.1\n\n(a) Every employer shall pay to each of its employees for each hour worked a wage of not less than the applicable minimum wage rate provided under article 19 of the Labor Law and this Part.",
+    "sections": [
+      {
+        "sectionRef": "142-2.1",
+        "content": "New York DOL Part 142 requires payment of the statutory minimum wage."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T22:00:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "New York State Department of Labor (official Part 142 publication)",
+      "platformFamily": "agency_pdf",
+      "wave": "2J",
+      "sourceClass": "C_official_pdf"
+    }
+  },
+  {
+    "title": "12 NYCRR § 142-2.2 — Overtime rate",
+    "shortTitle": "12 NYCRR § 142-2.2",
+    "authorityType": "regulation",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "12 NYCRR § 142-2.2",
+    "normalizedCitation": "12 NYCRR § 142-2.2",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-nycrr-12-142-2-2",
+    "canonicalSourceUrl": "https://dol.ny.gov/system/files/documents/2021/03/part142.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NY",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "142-2.2",
+        "label": "12 NYCRR § 142-2.2"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "12 NYCRR § 142-2.2\n\nAn employer shall pay an employee for overtime at a wage rate of one and one-half times the employee's regular rate for hours worked in excess of 40 hours in a workweek, except as otherwise provided by law or this Part.",
+    "sections": [
+      {
+        "sectionRef": "142-2.2",
+        "content": "New York overtime at one and one-half times the regular rate after 40 hours."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T22:00:00.000Z",
+      "statuteTopic": "overtime",
+      "sourceOwner": "New York State Department of Labor (official Part 142 publication)",
+      "platformFamily": "agency_pdf",
+      "wave": "2J",
+      "sourceClass": "C_official_pdf"
+    }
+  },
+  {
+    "title": "13 NYCRR § 20.1 — General provisions",
+    "shortTitle": "13 NYCRR § 20.1",
+    "authorityType": "regulation",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "13 NYCRR § 20.1",
+    "normalizedCitation": "13 NYCRR § 20.1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-nycrr-13-20-1",
+    "canonicalSourceUrl": "https://dos.ny.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NY",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "20.1",
+        "label": "13 NYCRR § 20.1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "13 NYCRR § 20.1\n\nThis Part sets forth general provisions applicable to filings and administrative procedures administered by the Department of State under the applicable enabling statutes.",
+    "sections": [
+      {
+        "sectionRef": "20.1",
+        "content": "New York DOS administrative general provisions snapshot."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T22:00:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "New York Department of State",
+      "platformFamily": "agency_html",
+      "wave": "2J",
+      "sourceClass": "B_stable_html"
+    }
+  },
+  {
+    "title": "Conn. Agencies Regs. § 31-60-1 — Definitions",
+    "shortTitle": "Conn. Agencies Regs. § 31-60-1",
+    "authorityType": "regulation",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Agencies Regs. § 31-60-1",
+    "normalizedCitation": "Conn. Agencies Regs. § 31-60-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ct-reg-31-60-1",
+    "canonicalSourceUrl": "https://eregulations.ct.gov/eRegsPortal/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "31-60-1",
+        "label": "Conn. Agencies Regs. § 31-60-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Conn. Agencies Regs. § 31-60-1\n\nAs used in sections 31-60-1 to 31-60-16, inclusive:\n\n(a) \"Employee\" means any individual employed by an employer.\n\n(b) \"Employer\" means any person acting directly or indirectly in the interest of an employer in relation to an employee.",
+    "sections": [
+      {
+        "sectionRef": "31-60-1",
+        "content": "Connecticut wage-order definitions for employees and employers."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T22:00:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Connecticut eRegulations System / Department of Labor",
+      "platformFamily": "eregulations",
+      "wave": "2J",
+      "sourceClass": "B_stable_html"
+    }
+  },
+  {
+    "title": "Conn. Agencies Regs. § 31-60-10 — Overtime",
+    "shortTitle": "Conn. Agencies Regs. § 31-60-10",
+    "authorityType": "regulation",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Agencies Regs. § 31-60-10",
+    "normalizedCitation": "Conn. Agencies Regs. § 31-60-10",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ct-reg-31-60-10",
+    "canonicalSourceUrl": "https://eregulations.ct.gov/eRegsPortal/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "31-60-10",
+        "label": "Conn. Agencies Regs. § 31-60-10"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Conn. Agencies Regs. § 31-60-10\n\nExcept as otherwise provided, each employee shall be paid at a rate of not less than one and one-half times the employee's regular rate for all hours worked in excess of forty hours in any workweek.",
+    "sections": [
+      {
+        "sectionRef": "31-60-10",
+        "content": "Connecticut overtime regulation at time-and-a-half after forty hours."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T22:00:00.000Z",
+      "statuteTopic": "overtime",
+      "sourceOwner": "Connecticut eRegulations System / Department of Labor",
+      "platformFamily": "eregulations",
+      "wave": "2J",
+      "sourceClass": "B_stable_html"
+    }
+  },
+  {
+    "title": "Conn. Agencies Regs. § 31-62-D1 — Payment of wages",
+    "shortTitle": "Conn. Agencies Regs. § 31-62-D1",
+    "authorityType": "regulation",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Agencies Regs. § 31-62-D1",
+    "normalizedCitation": "Conn. Agencies Regs. § 31-62-D1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ct-reg-31-62-d1",
+    "canonicalSourceUrl": "https://eregulations.ct.gov/eRegsPortal/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "31-62-D1",
+        "label": "Conn. Agencies Regs. § 31-62-D1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Conn. Agencies Regs. § 31-62-D1\n\nWages shall be paid in accordance with section 31-71b of the Connecticut General Statutes and these regulations.",
+    "sections": [
+      {
+        "sectionRef": "31-62-D1",
+        "content": "Connecticut wage-payment administrative rule referencing Gen. Stat. § 31-71b."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T22:00:00.000Z",
+      "statuteTopic": "wage_payment",
+      "sourceOwner": "Connecticut eRegulations System / Department of Labor",
+      "platformFamily": "eregulations",
+      "wave": "2J",
+      "sourceClass": "B_stable_html"
+    }
+  }
+]

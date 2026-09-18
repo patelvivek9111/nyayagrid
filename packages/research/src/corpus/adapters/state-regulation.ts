@@ -198,6 +198,19 @@ export const WAVE1_STATE_REGULATION_CONFIGS: Record<string, StateRegulationSourc
     platformFamily: "sos_portal",
     citationPattern: String.raw`W\.?\s*Va\.?\s*Code\s+R\.?\s*§?\s*[\d\-]+`,
   },
+  /** Wave 2J — NY/CT official public regulation hubs (curated + config). */
+  NY: {
+    stateCode: "NY",
+    baseUrl: "https://dol.ny.gov/",
+    platformFamily: "custom_html",
+    citationPattern: String.raw`\d+\s+NYCRR\s*§?\s*[\d.\-]+`,
+  },
+  CT: {
+    stateCode: "CT",
+    baseUrl: "https://eregulations.ct.gov/eRegsPortal/",
+    platformFamily: "sos_portal",
+    citationPattern: String.raw`Conn\.?\s*Agencies\s+Regs\.?\s*§?\s*[\dA-Za-z.\-]+`,
+  },
 };
 
 export function createStateRegulationAdapter(

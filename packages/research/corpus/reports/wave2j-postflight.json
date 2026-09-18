@@ -1,0 +1,894 @@
+{
+  "ok": true,
+  "wave": "2J-pre",
+  "ge6": 51,
+  "ge8": 51,
+  "ge15": 51,
+  "below6": [],
+  "below15": [],
+  "currentness": [
+    {
+      "s": "current_as_of_source_date",
+      "n": 1255
+    },
+    {
+      "s": "unknown",
+      "n": 183
+    }
+  ],
+  "totals": {
+    "total": 1438,
+    "checked": 1258,
+    "regs": 113,
+    "reg_jurs": 24
+  },
+  "byState": {
+    "AL": {
+      "statutes": 18,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "AK": {
+      "statutes": 18,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "AZ": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "AR": {
+      "statutes": 18,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "CA": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "CO": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "CT": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "DE": {
+      "statutes": 16,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "DC": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "FL": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "GA": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "HI": {
+      "statutes": 18,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "ID": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "IL": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "IN": {
+      "statutes": 18,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "IA": {
+      "statutes": 18,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "KS": {
+      "statutes": 18,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "KY": {
+      "statutes": 18,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "LA": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "ME": {
+      "statutes": 18,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "MD": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "MA": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "MI": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "MN": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "MS": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "MO": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "MT": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "NE": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "NV": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "NH": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "NJ": {
+      "statutes": 16,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "NM": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "NY": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "NC": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "ND": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "OH": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "OK": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "OR": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "PA": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "RI": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "SC": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "SD": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "TN": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "TX": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "UT": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "VT": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "VA": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "WA": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "WV": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "WI": {
+      "statutes": 15,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    },
+    "WY": {
+      "statutes": 17,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "missing": []
+    }
+  }
+}

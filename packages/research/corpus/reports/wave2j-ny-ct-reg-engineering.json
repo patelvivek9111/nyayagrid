@@ -1,0 +1,28 @@
+{
+  "generatedAt": "2026-09-18T22:00:00.000Z",
+  "phase": "50S-WAVE-2J",
+  "NY": {
+    "findings": [
+      "Official NYCRR text is fragmented; Lexis/Westlaw browse wrappers disallowed.",
+      "NYS Department of Labor hosts official Part 142 (Minimum Wage) PDF with stable canonical URL.",
+      "Department of State publishes agency materials; full NYCRR machine bulk remains incomplete."
+    ],
+    "classification": "C_official_pdf + B_stable_html for agency-hosted slices",
+    "adapterStatus": "config_added_on_state_regulation_family (NY) + curated import",
+    "rowsPlanned": 3,
+    "rowsImported": 3,
+    "blockerIfAny": "Full NYCRR A_machine_readable bulk not available without proprietary publishers"
+  },
+  "CT": {
+    "findings": [
+      "Connecticut eRegulations System (eregulations.ct.gov) is the official public portal.",
+      "Wage/hour agency regulations accessible as official HTML via eRegs."
+    ],
+    "classification": "B_stable_html",
+    "adapterStatus": "config_added_on_state_regulation_family (CT) + curated import",
+    "rowsPlanned": 3,
+    "rowsImported": 3,
+    "blockerIfAny": null
+  },
+  "regJurisdictionsAfter": 24
+}

@@ -32,6 +32,7 @@ const TOPIC_TO_FAMILY: Record<string, StatuteSubjectFamily> = {
   statute_of_limitations: "limitations",
   limitations_written_contract: "limitations",
   ucc_article_2_limitations: "limitations",
+  statute_of_frauds: "contracts_commercial",
   ucc_merchantability: "contracts_commercial",
   ucc_warranty_disclaimer: "contracts_commercial",
   ucc_express_warranty: "contracts_commercial",

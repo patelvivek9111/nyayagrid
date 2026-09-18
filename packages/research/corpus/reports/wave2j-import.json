@@ -1,0 +1,42 @@
+{
+  "ok": true,
+  "wave": "2J",
+  "before": {
+    "total": 1402,
+    "cases": 170,
+    "statutes": 864,
+    "regulations": 113,
+    "rules": 254,
+    "last_checked": 1222,
+    "unknown": 183,
+    "current_src": 1219,
+    "normalized": 1277
+  },
+  "after": {
+    "total": 1438,
+    "cases": 170,
+    "statutes": 900,
+    "regulations": 113,
+    "rules": 254,
+    "reg_jurs": 24,
+    "last_checked": 1258,
+    "unknown": 183,
+    "current_src": 1255,
+    "normalized": 1313,
+    "aliased_rows": 185
+  },
+  "import": {
+    "statutes": {
+      "imported": 36,
+      "skipped": 331,
+      "newVersion": 0
+    },
+    "regulations": {
+      "imported": 0,
+      "skipped": 6,
+      "newVersion": 0
+    }
+  },
+  "aliased": 13,
+  "currentnessBackfill": 0
+}

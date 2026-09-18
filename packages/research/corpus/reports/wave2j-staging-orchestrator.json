@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "wave": "2J",
+  "steps": [
+    {
+      "out": "wave2j-import.json",
+      "ok": true
+    },
+    {
+      "out": "wave2j-postflight.json",
+      "ok": true
+    },
+    {
+      "out": "wave2j-retrieval.json",
+      "ok": true
+    },
+    {
+      "out": "wave2j-audit.json",
+      "ok": true
+    },
+    {
+      "out": "wave2j-cl-resume-prep.json",
+      "ok": true
+    }
+  ]
+}

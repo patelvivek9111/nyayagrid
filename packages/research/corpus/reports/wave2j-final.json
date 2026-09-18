@@ -1,0 +1,118 @@
+{
+  "verdict": "PASS",
+  "queue": 2,
+  "wave": "2J",
+  "transitionAllowed": false,
+  "nextSubStep": "Wave 2K — CL resume when cooldown clears OR deepen public regs / residual currentness; do not open Queue #3",
+  "corpus": {
+    "before": {
+      "authorities": 1075,
+      "cases": 170,
+      "statutes": 543,
+      "regulations": 107,
+      "rules": 254,
+      "regJurisdictions": 22
+    },
+    "after": {
+      "authorities": 1438,
+      "cases": 170,
+      "statutes": 900,
+      "regulations": 113,
+      "rules": 254,
+      "regJurisdictions": 24
+    }
+  },
+  "statuteNationalFloor": {
+    "ge6SubjectsBefore": 21,
+    "ge6SubjectsAfter": 51,
+    "ge8SubjectsAfter": 51,
+    "ge15StatutesBefore": 1,
+    "ge15StatutesAfter": 51,
+    "remainingSubjectThin": [],
+    "remainingCountThin": []
+  },
+  "nyRegulations": {
+    "sourceFindings": "DOL Part 142 official PDF + DOS/agency slices; full NYCRR bulk incomplete without proprietary publishers",
+    "classification": "C_official_pdf + B_stable_html",
+    "adapterStatus": "state_regulation config NY + curated import",
+    "rowsImported": 3,
+    "blocker": "Full NYCRR A_machine_readable bulk unavailable without proprietary publishers"
+  },
+  "ctRegulations": {
+    "sourceFindings": "eregulations.ct.gov official portal; wage/hour HTML stable",
+    "classification": "B_stable_html",
+    "adapterStatus": "state_regulation config CT + curated import",
+    "rowsImported": 3,
+    "blocker": null
+  },
+  "currentness": {
+    "unknownBefore": 186,
+    "unknownAfter": 183,
+    "lastCheckedBefore": 892,
+    "lastCheckedAfter": 1258,
+    "lastCheckedPctAfter": 87.5,
+    "reasonBuckets": {
+      "A_source_supports_recheck": 12,
+      "B_historical_case": 28,
+      "C_CL_related": 125,
+      "D_source_no_revision_metadata": 15,
+      "E_manual_source": 3,
+      "F_missing_metadata_bug": 0
+    },
+    "statusesChangedWithEvidence": "new curated rows stamped current_as_of_source_date from retrievedAt; no fabricated unknown→current conversions"
+  },
+  "broaderBlockers": {
+    "before": {
+      "authority_count_below_or_eq_100": 51,
+      "statute_count_below_15": 50,
+      "case_count_below_20": 51,
+      "no_high_or_appellate": 31,
+      "statute_subjects_below_6": 30
+    },
+    "after": {
+      "authority_count_below_or_eq_100": 51,
+      "statute_count_below_15": 0,
+      "case_count_below_20": 51,
+      "no_high_or_appellate": 31,
+      "statute_subjects_below_6": 0
+    },
+    "jurisdictionsNewlySatisfyingStatuteGates": "all 50 states + DC for ≥6 subjects and ≥15 statutes",
+    "dominantRemaining": ["case_count_below_20", "no_high_or_appellate", "authority_count_below_or_eq_100"]
+  },
+  "retrieval": {
+    "exactStatuteCite52": { "pass": 52, "fail": 0 },
+    "subjectQuery52": { "pass": 52, "fail": 0 },
+    "expectedMisses": 4,
+    "jurisdictionIsolation": "PASS",
+    "noWeb": true,
+    "courtListenerHttp": 0
+  },
+  "clReadiness": {
+    "federal": ["CA11", "CADC", "CAFC", "CA7", "CA10"],
+    "wave1": ["CA", "DE", "FL", "IL", "MA", "NJ", "NY", "PA", "TX", "VA"],
+    "checkpointIntegrity": "intact (read-only)",
+    "readyToResume": true,
+    "httpCalls": 0
+  },
+  "tests": {
+    "subjectBundle": "pass",
+    "citations": "pass",
+    "corpus": "pass",
+    "versioning": "pass",
+    "refresh": "pass",
+    "total": "48/48"
+  },
+  "operational": {
+    "healthReady": 200,
+    "authProvider": "clerk",
+    "featureAgents": "0",
+    "stagingDbImport": true,
+    "appImageRedeploy": "not required for curated DB import; machine 811d3e3f522648 healthy"
+  },
+  "cost": {
+    "httpFetches": "bounded official source validation during engineering; import used curated snapshots",
+    "embeddings": 0,
+    "estimatedSpend": "~$0 incremental model spend; FEATURE_AGENTS=0"
+  },
+  "releaseClassification": "staging corpus advance — Queue #2 remains open; case depth external"
+}

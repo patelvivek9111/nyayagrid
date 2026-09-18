@@ -1,0 +1,52 @@
+{
+  "generatedAt": "2026-09-18T14:00:00.000Z",
+  "phase": "50S-WAVE-2J",
+  "queue": 2,
+  "purpose": "Authoritative remaining blockers for Queue #2 — Wave 2J PASS does not close #2.",
+  "byCategory": {
+    "INTERNALLY_SOLVABLE_NOW": [
+      {
+        "item": "Residual unknown currentness on non-CL rows lacking revision metadata (bounded recheck only)",
+        "jurisdictions": ["multi"],
+        "action": "Re-fetch only where official revision date exists; leave unknowns honest when source has no revision signal",
+        "effort": "0.5–1 day",
+        "blockingDependency": "source revision evidence"
+      },
+      {
+        "item": "Deeper public regulation subject breadth beyond employment slices (CMR/AAC/RICR/CSR/NY Part 142/CT eRegs)",
+        "jurisdictions": ["MA", "CT", "RI", "NY", "multi"],
+        "action": "Curated official section packs for consumer/licensing/privacy where HTML/PDF is stable",
+        "effort": "1–2 days",
+        "blockingDependency": "stable official section URLs"
+      }
+    ],
+    "WAITING_FOR_COURTLISTENER": [
+      "case_count_below_20 for essentially all states (51)",
+      "no_high_or_appellate for ~31 jurisdictions",
+      "authority_count_below_or_eq_100 for 51 state/DC jurisdictions (case depth dominates)",
+      "Federal deepen CA11/CADC/CAFC/CA7/CA10",
+      "Wave-1 high-court/appellate deepen",
+      "broader_corpus for states (US federal already meets hard gate)"
+    ],
+    "PUBLIC_SOURCE_ENGINEERING": [
+      "NY full NYCRR bulk (agency PDF slices only today; machine bulk incomplete)",
+      "Deeper CT eRegulations harvest beyond wage/hour seed",
+      "Official case RSS normalizer (deferred adapters)"
+    ],
+    "EXTERNAL_PROPRIETARY_LIMITATION": [
+      "CA CCR complete official machine text",
+      "NJ N.J.A.C. complete public machine text",
+      "Lexis/Westlaw NYCRR browse wrappers (disallowed)"
+    ],
+    "NO_RELIABLE_PUBLIC_SOURCE": [
+      "Historical full-text state case bulk without CL/PACER-class feeds"
+    ]
+  },
+  "closedThisWave": [
+    "statute_subjects_below_6 (30 → 0)",
+    "statute_count_below_15 (50 → 0)",
+    "NY/CT regulation public-source engineering for employment slices",
+    "national statute subject floor ≥6/≥8 for all 50 states + DC",
+    "national statute row floor ≥15 for all 50 states + DC"
+  ]
+}
