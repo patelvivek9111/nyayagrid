@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "steps": [
+    {
+      "out": "wave2g-import.json",
+      "ok": true
+    },
+    {
+      "out": "wave2g-retrieval-smoke.json",
+      "ok": true
+    }
+  ]
+}

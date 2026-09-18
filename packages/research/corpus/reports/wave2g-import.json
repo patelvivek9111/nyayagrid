@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "wave": "2G",
+  "statutes": {
+    "imported": 116,
+    "skipped": 0,
+    "newVersion": 0
+  },
+  "rules": {
+    "imported": 21,
+    "skipped": 0,
+    "newVersion": 0
+  },
+  "corpus": {
+    "total": 801,
+    "cases": 170,
+    "statutes": 441,
+    "regulations": 90,
+    "rules": 99,
+    "rule_jurs": 24,
+    "reg_jurs": 13,
+    "normalized": 676,
+    "last_checked": 618
+  }
+}

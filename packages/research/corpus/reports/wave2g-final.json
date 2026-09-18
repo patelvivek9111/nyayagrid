@@ -1,0 +1,52 @@
+{
+  "generatedAt": "2026-09-18T12:42:00.000Z",
+  "wave": "2G",
+  "verdict": "PASS",
+  "queue": 2,
+  "gitSha": "6286ddd1863dc6b54d62c2bb945980261896d288",
+  "staging": {
+    "app": "nyayagrid-staging",
+    "machine": "811d3e3f522648",
+    "version": 75,
+    "image": "nyayagrid-staging:deployment-01M2T8D5BABN5BK5ER1NX4DESK",
+    "healthReady": 200,
+    "featureAgents": "0",
+    "authProvider": "clerk"
+  },
+  "corpus": {
+    "before": { "total": 664, "statutes": 325, "regulations": 90, "rules": 78, "cases": 170 },
+    "after": { "total": 801, "statutes": 441, "regulations": 90, "rules": 99, "cases": 170 }
+  },
+  "statuteDepth": {
+    "jurisdictionsAudited": 52,
+    "meetsMinimumSubjectBundle": 41,
+    "thinRemain": 11,
+    "importedStatutes": 116
+  },
+  "courtRules": {
+    "jurisdictionsBefore": 16,
+    "jurisdictionsAfter": 24,
+    "rulesBefore": 78,
+    "rulesAfter": 99,
+    "newJurisdictions": ["GA", "NC", "AZ", "CT", "WI", "IN", "MN", "OR"]
+  },
+  "regulations": {
+    "newAlternatives": [],
+    "stillBlocked": ["CA", "NJ", "NY", "CT", "RI", "WV"],
+    "regJurisdictions": 13
+  },
+  "broader": {
+    "count": 0,
+    "hardCriteriaDocumented": true,
+    "dominantBlocker": "B_requires_courtlistener (case depth + high-court/appellate)"
+  },
+  "coverage": {
+    "no_corpus": 0,
+    "seed": 0,
+    "limited": 52,
+    "broader": 0
+  },
+  "retrievalPass": true,
+  "clReadyToResume": true,
+  "courtListenerCalls": 0
+}

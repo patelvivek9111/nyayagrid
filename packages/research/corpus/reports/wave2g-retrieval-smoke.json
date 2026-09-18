@@ -1,0 +1,403 @@
+{
+  "ok": true,
+  "wave": "2G",
+  "featureAgents": "0",
+  "pass": true,
+  "wave1": {
+    "CA": {
+      "query": "Cal. Civ. Code § 1946.1",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Cal. Civ. Code § 1946.1",
+        "normalized_citation": "Cal. Civ. Code § 1946.1",
+        "t": "statute",
+        "authority_state": "CA",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "DE": {
+      "query": "6 Del. C. § 2513",
+      "hitCount": 1,
+      "hit": {
+        "citation": "6 Del. C. § 2513",
+        "normalized_citation": "6 Del. C. § 2513",
+        "t": "statute",
+        "authority_state": "DE",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "FL": {
+      "query": "Fla. Stat. § 501.204",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Fla. Stat. § 501.204",
+        "normalized_citation": "Fla. Stat. § 501.204",
+        "t": "statute",
+        "authority_state": "FL",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "IL": {
+      "query": "815 ILCS 505/2",
+      "hitCount": 1,
+      "hit": {
+        "citation": "815 ILCS 505/2",
+        "normalized_citation": "815 ILCS 505/2",
+        "t": "statute",
+        "authority_state": "IL",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "MA": {
+      "query": "Mass. Gen. Laws ch. 186, § 12",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Mass. Gen. Laws ch. 186, § 12",
+        "normalized_citation": "Mass. Gen. Laws ch. 186, § 12",
+        "t": "statute",
+        "authority_state": "MA",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "NJ": {
+      "query": "N.J. Stat. Ann. § 56:8-2",
+      "hitCount": 1,
+      "hit": {
+        "citation": "N.J. Stat. Ann. § 56:8-2",
+        "normalized_citation": "N.J. Stat. Ann. § 56:8-2",
+        "t": "statute",
+        "authority_state": "NJ",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "NY": {
+      "query": "N.Y. Gen. Bus. Law § 349",
+      "hitCount": 1,
+      "hit": {
+        "citation": "N.Y. Gen. Bus. Law § 349",
+        "normalized_citation": "N.Y. Gen. Bus. Law § 349",
+        "t": "statute",
+        "authority_state": "NY",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "PA": {
+      "query": "73 P.S. § 201-3",
+      "hitCount": 1,
+      "hit": {
+        "citation": "73 P.S. § 201-3",
+        "normalized_citation": "73 P.S. § 201-3",
+        "t": "statute",
+        "authority_state": "PA",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "TX": {
+      "query": "Tex. Bus. & Com. Code § 17.46",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Tex. Bus. & Com. Code § 17.46",
+        "normalized_citation": "Tex. Bus. & Com. Code § 17.46",
+        "t": "statute",
+        "authority_state": "TX",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "VA": {
+      "query": "Va. Code Ann. § 59.1-200",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Va. Code Ann. § 59.1-200",
+        "normalized_citation": "Va. Code Ann. § 59.1-200",
+        "t": "statute",
+        "authority_state": "VA",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    }
+  },
+  "thinSample": {
+    "AL": {
+      "query": "Ala. Code § 8-19-5",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Ala. Code § 8-19-5",
+        "normalized_citation": "Ala. Code § 8-19-5",
+        "t": "statute",
+        "authority_state": "AL",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "AK": {
+      "query": "Alaska Stat. § 45.50.471",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Alaska Stat. § 45.50.471",
+        "normalized_citation": "Alaska Stat. § 45.50.471",
+        "t": "statute",
+        "authority_state": "AK",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "ID": {
+      "query": "Idaho Code § 48-603",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Idaho Code § 48-603",
+        "normalized_citation": "Idaho Code § 48-603",
+        "t": "statute",
+        "authority_state": "ID",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "IN": {
+      "query": "Ind. Code § 24-5-0.5-3",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Ind. Code § 24-5-0.5-3",
+        "normalized_citation": "Ind. Code § 24-5-0.5-3",
+        "t": "statute",
+        "authority_state": "IN",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "MN": {
+      "query": "Minn. Stat. § 325F.69",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Minn. Stat. § 325F.69",
+        "normalized_citation": "Minn. Stat. § 325F.69",
+        "t": "statute",
+        "authority_state": "MN",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "MO": {
+      "query": "Mo. Rev. Stat. § 407.020",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Mo. Rev. Stat. § 407.020",
+        "normalized_citation": "Mo. Rev. Stat. § 407.020",
+        "t": "statute",
+        "authority_state": "MO",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "NV": {
+      "query": "Nev. Rev. Stat. § 598.0915",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Nev. Rev. Stat. § 598.0915",
+        "normalized_citation": "Nev. Rev. Stat. § 598.0915",
+        "t": "statute",
+        "authority_state": "NV",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "OR": {
+      "query": "Or. Rev. Stat. § 646.608",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Or. Rev. Stat. § 646.608",
+        "normalized_citation": "Or. Rev. Stat. § 646.608",
+        "t": "statute",
+        "authority_state": "OR",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "TN": {
+      "query": "Tenn. Code Ann. § 47-18-104",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Tenn. Code Ann. § 47-18-104",
+        "normalized_citation": "Tenn. Code Ann. § 47-18-104",
+        "t": "statute",
+        "authority_state": "TN",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "WY": {
+      "query": "Wyo. Stat. Ann. § 40-12-105",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Wyo. Stat. Ann. § 40-12-105",
+        "normalized_citation": "Wyo. Stat. Ann. § 40-12-105",
+        "t": "statute",
+        "authority_state": "WY",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    }
+  },
+  "rules": {
+    "GA": {
+      "query": "Ga. Unif. Super. Ct. R. 6.5",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Ga. Unif. Super. Ct. R. 6.5",
+        "normalized_citation": "Ga. Unif. Super. Ct. R. 6.5",
+        "t": "rule",
+        "authority_state": "GA",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "NC": {
+      "query": "N.C. R. Civ. P. 56",
+      "hitCount": 1,
+      "hit": {
+        "citation": "N.C. R. Civ. P. 56",
+        "normalized_citation": "N.C. R. Civ. P. 56",
+        "t": "rule",
+        "authority_state": "NC",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "AZ": {
+      "query": "Ariz. R. Civ. P. 12",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Ariz. R. Civ. P. 12",
+        "normalized_citation": "Ariz. R. Civ. P. 12",
+        "t": "rule",
+        "authority_state": "AZ",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "CT": {
+      "query": "Conn. Practice Book § 17-49",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Conn. Practice Book § 17-49",
+        "normalized_citation": "Conn. Practice Book § 17-49",
+        "t": "rule",
+        "authority_state": "CT",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "WI": {
+      "query": "Wis. Stat. § 802.08",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Wis. Stat. § 802.08",
+        "normalized_citation": "Wis. Stat. § 802.08",
+        "t": "rule",
+        "authority_state": "WI",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "IN": {
+      "query": "Ind. Trial R. 56",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Ind. Trial R. 56",
+        "normalized_citation": "Ind. Trial R. 56",
+        "t": "rule",
+        "authority_state": "IN",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "MN": {
+      "query": "Minn. R. Civ. P. 56",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Minn. R. Civ. P. 56",
+        "normalized_citation": "Minn. R. Civ. P. 56",
+        "t": "rule",
+        "authority_state": "MN",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    "OR": {
+      "query": "Or. R. Civ. P. 47",
+      "hitCount": 1,
+      "hit": {
+        "citation": "Or. R. Civ. P. 47",
+        "normalized_citation": "Or. R. Civ. P. 47",
+        "t": "rule",
+        "authority_state": "OR",
+        "has_url": true,
+        "currentness_status": "current_as_of_source_date"
+      },
+      "miss": false
+    }
+  },
+  "miss": [
+    {
+      "query": "99 Fake Code § 1",
+      "hitCount": 0,
+      "hit": null,
+      "miss": true
+    },
+    {
+      "query": "ZZ. R. Civ. P. 999",
+      "hitCount": 0,
+      "hit": null,
+      "miss": true
+    }
+  ],
+  "coverage": {
+    "total": 801,
+    "statutes": 441,
+    "regulations": 90,
+    "rules": 99,
+    "cases": 170,
+    "rule_jurs": 24
+  },
+  "notes": [
+    "Exact citation lookup only",
+    "No Web",
+    "No CourtListener"
+  ]
+}
