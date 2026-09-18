@@ -1,0 +1,73 @@
+{
+  "generatedAt": "2026-09-18T12:21:00.000Z",
+  "wave": "2F",
+  "verdict": "PARTIAL",
+  "queue": 2,
+  "gitSha": "28d69a7a56bd9218320e196cf73a5bd145bed005",
+  "staging": {
+    "app": "nyayagrid-staging",
+    "machine": "811d3e3f522648",
+    "version": 74,
+    "image": "nyayagrid-staging:deployment-01M2T76WY444E0VANGNRPWNER3",
+    "healthReady": 200,
+    "authProvider": "clerk",
+    "featureAgents": "0"
+  },
+  "corpus": {
+    "before": { "total": 654, "cases": 170, "statutes": 325, "regulations": 90, "rules": 68 },
+    "after": { "total": 664, "cases": 170, "statutes": 325, "regulations": 90, "rules": 78 }
+  },
+  "citationGraph": {
+    "extractedBefore": 2533,
+    "extractedAfter": 2533,
+    "resolvedBefore": 76,
+    "resolvedAfter": 79,
+    "unresolved": 2454,
+    "ambiguous": 0,
+    "resolutionPct": 3.12,
+    "edgeNormUpdated": 1528,
+    "authorityNormUpdated": 87,
+    "parallelAliasWrites": 75,
+    "matchableRemainingAfterPass": 0,
+    "dominantUnresolvedWhy": "A_target_absent"
+  },
+  "normalization": {
+    "beforeNormalized": 356,
+    "afterNormalized": 452,
+    "missingRemain": 87
+  },
+  "refresh": {
+    "realSourcesChecked": ["ecfr", "house_usc", "pa_code"],
+    "attempted": 5,
+    "unchanged": 4,
+    "changed": 0,
+    "failed": 1,
+    "versionsCreated": 0,
+    "idempotencyProof": true,
+    "changedVersionProof": "unit_fixtures_in_refresh.test.ts",
+    "note": "Official fetches succeeded for eCFR/USC; portal HTML shape-guard prevented false version writes. PA Code fetch failed (network); corpus preserved."
+  },
+  "stateRegulations": {
+    "newJurisdictions": 0,
+    "stillBlocked": ["CA", "NJ", "NY", "CT", "RI", "WV"],
+    "regJurisdictions": 13
+  },
+  "courtRules": {
+    "newJurisdictions": ["OH", "WA", "MD", "CO", "MI"],
+    "newRules": 10,
+    "ruleJurisdictions": 16
+  },
+  "coverage": {
+    "no_corpus": 0,
+    "seed": 0,
+    "limited": 52,
+    "broader": 0
+  },
+  "courtListener": "cooldown_no_calls",
+  "remainingQueue2Work": [
+    "CourtListener cooldown lift → resume case ingest to cut A_target_absent (federal reporter / U.S. Reports)",
+    "Additional public regulation adapters when non-proprietary sources appear for CA/NJ/NY/CT/RI/WV",
+    "Continue statute subject-bundle consistency for thin states",
+    "Broader_corpus hard criteria still unmet"
+  ]
+}

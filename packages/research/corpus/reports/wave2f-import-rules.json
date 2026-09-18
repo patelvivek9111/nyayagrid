@@ -1,0 +1,103 @@
+{
+  "ok": true,
+  "wave": "2F",
+  "bundlePath": "expansion-wave2f-state-rules.json",
+  "imported": 10,
+  "skipped": 0,
+  "newVersion": 0,
+  "samples": [
+    {
+      "citation": "Ohio Civ.R. 12",
+      "action": "imported"
+    },
+    {
+      "citation": "Ohio Civ.R. 56",
+      "action": "imported"
+    },
+    {
+      "citation": "Wash. CR 12",
+      "action": "imported"
+    },
+    {
+      "citation": "Wash. CR 56",
+      "action": "imported"
+    },
+    {
+      "citation": "Md. Rule 2-322",
+      "action": "imported"
+    }
+  ],
+  "corpus": {
+    "total": 664,
+    "cases": 170,
+    "statutes": 325,
+    "regulations": 90,
+    "rules": 78
+  },
+  "ruleJurisdictions": [
+    {
+      "authority_state": "CA",
+      "n": 4
+    },
+    {
+      "authority_state": "CO",
+      "n": 2
+    },
+    {
+      "authority_state": "DE",
+      "n": 4
+    },
+    {
+      "authority_state": "FL",
+      "n": 5
+    },
+    {
+      "authority_state": "IL",
+      "n": 4
+    },
+    {
+      "authority_state": "MA",
+      "n": 4
+    },
+    {
+      "authority_state": "MD",
+      "n": 2
+    },
+    {
+      "authority_state": "MI",
+      "n": 2
+    },
+    {
+      "authority_state": "NJ",
+      "n": 4
+    },
+    {
+      "authority_state": "NY",
+      "n": 4
+    },
+    {
+      "authority_state": "OH",
+      "n": 2
+    },
+    {
+      "authority_state": "PA",
+      "n": 5
+    },
+    {
+      "authority_state": "TX",
+      "n": 4
+    },
+    {
+      "authority_state": "US",
+      "n": 25
+    },
+    {
+      "authority_state": "VA",
+      "n": 5
+    },
+    {
+      "authority_state": "WA",
+      "n": 2
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "ok": true,
+  "wave": "2F",
+  "dryRun": false,
+  "generatedAt": "2026-09-18T12:10:44.747Z",
+  "sources": [
+    {
+      "sourceKey": "ecfr",
+      "jurisdiction": "US",
+      "checked": 2,
+      "unchanged": 2,
+      "changed": 0,
+      "failed": 0,
+      "unavailable": 0,
+      "versionsCreated": 0,
+      "status": "completed",
+      "healthStatus": "healthy",
+      "details": [
+        {
+          "authorityId": "a164da6e-47db-42f2-bec8-a5642d52353e",
+          "url": "https://www.ecfr.gov/current/title-16/chapter-I/subchapter-D/part-310/section-310.1",
+          "outcome": "changed",
+          "httpStatus": 200
+        },
+        {
+          "authorityId": "45a27049-443b-40a8-9832-0ee0a1232899",
+          "url": "https://www.ecfr.gov/current/title-16/chapter-I/subchapter-F/part-681/section-681.1",
+          "outcome": "changed",
+          "httpStatus": 200
+        }
+      ]
+    },
+    {
+      "sourceKey": "house_usc",
+      "jurisdiction": "US",
+      "checked": 2,
+      "unchanged": 2,
+      "changed": 0,
+      "failed": 0,
+      "unavailable": 0,
+      "versionsCreated": 0,
+      "status": "completed",
+      "healthStatus": "healthy",
+      "details": [
+        {
+          "authorityId": "3c93f083-6014-4980-b3ed-6d7bb555efe8",
+          "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title42-section1983&num=0&edition=prelim",
+          "outcome": "changed",
+          "httpStatus": 200
+        },
+        {
+          "authorityId": "b9eca390-f915-49a0-acf4-59e665029dfb",
+          "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title42-section3604&num=0&edition=prelim",
+          "outcome": "changed",
+          "httpStatus": 200
+        }
+      ]
+    },
+    {
+      "sourceKey": "pa_code",
+      "jurisdiction": "PA",
+      "checked": 1,
+      "unchanged": 0,
+      "changed": 0,
+      "failed": 1,
+      "unavailable": 0,
+      "versionsCreated": 0,
+      "status": "failed",
+      "healthStatus": "degraded",
+      "details": [
+        {
+          "authorityId": "62b25760-8a26-4ea1-9766-26c2ecbed08a",
+          "url": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/001/chapter35/s35.9.html",
+          "outcome": "failed",
+          "httpStatus": null
+        }
+      ]
+    }
+  ],
+  "totals": {
+    "attempted": 5,
+    "unchanged": 4,
+    "changed": 0,
+    "failed": 1,
+    "unavailable": 0,
+    "versionsCreated": 0
+  },
+  "idempotencyProof": {
+    "sourceKey": "ecfr",
+    "secondPassChecked": 1,
+    "secondPassUnchangedOrHashed": 1,
+    "noExtraVersionExpected": true
+  }
+}

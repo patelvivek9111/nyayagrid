@@ -1,0 +1,312 @@
+{
+  "ok": true,
+  "wave": "2F",
+  "featureAgents": "0",
+  "pass": true,
+  "federal": [
+    {
+      "query": "28 U.S.C. § 1331",
+      "lean": "28 U.S.C. § 1331",
+      "hitCount": 1,
+      "ambiguous": false,
+      "hit": {
+        "citation": "28 U.S.C. § 1331",
+        "normalized": "28 U.S.C. § 1331",
+        "type": "statute",
+        "state": "US",
+        "hasCanonicalUrl": true,
+        "currentness": "unknown"
+      },
+      "miss": false
+    },
+    {
+      "query": "29 C.F.R. § 541.300",
+      "lean": "29 C.F.R. § 541.300",
+      "hitCount": 1,
+      "ambiguous": false,
+      "hit": {
+        "citation": "29 CFR § 541.300",
+        "normalized": "29 C.F.R. § 541.300",
+        "type": "regulation",
+        "state": "US",
+        "hasCanonicalUrl": true,
+        "currentness": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    {
+      "query": "Fed. R. Civ. P. 56",
+      "lean": "Fed. R. Civ. P. 56",
+      "hitCount": 1,
+      "ambiguous": false,
+      "hit": {
+        "citation": "Fed. R. Civ. P. 56",
+        "normalized": "Fed. R. Civ. P. 56",
+        "type": "rule",
+        "state": "US",
+        "hasCanonicalUrl": true,
+        "currentness": "unknown"
+      },
+      "miss": false
+    }
+  ],
+  "statutes": [
+    {
+      "query": "42 Pa.C.S. § 5525",
+      "lean": "42 Pa.C.S. § 5525",
+      "hitCount": 1,
+      "ambiguous": false,
+      "hit": {
+        "citation": "42 Pa.C.S. § 5525",
+        "normalized": "42 Pa.C.S. § 5525",
+        "type": "statute",
+        "state": "PA",
+        "hasCanonicalUrl": true,
+        "currentness": "unknown"
+      },
+      "miss": false
+    },
+    {
+      "query": "N.Y. C.P.L.R. 3212",
+      "lean": "N.Y. C.P.L.R. 3212",
+      "hitCount": 1,
+      "ambiguous": false,
+      "hit": {
+        "citation": "N.Y. C.P.L.R. 3212",
+        "normalized": "N.Y. C.P.L.R. 3212",
+        "type": "rule",
+        "state": "NY",
+        "hasCanonicalUrl": true,
+        "currentness": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    {
+      "query": "Cal. Civ. Code § 1624",
+      "lean": "Cal. Civ. Code § 1624",
+      "hitCount": 0,
+      "ambiguous": false,
+      "hit": null,
+      "miss": true
+    },
+    {
+      "query": "Tex. Bus. & Com. Code § 2.201",
+      "lean": "Tex. Bus. & Com. Code § 2.201",
+      "hitCount": 0,
+      "ambiguous": false,
+      "hit": null,
+      "miss": true
+    },
+    {
+      "query": "N.J.S.A. 2A:14-1",
+      "lean": "N.J.S.A. 2A:14-1",
+      "hitCount": 0,
+      "ambiguous": false,
+      "hit": null,
+      "miss": true
+    }
+  ],
+  "regulations": [
+    {
+      "query": "34 Pa. Code § 231.1",
+      "lean": "34 Pa. Code § 231.1",
+      "hitCount": 1,
+      "ambiguous": false,
+      "hit": {
+        "citation": "34 Pa. Code § 231.1",
+        "normalized": "34 Pa. Code § 231.1",
+        "type": "regulation",
+        "state": "PA",
+        "hasCanonicalUrl": true,
+        "currentness": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    {
+      "query": "Fla. Admin. Code R. 61J2-3.008",
+      "lean": "Fla. Admin. Code R. 61J2-3.008",
+      "hitCount": 0,
+      "ambiguous": false,
+      "hit": null,
+      "miss": true
+    },
+    {
+      "query": "16 Tex. Admin. Code § 3.30",
+      "lean": "16 Tex. Admin. Code § 3.30",
+      "hitCount": 0,
+      "ambiguous": false,
+      "hit": null,
+      "miss": true
+    },
+    {
+      "query": "Ohio Adm.Code 4141-1-01",
+      "lean": "Ohio Adm.Code 4141-1-01",
+      "hitCount": 0,
+      "ambiguous": false,
+      "hit": null,
+      "miss": true
+    }
+  ],
+  "rules": [
+    {
+      "query": "Pa.R.C.P. 1007",
+      "lean": "Pa.R.C.P. 1007",
+      "hitCount": 1,
+      "ambiguous": false,
+      "hit": {
+        "citation": "Pa.R.C.P. 1007",
+        "normalized": "Pa.R.C.P. 1007",
+        "type": "rule",
+        "state": "PA",
+        "hasCanonicalUrl": true,
+        "currentness": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    {
+      "query": "Cal. Rules of Court, rule 3.110",
+      "lean": "Cal. Rules of Court, rule 3.110",
+      "hitCount": 1,
+      "ambiguous": false,
+      "hit": {
+        "citation": "Cal. Rules of Court, rule 3.110",
+        "normalized": "Cal. Rules of Court, rule 3.110",
+        "type": "rule",
+        "state": "CA",
+        "hasCanonicalUrl": true,
+        "currentness": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    {
+      "query": "Tex. R. Civ. P. 166a",
+      "lean": "Tex. R. Civ. P. 166a",
+      "hitCount": 1,
+      "ambiguous": false,
+      "hit": {
+        "citation": "Tex. R. Civ. P. 166a",
+        "normalized": "Tex. R. Civ. P. 166a",
+        "type": "rule",
+        "state": "TX",
+        "hasCanonicalUrl": true,
+        "currentness": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    {
+      "query": "Ohio Civ.R. 56",
+      "lean": "Ohio Civ.R. 56",
+      "hitCount": 1,
+      "ambiguous": false,
+      "hit": {
+        "citation": "Ohio Civ.R. 56",
+        "normalized": "Ohio Civ.R. 56",
+        "type": "rule",
+        "state": "OH",
+        "hasCanonicalUrl": true,
+        "currentness": "current_as_of_source_date"
+      },
+      "miss": false
+    },
+    {
+      "query": "Wash. CR 12",
+      "lean": "Wash. CR 12",
+      "hitCount": 1,
+      "ambiguous": false,
+      "hit": {
+        "citation": "Wash. CR 12",
+        "normalized": "Wash. CR 12",
+        "type": "rule",
+        "state": "WA",
+        "hasCanonicalUrl": true,
+        "currentness": "current_as_of_source_date"
+      },
+      "miss": false
+    }
+  ],
+  "cases": [
+    {
+      "query": "304 U.S. 64",
+      "lean": "304 U.S. 64",
+      "hitCount": 1,
+      "ambiguous": false,
+      "hit": {
+        "citation": "304 U.S. 64",
+        "normalized": "304 U.S. 64",
+        "type": "case",
+        "state": "US",
+        "hasCanonicalUrl": true,
+        "currentness": "unknown"
+      },
+      "miss": false
+    },
+    {
+      "query": "304 U. S. 64",
+      "lean": "304 U.S. 64",
+      "hitCount": 1,
+      "ambiguous": false,
+      "hit": {
+        "citation": "304 U.S. 64",
+        "normalized": "304 U.S. 64",
+        "type": "case",
+        "state": "US",
+        "hasCanonicalUrl": true,
+        "currentness": "unknown"
+      },
+      "miss": false
+    },
+    {
+      "query": "550 U.S. 544",
+      "lean": "550 U.S. 544",
+      "hitCount": 1,
+      "ambiguous": false,
+      "hit": {
+        "citation": "550 U.S. 544",
+        "normalized": "550 U.S. 544",
+        "type": "case",
+        "state": "US",
+        "hasCanonicalUrl": true,
+        "currentness": "unknown"
+      },
+      "miss": false
+    }
+  ],
+  "miss": [
+    {
+      "query": "999 U.S. 99999",
+      "lean": "999 U.S. 99999",
+      "hitCount": 0,
+      "ambiguous": false,
+      "hit": null,
+      "miss": true
+    },
+    {
+      "query": "99 ZZZ Code § 1",
+      "lean": "99 ZZZ Code § 1",
+      "hitCount": 0,
+      "ambiguous": false,
+      "hit": null,
+      "miss": true
+    }
+  ],
+  "coverage": {
+    "total": 664,
+    "cases": 170,
+    "statutes": 325,
+    "regulations": 90,
+    "rules": 78,
+    "normalized": 452,
+    "reg_jurs": 13,
+    "rule_jurs": 16
+  },
+  "citationGraph": {
+    "extracted": 2533,
+    "resolved": 79,
+    "unresolved": 2454
+  },
+  "notes": [
+    "Exact normalized/alias lookup only.",
+    "No Web; no CourtListener.",
+    "Miss queries must remain unresolved."
+  ]
+}

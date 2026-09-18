@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "steps": [
+    {
+      "out": "wave2f-import-rules.json",
+      "ok": true
+    },
+    {
+      "out": "wave2f-citation-resolve.json",
+      "ok": true
+    },
+    {
+      "out": "wave2f-live-refresh.json",
+      "ok": true
+    },
+    {
+      "out": "wave2f-citation-audit.json",
+      "ok": true
+    },
+    {
+      "out": "wave2f-retrieval-smoke.json",
+      "ok": true
+    }
+  ]
+}

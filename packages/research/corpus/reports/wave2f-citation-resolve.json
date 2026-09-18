@@ -1,0 +1,51 @@
+{
+  "ok": true,
+  "wave": "2F",
+  "dryRun": false,
+  "generatedAt": "2026-09-18T12:10:37.227Z",
+  "before": {
+    "extracted": 2533,
+    "resolved": 76,
+    "unresolved": 2457
+  },
+  "after": {
+    "extracted": 2533,
+    "resolved": 79,
+    "unresolved": 2454
+  },
+  "newlyResolved": 3,
+  "ambiguous": 0,
+  "stillUnresolved": 2454,
+  "edgeNormUpdated": 1528,
+  "parallelAliasWrites": 75,
+  "resolutionPct": 3.12,
+  "byFamily": {
+    "us_reports_resolved": 19,
+    "usc_resolved": 38,
+    "cfr_resolved": 0,
+    "fed_rules_resolved": 22,
+    "freporter_resolved": 0
+  },
+  "sampleResolved": [
+    {
+      "raw": "603 U. S. 369",
+      "lean": "603 U.S. 369",
+      "to": "89959358-6e73-41a1-bc64-b60bdc82b054"
+    },
+    {
+      "raw": "603 U. S. 369",
+      "lean": "603 U.S. 369",
+      "to": "89959358-6e73-41a1-bc64-b60bdc82b054"
+    },
+    {
+      "raw": "603 U. S. 369",
+      "lean": "603 U.S. 369",
+      "to": "89959358-6e73-41a1-bc64-b60bdc82b054"
+    }
+  ],
+  "sampleAmbiguous": [],
+  "notes": [
+    "Exact alias/normalized match only; multiple hits left unresolved as ambiguous.",
+    "No CourtListener traffic; no fuzzy title linking."
+  ]
+}
