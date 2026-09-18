@@ -2310,6 +2310,9 @@ var ClRateLimiter = class {
           120
         );
         this.lastRetryAfterSec = retryAfter;
+        if (retryAfter > 300) {
+          return last;
+        }
         this.globalPauseUntil = Date.now() + retryAfter * 1e3;
         if (attempt >= this.maxRetries) return last;
         await sleep(retryAfter * 1e3);

@@ -258,7 +258,10 @@ class ClRateLimiter {
           120,
         );
         this.lastRetryAfterSec = retryAfter;
-        // Global pause — do not retry-storm
+        // If CL asks for a multi-minute+ pause, exit to caller — do not sleep hours in-process.
+        if (retryAfter > 300) {
+          return last;
+        }
         this.globalPauseUntil = Date.now() + retryAfter * 1000;
         if (attempt >= this.maxRetries) return last;
         await sleep(retryAfter * 1000);
