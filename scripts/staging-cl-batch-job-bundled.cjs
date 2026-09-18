@@ -2299,7 +2299,8 @@ var ClRateLimiter = class {
           headers: {
             Authorization: `Token ${this.apiKey}`,
             Accept: "application/json"
-          }
+          },
+          signal: AbortSignal.timeout(45e3)
         });
         if (last.status !== 429) return last;
         this.rateLimitHits += 1;
