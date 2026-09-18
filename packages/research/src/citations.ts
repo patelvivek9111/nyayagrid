@@ -1,4 +1,4 @@
-import { or, sql } from "@nyayagrid/database";
+import { inArray, or } from "@nyayagrid/database";
 import type { Database } from "@nyayagrid/database";
 import { legalAuthorities } from "@nyayagrid/database";
 
@@ -132,6 +132,32 @@ export class StatuteCitationParser implements CitationParser {
   }
 }
 
+export class FederalRulesCitationParser implements CitationParser {
+  readonly name = "federal-rules";
+  readonly type: CitationKind = "rule";
+  readonly pattern =
+    /\bFed\.?\s*R\.?\s*(Civ\.?\s*P\.?|Evid\.?|App\.?\s*P\.?|Crim\.?\s*P\.?)\s*(\d+[A-Za-z]?)\b/gi;
+
+  build(match: RegExpMatchArray): ParsedCitation | null {
+    const kindRaw = (match[1] ?? "").replace(/\s+/g, " ").trim().toLowerCase();
+    const rule = match[2];
+    if (!rule) return null;
+    let reporter = "Fed. R. Civ. P.";
+    if (/^evid/i.test(kindRaw)) reporter = "Fed. R. Evid.";
+    else if (/^app/i.test(kindRaw)) reporter = "Fed. R. App. P.";
+    else if (/^crim/i.test(kindRaw)) reporter = "Fed. R. Crim. P.";
+    return {
+      raw: match[0],
+      normalized: `${reporter} ${rule}`,
+      reporter,
+      section: rule,
+      type: "rule",
+      parser: this.name,
+      confidence: "high",
+    };
+  }
+}
+
 export class RegulatoryCitationParser implements CitationParser {
   readonly name = "regulation";
   readonly type: CitationKind = "regulation";
@@ -224,6 +250,7 @@ export const DEFAULT_CITATION_PARSERS: CitationParser[] = [
   new StateCompiledStatuteParser(),
   new StatuteCitationParser(),
   new RegulatoryCitationParser(),
+  new FederalRulesCitationParser(),
   new USReportsParser(),
   new FederalReporterParser(),
   new AtlanticReporterParser(),
@@ -326,6 +353,40 @@ export type CitationResolution = {
   matchedOn: "normalized_citation" | "citation";
 };
 
+/** Exact citation aliases for statute/reg/rule forms that differ only by punctuation. */
+export function citationLookupAliases(normalizedOrRaw: string): string[] {
+  const base = normalizeCitationWhitespace(normalizedOrRaw);
+  if (!base) return [];
+  const aliases = new Set<string>([base]);
+
+  // CFR ↔ C.F.R.
+  const cfr = base.match(/^(\d{1,2})\s+C\.?\s?F\.?\s?R\.?\s*§\s*(.+)$/i);
+  if (cfr) {
+    aliases.add(`${cfr[1]} C.F.R. § ${cfr[2]}`);
+    aliases.add(`${cfr[1]} CFR § ${cfr[2]}`);
+  }
+
+  // U.S.C. ↔ USC
+  const usc = base.match(/^(\d{1,2})\s+U\.?\s?S\.?\s?C\.?\s*§\s*(.+)$/i);
+  if (usc) {
+    aliases.add(`${usc[1]} U.S.C. § ${usc[2]}`);
+    aliases.add(`${usc[1]} USC § ${usc[2]}`);
+  }
+
+  // Fed. R. Civ. P. / Evid. / App. P. spacing variants
+  const fr = base.match(/^Fed\.?\s*R\.?\s*(Civ\.?\s*P\.?|Evid\.?|App\.?\s*P\.?|Crim\.?\s*P\.?)\s+(\d+[A-Za-z]?)$/i);
+  if (fr) {
+    const kind = fr[1].replace(/\s+/g, " ").trim().toLowerCase();
+    let reporter = "Fed. R. Civ. P.";
+    if (/^evid/i.test(kind)) reporter = "Fed. R. Evid.";
+    else if (/^app/i.test(kind)) reporter = "Fed. R. App. P.";
+    else if (/^crim/i.test(kind)) reporter = "Fed. R. Crim. P.";
+    aliases.add(`${reporter} ${fr[2]}`);
+  }
+
+  return [...aliases];
+}
+
 /**
  * Resolve a citation to a corpus authority. Returns null when nothing matches or when more than
  * one authority matches, because guessing between candidates would misattribute authority.
@@ -338,31 +399,38 @@ export async function resolveCitationAgainstCorpus(
   const raw = normalizeCitationWhitespace(parsed.raw);
   if (!raw && !parsed.normalized) return null;
 
-  const conditions: Array<ReturnType<typeof sql>> = [];
-  if (parsed.normalized) {
-    conditions.push(sql`${legalAuthorities.normalizedCitation} = ${parsed.normalized}`);
+  const lookupValues = new Set<string>();
+  for (const value of [parsed.normalized, raw].filter(Boolean) as string[]) {
+    for (const alias of citationLookupAliases(value)) lookupValues.add(alias);
   }
-  if (raw) {
-    conditions.push(sql`${legalAuthorities.citation} = ${raw}`);
-  }
-  if (conditions.length === 0) return null;
+  if (lookupValues.size === 0) return null;
 
+  const values = [...lookupValues];
   const rows = await db
     .select({
       id: legalAuthorities.id,
       normalizedCitation: legalAuthorities.normalizedCitation,
     })
     .from(legalAuthorities)
-    .where(or(...conditions))
-    .limit(2);
+    .where(
+      or(
+        inArray(legalAuthorities.normalizedCitation, values),
+        inArray(legalAuthorities.citation, values),
+      ),
+    )
+    .limit(3);
 
-  if (rows.length !== 1) return null;
-  const row = rows[0];
+  // Deduplicate by authority id; ambiguity across distinct authorities is unresolved.
+  const unique = [...new Map(rows.map((r) => [r.id, r])).values()];
+  if (unique.length !== 1) return null;
+  const row = unique[0];
   if (!row) return null;
   return {
     authorityId: row.id,
     matchedOn:
-      parsed.normalized && row.normalizedCitation === parsed.normalized
+      parsed.normalized &&
+      row.normalizedCitation &&
+      citationLookupAliases(parsed.normalized).includes(row.normalizedCitation)
         ? "normalized_citation"
         : "citation",
   };

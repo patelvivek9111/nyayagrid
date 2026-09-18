@@ -1,0 +1,1524 @@
+[
+  {
+    "title": "11 U.S.C. § 101 — Definitions",
+    "shortTitle": "11 U.S.C. § 101",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "11 U.S.C. § 101",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-11-usc-101",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title11-section101&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "11",
+        "label": "Bankruptcy"
+      },
+      {
+        "level": "section",
+        "ref": "101",
+        "label": "Definitions"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "bankruptcy"
+    ],
+    "content": "11 U.S.C. § 101\n\n§ 101. Definitions\n\nIn this title the following definitions shall apply:\n\n(5) The term \"claim\" means—\n\n(A) right to payment, whether or not such right is reduced to judgment, liquidated, unliquidated, fixed, contingent, matured, unmatured, disputed, undisputed, legal, equitable, secured, or unsecured; or\n\n(B) right to an equitable remedy for breach of performance if such breach gives rise to a right to payment, whether or not such right to an equitable remedy is reduced to judgment, fixed, contingent, matured, unmatured, disputed, undisputed, secured, or unsecured.\n\n(10) The term \"creditor\" means—\n\n(A) entity that has a claim against the debtor that arose at the time of or before the order for relief concerning the debtor;\n\n(B) entity that has a claim against the estate of a kind specified in section 348(d), 502(f), 502(g), 502(h) or 502(i) of this title; or\n\n(C) entity that has a community claim.\n\n(13) The term \"debtor\" means person or municipality concerning which a case under this title has been commenced.",
+    "sections": [
+      {
+        "sectionRef": "101",
+        "content": "In this title, \"claim\" means a right to payment or a right to an equitable remedy for breach of performance if such breach gives rise to a right to payment."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "bankruptcy_definitions",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "11 U.S.C. § 301 — Voluntary cases",
+    "shortTitle": "11 U.S.C. § 301",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "11 U.S.C. § 301",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-11-usc-301",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title11-section301&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "11",
+        "label": "Bankruptcy"
+      },
+      {
+        "level": "section",
+        "ref": "301",
+        "label": "Voluntary cases"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "bankruptcy"
+    ],
+    "content": "11 U.S.C. § 301\n\n§ 301. Voluntary cases\n\n(a) A voluntary case under a chapter of this title is commenced by the filing with the bankruptcy court of a petition under such chapter by an entity that may be a debtor under such chapter.\n\n(b) The commencement of a voluntary case under a chapter of this title constitutes an order for relief under such chapter.",
+    "sections": [
+      {
+        "sectionRef": "301",
+        "content": "A voluntary case under a chapter of this title is commenced by the filing with the bankruptcy court of a petition under such chapter by an entity that may be a debtor under such chapter.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "bankruptcy_voluntary_petition",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "11 U.S.C. § 365 — Executory contracts and unexpired leases",
+    "shortTitle": "11 U.S.C. § 365",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "11 U.S.C. § 365",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-11-usc-365",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title11-section365&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "11",
+        "label": "Bankruptcy"
+      },
+      {
+        "level": "section",
+        "ref": "365",
+        "label": "Executory contracts and unexpired leases"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "bankruptcy",
+      "contract"
+    ],
+    "content": "11 U.S.C. § 365\n\n§ 365. Executory contracts and unexpired leases\n\n(a) Except as provided in sections 765 and 766 of this title and in subsections (b), (c), and (d) of this section, the trustee, subject to the court's approval, may assume or reject any executory contract or unexpired lease of the debtor.\n\n(b)(1) If there has been a default in an executory contract or unexpired lease of the debtor, the trustee may not assume such contract or lease unless, at the time of assumption of such contract or lease, the trustee—\n\n(A) cures, or provides adequate assurance that the trustee will promptly cure, such default other than a default that is a breach of a provision relating to the financial condition of the debtor or of the kind specified in section 365(b)(2) of this title;\n\n(B) compensates, or provides adequate assurance that the trustee will promptly compensate, a party other than the debtor to such contract or lease, for any actual pecuniary loss to such party resulting from such default; and\n\n(C) provides adequate assurance of future performance under such contract or lease.",
+    "sections": [
+      {
+        "sectionRef": "365",
+        "content": "Except as otherwise provided, the trustee, subject to the court's approval, may assume or reject any executory contract or unexpired lease of the debtor.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "bankruptcy_executory_contracts",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "11 U.S.C. § 523 — Exceptions to discharge",
+    "shortTitle": "11 U.S.C. § 523",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "11 U.S.C. § 523",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-11-usc-523",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title11-section523&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "11",
+        "label": "Bankruptcy"
+      },
+      {
+        "level": "section",
+        "ref": "523",
+        "label": "Exceptions to discharge"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "bankruptcy"
+    ],
+    "content": "11 U.S.C. § 523\n\n§ 523. Exceptions to discharge\n\n(a) A discharge under section 727, 1141, 1192, 1228(a), 1228(b), or 1328(b) of this title does not discharge an individual debtor from any debt—\n\n(2) for money, property, services, or an extension, renewal, or refinancing of credit, to the extent obtained by—\n\n(A) false pretenses, a false representation, or actual fraud, other than a statement respecting the debtor's or an insider's financial condition;\n\n(4) for fraud or defalcation while acting in a fiduciary capacity, embezzlement, or larceny;\n\n(5) for a domestic support obligation;\n\n(6) for willful and malicious injury by the debtor to another entity or to the property of another entity;\n\n(8) unless excepting such debt from discharge under this paragraph would impose an undue hardship on the debtor and the debtor's dependents, for—\n\n(A)(i) an educational benefit overpayment or loan made, insured, or guaranteed by a governmental unit, or made under any program funded in whole or in part by a governmental unit or nonprofit institution; or\n\n(ii) an obligation to repay funds received as an educational benefit, scholarship, or stipend; or\n\n(B) any other educational loan that is a qualified education loan, as defined in section 221(d)(1) of the Internal Revenue Code of 1986, incurred by a debtor who is an individual.",
+    "sections": [
+      {
+        "sectionRef": "523",
+        "content": "A discharge does not discharge an individual debtor from debts for certain fraud, fiduciary defalcation, domestic support obligations, willful and malicious injury, or most student loan obligations absent undue hardship.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "bankruptcy_discharge_exceptions",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "11 U.S.C. § 541 — Property of the estate",
+    "shortTitle": "11 U.S.C. § 541",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "11 U.S.C. § 541",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-11-usc-541",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title11-section541&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "11",
+        "label": "Bankruptcy"
+      },
+      {
+        "level": "section",
+        "ref": "541",
+        "label": "Property of the estate"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "bankruptcy",
+      "property"
+    ],
+    "content": "11 U.S.C. § 541\n\n§ 541. Property of the estate\n\n(a) The commencement of a case under section 301, 302, or 303 of this title creates an estate. Such estate is comprised of all the following property, wherever located and by whomever held:\n\n(1) Except as provided in subsections (b) and (c)(2) of this section, all legal or equitable interests of the debtor in property as of the commencement of the case.\n\n(2) All interests of the debtor and the debtor's spouse in community property as of the commencement of the case that is—\n\n(A) under the sole, equal, or joint management and control of the debtor; or\n\n(B) liable for an allowable claim against the debtor, or for both an allowable claim against the debtor and an allowable claim against the debtor's spouse, to the extent that such interest is so liable.",
+    "sections": [
+      {
+        "sectionRef": "541",
+        "content": "The commencement of a case creates an estate comprised of all legal or equitable interests of the debtor in property as of the commencement of the case, wherever located and by whomever held.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "bankruptcy_estate_property",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "11 U.S.C. § 547 — Preferences",
+    "shortTitle": "11 U.S.C. § 547",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "11 U.S.C. § 547",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-11-usc-547",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title11-section547&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "11",
+        "label": "Bankruptcy"
+      },
+      {
+        "level": "section",
+        "ref": "547",
+        "label": "Preferences"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "bankruptcy"
+    ],
+    "content": "11 U.S.C. § 547\n\n§ 547. Preferences\n\n(b) Except as provided in subsections (c) and (i) of this section, the trustee may, based on reasonable due diligence in the circumstances of the case and taking into account a party's known or reasonably knowable affirmative defenses under subsection (c), avoid any transfer of an interest of the debtor in property—\n\n(1) to or for the benefit of a creditor;\n\n(2) for or on account of an antecedent debt owed by the debtor before such transfer was made;\n\n(3) made while the debtor was insolvent;\n\n(4) made—\n\n(A) on or within 90 days before the date of the filing of the petition; or\n\n(B) between ninety days and one year before the date of the filing of the petition, if such creditor at the time of such transfer was an insider; and\n\n(5) that enables such creditor to receive more than such creditor would receive if—\n\n(A) the case were a case under chapter 7 of this title;\n\n(B) the transfer had not been made; and\n\n(C) such creditor received payment of such debt to the extent provided by the provisions of this title.",
+    "sections": [
+      {
+        "sectionRef": "547",
+        "content": "The trustee may avoid certain transfers of an interest of the debtor in property to or for the benefit of a creditor for an antecedent debt made while the debtor was insolvent within the preference period.",
+        "subsectionRef": "b"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "bankruptcy_preferences",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "15 U.S.C. § 2 — Monopolizing trade a felony; penalty",
+    "shortTitle": "15 U.S.C. § 2",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "15 U.S.C. § 2",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-15-usc-2",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title15-section2&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "15",
+        "label": "Commerce and Trade"
+      },
+      {
+        "level": "section",
+        "ref": "2",
+        "label": "Monopolizing trade a felony; penalty"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "antitrust",
+      "commercial"
+    ],
+    "content": "15 U.S.C. § 2\n\n§ 2. Monopolizing trade a felony; penalty\n\nEvery person who shall monopolize, or attempt to monopolize, or combine or conspire with any other person or persons, to monopolize any part of the trade or commerce among the several States, or with foreign nations, shall be deemed guilty of a felony, and, on conviction thereof, shall be punished by fine not exceeding $100,000,000 if a corporation, or, if any other person, $1,000,000, or by imprisonment not exceeding 10 years, or by both said punishments, in the discretion of the court.",
+    "sections": [
+      {
+        "sectionRef": "2",
+        "content": "Every person who shall monopolize, or attempt to monopolize, or combine or conspire with any other person or persons, to monopolize any part of the trade or commerce among the several States, or with foreign nations, shall be deemed guilty of a felony."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "sherman_act_section_2",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "15 U.S.C. § 45 — Unfair methods of competition unlawful; prevention by Commission",
+    "shortTitle": "15 U.S.C. § 45",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "15 U.S.C. § 45",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-15-usc-45",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title15-section45&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "15",
+        "label": "Commerce and Trade"
+      },
+      {
+        "level": "section",
+        "ref": "45",
+        "label": "Unfair methods of competition unlawful; prevention by Commission"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "consumer",
+      "commercial"
+    ],
+    "content": "15 U.S.C. § 45\n\n§ 45. Unfair methods of competition unlawful; prevention by Commission\n\n(a) Declaration of unlawfulness; power to prohibit unfair practices; inapplicability to foreign trade\n\n(1) Unfair methods of competition in or affecting commerce, and unfair or deceptive acts or practices in or affecting commerce, are hereby declared unlawful.\n\n(2) The Commission is hereby empowered and directed to prevent persons, partnerships, or corporations, except banks, savings and loan institutions described in section 57a(f)(3) of this title, Federal credit unions described in section 57a(f)(4) of this title, common carriers subject to the Acts to regulate commerce, air carriers and foreign air carriers subject to part A of subtitle VII of title 49, and persons, partnerships, or corporations insofar as they are subject to the Packers and Stockyards Act, 1921, as amended [7 U.S.C. 181 et seq.], except as provided in section 406(b) of said Act [7 U.S.C. 227(b)], from using unfair methods of competition in or affecting commerce and unfair or deceptive acts or practices in or affecting commerce.",
+    "sections": [
+      {
+        "sectionRef": "45",
+        "content": "Unfair methods of competition in or affecting commerce, and unfair or deceptive acts or practices in or affecting commerce, are hereby declared unlawful.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "ftc_act_section_5",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "15 U.S.C. § 1125 — False designations of origin, false descriptions, and dilution forbidden",
+    "shortTitle": "15 U.S.C. § 1125",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "15 U.S.C. § 1125",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-15-usc-1125",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title15-section1125&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "15",
+        "label": "Commerce and Trade"
+      },
+      {
+        "level": "section",
+        "ref": "1125",
+        "label": "False designations of origin, false descriptions, and dilution forbidden"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "commercial",
+      "intellectual_property"
+    ],
+    "content": "15 U.S.C. § 1125\n\n§ 1125. False designations of origin, false descriptions, and dilution forbidden\n\n(a) Civil action\n\n(1) Any person who, on or in connection with any goods or services, or any container for goods, uses in commerce any word, term, name, symbol, or device, or any combination thereof, or any false designation of origin, false or misleading description of fact, or false or misleading representation of fact, which—\n\n(A) is likely to cause confusion, or to cause mistake, or to deceive as to the affiliation, connection, or association of such person with another person, or as to the origin, sponsorship, or approval of his or her goods, services, or commercial activities by another person, or\n\n(B) in commercial advertising or promotion, misrepresents the nature, characteristics, qualities, or geographic origin of his or her or another person's goods, services, or commercial activities,\n\nshall be liable in a civil action by any person who believes that he or she is or is likely to be damaged by such act.",
+    "sections": [
+      {
+        "sectionRef": "1125",
+        "content": "Any person who uses in commerce a false or misleading description or representation of fact likely to cause confusion as to affiliation or origin, or who in commercial advertising misrepresents the nature or qualities of goods or services, shall be liable in a civil action.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "lanham_act_false_advertising",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "15 U.S.C. § 1692c — Communication in connection with debt collection",
+    "shortTitle": "15 U.S.C. § 1692c",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "15 U.S.C. § 1692c",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-15-usc-1692c",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title15-section1692c&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "15",
+        "label": "Commerce and Trade"
+      },
+      {
+        "level": "section",
+        "ref": "1692c",
+        "label": "Communication in connection with debt collection"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "consumer",
+      "debt_collection"
+    ],
+    "content": "15 U.S.C. § 1692c\n\n§ 1692c. Communication in connection with debt collection\n\n(a) Communication with the consumer generally\n\nWithout the prior consent of the consumer given directly to the debt collector or the express permission of a court of competent jurisdiction, a debt collector may not communicate with a consumer in connection with the collection of any debt—\n\n(1) at any unusual time or place or a time or place known or which should be known to be inconvenient to the consumer. In the absence of knowledge of circumstances to the contrary, a debt collector shall assume that the convenient time for communicating with a consumer is after 8 o'clock antemeridian and before 9 o'clock postmeridian, local time at the consumer's location;\n\n(2) if the debt collector knows the consumer is represented by an attorney with respect to such debt and has knowledge of, or can readily ascertain, such attorney's name and address, unless the attorney fails to respond within a reasonable period of time to a communication from the debt collector or unless the attorney consents to direct communication with the consumer; or\n\n(3) at the consumer's place of employment if the debt collector knows or has reason to know that the consumer's employer prohibits the consumer from receiving such communication.",
+    "sections": [
+      {
+        "sectionRef": "1692c",
+        "content": "Without prior consent or court permission, a debt collector may not communicate with a consumer at unusual or inconvenient times or places, if the consumer is known to be represented by counsel, or at the consumer's place of employment if the employer prohibits such communications.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "fdcpa_communications",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "15 U.S.C. § 1692e — False or misleading representations",
+    "shortTitle": "15 U.S.C. § 1692e",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "15 U.S.C. § 1692e",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-15-usc-1692e",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title15-section1692e&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "15",
+        "label": "Commerce and Trade"
+      },
+      {
+        "level": "section",
+        "ref": "1692e",
+        "label": "False or misleading representations"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "consumer",
+      "debt_collection"
+    ],
+    "content": "15 U.S.C. § 1692e\n\n§ 1692e. False or misleading representations\n\nA debt collector may not use any false, deceptive, or misleading representation or means in connection with the collection of any debt. Without limiting the general application of the foregoing, the following conduct is a violation of this section:\n\n(2) The false representation of—\n\n(A) the character, amount, or legal status of any debt; or\n\n(B) any services rendered or compensation which may be lawfully received by any debt collector for the collection of a debt.\n\n(5) The threat to take any action that cannot legally be taken or that is not intended to be taken.\n\n(10) The use of any false representation or deceptive means to collect or attempt to collect any debt or to obtain information concerning a consumer.",
+    "sections": [
+      {
+        "sectionRef": "1692e",
+        "content": "A debt collector may not use any false, deceptive, or misleading representation or means in connection with the collection of any debt."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "fdcpa_false_representations",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "15 U.S.C. § 2302 — Rules governing contents of warranties",
+    "shortTitle": "15 U.S.C. § 2302",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "15 U.S.C. § 2302",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-15-usc-2302",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title15-section2302&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "15",
+        "label": "Commerce and Trade"
+      },
+      {
+        "level": "section",
+        "ref": "2302",
+        "label": "Rules governing contents of warranties"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "consumer",
+      "contract"
+    ],
+    "content": "15 U.S.C. § 2302\n\n§ 2302. Rules governing contents of warranties\n\n(a) Full and conspicuous disclosure of terms and conditions; additional requirements for contents\n\nIn order to improve the adequacy of information available to consumers, prevent deception, and improve competition in the marketing of consumer products, any warrantor warranting a consumer product to a consumer by means of a written warranty shall, to the extent required by rules of the Commission, fully and conspicuously disclose in simple and readily understood language the terms and conditions of such warranty. Such rules may require inclusion in the written warranty of any of the following items among others:\n\n(1) The clear identification of the names and addresses of the warrantors.\n\n(2) The identity of the party or parties to whom the warranty is extended.\n\n(3) The products or parts covered.\n\n(4) A statement of what the warrantor will do in the event of a defect, malfunction, or failure to conform with such written warranty—at whose expense—and for what period of time.\n\n(5) A statement of what the consumer must do and expenses he must bear.",
+    "sections": [
+      {
+        "sectionRef": "2302",
+        "content": "Any warrantor warranting a consumer product by means of a written warranty shall, to the extent required by FTC rules, fully and conspicuously disclose in simple and readily understood language the terms and conditions of such warranty.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "magnuson_moss_warranty",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "18 U.S.C. § 1341 — Frauds and swindles",
+    "shortTitle": "18 U.S.C. § 1341",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "18 U.S.C. § 1341",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-18-usc-1341",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title18-section1341&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "18",
+        "label": "Crimes and Criminal Procedure"
+      },
+      {
+        "level": "section",
+        "ref": "1341",
+        "label": "Frauds and swindles"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "criminal",
+      "fraud"
+    ],
+    "content": "18 U.S.C. § 1341\n\n§ 1341. Frauds and swindles\n\nWhoever, having devised or intending to devise any scheme or artifice to defraud, or for obtaining money or property by means of false or fraudulent pretenses, representations, or promises, or to sell, dispose of, loan, exchange, alter, give away, distribute, supply, or furnish or procure for unlawful use any counterfeit or spurious coin, obligation, security, or other article, or anything represented to be or intimated or held out to be such counterfeit or spurious article, for the purpose of executing such scheme or artifice or attempting so to do, places in any post office or authorized depository for mail matter, any matter or thing whatever to be sent or delivered by the Postal Service, or deposits or causes to be deposited any matter or thing whatever to be sent or delivered by any private or commercial interstate carrier, or takes or receives therefrom, any such matter or thing, or knowingly causes to be delivered by mail or such carrier according to the direction thereon, or at the place at which it is directed to be delivered by the person to whom it is addressed, any such matter or thing, shall be fined under this title or imprisoned not more than 20 years, or both.",
+    "sections": [
+      {
+        "sectionRef": "1341",
+        "content": "Whoever, having devised any scheme or artifice to defraud or for obtaining money or property by false or fraudulent pretenses, places or causes to be delivered by mail or interstate carrier any matter for the purpose of executing such scheme, shall be fined or imprisoned not more than 20 years, or both."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "mail_fraud",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "18 U.S.C. § 1343 — Fraud by wire, radio, or television",
+    "shortTitle": "18 U.S.C. § 1343",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "18 U.S.C. § 1343",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-18-usc-1343",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title18-section1343&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "18",
+        "label": "Crimes and Criminal Procedure"
+      },
+      {
+        "level": "section",
+        "ref": "1343",
+        "label": "Fraud by wire, radio, or television"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "criminal",
+      "fraud"
+    ],
+    "content": "18 U.S.C. § 1343\n\n§ 1343. Fraud by wire, radio, or television\n\nWhoever, having devised or intending to devise any scheme or artifice to defraud, or for obtaining money or property by means of false or fraudulent pretenses, representations, or promises, transmits or causes to be transmitted by means of wire, radio, or television communication in interstate or foreign commerce, any writings, signs, signals, pictures, or sounds for the purpose of executing such scheme or artifice, shall be fined under this title or imprisoned not more than 20 years, or both.",
+    "sections": [
+      {
+        "sectionRef": "1343",
+        "content": "Whoever, having devised any scheme or artifice to defraud, transmits by means of wire, radio, or television communication in interstate or foreign commerce any writings, signs, signals, pictures, or sounds for the purpose of executing such scheme, shall be fined or imprisoned not more than 20 years, or both."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "wire_fraud",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "18 U.S.C. § 1962 — Prohibited activities",
+    "shortTitle": "18 U.S.C. § 1962",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "18 U.S.C. § 1962",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-18-usc-1962",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title18-section1962&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "18",
+        "label": "Crimes and Criminal Procedure"
+      },
+      {
+        "level": "section",
+        "ref": "1962",
+        "label": "Prohibited activities"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "criminal",
+      "rico"
+    ],
+    "content": "18 U.S.C. § 1962\n\n§ 1962. Prohibited activities\n\n(c) It shall be unlawful for any person employed by or associated with any enterprise engaged in, or the activities of which affect, interstate or foreign commerce, to conduct or participate, directly or indirectly, in the conduct of such enterprise's affairs through a pattern of racketeering activity or collection of unlawful debt.\n\n(d) It shall be unlawful for any person to conspire to violate any of the provisions of subsection (a), (b), or (c) of this section.",
+    "sections": [
+      {
+        "sectionRef": "1962",
+        "content": "It shall be unlawful for any person employed by or associated with any enterprise engaged in interstate commerce to conduct or participate in the conduct of such enterprise's affairs through a pattern of racketeering activity or collection of unlawful debt.",
+        "subsectionRef": "c"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "rico_prohibited_activities",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "18 U.S.C. § 1519 — Destruction, alteration, or falsification of records in Federal investigations and bankruptcy",
+    "shortTitle": "18 U.S.C. § 1519",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "18 U.S.C. § 1519",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-18-usc-1519",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title18-section1519&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "18",
+        "label": "Crimes and Criminal Procedure"
+      },
+      {
+        "level": "section",
+        "ref": "1519",
+        "label": "Destruction, alteration, or falsification of records in Federal investigations and bankruptcy"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "criminal",
+      "evidence"
+    ],
+    "content": "18 U.S.C. § 1519\n\n§ 1519. Destruction, alteration, or falsification of records in Federal investigations and bankruptcy\n\nWhoever knowingly alters, destroys, mutilates, conceals, covers up, falsifies, or makes a false entry in any record, document, or tangible object with the intent to impede, obstruct, or influence the investigation or proper administration of any matter within the jurisdiction of any department or agency of the United States or any case filed under title 11, or in relation to or contemplation of any such matter or case, shall be fined under this title, imprisoned not more than 20 years, or both.",
+    "sections": [
+      {
+        "sectionRef": "1519",
+        "content": "Whoever knowingly alters, destroys, mutilates, conceals, covers up, falsifies, or makes a false entry in any record, document, or tangible object with the intent to impede, obstruct, or influence a federal investigation or bankruptcy case shall be fined, imprisoned not more than 20 years, or both."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "obstruction_records",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "28 U.S.C. § 1334 — Bankruptcy cases and proceedings",
+    "shortTitle": "28 U.S.C. § 1334",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1334",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1334",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1334&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "28",
+        "label": "Judiciary and Judicial Procedure"
+      },
+      {
+        "level": "section",
+        "ref": "1334",
+        "label": "Bankruptcy cases and proceedings"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "bankruptcy",
+      "jurisdiction"
+    ],
+    "content": "28 U.S.C. § 1334\n\n§ 1334. Bankruptcy cases and proceedings\n\n(a) Except as provided in subsection (b) of this section, the district courts shall have original and exclusive jurisdiction of all cases under title 11.\n\n(b) Except as provided in subsection (e)(2), and notwithstanding any Act of Congress that confers exclusive jurisdiction on a court or courts other than the district courts, the district courts shall have original but not exclusive jurisdiction of all civil proceedings arising under title 11, or arising in or related to cases under title 11.",
+    "sections": [
+      {
+        "sectionRef": "1334",
+        "content": "The district courts shall have original and exclusive jurisdiction of all cases under title 11, and original but not exclusive jurisdiction of civil proceedings arising under, arising in, or related to cases under title 11.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "bankruptcy_jurisdiction",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "28 U.S.C. § 1361 — Action to compel an officer of the United States to perform his duty",
+    "shortTitle": "28 U.S.C. § 1361",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1361",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1361",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1361&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "28",
+        "label": "Judiciary and Judicial Procedure"
+      },
+      {
+        "level": "section",
+        "ref": "1361",
+        "label": "Action to compel an officer of the United States to perform his duty"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "jurisdiction"
+    ],
+    "content": "28 U.S.C. § 1361\n\n§ 1361. Action to compel an officer of the United States to perform his duty\n\nThe district courts shall have original jurisdiction of any action in the nature of mandamus to compel an officer or employee of the United States or any agency thereof to perform a duty owed to the plaintiff.",
+    "sections": [
+      {
+        "sectionRef": "1361",
+        "content": "The district courts shall have original jurisdiction of any action in the nature of mandamus to compel an officer or employee of the United States or any agency thereof to perform a duty owed to the plaintiff."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "mandamus_jurisdiction",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "28 U.S.C. § 1651 — Writs",
+    "shortTitle": "28 U.S.C. § 1651",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1651",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1651",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1651&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "28",
+        "label": "Judiciary and Judicial Procedure"
+      },
+      {
+        "level": "section",
+        "ref": "1651",
+        "label": "Writs"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "procedure"
+    ],
+    "content": "28 U.S.C. § 1651\n\n§ 1651. Writs\n\n(a) The Supreme Court and all courts established by Act of Congress may issue all writs necessary or appropriate in aid of their respective jurisdictions and agreeable to the usages and principles of law.\n\n(b) An alternative writ or rule nisi may be issued by a justice or judge of a court which has jurisdiction.",
+    "sections": [
+      {
+        "sectionRef": "1651",
+        "content": "The Supreme Court and all courts established by Act of Congress may issue all writs necessary or appropriate in aid of their respective jurisdictions and agreeable to the usages and principles of law.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "all_writs_act",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "28 U.S.C. § 1738 — State and Territorial statutes and judicial proceedings; full faith and credit",
+    "shortTitle": "28 U.S.C. § 1738",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 1738",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-1738",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section1738&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "28",
+        "label": "Judiciary and Judicial Procedure"
+      },
+      {
+        "level": "section",
+        "ref": "1738",
+        "label": "State and Territorial statutes and judicial proceedings; full faith and credit"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "procedure"
+    ],
+    "content": "28 U.S.C. § 1738\n\n§ 1738. State and Territorial statutes and judicial proceedings; full faith and credit\n\nThe Acts of the legislature of any State, Territory, or Possession of the United States, or copies thereof, shall be authenticated by affixing the seal of such State, Territory or Possession thereto.\n\nThe records and judicial proceedings of any court of any such State, Territory or Possession, or copies thereof, shall be proved or admitted in other courts within the United States and its Territories and Possessions by the attestation of the clerk and seal of the court annexed, if a seal exists, together with a certificate of a judge of the court that the said attestation is in proper form.\n\nSuch Acts, records and judicial proceedings or copies thereof, so authenticated, shall have the same full faith and credit in every court within the United States and its Territories and Possessions as they have by law or usage in the courts of such State, Territory or Possession from which they are taken.",
+    "sections": [
+      {
+        "sectionRef": "1738",
+        "content": "Authenticated state legislative acts and judicial records shall have the same full faith and credit in every court within the United States as they have by law or usage in the courts of the State from which they are taken."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "full_faith_and_credit",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "28 U.S.C. § 2201 — Creation of remedy",
+    "shortTitle": "28 U.S.C. § 2201",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 2201",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-2201",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section2201&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "28",
+        "label": "Judiciary and Judicial Procedure"
+      },
+      {
+        "level": "section",
+        "ref": "2201",
+        "label": "Creation of remedy"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "procedure"
+    ],
+    "content": "28 U.S.C. § 2201\n\n§ 2201. Creation of remedy\n\n(a) In a case of actual controversy within its jurisdiction, except with respect to Federal taxes other than actions brought under section 7428 of the Internal Revenue Code of 1986, a proceeding under section 505 or 1146 of title 11, or in any civil action involving an antidumping or countervailing duty proceeding regarding a class or kind of merchandise of a free trade area country (as defined in section 516A(f)(9) of the Tariff Act of 1930), as determined by the administering authority, any court of the United States, upon the filing of an appropriate pleading, may declare the rights and other legal relations of any interested party seeking such declaration, whether or not further relief is or could be sought. Any such declaration shall have the force and effect of a final judgment or decree and shall be reviewable as such.",
+    "sections": [
+      {
+        "sectionRef": "2201",
+        "content": "In a case of actual controversy within its jurisdiction, any court of the United States, upon the filing of an appropriate pleading, may declare the rights and other legal relations of any interested party seeking such declaration, whether or not further relief is or could be sought.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "declaratory_judgment",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "28 U.S.C. § 2283 — Stay of State court proceedings",
+    "shortTitle": "28 U.S.C. § 2283",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 2283",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-2283",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section2283&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "28",
+        "label": "Judiciary and Judicial Procedure"
+      },
+      {
+        "level": "section",
+        "ref": "2283",
+        "label": "Stay of State court proceedings"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "procedure"
+    ],
+    "content": "28 U.S.C. § 2283\n\n§ 2283. Stay of State court proceedings\n\nA court of the United States may not grant an injunction to stay proceedings in a State court except as expressly authorized by Act of Congress, or where necessary in aid of its jurisdiction, or to protect or effectuate its judgments.",
+    "sections": [
+      {
+        "sectionRef": "2283",
+        "content": "A court of the United States may not grant an injunction to stay proceedings in a State court except as expressly authorized by Act of Congress, or where necessary in aid of its jurisdiction, or to protect or effectuate its judgments."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "anti_injunction_act",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "28 U.S.C. § 2674 — Liability of United States",
+    "shortTitle": "28 U.S.C. § 2674",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 2674",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-2674",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section2674&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "28",
+        "label": "Judiciary and Judicial Procedure"
+      },
+      {
+        "level": "section",
+        "ref": "2674",
+        "label": "Liability of United States"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "tort"
+    ],
+    "content": "28 U.S.C. § 2674\n\n§ 2674. Liability of United States\n\nThe United States shall be liable, respecting the provisions of this title relating to tort claims, in the same manner and to the same extent as a private individual under like circumstances, but shall not be liable for interest prior to judgment or for punitive damages.\n\nIf, however, in any case wherein death was caused, the law of the place where the act or omission complained of occurred provides, or has been construed to provide, for damages only punitive in nature, the United States shall be liable for actual or compensatory damages, measured by the pecuniary injuries resulting from such death to the persons respectively, for whose benefit the action was brought, in lieu thereof.",
+    "sections": [
+      {
+        "sectionRef": "2674",
+        "content": "The United States shall be liable, respecting the provisions of this title relating to tort claims, in the same manner and to the same extent as a private individual under like circumstances, but shall not be liable for interest prior to judgment or for punitive damages."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "ftca_liability",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "28 U.S.C. § 2680 — Exceptions",
+    "shortTitle": "28 U.S.C. § 2680",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "28 U.S.C. § 2680",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-28-usc-2680",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title28-section2680&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "28",
+        "label": "Judiciary and Judicial Procedure"
+      },
+      {
+        "level": "section",
+        "ref": "2680",
+        "label": "Exceptions"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "tort"
+    ],
+    "content": "28 U.S.C. § 2680\n\n§ 2680. Exceptions\n\nThe provisions of this chapter and section 1346(b) of this title shall not apply to—\n\n(a) Any claim based upon an act or omission of an employee of the Government, exercising due care, in the execution of a statute or regulation, whether or not such statute or regulation be valid, or based upon the exercise or performance or the failure to exercise or perform a discretionary function or duty on the part of a federal agency or an employee of the Government, whether or not the discretion involved be abused.\n\n(h) Any claim arising out of assault, battery, false imprisonment, false arrest, malicious prosecution, abuse of process, libel, slander, misrepresentation, deceit, or interference with contract rights: Provided, That, with regard to acts or omissions of investigative or law enforcement officers of the United States Government, the provisions of this chapter and section 1346(b) of this title shall apply to any claim arising, on or after the date of the enactment of this proviso, out of assault, battery, false imprisonment, false arrest, abuse of process, or malicious prosecution.",
+    "sections": [
+      {
+        "sectionRef": "2680",
+        "content": "The FTCA does not apply to claims based on the discretionary function exception, or to certain intentional torts, subject to the law-enforcement proviso for assault, battery, false imprisonment, false arrest, abuse of process, or malicious prosecution.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "ftca_exceptions",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "29 U.S.C. § 206 — Minimum wage",
+    "shortTitle": "29 U.S.C. § 206",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "29 U.S.C. § 206",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-29-usc-206",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title29-section206&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "29",
+        "label": "Labor"
+      },
+      {
+        "level": "section",
+        "ref": "206",
+        "label": "Minimum wage"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "employment"
+    ],
+    "content": "29 U.S.C. § 206\n\n§ 206. Minimum wage\n\n(a) Employees engaged in commerce; home workers in Puerto Rico and Virgin Islands; employees in American Samoa; seamen on American vessels; agricultural employees\n\nEvery employer shall pay to each of his employees who in any workweek is engaged in commerce or in the production of goods for commerce, or is employed in an enterprise engaged in commerce or in the production of goods for commerce, wages at the following rates:\n\n(1) except as otherwise provided in this section, not less than—\n\n(A) $5.85 an hour, beginning on the 60th day after May 25, 2007;\n\n(B) $6.55 an hour, beginning 12 months after that 60th day;\n\n(C) $7.25 an hour, beginning 24 months after that 60th day;",
+    "sections": [
+      {
+        "sectionRef": "206",
+        "content": "Every employer shall pay to each of his employees who in any workweek is engaged in commerce or in the production of goods for commerce, or is employed in an enterprise engaged in commerce or in the production of goods for commerce, wages at not less than the rates prescribed in this section.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "flsa_minimum_wage",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "29 U.S.C. § 207 — Maximum hours",
+    "shortTitle": "29 U.S.C. § 207",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "29 U.S.C. § 207",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-29-usc-207",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title29-section207&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "29",
+        "label": "Labor"
+      },
+      {
+        "level": "section",
+        "ref": "207",
+        "label": "Maximum hours"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "employment"
+    ],
+    "content": "29 U.S.C. § 207\n\n§ 207. Maximum hours\n\n(a) Employees engaged in interstate commerce; additional applicability to employees pursuant to subsequent amendatory provisions\n\n(1) Except as otherwise provided in this section, no employer shall employ any of his employees who in any workweek is engaged in commerce or in the production of goods for commerce, or is employed in an enterprise engaged in commerce or in the production of goods for commerce, for a workweek longer than forty hours unless such employee receives compensation for his employment in excess of the hours above specified at a rate not less than one and one-half times the regular rate at which he is employed.",
+    "sections": [
+      {
+        "sectionRef": "207",
+        "content": "No employer shall employ any of his employees engaged in commerce or in an enterprise engaged in commerce for a workweek longer than forty hours unless such employee receives compensation for employment in excess of forty hours at a rate not less than one and one-half times the regular rate.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "flsa_overtime",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "29 U.S.C. § 216 — Penalties",
+    "shortTitle": "29 U.S.C. § 216",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "29 U.S.C. § 216",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-29-usc-216",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title29-section216&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "29",
+        "label": "Labor"
+      },
+      {
+        "level": "section",
+        "ref": "216",
+        "label": "Penalties"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "employment"
+    ],
+    "content": "29 U.S.C. § 216\n\n§ 216. Penalties\n\n(b) Damages; right of action; attorney's fees and costs; termination of right of action\n\nAny employer who violates the provisions of section 206 or section 207 of this title shall be liable to the employee or employees affected in the amount of their unpaid minimum wages, or their unpaid overtime compensation, as the case may be, and in an additional equal amount as liquidated damages. ... An action to recover the liability prescribed in the preceding sentences may be maintained against any employer (including a public agency) in any Federal or State court of competent jurisdiction by any one or more employees for and in behalf of himself or themselves and other employees similarly situated.",
+    "sections": [
+      {
+        "sectionRef": "216",
+        "content": "Any employer who violates section 206 or 207 shall be liable to the employee for unpaid minimum wages or unpaid overtime compensation, and in an additional equal amount as liquidated damages.",
+        "subsectionRef": "b"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "flsa_penalties",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "29 U.S.C. § 185 — Suits by and against labor organizations",
+    "shortTitle": "29 U.S.C. § 185",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "29 U.S.C. § 185",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-29-usc-185",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title29-section185&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "29",
+        "label": "Labor"
+      },
+      {
+        "level": "section",
+        "ref": "185",
+        "label": "Suits by and against labor organizations"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "employment",
+      "labor"
+    ],
+    "content": "29 U.S.C. § 185\n\n§ 185. Suits by and against labor organizations\n\n(a) Venue, amount, and citizenship\n\nSuits for violation of contracts between an employer and a labor organization representing employees in an industry affecting commerce as defined in this chapter, or between any such labor organizations, may be brought in any district court of the United States having jurisdiction of the parties, without respect to the amount in controversy or without regard to the citizenship of the parties.",
+    "sections": [
+      {
+        "sectionRef": "185",
+        "content": "Suits for violation of contracts between an employer and a labor organization representing employees in an industry affecting commerce may be brought in any district court of the United States having jurisdiction of the parties.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "lmra_section_301",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "29 U.S.C. § 1104 — Fiduciary duties",
+    "shortTitle": "29 U.S.C. § 1104",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "29 U.S.C. § 1104",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-29-usc-1104",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title29-section1104&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "29",
+        "label": "Labor"
+      },
+      {
+        "level": "section",
+        "ref": "1104",
+        "label": "Fiduciary duties"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "employment",
+      "erisa"
+    ],
+    "content": "29 U.S.C. § 1104\n\n§ 1104. Fiduciary duties\n\n(a) Prudent man standard of care\n\n(1) Subject to sections 1103(c) and (d), 1342, and 1344 of this title, a fiduciary shall discharge his duties with respect to a plan solely in the interest of the participants and beneficiaries and—\n\n(A) for the exclusive purpose of:\n\n(i) providing benefits to participants and their beneficiaries; and\n\n(ii) defraying reasonable expenses of administering the plan;\n\n(B) with the care, skill, prudence, and diligence under the circumstances then prevailing that a prudent man acting in a like capacity and familiar with such matters would use in the conduct of an enterprise of a like character and with like aims;\n\n(C) by diversifying the investments of the plan so as to minimize the risk of large losses, unless under the circumstances it is clearly prudent not to do so; and\n\n(D) in accordance with the documents and instruments governing the plan insofar as such documents and instruments are consistent with the provisions of this subchapter and subchapter III.",
+    "sections": [
+      {
+        "sectionRef": "1104",
+        "content": "A fiduciary shall discharge his duties with respect to a plan solely in the interest of the participants and beneficiaries, for the exclusive purpose of providing benefits and defraying reasonable expenses, and with the care, skill, prudence, and diligence that a prudent man would use.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "erisa_fiduciary_duties",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "29 U.S.C. § 2612 — Leave requirement",
+    "shortTitle": "29 U.S.C. § 2612",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "29 U.S.C. § 2612",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-29-usc-2612",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title29-section2612&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "29",
+        "label": "Labor"
+      },
+      {
+        "level": "section",
+        "ref": "2612",
+        "label": "Leave requirement"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "employment"
+    ],
+    "content": "29 U.S.C. § 2612\n\n§ 2612. Leave requirement\n\n(a) In general\n\n(1) Entitlement to leave\n\nSubject to section 2613 of this title, an eligible employee shall be entitled to a total of 12 workweeks of leave during any 12-month period for one or more of the following:\n\n(A) Because of the birth of a son or daughter of the employee and in order to care for such son or daughter.\n\n(B) Because of the placement of a son or daughter with the employee for adoption or foster care.\n\n(C) In order to care for the spouse, or a son, daughter, or parent, of the employee, if such spouse, son, daughter, or parent has a serious health condition.\n\n(D) Because of a serious health condition that makes the employee unable to perform the functions of the position of such employee.\n\n(E) Because of any qualifying exigency (as the Secretary shall, by regulation, determine) arising out of the fact that the spouse, or a son, daughter, or parent of the employee is on covered active duty (or has been notified of an impending call or order to covered active duty) in the Armed Forces.",
+    "sections": [
+      {
+        "sectionRef": "2612",
+        "content": "An eligible employee shall be entitled to a total of 12 workweeks of leave during any 12-month period for birth or placement of a child, to care for a family member with a serious health condition, because of the employee's own serious health condition, or for certain military qualifying exigencies.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "fmla_leave",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "42 U.S.C. § 1985 — Conspiracy to interfere with civil rights",
+    "shortTitle": "42 U.S.C. § 1985",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "42 U.S.C. § 1985",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-42-usc-1985",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title42-section1985&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "42",
+        "label": "The Public Health and Welfare"
+      },
+      {
+        "level": "section",
+        "ref": "1985",
+        "label": "Conspiracy to interfere with civil rights"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "constitutional"
+    ],
+    "content": "42 U.S.C. § 1985\n\n§ 1985. Conspiracy to interfere with civil rights\n\n(3) Depriving persons of rights or privileges\n\nIf two or more persons in any State or Territory conspire or go in disguise on the highway or on the premises of another, for the purpose of depriving, either directly or indirectly, any person or class of persons of the equal protection of the laws, or of equal privileges and immunities under the laws; or for the purpose of preventing or hindering the constituted authorities of any State or Territory from giving or securing to all persons within such State or Territory the equal protection of the laws; ... in any case of conspiracy set forth in this section, if one or more persons engaged therein do, or cause to be done, any act in furtherance of the object of such conspiracy, whereby another is injured in his person or property, or deprived of having and exercising any right or privilege of a citizen of the United States, the party so injured or deprived may have an action for the recovery of damages occasioned by such injury or deprivation, against any one or more of the conspirators.",
+    "sections": [
+      {
+        "sectionRef": "1985",
+        "content": "If two or more persons conspire for the purpose of depriving any person or class of persons of the equal protection of the laws, and an act in furtherance injures another in person or property or deprives a citizen of a right or privilege, the injured party may recover damages against any one or more of the conspirators.",
+        "subsectionRef": "3"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "civil_rights_conspiracy",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "42 U.S.C. § 1988 — Proceedings in vindication of civil rights",
+    "shortTitle": "42 U.S.C. § 1988",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "42 U.S.C. § 1988",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-42-usc-1988",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title42-section1988&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "42",
+        "label": "The Public Health and Welfare"
+      },
+      {
+        "level": "section",
+        "ref": "1988",
+        "label": "Proceedings in vindication of civil rights"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "constitutional"
+    ],
+    "content": "42 U.S.C. § 1988\n\n§ 1988. Proceedings in vindication of civil rights\n\n(b) Attorney's fees\n\nIn any action or proceeding to enforce a provision of sections 1981, 1981a, 1982, 1983, 1985, and 1986 of this title, title IX of Public Law 92-318 [20 U.S.C. 1681 et seq.], the Religious Freedom Restoration Act of 1993 [42 U.S.C. 2000bb et seq.], the Religious Land Use and Institutionalized Persons Act of 2000 [42 U.S.C. 2000cc et seq.], title VI of the Civil Rights Act of 1964 [42 U.S.C. 2000d et seq.], or section 12361 of title 34, the court, in its discretion, may allow the prevailing party, other than the United States, a reasonable attorney's fee as part of the costs, except that in any action brought against a judicial officer for an act or omission taken in such officer's judicial capacity such officer shall not be held liable for any costs, including attorney's fees, unless such action was clearly in excess of that officer's jurisdiction.",
+    "sections": [
+      {
+        "sectionRef": "1988",
+        "content": "In any action to enforce specified civil rights provisions, the court, in its discretion, may allow the prevailing party, other than the United States, a reasonable attorney's fee as part of the costs.",
+        "subsectionRef": "b"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "civil_rights_attorneys_fees",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "42 U.S.C. § 2000e-5 — Enforcement provisions",
+    "shortTitle": "42 U.S.C. § 2000e-5",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "42 U.S.C. § 2000e-5",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-42-usc-2000e-5",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title42-section2000e-5&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "42",
+        "label": "The Public Health and Welfare"
+      },
+      {
+        "level": "section",
+        "ref": "2000e-5",
+        "label": "Enforcement provisions"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "employment",
+      "civil_rights"
+    ],
+    "content": "42 U.S.C. § 2000e-5\n\n§ 2000e-5. Enforcement provisions\n\n(e) Time for filing charges; time for service of notice of charge on respondent; filing of charge by Commission with State or local agency; seniority system\n\n(1) A charge under this section shall be filed within one hundred and eighty days after the alleged unlawful employment practice occurred and notice of the charge (including the date, place and circumstances of the alleged unlawful employment practice) shall be served upon the person against whom such charge is made within ten days thereafter, except that in a case of an unlawful employment practice with respect to which the person aggrieved has initially instituted proceedings with a State or local agency with authority to grant or seek relief from such practice or to institute criminal proceedings with respect thereto upon receiving notice thereof, such charge shall be filed by or on behalf of the person aggrieved within three hundred days after the alleged unlawful employment practice occurred, or within thirty days after receiving notice that the State or local agency has terminated the proceedings under the State or local law, whichever is earlier, and a copy of such charge shall be filed by the Commission with the State or local agency.",
+    "sections": [
+      {
+        "sectionRef": "2000e-5",
+        "content": "A charge under this section shall be filed within one hundred and eighty days after the alleged unlawful employment practice occurred, or within three hundred days if a State or local agency proceeding was initially instituted.",
+        "subsectionRef": "e"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "title_vii_enforcement",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "42 U.S.C. § 12112 — Discrimination",
+    "shortTitle": "42 U.S.C. § 12112",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "42 U.S.C. § 12112",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-42-usc-12112",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title42-section12112&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "42",
+        "label": "The Public Health and Welfare"
+      },
+      {
+        "level": "section",
+        "ref": "12112",
+        "label": "Discrimination"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "employment",
+      "civil_rights"
+    ],
+    "content": "42 U.S.C. § 12112\n\n§ 12112. Discrimination\n\n(a) General rule\n\nNo covered entity shall discriminate against a qualified individual on the basis of disability in regard to job application procedures, the hiring, advancement, or discharge of employees, employee compensation, job training, and other terms, conditions, and privileges of employment.\n\n(b) Construction\n\nAs used in subsection (a), the term \"discriminate against a qualified individual on the basis of disability\" includes—\n\n(5)(A) not making reasonable accommodations to the known physical or mental limitations of an otherwise qualified individual with a disability who is an applicant or employee, unless such covered entity can demonstrate that the accommodation would impose an undue hardship on the operation of the business of such covered entity; or\n\n(B) denying employment opportunities to a job applicant or employee who is an otherwise qualified individual with a disability, if such denial is based on the need of such covered entity to make reasonable accommodation to the physical or mental impairments of the employee or applicant.",
+    "sections": [
+      {
+        "sectionRef": "12112",
+        "content": "No covered entity shall discriminate against a qualified individual on the basis of disability in regard to job application procedures, hiring, advancement, discharge, compensation, training, and other terms, conditions, and privileges of employment.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "ada_employment_discrimination",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  },
+  {
+    "title": "42 U.S.C. § 3604 — Discrimination in the sale or rental of housing and other prohibited practices",
+    "shortTitle": "42 U.S.C. § 3604",
+    "authorityType": "statute",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "42 U.S.C. § 3604",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-42-usc-3604",
+    "canonicalSourceUrl": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title42-section3604&num=0&edition=prelim",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "42",
+        "label": "The Public Health and Welfare"
+      },
+      {
+        "level": "section",
+        "ref": "3604",
+        "label": "Discrimination in the sale or rental of housing and other prohibited practices"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "property",
+      "civil_rights"
+    ],
+    "content": "42 U.S.C. § 3604\n\n§ 3604. Discrimination in the sale or rental of housing and other prohibited practices\n\nAs made applicable by section 3603 of this title and except as exempted by sections 3603(b) and 3607 of this title, it shall be unlawful—\n\n(a) To refuse to sell or rent after the making of a bona fide offer, or to refuse to negotiate for the sale or rental of, or otherwise make unavailable or deny, a dwelling to any person because of race, color, religion, sex, familial status, or national origin.\n\n(b) To discriminate against any person in the terms, conditions, or privileges of sale or rental of a dwelling, or in the provision of services or facilities in connection therewith, because of race, color, religion, sex, familial status, or national origin.\n\n(f)(1) To discriminate in the sale or rental, or to otherwise make unavailable or deny, a dwelling to any buyer or renter because of a handicap of—\n\n(A) that buyer or renter,\n\n(B) a person residing in or intending to reside in that dwelling after it is so sold, rented, or made available; or\n\n(C) any person associated with that buyer or renter.",
+    "sections": [
+      {
+        "sectionRef": "3604",
+        "content": "It shall be unlawful to refuse to sell or rent, or otherwise make unavailable or deny, a dwelling to any person because of race, color, religion, sex, familial status, or national origin, or to discriminate because of handicap as provided in this section.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "fair_housing_act",
+      "sourceOwner": "Office of the Law Revision Counsel"
+    }
+  }
+]

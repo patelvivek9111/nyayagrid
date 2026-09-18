@@ -12,15 +12,61 @@ export function classifyJurisdictionCoverage(params: {
   statuteCount: number;
   caseCount: number;
   regulationCount: number;
+  /** Optional: court rules, constitutions, high-court/appellate presence, metadata completeness. */
+  ruleCount?: number;
+  highCourtCaseCount?: number;
+  appellateCaseCount?: number;
+  withCanonicalUrlPercent?: number;
+  currentnessKnownPercent?: number;
 }): CorpusCoverageClass {
-  const { authorityCount, statuteCount, caseCount, regulationCount } = params;
+  const {
+    authorityCount,
+    statuteCount,
+    caseCount,
+    regulationCount,
+    ruleCount = 0,
+    highCourtCaseCount = 0,
+    appellateCaseCount = 0,
+    withCanonicalUrlPercent = 0,
+    currentnessKnownPercent = 0,
+  } = params;
   if (authorityCount === 0) return "no_corpus";
-  // One–few curated docs is always seed, even if a regulation snippet exists.
-  if (authorityCount <= 5) return "seed_corpus";
-  // "Broader" requires material multi-type depth — never claim it for shallow curated batches.
-  const multiType = statuteCount > 0 && caseCount > 0 && regulationCount > 0;
+
+  // Token / shallow seed: 1–2 authorities, or ≤2 statutes with no other primary-law types.
+  if (
+    authorityCount <= 2 ||
+    (statuteCount <= 2 &&
+      caseCount === 0 &&
+      regulationCount === 0 &&
+      ruleCount === 0 &&
+      authorityCount <= 5)
+  ) {
+    return "seed_corpus";
+  }
+
+  // Broader requires material multi-type depth plus appellate/high-court signal and provenance.
+  // Never claim broader for shallow curated batches alone.
+  const multiType =
+    statuteCount >= 15 &&
+    caseCount >= 20 &&
+    (regulationCount > 0 || ruleCount > 0) &&
+    (highCourtCaseCount > 0 || appellateCaseCount > 0) &&
+    withCanonicalUrlPercent >= 80 &&
+    currentnessKnownPercent >= 40;
   if (authorityCount > 100 && multiType) return "broader_corpus";
-  return "limited_corpus";
+
+  // Limited: meaningful statute depth and/or multi-type presence beyond token seed.
+  if (
+    statuteCount >= 3 ||
+    (statuteCount >= 1 && caseCount >= 1) ||
+    regulationCount >= 3 ||
+    ruleCount >= 3 ||
+    authorityCount >= 6
+  ) {
+    return "limited_corpus";
+  }
+
+  return "seed_corpus";
 }
 
 export type CorpusInventoryRow = {
@@ -188,6 +234,13 @@ export async function buildCorpusInventory(db: Database): Promise<CorpusInventor
       const statuteCount = authorities.filter((row) => row.authorityType === "statute").length;
       const caseCount = authorities.filter((row) => row.authorityType === "case").length;
       const regulationCount = authorities.filter((row) => row.authorityType === "regulation").length;
+      const ruleCount = authorities.filter((row) => row.authorityType === "rule").length;
+      const highCourtCaseCount = authorities.filter((row) => row.courtLevel === "state_high").length;
+      const appellateCaseCount = authorities.filter((row) => row.courtLevel === "state_appellate").length;
+      const withUrlPercent =
+        authorities.length === 0
+          ? 0
+          : Math.round((withUrl.length / authorities.length) * 1000) / 10;
       return [
         code,
         {
@@ -197,8 +250,8 @@ export async function buildCorpusInventory(db: Database): Promise<CorpusInventor
           statuteCount,
           caseCount,
           regulationCount,
-          stateHighCount: authorities.filter((row) => row.courtLevel === "state_high").length,
-          stateAppellateCount: authorities.filter((row) => row.courtLevel === "state_appellate").length,
+          stateHighCount: highCourtCaseCount,
+          stateAppellateCount: appellateCaseCount,
           normalizedMetadataPercent:
             authorities.length === 0
               ? 0
@@ -207,16 +260,17 @@ export async function buildCorpusInventory(db: Database): Promise<CorpusInventor
             authorities.length === 0
               ? 0
               : Math.round((withEffective.length / authorities.length) * 1000) / 10,
-          withCanonicalUrlPercent:
-            authorities.length === 0
-              ? 0
-              : Math.round((withUrl.length / authorities.length) * 1000) / 10,
+          withCanonicalUrlPercent: withUrlPercent,
           tierDistribution: tiers,
           coverageClass: classifyJurisdictionCoverage({
             authorityCount: authorities.length,
             statuteCount,
             caseCount,
             regulationCount,
+            ruleCount,
+            highCourtCaseCount,
+            appellateCaseCount,
+            withCanonicalUrlPercent: withUrlPercent,
           }),
         },
       ];
@@ -224,20 +278,34 @@ export async function buildCorpusInventory(db: Database): Promise<CorpusInventor
   );
 
   const federalRows = realRows.filter((row) => asJurisdiction(row) === "US" || row.authorityState === "US");
+  const federalStatuteCount = federalRows.filter((row) => row.authorityType === "statute").length;
+  const federalCaseCount = federalRows.filter((row) => row.authorityType === "case").length;
+  const federalRegulationCount = federalRows.filter((row) => row.authorityType === "regulation").length;
+  const federalRuleCount = federalRows.filter((row) => row.authorityType === "rule").length;
+  const federalWithUrl = federalRows.filter((row) => row.canonicalSourceUrl).length;
   const federal: FederalCorpusSummary = {
     authorityCount: federalRows.length,
-    statuteCount: federalRows.filter((row) => row.authorityType === "statute").length,
-    caseCount: federalRows.filter((row) => row.authorityType === "case").length,
+    statuteCount: federalStatuteCount,
+    caseCount: federalCaseCount,
     constitutionCount: federalRows.filter((row) => row.authorityType === "constitution").length,
-    regulationCount: federalRows.filter((row) => row.authorityType === "regulation").length,
+    regulationCount: federalRegulationCount,
     scotusCount: federalRows.filter(
       (row) => row.courtLevel === "scotus" || row.courtId === "us-scotus",
     ).length,
     coverageClass: classifyJurisdictionCoverage({
       authorityCount: federalRows.length,
-      statuteCount: federalRows.filter((row) => row.authorityType === "statute").length,
-      caseCount: federalRows.filter((row) => row.authorityType === "case").length,
-      regulationCount: federalRows.filter((row) => row.authorityType === "regulation").length,
+      statuteCount: federalStatuteCount,
+      caseCount: federalCaseCount,
+      regulationCount: federalRegulationCount,
+      ruleCount: federalRuleCount,
+      highCourtCaseCount: federalRows.filter(
+        (row) => row.courtLevel === "scotus" || row.courtId === "us-scotus",
+      ).length,
+      appellateCaseCount: federalRows.filter((row) => row.courtLevel === "circuit").length,
+      withCanonicalUrlPercent:
+        federalRows.length === 0
+          ? 0
+          : Math.round((federalWithUrl / federalRows.length) * 1000) / 10,
     }),
   };
 

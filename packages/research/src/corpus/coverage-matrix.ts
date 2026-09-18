@@ -93,6 +93,17 @@ function summarizeAuthorities(
     statuteCount: statutes.length,
     caseCount: cases.length,
     regulationCount: regulations.length,
+    ruleCount: courtRules.length,
+    highCourtCaseCount: high.length,
+    appellateCaseCount: appellate.length,
+    withCanonicalUrlPercent:
+      authorities.length === 0
+        ? 0
+        : Math.round((provenance.length / authorities.length) * 1000) / 10,
+    currentnessKnownPercent:
+      authorities.length === 0
+        ? 0
+        : Math.round((currentness.length / authorities.length) * 1000) / 10,
   });
   const notes: string[] = [];
   if (authorities.length > 0 && authorities.length <= 5) {

@@ -1,6 +1,18 @@
 {
   "version": "corpus1-v3",
-  "phase": "50S-EXPANSION-1",
+  "phase": "50S-WAVE-2C",
+  "wave2cProviders": {
+    "note": "Wave 2C combines live federal fetches (eCFR, USC House, US Courts rules) with curated wave2c expansion bundles for statutes, CFR excerpts, rules, and Wave 1/2 state seeds.",
+    "liveFetch": ["ecfr.gov", "uscode.house.gov", "uscourts.gov"],
+    "curatedBundles": [
+      "expansion-wave2c-usc.json",
+      "expansion-wave2c-cfr.json",
+      "expansion-wave2c-rules.json",
+      "expansion-wave2c-wave1.json",
+      "expansion-wave2c-states.json"
+    ],
+    "stateStatuteAdapter": "state-legislature-sites"
+  },
   "providers": [
     {
       "name": "us-primary-corpus",

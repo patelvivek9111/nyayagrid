@@ -1,0 +1,1661 @@
+[
+  {
+    "title": "Cal. Corp. Code § 309 — Performance of duties; liability",
+    "shortTitle": "Cal. Corp. Code § 309",
+    "authorityType": "statute",
+    "jurisdiction": "California",
+    "authorityState": "CA",
+    "citation": "Cal. Corp. Code § 309",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ca-corp-309",
+    "canonicalSourceUrl": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=309.&lawCode=CORP",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CA",
+        "label": "Corporations Code"
+      },
+      {
+        "level": "section",
+        "ref": "309",
+        "label": "Director duties"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "corporations",
+      "civil"
+    ],
+    "content": "Cal. Corp. Code § 309\n\n309. (a) A director shall perform the duties of a director, including duties as a member of any committee of the board upon which the director may serve, in good faith, in a manner such director believes to be in the best interests of the corporation and its shareholders and with such care, including reasonable inquiry, as an ordinarily prudent person in a like position would use under similar circumstances.",
+    "sections": [
+      {
+        "sectionRef": "309",
+        "content": "A director shall perform the duties of a director in good faith, in a manner such director believes to be in the best interests of the corporation and its shareholders and with such care, including reasonable inquiry, as an ordinarily prudent person in a like position would use under similar circumstances."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "director_fiduciary_duties",
+      "sourceOwner": "California Legislative Information"
+    }
+  },
+  {
+    "title": "Cal. Evid. Code § 352 — Discretion of court to exclude evidence",
+    "shortTitle": "Cal. Evid. Code § 352",
+    "authorityType": "statute",
+    "jurisdiction": "California",
+    "authorityState": "CA",
+    "citation": "Cal. Evid. Code § 352",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ca-evid-352",
+    "canonicalSourceUrl": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=352.&lawCode=EVID",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CA",
+        "label": "Evidence Code"
+      },
+      {
+        "level": "section",
+        "ref": "352",
+        "label": "Discretion to exclude"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence",
+      "civil"
+    ],
+    "content": "Cal. Evid. Code § 352\n\n352. The court in its discretion may exclude evidence if its probative value is substantially outweighed by the probability that its admission will (a) necessitate undue consumption of time or (b) create substantial danger of undue prejudice, of confusing the issues, or of misleading the jury.",
+    "sections": [
+      {
+        "sectionRef": "352",
+        "content": "The court in its discretion may exclude evidence if its probative value is substantially outweighed by the probability that its admission will necessitate undue consumption of time or create substantial danger of undue prejudice, of confusing the issues, or of misleading the jury."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "evidence_exclusion",
+      "sourceOwner": "California Legislative Information"
+    }
+  },
+  {
+    "title": "Cal. Com. Code § 2314 — Implied warranty: merchantability; usage of trade",
+    "shortTitle": "Cal. Com. Code § 2314",
+    "authorityType": "statute",
+    "jurisdiction": "California",
+    "authorityState": "CA",
+    "citation": "Cal. Com. Code § 2314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ca-ucc-2314",
+    "canonicalSourceUrl": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=2314.&lawCode=COM",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CA",
+        "label": "Commercial Code"
+      },
+      {
+        "level": "section",
+        "ref": "2314",
+        "label": "Implied warranty of merchantability"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "contract",
+      "commercial"
+    ],
+    "content": "Cal. Com. Code § 2314\n\n2314. (1) Unless excluded or modified (Section 2316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind. Under this section the serving for value of food or drink to be consumed either on the premises or elsewhere is a sale.\n\n(2) Goods to be merchantable must be at least such as\n\n(a) Pass without objection in the trade under the contract description; and\n\n(b) In the case of fungible goods, are of fair average quality within the description; and\n\n(c) Are fit for the ordinary purposes for which such goods are used; and\n\n(d) Run, within the variations permitted by the agreement, of even kind, quality and quantity within each unit and among all units involved; and\n\n(e) Are adequately contained, packaged, and labeled as the agreement may require; and\n\n(f) Conform to the promises or affirmations of fact made on the container or label if any.",
+    "sections": [
+      {
+        "sectionRef": "2314",
+        "content": "Unless excluded or modified, a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind. Goods to be merchantable must be fit for the ordinary purposes for which such goods are used."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "California Legislative Information"
+    }
+  },
+  {
+    "title": "Cal. Lab. Code § 1194 — Action to recover minimum wage, overtime compensation, etc.",
+    "shortTitle": "Cal. Lab. Code § 1194",
+    "authorityType": "statute",
+    "jurisdiction": "California",
+    "authorityState": "CA",
+    "citation": "Cal. Lab. Code § 1194",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ca-labor-1194",
+    "canonicalSourceUrl": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1194.&lawCode=LAB",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CA",
+        "label": "Labor Code"
+      },
+      {
+        "level": "section",
+        "ref": "1194",
+        "label": "Wage recovery action"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment"
+    ],
+    "content": "Cal. Lab. Code § 1194\n\n1194. (a) Notwithstanding any agreement to work for a lesser wage, any employee receiving less than the legal minimum wage or the legal overtime compensation applicable to the employee is entitled to recover in a civil action the unpaid balance of the full amount of this minimum wage or overtime compensation, including interest thereon, reasonable attorney's fees, and costs of suit.",
+    "sections": [
+      {
+        "sectionRef": "1194",
+        "content": "Notwithstanding any agreement to work for a lesser wage, any employee receiving less than the legal minimum wage or the legal overtime compensation applicable to the employee is entitled to recover in a civil action the unpaid balance of the full amount of this minimum wage or overtime compensation, including interest thereon, reasonable attorney's fees, and costs of suit."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "wage_recovery",
+      "sourceOwner": "California Legislative Information"
+    }
+  },
+  {
+    "title": "8 Del. C. § 141 — Board of directors; powers; number, qualifications, terms and quorum; committees; classes of directors; nonstock corporations; reliance upon books; action without meeting; etc.",
+    "shortTitle": "8 Del. C. § 141",
+    "authorityType": "statute",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "8 Del. C. § 141",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "de-8-del-c-141",
+    "canonicalSourceUrl": "https://delcode.delaware.gov/title8/c001/sc04/index.html",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "DE",
+        "label": "Delaware General Corporation Law"
+      },
+      {
+        "level": "section",
+        "ref": "141",
+        "label": "Board of directors"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "corporations"
+    ],
+    "content": "8 Del. C. § 141\n\n§ 141. Board of directors; powers; number, qualifications, terms and quorum; committees; classes of directors; nonstock corporations; reliance upon books; action without meeting; removal.\n\n(a) The business and affairs of every corporation organized under this chapter shall be managed by or under the direction of a board of directors, except as may be otherwise provided in this chapter or in its certificate of incorporation. If any such provision is made in the certificate of incorporation, the powers and duties conferred or imposed upon the board of directors by this chapter shall be exercised or performed to such extent and by such person or persons as shall be provided in the certificate of incorporation.",
+    "sections": [
+      {
+        "sectionRef": "141",
+        "content": "The business and affairs of every corporation organized under this chapter shall be managed by or under the direction of a board of directors, except as may be otherwise provided in this chapter or in its certificate of incorporation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "dgcl_board",
+      "sourceOwner": "Delaware General Assembly"
+    }
+  },
+  {
+    "title": "8 Del. C. § 102 — Contents of certificate of incorporation",
+    "shortTitle": "8 Del. C. § 102",
+    "authorityType": "statute",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "8 Del. C. § 102",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "de-8-del-c-102",
+    "canonicalSourceUrl": "https://delcode.delaware.gov/title8/c001/sc01/index.html",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "DE",
+        "label": "Delaware General Corporation Law"
+      },
+      {
+        "level": "section",
+        "ref": "102",
+        "label": "Certificate of incorporation"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "corporations"
+    ],
+    "content": "8 Del. C. § 102\n\n§ 102. Contents of certificate of incorporation.\n\n(a) The certificate of incorporation shall set forth:\n\n(1) The name of the corporation, which shall contain 1 of the words \"association,\" \"company,\" \"corporation,\" \"club,\" \"foundation,\" \"fund,\" \"incorporated,\" \"institute,\" \"society,\" \"union,\" \"syndicate,\" or \"limited,\" or 1 of the abbreviations \"co.,\" \"corp.,\" \"inc.,\" \"ltd.,\" or words or abbreviations of like import in other languages, provided that such corporation organized under this chapter shall not include the word \"trust,\" \"bank,\" or \"insurance\" in its name except as permitted by the Commissioner of Financial Institutions or the Insurance Commissioner;\n\n(3) The nature of the business or purposes to be conducted or promoted. It shall be sufficient to state, either alone or with other businesses or purposes, that the purpose of the corporation is to engage in any lawful act or activity for which corporations may be organized under the General Corporation Law of Delaware.",
+    "sections": [
+      {
+        "sectionRef": "102",
+        "content": "The certificate of incorporation shall set forth the name of the corporation and the nature of the business or purposes to be conducted or promoted. It shall be sufficient to state that the purpose of the corporation is to engage in any lawful act or activity for which corporations may be organized under the DGCL."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "dgcl_certificate",
+      "sourceOwner": "Delaware General Assembly"
+    }
+  },
+  {
+    "title": "6 Del. C. § 2-314 — Implied warranty: merchantability; usage of trade",
+    "shortTitle": "6 Del. C. § 2-314",
+    "authorityType": "statute",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "6 Del. C. § 2-314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "de-6-del-c-2-314",
+    "canonicalSourceUrl": "https://delcode.delaware.gov/title6/c002/sc03/index.html",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "DE",
+        "label": "Uniform Commercial Code"
+      },
+      {
+        "level": "section",
+        "ref": "2-314",
+        "label": "Implied warranty of merchantability"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "contract",
+      "commercial"
+    ],
+    "content": "6 Del. C. § 2-314\n\n§ 2-314. Implied warranty: merchantability; usage of trade.\n\n(1) Unless excluded or modified (Section 2-316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind. Under this section the serving for value of food or drink to be consumed either on the premises or elsewhere is a sale.\n\n(2) Goods to be merchantable must be at least such as\n\n(a) pass without objection in the trade under the contract description; and\n\n(b) in the case of fungible goods, are of fair average quality within the description; and\n\n(c) are fit for the ordinary purposes for which such goods are used;",
+    "sections": [
+      {
+        "sectionRef": "2-314",
+        "content": "Unless excluded or modified, a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind. Goods to be merchantable must be fit for the ordinary purposes for which such goods are used."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "Delaware General Assembly"
+    }
+  },
+  {
+    "title": "19 Del. C. § 1102 — Minimum wage rate",
+    "shortTitle": "19 Del. C. § 1102",
+    "authorityType": "statute",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "19 Del. C. § 1102",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "de-19-del-c-1102",
+    "canonicalSourceUrl": "https://delcode.delaware.gov/title19/c011/index.html",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "DE",
+        "label": "Labor"
+      },
+      {
+        "level": "section",
+        "ref": "1102",
+        "label": "Minimum wage rate"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment"
+    ],
+    "content": "19 Del. C. § 1102\n\n§ 1102. Minimum wage rate.\n\n(a) Except as may otherwise be provided under this chapter, every employer shall pay to each employee in any occupation wages of a rate not less than the rates set forth in this section.\n\n(b) Upon the effective date of this subsection, the minimum wage shall be as follows:\n\n(1) Beginning January 1, 2022, the minimum wage shall be not less than $10.50 per hour;\n\n(2) Beginning January 1, 2023, the minimum wage shall be not less than $11.75 per hour;\n\n(3) Beginning January 1, 2024, the minimum wage shall be not less than $13.25 per hour;\n\n(4) Beginning January 1, 2025, the minimum wage shall be not less than $15.00 per hour.",
+    "sections": [
+      {
+        "sectionRef": "1102",
+        "content": "Except as may otherwise be provided under this chapter, every employer shall pay to each employee in any occupation wages of a rate not less than the rates set forth in this section."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Delaware General Assembly"
+    }
+  },
+  {
+    "title": "Fla. Stat. § 607.0830 — General standards for directors",
+    "shortTitle": "Fla. Stat. § 607.0830",
+    "authorityType": "statute",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. Stat. § 607.0830",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "fl-stat-607-0830",
+    "canonicalSourceUrl": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0600-0699/0607/Sections/0607.0830.html",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "FL",
+        "label": "Florida Business Corporation Act"
+      },
+      {
+        "level": "section",
+        "ref": "607.0830",
+        "label": "Director standards"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "corporations"
+    ],
+    "content": "Fla. Stat. § 607.0830\n\n607.0830 General standards for directors.—\n\n(1) A director shall discharge his or her duties as a director, including his or her duties as a member of a committee:\n\n(a) In good faith;\n\n(b) With the care an ordinarily prudent person in a like position would exercise under similar circumstances; and\n\n(c) In a manner he or she reasonably believes to be in the best interests of the corporation.",
+    "sections": [
+      {
+        "sectionRef": "607.0830",
+        "content": "A director shall discharge his or her duties as a director in good faith; with the care an ordinarily prudent person in a like position would exercise under similar circumstances; and in a manner he or she reasonably believes to be in the best interests of the corporation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "Florida Legislature"
+    }
+  },
+  {
+    "title": "Fla. Stat. § 672.314 — Implied warranty; merchantability; usage of trade",
+    "shortTitle": "Fla. Stat. § 672.314",
+    "authorityType": "statute",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. Stat. § 672.314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "fl-stat-672-314",
+    "canonicalSourceUrl": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0600-0699/0672/Sections/0672.314.html",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "FL",
+        "label": "Uniform Commercial Code — Sales"
+      },
+      {
+        "level": "section",
+        "ref": "672.314",
+        "label": "Implied warranty of merchantability"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "contract",
+      "commercial"
+    ],
+    "content": "Fla. Stat. § 672.314\n\n672.314 Implied warranty; merchantability; usage of trade.—\n\n(1) Unless excluded or modified (s. 672.316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind. Under this section the serving for value of food or drink to be consumed either on the premises or elsewhere is a sale.\n\n(2) Goods to be merchantable must be at least such as:\n\n(a) Pass without objection in the trade under the contract description; and\n\n(c) Are fit for the ordinary purposes for which such goods are used;",
+    "sections": [
+      {
+        "sectionRef": "672.314",
+        "content": "Unless excluded or modified, a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "Florida Legislature"
+    }
+  },
+  {
+    "title": "Fla. Stat. § 90.403 — Exclusion on grounds of prejudice or confusion",
+    "shortTitle": "Fla. Stat. § 90.403",
+    "authorityType": "statute",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. Stat. § 90.403",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "fl-stat-90-403",
+    "canonicalSourceUrl": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0090/Sections/0090.403.html",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "FL",
+        "label": "Evidence Code"
+      },
+      {
+        "level": "section",
+        "ref": "90.403",
+        "label": "Exclusion for prejudice"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence",
+      "civil"
+    ],
+    "content": "Fla. Stat. § 90.403\n\n90.403 Exclusion on grounds of prejudice or confusion.—Relevant evidence is inadmissible if its probative value is substantially outweighed by the danger of unfair prejudice, confusion of issues, misleading the jury, or needless presentation of cumulative evidence. This section shall not be construed to mean that evidence of the existence of available third-party benefits is inadmissible.",
+    "sections": [
+      {
+        "sectionRef": "90.403",
+        "content": "Relevant evidence is inadmissible if its probative value is substantially outweighed by the danger of unfair prejudice, confusion of issues, misleading the jury, or needless presentation of cumulative evidence."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "evidence_exclusion",
+      "sourceOwner": "Florida Legislature"
+    }
+  },
+  {
+    "title": "Fla. Stat. § 448.08 — Attorney's fees for successful litigants in actions for unpaid wages",
+    "shortTitle": "Fla. Stat. § 448.08",
+    "authorityType": "statute",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. Stat. § 448.08",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "fl-stat-448-08",
+    "canonicalSourceUrl": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0400-0499/0448/Sections/0448.08.html",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "FL",
+        "label": "General Labor Regulations"
+      },
+      {
+        "level": "section",
+        "ref": "448.08",
+        "label": "Attorney's fees for unpaid wages"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment"
+    ],
+    "content": "Fla. Stat. § 448.08\n\n448.08 Attorney's fees for successful litigants in actions for unpaid wages.—The court may award to the prevailing party in an action for unpaid wages costs of the action and a reasonable attorney's fee.",
+    "sections": [
+      {
+        "sectionRef": "448.08",
+        "content": "The court may award to the prevailing party in an action for unpaid wages costs of the action and a reasonable attorney's fee."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "wage_claims",
+      "sourceOwner": "Florida Legislature"
+    }
+  },
+  {
+    "title": "805 ILCS 5/8.85 — Director's standard of care",
+    "shortTitle": "805 ILCS 5/8.85",
+    "authorityType": "statute",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "805 ILCS 5/8.85",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "il-805-ilcs-5-8-85",
+    "canonicalSourceUrl": "https://www.ilga.gov/legislation/ilcs/ilcs4.asp?DocName=080500050HArt%2E+8&ActID=2273&ChapterID=65",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "IL",
+        "label": "Business Corporation Act"
+      },
+      {
+        "level": "section",
+        "ref": "8.85",
+        "label": "Director standard of care"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "corporations"
+    ],
+    "content": "805 ILCS 5/8.85\n\nSec. 8.85. Director's standard of care. A director of a corporation shall discharge his or her duties as a director, including his or her duties as a member of any committee of the board upon which he or she may serve, in good faith, with the care an ordinarily prudent person in a like position would exercise under similar circumstances, and in a manner he or she reasonably believes to be in the best interests of the corporation.",
+    "sections": [
+      {
+        "sectionRef": "8.85",
+        "content": "A director of a corporation shall discharge his or her duties as a director in good faith, with the care an ordinarily prudent person in a like position would exercise under similar circumstances, and in a manner he or she reasonably believes to be in the best interests of the corporation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "Illinois General Assembly"
+    }
+  },
+  {
+    "title": "810 ILCS 5/2-314 — Implied Warranty: Merchantability; Usage of Trade",
+    "shortTitle": "810 ILCS 5/2-314",
+    "authorityType": "statute",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "810 ILCS 5/2-314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "il-810-ilcs-5-2-314",
+    "canonicalSourceUrl": "https://www.ilga.gov/legislation/ilcs/ilcs4.asp?DocName=081000050HArt%2E+2&ActID=2301&ChapterID=67",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "IL",
+        "label": "Uniform Commercial Code"
+      },
+      {
+        "level": "section",
+        "ref": "2-314",
+        "label": "Implied warranty of merchantability"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "contract",
+      "commercial"
+    ],
+    "content": "810 ILCS 5/2-314\n\nSec. 2-314. Implied Warranty: Merchantability; Usage of Trade.\n\n(1) Unless excluded or modified (Section 2-316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind. Under this Section the serving for value of food or drink to be consumed either on the premises or elsewhere is a sale.\n\n(2) Goods to be merchantable must be at least such as\n\n(a) pass without objection in the trade under the contract description; and\n\n(c) are fit for the ordinary purposes for which such goods are used;",
+    "sections": [
+      {
+        "sectionRef": "2-314",
+        "content": "Unless excluded or modified, a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "Illinois General Assembly"
+    }
+  },
+  {
+    "title": "820 ILCS 115/4 — Timing of wage payments",
+    "shortTitle": "820 ILCS 115/4",
+    "authorityType": "statute",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "820 ILCS 115/4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "il-820-ilcs-115-4",
+    "canonicalSourceUrl": "https://www.ilga.gov/legislation/ilcs/ilcs3.asp?ActID=2402&ChapterID=68",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "IL",
+        "label": "Illinois Wage Payment and Collection Act"
+      },
+      {
+        "level": "section",
+        "ref": "4",
+        "label": "Wage payment timing"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment"
+    ],
+    "content": "820 ILCS 115/4\n\nSec. 4. Every employer shall be deemed to have established the following as a condition of employment: to pay every employee all wages earned during the semi-monthly or bi-weekly pay period, or as otherwise provided by law, no later than 13 days after the end of the pay period in which such wages were earned, unless a different arrangement is made by written contract between the employer and employee.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "Every employer shall pay every employee all wages earned during the semi-monthly or bi-weekly pay period no later than 13 days after the end of the pay period in which such wages were earned, unless a different arrangement is made by written contract."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "wage_payment",
+      "sourceOwner": "Illinois General Assembly"
+    }
+  },
+  {
+    "title": "735 ILCS 5/2-615 — Motions with respect to pleadings",
+    "shortTitle": "735 ILCS 5/2-615",
+    "authorityType": "statute",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "735 ILCS 5/2-615",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "il-735-ilcs-5-2-615",
+    "canonicalSourceUrl": "https://www.ilga.gov/legislation/ilcs/ilcs4.asp?DocName=073500050HArt%2E+II&ActID=2017&ChapterID=56",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "IL",
+        "label": "Code of Civil Procedure"
+      },
+      {
+        "level": "section",
+        "ref": "2-615",
+        "label": "Motions with respect to pleadings"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "735 ILCS 5/2-615\n\nSec. 2-615. Motions with respect to pleadings.\n\n(a) All objections to pleadings shall be raised by motion. The motion shall point out specifically the defects complained of, and shall ask for appropriate relief, such as: that a pleading or portion thereof be stricken because substantially insufficient in law, or that the action be dismissed, or that a pleading be made more definite and certain in a specified particular, or that designated immaterial matter be stricken out, or that necessary parties be added, or that designated misjoined parties be dismissed, and so forth.",
+    "sections": [
+      {
+        "sectionRef": "2-615",
+        "content": "All objections to pleadings shall be raised by motion. The motion shall point out specifically the defects complained of, and shall ask for appropriate relief, such as that a pleading or portion thereof be stricken because substantially insufficient in law, or that the action be dismissed."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "civil_procedure_pleadings",
+      "sourceOwner": "Illinois General Assembly"
+    }
+  },
+  {
+    "title": "Mass. Gen. Laws ch. 156D, § 8.30 — Standards of conduct for directors",
+    "shortTitle": "M.G.L. c. 156D, § 8.30",
+    "authorityType": "statute",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "Mass. Gen. Laws ch. 156D, § 8.30",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-mgl-156d-8-30",
+    "canonicalSourceUrl": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXXII/Chapter156D/Section8.30",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MA",
+        "label": "Business Corporation Act"
+      },
+      {
+        "level": "section",
+        "ref": "8.30",
+        "label": "Director standards of conduct"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "corporations"
+    ],
+    "content": "Mass. Gen. Laws ch. 156D, § 8.30\n\nSection 8.30. Standards of conduct for directors\n\n(a) Each member of the board of directors, when discharging the duties of a director, shall act: (1) in good faith; and (2) in a manner the director reasonably believes to be in the best interests of the corporation.\n\n(b) The members of the board of directors or a committee of the board, when becoming informed in connection with their decision-making function or in connection with their oversight function, shall discharge their duties with the care that a person in a like position would reasonably believe appropriate under similar circumstances.",
+    "sections": [
+      {
+        "sectionRef": "8.30",
+        "content": "Each member of the board of directors, when discharging the duties of a director, shall act in good faith and in a manner the director reasonably believes to be in the best interests of the corporation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "Massachusetts General Court"
+    }
+  },
+  {
+    "title": "Mass. Gen. Laws ch. 106, § 2-314 — Implied Warranty: Merchantability; Usage of Trade",
+    "shortTitle": "M.G.L. c. 106, § 2-314",
+    "authorityType": "statute",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "Mass. Gen. Laws ch. 106, § 2-314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-mgl-106-2-314",
+    "canonicalSourceUrl": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXV/Chapter106/Article2/Section2-314",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MA",
+        "label": "Uniform Commercial Code"
+      },
+      {
+        "level": "section",
+        "ref": "2-314",
+        "label": "Implied warranty of merchantability"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "contract",
+      "commercial"
+    ],
+    "content": "Mass. Gen. Laws ch. 106, § 2-314\n\nSection 2-314. Implied Warranty: Merchantability; Usage of Trade\n\n(1) Unless excluded or modified (section 2-316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind. Under this section the serving for value of food or drink to be consumed either on the premises or elsewhere is a sale.\n\n(2) Goods to be merchantable must be at least such as\n\n(a) pass without objection in the trade under the contract description; and\n\n(c) are fit for the ordinary purposes for which such goods are used;",
+    "sections": [
+      {
+        "sectionRef": "2-314",
+        "content": "Unless excluded or modified, a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "Massachusetts General Court"
+    }
+  },
+  {
+    "title": "Mass. Gen. Laws ch. 151, § 1A — Overtime pay; excluded employments",
+    "shortTitle": "M.G.L. c. 151, § 1A",
+    "authorityType": "statute",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "Mass. Gen. Laws ch. 151, § 1A",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-mgl-151-1a",
+    "canonicalSourceUrl": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXXI/Chapter151/Section1A",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MA",
+        "label": "Minimum Fair Wages"
+      },
+      {
+        "level": "section",
+        "ref": "1A",
+        "label": "Overtime pay"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment"
+    ],
+    "content": "Mass. Gen. Laws ch. 151, § 1A\n\nSection 1A. Except as otherwise provided in this section, no employer in the commonwealth shall employ any of his employees in an occupation, as defined in section two, for a work week longer than forty hours, unless such employee receives compensation for his employment in excess of forty hours at a rate not less than one and one half times the regular rate at which he is employed.",
+    "sections": [
+      {
+        "sectionRef": "1A",
+        "content": "No employer in the commonwealth shall employ any of his employees for a work week longer than forty hours, unless such employee receives compensation for employment in excess of forty hours at a rate not less than one and one half times the regular rate at which he is employed."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "overtime",
+      "sourceOwner": "Massachusetts General Court"
+    }
+  },
+  {
+    "title": "Mass. Gen. Laws ch. 260, § 2 — Contract actions; limitations",
+    "shortTitle": "M.G.L. c. 260, § 2",
+    "authorityType": "statute",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "Mass. Gen. Laws ch. 260, § 2",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-mgl-260-2",
+    "canonicalSourceUrl": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleV/Chapter260/Section2",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MA",
+        "label": "Limitation of Actions"
+      },
+      {
+        "level": "section",
+        "ref": "2",
+        "label": "Contract limitations"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "contract"
+    ],
+    "content": "Mass. Gen. Laws ch. 260, § 2\n\nSection 2. Actions of contract, other than those to recover for personal injuries, founded upon contracts or liabilities, express or implied, except actions limited by section one or actions upon judgments or decrees of courts of record of the United States or of this or of any other state of the United States, shall, except as otherwise provided, be commenced only within six years next after the cause of action accrues.",
+    "sections": [
+      {
+        "sectionRef": "2",
+        "content": "Actions of contract, other than those to recover for personal injuries, founded upon contracts or liabilities, express or implied, shall, except as otherwise provided, be commenced only within six years next after the cause of action accrues."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "statute_of_limitations",
+      "sourceOwner": "Massachusetts General Court"
+    }
+  },
+  {
+    "title": "N.J. Stat. Ann. § 14A:6-1 — Board of directors",
+    "shortTitle": "N.J.S.A. § 14A:6-1",
+    "authorityType": "statute",
+    "jurisdiction": "New Jersey",
+    "authorityState": "NJ",
+    "citation": "N.J. Stat. Ann. § 14A:6-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nj-14a-6-1",
+    "canonicalSourceUrl": "https://www.njleg.state.nj.us/statutes/statute.aspx?sp=14A&sec=6&pl=1",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NJ",
+        "label": "New Jersey Business Corporation Act"
+      },
+      {
+        "level": "section",
+        "ref": "14A:6-1",
+        "label": "Board of directors"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "corporations"
+    ],
+    "content": "N.J. Stat. Ann. § 14A:6-1\n\n14A:6-1. Board of directors.\n\n(1) The business and affairs of a corporation shall be managed by or under the direction of its board, except as in this act or in its certificate of incorporation otherwise provided.\n\n(2) Directors shall be at least 18 years of age and need not be United States citizens or residents of this State or shareholders of the corporation unless the certificate of incorporation or by-laws so require.",
+    "sections": [
+      {
+        "sectionRef": "14A:6-1",
+        "content": "The business and affairs of a corporation shall be managed by or under the direction of its board, except as in this act or in its certificate of incorporation otherwise provided."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "board_of_directors",
+      "sourceOwner": "New Jersey Legislature"
+    }
+  },
+  {
+    "title": "N.J. Stat. Ann. § 12A:2-314 — Implied warranty: merchantability; usage of trade",
+    "shortTitle": "N.J.S.A. § 12A:2-314",
+    "authorityType": "statute",
+    "jurisdiction": "New Jersey",
+    "authorityState": "NJ",
+    "citation": "N.J. Stat. Ann. § 12A:2-314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nj-12a-2-314",
+    "canonicalSourceUrl": "https://www.njleg.state.nj.us/statutes/statute.aspx?sp=12A&sec=2&pl=314",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NJ",
+        "label": "Uniform Commercial Code"
+      },
+      {
+        "level": "section",
+        "ref": "12A:2-314",
+        "label": "Implied warranty of merchantability"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "contract",
+      "commercial"
+    ],
+    "content": "N.J. Stat. Ann. § 12A:2-314\n\n12A:2-314. Implied warranty: merchantability; usage of trade.\n\n(1) Unless excluded or modified (12A:2-316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind. Under this section the serving for value of food or drink to be consumed either on the premises or elsewhere is a sale.\n\n(2) Goods to be merchantable must be at least such as\n\n(a) pass without objection in the trade under the contract description; and\n\n(c) are fit for the ordinary purposes for which such goods are used;",
+    "sections": [
+      {
+        "sectionRef": "12A:2-314",
+        "content": "Unless excluded or modified, a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "New Jersey Legislature"
+    }
+  },
+  {
+    "title": "N.J. Stat. Ann. § 34:11-4.2 — Time and mode of payment; pay periods",
+    "shortTitle": "N.J.S.A. § 34:11-4.2",
+    "authorityType": "statute",
+    "jurisdiction": "New Jersey",
+    "authorityState": "NJ",
+    "citation": "N.J. Stat. Ann. § 34:11-4.2",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nj-34-11-4-2",
+    "canonicalSourceUrl": "https://www.njleg.state.nj.us/statutes/statute.aspx?sp=34&sec=11&pl=4.2",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NJ",
+        "label": "Wage Payment Law"
+      },
+      {
+        "level": "section",
+        "ref": "34:11-4.2",
+        "label": "Time and mode of payment"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment"
+    ],
+    "content": "N.J. Stat. Ann. § 34:11-4.2\n\n34:11-4.2. Time and mode of payment; pay periods.\n\nExcept as otherwise provided by law, every employer shall pay the full amount of wages due to his employees at least twice during each calendar month, on regular paydays designated in advance by the employer.",
+    "sections": [
+      {
+        "sectionRef": "34:11-4.2",
+        "content": "Except as otherwise provided by law, every employer shall pay the full amount of wages due to his employees at least twice during each calendar month, on regular paydays designated in advance by the employer."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "wage_payment",
+      "sourceOwner": "New Jersey Legislature"
+    }
+  },
+  {
+    "title": "N.J. Stat. Ann. § 2A:84A-16 — Relevancy",
+    "shortTitle": "N.J.S.A. § 2A:84A-16",
+    "authorityType": "statute",
+    "jurisdiction": "New Jersey",
+    "authorityState": "NJ",
+    "citation": "N.J. Stat. Ann. § 2A:84A-16",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "nj-2a-84a-16",
+    "canonicalSourceUrl": "https://www.njleg.state.nj.us/statutes/statute.aspx?sp=2A&sec=84A&pl=16",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NJ",
+        "label": "Rules of Evidence"
+      },
+      {
+        "level": "section",
+        "ref": "2A:84A-16",
+        "label": "Relevancy"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "evidence",
+      "civil"
+    ],
+    "content": "N.J. Stat. Ann. § 2A:84A-16\n\n2A:84A-16. Relevancy.\n\nExcept as otherwise provided in these rules or by other law, relevant evidence is admissible. Relevant evidence means evidence having any tendency in reason to prove any material fact.",
+    "sections": [
+      {
+        "sectionRef": "2A:84A-16",
+        "content": "Except as otherwise provided in these rules or by other law, relevant evidence is admissible. Relevant evidence means evidence having any tendency in reason to prove any material fact."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "New Jersey Legislature"
+    }
+  },
+  {
+    "title": "N.Y. Bus. Corp. Law § 717 — Duty of directors",
+    "shortTitle": "N.Y. BCL § 717",
+    "authorityType": "statute",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "N.Y. Bus. Corp. Law § 717",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-bcl-717",
+    "canonicalSourceUrl": "https://www.nysenate.gov/legislation/laws/BSC/717",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NY",
+        "label": "Business Corporation Law"
+      },
+      {
+        "level": "section",
+        "ref": "717",
+        "label": "Duty of directors"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "corporations"
+    ],
+    "content": "N.Y. Bus. Corp. Law § 717\n\n§ 717. Duty of directors.\n\n(a) A director shall perform his duties as a director, including his duties as a member of any committee of the board upon which he may serve, in good faith and with that degree of care which an ordinarily prudent person in a like position would use under similar circumstances.",
+    "sections": [
+      {
+        "sectionRef": "717",
+        "content": "A director shall perform his duties as a director, including his duties as a member of any committee of the board upon which he may serve, in good faith and with that degree of care which an ordinarily prudent person in a like position would use under similar circumstances."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "New York State Senate"
+    }
+  },
+  {
+    "title": "N.Y. U.C.C. Law § 2-314 — Implied Warranty: Merchantability; Usage of Trade",
+    "shortTitle": "N.Y. U.C.C. § 2-314",
+    "authorityType": "statute",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "N.Y. U.C.C. Law § 2-314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-ucc-2-314",
+    "canonicalSourceUrl": "https://www.nysenate.gov/legislation/laws/UCC/2-314",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NY",
+        "label": "Uniform Commercial Code"
+      },
+      {
+        "level": "section",
+        "ref": "2-314",
+        "label": "Implied warranty of merchantability"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "contract",
+      "commercial"
+    ],
+    "content": "N.Y. U.C.C. Law § 2-314\n\n§ 2-314. Implied Warranty: Merchantability; Usage of Trade.\n\n(1) Unless excluded or modified (Section 2-316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind. Under this section the serving for value of food or drink to be consumed either on the premises or elsewhere is a sale.\n\n(2) Goods to be merchantable must be at least such as\n\n(a) pass without objection in the trade under the contract description; and\n\n(c) are fit for the ordinary purposes for which such goods are used;",
+    "sections": [
+      {
+        "sectionRef": "2-314",
+        "content": "Unless excluded or modified, a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "New York State Senate"
+    }
+  },
+  {
+    "title": "N.Y. Lab. Law § 193 — Deductions from wages",
+    "shortTitle": "N.Y. Lab. Law § 193",
+    "authorityType": "statute",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "N.Y. Lab. Law § 193",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-labor-193",
+    "canonicalSourceUrl": "https://www.nysenate.gov/legislation/laws/LAB/193",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NY",
+        "label": "Labor Law"
+      },
+      {
+        "level": "section",
+        "ref": "193",
+        "label": "Deductions from wages"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment"
+    ],
+    "content": "N.Y. Lab. Law § 193\n\n§ 193. Deductions from wages.\n\n1. No employer shall make any deduction from the wages of an employee, except deductions which:\n\na. are made in accordance with the provisions of any law or any rule or regulation issued by any governmental agency including regulations under the Internal Revenue Code, Social Security Act, or other federal, state or local tax laws; or\nb. are expressly authorized in writing by the employee and are for the benefit of the employee, provided that such authorization is voluntary and only given following receipt by the employee of written notice of all terms and conditions of the deduction and the details of the manner in which deductions shall be made.",
+    "sections": [
+      {
+        "sectionRef": "193",
+        "content": "No employer shall make any deduction from the wages of an employee, except deductions which are made in accordance with law or regulation, or are expressly authorized in writing by the employee and are for the benefit of the employee."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "wage_deductions",
+      "sourceOwner": "New York State Senate"
+    }
+  },
+  {
+    "title": "N.Y. CPLR 3211 — Motion to dismiss",
+    "shortTitle": "N.Y. CPLR 3211",
+    "authorityType": "statute",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "N.Y. CPLR 3211",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-cplr-3211",
+    "canonicalSourceUrl": "https://www.nysenate.gov/legislation/laws/CVP/3211",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NY",
+        "label": "Civil Practice Law and Rules"
+      },
+      {
+        "level": "section",
+        "ref": "3211",
+        "label": "Motion to dismiss"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "N.Y. CPLR 3211\n\n§ 3211. Motion to dismiss.\n\n(a) Motion to dismiss cause of action. A party may move for judgment dismissing one or more causes of action asserted against him on the ground that:\n\n1. a defense is founded upon documentary evidence; or\n\n2. the court has not jurisdiction of the subject matter of the cause of action; or\n\n5. the cause of action may not be maintained because of arbitration and award, collateral estoppel, discharge in bankruptcy, infancy or other disability of the moving party, payment, release, res judicata, statute of limitations, or statute of frauds; or\n\n7. the pleading fails to state a cause of action;",
+    "sections": [
+      {
+        "sectionRef": "3211",
+        "content": "A party may move for judgment dismissing one or more causes of action asserted against him on grounds including lack of subject-matter jurisdiction, statute of limitations, and failure to state a cause of action."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "motion_to_dismiss",
+      "sourceOwner": "New York State Senate"
+    }
+  },
+  {
+    "title": "15 Pa.C.S. § 1712 — Standard of care and justifiable reliance",
+    "shortTitle": "15 Pa.C.S. § 1712",
+    "authorityType": "statute",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "15 Pa.C.S. § 1712",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "pa-15-pac-s-1712",
+    "canonicalSourceUrl": "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=15&div=0&chpt=17&sctn=12&subsctn=0",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "PA",
+        "label": "Associations Code"
+      },
+      {
+        "level": "section",
+        "ref": "1712",
+        "label": "Director standard of care"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "corporations"
+    ],
+    "content": "15 Pa.C.S. § 1712\n\n§ 1712. Standard of care and justifiable reliance.\n\n(a) Directors.--A director of a business corporation shall stand in a fiduciary relation to the corporation and shall perform his duties as a director, including his duties as a member of any committee of the board upon which he may serve, in good faith, in a manner he reasonably believes to be in the best interests of the corporation and with such care, including reasonable inquiry, skill and diligence, as a person of ordinary prudence would use under similar circumstances.",
+    "sections": [
+      {
+        "sectionRef": "1712",
+        "content": "A director of a business corporation shall stand in a fiduciary relation to the corporation and shall perform his duties as a director in good faith, in a manner he reasonably believes to be in the best interests of the corporation and with such care, including reasonable inquiry, skill and diligence, as a person of ordinary prudence would use under similar circumstances."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "Pennsylvania General Assembly"
+    }
+  },
+  {
+    "title": "13 Pa.C.S. § 2314 — Implied warranty: merchantability; usage of trade",
+    "shortTitle": "13 Pa.C.S. § 2314",
+    "authorityType": "statute",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "13 Pa.C.S. § 2314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "pa-13-pac-s-2314",
+    "canonicalSourceUrl": "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=13&div=0&chpt=23&sctn=14&subsctn=0",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "PA",
+        "label": "Uniform Commercial Code"
+      },
+      {
+        "level": "section",
+        "ref": "2314",
+        "label": "Implied warranty of merchantability"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "contract",
+      "commercial"
+    ],
+    "content": "13 Pa.C.S. § 2314\n\n§ 2314. Implied warranty: merchantability; usage of trade.\n\n(a) Sale by merchant.--Unless excluded or modified (section 2316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind. Under this section the serving for value of food or drink to be consumed either on the premises or elsewhere is a sale.\n\n(b) Merchantability standards for goods.--Goods to be merchantable must be at least such as:\n\n(1) pass without objection in the trade under the contract description;\n\n(3) are fit for the ordinary purposes for which such goods are used;",
+    "sections": [
+      {
+        "sectionRef": "2314",
+        "content": "Unless excluded or modified, a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "Pennsylvania General Assembly"
+    }
+  },
+  {
+    "title": "43 P.S. § 260.3 — Regular payday; payment of wages",
+    "shortTitle": "43 P.S. § 260.3",
+    "authorityType": "statute",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "43 P.S. § 260.3",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "pa-43-ps-260-3",
+    "canonicalSourceUrl": "https://www.legis.state.pa.us/cfdocs/legis/LI/uconsCheck.cfm?txtType=HTM&yr=1961&sessInd=0&smthLwInd=0&act=0329.&chpt=000.&sctn=003.&subsctn=000",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "PA",
+        "label": "Wage Payment and Collection Law"
+      },
+      {
+        "level": "section",
+        "ref": "260.3",
+        "label": "Regular payday"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment"
+    ],
+    "content": "43 P.S. § 260.3\n\n§ 260.3. Regular payday.\n\nEvery employer shall pay all wages, other than fringe benefits and wage supplements, due to his employes on regular paydays designated in advance by the employer. Overtime wages may be paid as late as the next regular payday after the one that would normally apply.",
+    "sections": [
+      {
+        "sectionRef": "260.3",
+        "content": "Every employer shall pay all wages, other than fringe benefits and wage supplements, due to his employes on regular paydays designated in advance by the employer."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "wage_payment",
+      "sourceOwner": "Pennsylvania General Assembly"
+    }
+  },
+  {
+    "title": "42 Pa.C.S. § 5524 — Two year limitation",
+    "shortTitle": "42 Pa.C.S. § 5524",
+    "authorityType": "statute",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "42 Pa.C.S. § 5524",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "pa-42-pac-s-5524",
+    "canonicalSourceUrl": "https://www.legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?txtType=HTM&ttl=42&div=0&chpt=55&sctn=24&subsctn=0",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "PA",
+        "label": "Judiciary and Judicial Procedure"
+      },
+      {
+        "level": "section",
+        "ref": "5524",
+        "label": "Two year limitation"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil"
+    ],
+    "content": "42 Pa.C.S. § 5524\n\n§ 5524. Two year limitation.\n\nThe following actions and proceedings must be commenced within two years:\n\n(1) An action for assault, battery, false imprisonment, false arrest, malicious prosecution or malicious abuse of process.\n\n(2) An action to recover damages for injuries to the person or for the death of an individual caused by the wrongful act or neglect or unlawful violence or negligence of another.\n\n(7) Any other action or proceeding to recover damages for injury to person or property which is founded on negligent, intentional, or otherwise tortious conduct or any other action or proceeding sounding in trespass, including deceit or fraud, except an action or proceeding subject to another limitation specified in this subchapter.",
+    "sections": [
+      {
+        "sectionRef": "5524",
+        "content": "The following actions and proceedings must be commenced within two years: an action for assault, battery, false imprisonment, false arrest, malicious prosecution or malicious abuse of process; and an action to recover damages for injuries to the person or for the death of an individual caused by the wrongful act or neglect of another."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "statute_of_limitations",
+      "sourceOwner": "Pennsylvania General Assembly"
+    }
+  },
+  {
+    "title": "Tex. Bus. Orgs. Code § 21.401 — Management by board of directors",
+    "shortTitle": "Tex. Bus. Orgs. Code § 21.401",
+    "authorityType": "statute",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "Tex. Bus. Orgs. Code § 21.401",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tx-boc-21-401",
+    "canonicalSourceUrl": "https://statutes.capitol.texas.gov/Docs/BO/htm/BO.21.htm",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "TX",
+        "label": "Business Organizations Code"
+      },
+      {
+        "level": "section",
+        "ref": "21.401",
+        "label": "Management by board"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "corporations"
+    ],
+    "content": "Tex. Bus. Orgs. Code § 21.401\n\nSec. 21.401. MANAGEMENT BY BOARD OF DIRECTORS. (a) Except as provided by Section 21.313 or Chapter 3, the business and affairs of a corporation shall be managed by or under the direction of a board of directors.\n\n(b) A director shall discharge the director's duties, including duties as a committee member, in good faith, with ordinary care, and in a manner the director reasonably believes to be in the best interest of the corporation.",
+    "sections": [
+      {
+        "sectionRef": "21.401",
+        "content": "Except as provided by Section 21.313 or Chapter 3, the business and affairs of a corporation shall be managed by or under the direction of a board of directors. A director shall discharge the director's duties in good faith, with ordinary care, and in a manner the director reasonably believes to be in the best interest of the corporation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "Texas Legislature"
+    }
+  },
+  {
+    "title": "Tex. Bus. & Com. Code § 2.313 — Express Warranties by Affirmation, Promise, Description, Sample",
+    "shortTitle": "Tex. Bus. & Com. Code § 2.313",
+    "authorityType": "statute",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "Tex. Bus. & Com. Code § 2.313",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tx-ucc-2-313",
+    "canonicalSourceUrl": "https://statutes.capitol.texas.gov/Docs/BC/htm/BC.2.htm",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "TX",
+        "label": "Business and Commerce Code"
+      },
+      {
+        "level": "section",
+        "ref": "2.313",
+        "label": "Express warranties"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "contract",
+      "commercial"
+    ],
+    "content": "Tex. Bus. & Com. Code § 2.313\n\nSec. 2.313. EXPRESS WARRANTIES BY AFFIRMATION, PROMISE, DESCRIPTION, SAMPLE. (a) Express warranties by the seller are created as follows:\n\n(1) Any affirmation of fact or promise made by the seller to the buyer which relates to the goods and becomes part of the basis of the bargain creates an express warranty that the goods shall conform to the affirmation or promise.\n\n(2) Any description of the goods which is made part of the basis of the bargain creates an express warranty that the goods shall conform to the description.\n\n(3) Any sample or model which is made part of the basis of the bargain creates an express warranty that the whole of the goods shall conform to the sample or model.",
+    "sections": [
+      {
+        "sectionRef": "2.313",
+        "content": "Any affirmation of fact or promise made by the seller to the buyer which relates to the goods and becomes part of the basis of the bargain creates an express warranty that the goods shall conform to the affirmation or promise."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "ucc_express_warranty",
+      "sourceOwner": "Texas Legislature"
+    }
+  },
+  {
+    "title": "Tex. Lab. Code § 61.011 — Payday",
+    "shortTitle": "Tex. Lab. Code § 61.011",
+    "authorityType": "statute",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "Tex. Lab. Code § 61.011",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tx-labor-61-011",
+    "canonicalSourceUrl": "https://statutes.capitol.texas.gov/Docs/LA/htm/LA.61.htm",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "TX",
+        "label": "Labor Code"
+      },
+      {
+        "level": "section",
+        "ref": "61.011",
+        "label": "Payday"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment"
+    ],
+    "content": "Tex. Lab. Code § 61.011\n\nSec. 61.011. PAYDAY. (a) An employer shall pay wages to each employee who is exempt from the overtime pay provisions of the Fair Labor Standards Act of 1938 (29 U.S.C. Section 201 et seq.) at least once a month.\n\n(b) An employer shall pay wages to each other employee at least twice a month.",
+    "sections": [
+      {
+        "sectionRef": "61.011",
+        "content": "An employer shall pay wages to each employee who is exempt from FLSA overtime at least once a month, and shall pay wages to each other employee at least twice a month."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "wage_payment",
+      "sourceOwner": "Texas Legislature"
+    }
+  },
+  {
+    "title": "Tex. Civ. Prac. & Rem. Code § 33.001 — Proportionate Responsibility",
+    "shortTitle": "Tex. CPRC § 33.001",
+    "authorityType": "statute",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "Tex. Civ. Prac. & Rem. Code § 33.001",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "tx-cprc-33-001",
+    "canonicalSourceUrl": "https://statutes.capitol.texas.gov/Docs/CP/htm/CP.33.htm",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "TX",
+        "label": "Civil Practice and Remedies Code"
+      },
+      {
+        "level": "section",
+        "ref": "33.001",
+        "label": "Proportionate responsibility"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "tort"
+    ],
+    "content": "Tex. Civ. Prac. & Rem. Code § 33.001\n\nSec. 33.001. PROPORTIONATE RESPONSIBILITY. In an action to which this chapter applies, a claimant may not recover damages if his percentage of responsibility is greater than 50 percent.",
+    "sections": [
+      {
+        "sectionRef": "33.001",
+        "content": "In an action to which this chapter applies, a claimant may not recover damages if his percentage of responsibility is greater than 50 percent."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "proportionate_responsibility",
+      "sourceOwner": "Texas Legislature"
+    }
+  },
+  {
+    "title": "Va. Code § 13.1-690 — General standards of conduct for directors",
+    "shortTitle": "Va. Code § 13.1-690",
+    "authorityType": "statute",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Code § 13.1-690",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "va-code-13-1-690",
+    "canonicalSourceUrl": "https://law.lis.virginia.gov/vacode/title13.1/chapter9/section13.1-690/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "VA",
+        "label": "Virginia Stock Corporation Act"
+      },
+      {
+        "level": "section",
+        "ref": "13.1-690",
+        "label": "Director standards of conduct"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "corporations"
+    ],
+    "content": "Va. Code § 13.1-690\n\n§ 13.1-690. General standards of conduct for directors.\n\nA. A director shall discharge his duties as a director, including his duties as a member of a committee, in accordance with his good faith business judgment of the best interests of the corporation.\n\nB. Unless he has knowledge or information concerning the matter in question that makes reliance unwarranted, a director is entitled to rely on information, opinions, reports or statements, including financial statements and other financial data, if prepared or presented by:\n\n1. One or more officers or employees of the corporation whom the director believes, in good faith, to be reliable and competent in the matters presented;",
+    "sections": [
+      {
+        "sectionRef": "13.1-690",
+        "content": "A director shall discharge his duties as a director, including his duties as a member of a committee, in accordance with his good faith business judgment of the best interests of the corporation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "Virginia General Assembly"
+    }
+  },
+  {
+    "title": "Va. Code § 8.2-314 — Implied warranty; merchantability; usage of trade",
+    "shortTitle": "Va. Code § 8.2-314",
+    "authorityType": "statute",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Code § 8.2-314",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "va-code-8-2-314",
+    "canonicalSourceUrl": "https://law.lis.virginia.gov/vacode/title8.2/section8.2-314/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "VA",
+        "label": "Uniform Commercial Code — Sales"
+      },
+      {
+        "level": "section",
+        "ref": "8.2-314",
+        "label": "Implied warranty of merchantability"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "contract",
+      "commercial"
+    ],
+    "content": "Va. Code § 8.2-314\n\n§ 8.2-314. Implied warranty; merchantability; usage of trade.\n\n(1) Unless excluded or modified (§ 8.2-316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind. Under this section the serving for value of food or drink to be consumed either on the premises or elsewhere is a sale.\n\n(2) Goods to be merchantable must be at least such as\n\n(a) pass without objection in the trade under the contract description; and\n\n(c) are fit for the ordinary purposes for which such goods are used;",
+    "sections": [
+      {
+        "sectionRef": "8.2-314",
+        "content": "Unless excluded or modified, a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "Virginia General Assembly"
+    }
+  },
+  {
+    "title": "Va. Code § 40.1-29 — Time and medium of payment; withholding wages; written statement of earnings; agreement for pay period; payment of wages by credit to bank account; etc.",
+    "shortTitle": "Va. Code § 40.1-29",
+    "authorityType": "statute",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Code § 40.1-29",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "va-code-40-1-29",
+    "canonicalSourceUrl": "https://law.lis.virginia.gov/vacode/title40.1/chapter3/section40.1-29/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "VA",
+        "label": "Labor and Employment"
+      },
+      {
+        "level": "section",
+        "ref": "40.1-29",
+        "label": "Payment of wages"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment"
+    ],
+    "content": "Va. Code § 40.1-29\n\n§ 40.1-29. Time and medium of payment; withholding wages; written statement of earnings; agreement for pay period; payment of wages by credit to bank account; payment of wages by credit to debit card or payroll card account; penalty.\n\nA. All employers operating a business or engaging in work in the Commonwealth shall establish regular pay periods and rates of pay for employees except executive personnel and shall pay salaries or wages upon such established regular pay periods. Salaries or wages of executive personnel may be paid biweekly or monthly.",
+    "sections": [
+      {
+        "sectionRef": "40.1-29",
+        "content": "All employers operating a business or engaging in work in the Commonwealth shall establish regular pay periods and rates of pay for employees except executive personnel and shall pay salaries or wages upon such established regular pay periods."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "wage_payment",
+      "sourceOwner": "Virginia General Assembly"
+    }
+  },
+  {
+    "title": "Va. Code § 8.01-246 — Personal actions based on contracts",
+    "shortTitle": "Va. Code § 8.01-246",
+    "authorityType": "statute",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Code § 8.01-246",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "va-code-8-01-246",
+    "canonicalSourceUrl": "https://law.lis.virginia.gov/vacode/title8.01/chapter4/section8.01-246/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "VA",
+        "label": "Civil Remedies and Procedure"
+      },
+      {
+        "level": "section",
+        "ref": "8.01-246",
+        "label": "Contract limitations"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "civil",
+      "contract"
+    ],
+    "content": "Va. Code § 8.01-246\n\n§ 8.01-246. Personal actions based on contracts.\n\nSubject to the provisions of § 8.01-243 regarding injuries to person and property and of § 8.01-245 regarding the application of limitations to fiduciaries, and of § 8.01-248 regarding contracts for the sale of goods subject to Title 8.2, actions founded upon a contract, other than actions on a judgment or recognizance, shall be brought as follows:\n\n2. In actions on any contract which is not otherwise specified and which is in writing and signed by the party to be charged thereby, or by his agent, within five years next after the cause of action shall have accrued; and\n\n4. In actions upon any unwritten contract, express or implied, within three years.",
+    "sections": [
+      {
+        "sectionRef": "8.01-246",
+        "content": "Actions founded upon a written contract signed by the party to be charged shall be brought within five years next after the cause of action shall have accrued; actions upon any unwritten contract, express or implied, within three years."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "statute_of_limitations",
+      "sourceOwner": "Virginia General Assembly"
+    }
+  }
+]

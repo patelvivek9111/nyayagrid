@@ -44,6 +44,7 @@ type BundleAuthority = {
   sourceMetadata?: Record<string, unknown>;
   bundleSourceClass?: string;
   docketNumber?: string | null;
+  currentnessStatus?: string | null;
 };
 
 type RunSummary = {
@@ -114,6 +115,43 @@ async function loadAuthoritiesFromGithub(): Promise<{
 
 function sha256Hex(content: string): string {
   return createHash("sha256").update(content, "utf8").digest("hex");
+}
+
+/** Deterministic citation normalize for lean import (no research package). */
+function leanNormalizeCitation(citation: string | null | undefined): string | null {
+  if (!citation) return null;
+  let c = citation.replace(/\s+/g, " ").trim().replace(/\s*§\s*/g, " § ");
+  const cfr = c.match(/^(\d{1,2})\s+C\.?\s?F\.?\s?R\.?\s*§\s*(.+)$/i);
+  if (cfr) return `${cfr[1]} C.F.R. § ${cfr[2]}`;
+  const usc = c.match(/^(\d{1,2})\s+U\.?\s?S\.?\s?C\.?\s*§\s*(.+)$/i);
+  if (usc) return `${usc[1]} U.S.C. § ${usc[2]}`;
+  const fr = c.match(/^Fed\.?\s*R\.?\s*(Civ\.?\s*P\.?|Evid\.?|App\.?\s*P\.?|Crim\.?\s*P\.?)\s+(\d+[A-Za-z]?)$/i);
+  if (fr) {
+    const kind = fr[1].replace(/\s+/g, " ").trim().toLowerCase();
+    let reporter = "Fed. R. Civ. P.";
+    if (/^evid/i.test(kind)) reporter = "Fed. R. Evid.";
+    else if (/^app/i.test(kind)) reporter = "Fed. R. App. P.";
+    else if (/^crim/i.test(kind)) reporter = "Fed. R. Crim. P.";
+    return `${reporter} ${fr[2]}`;
+  }
+  return c;
+}
+
+function resolveCurrentness(auth: BundleAuthority): string {
+  const raw = (auth.currentnessStatus ?? "").trim();
+  const allowed = new Set([
+    "unknown",
+    "current_as_of_source_date",
+    "current_verified_from_source",
+    "historical",
+    "superseded",
+  ]);
+  if (allowed.has(raw)) return raw;
+  // Live eCFR fetch with asOfDate warrants current_as_of_source_date.
+  const method = String(auth.sourceMetadata?.retrievalMethod ?? "");
+  if (method.includes("ecfr") || method.includes("live")) return "current_as_of_source_date";
+  if (method.includes("official")) return "current_as_of_source_date";
+  return "unknown";
 }
 
 /** Simple splitter: paragraphs, then hard-cap ~1000 chars. */
@@ -227,6 +265,12 @@ async function importOne(
   if (auth.bundleSourceClass) {
     metadata.bundleSourceClass = auth.bundleSourceClass;
   }
+  if (auth.sourceMetadata) {
+    metadata.sourceMetadata = auth.sourceMetadata;
+  }
+  const normalizedCitation =
+    auth.normalizedCitation ?? leanNormalizeCitation(auth.citation);
+  const currentness = resolveCurrentness(auth);
 
   const existing = await sql`
     select id from legal_authorities
@@ -270,14 +314,15 @@ async function importOne(
           federal_circuit = ${auth.federalCircuit ?? null},
           court_level = ${auth.courtLevel ?? null},
           citation = ${auth.citation ?? null},
-          normalized_citation = ${auth.normalizedCitation ?? null},
+          normalized_citation = ${normalizedCitation},
           decision_date = ${auth.decisionDate ?? null},
           effective_date = ${auth.effectiveDate ?? null},
           canonical_source_url = ${auth.canonicalSourceUrl ?? null},
           hierarchy_path = ${sql.json(auth.hierarchyPath ?? [])},
           metadata = ${sql.json(metadata)},
           ingestion_status = 'processing'::authority_ingestion_status,
-          currentness_status = 'unknown'::authority_currentness_status,
+          currentness_status = ${currentness}::authority_currentness_status,
+          last_checked_at = now(),
           updated_at = now()
         where id = ${authorityId}
       `;
@@ -293,7 +338,7 @@ async function importOne(
           federal_circuit = ${auth.federalCircuit ?? null},
           court_level = ${auth.courtLevel ?? null},
           citation = ${auth.citation ?? null},
-          normalized_citation = ${auth.normalizedCitation ?? null},
+          normalized_citation = ${normalizedCitation},
           decision_date = ${auth.decisionDate ?? null},
           effective_date = ${auth.effectiveDate ?? null},
           canonical_source_url = ${auth.canonicalSourceUrl ?? null},
@@ -357,7 +402,7 @@ async function importOne(
         ${auth.title},
         ${auth.shortTitle ?? null},
         ${auth.citation ?? null},
-        ${auth.normalizedCitation ?? null},
+        ${normalizedCitation},
         ${auth.docketNumber ?? null},
         ${auth.decisionDate ?? null},
         ${auth.effectiveDate ?? null},
@@ -366,10 +411,15 @@ async function importOne(
         ${auth.sourceExternalId},
         ${auth.canonicalSourceUrl ?? null},
         'processing'::authority_ingestion_status,
-        'unknown'::authority_currentness_status,
+        ${currentness}::authority_currentness_status,
         ${sql.json(auth.hierarchyPath ?? [])},
         ${sql.json(metadata)}
       )
+    `;
+    await sql`
+      update legal_authorities
+      set last_checked_at = now()
+      where id = ${authorityId}
     `;
   } else {
     await sql`
@@ -391,7 +441,7 @@ async function importOne(
         ${auth.title},
         ${auth.shortTitle ?? null},
         ${auth.citation ?? null},
-        ${auth.normalizedCitation ?? null},
+        ${normalizedCitation},
         ${auth.docketNumber ?? null},
         ${auth.decisionDate ?? null},
         ${auth.effectiveDate ?? null},

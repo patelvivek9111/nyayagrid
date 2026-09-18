@@ -1,0 +1,784 @@
+[
+  {
+    "title": "Fed. R. Civ. P. 4 — Summons",
+    "shortTitle": "FRCP 4",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Civ. P. 4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frcp-4",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-civil-procedure/rule-4-summons",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRCP",
+        "label": "Federal Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "4",
+        "label": "Summons"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "procedure"
+    ],
+    "content": "Fed. R. Civ. P. 4\n\nRule 4. Summons\n\n(c) Service.\n\n(1) In General. A summons must be served with a copy of the complaint. The plaintiff is responsible for having the summons and complaint served within the time allowed by Rule 4(m) and must furnish the necessary copies to the person who makes service.\n\n(2) By Whom. Any person who is at least 18 years old and not a party may serve a summons and complaint.\n\n(m) Time Limit for Service. If a defendant is not served within 90 days after the complaint is filed, the court—on motion or on its own after notice to the plaintiff—must dismiss the action without prejudice against that defendant or order that service be made within a specified time. But if the plaintiff shows good cause for the failure, the court must extend the time for service for an appropriate period.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "A summons must be served with a copy of the complaint. If a defendant is not served within 90 days after the complaint is filed, the court must dismiss without prejudice or order that service be made within a specified time, unless the plaintiff shows good cause.",
+        "subsectionRef": "c"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "service_of_process",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. Civ. P. 11 — Signing Pleadings, Motions, and Other Papers; Representations to the Court; Sanctions",
+    "shortTitle": "FRCP 11",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Civ. P. 11",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frcp-11",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-civil-procedure/rule-11-signing-pleadings-motions-and-other-papers-representations-court-sanctions",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRCP",
+        "label": "Federal Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "11",
+        "label": "Signing Pleadings, Motions, and Other Papers; Representations to the Court; Sanctions"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "procedure"
+    ],
+    "content": "Fed. R. Civ. P. 11\n\nRule 11. Signing Pleadings, Motions, and Other Papers; Representations to the Court; Sanctions\n\n(b) Representations to the Court. By presenting to the court a pleading, written motion, or other paper—whether by signing, filing, submitting, or later advocating it—an attorney or unrepresented party certifies that to the best of the person's knowledge, information, and belief, formed after an inquiry reasonable under the circumstances:\n\n(1) it is not being presented for any improper purpose, such as to harass, cause unnecessary delay, or needlessly increase the cost of litigation;\n\n(2) the claims, defenses, and other legal contentions are warranted by existing law or by a nonfrivolous argument for extending, modifying, or reversing existing law or for establishing new law;\n\n(3) the factual contentions have evidentiary support or, if specifically so identified, will likely have evidentiary support after a reasonable opportunity for further investigation or discovery; and\n\n(4) the denials of factual contentions are warranted on the evidence or, if specifically so identified, are reasonably based on belief or a lack of information.",
+    "sections": [
+      {
+        "sectionRef": "11",
+        "content": "By presenting a pleading, written motion, or other paper to the court, an attorney or unrepresented party certifies that it is not presented for an improper purpose, that legal contentions are warranted by existing law or a nonfrivolous argument, and that factual contentions have or will likely have evidentiary support.",
+        "subsectionRef": "b"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "rule_11_sanctions",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. Civ. P. 15 — Amended and Supplemental Pleadings",
+    "shortTitle": "FRCP 15",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Civ. P. 15",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frcp-15",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-civil-procedure/rule-15-amended-and-supplemental-pleadings",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRCP",
+        "label": "Federal Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "15",
+        "label": "Amended and Supplemental Pleadings"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "procedure"
+    ],
+    "content": "Fed. R. Civ. P. 15\n\nRule 15. Amended and Supplemental Pleadings\n\n(a) Amendments Before Trial.\n\n(1) Amending as a Matter of Course. A party may amend its pleading once as a matter of course within:\n\n(A) 21 days after serving it, or\n\n(B) if the pleading is one to which a responsive pleading is required, 21 days after service of a responsive pleading or 21 days after service of a motion under Rule 12(b), (e), or (f), whichever is earlier.\n\n(2) Other Amendments. In all other cases, a party may amend its pleading only with the opposing party's written consent or the court's leave. The court should freely give leave when justice so requires.\n\n(c) Relation Back of Amendments.\n\n(1) When an Amendment Relates Back. An amendment to a pleading relates back to the date of the original pleading when:\n\n(A) the law that provides the applicable statute of limitations allows relation back;\n\n(B) the amendment asserts a claim or defense that arose out of the conduct, transaction, or occurrence set out—or attempted to be set out—in the original pleading; or\n\n(C) the amendment changes the party or the naming of the party against whom a claim is asserted, if Rule 15(c)(1)(B) is satisfied and if, within the period provided by Rule 4(m) for serving the summons and complaint, the party to be brought in by amendment received such notice of the action that it will not be prejudiced in defending on the merits and knew or should have known that the action would have been brought against it, but for a mistake concerning the proper party's identity.",
+    "sections": [
+      {
+        "sectionRef": "15",
+        "content": "A party may amend its pleading once as a matter of course within 21 days after serving it or after a responsive pleading or certain Rule 12 motions; otherwise only with written consent or the court's leave, which should be freely given when justice so requires.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "amended_pleadings",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. Civ. P. 26 — Duty to Disclose; General Provisions Governing Discovery",
+    "shortTitle": "FRCP 26",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Civ. P. 26",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frcp-26",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-civil-procedure/rule-26-duty-disclose-general-provisions-governing-discovery",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRCP",
+        "label": "Federal Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "26",
+        "label": "Duty to Disclose; General Provisions Governing Discovery"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "procedure",
+      "evidence"
+    ],
+    "content": "Fed. R. Civ. P. 26\n\nRule 26. Duty to Disclose; General Provisions Governing Discovery\n\n(b) Discovery Scope and Limits.\n\n(1) Scope in General. Unless otherwise limited by court order, the scope of discovery is as follows: Parties may obtain discovery regarding any nonprivileged matter that is relevant to any party's claim or defense and proportional to the needs of the case, considering the importance of the issues at stake in the action, the amount in controversy, the parties' relative access to relevant information, the parties' resources, the importance of the discovery in resolving the issues, and whether the burden or expense of the proposed discovery outweighs its likely benefit. Information within this scope of discovery need not be admissible in evidence to be discoverable.",
+    "sections": [
+      {
+        "sectionRef": "26",
+        "content": "Parties may obtain discovery regarding any nonprivileged matter that is relevant to any party's claim or defense and proportional to the needs of the case. Information within this scope of discovery need not be admissible in evidence to be discoverable.",
+        "subsectionRef": "b"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "discovery_scope",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. Civ. P. 37 — Failure to Make Disclosures or to Cooperate in Discovery; Sanctions",
+    "shortTitle": "FRCP 37",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Civ. P. 37",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frcp-37",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-civil-procedure/rule-37-failure-make-disclosures-or-cooperate-discovery-sanctions",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRCP",
+        "label": "Federal Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "37",
+        "label": "Failure to Make Disclosures or to Cooperate in Discovery; Sanctions"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "procedure"
+    ],
+    "content": "Fed. R. Civ. P. 37\n\nRule 37. Failure to Make Disclosures or to Cooperate in Discovery; Sanctions\n\n(a) Motion for an Order Compelling Disclosure or Discovery.\n\n(1) In General. On notice to other parties and all affected persons, a party may move for an order compelling disclosure or discovery. The motion must include a certification that the movant has in good faith conferred or attempted to confer with the person or party failing to make disclosure or discovery in an effort to obtain it without court action.\n\n(b) Failure to Comply with a Court Order.\n\n(2) Sanctions Sought in the District Where the Action Is Pending.\n\n(A) For Not Obeying a Discovery Order. If a party or a party's officer, director, or managing agent—or a witness designated under Rule 30(b)(6) or 31(a)(4)—fails to obey an order to provide or permit discovery, including an order under Rule 26(f), 35, or 37(a), the court where the action is pending may issue further just orders.",
+    "sections": [
+      {
+        "sectionRef": "37",
+        "content": "On notice to other parties, a party may move for an order compelling disclosure or discovery after certifying a good-faith conference. If a party fails to obey a discovery order, the court may issue further just orders.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "discovery_sanctions",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. Civ. P. 55 — Default; Default Judgment",
+    "shortTitle": "FRCP 55",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Civ. P. 55",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frcp-55",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-civil-procedure/rule-55-default-default-judgment",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRCP",
+        "label": "Federal Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "55",
+        "label": "Default; Default Judgment"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "procedure"
+    ],
+    "content": "Fed. R. Civ. P. 55\n\nRule 55. Default; Default Judgment\n\n(a) Entering a Default. When a party against whom a judgment for affirmative relief is sought has failed to plead or otherwise defend, and that failure is shown by affidavit or otherwise, the clerk must enter the party's default.\n\n(b) Entering a Default Judgment.\n\n(1) By the Clerk. If the plaintiff's claim is for a sum certain or a sum that can be made certain by computation, the clerk—on the plaintiff's request, with an affidavit showing the amount due—must enter judgment for that amount and costs against a defendant who has been defaulted for not appearing and who is neither a minor nor an incompetent person.\n\n(2) By the Court. In all other cases, the party must apply to the court for a default judgment.",
+    "sections": [
+      {
+        "sectionRef": "55",
+        "content": "When a party against whom a judgment for affirmative relief is sought has failed to plead or otherwise defend, and that failure is shown by affidavit or otherwise, the clerk must enter the party's default.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "default_judgment",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. Civ. P. 65 — Injunctions and Restraining Orders",
+    "shortTitle": "FRCP 65",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Civ. P. 65",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frcp-65",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-civil-procedure/rule-65-injunctions-and-restraining-orders",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRCP",
+        "label": "Federal Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "65",
+        "label": "Injunctions and Restraining Orders"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "procedure"
+    ],
+    "content": "Fed. R. Civ. P. 65\n\nRule 65. Injunctions and Restraining Orders\n\n(a) Preliminary Injunction.\n\n(1) Notice. The court may issue a preliminary injunction only on notice to the adverse party.\n\n(b) Temporary Restraining Order.\n\n(1) Issuing Without Notice. The court may issue a temporary restraining order without written or oral notice to the adverse party or its attorney only if:\n\n(A) specific facts in an affidavit or a verified complaint clearly show that immediate and irreparable injury, loss, or damage will result to the movant before the adverse party can be heard in opposition; and\n\n(B) the movant's attorney certifies in writing any efforts made to give notice and the reasons why it should not be required.\n\n(c) Security. The court may issue a preliminary injunction or a temporary restraining order only if the movant gives security in an amount that the court considers proper to pay the costs and damages sustained by any party found to have been wrongfully enjoined or restrained.",
+    "sections": [
+      {
+        "sectionRef": "65",
+        "content": "The court may issue a preliminary injunction only on notice to the adverse party. A temporary restraining order may issue without notice only if specific facts show immediate and irreparable injury and counsel certifies efforts to give notice or reasons why notice should not be required.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "injunctions",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. Evid. 403 — Excluding Relevant Evidence for Prejudice, Confusion, Waste of Time, or Other Reasons",
+    "shortTitle": "FRE 403",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Evid. 403",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-fre-403",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-evidence/rule-403-excluding-relevant-evidence-prejudice-confusion-waste-time-or-other-reasons",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRE",
+        "label": "Federal Rules of Evidence"
+      },
+      {
+        "level": "rule",
+        "ref": "403",
+        "label": "Excluding Relevant Evidence for Prejudice, Confusion, Waste of Time, or Other Reasons"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "evidence"
+    ],
+    "content": "Fed. R. Evid. 403\n\nRule 403. Excluding Relevant Evidence for Prejudice, Confusion, Waste of Time, or Other Reasons\n\nThe court may exclude relevant evidence if its probative value is substantially outweighed by a danger of one or more of the following: unfair prejudice, confusing the issues, misleading the jury, undue delay, wasting time, or needlessly presenting cumulative evidence.",
+    "sections": [
+      {
+        "sectionRef": "403",
+        "content": "The court may exclude relevant evidence if its probative value is substantially outweighed by a danger of unfair prejudice, confusing the issues, misleading the jury, undue delay, wasting time, or needlessly presenting cumulative evidence."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "evidence_403_balancing",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. Evid. 701 — Opinion Testimony by Lay Witnesses",
+    "shortTitle": "FRE 701",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Evid. 701",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-fre-701",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-evidence/rule-701-opinion-testimony-lay-witnesses",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRE",
+        "label": "Federal Rules of Evidence"
+      },
+      {
+        "level": "rule",
+        "ref": "701",
+        "label": "Opinion Testimony by Lay Witnesses"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "evidence"
+    ],
+    "content": "Fed. R. Evid. 701\n\nRule 701. Opinion Testimony by Lay Witnesses\n\nIf a witness is not testifying as an expert, testimony in the form of an opinion is limited to one that is:\n\n(a) rationally based on the witness's perception;\n\n(b) helpful to clearly understanding the witness's testimony or to determining a fact in issue; and\n\n(c) not based on scientific, technical, or other specialized knowledge within the scope of Rule 702.",
+    "sections": [
+      {
+        "sectionRef": "701",
+        "content": "If a witness is not testifying as an expert, opinion testimony is limited to one that is rationally based on the witness's perception, helpful to understanding the testimony or determining a fact in issue, and not based on specialized knowledge within Rule 702."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "lay_opinion",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. Evid. 801 — Definitions That Apply to This Article; Exclusions from Hearsay",
+    "shortTitle": "FRE 801",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Evid. 801",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-fre-801",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-evidence/rule-801-definitions-apply-article-exclusions-hearsay",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRE",
+        "label": "Federal Rules of Evidence"
+      },
+      {
+        "level": "rule",
+        "ref": "801",
+        "label": "Definitions That Apply to This Article; Exclusions from Hearsay"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "evidence"
+    ],
+    "content": "Fed. R. Evid. 801\n\nRule 801. Definitions That Apply to This Article; Exclusions from Hearsay\n\n(c) Hearsay. \"Hearsay\" means a statement that:\n\n(1) the declarant does not make while testifying at the current trial or hearing; and\n\n(2) a party offers in evidence to prove the truth of the matter asserted in the statement.\n\n(d) Statements That Are Not Hearsay. A statement that meets the following conditions is not hearsay:\n\n(2) An Opposing Party's Statement. The statement is offered against an opposing party and:\n\n(A) was made by the party in an individual or representative capacity;\n\n(B) is one the party manifested that it adopted or believed to be true;\n\n(C) was made by a person whom the party authorized to make a statement on the subject;\n\n(D) was made by the party's agent or employee on a matter within the scope of that relationship and while it existed; or\n\n(E) was made by the party's coconspirator during and in furtherance of the conspiracy.",
+    "sections": [
+      {
+        "sectionRef": "801",
+        "content": "\"Hearsay\" means a statement that the declarant does not make while testifying at the current trial or hearing and that a party offers in evidence to prove the truth of the matter asserted in the statement.",
+        "subsectionRef": "c"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "hearsay_definition",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. Evid. 802 — The Rule Against Hearsay",
+    "shortTitle": "FRE 802",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Evid. 802",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-fre-802",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-evidence/rule-802-rule-against-hearsay",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRE",
+        "label": "Federal Rules of Evidence"
+      },
+      {
+        "level": "rule",
+        "ref": "802",
+        "label": "The Rule Against Hearsay"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "evidence"
+    ],
+    "content": "Fed. R. Evid. 802\n\nRule 802. The Rule Against Hearsay\n\nHearsay is not admissible unless any of the following provides otherwise:\n\n• a federal statute;\n\n• these rules; or\n\n• other rules prescribed by the Supreme Court.",
+    "sections": [
+      {
+        "sectionRef": "802",
+        "content": "Hearsay is not admissible unless a federal statute, these rules, or other rules prescribed by the Supreme Court provide otherwise."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "hearsay_rule",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. Evid. 803 — Exceptions to the Rule Against Hearsay — Regardless of Whether the Declarant Is Available as a Witness",
+    "shortTitle": "FRE 803",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Evid. 803",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-fre-803",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-evidence/rule-803-exceptions-rule-against-hearsay-regardless-whether-declarant-available-witness",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRE",
+        "label": "Federal Rules of Evidence"
+      },
+      {
+        "level": "rule",
+        "ref": "803",
+        "label": "Exceptions to the Rule Against Hearsay — Regardless of Whether the Declarant Is Available as a Witness"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "evidence"
+    ],
+    "content": "Fed. R. Evid. 803\n\nRule 803. Exceptions to the Rule Against Hearsay — Regardless of Whether the Declarant Is Available as a Witness\n\nThe following are not excluded by the rule against hearsay, regardless of whether the declarant is available as a witness:\n\n(1) Present Sense Impression. A statement describing or explaining an event or condition, made while or immediately after the declarant perceived it.\n\n(2) Excited Utterance. A statement relating to a startling event or condition, made while the declarant was under the stress of excitement that it caused.\n\n(6) Records of a Regularly Conducted Activity. A record of an act, event, condition, opinion, or diagnosis if:\n\n(A) the record was made at or near the time by — or from information transmitted by — someone with knowledge;\n\n(B) the record was kept in the course of a regularly conducted activity of a business, organization, occupation, or calling, whether or not for profit;\n\n(C) making the record was a regular practice of that activity;\n\n(D) all these conditions are shown by the testimony of the custodian or another qualified witness, or by a certification that complies with Rule 902(11) or (12) or with a statute permitting certification; and\n\n(E) the opponent does not show that the source of information or the method or circumstances of preparation indicate a lack of trustworthiness.",
+    "sections": [
+      {
+        "sectionRef": "803",
+        "content": "The following are not excluded by the rule against hearsay regardless of whether the declarant is available as a witness: present sense impression, excited utterance, and records of a regularly conducted activity meeting the conditions of Rule 803(6)."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "hearsay_exceptions",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. App. P. 4 — Appeal as of Right — When Taken",
+    "shortTitle": "FRAP 4",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. App. P. 4",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frap-4",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-appellate-procedure/rule-4-appeal-right-when-taken",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRAP",
+        "label": "Federal Rules of Appellate Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "4",
+        "label": "Appeal as of Right — When Taken"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "appellate"
+    ],
+    "content": "Fed. R. App. P. 4\n\nRule 4. Appeal as of Right — When Taken\n\n(a) Appeal in a Civil Case.\n\n(1) Time for Filing a Notice of Appeal.\n\n(A) In a civil case, except as provided in Rules 4(a)(1)(B), 4(a)(4), and 4(c), the notice of appeal required by Rule 3 must be filed with the district clerk within 30 days after entry of the judgment or order appealed from.\n\n(B) The notice of appeal may be filed by any party within 60 days after entry of the judgment or order appealed from if one of the parties is:\n\n(i) the United States;\n\n(ii) a United States agency;\n\n(iii) a United States officer or employee sued in an official capacity; or\n\n(iv) a current or former United States officer or employee sued in an individual capacity for an act or omission occurring in connection with duties performed on the United States' behalf — including all instances in which the United States represents that person when the judgment or order is entered or files the appeal for that person.",
+    "sections": [
+      {
+        "sectionRef": "4",
+        "content": "In a civil case, the notice of appeal must be filed with the district clerk within 30 days after entry of the judgment or order appealed from, or within 60 days if one of the parties is the United States or a United States agency or officer as specified.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "appeal_timing",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. App. P. 10 — The Record on Appeal",
+    "shortTitle": "FRAP 10",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. App. P. 10",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frap-10",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-appellate-procedure/rule-10-record-appeal",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRAP",
+        "label": "Federal Rules of Appellate Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "10",
+        "label": "The Record on Appeal"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "appellate"
+    ],
+    "content": "Fed. R. App. P. 10\n\nRule 10. The Record on Appeal\n\n(a) Composition of the Record on Appeal. The following items constitute the record on appeal:\n\n(1) the original papers and exhibits filed in the district court;\n\n(2) the transcript of proceedings, if any; and\n\n(3) a certified copy of the docket entries prepared by the district clerk.\n\n(b) The Transcript of Proceedings.\n\n(1) Appellant's Duty to Order. Within 14 days after filing the notice of appeal or entry of an order disposing of the last timely remaining motion of a type specified in Rule 4(a)(4)(A), whichever is later, the appellant must do either of the following:\n\n(A) order from the reporter a transcript of such parts of the proceedings not already on file as the appellant considers necessary, subject to a local rule of the court of appeals and with the following qualifications; or\n\n(B) file a certificate stating that the appellant will not order a transcript.",
+    "sections": [
+      {
+        "sectionRef": "10",
+        "content": "The record on appeal consists of the original papers and exhibits filed in the district court, the transcript of proceedings, if any, and a certified copy of the docket entries prepared by the district clerk.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "record_on_appeal",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. App. P. 28 — Briefs",
+    "shortTitle": "FRAP 28",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. App. P. 28",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frap-28",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-appellate-procedure/rule-28-briefs",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRAP",
+        "label": "Federal Rules of Appellate Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "28",
+        "label": "Briefs"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "appellate"
+    ],
+    "content": "Fed. R. App. P. 28\n\nRule 28. Briefs\n\n(a) Appellant's Brief. The appellant's brief must contain, under appropriate headings and in the order indicated:\n\n(1) a corporate disclosure statement if required by Rule 26.1;\n\n(2) a table of contents, with page references;\n\n(3) a table of authorities — cases (alphabetically arranged), statutes, and other authorities — with references to the pages of the brief where they are cited;\n\n(4) a jurisdictional statement;\n\n(5) a statement of the issues presented for review;\n\n(6) a concise statement of the case setting out the facts relevant to the issues submitted for review;\n\n(7) a summary of the argument;\n\n(8) the argument, which must contain:\n\n(A) appellant's contentions and the reasons for them, with citations to the authorities and parts of the record on which the appellant relies; and\n\n(B) for each issue, a concise statement of the applicable standard of review;\n\n(9) a short conclusion stating the precise relief sought; and\n\n(10) the certificate of compliance, if required by Rule 32(g)(1).",
+    "sections": [
+      {
+        "sectionRef": "28",
+        "content": "The appellant's brief must contain, under appropriate headings, a table of contents, table of authorities, jurisdictional statement, statement of issues, statement of the case, summary of the argument, the argument with standard of review, a short conclusion stating the relief sought, and any required certificate of compliance.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "appellate_briefs",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. App. P. 32 — Form of Briefs, Appendices, and Other Papers",
+    "shortTitle": "FRAP 32",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. App. P. 32",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frap-32",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-appellate-procedure/rule-32-form-briefs-appendices-and-other-papers",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRAP",
+        "label": "Federal Rules of Appellate Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "32",
+        "label": "Form of Briefs, Appendices, and Other Papers"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "appellate"
+    ],
+    "content": "Fed. R. App. P. 32\n\nRule 32. Form of Briefs, Appendices, and Other Papers\n\n(a) Form of a Brief.\n\n(7) Length.\n\n(A) Page Limitation. A principal brief may not exceed 30 pages, or a reply brief 15 pages, unless it complies with Rule 32(a)(7)(B).\n\n(B) Type-Volume Limitation.\n\n(i) A principal brief is acceptable if it:\n\n• contains no more than 13,000 words; or\n\n• uses a monospaced face and contains no more than 1,300 lines of text.\n\n(ii) A reply brief is acceptable if it contains no more than half of the type volume specified in Rule 32(a)(7)(B)(i).",
+    "sections": [
+      {
+        "sectionRef": "32",
+        "content": "A principal brief may not exceed 30 pages, or a reply brief 15 pages, unless it complies with the type-volume limitation of no more than 13,000 words for a principal brief (or half that for a reply brief).",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "brief_form_length",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. Civ. P. 23 — Class Actions",
+    "shortTitle": "FRCP 23",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Civ. P. 23",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-frcp-23",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-civil-procedure/rule-23-class-actions",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRCP",
+        "label": "Federal Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "23",
+        "label": "Class Actions"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "civil",
+      "procedure"
+    ],
+    "content": "Fed. R. Civ. P. 23\n\nRule 23. Class Actions\n\n(a) Prerequisites. One or more members of a class may sue or be sued as representative parties on behalf of all members only if:\n\n(1) the class is so numerous that joinder of all members is impracticable;\n\n(2) there are questions of law or fact common to the class;\n\n(3) the claims or defenses of the representative parties are typical of the claims or defenses of the class; and\n\n(4) the representative parties will fairly and adequately protect the interests of the class.\n\n(b) Types of Class Actions. A class action may be maintained if Rule 23(a) is satisfied and if:\n\n(2) the party opposing the class has acted or refused to act on grounds that apply generally to the class, so that final injunctive relief or corresponding declaratory relief is appropriate respecting the class as a whole; or\n\n(3) the court finds that the questions of law or fact common to class members predominate over any questions affecting only individual members, and that a class action is superior to other available methods for fairly and efficiently adjudicating the controversy.",
+    "sections": [
+      {
+        "sectionRef": "23",
+        "content": "One or more members of a class may sue as representative parties on behalf of all members only if the class is so numerous that joinder is impracticable, there are questions of law or fact common to the class, the claims of the representatives are typical, and the representatives will fairly and adequately protect the interests of the class.",
+        "subsectionRef": "a"
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "class_actions",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  },
+  {
+    "title": "Fed. R. Evid. 501 — Privilege in General",
+    "shortTitle": "FRE 501",
+    "authorityType": "rule",
+    "jurisdiction": "United States",
+    "authorityState": "US",
+    "citation": "Fed. R. Evid. 501",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "us-fre-501",
+    "canonicalSourceUrl": "https://www.uscourts.gov/forms-rules/current-rules/rules-evidence/rule-501-privilege-general",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "FRE",
+        "label": "Federal Rules of Evidence"
+      },
+      {
+        "level": "rule",
+        "ref": "501",
+        "label": "Privilege in General"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "federal",
+      "evidence"
+    ],
+    "content": "Fed. R. Evid. 501\n\nRule 501. Privilege in General\n\nThe common law — as interpreted by United States courts in the light of reason and experience — governs a claim of privilege unless any of the following provides otherwise:\n\n• the United States Constitution;\n\n• a federal statute; or\n\n• rules prescribed by the Supreme Court.\n\nBut in a civil case, state law governs privilege regarding a claim or defense for which state law supplies the rule of decision.",
+    "sections": [
+      {
+        "sectionRef": "501",
+        "content": "The common law as interpreted by United States courts governs a claim of privilege unless the Constitution, a federal statute, or rules prescribed by the Supreme Court provide otherwise. In a civil case, state law governs privilege regarding a claim or defense for which state law supplies the rule of decision."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "privilege",
+      "sourceOwner": "Judicial Conference of the United States"
+    }
+  }
+]

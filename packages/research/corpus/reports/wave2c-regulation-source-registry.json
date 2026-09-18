@@ -1,0 +1,855 @@
+{
+  "generatedAt": "2026-09-18T01:41:11.874Z",
+  "phase": "50S-WAVE-2C",
+  "registryType": "regulation_source",
+  "jurisdictionCount": 52,
+  "summary": {
+    "ready": 1,
+    "configured": 0,
+    "manual_or_unimplemented": 51,
+    "withOfficialUrl": 5
+  },
+  "entries": [
+    {
+      "jurisdiction": "US",
+      "officialRegulationUrl": "https://www.ecfr.gov/",
+      "sourceOwner": "Office of the Federal Register / GPO (eCFR)",
+      "machineReadable": true,
+      "formats": [
+        "html"
+      ],
+      "adapterStatus": "ready",
+      "citationFormat": "29 C.F.R. § 825.112",
+      "currentnessAvailability": "source_date",
+      "refreshFeasibility": "high",
+      "notes": [
+        "Federal adapters ready for USC (House), eCFR, CourtListener, and US Courts rules entry points.",
+        "Seed/limited corpus only — not comprehensive federal coverage.",
+        "ecfr adapter ready; public versioner API with as-of date metadata.",
+        "ecfr adapter ready for section-level API fetch."
+      ]
+    },
+    {
+      "jurisdiction": "AL",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "AL admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "AK",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "AK admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "AZ",
+      "officialRegulationUrl": "https://apps.azsos.gov/public_services/CodeTitle.htm",
+      "sourceOwner": "Arizona Secretary of State (Administrative Code)",
+      "machineReadable": false,
+      "formats": [
+        "html"
+      ],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "Ariz. Admin. Code R18-4-215",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "Official regulation URL known; no state regulation scraper implemented."
+      ]
+    },
+    {
+      "jurisdiction": "AR",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "AR admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "CA",
+      "officialRegulationUrl": "https://oal.ca.gov/publications/ccr/",
+      "sourceOwner": "California Office of Administrative Law",
+      "machineReadable": false,
+      "formats": [
+        "html",
+        "pdf"
+      ],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "Cal. Code Regs. tit. 2, § 11042",
+      "currentnessAvailability": "partial",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "Official regulation URL known; no state regulation scraper implemented."
+      ]
+    },
+    {
+      "jurisdiction": "CO",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "CO admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "CT",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "CT admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "DE",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "DE admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "Delaware has no general intermediate appellate court of last resort below the Supreme Court.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "FL",
+      "officialRegulationUrl": "https://www.flrules.org/",
+      "sourceOwner": "Florida Department of State (Florida Administrative Code)",
+      "machineReadable": false,
+      "formats": [
+        "html"
+      ],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "Fla. Admin. Code R. 60A-1.004",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "Official regulation URL known; no state regulation scraper implemented."
+      ]
+    },
+    {
+      "jurisdiction": "GA",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "GA admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "HI",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "HI admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "ID",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "ID admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "IL",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "IL admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "IN",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "IN admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "IA",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "IA admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "KS",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "KS admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "KY",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "KY admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "LA",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "LA admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "ME",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "ME admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "MD",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "MD admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "MA",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "MA admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "MI",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "MI admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "MN",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "MN admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "MS",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "MS admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "MO",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "MO admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "MT",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "MT admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "NE",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "NE admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "NV",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "NV admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "NH",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "NH admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "NJ",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "NJ admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "NM",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "NM admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "NY",
+      "officialRegulationUrl": "https://www.dos.ny.gov/info/nycrr.html",
+      "sourceOwner": "New York Department of State (NYCRR)",
+      "machineReadable": false,
+      "formats": [
+        "html"
+      ],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "19 N.Y.C.R.R. § 130-1.1",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "Official regulation URL known; no state regulation scraper implemented."
+      ]
+    },
+    {
+      "jurisdiction": "NC",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "NC admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "ND",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "ND admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "OH",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "OH admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "OK",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "OK admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "OR",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "OR admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "PA",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "PA admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "RI",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "RI admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "SC",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "SC admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "SD",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "SD admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "TN",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "TN admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "TX",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "TX admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "UT",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "UT admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "VT",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "VT admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "VA",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "VA admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "WA",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "WA admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "WV",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "WV admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "WI",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "WI admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "WY",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "WY admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    },
+    {
+      "jurisdiction": "DC",
+      "officialRegulationUrl": null,
+      "sourceOwner": null,
+      "machineReadable": "unknown",
+      "formats": [],
+      "adapterStatus": "manual_or_unimplemented",
+      "citationFormat": "DC admin. code (format varies)",
+      "currentnessAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "notes": [
+        "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
+        "No official regulation URL in jurisdiction-sources registry.",
+        "No official regulation URL recorded; state admin code sourcing not automated."
+      ]
+    }
+  ]
+}

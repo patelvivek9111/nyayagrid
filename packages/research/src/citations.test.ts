@@ -76,6 +76,39 @@ describe("parseCitation", () => {
     expect(parsed.pinpoint).toBe("7");
     expect(parsed.normalized).toBe("999 F.3d 1");
   });
+
+  it("normalizes federal procedural rule citations", () => {
+    expect(parseCitation("Fed. R. Civ. P. 56")).toMatchObject({
+      normalized: "Fed. R. Civ. P. 56",
+      type: "rule",
+      confidence: "high",
+    });
+    expect(parseCitation("Fed. R. Evid. 401")).toMatchObject({
+      normalized: "Fed. R. Evid. 401",
+      type: "rule",
+    });
+    expect(parseCitation("Fed. R. App. P. 4")).toMatchObject({
+      normalized: "Fed. R. App. P. 4",
+      type: "rule",
+    });
+  });
+
+  it("normalizes CFR without periods to C.F.R.", () => {
+    expect(parseCitation("29 CFR § 541.300")).toMatchObject({
+      normalized: "29 C.F.R. § 541.300",
+      type: "regulation",
+      confidence: "high",
+    });
+  });
+});
+
+describe("citationLookupAliases", () => {
+  it("aliases CFR punctuation variants", async () => {
+    const { citationLookupAliases } = await import("./citations");
+    const aliases = citationLookupAliases("29 CFR § 541.300");
+    expect(aliases).toContain("29 C.F.R. § 541.300");
+    expect(aliases).toContain("29 CFR § 541.300");
+  });
 });
 
 describe("extractCitationsFromText", () => {
