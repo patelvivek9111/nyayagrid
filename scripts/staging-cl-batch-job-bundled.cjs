@@ -2776,6 +2776,13 @@ async function main() {
       }
     }
     console.log(JSON.stringify({ ok: payload.ok !== false, ...payload, featureAgents: process.env.FEATURE_AGENTS ?? null }));
+    try {
+      require("node:fs").writeFileSync(
+        "/tmp/cl-batch-result.json",
+        JSON.stringify({ ok: payload.ok !== false, ...payload, featureAgents: process.env.FEATURE_AGENTS ?? null })
+      );
+    } catch {
+    }
     if (sql) await sql.end({ timeout: 5 });
     process.exit(exitCode);
   };

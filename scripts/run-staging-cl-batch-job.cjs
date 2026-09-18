@@ -54,7 +54,7 @@ if (start.status !== 0) process.exit(start.status ?? 1);
 for (let i = 0; i < 80; i++) {
   sleep(12_000);
   const poll = fly(
-    `node -e "const fs=require('fs');const log=fs.existsSync('/tmp/cl-batch.log')?fs.readFileSync('/tmp/cl-batch.log','utf8'):'';const err=fs.existsSync('/tmp/cl-batch.err')?fs.readFileSync('/tmp/cl-batch.err','utf8').slice(-600):'';const done=/\\\"status\\\":/.test(log)&&(/\\\"ok\\\":true/.test(log)||/\\\"ok\\\":false/.test(log)||/\\\"ok\\\": true/.test(log)||/\\\"ok\\\": false/.test(log));let parsed=null;try{const lines=log.trim().split(/\\n/).filter(Boolean);parsed=JSON.parse(lines[lines.length-1]||'{}')}catch(e){parsed=null}console.log(JSON.stringify({i:${i},done,result:parsed,errTail:err}))"`,
+    `node -e "const fs=require('fs'); const resultPath='/tmp/cl-batch-result.json'; const hasResult=fs.existsSync(resultPath); const log=fs.existsSync('/tmp/cl-batch.log')?fs.readFileSync('/tmp/cl-batch.log','utf8'):''; const err=fs.existsSync('/tmp/cl-batch.err')?fs.readFileSync('/tmp/cl-batch.err','utf8').slice(-600):''; let parsed=null; if(hasResult){ try{parsed=JSON.parse(fs.readFileSync(resultPath,'utf8'))}catch(e){parsed={parseError:true}} } else { try{ const lines=log.trim().split(/\\n/).filter(Boolean); parsed=JSON.parse(lines[lines.length-1]||'null'); }catch(e){parsed=null} } const done=Boolean(hasResult || (parsed && parsed.status)); console.log(JSON.stringify({i:${i},done,result:parsed,errTail:err}))"`,
     90,
   );
   const line = (poll.stdout || "").trim().split("\n").pop() || "{}";
