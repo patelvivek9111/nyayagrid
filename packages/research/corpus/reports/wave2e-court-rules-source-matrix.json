@@ -1,0 +1,931 @@
+{
+  "generatedAt": "2026-09-18T02:44:06.127Z",
+  "phase": "50S-WAVE-2E",
+  "matrixType": "court_rules_source",
+  "methodology": [
+    "Primary inputs: jurisdiction-sources.ts officialJudiciaryUrl / officialCourtRulesUrl, wave2d courtRulesTractable.",
+    "Availability flags set only where official rules hub verified or codified in known platform (e.g., PA Title 231)."
+  ],
+  "summary": {
+    "jurisdictionCount": 52,
+    "implementationStatus": {
+      "ready": 1,
+      "manual_or_unimplemented": 50,
+      "adapter_available": 1
+    },
+    "withCanonicalRulesUrl": 6,
+    "tractableRulesSets": 6
+  },
+  "entries": [
+    {
+      "jurisdiction": "US",
+      "officialCourtDomain": "www.supremecourt.gov",
+      "canonicalRulesUrl": "https://www.uscourts.gov/rules-policies",
+      "civilProcedureAvailable": true,
+      "evidenceAvailable": true,
+      "appellateAvailable": true,
+      "highCourtProceduralAvailable": true,
+      "format": "HTML",
+      "citationExamples": [
+        "Fed. R. Civ. P. 12(b)(6)",
+        "Fed. R. Evid. 401",
+        "Fed. R. App. P. 4(a)(1)(A)"
+      ],
+      "effectiveDateSupport": "yes",
+      "adapterFeasibility": "high",
+      "implementationStatus": "ready",
+      "notes": [
+        "Official court rules URL in registry; not yet triaged for adapter feasibility.",
+        "uscourts_rules adapter configured for federal rules entry points."
+      ]
+    },
+    {
+      "jurisdiction": "AL",
+      "officialCourtDomain": "judicial.alabama.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "AK",
+      "officialCourtDomain": "courts.alaska.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "AZ",
+      "officialCourtDomain": "www.azcourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "AR",
+      "officialCourtDomain": "www.arcourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "CA",
+      "officialCourtDomain": "www.courts.ca.gov",
+      "canonicalRulesUrl": "https://www.courts.ca.gov/rules.htm",
+      "civilProcedureAvailable": true,
+      "evidenceAvailable": true,
+      "appellateAvailable": true,
+      "highCourtProceduralAvailable": true,
+      "format": "HTML",
+      "citationExamples": [
+        "Cal. R. Ct. 3.110",
+        "Cal. R. Ct. 8.204"
+      ],
+      "effectiveDateSupport": "partial",
+      "adapterFeasibility": "medium",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "Official court rules URL in registry; not yet triaged for adapter feasibility.",
+        "Official judiciary rules hub; not yet wired to corpus adapter."
+      ]
+    },
+    {
+      "jurisdiction": "CO",
+      "officialCourtDomain": "www.courts.state.co.us",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "CT",
+      "officialCourtDomain": "www.jud.ct.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "DE",
+      "officialCourtDomain": "courts.delaware.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "FL",
+      "officialCourtDomain": "www.flcourts.gov",
+      "canonicalRulesUrl": "https://www.flcourts.gov/Rules-Proc",
+      "civilProcedureAvailable": true,
+      "evidenceAvailable": true,
+      "appellateAvailable": true,
+      "highCourtProceduralAvailable": true,
+      "format": "HTML",
+      "citationExamples": [
+        "Fla. R. Civ. P. 1.110",
+        "Fla. R. App. P. 9.110"
+      ],
+      "effectiveDateSupport": "partial",
+      "adapterFeasibility": "high",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately.",
+        "Wave2d verified 200; central rules hub."
+      ]
+    },
+    {
+      "jurisdiction": "GA",
+      "officialCourtDomain": "www.gasupreme.us",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "HI",
+      "officialCourtDomain": "www.courts.state.hi.us",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "ID",
+      "officialCourtDomain": "isc.idaho.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "IL",
+      "officialCourtDomain": "www.illinoiscourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "IN",
+      "officialCourtDomain": "www.in.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "IA",
+      "officialCourtDomain": "www.iowacourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "KS",
+      "officialCourtDomain": "www.kscourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "KY",
+      "officialCourtDomain": "kycourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "LA",
+      "officialCourtDomain": "www.lasc.org",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "ME",
+      "officialCourtDomain": "www.courts.maine.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "MD",
+      "officialCourtDomain": "www.mdcourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "MA",
+      "officialCourtDomain": "www.mass.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "MI",
+      "officialCourtDomain": "www.courts.michigan.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "MN",
+      "officialCourtDomain": "www.mncourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "MS",
+      "officialCourtDomain": "courts.ms.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "MO",
+      "officialCourtDomain": "www.courts.mo.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "MT",
+      "officialCourtDomain": "courts.mt.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "NE",
+      "officialCourtDomain": "supremecourt.nebraska.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "NV",
+      "officialCourtDomain": "nvcourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "NH",
+      "officialCourtDomain": "www.courts.nh.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "NJ",
+      "officialCourtDomain": "www.njcourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "NM",
+      "officialCourtDomain": "www.nmcourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "NY",
+      "officialCourtDomain": "www.nycourts.gov",
+      "canonicalRulesUrl": "https://ww2.nycourts.gov/rules/index.shtml",
+      "civilProcedureAvailable": true,
+      "evidenceAvailable": true,
+      "appellateAvailable": true,
+      "highCourtProceduralAvailable": true,
+      "format": "HTML",
+      "citationExamples": [
+        "CPLR 3012(a)",
+        "22 NYCRR § 202.5"
+      ],
+      "effectiveDateSupport": "partial",
+      "adapterFeasibility": "medium",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "Official court rules URL in registry; not yet triaged for adapter feasibility.",
+        "Registry URL returned 403 on automated HEAD; likely valid in browser."
+      ]
+    },
+    {
+      "jurisdiction": "NC",
+      "officialCourtDomain": "www.nccourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "ND",
+      "officialCourtDomain": "www.ndcourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "OH",
+      "officialCourtDomain": "www.supremecourt.ohio.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "OK",
+      "officialCourtDomain": "www.oscn.net",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "OR",
+      "officialCourtDomain": "www.courts.oregon.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "PA",
+      "officialCourtDomain": "www.pacourts.us",
+      "canonicalRulesUrl": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/231/chapter1/chap1toc.html",
+      "civilProcedureAvailable": true,
+      "evidenceAvailable": true,
+      "appellateAvailable": true,
+      "highCourtProceduralAvailable": true,
+      "format": "HTML",
+      "citationExamples": [
+        "Pa.R.C.P. 1007",
+        "Pa.R.A.P. 903",
+        "Pa.R.E. 401"
+      ],
+      "effectiveDateSupport": "partial",
+      "adapterFeasibility": "high",
+      "implementationStatus": "adapter_available",
+      "notes": [
+        "Official court rules URL in registry; not yet triaged for adapter feasibility.",
+        "Court rules codified in Pa Code Title 231; registry pacourts.us/rules-and-procedures returns 404."
+      ]
+    },
+    {
+      "jurisdiction": "RI",
+      "officialCourtDomain": "www.courts.ri.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "SC",
+      "officialCourtDomain": "www.sccourts.org",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "SD",
+      "officialCourtDomain": "ujs.sd.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "TN",
+      "officialCourtDomain": "www.tncourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "TX",
+      "officialCourtDomain": "www.txcourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "UT",
+      "officialCourtDomain": "www.utcourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "VT",
+      "officialCourtDomain": "www.vermontjudiciary.org",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "VA",
+      "officialCourtDomain": "www.vacourts.gov",
+      "canonicalRulesUrl": "https://www.vacourts.gov/courts/scv/rules",
+      "civilProcedureAvailable": true,
+      "evidenceAvailable": true,
+      "appellateAvailable": true,
+      "highCourtProceduralAvailable": true,
+      "format": "HTML",
+      "citationExamples": [
+        "Va. Sup. Ct. R. 5:1",
+        "Va. Code § 8.01-271.1"
+      ],
+      "effectiveDateSupport": "partial",
+      "adapterFeasibility": "high",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately.",
+        "Wave2d verified 200; trial rules on separate vacourts pages."
+      ]
+    },
+    {
+      "jurisdiction": "WA",
+      "officialCourtDomain": "www.courts.wa.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "WV",
+      "officialCourtDomain": "www.courtswv.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "WI",
+      "officialCourtDomain": "www.wicourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "WY",
+      "officialCourtDomain": "www.courts.state.wy.us",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    },
+    {
+      "jurisdiction": "DC",
+      "officialCourtDomain": "www.dccourts.gov",
+      "canonicalRulesUrl": null,
+      "civilProcedureAvailable": false,
+      "evidenceAvailable": false,
+      "appellateAvailable": false,
+      "highCourtProceduralAvailable": false,
+      "format": "unknown",
+      "citationExamples": [],
+      "effectiveDateSupport": "unknown",
+      "adapterFeasibility": "low",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official court rules URL recorded; judiciary portal may host rules separately."
+      ]
+    }
+  ]
+}

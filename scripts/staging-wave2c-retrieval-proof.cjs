@@ -15,7 +15,12 @@ const postgres = require("postgres");
     { key: "al_deepened", cite: "Ala. Code" },
     { key: "pa_reg", cite: "34 Pa. Code § 231.1" },
     { key: "fl_reg", cite: "Fla. Admin. Code" },
+    { key: "va_reg", cite: "VAC" },
+    { key: "oh_reg", cite: "Ohio Admin" },
+    { key: "tx_reg", cite: "Tex. Admin" },
     { key: "pa_rule", cite: "Pa.R.C.P." },
+    { key: "ca_rule", cite: "Cal. Rules of Court" },
+    { key: "tx_rule", cite: "Tex. R. Civ. P." },
     { key: "miss", cite: "ZZZ.FAKE.STATUTE § 99999" },
   ];
   const hits = {};
@@ -56,7 +61,11 @@ const postgres = require("postgres");
       hits[q.key] = { state, rows };
       continue;
     }
-    if (["pa_reg", "fl_reg", "pa_rule"].includes(q.key)) {
+    if (
+      ["pa_reg", "fl_reg", "va_reg", "oh_reg", "tx_reg", "pa_rule", "ca_rule", "tx_rule"].includes(
+        q.key,
+      )
+    ) {
       const rows = await sql`
         select citation, authority_type::text as t, authority_state, left(title,100) as title,
           canonical_source_url is not null as has_url,

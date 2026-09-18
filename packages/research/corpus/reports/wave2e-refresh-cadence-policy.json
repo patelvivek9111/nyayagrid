@@ -1,0 +1,52 @@
+{
+  "generatedAt": "2026-09-18T02:44:06.127Z",
+  "phase": "50S-WAVE-2E",
+  "policyType": "refresh_cadence",
+  "notes": [
+    "Conservative defaults for NyayaGrid corpus refresh scheduling.",
+    "Interval days are minimum spacing between automated refresh attempts; manual-only has no scheduler."
+  ],
+  "classes": {
+    "regulatory_frequent": {
+      "intervalDays": 7,
+      "appliesTo": [
+        "US eCFR",
+        "States with adapter_available and high refreshFeasibility"
+      ],
+      "notes": "Federal eCFR updates continuously; weekly check balances freshness vs. API load. State regs with stable HTML adapters may use 14-day override per jurisdiction."
+    },
+    "statute_periodic": {
+      "intervalDays": 90,
+      "appliesTo": [
+        "State statutes via state_statute adapter",
+        "USC House viewer snapshots"
+      ],
+      "notes": "Session-law-driven; quarterly refresh unless jurisdiction signals mid-session codification update."
+    },
+    "court_rules_periodic": {
+      "intervalDays": 180,
+      "appliesTo": [
+        "Federal US Courts rules",
+        "State court rules with official HTML hubs"
+      ],
+      "notes": "Rules amend less frequently than regulations; semi-annual check unless court order amends tracked rule set."
+    },
+    "constitution_static": {
+      "intervalDays": 365,
+      "appliesTo": [
+        "State and federal constitutional provisions in seed corpus"
+      ],
+      "notes": "Amendments are rare; annual verification sufficient unless amendment ballot pending."
+    },
+    "manual_only": {
+      "intervalDays": null,
+      "appliesTo": [
+        "blocked_by_proprietary_browse (Lexis/Westlaw)",
+        "terms_review_required (mass.gov CMS)",
+        "source_unstable (TX TAC transition)",
+        "Jurisdictions without canonical official URL"
+      ],
+      "notes": "No automated refresh; human-curated snapshot or licensed source required before re-ingest."
+    }
+  }
+}

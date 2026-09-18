@@ -100,6 +100,48 @@ export const WAVE1_STATE_REGULATION_CONFIGS: Record<string, StateRegulationSourc
     platformFamily: "jcar_html",
     citationPattern: String.raw`Ill\.\s*Admin\.\s*Code\s+tit\.\s*\d+\s*§\s*[\d.]+`,
   },
+  OH: {
+    stateCode: "OH",
+    baseUrl: "https://codes.ohio.gov/ohio-administrative-code/",
+    platformFamily: "custom_html",
+    citationPattern: String.raw`Ohio\s+Admin\.\s*Code\s+[\d\-.:]+`,
+  },
+  WA: {
+    stateCode: "WA",
+    baseUrl: "https://app.leg.wa.gov/WAC/",
+    platformFamily: "lis_revisor",
+    citationPattern: String.raw`WAC\s+[\d\-]+`,
+  },
+  CO: {
+    stateCode: "CO",
+    baseUrl: "https://www.sos.state.co.us/CCR/",
+    platformFamily: "sos_portal",
+    citationPattern: String.raw`\d+\s+CCR\s+[\d\-]+`,
+  },
+  MI: {
+    stateCode: "MI",
+    baseUrl: "https://www.michigan.gov/lara/",
+    platformFamily: "custom_html",
+    citationPattern: String.raw`Mich\.\s*Admin\.\s*Code\s+R\s+[\d.]+`,
+  },
+  MD: {
+    stateCode: "MD",
+    baseUrl: "https://dsd.maryland.gov/Pages/COMARHome.aspx",
+    platformFamily: "custom_html",
+    citationPattern: String.raw`COMAR\s+[\d.]+`,
+  },
+  TX: {
+    stateCode: "TX",
+    baseUrl: "https://www.sos.texas.gov/tac/",
+    platformFamily: "sos_portal",
+    citationPattern: String.raw`\d+\s+Tex\.\s*Admin\.\s*Code\s*§\s*[\d.]+`,
+  },
+  NC: {
+    stateCode: "NC",
+    baseUrl: "https://www.oah.nc.gov/",
+    platformFamily: "custom_html",
+    citationPattern: String.raw`\d+\s+NCAC\s+[\d.]+`,
+  },
 };
 
 export function createStateRegulationAdapter(

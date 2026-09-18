@@ -1,5 +1,5 @@
   {
-    "phase": "50S-WAVE-2D",
+    "phase": "50S-WAVE-2E",
     "parserVersion": "corpus1-v3",
     "federalBundles": [
     { "bundleFile": "federal.json", "practiceAreas": ["federal", "constitutional", "civil"] },
@@ -16,7 +16,10 @@
     { "bundleFile": "expansion-wave2c-states.json", "practiceAreas": ["civil", "commercial"] },
     { "bundleFile": "expansion-wave2d-state-regs.json", "practiceAreas": ["employment", "administrative", "regulation", "business"] },
     { "bundleFile": "expansion-wave2d-state-rules.json", "practiceAreas": ["civil", "procedure"] },
-    { "bundleFile": "expansion-wave2d-statutes.json", "practiceAreas": ["civil", "commercial", "corporations"] }
+    { "bundleFile": "expansion-wave2d-statutes.json", "practiceAreas": ["civil", "commercial", "corporations"] },
+    { "bundleFile": "expansion-wave2e-state-regs.json", "practiceAreas": ["employment", "administrative", "regulation", "business"] },
+    { "bundleFile": "expansion-wave2e-state-rules.json", "practiceAreas": ["civil", "procedure"] },
+    { "bundleFile": "expansion-wave2e-statutes.json", "practiceAreas": ["civil", "commercial", "corporations", "employment", "consumer"] }
   ],
   "states": [
     { "code": "PA", "bundleFile": "pa.json", "practiceAreas": ["contract", "employment", "civil"] },

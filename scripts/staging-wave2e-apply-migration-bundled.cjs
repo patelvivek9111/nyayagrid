@@ -2196,121 +2196,82 @@ var require_src = __commonJS({
   }
 });
 
-// scripts/staging-wave2c-retrieval-proof.cjs
+// scripts/staging-wave2e-apply-migration.cjs
 var postgres = require_src();
+var DDL = `
+CREATE TABLE IF NOT EXISTS "corpus_refresh_jobs" (
+  "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  "source_key" text NOT NULL,
+  "jurisdiction" text NOT NULL,
+  "adapter_name" text NOT NULL,
+  "cadence_class" text NOT NULL DEFAULT 'manual_only',
+  "status" text NOT NULL DEFAULT 'pending',
+  "cursor" text,
+  "checkpoint" jsonb NOT NULL DEFAULT '{}'::jsonb,
+  "authorities_checked" integer NOT NULL DEFAULT 0,
+  "authorities_unchanged" integer NOT NULL DEFAULT 0,
+  "authorities_changed" integer NOT NULL DEFAULT 0,
+  "authorities_failed" integer NOT NULL DEFAULT 0,
+  "authorities_unavailable" integer NOT NULL DEFAULT 0,
+  "http_fetches" integer NOT NULL DEFAULT 0,
+  "last_error" text,
+  "last_successful_run_at" timestamp with time zone,
+  "next_eligible_at" timestamp with time zone,
+  "started_at" timestamp with time zone,
+  "updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+  "completed_at" timestamp with time zone,
+  "created_at" timestamp with time zone DEFAULT now() NOT NULL
+);
+CREATE UNIQUE INDEX IF NOT EXISTS "corpus_refresh_jobs_source_jur_uidx"
+  ON "corpus_refresh_jobs" ("source_key", "jurisdiction");
+CREATE INDEX IF NOT EXISTS "corpus_refresh_jobs_status_idx"
+  ON "corpus_refresh_jobs" ("status");
+CREATE INDEX IF NOT EXISTS "corpus_refresh_jobs_next_eligible_idx"
+  ON "corpus_refresh_jobs" ("next_eligible_at");
+
+CREATE TABLE IF NOT EXISTS "corpus_source_health" (
+  "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+  "source_key" text NOT NULL,
+  "jurisdiction" text NOT NULL,
+  "adapter_name" text,
+  "status" text NOT NULL DEFAULT 'healthy',
+  "last_success_at" timestamp with time zone,
+  "last_failure_at" timestamp with time zone,
+  "consecutive_failures" integer NOT NULL DEFAULT 0,
+  "last_http_status" integer,
+  "last_error" text,
+  "parser_version" text,
+  "metadata" jsonb NOT NULL DEFAULT '{}'::jsonb,
+  "updated_at" timestamp with time zone DEFAULT now() NOT NULL,
+  "created_at" timestamp with time zone DEFAULT now() NOT NULL
+);
+CREATE UNIQUE INDEX IF NOT EXISTS "corpus_source_health_source_jur_uidx"
+  ON "corpus_source_health" ("source_key", "jurisdiction");
+CREATE INDEX IF NOT EXISTS "corpus_source_health_status_idx"
+  ON "corpus_source_health" ("status");
+`;
 (async () => {
-  const sql = postgres(process.env.DATABASE_URL, { ssl: "require", max: 1 });
-  const queries = [
-    { key: "usc", cite: "28 U.S.C. \xA7 1331" },
-    { key: "cfr", cite: "29 C.F.R. \xA7 541.300" },
-    { key: "cfr_alt", cite: "29 CFR \xA7 541.300" },
-    { key: "frcp", cite: "Fed. R. Civ. P. 12" },
-    { key: "pa", cite: "42 Pa.C.S. \xA7 5525" },
-    { key: "ny", cite: "N.Y." },
-    { key: "ca", cite: "Cal." },
-    { key: "tx", cite: "Tex." },
-    { key: "nj", cite: "N.J.S.A." },
-    { key: "al_deepened", cite: "Ala. Code" },
-    { key: "pa_reg", cite: "34 Pa. Code \xA7 231.1" },
-    { key: "fl_reg", cite: "Fla. Admin. Code" },
-    { key: "va_reg", cite: "VAC" },
-    { key: "oh_reg", cite: "Ohio Admin" },
-    { key: "tx_reg", cite: "Tex. Admin" },
-    { key: "pa_rule", cite: "Pa.R.C.P." },
-    { key: "ca_rule", cite: "Cal. Rules of Court" },
-    { key: "tx_rule", cite: "Tex. R. Civ. P." },
-    { key: "miss", cite: "ZZZ.FAKE.STATUTE \xA7 99999" }
-  ];
-  const hits = {};
-  for (const q of queries) {
-    if (q.key === "miss") {
-      const rows2 = await sql`
-        select citation, authority_type::text as t, authority_state, left(title,80) as title
-        from legal_authorities
-        where source_provider = 'us-primary-corpus'
-          and (citation ilike ${"%" + q.cite + "%"} or title ilike ${"%" + q.cite + "%"})
-        limit 3
-      `;
-      hits[q.key] = { cite: q.cite, rows: rows2, missSafe: rows2.length === 0 };
-      continue;
-    }
-    if (["ny", "ca", "tx", "nj", "al_deepened"].includes(q.key)) {
-      const state = q.key === "ny" ? "NY" : q.key === "ca" ? "CA" : q.key === "tx" ? "TX" : q.key === "nj" ? "NJ" : "AL";
-      const rows2 = await sql`
-        select citation, authority_type::text as t, authority_state, left(title,100) as title,
-          canonical_source_url is not null as has_url,
-          currentness_status::text as currentness
-        from legal_authorities
-        where source_provider = 'us-primary-corpus'
-          and authority_state = ${state}
-          and authority_type = 'statute'
-        order by citation
-        limit 5
-      `;
-      hits[q.key] = { state, rows: rows2 };
-      continue;
-    }
-    if (["pa_reg", "fl_reg", "va_reg", "oh_reg", "tx_reg", "pa_rule", "ca_rule", "tx_rule"].includes(
-      q.key
-    )) {
-      const rows2 = await sql`
-        select citation, authority_type::text as t, authority_state, left(title,100) as title,
-          canonical_source_url is not null as has_url,
-          currentness_status::text as currentness
-        from legal_authorities
-        where source_provider = 'us-primary-corpus'
-          and (
-            citation ilike ${"%" + q.cite.replace("\xA7", "%") + "%"}
-            or title ilike ${"%" + q.cite + "%"}
-          )
-        limit 3
-      `;
-      hits[q.key] = { cite: q.cite, rows: rows2 };
-      continue;
-    }
-    const rows = await sql`
-      select citation, normalized_citation, authority_type::text as t, authority_state,
-        left(title,100) as title, canonical_source_url is not null as has_url,
-        currentness_status::text as currentness
-      from legal_authorities
-      where source_provider = 'us-primary-corpus'
-        and (
-          citation ilike ${"%" + q.cite.replace("\xA7", "%") + "%"}
-          or normalized_citation ilike ${"%" + q.cite.replace("\xA7", "%") + "%"}
-          or title ilike ${"%" + q.cite + "%"}
-        )
-      limit 3
-    `;
-    hits[q.key] = { cite: q.cite, rows };
-  }
-  const chunks = await sql`
-    select count(*)::int as n
-    from legal_authority_chunks c
-    join legal_authorities a on a.id = c.authority_id
-    where a.source_provider = 'us-primary-corpus'
+  const sql = postgres(process.env.DATABASE_URL, { max: 1, ssl: "require" });
+  await sql.unsafe(DDL);
+  await sql`
+    insert into corpus_source_health (source_key, jurisdiction, adapter_name, status, parser_version)
+    values
+      ('ecfr', 'US', 'ecfr', 'healthy', 'corpus1-v3'),
+      ('state_regulation', 'PA', 'state_regulation_pa', 'healthy', 'corpus1-v3'),
+      ('state_regulation', 'FL', 'state_regulation_fl', 'healthy', 'corpus1-v3'),
+      ('state_regulation', 'VA', 'state_regulation_va', 'healthy', 'corpus1-v3'),
+      ('uscourts_rules', 'US', 'uscourts_rules', 'degraded', 'corpus1-v3')
+    on conflict (source_key, jurisdiction) do nothing
   `;
-  const emb = await sql`
-    select count(*)::int as n
-    from legal_authority_chunks c
-    join legal_authorities a on a.id = c.authority_id
-    where a.source_provider = 'us-primary-corpus' and c.embedding is not null
+  const tables = await sql`
+    select table_name from information_schema.tables
+    where table_name in ('corpus_refresh_jobs','corpus_source_health')
+    order by 1
   `;
-  console.log(
-    JSON.stringify(
-      {
-        ok: true,
-        hits,
-        chunks: chunks[0],
-        embeddings: emb[0],
-        featureAgents: process.env.FEATURE_AGENTS ?? null,
-        generalWebNote: "Legal Research contract remains generalWebEnabled=false; this probe is corpus SQL only"
-      },
-      null,
-      2
-    )
-  );
-  await sql.end({ timeout: 5 });
+  const health = await sql`select source_key, jurisdiction, status from corpus_source_health order by 1,2`;
+  console.log(JSON.stringify({ ok: true, tables, health }, null, 2));
+  await sql.end({ timeout: 2 });
 })().catch((e) => {
-  console.log(JSON.stringify({ ok: false, err: String(e.message || e).slice(0, 300) }));
+  console.log(JSON.stringify({ ok: false, err: String(e.message || e).slice(0, 500) }));
   process.exit(1);
 });

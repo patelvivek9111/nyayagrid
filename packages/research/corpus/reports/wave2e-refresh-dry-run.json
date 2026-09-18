@@ -1,0 +1,93 @@
+{
+  "generatedAt": "2026-09-18T03:01:45.707Z",
+  "wave": "2E",
+  "note": "Dry-run HTTP checks only; no corpus mutation; no CourtListener.",
+  "attempted": 9,
+  "fetched": 7,
+  "unchanged": 0,
+  "changed": 0,
+  "unavailable": 2,
+  "failed": 0,
+  "rateLimited": 0,
+  "results": [
+    {
+      "id": "us-29-cfr-541-300",
+      "url": "https://www.ecfr.gov/current/title-29/part-541/section-541.300",
+      "type": "regulation",
+      "state": "US",
+      "outcome": "fetched",
+      "httpStatus": 200,
+      "bytes": 10595
+    },
+    {
+      "id": "us-29-cfr-541-400",
+      "url": "https://www.ecfr.gov/current/title-29/part-541/section-541.400",
+      "type": "regulation",
+      "state": "US",
+      "outcome": "fetched",
+      "httpStatus": 200,
+      "bytes": 10595
+    },
+    {
+      "id": "us-29-cfr-541-500",
+      "url": "https://www.ecfr.gov/current/title-29/part-541/section-541.500",
+      "type": "regulation",
+      "state": "US",
+      "outcome": "fetched",
+      "httpStatus": 200,
+      "bytes": 10595
+    },
+    {
+      "id": "pa-code-34-231-1",
+      "url": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/034/chapter231/s231.1.html",
+      "type": "regulation",
+      "state": "PA",
+      "outcome": "fetched",
+      "httpStatus": 200,
+      "bytes": 42319
+    },
+    {
+      "id": "pa-code-34-231-41",
+      "url": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/034/chapter231/s231.41.html",
+      "type": "regulation",
+      "state": "PA",
+      "outcome": "fetched",
+      "httpStatus": 200,
+      "bytes": 32471
+    },
+    {
+      "id": "pa-code-34-231-43",
+      "url": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/034/chapter231/s231.43.html",
+      "type": "regulation",
+      "state": "PA",
+      "outcome": "fetched",
+      "httpStatus": 200,
+      "bytes": 43265
+    },
+    {
+      "id": "pa-code-1-35-9",
+      "url": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/001/chapter35/s35.9.html",
+      "type": "regulation",
+      "state": "PA",
+      "outcome": "fetched",
+      "httpStatus": 200,
+      "bytes": 39700
+    },
+    {
+      "id": "us-frcp-1",
+      "url": "https://www.uscourts.gov/forms-rules/current-rules/rules-civil-procedure/rule-1-scope-and-purpose",
+      "type": "rule",
+      "state": "US",
+      "outcome": "unavailable",
+      "httpStatus": 404
+    },
+    {
+      "id": "us-frcp-8",
+      "url": "https://www.uscourts.gov/forms-rules/current-rules/rules-civil-procedure/rule-8-general-rules-pleading",
+      "type": "rule",
+      "state": "US",
+      "outcome": "unavailable",
+      "httpStatus": 404
+    }
+  ]
+}

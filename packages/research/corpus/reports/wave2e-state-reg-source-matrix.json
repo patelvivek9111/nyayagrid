@@ -1,0 +1,1042 @@
+{
+  "generatedAt": "2026-09-18T02:44:06.127Z",
+  "phase": "50S-WAVE-2E",
+  "matrixType": "state_regulation_source",
+  "methodology": [
+    "Primary inputs: jurisdiction-sources.ts, wave2c-regulation-source-registry.json, wave2d-state-reg-triage.json, state-regulation.ts WAVE1 configs.",
+    "Wave-1 CA/MA/NJ/NY/TX: prefer official compilers; Westlaw/Lexis browse-only → blocked_by_proprietary_browse.",
+    "No public APIs assumed or invented."
+  ],
+  "summary": {
+    "jurisdictionCount": 52,
+    "implementationStatus": {
+      "ready": 1,
+      "manual_or_unimplemented": 38,
+      "blocked_by_proprietary_browse": 6,
+      "adapter_available": 5,
+      "terms_review_required": 1,
+      "source_unstable": 1
+    },
+    "platformFamily": {
+      "unknown": 31,
+      "sos_portal": 6,
+      "westlaw_browse_contract": 2,
+      "lexis_publisher_contract": 4,
+      "lis_revisor": 6,
+      "jcar_html": 1,
+      "mass_cms": 1,
+      "legislative_reference_bureau": 1
+    },
+    "withCanonicalUrl": 18,
+    "adapterAvailable": 5
+  },
+  "entries": [
+    {
+      "jurisdiction": "US",
+      "officialSourceOwner": "Office of the Federal Register / GPO (eCFR)",
+      "canonicalSourceUrl": "https://www.ecfr.gov/",
+      "adminCodeTitle": "Code of Federal Regulations",
+      "platformFamily": "unknown",
+      "format": "API",
+      "machineReadableQuality": "high",
+      "citationStructure": "29 C.F.R. § 825.112",
+      "currentnessMetadataAvailability": "source_date",
+      "effectiveDateMetadataAvailability": "yes",
+      "historicalVersionAvailability": "partial",
+      "refreshFeasibility": "high",
+      "adapterFamily": null,
+      "implementationStatus": "ready",
+      "notes": [
+        "Official regulation URL in jurisdiction-sources registry; not yet triaged in wave2d.",
+        "ecfr adapter ready; public versioner API with as-of date metadata."
+      ]
+    },
+    {
+      "jurisdiction": "AL",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Alabama Administrative Code",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "Ala. Admin. Code r. 660-X-6-.01",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "AK",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Alaska Administrative Code",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "4 AAC 07.010",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "AZ",
+      "officialSourceOwner": "Arizona Secretary of State (Administrative Code)",
+      "canonicalSourceUrl": "https://apps.azsos.gov/public_services/CodeTitle.htm",
+      "adminCodeTitle": "Arizona Administrative Code",
+      "platformFamily": "sos_portal",
+      "format": "HTML",
+      "machineReadableQuality": "low",
+      "citationStructure": "Ariz. Admin. Code R18-4-215",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "Official regulation URL in jurisdiction-sources registry; not yet triaged in wave2d."
+      ]
+    },
+    {
+      "jurisdiction": "AR",
+      "officialSourceOwner": "Arkansas Secretary of State",
+      "canonicalSourceUrl": "https://www.sos.arkansas.gov/rules-and-regulations/arkansas-administrative-code",
+      "adminCodeTitle": "Arkansas Administrative Code",
+      "platformFamily": "sos_portal",
+      "format": "HTML",
+      "machineReadableQuality": "low",
+      "citationStructure": "005.01.22-001",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry.",
+        "Wave2d SOS portal family example state."
+      ]
+    },
+    {
+      "jurisdiction": "CA",
+      "officialSourceOwner": "California Office of Administrative Law (compiler); Thomson Reuters (contracted online browse)",
+      "canonicalSourceUrl": "https://oal.ca.gov/publications/ccr/",
+      "adminCodeTitle": "California Code of Regulations",
+      "platformFamily": "westlaw_browse_contract",
+      "format": "mixed",
+      "machineReadableQuality": "low",
+      "citationStructure": "Cal. Code Regs. tit. 2, § 11042",
+      "currentnessMetadataAvailability": "partial",
+      "effectiveDateMetadataAvailability": "partial",
+      "historicalVersionAvailability": "partial",
+      "refreshFeasibility": "low",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "blocked_by_proprietary_browse",
+      "notes": [
+        "Official regulation URL in jurisdiction-sources registry; not yet triaged in wave2d.",
+        "Full online CCR via govt.westlaw.com/calregs under state contract; OAL page is compiler landing only.",
+        "Title 24 excluded from online CCR."
+      ]
+    },
+    {
+      "jurisdiction": "CO",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Colorado Code of Regulations",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "5 CCR 1007-2, Part 1",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "CT",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Connecticut Administrative Regulations",
+      "platformFamily": "lexis_publisher_contract",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "Conn. Agencies Regs. § 19a-36-A10",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "blocked_by_proprietary_browse",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry.",
+        "Wave2d: official-publisher Lexis arrangement reported — verify before any ingestion."
+      ]
+    },
+    {
+      "jurisdiction": "DE",
+      "officialSourceOwner": "Delaware Register of Regulations",
+      "canonicalSourceUrl": "https://regulations.delaware.gov/",
+      "adminCodeTitle": "Delaware Administrative Code",
+      "platformFamily": "sos_portal",
+      "format": "HTML",
+      "machineReadableQuality": "medium",
+      "citationStructure": "16 Del. Admin. Code § 4501.0",
+      "currentnessMetadataAvailability": "partial",
+      "effectiveDateMetadataAvailability": "partial",
+      "historicalVersionAvailability": "partial",
+      "refreshFeasibility": "medium",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "adapter_available",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "FL",
+      "officialSourceOwner": "Florida Department of State (Florida Administrative Code & Register)",
+      "canonicalSourceUrl": "https://www.flrules.org/",
+      "adminCodeTitle": "Florida Administrative Code",
+      "platformFamily": "sos_portal",
+      "format": "HTML",
+      "machineReadableQuality": "medium",
+      "citationStructure": "Fla. Admin. Code R. 60A-1.004",
+      "currentnessMetadataAvailability": "partial",
+      "effectiveDateMetadataAvailability": "partial",
+      "historicalVersionAvailability": "partial",
+      "refreshFeasibility": "high",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "adapter_available",
+      "notes": [
+        "Official regulation URL in jurisdiction-sources registry; not yet triaged in wave2d."
+      ]
+    },
+    {
+      "jurisdiction": "GA",
+      "officialSourceOwner": "Georgia Secretary of State (Rules and Regulations)",
+      "canonicalSourceUrl": "https://rules.sos.ga.gov/",
+      "adminCodeTitle": "Georgia Compiled Rules and Regulations",
+      "platformFamily": "lis_revisor",
+      "format": "HTML",
+      "machineReadableQuality": "medium",
+      "citationStructure": "Ga. Comp. R. & Regs. r. 480-3-.02",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "medium",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry.",
+        "Wave2d LIS/revisor family example state."
+      ]
+    },
+    {
+      "jurisdiction": "HI",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Hawaii Administrative Rules",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "Haw. Admin. Rules § 11-60.1-1",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "ID",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Idaho Administrative Code",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "IDAPA 08.02.01.100",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "IL",
+      "officialSourceOwner": "Joint Committee on Administrative Rules (JCAR) / Illinois General Assembly",
+      "canonicalSourceUrl": "https://www.ilga.gov/commission/jcar/admincode/titles.html",
+      "adminCodeTitle": "Illinois Administrative Code",
+      "platformFamily": "jcar_html",
+      "format": "HTML",
+      "machineReadableQuality": "medium",
+      "citationStructure": "Ill. Admin. Code tit. 77, § 1000.10",
+      "currentnessMetadataAvailability": "partial",
+      "effectiveDateMetadataAvailability": "partial",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "medium",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "adapter_available",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "IN",
+      "officialSourceOwner": "Indiana Legislative Services Agency",
+      "canonicalSourceUrl": "https://iga.in.gov/laws/administrative-rules",
+      "adminCodeTitle": "Indiana Administrative Code and Rules",
+      "platformFamily": "lis_revisor",
+      "format": "HTML",
+      "machineReadableQuality": "medium",
+      "citationStructure": "675 IAC 12-6-1",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "medium",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry.",
+        "Wave2d LIS/revisor family example state."
+      ]
+    },
+    {
+      "jurisdiction": "IA",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Iowa Administrative Code",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "Iowa Admin. Code r. 481-25.1",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "KS",
+      "officialSourceOwner": "Kansas Secretary of State",
+      "canonicalSourceUrl": "https://sos.ks.gov/publications/Regulations.html",
+      "adminCodeTitle": "Kansas Administrative Regulations",
+      "platformFamily": "sos_portal",
+      "format": "HTML",
+      "machineReadableQuality": "low",
+      "citationStructure": "K.A.R. 28-4-135",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry.",
+        "Wave2d SOS portal family example state; URL not spot-checked this session."
+      ]
+    },
+    {
+      "jurisdiction": "KY",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Kentucky Administrative Regulations",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "902 KAR 2:020",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "LA",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Louisiana Administrative Code",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "La. Admin. Code tit. 51, § 101",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "ME",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Maine Administrative Code",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "01-001 C.M.R. ch. 1, § 1",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "MD",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Code of Maryland Regulations",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "COMAR 10.09.01.01",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "MA",
+      "officialSourceOwner": "Commonwealth of Massachusetts (Executive agencies; CMR on mass.gov)",
+      "canonicalSourceUrl": "https://www.mass.gov/lists/code-of-massachusetts-regulations-cmr-by-number",
+      "adminCodeTitle": "Code of Massachusetts Regulations",
+      "platformFamily": "mass_cms",
+      "format": "HTML",
+      "machineReadableQuality": "low",
+      "citationStructure": "940 CMR 3.00",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "terms_review_required",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry.",
+        "Automated HEAD returned 403 — likely bot filtering; prefer throttled manual snapshot."
+      ]
+    },
+    {
+      "jurisdiction": "MI",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Michigan Administrative Code",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "Mich. Admin. Code R 325.7001",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "MN",
+      "officialSourceOwner": "Minnesota Office of the Revisor of Statutes",
+      "canonicalSourceUrl": "https://www.revisor.mn.gov/rules/",
+      "adminCodeTitle": "Minnesota Administrative Rules",
+      "platformFamily": "lis_revisor",
+      "format": "HTML",
+      "machineReadableQuality": "medium",
+      "citationStructure": "Minn. R. 4620.0100",
+      "currentnessMetadataAvailability": "partial",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "medium",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry.",
+        "Wave2d LIS/revisor family example state."
+      ]
+    },
+    {
+      "jurisdiction": "MS",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Mississippi Administrative Code",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "Miss. Admin. Code Pt. 100, r. 1.1",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "MO",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Missouri Code of State Regulations",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "2 CSR 10-2.010",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "MT",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Montana Administrative Rules",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "ARM 37.82.101",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "NE",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Nebraska Administrative Code",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "173 NAC 1",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "NV",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Nevada Administrative Code",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "NAC 284.546",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "NH",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "New Hampshire Code of Administrative Rules",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "Env-A 100.01",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "NJ",
+      "officialSourceOwner": "New Jersey Office of Administrative Law (compiler); LexisNexis/Matthew Bender (official publisher)",
+      "canonicalSourceUrl": "https://www.nj.gov/oal/rules/accessp/",
+      "adminCodeTitle": "New Jersey Administrative Code",
+      "platformFamily": "lexis_publisher_contract",
+      "format": "HTML",
+      "machineReadableQuality": "low",
+      "citationStructure": "N.J. Admin. Code § 13:45A-1.1",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "blocked_by_proprietary_browse",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry.",
+        "OAL directs public to Lexis hottopics mirror; site states online version is not the official Code."
+      ]
+    },
+    {
+      "jurisdiction": "NM",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "New Mexico Administrative Code",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "N.M. Admin. Code § 18.104.22.168",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "NY",
+      "officialSourceOwner": "New York Department of State, Division of Administrative Rules (compiler); Thomson Reuters Westlaw (unofficial browse)",
+      "canonicalSourceUrl": "https://dos.ny.gov/division-administrative-rules",
+      "adminCodeTitle": "New York Codes, Rules and Regulations",
+      "platformFamily": "westlaw_browse_contract",
+      "format": "mixed",
+      "machineReadableQuality": "low",
+      "citationStructure": "19 N.Y.C.R.R. § 130-1.1",
+      "currentnessMetadataAvailability": "partial",
+      "effectiveDateMetadataAvailability": "partial",
+      "historicalVersionAvailability": "partial",
+      "refreshFeasibility": "low",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "blocked_by_proprietary_browse",
+      "notes": [
+        "Official regulation URL in jurisdiction-sources registry; not yet triaged in wave2d.",
+        "Searchable NYCRR text on govt.westlaw.com/nycrr labeled unofficial.",
+        "Official State Register PDFs at dos.ny.gov are register-only, not full codified code.",
+        "Registry URL www.dos.ny.gov/info/nycrr.html returns 404 (wave2d)."
+      ]
+    },
+    {
+      "jurisdiction": "NC",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "North Carolina Administrative Code",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "15A NCAC 18A .0101",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "ND",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "North Dakota Administrative Code",
+      "platformFamily": "lis_revisor",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "N.D. Admin. Code § 33-04-01-01",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry.",
+        "Wave2d LIS/revisor family example state; official admin code URL not recorded in registry."
+      ]
+    },
+    {
+      "jurisdiction": "OH",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Ohio Administrative Code",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "Ohio Admin. Code 3701-9-01",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "OK",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Oklahoma Administrative Rules",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "OAC 310:675-1-2",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "OR",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Oregon Administrative Rules",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "OAR 411-015-0005",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "PA",
+      "officialSourceOwner": "Pennsylvania Legislative Reference Bureau (Pennsylvania Code and Bulletin)",
+      "canonicalSourceUrl": "https://www.pacodeandbulletin.gov/",
+      "adminCodeTitle": "Pennsylvania Code (Title 67 et seq.)",
+      "platformFamily": "legislative_reference_bureau",
+      "format": "HTML",
+      "machineReadableQuality": "medium",
+      "citationStructure": "61 Pa. Code § 67.1",
+      "currentnessMetadataAvailability": "partial",
+      "effectiveDateMetadataAvailability": "partial",
+      "historicalVersionAvailability": "partial",
+      "refreshFeasibility": "high",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "adapter_available",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "RI",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Rhode Island Administrative Code",
+      "platformFamily": "lexis_publisher_contract",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "R.I. Code R. 05-000-001",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "blocked_by_proprietary_browse",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry.",
+        "Wave2d: official-publisher Lexis arrangement reported — verify before any ingestion."
+      ]
+    },
+    {
+      "jurisdiction": "SC",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "South Carolina Code of Regulations",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "S.C. Code Regs. 61-1",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "SD",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "South Dakota Administrative Rules",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "ARSD 44:09:01:01",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "TN",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Tennessee Compilation of Rules and Regulations",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "Tenn. Comp. R. & Regs. 1200-03-01-.01",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "TX",
+      "officialSourceOwner": "Texas Secretary of State (Texas Register & Texas Administrative Code)",
+      "canonicalSourceUrl": "https://www.sos.texas.gov/texreg/index.shtml",
+      "adminCodeTitle": "Texas Administrative Code",
+      "platformFamily": "sos_portal",
+      "format": "mixed",
+      "machineReadableQuality": "low",
+      "citationStructure": "16 Tex. Admin. Code § 3.30",
+      "currentnessMetadataAvailability": "partial",
+      "effectiveDateMetadataAvailability": "partial",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "medium",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "source_unstable",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry.",
+        "Legacy readtac.cfm returned 401 on automated check; Appian portal migration adds session friction."
+      ]
+    },
+    {
+      "jurisdiction": "UT",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Utah Administrative Code",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "R432-100-1",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "VT",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Vermont Administrative Rules",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "Code Vt. R. 13 140 001",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "VA",
+      "officialSourceOwner": "Virginia General Assembly — Legislative Information System (LIS)",
+      "canonicalSourceUrl": "https://law.lis.virginia.gov/admincode/",
+      "adminCodeTitle": "Virginia Administrative Code",
+      "platformFamily": "lis_revisor",
+      "format": "HTML",
+      "machineReadableQuality": "medium",
+      "citationStructure": "12 Va. Admin. Code § 5-421-460",
+      "currentnessMetadataAvailability": "partial",
+      "effectiveDateMetadataAvailability": "partial",
+      "historicalVersionAvailability": "partial",
+      "refreshFeasibility": "high",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "adapter_available",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "WA",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Washington Administrative Code",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "WAC 388-112-0010",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "WV",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "West Virginia Code of State Rules",
+      "platformFamily": "lexis_publisher_contract",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "64 CSR 7",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "blocked_by_proprietary_browse",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry.",
+        "Wave2d: official-publisher Lexis arrangement reported — verify before any ingestion."
+      ]
+    },
+    {
+      "jurisdiction": "WI",
+      "officialSourceOwner": "Wisconsin Legislative Reference Bureau",
+      "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/code/admin_code",
+      "adminCodeTitle": "Wisconsin Administrative Code",
+      "platformFamily": "lis_revisor",
+      "format": "HTML",
+      "machineReadableQuality": "medium",
+      "citationStructure": "Wis. Admin. Code DHS 105.01",
+      "currentnessMetadataAvailability": "partial",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "medium",
+      "adapterFamily": "state_regulation",
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry.",
+        "Wave2d LIS/revisor family example state."
+      ]
+    },
+    {
+      "jurisdiction": "WY",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "Wyoming Administrative Rules",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "Wyo. Rules and Regulations HMD 001",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    },
+    {
+      "jurisdiction": "DC",
+      "officialSourceOwner": null,
+      "canonicalSourceUrl": null,
+      "adminCodeTitle": "District of Columbia Municipal Regulations",
+      "platformFamily": "unknown",
+      "format": "unknown",
+      "machineReadableQuality": "unknown",
+      "citationStructure": "DCMR Title 22, § 100",
+      "currentnessMetadataAvailability": "unknown",
+      "effectiveDateMetadataAvailability": "unknown",
+      "historicalVersionAvailability": "unknown",
+      "refreshFeasibility": "low",
+      "adapterFamily": null,
+      "implementationStatus": "manual_or_unimplemented",
+      "notes": [
+        "No official regulation URL recorded in jurisdiction-sources registry."
+      ]
+    }
+  ]
+}

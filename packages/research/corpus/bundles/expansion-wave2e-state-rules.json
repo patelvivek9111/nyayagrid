@@ -1,0 +1,1197 @@
+[
+  {
+    "title": "Cal. Rules of Court, rule 3.110 \u2014 Time for service of complaint, cross-complaint, and response",
+    "shortTitle": "Cal. Rules of Court, rule 3.110",
+    "jurisdiction": "California",
+    "authorityState": "CA",
+    "citation": "Cal. Rules of Court, rule 3.110",
+    "sourceExternalId": "ca-crc-3-110",
+    "canonicalSourceUrl": "https://courts.ca.gov/cms/rules/index/three/rule3_110",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "3",
+        "label": "Civil Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "3.110",
+        "label": "Time for service"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Cal. Rules of Court, rule 3.110\n\n(a) Application\n\nThis rule applies to the service of pleadings in civil cases except for collections cases under rule 3.740(a), unlawful detainer actions, proceedings under the Family Code, and other proceedings for which different service requirements are prescribed by law.\n\n(b) Service of complaint\n\nThe complaint must be served on all named defendants and proofs of service on those defendants must be filed with the court within 60 days after the filing of the complaint. When the complaint is amended to add a defendant, the added defendant must be served and proof of service must be filed within 30 days after the filing of the amended complaint.\n\n(g) Request for entry of default\n\nIf a responsive pleading is not served within the time limits specified in this rule and no extension of time has been granted, the plaintiff must file a request for entry of default within 10 days after the time for service has elapsed.",
+    "sections": [
+      {
+        "sectionRef": "3.110",
+        "subsectionRef": "b",
+        "content": "A complaint generally must be served, with proofs of service filed, within 60 days after filing."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "service_timing",
+      "sourceOwner": "Judicial Council of California"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Cal. Rules of Court, rule 3.1350 \u2014 Motion for summary judgment or summary adjudication",
+    "shortTitle": "Cal. Rules of Court, rule 3.1350",
+    "jurisdiction": "California",
+    "authorityState": "CA",
+    "citation": "Cal. Rules of Court, rule 3.1350",
+    "sourceExternalId": "ca-crc-3-1350",
+    "canonicalSourceUrl": "https://courts.ca.gov/cms/rules/index/three/rule3_1350",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "3",
+        "label": "Civil Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "3.1350",
+        "label": "Summary judgment"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Cal. Rules of Court, rule 3.1350\n\n(a) Definitions\n\nAs used in this rule:\n\n(1) \"Motion\" refers to either a motion for summary judgment or a motion for summary adjudication.\n\n(2) \"Material facts\" are facts that relate to the cause of action, claim for damages, issue of duty, or affirmative defense that is the subject of the motion and that could make a difference in the disposition of the motion.\n\n(c) Documents in support of motion\n\nExcept as provided in Code of Civil Procedure section 437c(r) and rule 3.1351, the motion must contain and be supported by the following documents:\n\n(1) Notice of motion;\n\n(2) Separate statement of undisputed material facts;\n\n(3) Memorandum;\n\n(4) Evidence; and\n\n(5) Request for judicial notice (if appropriate).",
+    "sections": [
+      {
+        "sectionRef": "3.1350",
+        "subsectionRef": "c",
+        "content": "A summary judgment motion must include a notice, separate statement, memorandum, and supporting evidence."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Judicial Council of California"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Cal. Rules of Court, rule 8.104 \u2014 Time to appeal",
+    "shortTitle": "Cal. Rules of Court, rule 8.104",
+    "jurisdiction": "California",
+    "authorityState": "CA",
+    "citation": "Cal. Rules of Court, rule 8.104",
+    "sourceExternalId": "ca-crc-8-104",
+    "canonicalSourceUrl": "https://courts.ca.gov/cms/rules/index/eight/rule8_104",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "8",
+        "label": "Appellate Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "8.104",
+        "label": "Time to appeal"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure",
+      "appellate"
+    ],
+    "content": "Cal. Rules of Court, rule 8.104\n\n(a) Normal time\n\n(1) Unless a statute or rules 8.108, 8.702, or 8.712 provides otherwise, a notice of appeal must be filed on or before the earliest of:\n\n(A) 60 days after the superior court clerk serves on the party filing the notice of appeal a document entitled \"Notice of Entry\" of judgment or a filed-endorsed copy of the judgment, showing the date either was served;\n\n(B) 60 days after the party filing the notice of appeal serves or is served by a party with a document entitled \"Notice of Entry\" of judgment or a filed-endorsed copy of the judgment, accompanied by proof of service; or\n\n(C) 180 days after entry of judgment.\n\n(b) No extension of time; late notice of appeal\n\nExcept as provided in rule 8.66, no court may extend the time to file a notice of appeal. If a notice of appeal is filed late, the reviewing court must dismiss the appeal.",
+    "sections": [
+      {
+        "sectionRef": "8.104",
+        "subsectionRef": "a",
+        "content": "A notice of appeal is generally due by the earliest of 60 days after qualifying notice/service or 180 days after entry of judgment."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "appeal_timing",
+      "sourceOwner": "Judicial Council of California"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Cal. Rules of Court, rule 3.1320 \u2014 Demurrers",
+    "shortTitle": "Cal. Rules of Court, rule 3.1320",
+    "jurisdiction": "California",
+    "authorityState": "CA",
+    "citation": "Cal. Rules of Court, rule 3.1320",
+    "sourceExternalId": "ca-crc-3-1320",
+    "canonicalSourceUrl": "https://courts.ca.gov/cms/rules/index/three/rule3_1320",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "3",
+        "label": "Civil Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "3.1320",
+        "label": "Demurrers"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Cal. Rules of Court, rule 3.1320\n\n(a) Grounds separately stated\n\nEach ground of demurrer must be in a separate paragraph and must state whether it applies to the entire complaint, cross-complaint, or answer, or to specified causes of action or defenses.\n\n(c) Notice of hearing\n\nA party filing a demurrer must serve and file therewith a notice of hearing that must specify a hearing date in accordance with Code of Civil Procedure section 1005 and, if service is by electronic means, with rule 2.251(h)(2).\n\n(d) Length of memorandum\n\nA memorandum supporting or opposing a demurrer may not exceed 15 pages.",
+    "sections": [
+      {
+        "sectionRef": "3.1320",
+        "content": "Each demurrer ground must be separately stated; the moving party must notice a hearing and observe memorandum length limits."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "demurrer",
+      "sourceOwner": "Judicial Council of California"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Del. Super. Ct. Civ. R. 12 \u2014 Defenses and objections",
+    "shortTitle": "Del. Super. Ct. Civ. R. 12",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "Del. Super. Ct. Civ. R. 12",
+    "sourceExternalId": "de-super-civ-r-12",
+    "canonicalSourceUrl": "https://courts.delaware.gov/forms/download.aspx?id=304488",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Super. Ct. Civ. R.",
+        "label": "Superior Court Civil Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "Defenses and objections"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Del. Super. Ct. Civ. R. 12\n\n(b) How presented. Every defense, in law or fact, to a claim for relief in any pleading, whether a claim, counterclaim, cross-claim, or third-party claim, shall be asserted in the responsive pleading thereto if one is required, except that the following defenses may at the option of the pleader be made by motion: (1) Lack of jurisdiction over the subject matter, (2) lack of jurisdiction over the person, (3) improper venue, (4) insufficiency of process, (5) insufficiency of service of process, (6) failure to state a claim upon which relief can be granted, (7) failure to join a party under Rule 19. ... If, on a motion asserting the defense numbered (6) to dismiss for failure of the pleadings to state a claim upon which relief can be granted, matters outside the pleading are presented to and not excluded by the Court, the motion shall be treated as one for summary judgment and disposed of as provided in Rule 56.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "subsectionRef": "b",
+        "content": "Rule 12(b) defenses may be raised by motion; a 12(b)(6) motion considering outside materials converts to summary judgment under Rule 56."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "defenses_motion",
+      "sourceOwner": "Delaware Superior Court"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Del. Super. Ct. Civ. R. 56 \u2014 Summary judgment",
+    "shortTitle": "Del. Super. Ct. Civ. R. 56",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "Del. Super. Ct. Civ. R. 56",
+    "sourceExternalId": "de-super-civ-r-56",
+    "canonicalSourceUrl": "https://courts.delaware.gov/forms/download.aspx?id=304488",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Super. Ct. Civ. R.",
+        "label": "Superior Court Civil Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "Summary judgment"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Del. Super. Ct. Civ. R. 56\n\n(c) Motion and proceedings thereon. The motion shall be served at least 10 days before the time fixed for the hearing. The adverse party prior to the day of hearing may serve opposing affidavits. The judgment sought shall be rendered forthwith if the pleadings, depositions, answers to interrogatories, and admissions on file, together with the affidavits, if any, show that there is no genuine issue as to any material fact and that the moving party is entitled to a judgment as a matter of law. A summary judgment, interlocutory in character, may be rendered on the issue of liability alone although there is a genuine issue as to the amount of damages.\n\n(e) ... When a motion for summary judgment is made and supported as provided in this Rule, an adverse party may not rest upon the mere allegations or denials of the adverse party's pleading, but the adverse party's response, by affidavits or as otherwise provided in this Rule, must set forth specific facts showing that there is a genuine issue for trial.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "subsectionRef": "c",
+        "content": "Summary judgment is proper when there is no genuine issue of material fact and the movant is entitled to judgment as a matter of law."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Delaware Superior Court"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Del. Super. Ct. Civ. R. 8 \u2014 General rules of pleading",
+    "shortTitle": "Del. Super. Ct. Civ. R. 8",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "Del. Super. Ct. Civ. R. 8",
+    "sourceExternalId": "de-super-civ-r-8",
+    "canonicalSourceUrl": "https://courts.delaware.gov/forms/download.aspx?id=304488",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Super. Ct. Civ. R.",
+        "label": "Superior Court Civil Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "8",
+        "label": "General rules of pleading"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Del. Super. Ct. Civ. R. 8\n\n(a) Claims for relief. A pleading which sets forth a claim for relief, whether an original claim, counterclaim, cross-claim or third-party claim, shall contain (1) a short and plain statement of the claim showing that the pleader is entitled to relief and (2) a demand for judgment for the relief to which the pleader deems himself or herself entitled. Relief in the alternative or of several different types may be demanded.\n\n(b) Defenses; form of denials. A party shall state in short and plain terms the party's defenses to each claim asserted and shall admit or deny the averments upon which the adverse party relies.",
+    "sections": [
+      {
+        "sectionRef": "8",
+        "subsectionRef": "a",
+        "content": "A claim for relief must contain a short and plain statement showing entitlement to relief and a demand for judgment."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "pleading",
+      "sourceOwner": "Delaware Superior Court"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Del. Super. Ct. Civ. R. 15 \u2014 Amended and supplemental pleadings",
+    "shortTitle": "Del. Super. Ct. Civ. R. 15",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "Del. Super. Ct. Civ. R. 15",
+    "sourceExternalId": "de-super-civ-r-15",
+    "canonicalSourceUrl": "https://courts.delaware.gov/forms/download.aspx?id=304488",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Super. Ct. Civ. R.",
+        "label": "Superior Court Civil Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "15",
+        "label": "Amended pleadings"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Del. Super. Ct. Civ. R. 15\n\n(a) Amendments. A party may amend the party's pleading once as a matter of course at any time before a responsive pleading is served or, if the pleading is one to which no responsive pleading is permitted and the action has not been placed upon the trial calendar, the party may so amend it at any time within 20 days after it is served. Otherwise a party may amend the party's pleading only by leave of Court or by written consent of the adverse party; and leave shall be freely given when justice so requires.",
+    "sections": [
+      {
+        "sectionRef": "15",
+        "subsectionRef": "a",
+        "content": "A party may amend once as of course before a responsive pleading is served; thereafter leave shall be freely given when justice so requires."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "amended_pleadings",
+      "sourceOwner": "Delaware Superior Court"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Ill. S. Ct. R. 201 \u2014 General Discovery Provisions",
+    "shortTitle": "Ill. S. Ct. R. 201",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "Ill. S. Ct. R. 201",
+    "sourceExternalId": "il-sct-r-201",
+    "canonicalSourceUrl": "https://www.illinoiscourts.gov/Rules/Rules/Article_II_Rules_201-224.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Ill. S. Ct. R.",
+        "label": "Illinois Supreme Court Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "201",
+        "label": "General Discovery Provisions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Ill. S. Ct. R. 201\n\n(a) Discovery Methods. Information is obtainable through deposition upon oral examination or written questions, written interrogatories to parties, discovery of documents, objects or tangible things, inspection of real estate, requests to admit, and physical and mental examination of persons.\n\n(b) Scope of Discovery.\n\n(1) Full Disclosure Required. Except as provided in these rules, a party may obtain by discovery full disclosure regarding any matter relevant to the subject matter involved in the pending action, whether it relates to the claim or defense of the party seeking disclosure or of any other party.",
+    "sections": [
+      {
+        "sectionRef": "201",
+        "subsectionRef": "b",
+        "content": "Parties may obtain discovery of any matter relevant to the subject matter of the pending action, subject to the rules."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "discovery_scope",
+      "sourceOwner": "Supreme Court of Illinois"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Ill. S. Ct. R. 341 \u2014 Briefs",
+    "shortTitle": "Ill. S. Ct. R. 341",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "Ill. S. Ct. R. 341",
+    "sourceExternalId": "il-sct-r-341",
+    "canonicalSourceUrl": "https://www.illinoiscourts.gov/supreme-court-rules/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Ill. S. Ct. R.",
+        "label": "Illinois Supreme Court Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "341",
+        "label": "Briefs"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure",
+      "appellate"
+    ],
+    "content": "Ill. S. Ct. R. 341\n\n(a) Form of Briefs. Briefs shall be produced in clear black type on white paper. ...\n\n(h) Argument. The argument shall contain the contentions of the appellant and the reasons therefor, with citation of the authorities and the pages of the record relied on. Points not argued are forfeited and shall not be raised in the reply brief, in oral argument, or on petition for rehearing.\n\n(i) Reply Brief. The reply brief, if any, shall be confined strictly to replying to arguments presented in the brief of the appellee.",
+    "sections": [
+      {
+        "sectionRef": "341",
+        "subsectionRef": "h",
+        "content": "Appellate briefs must present argument with citations; points not argued are forfeited."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "appellate_briefs",
+      "sourceOwner": "Supreme Court of Illinois"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Ill. S. Ct. R. 137 \u2014 Signing of Pleadings; Sanctions",
+    "shortTitle": "Ill. S. Ct. R. 137",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "Ill. S. Ct. R. 137",
+    "sourceExternalId": "il-sct-r-137",
+    "canonicalSourceUrl": "https://www.illinoiscourts.gov/supreme-court-rules/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Ill. S. Ct. R.",
+        "label": "Illinois Supreme Court Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "137",
+        "label": "Signing; sanctions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Ill. S. Ct. R. 137\n\nEvery pleading, motion and other document of a party represented by an attorney shall be signed by at least one attorney of record in his individual name... The signature of an attorney or party constitutes a certificate by him that he has read the pleading, motion or other document; that to the best of his knowledge, information, and belief formed after reasonable inquiry it is well grounded in fact and is warranted by existing law or a good-faith argument for the extension, modification, or reversal of existing law, and that it is not interposed for any improper purpose, such as to harass or to cause unnecessary delay or needless increase in the cost of litigation.",
+    "sections": [
+      {
+        "sectionRef": "137",
+        "content": "An attorney's signature certifies reasonable inquiry that the filing is factually supported, legally warranted, and not filed for an improper purpose."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "sanctions",
+      "sourceOwner": "Supreme Court of Illinois"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Ill. S. Ct. R. 191 \u2014 Affidavits on Motions for Summary Judgment",
+    "shortTitle": "Ill. S. Ct. R. 191",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "Ill. S. Ct. R. 191",
+    "sourceExternalId": "il-sct-r-191",
+    "canonicalSourceUrl": "https://www.illinoiscourts.gov/supreme-court-rules/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Ill. S. Ct. R.",
+        "label": "Illinois Supreme Court Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "191",
+        "label": "Summary judgment affidavits"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Ill. S. Ct. R. 191\n\n(a) Affidavits in support of and in opposition to a motion for summary judgment under section 2-1005 of the Code of Civil Procedure ... shall be made on the personal knowledge of the affiants; shall set forth with particularity the facts upon which the claim, counterclaim, or defense is based; shall have attached thereto sworn or certified copies of all documents upon which the affiant relies; shall not consist of conclusions but of facts admissible in evidence; and shall affirmatively show that the affiant, if sworn as a witness, can testify competently thereto.",
+    "sections": [
+      {
+        "sectionRef": "191",
+        "subsectionRef": "a",
+        "content": "Summary-judgment affidavits must be based on personal knowledge, set forth particular facts, and attach relied-upon documents."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "summary_judgment_affidavits",
+      "sourceOwner": "Supreme Court of Illinois"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Mass. R. Civ. P. 12 \u2014 Defenses and Objections",
+    "shortTitle": "Mass. R. Civ. P. 12",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "Mass. R. Civ. P. 12",
+    "sourceExternalId": "ma-rcp-12",
+    "canonicalSourceUrl": "https://www.mass.gov/doc/massachusetts-rules-of-civil-procedure/download",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Mass. R. Civ. P.",
+        "label": "Massachusetts Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "12",
+        "label": "Defenses and Objections"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Mass. R. Civ. P. 12\n\n(b) How Presented. Every defense, in law or fact, to a claim for relief in any pleading, whether a claim, counterclaim, cross-claim, or third-party claim, shall be asserted in the responsive pleading thereto if one is required, except that the following defenses may at the option of the pleader be made by motion: (1) Lack of jurisdiction over the subject matter; (2) Lack of jurisdiction over the person; (3) Improper venue; (4) Insufficiency of process; (5) Insufficiency of service of process; (6) Failure to state a claim upon which relief can be granted; (7) Failure to join a party under Rule 19; (8) Misnomer of a party; (9) Pendency of a prior action in a court of the Commonwealth; (10) Improper amount of damages... If, on any motion asserting the defense numbered (6), ... matters outside the pleading are presented to and not excluded by the court, the motion shall be treated as one for summary judgment and disposed of as provided in Rule 56.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "subsectionRef": "b",
+        "content": "Enumerated defenses, including failure to state a claim, may be raised by motion; outside materials convert a 12(b)(6) motion to summary judgment."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "defenses_motion",
+      "sourceOwner": "Supreme Judicial Court of Massachusetts"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Mass. R. Civ. P. 56 \u2014 Summary Judgment",
+    "shortTitle": "Mass. R. Civ. P. 56",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "Mass. R. Civ. P. 56",
+    "sourceExternalId": "ma-rcp-56",
+    "canonicalSourceUrl": "https://www.mass.gov/doc/massachusetts-rules-of-civil-procedure/download",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Mass. R. Civ. P.",
+        "label": "Massachusetts Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "56",
+        "label": "Summary Judgment"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Mass. R. Civ. P. 56\n\n(c) Motion and Proceedings Thereon. The motion shall be served at least 10 days before the time fixed for the hearing. The adverse party prior to the day of hearing may serve opposing affidavits. The judgment sought shall be rendered forthwith if the pleadings, depositions, answers to interrogatories, and responses to requests for admission under Rule 36, together with the affidavits, if any, show that there is no genuine issue as to any material fact and that the moving party is entitled to a judgment as a matter of law. ... Summary judgment, when appropriate, may be rendered against the moving party.\n\n(e) ... When a motion for summary judgment is made and supported as provided in this rule, an adverse party may not rest upon the mere allegations or denials of his pleading, but his response, by affidavits or as otherwise provided in this rule, must set forth specific facts showing that there is a genuine issue for trial.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "subsectionRef": "c",
+        "content": "Summary judgment issues if no genuine issue of material fact exists and the movant is entitled to judgment as a matter of law."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Supreme Judicial Court of Massachusetts"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Mass. R. Civ. P. 8 \u2014 General Rules of Pleading",
+    "shortTitle": "Mass. R. Civ. P. 8",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "Mass. R. Civ. P. 8",
+    "sourceExternalId": "ma-rcp-8",
+    "canonicalSourceUrl": "https://www.mass.gov/doc/massachusetts-rules-of-civil-procedure/download",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Mass. R. Civ. P.",
+        "label": "Massachusetts Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "8",
+        "label": "General Rules of Pleading"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Mass. R. Civ. P. 8\n\n(a) Claims for Relief. A pleading which sets forth a claim for relief, whether an original claim, counterclaim, cross-claim, or third-party claim shall contain (1) a short and plain statement of the claim showing that the pleader is entitled to relief, and (2) a demand for judgment for the relief to which he deems himself entitled. Relief in the alternative or of several different types may be demanded.\n\n(b) Defenses; Form of Denials. A party shall state in short and plain terms his defenses to each claim asserted and shall admit or deny the averments upon which the adverse party relies.",
+    "sections": [
+      {
+        "sectionRef": "8",
+        "subsectionRef": "a",
+        "content": "A claim for relief must include a short and plain statement showing entitlement to relief and a demand for judgment."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "pleading",
+      "sourceOwner": "Supreme Judicial Court of Massachusetts"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Mass. R. Civ. P. 15 \u2014 Amended and Supplemental Pleadings",
+    "shortTitle": "Mass. R. Civ. P. 15",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "Mass. R. Civ. P. 15",
+    "sourceExternalId": "ma-rcp-15",
+    "canonicalSourceUrl": "https://www.mass.gov/doc/massachusetts-rules-of-civil-procedure/download",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Mass. R. Civ. P.",
+        "label": "Massachusetts Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "15",
+        "label": "Amended Pleadings"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Mass. R. Civ. P. 15\n\n(a) Amendments. A party may amend his pleading once as a matter of course at any time before a responsive pleading is served and prior to entry of an order of dismissal or, if the pleading is one to which no responsive pleading is permitted and the action has not been placed upon the trial calendar, he may so amend it at any time within 20 days after it is served. Otherwise a party may amend his pleading only by leave of court or by written consent of the adverse party; and leave shall be freely given when justice so requires.",
+    "sections": [
+      {
+        "sectionRef": "15",
+        "subsectionRef": "a",
+        "content": "A party may amend once as of course before a responsive pleading; thereafter leave shall be freely given when justice so requires."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "amended_pleadings",
+      "sourceOwner": "Supreme Judicial Court of Massachusetts"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "N.J. Ct. R. 4:6-2 \u2014 How Presented",
+    "shortTitle": "N.J. Ct. R. 4:6-2",
+    "jurisdiction": "New Jersey",
+    "authorityState": "NJ",
+    "citation": "N.J. Ct. R. 4:6-2",
+    "sourceExternalId": "nj-ctr-4-6-2",
+    "canonicalSourceUrl": "https://www.njcourts.gov/attorneys/rules-evidence",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "N.J. Ct. R.",
+        "label": "New Jersey Court Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "4:6-2",
+        "label": "How Presented"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "N.J. Ct. R. 4:6-2\n\nEvery defense, legal or equitable, in law or fact, to a claim for relief in any complaint, counterclaim, cross-claim, or third-party complaint shall be asserted in the answer thereto, except that the following defenses, unless otherwise provided by R. 4:6-3, may at the option of the pleader be made by motion, with briefs: (a) lack of jurisdiction over the subject matter, (b) lack of jurisdiction over the person, (c) insufficiency of process, (d) insufficiency of service of process, (e) failure to state a claim upon which relief can be granted, (f) failure to join a party without whom the action cannot proceed, as provided by R. 4:28-1. ... If, on a motion to dismiss based on the defense numbered (e), matters outside the pleading are presented to and not excluded by the court, the motion shall be treated as one for summary judgment and disposed of as provided by R. 4:46.",
+    "sections": [
+      {
+        "sectionRef": "4:6-2",
+        "content": "Enumerated defenses including failure to state a claim may be raised by motion; outside materials convert the motion to summary judgment under R. 4:46."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "defenses_motion",
+      "sourceOwner": "Supreme Court of New Jersey"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "N.J. Ct. R. 4:46-2 \u2014 Motion and Proceedings Thereon",
+    "shortTitle": "N.J. Ct. R. 4:46-2",
+    "jurisdiction": "New Jersey",
+    "authorityState": "NJ",
+    "citation": "N.J. Ct. R. 4:46-2",
+    "sourceExternalId": "nj-ctr-4-46-2",
+    "canonicalSourceUrl": "https://www.njcourts.gov/attorneys/rules-evidence",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "N.J. Ct. R.",
+        "label": "New Jersey Court Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "4:46-2",
+        "label": "Summary judgment proceedings"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "N.J. Ct. R. 4:46-2\n\n(c) Judgment. The judgment or order sought shall be rendered forthwith if the pleadings, depositions, answers to interrogatories and admissions on file, together with the affidavits, if any, show that there is no genuine issue as to any material fact challenged and that the moving party is entitled to a judgment or order as a matter of law. ... An issue of fact is genuine only if, considering the burden of persuasion at trial, the evidence submitted by the parties on the motion, together with all legitimate inferences therefrom favoring the non-moving party, would require submission of the issue to the trier of fact.",
+    "sections": [
+      {
+        "sectionRef": "4:46-2",
+        "subsectionRef": "c",
+        "content": "Summary judgment is proper when there is no genuine issue of material fact and the movant is entitled to judgment as a matter of law."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Supreme Court of New Jersey"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "N.J. Ct. R. 4:46-1 \u2014 Time for Making Motion",
+    "shortTitle": "N.J. Ct. R. 4:46-1",
+    "jurisdiction": "New Jersey",
+    "authorityState": "NJ",
+    "citation": "N.J. Ct. R. 4:46-1",
+    "sourceExternalId": "nj-ctr-4-46-1",
+    "canonicalSourceUrl": "https://www.njcourts.gov/attorneys/rules-evidence",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "N.J. Ct. R.",
+        "label": "New Jersey Court Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "4:46-1",
+        "label": "Time for Making Motion"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "N.J. Ct. R. 4:46-1\n\nA party seeking any affirmative relief may, at any time after the expiration of 35 days from the service of the pleading claiming such relief, move for a summary judgment or order in the party's favor upon all or any part thereof or as to any defense. A party against whom a claim for affirmative relief is asserted may move at any time for a summary judgment or order in the party's favor as to all or any part thereof.",
+    "sections": [
+      {
+        "sectionRef": "4:46-1",
+        "content": "A claimant may move for summary judgment after 35 days from service of the pleading; a defending party may move at any time."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "summary_judgment_timing",
+      "sourceOwner": "Supreme Court of New Jersey"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "N.J. Ct. R. 4:5-2 \u2014 Claim for Relief",
+    "shortTitle": "N.J. Ct. R. 4:5-2",
+    "jurisdiction": "New Jersey",
+    "authorityState": "NJ",
+    "citation": "N.J. Ct. R. 4:5-2",
+    "sourceExternalId": "nj-ctr-4-5-2",
+    "canonicalSourceUrl": "https://www.njcourts.gov/attorneys/rules-evidence",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "N.J. Ct. R.",
+        "label": "New Jersey Court Rules"
+      },
+      {
+        "level": "rule",
+        "ref": "4:5-2",
+        "label": "Claim for Relief"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "N.J. Ct. R. 4:5-2\n\nA pleading which sets forth a claim for relief, whether an original claim, counterclaim, cross-claim or third-party claim, shall contain a statement of the facts on which the claim is based, showing that the pleader is entitled to relief, and a demand for judgment for the relief to which the pleader deems himself entitled. Relief in the alternative or of several different types may be demanded.",
+    "sections": [
+      {
+        "sectionRef": "4:5-2",
+        "content": "A claim for relief must state facts showing entitlement to relief and demand judgment."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "pleading",
+      "sourceOwner": "Supreme Court of New Jersey"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "N.Y. C.P.L.R. 3212 \u2014 Motion for summary judgment",
+    "shortTitle": "N.Y. C.P.L.R. 3212",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "N.Y. C.P.L.R. 3212",
+    "sourceExternalId": "ny-cplr-3212",
+    "canonicalSourceUrl": "https://www.nycourts.gov/lawlibraries/cplr.shtml",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CPLR",
+        "label": "Civil Practice Law and Rules"
+      },
+      {
+        "level": "section",
+        "ref": "3212",
+        "label": "Motion for summary judgment"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "N.Y. C.P.L.R. 3212\n\n(a) Time; kind of action. Any party may move for summary judgment in any action, after issue has been joined; provided however, that the court may set a date after which no such motion may be made...\n\n(b) Supporting proof; grounds; relief to either party. A motion for summary judgment shall be supported by affidavit, by a copy of the pleadings and by other available proof, such as depositions and written admissions. The affidavit shall be by a person having knowledge of the facts; it shall recite all the material facts; and it shall show that there is no defense to the cause of action or that the cause of action or defense has no merit. ... The motion shall be granted if, upon all the papers and proof submitted, the cause of action or defense shall be established sufficiently to warrant the court as a matter of law in directing judgment in favor of any party.",
+    "sections": [
+      {
+        "sectionRef": "3212",
+        "subsectionRef": "b",
+        "content": "Summary judgment is granted when the papers establish entitlement to judgment as a matter of law and show no triable issue of fact."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "New York State Unified Court System"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "22 NYCRR 202.8 \u2014 Motion procedure",
+    "shortTitle": "22 NYCRR 202.8",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "22 NYCRR 202.8",
+    "sourceExternalId": "ny-nycrr-202-8",
+    "canonicalSourceUrl": "https://ww2.nycourts.gov/rules/trialcourts/202.shtml",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "22 NYCRR",
+        "label": "Uniform Civil Rules for the Supreme Court and the County Court"
+      },
+      {
+        "level": "section",
+        "ref": "202.8",
+        "label": "Motion procedure"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "22 NYCRR 202.8\n\n(a) Form of Motion Papers. ... Moving and answering papers shall be served as provided by CPLR 2214. ...\n\n(b) Notice of Motion. There shall be a notice of motion which shall specify the time and place of the hearing on the motion and the supporting papers upon which the motion is based.\n\n(f) Oral Argument. Scheduled oral argument of a motion shall be held unless the court directs that no oral argument is required.",
+    "sections": [
+      {
+        "sectionRef": "202.8",
+        "content": "Supreme/County Court motions require a notice specifying the hearing and supporting papers, with service under CPLR 2214."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "motion_procedure",
+      "sourceOwner": "New York State Unified Court System"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "22 NYCRR 202.27 \u2014 Defaults",
+    "shortTitle": "22 NYCRR 202.27",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "22 NYCRR 202.27",
+    "sourceExternalId": "ny-nycrr-202-27",
+    "canonicalSourceUrl": "https://ww2.nycourts.gov/rules/trialcourts/202.shtml",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "22 NYCRR",
+        "label": "Uniform Civil Rules for the Supreme Court and the County Court"
+      },
+      {
+        "level": "section",
+        "ref": "202.27",
+        "label": "Defaults"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "22 NYCRR 202.27\n\nAt any scheduled call of a calendar or at any conference, if all parties do not appear and proceed or announce their readiness to proceed immediately or subject to the engagement of counsel, the judge may note the default on the record and enter an order as follows:\n\n(a) If the plaintiff appears but the defendant does not, the judge may grant judgment by default or order an inquest.\n\n(b) If the defendant appears but the plaintiff does not, the judge may dismiss the action and may order a severance of counterclaims or cross-claims.",
+    "sections": [
+      {
+        "sectionRef": "202.27",
+        "content": "On calendar call or conference, nonappearance may result in default judgment, inquest, or dismissal depending on which party appears."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "defaults",
+      "sourceOwner": "New York State Unified Court System"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "N.Y. C.P.L.R. 3211 \u2014 Motion to dismiss",
+    "shortTitle": "N.Y. C.P.L.R. 3211",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "N.Y. C.P.L.R. 3211",
+    "sourceExternalId": "ny-cplr-3211-rule",
+    "canonicalSourceUrl": "https://www.nycourts.gov/lawlibraries/cplr.shtml",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CPLR",
+        "label": "Civil Practice Law and Rules"
+      },
+      {
+        "level": "section",
+        "ref": "3211",
+        "label": "Motion to dismiss"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "N.Y. C.P.L.R. 3211\n\n(a) Motion to dismiss cause of action. A party may move for judgment dismissing one or more causes of action asserted against him on the ground that:\n\n1. a defense is founded upon documentary evidence; or\n\n2. the court has not jurisdiction of the subject matter of the cause of action; or\n\n5. the cause of action may not be maintained because of arbitration and award, collateral estoppel, discharge in bankruptcy, infancy or other disability of the moving party, payment, release, res judicata, statute of limitations, or statute of frauds; or\n\n7. the pleading fails to state a cause of action.",
+    "sections": [
+      {
+        "sectionRef": "3211",
+        "subsectionRef": "a",
+        "content": "CPLR 3211(a) authorizes dismissal on enumerated grounds including documentary evidence, jurisdiction, limitations, and failure to state a cause of action."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "motion_to_dismiss",
+      "sourceOwner": "New York State Unified Court System"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Tex. R. Civ. P. 91a \u2014 Dismissal of Baseless Causes of Action",
+    "shortTitle": "Tex. R. Civ. P. 91a",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "Tex. R. Civ. P. 91a",
+    "sourceExternalId": "tx-rcp-91a",
+    "canonicalSourceUrl": "https://www.txcourts.gov/media/1462349/texas-rules-of-civil-procedure.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Tex. R. Civ. P.",
+        "label": "Texas Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "91a",
+        "label": "Baseless causes of action"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Tex. R. Civ. P. 91a\n\n91a.1 Motion and Grounds. Except in a case brought under the Family Code or a case governed by Chapter 14 of the Texas Civil Practice and Remedies Code, a party may move to dismiss a cause of action on the grounds that it has no basis in law or fact. A cause of action has no basis in law if the allegations, taken as true, together with inferences reasonably drawn from them, do not entitle the claimant to the relief sought. A cause of action has no basis in fact if no reasonable person could believe the facts pleaded.\n\n91a.2 Contents of Motion. A motion to dismiss must state that it is made pursuant to this rule, must identify each cause of action to which it is addressed, and must state specifically the reasons the cause of action has no basis in law, no basis in fact, or both.\n\n91a.3 Time for Motion and Ruling. A motion to dismiss must be: (a) filed within 60 days after the first pleading containing the challenged cause of action is served on the movant; (b) filed at least 21 days before the motion is heard; and (c) granted or denied within 45 days after the motion is filed.",
+    "sections": [
+      {
+        "sectionRef": "91a",
+        "content": "Rule 91a allows early dismissal of causes of action with no basis in law or fact, on a short statutory timeline."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "baseless_dismissal",
+      "sourceOwner": "Supreme Court of Texas"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Tex. R. Civ. P. 166a \u2014 Summary Judgment",
+    "shortTitle": "Tex. R. Civ. P. 166a",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "Tex. R. Civ. P. 166a",
+    "sourceExternalId": "tx-rcp-166a",
+    "canonicalSourceUrl": "https://www.txcourts.gov/media/1462349/texas-rules-of-civil-procedure.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Tex. R. Civ. P.",
+        "label": "Texas Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "166a",
+        "label": "Summary Judgment"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Tex. R. Civ. P. 166a\n\n(a) Definitions.\n\n(1) A \"traditional\" motion for summary judgment is a motion that seeks to establish that no genuine issue of material fact exists as to a claim or defense and that the movant is entitled to judgment as a matter of law.\n\n(2) A \"no-evidence\" motion for summary judgment is a motion that seeks to establish that there is no evidence of an essential element of a claim or defense on which the nonmovant would have the burden of proof at trial.\n\n(b) Motion.\n\n(1) In General. A party may move for summary judgment on a claim or defense. A motion may combine both traditional and no-evidence motions.\n\n(D) No-Evidence Motion. A no-evidence motion must state the elements of the claim or defense as to which there is no evidence.",
+    "sections": [
+      {
+        "sectionRef": "166a",
+        "content": "Texas recognizes traditional and no-evidence summary-judgment motions; a no-evidence motion must identify the challenged elements."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Supreme Court of Texas"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Tex. R. Civ. P. 91 \u2014 Special Exceptions",
+    "shortTitle": "Tex. R. Civ. P. 91",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "Tex. R. Civ. P. 91",
+    "sourceExternalId": "tx-rcp-91",
+    "canonicalSourceUrl": "https://www.txcourts.gov/media/1462349/texas-rules-of-civil-procedure.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Tex. R. Civ. P.",
+        "label": "Texas Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "91",
+        "label": "Special Exceptions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Tex. R. Civ. P. 91\n\nA special exception shall point out intelligibly and with particularity the defect, omission, obscurity, duplicity, generality, or other insufficiency in the allegations in the pleading excepted to.",
+    "sections": [
+      {
+        "sectionRef": "91",
+        "content": "Special exceptions must specifically identify pleading defects with particularity."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "special_exceptions",
+      "sourceOwner": "Supreme Court of Texas"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  },
+  {
+    "title": "Tex. R. Civ. P. 13 \u2014 Effect of Signing of Pleadings, Motions and Other Papers; Sanctions",
+    "shortTitle": "Tex. R. Civ. P. 13",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "Tex. R. Civ. P. 13",
+    "sourceExternalId": "tx-rcp-13",
+    "canonicalSourceUrl": "https://www.txcourts.gov/media/1462349/texas-rules-of-civil-procedure.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "Tex. R. Civ. P.",
+        "label": "Texas Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "13",
+        "label": "Sanctions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Tex. R. Civ. P. 13\n\nThe signatures of attorneys or parties constitute a certificate by them that they have read the pleading, motion, or other paper; that to the best of their knowledge, information, and belief formed after reasonable inquiry the instrument is not groundless and brought in bad faith or groundless and brought for the purpose of harassment. Attorneys or parties who shall bring a fictitious suit as an experiment to get an opinion of the court, or who shall file any fictitious pleading in a cause for such a purpose, or shall make statements in pleading which they know to be groundless and false, for the purpose of securing a delay of the trial of the cause, shall be held guilty of a contempt. ... Courts shall presume that pleadings, motions, and other papers are filed in good faith. No sanctions under this rule may be imposed except for good cause, the particulars of which must be stated in the sanction order.",
+    "sections": [
+      {
+        "sectionRef": "13",
+        "content": "Signing certifies that after reasonable inquiry the filing is not groundless and brought in bad faith or for harassment."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "sanctions",
+      "sourceOwner": "Supreme Court of Texas"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "rule"
+  }
+]

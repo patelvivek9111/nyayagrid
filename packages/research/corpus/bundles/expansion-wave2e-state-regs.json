@@ -1,0 +1,1099 @@
+[
+  {
+    "title": "Ohio Adm.Code 4101:9-2-01 \u2014 Hazardous occupations for minors",
+    "shortTitle": "OAC 4101:9-2-01",
+    "authorityType": "regulation",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio Adm.Code 4101:9-2-01",
+    "sourceExternalId": "oh-oac-4101-9-2-01",
+    "canonicalSourceUrl": "https://codes.ohio.gov/ohio-administrative-code/rule-4101:9-2-01",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "4101:9",
+        "label": "Wage and Hour"
+      },
+      {
+        "level": "chapter",
+        "ref": "4101:9-2",
+        "label": "Employment of Minors"
+      },
+      {
+        "level": "section",
+        "ref": "4101:9-2-01",
+        "label": "Hazardous occupations"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Ohio Adm.Code 4101:9-2-01\n\nIn order to prevent the employment of minors in any occupations found hazardous or detrimental to the health and well-being of minors, the director of the department of commerce, after consultation with the director of health, is authorized to issue rules pursuant to section 4109.05 of the Revised Code prohibiting the employment of minors in occupations that are hazardous or detrimental to the health and well-being of minors.",
+    "sections": [
+      {
+        "sectionRef": "4101:9-2-01",
+        "content": "The director of commerce may prohibit employment of minors in occupations hazardous or detrimental to their health and well-being."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "child_labor_hazardous",
+      "sourceOwner": "Ohio Department of Commerce"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ohio Adm.Code 4101:9-4-02 \u2014 Definitions (prevailing wage)",
+    "shortTitle": "OAC 4101:9-4-02",
+    "authorityType": "regulation",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio Adm.Code 4101:9-4-02",
+    "sourceExternalId": "oh-oac-4101-9-4-02",
+    "canonicalSourceUrl": "https://codes.ohio.gov/ohio-administrative-code/rule-4101:9-4-02",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "4101:9",
+        "label": "Wage and Hour"
+      },
+      {
+        "level": "chapter",
+        "ref": "4101:9-4",
+        "label": "Prevailing Wage"
+      },
+      {
+        "level": "section",
+        "ref": "4101:9-4-02",
+        "label": "Definitions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Ohio Adm.Code 4101:9-4-02\n\n(Z) \"Prevailing wage\" means the sum of the following:\n\n(1) The basic hourly rate of pay;\n\n(2) The rate of contribution irrevocably made by an employer to a trustee or to a third person pursuant to a fund, plan, or program that is communicated in writing to the employees affected prior to completion of any project to which sections 4115.03 to 4115.16 of the Revised Code apply;\n\n(3) The rate of costs to the employer that may be reasonably anticipated in providing fringe benefits to employees pursuant to an enforceable commitment to carry out a financially responsible plan or program that is communicated in writing to the employees affected prior to completion of any project to which sections 4115.03 to 4115.16 of the Revised Code apply.",
+    "sections": [
+      {
+        "sectionRef": "4101:9-4-02",
+        "subsectionRef": "Z",
+        "content": "Prevailing wage includes the basic hourly rate plus irrevocable fringe contributions or reasonably anticipated fringe-benefit costs."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "prevailing_wage_definitions",
+      "sourceOwner": "Ohio Department of Commerce"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ohio Adm.Code 4141-5-02 \u2014 Domestic service",
+    "shortTitle": "OAC 4141-5-02",
+    "authorityType": "regulation",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio Adm.Code 4141-5-02",
+    "sourceExternalId": "oh-oac-4141-5-02",
+    "canonicalSourceUrl": "https://codes.ohio.gov/ohio-administrative-code/rule-4141-5-02",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "4141",
+        "label": "Unemployment Compensation"
+      },
+      {
+        "level": "chapter",
+        "ref": "4141-5",
+        "label": "Coverage and Liability"
+      },
+      {
+        "level": "section",
+        "ref": "4141-5-02",
+        "label": "Domestic service"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Ohio Adm.Code 4141-5-02\n\n\"Domestic employer\" means an employer who employs domestic workers and meets the requirements specified in division (A)(1)(c) of section 4141.01 of the Revised Code. \"Domestic worker\" means an individual who performs services for a domestic employer in a private household, local college club, or local chapter of a college fraternity or sorority. Such services include, but are not limited to, those rendered by cooks, maids, butlers, valets, paid companions, babysitters, gardeners, yard workers, janitors, grooms, and chauffeurs of automobiles for family use. Service performed by a domestic worker for a domestic employer is covered in accordance with the provisions of division (B)(2)(c) of section 4141.01 of the Revised Code. Service performed by a domestic worker for an employer who does not meet the provisions of division (A)(1)(c) of section 4141.01 of the Revised Code is not domestic service.",
+    "sections": [
+      {
+        "sectionRef": "4141-5-02",
+        "content": "Domestic service for unemployment coverage includes household workers for qualifying domestic employers; service for non-qualifying employers is not domestic service."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "unemployment_domestic_service",
+      "sourceOwner": "Ohio Department of Job and Family Services"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "WAC 296-126-020 \u2014 Minimum wage\u2014Minors",
+    "shortTitle": "WAC 296-126-020",
+    "authorityType": "regulation",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "WAC 296-126-020",
+    "sourceExternalId": "wa-wac-296-126-020",
+    "canonicalSourceUrl": "https://app.leg.wa.gov/wac/default.aspx?cite=296-126-020",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "296",
+        "label": "Labor and Industries"
+      },
+      {
+        "level": "chapter",
+        "ref": "296-126",
+        "label": "Standards of Labor"
+      },
+      {
+        "level": "section",
+        "ref": "296-126-020",
+        "label": "Minimum wage\u2014Minors"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "WAC 296-126-020\n\nExcept where a higher minimum wage is required by Washington state or federal law:\n\n(1) Every employer shall pay to each of his or her employees who have reached their 16th or 17th year of age a rate of pay per hour which is equal to the hourly rate required by RCW 49.46.020 for employees 18 years of age or older, whether computed on an hourly, commission, piecework, or other basis, except as may be otherwise provided under this chapter.\n\n(2) Every employer shall pay to each of his or her employees who have not reached their 16th year of age a rate of pay per hour that is not less than 85 percent of the hourly rate required by RCW 49.46.020 for employees 18 years of age or older whether computed on an hourly, commission, piecework, or other basis, except as may be otherwise provided under this chapter.",
+    "sections": [
+      {
+        "sectionRef": "296-126-020",
+        "content": "Employees age 16\u201317 must receive the adult state minimum wage; employees under 16 must receive at least 85% of that rate unless a higher wage applies."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "minimum_wage_minors",
+      "sourceOwner": "Washington Department of Labor and Industries"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "WAC 296-126-092 \u2014 Meal periods\u2014Rest periods",
+    "shortTitle": "WAC 296-126-092",
+    "authorityType": "regulation",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "WAC 296-126-092",
+    "sourceExternalId": "wa-wac-296-126-092",
+    "canonicalSourceUrl": "https://app.leg.wa.gov/wac/default.aspx?cite=296-126-092",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "296",
+        "label": "Labor and Industries"
+      },
+      {
+        "level": "chapter",
+        "ref": "296-126",
+        "label": "Standards of Labor"
+      },
+      {
+        "level": "section",
+        "ref": "296-126-092",
+        "label": "Meal and rest periods"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "WAC 296-126-092\n\n(1) Employees shall be allowed a meal period of at least thirty minutes which commences no less than two hours nor more than five hours from the beginning of the shift. Meal periods shall be on the employer's time when the employee is required by the employer to remain on duty on the premises or at a prescribed work site in the interest of the employer.\n\n(2) No employee shall be required to work more than five consecutive hours without a meal period.\n\n(4) Employees shall be allowed a rest period of not less than ten minutes, on the employer's time, for each four hours of working time. Rest periods shall be scheduled as near as possible to the midpoint of the work period. No employee shall be required to work more than three hours without a rest period.",
+    "sections": [
+      {
+        "sectionRef": "296-126-092",
+        "content": "Employees must receive a 30-minute meal period within the required window and a 10-minute paid rest period for each four hours worked."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "meal_rest_periods",
+      "sourceOwner": "Washington Department of Labor and Industries"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "WAC 296-128-500 \u2014 Purpose",
+    "shortTitle": "WAC 296-128-500",
+    "authorityType": "regulation",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "WAC 296-128-500",
+    "sourceExternalId": "wa-wac-296-128-500",
+    "canonicalSourceUrl": "https://app.leg.wa.gov/wac/default.aspx?cite=296-128-500",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "296",
+        "label": "Labor and Industries"
+      },
+      {
+        "level": "chapter",
+        "ref": "296-128",
+        "label": "Minimum Wages"
+      },
+      {
+        "level": "section",
+        "ref": "296-128-500",
+        "label": "Purpose"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "WAC 296-128-500\n\n(1) This regulation is adopted in accordance with chapter 49.46 RCW to define the terms \"bona fide executive, administrative, or professional capacity or in the capacity of outside salesperson,\" to define salary basis and to establish a procedure for computing overtime pay.\n\n(2) An employee who meets the definitions of executive, administrative, or professional and who is paid on a salary basis (except as provided for in WAC 296-128-510 (2)(b), 296-128-520 (1)(c) and (2)(b), 296-128-530 (1)(b), (2)(b) and (3)(d), or 296-128-535 (1)(c)) is considered exempt from the requirements of chapter 49.46 RCW. A job title, or payment of a salary, does not in and of itself exempt a worker from these requirements.",
+    "sections": [
+      {
+        "sectionRef": "296-128-500",
+        "content": "White-collar overtime exemptions require meeting both duties and salary-basis tests; a job title or salary alone is insufficient."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "overtime_exemptions",
+      "sourceOwner": "Washington Department of Labor and Industries"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "7 CCR 1103-1 Rule 1.1 \u2014 Authority (COMPS Order)",
+    "shortTitle": "7 CCR 1103-1 R. 1.1",
+    "authorityType": "regulation",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "7 CCR 1103-1 Rule 1.1",
+    "sourceExternalId": "co-ccr-1103-1-1-1",
+    "canonicalSourceUrl": "https://www.sos.state.co.us/CCR/GenerateRulePdf.do?ruleVersionId=12406",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "7 CCR 1103-1",
+        "label": "COMPS Order"
+      },
+      {
+        "level": "rule",
+        "ref": "1.1",
+        "label": "Authority"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "7 CCR 1103-1 Rule 1.1\n\nAuthority, application, and relation to prior orders. Colorado Overtime and Minimum Pay Standards Order (COMPS Order) #40 replaces COMPS Order #39 (2024) and prior orders, except that the provisions of prior orders still govern as to events occurring while they were in effect. The COMPS Order is issued under the authority of, and as enforcement of, Colorado Revised Statutes (C.R.S.) Title 8, Articles 1, 4, 6, 12, 13.3, and 13.5, and is intended to be consistent with the requirements of the State Administrative Procedure Act, C.R.S. \u00a7 24-4-101, et seq. The effective date of COMPS Order #40 is February 1, 2026.",
+    "sections": [
+      {
+        "sectionRef": "1.1",
+        "content": "COMPS Order #40 implements Colorado wage statutes and took effect February 1, 2026."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "comps_authority",
+      "sourceOwner": "Colorado Department of Labor and Employment"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "7 CCR 1103-1 Rule 3.1 \u2014 Statewide Minimum Wage",
+    "shortTitle": "7 CCR 1103-1 R. 3.1",
+    "authorityType": "regulation",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "7 CCR 1103-1 Rule 3.1",
+    "sourceExternalId": "co-ccr-1103-1-3-1",
+    "canonicalSourceUrl": "https://www.sos.state.co.us/CCR/GenerateRulePdf.do?ruleVersionId=12406",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "7 CCR 1103-1",
+        "label": "COMPS Order"
+      },
+      {
+        "level": "rule",
+        "ref": "3.1",
+        "label": "Statewide Minimum Wage"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "7 CCR 1103-1 Rule 3.1\n\nStatewide Minimum Wage. Under the minimum wage requirements of Article XVIII, Section 15, of the Colorado Constitution, all employees (with the exception detailed in Rule 3.3), whether employed on an hourly, piecework, commission, time, task, or other basis, shall be paid not less than the Colorado minimum wage, as specified for the applicable year in the PAY CALC Order, less any applicable lawful credits or exceptions noted, for all hours worked, if the employee is covered by either:\n\n(A) Rule 2 (Coverage and Exemptions) of the COMPS Order; or\n\n(B) the minimum wage provisions of the federal Fair Labor Standards Act (29 U.S.C. \u00a7 201 et seq.).",
+    "sections": [
+      {
+        "sectionRef": "3.1",
+        "content": "Covered employees must receive at least the Colorado minimum wage published in the PAY CALC Order for all hours worked."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Colorado Department of Labor and Employment"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "7 CCR 1103-1 Rule 4.1.1 \u2014 Overtime Wages",
+    "shortTitle": "7 CCR 1103-1 R. 4.1.1",
+    "authorityType": "regulation",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "7 CCR 1103-1 Rule 4.1.1",
+    "sourceExternalId": "co-ccr-1103-1-4-1-1",
+    "canonicalSourceUrl": "https://www.sos.state.co.us/CCR/GenerateRulePdf.do?ruleVersionId=12406",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "7 CCR 1103-1",
+        "label": "COMPS Order"
+      },
+      {
+        "level": "rule",
+        "ref": "4.1.1",
+        "label": "Overtime Wages"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "7 CCR 1103-1 Rule 4.1.1\n\nEmployees shall be paid time and one-half of the regular rate of pay for any work in excess of any of the following, except as provided in exemptions or variances in Rule 2:\n\n(A) 40 hours per workweek;\n\n(B) 12 hours per workday; or\n\n(C) 12 consecutive hours without regard to the start and end time of the workday.\n\n4.1.2 Whichever of the three calculations in Rule 4.1.1 results in the greater payment of wages shall apply in any particular situation.",
+    "sections": [
+      {
+        "sectionRef": "4.1.1",
+        "content": "Colorado overtime is owed at time-and-a-half after 40 hours/week, 12 hours/day, or 12 consecutive hours, whichever yields the greater payment."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "overtime",
+      "sourceOwner": "Colorado Department of Labor and Employment"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Mich. Admin. Code R 408.701 \u2014 Definitions",
+    "shortTitle": "Mich. Admin. Code R 408.701",
+    "authorityType": "regulation",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "Mich. Admin. Code R 408.701",
+    "sourceExternalId": "mi-admin-r-408-701",
+    "canonicalSourceUrl": "https://ars.apps.lara.state.mi.us/AdminCode/DownloadAdminCodeFile?FileName=R+408.701+to+408.787.pdf&ReturnHTML=True",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "R 408",
+        "label": "Wage and Hour"
+      },
+      {
+        "level": "section",
+        "ref": "408.701",
+        "label": "Definitions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Mich. Admin. Code R 408.701\n\nRule 1. As used in these rules:\n\n(a) \"Act\" means the improved workforce opportunity wage act, 2018 PA 337, MCL 408.931 to 408.945.\n\n(b) \"Administrative capacity\" means an employee to whom all of the following apply:\n\n(i) Compensation is on a salary basis at no less than the federal standard salary level per week for overtime exempt employees.\n\n(ii) The employee's primary duty is the performance of office or non-manual work directly related to the management or general business operations of the employer.\n\n(iii) The employee uses discretion and independent judgment in matters of significance.\n\n(j) \"Salary\" means payment of a fixed amount not subject to reduction because of variations in the quantity or quality of work performed.\n\n(l) \"Workweek,\" as applied to an employee, means a fixed and regular recurring period of 168 hours or 7 consecutive 24-hour periods.",
+    "sections": [
+      {
+        "sectionRef": "408.701",
+        "content": "Michigan wage-and-hour rules define administrative capacity, salary basis, and workweek for overtime purposes."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "wage_hour_definitions",
+      "sourceOwner": "Michigan Department of Labor and Economic Opportunity"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Mich. Admin. Code R 408.702 \u2014 Records",
+    "shortTitle": "Mich. Admin. Code R 408.702",
+    "authorityType": "regulation",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "Mich. Admin. Code R 408.702",
+    "sourceExternalId": "mi-admin-r-408-702",
+    "canonicalSourceUrl": "https://ars.apps.lara.state.mi.us/AdminCode/DownloadAdminCodeFile?FileName=R+408.701+to+408.787.pdf&ReturnHTML=True",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "R 408",
+        "label": "Wage and Hour"
+      },
+      {
+        "level": "section",
+        "ref": "408.702",
+        "label": "Records"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Mich. Admin. Code R 408.702\n\nRule 2. (1) An employer shall keep employment records for each employee showing all of the following:\n\n(a) Name.\n\n(b) Home address.\n\n(c) Date of birth.\n\n(d) Occupation in which employed.\n\n(e) Total daily hours worked, showing the starting and ending times each day, computed to the nearest tenth of an hour, or other finer measure.\n\n(f) Total hours worked in each pay period.\n\n(i) Total wages paid each pay period.\n\n(j) Itemization of all deductions made each pay period.\n\n(4) Records required under this rule shall be preserved by the employer for not less than 3 years.",
+    "sections": [
+      {
+        "sectionRef": "408.702",
+        "content": "Employers must keep specified wage-and-hour records for each employee and preserve them for at least three years."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "wage_records",
+      "sourceOwner": "Michigan Department of Labor and Economic Opportunity"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Mich. Admin. Code R 408.706 \u2014 Complaint; filing date; time limitation",
+    "shortTitle": "Mich. Admin. Code R 408.706",
+    "authorityType": "regulation",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "Mich. Admin. Code R 408.706",
+    "sourceExternalId": "mi-admin-r-408-706",
+    "canonicalSourceUrl": "https://ars.apps.lara.state.mi.us/AdminCode/DownloadAdminCodeFile?FileName=R+408.701+to+408.787.pdf&ReturnHTML=True",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "R 408",
+        "label": "Wage and Hour"
+      },
+      {
+        "level": "section",
+        "ref": "408.706",
+        "label": "Complaint filing"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation",
+      "administrative"
+    ],
+    "content": "Mich. Admin. Code R 408.706\n\nRule 6. (1) A complaint shall be considered filed with the department as of the date it is received by the department.\n\n(2) A complaint shall be filed with the department not later than 36 months after the date of the alleged violation.",
+    "sections": [
+      {
+        "sectionRef": "408.706",
+        "content": "Wage complaints are considered filed when received and must be filed within 36 months of the alleged violation."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "wage_complaint_limitations",
+      "sourceOwner": "Michigan Department of Labor and Economic Opportunity"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "COMAR 09.12.41.01 \u2014 Administrative Capacity",
+    "shortTitle": "COMAR 09.12.41.01",
+    "authorityType": "regulation",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "COMAR 09.12.41.01",
+    "sourceExternalId": "md-comar-09-12-41-01",
+    "canonicalSourceUrl": "https://dsd.maryland.gov/regulations/Pages/09.12.41.01.aspx",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "09",
+        "label": "Maryland Department of Labor"
+      },
+      {
+        "level": "subtitle",
+        "ref": "12.41",
+        "label": "Wage and Hour Law"
+      },
+      {
+        "level": "section",
+        "ref": "09.12.41.01",
+        "label": "Administrative Capacity"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "COMAR 09.12.41.01\n\n.01 Administrative Capacity.\n\n\"Administrative capacity\" has the meaning stated in 29 CFR \u00a7541.200 et seq.",
+    "sections": [
+      {
+        "sectionRef": "09.12.41.01",
+        "content": "Maryland incorporates the federal FLSA administrative-capacity definition for wage-and-hour purposes."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "administrative_capacity",
+      "sourceOwner": "Maryland Department of Labor"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "COMAR 09.12.41.02 \u2014 Agriculture",
+    "shortTitle": "COMAR 09.12.41.02",
+    "authorityType": "regulation",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "COMAR 09.12.41.02",
+    "sourceExternalId": "md-comar-09-12-41-02",
+    "canonicalSourceUrl": "https://dsd.maryland.gov/regulations/Pages/09.12.41.02.aspx",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "09",
+        "label": "Maryland Department of Labor"
+      },
+      {
+        "level": "subtitle",
+        "ref": "12.41",
+        "label": "Wage and Hour Law"
+      },
+      {
+        "level": "section",
+        "ref": "09.12.41.02",
+        "label": "Agriculture"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "COMAR 09.12.41.02\n\n.02 Agriculture.\n\n\"Agriculture\" means work performed by a farmer or on a farm as an incident to or in conjunction with farming operations, such as:\n\nA. The cultivation and tillage of soil, including grading, rock removal, building terraces, irrigation, and fertilization;\n\nB. The production, growing, cultivation, or harvesting of agricultural or horticultural products or commodities;\n\nC. Breeding, fattening, feeding, or the general care of livestock, bees, fur-bearing animals whose fur has marketable value, or poultry, including poultry hatchery operations;\n\nD. Dairying, including caring for and milking of milk-giving animals, containing, cooling, and storage of milk when done on the farm, and farm-based manufacturing operations directly and closely related to dairying.",
+    "sections": [
+      {
+        "sectionRef": "09.12.41.02",
+        "content": "Agriculture for Maryland wage-and-hour purposes includes farming operations and closely related on-farm work."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "agriculture_definitions",
+      "sourceOwner": "Maryland Department of Labor"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "COMAR 09.12.41.07 \u2014 Food and Drink Establishment",
+    "shortTitle": "COMAR 09.12.41.07",
+    "authorityType": "regulation",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "COMAR 09.12.41.07",
+    "sourceExternalId": "md-comar-09-12-41-07",
+    "canonicalSourceUrl": "https://dsd.maryland.gov/regulations/Pages/09.12.41.07.aspx",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "09",
+        "label": "Maryland Department of Labor"
+      },
+      {
+        "level": "subtitle",
+        "ref": "12.41",
+        "label": "Wage and Hour Law"
+      },
+      {
+        "level": "section",
+        "ref": "09.12.41.07",
+        "label": "Food and Drink Establishment"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation",
+      "business"
+    ],
+    "content": "COMAR 09.12.41.07\n\n.07 Food and Drink Establishment.\n\nA. \"Annual gross income\":\n\n(1) Means the total of all receipts from all sales made during the preceding four calendar quarters; and\n\n(2) Is the sole basis for determining the annual gross income for all subsequent quarters.\n\nD. \"Restaurant\" means an establishment which:\n\n(1) Is primarily engaged in selling and serving prepared food and beverages for consumption on the premises;\n\n(2) Provides characteristic employee services and dining facilities; and\n\n(3) Contains physical and functional equipment and facilities required for the consumption of a meal.",
+    "sections": [
+      {
+        "sectionRef": "09.12.41.07",
+        "content": "Maryland defines restaurants and related food-and-drink establishments for wage-and-hour coverage determinations."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "food_service_definitions",
+      "sourceOwner": "Maryland Department of Labor"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "40 TAC \u00a7 821.1 \u2014 Title and Purpose (Texas Payday Rules)",
+    "shortTitle": "40 TAC \u00a7 821.1",
+    "authorityType": "regulation",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "40 TAC \u00a7 821.1",
+    "sourceExternalId": "tx-tac-40-821-1",
+    "canonicalSourceUrl": "https://www.twc.texas.gov/sites/default/files/ogc/docs/rules-chapter-821-payday-twc.pdf",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "40",
+        "label": "Social Services and Assistance"
+      },
+      {
+        "level": "chapter",
+        "ref": "821",
+        "label": "Texas Payday Rules"
+      },
+      {
+        "level": "section",
+        "ref": "821.1",
+        "label": "Title and Purpose"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "40 TAC \u00a7 821.1\n\n(a) Title. These rules may be cited as the Texas Payday Rules.\n\n(b) Purpose. The purpose of these rules is to implement and interpret the provisions of the Texas Labor Code, Chapter 61, Payment of Wages.",
+    "sections": [
+      {
+        "sectionRef": "821.1",
+        "content": "Chapter 821 implements and interprets the Texas Payday Law (Labor Code Chapter 61)."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "payday_rules_purpose",
+      "sourceOwner": "Texas Workforce Commission"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "40 TAC \u00a7 821.2 \u2014 Definitions",
+    "shortTitle": "40 TAC \u00a7 821.2",
+    "authorityType": "regulation",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "40 TAC \u00a7 821.2",
+    "sourceExternalId": "tx-tac-40-821-2",
+    "canonicalSourceUrl": "https://www.twc.texas.gov/sites/default/files/ogc/docs/rules-chapter-821-payday-twc.pdf",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "40",
+        "label": "Social Services and Assistance"
+      },
+      {
+        "level": "chapter",
+        "ref": "821",
+        "label": "Texas Payday Rules"
+      },
+      {
+        "level": "section",
+        "ref": "821.2",
+        "label": "Definitions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "40 TAC \u00a7 821.2\n\nThe following words and terms, when used in this chapter, shall have the following meanings, unless the context clearly indicates otherwise.\n\n(1) Act--Texas Labor Code, Chapter 61, also known as the Texas Payday Act or the Texas Payday Law.\n\n(2) Claimant--A person who has filed a wage claim under the Act.\n\n(3) Commission--The Texas Workforce Commission.\n\n(4) Court of competent jurisdiction--A court authorized to issue an order including, but not limited to, a legislative or statutory county court at law, district court, small claims court, or federal court that acts within the appropriate jurisdiction over the amount in controversy, the person, and other appropriate subject matter.",
+    "sections": [
+      {
+        "sectionRef": "821.2",
+        "content": "Payday Rules define Act, Claimant, Commission, and court of competent jurisdiction."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "payday_definitions",
+      "sourceOwner": "Texas Workforce Commission"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "40 TAC \u00a7 821.3 \u2014 Jurisdiction",
+    "shortTitle": "40 TAC \u00a7 821.3",
+    "authorityType": "regulation",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "40 TAC \u00a7 821.3",
+    "sourceExternalId": "tx-tac-40-821-3",
+    "canonicalSourceUrl": "https://www.twc.texas.gov/sites/default/files/ogc/docs/rules-chapter-821-payday-twc.pdf",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "40",
+        "label": "Social Services and Assistance"
+      },
+      {
+        "level": "chapter",
+        "ref": "821",
+        "label": "Texas Payday Rules"
+      },
+      {
+        "level": "section",
+        "ref": "821.3",
+        "label": "Jurisdiction"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation",
+      "administrative"
+    ],
+    "content": "40 TAC \u00a7 821.3\n\n(a) The Commission shall exercise jurisdiction over wage claims in which:\n\n(1) the work is performed exclusively in Texas;\n\n(2) the work is performed in part in Texas and in part in other states within the United States and where the wages would be reportable to Texas for Unemployment Insurance purposes pursuant to Texas Labor Code \u00a7 201.043; or\n\n(3) the work is performed by an individual who is a Texas resident at the time the work is performed and the work is performed outside Texas for a Texas employer or a non-resident employer over whom Texas exercises jurisdiction pursuant to subsection (b) of this section.\n\n(c) The Commission shall not exercise jurisdiction over wage claims to the extent the wages are for work performed outside the United States.",
+    "sections": [
+      {
+        "sectionRef": "821.3",
+        "content": "TWC payday jurisdiction covers exclusive Texas work, partial Texas work reportable for UI, and certain Texas-resident employees; work outside the United States is excluded."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "payday_jurisdiction",
+      "sourceOwner": "Texas Workforce Commission"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "13 NCAC 12 .0103 \u2014 Federal law as guide",
+    "shortTitle": "13 NCAC 12 .0103",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "13 NCAC 12 .0103",
+    "sourceExternalId": "nc-ncac-13-12-0103",
+    "canonicalSourceUrl": "http://reports.oah.state.nc.us/ncac/title%2013%20-%20labor/chapter%2012%20-%20wage%20and%20hour/chapter%2012%20rules.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "13",
+        "label": "Labor"
+      },
+      {
+        "level": "chapter",
+        "ref": "12",
+        "label": "Wage and Hour"
+      },
+      {
+        "level": "section",
+        "ref": ".0103",
+        "label": "Federal law as guide"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "13 NCAC 12 .0103\n\nWhere the legislature has adopted the language or terminology of the Fair Labor Standards Act (F.L.S.A.) for the purpose of facilitating and simplifying compliance by employers with both the federal and state labor laws, or has incorporated a federal act by reference, the Department of Labor will look to the judicial and administrative interpretations and rulings established under the federal law as a guide for interpreting the North Carolina law. Such federal interpretations will therefore be considered persuasive and will carry great weight as a guide to the meaning of the North Carolina provisions and will be controlling for enforcement purposes. However, where there are intentional differences in the language of the North Carolina statutes, or where the laws of this State or the authority granted to the Commissioner of Labor of North Carolina require a different interpretation, the federal decisions will not be binding on the Department.",
+    "sections": [
+      {
+        "sectionRef": ".0103",
+        "content": "Where North Carolina adopts FLSA language, federal interpretations are persuasive and controlling for enforcement unless intentional state differences require otherwise."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "wage_hour_interpretation",
+      "sourceOwner": "North Carolina Department of Labor / OAH"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "regulation"
+  },
+  {
+    "title": "13 NCAC 12 .0301 \u2014 Board: lodging or other facilities",
+    "shortTitle": "13 NCAC 12 .0301",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "13 NCAC 12 .0301",
+    "sourceExternalId": "nc-ncac-13-12-0301",
+    "canonicalSourceUrl": "http://reports.oah.state.nc.us/ncac/title%2013%20-%20labor/chapter%2012%20-%20wage%20and%20hour/chapter%2012%20rules.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "13",
+        "label": "Labor"
+      },
+      {
+        "level": "chapter",
+        "ref": "12",
+        "label": "Wage and Hour"
+      },
+      {
+        "level": "section",
+        "ref": ".0301",
+        "label": "Board and lodging"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "13 NCAC 12 .0301\n\n(a) \"Wage\" paid to an employee includes the reasonable cost of furnishing employees with board, lodging and other facilities where there is benefit to the employee and the benefit has been received by the employee.\n\n(c) Reasonable cost under this Section does not include a profit to the employer or to an affiliated person.\n\n(d) Items which are primarily for the benefit of the employer and which will not be computed as wages include but are not limited to: tools and equipment required by the employer; uniforms, where the business requires the employee to wear a unique or customized uniform; transportation charges where it is an incident of and necessary to the employment.",
+    "sections": [
+      {
+        "sectionRef": ".0301",
+        "content": "Reasonable cost of employee board/lodging may count as wages if beneficial to the employee and received; employer profit and employer-benefit items are excluded."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "wage_board_lodging",
+      "sourceOwner": "North Carolina Department of Labor / OAH"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "regulation"
+  },
+  {
+    "title": "13 NCAC 12 .0302 \u2014 Computation of reasonable cost",
+    "shortTitle": "13 NCAC 12 .0302",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "13 NCAC 12 .0302",
+    "sourceExternalId": "nc-ncac-13-12-0302",
+    "canonicalSourceUrl": "http://reports.oah.state.nc.us/ncac/title%2013%20-%20labor/chapter%2012%20-%20wage%20and%20hour/chapter%2012%20rules.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "13",
+        "label": "Labor"
+      },
+      {
+        "level": "chapter",
+        "ref": "12",
+        "label": "Wage and Hour"
+      },
+      {
+        "level": "section",
+        "ref": ".0302",
+        "label": "Computation of reasonable cost"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "13 NCAC 12 .0302\n\n(a) For the purpose of calculating the wage paid to an employee, in an establishment which regularly provides meals to the public, the reasonable cost of furnishing employees meals will be computed as 50 percent of the established retail rate for the meals. In establishments without an established retail rate, the cost will be computed as 50 percent of the retail rate charged for comparable meals of like quality and kind within the community.\n\n(b) With respect to lodging furnished to an employee, the employer may count as wages the full retail cost of the facilities furnished. Where there is no retail cost, the employer may compute the retail rate charged for comparable services of like quality within the community.\n\n(c) In order to include the reasonable cost of board, lodging or other facilities as a wage paid to an employee, the employer must keep accurate and complete records of the board, lodging and other facilities provided to the employee.",
+    "sections": [
+      {
+        "sectionRef": ".0302",
+        "content": "Meal credits are generally 50% of retail rate; lodging may be credited at retail cost, with required records."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "wage_credit_computation",
+      "sourceOwner": "North Carolina Department of Labor / OAH"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "regulation"
+  },
+  {
+    "title": "Mich. Admin. Code R 408.730 \u2014 Employment in agriculture",
+    "shortTitle": "Mich. Admin. Code R 408.730",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "Mich. Admin. Code R 408.730",
+    "sourceExternalId": "mi-admin-r-408-730",
+    "canonicalSourceUrl": "https://ars.apps.lara.state.mi.us/AdminCode/DownloadAdminCodeFile?FileName=R+408.701+to+408.787.pdf&ReturnHTML=True",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "R 408",
+        "label": "Wage and Hour"
+      },
+      {
+        "level": "section",
+        "ref": "408.730",
+        "label": "Employment in agriculture"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Mich. Admin. Code R 408.730\n\nRule 30. (1) An employee shall not be considered employed in agriculture for any workweek in which nonagricultural work exceeds 20% of the hours worked in the workweek.\n\n(2) An employee of an establishment which produces agricultural commodities and sells such commodities to the general public shall not be considered employed in agriculture, regardless of his or her duties, if more than 50% of the gross income of the establishment results from sales to the general public.",
+    "sections": [
+      {
+        "sectionRef": "408.730",
+        "content": "Agriculture coverage fails for a workweek if nonagricultural work exceeds 20% of hours, or if retail sales of commodities exceed 50% of establishment gross income."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "agriculture_coverage",
+      "sourceOwner": "Michigan Department of Labor and Economic Opportunity"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "regulation"
+  },
+  {
+    "title": "13 NCAC 12 .0202 \u2014 Disabled worker certification",
+    "shortTitle": "13 NCAC 12 .0202",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "13 NCAC 12 .0202",
+    "sourceExternalId": "nc-ncac-13-12-0202",
+    "canonicalSourceUrl": "http://reports.oah.state.nc.us/ncac/title%2013%20-%20labor/chapter%2012%20-%20wage%20and%20hour/chapter%2012%20rules.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "13",
+        "label": "Labor"
+      },
+      {
+        "level": "chapter",
+        "ref": "12",
+        "label": "Wage and Hour"
+      },
+      {
+        "level": "section",
+        "ref": ".0202",
+        "label": "Disabled worker certification"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "13 NCAC 12 .0202\n\n(a) For purposes of this Rule, a \"disabled worker\" means an individual whose earning capacity is impaired by age or physical or mental deficiency or injury for the work he is to perform.\n\n(b) An application for the issuance of a disabled worker certificate establishing a subminimum wage rate for an individual for a particular job may be made by an employer with the Administrator of the Wage and Hour Bureau and must include:\n\n(1) the name, address and nature of the business of the employer;\n\n(2) a description of the occupation at which the worker is to be employed;\n\n(3) the nature of the worker's disability and its relation to his work;\n\n(4) the wage the employer proposes to pay the worker (as a percentage of the State minimum wage);\n\n(5) signatures of the employer and the worker; and\n\n(6) certification of the applicant's disability by the Division of Employment and Independence for People with Disabilities of the Department of Health and Human Services.",
+    "sections": [
+      {
+        "sectionRef": ".0202",
+        "content": "Employers may seek a disabled-worker certificate for a subminimum wage by submitting specified application materials to the Wage and Hour Bureau."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "subminimum_wage_disabled",
+      "sourceOwner": "North Carolina Department of Labor / OAH"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "regulation"
+  },
+  {
+    "title": "40 TAC \u00a7 821.6 \u2014 Wage Claims Involving Minimum Wage or Overtime",
+    "shortTitle": "40 TAC \u00a7 821.6",
+    "jurisdiction": "Texas",
+    "authorityState": "TX",
+    "citation": "40 TAC \u00a7 821.6",
+    "sourceExternalId": "tx-tac-40-821-6",
+    "canonicalSourceUrl": "https://www.twc.texas.gov/sites/default/files/ogc/docs/rules-chapter-821-payday-twc.pdf",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "40",
+        "label": "Social Services and Assistance"
+      },
+      {
+        "level": "chapter",
+        "ref": "821",
+        "label": "Texas Payday Rules"
+      },
+      {
+        "level": "section",
+        "ref": "821.6",
+        "label": "Minimum wage or overtime claims"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "40 TAC \u00a7 821.6\n\n(a) The Commission shall consider any applicable minimum wage and overtime requirement in determining if wages are due and unpaid.\n\n(b) In determining an employee's entitlement to federal minimum wage or overtime, the Commission shall look to the Fair Labor Standards Act (FLSA) of 1938 as amended, 29 U.S.C. 201 et seq., and the regulations promulgated by the United States Department of Labor thereunder. In determining an employee's entitlement to state minimum wage, the Commission shall look to the Texas Minimum Wage Act, located at Texas Labor Code, Chapter 62.",
+    "sections": [
+      {
+        "sectionRef": "821.6",
+        "content": "TWC payday determinations consider FLSA for federal MW/OT and the Texas Minimum Wage Act for state minimum wage."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "payday_mw_ot",
+      "sourceOwner": "Texas Workforce Commission"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "regulation"
+  }
+]

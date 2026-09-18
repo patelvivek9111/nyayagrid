@@ -118,6 +118,18 @@ describe("parseCitation", () => {
       normalized: "Fla. R. Civ. P. 1.110",
       type: "rule",
     });
+    expect(parseCitation("Cal. Rules of Court, rule 3.110")).toMatchObject({
+      normalized: "Cal. Rules of Court, rule 3.110",
+      type: "rule",
+    });
+    expect(parseCitation("Tex. R. Civ. P. 166a")).toMatchObject({
+      normalized: "Tex. R. Civ. P. 166a",
+      type: "rule",
+    });
+    expect(parseCitation("N.J. Ct. R. 4:6-2")).toMatchObject({
+      normalized: "N.J. Ct. R. 4:6-2",
+      type: "rule",
+    });
   });
 });
 

@@ -1,0 +1,1267 @@
+[
+  {
+    "title": "Ohio Rev. Code \u00a7 4111.02 \u2014 Wage rates",
+    "shortTitle": "Ohio Rev. Code \u00a7 4111.02",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio Rev. Code \u00a7 4111.02",
+    "sourceExternalId": "oh-rev-code-4111-02",
+    "canonicalSourceUrl": "https://codes.ohio.gov/ohio-revised-code/section-4111.02",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "OH",
+        "label": "Minimum Fair Wage Standards"
+      },
+      {
+        "level": "section",
+        "ref": "4111.02",
+        "label": "Wage rates"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "civil"
+    ],
+    "content": "Ohio Rev. Code \u00a7 4111.02\n\nEvery employer, as defined in Section 34a of Article II, Ohio Constitution, shall pay each of the employer's employees at a wage rate of not less than the wage rate specified in Section 34a of Article II, Ohio Constitution.\n\nThe director of commerce annually shall adjust the wage rate as specified in Section 34a of Article II, Ohio Constitution.\n\nNo political subdivision shall establish a minimum wage rate different from the wage rate required under this section.\n\nAs used in this section, \"employee\" has the same meaning as in section 4111.14 of the Revised Code.",
+    "sections": [
+      {
+        "sectionRef": "4111.02",
+        "content": "Ohio employers must pay at least the constitutional state minimum wage; political subdivisions may not set a different rate."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Ohio Legislature"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Ohio Rev. Code \u00a7 1701.59 \u2014 Authority of directors; standard of care",
+    "shortTitle": "Ohio Rev. Code \u00a7 1701.59",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio Rev. Code \u00a7 1701.59",
+    "sourceExternalId": "oh-rev-code-1701-59",
+    "canonicalSourceUrl": "https://codes.ohio.gov/ohio-revised-code/section-1701.59",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "OH",
+        "label": "General Corporation Law"
+      },
+      {
+        "level": "section",
+        "ref": "1701.59",
+        "label": "Director duties"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "corporations",
+      "business"
+    ],
+    "content": "Ohio Rev. Code \u00a7 1701.59\n\n(A) Except where the law, the articles, or the regulations require action to be authorized or taken by shareholders, all of the authority of a corporation shall be exercised by or under the direction of its directors.\n\n(B) A director shall perform the director's duties as a director, including the duties as a member of any committee of the directors upon which the director may serve, in good faith, in a manner the director reasonably believes to be in or not opposed to the best interests of the corporation, and with the care that an ordinarily prudent person in a like position would use under similar circumstances.",
+    "sections": [
+      {
+        "sectionRef": "1701.59",
+        "subsectionRef": "B",
+        "content": "Directors must act in good faith, in the corporation's best interests, and with ordinary prudence."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "Ohio Legislature"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Ohio Rev. Code \u00a7 1302.27 \u2014 Implied warranty: merchantability",
+    "shortTitle": "Ohio Rev. Code \u00a7 1302.27",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio Rev. Code \u00a7 1302.27",
+    "sourceExternalId": "oh-rev-code-1302-27",
+    "canonicalSourceUrl": "https://codes.ohio.gov/ohio-revised-code/section-1302.27",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "OH",
+        "label": "Uniform Commercial Code"
+      },
+      {
+        "level": "section",
+        "ref": "1302.27",
+        "label": "Merchantability"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "contract",
+      "commercial"
+    ],
+    "content": "Ohio Rev. Code \u00a7 1302.27\n\n(A) Unless excluded or modified as provided in section 1302.29 of the Revised Code, a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind. Under this section the serving for value of food or drink to be consumed either on the premises or elsewhere is a sale.\n\n(B) Goods to be merchantable must be at least such as:\n\n(1) pass without objection in the trade under the contract description; and\n\n(2) in the case of fungible goods are of fair average quality within the description; and\n\n(3) are fit for the ordinary purposes for which such goods are used; and\n\n(4) run, within the variations permitted by the agreement, of even kind, quality and quantity, within each unit and among all units involved; and\n\n(5) are adequately contained, packaged, and labeled as the agreement may require; and\n\n(6) conform to the promises or affirmations of fact made on the container or label if any.",
+    "sections": [
+      {
+        "sectionRef": "1302.27",
+        "content": "A merchant seller impliedly warrants that goods are merchantable, including fit for ordinary purposes."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "Ohio Legislature"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "O.C.G.A. \u00a7 34-4-3 \u2014 Amount of minimum wage; exemptions",
+    "shortTitle": "O.C.G.A. \u00a7 34-4-3",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "O.C.G.A. \u00a7 34-4-3",
+    "sourceExternalId": "ga-ocga-34-4-3",
+    "canonicalSourceUrl": "https://www.legis.ga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "GA",
+        "label": "Minimum Wage Law"
+      },
+      {
+        "level": "section",
+        "ref": "34-4-3",
+        "label": "Minimum wage"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "civil"
+    ],
+    "content": "O.C.G.A. \u00a7 34-4-3\n\n(a) Except as otherwise provided in this Code section, every employer, whether a person, firm, or corporation, shall pay to each of his or her employees wages at a rate of not less than $5.15 per hour for each hour worked in the employment of such employer.\n\n(b) This chapter shall not apply with respect to:\n\n(1) Any employer having sales of $40,000.00 per year or less;\n\n(2) Any employer having five employees or less;\n\n(3) Any employee who is a high school or college student;\n\n(4) Any individual who is employed as a newspaper carrier; or\n\n(5) Any individual who is employed by a nonprofit child-caring institution or long-term care facility serving children or mentally disabled adults who are enrolled in such institution and reside in residential facilities of the institution, if such employee resides in such facilities, receives without cost board and lodging from such institution, and is compensated on a cash basis at an annual rate of not less than $10,000.00.",
+    "sections": [
+      {
+        "sectionRef": "34-4-3",
+        "content": "Georgia's statutory minimum wage is $5.15 per hour subject to listed coverage exemptions."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Georgia General Assembly"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "O.C.G.A. \u00a7 14-2-830 \u2014 General standards for directors",
+    "shortTitle": "O.C.G.A. \u00a7 14-2-830",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "O.C.G.A. \u00a7 14-2-830",
+    "sourceExternalId": "ga-ocga-14-2-830",
+    "canonicalSourceUrl": "https://www.legis.ga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "GA",
+        "label": "Business Corporation Code"
+      },
+      {
+        "level": "section",
+        "ref": "14-2-830",
+        "label": "Director standards"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "corporations",
+      "business"
+    ],
+    "content": "O.C.G.A. \u00a7 14-2-830\n\n(a) A director shall discharge his duties as a director, including his duties as a member of a committee:\n\n(1) In a manner he believes in good faith to be in the best interests of the corporation; and\n\n(2) With the care an ordinarily prudent person in a like position would exercise under similar circumstances.\n\n(b) In discharging his duties, a director is entitled to rely on information, opinions, reports, or statements, including financial statements and other financial data, if prepared or presented by:\n\n(1) One or more officers or employees of the corporation whom the director reasonably believes to be reliable and competent in the matters presented;\n\n(2) Legal counsel, public accountants, or other persons as to matters the director reasonably believes are within the person's professional or expert competence; or\n\n(3) A committee of the board of directors of which he is not a member if the director reasonably believes the committee merits confidence.",
+    "sections": [
+      {
+        "sectionRef": "14-2-830",
+        "subsectionRef": "a",
+        "content": "Directors must act in good faith in the corporation's best interests and with ordinary prudence."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "Georgia General Assembly"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "O.C.G.A. \u00a7 10-1-393 \u2014 Unfair or deceptive practices in consumer transactions unlawful; listing of unfair or deceptive practices",
+    "shortTitle": "O.C.G.A. \u00a7 10-1-393",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "O.C.G.A. \u00a7 10-1-393",
+    "sourceExternalId": "ga-ocga-10-1-393",
+    "canonicalSourceUrl": "https://www.legis.ga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "GA",
+        "label": "Fair Business Practices Act"
+      },
+      {
+        "level": "section",
+        "ref": "10-1-393",
+        "label": "Unfair practices"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "consumer",
+      "commercial"
+    ],
+    "content": "O.C.G.A. \u00a7 10-1-393\n\n(a) Unfair or deceptive acts or practices in the conduct of consumer transactions and consumer acts or practices in trade or commerce are declared unlawful.\n\n(b) By way of illustration only and without limiting the scope of subsection (a) of this Code section, the following practices are declared unlawful:\n\n(1) Passing off goods or services as those of another;\n\n(2) Causing actual confusion or actual misunderstanding as to the source, sponsorship, approval, or certification of goods or services;\n\n(5) Representing that goods or services have sponsorship, approval, characteristics, ingredients, uses, benefits, or quantities that they do not have or that a person has a sponsorship, approval, status, affiliation, or connection that he or she does not have;\n\n(9) Advertising goods or services with intent not to sell them as advertised.",
+    "sections": [
+      {
+        "sectionRef": "10-1-393",
+        "subsectionRef": "a",
+        "content": "Unfair or deceptive acts or practices in consumer transactions are unlawful under Georgia's Fair Business Practices Act."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "consumer_protection",
+      "sourceOwner": "Georgia General Assembly"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "N.C. Gen. Stat. \u00a7 95-25.3 \u2014 Minimum wage",
+    "shortTitle": "N.C. Gen. Stat. \u00a7 95-25.3",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "N.C. Gen. Stat. \u00a7 95-25.3",
+    "sourceExternalId": "nc-gstat-95-25-3",
+    "canonicalSourceUrl": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_95/GS_95-25.3.html",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NC",
+        "label": "Wage and Hour Act"
+      },
+      {
+        "level": "section",
+        "ref": "95-25.3",
+        "label": "Minimum wage"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "civil"
+    ],
+    "content": "N.C. Gen. Stat. \u00a7 95-25.3\n\n(a) Every employer shall pay to each employee who in any workweek performs any work, wages of at least six dollars and fifteen cents ($6.15) per hour or the minimum wage set forth in paragraph 1 of section 6(a) of the Fair Labor Standards Act, 29 U.S.C. 206(a)(1), as that wage may change from time to time, whichever is higher, except as otherwise provided in this section.\n\n(f) Tips earned by a tipped employee may be counted as wages only up to the amount permitted in section 3(m) of the Fair Labor Standards Act, 29 U.S.C. 203(m), if the tipped employee is notified in advance, is permitted to retain all tips and the employer maintains accurate and complete records of tips received by each employee as such tips are certified by the employee monthly or for each pay period.",
+    "sections": [
+      {
+        "sectionRef": "95-25.3",
+        "subsectionRef": "a",
+        "content": "North Carolina minimum wage is the greater of $6.15 or the federal FLSA minimum wage."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "North Carolina General Assembly"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "N.C. Gen. Stat. \u00a7 55-8-30 \u2014 General standards for directors",
+    "shortTitle": "N.C. Gen. Stat. \u00a7 55-8-30",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "N.C. Gen. Stat. \u00a7 55-8-30",
+    "sourceExternalId": "nc-gstat-55-8-30",
+    "canonicalSourceUrl": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_55/GS_55-8-30.html",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NC",
+        "label": "Business Corporation Act"
+      },
+      {
+        "level": "section",
+        "ref": "55-8-30",
+        "label": "Director standards"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "corporations",
+      "business"
+    ],
+    "content": "N.C. Gen. Stat. \u00a7 55-8-30\n\n(a) A director shall discharge the director's duties as a director, including the director's duties as a member of a committee or subcommittee, in accordance with all of the following:\n\n(1) In good faith.\n\n(2) With the care an ordinarily prudent person in a like position would exercise under similar circumstances.\n\n(3) In a manner the director reasonably believes to be in the best interests of the corporation.",
+    "sections": [
+      {
+        "sectionRef": "55-8-30",
+        "subsectionRef": "a",
+        "content": "Directors must act in good faith, with ordinary care, and in the corporation's best interests."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "North Carolina General Assembly"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "N.C. Gen. Stat. \u00a7 25-2-314 \u2014 Implied warranty: merchantability; usage of trade",
+    "shortTitle": "N.C. Gen. Stat. \u00a7 25-2-314",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "N.C. Gen. Stat. \u00a7 25-2-314",
+    "sourceExternalId": "nc-gstat-25-2-314",
+    "canonicalSourceUrl": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_25/GS_25-2-314.html",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NC",
+        "label": "Uniform Commercial Code"
+      },
+      {
+        "level": "section",
+        "ref": "25-2-314",
+        "label": "Merchantability"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "contract",
+      "commercial"
+    ],
+    "content": "N.C. Gen. Stat. \u00a7 25-2-314\n\n(1) Unless excluded or modified (Section 2-316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind. Under this section the serving for value of food or drink to be consumed either on the premises or elsewhere is a sale.\n\n(2) Goods to be merchantable must be at least such as\n\n(a) pass without objection in the trade under the contract description; and\n\n(b) in the case of fungible goods, are of fair average quality within the description; and\n\n(c) are fit for the ordinary purposes for which such goods are used; and\n\n(d) run, within the variations permitted by the agreement, of even kind, quality and quantity within each unit and among all units involved; and\n\n(e) are adequately contained, packaged, and labeled as the agreement may require; and\n\n(f) conform to the promises or affirmations of fact made on the container or label if any.\n\n(3) Unless excluded or modified (Section 2-316) other implied warranties may arise from course of dealing or usage of trade.",
+    "sections": [
+      {
+        "sectionRef": "25-2-314",
+        "content": "A merchant seller impliedly warrants that goods are merchantable, including fit for ordinary purposes."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "North Carolina General Assembly"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "RCW 49.46.020 \u2014 Minimum hourly wage\u2014Paid sick leave",
+    "shortTitle": "RCW 49.46.020",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "RCW 49.46.020",
+    "sourceExternalId": "wa-rcw-49-46-020",
+    "canonicalSourceUrl": "https://app.leg.wa.gov/rcw/default.aspx?cite=49.46.020",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WA",
+        "label": "Minimum Wage Act"
+      },
+      {
+        "level": "section",
+        "ref": "49.46.020",
+        "label": "Minimum hourly wage"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "civil"
+    ],
+    "content": "RCW 49.46.020\n\n(2)(a) Beginning on January 1, 2021, and each following January 1st as set forth under (b) of this subsection, every employer shall pay to each of his or her employees who has reached the age of eighteen years wages at a rate of not less than the amount established under (b) of this subsection.\n\n(b) On September 30, 2020, and on each following September 30th, the department of labor and industries shall calculate an adjusted minimum wage rate to maintain employee purchasing power by increasing the current year's minimum wage rate by the rate of inflation. ... Each adjusted minimum wage rate calculated under this subsection (2)(b) takes effect on the following January 1st.\n\n(3) An employer must pay to its employees: (a) All tips and gratuities; and (b) all service charges as defined under RCW 49.46.160 except those that, pursuant to RCW 49.46.160, are itemized as not being payable to the employee or employees servicing the customer. Tips and service charges paid to an employee are in addition to, and may not count towards, the employee's hourly minimum wage.",
+    "sections": [
+      {
+        "sectionRef": "49.46.020",
+        "content": "Washington's adult minimum wage is inflation-adjusted annually; tips may not count toward the hourly minimum wage."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Washington Legislature"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "RCW 23B.08.300 \u2014 General standards for directors",
+    "shortTitle": "RCW 23B.08.300",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "RCW 23B.08.300",
+    "sourceExternalId": "wa-rcw-23b-08-300",
+    "canonicalSourceUrl": "https://app.leg.wa.gov/rcw/default.aspx?cite=23B.08.300",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WA",
+        "label": "Washington Business Corporation Act"
+      },
+      {
+        "level": "section",
+        "ref": "23B.08.300",
+        "label": "Director standards"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "corporations",
+      "business"
+    ],
+    "content": "RCW 23B.08.300\n\n(1) A director shall discharge the duties of a director, including duties as a member of a committee:\n\n(a) In good faith;\n\n(b) With the care an ordinarily prudent person in a like position would exercise under similar circumstances; and\n\n(c) In a manner the director reasonably believes to be in the best interests of the corporation.",
+    "sections": [
+      {
+        "sectionRef": "23B.08.300",
+        "content": "Directors must act in good faith, with ordinary care, and in the corporation's best interests."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "Washington Legislature"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "RCW 19.86.020 \u2014 Unfair competition, practices, declared unlawful",
+    "shortTitle": "RCW 19.86.020",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "RCW 19.86.020",
+    "sourceExternalId": "wa-rcw-19-86-020",
+    "canonicalSourceUrl": "https://app.leg.wa.gov/rcw/default.aspx?cite=19.86.020",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WA",
+        "label": "Consumer Protection Act"
+      },
+      {
+        "level": "section",
+        "ref": "19.86.020",
+        "label": "Unfair practices"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "consumer",
+      "commercial"
+    ],
+    "content": "RCW 19.86.020\n\nUnfair methods of competition and unfair or deceptive acts or practices in the conduct of any trade or commerce are hereby declared unlawful.",
+    "sections": [
+      {
+        "sectionRef": "19.86.020",
+        "content": "Washington's Consumer Protection Act declares unfair or deceptive acts in trade or commerce unlawful."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "consumer_protection",
+      "sourceOwner": "Washington Legislature"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "C.R.S. \u00a7 8-6-101 \u2014 Declaration of public policy",
+    "shortTitle": "C.R.S. \u00a7 8-6-101",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "C.R.S. \u00a7 8-6-101",
+    "sourceExternalId": "co-crs-8-6-101",
+    "canonicalSourceUrl": "https://leg.colorado.gov/sites/default/files/images/olls/crs2023-title-08.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CO",
+        "label": "Minimum Wages of Workers"
+      },
+      {
+        "level": "section",
+        "ref": "8-6-101",
+        "label": "Public policy"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "civil"
+    ],
+    "content": "C.R.S. \u00a7 8-6-101\n\n(1) The welfare of the state of Colorado demands that workers be protected from conditions of labor that have a pernicious effect on their health and morals, and it is declared that inadequate wages and unsanitary conditions of labor exert such a pernicious effect.\n\n(2) It is declared to be the policy of this state that freedom from conditions of labor that have a pernicious effect on health and morals is a matter of public concern and that such freedom requires that workers be paid a wage sufficient to enable them to live decently and to provide their families with the necessities of life.",
+    "sections": [
+      {
+        "sectionRef": "8-6-101",
+        "content": "Colorado declares inadequate wages a public-policy concern and seeks wages sufficient for workers to live decently."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "minimum_wage_policy",
+      "sourceOwner": "Colorado General Assembly"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "C.R.S. \u00a7 7-108-401 \u2014 General standards of conduct for directors",
+    "shortTitle": "C.R.S. \u00a7 7-108-401",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "C.R.S. \u00a7 7-108-401",
+    "sourceExternalId": "co-crs-7-108-401",
+    "canonicalSourceUrl": "https://leg.colorado.gov/sites/default/files/images/olls/crs2023-title-07.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CO",
+        "label": "Colorado Business Corporation Act"
+      },
+      {
+        "level": "section",
+        "ref": "7-108-401",
+        "label": "Director standards"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "corporations",
+      "business"
+    ],
+    "content": "C.R.S. \u00a7 7-108-401\n\n(1) Each director shall discharge the director's duties as a director, including the director's duties as a member of a committee of the board, and each officer with discretionary authority shall discharge the officer's duties under that authority:\n\n(a) In good faith;\n\n(b) With the care an ordinarily prudent person in a like position would exercise under similar circumstances; and\n\n(c) In a manner the director or officer reasonably believes to be in the best interests of the corporation.",
+    "sections": [
+      {
+        "sectionRef": "7-108-401",
+        "content": "Directors and officers with discretionary authority must act in good faith, with ordinary care, and in the corporation's best interests."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "Colorado General Assembly"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "C.R.S. \u00a7 6-1-105 \u2014 Deceptive trade practices",
+    "shortTitle": "C.R.S. \u00a7 6-1-105",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "C.R.S. \u00a7 6-1-105",
+    "sourceExternalId": "co-crs-6-1-105",
+    "canonicalSourceUrl": "https://leg.colorado.gov/sites/default/files/images/olls/crs2023-title-06.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CO",
+        "label": "Colorado Consumer Protection Act"
+      },
+      {
+        "level": "section",
+        "ref": "6-1-105",
+        "label": "Deceptive trade practices"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "consumer",
+      "commercial"
+    ],
+    "content": "C.R.S. \u00a7 6-1-105\n\n(1) A person engages in a deceptive trade practice when, in the course of the person's business, vocation, or occupation, the person:\n\n(a) Knowingly passes off goods, services, or property as those of another;\n\n(e) Knowingly makes a false representation as to the characteristics, ingredients, uses, benefits, alterations, or quantities of goods, food, services, or property or a false representation as to the sponsorship, approval, status, affiliation, or connection of a person therewith;\n\n(i) Advertises goods, services, or property with intent not to sell them as advertised;\n\n(u) Fails to disclose material information concerning goods, services, or property which information was known at the time of an advertisement or sale if such failure to disclose such information was intended to induce the consumer to enter into a transaction.",
+    "sections": [
+      {
+        "sectionRef": "6-1-105",
+        "content": "Colorado's CCPA enumerates deceptive trade practices including false representations and advertising without intent to sell as advertised."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "consumer_protection",
+      "sourceOwner": "Colorado General Assembly"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Ariz. Rev. Stat. \u00a7 23-363 \u2014 Minimum wage",
+    "shortTitle": "Ariz. Rev. Stat. \u00a7 23-363",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "Ariz. Rev. Stat. \u00a7 23-363",
+    "sourceExternalId": "az-ars-23-363",
+    "canonicalSourceUrl": "https://www.azleg.gov/viewdocument/?docName=https://www.azleg.gov/ars/23/00363.htm",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Labor"
+      },
+      {
+        "level": "section",
+        "ref": "23-363",
+        "label": "Minimum wage"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "civil"
+    ],
+    "content": "Ariz. Rev. Stat. \u00a7 23-363\n\nA. Employers shall pay employees no less than the minimum wage, which shall be not less than:\n\n1. $10 on and after January 1, 2017.\n\n2. $10.50 on and after January 1, 2018.\n\n3. $11 on and after January 1, 2019.\n\n4. $12 on and after January 1, 2020.\n\nB. The minimum wage shall be increased on January 1, 2021 and on January 1 of successive years by the increase in the cost of living. The increase in the cost of living shall be measured by the percentage increase as of August of the immediately preceding year over the level as of August of the previous year of the consumer price index (all urban consumers, U.S. city average for all items) or its successor index as published by the U.S. department of labor or its successor agency, with the amount of the minimum wage increase rounded to the nearest multiple of five cents.",
+    "sections": [
+      {
+        "sectionRef": "23-363",
+        "content": "Arizona requires payment of a CPI-adjusted state minimum wage."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Arizona Legislature"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Ariz. Rev. Stat. \u00a7 10-830 \u2014 General standards of conduct for directors",
+    "shortTitle": "Ariz. Rev. Stat. \u00a7 10-830",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "Ariz. Rev. Stat. \u00a7 10-830",
+    "sourceExternalId": "az-ars-10-830",
+    "canonicalSourceUrl": "https://www.azleg.gov/viewdocument/?docName=https://www.azleg.gov/ars/10/00830.htm",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Arizona Business Corporation Act"
+      },
+      {
+        "level": "section",
+        "ref": "10-830",
+        "label": "Director standards"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "corporations",
+      "business"
+    ],
+    "content": "Ariz. Rev. Stat. \u00a7 10-830\n\nA. A director's duties, including duties as a member of a committee, shall be discharged:\n\n1. In good faith.\n\n2. With the care an ordinarily prudent person in a like position would exercise under similar circumstances.\n\n3. In a manner the director reasonably believes to be in the best interests of the corporation.",
+    "sections": [
+      {
+        "sectionRef": "10-830",
+        "content": "Directors must act in good faith, with ordinary care, and in the corporation's best interests."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "Arizona Legislature"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Ariz. Rev. Stat. \u00a7 44-1522 \u2014 Unlawful practices",
+    "shortTitle": "Ariz. Rev. Stat. \u00a7 44-1522",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "Ariz. Rev. Stat. \u00a7 44-1522",
+    "sourceExternalId": "az-ars-44-1522",
+    "canonicalSourceUrl": "https://www.azleg.gov/viewdocument/?docName=https://www.azleg.gov/ars/44/01522.htm",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Consumer Fraud Act"
+      },
+      {
+        "level": "section",
+        "ref": "44-1522",
+        "label": "Unlawful practices"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "consumer",
+      "commercial"
+    ],
+    "content": "Ariz. Rev. Stat. \u00a7 44-1522\n\nA. The act, use or employment by any person of any deception, deceptive or unfair act or practice, fraud, false pretense, false promise, misrepresentation, or concealment, suppression or omission of any material fact with intent that others rely on such concealment, suppression or omission, in connection with the sale or advertisement of any merchandise whether or not any person has in fact been misled, deceived or damaged thereby, is declared to be an unlawful practice.",
+    "sections": [
+      {
+        "sectionRef": "44-1522",
+        "content": "Arizona's Consumer Fraud Act prohibits deceptive or unfair acts in connection with the sale or advertisement of merchandise."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "consumer_protection",
+      "sourceOwner": "Arizona Legislature"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Mich. Comp. Laws \u00a7 408.934 \u2014 Minimum hourly wage rate",
+    "shortTitle": "Mich. Comp. Laws \u00a7 408.934",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "Mich. Comp. Laws \u00a7 408.934",
+    "sourceExternalId": "mi-mcl-408-934",
+    "canonicalSourceUrl": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-408-934",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MI",
+        "label": "Improved Workforce Opportunity Wage Act"
+      },
+      {
+        "level": "section",
+        "ref": "408.934",
+        "label": "Minimum wage"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "civil"
+    ],
+    "content": "Mich. Comp. Laws \u00a7 408.934\n\n(1) Subject to the exceptions specified in this act, the minimum hourly wage rate is:\n\n(a) Beginning February 21, 2025, $12.48.\n\n(b) Beginning January 1, 2026, $13.73.\n\n(c) Beginning January 1, 2027, $15.00.\n\n(2) Every October beginning in October, 2027, the state treasurer shall calculate an adjusted minimum wage rate. The adjustment must increase the minimum wage by the rate of inflation. ... The adjusted minimum wage rate is effective beginning January 1 of the immediately succeeding year.",
+    "sections": [
+      {
+        "sectionRef": "408.934",
+        "content": "Michigan schedules minimum-wage increases through 2027, then annual inflation adjustments."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Michigan Legislature"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Mich. Comp. Laws \u00a7 450.1541a \u2014 Director duties; liability",
+    "shortTitle": "Mich. Comp. Laws \u00a7 450.1541a",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "Mich. Comp. Laws \u00a7 450.1541a",
+    "sourceExternalId": "mi-mcl-450-1541a",
+    "canonicalSourceUrl": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-450-1541a",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MI",
+        "label": "Business Corporation Act"
+      },
+      {
+        "level": "section",
+        "ref": "450.1541a",
+        "label": "Director duties"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "corporations",
+      "business"
+    ],
+    "content": "Mich. Comp. Laws \u00a7 450.1541a\n\n(1) A director or officer shall discharge his or her duties as a director or officer including his or her duties as a member of a committee in the following manner:\n\n(a) In good faith.\n\n(b) With the care an ordinarily prudent person in a like position would exercise under similar circumstances.\n\n(c) In a manner he or she reasonably believes to be in the best interests of the corporation.",
+    "sections": [
+      {
+        "sectionRef": "450.1541a",
+        "content": "Directors and officers must act in good faith, with ordinary care, and in the corporation's best interests."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "Michigan Legislature"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Mich. Comp. Laws \u00a7 440.2314 \u2014 Implied warranty: merchantability; usage of trade",
+    "shortTitle": "Mich. Comp. Laws \u00a7 440.2314",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "Mich. Comp. Laws \u00a7 440.2314",
+    "sourceExternalId": "mi-mcl-440-2314",
+    "canonicalSourceUrl": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-440-2314",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MI",
+        "label": "Uniform Commercial Code"
+      },
+      {
+        "level": "section",
+        "ref": "440.2314",
+        "label": "Merchantability"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "contract",
+      "commercial"
+    ],
+    "content": "Mich. Comp. Laws \u00a7 440.2314\n\n(1) Unless excluded or modified (Section 2-316), a warranty that the goods shall be merchantable is implied in a contract for their sale if the seller is a merchant with respect to goods of that kind. Under this section the serving for value of food or drink to be consumed either on the premises or elsewhere is a sale.\n\n(2) Goods to be merchantable must be at least such as\n\n(a) pass without objection in the trade under the contract description; and\n\n(b) in the case of fungible goods, are of fair average quality within the description; and\n\n(c) are fit for the ordinary purposes for which such goods are used; and\n\n(d) run, within the variations permitted by the agreement, of even kind, quality and quantity within each unit and among all units involved; and\n\n(e) are adequately contained, packaged, and labeled as the agreement may require; and\n\n(f) conform to the promises or affirmations of fact made on the container or label if any.\n\n(3) Unless excluded or modified (Section 2-316) other implied warranties may arise from course of dealing or usage of trade.",
+    "sections": [
+      {
+        "sectionRef": "440.2314",
+        "content": "A merchant seller impliedly warrants that goods are merchantable, including fit for ordinary purposes."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "ucc_merchantability",
+      "sourceOwner": "Michigan Legislature"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Md. Code, Lab. & Empl. \u00a7 3-413 \u2014 Payment of minimum wage required",
+    "shortTitle": "Md. Code, Lab. & Empl. \u00a7 3-413",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "Md. Code, Lab. & Empl. \u00a7 3-413",
+    "sourceExternalId": "md-le-3-413",
+    "canonicalSourceUrl": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gle&section=3-413&enactments=false",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MD",
+        "label": "Labor and Employment"
+      },
+      {
+        "level": "section",
+        "ref": "3-413",
+        "label": "Minimum wage"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "civil"
+    ],
+    "content": "Md. Code, Lab. & Empl. \u00a7 3-413\n\n(a) In this section, \"employer\" includes a governmental unit.\n\n(b) Except as provided in \u00a7 3-414 of this subtitle, each employer shall pay:\n\n(1) to each employee who is subject to both the federal Act and this subtitle, at least the greater of:\n\n(i) the minimum wage for that employee under the federal Act; or\n\n(ii) the State minimum wage rate set under \u00a7 3-413.1 of this subtitle; and\n\n(2) to each other employee who is subject to this subtitle, at least the greater of:\n\n(i) the highest minimum wage under the federal Act; or\n\n(ii) the State minimum wage rate set under \u00a7 3-413.1 of this subtitle.",
+    "sections": [
+      {
+        "sectionRef": "3-413",
+        "content": "Maryland employers must pay at least the greater of the applicable federal or State minimum wage."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Maryland General Assembly"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Md. Code, Corps. & Ass'ns \u00a7 2-405.1 \u2014 Standard of care of directors",
+    "shortTitle": "Md. Code, Corps. & Ass'ns \u00a7 2-405.1",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "Md. Code, Corps. & Ass'ns \u00a7 2-405.1",
+    "sourceExternalId": "md-ca-2-405-1",
+    "canonicalSourceUrl": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gca&section=2-405.1&enactments=false",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MD",
+        "label": "Corporations and Associations"
+      },
+      {
+        "level": "section",
+        "ref": "2-405.1",
+        "label": "Director standard of care"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "corporations",
+      "business"
+    ],
+    "content": "Md. Code, Corps. & Ass'ns \u00a7 2-405.1\n\n(a) A director shall perform his duties as a director, including his duties as a member of a committee of the board on which he serves:\n\n(1) In good faith;\n\n(2) In a manner he reasonably believes to be in the best interests of the corporation; and\n\n(3) With the care that an ordinarily prudent person in a like position would use under similar circumstances.",
+    "sections": [
+      {
+        "sectionRef": "2-405.1",
+        "content": "Directors must act in good faith, in the corporation's best interests, and with ordinary prudence."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "Maryland General Assembly"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Md. Code, Com. Law \u00a7 13-303 \u2014 Unfair, abusive, or deceptive trade practices",
+    "shortTitle": "Md. Code, Com. Law \u00a7 13-303",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "Md. Code, Com. Law \u00a7 13-303",
+    "sourceExternalId": "md-cl-13-303",
+    "canonicalSourceUrl": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcl&section=13-303&enactments=false",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MD",
+        "label": "Consumer Protection Act"
+      },
+      {
+        "level": "section",
+        "ref": "13-303",
+        "label": "Unfair practices"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "consumer",
+      "commercial"
+    ],
+    "content": "Md. Code, Com. Law \u00a7 13-303\n\nA person may not engage in any unfair, abusive, or deceptive trade practice, as defined in this subtitle or as further defined by the Division, in:\n\n(1) The sale, lease, rental, loan, or bailment of any consumer goods, consumer realty, or consumer services;\n\n(2) The offer for sale, lease, rental, loan, or bailment of consumer goods, consumer realty, or consumer services;\n\n(3) The offer for sale of course credit or educational services;\n\n(4) The extension of consumer credit;\n\n(5) The collection of consumer debts; or\n\n(6) The offer for sale or sale of consumer services of any description.",
+    "sections": [
+      {
+        "sectionRef": "13-303",
+        "content": "Maryland prohibits unfair, abusive, or deceptive trade practices in consumer sales, credit, debt collection, and related transactions."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "consumer_protection",
+      "sourceOwner": "Maryland General Assembly"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Conn. Gen. Stat. \u00a7 31-58 \u2014 Definitions (minimum wage)",
+    "shortTitle": "Conn. Gen. Stat. \u00a7 31-58",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Gen. Stat. \u00a7 31-58",
+    "sourceExternalId": "ct-cgs-31-58",
+    "canonicalSourceUrl": "https://www.cga.ct.gov/current/pub/chap_558.htm#sec_31-58",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Minimum Wages"
+      },
+      {
+        "level": "section",
+        "ref": "31-58",
+        "label": "Definitions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "civil"
+    ],
+    "content": "Conn. Gen. Stat. \u00a7 31-58\n\n(a) \"Commissioner\" means the Labor Commissioner;\n\n(e) \"Fair wage\" means a wage fairly and reasonably commensurate with the value of a particular service or class of service rendered, and, in establishing a minimum fair wage for such service or class of service under this part, the commissioner and the wage board without being bound by any technical rules of evidence or procedure (1) may take into account all relevant circumstances affecting the value of the services rendered, and (2) may be guided by like considerations as would guide a court in a suit for the reasonable value of services rendered;\n\n(f) \"Employ\" includes to suffer or permit to work;\n\n(i) \"Minimum fair wage\" in any industry or occupation in this state means a wage of not less than the amount established by section 31-58e...",
+    "sections": [
+      {
+        "sectionRef": "31-58",
+        "content": "Connecticut minimum-wage law defines commissioner, fair wage, employ, and minimum fair wage."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "minimum_wage_definitions",
+      "sourceOwner": "Connecticut General Assembly"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Conn. Gen. Stat. \u00a7 33-756 \u2014 General standards for directors",
+    "shortTitle": "Conn. Gen. Stat. \u00a7 33-756",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Gen. Stat. \u00a7 33-756",
+    "sourceExternalId": "ct-cgs-33-756",
+    "canonicalSourceUrl": "https://www.cga.ct.gov/current/pub/chap_601.htm#sec_33-756",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Business Corporations"
+      },
+      {
+        "level": "section",
+        "ref": "33-756",
+        "label": "Director standards"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "corporations",
+      "business"
+    ],
+    "content": "Conn. Gen. Stat. \u00a7 33-756\n\n(a) A director shall discharge his duties as a director, including his duties as a member of a committee: (1) In good faith; (2) with the care an ordinarily prudent person in a like position would exercise under similar circumstances; and (3) in a manner he reasonably believes to be in the best interests of the corporation.",
+    "sections": [
+      {
+        "sectionRef": "33-756",
+        "content": "Directors must act in good faith, with ordinary care, and in the corporation's best interests."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "director_duties",
+      "sourceOwner": "Connecticut General Assembly"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Conn. Gen. Stat. \u00a7 42-110b \u2014 Unfair trade practices prohibited",
+    "shortTitle": "Conn. Gen. Stat. \u00a7 42-110b",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Gen. Stat. \u00a7 42-110b",
+    "sourceExternalId": "ct-cgs-42-110b",
+    "canonicalSourceUrl": "https://www.cga.ct.gov/current/pub/chap_735a.htm#sec_42-110b",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Connecticut Unfair Trade Practices Act"
+      },
+      {
+        "level": "section",
+        "ref": "42-110b",
+        "label": "Unfair trade practices"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "consumer",
+      "commercial"
+    ],
+    "content": "Conn. Gen. Stat. \u00a7 42-110b\n\n(a) No person shall engage in unfair methods of competition and unfair or deceptive acts or practices in the conduct of any trade or commerce.\n\n(b) It is the intent of the legislature that in construing subsection (a) of this section, the commissioner and the courts of this state shall be guided by interpretations given by the Federal Trade Commission and the federal courts to Section 5(a)(1) of the Federal Trade Commission Act (15 USC 45(a)(1)), as from time to time amended.",
+    "sections": [
+      {
+        "sectionRef": "42-110b",
+        "content": "CUTPA prohibits unfair methods of competition and unfair or deceptive acts in trade or commerce."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "consumer_protection",
+      "sourceOwner": "Connecticut General Assembly"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Wis. Stat. \u00a7 104.035 \u2014 Minimum wage",
+    "shortTitle": "Wis. Stat. \u00a7 104.035",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Stat. \u00a7 104.035",
+    "sourceExternalId": "wi-stat-104-035",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/statutes/statutes/104/035",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WI",
+        "label": "Minimum Wage"
+      },
+      {
+        "level": "section",
+        "ref": "104.035",
+        "label": "Minimum wage"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "civil"
+    ],
+    "content": "Wis. Stat. \u00a7 104.035\n\n(1) Employees generally. Except as provided in subs. (2) to (4) and s. 104.07, and subject to the limitations under s. 104.045, the minimum wage is $7.25 per hour.\n\n(2) Opportunity employees. Except as provided in subs. (3) and (4) and s. 104.07, and subject to the limitations under s. 104.045, the minimum wage for an opportunity employee is $5.90 per hour.\n\n(3) Tipped employees. Except as provided in sub. (4) and s. 104.07, and subject to the limitations under s. 104.045, if an employer of a tipped employee establishes by the employer's payroll records that, when credit for tips is added to wages paid by the employer, an amount equal to at least the applicable minimum wage under sub. (1) or (2) is received by the employee, the minimum wage for the tipped employee is $2.33 per hour.",
+    "sections": [
+      {
+        "sectionRef": "104.035",
+        "content": "Wisconsin's general minimum wage is $7.25 per hour, with separate rates for opportunity and tipped employees."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "minimum_wage",
+      "sourceOwner": "Wisconsin Legislature"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Wis. Stat. \u00a7 180.0801 \u2014 Requirement for and duties of board of directors",
+    "shortTitle": "Wis. Stat. \u00a7 180.0801",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Stat. \u00a7 180.0801",
+    "sourceExternalId": "wi-stat-180-0801",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/statutes/statutes/180/0801",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WI",
+        "label": "Business Corporations"
+      },
+      {
+        "level": "section",
+        "ref": "180.0801",
+        "label": "Board of directors"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "corporations",
+      "business"
+    ],
+    "content": "Wis. Stat. \u00a7 180.0801\n\n(1) Except as provided in s. 180.0731 (2) or 180.1821, each corporation shall have a board of directors.\n\n(2) All corporate powers shall be exercised by or under the authority of, and the business and affairs of the corporation managed under the direction of, its board of directors, subject to any limitation set forth in the articles of incorporation.",
+    "sections": [
+      {
+        "sectionRef": "180.0801",
+        "content": "Corporate powers are exercised by or under the board of directors, subject to articles limitations."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "board_of_directors",
+      "sourceOwner": "Wisconsin Legislature"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  },
+  {
+    "title": "Wis. Stat. \u00a7 100.18 \u2014 Fraudulent representations",
+    "shortTitle": "Wis. Stat. \u00a7 100.18",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Stat. \u00a7 100.18",
+    "sourceExternalId": "wi-stat-100-18",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/statutes/statutes/100/18",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WI",
+        "label": "Marketing; Trade Practices"
+      },
+      {
+        "level": "section",
+        "ref": "100.18",
+        "label": "Fraudulent representations"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "consumer",
+      "commercial"
+    ],
+    "content": "Wis. Stat. \u00a7 100.18\n\n(1) No person, firm, corporation or association, or any employee thereof, with intent to sell, distribute, increase the consumption of or in any wise dispose of any real estate, merchandise, securities, employment, service, or anything offered by such person, firm, corporation or association, directly or indirectly, to the public for sale, hire, use or other distribution, or with intent to induce the public in any manner to enter into any contract or obligation relating to the purchase, lease, hire, use or other disposition of any such real estate, merchandise, securities, employment, service or anything, shall make, publish, disseminate, circulate, or place before the public, or cause, directly or indirectly, to be made, published, disseminated, circulated, or placed before the public, in this state, in a newspaper, magazine or other publication, or in the form of a book, notice, handbill, poster, bill, circular, pamphlet, letter, sign, placard, card, label, or over any radio or television station, or in any other way similar or dissimilar to the foregoing, an advertisement, announcement, statement or representation of any kind to the public relating to such purchase, sale, hire, use or lease of such real estate, merchandise, securities, service or employment or to the terms or conditions thereof, which advertisement, announcement, statement or representation contains any assertion, representation or statement of fact which is untrue, deceptive or misleading.",
+    "sections": [
+      {
+        "sectionRef": "100.18",
+        "content": "Wisconsin prohibits untrue, deceptive, or misleading advertisements or representations made to induce public purchases or contracts."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_codification_snapshot",
+      "retrievedAt": "2026-09-18T02:45:00.000Z",
+      "statuteTopic": "consumer_protection",
+      "sourceOwner": "Wisconsin Legislature"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date",
+    "authorityType": "statute"
+  }
+]

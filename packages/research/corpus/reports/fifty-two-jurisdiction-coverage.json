@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-09-18T02:28:30.235Z",
-  "phase": "50S-WAVE-2D",
+  "generatedAt": "2026-09-18T03:01:50.790Z",
+  "phase": "50S-WAVE-2E",
   "parserVersion": "corpus1-v3",
-  "bundleAuthorityCount": 447,
+  "bundleAuthorityCount": 529,
   "entryCount": 52,
   "summary": {
     "limited": 52,
     "seed": 0,
     "noCorpus": 0,
     "broader": 0,
-    "withRegulations": 6,
-    "withCourtRules": 4
+    "withRegulations": 13,
+    "withCourtRules": 11
   },
   "honestClaims": [
     "Curated public primary-law expansion — not exhaustive 50-state coverage.",
@@ -121,7 +121,7 @@
       "displayName": "Arizona",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 3,
+      "authorityCount": 6,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
@@ -142,7 +142,6 @@
       "courtMapping": true,
       "highestCourt": "Arizona Supreme Court",
       "notes": [
-        "Seed corpus only — not meaningful full-jurisdiction coverage.",
         "No regulations in seed.",
         "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
@@ -185,12 +184,12 @@
       "displayName": "California",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 10,
+      "authorityCount": 14,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
       "regulations": false,
-      "courtRules": false,
+      "courtRules": true,
       "constitution": false,
       "importerStatus": "configured",
       "statuteSource": "https://leginfo.legislature.ca.gov/",
@@ -207,7 +206,6 @@
       "highestCourt": "Supreme Court of California",
       "notes": [
         "No regulations in seed.",
-        "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
       ]
     },
@@ -216,11 +214,11 @@
       "displayName": "Colorado",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 3,
+      "authorityCount": 9,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
-      "regulations": false,
+      "regulations": true,
       "courtRules": false,
       "constitution": false,
       "importerStatus": "configured",
@@ -237,8 +235,6 @@
       "courtMapping": true,
       "highestCourt": "Colorado Supreme Court",
       "notes": [
-        "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed.",
         "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
       ]
@@ -248,7 +244,7 @@
       "displayName": "Connecticut",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 3,
+      "authorityCount": 6,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
@@ -269,7 +265,6 @@
       "courtMapping": true,
       "highestCourt": "Connecticut Supreme Court",
       "notes": [
-        "Seed corpus only — not meaningful full-jurisdiction coverage.",
         "No regulations in seed.",
         "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
@@ -280,12 +275,12 @@
       "displayName": "Delaware",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 14,
+      "authorityCount": 18,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
       "regulations": true,
-      "courtRules": false,
+      "courtRules": true,
       "constitution": false,
       "importerStatus": "configured",
       "statuteSource": "https://delcode.delaware.gov/",
@@ -301,7 +296,6 @@
       "courtMapping": true,
       "highestCourt": "Supreme Court of Delaware",
       "notes": [
-        "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage.",
         "Delaware has no general intermediate appellate court of last resort below the Supreme Court."
       ]
@@ -340,7 +334,7 @@
       "displayName": "Georgia",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 3,
+      "authorityCount": 6,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
@@ -361,7 +355,6 @@
       "courtMapping": true,
       "highestCourt": "Supreme Court of Georgia",
       "notes": [
-        "Seed corpus only — not meaningful full-jurisdiction coverage.",
         "No regulations in seed.",
         "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
@@ -436,12 +429,12 @@
       "displayName": "Illinois",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 14,
+      "authorityCount": 18,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
       "regulations": true,
-      "courtRules": false,
+      "courtRules": true,
       "constitution": false,
       "importerStatus": "configured",
       "statuteSource": "https://www.ilga.gov/",
@@ -457,7 +450,6 @@
       "courtMapping": true,
       "highestCourt": "Supreme Court of Illinois",
       "notes": [
-        "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
       ]
     },
@@ -658,11 +650,11 @@
       "displayName": "Maryland",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 3,
+      "authorityCount": 9,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
-      "regulations": false,
+      "regulations": true,
       "courtRules": false,
       "constitution": false,
       "importerStatus": "configured",
@@ -679,8 +671,6 @@
       "courtMapping": true,
       "highestCourt": "Supreme Court of Maryland",
       "notes": [
-        "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed.",
         "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
       ]
@@ -690,12 +680,12 @@
       "displayName": "Massachusetts",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 10,
+      "authorityCount": 14,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
       "regulations": false,
-      "courtRules": false,
+      "courtRules": true,
       "constitution": false,
       "importerStatus": "configured",
       "statuteSource": "https://malegislature.gov/Laws/GeneralLaws",
@@ -712,7 +702,6 @@
       "highestCourt": "Massachusetts Supreme Judicial Court",
       "notes": [
         "No regulations in seed.",
-        "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
       ]
     },
@@ -721,11 +710,11 @@
       "displayName": "Michigan",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 3,
+      "authorityCount": 10,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
-      "regulations": false,
+      "regulations": true,
       "courtRules": false,
       "constitution": false,
       "importerStatus": "configured",
@@ -742,8 +731,6 @@
       "courtMapping": true,
       "highestCourt": "Michigan Supreme Court",
       "notes": [
-        "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed.",
         "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
       ]
@@ -977,12 +964,12 @@
       "displayName": "New Jersey",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 10,
+      "authorityCount": 14,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
       "regulations": false,
-      "courtRules": false,
+      "courtRules": true,
       "constitution": false,
       "importerStatus": "configured",
       "statuteSource": "https://www.njleg.state.nj.us/",
@@ -999,7 +986,6 @@
       "highestCourt": "Supreme Court of New Jersey",
       "notes": [
         "No regulations in seed.",
-        "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
       ]
     },
@@ -1040,12 +1026,12 @@
       "displayName": "New York",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 10,
+      "authorityCount": 14,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
       "regulations": false,
-      "courtRules": false,
+      "courtRules": true,
       "constitution": false,
       "importerStatus": "configured",
       "statuteSource": "https://public.leginfo.state.ny.us/",
@@ -1062,7 +1048,6 @@
       "highestCourt": "New York Court of Appeals",
       "notes": [
         "No regulations in seed.",
-        "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
       ]
     },
@@ -1071,11 +1056,11 @@
       "displayName": "North Carolina",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 3,
+      "authorityCount": 10,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
-      "regulations": false,
+      "regulations": true,
       "courtRules": false,
       "constitution": false,
       "importerStatus": "configured",
@@ -1092,8 +1077,6 @@
       "courtMapping": true,
       "highestCourt": "Supreme Court of North Carolina",
       "notes": [
-        "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed.",
         "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
       ]
@@ -1135,11 +1118,11 @@
       "displayName": "Ohio",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 3,
+      "authorityCount": 9,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
-      "regulations": false,
+      "regulations": true,
       "courtRules": false,
       "constitution": false,
       "importerStatus": "configured",
@@ -1156,8 +1139,6 @@
       "courtMapping": true,
       "highestCourt": "Supreme Court of Ohio",
       "notes": [
-        "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed.",
         "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
       ]
@@ -1388,12 +1369,12 @@
       "displayName": "Texas",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 10,
+      "authorityCount": 18,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
-      "regulations": false,
-      "courtRules": false,
+      "regulations": true,
+      "courtRules": true,
       "constitution": false,
       "importerStatus": "configured",
       "statuteSource": "https://statutes.capitol.texas.gov/",
@@ -1409,8 +1390,6 @@
       "courtMapping": true,
       "highestCourt": "Supreme Court of Texas",
       "notes": [
-        "No regulations in seed.",
-        "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
       ]
     },
@@ -1512,11 +1491,11 @@
       "displayName": "Washington",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 3,
+      "authorityCount": 9,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
-      "regulations": false,
+      "regulations": true,
       "courtRules": false,
       "constitution": false,
       "importerStatus": "configured",
@@ -1533,8 +1512,6 @@
       "courtMapping": true,
       "highestCourt": "Washington Supreme Court",
       "notes": [
-        "Seed corpus only — not meaningful full-jurisdiction coverage.",
-        "No regulations in seed.",
         "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
       ]
@@ -1576,7 +1553,7 @@
       "displayName": "Wisconsin",
       "type": "state",
       "corpusStatus": "limited_corpus",
-      "authorityCount": 3,
+      "authorityCount": 6,
       "statutes": true,
       "casesHigh": true,
       "casesAppellate": false,
@@ -1597,7 +1574,6 @@
       "courtMapping": true,
       "highestCourt": "Wisconsin Supreme Court",
       "notes": [
-        "Seed corpus only — not meaningful full-jurisdiction coverage.",
         "No regulations in seed.",
         "No court rules in seed.",
         "Curated shallow seed/expansion bundle present; not full primary-law coverage."
