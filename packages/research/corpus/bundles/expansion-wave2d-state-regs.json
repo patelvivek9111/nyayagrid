@@ -1,0 +1,948 @@
+[
+  {
+    "title": "34 Pa. Code § 231.1 — Definitions",
+    "shortTitle": "34 Pa. Code § 231.1",
+    "authorityType": "regulation",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "34 Pa. Code § 231.1",
+    "sourceExternalId": "pa-code-34-231-1",
+    "canonicalSourceUrl": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/034/chapter231/s231.1.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "34",
+        "label": "Labor and Industry"
+      },
+      {
+        "level": "chapter",
+        "ref": "231",
+        "label": "Minimum Wage"
+      },
+      {
+        "level": "section",
+        "ref": "231.1",
+        "label": "Definitions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "34 Pa. Code § 231.1\n\n§ 231.1. Definitions.\n\n(a) Terms used in this chapter shall have the same meaning and be defined in the same manner as in the act.\n\n(b) In addition to the provisions of subsection (a), the following words and terms, when used in this chapter, have the following meanings, unless the context clearly indicates otherwise:\n\nAct—The Minimum Wage Act of 1968 (43 P.S. §§ 333.101—333.115).\n\nHours worked—The term includes time during which an employee is required by the employer to be on the premises of the employer, to be on duty or to be at the prescribed work place, time spent in traveling as part of the duties of the employee during normal working hours and time during which an employee is employed or permitted to work; provided, however, that time allowed for meals shall be excluded unless the employee is required or permitted to work during that time, and provided further, that time spent on the premises of the employer for the convenience of the employee shall be excluded.\n\nTipped employee—An employee engaged in an occupation in which the employee customarily and regularly receives more than $135 a month in tips.\n\nWeek—A period of 7 consecutive days starting on any day selected by the employer.",
+    "sections": [
+      {
+        "sectionRef": "231.1",
+        "subsectionRef": "b",
+        "content": "Hours worked includes time an employee is required to be on the employer premises, on duty, or at the prescribed workplace, and time employed or permitted to work, excluding meal time unless the employee is required or permitted to work during that time."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "minimum_wage_definitions",
+      "sourceOwner": "Pennsylvania Department of Labor and Industry"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "34 Pa. Code § 231.41 — Rate",
+    "shortTitle": "34 Pa. Code § 231.41",
+    "authorityType": "regulation",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "34 Pa. Code § 231.41",
+    "sourceExternalId": "pa-code-34-231-41",
+    "canonicalSourceUrl": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/034/chapter231/s231.41.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "34",
+        "label": "Labor and Industry"
+      },
+      {
+        "level": "chapter",
+        "ref": "231",
+        "label": "Minimum Wage"
+      },
+      {
+        "level": "section",
+        "ref": "231.41",
+        "label": "Overtime rate"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "34 Pa. Code § 231.41\n\n§ 231.41. Rate.\n\nExcept as otherwise provided in section 5(a)—(c) of the act (43 P. S. § 333.105(a)—(c)), each employee shall be paid for overtime not less than 1-1/2 times the employee's regular rate of pay for all hours in excess of 40 hours in a workweek.",
+    "sections": [
+      {
+        "sectionRef": "231.41",
+        "content": "Each employee shall be paid for overtime not less than 1-1/2 times the employee's regular rate of pay for all hours in excess of 40 hours in a workweek, except as otherwise provided in section 5(a)-(c) of the Minimum Wage Act."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "overtime_rate",
+      "sourceOwner": "Pennsylvania Department of Labor and Industry"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "34 Pa. Code § 231.43 — Regular rate",
+    "shortTitle": "34 Pa. Code § 231.43",
+    "authorityType": "regulation",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "34 Pa. Code § 231.43",
+    "sourceExternalId": "pa-code-34-231-43",
+    "canonicalSourceUrl": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/034/chapter231/s231.43.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "34",
+        "label": "Labor and Industry"
+      },
+      {
+        "level": "chapter",
+        "ref": "231",
+        "label": "Minimum Wage"
+      },
+      {
+        "level": "section",
+        "ref": "231.43",
+        "label": "Regular rate"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "34 Pa. Code § 231.43\n\n§ 231.43. Regular rate.\n\n(a) For purposes of these §§ 231.41—231.43 (relating to overtime pay), the regular rate at which an employee is employed shall be deemed to include all remuneration for employment paid to or on behalf of the employee, but it shall not be deemed to include the following:\n\n(1) Sums paid as gifts, payments in the nature of gifts made during any holiday or on other special occasions as a reward for service, the amounts of which are not measured by or dependent on hours worked, production or efficiency.\n\n(g) The regular rate for salaried employees who are not exempt from overtime is the amount of remuneration determined under subsection (a) divided by 40 hours.",
+    "sections": [
+      {
+        "sectionRef": "231.43",
+        "subsectionRef": "g",
+        "content": "The regular rate for salaried employees who are not exempt from overtime is the amount of remuneration determined under subsection (a) divided by 40 hours."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "overtime_regular_rate",
+      "sourceOwner": "Pennsylvania Department of Labor and Industry"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "1 Pa. Code § 35.9 — Formal complaints generally",
+    "shortTitle": "1 Pa. Code § 35.9",
+    "authorityType": "regulation",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "1 Pa. Code § 35.9",
+    "sourceExternalId": "pa-code-1-35-9",
+    "canonicalSourceUrl": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/001/chapter35/s35.9.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "1",
+        "label": "Administration"
+      },
+      {
+        "level": "chapter",
+        "ref": "35",
+        "label": "Formal Proceedings"
+      },
+      {
+        "level": "section",
+        "ref": "35.9",
+        "label": "Formal complaints generally"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "administrative",
+      "regulation"
+    ],
+    "content": "1 Pa. Code § 35.9\n\n§ 35.9. Formal complaints generally.\n\nA person complaining of anything done or omitted to be done by a person subject to the jurisdiction of an agency, in violation of a statute or regulation administered or issued by the agency may file a complaint with the agency. If the complaint relates to a provision in a tariff, policy form or other similar contract document on file with the agency, the document should be identified. A copy of the complaint will be forwarded by the agency to the respondent who will be called upon to satisfy the complaint or to answer the same in writing within the time specified in § 35.35 (relating to answers to complaints and petitions), or such lesser time as may be prescribed by statute, after the date of service of the complaint, unless the agency with or without motion shall prescribe a different time. If, in the judgment of the agency, a violation of a statute or regulation administered or issued by the agency has been alleged and has not been satisfied adequately the agency will either invite the parties to an informal conference, set the matter for a formal hearing, or take another action which in the judgment of the agency is appropriate. In the event that a hearing is held the complainant automatically shall be a party thereto and need not file a petition for leave to intervene.",
+    "sections": [
+      {
+        "sectionRef": "35.9",
+        "content": "A person may file a complaint with an agency alleging a statutory or regulatory violation by a person subject to the agency's jurisdiction; the agency forwards the complaint to the respondent and may convene an informal conference, set a formal hearing, or take other appropriate action."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "administrative_complaints",
+      "sourceOwner": "Pennsylvania Joint Committee on Documents"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Fla. Admin. Code R. 60Y-5.001 — Complaints",
+    "shortTitle": "Fla. Admin. Code R. 60Y-5.001",
+    "authorityType": "regulation",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. Admin. Code R. 60Y-5.001",
+    "sourceExternalId": "fl-fac-60y-5-001",
+    "canonicalSourceUrl": "https://www.flrules.org/gateway/ruleno.asp?id=60Y-5.001",
+    "hierarchyPath": [
+      {
+        "level": "chapter",
+        "ref": "60Y-5",
+        "label": "Proceedings Upon Complaints of Unlawful Employment Practice"
+      },
+      {
+        "level": "rule",
+        "ref": "60Y-5.001",
+        "label": "Complaints"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Fla. Admin. Code R. 60Y-5.001\n\n60Y-5.001 Complaints.\n\n(1) Who May File. A complaint may be filed by any person aggrieved by an unlawful employment practice. A complaint may also be filed by the Attorney General, a Commissioner, or the Commission. When a complaint is filed by a Commissioner, that Commissioner is the complainant, and shall not participate as a Commissioner in any subsequent proceeding upon that complaint.\n\n(2) Time for Filing. A complaint may be filed at any time within 365 days of the occurrence of the alleged unlawful employment practice. If the alleged unlawful employment practice is of a continuing nature, the date of the occurrence may be any date subsequent to the commencement of the unlawful employment practice up to and including the date on which it shall have ceased.\n\n(5) Form. The complaint must be in writing and shall be signed by the complainant. The complaint shall be verified.\n\n(6)(b) Notwithstanding the provision of paragraph (a) of this subsection, a complaint is sufficient if it is in writing, signed by the Complainant, verified, and is sufficiently precise to identify the parties and to describe generally the action or practice complained of.",
+    "sections": [
+      {
+        "sectionRef": "60Y-5.001",
+        "subsectionRef": "2",
+        "content": "A complaint may be filed at any time within 365 days of the occurrence of the alleged unlawful employment practice; continuing practices may use any date from commencement through cessation."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "employment_discrimination_complaints",
+      "sourceOwner": "Florida Commission on Human Relations"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Fla. Admin. Code R. 60Y-5.003 — Investigation of Complaints",
+    "shortTitle": "Fla. Admin. Code R. 60Y-5.003",
+    "authorityType": "regulation",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. Admin. Code R. 60Y-5.003",
+    "sourceExternalId": "fl-fac-60y-5-003",
+    "canonicalSourceUrl": "https://www.flrules.org/gateway/ruleno.asp?id=60Y-5.003",
+    "hierarchyPath": [
+      {
+        "level": "chapter",
+        "ref": "60Y-5",
+        "label": "Proceedings Upon Complaints of Unlawful Employment Practice"
+      },
+      {
+        "level": "rule",
+        "ref": "60Y-5.003",
+        "label": "Investigation of Complaints"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Fla. Admin. Code R. 60Y-5.003\n\n60Y-5.003 Investigation of Complaints.\n\n(1) By Whom. The investigation of the complaint shall be made by the Office of Employment Investigations or by any other person designated by the Executive Director. The Executive Director may utilize services of other public agencies, state, local or federal, which are charged with the administration of fair employment practice laws, and may utilize the information gathered by such.\n\n(2) Statement of Complainant. During the course of an investigation, the complainant may be required to provide a statement which includes:\n\n(a) A statement of each particular harm which the aggrieved person has suffered and the date on which each harm occurred;\n\n(b) For each harm, a statement specifying the act, policy or practice which is alleged to be unlawful;\n\n(c) For each act, policy, or practice alleged to have harmed the aggrieved person, a statement of the facts which lead the complainant to believe that the act, policy or practice is discriminatory.",
+    "sections": [
+      {
+        "sectionRef": "60Y-5.003",
+        "subsectionRef": "1",
+        "content": "Complaint investigation is conducted by the Office of Employment Investigations or another person designated by the Executive Director, who may use other public fair-employment agencies."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "employment_discrimination_investigation",
+      "sourceOwner": "Florida Commission on Human Relations"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Fla. Admin. Code R. 61J2-10.025 — Advertising",
+    "shortTitle": "Fla. Admin. Code R. 61J2-10.025",
+    "authorityType": "regulation",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. Admin. Code R. 61J2-10.025",
+    "sourceExternalId": "fl-fac-61j2-10-025",
+    "canonicalSourceUrl": "https://www.flrules.org/gateway/ruleno.asp?id=61J2-10.025",
+    "hierarchyPath": [
+      {
+        "level": "chapter",
+        "ref": "61J2-10",
+        "label": "Operation, Business and Offices"
+      },
+      {
+        "level": "rule",
+        "ref": "61J2-10.025",
+        "label": "Advertising"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "business",
+      "consumer",
+      "regulation"
+    ],
+    "content": "Fla. Admin. Code R. 61J2-10.025\n\n61J2-10.025 Advertising.\n\n(1) All advertising must be in a manner in which reasonable persons would know they are dealing with a real estate licensee. All real estate advertisements must include the licensed name of the brokerage firm. No real estate advertisement placed or caused to be placed by a licensee shall be fraudulent, false, deceptive or misleading.\n\n(2) When the licensee's personal name appears in the advertisement, at the very least the licensee's last name must be used in the manner in which it is registered with the Commission.\n\n(3)(a) When advertising on a site on the Internet, the brokerage firm name as required in subsection (1) above shall be placed adjacent to or immediately above or below the point of contact information. \"Point of contact information\" refers to any means by which to contact the brokerage firm or individual licensee including mailing address(es), physical street address(es), e-mail address(es), telephone number(s) or facsimile telephone number(s).",
+    "sections": [
+      {
+        "sectionRef": "61J2-10.025",
+        "subsectionRef": "1",
+        "content": "All real estate advertisements must include the licensed name of the brokerage firm and must not be fraudulent, false, deceptive, or misleading."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "real_estate_advertising",
+      "sourceOwner": "Florida Real Estate Commission"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Fla. Admin. Code R. 28-106.201 — Initiation of Proceedings",
+    "shortTitle": "Fla. Admin. Code R. 28-106.201",
+    "authorityType": "regulation",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. Admin. Code R. 28-106.201",
+    "sourceExternalId": "fl-fac-28-106-201",
+    "canonicalSourceUrl": "https://www.flrules.org/gateway/ruleno.asp?id=28-106.201",
+    "hierarchyPath": [
+      {
+        "level": "chapter",
+        "ref": "28-106",
+        "label": "Decisions Determining Substantial Interests"
+      },
+      {
+        "level": "rule",
+        "ref": "28-106.201",
+        "label": "Initiation of Proceedings"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "administrative",
+      "regulation"
+    ],
+    "content": "Fla. Admin. Code R. 28-106.201\n\n28-106.201 Initiation of Proceedings.\n\n(1) Unless otherwise provided by statute, and except for agency enforcement and disciplinary actions that shall be initiated under Rule 28-106.2015, F.A.C., initiation of proceedings shall be made by written petition to the agency responsible for rendering final agency action. The term \"petition\" includes any document that requests an evidentiary proceeding and asserts the existence of a disputed issue of material fact. Each petition shall be legible and on 8 1/2 by 11 inch white paper. Unless printed, the impression shall be on one side of the paper only and lines shall be double-spaced.\n\n(2) All petitions filed under these rules shall contain:\n\n(a) The name and address of each agency affected and each agency's file or identification number, if known;\n\n(d) A statement of all disputed issues of material fact. If there are none, the petition must so indicate;\n\n(e) A concise statement of the ultimate facts alleged, including the specific facts the petitioner contends warrant reversal or modification of the agency's proposed action;\n\n(g) A statement of the relief sought by the petitioner, stating precisely the action petitioner wishes the agency to take with respect to the agency's proposed action.",
+    "sections": [
+      {
+        "sectionRef": "28-106.201",
+        "subsectionRef": "2",
+        "content": "A petition initiating an administrative proceeding must identify the agency, disputed material facts, ultimate facts warranting relief, and the precise relief sought."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "apa_petition",
+      "sourceOwner": "Florida Administration Commission"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "16VAC15-21-10 — Definitions",
+    "shortTitle": "16VAC15-21-10",
+    "authorityType": "regulation",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "16VAC15-21-10",
+    "sourceExternalId": "va-vac-16vac15-21-10",
+    "canonicalSourceUrl": "https://law.lis.virginia.gov/admincode/title16/agency15/chapter21/section10/",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "16",
+        "label": "Labor and Employment"
+      },
+      {
+        "level": "agency",
+        "ref": "15",
+        "label": "Department of Labor and Industry"
+      },
+      {
+        "level": "chapter",
+        "ref": "21",
+        "label": "Maximum Garnishment Amounts"
+      },
+      {
+        "level": "section",
+        "ref": "10",
+        "label": "Definitions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "16VAC15-21-10\n\n16VAC15-21-10. Definitions.\n\nThe following words and terms when used in this chapter shall have the following meanings unless the context clearly indicates otherwise:\n\n\"Disposable earnings\" means that part of the earnings of any individual remaining after the deduction from those earnings of any amount required by law to be withheld.\n\n\"Earnings\" means compensation paid or payable for personal services, whether denominated as wages, salary, commission, bonus, payments to an independent contractor, or otherwise, whether paid directly to the individual or deposited with another entity or person on behalf of and traceable to the individual, and includes periodic payments pursuant to a pension or retirement program.\n\n\"F.M.W.R.\" means the current federal minimum hourly wage rate set out in the Fair Labor Standards Act, 29 USC § 206(a)(1) or its successor, and any regulations promulgated thereunder.\n\n\"Garnishment\" means any legal or equitable procedure through which the earnings of any individual are required to be withheld for payment of any debt.\n\n\"Ordinary debt\" means any debt other than a debt for the support of a person or a debt for taxes, or any other debt for which a different maximum garnishment amount is established by law.",
+    "sections": [
+      {
+        "sectionRef": "16VAC15-21-10",
+        "content": "Defines disposable earnings, earnings, federal minimum wage rate (F.M.W.R.), garnishment, and ordinary debt for Virginia maximum garnishment amount regulations."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "wage_garnishment_definitions",
+      "sourceOwner": "Virginia Department of Labor and Industry"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "16VAC15-21-30 — Calculation of maximum garnishment amounts for an ordinary debt",
+    "shortTitle": "16VAC15-21-30",
+    "authorityType": "regulation",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "16VAC15-21-30",
+    "sourceExternalId": "va-vac-16vac15-21-30",
+    "canonicalSourceUrl": "https://law.lis.virginia.gov/admincode/title16/agency15/chapter21/section30/",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "16",
+        "label": "Labor and Employment"
+      },
+      {
+        "level": "agency",
+        "ref": "15",
+        "label": "Department of Labor and Industry"
+      },
+      {
+        "level": "chapter",
+        "ref": "21",
+        "label": "Maximum Garnishment Amounts"
+      },
+      {
+        "level": "section",
+        "ref": "30",
+        "label": "Maximum garnishment calculation"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "16VAC15-21-30\n\n16VAC15-21-30. Calculation of maximum garnishment amounts for an ordinary debt.\n\nA. Weekly earnings.\n\n1. If the amount of weekly disposable earnings equals 40 times the federal minimum wage rate (F.M.W.R.) or less, nothing may be withheld for garnishment.\n\n2. If the weekly disposable earnings exceed 40 times the federal minimum wage rate (F.M.W.R.), the maximum amount that can be withheld for garnishment shall be either 25% of the weekly disposable earnings or the amount by which the weekly disposable earnings exceed 40 times the F.M.W.R., whichever is less, so long as the amount withheld does not reduce the weekly disposable earnings below 40 times the F.M.W.R. Based on a federal minimum wage rate of $7.25 per hour, 40 times the F.M.W.R. is $290.",
+    "sections": [
+      {
+        "sectionRef": "16VAC15-21-30",
+        "subsectionRef": "A",
+        "content": "For weekly earnings, nothing may be withheld if disposable earnings are at or below 40 times the federal minimum wage; otherwise the maximum withhold is the lesser of 25% of disposable earnings or the excess over 40 times F.M.W.R."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "wage_garnishment_limits",
+      "sourceOwner": "Virginia Department of Labor and Industry"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "16VAC15-30-20 — Index of hazardous occupations",
+    "shortTitle": "16VAC15-30-20",
+    "authorityType": "regulation",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "16VAC15-30-20",
+    "sourceExternalId": "va-vac-16vac15-30-20",
+    "canonicalSourceUrl": "https://law.lis.virginia.gov/admincode/title16/agency15/chapter30/section20/",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "16",
+        "label": "Labor and Employment"
+      },
+      {
+        "level": "agency",
+        "ref": "15",
+        "label": "Department of Labor and Industry"
+      },
+      {
+        "level": "chapter",
+        "ref": "30",
+        "label": "Virginia Rules and Regulations Declaring Hazardous Occupations"
+      },
+      {
+        "level": "section",
+        "ref": "20",
+        "label": "Index of hazardous occupations"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "16VAC15-30-20\n\n16VAC15-30-20. Index of hazardous occupations.\n\nThe following occupations have been determined to be hazardous or detrimental to the health of minors under 18 years of age. Additional information on each group of occupations is provided in the referenced section.\n\n1. Manufacturing or Storage Occupations Involving Explosives. (16VAC15-30-30)\n\n2. Motor Vehicle Occupations. (16VAC15-30-40)\n\n3. Logging and Sawmilling Occupations. (16VAC15-30-50)\n\n6. Power-Driven Hoisting Apparatus Occupations. (16VAC15-30-80)\n\n15. Occupations in Roofing Operations. (16VAC15-30-170)\n\n16. Occupations in Excavation Operations. (16VAC15-30-180)\n\n17. Fire Fighting. (16VAC15-30-190)\n\n18. Other Prohibited Occupations. (16VAC15-30-200)",
+    "sections": [
+      {
+        "sectionRef": "16VAC15-30-20",
+        "content": "Lists occupations determined hazardous or detrimental to the health of minors under 18, including explosives, motor vehicle, logging, roofing, excavation, and fire fighting occupations."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "child_labor_hazardous_occupations",
+      "sourceOwner": "Virginia Department of Labor and Industry"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "16VAC15-40-10 — Definitions",
+    "shortTitle": "16VAC15-40-10",
+    "authorityType": "regulation",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "16VAC15-40-10",
+    "sourceExternalId": "va-vac-16vac15-40-10",
+    "canonicalSourceUrl": "https://law.lis.virginia.gov/admincode/title16/agency15/chapter40/section10/",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "16",
+        "label": "Labor and Employment"
+      },
+      {
+        "level": "agency",
+        "ref": "15",
+        "label": "Department of Labor and Industry"
+      },
+      {
+        "level": "chapter",
+        "ref": "40",
+        "label": "Virginia Hours and Conditions of Employment for Children"
+      },
+      {
+        "level": "section",
+        "ref": "10",
+        "label": "Definitions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "16VAC15-40-10\n\n16VAC15-40-10. Definitions.\n\nThe following terms when used in this chapter shall have the following meanings, unless the context clearly indicates otherwise.\n\n\"Employ\" means to put to work, use or service, or to engage the services of, and shall include to permit or suffer to work. \"To permit or suffer to work\" means to knowingly allow by failure to stop or to protest, as well as to employ by oral or written contract, by any person having authority over a minor in connection with the services being performed. As used in this chapter, the term \"employ\" is broader than the common law concept of employment and must be interpreted broadly in the light of the mischief to be corrected.\n\n\"Employer\" means an individual, partnership, association, corporation, legal representative, receiver, trustee, or trustee in bankruptcy doing business in or operating within this Commonwealth who employs another to work for wages, salaries, or on commission and shall include any similar entity acting directly or indirectly in the interest of an employer in relation to an employee. For purposes of this chapter, it shall not include the government of the United States, the Commonwealth of Virginia or any of its agencies, institutions, or political subdivisions or any public body.\n\n\"School hours\" means those periods when the school attended by the minor is in regular session, and does not include hours before and after school, Saturdays and Sundays, holidays, or school vacations, including summer vacations.",
+    "sections": [
+      {
+        "sectionRef": "16VAC15-40-10",
+        "content": "Defines employ (including permit or suffer to work), employer, and school hours for Virginia child hours and conditions of employment regulations."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "child_labor_definitions",
+      "sourceOwner": "Virginia Department of Labor and Industry"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "19 DE Admin. Code 1102 — Exemptions for Disabled Workers from the Minimum Wage Act",
+    "shortTitle": "19 DE Admin. Code 1102",
+    "authorityType": "regulation",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "19 DE Admin. Code 1102",
+    "sourceExternalId": "de-admin-19-1102",
+    "canonicalSourceUrl": "https://regulations.delaware.gov/AdminCode/title19/1102.shtml",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "19",
+        "label": "Labor"
+      },
+      {
+        "level": "regulation",
+        "ref": "1102",
+        "label": "Exemptions for Disabled Workers from the Minimum Wage Act"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "19 DE Admin. Code 1102\n\n1102 Exemptions for Disabled Workers from the Minimum Wage Act\n\n2.0 Definitions\n\n\"Disabled worker\" or \"worker\" means an individual whose earning capacity is impaired by age or physical or mental deficiency or injury for work (s) he is to perform.\n\n5.0 Conditions for Granting a Certificate\n\n5.1 The application must set forth facts showing:\n\n5.1.1 A special minimum wage is necessary to prevent curtailment of the worker's or trainee's opportunities for employment; and\n\n5.1.2 The earning or productive capacity of the worker for the work (s)he is perform is impaired by age or physical or mental deficiency or injury.\n\n8.3 The wage rate (s) set in the certificate shall be fixed at a figure designed to reflect adequately the individual worker's or trainee's earning or productive capacity. No wage rate shall be fixed at less than 75 percent of the applicable minimum wage under the Minimum Wage Act unless after investigation a lower rate appears to be clearly justified.",
+    "sections": [
+      {
+        "sectionRef": "1102",
+        "subsectionRef": "5.1",
+        "content": "A special minimum wage certificate requires a showing that the wage is necessary to prevent curtailment of employment opportunities and that earning capacity is impaired by age or physical or mental deficiency or injury."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "disabled_worker_minimum_wage",
+      "sourceOwner": "Delaware Department of Labor"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "19 DE Admin. Code 1311 — Office of Anti-Discrimination Rules and Regulations",
+    "shortTitle": "19 DE Admin. Code 1311 § 2.0",
+    "authorityType": "regulation",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "19 DE Admin. Code 1311 § 2.0",
+    "sourceExternalId": "de-admin-19-1311-2",
+    "canonicalSourceUrl": "https://regulations.delaware.gov/AdminCode/title19/1311.shtml",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "19",
+        "label": "Labor"
+      },
+      {
+        "level": "regulation",
+        "ref": "1311",
+        "label": "Office of Anti-Discrimination Rules and Regulations"
+      },
+      {
+        "level": "section",
+        "ref": "2.0",
+        "label": "Commencement of Actions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "19 DE Admin. Code 1311\n\n2.0 Commencement of Actions\n\n2.1 Manner of commencing actions.\n\n2.1.1 An action shall be commenced by the filing of a verified charge with the department's Office of Anti-Discrimination.\n\n2.2 Who may file a verified charge.\n\n2.2.1 A complainant may file a verified charge alleging a violation of the Discrimination in Employment Act or the Handicapped Persons Employment Protections Act.\n\n2.3.3 The verified charge shall indicate that it is filed with the department, and shall set forth the following:\n\n2.3.3.1 The complainant's full name, address, and telephone number;\n\n2.3.3.2 The respondent's full name, address, and telephone number if known;\n\n2.3.3.4 The specific prohibited basis or bases that gave rise to the alleged violation;\n\n2.3.3.5 The specific adverse employment action alleged to have occurred as a result of the alleged violation;\n\n2.3.3.6 A brief statement of the facts deemed to constitute the alleged violation.",
+    "sections": [
+      {
+        "sectionRef": "2.0",
+        "content": "An employment discrimination action is commenced by filing a verified charge with Delaware's Office of Anti-Discrimination alleging a violation of the Discrimination in Employment Act or Handicapped Persons Employment Protections Act."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "employment_discrimination_charges",
+      "sourceOwner": "Delaware Department of Labor"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "19 DE Admin. Code 1326 — Workplace Fraud Act Regulations",
+    "shortTitle": "19 DE Admin. Code 1326 § 2.0",
+    "authorityType": "regulation",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "19 DE Admin. Code 1326 § 2.0",
+    "sourceExternalId": "de-admin-19-1326-2",
+    "canonicalSourceUrl": "https://regulations.delaware.gov/AdminCode/title19/1326.shtml",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "19",
+        "label": "Labor"
+      },
+      {
+        "level": "regulation",
+        "ref": "1326",
+        "label": "Workplace Fraud Act Regulations"
+      },
+      {
+        "level": "section",
+        "ref": "2.0",
+        "label": "Commencement of Actions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "19 DE Admin. Code 1326\n\n1.1 Purpose and scope.\n\n1.1.1 The regulations set forth in this part contain the procedures established by the Department of Labor for carrying out its responsibilities in the administration and enforcement of the Workplace Fraud Act.\n\n2.0 Commencement of Actions\n\n2.1 Manner of commencing actions. An action may be commenced by the filing of a complaint with the Department's Office of Labor Law Enforcement.\n\n2.2 Who may file a complaint. An employee or the Department on its own may file a complaint alleging a violation of the Workplace Fraud Act.",
+    "sections": [
+      {
+        "sectionRef": "2.0",
+        "content": "A Workplace Fraud Act action may be commenced by filing a complaint with Delaware's Office of Labor Law Enforcement; an employee or the Department may file."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "workplace_fraud",
+      "sourceOwner": "Delaware Department of Labor"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "19 DE Admin. Code 1311 § 1.3 — Definitions",
+    "shortTitle": "19 DE Admin. Code 1311 § 1.3",
+    "authorityType": "regulation",
+    "jurisdiction": "Delaware",
+    "authorityState": "DE",
+    "citation": "19 DE Admin. Code 1311 § 1.3",
+    "sourceExternalId": "de-admin-19-1311-1-3",
+    "canonicalSourceUrl": "https://regulations.delaware.gov/AdminCode/title19/1311.shtml",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "19",
+        "label": "Labor"
+      },
+      {
+        "level": "regulation",
+        "ref": "1311",
+        "label": "Office of Anti-Discrimination Rules and Regulations"
+      },
+      {
+        "level": "section",
+        "ref": "1.3",
+        "label": "Definitions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "19 DE Admin. Code 1311\n\n1.3 Definitions.\n\n1.3.2 The following words and terms, when used in this regulation, shall have the following meanings:\n\n\"Administrator\" means the Office of Anti-Discrimination Administrator or his designee.\n\n\"Complainant\" means any individual claiming to have been harmed by an unlawful employment practice under the Discrimination in Employment Act (19 Del.C. §711) or the Handicapped Persons Employment Protections Act (19 Del.C. §724).\n\n\"Day\" means calendar day unless otherwise specified.\n\n\"Department\" means the Department of Labor.\n\n\"Verified charge\" or \"charge\" means a charge of discrimination that sets forth a concise statement of facts, in writing, verified under oath and signed by the Charging Party.",
+    "sections": [
+      {
+        "sectionRef": "1.3",
+        "content": "Defines complainant, day, department, and verified charge for Delaware Office of Anti-Discrimination proceedings."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "employment_discrimination_definitions",
+      "sourceOwner": "Delaware Department of Labor"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ill. Admin. Code tit. 56 § 300.440 — Jurisdiction",
+    "shortTitle": "Ill. Admin. Code tit. 56 § 300.440",
+    "authorityType": "regulation",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "Ill. Admin. Code tit. 56 § 300.440",
+    "sourceExternalId": "il-admin-56-300-440",
+    "canonicalSourceUrl": "https://www.ilga.gov/commission/jcar/admincode/056/056003000A04400R.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "56",
+        "label": "Labor and Employment"
+      },
+      {
+        "level": "part",
+        "ref": "300",
+        "label": "Payment and Collection of Wages or Final Compensation"
+      },
+      {
+        "level": "section",
+        "ref": "300.440",
+        "label": "Jurisdiction"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Ill. Admin. Code tit. 56 § 300.440\n\nSection 300.440 Jurisdiction\n\nThe Department will review a claim for wages or final compensation and determine whether the Department can assert jurisdiction over the claim.\n\na) The phrase \"in this State\" as used in the Act does not exclude entities physically situated outside the State of Illinois. An employer or employee, to be \"in this State\", need not have residency in this State. An officer or agent need not be physically present in order to be regarded as \"in this State\" for purposes of jurisdiction under the Act.\n\nb) The Department will assert jurisdiction over a claim when the work was performed in Illinois for an Illinois employer, regardless of where the employee resides.\n\nc) The Department will assert jurisdiction over a claim when the work was performed in Illinois for an employer that may have residency outside the State if the employer has sufficient contacts in the State, such as performing substantial business in the State, maintaining a principal place of business in the State, marketing its services in the State or maintaining a registered agent within the State.\n\nd) If the work is performed outside the State of Illinois, the employer must be located in Illinois in order for the Department to assert jurisdiction over the claim.",
+    "sections": [
+      {
+        "sectionRef": "300.440",
+        "subsectionRef": "b",
+        "content": "The Illinois Department of Labor asserts wage-claim jurisdiction when work was performed in Illinois for an Illinois employer, regardless of where the employee resides."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "wage_claim_jurisdiction",
+      "sourceOwner": "Illinois Department of Labor"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ill. Admin. Code tit. 56 § 300.450 — Definitions",
+    "shortTitle": "Ill. Admin. Code tit. 56 § 300.450",
+    "authorityType": "regulation",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "Ill. Admin. Code tit. 56 § 300.450",
+    "sourceExternalId": "il-admin-56-300-450",
+    "canonicalSourceUrl": "https://www.ilga.gov/commission/jcar/admincode/056/056003000A04500R.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "56",
+        "label": "Labor and Employment"
+      },
+      {
+        "level": "part",
+        "ref": "300",
+        "label": "Payment and Collection of Wages or Final Compensation"
+      },
+      {
+        "level": "section",
+        "ref": "300.450",
+        "label": "Definitions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Ill. Admin. Code tit. 56 § 300.450\n\nSection 300.450 Definitions\n\nExcept for the terms set forth in Section 2 of the Act, all other terms used in this Part shall have the meanings set forth in this Section.\n\n\"Act\" means the Illinois Wage Payment and Collection Act [820 ILCS 115].\n\n\"Agreement\" means the manifestation of mutual assent on the part of two or more persons. An agreement is broader than a contract and an exchange of promises or an exchange is not required for an agreement to be in effect. An agreement may be reached by the parties without the formalities and accompanying legal protections of a contract and may be manifested by words or by any other conduct, such as past practice. Company policies and policies in a handbook create an agreement even when the handbook or policy contains a general disclaimer such as a provision disclaiming the handbook from being an employment contract, a guarantee of employment, or an enforceable contract.\n\n\"Compensation\" means remuneration or compensation an employee receives in return for services rendered to an employer. The remuneration for services rendered includes hourly wages, overtime wages, commissions, piece rate work, salary, bonuses, expense reimbursements, or any other basis of calculation for services performed.",
+    "sections": [
+      {
+        "sectionRef": "300.450",
+        "content": "Defines agreement broadly to include handbook policies even with disclaimers, and compensation to include wages, overtime, commissions, salary, bonuses, and expense reimbursements."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "wage_payment_definitions",
+      "sourceOwner": "Illinois Department of Labor"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ill. Admin. Code tit. 56 § 300.460 — Independent Contractor Exemption",
+    "shortTitle": "Ill. Admin. Code tit. 56 § 300.460",
+    "authorityType": "regulation",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "Ill. Admin. Code tit. 56 § 300.460",
+    "sourceExternalId": "il-admin-56-300-460",
+    "canonicalSourceUrl": "https://www.ilga.gov/commission/jcar/admincode/056/056003000A04600R.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "56",
+        "label": "Labor and Employment"
+      },
+      {
+        "level": "part",
+        "ref": "300",
+        "label": "Payment and Collection of Wages or Final Compensation"
+      },
+      {
+        "level": "section",
+        "ref": "300.460",
+        "label": "Independent Contractor Exemption"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Ill. Admin. Code tit. 56 § 300.460\n\nSection 300.460 Independent Contractor Exemption\n\na) All three conditions enumerated in Section 2 of the Act must be satisfied for the independent contractor exemption to apply. For purposes of Section 2 of the Act:\n\n1) \"Control\" means the existence of general control or right to general control, even though the details of work are left to an individual's judgment.\n\n2) \"An independently established trade, occupation, profession or business\" means the individual performing the services has a proprietary interest in such business, to the extent that he/she operates the business without hindrance from any other person and, as the enterprise's owner, may sell or otherwise transfer the business.\n\nc) In determining whether this exemption applies, the Department shall consider the actual, rather than the alleged, relationship between an employer and a claimant; designations and terminology used by the parties are not controlling nor is the claimant's status for tax purposes controlling.",
+    "sections": [
+      {
+        "sectionRef": "300.460",
+        "subsectionRef": "c",
+        "content": "Independent contractor status turns on the actual relationship; party labels and tax status are not controlling."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "independent_contractor_exemption",
+      "sourceOwner": "Illinois Department of Labor"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ill. Admin. Code tit. 56 § 210.110 — Definitions",
+    "shortTitle": "Ill. Admin. Code tit. 56 § 210.110",
+    "authorityType": "regulation",
+    "jurisdiction": "Illinois",
+    "authorityState": "IL",
+    "citation": "Ill. Admin. Code tit. 56 § 210.110",
+    "sourceExternalId": "il-admin-56-210-110",
+    "canonicalSourceUrl": "https://www.ilga.gov/commission/jcar/admincode/056/056002100A01100R.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "56",
+        "label": "Labor and Employment"
+      },
+      {
+        "level": "part",
+        "ref": "210",
+        "label": "Minimum Wage Law"
+      },
+      {
+        "level": "section",
+        "ref": "210.110",
+        "label": "Definitions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Ill. Admin. Code tit. 56 § 210.110\n\nSection 210.110 Definitions\n\n\"Act\" means Minimum Wage Law [820 ILCS 105].\n\n\"Employee\" means any individual permitted or suffered to work by an employer.\n\nThe Director will consider the following factors as significant when determining whether an individual is an employee or an independent contractor:\n\nthe degree of control the alleged employer exercised over the individual;\n\nthe extent to which the services rendered by the individual are an integral part of the alleged employer's business;\n\nthe extent of the relative investments of the individual and alleged employer;\n\nthe degree to which the individual's opportunity for profit and loss is determined by the alleged employer;\n\nthe permanency of the relationship;\n\nthe skill required in the claimed independent operation.\n\n\"Hours worked\" means all the time an employee is required to be on duty, or on the employer's premises, or at other prescribed places of work, and any additional time the employee is required or permitted to work for the employer.\n\n\"Tipped employee\" means an employee engaged in an occupation in which gratuities are customarily recognized as part of the remuneration of such employee as referred to in Section 4(c) of the Act; an employee cannot be deemed a tipped employee unless the employee received $20 or more per month in gratuities.",
+    "sections": [
+      {
+        "sectionRef": "210.110",
+        "content": "Defines employee using economic-reality factors, hours worked as all required or permitted work time, and tipped employee as one receiving $20 or more per month in gratuities."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "minimum_wage_definitions",
+      "sourceOwner": "Illinois Department of Labor"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  }
+]

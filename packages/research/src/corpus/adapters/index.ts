@@ -29,5 +29,15 @@ export {
 } from "./state-statute";
 export type { StateStatuteSourceConfig } from "./state-statute";
 
+export {
+  createStateRegulationAdapter,
+  parsePrefetchedStateRegulation,
+  WAVE1_STATE_REGULATION_CONFIGS,
+} from "./state-regulation";
+export type {
+  StateRegulationPlatformFamily,
+  StateRegulationSourceConfig,
+} from "./state-regulation";
+
 export { runAdapterBatch } from "./batch-runner";
 export type { AdapterBatchPersistFn, AdapterBatchSummary } from "./batch-runner";

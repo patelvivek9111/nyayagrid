@@ -2211,6 +2211,26 @@ var PATTERNS = [
       else if (/^app/i.test(k)) r = "Fed. R. App. P.";
       return `${r} ${m[2]}`;
     }
+  },
+  {
+    type: "regulation",
+    re: /\b(\d{1,3})\s+Pa\.?\s*Code\s*§+\s*([\d.]+)/gi,
+    norm: (m) => `${m[1]} Pa. Code \xA7 ${m[2]}`
+  },
+  {
+    type: "regulation",
+    re: /\bFla\.?\s*Admin\.?\s*Code\s*R\.?\s*([\dA-Za-z.-]+)/gi,
+    norm: (m) => `Fla. Admin. Code R. ${m[1]}`
+  },
+  {
+    type: "rule",
+    re: /\bPa\.?\s*R\.?\s*C\.?\s*P\.?\s*([\d.]+)/gi,
+    norm: (m) => `Pa.R.C.P. ${m[1]}`
+  },
+  {
+    type: "rule",
+    re: /\bFla\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)/gi,
+    norm: (m) => `Fla. R. Civ. P. ${m[1]}`
   }
 ];
 function extract(text) {

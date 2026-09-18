@@ -1,0 +1,16 @@
+{
+  "wave": "2D",
+  "branch": "COURTLISTENER_BLOCKED",
+  "probedAt": "2026-09-18T02:12:00.000Z",
+  "probe": {
+    "endpoint": "GET /api/rest/v4/opinions/?cluster__docket__court=ca11&page_size=1",
+    "status": 429,
+    "retryAfterSeconds": 59308,
+    "retryAfterApproxHours": 16.5,
+    "additionalClCalls": 0
+  },
+  "notes": [
+    "Exactly one authenticated probe. No further CourtListener calls until Retry-After elapses.",
+    "Resume Wave 2B from durable checkpoints after window: CA11, CADC, CAFC, deepen CA7/CA10, then Wave-1 state courts."
+  ]
+}

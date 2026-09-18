@@ -1,0 +1,293 @@
+{
+  "generatedAt": "2026-09-18T02:15:00.000Z",
+  "phase": "50S-WAVE-2D",
+  "registryType": "state_regulation_triage",
+  "scope": "Wave-1 states only (CA, DE, FL, IL, MA, NJ, NY, PA, TX, VA)",
+  "methodology": [
+    "Primary inputs: jurisdiction-sources.ts officialRegulationUrl / officialCourtRulesUrl and wave2c-regulation-source-registry.json.",
+    "Missing Wave-1 URLs filled from well-known official .gov entry points; HTTP HEAD/GET spot-check 2026-09-18.",
+    "Commercial Lexis/Westlaw wrappers flagged E_terms_unclear; not recommended for automated ingestion.",
+    "No public APIs assumed or invented."
+  ],
+  "platformFamiliesAllStates": [
+    {
+      "family": "LexisNexis / Matthew Bender (official publisher contract)",
+      "proprietary": true,
+      "notes": "NJ Administrative Code and Register are officially published by Lexis; free hottopics mirror is explicitly non-official. Similar official-publisher arrangements appear in other states (e.g., CT, RI, WV) — verify per state before ingestion.",
+      "exampleStates": ["NJ"]
+    },
+    {
+      "family": "Thomson Reuters / Westlaw (official online browse contract)",
+      "proprietary": true,
+      "notes": "CA CCR and NY NYCRR free online browse run on Westlaw under state contract; sites label content unofficial or non-evidentiary. OAL/DOS remain official compilers.",
+      "exampleStates": ["CA", "NY"]
+    },
+    {
+      "family": "State LIS / legislative revisor stack",
+      "proprietary": false,
+      "notes": "Shared HTML browse pattern for statutes and admin code on one legislative domain (section URLs, title TOC, PDF export).",
+      "exampleStates": ["VA", "MN", "WI", "ND", "IN", "GA"]
+    },
+    {
+      "family": "Secretary of State / register + code portals",
+      "proprietary": false,
+      "notes": "Custom SOS-hosted HTML for administrative register and codified rules; often long-lived static or semi-static pages.",
+      "exampleStates": ["FL", "TX", "AZ", "AR", "KS"]
+    },
+    {
+      "family": "Legislative reference bureau code & bulletin",
+      "proprietary": false,
+      "notes": "Unified official code + register site maintained by legislative staff.",
+      "exampleStates": ["PA"]
+    },
+    {
+      "family": "State CMS (mass.gov-style)",
+      "proprietary": false,
+      "notes": "Agency CMS pages for CMR/regulations; structured HTML but often bot-protected.",
+      "exampleStates": ["MA"]
+    },
+    {
+      "family": "American Legal Publishing / eCode360",
+      "proprietary": "mixed",
+      "notes": "Common for municipalities; some state-adjacent compilations. Treat as secondary unless confirmed official.",
+      "exampleStates": []
+    },
+    {
+      "family": "Cornell LII / Justia mirrors",
+      "proprietary": false,
+      "notes": "Unofficial mirrors — useful for human lookup only; do not use as corpus authority.",
+      "exampleStates": []
+    }
+  ],
+  "summary": {
+    "jurisdictionCount": 10,
+    "formatClassCounts": {
+      "A_api_xml_json": 0,
+      "B_stable_html": 5,
+      "C_stable_pdf": 0,
+      "D_difficult_manual": 2,
+      "E_terms_unclear": 3
+    },
+    "adapterFeasibilityCounts": {
+      "high": 3,
+      "medium": 3,
+      "low": 4
+    },
+    "recommendedApproachCounts": {
+      "curated_snapshot": 4,
+      "html_adapter": 4,
+      "skip_for_now": 2
+    },
+    "bestCuratedSnapshotThisSession": ["PA", "FL", "VA", "DE"],
+    "registryUrlGapsFilled": 7,
+    "registryUrlsStale": [
+      {
+        "jurisdiction": "NY",
+        "registryUrl": "https://www.dos.ny.gov/info/nycrr.html",
+        "status": "404",
+        "replacement": "https://dos.ny.gov/division-administrative-rules"
+      }
+    ]
+  },
+  "courtRulesTractable": [
+    {
+      "jurisdiction": "PA",
+      "officialCourtRulesUrl": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/231/chapter1/chap1toc.html",
+      "sourceOwner": "Pennsylvania Legislative Reference Bureau (Pa Code Title 231 — court rules)",
+      "notes": "Court rules codified in Pa Code; same stable HTML platform as regulations. Verified 200."
+    },
+    {
+      "jurisdiction": "FL",
+      "officialCourtRulesUrl": "https://www.flcourts.gov/Rules-Proc",
+      "sourceOwner": "Florida Courts",
+      "notes": "Central rules hub with links to supreme, appellate, and trial rules. Verified 200."
+    },
+    {
+      "jurisdiction": "VA",
+      "officialCourtRulesUrl": "https://www.vacourts.gov/courts/scv/rules",
+      "sourceOwner": "Supreme Court of Virginia",
+      "notes": "Official SCV rules index; trial rules on separate vacourts pages. Verified 200."
+    }
+  ],
+  "entries": [
+    {
+      "jurisdiction": "CA",
+      "displayName": "California",
+      "officialRegulationUrl": "https://oal.ca.gov/publications/ccr/",
+      "browseUrl": "https://govt.westlaw.com/calregs/Index",
+      "sourceOwner": "California Office of Administrative Law (official compiler); Thomson Reuters/Barclays (contracted online browse)",
+      "formatClass": "E_terms_unclear",
+      "platformFamily": "Thomson Reuters / Westlaw (contracted; proprietary)",
+      "platformProprietary": true,
+      "adapterFeasibility": "low",
+      "citationExample": "Cal. Code Regs. tit. 2, § 11042",
+      "recommendedApproach": "skip_for_now",
+      "officialCourtRulesUrl": "https://www.courts.ca.gov/rules.htm",
+      "notes": [
+        "Registry URL verified 200; OAL page states full online CCR is provided via Thomson Reuters contract, not on oal.ca.gov directly.",
+        "Westlaw browse is labeled official compilation online but pop-up/session friction and proprietary ToS make automation unsuitable.",
+        "Title 24 (building standards) excluded from online CCR."
+      ]
+    },
+    {
+      "jurisdiction": "DE",
+      "displayName": "Delaware",
+      "officialRegulationUrl": "https://regulations.delaware.gov/",
+      "sourceOwner": "Delaware Register of Regulations / Division of Small Business (official Administrative Code)",
+      "formatClass": "B_stable_html",
+      "platformFamily": "Custom Delaware state portal",
+      "platformProprietary": false,
+      "adapterFeasibility": "medium",
+      "citationExample": "16 Del. Admin. Code § 4501.0",
+      "recommendedApproach": "html_adapter",
+      "officialCourtRulesUrl": null,
+      "notes": [
+        "Not in wave2c registry; filled from official .gov portal. Verified 200.",
+        "Searchable Register + Administrative Code + cumulative tables; tractable HTML deepening."
+      ]
+    },
+    {
+      "jurisdiction": "FL",
+      "displayName": "Florida",
+      "officialRegulationUrl": "https://www.flrules.org/",
+      "sourceOwner": "Florida Department of State (Florida Administrative Code & Register)",
+      "formatClass": "B_stable_html",
+      "platformFamily": "Custom FLRules.org SOS portal",
+      "platformProprietary": false,
+      "adapterFeasibility": "high",
+      "citationExample": "Fla. Admin. Code R. 60A-1.004",
+      "recommendedApproach": "html_adapter",
+      "officialCourtRulesUrl": null,
+      "notes": [
+        "Registry URL verified 200 (redirects to flrules.org).",
+        "Mature chapter/section browse and search; strong Wave-1 html_adapter target."
+      ]
+    },
+    {
+      "jurisdiction": "IL",
+      "displayName": "Illinois",
+      "officialRegulationUrl": "https://www.ilga.gov/commission/jcar/admincode/titles.html",
+      "sourceOwner": "Joint Committee on Administrative Rules (JCAR) / Illinois General Assembly",
+      "formatClass": "B_stable_html",
+      "platformFamily": "Custom ILGA JCAR static HTML",
+      "platformProprietary": false,
+      "adapterFeasibility": "medium",
+      "citationExample": "Ill. Admin. Code tit. 77, § 1000.10",
+      "recommendedApproach": "html_adapter",
+      "officialCourtRulesUrl": null,
+      "notes": [
+        "Not in wave2c registry; official JCAR title index verified 200.",
+        "Title-linked static HTML; good curated_snapshot or html_adapter candidate."
+      ]
+    },
+    {
+      "jurisdiction": "MA",
+      "displayName": "Massachusetts",
+      "officialRegulationUrl": "https://www.mass.gov/lists/code-of-massachusetts-regulations-cmr-by-number",
+      "sourceOwner": "Commonwealth of Massachusetts (Executive agencies; CMR published on mass.gov)",
+      "formatClass": "D_difficult_manual",
+      "platformFamily": "mass.gov CMS",
+      "platformProprietary": false,
+      "adapterFeasibility": "medium",
+      "citationExample": "940 CMR 3.00",
+      "recommendedApproach": "curated_snapshot",
+      "officialCourtRulesUrl": null,
+      "notes": [
+        "Not in wave2c registry; official CMR list on mass.gov (HEAD returned 403 from automated check — likely bot filtering).",
+        "Structured agency CMS pages; manual or throttled snapshot preferred over bulk scrape."
+      ]
+    },
+    {
+      "jurisdiction": "NJ",
+      "displayName": "New Jersey",
+      "officialRegulationUrl": "https://www.nj.gov/oal/rules/accessp/",
+      "browseUrl": "https://www.lexisnexis.com/hottopics/njcode/",
+      "sourceOwner": "New Jersey Office of Administrative Law (official compiler); LexisNexis/Matthew Bender (official publisher & free online mirror)",
+      "formatClass": "E_terms_unclear",
+      "platformFamily": "LexisNexis Public (official publisher; proprietary)",
+      "platformProprietary": true,
+      "adapterFeasibility": "low",
+      "citationExample": "N.J. Admin. Code § 13:45A-1.1",
+      "recommendedApproach": "skip_for_now",
+      "officialCourtRulesUrl": null,
+      "notes": [
+        "OAL public-access page directs to Lexis hottopics; site states online version is not the official Code.",
+        "No clean official .gov HTML corpus; defer until licensed source or manual curation policy."
+      ]
+    },
+    {
+      "jurisdiction": "NY",
+      "displayName": "New York",
+      "officialRegulationUrl": "https://dos.ny.gov/division-administrative-rules",
+      "browseUrl": "https://govt.westlaw.com/nycrr/",
+      "registryOfficialRegulationUrl": "https://www.dos.ny.gov/info/nycrr.html",
+      "sourceOwner": "New York Department of State, Division of Administrative Rules (official compiler); Thomson Reuters Westlaw (contracted unofficial online browse)",
+      "formatClass": "E_terms_unclear",
+      "platformFamily": "Thomson Reuters / Westlaw (contracted; proprietary)",
+      "platformProprietary": true,
+      "adapterFeasibility": "low",
+      "citationExample": "19 N.Y.C.R.R. § 130-1.1",
+      "recommendedApproach": "skip_for_now",
+      "officialCourtRulesUrl": "https://ww2.nycourts.gov/rules/index.shtml",
+      "notes": [
+        "Registry URL (dos.ny.gov/info/nycrr.html) returns 404; replaced with DOS Division of Administrative Rules landing page.",
+        "Searchable NYCRR text only on Westlaw mirror explicitly labeled unofficial; official State Register PDFs at dos.ny.gov/state-register are register-only, not full code.",
+        "Court rules URL in registry returned 403 on automated HEAD; likely valid in browser."
+      ]
+    },
+    {
+      "jurisdiction": "PA",
+      "displayName": "Pennsylvania",
+      "officialRegulationUrl": "https://www.pacodeandbulletin.gov/",
+      "sourceOwner": "Pennsylvania Legislative Reference Bureau (Pennsylvania Code and Bulletin)",
+      "formatClass": "B_stable_html",
+      "platformFamily": "Custom PA Code & Bulletin portal",
+      "platformProprietary": false,
+      "adapterFeasibility": "high",
+      "citationExample": "61 Pa. Code § 67.1",
+      "recommendedApproach": "curated_snapshot",
+      "officialCourtRulesUrl": "https://www.pacourts.us/rules-and-procedures",
+      "notes": [
+        "Not in wave2c registry; official unified code+bulletin site verified 200.",
+        "Best Wave-1 target: stable section URLs, court rules in Title 231 on same platform.",
+        "Registry court-rules URL (pacourts.us/rules-and-procedures) 404; use Pa Code Title 231 instead."
+      ]
+    },
+    {
+      "jurisdiction": "TX",
+      "displayName": "Texas",
+      "officialRegulationUrl": "https://www.sos.texas.gov/texreg/index.shtml",
+      "browseUrl": "https://texreg.sos.state.tx.us/public/readtac.cfm",
+      "sourceOwner": "Texas Secretary of State (Texas Register & Texas Administrative Code)",
+      "formatClass": "D_difficult_manual",
+      "platformFamily": "Texas SOS TexReg (legacy CFM + Appian transition)",
+      "platformProprietary": false,
+      "adapterFeasibility": "medium",
+      "citationExample": "16 Tex. Admin. Code § 3.30",
+      "recommendedApproach": "html_adapter",
+      "officialCourtRulesUrl": null,
+      "notes": [
+        "Not in wave2c registry; SOS Texas Register index verified 200.",
+        "Legacy readtac.cfm returned 401 on automated check; newer Appian portal (texas-sos.appianportalsgov.com) also live — expect SPA/session friction.",
+        "Register HTML/PDF tractable; full TAC crawl needs adapter spike."
+      ]
+    },
+    {
+      "jurisdiction": "VA",
+      "displayName": "Virginia",
+      "officialRegulationUrl": "https://law.lis.virginia.gov/admincode/",
+      "sourceOwner": "Virginia General Assembly — Legislative Information System (LIS)",
+      "formatClass": "B_stable_html",
+      "platformFamily": "Virginia LIS (shared with statutes)",
+      "platformProprietary": false,
+      "adapterFeasibility": "high",
+      "citationExample": "12 Va. Admin. Code § 5-421-460",
+      "recommendedApproach": "curated_snapshot",
+      "officialCourtRulesUrl": null,
+      "notes": [
+        "Not in wave2c registry; LIS admin code verified 200.",
+        "Same platform family as VA statutes already in corpus path; title TOC + section pages with PDF export."
+      ]
+    }
+  ]
+}

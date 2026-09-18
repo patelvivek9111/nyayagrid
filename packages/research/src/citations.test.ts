@@ -100,6 +100,25 @@ describe("parseCitation", () => {
       confidence: "high",
     });
   });
+  it("normalizes state admin-code and court-rule citations", () => {
+    expect(parseCitation("34 Pa. Code § 231.1")).toMatchObject({
+      normalized: "34 Pa. Code § 231.1",
+      type: "regulation",
+      confidence: "high",
+    });
+    expect(parseCitation("Fla. Admin. Code R. 61J2-3.008")).toMatchObject({
+      normalized: "Fla. Admin. Code R. 61J2-3.008",
+      type: "regulation",
+    });
+    expect(parseCitation("Pa.R.C.P. 1007")).toMatchObject({
+      normalized: "Pa.R.C.P. 1007",
+      type: "rule",
+    });
+    expect(parseCitation("Fla. R. Civ. P. 1.110")).toMatchObject({
+      normalized: "Fla. R. Civ. P. 1.110",
+      type: "rule",
+    });
+  });
 });
 
 describe("citationLookupAliases", () => {

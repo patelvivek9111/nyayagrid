@@ -60,7 +60,7 @@ function stateAdapters(code: string): Pick<
     return {
       caseSourceAdapters: ["courtlistener"],
       statuteSourceAdapters: ["state_statute"],
-      regulationSourceAdapters: [],
+      regulationSourceAdapters: ["state_regulation"],
       courtRulesSourceAdapters: [],
     };
   }

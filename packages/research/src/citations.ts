@@ -158,6 +158,122 @@ export class FederalRulesCitationParser implements CitationParser {
   }
 }
 
+/** State admin-code forms: 34 Pa. Code § 231.1, Fla. Admin. Code R. 61J2-3.008, 16VAC15-21-10. */
+export class StateAdminCodeCitationParser implements CitationParser {
+  readonly name = "state-admin-code";
+  readonly type: CitationKind = "regulation";
+  readonly pattern =
+    /\b(?:(\d{1,3})\s+Pa\.?\s*Code\s*§+\s*([\d.]+)|Fla\.?\s*Admin\.?\s*Code\s*R\.?\s*([\dA-Za-z.-]+)|(\d+)\s*VAC\s*([\d.-]+)|(\d+)\s+DE\s+Admin\.?\s*Code\s+([\d.]+)|Ill\.?\s*Admin\.?\s*Code\s+tit\.?\s*(\d+)\s*§+\s*([\d.]+))\b/gi;
+
+  build(match: RegExpMatchArray): ParsedCitation | null {
+    if (match[1] && match[2]) {
+      return {
+        raw: match[0],
+        normalized: `${match[1]} Pa. Code § ${match[2]}`,
+        reporter: "Pa. Code",
+        volume: toInt(match[1]),
+        section: match[2],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[3]) {
+      return {
+        raw: match[0],
+        normalized: `Fla. Admin. Code R. ${match[3]}`,
+        reporter: "Fla. Admin. Code",
+        section: match[3],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[4] && match[5]) {
+      return {
+        raw: match[0],
+        normalized: `${match[4]}VAC${match[5]}`,
+        reporter: "VAC",
+        volume: toInt(match[4]),
+        section: match[5],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[6] && match[7]) {
+      return {
+        raw: match[0],
+        normalized: `${match[6]} DE Admin. Code ${match[7]}`,
+        reporter: "DE Admin. Code",
+        volume: toInt(match[6]),
+        section: match[7],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[8] && match[9]) {
+      return {
+        raw: match[0],
+        normalized: `Ill. Admin. Code tit. ${match[8]} § ${match[9]}`,
+        reporter: "Ill. Admin. Code",
+        volume: toInt(match[8]),
+        section: match[9],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    return null;
+  }
+}
+
+/** State court rules: Pa.R.C.P. 1007, Fla. R. Civ. P. 1.110, Va. Sup. Ct. R. 3:8. */
+export class StateCourtRulesCitationParser implements CitationParser {
+  readonly name = "state-court-rules";
+  readonly type: CitationKind = "rule";
+  readonly pattern =
+    /\b(?:Pa\.?\s*R\.?\s*C\.?\s*P\.?\s*([\d.]+)|Fla\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Va\.?\s*Sup\.?\s*Ct\.?\s*R\.?\s*([\d.:]+))\b/gi;
+
+  build(match: RegExpMatchArray): ParsedCitation | null {
+    if (match[1]) {
+      return {
+        raw: match[0],
+        normalized: `Pa.R.C.P. ${match[1]}`,
+        reporter: "Pa.R.C.P.",
+        section: match[1],
+        type: "rule",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[2]) {
+      return {
+        raw: match[0],
+        normalized: `Fla. R. Civ. P. ${match[2]}`,
+        reporter: "Fla. R. Civ. P.",
+        section: match[2],
+        type: "rule",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[3]) {
+      return {
+        raw: match[0],
+        normalized: `Va. Sup. Ct. R. ${match[3]}`,
+        reporter: "Va. Sup. Ct. R.",
+        section: match[3],
+        type: "rule",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    return null;
+  }
+}
+
 export class RegulatoryCitationParser implements CitationParser {
   readonly name = "regulation";
   readonly type: CitationKind = "regulation";
@@ -248,6 +364,8 @@ export class AtlanticReporterParser implements CitationParser {
 
 export const DEFAULT_CITATION_PARSERS: CitationParser[] = [
   new StateCompiledStatuteParser(),
+  new StateAdminCodeCitationParser(),
+  new StateCourtRulesCitationParser(),
   new StatuteCitationParser(),
   new RegulatoryCitationParser(),
   new FederalRulesCitationParser(),

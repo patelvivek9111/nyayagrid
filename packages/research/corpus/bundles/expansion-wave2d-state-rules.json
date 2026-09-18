@@ -1,0 +1,643 @@
+[
+  {
+    "title": "Pa.R.C.P. 1007 — Commencement of Action",
+    "shortTitle": "Pa.R.C.P. 1007",
+    "authorityType": "rule",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "Pa.R.C.P. 1007",
+    "sourceExternalId": "pa-rcpp-1007",
+    "canonicalSourceUrl": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/231/chapter1000/s1007.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "231",
+        "label": "Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "1007",
+        "label": "Commencement of Action"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Pa.R.C.P. 1007\n\nRule 1007. Commencement of Action.\n\nAn action may be commenced by filing with the prothonotary:\n\n(1) a praecipe for a writ of summons, or\n\n(2) a complaint.",
+    "sections": [
+      {
+        "sectionRef": "1007",
+        "content": "A Pennsylvania civil action may be commenced by filing a praecipe for a writ of summons or a complaint with the prothonotary."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "commencement",
+      "sourceOwner": "Supreme Court of Pennsylvania"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Pa.R.C.P. 1019 — Contents of Pleadings. General and Specific Averments",
+    "shortTitle": "Pa.R.C.P. 1019",
+    "authorityType": "rule",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "Pa.R.C.P. 1019",
+    "sourceExternalId": "pa-rcpp-1019",
+    "canonicalSourceUrl": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/231/chapter1000/s1019.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "231",
+        "label": "Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "1019",
+        "label": "Contents of Pleadings"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Pa.R.C.P. 1019\n\nRule 1019. Contents of Pleadings. General and Specific Averments.\n\n(a) The material facts on which a cause of action or defense is based shall be stated in a concise and summary form.\n\n(b) Averments of fraud or mistake shall be averred with particularity. Malice, intent, knowledge, and other conditions of mind may be averred generally.\n\n(f) Averments of time, place and items of special damage shall be specifically stated.\n\n(h) When any claim or defense is based upon an agreement, the pleading shall state specifically if the agreement is oral or written.\n\n(i) When any claim or defense is based upon a writing, the pleader shall attach a copy of the writing, or the material part thereof, but if the writing or copy is not accessible to the pleader, it is sufficient so to state, together with the reason, and to set forth the substance of the writing.",
+    "sections": [
+      {
+        "sectionRef": "1019",
+        "subsectionRef": "b",
+        "content": "Fraud or mistake must be averred with particularity; malice, intent, knowledge, and other conditions of mind may be averred generally."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "pleading_particularity",
+      "sourceOwner": "Supreme Court of Pennsylvania"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Pa.R.C.P. 1028 — Preliminary Objections",
+    "shortTitle": "Pa.R.C.P. 1028",
+    "authorityType": "rule",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "Pa.R.C.P. 1028",
+    "sourceExternalId": "pa-rcpp-1028",
+    "canonicalSourceUrl": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/231/chapter1000/s1028.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "231",
+        "label": "Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "1028",
+        "label": "Preliminary Objections"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Pa.R.C.P. 1028\n\nRule 1028. Preliminary Objections.\n\n(a) Preliminary objections may be filed by any party to any pleading and are limited to the following grounds:\n\n(1) lack of jurisdiction over the subject matter of the action or the person of the defendant, improper venue or improper form or service of a writ of summons or a complaint;\n\n(2) failure of a pleading to conform to law or rule of court or inclusion of scandalous or impertinent matter;\n\n(3) insufficient specificity in a pleading;\n\n(4) legal insufficiency of a pleading (demurrer);\n\n(5) lack of capacity to sue, nonjoinder of a necessary party or misjoinder of a cause of action;\n\n(6) pendency of a prior action or agreement for alternative dispute resolution;\n\n(7) failure to exercise or exhaust a statutory remedy; and\n\n(8) full, complete and adequate non-statutory remedy at law.\n\n(b) All preliminary objections shall be raised at one time. They shall state specifically the grounds relied upon and may be inconsistent. Two or more preliminary objections may be raised in one pleading.\n\n(d) If the preliminary objections are overruled, the objecting party shall have the right to plead over within twenty days after notice of the order or within such other time as the court shall fix.",
+    "sections": [
+      {
+        "sectionRef": "1028",
+        "subsectionRef": "a",
+        "content": "Preliminary objections are limited to enumerated grounds including jurisdiction/venue/service, demurrer, insufficient specificity, nonjoinder, and failure to exhaust a statutory remedy, and must generally be raised at one time."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "preliminary_objections",
+      "sourceOwner": "Supreme Court of Pennsylvania"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Pa.R.C.P. 1029 — Denials. Effect of Failure to Deny",
+    "shortTitle": "Pa.R.C.P. 1029",
+    "authorityType": "rule",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "Pa.R.C.P. 1029",
+    "sourceExternalId": "pa-rcpp-1029",
+    "canonicalSourceUrl": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/231/chapter1000/s1029.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "231",
+        "label": "Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "1029",
+        "label": "Denials"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Pa.R.C.P. 1029\n\nRule 1029. Denials. Effect of Failure to Deny.\n\n(a) A responsive pleading shall admit or deny each averment of fact in the preceding pleading or any part thereof to which it is responsive. A party denying only a part of an averment shall specify so much of it as is admitted and shall deny the remainder. Admissions and denials in a responsive pleading shall refer specifically to the paragraph in which the averment admitted or denied is set forth.\n\n(b) Averments in a pleading to which a responsive pleading is required are admitted when not denied specifically or by necessary implication. A general denial or a demand for proof, except as provided by subdivision (c) and (e) of this rule, shall have the effect of an admission.\n\n(c) A statement by a party that after reasonable investigation the party is without knowledge or information sufficient to form a belief as the truth of an averment shall have the effect of a denial.",
+    "sections": [
+      {
+        "sectionRef": "1029",
+        "subsectionRef": "b",
+        "content": "Averments requiring a response are admitted if not denied specifically or by necessary implication; a general denial generally operates as an admission."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "denials",
+      "sourceOwner": "Supreme Court of Pennsylvania"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Pa.R.C.P. 1035.2 — Motion",
+    "shortTitle": "Pa.R.C.P. 1035.2",
+    "authorityType": "rule",
+    "jurisdiction": "Pennsylvania",
+    "authorityState": "PA",
+    "citation": "Pa.R.C.P. 1035.2",
+    "sourceExternalId": "pa-rcpp-1035-2",
+    "canonicalSourceUrl": "https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/231/chapter1000/s1035.2.html",
+    "hierarchyPath": [
+      {
+        "level": "title",
+        "ref": "231",
+        "label": "Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "1035.2",
+        "label": "Summary Judgment Motion"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Pa.R.C.P. 1035.2\n\nRule 1035.2. Motion.\n\nAfter the relevant pleadings are closed, but within such time as not to unreasonably delay trial, any party may move for summary judgment in whole or in part as a matter of law\n\n(1) whenever there is no genuine issue of any material fact as to a necessary element of the cause of action or defense which could be established by additional discovery or expert report, or\n\n(2) if, after the completion of discovery relevant to the motion, including the production of expert reports, an adverse party who will bear the burden of proof at trial has failed to produce evidence of facts essential to the cause of action or defense which in a jury trial would require the issues to be submitted to a jury.",
+    "sections": [
+      {
+        "sectionRef": "1035.2",
+        "content": "After relevant pleadings are closed, a party may move for summary judgment when there is no genuine issue of material fact or when the burden-bearing party lacks essential evidence after discovery."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Supreme Court of Pennsylvania"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Fla. R. Civ. P. 1.110 — General Rules of Pleading",
+    "shortTitle": "Fla. R. Civ. P. 1.110",
+    "authorityType": "rule",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. R. Civ. P. 1.110",
+    "sourceExternalId": "fl-rcp-1-110",
+    "canonicalSourceUrl": "https://www.floridabar.org/rules/ctproc/",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "Fla. R. Civ. P.",
+        "label": "Florida Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "1.110",
+        "label": "General Rules of Pleading"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Fla. R. Civ. P. 1.110\n\nRULE 1.110. GENERAL RULES OF PLEADING\n\n(a) Forms of Pleadings. Forms of action and technical forms for seeking relief and of pleas, pleadings, or motions are abolished.\n\n(b) Claims for Relief. A pleading which sets forth a claim for relief, whether an original claim, counterclaim, crossclaim, or third party claim, must state a cause of action and must contain:\n\n(1) a short and plain statement of the grounds on which the court's jurisdiction depends, unless the court already has jurisdiction and the claim needs no new grounds of jurisdiction to support it;\n\n(2) a short and plain statement of the ultimate facts showing that the pleader is entitled to relief; and\n\n(3) a demand for judgment for the relief to which the pleader deems the pleader entitled.\n\nRelief in the alternative or of several different types may be demanded. Every complaint will be considered to pray for general relief.",
+    "sections": [
+      {
+        "sectionRef": "1.110",
+        "subsectionRef": "b",
+        "content": "A claim for relief must state a cause of action and include jurisdictional grounds, ultimate facts showing entitlement to relief, and a demand for judgment."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "pleading",
+      "sourceOwner": "Supreme Court of Florida"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Fla. R. Civ. P. 1.140 — Defenses",
+    "shortTitle": "Fla. R. Civ. P. 1.140",
+    "authorityType": "rule",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. R. Civ. P. 1.140",
+    "sourceExternalId": "fl-rcp-1-140",
+    "canonicalSourceUrl": "https://www.floridabar.org/rules/ctproc/",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "Fla. R. Civ. P.",
+        "label": "Florida Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "1.140",
+        "label": "Defenses"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Fla. R. Civ. P. 1.140\n\nRULE 1.140. DEFENSES\n\n(a) When Presented. (1) Unless a different time is prescribed in a statute of Florida, a defendant must serve an answer within 20 days after service of original process and the initial pleading on the defendant, or not later than the date fixed in a notice by publication.\n\n(b) How Presented. Every defense in law or fact to a claim for relief in a pleading must be asserted in the responsive pleading, if one is required, but the following defenses may be made by motion at the option of the pleader: (1) lack of jurisdiction over the subject matter, (2) lack of jurisdiction over the person, (3) improper venue, (4) insufficiency of process, (5) insufficiency of service of process, (6) failure to state a cause of action, and (7) failure to join indispensable parties. A motion making any of these defenses must be made before pleading if a further pleading is permitted. The grounds on which any of the enumerated defenses are based and the substantial matters of law intended to be argued must be stated specifically and with particularity in the responsive pleading or motion. Any ground not stated must be deemed to be waived except any ground showing that the court lacks jurisdiction of the subject matter or that there is an incurable defect in the pleadings.",
+    "sections": [
+      {
+        "sectionRef": "1.140",
+        "subsectionRef": "b",
+        "content": "Defenses of lack of subject-matter or personal jurisdiction, improper venue, process defects, failure to state a cause of action, and failure to join indispensable parties may be raised by motion and must be stated with particularity."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "defenses_motion",
+      "sourceOwner": "Supreme Court of Florida"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Fla. R. Civ. P. 1.190 — Amended and Supplemental Pleadings",
+    "shortTitle": "Fla. R. Civ. P. 1.190",
+    "authorityType": "rule",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. R. Civ. P. 1.190",
+    "sourceExternalId": "fl-rcp-1-190",
+    "canonicalSourceUrl": "https://www.floridabar.org/rules/ctproc/",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "Fla. R. Civ. P.",
+        "label": "Florida Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "1.190",
+        "label": "Amended and Supplemental Pleadings"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Fla. R. Civ. P. 1.190\n\nRULE 1.190. AMENDED AND SUPPLEMENTAL PLEADINGS\n\n(a) Amendments. A party may amend a pleading once as a matter of course at any time before a responsive pleading is served or, if the pleading is one to which no responsive pleading is permitted and the action has not been placed on the trial calendar, may so amend it at any time within 20 days after it is served. Otherwise a party may amend a pleading only by leave of court or by written consent of the adverse party. If a party files a motion to amend a pleading, the party shall attach the proposed amended pleading to the motion. Leave of court shall be given freely when justice so requires. A party shall plead in response to an amended pleading within 10 days after service of the amended pleading unless the court otherwise orders.\n\n(c) Relation Back of Amendments. When the claim or defense asserted in the amended pleading arose out of the conduct, transaction, or occurrence set forth or attempted to be set forth in the original pleading, the amendment shall relate back to the date of the original pleading.",
+    "sections": [
+      {
+        "sectionRef": "1.190",
+        "subsectionRef": "a",
+        "content": "A party may amend once as of course before a responsive pleading is served; thereafter amendment requires leave or consent, and leave shall be freely given when justice so requires."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "amendments",
+      "sourceOwner": "Supreme Court of Florida"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Fla. R. Civ. P. 1.280 — General Provisions Governing Discovery",
+    "shortTitle": "Fla. R. Civ. P. 1.280",
+    "authorityType": "rule",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. R. Civ. P. 1.280",
+    "sourceExternalId": "fl-rcp-1-280",
+    "canonicalSourceUrl": "https://www.floridabar.org/rules/ctproc/",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "Fla. R. Civ. P.",
+        "label": "Florida Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "1.280",
+        "label": "General Provisions Governing Discovery"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Fla. R. Civ. P. 1.280\n\nRULE 1.280. GENERAL PROVISIONS GOVERNING DISCOVERY\n\n(c) Scope of Discovery. Unless otherwise limited by court order, the scope of discovery is as follows:\n\n(1) In General. Parties may obtain discovery regarding any nonprivileged matter that is relevant to any party's claim or defense and proportional to the needs of the case, considering the importance of the issues at stake in the action, the amount in controversy, the parties' relative access to relevant information, the parties' resources, the importance of the discovery in resolving the issues, and whether the burden or expense of the proposed discovery outweighs its likely benefit. Information within this scope of discovery need not be admissible in evidence to be discoverable.\n\n(b) Discovery Methods. Parties may obtain discovery by 1 or more of the following methods: depositions on oral examination or written questions; written interrogatories; production of documents or things or permission to enter on land or other property for inspection and other purposes; physical and mental examinations; and requests for admission.",
+    "sections": [
+      {
+        "sectionRef": "1.280",
+        "subsectionRef": "c-1",
+        "content": "Discovery reaches nonprivileged matter relevant to any party's claim or defense and proportional to the needs of the case; discoverability does not require admissibility."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "discovery_scope",
+      "sourceOwner": "Supreme Court of Florida"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Fla. R. Civ. P. 1.510 — Summary Judgment",
+    "shortTitle": "Fla. R. Civ. P. 1.510",
+    "authorityType": "rule",
+    "jurisdiction": "Florida",
+    "authorityState": "FL",
+    "citation": "Fla. R. Civ. P. 1.510",
+    "sourceExternalId": "fl-rcp-1-510",
+    "canonicalSourceUrl": "https://www.floridabar.org/rules/ctproc/",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "Fla. R. Civ. P.",
+        "label": "Florida Rules of Civil Procedure"
+      },
+      {
+        "level": "rule",
+        "ref": "1.510",
+        "label": "Summary Judgment"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Fla. R. Civ. P. 1.510\n\nRULE 1.510. SUMMARY JUDGMENT\n\n(a) Motion for Summary Judgment or Partial Summary Judgment. A party may move for summary judgment, identifying each claim or defense—or the part of each claim or defense—on which summary judgment is sought. The court shall grant summary judgment if the movant shows that there is no genuine dispute as to any material fact and the movant is entitled to judgment as a matter of law. The court shall state on the record the reasons for granting or denying the motion. The summary judgment standard provided for in this rule shall be construed and applied in accordance with the federal summary judgment standard.\n\n(c)(1) Supporting Factual Positions. A party asserting that a fact cannot be or is genuinely disputed must support the assertion by:\n\n(A) citing to particular parts of materials in the record, including depositions, documents, electronically stored information, affidavits or declarations, stipulations (including those made for purposes of the motion only), admissions, interrogatory answers, or other materials; or\n\n(B) showing that the materials cited do not establish the absence or presence of a genuine dispute, or that an adverse party cannot produce admissible evidence to support the fact.",
+    "sections": [
+      {
+        "sectionRef": "1.510",
+        "subsectionRef": "a",
+        "content": "The court shall grant summary judgment if there is no genuine dispute as to any material fact and the movant is entitled to judgment as a matter of law, applying the federal summary judgment standard."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Supreme Court of Florida"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Va. Sup. Ct. R. 3:1 — Scope",
+    "shortTitle": "Va. Sup. Ct. R. 3:1",
+    "authorityType": "rule",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Sup. Ct. R. 3:1",
+    "sourceExternalId": "va-scv-r-3-1",
+    "canonicalSourceUrl": "https://www.vacourts.gov/courts/scv/rulesofcourt.pdf",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "Part Three",
+        "label": "Practice and Procedure in Civil Actions"
+      },
+      {
+        "level": "rule",
+        "ref": "3:1",
+        "label": "Scope"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Va. Sup. Ct. R. 3:1\n\nRule 3:1. Scope.\n\nThere is one form of civil case, known as a civil action. These Rules apply to all civil actions, in the circuit courts, whether the claims involved arise under legal or equitable causes of action, unless otherwise provided by law. These rules apply in cases appealed or removed to such courts from inferior courts whenever applicable to such cases. These Rules do not apply in petitions for a writ of habeas corpus. In matters not covered by these Rules, the established practices and procedures are continued.\n\nWhenever in this Part Three the words \"action\" or \"suit\" appear they refer to a civil action, which may include legal and equitable claims.",
+    "sections": [
+      {
+        "sectionRef": "3:1",
+        "content": "Virginia recognizes one form of civil case—a civil action—and Part Three rules apply to circuit-court civil actions at law or equity unless otherwise provided by law."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "scope",
+      "sourceOwner": "Supreme Court of Virginia"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Va. Sup. Ct. R. 3:8 — Answers, Pleas, Demurrers and Motions",
+    "shortTitle": "Va. Sup. Ct. R. 3:8",
+    "authorityType": "rule",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Sup. Ct. R. 3:8",
+    "sourceExternalId": "va-scv-r-3-8",
+    "canonicalSourceUrl": "https://www.vacourts.gov/courts/scv/rulesofcourt.pdf",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "Part Three",
+        "label": "Practice and Procedure in Civil Actions"
+      },
+      {
+        "level": "rule",
+        "ref": "3:8",
+        "label": "Answers, Pleas, Demurrers and Motions"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Va. Sup. Ct. R. 3:8\n\nRule 3:8. Answers, Pleas, Demurrers and Motions.\n\n(a) Response Requirement. — A defendant must file pleadings in response within 21 days after service of the summons and complaint upon that defendant, or if service of the summons has been timely waived on request under Code § 8.01-286.1, within 60 days after the date when the request for waiver was sent, or within 90 days after that date if the defendant was addressed outside the Commonwealth. Pleadings in response under this Rule – other than an answer – are limited to the following, and are deemed responsive only to the specific count or counts addressed therein: a demurrer, plea, motion to dismiss, motion for a bill of particulars, motion craving oyer, and a written motion asserting any preliminary defense permitted under Code § 8.01-276. If a defendant files no other pleading in response than the answer, it must be filed within the applicable 21day, 60-day, or 90-day period specified in this Rule. An answer must respond to the paragraphs of the complaint. A general denial of the entire complaint or plea of the general issue is not permitted.\n\n(b) Response After Demurrer, Plea or Motion. — When the court has entered its order overruling all motions, demurrers and other pleas filed by a defendant as a responsive pleading, such defendant must, unless the defendant has already done so, file an answer within 21 days after the entry of such order, or within such other time as the court may prescribe.",
+    "sections": [
+      {
+        "sectionRef": "3:8",
+        "subsectionRef": "a",
+        "content": "A defendant generally must respond within 21 days of service; responses other than an answer are limited to demurrer, plea, motion to dismiss, bill of particulars, oyer, and certain preliminary defenses; general denials are not permitted."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "responsive_pleadings",
+      "sourceOwner": "Supreme Court of Virginia"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Va. Sup. Ct. R. 3:18 — General Provisions as to Pleadings",
+    "shortTitle": "Va. Sup. Ct. R. 3:18",
+    "authorityType": "rule",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Sup. Ct. R. 3:18",
+    "sourceExternalId": "va-scv-r-3-18",
+    "canonicalSourceUrl": "https://www.vacourts.gov/courts/scv/rulesofcourt.pdf",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "Part Three",
+        "label": "Practice and Procedure in Civil Actions"
+      },
+      {
+        "level": "rule",
+        "ref": "3:18",
+        "label": "General Provisions as to Pleadings"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Va. Sup. Ct. R. 3:18\n\nRule 3:18. General Provisions as to Pleadings.\n\n(a) Pleadings. — All motions in writing, including a motion for a bill of particulars and a motion to dismiss, whether filed in paper document format or as electronic or digitally imaged filings, are pleadings.\n\n(b) Allegation of negligence. — An allegation of negligence or contributory negligence is sufficient without specifying the particulars of the negligence.\n\n(c) Contributory negligence as a defense. — Contributory negligence will not constitute a defense unless pleaded or shown by the plaintiff's evidence.\n\n(d) Pleading the statute of limitations. — An allegation that an action is barred by the statute of limitations is sufficient without specifying the particular statute relied on.",
+    "sections": [
+      {
+        "sectionRef": "3:18",
+        "subsectionRef": "d",
+        "content": "An allegation that an action is barred by the statute of limitations is sufficient without specifying the particular statute relied on."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "pleading_general",
+      "sourceOwner": "Supreme Court of Virginia"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Va. Sup. Ct. R. 3:20 — Motion for Summary Judgment",
+    "shortTitle": "Va. Sup. Ct. R. 3:20",
+    "authorityType": "rule",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Sup. Ct. R. 3:20",
+    "sourceExternalId": "va-scv-r-3-20",
+    "canonicalSourceUrl": "https://www.vacourts.gov/courts/scv/rulesofcourt.pdf",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "Part Three",
+        "label": "Practice and Procedure in Civil Actions"
+      },
+      {
+        "level": "rule",
+        "ref": "3:20",
+        "label": "Motion for Summary Judgment"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Va. Sup. Ct. R. 3:20\n\nRule 3:20. Motion for Summary Judgment.\n\nAny party may make a motion for summary judgment at any time after the parties are at issue, except in an action for divorce or for annulment of marriage. If it appears from the pleadings, the orders, if any, made at a pretrial conference, the admissions, if any, in the proceedings, that the moving party is entitled to judgment, the court shall grant the motion. Summary judgment, interlocutory in nature, may be entered as to the undisputed portion of a contested claim or on the issue of liability alone although there is a genuine issue as to the amount of damages. Summary judgment may not be entered if any material fact is genuinely in dispute. No motion for summary judgment or motion to strike the evidence will be sustained when based in whole or in part upon any discovery depositions under Rule 4:5, unless all parties to the action agree that such deposition may be so used, or unless the motion is brought in accordance with the provisions of subsection B of § 8.01-420.",
+    "sections": [
+      {
+        "sectionRef": "3:20",
+        "content": "After the parties are at issue, summary judgment may be granted if the moving party is entitled to judgment and no material fact is genuinely in dispute, with limits on use of discovery depositions."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Supreme Court of Virginia"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Va. Sup. Ct. R. 4:1 — General Provisions Governing Discovery",
+    "shortTitle": "Va. Sup. Ct. R. 4:1",
+    "authorityType": "rule",
+    "jurisdiction": "Virginia",
+    "authorityState": "VA",
+    "citation": "Va. Sup. Ct. R. 4:1",
+    "sourceExternalId": "va-scv-r-4-1",
+    "canonicalSourceUrl": "https://www.vacourts.gov/courts/scv/rulesofcourt.pdf",
+    "hierarchyPath": [
+      {
+        "level": "rules",
+        "ref": "Part Four",
+        "label": "Pretrial Procedures, Depositions and Production at Trial"
+      },
+      {
+        "level": "rule",
+        "ref": "4:1",
+        "label": "General Provisions Governing Discovery"
+      }
+    ],
+    "bundlePracticeAreas": [
+      "civil",
+      "procedure"
+    ],
+    "content": "Va. Sup. Ct. R. 4:1\n\nRule 4:1. General Provisions Governing Discovery.\n\n(a) Discovery Methods. — Parties may obtain discovery by one or more of the following methods: depositions upon oral examination or written questions; written interrogatories; production of documents, electronically stored information, or things or permission to enter upon land or other property, for inspection and other purposes; physical and mental examinations; and requests for admission.\n\n(b) Scope of Discovery. — Unless otherwise limited by order of the court in accordance with these Rules, the scope of discovery is as follows: (1) In General. Parties may obtain discovery regarding any matter, not privileged, which is relevant to the subject matter involved in the pending action, whether it relates to the claim or defense of the party seeking discovery or to the claim or defense of any other party, including the existence, description, nature, custody, condition and location of any books, documents, or other tangible things and the identity and location of persons having knowledge of any discoverable matter. It is not ground for objection that the information sought will be inadmissible at the trial if the information sought appears reasonably calculated to lead to the discovery of admissible evidence.",
+    "sections": [
+      {
+        "sectionRef": "4:1",
+        "subsectionRef": "b-1",
+        "content": "Parties may obtain discovery of any nonprivileged matter relevant to the subject matter of the action; inadmissibility alone is not a ground for objection if the information appears reasonably calculated to lead to admissible evidence."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T02:20:00.000Z",
+      "statuteTopic": "discovery_scope",
+      "sourceOwner": "Supreme Court of Virginia"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  }
+]

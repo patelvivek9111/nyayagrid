@@ -2211,6 +2211,9 @@ var postgres = require_src();
     { key: "tx", cite: "Tex." },
     { key: "nj", cite: "N.J.S.A." },
     { key: "al_deepened", cite: "Ala. Code" },
+    { key: "pa_reg", cite: "34 Pa. Code \xA7 231.1" },
+    { key: "fl_reg", cite: "Fla. Admin. Code" },
+    { key: "pa_rule", cite: "Pa.R.C.P." },
     { key: "miss", cite: "ZZZ.FAKE.STATUTE \xA7 99999" }
   ];
   const hits = {};
@@ -2240,6 +2243,22 @@ var postgres = require_src();
         limit 5
       `;
       hits[q.key] = { state, rows: rows2 };
+      continue;
+    }
+    if (["pa_reg", "fl_reg", "pa_rule"].includes(q.key)) {
+      const rows2 = await sql`
+        select citation, authority_type::text as t, authority_state, left(title,100) as title,
+          canonical_source_url is not null as has_url,
+          currentness_status::text as currentness
+        from legal_authorities
+        where source_provider = 'us-primary-corpus'
+          and (
+            citation ilike ${"%" + q.cite.replace("\xA7", "%") + "%"}
+            or title ilike ${"%" + q.cite + "%"}
+          )
+        limit 3
+      `;
+      hits[q.key] = { cite: q.cite, rows: rows2 };
       continue;
     }
     const rows = await sql`
