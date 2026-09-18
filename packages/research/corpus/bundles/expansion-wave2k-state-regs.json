@@ -1,0 +1,2121 @@
+[
+  {
+    "title": "12 NYCRR § 142-2.3 — Overtime rate — exceptions",
+    "shortTitle": "12 NYCRR § 142-2.3",
+    "authorityType": "regulation",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "12 NYCRR § 142-2.3",
+    "normalizedCitation": "12 NYCRR § 142-2.3",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-nycrr-12-142-2-3",
+    "canonicalSourceUrl": "https://dol.ny.gov/system/files/documents/2021/03/part142.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NY",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "142-2.3",
+        "label": "12 NYCRR § 142-2.3"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "12 NYCRR § 142-2.3\n\n(a) An employer shall pay an employee for overtime at a wage rate of one and one-half times the employee's regular rate in accordance with section 142-2.2, except as otherwise provided in this Part or by statute.\n(b) Nothing in this Part relieves an employer of obligations under the Fair Labor Standards Act when that Act applies.",
+    "sections": [
+      {
+        "sectionRef": "142-2.3",
+        "content": "NY Part 142 overtime exceptions and FLSA interaction."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "overtime_exceptions",
+      "sourceOwner": "New York State Department of Labor",
+      "platformFamily": "agency_pdf",
+      "wave": "2K",
+      "sourceClass": "C_official_pdf",
+      "regulationFamily": "NYCRR",
+      "subjectFamily": "employment"
+    }
+  },
+  {
+    "title": "8 NYCRR § 29.1 — Unprofessional conduct — general",
+    "shortTitle": "8 NYCRR § 29.1",
+    "authorityType": "regulation",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "8 NYCRR § 29.1",
+    "normalizedCitation": "8 NYCRR § 29.1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-nycrr-8-29-1",
+    "canonicalSourceUrl": "https://www.op.nysed.gov/title8/education-law/part-29",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NY",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "29.1",
+        "label": "8 NYCRR § 29.1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "licensing",
+      "regulation"
+    ],
+    "content": "8 NYCRR § 29.1\n\nUnprofessional conduct shall include willful or grossly negligent failure to comply with substantial provisions of Federal, State or local laws, rules or regulations governing the practice of the profession; exercising undue influence on a patient or client; and failing to maintain records required by law or regulation.",
+    "sections": [
+      {
+        "sectionRef": "29.1",
+        "content": "NY professional licensing unprofessional-conduct baseline."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "professional_licensing",
+      "sourceOwner": "New York State Education Department Office of the Professions",
+      "platformFamily": "agency_html",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "NYCRR",
+      "subjectFamily": "licensing"
+    }
+  },
+  {
+    "title": "13 NYCRR § 400.1 — DFS definitions — banking",
+    "shortTitle": "13 NYCRR § 400.1",
+    "authorityType": "regulation",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "13 NYCRR § 400.1",
+    "normalizedCitation": "13 NYCRR § 400.1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-nycrr-13-400-1",
+    "canonicalSourceUrl": "https://www.dfs.ny.gov/industry_guidance/regulations",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NY",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "400.1",
+        "label": "13 NYCRR § 400.1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "business",
+      "consumer",
+      "regulation"
+    ],
+    "content": "13 NYCRR § 400.1\n\nAs used in this Part, unless the context otherwise requires, terms have the meanings assigned in the Banking Law and the Financial Services Law. \"Superintendent\" means the Superintendent of Financial Services of the State of New York.",
+    "sections": [
+      {
+        "sectionRef": "400.1",
+        "content": "NY DFS Part 400 definitional scope for supervised institutions."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "financial_services_definitions",
+      "sourceOwner": "New York Department of Financial Services",
+      "platformFamily": "agency_html",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "NYCRR",
+      "subjectFamily": "business"
+    }
+  },
+  {
+    "title": "23 NYCRR § 500.02 — Cybersecurity program",
+    "shortTitle": "23 NYCRR § 500.02",
+    "authorityType": "regulation",
+    "jurisdiction": "New York",
+    "authorityState": "NY",
+    "citation": "23 NYCRR § 500.02",
+    "normalizedCitation": "23 NYCRR § 500.02",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ny-nycrr-23-500-02",
+    "canonicalSourceUrl": "https://www.dfs.ny.gov/industry_guidance/cybersecurity",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "NY",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "500.02",
+        "label": "23 NYCRR § 500.02"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy",
+      "regulation"
+    ],
+    "content": "23 NYCRR § 500.02\n\nEach Covered Entity shall maintain a cybersecurity program designed to protect the confidentiality, integrity and availability of the Covered Entity's Information Systems and Nonpublic Information.",
+    "sections": [
+      {
+        "sectionRef": "500.02",
+        "content": "NY DFS cybersecurity program obligation for covered entities."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "cybersecurity",
+      "sourceOwner": "New York Department of Financial Services",
+      "platformFamily": "agency_html",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "NYCRR",
+      "subjectFamily": "privacy"
+    }
+  },
+  {
+    "title": "Conn. Agencies Regs. § 42-110b-1 — Unfair trade practices — definitions",
+    "shortTitle": "Conn. Agencies Regs. § 42-110b-1",
+    "authorityType": "regulation",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Agencies Regs. § 42-110b-1",
+    "normalizedCitation": "Conn. Agencies Regs. § 42-110b-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ct-reg-42-110b-1",
+    "canonicalSourceUrl": "https://eregulations.ct.gov/eRegsPortal/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "42-110b-1",
+        "label": "Conn. Agencies Regs. § 42-110b-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer",
+      "regulation"
+    ],
+    "content": "Conn. Agencies Regs. § 42-110b-1\n\nAs used in sections 42-110b-1 to 42-110b-28, inclusive, \"person\" and \"trade\" and \"commerce\" have the meanings assigned by section 42-110a of the Connecticut General Statutes. These regulations interpret unfair methods of competition and unfair or deceptive acts or practices.",
+    "sections": [
+      {
+        "sectionRef": "42-110b-1",
+        "content": "Connecticut CUPTA interpretive definitions."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "unfair_trade_practices",
+      "sourceOwner": "Connecticut eRegulations / Department of Consumer Protection",
+      "platformFamily": "eregulations",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "CT_AGENCIES_REGS",
+      "subjectFamily": "consumer"
+    }
+  },
+  {
+    "title": "Conn. Agencies Regs. § 20-300-1 — Professional engineer licensing — definitions",
+    "shortTitle": "Conn. Agencies Regs. § 20-300-1",
+    "authorityType": "regulation",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Agencies Regs. § 20-300-1",
+    "normalizedCitation": "Conn. Agencies Regs. § 20-300-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ct-reg-20-300-1",
+    "canonicalSourceUrl": "https://eregulations.ct.gov/eRegsPortal/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "20-300-1",
+        "label": "Conn. Agencies Regs. § 20-300-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "licensing",
+      "regulation"
+    ],
+    "content": "Conn. Agencies Regs. § 20-300-1\n\nAs used in this section and sections following, \"Board\" means the State Board of Examiners for Professional Engineers and Land Surveyors. \"License\" means a license issued by the Department pursuant to chapter 391 of the Connecticut General Statutes.",
+    "sections": [
+      {
+        "sectionRef": "20-300-1",
+        "content": "CT professional engineer licensing definitions."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "professional_licensing",
+      "sourceOwner": "Connecticut eRegulations / DCP Board of Examiners",
+      "platformFamily": "eregulations",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "CT_AGENCIES_REGS",
+      "subjectFamily": "licensing"
+    }
+  },
+  {
+    "title": "Conn. Agencies Regs. § 4-167-1 — Uniform Administrative Procedure — definitions",
+    "shortTitle": "Conn. Agencies Regs. § 4-167-1",
+    "authorityType": "regulation",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Agencies Regs. § 4-167-1",
+    "normalizedCitation": "Conn. Agencies Regs. § 4-167-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ct-reg-4-167-1",
+    "canonicalSourceUrl": "https://eregulations.ct.gov/eRegsPortal/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "4-167-1",
+        "label": "Conn. Agencies Regs. § 4-167-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative",
+      "regulation"
+    ],
+    "content": "Conn. Agencies Regs. § 4-167-1\n\nAs used in regulations adopted under chapter 54 of the Connecticut General Statutes, \"agency\" and \"contested case\" have the meanings provided in section 4-166 of the general statutes unless a more specific regulation provides otherwise.",
+    "sections": [
+      {
+        "sectionRef": "4-167-1",
+        "content": "CT UAPA regulatory definitional baseline."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Connecticut eRegulations",
+      "platformFamily": "eregulations",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "CT_AGENCIES_REGS",
+      "subjectFamily": "administrative"
+    }
+  },
+  {
+    "title": "Conn. Agencies Regs. § 31-51qq-1 — Family and medical leave — definitions",
+    "shortTitle": "Conn. Agencies Regs. § 31-51qq-1",
+    "authorityType": "regulation",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Agencies Regs. § 31-51qq-1",
+    "normalizedCitation": "Conn. Agencies Regs. § 31-51qq-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ct-reg-31-51qq-1",
+    "canonicalSourceUrl": "https://eregulations.ct.gov/eRegsPortal/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "CT",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "31-51qq-1",
+        "label": "Conn. Agencies Regs. § 31-51qq-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Conn. Agencies Regs. § 31-51qq-1\n\nAs used in sections 31-51qq-1 to 31-51qq-48, inclusive, terms have the meanings assigned in section 31-51kk of the Connecticut General Statutes unless otherwise defined in these regulations.",
+    "sections": [
+      {
+        "sectionRef": "31-51qq-1",
+        "content": "CT paid family and medical leave regulation definitions."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "family_medical_leave",
+      "sourceOwner": "Connecticut eRegulations / Department of Labor",
+      "platformFamily": "eregulations",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "CT_AGENCIES_REGS",
+      "subjectFamily": "employment"
+    }
+  },
+  {
+    "title": "940 CMR 3.01 — Consumer protection — unfair practices",
+    "shortTitle": "940 CMR 3.01",
+    "authorityType": "regulation",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "940 CMR 3.01",
+    "normalizedCitation": "940 CMR 3.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-cmr-940-3-01",
+    "canonicalSourceUrl": "https://www.mass.gov/regulations/940-CMR-300-consumer-protection",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MA",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "3.01",
+        "label": "940 CMR 3.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer",
+      "regulation"
+    ],
+    "content": "940 CMR 3.01\n\nIt shall be an unfair or deceptive act or practice for a seller to make a representation that has the capacity or tendency to deceive, or to fail to disclose a material fact where disclosure is necessary to prevent deception.",
+    "sections": [
+      {
+        "sectionRef": "3.01",
+        "content": "Massachusetts AG consumer-protection unfair-practice standard."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "unfair_practices",
+      "sourceOwner": "Massachusetts Attorney General / mass.gov CMR",
+      "platformFamily": "agency_cmr",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "CMR",
+      "subjectFamily": "consumer"
+    }
+  },
+  {
+    "title": "247 CMR 2.00 — Board of Registration in Pharmacy — definitions",
+    "shortTitle": "247 CMR 2.00",
+    "authorityType": "regulation",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "247 CMR 2.00",
+    "normalizedCitation": "247 CMR 2.00",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-cmr-247-2-00",
+    "canonicalSourceUrl": "https://www.mass.gov/regulations/247-CMR-200-definitions",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MA",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "2.00",
+        "label": "247 CMR 2.00"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "licensing",
+      "regulation"
+    ],
+    "content": "247 CMR 2.00\n\nAs used in 247 CMR, \"Board\" means the Board of Registration in Pharmacy. \"Pharmacist\" means a person duly registered by the Board to engage in the practice of pharmacy in the Commonwealth.",
+    "sections": [
+      {
+        "sectionRef": "2.00",
+        "content": "MA pharmacy licensing definitional regulation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "pharmacy_licensing",
+      "sourceOwner": "Massachusetts Board of Registration in Pharmacy",
+      "platformFamily": "agency_cmr",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "CMR",
+      "subjectFamily": "licensing"
+    }
+  },
+  {
+    "title": "201 CMR 17.03 — Standards for protecting personal information",
+    "shortTitle": "201 CMR 17.03",
+    "authorityType": "regulation",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "201 CMR 17.03",
+    "normalizedCitation": "201 CMR 17.03",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-cmr-201-17-03",
+    "canonicalSourceUrl": "https://www.mass.gov/regulations/201-CMR-1700-standards-for-the-protection-of-personal-information-of-residents-of-the-commonwealth",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MA",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "17.03",
+        "label": "201 CMR 17.03"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy",
+      "regulation"
+    ],
+    "content": "201 CMR 17.03\n\nEvery person that owns or licenses personal information about a resident of the Commonwealth shall develop, implement, and maintain a comprehensive information security program that is written in one or more readily accessible parts and contains administrative, technical, and physical safeguards.",
+    "sections": [
+      {
+        "sectionRef": "17.03",
+        "content": "MA data-security regulation for personal information."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "personal_information",
+      "sourceOwner": "Massachusetts Office of Consumer Affairs and Business Regulation",
+      "platformFamily": "agency_cmr",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "CMR",
+      "subjectFamily": "privacy"
+    }
+  },
+  {
+    "title": "801 CMR 1.01 — Standard adjudicatory rules of practice and procedure",
+    "shortTitle": "801 CMR 1.01",
+    "authorityType": "regulation",
+    "jurisdiction": "Massachusetts",
+    "authorityState": "MA",
+    "citation": "801 CMR 1.01",
+    "normalizedCitation": "801 CMR 1.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ma-cmr-801-1-01",
+    "canonicalSourceUrl": "https://www.mass.gov/regulations/801-CMR-100-standard-adjudicatory-rules-of-practice-and-procedure",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MA",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "1.01",
+        "label": "801 CMR 1.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative",
+      "regulation"
+    ],
+    "content": "801 CMR 1.01\n\nThese Standard Adjudicatory Rules of Practice and Procedure govern proceedings conducted under M.G.L. c. 30A unless an agency adopts more specific procedural regulations consistent with c. 30A.",
+    "sections": [
+      {
+        "sectionRef": "1.01",
+        "content": "MA APA standard adjudicatory procedure regulations."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Massachusetts Executive Office for Administration and Finance",
+      "platformFamily": "agency_cmr",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "CMR",
+      "subjectFamily": "administrative"
+    }
+  },
+  {
+    "title": "A.A.C. R4-16-101 — Medical Board — definitions",
+    "shortTitle": "A.A.C. R4-16-101",
+    "authorityType": "regulation",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "A.A.C. R4-16-101",
+    "normalizedCitation": "A.A.C. R4-16-101",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "az-aac-r4-16-101",
+    "canonicalSourceUrl": "https://apps.azsos.gov/public_services/Title_04/4-16.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "R4-16-101",
+        "label": "A.A.C. R4-16-101"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "licensing",
+      "regulation"
+    ],
+    "content": "A.A.C. R4-16-101\n\nIn this Chapter, unless the context otherwise requires: \"Board\" means the Arizona Medical Board. \"Physician\" means a person licensed under A.R.S. Title 32, Chapter 13.",
+    "sections": [
+      {
+        "sectionRef": "R4-16-101",
+        "content": "Arizona Medical Board licensing definitions."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "medical_licensing",
+      "sourceOwner": "Arizona Secretary of State / Arizona Medical Board",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "C_official_pdf",
+      "regulationFamily": "AAC",
+      "subjectFamily": "licensing"
+    }
+  },
+  {
+    "title": "A.A.C. R14-2-201 — Corporation Commission — utility definitions",
+    "shortTitle": "A.A.C. R14-2-201",
+    "authorityType": "regulation",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "A.A.C. R14-2-201",
+    "normalizedCitation": "A.A.C. R14-2-201",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "az-aac-r14-2-201",
+    "canonicalSourceUrl": "https://apps.azsos.gov/public_services/Title_14/14-02.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "R14-2-201",
+        "label": "A.A.C. R14-2-201"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "business",
+      "consumer",
+      "regulation"
+    ],
+    "content": "A.A.C. R14-2-201\n\nAs used in this Article, \"utility\" means a public service corporation as defined in A.R.S. § 40-201 providing electric, gas, water, or telecommunications service subject to Commission jurisdiction.",
+    "sections": [
+      {
+        "sectionRef": "R14-2-201",
+        "content": "Arizona utility consumer-protection definitional regulation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "utility_consumer",
+      "sourceOwner": "Arizona Corporation Commission / SOS",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "C_official_pdf",
+      "regulationFamily": "AAC",
+      "subjectFamily": "consumer"
+    }
+  },
+  {
+    "title": "A.A.C. R2-19-101 — Office of Administrative Hearings — definitions",
+    "shortTitle": "A.A.C. R2-19-101",
+    "authorityType": "regulation",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "A.A.C. R2-19-101",
+    "normalizedCitation": "A.A.C. R2-19-101",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "az-aac-r2-19-101",
+    "canonicalSourceUrl": "https://apps.azsos.gov/public_services/Title_02/2-19.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "R2-19-101",
+        "label": "A.A.C. R2-19-101"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative",
+      "regulation"
+    ],
+    "content": "A.A.C. R2-19-101\n\nIn this Chapter, \"Office\" means the Office of Administrative Hearings. \"Contested case\" has the meaning in A.R.S. § 41-1001.",
+    "sections": [
+      {
+        "sectionRef": "R2-19-101",
+        "content": "Arizona OAH administrative hearing definitions."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Arizona Office of Administrative Hearings / SOS",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "C_official_pdf",
+      "regulationFamily": "AAC",
+      "subjectFamily": "administrative"
+    }
+  },
+  {
+    "title": "A.A.C. R20-5-1201 — Industrial Commission — wage definitions",
+    "shortTitle": "A.A.C. R20-5-1201",
+    "authorityType": "regulation",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "A.A.C. R20-5-1201",
+    "normalizedCitation": "A.A.C. R20-5-1201",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "az-aac-r20-5-1201",
+    "canonicalSourceUrl": "https://apps.azsos.gov/public_services/Title_20/20-05.pdf",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "AZ",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "R20-5-1201",
+        "label": "A.A.C. R20-5-1201"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "A.A.C. R20-5-1201\n\nIn this Article, unless the context otherwise requires, \"Commission\" means the Industrial Commission of Arizona and \"wages\" has the meaning provided in A.R.S. Title 23 relating to payment of wages.",
+    "sections": [
+      {
+        "sectionRef": "R20-5-1201",
+        "content": "Arizona wage-payment regulatory definitions."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "wage_definitions",
+      "sourceOwner": "Arizona Industrial Commission / SOS",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "C_official_pdf",
+      "regulationFamily": "AAC",
+      "subjectFamily": "employment"
+    }
+  },
+  {
+    "title": "260-RICR-30-05-5 — Minimum wage — administration",
+    "shortTitle": "260-RICR-30-05-5",
+    "authorityType": "regulation",
+    "jurisdiction": "Rhode Island",
+    "authorityState": "RI",
+    "citation": "260-RICR-30-05-5",
+    "normalizedCitation": "260-RICR-30-05-5",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ri-ricr-260-30-05-5",
+    "canonicalSourceUrl": "https://rules.sos.ri.gov/regulations/part/260-30-05-5",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "RI",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "30-05-5",
+        "label": "260-RICR-30-05-5"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "260-RICR-30-05-5\n\nThe Department administers and enforces the Rhode Island Minimum Wage Act. Employers shall keep records and make them available as required by R.I. Gen. Laws Title 28 and this Part.",
+    "sections": [
+      {
+        "sectionRef": "30-05-5",
+        "content": "RI minimum-wage administration regulation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "minimum_wage_admin",
+      "sourceOwner": "Rhode Island Department of Labor and Training / SOS",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "RICR",
+      "subjectFamily": "employment"
+    }
+  },
+  {
+    "title": "100-RICR-20-00-1 — Department of Business Regulation — general procedures",
+    "shortTitle": "100-RICR-20-00-1",
+    "authorityType": "regulation",
+    "jurisdiction": "Rhode Island",
+    "authorityState": "RI",
+    "citation": "100-RICR-20-00-1",
+    "normalizedCitation": "100-RICR-20-00-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ri-ricr-100-20-00-1",
+    "canonicalSourceUrl": "https://rules.sos.ri.gov/regulations/part/100-20-00-1",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "RI",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "20-00-1",
+        "label": "100-RICR-20-00-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative",
+      "business",
+      "regulation"
+    ],
+    "content": "100-RICR-20-00-1\n\nThese rules govern practice before the Department of Business Regulation in contested cases and licensing matters under the Rhode Island Administrative Procedures Act, unless a more specific Part applies.",
+    "sections": [
+      {
+        "sectionRef": "20-00-1",
+        "content": "RI DBR administrative practice regulation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Rhode Island Department of Business Regulation / SOS",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "RICR",
+      "subjectFamily": "administrative"
+    }
+  },
+  {
+    "title": "230-RICR-20-60-3 — Insurance — unfair trade practices",
+    "shortTitle": "230-RICR-20-60-3",
+    "authorityType": "regulation",
+    "jurisdiction": "Rhode Island",
+    "authorityState": "RI",
+    "citation": "230-RICR-20-60-3",
+    "normalizedCitation": "230-RICR-20-60-3",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ri-ricr-230-20-60-3",
+    "canonicalSourceUrl": "https://rules.sos.ri.gov/regulations/part/230-20-60-3",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "RI",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "20-60-3",
+        "label": "230-RICR-20-60-3"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer",
+      "business",
+      "regulation"
+    ],
+    "content": "230-RICR-20-60-3\n\nNo insurer doing business in this state shall engage in an unfair method of competition or an unfair or deceptive act or practice in the business of insurance as defined by R.I. Gen. Laws and this Part.",
+    "sections": [
+      {
+        "sectionRef": "20-60-3",
+        "content": "RI insurance unfair-trade-practice regulation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "insurance_unfair_practices",
+      "sourceOwner": "Rhode Island Department of Business Regulation / SOS",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "RICR",
+      "subjectFamily": "consumer"
+    }
+  },
+  {
+    "title": "216-RICR-40-05-1 — Health professional licensing — general",
+    "shortTitle": "216-RICR-40-05-1",
+    "authorityType": "regulation",
+    "jurisdiction": "Rhode Island",
+    "authorityState": "RI",
+    "citation": "216-RICR-40-05-1",
+    "normalizedCitation": "216-RICR-40-05-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ri-ricr-216-40-05-1",
+    "canonicalSourceUrl": "https://rules.sos.ri.gov/regulations/part/216-40-05-1",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "RI",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "40-05-1",
+        "label": "216-RICR-40-05-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "licensing",
+      "regulation"
+    ],
+    "content": "216-RICR-40-05-1\n\nA person shall not practice a health profession regulated by the Department unless licensed or otherwise authorized under applicable Rhode Island law and this Chapter.",
+    "sections": [
+      {
+        "sectionRef": "40-05-1",
+        "content": "RI health professional licensing baseline."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "health_licensing",
+      "sourceOwner": "Rhode Island Department of Health / SOS",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "RICR",
+      "subjectFamily": "licensing"
+    }
+  },
+  {
+    "title": "W. Va. Code R. § 42-5-1 — Wage payment — general",
+    "shortTitle": "W. Va. Code R. § 42-5-1",
+    "authorityType": "regulation",
+    "jurisdiction": "West Virginia",
+    "authorityState": "WV",
+    "citation": "W. Va. Code R. § 42-5-1",
+    "normalizedCitation": "W. Va. Code R. § 42-5-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wv-csr-42-5-1",
+    "canonicalSourceUrl": "https://apps.sos.wv.gov/adlaw/csr/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WV",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "42-5-1",
+        "label": "W. Va. Code R. § 42-5-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "W. Va. Code R. § 42-5-1\n\nThese rules implement the Wage Payment and Collection Act. Employers shall pay wages due in the manner and at the times required by W. Va. Code and this rule.",
+    "sections": [
+      {
+        "sectionRef": "42-5-1",
+        "content": "WV wage-payment collection rule."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "wage_payment_general",
+      "sourceOwner": "West Virginia Division of Labor / SOS CSR",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "CSR",
+      "subjectFamily": "employment"
+    }
+  },
+  {
+    "title": "W. Va. Code R. § 114-14-1 — Insurance unfair trade practices",
+    "shortTitle": "W. Va. Code R. § 114-14-1",
+    "authorityType": "regulation",
+    "jurisdiction": "West Virginia",
+    "authorityState": "WV",
+    "citation": "W. Va. Code R. § 114-14-1",
+    "normalizedCitation": "W. Va. Code R. § 114-14-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wv-csr-114-14-1",
+    "canonicalSourceUrl": "https://apps.sos.wv.gov/adlaw/csr/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WV",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "114-14-1",
+        "label": "W. Va. Code R. § 114-14-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer",
+      "regulation"
+    ],
+    "content": "W. Va. Code R. § 114-14-1\n\nThe purpose of this rule is to define unfair methods of competition and unfair or deceptive acts or practices in the business of insurance and to establish procedures for enforcement.",
+    "sections": [
+      {
+        "sectionRef": "114-14-1",
+        "content": "WV insurance unfair-trade-practice CSR."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "insurance_unfair_practices",
+      "sourceOwner": "West Virginia Offices of the Insurance Commissioner / SOS",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "CSR",
+      "subjectFamily": "consumer"
+    }
+  },
+  {
+    "title": "W. Va. Code R. § 19-1-1 — Board of Medicine — general provisions",
+    "shortTitle": "W. Va. Code R. § 19-1-1",
+    "authorityType": "regulation",
+    "jurisdiction": "West Virginia",
+    "authorityState": "WV",
+    "citation": "W. Va. Code R. § 19-1-1",
+    "normalizedCitation": "W. Va. Code R. § 19-1-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wv-csr-19-1-1",
+    "canonicalSourceUrl": "https://apps.sos.wv.gov/adlaw/csr/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WV",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "19-1-1",
+        "label": "W. Va. Code R. § 19-1-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "licensing",
+      "regulation"
+    ],
+    "content": "W. Va. Code R. § 19-1-1\n\nThis legislative rule establishes procedures for licensing physicians and related practitioners under the West Virginia Medical Practice Act.",
+    "sections": [
+      {
+        "sectionRef": "19-1-1",
+        "content": "WV Board of Medicine licensing rule."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "medical_licensing",
+      "sourceOwner": "West Virginia Board of Medicine / SOS",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "CSR",
+      "subjectFamily": "licensing"
+    }
+  },
+  {
+    "title": "W. Va. Code R. § 148-3-1 — Administrative procedures — contested cases",
+    "shortTitle": "W. Va. Code R. § 148-3-1",
+    "authorityType": "regulation",
+    "jurisdiction": "West Virginia",
+    "authorityState": "WV",
+    "citation": "W. Va. Code R. § 148-3-1",
+    "normalizedCitation": "W. Va. Code R. § 148-3-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wv-csr-148-3-1",
+    "canonicalSourceUrl": "https://apps.sos.wv.gov/adlaw/csr/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WV",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "148-3-1",
+        "label": "W. Va. Code R. § 148-3-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative",
+      "regulation"
+    ],
+    "content": "W. Va. Code R. § 148-3-1\n\nThese rules govern contested-case hearings before state agencies when an agency has not adopted more specific procedural rules consistent with the State Administrative Procedures Act.",
+    "sections": [
+      {
+        "sectionRef": "148-3-1",
+        "content": "WV contested-case administrative procedure rule."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "West Virginia Secretary of State / CSR",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "CSR",
+      "subjectFamily": "administrative"
+    }
+  },
+  {
+    "title": "610 IAC 6-1-1 — Wage claims — definitions",
+    "shortTitle": "610 IAC 6-1-1",
+    "authorityType": "regulation",
+    "jurisdiction": "Indiana",
+    "authorityState": "IN",
+    "citation": "610 IAC 6-1-1",
+    "normalizedCitation": "610 IAC 6-1-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "in-iac-610-6-1-1",
+    "canonicalSourceUrl": "http://iac.iga.in.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "IN",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "6-1-1",
+        "label": "610 IAC 6-1-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "610 IAC 6-1-1\n\nAs used in this article, \"department\" means the Indiana department of labor and \"wage claim\" means a claim for unpaid wages filed under IC 22-2.",
+    "sections": [
+      {
+        "sectionRef": "6-1-1",
+        "content": "Indiana wage-claim regulatory definitions."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "wage_claims",
+      "sourceOwner": "Indiana Department of Labor / IAC",
+      "platformFamily": "lis_revisor",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "IAC",
+      "subjectFamily": "employment"
+    }
+  },
+  {
+    "title": "750 IAC 9-1-1 — Mortgage lending — definitions",
+    "shortTitle": "750 IAC 9-1-1",
+    "authorityType": "regulation",
+    "jurisdiction": "Indiana",
+    "authorityState": "IN",
+    "citation": "750 IAC 9-1-1",
+    "normalizedCitation": "750 IAC 9-1-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "in-iac-750-9-1-1",
+    "canonicalSourceUrl": "http://iac.iga.in.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "IN",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "9-1-1",
+        "label": "750 IAC 9-1-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer",
+      "business",
+      "regulation"
+    ],
+    "content": "750 IAC 9-1-1\n\nAs used in this article, terms relating to mortgage lending have the meanings set forth in IC 24-4.4 and IC 24-4.5 unless a more specific definition is provided in this rule.",
+    "sections": [
+      {
+        "sectionRef": "9-1-1",
+        "content": "Indiana mortgage-lending consumer regulation definitions."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "mortgage_lending",
+      "sourceOwner": "Indiana Department of Financial Institutions / IAC",
+      "platformFamily": "lis_revisor",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "IAC",
+      "subjectFamily": "consumer"
+    }
+  },
+  {
+    "title": "844 IAC 4-1-1 — Medical licensing board — definitions",
+    "shortTitle": "844 IAC 4-1-1",
+    "authorityType": "regulation",
+    "jurisdiction": "Indiana",
+    "authorityState": "IN",
+    "citation": "844 IAC 4-1-1",
+    "normalizedCitation": "844 IAC 4-1-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "in-iac-844-4-1-1",
+    "canonicalSourceUrl": "http://iac.iga.in.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "IN",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "4-1-1",
+        "label": "844 IAC 4-1-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "licensing",
+      "regulation"
+    ],
+    "content": "844 IAC 4-1-1\n\nAs used in this article, \"board\" means the medical licensing board of Indiana and \"license\" means a license to practice medicine issued under IC 25-22.5.",
+    "sections": [
+      {
+        "sectionRef": "4-1-1",
+        "content": "Indiana medical licensing definitions."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "medical_licensing",
+      "sourceOwner": "Indiana Medical Licensing Board / IAC",
+      "platformFamily": "lis_revisor",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "IAC",
+      "subjectFamily": "licensing"
+    }
+  },
+  {
+    "title": "315 IAC 1-1-1 — Office of Environmental Adjudication — definitions",
+    "shortTitle": "315 IAC 1-1-1",
+    "authorityType": "regulation",
+    "jurisdiction": "Indiana",
+    "authorityState": "IN",
+    "citation": "315 IAC 1-1-1",
+    "normalizedCitation": "315 IAC 1-1-1",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "in-iac-315-1-1-1",
+    "canonicalSourceUrl": "http://iac.iga.in.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "IN",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "1-1-1",
+        "label": "315 IAC 1-1-1"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative",
+      "regulation"
+    ],
+    "content": "315 IAC 1-1-1\n\nThese rules govern practice and procedure before the office of environmental adjudication in administrative proceedings under IC 4-21.5.",
+    "sections": [
+      {
+        "sectionRef": "1-1-1",
+        "content": "Indiana environmental adjudicatory procedure regulation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Indiana Office of Environmental Adjudication / IAC",
+      "platformFamily": "lis_revisor",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "IAC",
+      "subjectFamily": "administrative"
+    }
+  },
+  {
+    "title": "Minn. R. 5200.0140 — Wage records",
+    "shortTitle": "Minn. R. 5200.0140",
+    "authorityType": "regulation",
+    "jurisdiction": "Minnesota",
+    "authorityState": "MN",
+    "citation": "Minn. R. 5200.0140",
+    "normalizedCitation": "Minn. R. 5200.0140",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mn-r-5200-0140",
+    "canonicalSourceUrl": "https://www.revisor.mn.gov/rules/5200.0140/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MN",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "5200.0140",
+        "label": "Minn. R. 5200.0140"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Minn. R. 5200.0140\n\nEvery employer subject to Minnesota Statutes, sections 177.21 to 177.35, shall keep accurate records of hours worked and wages paid as required by Minnesota Statutes, section 177.30.",
+    "sections": [
+      {
+        "sectionRef": "5200.0140",
+        "content": "Minnesota wage-record keeping rule."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "wage_records",
+      "sourceOwner": "Minnesota Office of the Revisor of Statutes",
+      "platformFamily": "lis_revisor",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "MINN_R",
+      "subjectFamily": "employment"
+    }
+  },
+  {
+    "title": "Minn. R. 2800.0100 — Real estate brokers — definitions",
+    "shortTitle": "Minn. R. 2800.0100",
+    "authorityType": "regulation",
+    "jurisdiction": "Minnesota",
+    "authorityState": "MN",
+    "citation": "Minn. R. 2800.0100",
+    "normalizedCitation": "Minn. R. 2800.0100",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mn-r-2800-0100",
+    "canonicalSourceUrl": "https://www.revisor.mn.gov/rules/2800.0100/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MN",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "2800.0100",
+        "label": "Minn. R. 2800.0100"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "licensing",
+      "consumer",
+      "regulation"
+    ],
+    "content": "Minn. R. 2800.0100\n\nFor purposes of this chapter, terms have the meanings given them in Minnesota Statutes, chapter 82, unless otherwise defined in this part.",
+    "sections": [
+      {
+        "sectionRef": "2800.0100",
+        "content": "Minnesota real-estate licensing definitions."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "real_estate_licensing",
+      "sourceOwner": "Minnesota Office of the Revisor of Statutes",
+      "platformFamily": "lis_revisor",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "MINN_R",
+      "subjectFamily": "licensing"
+    }
+  },
+  {
+    "title": "Minn. R. 1400.5010 — Office of Administrative Hearings — scope",
+    "shortTitle": "Minn. R. 1400.5010",
+    "authorityType": "regulation",
+    "jurisdiction": "Minnesota",
+    "authorityState": "MN",
+    "citation": "Minn. R. 1400.5010",
+    "normalizedCitation": "Minn. R. 1400.5010",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mn-r-1400-5010",
+    "canonicalSourceUrl": "https://www.revisor.mn.gov/rules/1400.5010/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MN",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "1400.5010",
+        "label": "Minn. R. 1400.5010"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative",
+      "regulation"
+    ],
+    "content": "Minn. R. 1400.5010\n\nParts 1400.5010 to 1400.8401 govern contested case hearings conducted by the Office of Administrative Hearings under Minnesota Statutes, chapter 14, unless otherwise provided by law.",
+    "sections": [
+      {
+        "sectionRef": "1400.5010",
+        "content": "Minnesota OAH contested-case scope rule."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Minnesota Office of the Revisor of Statutes",
+      "platformFamily": "lis_revisor",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "MINN_R",
+      "subjectFamily": "administrative"
+    }
+  },
+  {
+    "title": "Minn. R. 1205.0100 — Data practices — purpose",
+    "shortTitle": "Minn. R. 1205.0100",
+    "authorityType": "regulation",
+    "jurisdiction": "Minnesota",
+    "authorityState": "MN",
+    "citation": "Minn. R. 1205.0100",
+    "normalizedCitation": "Minn. R. 1205.0100",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "mn-r-1205-0100",
+    "canonicalSourceUrl": "https://www.revisor.mn.gov/rules/1205.0100/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "MN",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "1205.0100",
+        "label": "Minn. R. 1205.0100"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "privacy",
+      "regulation"
+    ],
+    "content": "Minn. R. 1205.0100\n\nThe purpose of this chapter is to implement the Minnesota Government Data Practices Act, Minnesota Statutes, chapter 13, regarding classification, access, and protection of government data.",
+    "sections": [
+      {
+        "sectionRef": "1205.0100",
+        "content": "Minnesota government data-practices implementing rule."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "data_practices",
+      "sourceOwner": "Minnesota Office of the Revisor of Statutes",
+      "platformFamily": "lis_revisor",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "MINN_R",
+      "subjectFamily": "privacy"
+    }
+  },
+  {
+    "title": "Wis. Admin. Code DWD § 272.04 — Overtime",
+    "shortTitle": "Wis. Admin. Code DWD § 272.04",
+    "authorityType": "regulation",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Admin. Code DWD § 272.04",
+    "normalizedCitation": "Wis. Admin. Code DWD § 272.04",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wi-dwd-272-04",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/code/admin_code/dwd/270_279/272",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WI",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "272.04",
+        "label": "Wis. Admin. Code DWD § 272.04"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Wis. Admin. Code DWD § 272.04\n\nExcept as otherwise provided, no employer may employ an employee for a workweek longer than 40 hours unless the employee receives compensation for employment in excess of 40 hours at a rate not less than one and one-half times the regular rate.",
+    "sections": [
+      {
+        "sectionRef": "272.04",
+        "content": "Wisconsin overtime administrative code."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "overtime",
+      "sourceOwner": "Wisconsin Legislature / DWD",
+      "platformFamily": "lis_revisor",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "WIS_ADMIN",
+      "subjectFamily": "employment"
+    }
+  },
+  {
+    "title": "Wis. Admin. Code DFI-Bkg § 73.01 — Adjustment service companies — purpose",
+    "shortTitle": "Wis. Admin. Code DFI-Bkg § 73.01",
+    "authorityType": "regulation",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Admin. Code DFI-Bkg § 73.01",
+    "normalizedCitation": "Wis. Admin. Code DFI-Bkg § 73.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wi-dfi-bkg-73-01",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/code/admin_code/dfi/bkg/70_79/73",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WI",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "73.01",
+        "label": "Wis. Admin. Code DFI-Bkg § 73.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer",
+      "business",
+      "regulation"
+    ],
+    "content": "Wis. Admin. Code DFI-Bkg § 73.01\n\nThe purpose of this chapter is to protect the interests of debtors who contract with adjustment service companies and to ensure fair dealing in the business of debt adjusting.",
+    "sections": [
+      {
+        "sectionRef": "73.01",
+        "content": "Wisconsin consumer debt-adjustment regulation purpose."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "debt_adjustment",
+      "sourceOwner": "Wisconsin Department of Financial Institutions",
+      "platformFamily": "lis_revisor",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "WIS_ADMIN",
+      "subjectFamily": "consumer"
+    }
+  },
+  {
+    "title": "Wis. Admin. Code SPS § 1.01 — Professional services — authority",
+    "shortTitle": "Wis. Admin. Code SPS § 1.01",
+    "authorityType": "regulation",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Admin. Code SPS § 1.01",
+    "normalizedCitation": "Wis. Admin. Code SPS § 1.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wi-sps-1-01",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/code/admin_code/sps/professional_services",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WI",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "1.01",
+        "label": "Wis. Admin. Code SPS § 1.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "licensing",
+      "regulation"
+    ],
+    "content": "Wis. Admin. Code SPS § 1.01\n\nThe rules in this series are adopted under authority of chs. 440 and 227, Stats., to regulate credentialed professions under the department's jurisdiction.",
+    "sections": [
+      {
+        "sectionRef": "1.01",
+        "content": "Wisconsin DSPS professional licensing authority rule."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "professional_licensing",
+      "sourceOwner": "Wisconsin Department of Safety and Professional Services",
+      "platformFamily": "lis_revisor",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "WIS_ADMIN",
+      "subjectFamily": "licensing"
+    }
+  },
+  {
+    "title": "Wis. Admin. Code HA § 1.01 — Division of Hearings and Appeals — procedure",
+    "shortTitle": "Wis. Admin. Code HA § 1.01",
+    "authorityType": "regulation",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Admin. Code HA § 1.01",
+    "normalizedCitation": "Wis. Admin. Code HA § 1.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "wi-ha-1-01",
+    "canonicalSourceUrl": "https://docs.legis.wisconsin.gov/code/admin_code/ha/1",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "WI",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "1.01",
+        "label": "Wis. Admin. Code HA § 1.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative",
+      "regulation"
+    ],
+    "content": "Wis. Admin. Code HA § 1.01\n\nThis chapter establishes procedures for contested cases heard by the division of hearings and appeals under ch. 227, Stats., unless a more specific rule applies.",
+    "sections": [
+      {
+        "sectionRef": "1.01",
+        "content": "Wisconsin DHA contested-case procedure."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Wisconsin Division of Hearings and Appeals",
+      "platformFamily": "lis_revisor",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "WIS_ADMIN",
+      "subjectFamily": "administrative"
+    }
+  },
+  {
+    "title": "Or. Admin. R. 839-020-0010 — Wage and hour — definitions",
+    "shortTitle": "Or. Admin. R. 839-020-0010",
+    "authorityType": "regulation",
+    "jurisdiction": "Oregon",
+    "authorityState": "OR",
+    "citation": "Or. Admin. R. 839-020-0010",
+    "normalizedCitation": "Or. Admin. R. 839-020-0010",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "or-oar-839-020-0010",
+    "canonicalSourceUrl": "https://secure.sos.state.or.us/oard/view.action?ruleNumber=839-020-0010",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "OR",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "839-020-0010",
+        "label": "Or. Admin. R. 839-020-0010"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Or. Admin. R. 839-020-0010\n\nAs used in OAR chapter 839, division 20, unless the context requires otherwise, terms have the meanings provided in ORS chapter 653 and these rules.",
+    "sections": [
+      {
+        "sectionRef": "839-020-0010",
+        "content": "Oregon wage-and-hour definitional rule."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "wage_hour_definitions",
+      "sourceOwner": "Oregon Bureau of Labor and Industries / SOS",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "OAR",
+      "subjectFamily": "employment"
+    }
+  },
+  {
+    "title": "Or. Admin. R. 137-020-0010 — Unlawful trade practices — definitions",
+    "shortTitle": "Or. Admin. R. 137-020-0010",
+    "authorityType": "regulation",
+    "jurisdiction": "Oregon",
+    "authorityState": "OR",
+    "citation": "Or. Admin. R. 137-020-0010",
+    "normalizedCitation": "Or. Admin. R. 137-020-0010",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "or-oar-137-020-0010",
+    "canonicalSourceUrl": "https://secure.sos.state.or.us/oard/view.action?ruleNumber=137-020-0010",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "OR",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "137-020-0010",
+        "label": "Or. Admin. R. 137-020-0010"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer",
+      "regulation"
+    ],
+    "content": "Or. Admin. R. 137-020-0010\n\nAs used in these rules interpreting the Unlawful Trade Practices Act, \"person\" and \"trade\" and \"commerce\" have the meanings assigned by ORS 646.605.",
+    "sections": [
+      {
+        "sectionRef": "137-020-0010",
+        "content": "Oregon UTPA interpretive definitions."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "unfair_trade_practices",
+      "sourceOwner": "Oregon Department of Justice / SOS",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "OAR",
+      "subjectFamily": "consumer"
+    }
+  },
+  {
+    "title": "Or. Admin. R. 137-003-0001 — Model rules of procedure — contested cases",
+    "shortTitle": "Or. Admin. R. 137-003-0001",
+    "authorityType": "regulation",
+    "jurisdiction": "Oregon",
+    "authorityState": "OR",
+    "citation": "Or. Admin. R. 137-003-0001",
+    "normalizedCitation": "Or. Admin. R. 137-003-0001",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "or-oar-137-003-0001",
+    "canonicalSourceUrl": "https://secure.sos.state.or.us/oard/view.action?ruleNumber=137-003-0001",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "OR",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "137-003-0001",
+        "label": "Or. Admin. R. 137-003-0001"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative",
+      "regulation"
+    ],
+    "content": "Or. Admin. R. 137-003-0001\n\nThe Attorney General's Model Rules of Procedure apply to contested case proceedings of agencies that have adopted them under ORS 183.341.",
+    "sections": [
+      {
+        "sectionRef": "137-003-0001",
+        "content": "Oregon model APA contested-case rules."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Oregon Department of Justice / SOS",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "OAR",
+      "subjectFamily": "administrative"
+    }
+  },
+  {
+    "title": "Or. Admin. R. 818-001-0002 — Board of Dentistry — definitions",
+    "shortTitle": "Or. Admin. R. 818-001-0002",
+    "authorityType": "regulation",
+    "jurisdiction": "Oregon",
+    "authorityState": "OR",
+    "citation": "Or. Admin. R. 818-001-0002",
+    "normalizedCitation": "Or. Admin. R. 818-001-0002",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "or-oar-818-001-0002",
+    "canonicalSourceUrl": "https://secure.sos.state.or.us/oard/view.action?ruleNumber=818-001-0002",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "OR",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "818-001-0002",
+        "label": "Or. Admin. R. 818-001-0002"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "licensing",
+      "regulation"
+    ],
+    "content": "Or. Admin. R. 818-001-0002\n\nAs used in OAR chapter 818, \"Board\" means the Oregon Board of Dentistry and \"licensee\" means a person holding a license issued by the Board.",
+    "sections": [
+      {
+        "sectionRef": "818-001-0002",
+        "content": "Oregon dental board licensing definitions."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "dental_licensing",
+      "sourceOwner": "Oregon Board of Dentistry / SOS",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "OAR",
+      "subjectFamily": "licensing"
+    }
+  },
+  {
+    "title": "Ga. Comp. R. & Regs. 300-2-3-.01 — Unemployment — contribution rates",
+    "shortTitle": "Ga. Comp. R. & Regs. 300-2-3-.01",
+    "authorityType": "regulation",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Comp. R. & Regs. 300-2-3-.01",
+    "normalizedCitation": "Ga. Comp. R. & Regs. 300-2-3-.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ga-comp-300-2-3-01",
+    "canonicalSourceUrl": "https://rules.sos.ga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "GA",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "300-2-3-.01",
+        "label": "Ga. Comp. R. & Regs. 300-2-3-.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "employment",
+      "regulation"
+    ],
+    "content": "Ga. Comp. R. & Regs. 300-2-3-.01\n\nEmployer contribution rates under the Employment Security Law are determined in accordance with O.C.G.A. Title 34 and this Chapter.",
+    "sections": [
+      {
+        "sectionRef": "300-2-3-.01",
+        "content": "Georgia unemployment contribution-rate regulation."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "unemployment_contributions",
+      "sourceOwner": "Georgia Department of Labor / SOS Rules",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "GA_COMP",
+      "subjectFamily": "employment"
+    }
+  },
+  {
+    "title": "Ga. Comp. R. & Regs. 120-2-2-.01 — Insurance — unfair trade practices",
+    "shortTitle": "Ga. Comp. R. & Regs. 120-2-2-.01",
+    "authorityType": "regulation",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Comp. R. & Regs. 120-2-2-.01",
+    "normalizedCitation": "Ga. Comp. R. & Regs. 120-2-2-.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ga-comp-120-2-2-01",
+    "canonicalSourceUrl": "https://rules.sos.ga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "GA",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "120-2-2-.01",
+        "label": "Ga. Comp. R. & Regs. 120-2-2-.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "consumer",
+      "regulation"
+    ],
+    "content": "Ga. Comp. R. & Regs. 120-2-2-.01\n\nNo person shall engage in this state in any trade practice which is defined in this Chapter or in Title 33 of the Official Code of Georgia Annotated as an unfair method of competition or an unfair or deceptive act or practice in the business of insurance.",
+    "sections": [
+      {
+        "sectionRef": "120-2-2-.01",
+        "content": "Georgia insurance unfair-trade-practice rule."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "insurance_unfair_practices",
+      "sourceOwner": "Georgia Office of Insurance / SOS Rules",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "GA_COMP",
+      "subjectFamily": "consumer"
+    }
+  },
+  {
+    "title": "Ga. Comp. R. & Regs. 360-2-.01 — Composite Medical Board — applications",
+    "shortTitle": "Ga. Comp. R. & Regs. 360-2-.01",
+    "authorityType": "regulation",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Comp. R. & Regs. 360-2-.01",
+    "normalizedCitation": "Ga. Comp. R. & Regs. 360-2-.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ga-comp-360-2-01",
+    "canonicalSourceUrl": "https://rules.sos.ga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "GA",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "360-2-.01",
+        "label": "Ga. Comp. R. & Regs. 360-2-.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "licensing",
+      "regulation"
+    ],
+    "content": "Ga. Comp. R. & Regs. 360-2-.01\n\nAn applicant for a license to practice medicine shall submit a completed application on forms prescribed by the Board together with the required fee and supporting documentation.",
+    "sections": [
+      {
+        "sectionRef": "360-2-.01",
+        "content": "Georgia medical license application rule."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "medical_licensing",
+      "sourceOwner": "Georgia Composite Medical Board / SOS Rules",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "GA_COMP",
+      "subjectFamily": "licensing"
+    }
+  },
+  {
+    "title": "Ga. Comp. R. & Regs. 616-1-2-.01 — Office of State Administrative Hearings — scope",
+    "shortTitle": "Ga. Comp. R. & Regs. 616-1-2-.01",
+    "authorityType": "regulation",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Comp. R. & Regs. 616-1-2-.01",
+    "normalizedCitation": "Ga. Comp. R. & Regs. 616-1-2-.01",
+    "sourceProvider": "us-primary-corpus",
+    "sourceExternalId": "ga-comp-616-1-2-01",
+    "canonicalSourceUrl": "https://rules.sos.ga.gov/",
+    "hierarchyPath": [
+      {
+        "level": "code",
+        "ref": "GA",
+        "label": "Admin Code"
+      },
+      {
+        "level": "section",
+        "ref": "616-1-2-.01",
+        "label": "Ga. Comp. R. & Regs. 616-1-2-.01"
+      }
+    ],
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "bundlePracticeAreas": [
+      "administrative",
+      "regulation"
+    ],
+    "content": "Ga. Comp. R. & Regs. 616-1-2-.01\n\nThese rules of procedure apply to contested cases assigned to the Office of State Administrative Hearings pursuant to the Georgia Administrative Procedure Act.",
+    "sections": [
+      {
+        "sectionRef": "616-1-2-.01",
+        "content": "Georgia OSAH contested-case scope rule."
+      }
+    ],
+    "currentnessStatus": "current_as_of_source_date",
+    "sourceMetadata": {
+      "retrievalMethod": "official_regulation_snapshot",
+      "retrievedAt": "2026-09-18T14:30:00.000Z",
+      "statuteTopic": "administrative_procedure",
+      "sourceOwner": "Georgia OSAH / SOS Rules",
+      "platformFamily": "sos_portal",
+      "wave": "2K",
+      "sourceClass": "B_stable_html",
+      "regulationFamily": "GA_COMP",
+      "subjectFamily": "administrative"
+    }
+  }
+]

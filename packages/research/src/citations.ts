@@ -184,12 +184,17 @@ export class FederalRulesCitationParser implements CitationParser {
   }
 }
 
-/** State admin-code forms: 34 Pa. Code § 231.1, Fla. Admin. Code R. 61J2-3.008, 16VAC15-21-10. */
+/**
+ * State admin-code forms including Wave-1/Wave-2K families:
+ * Pa. Code, Fla. Admin. Code, VAC, DE Admin. Code, Ill. Admin. Code,
+ * CMR, NYCRR, A.A.C., RICR, Conn. Agencies Regs., WAC, Minn. R., Wis. Admin. Code,
+ * OAR, IAC, Ga. Comp. R. & Regs., W. Va. Code R., Tex. Admin. Code, COMAR, Ohio Admin. Code.
+ */
 export class StateAdminCodeCitationParser implements CitationParser {
   readonly name = "state-admin-code";
   readonly type: CitationKind = "regulation";
   readonly pattern =
-    /\b(?:(\d{1,3})\s+Pa\.?\s*Code\s*§+\s*([\d.]+)|Fla\.?\s*Admin\.?\s*Code\s*R\.?\s*([\dA-Za-z.-]+)|(\d+)\s*VAC\s*([\d.-]+)|(\d+)\s+DE\s+Admin\.?\s*Code\s+([\d.]+)|Ill\.?\s*Admin\.?\s*Code\s+tit\.?\s*(\d+)\s*§+\s*([\d.]+))\b/gi;
+    /\b(?:(\d{1,3})\s+Pa\.?\s*Code\s*§+\s*([\d.]+)|Fla\.?\s*Admin\.?\s*Code\s*R\.?\s*([\dA-Za-z.-]+)|(\d+)\s*VAC\s*([\d.-]+)|(\d+)\s+DE\s+Admin\.?\s*Code\s+([\d.]+)|Ill\.?\s*Admin\.?\s*Code\s+tit\.?\s*(\d+)\s*§+\s*([\d.]+)|(\d{1,3})\s+CMR\s+([\d.]+)|(\d{1,2})\s+NYCRR\s*§?\s*([\d.\-]+)|A\.?\s*A\.?\s*C\.?\s*(R[\d\-]+)|(\d{1,3})-RICR-([\d\-]+)|Conn\.?\s*Agencies\s+Regs\.?\s*§?\s*([\dA-Za-z.\-]+)|WAC\s+([\d\-]+)|Minn\.?\s*R\.?\s*([\d.]+)|Wis\.?\s*Admin\.?\s*Code\s+([A-Z][A-Za-z\-]*(?:\s+[A-Z][A-Za-z\-]*)?)\s*§+\s*([\d.]+)|Or\.?\s*Admin\.?\s*R\.?\s*([\d.\-]+)|(\d{1,3})\s+IAC\s+([\d.\-]+)|Ga\.?\s*Comp\.?\s*R\.?\s*&?\s*Regs\.?\s*([\d.\-]+)|W\.?\s*Va\.?\s*Code\s+R\.?\s*§?\s*([\d.\-]+)|(\d{1,3})\s+Tex\.?\s*Admin\.?\s*Code\s*§+\s*([\d.]+)|COMAR\s+([\d.]+)|Ohio\s+Admin\.?\s*Code\s+([\d\-.:]+)|(\d{1,3})\s+CCR\s+([\d\-]+)|Mich\.?\s*Admin\.?\s*Code\s+R\s+([\d.]+)|(\d{1,3})\s+NCAC\s+([\d.]+))\b/gi;
 
   build(match: RegExpMatchArray): ParsedCitation | null {
     if (match[1] && match[2]) {
@@ -246,6 +251,211 @@ export class StateAdminCodeCitationParser implements CitationParser {
         reporter: "Ill. Admin. Code",
         volume: toInt(match[8]),
         section: match[9],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[10] && match[11]) {
+      return {
+        raw: match[0],
+        normalized: `${match[10]} CMR ${match[11]}`,
+        reporter: "CMR",
+        volume: toInt(match[10]),
+        section: match[11],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[12] && match[13]) {
+      return {
+        raw: match[0],
+        normalized: `${match[12]} NYCRR § ${match[13]}`,
+        reporter: "NYCRR",
+        volume: toInt(match[12]),
+        section: match[13],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[14]) {
+      return {
+        raw: match[0],
+        normalized: `A.A.C. ${match[14]}`,
+        reporter: "A.A.C.",
+        section: match[14],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[15] && match[16]) {
+      return {
+        raw: match[0],
+        normalized: `${match[15]}-RICR-${match[16]}`,
+        reporter: "RICR",
+        volume: toInt(match[15]),
+        section: match[16],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[17]) {
+      return {
+        raw: match[0],
+        normalized: `Conn. Agencies Regs. § ${match[17]}`,
+        reporter: "Conn. Agencies Regs.",
+        section: match[17],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[18]) {
+      return {
+        raw: match[0],
+        normalized: `WAC ${match[18]}`,
+        reporter: "WAC",
+        section: match[18],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[19]) {
+      return {
+        raw: match[0],
+        normalized: `Minn. R. ${match[19]}`,
+        reporter: "Minn. R.",
+        section: match[19],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[20] && match[21]) {
+      return {
+        raw: match[0],
+        normalized: `Wis. Admin. Code ${match[20]} § ${match[21]}`,
+        reporter: "Wis. Admin. Code",
+        section: `${match[20]} § ${match[21]}`,
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[22]) {
+      return {
+        raw: match[0],
+        normalized: `Or. Admin. R. ${match[22]}`,
+        reporter: "Or. Admin. R.",
+        section: match[22],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[23] && match[24]) {
+      return {
+        raw: match[0],
+        normalized: `${match[23]} IAC ${match[24]}`,
+        reporter: "IAC",
+        volume: toInt(match[23]),
+        section: match[24],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[25]) {
+      return {
+        raw: match[0],
+        normalized: `Ga. Comp. R. & Regs. ${match[25]}`,
+        reporter: "Ga. Comp. R. & Regs.",
+        section: match[25],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[26]) {
+      return {
+        raw: match[0],
+        normalized: `W. Va. Code R. § ${match[26]}`,
+        reporter: "W. Va. Code R.",
+        section: match[26],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[27] && match[28]) {
+      return {
+        raw: match[0],
+        normalized: `${match[27]} Tex. Admin. Code § ${match[28]}`,
+        reporter: "Tex. Admin. Code",
+        volume: toInt(match[27]),
+        section: match[28],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[29]) {
+      return {
+        raw: match[0],
+        normalized: `COMAR ${match[29]}`,
+        reporter: "COMAR",
+        section: match[29],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[30]) {
+      return {
+        raw: match[0],
+        normalized: `Ohio Admin. Code ${match[30]}`,
+        reporter: "Ohio Admin. Code",
+        section: match[30],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[31] && match[32]) {
+      return {
+        raw: match[0],
+        normalized: `${match[31]} CCR ${match[32]}`,
+        reporter: "CCR",
+        volume: toInt(match[31]),
+        section: match[32],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[33]) {
+      return {
+        raw: match[0],
+        normalized: `Mich. Admin. Code R ${match[33]}`,
+        reporter: "Mich. Admin. Code",
+        section: match[33],
+        type: "regulation",
+        parser: this.name,
+        confidence: "high",
+      };
+    }
+    if (match[34] && match[35]) {
+      return {
+        raw: match[0],
+        normalized: `${match[34]} NCAC ${match[35]}`,
+        reporter: "NCAC",
+        volume: toInt(match[34]),
+        section: match[35],
         type: "regulation",
         parser: this.name,
         confidence: "high",

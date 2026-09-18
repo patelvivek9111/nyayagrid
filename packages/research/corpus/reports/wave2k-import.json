@@ -1,0 +1,63 @@
+{
+  "ok": true,
+  "wave": "2K",
+  "before": {
+    "total": 1438,
+    "cases": 170,
+    "statutes": 900,
+    "regulations": 113,
+    "rules": 254,
+    "unknown": 183,
+    "last_checked": 1258
+  },
+  "after": {
+    "total": 1481,
+    "cases": 170,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "unknown": 138,
+    "historical": 45,
+    "current_src": 1298,
+    "last_checked": 1346,
+    "normalized": 1356,
+    "with_url": 1481,
+    "provenance": 1481,
+    "reg_jurs": 24
+  },
+  "import": {
+    "regulations": {
+      "imported": 43,
+      "skipped": 0,
+      "newVersion": 1
+    }
+  },
+  "currentness": {
+    "appliedA": 0,
+    "appliedBHistorical": 45,
+    "flaggedF": 0,
+    "leftD": 138,
+    "leftBuckets": {
+      "C_CL_related": 0,
+      "D_source_no_revision_metadata": 138,
+      "E_manual_source": 0
+    },
+    "lastCheckedBackfill": 0
+  },
+  "aliased": 1,
+  "statusDist": [
+    {
+      "s": "current_as_of_source_date",
+      "n": 1298
+    },
+    {
+      "s": "unknown",
+      "n": 138
+    },
+    {
+      "s": "historical",
+      "n": 45
+    }
+  ],
+  "courtListenerHttpCalls": 0
+}

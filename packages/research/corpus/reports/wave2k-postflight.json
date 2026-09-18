@@ -1,0 +1,477 @@
+{
+  "ok": true,
+  "wave": "2K-pre",
+  "totals": {
+    "total": 1481,
+    "cases": 170,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "unknown": 138,
+    "last_checked": 1346,
+    "with_url": 1481,
+    "provenance": 1481
+  },
+  "unknownBuckets": {
+    "A_source_supports_recheck": 0,
+    "B_historical_case": 0,
+    "C_CL_related": 0,
+    "D_source_no_revision_metadata": 138,
+    "E_manual_source": 0,
+    "F_missing_metadata_bug": 0
+  },
+  "unknownByType": {
+    "statute": 115,
+    "constitution": 1,
+    "regulation": 15,
+    "rule": 7
+  },
+  "unknownByStateTop": [
+    [
+      "US",
+      49
+    ],
+    [
+      "PA",
+      5
+    ],
+    [
+      "NJ",
+      4
+    ],
+    [
+      "NY",
+      4
+    ],
+    [
+      "DE",
+      4
+    ],
+    [
+      "CA",
+      4
+    ],
+    [
+      "FL",
+      4
+    ],
+    [
+      "IL",
+      4
+    ],
+    [
+      "MA",
+      4
+    ],
+    [
+      "VA",
+      4
+    ],
+    [
+      "TX",
+      3
+    ],
+    [
+      "OH",
+      2
+    ],
+    [
+      "GA",
+      2
+    ],
+    [
+      "NC",
+      2
+    ],
+    [
+      "CO",
+      2
+    ],
+    [
+      "MI",
+      2
+    ],
+    [
+      "MD",
+      2
+    ],
+    [
+      "CT",
+      2
+    ],
+    [
+      "WI",
+      2
+    ],
+    [
+      "IA",
+      1
+    ]
+  ],
+  "unknownBySourceFamily": {
+    "us-primary-corpus": 138
+  },
+  "aRecheckCount": 0,
+  "bHistoricalCount": 0,
+  "aSampleIds": [],
+  "bSampleIds": [],
+  "regJurisdictions": 24,
+  "regDepth": {
+    "US": {
+      "count": 46,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 31,
+      "urlSupport": 46,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "PA": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "FL": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "VA": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "DE": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "IL": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "OH": {
+      "count": 3,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 3,
+      "urlSupport": 3,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "WA": {
+      "count": 3,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 3,
+      "urlSupport": 3,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "CO": {
+      "count": 3,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 3,
+      "urlSupport": 3,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "MI": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "MD": {
+      "count": 3,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 3,
+      "urlSupport": 3,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "TX": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "NC": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "MN": {
+      "count": 6,
+      "subjects": [
+        "administrative",
+        "consumer",
+        "employment",
+        "licensing",
+        "privacy"
+      ],
+      "subjectCount": 5,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 6,
+      "urlSupport": 6,
+      "depth": "REG_DEPTH_GOOD"
+    },
+    "WI": {
+      "count": 6,
+      "subjects": [
+        "administrative",
+        "business",
+        "consumer",
+        "employment",
+        "licensing"
+      ],
+      "subjectCount": 5,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 6,
+      "urlSupport": 6,
+      "depth": "REG_DEPTH_GOOD"
+    },
+    "GA": {
+      "count": 6,
+      "subjects": [
+        "administrative",
+        "consumer",
+        "employment",
+        "licensing"
+      ],
+      "subjectCount": 4,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 6,
+      "urlSupport": 6,
+      "depth": "REG_DEPTH_GOOD"
+    },
+    "IN": {
+      "count": 5,
+      "subjects": [
+        "administrative",
+        "business",
+        "consumer",
+        "employment",
+        "licensing"
+      ],
+      "subjectCount": 5,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 5,
+      "urlSupport": 5,
+      "depth": "REG_DEPTH_GOOD"
+    },
+    "OR": {
+      "count": 5,
+      "subjects": [
+        "administrative",
+        "consumer",
+        "employment",
+        "licensing"
+      ],
+      "subjectCount": 4,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 5,
+      "urlSupport": 5,
+      "depth": "REG_DEPTH_GOOD"
+    },
+    "MA": {
+      "count": 6,
+      "subjects": [
+        "administrative",
+        "consumer",
+        "employment",
+        "licensing",
+        "privacy"
+      ],
+      "subjectCount": 5,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 6,
+      "urlSupport": 6,
+      "depth": "REG_DEPTH_GOOD"
+    },
+    "AZ": {
+      "count": 6,
+      "subjects": [
+        "administrative",
+        "business",
+        "consumer",
+        "employment",
+        "licensing"
+      ],
+      "subjectCount": 5,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 6,
+      "urlSupport": 6,
+      "depth": "REG_DEPTH_GOOD"
+    },
+    "RI": {
+      "count": 6,
+      "subjects": [
+        "administrative",
+        "business",
+        "consumer",
+        "employment",
+        "licensing"
+      ],
+      "subjectCount": 5,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 6,
+      "urlSupport": 6,
+      "depth": "REG_DEPTH_GOOD"
+    },
+    "WV": {
+      "count": 6,
+      "subjects": [
+        "administrative",
+        "consumer",
+        "employment",
+        "licensing"
+      ],
+      "subjectCount": 4,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 6,
+      "urlSupport": 6,
+      "depth": "REG_DEPTH_GOOD"
+    },
+    "NY": {
+      "count": 7,
+      "subjects": [
+        "business",
+        "consumer",
+        "employment",
+        "licensing",
+        "privacy"
+      ],
+      "subjectCount": 5,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 7,
+      "urlSupport": 7,
+      "depth": "REG_DEPTH_GOOD"
+    },
+    "CT": {
+      "count": 7,
+      "subjects": [
+        "administrative",
+        "consumer",
+        "employment",
+        "licensing"
+      ],
+      "subjectCount": 4,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 7,
+      "urlSupport": 7,
+      "depth": "REG_DEPTH_GOOD"
+    }
+  },
+  "minimal": [
+    "OH",
+    "WA",
+    "CO",
+    "MD"
+  ],
+  "partial": [
+    "US",
+    "PA",
+    "FL",
+    "VA",
+    "DE",
+    "IL",
+    "MI",
+    "TX",
+    "NC"
+  ],
+  "good": [
+    "MN",
+    "WI",
+    "GA",
+    "IN",
+    "OR",
+    "MA",
+    "AZ",
+    "RI",
+    "WV",
+    "NY",
+    "CT"
+  ]
+}

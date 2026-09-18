@@ -110,6 +110,30 @@ describe("parseCitation", () => {
       normalized: "Fla. Admin. Code R. 61J2-3.008",
       type: "regulation",
     });
+    expect(parseCitation("454 CMR 27.03")).toMatchObject({
+      normalized: "454 CMR 27.03",
+      type: "regulation",
+    });
+    expect(parseCitation("12 NYCRR § 142-2.1")).toMatchObject({
+      normalized: "12 NYCRR § 142-2.1",
+      type: "regulation",
+    });
+    expect(parseCitation("A.A.C. R20-5-1202")).toMatchObject({
+      normalized: "A.A.C. R20-5-1202",
+      type: "regulation",
+    });
+    expect(parseCitation("260-RICR-30-05-5")).toMatchObject({
+      normalized: "260-RICR-30-05-5",
+      type: "regulation",
+    });
+    expect(parseCitation("Conn. Agencies Regs. § 31-60-1")).toMatchObject({
+      normalized: "Conn. Agencies Regs. § 31-60-1",
+      type: "regulation",
+    });
+    expect(parseCitation("W. Va. Code R. § 42-5-1")).toMatchObject({
+      normalized: "W. Va. Code R. § 42-5-1",
+      type: "regulation",
+    });
     expect(parseCitation("Pa.R.C.P. 1007")).toMatchObject({
       normalized: "Pa.R.C.P. 1007",
       type: "rule",

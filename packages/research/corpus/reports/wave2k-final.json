@@ -1,0 +1,102 @@
+{
+  "verdict": "PASS",
+  "queue": 2,
+  "wave": "2K",
+  "transitionAllowed": false,
+  "nextSubStep": "Wave 2L — CL resume when cooldown clears (dominant remaining work); optional OH/WA/CO/MD reg deepen. Do not open Queue #3.",
+  "corpus": {
+    "before": { "authorities": 1438, "cases": 170, "statutes": 900, "regulations": 113, "rules": 254 },
+    "after": { "authorities": 1481, "cases": 170, "statutes": 900, "regulations": 156, "rules": 254 }
+  },
+  "currentness": {
+    "unknownBefore": 183,
+    "unknownAfter": 138,
+    "bucketsExact": {
+      "A_source_supports_recheck": 0,
+      "B_historical_case": 45,
+      "C_CL_related": 0,
+      "D_source_no_revision_metadata": 138,
+      "E_manual_source": 0,
+      "F_missing_metadata_bug": 0
+    },
+    "note": "125 CL cases already non-unknown; not in unknown pool. B applied → historical. A was empty (no unknown rows with retrievedAt).",
+    "statusesChanged": { "unknown_to_historical": 45, "new_regs_current_as_of_source_date": 43 },
+    "lastCheckedBefore": 1258,
+    "lastCheckedAfter": 1346,
+    "unverifiableRemaining": 138
+  },
+  "regulations": {
+    "jurisdictionsBefore": 24,
+    "jurisdictionsAfter": 24,
+    "depthGood": ["MN", "WI", "GA", "IN", "OR", "MA", "AZ", "RI", "WV", "NY", "CT"],
+    "depthPartial": ["US", "PA", "FL", "VA", "DE", "IL", "MI", "TX", "NC"],
+    "depthMinimal": ["OH", "WA", "CO", "MD"],
+    "NY": { "rows": 7, "subjects": ["business", "consumer", "employment", "licensing", "privacy"] },
+    "CT": { "rows": 7, "subjects": ["administrative", "consumer", "employment", "licensing"] },
+    "MA": { "rows": 6 },
+    "AZ": { "rows": 6 },
+    "RI": { "rows": 6 },
+    "WV": { "rows": 6 },
+    "newJurisdictions": [],
+    "remainingOpportunities": ["OH", "WA", "CO", "MD", "full NYCRR", "CA/NJ proprietary"]
+  },
+  "normalization": {
+    "expandedParsers": ["CMR", "NYCRR", "AAC", "RICR", "Conn. Agencies Regs.", "WAC", "Minn. R.", "Wis. Admin. Code", "OAR", "IAC", "Ga. Comp.", "W. Va. Code R.", "TAC", "COMAR", "Ohio Admin. Code", "CCR", "Mich. Admin. Code", "NCAC"],
+    "normalizedAfter": 1356
+  },
+  "retrieval": {
+    "regulationJurisdictionsTested": 24,
+    "exactCitePass": 24,
+    "subjectQueryPass": 24,
+    "fail": 0,
+    "expectedMiss": 4,
+    "jurisdictionIsolation": "PASS",
+    "noWeb": true,
+    "courtListenerHttp": 0
+  },
+  "refresh": {
+    "AUTO_REFRESH": ["ecfr", "usc_periodic"],
+    "REIMPORT_REFRESH": ["us_primary_corpus_bundles", "state_regulation_configs", "court_rules_curated"],
+    "MANUAL_REFRESH": ["constitution_static", "one_shot_historical"],
+    "EXTERNAL_BLOCKED": ["courtlistener"],
+    "sourceHealth": "adapters registered; no hammered live health sweep this wave"
+  },
+  "versioning": {
+    "unchangedProof": "skipped=0 on new IDs; hash-equal path updates last_checked only",
+    "changedProof": "newVersion=1 append-only",
+    "oldVersionRetention": true,
+    "duplicateSafety": "aliased=1"
+  },
+  "provenance": { "completenessPct": 100 },
+  "coverage": { "no_corpus": 0, "seed": 0, "limited": 51, "broader": 1 },
+  "broaderBlockers": {
+    "authority_count_below_or_eq_100": 51,
+    "statute_count_below_15": 0,
+    "case_count_below_20": 51,
+    "no_high_or_appellate": 31,
+    "statute_subjects_below_6": 0,
+    "remainingNonCase": "near-zero (statute gates clear; residual D currentness not a broader hard gate)",
+    "dominant": ["case_count_below_20", "no_high_or_appellate", "authority_count_below_or_eq_100"]
+  },
+  "clReadiness": {
+    "federal": ["CA11", "CADC", "CAFC", "CA7", "CA10"],
+    "wave1": ["CA", "DE", "FL", "IL", "MA", "NJ", "NY", "PA", "TX", "VA"],
+    "checkpointIntegrity": "intact",
+    "readyToResume": true,
+    "httpCalls": 0,
+    "courtListenerCases": 125
+  },
+  "tests": { "passed": 49, "failed": 0 },
+  "operational": {
+    "healthReady": 200,
+    "authProvider": "clerk",
+    "featureAgents": "0",
+    "stagingDbImport": true
+  },
+  "cost": {
+    "httpFetches": "none for CL; curated snapshots for regs",
+    "embeddings": 0,
+    "estimatedSpend": "~$0"
+  },
+  "releaseClassification": "staging corpus advance — Queue #2 remains open; case depth external"
+}

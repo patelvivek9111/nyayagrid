@@ -1,0 +1,458 @@
+{
+  "ok": true,
+  "wave": "2K-pre",
+  "totals": {
+    "total": 1438,
+    "cases": 170,
+    "statutes": 900,
+    "regulations": 113,
+    "rules": 254,
+    "unknown": 183,
+    "last_checked": 1258,
+    "with_url": 1438,
+    "provenance": 1438
+  },
+  "unknownBuckets": {
+    "A_source_supports_recheck": 0,
+    "B_historical_case": 45,
+    "C_CL_related": 0,
+    "D_source_no_revision_metadata": 138,
+    "E_manual_source": 0,
+    "F_missing_metadata_bug": 0
+  },
+  "unknownByType": {
+    "case": 45,
+    "statute": 115,
+    "constitution": 1,
+    "regulation": 15,
+    "rule": 7
+  },
+  "unknownByStateTop": [
+    [
+      "US",
+      63
+    ],
+    [
+      "PA",
+      8
+    ],
+    [
+      "NJ",
+      6
+    ],
+    [
+      "NY",
+      6
+    ],
+    [
+      "DE",
+      6
+    ],
+    [
+      "CA",
+      6
+    ],
+    [
+      "FL",
+      6
+    ],
+    [
+      "IL",
+      6
+    ],
+    [
+      "MA",
+      6
+    ],
+    [
+      "VA",
+      6
+    ],
+    [
+      "TX",
+      5
+    ],
+    [
+      "OH",
+      3
+    ],
+    [
+      "CO",
+      3
+    ],
+    [
+      "GA",
+      3
+    ],
+    [
+      "NC",
+      3
+    ],
+    [
+      "MI",
+      3
+    ],
+    [
+      "MD",
+      3
+    ],
+    [
+      "CT",
+      3
+    ],
+    [
+      "WI",
+      3
+    ],
+    [
+      "WA",
+      2
+    ]
+  ],
+  "unknownBySourceFamily": {
+    "us-primary-corpus": 183
+  },
+  "aRecheckCount": 0,
+  "bHistoricalCount": 45,
+  "aSampleIds": [],
+  "bSampleIds": [
+    "58bbafd8-95e0-401a-a9b1-1a4f5c6c9bf0",
+    "96f97066-b205-44d1-a1cb-2452bf8164c2",
+    "a5a02600-e688-45b1-8d47-c673ac6d58fa",
+    "d68c2861-5a34-4eb5-b69b-1757b1927860",
+    "bbd6e4bc-eb32-45a0-8c42-f5cec02ec4ea",
+    "8406da45-a9ed-4a9d-89c9-d96c62aa1053",
+    "6d11a4e7-de76-4b08-92d6-52bc016b03a3",
+    "a0fabae8-9fe3-48c3-847e-7506f869c1fc",
+    "23ea0f35-eeca-4720-8e57-51adf4382738",
+    "b0001f77-4467-4b9e-9aff-85c363746788",
+    "909f706c-41af-4d55-a9e1-e5a0cc21d6e4",
+    "22b1fc2a-8d90-4211-83d3-9959411c9ac6",
+    "b29f2eeb-6f13-4294-9957-553fa1b2f87f",
+    "204c63ef-eb75-4bda-a389-0f186b80630d",
+    "c93d951d-57d1-41b1-ad56-387be9139f2b",
+    "4a5cbc25-e94d-40f0-9387-fcad24493e34",
+    "a65988f9-6928-438a-99ac-0ebb7bd84a4a",
+    "89959358-6e73-41a1-bc64-b60bdc82b054",
+    "c04756e3-cb21-466b-a799-e26b723b84c4",
+    "5d3d020c-13cc-42cd-91b3-5d558372a907"
+  ],
+  "regJurisdictions": 24,
+  "regDepth": {
+    "US": {
+      "count": 46,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 31,
+      "urlSupport": 46,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "PA": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "FL": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "VA": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "DE": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "IL": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "OH": {
+      "count": 3,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 3,
+      "urlSupport": 3,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "WA": {
+      "count": 3,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 3,
+      "urlSupport": 3,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "CO": {
+      "count": 3,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 3,
+      "urlSupport": 3,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "MI": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "MD": {
+      "count": 3,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 3,
+      "urlSupport": 3,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "TX": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "NC": {
+      "count": 4,
+      "subjects": [],
+      "subjectCount": 0,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 4,
+      "urlSupport": 4,
+      "depth": "REG_DEPTH_PARTIAL"
+    },
+    "MN": {
+      "count": 2,
+      "subjects": [
+        "employment"
+      ],
+      "subjectCount": 1,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 2,
+      "urlSupport": 2,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "WI": {
+      "count": 2,
+      "subjects": [
+        "employment"
+      ],
+      "subjectCount": 1,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 2,
+      "urlSupport": 2,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "GA": {
+      "count": 2,
+      "subjects": [
+        "employment"
+      ],
+      "subjectCount": 1,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 2,
+      "urlSupport": 2,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "IN": {
+      "count": 1,
+      "subjects": [
+        "employment"
+      ],
+      "subjectCount": 1,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 1,
+      "urlSupport": 1,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "OR": {
+      "count": 2,
+      "subjects": [
+        "employment"
+      ],
+      "subjectCount": 1,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 2,
+      "urlSupport": 2,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "MA": {
+      "count": 2,
+      "subjects": [
+        "employment"
+      ],
+      "subjectCount": 1,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 2,
+      "urlSupport": 2,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "AZ": {
+      "count": 2,
+      "subjects": [
+        "employment"
+      ],
+      "subjectCount": 1,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 2,
+      "urlSupport": 2,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "RI": {
+      "count": 2,
+      "subjects": [
+        "employment"
+      ],
+      "subjectCount": 1,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 2,
+      "urlSupport": 2,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "WV": {
+      "count": 2,
+      "subjects": [
+        "employment"
+      ],
+      "subjectCount": 1,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 2,
+      "urlSupport": 2,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "NY": {
+      "count": 3,
+      "subjects": [
+        "employment"
+      ],
+      "subjectCount": 1,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 3,
+      "urlSupport": 3,
+      "depth": "REG_DEPTH_MINIMAL"
+    },
+    "CT": {
+      "count": 3,
+      "subjects": [
+        "employment"
+      ],
+      "subjectCount": 1,
+      "sourceFamilies": [
+        "us-primary-corpus"
+      ],
+      "currentnessSupport": 3,
+      "urlSupport": 3,
+      "depth": "REG_DEPTH_MINIMAL"
+    }
+  },
+  "minimal": [
+    "OH",
+    "WA",
+    "CO",
+    "MD",
+    "MN",
+    "WI",
+    "GA",
+    "IN",
+    "OR",
+    "MA",
+    "AZ",
+    "RI",
+    "WV",
+    "NY",
+    "CT"
+  ],
+  "partial": [
+    "US",
+    "PA",
+    "FL",
+    "VA",
+    "DE",
+    "IL",
+    "MI",
+    "TX",
+    "NC"
+  ],
+  "good": []
+}

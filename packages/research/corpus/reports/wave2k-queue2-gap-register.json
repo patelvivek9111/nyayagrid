@@ -1,0 +1,51 @@
+{
+  "generatedAt": "2026-09-18T14:10:00.000Z",
+  "phase": "50S-WAVE-2K",
+  "queue": 2,
+  "purpose": "Authoritative remaining blockers for Queue #2 — Wave 2K PASS does not close #2.",
+  "byCategory": {
+    "INTERNALLY_SOLVABLE_NOW": [
+      {
+        "item": "Optional deepen OH/WA/CO/MD regulation subject breadth (still REG_DEPTH_MINIMAL by classifier)",
+        "jurisdictions": ["OH", "WA", "CO", "MD"],
+        "action": "Add curated consumer/licensing/admin slices from existing sos/lis adapters; fix subject metadata tagging if needed",
+        "effort": "0.5–1 day",
+        "blockingDependency": "none"
+      },
+      {
+        "item": "Category D unknown currentness on early corpus statutes/regs/rules lacking revision metadata (138)",
+        "jurisdictions": ["multi"],
+        "action": "Only promote when official revision/edition date is obtained; otherwise leave unknown",
+        "effort": "ongoing / bounded",
+        "blockingDependency": "source revision evidence"
+      }
+    ],
+    "WAITING_FOR_COURTLISTENER": [
+      "case_count_below_20 for 51 jurisdictions",
+      "no_high_or_appellate for ~31 jurisdictions",
+      "authority_count_below_or_eq_100 for 51 (case depth dominates)",
+      "Federal deepen CA11/CADC/CAFC/CA7/CA10",
+      "Wave-1 high-court/appellate deepen",
+      "CL-related currentness refresh on 125 CL cases (already non-unknown locally; deepen via CL resume)"
+    ],
+    "PUBLIC_SOURCE_ENGINEERING": [
+      "NY full NYCRR bulk beyond agency PDF/HTML slices",
+      "Deeper CT eRegulations harvest beyond curated subjects",
+      "Official case RSS normalizer (deferred)"
+    ],
+    "EXTERNAL_PROPRIETARY_LIMITATION": [
+      "CA CCR complete official machine text",
+      "NJ N.J.A.C. complete public machine text",
+      "Lexis/Westlaw NYCRR browse wrappers (disallowed)"
+    ],
+    "NO_RELIABLE_PUBLIC_SOURCE": [
+      "Historical full-text state case bulk without CL/PACER-class feeds"
+    ]
+  },
+  "closedThisWave": [
+    "45 seed-case unknowns → historical (not treatment status)",
+    "NY/CT/MA/AZ/RI/WV/IN/MN/WI/OR/GA regulation subject deepen to REG_DEPTH_GOOD",
+    "state admin-code citation normalization expansion (CMR/NYCRR/AAC/RICR/CT/etc.)",
+    "regulation retrieval + isolation PASS for all 24 reg jurisdictions"
+  ]
+}
