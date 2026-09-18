@@ -255,108 +255,49 @@ export class StateAdminCodeCitationParser implements CitationParser {
   }
 }
 
-/** State court rules: Pa.R.C.P., Fla. R. Civ. P., Va. Sup. Ct. R., Cal. Rules of Court, Tex. R. Civ. P., etc. */
+/** State court rules: Pa.R.C.P., Fla. R. Civ. P., N.C. R. Civ. P., Ariz. R. Civ. P., etc. */
 export class StateCourtRulesCitationParser implements CitationParser {
   readonly name = "state-court-rules";
   readonly type: CitationKind = "rule";
   readonly pattern =
-    /\b(?:Pa\.?\s*R\.?\s*C\.?\s*P\.?\s*([\d.]+)|Fla\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Va\.?\s*Sup\.?\s*Ct\.?\s*R\.?\s*([\d.:]+)|Cal\.?\s*Rules?\s+of\s+Court(?:\s*,?\s*rule)?\s*([\d.]+)|Tex\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\dA-Za-z.]+)|Mass\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|N\.?\s*J\.?\s*Ct\.?\s*R\.?\s*([\d.:\-]+)|Ill\.?\s*S\.?\s*Ct\.?\s*R\.?\s*([\d.]+)|Del\.?\s*Super\.?\s*Ct\.?\s*Civ\.?\s*R\.?\s*([\d.]+))\b/gi;
+    /\b(?:Pa\.?\s*R\.?\s*C\.?\s*P\.?\s*([\d.]+)|Fla\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Va\.?\s*Sup\.?\s*Ct\.?\s*R\.?\s*([\d.:]+)|Cal\.?\s*Rules?\s+of\s+Court(?:\s*,?\s*rule)?\s*([\d.]+)|Tex\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\dA-Za-z.]+)|Mass\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|N\.?\s*J\.?\s*Ct\.?\s*R\.?\s*([\d.:\-]+)|Ill\.?\s*S\.?\s*Ct\.?\s*R\.?\s*([\d.]+)|Del\.?\s*Super\.?\s*Ct\.?\s*Civ\.?\s*R\.?\s*([\d.]+)|Ohio\s+Civ\.?\s*R\.?\s*([\d.]+)|Wash\.?\s*CR\s*([\d.]+)|Md\.?\s*Rule\s*([\d.\-]+)|C\.?\s*R\.?\s*C\.?\s*P\.?\s*([\d.]+)|MCR\s*([\d.]+)|N\.?\s*C\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|N\.?\s*C\.?\s*R\.?\s*Evid\.?\s*([\d.]+)|Ariz\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Ariz\.?\s*R\.?\s*Evid\.?\s*([\d.]+)|Conn\.?\s*Practice\s+Book\s*§?\s*([\d.\-]+)|Conn\.?\s*Code\s+Evid\.?\s*§?\s*([\d.\-]+)|Wis\.?\s*Stat\.?\s*§?\s*(802\.0[68]|904\.01)|Ind\.?\s*Trial\s+R\.?\s*([\d.]+)|Minn\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Or\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)|Ga\.?\s*Unif\.?\s*Super\.?\s*Ct\.?\s*R\.?\s*([\d.]+))\b/gi;
 
   build(match: RegExpMatchArray): ParsedCitation | null {
-    if (match[1]) {
+    const specs: Array<{ idx: number; normalized: (s: string) => string; reporter: string }> = [
+      { idx: 1, normalized: (s) => `Pa.R.C.P. ${s}`, reporter: "Pa.R.C.P." },
+      { idx: 2, normalized: (s) => `Fla. R. Civ. P. ${s}`, reporter: "Fla. R. Civ. P." },
+      { idx: 3, normalized: (s) => `Va. Sup. Ct. R. ${s}`, reporter: "Va. Sup. Ct. R." },
+      { idx: 4, normalized: (s) => `Cal. Rules of Court, rule ${s}`, reporter: "Cal. Rules of Court" },
+      { idx: 5, normalized: (s) => `Tex. R. Civ. P. ${s}`, reporter: "Tex. R. Civ. P." },
+      { idx: 6, normalized: (s) => `Mass. R. Civ. P. ${s}`, reporter: "Mass. R. Civ. P." },
+      { idx: 7, normalized: (s) => `N.J. Ct. R. ${s}`, reporter: "N.J. Ct. R." },
+      { idx: 8, normalized: (s) => `Ill. S. Ct. R. ${s}`, reporter: "Ill. S. Ct. R." },
+      { idx: 9, normalized: (s) => `Del. Super. Ct. Civ. R. ${s}`, reporter: "Del. Super. Ct. Civ. R." },
+      { idx: 10, normalized: (s) => `Ohio Civ.R. ${s}`, reporter: "Ohio Civ.R." },
+      { idx: 11, normalized: (s) => `Wash. CR ${s}`, reporter: "Wash. CR" },
+      { idx: 12, normalized: (s) => `Md. Rule ${s}`, reporter: "Md. Rule" },
+      { idx: 13, normalized: (s) => `C.R.C.P. ${s}`, reporter: "C.R.C.P." },
+      { idx: 14, normalized: (s) => `MCR ${s}`, reporter: "MCR" },
+      { idx: 15, normalized: (s) => `N.C. R. Civ. P. ${s}`, reporter: "N.C. R. Civ. P." },
+      { idx: 16, normalized: (s) => `N.C. R. Evid. ${s}`, reporter: "N.C. R. Evid." },
+      { idx: 17, normalized: (s) => `Ariz. R. Civ. P. ${s}`, reporter: "Ariz. R. Civ. P." },
+      { idx: 18, normalized: (s) => `Ariz. R. Evid. ${s}`, reporter: "Ariz. R. Evid." },
+      { idx: 19, normalized: (s) => `Conn. Practice Book § ${s}`, reporter: "Conn. Practice Book" },
+      { idx: 20, normalized: (s) => `Conn. Code Evid. § ${s}`, reporter: "Conn. Code Evid." },
+      { idx: 21, normalized: (s) => `Wis. Stat. § ${s}`, reporter: "Wis. Stat." },
+      { idx: 22, normalized: (s) => `Ind. Trial R. ${s}`, reporter: "Ind. Trial R." },
+      { idx: 23, normalized: (s) => `Minn. R. Civ. P. ${s}`, reporter: "Minn. R. Civ. P." },
+      { idx: 24, normalized: (s) => `Or. R. Civ. P. ${s}`, reporter: "Or. R. Civ. P." },
+      { idx: 25, normalized: (s) => `Ga. Unif. Super. Ct. R. ${s}`, reporter: "Ga. Unif. Super. Ct. R." },
+    ];
+    for (const spec of specs) {
+      const value = match[spec.idx];
+      if (!value) continue;
       return {
         raw: match[0],
-        normalized: `Pa.R.C.P. ${match[1]}`,
-        reporter: "Pa.R.C.P.",
-        section: match[1],
-        type: "rule",
-        parser: this.name,
-        confidence: "high",
-      };
-    }
-    if (match[2]) {
-      return {
-        raw: match[0],
-        normalized: `Fla. R. Civ. P. ${match[2]}`,
-        reporter: "Fla. R. Civ. P.",
-        section: match[2],
-        type: "rule",
-        parser: this.name,
-        confidence: "high",
-      };
-    }
-    if (match[3]) {
-      return {
-        raw: match[0],
-        normalized: `Va. Sup. Ct. R. ${match[3]}`,
-        reporter: "Va. Sup. Ct. R.",
-        section: match[3],
-        type: "rule",
-        parser: this.name,
-        confidence: "high",
-      };
-    }
-    if (match[4]) {
-      return {
-        raw: match[0],
-        normalized: `Cal. Rules of Court, rule ${match[4]}`,
-        reporter: "Cal. Rules of Court",
-        section: match[4],
-        type: "rule",
-        parser: this.name,
-        confidence: "high",
-      };
-    }
-    if (match[5]) {
-      return {
-        raw: match[0],
-        normalized: `Tex. R. Civ. P. ${match[5]}`,
-        reporter: "Tex. R. Civ. P.",
-        section: match[5],
-        type: "rule",
-        parser: this.name,
-        confidence: "high",
-      };
-    }
-    if (match[6]) {
-      return {
-        raw: match[0],
-        normalized: `Mass. R. Civ. P. ${match[6]}`,
-        reporter: "Mass. R. Civ. P.",
-        section: match[6],
-        type: "rule",
-        parser: this.name,
-        confidence: "high",
-      };
-    }
-    if (match[7]) {
-      return {
-        raw: match[0],
-        normalized: `N.J. Ct. R. ${match[7]}`,
-        reporter: "N.J. Ct. R.",
-        section: match[7],
-        type: "rule",
-        parser: this.name,
-        confidence: "high",
-      };
-    }
-    if (match[8]) {
-      return {
-        raw: match[0],
-        normalized: `Ill. S. Ct. R. ${match[8]}`,
-        reporter: "Ill. S. Ct. R.",
-        section: match[8],
-        type: "rule",
-        parser: this.name,
-        confidence: "high",
-      };
-    }
-    if (match[9]) {
-      return {
-        raw: match[0],
-        normalized: `Del. Super. Ct. Civ. R. ${match[9]}`,
-        reporter: "Del. Super. Ct. Civ. R.",
-        section: match[9],
+        normalized: spec.normalized(value),
+        reporter: spec.reporter,
+        section: value,
         type: "rule",
         parser: this.name,
         confidence: "high",

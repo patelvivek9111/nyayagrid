@@ -1,0 +1,1921 @@
+{
+  "generatedAt": "2026-09-18T12:37:45.199Z",
+  "gapMatrix": {
+    "AL": {
+      "statuteCount": 8,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "partial",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 1,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 7,
+      "meetsMinimumSubjectBundle": true
+    },
+    "AK": {
+      "statuteCount": 8,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "AZ": {
+      "statuteCount": 5,
+      "ruleCount": 3,
+      "regulationCount": 0,
+      "caseCount": 1,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "absent",
+        "corporations_business": "partial",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "absent",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 0,
+        "corporations_business": 1,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 0,
+        "civil_procedure_jurisdiction": 0,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 4,
+      "meetsMinimumSubjectBundle": false
+    },
+    "AR": {
+      "statuteCount": 8,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "CA": {
+      "statuteCount": 11,
+      "ruleCount": 4,
+      "regulationCount": 0,
+      "caseCount": 2,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "partial",
+        "privacy_data": "partial",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 1,
+        "corporations_business": 1,
+        "employment": 2,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 1,
+        "privacy_data": 1,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 9,
+      "meetsMinimumSubjectBundle": true
+    },
+    "CO": {
+      "statuteCount": 5,
+      "ruleCount": 2,
+      "regulationCount": 3,
+      "caseCount": 1,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "absent",
+        "corporations_business": "partial",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "absent",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 0,
+        "corporations_business": 1,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 0,
+        "civil_procedure_jurisdiction": 0,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 4,
+      "meetsMinimumSubjectBundle": false
+    },
+    "CT": {
+      "statuteCount": 5,
+      "ruleCount": 3,
+      "regulationCount": 0,
+      "caseCount": 1,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "absent",
+        "corporations_business": "partial",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "absent",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 0,
+        "corporations_business": 1,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 0,
+        "civil_procedure_jurisdiction": 0,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 4,
+      "meetsMinimumSubjectBundle": false
+    },
+    "DE": {
+      "statuteCount": 10,
+      "ruleCount": 4,
+      "regulationCount": 4,
+      "caseCount": 2,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "covered",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 1,
+        "corporations_business": 3,
+        "employment": 2,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 0,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "DC": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "FL": {
+      "statuteCount": 10,
+      "ruleCount": 5,
+      "regulationCount": 4,
+      "caseCount": 2,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "partial",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 1,
+        "corporations_business": 1,
+        "employment": 2,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 1,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 8,
+      "meetsMinimumSubjectBundle": true
+    },
+    "GA": {
+      "statuteCount": 5,
+      "ruleCount": 3,
+      "regulationCount": 0,
+      "caseCount": 1,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "absent",
+        "corporations_business": "partial",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "absent",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 0,
+        "corporations_business": 1,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 0,
+        "civil_procedure_jurisdiction": 0,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 4,
+      "meetsMinimumSubjectBundle": false
+    },
+    "HI": {
+      "statuteCount": 8,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "partial",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 1,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 7,
+      "meetsMinimumSubjectBundle": true
+    },
+    "ID": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "IL": {
+      "statuteCount": 10,
+      "ruleCount": 4,
+      "regulationCount": 4,
+      "caseCount": 2,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 1,
+        "corporations_business": 1,
+        "employment": 3,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 7,
+      "meetsMinimumSubjectBundle": true
+    },
+    "IN": {
+      "statuteCount": 8,
+      "ruleCount": 2,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "partial",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 1,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 7,
+      "meetsMinimumSubjectBundle": true
+    },
+    "IA": {
+      "statuteCount": 8,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "KS": {
+      "statuteCount": 8,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "partial",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 1,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 7,
+      "meetsMinimumSubjectBundle": true
+    },
+    "KY": {
+      "statuteCount": 8,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "LA": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "absent",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 0,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 5,
+      "meetsMinimumSubjectBundle": false
+    },
+    "ME": {
+      "statuteCount": 8,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "MD": {
+      "statuteCount": 5,
+      "ruleCount": 2,
+      "regulationCount": 3,
+      "caseCount": 1,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "absent",
+        "corporations_business": "partial",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "absent",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 0,
+        "corporations_business": 1,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 0,
+        "civil_procedure_jurisdiction": 0,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 4,
+      "meetsMinimumSubjectBundle": false
+    },
+    "MA": {
+      "statuteCount": 9,
+      "ruleCount": 4,
+      "regulationCount": 0,
+      "caseCount": 2,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 3,
+        "contracts_commercial": 1,
+        "corporations_business": 1,
+        "employment": 2,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 0,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "MI": {
+      "statuteCount": 5,
+      "ruleCount": 2,
+      "regulationCount": 4,
+      "caseCount": 1,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "partial",
+        "consumer_protection": "absent",
+        "property_landlord_tenant": "absent",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 1,
+        "corporations_business": 1,
+        "employment": 1,
+        "consumer_protection": 0,
+        "property_landlord_tenant": 0,
+        "civil_procedure_jurisdiction": 0,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 4,
+      "meetsMinimumSubjectBundle": false
+    },
+    "MN": {
+      "statuteCount": 7,
+      "ruleCount": 2,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "MS": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "MO": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "MT": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "NE": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "NV": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "NH": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "NJ": {
+      "statuteCount": 10,
+      "ruleCount": 4,
+      "regulationCount": 0,
+      "caseCount": 2,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "partial",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 1,
+        "corporations_business": 1,
+        "employment": 3,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 0,
+        "evidence": 1,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 7,
+      "meetsMinimumSubjectBundle": true
+    },
+    "NM": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "NY": {
+      "statuteCount": 10,
+      "ruleCount": 4,
+      "regulationCount": 0,
+      "caseCount": 2,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 1,
+        "corporations_business": 1,
+        "employment": 3,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 7,
+      "meetsMinimumSubjectBundle": true
+    },
+    "NC": {
+      "statuteCount": 5,
+      "ruleCount": 3,
+      "regulationCount": 4,
+      "caseCount": 1,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "partial",
+        "consumer_protection": "absent",
+        "property_landlord_tenant": "absent",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 1,
+        "corporations_business": 1,
+        "employment": 1,
+        "consumer_protection": 0,
+        "property_landlord_tenant": 0,
+        "civil_procedure_jurisdiction": 0,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 4,
+      "meetsMinimumSubjectBundle": false
+    },
+    "ND": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "OH": {
+      "statuteCount": 5,
+      "ruleCount": 2,
+      "regulationCount": 3,
+      "caseCount": 1,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "partial",
+        "consumer_protection": "absent",
+        "property_landlord_tenant": "absent",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 1,
+        "corporations_business": 1,
+        "employment": 1,
+        "consumer_protection": 0,
+        "property_landlord_tenant": 0,
+        "civil_procedure_jurisdiction": 0,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 4,
+      "meetsMinimumSubjectBundle": false
+    },
+    "OK": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "OR": {
+      "statuteCount": 7,
+      "ruleCount": 2,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "PA": {
+      "statuteCount": 11,
+      "ruleCount": 5,
+      "regulationCount": 4,
+      "caseCount": 3,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 4,
+        "contracts_commercial": 1,
+        "corporations_business": 1,
+        "employment": 2,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 7,
+      "meetsMinimumSubjectBundle": true
+    },
+    "RI": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "SC": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "SD": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "TN": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "TX": {
+      "statuteCount": 10,
+      "ruleCount": 4,
+      "regulationCount": 4,
+      "caseCount": 2,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "covered",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 2,
+        "corporations_business": 1,
+        "employment": 2,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 7,
+      "meetsMinimumSubjectBundle": true
+    },
+    "UT": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "VT": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "VA": {
+      "statuteCount": 10,
+      "ruleCount": 5,
+      "regulationCount": 4,
+      "caseCount": 2,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 3,
+        "contracts_commercial": 1,
+        "corporations_business": 1,
+        "employment": 2,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 7,
+      "meetsMinimumSubjectBundle": true
+    },
+    "WA": {
+      "statuteCount": 5,
+      "ruleCount": 2,
+      "regulationCount": 3,
+      "caseCount": 1,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "absent",
+        "corporations_business": "partial",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "absent",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 0,
+        "corporations_business": 1,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 0,
+        "civil_procedure_jurisdiction": 0,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 4,
+      "meetsMinimumSubjectBundle": false
+    },
+    "WV": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "WI": {
+      "statuteCount": 5,
+      "ruleCount": 3,
+      "regulationCount": 0,
+      "caseCount": 1,
+      "subjectFamilies": {
+        "limitations": "covered",
+        "contracts_commercial": "absent",
+        "corporations_business": "partial",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "absent",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 2,
+        "contracts_commercial": 0,
+        "corporations_business": 1,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 0,
+        "civil_procedure_jurisdiction": 0,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 4,
+      "meetsMinimumSubjectBundle": false
+    },
+    "WY": {
+      "statuteCount": 7,
+      "ruleCount": 0,
+      "regulationCount": 0,
+      "caseCount": 0,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "partial",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 1,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 1,
+        "evidence": 0,
+        "privacy_data": 0,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 6,
+      "meetsMinimumSubjectBundle": true
+    },
+    "US": {
+      "statuteCount": 64,
+      "ruleCount": 25,
+      "regulationCount": 46,
+      "caseCount": 14,
+      "subjectFamilies": {
+        "limitations": "partial",
+        "contracts_commercial": "covered",
+        "corporations_business": "absent",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "covered",
+        "evidence": "absent",
+        "privacy_data": "partial",
+        "licensing_admin_procedure": "absent"
+      },
+      "subjectFamilyHits": {
+        "limitations": 1,
+        "contracts_commercial": 2,
+        "corporations_business": 0,
+        "employment": 4,
+        "consumer_protection": 1,
+        "property_landlord_tenant": 1,
+        "civil_procedure_jurisdiction": 11,
+        "evidence": 0,
+        "privacy_data": 1,
+        "licensing_admin_procedure": 0
+      },
+      "meaningfulSubjectCount": 7,
+      "meetsMinimumSubjectBundle": true
+    }
+  },
+  "summary": {
+    "jurisdictionsAudited": 52,
+    "meetsMinimumSubjectBundle": 41,
+    "stillThinSubjectBundle": 11,
+    "thinRemain": [
+      "AZ",
+      "CO",
+      "CT",
+      "GA",
+      "LA",
+      "MD",
+      "MI",
+      "NC",
+      "OH",
+      "WA",
+      "WI"
+    ],
+    "ruleJurisdictions": 23,
+    "ruleJurisdictionList": [
+      "AZ",
+      "CA",
+      "CO",
+      "CT",
+      "DE",
+      "FL",
+      "GA",
+      "IL",
+      "IN",
+      "MD",
+      "MA",
+      "MI",
+      "MN",
+      "NJ",
+      "NY",
+      "NC",
+      "OH",
+      "OR",
+      "PA",
+      "TX",
+      "VA",
+      "WA",
+      "WI"
+    ],
+    "coverageClassCounts": {
+      "no_corpus": 0,
+      "seed_corpus": 0,
+      "limited_corpus": 52,
+      "broader_corpus": 0
+    },
+    "broaderCount": 0
+  },
+  "wave1SubjectGaps": {
+    "CA": {
+      "meaningful": 9,
+      "absent": [
+        "licensing_admin_procedure"
+      ],
+      "families": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "partial",
+        "privacy_data": "partial",
+        "licensing_admin_procedure": "absent"
+      }
+    },
+    "DE": {
+      "meaningful": 6,
+      "absent": [
+        "civil_procedure_jurisdiction",
+        "evidence",
+        "privacy_data",
+        "licensing_admin_procedure"
+      ],
+      "families": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "covered",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      }
+    },
+    "FL": {
+      "meaningful": 8,
+      "absent": [
+        "privacy_data",
+        "licensing_admin_procedure"
+      ],
+      "families": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "partial",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      }
+    },
+    "IL": {
+      "meaningful": 7,
+      "absent": [
+        "evidence",
+        "privacy_data",
+        "licensing_admin_procedure"
+      ],
+      "families": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      }
+    },
+    "MA": {
+      "meaningful": 6,
+      "absent": [
+        "civil_procedure_jurisdiction",
+        "evidence",
+        "privacy_data",
+        "licensing_admin_procedure"
+      ],
+      "families": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      }
+    },
+    "NJ": {
+      "meaningful": 7,
+      "absent": [
+        "civil_procedure_jurisdiction",
+        "privacy_data",
+        "licensing_admin_procedure"
+      ],
+      "families": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "absent",
+        "evidence": "partial",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      }
+    },
+    "NY": {
+      "meaningful": 7,
+      "absent": [
+        "evidence",
+        "privacy_data",
+        "licensing_admin_procedure"
+      ],
+      "families": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      }
+    },
+    "PA": {
+      "meaningful": 7,
+      "absent": [
+        "evidence",
+        "privacy_data",
+        "licensing_admin_procedure"
+      ],
+      "families": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      }
+    },
+    "TX": {
+      "meaningful": 7,
+      "absent": [
+        "evidence",
+        "privacy_data",
+        "licensing_admin_procedure"
+      ],
+      "families": {
+        "limitations": "covered",
+        "contracts_commercial": "covered",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      }
+    },
+    "VA": {
+      "meaningful": 7,
+      "absent": [
+        "evidence",
+        "privacy_data",
+        "licensing_admin_procedure"
+      ],
+      "families": {
+        "limitations": "covered",
+        "contracts_commercial": "partial",
+        "corporations_business": "partial",
+        "employment": "covered",
+        "consumer_protection": "partial",
+        "property_landlord_tenant": "partial",
+        "civil_procedure_jurisdiction": "partial",
+        "evidence": "absent",
+        "privacy_data": "absent",
+        "licensing_admin_procedure": "absent"
+      }
+    }
+  }
+}

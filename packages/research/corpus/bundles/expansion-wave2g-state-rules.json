@@ -1,0 +1,611 @@
+[
+  {
+    "title": "Ga. Unif. Super. Ct. R. 6.1 — Filing of pleadings",
+    "shortTitle": "Ga. Unif. Super. Ct. R. 6.1",
+    "authorityType": "rule",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Unif. Super. Ct. R. 6.1",
+    "normalizedCitation": "Ga. Unif. Super. Ct. R. 6.1",
+    "sourceExternalId": "ga-uscr-6-1",
+    "canonicalSourceUrl": "https://www.gasupreme.us/rules/",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "USCR", "label": "Uniform Superior Court Rules" },
+      { "level": "rule", "ref": "6.1", "label": "Filing of pleadings" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Ga. Unif. Super. Ct. R. 6.1\n\nRule 6.1. Filing of pleadings.\n\nAll pleadings, motions and other papers shall be filed with the clerk of the court. The clerk shall note thereon the filing date. Papers may be filed by electronic means where authorized by law or court order.",
+    "sections": [{ "sectionRef": "6.1", "content": "Pleadings and motions are filed with the clerk, who notes the filing date." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "pleadings",
+      "sourceOwner": "Supreme Court of Georgia",
+      "ruleFamily": "Ga. Unif. Super. Ct. R.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ga. Unif. Super. Ct. R. 6.5 — Motions for summary judgment",
+    "shortTitle": "Ga. Unif. Super. Ct. R. 6.5",
+    "authorityType": "rule",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Unif. Super. Ct. R. 6.5",
+    "normalizedCitation": "Ga. Unif. Super. Ct. R. 6.5",
+    "sourceExternalId": "ga-uscr-6-5",
+    "canonicalSourceUrl": "https://www.gasupreme.us/rules/",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "USCR", "label": "Uniform Superior Court Rules" },
+      { "level": "rule", "ref": "6.5", "label": "Summary judgment" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Ga. Unif. Super. Ct. R. 6.5\n\nRule 6.5. Motions for summary judgment.\n\nUpon any motion for summary judgment there shall be annexed to the notice of motion a separate, short and concise statement of each of the material facts as to which the moving party contends there is no genuine issue to be tried. Response shall include a corresponding statement of material facts as to which it is contended there exists a genuine issue to be tried.",
+    "sections": [{ "sectionRef": "6.5", "content": "Summary judgment motions require a concise statement of undisputed material facts; responses must identify disputed facts." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Supreme Court of Georgia",
+      "ruleFamily": "Ga. Unif. Super. Ct. R.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ga. Unif. Super. Ct. R. 19.1 — Continuances",
+    "shortTitle": "Ga. Unif. Super. Ct. R. 19.1",
+    "authorityType": "rule",
+    "jurisdiction": "Georgia",
+    "authorityState": "GA",
+    "citation": "Ga. Unif. Super. Ct. R. 19.1",
+    "normalizedCitation": "Ga. Unif. Super. Ct. R. 19.1",
+    "sourceExternalId": "ga-uscr-19-1",
+    "canonicalSourceUrl": "https://www.gasupreme.us/rules/",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "USCR", "label": "Uniform Superior Court Rules" },
+      { "level": "rule", "ref": "19.1", "label": "Continuances" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Ga. Unif. Super. Ct. R. 19.1\n\nRule 19.1. Continuances.\n\nContinuances will not be granted merely by agreement of counsel. A motion for continuance shall be made in writing unless otherwise directed by the court and shall state the grounds with particularity.",
+    "sections": [{ "sectionRef": "19.1", "content": "Continuances require court approval; agreement of counsel alone is insufficient." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "continuances",
+      "sourceOwner": "Supreme Court of Georgia",
+      "ruleFamily": "Ga. Unif. Super. Ct. R.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "N.C. R. Civ. P. 12 — Defenses and objections",
+    "shortTitle": "N.C. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "N.C. R. Civ. P. 12",
+    "normalizedCitation": "N.C. R. Civ. P. 12",
+    "sourceExternalId": "nc-rcp-12",
+    "canonicalSourceUrl": "https://www.nccourts.gov/courts/supreme-court/supreme-court-rules",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "N.C. R. Civ. P.", "label": "North Carolina Rules of Civil Procedure" },
+      { "level": "rule", "ref": "12", "label": "Defenses and objections" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "N.C. R. Civ. P. 12\n\nRule 12. Defenses and objections.\n\n(b) How presented. Every defense, in law or fact, to a claim for relief in any pleading, whether a claim, counterclaim, crossclaim, or third-party claim, shall be asserted in the responsive pleading thereto if one is required, except that the following defenses may at the option of the pleader be made by motion:\n\n(1) Lack of jurisdiction over the subject matter,\n(2) Lack of jurisdiction over the person,\n(3) Improper venue or division,\n(4) Insufficiency of process,\n(5) Insufficiency of service of process,\n(6) Failure to state a claim upon which relief can be granted,\n(7) Failure to join a necessary party.",
+    "sections": [{ "sectionRef": "12", "subsectionRef": "b(6)", "content": "Failure to state a claim upon which relief can be granted may be raised by motion." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "North Carolina Courts",
+      "ruleFamily": "N.C. R. Civ. P.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "N.C. R. Civ. P. 56 — Summary judgment",
+    "shortTitle": "N.C. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "N.C. R. Civ. P. 56",
+    "normalizedCitation": "N.C. R. Civ. P. 56",
+    "sourceExternalId": "nc-rcp-56",
+    "canonicalSourceUrl": "https://www.nccourts.gov/courts/supreme-court/supreme-court-rules",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "N.C. R. Civ. P.", "label": "North Carolina Rules of Civil Procedure" },
+      { "level": "rule", "ref": "56", "label": "Summary judgment" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "N.C. R. Civ. P. 56\n\nRule 56. Summary judgment.\n\n(c) Motion and proceedings thereon. The judgment sought shall be rendered forthwith if the pleadings, depositions, answers to interrogatories, and admissions on file, together with the affidavits, if any, show that there is no genuine issue as to any material fact and that any party is entitled to a judgment as a matter of law.",
+    "sections": [{ "sectionRef": "56", "subsectionRef": "c", "content": "Summary judgment is proper when there is no genuine issue of material fact and a party is entitled to judgment as a matter of law." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "North Carolina Courts",
+      "ruleFamily": "N.C. R. Civ. P.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "N.C. R. Evid. 401 — Definition of \"relevant evidence\"",
+    "shortTitle": "N.C. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "North Carolina",
+    "authorityState": "NC",
+    "citation": "N.C. R. Evid. 401",
+    "normalizedCitation": "N.C. R. Evid. 401",
+    "sourceExternalId": "nc-evid-401",
+    "canonicalSourceUrl": "https://www.nccourts.gov/courts/supreme-court/supreme-court-rules",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "N.C. R. Evid.", "label": "North Carolina Rules of Evidence" },
+      { "level": "rule", "ref": "401", "label": "Relevant evidence" }
+    ],
+    "bundlePracticeAreas": ["evidence", "civil"],
+    "content": "N.C. R. Evid. 401\n\nRule 401. Definition of \"relevant evidence.\"\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [{ "sectionRef": "401", "content": "Relevant evidence tends to make a consequential fact more or less probable." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "North Carolina Courts",
+      "ruleFamily": "N.C. R. Evid.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ariz. R. Civ. P. 12 — Defenses and objections",
+    "shortTitle": "Ariz. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "Ariz. R. Civ. P. 12",
+    "normalizedCitation": "Ariz. R. Civ. P. 12",
+    "sourceExternalId": "az-rcp-12",
+    "canonicalSourceUrl": "https://www.azcourts.gov/rules/",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "Ariz. R. Civ. P.", "label": "Arizona Rules of Civil Procedure" },
+      { "level": "rule", "ref": "12", "label": "Defenses and objections" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Ariz. R. Civ. P. 12\n\nRule 12. Defenses and Objections: When and How Presented; Motion for Judgment on the Pleadings; Consolidating Motions; Waiving Defenses; Pretrial Hearing.\n\n(b) How to Present Defenses. Every defense to a claim for relief in any pleading must be asserted in the responsive pleading if one is required. But a party may assert the following defenses by motion:\n\n(1) lack of subject-matter jurisdiction;\n(2) lack of personal jurisdiction;\n(3) improper venue;\n(4) insufficient process;\n(5) insufficient service of process;\n(6) failure to state a claim upon which relief can be granted; and\n(7) failure to join a party under Rule 19.",
+    "sections": [{ "sectionRef": "12", "subsectionRef": "b(6)", "content": "Failure to state a claim may be raised by motion." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Arizona Judicial Branch",
+      "ruleFamily": "Ariz. R. Civ. P.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ariz. R. Civ. P. 56 — Summary judgment",
+    "shortTitle": "Ariz. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "Ariz. R. Civ. P. 56",
+    "normalizedCitation": "Ariz. R. Civ. P. 56",
+    "sourceExternalId": "az-rcp-56",
+    "canonicalSourceUrl": "https://www.azcourts.gov/rules/",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "Ariz. R. Civ. P.", "label": "Arizona Rules of Civil Procedure" },
+      { "level": "rule", "ref": "56", "label": "Summary judgment" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Ariz. R. Civ. P. 56\n\nRule 56. Summary Judgment.\n\n(a) Motion for Summary Judgment or Partial Summary Judgment. A party may move for summary judgment, identifying each claim or defense—or the part of each claim or defense—on which summary judgment is sought. The court shall grant summary judgment if the moving party shows that there is no genuine dispute as to any material fact and the moving party is entitled to judgment as a matter of law.",
+    "sections": [{ "sectionRef": "56", "subsectionRef": "a", "content": "Summary judgment is granted when there is no genuine dispute of material fact and the movant is entitled to judgment as a matter of law." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Arizona Judicial Branch",
+      "ruleFamily": "Ariz. R. Civ. P.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ariz. R. Evid. 401 — Test for Relevant Evidence",
+    "shortTitle": "Ariz. R. Evid. 401",
+    "authorityType": "rule",
+    "jurisdiction": "Arizona",
+    "authorityState": "AZ",
+    "citation": "Ariz. R. Evid. 401",
+    "normalizedCitation": "Ariz. R. Evid. 401",
+    "sourceExternalId": "az-evid-401",
+    "canonicalSourceUrl": "https://www.azcourts.gov/rules/",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "Ariz. R. Evid.", "label": "Arizona Rules of Evidence" },
+      { "level": "rule", "ref": "401", "label": "Relevant evidence" }
+    ],
+    "bundlePracticeAreas": ["evidence"],
+    "content": "Ariz. R. Evid. 401\n\nRule 401. Test for Relevant Evidence.\n\nEvidence is relevant if:\n\n(a) it has any tendency to make a fact more or less probable than it would be without the evidence; and\n\n(b) the fact is of consequence in determining the action.",
+    "sections": [{ "sectionRef": "401", "content": "Evidence is relevant if it tends to make a consequential fact more or less probable." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Arizona Judicial Branch",
+      "ruleFamily": "Ariz. R. Evid.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Conn. Practice Book § 10-39 — Motion to strike",
+    "shortTitle": "Conn. Practice Book § 10-39",
+    "authorityType": "rule",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Practice Book § 10-39",
+    "normalizedCitation": "Conn. Practice Book § 10-39",
+    "sourceExternalId": "ct-pb-10-39",
+    "canonicalSourceUrl": "https://www.jud.ct.gov/publications/PracticeBook/",
+    "hierarchyPath": [
+      { "level": "chapter", "ref": "10", "label": "Pleadings" },
+      { "level": "rule", "ref": "10-39", "label": "Motion to strike" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Conn. Practice Book § 10-39\n\nSec. 10-39. Motion to Strike; Grounds.\n\n(a) A party may contest the legal sufficiency of any allegation or prayer for relief by a motion to strike.\n\n(1) A claim that a pleading fails to state a claim upon which relief can be granted may be raised by a motion to strike.",
+    "sections": [{ "sectionRef": "10-39", "content": "Connecticut parties may challenge legal sufficiency of a pleading by motion to strike." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "motion_to_strike",
+      "sourceOwner": "Connecticut Judicial Branch",
+      "ruleFamily": "Conn. Practice Book",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Conn. Practice Book § 17-49 — Summary judgment",
+    "shortTitle": "Conn. Practice Book § 17-49",
+    "authorityType": "rule",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Practice Book § 17-49",
+    "normalizedCitation": "Conn. Practice Book § 17-49",
+    "sourceExternalId": "ct-pb-17-49",
+    "canonicalSourceUrl": "https://www.jud.ct.gov/publications/PracticeBook/",
+    "hierarchyPath": [
+      { "level": "chapter", "ref": "17", "label": "Judgments" },
+      { "level": "rule", "ref": "17-49", "label": "Summary judgment" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Conn. Practice Book § 17-49\n\nSec. 17-49. Summary Judgments; When Rendered.\n\nThe judgment sought shall be rendered forthwith if the pleadings, affidavits and any other proof submitted show that there is no genuine issue as to any material fact and that the moving party is entitled to judgment as a matter of law.",
+    "sections": [{ "sectionRef": "17-49", "content": "Summary judgment is rendered when there is no genuine issue of material fact and the movant is entitled to judgment as a matter of law." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Connecticut Judicial Branch",
+      "ruleFamily": "Conn. Practice Book",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Conn. Code Evid. § 4-1 — Relevant evidence",
+    "shortTitle": "Conn. Code Evid. § 4-1",
+    "authorityType": "rule",
+    "jurisdiction": "Connecticut",
+    "authorityState": "CT",
+    "citation": "Conn. Code Evid. § 4-1",
+    "normalizedCitation": "Conn. Code Evid. § 4-1",
+    "sourceExternalId": "ct-evid-4-1",
+    "canonicalSourceUrl": "https://www.jud.ct.gov/publications/PracticeBook/",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "Conn. Code Evid.", "label": "Connecticut Code of Evidence" },
+      { "level": "rule", "ref": "4-1", "label": "Relevant evidence" }
+    ],
+    "bundlePracticeAreas": ["evidence"],
+    "content": "Conn. Code Evid. § 4-1\n\nSec. 4-1. Relevant Evidence.\n\n\"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is material to the determination of the proceeding more probable or less probable than it would be without the evidence.",
+    "sections": [{ "sectionRef": "4-1", "content": "Relevant evidence tends to make a material fact more or less probable." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Connecticut Judicial Branch",
+      "ruleFamily": "Conn. Code Evid.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Wis. Stat. § 802.06 — Defenses and objections",
+    "shortTitle": "Wis. Stat. § 802.06",
+    "authorityType": "rule",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Stat. § 802.06",
+    "normalizedCitation": "Wis. Stat. § 802.06",
+    "sourceExternalId": "wi-stat-802-06",
+    "canonicalSourceUrl": "https://www.wicourts.gov/supreme/sc_rules.jsp",
+    "hierarchyPath": [
+      { "level": "chapter", "ref": "802", "label": "Civil Procedure — Pleadings" },
+      { "level": "rule", "ref": "802.06", "label": "Defenses and objections" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Wis. Stat. § 802.06\n\n802.06 Defenses and objection; when and how presented; by pleading or motion; motion for judgment on the pleadings.\n\n(2) How presented. Every defense, in law or fact, except the defense of improper venue, to a claim for relief in any pleading, whether a claim, counterclaim, cross claim, or 3rd-party claim, shall be asserted in the responsive pleading thereto if one is required, except that the following defenses may at the option of the pleader be made by motion:\n\n(a) Lack of capacity to sue or be sued.\n(b) Lack of jurisdiction over the subject matter.\n(c) Lack of jurisdiction over the person or property.\n(f) Failure to state a claim upon which relief can be granted.",
+    "sections": [{ "sectionRef": "802.06", "subsectionRef": "2(f)", "content": "Failure to state a claim upon which relief can be granted may be raised by motion." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Wisconsin Courts",
+      "ruleFamily": "Wis. Stat. ch. 802",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Wis. Stat. § 802.08 — Summary judgment",
+    "shortTitle": "Wis. Stat. § 802.08",
+    "authorityType": "rule",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Stat. § 802.08",
+    "normalizedCitation": "Wis. Stat. § 802.08",
+    "sourceExternalId": "wi-stat-802-08",
+    "canonicalSourceUrl": "https://www.wicourts.gov/supreme/sc_rules.jsp",
+    "hierarchyPath": [
+      { "level": "chapter", "ref": "802", "label": "Civil Procedure — Pleadings" },
+      { "level": "rule", "ref": "802.08", "label": "Summary judgment" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Wis. Stat. § 802.08\n\n802.08 Summary judgment.\n\n(2) Motion. A party may move for summary judgment on any claim, counterclaim, cross claim, or 3rd-party claim which is asserted by or against the party. The judgment sought shall be rendered if the pleadings, depositions, answers to interrogatories, and admissions on file, together with the affidavits, if any, show that there is no genuine issue as to any material fact and that the moving party is entitled to a judgment as a matter of law.",
+    "sections": [{ "sectionRef": "802.08", "content": "Summary judgment is available when there is no genuine issue of material fact and the movant is entitled to judgment as a matter of law." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Wisconsin Courts",
+      "ruleFamily": "Wis. Stat. ch. 802",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Wis. Stat. § 904.01 — Definition of \"relevant evidence\"",
+    "shortTitle": "Wis. Stat. § 904.01",
+    "authorityType": "rule",
+    "jurisdiction": "Wisconsin",
+    "authorityState": "WI",
+    "citation": "Wis. Stat. § 904.01",
+    "normalizedCitation": "Wis. Stat. § 904.01",
+    "sourceExternalId": "wi-stat-904-01",
+    "canonicalSourceUrl": "https://www.wicourts.gov/supreme/sc_rules.jsp",
+    "hierarchyPath": [
+      { "level": "chapter", "ref": "904", "label": "Evidence — Relevancy" },
+      { "level": "rule", "ref": "904.01", "label": "Relevant evidence" }
+    ],
+    "bundlePracticeAreas": ["evidence"],
+    "content": "Wis. Stat. § 904.01\n\n904.01 Definition of \"relevant evidence\". \"Relevant evidence\" means evidence having any tendency to make the existence of any fact that is of consequence to the determination of the action more probable or less probable than it would be without the evidence.",
+    "sections": [{ "sectionRef": "904.01", "content": "Relevant evidence tends to make a consequential fact more or less probable." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "evidence_relevance",
+      "sourceOwner": "Wisconsin Courts",
+      "ruleFamily": "Wis. Stat. ch. 904",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ind. Trial R. 12 — Defenses and objections",
+    "shortTitle": "Ind. Trial R. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Indiana",
+    "authorityState": "IN",
+    "citation": "Ind. Trial R. 12",
+    "normalizedCitation": "Ind. Trial R. 12",
+    "sourceExternalId": "in-tr-12",
+    "canonicalSourceUrl": "https://www.in.gov/courts/rules/",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "Ind. Trial R.", "label": "Indiana Rules of Trial Procedure" },
+      { "level": "rule", "ref": "12", "label": "Defenses and objections" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Ind. Trial R. 12\n\nRule 12. Defenses and objections—When and how presented—By pleading or motion—Motion for judgment on the pleadings.\n\n(B) How presented. Every defense, in law or fact, to a claim for relief in any pleading, whether a claim, counterclaim, cross-claim, or third-party claim, shall be asserted in the responsive pleading thereto if one is required; except that the following defenses may at the option of the pleader be made by motion:\n\n(1) Lack of jurisdiction over the subject matter,\n(2) Lack of jurisdiction over the person,\n(3) Incorrect venue under Trial Rule 75,\n(6) Failure to state a claim upon which relief can be granted.",
+    "sections": [{ "sectionRef": "12", "subsectionRef": "B(6)", "content": "Failure to state a claim upon which relief can be granted may be raised by motion." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Indiana Supreme Court",
+      "ruleFamily": "Ind. Trial R.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ind. Trial R. 56 — Summary judgment",
+    "shortTitle": "Ind. Trial R. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Indiana",
+    "authorityState": "IN",
+    "citation": "Ind. Trial R. 56",
+    "normalizedCitation": "Ind. Trial R. 56",
+    "sourceExternalId": "in-tr-56",
+    "canonicalSourceUrl": "https://www.in.gov/courts/rules/",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "Ind. Trial R.", "label": "Indiana Rules of Trial Procedure" },
+      { "level": "rule", "ref": "56", "label": "Summary judgment" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Ind. Trial R. 56\n\nRule 56. Summary judgment.\n\n(C) Motion and proceedings thereon. The judgment sought shall be rendered forthwith if the pleadings, depositions, answers to interrogatories, and admissions on file, together with the affidavits and testimony, if any, show that there is no genuine issue as to any material fact and that the moving party is entitled to a judgment as a matter of law.",
+    "sections": [{ "sectionRef": "56", "subsectionRef": "C", "content": "Summary judgment is proper when there is no genuine issue of material fact and the movant is entitled to judgment as a matter of law." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Indiana Supreme Court",
+      "ruleFamily": "Ind. Trial R.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Minn. R. Civ. P. 12 — Defenses and objections",
+    "shortTitle": "Minn. R. Civ. P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Minnesota",
+    "authorityState": "MN",
+    "citation": "Minn. R. Civ. P. 12",
+    "normalizedCitation": "Minn. R. Civ. P. 12",
+    "sourceExternalId": "mn-rcp-12",
+    "canonicalSourceUrl": "https://www.mncourts.gov/mncourtsgov/media/Appellate/Supreme%20Court/Court-Rules/Civil-Procedure.pdf",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "Minn. R. Civ. P.", "label": "Minnesota Rules of Civil Procedure" },
+      { "level": "rule", "ref": "12", "label": "Defenses and objections" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Minn. R. Civ. P. 12\n\nRule 12. Defenses and Objections; When and How Presented; By Pleading or Motion; Motion for Judgment on Pleadings.\n\n12.02 How Presented. Every defense, in law or fact, to a claim for relief in any pleading, whether a claim, counterclaim, cross-claim, or third-party claim, shall be asserted in the responsive pleading thereto if one is required, except that the following defenses may at the option of the pleader be made by motion:\n\n(a) lack of jurisdiction over the subject matter;\n(b) lack of jurisdiction over the person;\n(e) failure to state a claim upon which relief can be granted.",
+    "sections": [{ "sectionRef": "12.02", "subsectionRef": "e", "content": "Failure to state a claim upon which relief can be granted may be raised by motion." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Minnesota Judicial Branch",
+      "ruleFamily": "Minn. R. Civ. P.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Minn. R. Civ. P. 56 — Summary judgment",
+    "shortTitle": "Minn. R. Civ. P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Minnesota",
+    "authorityState": "MN",
+    "citation": "Minn. R. Civ. P. 56",
+    "normalizedCitation": "Minn. R. Civ. P. 56",
+    "sourceExternalId": "mn-rcp-56",
+    "canonicalSourceUrl": "https://www.mncourts.gov/mncourtsgov/media/Appellate/Supreme%20Court/Court-Rules/Civil-Procedure.pdf",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "Minn. R. Civ. P.", "label": "Minnesota Rules of Civil Procedure" },
+      { "level": "rule", "ref": "56", "label": "Summary judgment" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Minn. R. Civ. P. 56\n\nRule 56. Summary Judgment.\n\n56.01 Motion for Summary Judgment or Partial Summary Judgment. A party may move for summary judgment, identifying each claim or defense—or the part of each claim or defense—on which summary judgment is sought. The court shall grant summary judgment if the movant shows that there is no genuine issue as to any material fact and the movant is entitled to judgment as a matter of law.",
+    "sections": [{ "sectionRef": "56.01", "content": "Summary judgment is granted when there is no genuine issue of material fact and the movant is entitled to judgment as a matter of law." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Minnesota Judicial Branch",
+      "ruleFamily": "Minn. R. Civ. P.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Or. R. Civ. P. 21 — Defenses and objections",
+    "shortTitle": "Or. R. Civ. P. 21",
+    "authorityType": "rule",
+    "jurisdiction": "Oregon",
+    "authorityState": "OR",
+    "citation": "Or. R. Civ. P. 21",
+    "normalizedCitation": "Or. R. Civ. P. 21",
+    "sourceExternalId": "or-orcp-21",
+    "canonicalSourceUrl": "https://www.courts.oregon.gov/rules/",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "ORCP", "label": "Oregon Rules of Civil Procedure" },
+      { "level": "rule", "ref": "21", "label": "Defenses and objections" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Or. R. Civ. P. 21\n\nRULE 21\n\nDEFENSES AND OBJECTIONS; HOW PRESENTED; BY PLEADING OR MOTION; MOTION FOR JUDGMENT ON THE PLEADINGS.\n\nA. How presented. Every defense, in law or fact, to a claim for relief in any pleading, whether a claim, counterclaim, cross-claim, or third party claim, shall be asserted in the responsive pleading thereto, except that the following defenses may at the option of the pleader be made by motion to dismiss:\n\nA(1) Lack of jurisdiction over the subject matter;\nA(2) Lack of jurisdiction over the person;\nA(8) Failure to state ultimate facts sufficient to constitute a claim.",
+    "sections": [{ "sectionRef": "21", "subsectionRef": "A(8)", "content": "Failure to state ultimate facts sufficient to constitute a claim may be raised by motion to dismiss." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Oregon Judicial Department",
+      "ruleFamily": "Or. R. Civ. P.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Or. R. Civ. P. 47 — Summary judgment",
+    "shortTitle": "Or. R. Civ. P. 47",
+    "authorityType": "rule",
+    "jurisdiction": "Oregon",
+    "authorityState": "OR",
+    "citation": "Or. R. Civ. P. 47",
+    "normalizedCitation": "Or. R. Civ. P. 47",
+    "sourceExternalId": "or-orcp-47",
+    "canonicalSourceUrl": "https://www.courts.oregon.gov/rules/",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "ORCP", "label": "Oregon Rules of Civil Procedure" },
+      { "level": "rule", "ref": "47", "label": "Summary judgment" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Or. R. Civ. P. 47\n\nRULE 47\n\nSUMMARY JUDGMENT.\n\nC. Motion and proceedings thereon. The court shall grant the motion if the pleadings, depositions, affidavits, declarations and admissions on file show that there is no genuine issue as to any material fact and that the moving party is entitled to prevail as a matter of law.",
+    "sections": [{ "sectionRef": "47", "subsectionRef": "C", "content": "Summary judgment is granted when there is no genuine issue of material fact and the moving party is entitled to prevail as a matter of law." }],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T16:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Oregon Judicial Department",
+      "ruleFamily": "Or. R. Civ. P.",
+      "wave": "2G"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  }
+]

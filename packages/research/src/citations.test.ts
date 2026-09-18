@@ -130,6 +130,19 @@ describe("parseCitation", () => {
       normalized: "N.J. Ct. R. 4:6-2",
       type: "rule",
     });
+    expect(parseCitation("N.C. R. Civ. P. 56")).toMatchObject({
+      normalized: "N.C. R. Civ. P. 56",
+      type: "rule",
+      confidence: "high",
+    });
+    expect(parseCitation("Ariz. R. Civ. P. 12")).toMatchObject({
+      normalized: "Ariz. R. Civ. P. 12",
+      type: "rule",
+    });
+    expect(parseCitation("Ohio Civ.R. 56")).toMatchObject({
+      normalized: "Ohio Civ.R. 56",
+      type: "rule",
+    });
   });
 });
 

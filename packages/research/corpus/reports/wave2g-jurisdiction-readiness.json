@@ -1,0 +1,4834 @@
+{
+  "generatedAt": "2026-09-18T12:37:45.199Z",
+  "broaderCriteria": {
+    "minAuthorities": 100,
+    "minStatutes": 15,
+    "minCases": 20,
+    "minRegsOrRules": 1,
+    "requireHighCourtOrAppellate": true,
+    "minCanonicalUrlPercent": 80,
+    "minCurrentnessKnownPercent": 40,
+    "minStatuteSubjectFamilies": 6,
+    "note": "All criteria are critical; no weighted override."
+  },
+  "readiness": {
+    "AL": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 7,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "AK": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "AZ": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 9,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 5,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 1,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=3",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 4,
+          "satisfied": false,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate",
+        "statute_subject_breadth"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "statute_subject_breadth",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "AR": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "CA": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 17,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 11,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 2,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=4",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 9,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": true,
+      "regulationBlocked": true
+    },
+    "CO": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 11,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 5,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 1,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=3,rules=2",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 4,
+          "satisfied": false,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate",
+        "statute_subject_breadth"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "statute_subject_breadth",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "CT": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 9,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 5,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 1,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=3",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 4,
+          "satisfied": false,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate",
+        "statute_subject_breadth"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "statute_subject_breadth",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": true
+    },
+    "DE": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 20,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 10,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 2,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=4,rules=4",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": true,
+      "regulationBlocked": false
+    },
+    "DC": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "FL": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 21,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 10,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 2,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=4,rules=5",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 8,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": true,
+      "regulationBlocked": false
+    },
+    "GA": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 9,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 5,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 1,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=3",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 4,
+          "satisfied": false,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate",
+        "statute_subject_breadth"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "statute_subject_breadth",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "HI": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 7,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "ID": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "IL": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 20,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 10,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 2,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=4,rules=4",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 7,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": true,
+      "regulationBlocked": false
+    },
+    "IN": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 10,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=2",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 7,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "IA": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "KS": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 7,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "KY": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "LA": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 5,
+          "satisfied": false,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate",
+        "statute_subject_breadth"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        },
+        {
+          "requirement": "statute_subject_breadth",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "ME": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 8,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "MD": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 11,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 5,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 1,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=3,rules=2",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 4,
+          "satisfied": false,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate",
+        "statute_subject_breadth"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "statute_subject_breadth",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "MA": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 15,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 9,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 2,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=4",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": true,
+      "regulationBlocked": false
+    },
+    "MI": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 12,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 5,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 1,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=4,rules=2",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 4,
+          "satisfied": false,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate",
+        "statute_subject_breadth"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "statute_subject_breadth",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "MN": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 9,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=2",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "MS": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "MO": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "MT": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "NE": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "NV": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "NH": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "NJ": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 16,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 10,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 2,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=4",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 7,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": true,
+      "regulationBlocked": true
+    },
+    "NM": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "NY": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 16,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 10,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 2,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=4",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 7,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": true,
+      "regulationBlocked": true
+    },
+    "NC": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 13,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 5,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 1,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=4,rules=3",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 4,
+          "satisfied": false,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate",
+        "statute_subject_breadth"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "statute_subject_breadth",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "ND": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "OH": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 11,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 5,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 1,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=3,rules=2",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 4,
+          "satisfied": false,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate",
+        "statute_subject_breadth"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "statute_subject_breadth",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "OK": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "OR": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 9,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=2",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "PA": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 23,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 11,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 3,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=4,rules=5",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 7,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": true,
+      "regulationBlocked": false
+    },
+    "RI": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "D_proprietary_public_source_limitation"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": true
+    },
+    "SC": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "SD": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "TN": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "TX": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 20,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 10,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 2,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=4,rules=4",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 7,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": true,
+      "regulationBlocked": false
+    },
+    "UT": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "VT": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "VA": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 21,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 10,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 2,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=4,rules=5",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 7,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": true,
+      "regulationBlocked": false
+    },
+    "WA": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 11,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 5,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 1,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=3,rules=2",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 4,
+          "satisfied": false,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate",
+        "statute_subject_breadth"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "statute_subject_breadth",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "WV": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "D_proprietary_public_source_limitation"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": true
+    },
+    "WI": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 9,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 5,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 1,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=3",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 4,
+          "satisfied": false,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "high_court_or_appellate",
+        "statute_subject_breadth"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "statute_subject_breadth",
+          "class": "A_internally_solvable_now"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "WY": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 7,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=0,rules=0",
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 6,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "authority_count",
+        "statute_count",
+        "case_count",
+        "reg_or_rule",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "authority_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [
+        {
+          "requirement": "statute_count",
+          "class": "A_internally_solvable_now"
+        },
+        {
+          "requirement": "reg_or_rule",
+          "class": "C_official_source_difficult_but_solvable"
+        }
+      ],
+      "wave1": false,
+      "regulationBlocked": false
+    },
+    "US": {
+      "coverageClass": "limited_corpus",
+      "requirements": [
+        {
+          "key": "authority_count",
+          "required": ">100",
+          "actual": 149,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_count",
+          "required": ">=15",
+          "actual": 64,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "case_count",
+          "required": ">=20",
+          "actual": 14,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "reg_or_rule",
+          "required": ">=1 reg or rule",
+          "actual": "regs=46,rules=25",
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "high_court_or_appellate",
+          "required": ">=1",
+          "actual": 0,
+          "satisfied": false,
+          "critical": true
+        },
+        {
+          "key": "canonical_url_pct",
+          "required": ">=80%",
+          "actual": 90,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "currentness_pct",
+          "required": ">=40%",
+          "actual": 50,
+          "satisfied": true,
+          "critical": true
+        },
+        {
+          "key": "statute_subject_breadth",
+          "required": ">=6",
+          "actual": 7,
+          "satisfied": true,
+          "critical": true
+        }
+      ],
+      "missing": [
+        "case_count",
+        "high_court_or_appellate"
+      ],
+      "externallyBlocked": [
+        {
+          "requirement": "case_count",
+          "class": "B_requires_courtlistener"
+        },
+        {
+          "requirement": "high_court_or_appellate",
+          "class": "B_requires_courtlistener"
+        }
+      ],
+      "internallyActionable": [],
+      "wave1": false,
+      "regulationBlocked": false
+    }
+  },
+  "coverageClassCounts": {
+    "no_corpus": 0,
+    "seed_corpus": 0,
+    "limited_corpus": 52,
+    "broader_corpus": 0
+  }
+}

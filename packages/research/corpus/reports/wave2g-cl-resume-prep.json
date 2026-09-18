@@ -1,0 +1,42 @@
+{
+  "generatedAt": "2026-09-18T12:37:45.199Z",
+  "planFile": "scripts/run-staging-cl-wave2b.cjs",
+  "federalCourtsConfigured": true,
+  "wave1CourtsConfigured": true,
+  "federalCourts": [
+    "ca11",
+    "cadc",
+    "cafc",
+    "ca7",
+    "ca10"
+  ],
+  "wave1Courts": [
+    "cal",
+    "calctapp",
+    "del",
+    "fla",
+    "fladistctapp",
+    "ill",
+    "illappct",
+    "mass",
+    "massappct",
+    "nj",
+    "njsuperct",
+    "ny",
+    "nyappdiv",
+    "pa",
+    "pasuperct",
+    "pacommwlth",
+    "tex",
+    "texcrimapp",
+    "texapp",
+    "va",
+    "vacapp"
+  ],
+  "networkCallsThisWave": 0,
+  "readyToResumeWhenQuotaAvailable": true,
+  "notes": [
+    "No CourtListener HTTP performed in Wave 2G.",
+    "Resume via: node scripts/run-staging-cl-wave2b.cjs <sha> federal|wave1"
+  ]
+}

@@ -18,6 +18,8 @@ export function classifyJurisdictionCoverage(params: {
   appellateCaseCount?: number;
   withCanonicalUrlPercent?: number;
   currentnessKnownPercent?: number;
+  /** Distinct statute subject families with ≥1 authority (Wave 2G hard gate). */
+  statuteSubjectFamilyCount?: number;
 }): CorpusCoverageClass {
   const {
     authorityCount,
@@ -29,6 +31,7 @@ export function classifyJurisdictionCoverage(params: {
     appellateCaseCount = 0,
     withCanonicalUrlPercent = 0,
     currentnessKnownPercent = 0,
+    statuteSubjectFamilyCount = 0,
   } = params;
   if (authorityCount === 0) return "no_corpus";
 
@@ -44,15 +47,17 @@ export function classifyJurisdictionCoverage(params: {
     return "seed_corpus";
   }
 
-  // Broader requires material multi-type depth plus appellate/high-court signal and provenance.
-  // Never claim broader for shallow curated batches alone.
+  // Broader requires material multi-type depth plus appellate/high-court signal,
+  // provenance, and statute subject breadth. Never claim broader for shallow batches.
+  // Subject breadth is required when known; callers that omit it pass 0 and cannot meet broader.
   const multiType =
     statuteCount >= 15 &&
     caseCount >= 20 &&
     (regulationCount > 0 || ruleCount > 0) &&
     (highCourtCaseCount > 0 || appellateCaseCount > 0) &&
     withCanonicalUrlPercent >= 80 &&
-    currentnessKnownPercent >= 40;
+    currentnessKnownPercent >= 40 &&
+    statuteSubjectFamilyCount >= 6;
   if (authorityCount > 100 && multiType) return "broader_corpus";
 
   // Limited: meaningful statute depth and/or multi-type presence beyond token seed.
