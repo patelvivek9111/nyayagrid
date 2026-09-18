@@ -620,12 +620,12 @@ export function citationLookupAliases(normalizedOrRaw: string): string[] {
   // Fed. R. Civ. P. / Evid. / App. P. spacing variants
   const fr = base.match(/^Fed\.?\s*R\.?\s*(Civ\.?\s*P\.?|Evid\.?|App\.?\s*P\.?|Crim\.?\s*P\.?)\s+(\d+[A-Za-z]?)$/i);
   if (fr) {
-    const kind = fr[1].replace(/\s+/g, " ").trim().toLowerCase();
+    const kind = (fr[1] ?? "").replace(/\s+/g, " ").trim().toLowerCase();
     let reporter = "Fed. R. Civ. P.";
     if (/^evid/i.test(kind)) reporter = "Fed. R. Evid.";
     else if (/^app/i.test(kind)) reporter = "Fed. R. App. P.";
     else if (/^crim/i.test(kind)) reporter = "Fed. R. Crim. P.";
-    aliases.add(`${reporter} ${fr[2]}`);
+    aliases.add(`${reporter} ${fr[2] ?? ""}`);
   }
 
   return [...aliases].filter(Boolean);

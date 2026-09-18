@@ -27,7 +27,6 @@ function esbuild(entry, outfile) {
     "--platform=node",
     "--format=cjs",
     `--outfile=${outfile}`,
-    "--external:postgres",
   ]);
   if (r.status !== 0) {
     console.error(r.stderr || r.stdout);
