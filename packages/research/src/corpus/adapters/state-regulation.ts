@@ -347,13 +347,13 @@ export function createStateRegulationAdapter(
   return adapter;
 }
 
-export function parsePrefetchedStateRegulation(params: {
+export async function parsePrefetchedStateRegulation(params: {
   config: StateRegulationSourceConfig;
   sourceExternalId: string;
   html: string;
   canonicalUrl: string;
   titleHint?: string;
-}): AdapterParseResult {
+}): Promise<AdapterParseResult> {
   const adapter = createStateRegulationAdapter(params.config);
   return adapter.parse([
     {
