@@ -1,0 +1,56 @@
+{
+  "wave": "2E",
+  "queue": 2,
+  "result": "PARTIAL",
+  "generatedAt": "2026-09-18T03:05:00.000Z",
+  "gitSha": "edf5ce4b5407d66d14ba86e8332b85d264218b5e",
+  "courtListenerCalls": 0,
+  "before": {
+    "total": 572,
+    "curated": 447,
+    "cl": 125,
+    "statutes": 295,
+    "regulations": 66,
+    "rules": 40,
+    "currentAsOf": 261,
+    "lastChecked": 386,
+    "citationResolved": 76
+  },
+  "after": {
+    "total": 654,
+    "curated": 529,
+    "cl": 125,
+    "statutes": 325,
+    "regulations": 90,
+    "rules": 68,
+    "cases": 170,
+    "currentAsOf": 343,
+    "lastChecked": 468,
+    "normalized": 356,
+    "citationExtracted": 2533,
+    "citationResolved": 76,
+    "chunks": 2601,
+    "embeddings": 2601
+  },
+  "imported": {
+    "newAuthorities": 82,
+    "regs": 24,
+    "rules": 28,
+    "statutes": 30,
+    "errors": 0
+  },
+  "refreshDryRun": {
+    "attempted": 9,
+    "fetched": 7,
+    "unavailable": 2,
+    "rateLimited": 0
+  },
+  "featureAgents": "0",
+  "notes": [
+    "No CourtListener calls",
+    "CA/NJ/NY admin codes remain blocked_by_proprietary_browse",
+    "TX TAC marked source_unstable in matrix but curated TAC sections ingested from official SOS paths",
+    "broader_corpus not claimed",
+    "Queue #2 not complete"
+  ]
+}
