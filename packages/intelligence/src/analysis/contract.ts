@@ -23,6 +23,7 @@ import {
   type ProfessionalChunk,
 } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
+import { checkpointCreatedLegalWork, snapshotIfNeeded } from "../recovery";
 import { loadAuthorizedChunks } from "../provenance";
 import { buildContractAnalysisIdempotencyKey } from "../draft/helpers";
 import {
@@ -288,6 +289,16 @@ export async function analyzeContract(params: {
       .where(eq(documentAnalysisItems.analysisId, analysis.id));
     const oldItemIds = oldItems.map((i) => i.id);
     if (oldItemIds.length > 0) {
+      for (const objectId of oldItemIds) {
+        await snapshotIfNeeded(params.db, {
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          actorUserId: params.userId,
+          objectType: "analysis_item",
+          objectId,
+          source: "ai",
+        });
+      }
       await params.db
         .delete(documentAnalysisSources)
         .where(inArray(documentAnalysisSources.analysisItemId, oldItemIds));
@@ -349,6 +360,19 @@ export async function analyzeContract(params: {
       jsonParseFailed,
       duplicateSuppressed: collapsed.duplicateSuppressed,
     },
+  });
+
+  await checkpointCreatedLegalWork({
+    db: params.db,
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    reason: `AI contract analysis ${analysis.id}`,
+    source: "ai",
+    objects: createdItems.map((item) => ({
+      objectType: "analysis_item" as const,
+      objectId: item.id,
+    })),
   });
 
   const full = await getContractAnalysis({

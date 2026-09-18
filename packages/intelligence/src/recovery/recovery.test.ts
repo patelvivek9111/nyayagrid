@@ -134,6 +134,37 @@ describe("legal-work recovery", () => {
     ).rejects.toBeInstanceOf(LegalWorkConflictError);
   });
 
+  it("6b. restore-as-new-version conflicts when expectedCurrentVersionId is stale", async () => {
+    const { engine: e } = engine();
+    const v1 = await seedDraft(e, "one");
+    const v2 = await seedDraft(e, "two");
+    await expect(
+      e.restoreVersion({
+        organizationId: org,
+        matterId: matter,
+        actorUserId: userA,
+        objectType: "draft",
+        objectId: draftId,
+        targetVersionId: v1.version.id,
+        expectedCurrentVersionId: v1.version.id,
+        mode: "as_new_version",
+        role: "editor",
+      }),
+    ).rejects.toBeInstanceOf(LegalWorkConflictError);
+    const intentional = await e.restoreVersion({
+      organizationId: org,
+      matterId: matter,
+      actorUserId: userA,
+      objectType: "draft",
+      objectId: draftId,
+      targetVersionId: v1.version.id,
+      mode: "as_new_version",
+      role: "editor",
+    });
+    expect(intentional.version?.versionNumber).toBe(3);
+    expect(intentional.version?.priorVersionId).toBe(v2.version.id);
+  });
+
   it("8. original evidence cannot be restored", async () => {
     const { engine: e } = engine();
     expect(isProtectedObjectType("document")).toBe(true);

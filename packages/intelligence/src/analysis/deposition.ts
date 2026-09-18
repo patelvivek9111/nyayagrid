@@ -29,6 +29,7 @@ import {
   type ProfessionalChunk,
 } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
+import { checkpointCreatedLegalWork, snapshotIfNeeded } from "../recovery";
 import { loadAuthorizedChunks, resolveValidatedSources } from "../provenance";
 import {
   linkContradictionToTimelineEvents,
@@ -166,6 +167,20 @@ export async function analyzeDeposition(params: {
   const now = new Date();
   let run = existingRun;
   if (run && params.force) {
+    const priorFindings = await params.db
+      .select({ id: analysisFindings.id })
+      .from(analysisFindings)
+      .where(eq(analysisFindings.analysisRunId, run.id));
+    for (const finding of priorFindings) {
+      await snapshotIfNeeded(params.db, {
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        actorUserId: params.userId,
+        objectType: "analysis",
+        objectId: finding.id,
+        source: "ai",
+      });
+    }
     await params.db.delete(analysisFindings).where(eq(analysisFindings.analysisRunId, run.id));
     const [updated] = await params.db
       .update(analysisRuns)
@@ -273,6 +288,19 @@ export async function analyzeDeposition(params: {
       relatedChunkCount: relatedChunks.length,
       provider: generation.provider,
     },
+  });
+
+  await checkpointCreatedLegalWork({
+    db: params.db,
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    reason: `AI deposition analysis ${run.id}`,
+    source: "ai",
+    objects: createdFindings.map((finding) => ({
+      objectType: "analysis" as const,
+      objectId: finding.id,
+    })),
   });
 
   return {
@@ -397,6 +425,20 @@ export async function detectContradictionCandidates(params: {
   const now = new Date();
   let run = existingRun;
   if (run && force) {
+    const priorFindings = await params.db
+      .select({ id: analysisFindings.id })
+      .from(analysisFindings)
+      .where(eq(analysisFindings.analysisRunId, run.id));
+    for (const finding of priorFindings) {
+      await snapshotIfNeeded(params.db, {
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        actorUserId: params.userId,
+        objectType: "analysis",
+        objectId: finding.id,
+        source: "ai",
+      });
+    }
     await params.db.delete(analysisFindings).where(eq(analysisFindings.analysisRunId, run.id));
     const [updated] = await params.db
       .update(analysisRuns)
@@ -518,6 +560,19 @@ export async function detectContradictionCandidates(params: {
       rejectedIncomplete,
       provider: generation.provider,
     },
+  });
+
+  await checkpointCreatedLegalWork({
+    db: params.db,
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    reason: `AI contradiction analysis ${run.id}`,
+    source: "ai",
+    objects: createdFindings.map((finding) => ({
+      objectType: "analysis" as const,
+      objectId: finding.id,
+    })),
   });
 
   return {

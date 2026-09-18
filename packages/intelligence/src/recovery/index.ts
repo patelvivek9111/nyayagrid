@@ -139,3 +139,38 @@ export async function snapshotIfNeeded(
   });
   return store.getHead(params).then((h) => h ?? recorded);
 }
+
+/**
+ * After AI/system creates recoverable objects, record create versions and a bulk
+ * checkpoint so the batch can be restored without inventing a prior state later.
+ */
+export async function checkpointCreatedLegalWork(params: {
+  db: Database;
+  organizationId: string;
+  matterId: string;
+  actorUserId: string;
+  reason: string;
+  objects: Array<{ objectType: LegalWorkObjectType; objectId: string }>;
+  source?: RecordMutationInput["source"];
+}) {
+  if (params.objects.length === 0) return null;
+  for (const object of params.objects) {
+    await snapshotIfNeeded(params.db, {
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      actorUserId: params.actorUserId,
+      objectType: object.objectType,
+      objectId: object.objectId,
+      source: params.source ?? "ai",
+    });
+  }
+  const engine = createLegalWorkEngine(params.db);
+  return engine.createCheckpoint({
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.actorUserId,
+    kind: "bulk",
+    reason: params.reason,
+    objects: params.objects,
+  });
+}

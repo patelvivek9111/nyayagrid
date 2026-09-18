@@ -52,7 +52,9 @@
     "beta:check": "tsx scripts/beta-check.ts",
     "beta:stuck-documents": "tsx scripts/stuck-documents.ts",
     "beta:smoke": "tsx scripts/beta-smoke.ts",
-    "beta:canary": "tsx scripts/beta-smoke.ts --canary"
+    "beta:canary": "tsx scripts/beta-smoke.ts --canary",
+    "staging:auth:setup": "playwright test -c playwright.staging.config.ts --project=setup",
+    "staging:q9:acceptance": "tsx scripts/q9-staging-recovery-acceptance.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",

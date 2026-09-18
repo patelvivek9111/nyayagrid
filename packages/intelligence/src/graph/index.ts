@@ -16,7 +16,7 @@ import {
   type AIProvider,
 } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
-import { trackLiveChange } from "../recovery";
+import { checkpointCreatedLegalWork, trackLiveChange } from "../recovery";
 import { loadAuthorizedChunks, resolveValidatedSources } from "../provenance";
 import { upsertGraphEdge } from "./materialize";
 import { attorneyBadgeKind } from "../review-status";
@@ -120,6 +120,7 @@ export async function extractGraphRelationshipCandidates(params: {
   let proposed = 0;
   let merged = 0;
   let rejected = 0;
+  const proposedEdgeIds: string[] = [];
 
   for (const rel of parsed.relationships) {
     const from = nodeByCanonical.get(`${rel.fromCanonicalType}:${rel.fromCanonicalId}`);
@@ -158,7 +159,10 @@ export async function extractGraphRelationshipCandidates(params: {
       sources,
     });
     if (result.merged) merged += 1;
-    else proposed += 1;
+    else {
+      proposed += 1;
+      if (result.edge?.id) proposedEdgeIds.push(result.edge.id);
+    }
   }
 
   await writeAuditEvent(params.db, {
@@ -170,6 +174,21 @@ export async function extractGraphRelationshipCandidates(params: {
     targetId: params.matterId,
     metadata: { proposed, merged, rejected, provider: generation.provider },
   });
+
+  if (params.userId && proposedEdgeIds.length > 0) {
+    await checkpointCreatedLegalWork({
+      db: params.db,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      actorUserId: params.userId,
+      reason: "AI graph relationship extraction",
+      source: "ai",
+      objects: proposedEdgeIds.map((objectId) => ({
+        objectType: "graph_edge" as const,
+        objectId,
+      })),
+    });
+  }
 
   return { proposed, merged, rejected, provider: generation.provider, model: generation.model };
 }

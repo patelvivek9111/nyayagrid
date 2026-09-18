@@ -25,6 +25,7 @@ import {
   type ExtractionChunk,
 } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
+import { checkpointCreatedLegalWork } from "./recovery";
 import { buildTimelineDedupeKey, findDuplicateTimelineEvent } from "./dedupe";
 import {
   loadAuthorizedChunks,
@@ -569,6 +570,41 @@ export async function extractMatterIntelligenceForDocument(params: {
       targetId: params.documentVersionId,
       metadata: { runId: run.id, ...stats },
     });
+
+    if (params.userId) {
+      const [events, facts, entities, deadlines] = await Promise.all([
+        params.db
+          .select({ id: timelineEvents.id })
+          .from(timelineEvents)
+          .where(eq(timelineEvents.extractionRunId, run.id)),
+        params.db
+          .select({ id: matterFacts.id })
+          .from(matterFacts)
+          .where(eq(matterFacts.extractionRunId, run.id)),
+        params.db
+          .select({ id: matterEntities.id })
+          .from(matterEntities)
+          .where(eq(matterEntities.extractionRunId, run.id)),
+        params.db
+          .select({ id: deadlineCandidates.id })
+          .from(deadlineCandidates)
+          .where(eq(deadlineCandidates.extractionRunId, run.id)),
+      ]);
+      await checkpointCreatedLegalWork({
+        db: params.db,
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        actorUserId: params.userId,
+        reason: `AI extract run ${run.id}`,
+        source: "ai",
+        objects: [
+          ...events.map((r) => ({ objectType: "timeline_event" as const, objectId: r.id })),
+          ...facts.map((r) => ({ objectType: "fact" as const, objectId: r.id })),
+          ...entities.map((r) => ({ objectType: "entity" as const, objectId: r.id })),
+          ...deadlines.map((r) => ({ objectType: "deadline" as const, objectId: r.id })),
+        ],
+      });
+    }
 
     return { skipped: false as const, run: completed!, stats };
   } catch (error) {

@@ -294,7 +294,10 @@ export class LegalWorkEngine {
       head,
       expectedVersionId: input.expectedCurrentVersionId,
     });
-    if (input.mode === "undo" && optimistic) {
+    // When the client supplies expectedCurrentVersionId and the head moved,
+    // fail closed for both undo and restore-as-new-version. Callers that
+    // intentionally accept newer work omit expectedCurrentVersionId.
+    if (optimistic) {
       throw new LegalWorkConflictError(optimistic.message, {
         ...optimistic,
         options: ["view_diff", "restore_as_new_version", "cancel"],
