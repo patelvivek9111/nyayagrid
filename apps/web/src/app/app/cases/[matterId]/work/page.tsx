@@ -11,6 +11,7 @@ import {
   SuggestedBadge,
   VerifiedBadge,
   WorkRunCard,
+  SessionRestoreControl,
 } from "@/components/ux";
 
 type AgentRun = {
@@ -107,6 +108,8 @@ export default function CaseWorkPage() {
 
   return (
     <div className="space-y-6">
+      {error ? <ErrorState message={error} /> : null}
+      <SessionRestoreControl matterId={matterId} />
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h2 className="font-display text-xl text-ink">Work</h2>

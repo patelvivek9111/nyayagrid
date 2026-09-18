@@ -487,6 +487,7 @@ export const generateDraftSchema = z.object({
 export const saveDraftVersionSchema = z.object({
   content: z.string().min(1).max(200000),
   changeSummary: z.string().max(2000).optional(),
+  expectedVersionNumber: z.number().int().positive().optional(),
 });
 
 export const transformDraftSchema = z.object({
@@ -497,6 +498,10 @@ export const transformDraftSchema = z.object({
 
 export const restoreDraftVersionSchema = z.object({
   versionId: z.string().uuid(),
+  expectedVersionId: z.string().uuid().optional(),
+  restoreAsNewVersion: z.boolean().optional(),
+  reason: z.string().trim().max(2000).optional(),
+  idempotencyKey: z.string().trim().min(8).max(120).optional(),
 });
 
 export const updateDraftStatusSchema = z.object({
@@ -938,6 +943,121 @@ export const assignMatterMemberSchema = z.object({
 
 export const recordTrainingConsentSchema = z.object({
   statement: z.string().trim().min(20).max(4000),
+});
+
+export const legalWorkObjectTypeSchema = z.enum([
+  "draft",
+  "note",
+  "timeline_event",
+  "evidence_review",
+  "evidence_tag",
+  "memory",
+  "graph_node",
+  "graph_edge",
+  "review_status",
+  "fact",
+  "entity",
+  "deadline",
+  "summary",
+  "analysis",
+  "analysis_item",
+  "redline",
+  "task",
+  "document",
+  "document_version",
+  "audit_event",
+]);
+
+export const legalWorkHistoryQuerySchema = z.object({
+  objectType: legalWorkObjectTypeSchema,
+  objectId: z.string().uuid(),
+});
+
+export const legalWorkCompareSchema = z.object({
+  objectType: legalWorkObjectTypeSchema,
+  objectId: z.string().uuid(),
+  fromVersionId: z.string().uuid(),
+  toVersionId: z.string().uuid(),
+});
+
+export const legalWorkRestoreSchema = z.object({
+  objectType: legalWorkObjectTypeSchema,
+  objectId: z.string().uuid(),
+  targetVersionId: z.string().uuid(),
+  expectedCurrentVersionId: z.string().uuid().optional(),
+  restoreAsNewVersion: z.boolean().optional(),
+  restoreApprovals: z.boolean().optional(),
+  reason: z.string().trim().max(2000).optional(),
+  idempotencyKey: z.string().trim().min(8).max(120).optional(),
+  sessionId: z.string().uuid().optional(),
+});
+
+export const legalWorkUndoSchema = z.object({
+  scope: z.enum(["object", "matter", "session"]).default("object"),
+  objectType: legalWorkObjectTypeSchema.optional(),
+  objectId: z.string().uuid().optional(),
+  sessionId: z.string().uuid().optional(),
+  idempotencyKey: z.string().trim().min(8).max(120).optional(),
+});
+
+export const legalWorkCheckpointSchema = z.object({
+  kind: z.enum(["object", "bulk", "session"]).default("bulk"),
+  reason: z.string().trim().max(2000).optional(),
+  sessionId: z.string().uuid().optional(),
+  objects: z
+    .array(
+      z.object({
+        objectType: legalWorkObjectTypeSchema,
+        objectId: z.string().uuid(),
+      }),
+    )
+    .min(1)
+    .max(200),
+});
+
+export const legalWorkBulkRestoreSchema = z.object({
+  checkpointId: z.string().uuid(),
+  idempotencyKey: z.string().trim().min(8).max(120).optional(),
+});
+
+export const legalWorkBulkMutateSchema = z.object({
+  reason: z.string().trim().max(2000).optional(),
+  sessionId: z.string().uuid().optional(),
+  operations: z
+    .array(
+      z.object({
+        objectType: legalWorkObjectTypeSchema,
+        objectId: z.string().uuid(),
+        operation: z.enum([
+          "create",
+          "update",
+          "review",
+          "approve",
+          "reject",
+          "retire",
+          "status",
+          "tag",
+        ]),
+        afterPayload: z.record(z.unknown()),
+      }),
+    )
+    .min(1)
+    .max(200),
+});
+
+export const legalWorkSessionSchema = z.object({
+  reason: z.string().trim().max(2000).optional(),
+});
+
+export const legalWorkSessionRestoreSchema = z.object({
+  sessionId: z.string().uuid(),
+  idempotencyKey: z.string().trim().min(8).max(120).optional(),
+});
+
+export const updateNoteSchema = z.object({
+  title: z.string().trim().min(1).max(300).optional(),
+  content: z.string().trim().min(1).max(200000).optional(),
+  expectedVersionId: z.string().uuid().optional(),
 });
 
 export { z };

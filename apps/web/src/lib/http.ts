@@ -14,6 +14,7 @@ import { InviteRoleNotFoundError } from "./invites";
 import { FeatureDisabledError } from "./features";
 import { InvalidJurisdictionError } from "@nyayagrid/jurisdiction";
 import { RouterUnavailableError, ROUTER_UNAVAILABLE_USER_MESSAGE } from "@nyayagrid/ai";
+import { LegalWorkError } from "@nyayagrid/intelligence";
 import { createLogger } from "@nyayagrid/observability";
 
 const logger = createLogger("web.http");
@@ -95,6 +96,9 @@ export function handleRouteError(error: unknown) {
   }
   if (error instanceof RouterUnavailableError) {
     return jsonError(error.code, ROUTER_UNAVAILABLE_USER_MESSAGE, 503);
+  }
+  if (error instanceof LegalWorkError) {
+    return jsonError(error.code, error.message, error.status, error.details);
   }
   if (error instanceof ZodError) {
     const first = error.issues[0]?.message?.trim();

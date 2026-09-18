@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
 import { Badge, Button, Panel } from "@nyayagrid/ui";
-import { EmptyState, ErrorState, LoadingState, SuggestedBadge } from "@/components/ux";
+import { EmptyState, ErrorState, LoadingState, SuggestedBadge, VersionHistoryPanel } from "@/components/ux";
 import { humanizeKey } from "@/lib/plain-labels";
 import { ExecutionStrategyControl, type ExecutionStrategyValue } from "@/components/ux/execution-strategy-control";
 
@@ -224,27 +224,6 @@ export default function CaseDraftPage() {
     }
   }
 
-  async function restoreVersion(versionId: string) {
-    if (!selectedDraftId) return;
-    setBusy(true);
-    setError("");
-    try {
-      const res = await fetch(`/api/v1/matters/${matterId}/drafts/${selectedDraftId}/restore`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ versionId }),
-      });
-      const json = await res.json();
-      if (!res.ok) throw new Error(json?.error?.message ?? "Restore failed");
-      await loadDrafts();
-      await loadDraft(selectedDraftId);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Restore failed");
-    } finally {
-      setBusy(false);
-    }
-  }
-
   async function markAttorneyReviewed() {
     if (!selectedDraftId) return;
     setBusy(true);
@@ -274,11 +253,6 @@ export default function CaseDraftPage() {
   const insufficient = Boolean(selectedDraft?.sourceContext?.insufficientSourceMaterial);
   const needsAttorneyReview =
     Boolean(selectedDraft?.aiGenerated) && selectedDraft?.status === "draft";
-
-  const sortedVersions = useMemo(
-    () => [...versions].sort((a, b) => b.versionNumber - a.versionNumber),
-    [versions],
-  );
 
   if (loading) return <LoadingState label="Loading drafts…" />;
 
@@ -550,37 +524,11 @@ export default function CaseDraftPage() {
               </div>
 
               <div>
-                <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-ink/60">
-                  Version history
-                </p>
-                <p className="mb-2 text-xs text-ink/55">
-                  Restoring appends a new version. History is never rewritten or deleted.
-                </p>
-                <ul aria-label="Draft version history" className="space-y-2 text-sm">
-                  {sortedVersions.map((v) => (
-                    <li key={v.id} className="rounded border border-line p-2">
-                      <div className="flex items-center justify-between">
-                        <span className="font-semibold">v{v.versionNumber}</span>
-                        <span className="text-xs text-ink/60">{v.origin}</span>
-                      </div>
-                      {v.changeSummary ? (
-                        <p className="text-xs text-ink/70">{v.changeSummary}</p>
-                      ) : null}
-                      {v.versionNumber !== selectedDraft.currentVersionNumber ? (
-                        <Button
-                          className="mt-1"
-                          variant="ghost"
-                          disabled={busy}
-                          onClick={() => restoreVersion(v.id)}
-                        >
-                          Restore this version
-                        </Button>
-                      ) : (
-                        <p className="mt-1 text-[11px] text-ink/50">Current version</p>
-                      )}
-                    </li>
-                  ))}
-                </ul>
+                <VersionHistoryPanel
+                  matterId={matterId}
+                  objectType="draft"
+                  objectId={selectedDraftId}
+                />
               </div>
             </div>
           )}

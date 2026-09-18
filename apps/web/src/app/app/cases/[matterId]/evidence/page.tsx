@@ -14,6 +14,7 @@ import {
   RelatedList,
   SourceDrawer,
   TrustStatus,
+  VersionHistoryPanel,
   type SourceDrawerItem,
 } from "@/components/ux";
 import {
@@ -391,6 +392,11 @@ export default function CaseEvidencePage() {
                 </ul>
               ) : null}
             </RelatedList>
+            <VersionHistoryPanel
+              matterId={matterId}
+              objectType="evidence_review"
+              objectId={selectedDoc.document?.id ?? selectedDoc.id ?? null}
+            />
           </>
         ) : null}
       </IntelligenceInspector>

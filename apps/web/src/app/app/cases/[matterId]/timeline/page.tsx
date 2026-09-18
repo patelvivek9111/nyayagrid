@@ -15,6 +15,7 @@ import {
   RelatedList,
   SourceDrawer,
   TrustStatus,
+  VersionHistoryPanel,
   type SourceDrawerItem,
 } from "@/components/ux";
 import { humanizeKey } from "@/lib/plain-labels";
@@ -353,6 +354,11 @@ export default function MatterTimelinePage() {
                   account.
                 </p>
               ) : null}
+              <VersionHistoryPanel
+                matterId={matterId}
+                objectType="timeline_event"
+                objectId={selected.id}
+              />
               {selectedIsSuggested ? (
                 <div className="space-y-2">
                   <label className="block text-xs text-ink/60">

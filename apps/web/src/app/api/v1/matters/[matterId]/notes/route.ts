@@ -1,7 +1,8 @@
 import { and, desc, eq } from "drizzle-orm";
 import { aiArtifacts, notes } from "@nyayagrid/database";
-import { createManualNoteSchema, saveNyayaNoteSchema } from "@nyayagrid/validation";
+import { createManualNoteSchema, saveNyayaNoteSchema, updateNoteSchema } from "@nyayagrid/validation";
 import { requireMatterAccess, writeAuditEvent } from "@nyayagrid/permissions";
+import { trackLiveChange } from "@nyayagrid/intelligence";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
 
@@ -78,6 +79,15 @@ export async function POST(request: Request, { params }: Params) {
         targetId: note!.id,
         metadata: { artifactId: artifact.id },
       });
+      await trackLiveChange(db, {
+        organizationId: matter.organizationId,
+        matterId,
+        actorUserId: user.id,
+        objectType: "note",
+        objectId: note!.id,
+        operation: "create",
+        source: "ai",
+      });
 
       return jsonOk({ note }, { status: 201 });
     }
@@ -103,8 +113,76 @@ export async function POST(request: Request, { params }: Params) {
       targetType: "note",
       targetId: note!.id,
     });
+    await trackLiveChange(db, {
+      organizationId: matter.organizationId,
+      matterId,
+      actorUserId: user.id,
+      objectType: "note",
+      objectId: note!.id,
+      operation: "create",
+      source: "user",
+    });
 
     return jsonOk({ note }, { status: 201 });
+  } catch (error) {
+    return handleRouteError(error);
+  }
+}
+
+export async function PATCH(request: Request, { params }: Params) {
+  try {
+    const { matterId } = await params;
+    const { db, user } = await requireUser(request.headers);
+    const { matter } = await requireMatterAccess(db, {
+      userId: user.id,
+      matterId,
+      minAccess: "edit",
+      capability: "matters.edit",
+    });
+    const url = new URL(request.url);
+    const noteId = url.searchParams.get("noteId");
+    if (!noteId) return jsonError("VALIDATION_ERROR", "noteId is required", 400);
+    const body = updateNoteSchema.parse(await request.json());
+    const [existing] = await db
+      .select()
+      .from(notes)
+      .where(
+        and(
+          eq(notes.id, noteId),
+          eq(notes.matterId, matterId),
+          eq(notes.organizationId, matter.organizationId),
+        ),
+      )
+      .limit(1);
+    if (!existing) return jsonError("NOT_FOUND", "Note not found", 404);
+    const [updated] = await db
+      .update(notes)
+      .set({
+        title: body.title ?? existing.title,
+        content: body.content ?? existing.content,
+        updatedAt: new Date(),
+      })
+      .where(eq(notes.id, noteId))
+      .returning();
+    await writeAuditEvent(db, {
+      organizationId: matter.organizationId,
+      actorUserId: user.id,
+      matterId,
+      action: "note.updated",
+      targetType: "note",
+      targetId: noteId,
+    });
+    await trackLiveChange(db, {
+      organizationId: matter.organizationId,
+      matterId,
+      actorUserId: user.id,
+      objectType: "note",
+      objectId: noteId,
+      operation: "update",
+      source: "user",
+      expectedVersionId: body.expectedVersionId,
+    });
+    return jsonOk({ note: updated });
   } catch (error) {
     return handleRouteError(error);
   }

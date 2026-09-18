@@ -38,6 +38,7 @@ export {
   CompactSection,
 } from "./case-intelligence";
 export { CaseGraphCanvas } from "./case-intelligence-graph";
+export { VersionHistoryPanel, SessionRestoreControl } from "./version-history";
 export {
   FirmPageHeader,
   FirmRow,

@@ -469,6 +469,16 @@ export async function reviewAnalysisItem(params: {
     targetType: "document_analysis_item",
     targetId: params.itemId,
   });
+  const { trackLiveChange } = await import("../recovery");
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "analysis_item",
+    objectId: params.itemId,
+    operation: "review",
+    source: "user",
+  });
 
   return updated;
 }
@@ -619,6 +629,16 @@ export async function reviewRedlineSuggestion(params: {
     action: `redline_suggestion.${params.status}`,
     targetType: "redline_suggestion",
     targetId: params.suggestionId,
+  });
+  const { trackLiveChange } = await import("../recovery");
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "redline",
+    objectId: params.suggestionId,
+    operation: "review",
+    source: "user",
   });
 
   return updated;

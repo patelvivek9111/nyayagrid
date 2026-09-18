@@ -14,6 +14,7 @@ import {
   type RoutingMode,
 } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
+import { recordLegalWorkChange, restoreLegalWorkVersion, PostgresLegalWorkStore } from "../recovery";
 import { loadAuthorizedChunks } from "../provenance";
 import { formatVerifiedIntelligenceForPrompt, loadVerifiedMatterIntelligence } from "../verified";
 import { loadVerifiedGraphContext } from "../graph/index";
@@ -223,6 +224,61 @@ async function insertDraftVersion(params: {
   return version!;
 }
 
+async function trackDraftVersion(params: {
+  db: Database;
+  organizationId: string;
+  matterId: string;
+  userId: string;
+  draftId: string;
+  version: {
+    id: string;
+    versionNumber: number;
+    content: string;
+    changeSummary: string | null;
+    origin: "manual" | "ai" | "ai_edited";
+    sourceAssertions?: unknown;
+  };
+  operation: "create" | "update" | "restore" | "status";
+  source: "user" | "ai" | "restore";
+  description: string;
+  sessionId?: string | null;
+  expectedVersionNumber?: number | null;
+  provider?: string | null;
+  model?: string | null;
+}) {
+  const [draft] = await params.db
+    .select()
+    .from(drafts)
+    .where(eq(drafts.id, params.draftId))
+    .limit(1);
+  await recordLegalWorkChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "draft",
+    objectId: params.draftId,
+    operation: params.operation,
+    source: params.source,
+    afterPayload: {
+      title: draft?.title ?? "",
+      status: draft?.status ?? "draft",
+      draftType: draft?.draftType ?? "other",
+      content: params.version.content,
+      changeSummary: params.version.changeSummary,
+      origin: params.version.origin,
+      sourceAssertions: params.version.sourceAssertions ?? [],
+      nativeVersionId: params.version.id,
+    },
+    description: params.description,
+    sessionId: params.sessionId,
+    expectedVersionNumber: params.expectedVersionNumber,
+    nativeVersionId: params.version.id,
+    provider: params.provider,
+    model: params.model,
+    skipApply: true,
+  });
+}
+
 export async function createDraft(params: {
   db: Database;
   organizationId: string;
@@ -267,6 +323,17 @@ export async function createDraft(params: {
     targetType: "draft",
     targetId: draft!.id,
     metadata: { draftType: params.draftType, aiGenerated: params.aiGenerated ?? false },
+  });
+  await trackDraftVersion({
+    db: params.db,
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    userId: params.userId,
+    draftId: draft!.id,
+    version,
+    operation: "create",
+    source: params.aiGenerated ? "ai" : "user",
+    description: "Created draft",
   });
 
   return { draft: draft!, version };
@@ -444,6 +511,19 @@ export async function generateDraft(params: {
       promptVersion: DRAFT_GENERATION_PROMPT_VERSION,
     },
   });
+  await trackDraftVersion({
+    db: params.db,
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    userId: params.userId,
+    draftId: draft!.id,
+    version,
+    operation: "create",
+    source: "ai",
+    description: "AI-generated draft",
+    provider: generation.provider,
+    model: generation.model,
+  });
 
   return {
     draft: draft!,
@@ -513,6 +593,8 @@ export async function saveDraftVersion(params: {
   userId: string;
   content: string;
   changeSummary?: string;
+  expectedVersionNumber?: number;
+  sessionId?: string | null;
 }) {
   const existing = await getDraftWithVersions(params);
   if (!existing) throw new Error("Draft not found in matter scope");
@@ -540,6 +622,19 @@ export async function saveDraftVersion(params: {
     targetId: version.id,
     metadata: { draftId: params.draftId, versionNumber: nextVersion },
   });
+  await trackDraftVersion({
+    db: params.db,
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    userId: params.userId,
+    draftId: params.draftId,
+    version,
+    operation: "update",
+    source: "user",
+    description: params.changeSummary ?? "Manual edit",
+    expectedVersionNumber: params.expectedVersionNumber,
+    sessionId: params.sessionId,
+  });
 
   return version;
 }
@@ -551,28 +646,73 @@ export async function restoreDraftVersion(params: {
   draftId: string;
   versionNumber: number;
   userId: string;
+  expectedVersionNumber?: number;
+  sessionId?: string | null;
+  idempotencyKey?: string | null;
 }) {
   const existing = await getDraftWithVersions(params);
   if (!existing) throw new Error("Draft not found in matter scope");
+  if (existing.draft.status === "final" || existing.draft.status === "archived") {
+    throw new Error(
+      existing.draft.status === "final"
+        ? "This draft is finalized. Restore is disabled; create an amended working version instead."
+        : "This draft is archived. Restore is disabled; duplicate it as a new working draft instead.",
+    );
+  }
 
   const source = existing.versions.find((v) => v.versionNumber === params.versionNumber);
   if (!source) throw new Error("Draft version not found");
 
-  const nextVersion = existing.draft.currentVersionNumber + 1;
-  const version = await insertDraftVersion({
-    db: params.db,
+  const store = new PostgresLegalWorkStore(params.db);
+  const generic = await store.listVersions({
     organizationId: params.organizationId,
     matterId: params.matterId,
-    draftId: params.draftId,
-    userId: params.userId,
-    content: source.content,
-    versionNumber: nextVersion,
-    origin: "manual",
-    changeSummary: `Restored from version ${params.versionNumber}`,
-    sourceAssertions: source.sourceAssertions ?? [],
-    provider: source.provider,
-    model: source.model,
-    promptVersion: source.promptVersion,
+    objectType: "draft",
+    objectId: params.draftId,
+  });
+  const haveNative = new Set(generic.map((row) => row.nativeVersionId).filter(Boolean));
+  const haveNumber = new Set(generic.map((row) => row.versionNumber));
+  for (const native of existing.versions) {
+    if (haveNative.has(native.id) || haveNumber.has(native.versionNumber)) continue;
+    await trackDraftVersion({
+      db: params.db,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      userId: native.createdByUserId ?? params.userId,
+      draftId: params.draftId,
+      version: native,
+      operation: native.versionNumber === 1 ? "create" : "update",
+      source: native.origin === "ai" || native.origin === "ai_edited" ? "ai" : "user",
+      description: native.changeSummary ?? `Version ${native.versionNumber}`,
+      provider: native.provider,
+      model: native.model,
+    });
+    haveNative.add(native.id);
+    haveNumber.add(native.versionNumber);
+  }
+
+  const synced = await store.listVersions({
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    objectType: "draft",
+    objectId: params.draftId,
+  });
+  const target =
+    synced.find((row) => row.nativeVersionId === source.id) ??
+    synced.find((row) => row.versionNumber === params.versionNumber);
+  if (!target) throw new Error("Draft version not found");
+
+  await restoreLegalWorkVersion(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "draft",
+    objectId: params.draftId,
+    targetVersionId: target.id,
+    mode: "as_new_version",
+    role: "editor",
+    sessionId: params.sessionId,
+    idempotencyKey: params.idempotencyKey,
   });
 
   await writeAuditEvent(params.db, {
@@ -581,15 +721,16 @@ export async function restoreDraftVersion(params: {
     matterId: params.matterId,
     action: "draft.version_restored",
     targetType: "draft_version",
-    targetId: version.id,
+    targetId: params.draftId,
     metadata: {
       draftId: params.draftId,
       restoredFrom: params.versionNumber,
-      versionNumber: nextVersion,
+      restorationOfVersionId: target.id,
     },
   });
 
-  return version;
+  const after = await getDraftWithVersions(params);
+  return after!.versions[after!.versions.length - 1]!;
 }
 
 function buildTransformInstructions(
@@ -778,6 +919,19 @@ export async function transformDraftSection(params: {
       savedAuthorityCount: authorityContext.authorityIds.length,
     },
   });
+  await trackDraftVersion({
+    db: params.db,
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    userId: params.userId,
+    draftId: params.draftId,
+    version,
+    operation: "update",
+    source: "ai",
+    description: `AI ${params.action}`,
+    provider: generation.provider,
+    model: generation.model,
+  });
 
   return version;
 }
@@ -819,6 +973,20 @@ export async function updateDraftStatus(params: {
     targetId: params.draftId,
     metadata: { status: params.status, previousStatus: existing.draft.status },
   });
+  const current = existing.versions.find((v) => v.versionNumber === existing.draft.currentVersionNumber);
+  if (current) {
+    await trackDraftVersion({
+      db: params.db,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      userId: params.userId,
+      draftId: params.draftId,
+      version: current,
+      operation: "status",
+      source: "user",
+      description: `Status changed to ${params.status}`,
+    });
+  }
 
   return updated;
 }

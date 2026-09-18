@@ -570,6 +570,16 @@ export async function reviewFinding(params: {
     targetId: params.findingId,
     metadata: { note: params.note ?? null },
   });
+  const { trackLiveChange } = await import("../recovery");
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "analysis",
+    objectId: params.findingId,
+    operation: "review",
+    source: "user",
+  });
 
   return updated;
 }

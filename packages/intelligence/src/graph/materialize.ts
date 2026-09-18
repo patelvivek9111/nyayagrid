@@ -57,12 +57,14 @@ export async function upsertGraphNode(
       ),
   });
   if (existing) {
+    const existingMeta = (existing.metadata ?? {}) as Record<string, unknown>;
+    const keepSemantic = existingMeta.semanticOverride === true;
     const [updated] = await db
       .update(graphNodes)
       .set({
-        displayName: params.displayName,
+        displayName: keepSemantic ? existing.displayName : params.displayName,
         nodeType: params.nodeType,
-        metadata: params.metadata ?? existing.metadata ?? {},
+        metadata: keepSemantic ? existingMeta : (params.metadata ?? existingMeta),
         updatedAt: new Date(),
       })
       .where(eq(graphNodes.id, existing.id))

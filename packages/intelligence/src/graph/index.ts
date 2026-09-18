@@ -16,6 +16,7 @@ import {
   type AIProvider,
 } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
+import { trackLiveChange } from "../recovery";
 import { loadAuthorizedChunks, resolveValidatedSources } from "../provenance";
 import { upsertGraphEdge } from "./materialize";
 import { attorneyBadgeKind } from "../review-status";
@@ -242,6 +243,15 @@ export async function reviewGraphEdge(params: {
     targetType: "graph_edge",
     targetId: params.edgeId,
   });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "graph_edge",
+    objectId: params.edgeId,
+    operation: params.action === "reject" ? "reject" : params.action === "approve" ? "approve" : "review",
+    source: "user",
+  });
   return updated;
 }
 
@@ -294,7 +304,64 @@ export async function createManualGraphEdge(params: {
     targetType: "graph_edge",
     targetId: result.edge.id,
   });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "graph_edge",
+    objectId: result.edge.id,
+    operation: "create",
+    source: "user",
+  });
   return result.edge;
+}
+
+export async function updateGraphNode(params: {
+  db: Database;
+  organizationId: string;
+  matterId: string;
+  nodeId: string;
+  userId: string;
+  displayName?: string;
+  metadata?: Record<string, unknown>;
+}) {
+  const [updated] = await params.db
+    .update(graphNodes)
+    .set({
+      ...(params.displayName !== undefined ? { displayName: params.displayName } : {}),
+      metadata: {
+        ...(params.metadata ?? {}),
+        semanticOverride: true,
+      },
+      updatedAt: new Date(),
+    })
+    .where(
+      and(
+        eq(graphNodes.id, params.nodeId),
+        eq(graphNodes.organizationId, params.organizationId),
+        eq(graphNodes.matterId, params.matterId),
+      ),
+    )
+    .returning();
+  if (!updated) throw new Error("Graph node not found in matter scope");
+  await writeAuditEvent(params.db, {
+    organizationId: params.organizationId,
+    actorUserId: params.userId,
+    matterId: params.matterId,
+    action: "graph_node.updated",
+    targetType: "graph_node",
+    targetId: params.nodeId,
+  });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "graph_node",
+    objectId: params.nodeId,
+    operation: "update",
+    source: "user",
+  });
+  return updated;
 }
 
 export async function getGraphNeighborhood(params: {

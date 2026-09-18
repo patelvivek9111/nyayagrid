@@ -18,6 +18,7 @@ import {
   RelatedList,
   SourceDrawer,
   TrustStatus,
+  VersionHistoryPanel,
   type SourceDrawerItem,
 } from "@/components/ux";
 import {
@@ -315,6 +316,8 @@ export default function CaseGraphPage() {
   }
 
   const inspectorOpen = Boolean(selected || selectedProposed || selectedEdge);
+  const historyObjectType = selectedEdge || selectedProposed ? "graph_edge" : "graph_node";
+  const historyObjectId = selectedEdge?.id ?? selectedProposed?.id ?? selected?.id ?? null;
 
   return (
     <div className="space-y-4">
@@ -714,6 +717,11 @@ export default function CaseGraphPage() {
                     </ul>
                   ) : null}
                 </RelatedList>
+                <VersionHistoryPanel
+                  matterId={matterId}
+                  objectType={historyObjectType}
+                  objectId={historyObjectId}
+                />
               </>
             ) : (
               <p className="text-ink/60">Select a person, document, or event on the graph.</p>

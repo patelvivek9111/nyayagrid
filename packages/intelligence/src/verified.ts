@@ -17,6 +17,7 @@ import {
   type AIProvider,
 } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
+import { trackLiveChange } from "./recovery";
 
 const APPROVED = ["approved", "edited_and_approved"] as const;
 
@@ -230,6 +231,25 @@ export async function regenerateMatterSummary(params: {
     targetId: row!.id,
     metadata: { promptVersion: MATTER_SUMMARY_PROMPT_VERSION },
   });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "summary",
+    objectId: params.matterId,
+    operation: "create",
+    source: "ai",
+    afterPayload: {
+      summary: row!.summary,
+      provider: row!.provider,
+      model: row!.model,
+      promptVersion: row!.promptVersion,
+      provenance: row!.provenance,
+      nativeSummaryId: row!.id,
+    },
+    provider: row!.provider,
+    model: row!.model,
+  });
 
   return row!;
 }
@@ -239,6 +259,36 @@ export async function getLatestMatterSummary(params: {
   organizationId: string;
   matterId: string;
 }) {
+  const { PostgresLegalWorkStore } = await import("./recovery");
+  const store = new PostgresLegalWorkStore(params.db);
+  const head = await store.getHead({
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    objectType: "summary",
+    objectId: params.matterId,
+  });
+  if (head) {
+    const version = await store.getVersion({
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      versionId: head.currentVersionId,
+    });
+    const nativeId = version?.payload.nativeSummaryId;
+    if (typeof nativeId === "string") {
+      const [current] = await params.db
+        .select()
+        .from(matterSummaries)
+        .where(
+          and(
+            eq(matterSummaries.id, nativeId),
+            eq(matterSummaries.organizationId, params.organizationId),
+            eq(matterSummaries.matterId, params.matterId),
+          ),
+        )
+        .limit(1);
+      if (current) return current;
+    }
+  }
   const [row] = await params.db
     .select()
     .from(matterSummaries)

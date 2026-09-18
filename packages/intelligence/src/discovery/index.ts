@@ -20,6 +20,7 @@ import {
   type AIProvider,
 } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
+import { trackLiveChange } from "../recovery";
 
 export async function ensureReviewState(params: {
   db: Database;
@@ -184,6 +185,15 @@ export async function updateDiscoveryReview(params: {
       privilege: params.privilege ?? null,
       humanPrivilegeFinal: params.humanPrivilegeFinal ?? null,
     },
+  });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "evidence_review",
+    objectId: params.documentId,
+    operation: "update",
+    source: "user",
   });
 
   return updated!;
@@ -430,6 +440,15 @@ export async function assignTag(params: {
     targetType: "document",
     targetId: params.documentId,
     metadata: { tagId: params.tagId },
+  });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "evidence_tag",
+    objectId: params.documentId,
+    operation: "tag",
+    source: "user",
   });
 
   return assignment!;

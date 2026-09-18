@@ -2,6 +2,7 @@ import { and, eq } from "drizzle-orm";
 import { tasks } from "@nyayagrid/database";
 import { updateTaskSchema } from "@nyayagrid/validation";
 import { requireMatterAccess, writeAuditEvent } from "@nyayagrid/permissions";
+import { trackLiveChange } from "@nyayagrid/intelligence";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
 
@@ -57,6 +58,15 @@ export async function PATCH(request: Request, { params }: Params) {
       targetType: "task",
       targetId: taskId,
       metadata: { status: body.status },
+    });
+    await trackLiveChange(db, {
+      organizationId: matter.organizationId,
+      matterId,
+      actorUserId: user.id,
+      objectType: "task",
+      objectId: taskId,
+      operation: "update",
+      source: "user",
     });
 
     return jsonOk({ task: updated });

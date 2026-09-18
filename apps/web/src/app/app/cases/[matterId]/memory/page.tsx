@@ -16,6 +16,7 @@ import {
   RelatedList,
   SourceDrawer,
   TrustStatus,
+  VersionHistoryPanel,
   type SourceDrawerItem,
 } from "@/components/ux";
 import {
@@ -448,6 +449,7 @@ export default function CaseMemoryPage() {
               {selected.rationale ? (
                 <p className="text-xs text-ink/55">{selected.rationale}</p>
               ) : null}
+              <VersionHistoryPanel matterId={matterId} objectType="memory" objectId={selected.id} />
               {(selected.relatedPeople.length > 0 || selected.relatedEvents.length > 0) && (
                 <RelatedList heading="Related">
                   <div className="flex flex-col gap-1">

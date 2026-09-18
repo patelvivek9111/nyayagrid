@@ -17,6 +17,7 @@ import {
   timelineEvents,
 } from "@nyayagrid/database";
 import { writeAuditEvent } from "@nyayagrid/permissions";
+import { trackLiveChange } from "../recovery";
 import { ensureReviewState } from "../discovery/index";
 
 const APPROVED = ["approved", "edited_and_approved"] as const;
@@ -573,6 +574,15 @@ export async function markDocumentImportant(params: {
     targetType: "document",
     targetId: params.documentId,
     metadata: { important: params.important },
+  });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "evidence_review",
+    objectId: params.documentId,
+    operation: "update",
+    source: "user",
   });
 
   return updated!;

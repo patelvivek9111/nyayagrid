@@ -13,6 +13,7 @@ import {
   OverflowMenu,
   TrustStatus,
   VerifiedBadge,
+  VersionHistoryPanel,
 } from "@/components/ux";
 import { formatMatterCalendarDate } from "@/lib/matter-dates";
 import { humanizeKey } from "@/lib/plain-labels";
@@ -106,6 +107,7 @@ export default function CaseHomePage() {
   const [noteOpen, setNoteOpen] = useState(false);
   const [noteTitle, setNoteTitle] = useState("");
   const [noteContent, setNoteContent] = useState("");
+  const [selectedNoteId, setSelectedNoteId] = useState<string | null>(null);
 
   async function load() {
     const res = await fetch(`/api/v1/matters/${matterId}`);
@@ -597,12 +599,23 @@ export default function CaseHomePage() {
           <ul className="space-y-2 text-sm">
             {recentNotes.slice(0, 4).map((note) => (
               <li key={note.id}>
-                <span className="font-semibold">{note.title}</span>
-                <p className="line-clamp-2 text-xs text-ink/60">{note.content}</p>
+                <button
+                  type="button"
+                  className="text-left"
+                  onClick={() => setSelectedNoteId(note.id)}
+                >
+                  <span className="font-semibold">{note.title}</span>
+                  <p className="line-clamp-2 text-xs text-ink/60">{note.content}</p>
+                </button>
               </li>
             ))}
           </ul>
         )}
+        {selectedNoteId ? (
+          <div className="mt-3">
+            <VersionHistoryPanel matterId={matterId} objectType="note" objectId={selectedNoteId} />
+          </div>
+        ) : null}
       </CompactSection>
 
       <CompactSection

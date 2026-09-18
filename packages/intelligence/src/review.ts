@@ -13,6 +13,7 @@ import {
   deadlineCandidateSources,
 } from "@nyayagrid/database";
 import { writeAuditEvent } from "@nyayagrid/permissions";
+import { createLegalWorkEngine, snapshotIfNeeded, trackLiveChange } from "./recovery";
 import { normalizeEntityName, parseOptionalDate } from "./provenance";
 
 type ReviewAction = "approve" | "edit_and_approve" | "reject";
@@ -137,6 +138,15 @@ export async function reviewTimelineEvent(params: {
     targetId: params.eventId,
     metadata: { rejectionReason: params.rejectionReason ?? null },
   });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "timeline_event",
+    objectId: params.eventId,
+    operation: params.action === "reject" ? "reject" : params.action === "approve" ? "approve" : "review",
+    source: "user",
+  });
   if (params.action !== "reject") {
     await incrementalMaterializeGraph(params);
   }
@@ -210,7 +220,55 @@ export async function createManualTimelineEvent(params: {
     targetType: "timeline_event",
     targetId: event!.id,
   });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "timeline_event",
+    objectId: event!.id,
+    operation: "create",
+    source: "user",
+  });
   return event!;
+}
+
+export async function retireTimelineEvent(params: {
+  db: Database;
+  organizationId: string;
+  matterId: string;
+  eventId: string;
+  userId: string;
+}) {
+  const [updated] = await params.db
+    .update(timelineEvents)
+    .set({ retiredAt: new Date(), updatedAt: new Date() })
+    .where(
+      and(
+        eq(timelineEvents.id, params.eventId),
+        eq(timelineEvents.organizationId, params.organizationId),
+        eq(timelineEvents.matterId, params.matterId),
+      ),
+    )
+    .returning();
+  if (!updated) throw new Error("Record not found in matter scope");
+  await writeAuditEvent(params.db, {
+    organizationId: params.organizationId,
+    actorUserId: params.userId,
+    matterId: params.matterId,
+    action: "timeline_event.retired",
+    targetType: "timeline_event",
+    targetId: params.eventId,
+  });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "timeline_event",
+    objectId: params.eventId,
+    operation: "retire",
+    source: "user",
+  });
+  return updated;
 }
 
 export async function reviewMatterFact(params: {
@@ -251,6 +309,15 @@ export async function reviewMatterFact(params: {
     action: `matter_fact.${params.action}`,
     targetType: "matter_fact",
     targetId: params.factId,
+  });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "fact",
+    objectId: params.factId,
+    operation: params.action === "reject" ? "reject" : "review",
+    source: "user",
   });
   if (params.action !== "reject") {
     await incrementalMaterializeGraph(params);
@@ -356,6 +423,15 @@ export async function reviewMatterEntity(params: {
     targetType: "matter_entity",
     targetId: params.entityId,
   });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "entity",
+    objectId: params.entityId,
+    operation: params.action === "reject" ? "reject" : "review",
+    source: "user",
+  });
   if (params.action !== "reject") {
     await incrementalMaterializeGraph(params);
   }
@@ -396,6 +472,35 @@ export async function mergeMatterEntities(params: {
     )
     .limit(1);
   if (!keep || !merge) throw new Error("Entity not found in matter scope");
+
+  const engine = createLegalWorkEngine(params.db);
+  await snapshotIfNeeded(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "entity",
+    objectId: keep.id,
+    source: "system",
+  });
+  await snapshotIfNeeded(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "entity",
+    objectId: merge.id,
+    source: "system",
+  });
+  const checkpoint = await engine.createCheckpoint({
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    kind: "bulk",
+    reason: "Entity merge",
+    objects: [
+      { objectType: "entity", objectId: keep.id },
+      { objectType: "entity", objectId: merge.id },
+    ],
+  });
 
   const aliases = await params.db
     .select()
@@ -479,7 +584,25 @@ export async function mergeMatterEntities(params: {
     action: "matter_entity.merged",
     targetType: "matter_entity",
     targetId: keep.id,
-    metadata: { mergedEntityId: merge.id },
+    metadata: { mergedEntityId: merge.id, checkpointId: checkpoint.checkpoint.id },
+  });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "entity",
+    objectId: merge.id,
+    operation: "update",
+    source: "bulk",
+  });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "entity",
+    objectId: keep.id,
+    operation: "update",
+    source: "bulk",
   });
 
   return keep;
@@ -605,6 +728,15 @@ export async function reviewDeadlineCandidate(params: {
     action: `deadline_candidate.${params.action}`,
     targetType: "deadline_candidate",
     targetId: params.deadlineId,
+  });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "deadline",
+    objectId: params.deadlineId,
+    operation: params.action === "reject" ? "reject" : "review",
+    source: "user",
   });
   if (params.action !== "reject") {
     await incrementalMaterializeGraph(params);

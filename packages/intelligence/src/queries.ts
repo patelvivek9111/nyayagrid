@@ -191,6 +191,7 @@ export async function listTimelineEvents(params: {
           timelineEvents.status,
           statusFilter as Array<"proposed" | "approved" | "edited_and_approved" | "rejected">,
         ),
+        isNull(timelineEvents.retiredAt),
       ),
     )
     .orderBy(asc(timelineEvents.eventDate), asc(timelineEvents.createdAt));

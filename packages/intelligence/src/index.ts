@@ -16,6 +16,7 @@ export * from "./analysis/context";
 export * from "./evidence/index";
 export * from "./discovery/index";
 export * from "./draft/index";
+export * from "./recovery";
 export * from "./analysis/contract";
 export * from "./analysis/contract-span";
 export * from "./analysis/compare";

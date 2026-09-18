@@ -18,6 +18,7 @@ import {
   type EmbeddingProvider,
 } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
+import { trackLiveChange } from "../recovery";
 import { loadAuthorizedChunks } from "../provenance";
 import { formatVerifiedIntelligenceForPrompt, loadVerifiedMatterIntelligence } from "../verified";
 import {
@@ -122,6 +123,15 @@ export async function createMatterMemory(params: {
     targetId: memory!.id,
     metadata: { memoryType: params.memoryType, supersedesId: params.supersedesId ?? null },
   });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "memory",
+    objectId: memory!.id,
+    operation: "create",
+    source: params.origin === "ai" ? "ai" : "user",
+  });
 
   return memory!;
 }
@@ -206,6 +216,15 @@ export async function reviewMatterMemory(params: {
     action: `matter_memory.${params.action}`,
     targetType: "matter_memory",
     targetId: params.memoryId,
+  });
+  await trackLiveChange(params.db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    actorUserId: params.userId,
+    objectType: "memory",
+    objectId: params.memoryId,
+    operation: params.action === "reject" ? "reject" : params.action === "approve" ? "approve" : "review",
+    source: "user",
   });
   return updated;
 }
@@ -624,6 +643,18 @@ export async function proposeMatterMemories(params: {
     targetId: params.matterId,
     metadata: { count: created.length },
   });
+  if (created.length > 0) {
+    const { createLegalWorkEngine } = await import("../recovery");
+    const engine = createLegalWorkEngine(params.db);
+    await engine.createCheckpoint({
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      actorUserId: params.userId,
+      kind: "bulk",
+      reason: "Nyaya Memory proposal batch",
+      objects: created.map((memory) => ({ objectType: "memory" as const, objectId: memory.id })),
+    });
+  }
 
   return { proposals: created, provider: generation.provider, model: generation.model };
 }
