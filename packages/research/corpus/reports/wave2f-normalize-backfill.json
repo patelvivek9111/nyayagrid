@@ -1,0 +1,40 @@
+{
+  "generatedAt": "2026-09-18T11:56:22.192Z",
+  "gitSha": "53dd2e39b7c7426cf39cb71de2e9be1c3ddaf5dd",
+  "wave": "2F",
+  "stagingMachine": "811d3e3f522648",
+  "stagingApp": "nyayagrid-staging",
+  "ok": true,
+  "dryRun": false,
+  "before": {
+    "total": 654,
+    "with_citation": 529,
+    "with_normalized": 356,
+    "missing_normalized": 173
+  },
+  "after": {
+    "total": 654,
+    "with_citation": 529,
+    "with_normalized": 442,
+    "missing_normalized": 87
+  },
+  "candidates": 173,
+  "eligibleUpdates": 86,
+  "updated": 86,
+  "skipped": {
+    "low_confidence": 0,
+    "no_change": 0,
+    "garbage": 87
+  },
+  "sampleUpdates": [
+    { "citation": "326 U.S. 310", "normalized": "326 U.S. 310", "authority_type": "case" },
+    { "citation": "Iowa Code § 614.1", "normalized": "Iowa Code § 614.1", "authority_type": "statute" },
+    { "citation": "268 S.W.3d 594", "normalized": "268 S.W.3d 594", "authority_type": "case" },
+    { "citation": "28 U.S.C. § 1332", "normalized": "28 U.S.C. § 1332", "authority_type": "statute" },
+    { "citation": "42 U.S.C. § 1983", "normalized": "42 U.S.C. § 1983", "authority_type": "statute" }
+  ],
+  "notes": [
+    "High-confidence deterministic leanNormalize only (USC/CFR/Fed rules + common reporters/statutes).",
+    "87 rows remain without normalized_citation — non-deterministic or unsupported citation forms."
+  ]
+}

@@ -48,7 +48,7 @@ function toInt(value: string | undefined): number | null {
 export class USReportsParser implements CitationParser {
   readonly name = "us-reports";
   readonly type: CitationKind = "case";
-  readonly pattern = /\b(\d{1,3})\s+U\.?\s?S\.?\s+(\d{1,4})\b/g;
+  readonly pattern = /\b(\d{1,3})\s+U\.\s*S\.\s+(\d{1,4})\b/g;
 
   build(match: RegExpMatchArray): ParsedCitation | null {
     const volume = toInt(match[1]);
@@ -70,17 +70,43 @@ export class USReportsParser implements CitationParser {
 export class FederalReporterParser implements CitationParser {
   readonly name = "federal-reporter";
   readonly type: CitationKind = "case";
-  readonly pattern = /\b(\d{1,4})\s+F\.(\s?Supp\.)?(?:\s?(2d|3d|4th))?\s+(\d{1,4})\b/g;
+  readonly pattern = /\b(\d{1,4})\s+F\.?\s*(Supp\.?)?\s*(2d|3d|4th)?\s+(\d{1,4})\b/gi;
 
   build(match: RegExpMatchArray): ParsedCitation | null {
     const volume = toInt(match[1]);
     const page = toInt(match[4]);
     if (volume === null || page === null) return null;
     const supplement = Boolean(match[2]);
-    const series = match[3];
+    const series = match[3] ? match[3].toLowerCase() : "";
     const reporter = supplement
       ? `F. Supp.${series ? ` ${series}` : ""}`
-      : `F.${series ? series : ""}`;
+      : `F.${series}`;
+    return {
+      raw: match[0],
+      normalized: `${volume} ${reporter} ${page}`,
+      reporter,
+      volume,
+      page,
+      type: "case",
+      parser: this.name,
+      confidence: "high",
+    };
+  }
+}
+
+export class SupremeCourtReporterParser implements CitationParser {
+  readonly name = "supreme-court-reporter";
+  readonly type: CitationKind = "case";
+  readonly pattern = /\b(\d{1,3})\s+(?:S\.?\s*Ct\.?|L\.?\s*Ed\.?(?:\s*2d)?)\s+(\d{1,4})\b/gi;
+
+  build(match: RegExpMatchArray): ParsedCitation | null {
+    const volume = toInt(match[1]);
+    const page = toInt(match[2]);
+    if (volume === null || page === null) return null;
+    const raw = match[0];
+    const isLed = /L\.?\s*Ed/i.test(raw);
+    const led2d = /2d/i.test(raw);
+    const reporter = isLed ? (led2d ? "L. Ed. 2d" : "L. Ed.") : "S. Ct.";
     return {
       raw: match[0],
       normalized: `${volume} ${reporter} ${page}`,
@@ -437,6 +463,7 @@ export const DEFAULT_CITATION_PARSERS: CitationParser[] = [
   new FederalRulesCitationParser(),
   new USReportsParser(),
   new FederalReporterParser(),
+  new SupremeCourtReporterParser(),
   new AtlanticReporterParser(),
 ];
 
@@ -503,7 +530,8 @@ export function parseCitation(
   if (!trimmed) return unresolved;
 
   for (const parser of parsers) {
-    const anchored = new RegExp(`^(?:${parser.pattern.source})$`);
+    const flags = parser.pattern.flags.replace(/g/g, "");
+    const anchored = new RegExp(`^(?:${parser.pattern.source})$`, flags);
     const match = anchored.exec(trimmed);
     if (!match) continue;
     const built = parser.build(match);
@@ -537,11 +565,43 @@ export type CitationResolution = {
   matchedOn: "normalized_citation" | "citation";
 };
 
-/** Exact citation aliases for statute/reg/rule forms that differ only by punctuation. */
+/** Exact citation aliases for statute/reg/rule/case forms that differ only by punctuation. */
 export function citationLookupAliases(normalizedOrRaw: string): string[] {
   const base = normalizeCitationWhitespace(normalizedOrRaw);
   if (!base) return [];
-  const aliases = new Set<string>([base]);
+  const aliases = new Set<string>([base, base.replace(/\b(2D|3D|4TH)\b/g, (m) => m.toLowerCase())]);
+
+  // U.S. reporter spacing: "558 U. S. 183" ↔ "558 U.S. 183"
+  const usReporter = base.match(/^(\d{1,3})\s+U\.?\s*S\.?\s+(\d{1,4})$/i);
+  if (usReporter) {
+    aliases.add(`${usReporter[1]} U.S. ${usReporter[2]}`);
+    aliases.add(`${usReporter[1]} U. S. ${usReporter[2]}`);
+  }
+
+  // Federal reporter spacing: "503 F. 3d 284" ↔ "503 F.3d 284"
+  const fReporter = base.match(/^(\d{1,4})\s+F\.?\s*(Supp\.?)?\s*(2d|3d|4th)?\s+(\d{1,4})$/i);
+  if (fReporter) {
+    const vol = fReporter[1];
+    const page = fReporter[4];
+    const series = (fReporter[3] ?? "").toLowerCase();
+    if (fReporter[2]) {
+      aliases.add(`${vol} F. Supp.${series ? ` ${series}` : ""} ${page}`.replace(/\s+/g, " ").trim());
+    } else if (series) {
+      aliases.add(`${vol} F.${series} ${page}`);
+      aliases.add(`${vol} F. ${series} ${page}`);
+    }
+  }
+
+  // S. Ct. / L. Ed.
+  const sct = base.match(/^(\d{1,3})\s+S\.?\s*Ct\.?\s+(\d{1,4})$/i);
+  if (sct) {
+    aliases.add(`${sct[1]} S. Ct. ${sct[2]}`);
+    aliases.add(`${sct[1]} S.Ct. ${sct[2]}`);
+  }
+  const led = base.match(/^(\d{1,3})\s+L\.?\s*Ed\.?\s*(2d)?\s+(\d{1,4})$/i);
+  if (led) {
+    aliases.add(`${led[1]} L. Ed.${led[2] ? " 2d" : ""} ${led[3]}`.replace(/\s+/g, " ").trim());
+  }
 
   // CFR ↔ C.F.R.
   const cfr = base.match(/^(\d{1,2})\s+C\.?\s?F\.?\s?R\.?\s*§\s*(.+)$/i);
@@ -568,7 +628,7 @@ export function citationLookupAliases(normalizedOrRaw: string): string[] {
     aliases.add(`${reporter} ${fr[2]}`);
   }
 
-  return [...aliases];
+  return [...aliases].filter(Boolean);
 }
 
 /**

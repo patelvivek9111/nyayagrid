@@ -19,7 +19,8 @@
     { "bundleFile": "expansion-wave2d-statutes.json", "practiceAreas": ["civil", "commercial", "corporations"] },
     { "bundleFile": "expansion-wave2e-state-regs.json", "practiceAreas": ["employment", "administrative", "regulation", "business"] },
     { "bundleFile": "expansion-wave2e-state-rules.json", "practiceAreas": ["civil", "procedure"] },
-    { "bundleFile": "expansion-wave2e-statutes.json", "practiceAreas": ["civil", "commercial", "corporations", "employment", "consumer"] }
+    { "bundleFile": "expansion-wave2e-statutes.json", "practiceAreas": ["civil", "commercial", "corporations", "employment", "consumer"] },
+    { "bundleFile": "expansion-wave2f-state-rules.json", "practiceAreas": ["civil", "procedure"] }
   ],
   "states": [
     { "code": "PA", "bundleFile": "pa.json", "practiceAreas": ["contract", "employment", "civil"] },

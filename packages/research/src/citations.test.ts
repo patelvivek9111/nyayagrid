@@ -140,6 +140,16 @@ describe("citationLookupAliases", () => {
     expect(aliases).toContain("29 C.F.R. § 541.300");
     expect(aliases).toContain("29 CFR § 541.300");
   });
+
+  it("aliases spaced U.S. and F.3d reporter forms", async () => {
+    const { citationLookupAliases, parseCitation } = await import("./citations");
+    expect(parseCitation("558 U. S. 183").normalized).toBe("558 U.S. 183");
+    expect(citationLookupAliases("558 U. S. 183")).toContain("558 U.S. 183");
+    expect(parseCitation("503 F. 3d 284").normalized).toBe("503 F.3d 284");
+    expect(citationLookupAliases("503 F. 3D 284")).toContain("503 F.3d 284");
+    expect(parseCitation("999 F. Supp. 2d 45").normalized).toBe("999 F. Supp. 2d 45");
+    expect(parseCitation("130 S. Ct. 876").normalized).toBe("130 S. Ct. 876");
+  });
 });
 
 describe("extractCitationsFromText", () => {

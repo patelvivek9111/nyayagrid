@@ -1,0 +1,332 @@
+[
+  {
+    "title": "Ohio Civ.R. 12 — Defenses and Objections",
+    "shortTitle": "Ohio Civ.R. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio Civ.R. 12",
+    "normalizedCitation": "Ohio Civ.R. 12",
+    "sourceExternalId": "oh-civr-12",
+    "canonicalSourceUrl": "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/civil/Civil.pdf",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "Civ.R.", "label": "Ohio Rules of Civil Procedure" },
+      { "level": "rule", "ref": "12", "label": "Defenses and Objections" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Ohio Civ.R. 12\n\nRule 12. Defenses and Objections—When and How Presented—By Pleading or Motion—Motion for Judgment on the Pleadings\n\n(A) When presented. The answer or reply shall be served within twenty-eight days after service of the pleading being answered or replied to.\n\n(B) How presented. Every defense, in law or fact, to a claim for relief in any pleading, whether a claim, counterclaim, cross-claim, or third-party claim, shall be asserted in the responsive pleading thereto if one is required, except that the following defenses may at the option of the pleader be made by motion: (1) lack of jurisdiction over the subject matter, (2) lack of jurisdiction over the person, (3) improper venue, (4) insufficiency of process, (5) insufficiency of service of process, (6) failure to state a claim upon which relief can be granted, (7) failure to join a party under Rule 19 or Rule 19.1.\n\nA motion making any of these defenses shall be made before pleading if a further pleading is permitted.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "subsectionRef": "B(6)",
+        "content": "Failure to state a claim upon which relief can be granted may be raised by motion before pleading."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Supreme Court of Ohio"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Ohio Civ.R. 56 — Summary Judgment",
+    "shortTitle": "Ohio Civ.R. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Ohio",
+    "authorityState": "OH",
+    "citation": "Ohio Civ.R. 56",
+    "normalizedCitation": "Ohio Civ.R. 56",
+    "sourceExternalId": "oh-civr-56",
+    "canonicalSourceUrl": "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/civil/Civil.pdf",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "Civ.R.", "label": "Ohio Rules of Civil Procedure" },
+      { "level": "rule", "ref": "56", "label": "Summary Judgment" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Ohio Civ.R. 56\n\nRule 56. Summary Judgment\n\n(A) For party seeking affirmative relief. A party seeking to recover upon a claim, counterclaim, or cross-claim or to obtain a declaratory judgment may move with or without supporting affidavits for a summary judgment in the party's favor as to all or any part of the claim, counterclaim, cross-claim, or declaratory judgment action.\n\n(C) Motion and proceedings. The motion shall be served at least fourteen days before the time fixed for hearing. The adverse party prior to the day of hearing may serve and file opposing affidavits. Summary judgment shall be rendered forthwith if the pleadings, depositions, answers to interrogatories, written admissions, affidavits, transcripts of evidence, and written stipulations of fact, if any, timely filed in the action, show that there is no genuine issue as to any material fact and that the moving party is entitled to judgment as a matter of law.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "subsectionRef": "C",
+        "content": "Summary judgment is proper when there is no genuine issue of material fact and the movant is entitled to judgment as a matter of law."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Supreme Court of Ohio"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Wash. CR 12 — Defenses",
+    "shortTitle": "Wash. CR 12",
+    "authorityType": "rule",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "Wash. CR 12",
+    "normalizedCitation": "Wash. CR 12",
+    "sourceExternalId": "wa-cr-12",
+    "canonicalSourceUrl": "https://www.courts.wa.gov/court_rules/?fa=court_rules.display&group=sup&set=CR&ruleid=supcr12",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "CR", "label": "Superior Court Civil Rules" },
+      { "level": "rule", "ref": "12", "label": "Defenses" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Wash. CR 12\n\nRULE 12. DEFENSES AND OBJECTIONS\n\n(a) When Presented. A defendant shall serve an answer within 20 days after the service of the summons and complaint upon that defendant.\n\n(b) How Presented. Every defense, in law or fact, to a claim for relief in any pleading, whether a claim, counterclaim, cross claim, or third party claim, shall be asserted in the responsive pleading thereto if one is required, except that the following defenses may at the option of the pleader be made by motion: (1) lack of jurisdiction over the subject matter, (2) lack of jurisdiction over the person, (3) improper venue, (4) insufficiency of process, (5) insufficiency of service of process, (6) failure to state a claim upon which relief can be granted, (7) failure to join a party under rule 19. A motion making any of these defenses shall be made before pleading if a further pleading is permitted.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "subsectionRef": "b(6)",
+        "content": "Failure to state a claim upon which relief can be granted may be raised by motion."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Washington Courts"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Wash. CR 56 — Summary Judgment",
+    "shortTitle": "Wash. CR 56",
+    "authorityType": "rule",
+    "jurisdiction": "Washington",
+    "authorityState": "WA",
+    "citation": "Wash. CR 56",
+    "normalizedCitation": "Wash. CR 56",
+    "sourceExternalId": "wa-cr-56",
+    "canonicalSourceUrl": "https://www.courts.wa.gov/court_rules/?fa=court_rules.display&group=sup&set=CR&ruleid=supcr56",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "CR", "label": "Superior Court Civil Rules" },
+      { "level": "rule", "ref": "56", "label": "Summary Judgment" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Wash. CR 56\n\nRULE 56. SUMMARY JUDGMENT\n\n(a) For Claimant. A party seeking to recover upon a claim, counterclaim, or cross claim, or to obtain a declaratory judgment may, after the expiration of the period within which the defendant is required to appear, or after service of a motion for summary judgment by the adverse party, move with or without supporting affidavits for a summary judgment in the party's favor upon all or any part thereof.\n\n(c) Motion and Proceedings. The judgment sought shall be rendered forthwith if the pleadings, depositions, answers to interrogatories, and admissions on file, together with the affidavits, if any, show that there is no genuine issue as to any material fact and that the moving party is entitled to a judgment as a matter of law.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "subsectionRef": "c",
+        "content": "Summary judgment shall be rendered if there is no genuine issue of material fact and the movant is entitled to judgment as a matter of law."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Washington Courts"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Md. Rule 2-322 — Preliminary Motions",
+    "shortTitle": "Md. Rule 2-322",
+    "authorityType": "rule",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "Md. Rule 2-322",
+    "normalizedCitation": "Md. Rule 2-322",
+    "sourceExternalId": "md-rule-2-322",
+    "canonicalSourceUrl": "https://www.courts.state.md.us/rules",
+    "hierarchyPath": [
+      { "level": "title", "ref": "2", "label": "Civil Procedure — Circuit Court" },
+      { "level": "rule", "ref": "2-322", "label": "Preliminary Motions" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Md. Rule 2-322\n\nRule 2-322. Preliminary Motions\n\n(a) Mandatory. The following defenses shall be made by motion to dismiss filed before the answer, if an answer is required: (1) lack of jurisdiction over the person, (2) improper venue, (3) insufficiency of process, and (4) insufficiency of service of process. If not so made and the answer is filed, these defenses are waived.\n\n(b) Permissive. The following defenses may be made by motion to dismiss filed before the answer, if an answer is required: (1) lack of jurisdiction over the subject matter, (2) failure to state a claim upon which relief can be granted, (3) failure to join a party under Rule 2-211, (4) discharge in bankruptcy, and (5) governmental immunity.",
+    "sections": [
+      {
+        "sectionRef": "2-322",
+        "subsectionRef": "b(2)",
+        "content": "Failure to state a claim upon which relief can be granted may be raised by preliminary motion to dismiss."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "preliminary_motions",
+      "sourceOwner": "Maryland Judiciary"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "Md. Rule 2-501 — Motion for Summary Judgment",
+    "shortTitle": "Md. Rule 2-501",
+    "authorityType": "rule",
+    "jurisdiction": "Maryland",
+    "authorityState": "MD",
+    "citation": "Md. Rule 2-501",
+    "normalizedCitation": "Md. Rule 2-501",
+    "sourceExternalId": "md-rule-2-501",
+    "canonicalSourceUrl": "https://www.courts.state.md.us/rules",
+    "hierarchyPath": [
+      { "level": "title", "ref": "2", "label": "Civil Procedure — Circuit Court" },
+      { "level": "rule", "ref": "2-501", "label": "Motion for Summary Judgment" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "Md. Rule 2-501\n\nRule 2-501. Motion for Summary Judgment\n\n(a) Motion. Any party may file a written motion for summary judgment on all or part of an action on the ground that there is no genuine dispute as to any material fact and that the party is entitled to judgment as a matter of law. The motion shall be supported by affidavit if it is filed before the day on which the adverse party's initial pleading or motion is filed.\n\n(f) Entry of Judgment. The court shall enter judgment in favor of or against the moving party if the motion and response show that there is no genuine dispute as to any material fact and that the party in whose favor judgment is entered is entitled to judgment as a matter of law.",
+    "sections": [
+      {
+        "sectionRef": "2-501",
+        "subsectionRef": "a",
+        "content": "Summary judgment may be granted when there is no genuine dispute of material fact and a party is entitled to judgment as a matter of law."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Maryland Judiciary"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "C.R.C.P. 12 — Defenses and Objections",
+    "shortTitle": "C.R.C.P. 12",
+    "authorityType": "rule",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "C.R.C.P. 12",
+    "normalizedCitation": "C.R.C.P. 12",
+    "sourceExternalId": "co-crcp-12",
+    "canonicalSourceUrl": "https://www.courts.state.co.us/Courts/Supreme_Court/Rule_Changes.cfm",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "C.R.C.P.", "label": "Colorado Rules of Civil Procedure" },
+      { "level": "rule", "ref": "12", "label": "Defenses and Objections" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "C.R.C.P. 12\n\nRule 12. Defenses and Objections—When and How Presented—By Pleading or Motion—Motion for Judgment on Pleadings\n\n(a) When Presented. A defendant shall serve an answer within 21 days after the service of the summons and complaint upon that defendant.\n\n(b) How Presented. Every defense, in law or fact, to a claim for relief in any pleading, whether a claim, counterclaim, cross-claim, or third-party claim, shall be asserted in the responsive pleading thereto if one is required, except that the following defenses may at the option of the pleader be made by motion: (1) lack of jurisdiction over the subject matter, (2) lack of jurisdiction over the person, (3) insufficiency of process, (4) insufficiency of service of process, (5) failure to state a claim upon which relief can be granted, (6) failure to join a party under Rule 19. A motion making any of these defenses shall be made before pleading if a further pleading is permitted.",
+    "sections": [
+      {
+        "sectionRef": "12",
+        "subsectionRef": "b(5)",
+        "content": "Failure to state a claim upon which relief can be granted may be presented by motion."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "pleadings_motions",
+      "sourceOwner": "Colorado Judicial Branch"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "C.R.C.P. 56 — Summary Judgment",
+    "shortTitle": "C.R.C.P. 56",
+    "authorityType": "rule",
+    "jurisdiction": "Colorado",
+    "authorityState": "CO",
+    "citation": "C.R.C.P. 56",
+    "normalizedCitation": "C.R.C.P. 56",
+    "sourceExternalId": "co-crcp-56",
+    "canonicalSourceUrl": "https://www.courts.state.co.us/Courts/Supreme_Court/Rule_Changes.cfm",
+    "hierarchyPath": [
+      { "level": "ruleset", "ref": "C.R.C.P.", "label": "Colorado Rules of Civil Procedure" },
+      { "level": "rule", "ref": "56", "label": "Summary Judgment" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "C.R.C.P. 56\n\nRule 56. Summary Judgment and Rulings on Questions of Law\n\n(a) For Claimant. A party seeking to recover upon a claim, counterclaim, or cross-claim or to obtain a declaratory judgment may, after the expiration of 21 days from the commencement of the action or after service of a motion for summary judgment by the adverse party, move with or without supporting affidavits for a summary judgment in the party's favor upon all or any part thereof.\n\n(c) Motion and Proceedings Thereon. The judgment sought shall be rendered forthwith if the pleadings, depositions, answers to interrogatories, and admissions on file, together with the affidavits, if any, show that there is no genuine issue as to any material fact and that the moving party is entitled to a judgment as a matter of law.",
+    "sections": [
+      {
+        "sectionRef": "56",
+        "subsectionRef": "c",
+        "content": "Summary judgment is appropriate when there is no genuine issue of material fact and the moving party is entitled to judgment as a matter of law."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "summary_judgment",
+      "sourceOwner": "Colorado Judicial Branch"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "MCR 2.116 — Summary Disposition",
+    "shortTitle": "MCR 2.116",
+    "authorityType": "rule",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "MCR 2.116",
+    "normalizedCitation": "MCR 2.116",
+    "sourceExternalId": "mi-mcr-2-116",
+    "canonicalSourceUrl": "https://www.courts.michigan.gov/rules-administration/rules/",
+    "hierarchyPath": [
+      { "level": "chapter", "ref": "2", "label": "Civil Procedure" },
+      { "level": "rule", "ref": "2.116", "label": "Summary Disposition" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "MCR 2.116\n\nRule 2.116 Summary Disposition\n\n(C) Grounds. The motion may be based on one or more of these grounds, and must specify the grounds on which it is based: ... (8) The opposing party has failed to state a claim on which relief can be granted. (10) Except as to the amount of damages, there is no genuine issue as to any material fact, and the moving party is entitled to judgment or partial judgment as a matter of law.\n\n(G) Affidavits; Hearing. (1) Except as to a motion based on subrule (C)(8) or (9), affidavits, depositions, admissions, or other documentary evidence may be offered in support of or in opposition to the grounds asserted in the motion.",
+    "sections": [
+      {
+        "sectionRef": "2.116",
+        "subsectionRef": "C(10)",
+        "content": "Summary disposition is available when there is no genuine issue of material fact and the moving party is entitled to judgment as a matter of law."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "summary_disposition",
+      "sourceOwner": "Michigan Courts"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  },
+  {
+    "title": "MCR 2.111 — General Rules of Pleading",
+    "shortTitle": "MCR 2.111",
+    "authorityType": "rule",
+    "jurisdiction": "Michigan",
+    "authorityState": "MI",
+    "citation": "MCR 2.111",
+    "normalizedCitation": "MCR 2.111",
+    "sourceExternalId": "mi-mcr-2-111",
+    "canonicalSourceUrl": "https://www.courts.michigan.gov/rules-administration/rules/",
+    "hierarchyPath": [
+      { "level": "chapter", "ref": "2", "label": "Civil Procedure" },
+      { "level": "rule", "ref": "2.111", "label": "General Rules of Pleading" }
+    ],
+    "bundlePracticeAreas": ["civil", "procedure"],
+    "content": "MCR 2.111\n\nRule 2.111 General Rules of Pleading\n\n(A) Pleading to Be Concise and Direct; Consistency. (1) Each allegation of a pleading must be clear, concise, and direct. (2) Inconsistent claims or defenses are not objectionable.\n\n(B) Statement of Claim. A complaint, counterclaim, cross-claim, or third-party complaint must contain the following: (1) A statement of the facts, without repetition, on which the pleader relies in stating the cause of action, with the specific allegations necessary reasonably to inform the adverse party of the nature of the claims the adverse party is called on to defend.",
+    "sections": [
+      {
+        "sectionRef": "2.111",
+        "subsectionRef": "B",
+        "content": "A complaint must state facts sufficient to reasonably inform the adverse party of the nature of the claims to be defended."
+      }
+    ],
+    "sourceMetadata": {
+      "retrievalMethod": "official_rules_snapshot",
+      "retrievedAt": "2026-09-18T12:00:00.000Z",
+      "statuteTopic": "pleading",
+      "sourceOwner": "Michigan Courts"
+    },
+    "sourceProvider": "us-primary-corpus",
+    "bundleSourceClass": "PRIMARY_OFFICIAL",
+    "currentnessStatus": "current_as_of_source_date"
+  }
+]

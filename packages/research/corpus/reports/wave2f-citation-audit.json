@@ -1,0 +1,94 @@
+{
+  "generatedAt": "2026-09-18T11:56:39.196Z",
+  "gitSha": "53dd2e39b7c7426cf39cb71de2e9be1c3ddaf5dd",
+  "wave": "2F",
+  "stagingMachine": "811d3e3f522648",
+  "stagingApp": "nyayagrid-staging",
+  "ok": true,
+  "citationGraph": {
+    "total": 2533,
+    "resolved": 76,
+    "unresolved": 2457
+  },
+  "authorityNormalizationGap": {
+    "with_citation": 529,
+    "missing_normalized": 87
+  },
+  "families": {
+    "us_reports": 783,
+    "federal_reporter": 1279,
+    "federal_supplement": 41,
+    "regional_reporter": 0,
+    "usc": 331,
+    "cfr": 47,
+    "federal_rules": 51,
+    "state_statute": 0,
+    "state_regulation": 0,
+    "state_court_rules": 0,
+    "slip_unreported": 0,
+    "docket_like": 0,
+    "malformed_partial": 0,
+    "unknown": 1
+  },
+  "whyUnresolved": {
+    "A_target_absent": 2453,
+    "B_normalization_mismatch": 0,
+    "C_parser_gap": 0,
+    "D_ambiguous": 0,
+    "E_malformed": 0,
+    "F_unsupported_family": 1
+  },
+  "sqlUnresolvedHints": {
+    "us_reports": 783,
+    "federal_reporter": 1279,
+    "federal_supplement": 42,
+    "usc": 331,
+    "cfr": 47,
+    "unresolved_total": 2457
+  },
+  "samples": {
+    "us_reports": [
+      { "raw": "558 U. S. 183", "normalized": "558 U. S. 183", "why": "A_target_absent", "resolved": false },
+      { "raw": "598 U. S. 411", "normalized": "598 U. S. 411", "why": "A_target_absent", "resolved": false }
+    ],
+    "federal_reporter": [
+      { "raw": "503 F. 3d 284", "normalized": "503 F. 3D 284", "why": "A_target_absent", "resolved": false }
+    ],
+    "unknown": [
+      { "raw": "30552 F. Supp. 3", "normalized": "30552 F. SUPP. 3", "why": "F_unsupported_family", "resolved": false }
+    ]
+  },
+  "meta": {
+    "edgesAudited": 2533,
+    "authoritiesIndexed": 654,
+    "familyBuckets": [
+      "us_reports",
+      "federal_reporter",
+      "federal_supplement",
+      "regional_reporter",
+      "usc",
+      "cfr",
+      "federal_rules",
+      "state_statute",
+      "state_regulation",
+      "state_court_rules",
+      "slip_unreported",
+      "docket_like",
+      "malformed_partial",
+      "unknown"
+    ],
+    "whyCodes": [
+      "A_target_absent",
+      "B_normalization_mismatch",
+      "C_parser_gap",
+      "D_ambiguous",
+      "E_malformed",
+      "F_unsupported_family"
+    ]
+  },
+  "notes": [
+    "Post-backfill audit: authority missing_normalized reduced from 173 to 87.",
+    "Dominant unresolved cause is A_target_absent — cited case reporters not present in curated corpus.",
+    "No CourtListener calls; staging-only SQL audit."
+  ]
+}

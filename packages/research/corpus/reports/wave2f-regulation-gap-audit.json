@@ -1,0 +1,55 @@
+{
+  "generatedAt": "2026-09-18T12:30:00.000Z",
+  "wave": "2F",
+  "phase": "state_regulation_gap_audit",
+  "currentRegulationJurisdictions": 13,
+  "methodology": [
+    "Re-audit official/public alternatives only (agency, SOS, legislature, register, official PDF/XML/HTML).",
+    "No Lexis/Westlaw scrape. No CourtListener."
+  ],
+  "priorityBlocked": [
+    {
+      "jurisdiction": "CA",
+      "status": "blocked_proprietary",
+      "officialPortal": "https://oal.ca.gov/publications/ccr/",
+      "why": "Full CCR online text delivered via Thomson Reuters/Westlaw browse contract; no non-proprietary bulk HTML/XML suitable for adapter."
+    },
+    {
+      "jurisdiction": "NJ",
+      "status": "blocked_proprietary",
+      "officialPortal": "https://www.nj.gov/oal/rules/accessp/",
+      "why": "OAL directs public to LexisNexis mirror; not an official Code dump."
+    },
+    {
+      "jurisdiction": "NY",
+      "status": "blocked_proprietary",
+      "officialPortal": "https://dos.ny.gov/division-administrative-rules",
+      "why": "Searchable NYCRR hosted on Westlaw unlabeled/officially constrained; State Register PDFs are register-only, not full code."
+    },
+    {
+      "jurisdiction": "CT",
+      "status": "blocked_or_manual",
+      "officialPortal": null,
+      "why": "No stable official bulk admin-code HTML identified; Lexis/Matthew Bender pattern common for New England regs."
+    },
+    {
+      "jurisdiction": "RI",
+      "status": "blocked_or_manual",
+      "officialPortal": null,
+      "why": "No reliable official machine-readable code source confirmed this wave."
+    },
+    {
+      "jurisdiction": "WV",
+      "status": "blocked_or_manual",
+      "officialPortal": null,
+      "why": "No reliable official bulk source confirmed; defer pending SOS/legislature spike."
+    }
+  ],
+  "newlyDiscoveredOfficialSources": [],
+  "newAdapters": [],
+  "stillBlocked": ["CA", "NJ", "NY", "CT", "RI", "WV"],
+  "notes": [
+    "Wave 2F prioritizes citation resolution + refresh versioning over forcing proprietary regulation states.",
+    "Existing 13 regulation jurisdictions retained; no unsafe new regulation adapters this wave."
+  ]
+}

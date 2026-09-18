@@ -300,3 +300,325 @@ export async function runRefreshDryRun(params: {
     results,
   };
 }
+
+/** Deterministic version-diff metadata (no LLM). */
+export type VersionDiffMetadata = {
+  priorHash: string | null;
+  newHash: string;
+  changedAt: string;
+  textChanged: boolean;
+  metadataChanged: boolean;
+  sourceRevision: string | null;
+  previousVersionId: string | null;
+  newVersionId: string;
+  textDiffSummary: string | null;
+};
+
+export function summarizeTextDiff(prior: string, next: string, maxLen = 240): string {
+  if (prior === next) return "no_text_change";
+  const priorLen = prior.length;
+  const nextLen = next.length;
+  let i = 0;
+  const min = Math.min(priorLen, nextLen);
+  while (i < min && prior[i] === next[i]) i += 1;
+  let j = 0;
+  while (j < min - i && prior[priorLen - 1 - j] === next[nextLen - 1 - j]) j += 1;
+  const removed = prior.slice(i, priorLen - j).slice(0, 80);
+  const added = next.slice(i, nextLen - j).slice(0, 80);
+  const summary = `len ${priorLen}->${nextLen}; -"${removed}" +"${added}"`;
+  return summary.length > maxLen ? `${summary.slice(0, maxLen - 3)}...` : summary;
+}
+
+export function buildVersionDiff(params: {
+  priorHash: string | null;
+  newHash: string;
+  priorText?: string | null;
+  newText?: string | null;
+  metadataChanged?: boolean;
+  sourceRevision?: string | null;
+  previousVersionId: string | null;
+  newVersionId: string;
+  changedAt?: string;
+}): VersionDiffMetadata {
+  const textChanged = Boolean(
+    params.priorHash == null || params.priorHash !== params.newHash,
+  );
+  return {
+    priorHash: params.priorHash,
+    newHash: params.newHash,
+    changedAt: params.changedAt ?? new Date().toISOString(),
+    textChanged,
+    metadataChanged: Boolean(params.metadataChanged),
+    sourceRevision: params.sourceRevision ?? null,
+    previousVersionId: params.previousVersionId,
+    newVersionId: params.newVersionId,
+    textDiffSummary:
+      textChanged && params.priorText != null && params.newText != null
+        ? summarizeTextDiff(params.priorText, params.newText)
+        : textChanged
+          ? "text_changed_body_not_compared"
+          : null,
+  };
+}
+
+export type AuthorityVersionRecord = {
+  id: string;
+  authorityId: string;
+  versionNumber: number;
+  content: string;
+  sha256: string;
+  validTo: string | null;
+  sourceMetadata?: Record<string, unknown>;
+};
+
+export type RefreshWriteAction =
+  | "unchanged_meta_only"
+  | "version_created"
+  | "failed_preserved"
+  | "unavailable_preserved"
+  | "idempotent_skip"
+  | "resumed_no_duplicate";
+
+export type RefreshWriteResult = {
+  action: RefreshWriteAction;
+  authorityId: string;
+  priorVersionId: string | null;
+  newVersionId: string | null;
+  diff: VersionDiffMetadata | null;
+  healthStatus: SourceHealthStatus;
+  consecutiveFailures: number;
+};
+
+export type InMemoryRefreshStore = {
+  versions: Map<string, AuthorityVersionRecord[]>;
+  health: Map<
+    string,
+    {
+      status: SourceHealthStatus;
+      consecutiveFailures: number;
+      lifetimeFailures: number;
+      lastHttpStatus: number | null;
+    }
+  >;
+  jobs: Map<
+    string,
+    {
+      status: string;
+      checkpoint: Record<string, unknown>;
+      attempted: number;
+      unchanged: number;
+      changed: number;
+      failed: number;
+      startedAt: string | null;
+      completedAt: string | null;
+      lastError: string | null;
+    }
+  >;
+};
+
+export function createInMemoryRefreshStore(): InMemoryRefreshStore {
+  return { versions: new Map(), health: new Map(), jobs: new Map() };
+}
+
+function healthKey(sourceKey: string, jurisdiction: string): string {
+  return `${sourceKey}::${jurisdiction}`;
+}
+
+/**
+ * Apply one refresh check result to an in-memory store (append-only versions).
+ * Used by fixtures and as the contract for durable DB writers.
+ */
+export function applyRefreshWrite(params: {
+  store: InMemoryRefreshStore;
+  sourceKey: string;
+  jurisdiction: string;
+  authorityId: string;
+  check: RefreshCheckResult;
+  /** When set, treats a second identical changed write as idempotent. */
+  idempotencyKey?: string;
+  /** Resume token already recorded for this authority+hash. */
+  resumeCheckpoint?: { authorityId: string; contentHash: string; versionId: string } | null;
+}): RefreshWriteResult {
+  const { store, check } = params;
+  const hk = healthKey(params.sourceKey, params.jurisdiction);
+  const health = store.health.get(hk) ?? {
+    status: "healthy" as SourceHealthStatus,
+    consecutiveFailures: 0,
+    lifetimeFailures: 0,
+    lastHttpStatus: null as number | null,
+  };
+
+  const versions = store.versions.get(params.authorityId) ?? [];
+  const current = [...versions].sort((a, b) => b.versionNumber - a.versionNumber).find((v) => v.validTo == null) ?? versions.at(-1) ?? null;
+
+  if (
+    params.resumeCheckpoint &&
+    params.resumeCheckpoint.authorityId === params.authorityId &&
+    check.contentHash &&
+    params.resumeCheckpoint.contentHash === check.contentHash
+  ) {
+    return {
+      action: "resumed_no_duplicate",
+      authorityId: params.authorityId,
+      priorVersionId: current?.id ?? null,
+      newVersionId: params.resumeCheckpoint.versionId,
+      diff: null,
+      healthStatus: health.status,
+      consecutiveFailures: health.consecutiveFailures,
+    };
+  }
+
+  if (check.outcome === "failed" || check.outcome === "unavailable" || check.outcome === "rate_limited") {
+    health.consecutiveFailures += 1;
+    health.lifetimeFailures += 1;
+    health.lastHttpStatus = check.httpStatus ?? null;
+    health.status = deriveHealthStatus({
+      consecutiveFailures: health.consecutiveFailures,
+      lastHttpStatus: health.lastHttpStatus,
+    });
+    store.health.set(hk, health);
+    return {
+      action: check.outcome === "unavailable" ? "unavailable_preserved" : "failed_preserved",
+      authorityId: params.authorityId,
+      priorVersionId: current?.id ?? null,
+      newVersionId: null,
+      diff: null,
+      healthStatus: health.status,
+      consecutiveFailures: health.consecutiveFailures,
+    };
+  }
+
+  // Success path — recover health
+  health.consecutiveFailures = 0;
+  health.lastHttpStatus = check.httpStatus ?? 200;
+  health.status = "healthy";
+  store.health.set(hk, health);
+
+  const newHash = check.contentHash ?? contentHash(check.bodyText ?? "");
+  if (current && current.sha256 === newHash) {
+    return {
+      action: "unchanged_meta_only",
+      authorityId: params.authorityId,
+      priorVersionId: current.id,
+      newVersionId: null,
+      diff: null,
+      healthStatus: "healthy",
+      consecutiveFailures: 0,
+    };
+  }
+
+  if (
+    params.idempotencyKey &&
+    current &&
+    current.sourceMetadata?.idempotencyKey === params.idempotencyKey &&
+    current.sha256 === newHash
+  ) {
+    return {
+      action: "idempotent_skip",
+      authorityId: params.authorityId,
+      priorVersionId: current.id,
+      newVersionId: current.id,
+      diff: null,
+      healthStatus: "healthy",
+      consecutiveFailures: 0,
+    };
+  }
+
+  const now = new Date().toISOString();
+  const closed = versions.map((v) =>
+    v.validTo == null ? { ...v, validTo: now } : v,
+  );
+  const newVersion: AuthorityVersionRecord = {
+    id: `ver_${(current?.versionNumber ?? 0) + 1}_${newHash.slice(0, 8)}`,
+    authorityId: params.authorityId,
+    versionNumber: (current?.versionNumber ?? 0) + 1,
+    content: check.bodyText ?? "",
+    sha256: newHash,
+    validTo: null,
+    sourceMetadata: {
+      refresh: true,
+      etag: check.etag ?? null,
+      lastModified: check.lastModified ?? null,
+      ...(params.idempotencyKey ? { idempotencyKey: params.idempotencyKey } : {}),
+    },
+  };
+  store.versions.set(params.authorityId, [...closed, newVersion]);
+
+  const diff = buildVersionDiff({
+    priorHash: current?.sha256 ?? null,
+    newHash,
+    priorText: current?.content ?? null,
+    newText: newVersion.content,
+    previousVersionId: current?.id ?? null,
+    newVersionId: newVersion.id,
+    changedAt: now,
+  });
+
+  return {
+    action: "version_created",
+    authorityId: params.authorityId,
+    priorVersionId: current?.id ?? null,
+    newVersionId: newVersion.id,
+    diff,
+    healthStatus: "healthy",
+    consecutiveFailures: 0,
+  };
+}
+
+export function applyHealthEvent(params: {
+  consecutiveFailures: number;
+  lifetimeFailures: number;
+  event: "success" | "failure" | "unavailable" | "rate_limited" | "blocked";
+  httpStatus?: number | null;
+}): {
+  status: SourceHealthStatus;
+  consecutiveFailures: number;
+  lifetimeFailures: number;
+} {
+  if (params.event === "blocked") {
+    return {
+      status: "blocked",
+      consecutiveFailures: params.consecutiveFailures,
+      lifetimeFailures: params.lifetimeFailures,
+    };
+  }
+  if (params.event === "success") {
+    return {
+      status: "healthy",
+      consecutiveFailures: 0,
+      lifetimeFailures: params.lifetimeFailures,
+    };
+  }
+  const consecutiveFailures = params.consecutiveFailures + 1;
+  const lifetimeFailures = params.lifetimeFailures + 1;
+  return {
+    status: deriveHealthStatus({
+      consecutiveFailures,
+      lastHttpStatus: params.httpStatus,
+    }),
+    consecutiveFailures,
+    lifetimeFailures,
+  };
+}
+
+export type RefreshJobStatus =
+  | "queued"
+  | "running"
+  | "completed"
+  | "partial"
+  | "failed"
+  | "rate_limited";
+
+export function deriveJobStatus(params: {
+  attempted: number;
+  failed: number;
+  rateLimited: number;
+  changed: number;
+  unchanged: number;
+}): RefreshJobStatus {
+  if (params.rateLimited > 0 && params.attempted === params.rateLimited) return "rate_limited";
+  if (params.attempted === 0) return "queued";
+  if (params.failed > 0 && params.failed === params.attempted) return "failed";
+  if (params.failed > 0 || params.rateLimited > 0) return "partial";
+  return "completed";
+}
