@@ -17,14 +17,16 @@
     "retryAfterSeconds": 1380,
     "retryAfterApproxMinutes": 23,
     "blockedUntilApprox": "2026-09-19T21:01:44Z",
-    "additionalClCallsAfterBlock": 0
+    "lastObservedRetryAfterSeconds": 902,
+    "lastObservedAt": "2026-09-19T20:47:28Z",
+    "blockedUntilFromLastObservedApprox": "2026-09-19T21:02:30Z"
   },
   "progressThisRun": {
     "ca11": { "status": "completed", "imported": 15, "skipped": 0 },
     "cadc": { "status": "completed", "imported": 10, "skipped": 5, "clCount": 16 },
     "cafc": { "status": "rate_limited", "imported": 4, "cursor": "cl-opinion-11444470", "checkpointPreserved": true },
-    "ca7": { "status": "not_started_this_run", "clCount": 5 },
-    "ca10": { "status": "not_started_this_run", "clCount": 6 }
+    "ca7": { "status": "rate_limited", "importedNew": 0, "clCount": 5 },
+    "ca10": { "status": "rate_limited", "importedNew": 0, "clCount": 6 }
   },
   "resumeOrderWhenOpen": [
     "CAFC (resume checkpoint)",
@@ -36,9 +38,8 @@
   ],
   "notes": [
     "Probe succeeded (200). Federal CA11+CADC completed before long Retry-After on CAFC.",
-    "Orchestrator briefly re-entered CAFC after rate_limited due to status-parse bug; process killed; fix landed in run-staging-cl-wave2b.cjs.",
-    "CA7/CA10 job rows marked rate_limited with 0 new imports; prior depths 5/6 retained.",
-    "Zero further CourtListener calls after hard stop.",
-    "Durable checkpoints intact for CAFC resume."
+    "A parallel Tee-Object wave2b process continued after rate_limited due to status-parse bug and retried CAFC/CA7/CA10; leftover local processes force-stopped.",
+    "Hard-stop fix already in run-staging-cl-wave2b.cjs (commit 95b25ee).",
+    "Durable checkpoints intact for CAFC resume. Do not start new CL calls until blockedUntil elapses."
   ]
 }
