@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState, type FormEvent } from "react";
 import { Button, PageHeader, Panel } from "@nyayagrid/ui";
 import { ErrorState } from "@/components/ux";
+import { isClientGuestRole } from "@/lib/first-run";
 import { USER_FACING_ASK_ERROR } from "@/lib/user-facing-error";
 
 type OrgRow = { id: string; name: string };
@@ -20,6 +21,8 @@ export default function PortalPage() {
   const [answer, setAnswer] = useState("");
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [roleKey, setRoleKey] = useState<string | null>(null);
+  const [roleLoading, setRoleLoading] = useState(true);
 
   useEffect(() => {
     fetch("/api/v1/organizations")
@@ -32,6 +35,37 @@ export default function PortalPage() {
       })
       .catch((err) => setError(err instanceof Error ? err.message : "Failed"));
   }, []);
+
+  useEffect(() => {
+    if (!organizationId) {
+      setRoleKey(null);
+      setRoleLoading(false);
+      return;
+    }
+    let cancelled = false;
+    setRoleLoading(true);
+    fetch(`/api/v1/organizations/${organizationId}/account`)
+      .then(async (res) => {
+        const data = await res.json();
+        if (cancelled) return;
+        if (res.ok) {
+          setRoleKey(
+            typeof data.membership?.roleKey === "string" ? data.membership.roleKey : null,
+          );
+        } else {
+          setRoleKey(null);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setRoleKey(null);
+      })
+      .finally(() => {
+        if (!cancelled) setRoleLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [organizationId]);
 
   useEffect(() => {
     if (!organizationId) return;
@@ -84,6 +118,10 @@ export default function PortalPage() {
     }
   }
 
+  const guestPortalOnly = isClientGuestRole(roleKey);
+  // Until role is known, do not offer a Professional escape hatch that bounces guests.
+  const showProfessionalLink = !roleLoading && roleKey !== null && !guestPortalOnly;
+
   return (
     <div className="min-h-screen">
       <header className="border-b border-line bg-white/80">
@@ -92,9 +130,15 @@ export default function PortalPage() {
             <p className="font-display text-xl text-ink">Client portal</p>
             <p className="text-xs uppercase tracking-[0.16em] text-accent">Assigned cases only</p>
           </div>
-          <Link href="/app" className="text-sm font-semibold text-accent underline">
-            Professional
-          </Link>
+          {showProfessionalLink ? (
+            <Link href="/app" className="text-sm font-semibold text-accent underline">
+              Professional
+            </Link>
+          ) : (
+            <p className="text-sm font-semibold text-ink/55" aria-current="page">
+              Client portal
+            </p>
+          )}
         </div>
       </header>
       <main className="mx-auto max-w-5xl px-6 py-8">

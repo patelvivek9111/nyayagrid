@@ -70,6 +70,8 @@ describe("Sidebar workspace switcher presentation", () => {
 
   it("keeps the workspace footer with nav instead of stretching with page content", () => {
     const shell = src("src/components/ux/workspace-sidebar.tsx");
+    const layout = src("src/app/app/layout.tsx");
+    expect(layout).toContain("ClientGuestAppShell");
     expect(shell).toContain("lg:sticky lg:top-0 lg:self-start");
     expect(shell).toContain("h-screen w-[260px]");
     expect(shell).toContain('data-open={mobileOpen ? "true" : "false"}');
