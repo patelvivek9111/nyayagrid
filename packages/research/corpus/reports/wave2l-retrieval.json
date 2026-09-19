@@ -1,0 +1,82 @@
+{
+  "ok": true,
+  "wave": "2I",
+  "jurisdictionsTested": 52,
+  "pass": 110,
+  "expectedMiss": 4,
+  "fail": 0,
+  "exactCite": {
+    "pass": 52,
+    "fail": 0,
+    "expectedMiss": 0
+  },
+  "subject": {
+    "pass": 52,
+    "fail": 0
+  },
+  "isolation": [
+    {
+      "a": "Ala. R. Civ. P. 12",
+      "b": "Alaska R. Civ. P. 12",
+      "aHits": 1,
+      "bHits": 1,
+      "bleed": false,
+      "status": "PASS"
+    },
+    {
+      "a": "N.C. R. Civ. P. 12",
+      "b": "Ariz. R. Civ. P. 12",
+      "aHits": 1,
+      "bHits": 1,
+      "bleed": false,
+      "status": "PASS"
+    },
+    {
+      "a": "Pa.R.E. 401",
+      "b": "Fla. Stat. § 90.401",
+      "aHits": 1,
+      "bHits": 1,
+      "bleed": false,
+      "status": "PASS"
+    }
+  ],
+  "typeFilter": [
+    {
+      "cite": "28 U.S.C. § 1331",
+      "expected": "statute",
+      "got": "statute",
+      "status": "PASS"
+    },
+    {
+      "cite": "Fed. R. Civ. P. 12",
+      "expected": "rule",
+      "got": "rule",
+      "status": "PASS"
+    },
+    {
+      "cite": "Minn. R. 5200.0030",
+      "expected": "regulation",
+      "got": "regulation",
+      "status": "PASS"
+    }
+  ],
+  "misses": [
+    {
+      "cite": "Fake. Stat. § 99999",
+      "status": "EXPECTED_MISS"
+    },
+    {
+      "cite": "Zy. R. Civ. P. 999",
+      "status": "EXPECTED_MISS"
+    },
+    {
+      "cite": "999 Z.Z.Z. § 1",
+      "status": "EXPECTED_MISS"
+    },
+    {
+      "cite": "Invented Reg. R. 0.0",
+      "status": "EXPECTED_MISS"
+    }
+  ],
+  "noWeb": true
+}

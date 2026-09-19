@@ -1,0 +1,48 @@
+{
+  "generatedAt": "2026-09-19T20:46:00.000Z",
+  "phase": "50S-WAVE-2L",
+  "queue": 2,
+  "purpose": "Authoritative remaining blockers after Wave 2L CL resume — PASS/PARTIAL does not close #2.",
+  "byCategory": {
+    "INTERNALLY_SOLVABLE_NOW": [
+      {
+        "item": "Optional OH/WA/CO/MD regulation subject deepen (still MINIMAL)",
+        "action": "Curated official slices when next non-CL window",
+        "effort": "0.5 day"
+      },
+      {
+        "item": "Category D unknown currentness (138) — evidence-gated only",
+        "action": "Promote only with official revision/edition dates",
+        "effort": "bounded"
+      }
+    ],
+    "WAITING_FOR_CL": [
+      "Resume CAFC checkpoint (4/15) after Retry-After",
+      "Deepen CA7 (5) and CA10 (6) to ≥15",
+      "Wave-1 high courts: CA DE FL IL MA NJ NY PA TX VA",
+      "Wave-1 intermediate appellate",
+      "National state high-court + intermediate appellate expansion",
+      "case_count_below_20 (51)",
+      "no_high_or_appellate (31)",
+      "authority_count_below_or_eq_100 (51)"
+    ],
+    "PUBLIC_SOURCE_ENGINEERING": [
+      "Full NYCRR bulk",
+      "Deeper CT eRegs"
+    ],
+    "EXTERNAL_PROPRIETARY": [
+      "CA CCR complete machine text",
+      "NJ N.J.A.C. complete public machine text"
+    ],
+    "NO_RELIABLE_PUBLIC_SOURCE": [
+      "Historical full-text state case bulk without CL/PACER-class feeds"
+    ]
+  },
+  "closedThisWave": [
+    "CL probe succeeded after prior cooldown expiry",
+    "CA11 circuit baseline completed (15)",
+    "CADC circuit baseline completed (16)",
+    "CAFC started (4) before rate limit",
+    "35 new CL cases ingested; historical currentness applied"
+  ]
+}

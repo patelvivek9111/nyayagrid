@@ -1,0 +1,340 @@
+{
+  "ok": true,
+  "totals": {
+    "total": 1516,
+    "seed": 1356,
+    "courtlistener": 160,
+    "cases": 205,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254
+  },
+  "byCourt": [
+    {
+      "court_id": "us-scotus",
+      "court_level": "scotus",
+      "authority_state": "US",
+      "n": 18
+    },
+    {
+      "court_id": "us-ca-dc",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 16
+    },
+    {
+      "court_id": "us-ca-11",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 15
+    },
+    {
+      "court_id": "us-ca-8",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 15
+    },
+    {
+      "court_id": "us-ca-9",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 15
+    },
+    {
+      "court_id": "us-ca-4",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 12
+    },
+    {
+      "court_id": "us-ca-6",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 12
+    },
+    {
+      "court_id": "us-ca-1",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 11
+    },
+    {
+      "court_id": "us-ca-3",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 11
+    },
+    {
+      "court_id": "us-ca-2",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 10
+    },
+    {
+      "court_id": "us-ca-5",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 10
+    },
+    {
+      "court_id": "us-ca-10",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 6
+    },
+    {
+      "court_id": "us-ca-7",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 5
+    },
+    {
+      "court_id": "us-ca-fed",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 4
+    }
+  ],
+  "byState": [
+    {
+      "s": "CA",
+      "cases": 2,
+      "cl": 0,
+      "n": 23
+    },
+    {
+      "s": "DE",
+      "cases": 2,
+      "cl": 0,
+      "n": 28
+    },
+    {
+      "s": "FL",
+      "cases": 2,
+      "cl": 0,
+      "n": 28
+    },
+    {
+      "s": "IL",
+      "cases": 2,
+      "cl": 0,
+      "n": 27
+    },
+    {
+      "s": "MA",
+      "cases": 2,
+      "cl": 0,
+      "n": 29
+    },
+    {
+      "s": "NJ",
+      "cases": 2,
+      "cl": 0,
+      "n": 24
+    },
+    {
+      "s": "NY",
+      "cases": 2,
+      "cl": 0,
+      "n": 30
+    },
+    {
+      "s": "PA",
+      "cases": 3,
+      "cl": 0,
+      "n": 29
+    },
+    {
+      "s": "TX",
+      "cases": 2,
+      "cl": 0,
+      "n": 27
+    },
+    {
+      "s": "US",
+      "cases": 174,
+      "cl": 160,
+      "n": 310
+    },
+    {
+      "s": "VA",
+      "cases": 2,
+      "cl": 0,
+      "n": 28
+    }
+  ],
+  "citations": {
+    "edges": 2929,
+    "resolved": 86,
+    "normalized": 2929
+  },
+  "treatment": {
+    "authorities_with_treatment": 160
+  },
+  "chunks": {
+    "chunks": 3814,
+    "with_embedding": 3814
+  },
+  "currentness": {
+    "with_status": 160,
+    "with_checked": 160
+  },
+  "sampleCl": [
+    {
+      "title": "Richards v. Kallish",
+      "citation": null,
+      "court_id": "us-ca-fed",
+      "d": "2026-09-18",
+      "url": "https://www.courtlistener.com/opinion/10976829/richards-v-kallish/"
+    },
+    {
+      "title": "Constantine v. Collins",
+      "citation": null,
+      "court_id": "us-ca-fed",
+      "d": "2026-09-18",
+      "url": "https://www.courtlistener.com/opinion/10976830/constantine-v-collins/"
+    },
+    {
+      "title": "Sutton v. USPS",
+      "citation": null,
+      "court_id": "us-ca-fed",
+      "d": "2026-09-18",
+      "url": "https://www.courtlistener.com/opinion/10976948/sutton-v-usps/"
+    },
+    {
+      "title": "Meenk v. United States",
+      "citation": null,
+      "court_id": "us-ca-fed",
+      "d": "2026-09-18",
+      "url": "https://www.courtlistener.com/opinion/10976949/meenk-v-united-states/"
+    },
+    {
+      "title": "Azael Perales v. State of California",
+      "citation": null,
+      "court_id": "us-ca-dc",
+      "d": "2026-08-12",
+      "url": "https://www.courtlistener.com/opinion/10945775/azael-perales-v-state-of-california/"
+    },
+    {
+      "title": "United States v. Garrick Richardson",
+      "citation": null,
+      "court_id": "us-ca-dc",
+      "d": "2026-08-21",
+      "url": "https://www.courtlistener.com/opinion/10954582/united-states-v-garrick-richardson/"
+    },
+    {
+      "title": "United States v. Enyinna Onyewu",
+      "citation": null,
+      "court_id": "us-ca-dc",
+      "d": "2026-08-21",
+      "url": "https://www.courtlistener.com/opinion/10954583/united-states-v-enyinna-onyewu/"
+    },
+    {
+      "title": "Shana Hargrove v. MedStar Washington Hospital Center",
+      "citation": null,
+      "court_id": "us-ca-dc",
+      "d": "2026-08-21",
+      "url": "https://www.courtlistener.com/opinion/10954584/shana-hargrove-v-medstar-washington-hospital-center/"
+    }
+  ],
+  "retrieval": {
+    "scotus": {
+      "court": "us-scotus",
+      "hits": 3,
+      "sample": [
+        {
+          "title": "National Republican Congressional Committee v. Brown",
+          "citation": null,
+          "court_id": "us-scotus"
+        },
+        {
+          "title": "National Park Service v. National Trust for Historic Preservation in the United ",
+          "citation": null,
+          "court_id": "us-scotus"
+        },
+        {
+          "title": "Trump v. California",
+          "citation": null,
+          "court_id": "us-scotus"
+        }
+      ]
+    },
+    "ca9": {
+      "court": "us-ca-9",
+      "hits": 3,
+      "sample": [
+        {
+          "title": "Cambronne v. Blanche",
+          "citation": null,
+          "court_id": "us-ca-9"
+        },
+        {
+          "title": "Cascadia Wildlands v. Adcock",
+          "citation": null,
+          "court_id": "us-ca-9"
+        },
+        {
+          "title": "Dorsainvil v. Blanche",
+          "citation": null,
+          "court_id": "us-ca-9"
+        }
+      ]
+    },
+    "ca_high": {
+      "court": "st-ca-high",
+      "hits": 0,
+      "sample": []
+    },
+    "pa_high": {
+      "court": "st-pa-high",
+      "hits": 0,
+      "sample": []
+    }
+  },
+  "vectorHit": {
+    "ok": true,
+    "neighbors": [
+      {
+        "title": "CourtListener opinion",
+        "court_id": "us-ca-2",
+        "citation": null
+      },
+      {
+        "title": "CourtListener opinion",
+        "court_id": "us-ca-2",
+        "citation": null
+      },
+      {
+        "title": "CourtListener opinion",
+        "court_id": "us-ca-2",
+        "citation": null
+      }
+    ]
+  },
+  "courtMapping": {
+    "expected": 33,
+    "present": 14,
+    "missingCourts": [
+      "st-ca-high",
+      "st-ca-app",
+      "st-ny-high",
+      "st-ny-app",
+      "st-pa-high",
+      "st-pa-super",
+      "st-tx-high",
+      "st-tx-app",
+      "st-nj-high",
+      "st-nj-app",
+      "st-fl-high",
+      "st-fl-app",
+      "st-il-high",
+      "st-il-app",
+      "st-ma-high",
+      "st-ma-app",
+      "st-va-high",
+      "st-va-app",
+      "st-de-high"
+    ]
+  },
+  "featureAgents": "0"
+}

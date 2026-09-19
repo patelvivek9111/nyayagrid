@@ -1,0 +1,49 @@
+{
+  "ok": true,
+  "wave": "2F",
+  "dryRun": false,
+  "generatedAt": "2026-09-19T20:42:44.871Z",
+  "before": {
+    "extracted": 2929,
+    "resolved": 86,
+    "unresolved": 2843
+  },
+  "after": {
+    "extracted": 2929,
+    "resolved": 86,
+    "unresolved": 2843
+  },
+  "newlyResolved": 0,
+  "ambiguous": 0,
+  "stillUnresolved": 2843,
+  "edgeNormUpdated": 0,
+  "authorityNormUpdated": 0,
+  "parallelAliasWrites": 0,
+  "newlyResolvedByFamily": {
+    "us_reports": 0,
+    "federal_reporter": 0,
+    "usc": 0,
+    "cfr": 0,
+    "federal_rules": 0,
+    "other": 0
+  },
+  "resolutionPct": 2.94,
+  "byFamily": {
+    "us_reports_resolved": 26,
+    "usc_resolved": 38,
+    "cfr_resolved": 0,
+    "fed_rules_resolved": 22,
+    "freporter_resolved": 0
+  },
+  "auditHints": {
+    "missingTargetSample500": 500,
+    "parserGapSample500": 0
+  },
+  "sampleResolved": [],
+  "sampleAmbiguous": [],
+  "notes": [
+    "Authority alias/normalization backfill runs before resolve index build.",
+    "Exact alias/normalized match only; multiple hits left unresolved as ambiguous.",
+    "No CourtListener traffic; no fuzzy title linking."
+  ]
+}

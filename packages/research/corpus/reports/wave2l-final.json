@@ -1,0 +1,86 @@
+{
+  "verdict": "PARTIAL",
+  "queue": 2,
+  "queue9": "CLOSED",
+  "transitionAllowed": false,
+  "wave": "2L",
+  "nextSubStep": "After Retry-After (~2026-09-19T21:01:44Z): resume CAFC checkpoint → deepen CA7/CA10 → Wave-1 high courts. Do not open #3.",
+  "courtListener": {
+    "probe": { "status": 200, "at": "2026-09-19T20:02:00.000Z", "endpoint": "opinions?court=ca11&page_size=1" },
+    "rateLimit": {
+      "status": 429,
+      "at": "2026-09-19T20:38:44.397Z",
+      "court": "cafc",
+      "retryAfterSeconds": 1380,
+      "blockedUntilApprox": "2026-09-19T21:01:44Z"
+    },
+    "resumed": ["ca11", "cadc", "cafc"],
+    "checkpoints": {
+      "ca11": "completed",
+      "cadc": "completed",
+      "cafc": "rate_limited@cl-opinion-11444470 (4 imported)",
+      "ca7": "rate_limited (0 new this run; prior n=5)",
+      "ca10": "rate_limited (0 new this run; prior n=6)"
+    }
+  },
+  "federal": {
+    "scotus": 18,
+    "ca1": 11, "ca2": 10, "ca3": 11, "ca4": 12, "ca5": 10, "ca6": 12,
+    "ca7": 5, "ca8": 15, "ca9": 15, "ca10": 6, "ca11": 15,
+    "cadc": 16, "cafc": 4
+  },
+  "states": {
+    "highCourtCompleted": [],
+    "intermediateCompleted": [],
+    "progressed": [],
+    "remaining": "all Wave-1 + national states (blocked on CL cooldown)"
+  },
+  "corpus": {
+    "before": { "authorities": 1481, "cases": 170, "cl": 125 },
+    "after": {
+      "authorities": 1516,
+      "cases": 205,
+      "statutes": 900,
+      "regulations": 156,
+      "rules": 254,
+      "cl": 160,
+      "normalized": 1356,
+      "provenance": 1516,
+      "unknown": 138,
+      "historical": 80,
+      "lastChecked": 1381
+    }
+  },
+  "citationGraph": {
+    "extracted": 2929,
+    "resolved": 86,
+    "unresolved": 2843,
+    "ambiguous": 0,
+    "targetAbsentDominant": true,
+    "parserGapSample": 0
+  },
+  "retrieval": {
+    "exactCite": "52/52 PASS",
+    "subject": "52/52 PASS",
+    "isolation": "PASS",
+    "safeMiss": 4,
+    "noWeb": true
+  },
+  "coverage": {
+    "broader": 1,
+    "limited": 51,
+    "blockers": {
+      "authority_count_below_or_eq_100": 51,
+      "case_count_below_20": 51,
+      "no_high_or_appellate": 31,
+      "statute_count_below_15": 0,
+      "statute_subjects_below_6": 0
+    }
+  },
+  "operational": {
+    "health": 200,
+    "featureAgents": "0",
+    "orchestratorFix": "wave2b status parsing + retry_after>300 hard stop"
+  },
+  "releaseClassification": "staging corpus advance — Queue #2 remains OPEN; CL cooldown active"
+}

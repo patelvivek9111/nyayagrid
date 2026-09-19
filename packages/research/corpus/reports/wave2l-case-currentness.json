@@ -1,0 +1,19 @@
+{
+  "ok": true,
+  "wave": "2L",
+  "before": {
+    "unknown": 173
+  },
+  "appliedHistorical": 35,
+  "after": {
+    "total": 1516,
+    "cases": 205,
+    "cl": 160,
+    "unknown": 138,
+    "historical": 80,
+    "last_checked": 1381,
+    "normalized": 1356,
+    "provenance": 1516
+  },
+  "courtListenerHttpCalls": 0
+}

@@ -1,0 +1,500 @@
+{
+  "ok": true,
+  "wave": "2I",
+  "total": 1516,
+  "broaderCount": 1,
+  "blockersByType": {
+    "authority_count_below_or_eq_100": 51,
+    "case_count_below_20": 51,
+    "no_high_or_appellate": 31
+  },
+  "closestToBroader": [
+    {
+      "j": "US",
+      "missing": 0,
+      "blockers": [],
+      "cases": 174,
+      "authorities": 310
+    },
+    {
+      "j": "PA",
+      "missing": 2,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "cases": 3,
+      "authorities": 29
+    },
+    {
+      "j": "NJ",
+      "missing": 2,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "cases": 2,
+      "authorities": 24
+    },
+    {
+      "j": "NY",
+      "missing": 2,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "cases": 2,
+      "authorities": 30
+    },
+    {
+      "j": "DE",
+      "missing": 2,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "cases": 2,
+      "authorities": 28
+    },
+    {
+      "j": "TX",
+      "missing": 2,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "cases": 2,
+      "authorities": 27
+    },
+    {
+      "j": "CA",
+      "missing": 2,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "cases": 2,
+      "authorities": 23
+    },
+    {
+      "j": "FL",
+      "missing": 2,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "cases": 2,
+      "authorities": 28
+    },
+    {
+      "j": "MA",
+      "missing": 2,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "cases": 2,
+      "authorities": 29
+    },
+    {
+      "j": "IL",
+      "missing": 2,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "cases": 2,
+      "authorities": 27
+    },
+    {
+      "j": "VA",
+      "missing": 2,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "cases": 2,
+      "authorities": 28
+    },
+    {
+      "j": "OH",
+      "missing": 2,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "cases": 1,
+      "authorities": 23
+    },
+    {
+      "j": "WA",
+      "missing": 2,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "cases": 1,
+      "authorities": 23
+    },
+    {
+      "j": "CO",
+      "missing": 2,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "cases": 1,
+      "authorities": 23
+    },
+    {
+      "j": "NC",
+      "missing": 2,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "cases": 1,
+      "authorities": 24
+    }
+  ],
+  "ruleDepthCounts": {
+    "COMPLETE_CORE": 52
+  },
+  "currentness": {
+    "historical": 80,
+    "current_as_of_source_date": 1298,
+    "unknown": 138
+  },
+  "lastChecked": 1381,
+  "lastCheckedPct": 91,
+  "refresh": {
+    "AUTO_REFRESH": [
+      "ecfr",
+      "usc_periodic"
+    ],
+    "REIMPORT_REFRESH": [
+      "us_primary_corpus_bundles",
+      "state_regulation_configs",
+      "court_rules_curated"
+    ],
+    "MANUAL_REFRESH": [
+      "constitution_static",
+      "one_shot_historical"
+    ],
+    "EXTERNAL_BLOCKED": [
+      "courtlistener"
+    ]
+  },
+  "sampleJurisdictions": {
+    "PA": {
+      "authorities": 29,
+      "statutes": 15,
+      "cases": 3,
+      "regulations": 4,
+      "rules": 7,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "urlPct": 100,
+      "curPct": 83,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "ruleDepth": "COMPLETE_CORE",
+      "ruleCivil": 5,
+      "ruleEvid": 1,
+      "ruleApp": 1,
+      "broaderEligible": false
+    },
+    "CA": {
+      "authorities": 23,
+      "statutes": 15,
+      "cases": 2,
+      "regulations": 0,
+      "rules": 6,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "urlPct": 100,
+      "curPct": 83,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "ruleDepth": "COMPLETE_CORE",
+      "ruleCivil": 4,
+      "ruleEvid": 1,
+      "ruleApp": 1,
+      "broaderEligible": false
+    },
+    "NY": {
+      "authorities": 30,
+      "statutes": 15,
+      "cases": 2,
+      "regulations": 7,
+      "rules": 6,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "urlPct": 100,
+      "curPct": 87,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "ruleDepth": "COMPLETE_CORE",
+      "ruleCivil": 4,
+      "ruleEvid": 1,
+      "ruleApp": 1,
+      "broaderEligible": false
+    },
+    "TX": {
+      "authorities": 27,
+      "statutes": 15,
+      "cases": 2,
+      "regulations": 4,
+      "rules": 6,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "urlPct": 100,
+      "curPct": 89,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "ruleDepth": "COMPLETE_CORE",
+      "ruleCivil": 4,
+      "ruleEvid": 1,
+      "ruleApp": 1,
+      "broaderEligible": false
+    },
+    "AL": {
+      "authorities": 22,
+      "statutes": 18,
+      "cases": 0,
+      "regulations": 0,
+      "rules": 4,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "urlPct": 100,
+      "curPct": 95,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20",
+        "no_high_or_appellate"
+      ],
+      "ruleDepth": "COMPLETE_CORE",
+      "ruleCivil": 2,
+      "ruleEvid": 1,
+      "ruleApp": 1,
+      "broaderEligible": false
+    },
+    "MA": {
+      "authorities": 29,
+      "statutes": 15,
+      "cases": 2,
+      "regulations": 6,
+      "rules": 6,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "urlPct": 100,
+      "curPct": 86,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "ruleDepth": "COMPLETE_CORE",
+      "ruleCivil": 4,
+      "ruleEvid": 1,
+      "ruleApp": 1,
+      "broaderEligible": false
+    },
+    "AZ": {
+      "authorities": 26,
+      "statutes": 15,
+      "cases": 1,
+      "regulations": 6,
+      "rules": 4,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "urlPct": 100,
+      "curPct": 96,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20"
+      ],
+      "ruleDepth": "COMPLETE_CORE",
+      "ruleCivil": 2,
+      "ruleEvid": 1,
+      "ruleApp": 1,
+      "broaderEligible": false
+    },
+    "RI": {
+      "authorities": 27,
+      "statutes": 17,
+      "cases": 0,
+      "regulations": 6,
+      "rules": 4,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "urlPct": 100,
+      "curPct": 96,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20",
+        "no_high_or_appellate"
+      ],
+      "ruleDepth": "COMPLETE_CORE",
+      "ruleCivil": 2,
+      "ruleEvid": 1,
+      "ruleApp": 1,
+      "broaderEligible": false
+    },
+    "WV": {
+      "authorities": 27,
+      "statutes": 17,
+      "cases": 0,
+      "regulations": 6,
+      "rules": 4,
+      "subjects": 10,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "corporations_business",
+        "employment",
+        "evidence",
+        "licensing_admin_procedure",
+        "limitations",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "urlPct": 100,
+      "curPct": 96,
+      "blockers": [
+        "authority_count_below_or_eq_100",
+        "case_count_below_20",
+        "no_high_or_appellate"
+      ],
+      "ruleDepth": "COMPLETE_CORE",
+      "ruleCivil": 2,
+      "ruleEvid": 1,
+      "ruleApp": 1,
+      "broaderEligible": false
+    },
+    "US": {
+      "authorities": 310,
+      "statutes": 64,
+      "cases": 174,
+      "regulations": 46,
+      "rules": 25,
+      "subjects": 6,
+      "subjectList": [
+        "civil_procedure_jurisdiction",
+        "consumer_protection",
+        "contracts_commercial",
+        "employment",
+        "privacy_data",
+        "property_landlord_tenant"
+      ],
+      "urlPct": 100,
+      "curPct": 84,
+      "blockers": [],
+      "ruleDepth": "COMPLETE_CORE",
+      "ruleCivil": 12,
+      "ruleEvid": 9,
+      "ruleApp": 4,
+      "broaderEligible": true
+    }
+  },
+  "meets6Subjects": 52,
+  "licensingGaps": [
+    "US"
+  ]
+}

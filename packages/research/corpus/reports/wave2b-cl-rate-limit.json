@@ -1,33 +1,44 @@
 {
-  "wave": "2B-resume",
+  "wave": "2L-cl-resume",
   "branch": "COURTLISTENER_BLOCKED",
   "result": "RATE_LIMIT_WINDOW_REACHED",
-  "probedAt": "2026-09-18T02:34:00.000Z",
+  "probedAt": "2026-09-19T20:02:00.000Z",
   "probe": {
     "endpoint": "GET /api/rest/v4/opinions/?cluster__docket__court=ca11&page_size=1",
-    "status": 429,
-    "retryAfterSeconds": 58010,
-    "retryAfterApproxHours": 16.1,
-    "additionalClCalls": 0
+    "status": 200,
+    "retryAfterSeconds": null,
+    "result": "PROBE_OK"
   },
-  "corpusFrozen": {
-    "total": 572,
-    "curated": 447,
-    "cl": 125,
-    "cases": 170
+  "blockedAt": "2026-09-19T20:38:44.397Z",
+  "block": {
+    "court": "cafc",
+    "endpoint": "GET /api/rest/v4/opinions/",
+    "status": 429,
+    "retryAfterSeconds": 1380,
+    "retryAfterApproxMinutes": 23,
+    "blockedUntilApprox": "2026-09-19T21:01:44Z",
+    "additionalClCallsAfterBlock": 0
+  },
+  "progressThisRun": {
+    "ca11": { "status": "completed", "imported": 15, "skipped": 0 },
+    "cadc": { "status": "completed", "imported": 10, "skipped": 5, "clCount": 16 },
+    "cafc": { "status": "rate_limited", "imported": 4, "cursor": "cl-opinion-11444470", "checkpointPreserved": true },
+    "ca7": { "status": "not_started_this_run", "clCount": 5 },
+    "ca10": { "status": "not_started_this_run", "clCount": 6 }
   },
   "resumeOrderWhenOpen": [
-    "CA11",
-    "CADC",
-    "CAFC",
+    "CAFC (resume checkpoint)",
     "deepen CA7",
     "deepen CA10",
     "Wave-1 high courts: CA DE FL IL MA NJ NY PA TX VA",
-    "Wave-1 intermediate appellate (bounded)"
+    "Wave-1 intermediate appellate",
+    "national state high-court expansion"
   ],
   "notes": [
-    "Exactly one authenticated probe. Zero additional CourtListener calls.",
-    "No non-CL expansion launched this run per Wave 2B resume instructions.",
-    "Durable checkpoints and corpus_ingest_jobs remain intact for resume."
+    "Probe succeeded (200). Federal CA11+CADC completed before long Retry-After on CAFC.",
+    "Orchestrator briefly re-entered CAFC after rate_limited due to status-parse bug; process killed; fix landed in run-staging-cl-wave2b.cjs.",
+    "CA7/CA10 job rows marked rate_limited with 0 new imports; prior depths 5/6 retained.",
+    "Zero further CourtListener calls after hard stop.",
+    "Durable checkpoints intact for CAFC resume."
   ]
 }

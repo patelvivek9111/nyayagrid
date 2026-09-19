@@ -67,7 +67,10 @@ function runOne(court, batch, target) {
   for (const line of lines) {
     try {
       const j = JSON.parse(line);
-      if (j.result || j.status || j.downloaded) last = j.result || j;
+      // Prefer durable job status / fileResult payload over download chatter.
+      if (j.fileResult && j.fileResult.status) last = j.fileResult;
+      else if (j.via === "db_checkpoint" && j.job && j.job.status) last = j.job;
+      else if (j.result || j.status) last = j.result || j;
     } catch {
       // ignore
     }
@@ -93,7 +96,7 @@ for (const item of plan) {
         JSON.stringify({
           ok: true,
           status: "RATE LIMIT WINDOW REACHED",
-          completedCourts: [...new Set(results.filter((r) => r.result?.status === "completed").map((r) => r.court))],
+          completedCourts: [...new Set(results.filter((r) => (r.result?.status === "completed")).map((r) => r.court))],
           partialCourt: item.court,
           checkpoint: {
             cursor: last?.cursor ?? last?.result?.cursor,
@@ -107,6 +110,13 @@ for (const item of plan) {
         path.join(__dirname, "wave2b-results.json"),
         JSON.stringify({ stopped: "rate_limited", results }, null, 2),
       );
+      process.exit(0);
+    }
+    // Also halt if Retry-After on nested payloads exceeds short-backoff window.
+    const retrySec = Number(last?.lastRetryAfterSec ?? last?.result?.lastRetryAfterSec ?? 0);
+    if (retrySec > 300) {
+      console.log(JSON.stringify({ ok: true, status: "RATE LIMIT WINDOW REACHED", reason: "retry_after_gt_300", retrySec, court: item.court }));
+      fs.writeFileSync(path.join(__dirname, "wave2b-results.json"), JSON.stringify({ stopped: "rate_limited", results }, null, 2));
       process.exit(0);
     }
     if (status === "completed") break;
