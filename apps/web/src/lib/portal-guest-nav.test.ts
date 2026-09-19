@@ -39,8 +39,9 @@ describe("client guest portal navigation policy", () => {
     const portal = src("src/app/portal/page.tsx");
     expect(portal).toContain("isClientGuestRole");
     expect(portal).toContain("showProfessionalLink");
-    expect(portal).toContain('aria-current="page"');
-    expect(portal).toContain("Client portal");
+    expect(portal).toContain("Professional workspace unavailable");
+    expect(portal).toContain("Ask about this case (optional)");
+    expect(portal).toContain("you do not need it to continue");
     // Professional link remains for non-guest visitors of /portal only.
     expect(portal).toContain('href="/app"');
     expect(portal).toContain("!guestPortalOnly");

@@ -69,11 +69,17 @@ export default function PortalPage() {
 
   useEffect(() => {
     if (!organizationId) return;
+    setMatterId("");
+    setMatters([]);
+    setDocuments([]);
+    setAnswer("");
     fetch(`/api/v1/matters?organizationId=${organizationId}`)
       .then(async (res) => {
         const data = await res.json();
         if (!res.ok) throw new Error(data?.error?.message ?? "Failed to load cases");
-        setMatters(data.matters ?? []);
+        const next = (data.matters ?? []) as MatterRow[];
+        setMatters(next);
+        if (next[0]?.id) setMatterId(next[0].id);
       })
       .catch((err) => setError(err instanceof Error ? err.message : "Failed"));
   }, [organizationId]);
@@ -121,6 +127,7 @@ export default function PortalPage() {
   const guestPortalOnly = isClientGuestRole(roleKey);
   // Until role is known, do not offer a Professional escape hatch that bounces guests.
   const showProfessionalLink = !roleLoading && roleKey !== null && !guestPortalOnly;
+  const selectedMatter = matters.find((matter) => matter.id === matterId) ?? null;
 
   return (
     <div className="min-h-screen">
@@ -135,8 +142,11 @@ export default function PortalPage() {
               Professional
             </Link>
           ) : (
-            <p className="text-sm font-semibold text-ink/55" aria-current="page">
-              Client portal
+            <p
+              className="text-sm text-ink/45"
+              title="Your account is limited to assigned cases in the client portal."
+            >
+              Professional workspace unavailable
             </p>
           )}
         </div>
@@ -145,7 +155,11 @@ export default function PortalPage() {
         <PageHeader
           eyebrow="NyayaGrid"
           title="Your cases"
-          description="Documents and limited Ask for cases you have been assigned. This is not a student or public workspace."
+          description={
+            guestPortalOnly
+              ? "This is your workspace. Open an assigned case to review shared documents. Asking Nyaya is optional — you do not need it to continue."
+              : "Documents and limited Ask for cases you have been assigned. This is not a student or public workspace."
+          }
         />
         {error ? (
           <div className="mb-4">
@@ -185,12 +199,24 @@ export default function PortalPage() {
           </label>
         </div>
 
+        {selectedMatter ? (
+          <p className="mb-4 text-sm text-ink/65">
+            Viewing <span className="font-semibold text-ink">{selectedMatter.title}</span>
+            {documents.length > 0
+              ? ` · ${documents.length} shared document${documents.length === 1 ? "" : "s"}`
+              : " · waiting on shared documents from your firm"}
+          </p>
+        ) : null}
+
         <div className="grid gap-4 lg:grid-cols-2">
           <Panel title="Documents">
             {!matterId ? (
               <p className="text-sm text-ink/70">Select a case to see documents.</p>
             ) : documents.length === 0 ? (
-              <p className="text-sm text-ink/70">No documents on this case.</p>
+              <p className="text-sm text-ink/70">
+                Your firm has not shared documents on this case yet. You are already in the right
+                place — nothing else is required until files appear here.
+              </p>
             ) : (
               <ul className="space-y-2 text-sm">
                 {documents.map((document) => (
@@ -201,15 +227,27 @@ export default function PortalPage() {
               </ul>
             )}
           </Panel>
-          <Panel title="Ask about this case">
+          <Panel title="Ask about this case (optional)">
+            <p className="mb-3 text-sm text-ink/65">
+              Optional helper when documents are available. You do not need to ask a question to use
+              the portal.
+            </p>
             <form className="flex flex-col gap-3" onSubmit={ask}>
               <textarea
                 className="min-h-[120px] rounded border border-line px-2 py-1.5 text-sm"
-                placeholder="Ask a question about the documents on this case"
+                placeholder={
+                  documents.length === 0
+                    ? "Ask becomes useful after your firm shares case documents"
+                    : "Ask a question about the documents on this case"
+                }
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
+                disabled={!matterId || documents.length === 0}
               />
-              <Button type="submit" disabled={busy || !matterId || !question.trim()}>
+              <Button
+                type="submit"
+                disabled={busy || !matterId || documents.length === 0 || !question.trim()}
+              >
                 {busy ? "Asking…" : "Ask"}
               </Button>
             </form>
