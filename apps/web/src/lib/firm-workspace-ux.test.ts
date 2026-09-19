@@ -191,6 +191,9 @@ describe("firm workspace pages stay presentation-only", () => {
     expect(settings).not.toContain("sk_");
     expect(settings).toContain("Assign to case");
     expect(settings).toContain('access: "read"');
+    expect(settings).toContain("Case access assigned.");
+    expect(settings).toContain("refreshClerkSessionKeepAlive");
+    expect(settings).toContain("CLERK_HANDSHAKE");
     expect(settings).toContain("/invites/${inviteId}/revoke");
     expect(settings).not.toContain('value="owner"');
     expect(settings).toContain("emailDelivered");

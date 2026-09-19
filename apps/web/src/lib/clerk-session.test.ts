@@ -5,6 +5,7 @@ import {
   appendClerkAuthHeaders,
   clerkRequestFromHeaders,
   refreshClerkBrowserSession,
+  resolveClerkApiAuth,
   resolveClerkSession,
   resolveClerkSessionFromState,
   sessionKeepAliveResponse,
@@ -74,6 +75,26 @@ describe("resolveClerkSessionFromState", () => {
         getUser,
       ),
     ).toEqual({ userId: null });
+  });
+
+  it("resolveClerkApiAuth preserves handshake headers for API callers", async () => {
+    const clerkHeaders = new Headers();
+    clerkHeaders.append("Set-Cookie", "__session=rotated; Path=/; HttpOnly; Secure");
+    const resolved = await resolveClerkApiAuth(
+      new Headers({ host: "staging.nyayagrid.com", cookie: "__client_uat=1" }),
+      {
+        authenticateRequest: async () => ({
+          status: "handshake",
+          headers: clerkHeaders,
+          toAuth: () => null,
+        }),
+        getUser: async () => user,
+      },
+    );
+    expect(resolved.status).toBe("handshake");
+    expect(resolved.headers.getSetCookie?.()[0] ?? resolved.headers.get("set-cookie")).toMatch(
+      /__session=rotated/,
+    );
   });
 });
 

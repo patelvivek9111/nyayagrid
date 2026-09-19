@@ -164,6 +164,18 @@ export class UnauthenticatedError extends Error {
   }
 }
 
+/**
+ * Clerk needs the browser to complete a handshake / cookie rotation.
+ * API callers should return 401 with this code and forward `clerkHeaders` Set-Cookie.
+ */
+export class ClerkHandshakeError extends Error {
+  readonly code = "CLERK_HANDSHAKE";
+  constructor(readonly clerkHeaders: Headers = new Headers()) {
+    super("Refreshing your session.");
+    this.name = "ClerkHandshakeError";
+  }
+}
+
 export * from "./invites";
 export * from "./clerk-webhook";
 export * from "./user-facing";

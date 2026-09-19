@@ -12,6 +12,9 @@ describe("handleRouteError", () => {
     expect(source).not.toContain('jsonError("INTERNAL_ERROR", error.message, 500)');
     expect(source).toContain("USER_FACING_AUTH.unauthenticated");
     expect(source).toContain("USER_FACING_AUTH.forbidden");
+    expect(source).toContain("ClerkHandshakeError");
+    expect(source).toContain("error.code");
+    expect(source).toContain("appendClerkAuthHeaders");
     expect(source).toContain("userFacingInviteMessage");
     expect(source).not.toContain("error.stack");
   });

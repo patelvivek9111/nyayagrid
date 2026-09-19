@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { AuthorizationError } from "@nyayagrid/permissions";
-import { InviteError, UnauthenticatedError, userFacingInviteMessage, USER_FACING_AUTH } from "@nyayagrid/auth";
+import { InviteError, UnauthenticatedError, ClerkHandshakeError, userFacingInviteMessage, USER_FACING_AUTH } from "@nyayagrid/auth";
+import { appendClerkAuthHeaders } from "./clerk-session";
 import { StudentAccessError, GuideAuthorizationError } from "@nyayagrid/workspaces";
 import { DocumentDownloadError } from "@nyayagrid/documents";
 import {
@@ -48,6 +49,11 @@ export function jsonError(code: string, message: string, status: number, details
 }
 
 export function handleRouteError(error: unknown) {
+  if (error instanceof ClerkHandshakeError) {
+    const response = jsonError(error.code, error.message, 401);
+    appendClerkAuthHeaders(error.clerkHeaders, response.headers);
+    return response;
+  }
   if (error instanceof UnauthenticatedError) {
     return jsonError(error.code, USER_FACING_AUTH.unauthenticated, 401);
   }

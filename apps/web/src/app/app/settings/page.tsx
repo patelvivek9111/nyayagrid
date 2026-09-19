@@ -16,7 +16,9 @@ import {
   FirmTabs,
 } from "@/components/ux/firm-workspace";
 import { SignOutControl } from "@/components/sign-out-control";
+import { refreshClerkSessionKeepAlive } from "@/components/clerk-session-keep-alive";
 import { inviteStatusLabel, roleLabel } from "@/lib/firm-workspace-ux";
+import { USER_FACING_AUTH } from "@nyayagrid/auth/user-facing";
 import { formatByteSize, formatTokenCount } from "@nyayagrid/platform/usage-format";
 
 type InviteRow = {
@@ -110,6 +112,7 @@ export default function SettingsPage() {
     emailDelivered: boolean;
   } | null>(null);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [busy, setBusy] = useState(false);
   const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState("account");
@@ -247,18 +250,48 @@ export default function SettingsPage() {
     }
   }
 
+  async function ensureClerkSessionForMutation(): Promise<boolean> {
+    const keep = await refreshClerkSessionKeepAlive();
+    if (keep === "handshake") return false;
+    if (keep === "signed-out") {
+      setError(USER_FACING_AUTH.unauthenticated);
+      return false;
+    }
+    return true;
+  }
+
   async function assignToMatter() {
-    if (!assignMatterId || !assignUserId || !canAssign) return;
+    if (!organizationId || !account) return;
+    if (!assignMatterId || !assignUserId || !canAssign) {
+      setError("Select a client guest and a case before assigning.");
+      return;
+    }
     setBusy(true);
     setError("");
+    setSuccess("");
     try {
+      if (!(await ensureClerkSessionForMutation())) return;
       const res = await fetch(`/api/v1/matters/${assignMatterId}/members`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId: assignUserId, access: "read" }),
       });
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
+      if (res.status === 401 && data?.error?.code === "CLERK_HANDSHAKE") {
+        window.location.reload();
+        return;
+      }
+      if (res.status === 401) {
+        throw new Error(USER_FACING_AUTH.unauthenticated);
+      }
+      if (res.status === 403) {
+        throw new Error(data?.error?.message ?? USER_FACING_AUTH.forbidden);
+      }
       if (!res.ok) throw new Error(data?.error?.message ?? "Assign failed");
+      setSuccess("Case access assigned.");
+      setAssignUserId("");
+      setAssignMatterId("");
+      await loadFirm(organizationId, account.permissions);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed");
     } finally {
@@ -341,6 +374,11 @@ export default function SettingsPage() {
       {error ? (
         <div className="mt-4">
           <FirmError message={error} />
+        </div>
+      ) : null}
+      {success ? (
+        <div className="mt-4">
+          <FirmNotice>{success}</FirmNotice>
         </div>
       ) : null}
       {loading ? <p className="mt-6 text-sm text-ink/60">Loading settings…</p> : null}
@@ -506,9 +544,9 @@ export default function SettingsPage() {
                     <Button
                       type="button"
                       disabled={busy || !assignUserId || !assignMatterId}
-                      onClick={assignToMatter}
+                      onClick={() => void assignToMatter()}
                     >
-                      Assign to case
+                      {busy ? "Assigning…" : "Assign to case"}
                     </Button>
                   </div>
                 ) : (

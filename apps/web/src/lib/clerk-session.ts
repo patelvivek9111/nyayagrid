@@ -90,6 +90,37 @@ function createClerkSessionDeps(): ClerkSessionDeps | null {
   };
 }
 
+export type ResolvedClerkApiAuth =
+  | { status: "signed-in"; session: ClerkSession; headers: Headers }
+  | { status: "handshake"; session: ClerkSession; headers: Headers }
+  | { status: "signed-out"; session: ClerkSession; headers: Headers }
+  | { status: "unavailable"; session: ClerkSession; headers: Headers };
+
+/**
+ * Resolves Clerk auth for API routes, preserving response headers (Set-Cookie) so handshake
+ * and session rotation can be forwarded to the browser.
+ */
+export async function resolveClerkApiAuth(
+  requestHeaders: Headers,
+  deps: ClerkSessionDeps | null = createClerkSessionDeps(),
+): Promise<ResolvedClerkApiAuth> {
+  if (!deps) return { status: "unavailable", session: { userId: null }, headers: new Headers() };
+  try {
+    const state = await deps.authenticateRequest(clerkRequestFromHeaders(requestHeaders));
+    const headers = state.headers instanceof Headers ? state.headers : new Headers();
+    if (state.status === "handshake") {
+      return { status: "handshake", session: { userId: null }, headers };
+    }
+    if (state.status !== "signed-in") {
+      return { status: "signed-out", session: { userId: null }, headers };
+    }
+    const session = await resolveClerkSessionFromState(state, deps.getUser);
+    return { status: "signed-in", session, headers };
+  } catch {
+    return { status: "unavailable", session: { userId: null }, headers: new Headers() };
+  }
+}
+
 /**
  * Resolves a Clerk session from the incoming request using Clerk's request authentication.
  * Suffixed session cookies, the unsuffixed __session cookie, and Bearer session tokens are all
@@ -99,13 +130,8 @@ export async function resolveClerkSession(
   requestHeaders: Headers,
   deps: ClerkSessionDeps | null = createClerkSessionDeps(),
 ): Promise<ClerkSession> {
-  if (!deps) return { userId: null };
-  try {
-    const state = await deps.authenticateRequest(clerkRequestFromHeaders(requestHeaders));
-    return resolveClerkSessionFromState(state, deps.getUser);
-  } catch {
-    return { userId: null };
-  }
+  const resolved = await resolveClerkApiAuth(requestHeaders, deps);
+  return resolved.session;
 }
 
 /** Copy Clerk Set-Cookie onto a response so a keep-alive can rotate a short-lived session JWT. */
