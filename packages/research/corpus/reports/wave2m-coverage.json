@@ -1,0 +1,345 @@
+{
+  "ok": true,
+  "totals": {
+    "total": 1568,
+    "seed": 1356,
+    "courtlistener": 212,
+    "cases": 257,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254
+  },
+  "byCourt": [
+    {
+      "court_id": "st-ny-high",
+      "court_level": "state_high",
+      "authority_state": "NY",
+      "n": 19
+    },
+    {
+      "court_id": "us-scotus",
+      "court_level": "scotus",
+      "authority_state": "US",
+      "n": 18
+    },
+    {
+      "court_id": "us-ca-7",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 17
+    },
+    {
+      "court_id": "us-ca-10",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 16
+    },
+    {
+      "court_id": "us-ca-dc",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 16
+    },
+    {
+      "court_id": "us-ca-11",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 15
+    },
+    {
+      "court_id": "us-ca-8",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 15
+    },
+    {
+      "court_id": "us-ca-9",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 15
+    },
+    {
+      "court_id": "us-ca-fed",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 15
+    },
+    {
+      "court_id": "us-ca-4",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 12
+    },
+    {
+      "court_id": "us-ca-6",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 12
+    },
+    {
+      "court_id": "us-ca-1",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 11
+    },
+    {
+      "court_id": "us-ca-3",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 11
+    },
+    {
+      "court_id": "us-ca-2",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 10
+    },
+    {
+      "court_id": "us-ca-5",
+      "court_level": "circuit",
+      "authority_state": "US",
+      "n": 10
+    }
+  ],
+  "byState": [
+    {
+      "s": "CA",
+      "cases": 2,
+      "cl": 0,
+      "n": 23
+    },
+    {
+      "s": "DE",
+      "cases": 2,
+      "cl": 0,
+      "n": 28
+    },
+    {
+      "s": "FL",
+      "cases": 2,
+      "cl": 0,
+      "n": 28
+    },
+    {
+      "s": "IL",
+      "cases": 2,
+      "cl": 0,
+      "n": 27
+    },
+    {
+      "s": "MA",
+      "cases": 2,
+      "cl": 0,
+      "n": 29
+    },
+    {
+      "s": "NJ",
+      "cases": 2,
+      "cl": 0,
+      "n": 24
+    },
+    {
+      "s": "NY",
+      "cases": 21,
+      "cl": 19,
+      "n": 49
+    },
+    {
+      "s": "PA",
+      "cases": 3,
+      "cl": 0,
+      "n": 29
+    },
+    {
+      "s": "TX",
+      "cases": 2,
+      "cl": 0,
+      "n": 27
+    },
+    {
+      "s": "US",
+      "cases": 207,
+      "cl": 193,
+      "n": 343
+    },
+    {
+      "s": "VA",
+      "cases": 2,
+      "cl": 0,
+      "n": 28
+    }
+  ],
+  "citations": {
+    "edges": 3297,
+    "resolved": 90,
+    "normalized": 3297
+  },
+  "treatment": {
+    "authorities_with_treatment": 212
+  },
+  "chunks": {
+    "chunks": 4602,
+    "with_embedding": 4602
+  },
+  "currentness": {
+    "with_status": 212,
+    "with_checked": 212
+  },
+  "sampleCl": [
+    {
+      "title": "People v. Gaffney",
+      "citation": null,
+      "court_id": "st-ny-high",
+      "d": "2026-03-17",
+      "url": "https://www.courtlistener.com/opinion/10809778/people-v-gaffney/"
+    },
+    {
+      "title": "People v. Curry",
+      "citation": null,
+      "court_id": "st-ny-high",
+      "d": "2026-03-17",
+      "url": "https://www.courtlistener.com/opinion/10839965/people-v-curry/"
+    },
+    {
+      "title": "People v. Bender",
+      "citation": null,
+      "court_id": "st-ny-high",
+      "d": "2026-03-17",
+      "url": "https://www.courtlistener.com/opinion/10809924/people-v-bender/"
+    },
+    {
+      "title": "Matter of Gonzalez v. Northeast Parent & Child Socy.",
+      "citation": null,
+      "court_id": "st-ny-high",
+      "d": "2026-03-17",
+      "url": "https://www.courtlistener.com/opinion/10809925/matter-of-gonzalez-v-northeast-parent-child-socy/"
+    },
+    {
+      "title": "People v. Woods",
+      "citation": null,
+      "court_id": "st-ny-high",
+      "d": "2026-04-21",
+      "url": "https://www.courtlistener.com/opinion/10849152/people-v-woods/"
+    },
+    {
+      "title": "People v. Roper",
+      "citation": null,
+      "court_id": "st-ny-high",
+      "d": "2026-04-21",
+      "url": "https://www.courtlistener.com/opinion/10849153/people-v-roper/"
+    },
+    {
+      "title": "Matter of Lawyers for Children v. New York State Off. of Children & Family Servs.",
+      "citation": null,
+      "court_id": "st-ny-high",
+      "d": "2026-05-21",
+      "url": "https://www.courtlistener.com/opinion/10866502/matter-of-lawyers-for-children-v-new-york-state-off-of-children-family/"
+    },
+    {
+      "title": "Matter of Abdoch v. Abdoch",
+      "citation": null,
+      "court_id": "st-ny-high",
+      "d": "2026-05-21",
+      "url": "https://www.courtlistener.com/opinion/10866503/matter-of-abdoch-v-abdoch/"
+    }
+  ],
+  "retrieval": {
+    "scotus": {
+      "court": "us-scotus",
+      "hits": 3,
+      "sample": [
+        {
+          "title": "National Republican Congressional Committee v. Brown",
+          "citation": null,
+          "court_id": "us-scotus"
+        },
+        {
+          "title": "National Park Service v. National Trust for Historic Preservation in the United ",
+          "citation": null,
+          "court_id": "us-scotus"
+        },
+        {
+          "title": "Trump v. California",
+          "citation": null,
+          "court_id": "us-scotus"
+        }
+      ]
+    },
+    "ca9": {
+      "court": "us-ca-9",
+      "hits": 3,
+      "sample": [
+        {
+          "title": "Cambronne v. Blanche",
+          "citation": null,
+          "court_id": "us-ca-9"
+        },
+        {
+          "title": "Cascadia Wildlands v. Adcock",
+          "citation": null,
+          "court_id": "us-ca-9"
+        },
+        {
+          "title": "Dorsainvil v. Blanche",
+          "citation": null,
+          "court_id": "us-ca-9"
+        }
+      ]
+    },
+    "ca_high": {
+      "court": "st-ca-high",
+      "hits": 0,
+      "sample": []
+    },
+    "pa_high": {
+      "court": "st-pa-high",
+      "hits": 0,
+      "sample": []
+    }
+  },
+  "vectorHit": {
+    "ok": true,
+    "neighbors": [
+      {
+        "title": "CourtListener opinion",
+        "court_id": "us-ca-2",
+        "citation": null
+      },
+      {
+        "title": "CourtListener opinion",
+        "court_id": "us-ca-2",
+        "citation": null
+      },
+      {
+        "title": "CourtListener opinion",
+        "court_id": "us-ca-2",
+        "citation": null
+      }
+    ]
+  },
+  "courtMapping": {
+    "expected": 33,
+    "present": 15,
+    "missingCourts": [
+      "st-ca-high",
+      "st-ca-app",
+      "st-ny-app",
+      "st-pa-high",
+      "st-pa-super",
+      "st-tx-high",
+      "st-tx-app",
+      "st-nj-high",
+      "st-nj-app",
+      "st-fl-high",
+      "st-fl-app",
+      "st-il-high",
+      "st-il-app",
+      "st-ma-high",
+      "st-ma-app",
+      "st-va-high",
+      "st-va-app",
+      "st-de-high"
+    ]
+  },
+  "featureAgents": "0"
+}

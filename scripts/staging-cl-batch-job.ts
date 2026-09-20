@@ -241,13 +241,24 @@ class ClRateLimiter {
 
         this.apiCalls += 1;
         this.lastRequestAt = Date.now();
-        last = await fetch(url, {
-          headers: {
-            Authorization: `Token ${this.apiKey}`,
-            Accept: "application/json",
-          },
-          signal: AbortSignal.timeout(45_000),
-        });
+        try {
+          last = await fetch(url, {
+            headers: {
+              Authorization: `Token ${this.apiKey}`,
+              Accept: "application/json",
+            },
+            signal: AbortSignal.timeout(90_000),
+          });
+        } catch (err) {
+          const msg = String(err instanceof Error ? err.message : err);
+          const isTimeout = /timeout|aborted|AbortError|TimeoutError/i.test(msg);
+          if (!isTimeout || attempt >= this.maxRetries) throw err;
+          const backoffSec = Math.min(15 + attempt * 10 + Math.floor(Math.random() * 5), 60);
+          this.lastRetryAfterSec = backoffSec;
+          this.globalPauseUntil = Date.now() + backoffSec * 1000;
+          await sleep(backoffSec * 1000);
+          continue;
+        }
 
         if (last.status !== 429) return last;
 
@@ -413,6 +424,7 @@ async function embedBatch(texts: string[], apiKey: string): Promise<number[][]> 
       input: texts,
       dimensions: EMBEDDING_DIMS,
     }),
+    signal: AbortSignal.timeout(90_000),
   });
   if (!res.ok) throw new Error(`openai_embeddings_${res.status}`);
   const json = (await res.json()) as { data: Array<{ embedding: number[]; index: number }> };
@@ -1204,12 +1216,44 @@ async function main() {
 }
 
 main().catch(async (e) => {
-  console.log(
-    JSON.stringify({
-      ok: false,
-      status: "failed",
-      err: String(e?.stack || e).slice(0, 2000),
-    }),
-  );
-  process.exit(1);
+  const errText = String(e?.stack || e).slice(0, 2000);
+  const isTimeout = /TimeoutError|aborted due to timeout|AbortError/i.test(errText);
+  const payload = {
+    ok: isTimeout,
+    status: isTimeout ? "paused" : "failed",
+    reason: isTimeout ? "fetch_timeout_soft_pause" : "unhandled_error",
+    last_error: errText.slice(0, 400),
+    err: errText,
+  };
+  // Durable stop: always persist result file so local pollers exit (no orphan loops).
+  try {
+    require("node:fs").writeFileSync("/tmp/cl-batch-result.json", JSON.stringify(payload));
+  } catch {
+    // ignore ephemeral fs failures
+  }
+  console.log(JSON.stringify(payload));
+  // Best-effort: pause any running CL job so resume can continue from checkpoint.
+  try {
+    const databaseUrl = process.env.DATABASE_URL?.trim();
+    const clCourt = (process.env.CL_COURT ?? "").trim().toLowerCase();
+    if (databaseUrl && clCourt) {
+      const sql = postgres(databaseUrl, { max: 1, ssl: "require", idle_timeout: 5, connect_timeout: 20 });
+      try {
+        await sql`
+          update corpus_ingest_jobs
+          set status = ${isTimeout ? "paused" : "failed"},
+              updated_at = now(),
+              last_error = ${errText.slice(0, 400)}
+          where source = ${"courtlistener"}
+            and cl_court = ${clCourt}
+            and status = ${"running"}
+        `;
+      } finally {
+        await sql.end({ timeout: 5 });
+      }
+    }
+  } catch {
+    // ignore DB cleanup failures
+  }
+  process.exit(isTimeout ? 0 : 1);
 });

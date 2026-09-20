@@ -1,0 +1,106 @@
+{
+  "verdict": "PARTIAL",
+  "queue": 2,
+  "queue9": "CLOSED",
+  "transitionAllowed": false,
+  "wave": "2M",
+  "featureAgents": "0",
+  "nextSubStep": "After Retry-After (~2026-09-20T16:45:30Z): resume NY high-court checkpoint cl-opinion-11276521 (n≈19) → continue Wave-1 high courts CA→DE. Do not open #3.",
+  "courtListener": {
+    "cooldownExpiredAtStart": true,
+    "probe": { "status": 200, "at": "2026-09-20T13:57:00.000Z", "endpoint": "opinions?court=ca11&page_size=1" },
+    "hardStop": {
+      "status": 429,
+      "at": "2026-09-20T15:45:27.000Z",
+      "court": "ny",
+      "retryAfterSeconds": 3600,
+      "blockedUntil": "2026-09-20T16:45:30.000Z",
+      "post429ExtraRequests": 0,
+      "regressionVs5f4b32f": "PASS"
+    },
+    "federalCompletedThisWave": ["cafc", "ca7", "ca10"],
+    "checkpoints": {
+      "cafc": "completed (n=15)",
+      "ca7": "completed (n=17)",
+      "ca10": "completed (n=16)",
+      "ny": "rate_limited@cl-opinion-11276521 (n=19; completedCount=20)"
+    }
+  },
+  "federal": {
+    "scotus": 18,
+    "ca1": 11, "ca2": 10, "ca3": 11, "ca4": 12, "ca5": 10, "ca6": 12,
+    "ca7": 17, "ca8": 15, "ca9": 15, "ca10": 16, "ca11": 15,
+    "cadc": 16, "cafc": 15,
+    "meaningfulAppellateBaseline": true
+  },
+  "states": {
+    "highCourtStarted": ["NY"],
+    "highCourtCompleted": [],
+    "highCourtCounts": { "NY": 19 },
+    "intermediateCompleted": [],
+    "remaining": ["NY(finish≥20)", "CA", "PA", "NJ", "FL", "TX", "IL", "MA", "VA", "DE"]
+  },
+  "corpus": {
+    "before": { "authorities": 1516, "cases": 205, "cl": 160 },
+    "after": {
+      "authorities": 1568,
+      "cases": 257,
+      "statutes": 900,
+      "regulations": 156,
+      "rules": 254,
+      "cl": 212,
+      "normalized": 1356,
+      "provenance": 1568,
+      "historical": 80,
+      "current_as_of_source_date": 1298,
+      "unknown": 190,
+      "lastChecked": 1433,
+      "lastCheckedPct": 91
+    }
+  },
+  "citationGraph": {
+    "extracted": 3297,
+    "resolved": 90,
+    "unresolved": 3207,
+    "ambiguous": 0,
+    "newlyResolvedThisRun": 0,
+    "targetAbsentDominant": true,
+    "parserGapSample": 0
+  },
+  "retrieval": {
+    "exactCite": "52/52 PASS",
+    "subjectIssue": "52/52 PASS",
+    "isolation": "PASS",
+    "typeFilter": "PASS",
+    "safeMiss": 4,
+    "noWeb": true
+  },
+  "coverage": {
+    "broader": 1,
+    "limited": 51,
+    "blockers": {
+      "authority_count_below_or_eq_100": 51,
+      "case_count_below_20": 50,
+      "no_high_or_appellate": 31,
+      "statute_count_below_15": 0,
+      "statute_subjects_below_6": 0
+    }
+  },
+  "operational": {
+    "orphanProcesses": 0,
+    "autostopDisabled": true,
+    "machine": "811d3e3f522648",
+    "commitPending": true,
+    "deploy": "none (DB corpus only + scripts)",
+    "health": "passing",
+    "FEATURE_AGENTS": "0"
+  },
+  "engineeringFixesThisWave": [
+    "Write /tmp/cl-batch-result.json on unhandled/timeout errors so pollers exit",
+    "Upload local bundled CL job (avoid stale GitHub raw)",
+    "Retry TimeoutError inside ClRateLimiter; 90s fetch/embed timeouts",
+    "Poller stale-running guard + ignore pre-start paused race",
+    "Wave-1 soft Retry-After wait; Fly autostop off for CL workers"
+  ],
+  "releaseClassification": "staging corpus advance — Queue #2 remains OPEN; CL hard-stop cooldown active"
+}

@@ -1,0 +1,34 @@
+{
+  "wave": "2M",
+  "queue": 2,
+  "queue9": "CLOSED",
+  "openGaps": [
+    {
+      "id": "CL_COOLDOWN",
+      "priority": 1,
+      "detail": "CourtListener Retry-After 3600s; blockedUntil ~2026-09-20T16:45:30Z. Resume NY@cl-opinion-11276521 then Wave-1 high courts."
+    },
+    {
+      "id": "WAVE1_HIGH_COURTS",
+      "priority": 1,
+      "detail": "NY high ≈19 (target ≥20). Remaining high courts: CA PA NJ FL TX IL MA VA DE. Do not start intermediate appellate until high-court baseline exists."
+    },
+    {
+      "id": "CITATION_TARGET_ABSENT",
+      "priority": 2,
+      "detail": "extracted 3297 / resolved 90 / unresolved 3207. Dominant: target absent (federal reporter cites). No aggressive fuzzy matching."
+    },
+    {
+      "id": "BROADER_STATES",
+      "priority": 2,
+      "detail": "broader=1 (US only). Blockers: authority≤100 (51), case<20 (50), no high/appellate (31)."
+    }
+  ],
+  "closedThisWave": [
+    "Federal CAFC deepen to 15",
+    "Federal CA7 deepen to 17",
+    "Federal CA10 deepen to 16",
+    "Hard-stop regression after long Retry-After (3600s) — zero extra CL calls"
+  ],
+  "doNotOpen": ["Queue #3"]
+}

@@ -2295,13 +2295,24 @@ var ClRateLimiter = class {
         if (wait > 0) await sleep(wait);
         this.apiCalls += 1;
         this.lastRequestAt = Date.now();
-        last = await fetch(url, {
-          headers: {
-            Authorization: `Token ${this.apiKey}`,
-            Accept: "application/json"
-          },
-          signal: AbortSignal.timeout(45e3)
-        });
+        try {
+          last = await fetch(url, {
+            headers: {
+              Authorization: `Token ${this.apiKey}`,
+              Accept: "application/json"
+            },
+            signal: AbortSignal.timeout(9e4)
+          });
+        } catch (err) {
+          const msg = String(err instanceof Error ? err.message : err);
+          const isTimeout = /timeout|aborted|AbortError|TimeoutError/i.test(msg);
+          if (!isTimeout || attempt >= this.maxRetries) throw err;
+          const backoffSec = Math.min(15 + attempt * 10 + Math.floor(Math.random() * 5), 60);
+          this.lastRetryAfterSec = backoffSec;
+          this.globalPauseUntil = Date.now() + backoffSec * 1e3;
+          await sleep(backoffSec * 1e3);
+          continue;
+        }
         if (last.status !== 429) return last;
         this.rateLimitHits += 1;
         this.last429Endpoint = url.split("?")[0] ?? url;
@@ -2442,7 +2453,8 @@ async function embedBatch(texts, apiKey) {
       model: EMBEDDING_MODEL,
       input: texts,
       dimensions: EMBEDDING_DIMS
-    })
+    }),
+    signal: AbortSignal.timeout(9e4)
   });
   if (!res.ok) throw new Error(`openai_embeddings_${res.status}`);
   const json = await res.json();
@@ -3125,12 +3137,40 @@ async function main() {
   });
 }
 main().catch(async (e) => {
-  console.log(
-    JSON.stringify({
-      ok: false,
-      status: "failed",
-      err: String(e?.stack || e).slice(0, 2e3)
-    })
-  );
-  process.exit(1);
+  const errText = String(e?.stack || e).slice(0, 2e3);
+  const isTimeout = /TimeoutError|aborted due to timeout|AbortError/i.test(errText);
+  const payload = {
+    ok: isTimeout,
+    status: isTimeout ? "paused" : "failed",
+    reason: isTimeout ? "fetch_timeout_soft_pause" : "unhandled_error",
+    last_error: errText.slice(0, 400),
+    err: errText
+  };
+  try {
+    require("node:fs").writeFileSync("/tmp/cl-batch-result.json", JSON.stringify(payload));
+  } catch {
+  }
+  console.log(JSON.stringify(payload));
+  try {
+    const databaseUrl = process.env.DATABASE_URL?.trim();
+    const clCourt = (process.env.CL_COURT ?? "").trim().toLowerCase();
+    if (databaseUrl && clCourt) {
+      const sql = src_default(databaseUrl, { max: 1, ssl: "require", idle_timeout: 5, connect_timeout: 20 });
+      try {
+        await sql`
+          update corpus_ingest_jobs
+          set status = ${isTimeout ? "paused" : "failed"},
+              updated_at = now(),
+              last_error = ${errText.slice(0, 400)}
+          where source = ${"courtlistener"}
+            and cl_court = ${clCourt}
+            and status = ${"running"}
+        `;
+      } finally {
+        await sql.end({ timeout: 5 });
+      }
+    }
+  } catch {
+  }
+  process.exit(isTimeout ? 0 : 1);
 });

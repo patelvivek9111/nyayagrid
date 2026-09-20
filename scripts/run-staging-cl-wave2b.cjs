@@ -48,8 +48,8 @@ function buildPlan() {
   if (planArg === "all") return [...FEDERAL, ...WAVE1];
   return planArg.split(",").filter(Boolean).map((court) => ({
     court: court.trim(),
-    target: 12,
-    batch: 4,
+    target: 15,
+    batch: 5,
   }));
 }
 
@@ -121,10 +121,11 @@ for (const item of plan) {
     }
     if (status === "completed") break;
     if (status === "failed" && last?.ok === false) break;
-    // paused → continue same court
+    // paused → wait at least Retry-After (soft) before next batch; never probe early.
+    const waitMs = Math.max((retrySec > 0 ? retrySec + 5 : 8) * 1000, 8_000);
     spawnSync(process.execPath, [
       "-e",
-      "Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,8000)",
+      `Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,${waitMs})`,
     ]);
   }
 }

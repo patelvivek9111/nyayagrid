@@ -1,0 +1,25 @@
+{
+  "stopped": "rate_limited",
+  "results": [
+    {
+      "court": "ny",
+      "round": 1,
+      "result": {
+        "ok": true,
+        "status": "rate_limited",
+        "reason": "RATE LIMIT WINDOW REACHED",
+        "clCourt": "ny",
+        "mappedCourt": "st-ny-high",
+        "discoverPath": "opinions",
+        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/opinions/",
+        "lastRetryAfterSec": 3600,
+        "rateLimitCount": 1,
+        "apiCalls": 1,
+        "cursor": "cl-opinion-11276521",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ny&cursor=cD0xMTI2MjgyMw%3D%3D&order_by=-id&page_size=10",
+        "completedCount": 20,
+        "featureAgents": "0"
+      }
+    }
+  ]
+}
