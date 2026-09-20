@@ -98,6 +98,11 @@ describe("corpus bundles", () => {
       "50S-WAVE-2H",
       "50S-WAVE-2I",
       "50S-WAVE-2J",
+      "50S-WAVE-2K",
+      "50S-WAVE-2L",
+      "50S-WAVE-2M",
+      "50S-WAVE-2N",
+      "50S-WAVE-2O",
     ]).toContain(manifest.phase);
     expect(manifest.states.length).toBeGreaterThanOrEqual(20);
     const codes = manifest.states.map((s) => s.code);

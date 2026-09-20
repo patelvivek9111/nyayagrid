@@ -1,0 +1,41 @@
+{
+  "wave": "2O",
+  "phase": "50S-WAVE-2O",
+  "queue": 2,
+  "queue9": "CLOSED",
+  "openGaps": [
+    {
+      "id": "CL_COOLDOWN",
+      "priority": 1,
+      "detail": "blockedUntil ~2026-09-20T20:02:02Z. Zero CL calls this run. Resume per wave2o-next-cl-run-manifest.json."
+    },
+    {
+      "id": "WAVE1_HIGH_COURTS",
+      "priority": 1,
+      "detail": "NY 19/20; CA–DE not started. Mappings verified locally."
+    },
+    {
+      "id": "CITATION_TARGET_ABSENT",
+      "priority": 2,
+      "detail": "3206/3207 unresolved = A_target_absent (mostly F.2d/F.3d + U.S. Reports)."
+    },
+    {
+      "id": "NATIONAL_CASE_DEPTH",
+      "priority": 2,
+      "detail": "971 cases still needed for all states+DC to hit ≥20 cases; ~3926 authority slots to clear >100 gates arithmetically."
+    },
+    {
+      "id": "CONTINUOUS_GROWTH_PREP",
+      "priority": 3,
+      "detail": "See wave2o-continuous-growth-prep.json — #2 ready for checkpoints/dedup; national queue/scheduler is #8."
+    }
+  ],
+  "closedThisWave": [
+    "Wave-1 high + intermediate local mapping audit",
+    "National gap-ranked priority queue",
+    "Normalization gap classified (unreported CL exemption)",
+    "CL chunk/embedding completeness verified",
+    "Citation WHY audit + retrieval + federal isolation"
+  ],
+  "doNotOpen": ["Queue #3", "Queue #8 implementation"]
+}

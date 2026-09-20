@@ -1,0 +1,133 @@
+{
+  "wave": "2O",
+  "courtListenerHttpCalls": 0,
+  "blockedUntil": "2026-09-20T20:02:02.000Z",
+  "purpose": "Deterministic next CL run — no rediscovery. Resume after cooldown only.",
+  "wave1High": [
+    {
+      "order": 1,
+      "jurisdiction": "NY",
+      "clCourtId": "ny",
+      "nyayaCourtId": "st-ny-high",
+      "checkpoint": "cl-opinion-11276521",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ny&cursor=cD0xMTI2MjgyMw%3D%3D&order_by=-id&page_size=10",
+      "currentCount": 19,
+      "target": 20,
+      "status": "resume"
+    },
+    {
+      "order": 2,
+      "jurisdiction": "CA",
+      "clCourtId": "cal",
+      "nyayaCourtId": "st-ca-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "start"
+    },
+    {
+      "order": 3,
+      "jurisdiction": "PA",
+      "clCourtId": "pa",
+      "nyayaCourtId": "st-pa-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "start"
+    },
+    {
+      "order": 4,
+      "jurisdiction": "NJ",
+      "clCourtId": "nj",
+      "nyayaCourtId": "st-nj-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "start"
+    },
+    {
+      "order": 5,
+      "jurisdiction": "FL",
+      "clCourtId": "fla",
+      "nyayaCourtId": "st-fl-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "start"
+    },
+    {
+      "order": 6,
+      "jurisdiction": "TX",
+      "clCourtId": "tex",
+      "nyayaCourtId": "st-tx-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "start",
+      "notes": "Civil high court"
+    },
+    {
+      "order": 7,
+      "jurisdiction": "TX",
+      "clCourtId": "texcrimapp",
+      "nyayaCourtId": "st-tx-crim-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 10,
+      "status": "start",
+      "notes": "Criminal high court — do not collapse with tex"
+    },
+    {
+      "order": 8,
+      "jurisdiction": "IL",
+      "clCourtId": "ill",
+      "nyayaCourtId": "st-il-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "start"
+    },
+    {
+      "order": 9,
+      "jurisdiction": "MA",
+      "clCourtId": "mass",
+      "nyayaCourtId": "st-ma-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "start"
+    },
+    {
+      "order": 10,
+      "jurisdiction": "VA",
+      "clCourtId": "va",
+      "nyayaCourtId": "st-va-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "start"
+    },
+    {
+      "order": 11,
+      "jurisdiction": "DE",
+      "clCourtId": "del",
+      "nyayaCourtId": "st-de-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "start"
+    }
+  ],
+  "afterWave1High": {
+    "intermediateAppellate": "see wave2o-intermediate-appellate-prep.json — only after each state's high-court baseline",
+    "nationalHighCourtPriority": "see wave2o-coverage-priority.json priorityOrder (gap-ranked)"
+  },
+  "workerEntry": "node scripts/run-staging-cl-wave1-high.cjs <sha> ny",
+  "hardStopRules": [
+    "concurrency 1",
+    "CL_RATE_MS>=1500",
+    "Retry-After>300 => exit rate_limited immediately",
+    "post-429 extra requests must be 0",
+    "orphan check after stop"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "wave": "2O",
+  "courtListenerHttpCalls": 0,
+  "codeReviewed": "scripts/staging-cl-batch-job.ts",
+  "findings": [
+    {
+      "id": "PAGE_SIZE",
+      "status": "ok",
+      "detail": "pageSize = min(batchSize*2, 50); list discover uses cursor next_page_url — no completed-page refetch when checkpoint present."
+    },
+    {
+      "id": "CLUSTER_ENRICH_GATE",
+      "status": "ok",
+      "detail": "enrichFromCluster skipped when citation OR docket_number already present on list hit."
+    },
+    {
+      "id": "SHORT_TEXT_OPINION_REFETCH",
+      "status": "accepted_cost",
+      "detail": "Extra GET /opinions/{id}/ only when list text < 200 chars — required for chunking quality."
+    },
+    {
+      "id": "DOCKET_URL_FOLLOW",
+      "status": "accepted_cost",
+      "detail": "Optional docket GET only when still missing docket after cluster enrich; enables honest unreported labeling."
+    },
+    {
+      "id": "CONCURRENCY",
+      "status": "ok",
+      "detail": "ClRateLimiter single-flight chain; CL_RATE_MS default 1500."
+    },
+    {
+      "id": "HARD_STOP",
+      "status": "ok",
+      "detail": "Retry-After > 300 returns 429 to caller; batch job exits rate_limited and writes /tmp/cl-batch-result.json."
+    },
+    {
+      "id": "USAGE_ENDPOINT",
+      "status": "not_integrated",
+      "detail": "No CourtListener API usage/quota endpoint wired yet — stop-before-limit needs that after cooldown (still zero calls this run)."
+    },
+    {
+      "id": "CACHED_MAPPINGS",
+      "status": "ok",
+      "detail": "CL_COURT_MAP is local static — no /courts/ rediscovery on each batch."
+    }
+  ],
+  "codeChangesThisRun": "none — no clear amplification bug without harming metadata quality"
+}

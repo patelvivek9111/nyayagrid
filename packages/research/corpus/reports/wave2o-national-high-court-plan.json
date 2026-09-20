@@ -1,0 +1,24 @@
+{
+  "wave": "2O",
+  "courtListenerHttpCalls": 0,
+  "purpose": "National high-court ingestion ordering for remaining states+DC after Wave-1.",
+  "method": "Sort limited jurisdictions by severity: no_high/appellate (1000) + authorityDeficit*2 + caseDeficit*10. No invented legal significance.",
+  "wave1First": ["NY", "CA", "PA", "NJ", "FL", "TX", "IL", "MA", "VA", "DE"],
+  "nationalAfterWave1": [
+    "LA", "DC", "ID", "MO", "MS", "MT", "ND", "NE", "NH", "NM", "NV", "OK", "SC", "SD", "TN",
+    "UT", "VT", "WI", "WY", "AL", "AK", "AR", "GA", "HI", "IA", "IN", "KS", "KY", "ME", "MI",
+    "MN", "NC", "OR", "RI", "WV", "OH", "WA", "CO", "MD", "AZ", "CT"
+  ],
+  "mappingStatus": {
+    "wave1HighMappedLocally": 11,
+    "wave1IntermediateMappedLocally": 10,
+    "deIntermediate": "NEEDS_VERIFY_AFTER_COOLDOWN",
+    "nationalClIds": "NEEDS_VERIFY_AFTER_COOLDOWN — only Wave-1 + federal CL ids exist in CL_COURT_MAP today"
+  },
+  "architecturalNotes": [
+    "corpus_ingest_jobs already supports per-cl_court checkpoints.",
+    "run-staging-cl-wave1-high.cjs / wave2b plans are the current queue drivers.",
+    "Missing: durable national queue table + scheduler for hands-off multi-state runs (Queue #8 territory)."
+  ],
+  "source": "wave2o-coverage-priority.json"
+}

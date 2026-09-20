@@ -1,0 +1,37 @@
+{
+  "wave": "2O",
+  "courtListenerHttpCalls": 0,
+  "scope": "Queue #2 architecture readiness for eventual continuous growth — NOT Queue #8 implementation.",
+  "alreadySupports": [
+    "Durable corpus_ingest_jobs checkpoints (cursor, next_page_url, imported counts)",
+    "Dedup via source_external_id / content-hash skip paths in staging-cl-batch-job",
+    "Normalization of jurisdiction/court metadata on ingest",
+    "Chunks + embeddings on import",
+    "Citation edge extraction on import",
+    "Rate-limit hard-stop with Retry-After persistence",
+    "Coverage/currentness recalculation via inventory + audit scripts"
+  ],
+  "gapsBlockingHandsOffGrowth": [
+    {
+      "id": "NO_NATIONAL_QUEUE_TABLE",
+      "detail": "Plans live in JS arrays / JSON reports, not a durable scheduled queue with lease/heartbeat."
+    },
+    {
+      "id": "NO_AUTO_NEW_OPINION_WATCHER",
+      "detail": "Ingest is pull/batch from oldest-cursor pagination, not a continuous new-opinion watcher."
+    },
+    {
+      "id": "INCOMPLETE_CL_COURT_MAP",
+      "detail": "CL_COURT_MAP covers Wave-1 + federal only; remaining states need verified CL ids before national automation."
+    },
+    {
+      "id": "FLY_AUTOSTOP_RISK",
+      "detail": "Detached workers on Fly can die if machine autostops; keep-alive/autostop-off required for long batches."
+    },
+    {
+      "id": "UNREPORTED_CASE_DEPTH",
+      "detail": "Many recent CL opinions are unreported (no reporter cite), limiting citation-graph resolution until reporter-bearing opinions are prioritized."
+    }
+  ],
+  "doNotImplementHere": ["Queue #8 continuous growth system"]
+}

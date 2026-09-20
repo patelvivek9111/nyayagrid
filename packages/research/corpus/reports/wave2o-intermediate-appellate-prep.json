@@ -1,0 +1,130 @@
+{
+  "wave": "2O",
+  "courtListenerHttpCalls": 0,
+  "note": "From local CL_COURT_MAP only. External CL /courts/ verification marked NEEDS_VERIFY_AFTER_COOLDOWN.",
+  "ingestionOrderAfterHighBaseline": ["ny", "cal", "pa", "nj", "fla", "tex", "ill", "mass", "va", "del"],
+  "intermediateAppellate": [
+    {
+      "jurisdiction": "NY",
+      "courtName": "New York Supreme Court, Appellate Division",
+      "clCourtId": "nyappdiv",
+      "nyayaCourtId": "st-ny-app",
+      "courtLevel": "state_appellate",
+      "structureExists": true,
+      "checkpointNamespace": "corpus_ingest_jobs.cl_court=nyappdiv",
+      "verifyStatus": "mapped_local",
+      "gate": "after_ny_high_baseline"
+    },
+    {
+      "jurisdiction": "CA",
+      "courtName": "California Court of Appeal",
+      "clCourtId": "calctapp",
+      "nyayaCourtId": "st-ca-app",
+      "courtLevel": "state_appellate",
+      "structureExists": true,
+      "checkpointNamespace": "corpus_ingest_jobs.cl_court=calctapp",
+      "verifyStatus": "mapped_local",
+      "gate": "after_ca_high_baseline"
+    },
+    {
+      "jurisdiction": "PA",
+      "courtName": "Superior Court of Pennsylvania",
+      "clCourtId": "pasuperct",
+      "nyayaCourtId": "st-pa-super",
+      "courtLevel": "state_appellate",
+      "structureExists": true,
+      "checkpointNamespace": "corpus_ingest_jobs.cl_court=pasuperct",
+      "verifyStatus": "mapped_local",
+      "gate": "after_pa_high_baseline"
+    },
+    {
+      "jurisdiction": "PA",
+      "courtName": "Commonwealth Court of Pennsylvania",
+      "clCourtId": "pacommwlth",
+      "nyayaCourtId": "st-pa-comm",
+      "courtLevel": "state_appellate",
+      "structureExists": true,
+      "checkpointNamespace": "corpus_ingest_jobs.cl_court=pacommwlth",
+      "verifyStatus": "mapped_local",
+      "gate": "after_pa_high_baseline"
+    },
+    {
+      "jurisdiction": "NJ",
+      "courtName": "Superior Court of New Jersey, Appellate Division",
+      "clCourtId": "njsuperct",
+      "nyayaCourtId": "st-nj-app",
+      "courtLevel": "state_appellate",
+      "structureExists": true,
+      "checkpointNamespace": "corpus_ingest_jobs.cl_court=njsuperct",
+      "verifyStatus": "mapped_local",
+      "notes": "CL id njsuperct historically used for Appellate Division; NEEDS_VERIFY_AFTER_COOLDOWN against /courts/",
+      "gate": "after_nj_high_baseline"
+    },
+    {
+      "jurisdiction": "FL",
+      "courtName": "Florida District Courts of Appeal",
+      "clCourtId": "fladistctapp",
+      "nyayaCourtId": "st-fl-app",
+      "courtLevel": "state_appellate",
+      "structureExists": true,
+      "checkpointNamespace": "corpus_ingest_jobs.cl_court=fladistctapp",
+      "verifyStatus": "mapped_local",
+      "gate": "after_fl_high_baseline"
+    },
+    {
+      "jurisdiction": "TX",
+      "courtName": "Texas Courts of Appeals",
+      "clCourtId": "texapp",
+      "nyayaCourtId": "st-tx-app",
+      "courtLevel": "state_appellate",
+      "structureExists": true,
+      "checkpointNamespace": "corpus_ingest_jobs.cl_court=texapp",
+      "verifyStatus": "mapped_local",
+      "gate": "after_tx_high_baseline_both_courts"
+    },
+    {
+      "jurisdiction": "IL",
+      "courtName": "Appellate Court of Illinois",
+      "clCourtId": "illappct",
+      "nyayaCourtId": "st-il-app",
+      "courtLevel": "state_appellate",
+      "structureExists": true,
+      "checkpointNamespace": "corpus_ingest_jobs.cl_court=illappct",
+      "verifyStatus": "mapped_local",
+      "gate": "after_il_high_baseline"
+    },
+    {
+      "jurisdiction": "MA",
+      "courtName": "Massachusetts Appeals Court",
+      "clCourtId": "massappct",
+      "nyayaCourtId": "st-ma-app",
+      "courtLevel": "state_appellate",
+      "structureExists": true,
+      "checkpointNamespace": "corpus_ingest_jobs.cl_court=massappct",
+      "verifyStatus": "mapped_local",
+      "gate": "after_ma_high_baseline"
+    },
+    {
+      "jurisdiction": "VA",
+      "courtName": "Court of Appeals of Virginia",
+      "clCourtId": "vacapp",
+      "nyayaCourtId": "st-va-app",
+      "courtLevel": "state_appellate",
+      "structureExists": true,
+      "checkpointNamespace": "corpus_ingest_jobs.cl_court=vacapp",
+      "verifyStatus": "mapped_local",
+      "gate": "after_va_high_baseline"
+    },
+    {
+      "jurisdiction": "DE",
+      "courtName": null,
+      "clCourtId": null,
+      "nyayaCourtId": null,
+      "courtLevel": null,
+      "structureExists": false,
+      "checkpointNamespace": null,
+      "verifyStatus": "NEEDS_VERIFY_AFTER_COOLDOWN",
+      "notes": "Delaware has limited intermediate appellate structure; no CL id in local map. Confirm after cooldown."
+    }
+  ]
+}

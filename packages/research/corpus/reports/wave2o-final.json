@@ -1,0 +1,70 @@
+{
+  "verdict": "PASS",
+  "queue": 2,
+  "queue9": "CLOSED",
+  "transitionAllowed": false,
+  "wave": "2O",
+  "courtListenerHttpCalls": 0,
+  "featureAgents": "0",
+  "blockedUntil": "2026-09-20T20:02:02.000Z",
+  "summary": "Cooldown-only prep complete: Wave-1 mappings verified, national priority queue built, citation WHY audit confirms TARGET_ABSENT dominance, normalization gap explained (212 unreported CL cases), all CL chunks/embeddings complete, retrieval + federal isolation PASS.",
+  "normalization": {
+    "before": { "total": 1568, "withCitation": 1356, "withNormalizedCitation": 1356, "missingNormalizedCitation": 0, "metadataNormalized": 1568 },
+    "after": { "total": 1568, "withCitation": 1356, "withNormalizedCitation": 1356, "missingNormalizedCitation": 0, "metadataNormalized": 1568 },
+    "updated": 0,
+    "remainingGapExplanation": "212 CourtListener cases are unreported (no reporter citation) — expected exemption, not a stale report or bug"
+  },
+  "chunksEmbeddings": {
+    "clAuthorities": 212,
+    "chunks": 4602,
+    "withEmbedding": 4602,
+    "authoritiesWithoutChunks": 0,
+    "orphanChunks": 0,
+    "duplicateExternalIds": 0,
+    "embeddingDims": 384,
+    "repaired": 0
+  },
+  "citationGraph": {
+    "extracted": 3297,
+    "resolved": 90,
+    "unresolved": 3207,
+    "ambiguous": 0,
+    "TARGET_ABSENT": 3206,
+    "PARSER_GAP": 0,
+    "JURISDICTION_MISMATCH": 0,
+    "MALFORMED": 1,
+    "NORMALIZATION_MISMATCH": 0,
+    "UNSUPPORTED_FAMILY": 0
+  },
+  "coverage": {
+    "broader": 1,
+    "limited": 51,
+    "nationalMinimumCasesStillNeeded": 971,
+    "approximateCasesForAuthorityGates": 3926,
+    "noHighOrAppellate": 31
+  },
+  "retrieval": {
+    "exactCite": "52/52 PASS",
+    "subjectIssue": "52/52 PASS",
+    "isolation": "PASS",
+    "federalAllCircuitsRepresented": true,
+    "federalCircuitIsolation": "PASS",
+    "safeMiss": 4,
+    "noWeb": true
+  },
+  "tests": {
+    "researchCorpusCitationRefreshAdaptersSubject": "53/53 after phase allowlist fix",
+    "wave2bRateLimit": "4/4 PASS"
+  },
+  "nextClAction": "After blocked-until: resume NY@cl-opinion-11276521 (19→≥20) then Wave-1 highs per wave2o-next-cl-run-manifest.json",
+  "artifacts": [
+    "wave2o-wave1-court-mapping.json",
+    "wave2o-intermediate-appellate-prep.json",
+    "wave2o-national-high-court-plan.json",
+    "wave2o-next-cl-run-manifest.json",
+    "wave2o-coverage-priority.json",
+    "wave2o-continuous-growth-prep.json",
+    "wave2o-rate-limit-efficiency.json",
+    "wave2o-cooldown-prep.json"
+  ]
+}
