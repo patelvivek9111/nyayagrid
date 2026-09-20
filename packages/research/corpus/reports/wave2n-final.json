@@ -1,0 +1,93 @@
+{
+  "verdict": "WAITING_FOR_CL",
+  "queue": 2,
+  "queue9": "CLOSED",
+  "transitionAllowed": false,
+  "wave": "2N",
+  "featureAgents": "0",
+  "nextSubStep": "After Retry-After (~2026-09-20T20:02:02Z): resume NY@cl-opinion-11276521 (n=19→≥20) then Wave-1 high courts CA→DE. Do not open #3.",
+  "courtListener": {
+    "priorCooldownExpired": true,
+    "probe": {
+      "status": 429,
+      "at": "2026-09-20T16:45:45.000Z",
+      "endpoint": "opinions?court=ca11&page_size=1",
+      "retryAfterSeconds": 11733,
+      "ms": 444
+    },
+    "hardStop": {
+      "blockedUntil": "2026-09-20T20:02:02.000Z",
+      "post429ExtraRequests": 0,
+      "regression": "PASS"
+    },
+    "usageQuotaEndpoint": "not_queried_after_429"
+  },
+  "federal": {
+    "baseline": "COMPLETE",
+    "counts": {
+      "scotus": 18,
+      "ca1": 11, "ca2": 10, "ca3": 11, "ca4": 12, "ca5": 10, "ca6": 12,
+      "ca7": 17, "ca8": 15, "ca9": 15, "ca10": 16, "ca11": 15,
+      "cadc": 16, "cafc": 15
+    }
+  },
+  "wave1HighCourts": {
+    "ny": { "cases": 19, "checkpoint": "cl-opinion-11276521", "status": "partial" },
+    "ca": { "cases": 0, "checkpoint": null, "status": "not_started" },
+    "pa": { "cases": 0, "checkpoint": null, "status": "not_started" },
+    "nj": { "cases": 0, "checkpoint": null, "status": "not_started" },
+    "fl": { "cases": 0, "checkpoint": null, "status": "not_started" },
+    "tx": { "cases": 0, "checkpoint": null, "status": "not_started" },
+    "il": { "cases": 0, "checkpoint": null, "status": "not_started" },
+    "ma": { "cases": 0, "checkpoint": null, "status": "not_started" },
+    "va": { "cases": 0, "checkpoint": null, "status": "not_started" },
+    "de": { "cases": 0, "checkpoint": null, "status": "not_started" }
+  },
+  "corpus": {
+    "authorities": 1568,
+    "cases": 257,
+    "cl": 212,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "normalized": 1356,
+    "provenance": 1568,
+    "historical": 80,
+    "current_as_of_source_date": 1298,
+    "unknown": 190,
+    "lastChecked": 1433
+  },
+  "citationGraph": {
+    "extracted": 3297,
+    "resolved": 90,
+    "unresolved": 3207,
+    "ambiguous": 0,
+    "newlyResolved": 0,
+    "targetAbsentDominant": true,
+    "parserGapSample": 0
+  },
+  "retrieval": {
+    "exactCite": "52/52 PASS",
+    "subjectIssue": "52/52 PASS",
+    "isolation": "PASS",
+    "safeMiss": 4,
+    "noWeb": true
+  },
+  "coverage": {
+    "broader": 1,
+    "limited": 51,
+    "blockers": {
+      "authority_count_below_or_eq_100": 51,
+      "case_count_below_20": 50,
+      "no_high_or_appellate": 31
+    }
+  },
+  "operational": {
+    "orphanProcesses": 0,
+    "commitPending": true,
+    "deploy": "none",
+    "health": "passing",
+    "FEATURE_AGENTS": "0"
+  },
+  "releaseClassification": "WAITING_FOR_CL — Queue #2 OPEN; Wave-1 high courts blocked on CourtListener cooldown"
+}

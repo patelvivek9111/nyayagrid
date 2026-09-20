@@ -1,44 +1,43 @@
 {
-  "wave": "2M-cl-resume",
+  "wave": "2N-wave1-high-resume",
   "branch": "COURTLISTENER_HARD_STOP",
-  "result": "RATE_LIMITED",
+  "result": "WAITING_FOR_CL",
   "cooldownCheck": {
-    "blockedUntil": "2026-09-19T21:02:30.000Z",
-    "checkedAt": "2026-09-20T13:56:49.938Z",
+    "blockedUntilPrior": "2026-09-20T16:45:30.000Z",
+    "checkedAt": "2026-09-20T16:45:32.485Z",
     "expired": true
   },
-  "probedAt": "2026-09-20T13:57:00.000Z",
+  "probedAt": "2026-09-20T16:45:45.000Z",
   "probe": {
     "endpoint": "GET /api/rest/v4/opinions/?cluster__docket__court=ca11&page_size=1",
-    "status": 200,
-    "retryAfterSeconds": null,
-    "ms": 1167,
-    "resultCount": 20,
-    "sampleOpinionIdPresent": true,
-    "additionalClCallsBeforeResume": 0
+    "status": 429,
+    "retryAfterSeconds": 11733,
+    "ms": 444,
+    "resultCount": 0,
+    "additionalClCallsAfter429": 0
   },
   "hardStop": {
-    "at": "2026-09-20T15:45:30.000Z",
-    "court": "ny",
+    "at": "2026-09-20T16:45:45.000Z",
+    "court": "probe_pre_resume",
     "endpoint": "https://www.courtlistener.com/api/rest/v4/opinions/",
     "httpStatus": 429,
-    "retryAfterSeconds": 3600,
-    "blockedUntil": "2026-09-20T16:45:30.000Z",
+    "retryAfterSeconds": 11733,
+    "blockedUntil": "2026-09-20T20:02:02.000Z",
     "post429ExtraRequests": 0,
     "hardStopRegression": "PASS",
-    "notes": "Retry-After>300 returned immediately; zero additional CL calls this run after hard stop."
+    "notes": "Exactly one probe after prior cooldown expiry; 429 → immediate stop; zero additional CL calls."
   },
   "checkpoint": {
     "court": "ny",
     "cursor": "cl-opinion-11276521",
     "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ny&cursor=cD0xMTI2MjgyMw%3D%3D&order_by=-id&page_size=10",
+    "nyCases": 19,
     "completedCount": 20
   },
   "resumeOrder": ["ny", "cal", "pa", "nj", "fla", "tex", "ill", "mass", "va", "del"],
   "notes": [
-    "Cooldown expired. Exactly one authenticated probe before resume.",
-    "Hard-stop fix from 5f4b32f retained; post-timeout result-file + poller guards added this wave.",
-    "Federal deepen CAFC/CA7/CA10 completed before Wave-1.",
-    "Fly autostop disabled on staging machine 811d3e3f522648 for CL workers."
+    "Prior cooldown expired; single authenticated probe only.",
+    "Hard-stop retained; no Wave-1 ingest this run.",
+    "Independent #2 work only after hard stop."
   ]
 }

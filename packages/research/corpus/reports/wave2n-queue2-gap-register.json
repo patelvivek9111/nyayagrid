@@ -1,0 +1,31 @@
+{
+  "wave": "2N",
+  "queue": 2,
+  "queue9": "CLOSED",
+  "openGaps": [
+    {
+      "id": "CL_COOLDOWN",
+      "priority": 1,
+      "detail": "Probe 429 Retry-After 11733s; blockedUntil ~2026-09-20T20:02:02Z. Resume NY@cl-opinion-11276521 then Wave-1 highs."
+    },
+    {
+      "id": "WAVE1_HIGH_COURTS",
+      "priority": 1,
+      "detail": "NY high 19 (need ≥20). Remaining: CA PA NJ FL TX IL MA VA DE. No intermediate appellate until high-court baselines."
+    },
+    {
+      "id": "CITATION_TARGET_ABSENT",
+      "priority": 2,
+      "detail": "extracted 3297 / resolved 90 / unresolved 3207. Dominant: target absent."
+    },
+    {
+      "id": "BROADER_STATES",
+      "priority": 2,
+      "detail": "broader=1 (US). Blockers: authority≤100 (51), case<20 (50), no high/appellate (31)."
+    }
+  ],
+  "closedThisWave": [
+    "Hard-stop regression reconfirmed on probe 429 (post-429 extra requests = 0)"
+  ],
+  "doNotOpen": ["Queue #3"]
+}
