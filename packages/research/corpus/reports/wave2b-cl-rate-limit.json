@@ -1,43 +1,42 @@
 {
-  "wave": "2N-wave1-high-resume",
+  "wave": "2P-wave1-high-resume",
   "branch": "COURTLISTENER_HARD_STOP",
-  "result": "WAITING_FOR_CL",
+  "result": "RATE_LIMITED",
   "cooldownCheck": {
-    "blockedUntilPrior": "2026-09-20T16:45:30.000Z",
-    "checkedAt": "2026-09-20T16:45:32.485Z",
+    "blockedUntil": "2026-09-20T20:02:02.000Z",
+    "checkedAt": "2026-09-20T20:33:11.598Z",
     "expired": true
   },
-  "probedAt": "2026-09-20T16:45:45.000Z",
+  "probedAt": "2026-09-20T20:33:20.000Z",
   "probe": {
     "endpoint": "GET /api/rest/v4/opinions/?cluster__docket__court=ca11&page_size=1",
-    "status": 429,
-    "retryAfterSeconds": 11733,
-    "ms": 444,
-    "resultCount": 0,
-    "additionalClCallsAfter429": 0
+    "status": 200,
+    "retryAfterSeconds": null,
+    "ms": 788,
+    "resultCount": 20,
+    "sampleOpinionIdPresent": true,
+    "additionalClCallsBeforeResume": 0
   },
   "hardStop": {
-    "at": "2026-09-20T16:45:45.000Z",
-    "court": "probe_pre_resume",
+    "at": "2026-09-20T20:55:53.987Z",
+    "court": "nj",
     "endpoint": "https://www.courtlistener.com/api/rest/v4/opinions/",
     "httpStatus": 429,
-    "retryAfterSeconds": 11733,
-    "blockedUntil": "2026-09-20T20:02:02.000Z",
+    "retryAfterSeconds": 2250,
+    "blockedUntil": "2026-09-20T21:33:57.000Z",
     "post429ExtraRequests": 0,
     "hardStopRegression": "PASS",
-    "notes": "Exactly one probe after prior cooldown expiry; 429 → immediate stop; zero additional CL calls."
+    "notes": "NY/CA/PA high baselines complete. NJ first discover call hit Retry-After 2250; zero additional CL calls."
   },
   "checkpoint": {
-    "court": "ny",
-    "cursor": "cl-opinion-11276521",
-    "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ny&cursor=cD0xMTI2MjgyMw%3D%3D&order_by=-id&page_size=10",
-    "nyCases": 19,
-    "completedCount": 20
+    "ny": { "cursor": "cl-opinion-11261629", "n": 20, "status": "complete" },
+    "cal": { "cursor": "cl-opinion-11116316", "n": 20, "status": "complete" },
+    "pa": { "cursor": "cl-opinion-11343156", "n": 20, "status": "complete" },
+    "nj": { "cursor": null, "n": 0, "status": "rate_limited_before_import" }
   },
-  "resumeOrder": ["ny", "cal", "pa", "nj", "fla", "tex", "ill", "mass", "va", "del"],
+  "resumeOrder": ["nj", "fla", "tex", "texcrimapp", "ill", "mass", "va", "del"],
   "notes": [
-    "Prior cooldown expired; single authenticated probe only.",
-    "Hard-stop retained; no Wave-1 ingest this run.",
-    "Independent #2 work only after hard stop."
+    "Cooldown expired; single probe 200 before Wave-1 resume.",
+    "Hard-stop retained."
   ]
 }

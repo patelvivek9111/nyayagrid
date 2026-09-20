@@ -5,7 +5,7 @@ const sha =
   spawnSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).stdout.trim();
 const url = `https://raw.githubusercontent.com/patelvivek9111/nyayagrid/${sha}/scripts/staging-cl-shape-probe-bundled.cjs`;
 
-const cmd = `node -e "fetch(process.argv[1]).then(r=>{if(!r.ok)throw new Error('http_'+r.status);return r.text()}).then(t=>{require('fs').writeFileSync('/tmp/cl-shape.cjs',t); const {spawnSync}=require('child_process'); const r=spawnSync('env',['CL_COURT=scotus','node','/tmp/cl-shape.cjs'],{encoding:'utf8',env:process.env}); process.stdout.write(r.stdout||''); process.stderr.write((r.stderr||'').slice(0,800)); process.exit(r.status||0)}).catch(e=>{console.log(JSON.stringify({ok:false,err:String(e.message||e)}));process.exit(1)})" ${url}`;
+const cmd = `node -e "fetch(process.argv[1]).then(r=>{if(!r.ok)throw new Error('http_'+r.status);return r.text()}).then(t=>{require('fs').writeFileSync('/tmp/cl-shape.cjs',t); process.env.CL_COURT='scotus'; const {spawnSync}=require('child_process'); const r=spawnSync(process.execPath,['/tmp/cl-shape.cjs'],{encoding:'utf8',env:process.env}); process.stdout.write(r.stdout||''); process.stderr.write((r.stderr||'').slice(0,800)); process.exit(r.status||0)}).catch(e=>{console.log(JSON.stringify({ok:false,err:String(e.message||e)}));process.exit(1)})" ${url}`;
 
 const r = spawnSync(
   "flyctl",

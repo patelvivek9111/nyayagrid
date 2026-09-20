@@ -1,0 +1,124 @@
+{
+  "verdict": "WAITING_FOR_CL",
+  "queue": 2,
+  "queue9": "CLOSED",
+  "queue3": "NOT_OPEN",
+  "transitionAllowed": false,
+  "wave": "2P",
+  "featureAgents": "0",
+  "summary": "Cooldown expired; single probe 200; NY/CA/PA high-court baselines completed (>=20). NJ first discover hit Retry-After 2250; hard-stop with post-429 extra requests = 0. Cooldown blocked-until 2026-09-20T21:33:57.000Z. Independent citation/coverage/retrieval reports completed with zero additional CL HTTP.",
+  "courtListener": {
+    "cooldownExpiredAtStart": true,
+    "priorBlockedUntil": "2026-09-20T20:02:02.000Z",
+    "probe": {
+      "status": 200,
+      "endpoint": "GET /api/rest/v4/opinions/?cluster__docket__court=ca11&page_size=1",
+      "ms": 788
+    },
+    "hardStop": {
+      "at": "2026-09-20T20:55:53.987Z",
+      "court": "nj",
+      "httpStatus": 429,
+      "retryAfterSeconds": 2250,
+      "blockedUntil": "2026-09-20T21:33:57.000Z",
+      "post429ExtraRequests": 0,
+      "hardStopRegression": "PASS"
+    },
+    "quotaUsageQueried": false,
+    "orphanWorkers": 0
+  },
+  "wave1Highs": {
+    "ny": { "count": 20, "checkpoint": "cl-opinion-11261629", "baseline": "COMPLETE", "jurisdictionCases": 22, "highCourtCases": 22 },
+    "cal": { "count": 20, "checkpoint": "cl-opinion-11116316", "baseline": "COMPLETE", "jurisdictionCases": 22, "highCourtCases": 22 },
+    "pa": { "count": 20, "checkpoint": "cl-opinion-11343156", "baseline": "COMPLETE", "jurisdictionCases": 23, "highCourtCases": 22 },
+    "nj": { "count": 0, "checkpoint": null, "baseline": "INCOMPLETE", "status": "rate_limited_before_import" },
+    "fla": { "count": 0, "checkpoint": null, "baseline": "NOT_STARTED" },
+    "tex": { "count": 0, "checkpoint": null, "baseline": "NOT_STARTED", "note": "civil Supreme Court path preserved" },
+    "texcrimapp": { "count": 0, "checkpoint": null, "baseline": "NOT_STARTED", "note": "criminal high court path preserved" },
+    "ill": { "count": 0, "checkpoint": null, "baseline": "NOT_STARTED" },
+    "mass": { "count": 0, "checkpoint": null, "baseline": "NOT_STARTED" },
+    "va": { "count": 0, "checkpoint": null, "baseline": "NOT_STARTED" },
+    "del": { "count": 0, "checkpoint": null, "baseline": "NOT_STARTED" }
+  },
+  "resumeOrder": ["nj", "fla", "tex", "texcrimapp", "ill", "mass", "va", "del"],
+  "intermediateAppellate": {
+    "started": false,
+    "completed": false,
+    "note": "Deferred until Wave-1 highs complete and quota remains"
+  },
+  "nationalExpansion": {
+    "started": false,
+    "nextPriority": ["LA", "DC", "ID", "MO", "MS"]
+  },
+  "corpus": {
+    "authorities": 1609,
+    "cases": 298,
+    "clCases": 253,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "provenanceCanonicalUrlPct": 100,
+    "metadataNormalized": "1609/1609",
+    "citationNormalized": "1356/1356 eligible",
+    "clUnreportedCitationExemptions": 253,
+    "lastChecked": 1474,
+    "lastCheckedPct": 92,
+    "clChunks": 5591,
+    "clEmbeddings": 5591,
+    "embeddingDims": 384,
+    "missingChunks": 0,
+    "orphanChunks": 0,
+    "duplicateClExternalIds": 0
+  },
+  "coverage": {
+    "broader": 1,
+    "limited": 51,
+    "minimumCaseDeficit": 936,
+    "authorityGateDeficit": 3885,
+    "caseBelow20": 48,
+    "noHighOrAppellate": 31
+  },
+  "citationGraph": {
+    "extracted": 3354,
+    "resolved": 91,
+    "newlyResolved": 0,
+    "unresolved": 3263,
+    "TARGET_ABSENT": 3262,
+    "PARSER_GAP": 0,
+    "MALFORMED": 1,
+    "AMBIGUOUS": 0
+  },
+  "retrieval": {
+    "exactCite": "52/52 PASS",
+    "caseNameIssueSubject": "52/52 PASS",
+    "isolation": "PASS",
+    "highCourtPreference": "federal circuits represented; state high floors incomplete",
+    "safeMiss": "4/4 EXPECTED_MISS",
+    "noWeb": true,
+    "federalCircuitIsolation": "PASS",
+    "allCircuitsRepresented": true
+  },
+  "tests": {
+    "citationAudit": "PASS",
+    "citationResolve": "PASS (0 newly resolved; TARGET_ABSENT dominant)",
+    "retrievalDeterministic": "110 pass / 0 fail / 4 expected miss",
+    "coverageAudit": "PASS",
+    "federalRetrieval": "PASS",
+    "rateLimitHardStop": "PASS"
+  },
+  "operational": {
+    "commit": "pending",
+    "deploy": "not required (corpus ingest + reports only)",
+    "health": "ok (staging /api/v1/health; problems=[])",
+    "featureAgents": "0",
+    "orphanWorkers": 0,
+    "rollback": null
+  },
+  "remainingQueue2Work": [
+    "Resume Wave-1 highs after blocked-until: NJ→FL→TX(tex+texcrimapp)→IL→MA→VA→DE",
+    "Then Wave-1 intermediate appellate per wave2o prep",
+    "Then national high courts LA→DC→ID→MO→MS…",
+    "Continue until national breadth/depth complete; do not close #2 at floor=20"
+  ],
+  "productionClassification": "PARTIAL_INGEST_HARD_STOPPED_ON_CL_QUOTA — corpus growth blocked only by CourtListener Retry-After; local pipeline healthy"
+}

@@ -1,0 +1,24 @@
+{
+  "wave": "2P",
+  "generatedAt": "2026-09-20T20:58:00.000Z",
+  "queue2Open": true,
+  "queue9Closed": true,
+  "queue3NotOpen": true,
+  "blockedUntil": "2026-09-20T21:33:57.000Z",
+  "wave1HighProgress": {
+    "complete": ["ny", "cal", "pa"],
+    "incomplete": ["nj", "fla", "tex", "texcrimapp", "ill", "mass", "va", "del"],
+    "nextResume": "nj @ discover (cursor null)"
+  },
+  "coverageGaps": {
+    "broader": 1,
+    "limited": 51,
+    "minimumCaseDeficit": 936,
+    "authorityGateDeficit": 3885,
+    "caseBelow20": 48,
+    "noHighOrAppellate": 31
+  },
+  "citationBottleneck": "TARGET_ABSENT (3262/3263 unresolved) — more case-law ingestion required; no parser tuning",
+  "nationalNext": ["LA", "DC", "ID", "MO", "MS"],
+  "externalLimitation": "CourtListener rate limit Retry-After 2250s after NJ discover"
+}

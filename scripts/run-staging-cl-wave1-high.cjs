@@ -17,6 +17,7 @@ const HIGH = [
   { court: "nj", target: 20, batch: 5 },
   { court: "fla", target: 20, batch: 5 },
   { court: "tex", target: 20, batch: 5 },
+  { court: "texcrimapp", target: 10, batch: 5 },
   { court: "ill", target: 20, batch: 5 },
   { court: "mass", target: 20, batch: 5 },
   { court: "va", target: 20, batch: 5 },

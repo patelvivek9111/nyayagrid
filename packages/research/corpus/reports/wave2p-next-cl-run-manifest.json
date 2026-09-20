@@ -1,0 +1,122 @@
+{
+  "wave": "2P",
+  "blockedUntil": "2026-09-20T21:33:57.000Z",
+  "purpose": "Deterministic next CL run after Wave-2P hard-stop. Resume NJ discover then remaining Wave-1 highs. No rediscovery.",
+  "wave1High": [
+    {
+      "order": 1,
+      "jurisdiction": "NY",
+      "clCourtId": "ny",
+      "nyayaCourtId": "st-ny-high",
+      "checkpoint": "cl-opinion-11261629",
+      "currentCount": 20,
+      "target": 20,
+      "status": "complete"
+    },
+    {
+      "order": 2,
+      "jurisdiction": "CA",
+      "clCourtId": "cal",
+      "nyayaCourtId": "st-ca-high",
+      "checkpoint": "cl-opinion-11116316",
+      "currentCount": 20,
+      "target": 20,
+      "status": "complete"
+    },
+    {
+      "order": 3,
+      "jurisdiction": "PA",
+      "clCourtId": "pa",
+      "nyayaCourtId": "st-pa-high",
+      "checkpoint": "cl-opinion-11343156",
+      "currentCount": 20,
+      "target": 20,
+      "status": "complete"
+    },
+    {
+      "order": 4,
+      "jurisdiction": "NJ",
+      "clCourtId": "nj",
+      "nyayaCourtId": "st-nj-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "resume_discover"
+    },
+    {
+      "order": 5,
+      "jurisdiction": "FL",
+      "clCourtId": "fla",
+      "nyayaCourtId": "st-fl-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "start"
+    },
+    {
+      "order": 6,
+      "jurisdiction": "TX",
+      "clCourtId": "tex",
+      "nyayaCourtId": "st-tx-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "start",
+      "notes": "Civil high court"
+    },
+    {
+      "order": 7,
+      "jurisdiction": "TX",
+      "clCourtId": "texcrimapp",
+      "nyayaCourtId": "st-tx-crim-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 10,
+      "status": "start",
+      "notes": "Criminal high court — do not collapse with tex"
+    },
+    {
+      "order": 8,
+      "jurisdiction": "IL",
+      "clCourtId": "ill",
+      "nyayaCourtId": "st-il-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "start"
+    },
+    {
+      "order": 9,
+      "jurisdiction": "MA",
+      "clCourtId": "mass",
+      "nyayaCourtId": "st-ma-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "start"
+    },
+    {
+      "order": 10,
+      "jurisdiction": "VA",
+      "clCourtId": "va",
+      "nyayaCourtId": "st-va-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "start"
+    },
+    {
+      "order": 11,
+      "jurisdiction": "DE",
+      "clCourtId": "del",
+      "nyayaCourtId": "st-de-high",
+      "checkpoint": null,
+      "currentCount": 0,
+      "target": 20,
+      "status": "start"
+    }
+  ],
+  "nextAction": "After blocked-until expires: single probe, then resume nj discover → fla → tex → texcrimapp → ill → mass → va → del",
+  "nationalPriorityAfterWave1": ["LA", "DC", "ID", "MO", "MS"],
+  "sourcePriorityFile": "wave2o-coverage-priority.json"
+}
