@@ -1,0 +1,187 @@
+{
+  "wave": "2V",
+  "status": "PARTIAL",
+  "generatedAt": "2026-09-21T19:05:36.471Z",
+  "queue": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
+  },
+  "tier2": {
+    "liveLimits": {
+      "minute": 30,
+      "hour": 300,
+      "day": 1200
+    },
+    "atResumeStart": {
+      "minute": {
+        "used": 0,
+        "remaining": 30
+      },
+      "hour": {
+        "used": 199,
+        "remaining": 101,
+        "hourSafeRem": 81
+      },
+      "day": {
+        "used": 530,
+        "remaining": 670,
+        "daySafeRem": 630
+      }
+    },
+    "midRun": {
+      "hour": {
+        "used": 157,
+        "remaining": 143,
+        "hourSafeRem": 123
+      },
+      "day": {
+        "used": 687,
+        "remaining": 513,
+        "daySafeRem": 473
+      }
+    },
+    "post429": "not_probed_zero_post429_cl"
+  },
+  "courtListener": {
+    "opinionBatchApiCalls": 153,
+    "courtVerifyApprox": 16,
+    "totalRequestsApprox": 169,
+    "hard429Count": 1,
+    "post429OpinionRequests": 0,
+    "post429Requests": 0,
+    "cooldown": true,
+    "blockedUntil": "2026-09-21T20:03:39.000Z",
+    "cause429": "unpaced /courts/{id}/ verification burst after failed intermediate mappings; controller did not wrap court-id probes",
+    "orphanWorkers": 0
+  },
+  "efficiency": {
+    "casesImported": 64,
+    "authoritiesImported": 64,
+    "requestsPerAuthority": 2.39,
+    "note": "req/auth excludes court-verify waste; with verify waste higher",
+    "duplicateSkips": 0
+  },
+  "wave1Intermediate": {
+    "nyappdiv": {
+      "status": "COMPLETE",
+      "count": 15,
+      "cursor": "cl-opinion-11443015"
+    },
+    "calctapp": {
+      "status": "COMPLETE",
+      "count": 15,
+      "cursor": "cl-opinion-11443170"
+    },
+    "pasuperct": {
+      "status": "COMPLETE",
+      "count": 15,
+      "cursor": "cl-opinion-11441953"
+    },
+    "pacommwlth": {
+      "status": "MAPPING_GAP",
+      "count": 0,
+      "cursor": null,
+      "note": "CL id pacommwlth returns 404"
+    },
+    "njsuperct": {
+      "status": "MAPPING_GAP",
+      "count": 0,
+      "cursor": null,
+      "note": "CL id njsuperct returns 404"
+    },
+    "fladistctapp": {
+      "status": "COMPLETE",
+      "count": 15,
+      "cursor": "cl-opinion-11444300"
+    },
+    "texapp": {
+      "status": "failed",
+      "count": 0,
+      "cursor": null,
+      "note": "discover_http_502"
+    },
+    "illappct": {
+      "status": "COMPLETE",
+      "count": 15,
+      "cursor": "cl-opinion-11443051"
+    },
+    "massappct": {
+      "status": "COMPLETE",
+      "count": 15,
+      "cursor": "cl-opinion-11400840"
+    },
+    "vacapp": {
+      "status": "MAPPING_GAP",
+      "count": 0,
+      "cursor": null,
+      "note": "CL id vacapp returns 404"
+    }
+  },
+  "nationalHighs": {
+    "completed": [],
+    "partial": [],
+    "nextPriorities": [
+      "LA",
+      "DC",
+      "ID",
+      "MO",
+      "MS"
+    ],
+    "blockedBy": "429_hard_stop_before_national_map_expand",
+    "verifiedHighIds": {
+      "la": true,
+      "dc": true,
+      "idaho": true,
+      "mo": true,
+      "miss": true
+    }
+  },
+  "corpus": {
+    "authorities": 1863,
+    "cases": 552,
+    "clCases": 507,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "provenance": "100%",
+    "metadataNormalized": "1863/1863",
+    "citationNormalized": "1356/1356",
+    "lastChecked": 1728,
+    "chunksEmbeddings": "10811/10811",
+    "orphanChunks": 0
+  },
+  "coverage": {
+    "broader": 1,
+    "limited": 51,
+    "minimumCaseDeficit": 810,
+    "authorityGateDeficit": 3631,
+    "caseLt20": 41,
+    "noHighOrAppellate": 31
+  },
+  "citationGraph": {
+    "extracted": 3778,
+    "resolved": 102,
+    "newlyResolved": 0,
+    "TARGET_ABSENT": 3676,
+    "PARSER_GAP": 0,
+    "malformed": 1,
+    "ambiguous": 0
+  },
+  "retrieval": {
+    "exactCite": "PASS",
+    "caseName": "PASS",
+    "issue": "PASS",
+    "isolation": "PASS",
+    "highCourt": "PASS",
+    "intermediateAppellate": "PASS",
+    "safeMiss": "PASS",
+    "noWeb": true
+  },
+  "nextAutomaticResume": {
+    "timestamp": "2026-09-21T20:03:39.000Z",
+    "command": "CL_COURT=texapp CL_TARGET_MAX=15 node scripts/run-staging-cl-batch-job.cjs HEAD texapp 5 15",
+    "afterCooldownAlso": "expand CL_COURT_MAP for national highs (la,dc,idaho,...) then run national plan; fix NJ/PA-comm/VA-app CL ids offline before retry"
+  }
+}

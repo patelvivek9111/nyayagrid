@@ -1,0 +1,12 @@
+{
+  "wave": "2V",
+  "reason": "HARD_429_DURING_COURT_ID_VERIFY",
+  "hard429": true,
+  "blockedUntil": "2026-09-21T20:03:39.000Z",
+  "retryAfterSec": null,
+  "resumeCourt": "texapp",
+  "resumeCommand": "CL_COURT=texapp CL_TARGET_MAX=15 node scripts/run-staging-cl-batch-job.cjs HEAD texapp 5 15",
+  "featureAgents": "0",
+  "writtenAt": "2026-09-21T19:05:36.472Z",
+  "diagnosis": "Court ID probe loop continued after first 404s and hit 429; opinion ingest was already plan_finished. Zero post-429 opinion requests."
+}
