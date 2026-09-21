@@ -1,0 +1,58 @@
+{
+  "apiSumAllRounds": 245,
+  "r429": 0,
+  "finalDoneLastRound": 131,
+  "netAuth": 126,
+  "netCases": 126,
+  "reqPerNetAuth": 1.94,
+  "courts": {
+    "texcrimapp": {
+      "status": "completed",
+      "completed": 20,
+      "cursor": "cl-opinion-11327887",
+      "apiLastRound": 3
+    },
+    "ill": {
+      "status": "completed",
+      "completed": 21,
+      "cursor": "cl-opinion-11093298",
+      "apiLastRound": 11
+    },
+    "mass": {
+      "status": "completed",
+      "completed": 20,
+      "cursor": "cl-opinion-11336938",
+      "apiLastRound": 9
+    },
+    "va": {
+      "status": "completed",
+      "completed": 20,
+      "cursor": "cl-opinion-11219196",
+      "apiLastRound": 9
+    },
+    "del": {
+      "status": "completed",
+      "completed": 20,
+      "cursor": "cl-opinion-11411446",
+      "apiLastRound": 9
+    },
+    "nyappdiv": {
+      "status": "completed",
+      "completed": 15,
+      "cursor": "cl-opinion-11443015",
+      "apiLastRound": 11
+    },
+    "calctapp": {
+      "status": "completed",
+      "completed": 15,
+      "cursor": "cl-opinion-11443170",
+      "apiLastRound": 11
+    },
+    "pasuperct": {
+      "status": "quota_paused",
+      "completed": 0,
+      "cursor": "cl-opinion-11445968",
+      "apiLastRound": 1
+    }
+  }
+}

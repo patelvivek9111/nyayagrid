@@ -1,0 +1,26 @@
+{
+  "wave": "2U",
+  "coverage": {
+    "minimumCaseDeficit": 810,
+    "authorityGateDeficit": 3695,
+    "caseLt20": 41,
+    "noHighOrAppellate": 31,
+    "broader": 1,
+    "limited": 51
+  },
+  "citation": {
+    "extracted": 3742,
+    "resolved": 102,
+    "newlyResolved": 0,
+    "TARGET_ABSENT": 3639,
+    "PARSER_GAP": 0,
+    "malformed": 1,
+    "ambiguous": 0
+  },
+  "next": [
+    "Finish Wave-1 intermediates (PA→DE)",
+    "National high-court sweep from LA/DC/ID…",
+    "Drive case<20 and no-high/appellate to 0",
+    "Then deepen toward >100 authorities / citation TARGET_ABSENT"
+  ]
+}

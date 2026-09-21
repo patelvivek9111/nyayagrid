@@ -1,0 +1,21 @@
+{
+  "wave": "2U",
+  "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+  "hard429": false,
+  "blockedUntil": "2026-09-21T18:26:00.000Z",
+  "resumeCourt": "pasuperct",
+  "resumeCursor": "cl-opinion-11445968",
+  "resumeCommand": "CL_COURT=pasuperct CL_CURSOR=cl-opinion-11445968 CL_TARGET_MAX=15 node scripts/run-staging-cl-wave1-intermediate.cjs",
+  "liveLimits": {
+    "minute": 30,
+    "hour": 300,
+    "day": 1200
+  },
+  "safetyTargets": {
+    "minute": 28,
+    "hour": 280,
+    "day": 1160
+  },
+  "featureAgents": "0",
+  "writtenAt": "2026-09-21T18:02:17.145Z"
+}

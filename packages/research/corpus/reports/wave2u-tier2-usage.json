@@ -1,0 +1,22 @@
+{
+  "wave": "2U-tier2-verify",
+  "probedAt": "2026-09-21T17:23:30.000Z",
+  "endpoint": "GET /api/rest/v4/api-usage/",
+  "countsAgainstUserQuota": false,
+  "membership": {
+    "level": "CL Membership - Tier 2",
+    "is_active": true
+  },
+  "liveLimits": {
+    "minute": { "limit": 30, "used": 0, "remaining": 30 },
+    "hour": { "limit": 300, "used": 0, "remaining": 300 },
+    "day": { "limit": 1200, "used": 250, "remaining": 950, "reset_at": "2026-09-21T20:33:23.255626+00:00" }
+  },
+  "brochureExpectedTier": { "minute": 15, "hour": 150, "day": 600 },
+  "note": "Live limits are elevated above free defaults and above brochure Tier-2 numbers; use LIVE limits for pacing.",
+  "propagationReady": true,
+  "freeDefault": false,
+  "safetyTargets": { "minute": 28, "hour": 280, "day": 1160 },
+  "usableTodayApprox": 910,
+  "recommendedRateMs": 2143
+}

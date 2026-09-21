@@ -1,191 +1,30 @@
 {
-  "stopped": "rate_limited",
+  "ok": true,
+  "status": "plan_finished",
   "results": [
     {
-      "court": "tex",
+      "court": "texcrimapp",
       "round": 1,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "tex",
-        "mappedCourt": "st-tx-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 40,
-        "items_fetched": 10,
-        "items_imported": 9,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 9,
-        "embeddedChunks": 141,
-        "cursor": "cl-opinion-11341711",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=tex&cursor=cD0xMTMzODA5Mg%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 9,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 11,
-        "sample": [
-          {
-            "title": "River Creek Development Corporation and City of Hutto, Texas v. Preston Hollow C",
-            "citation": null,
-            "docket": "24-1070",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "River Creek Development Corporation and City of Hutto, Texas v. Preston Hollow C",
-            "citation": null,
-            "docket": "24-1070",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "The State of Texas and Kyle Madsen in His Official Capacity as Director of Right",
-            "citation": null,
-            "docket": "24-0447",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "tex",
-      "round": 2,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "tex",
-        "mappedCourt": "st-tx-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 60,
-        "items_fetched": 15,
-        "items_imported": 14,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 11,
-        "embeddedChunks": 96,
-        "cursor": "cl-opinion-11333679",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=tex&cursor=cD0xMTMyODg2Mw%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 14,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 11,
-        "sample": [
-          {
-            "title": "The State of Texas v. City of McAllen",
-            "citation": null,
-            "docket": "24-1060",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Huffman Asset Management, LLC and Prairie Capital, LLC v. Maurice Colter and Ni-",
-            "citation": null,
-            "docket": "24-0205",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Huffman Asset Management, LLC and Prairie Capital, LLC v. Maurice Colter and Ni-",
-            "citation": null,
-            "docket": "24-0205",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "tex",
-      "round": 3,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "tex",
-        "mappedCourt": "st-tx-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 80,
-        "items_fetched": 20,
-        "items_imported": 19,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 17,
-        "embeddedChunks": 95,
-        "cursor": "cl-opinion-11328858",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=tex&cursor=cD0xMTMxNTAzMg%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 19,
-        "rateLimitCount": 2,
-        "lastRetryAfterSec": 37,
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/73048966/",
-        "apiCalls": 14,
-        "sample": [
-          {
-            "title": "In Re State of Texas",
-            "citation": null,
-            "docket": "25-0687",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "In Re State of Texas",
-            "citation": null,
-            "docket": "25-0687",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Jonathan Timothy Noyes v. the State of Texas for the Protection of Samantha Jo V",
-            "citation": null,
-            "docket": "24-0023",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "tex",
-      "round": 4,
       "result": {
         "ok": true,
         "status": "completed",
         "proofMode": false,
-        "clCourt": "tex",
-        "mappedCourt": "st-tx-high",
+        "clCourt": "texcrimapp",
+        "mappedCourt": "st-tx-crim-high",
         "discoverPath": "opinions",
         "batchProcessed": 1,
-        "batchSize": 5,
+        "batchSize": 8,
         "targetMax": 20,
-        "items_discovered": 100,
-        "items_fetched": 21,
+        "items_discovered": 80,
+        "items_fetched": 22,
         "items_imported": 20,
         "items_skipped": 0,
         "items_failed": 0,
         "items_quarantined": 0,
-        "citationEdges": 5,
-        "embeddedChunks": 33,
-        "cursor": "cl-opinion-11315031",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=tex&cursor=cD0xMTI3NTE0MQ%3D%3D&order_by=-id&page_size=10",
+        "citationEdges": 9,
+        "embeddedChunks": 40,
+        "cursor": "cl-opinion-11327887",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=texcrimapp&cursor=cD0xMTMwNDkxNQ%3D%3D&order_by=-id&page_size=10",
         "completedCount": 20,
         "rateLimitCount": 0,
         "lastRetryAfterSec": null,
@@ -193,9 +32,9 @@
         "apiCalls": 3,
         "sample": [
           {
-            "title": "In Re Bell Helicopter Services Inc. and Bell Helicopter Textron Inc.",
+            "title": "YOUNG, MARTIN v. the State of Texas",
             "citation": null,
-            "docket": "24-0883",
+            "docket": "PD-0526-25",
             "citationStatus": "unreported",
             "persist": "imported"
           }
@@ -204,28 +43,624 @@
       }
     },
     {
-      "court": "texcrimapp",
+      "court": "ill",
+      "round": 1,
+      "result": {
+        "source": "courtlistener",
+        "cl_court": "ill",
+        "court_id": "st-il-high",
+        "status": "paused",
+        "cursor": "cl-opinion-11330166",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ill&cursor=cD0xMTI0NTMxOQ%3D%3D&order_by=-id&page_size=16",
+        "last_successful_external_id": null,
+        "items_discovered": 20,
+        "items_fetched": 8,
+        "items_imported": 7,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 1,
+        "rate_limit_count": 0,
+        "api_calls": 18,
+        "target_max": 20,
+        "batch_size": 8,
+        "last_retry_after_sec": null,
+        "last_error": null,
+        "started_at": "2026-09-21T17:31:23.439Z",
+        "updated_at": "2026-09-21T17:33:01.906Z",
+        "completed_at": null
+      }
+    },
+    {
+      "court": "ill",
+      "round": 2,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "ill",
+        "mappedCourt": "st-il-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 40,
+        "items_fetched": 16,
+        "items_imported": 15,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 1,
+        "citationEdges": 25,
+        "embeddedChunks": 310,
+        "cursor": "cl-opinion-11206006",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ill&cursor=cD0xMTE0MDI2Ng%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 16,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "People v. Vesey",
+            "citation": null,
+            "docket": "130919",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Schilling v. Quincy Physicians & Surgeons Clinic, S.C.",
+            "citation": null,
+            "docket": "131411",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "People v. Seymore",
+            "citation": null,
+            "docket": "131564",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "ill",
+      "round": 3,
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "proofMode": false,
+        "clCourt": "ill",
+        "mappedCourt": "st-il-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 5,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 60,
+        "items_fetched": 21,
+        "items_imported": 20,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 1,
+        "citationEdges": 15,
+        "embeddedChunks": 174,
+        "cursor": "cl-opinion-11093298",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ill&cursor=cD0xMDg1MDc5Mw%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 21,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 11,
+        "sample": [
+          {
+            "title": "People ex rel Smith v. Tobin",
+            "citation": null,
+            "docket": "131213",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "People v. Keys",
+            "citation": null,
+            "docket": "130110",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Stewart v. Rosenblum",
+            "citation": null,
+            "docket": "131365",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "mass",
       "round": 1,
       "result": {
         "ok": true,
-        "status": "rate_limited",
-        "reason": "RATE LIMIT WINDOW REACHED",
-        "clCourt": "texcrimapp",
-        "mappedCourt": "st-tx-crim-high",
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/clusters/10978155/",
-        "lastRetryAfterSec": 3600,
-        "apiCalls": 13,
-        "cursor": "cl-opinion-11445812",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=texcrimapp&cursor=cD0xMTQ0NTc5Nw%3D%3D&order_by=-id&page_size=10",
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "mass",
+        "mappedCourt": "st-ma-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
         "items_discovered": 20,
-        "items_fetched": 5,
-        "items_imported": 4,
+        "items_fetched": 8,
+        "items_imported": 8,
         "items_skipped": 0,
         "items_failed": 0,
         "items_quarantined": 0,
-        "last_successful_external_id": "cl-opinion-11445813",
-        "completedCount": 4,
+        "citationEdges": 26,
+        "embeddedChunks": 208,
+        "cursor": "cl-opinion-11421608",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=mass&cursor=cD0xMTQwNDE0NA%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 8,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Marshfield v. Commonwealth",
+            "citation": null,
+            "docket": "SJC 13840",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Commonwealth v. Shu Feng Hsu",
+            "citation": null,
+            "docket": "SJC 13855",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "In the Matter of an Impounded Case",
+            "citation": null,
+            "docket": "SJC 13838",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "mass",
+      "round": 2,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "mass",
+        "mappedCourt": "st-ma-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 40,
+        "items_fetched": 16,
+        "items_imported": 16,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 37,
+        "embeddedChunks": 220,
+        "cursor": "cl-opinion-11394696",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=mass&cursor=cD0xMTM0MTY3Mw%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 16,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Commonwealth v. Shaw",
+            "citation": null,
+            "docket": "SJC 13852",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Commonwealth v. Pina",
+            "citation": null,
+            "docket": "SJC 13783",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Gilardi v. Board of Health of Pittsfield",
+            "citation": null,
+            "docket": "SJC 13797",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "mass",
+      "round": 3,
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "proofMode": false,
+        "clCourt": "mass",
+        "mappedCourt": "st-ma-high",
+        "discoverPath": "opinions",
         "batchProcessed": 4,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 60,
+        "items_fetched": 20,
+        "items_imported": 20,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 5,
+        "embeddedChunks": 91,
+        "cursor": "cl-opinion-11336938",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=mass&cursor=cD0xMTMxOTAzMw%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 20,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 9,
+        "sample": [
+          {
+            "title": "Commonwealth v. Phan",
+            "citation": null,
+            "docket": "SJC 13924",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Crown Communities, LLC v. Austin",
+            "citation": null,
+            "docket": "SJC 13841",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Muckle v. Lamothe",
+            "citation": null,
+            "docket": "SJC 13903",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "va",
+      "round": 1,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "va",
+        "mappedCourt": "st-va-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 20,
+        "items_fetched": 8,
+        "items_imported": 8,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 36,
+        "embeddedChunks": 225,
+        "cursor": "cl-opinion-11337480",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=va&cursor=cD0xMTMxMTIzNA%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 8,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Commonwealth v. Kuykendall",
+            "citation": null,
+            "docket": "250701",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Leiser v. Virginia State Bar",
+            "citation": null,
+            "docket": "251120",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Pinnacle Flooring Solutions v. Premier Homes Group",
+            "citation": null,
+            "docket": "250618",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "va",
+      "round": 2,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "va",
+        "mappedCourt": "st-va-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 40,
+        "items_fetched": 16,
+        "items_imported": 16,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 5,
+        "embeddedChunks": 160,
+        "cursor": "cl-opinion-11274474",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=va&cursor=cD0xMTIzMzA2OA%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 16,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Stevens v. Jurnigan",
+            "citation": null,
+            "docket": "250142",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Thibault Enterprises, LLC v. Yost",
+            "citation": null,
+            "docket": "250128",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Commonwealth v. Moncrea",
+            "citation": null,
+            "docket": "240844",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "va",
+      "round": 3,
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "proofMode": false,
+        "clCourt": "va",
+        "mappedCourt": "st-va-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 4,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 60,
+        "items_fetched": 20,
+        "items_imported": 20,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 3,
+        "embeddedChunks": 79,
+        "cursor": "cl-opinion-11219196",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=va&cursor=cD0xMTA2MTI3Ng%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 20,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 9,
+        "sample": [
+          {
+            "title": "Commonwealth v. Brawner (ORDER)",
+            "citation": null,
+            "docket": "240814",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "In Re: Hargrove",
+            "citation": null,
+            "docket": "240316",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Ingleside v. Hollis",
+            "citation": null,
+            "docket": "241064",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "del",
+      "round": 1,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "del",
+        "mappedCourt": "st-de-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 20,
+        "items_fetched": 8,
+        "items_imported": 8,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 3,
+        "embeddedChunks": 45,
+        "cursor": "cl-opinion-11438105",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=del&cursor=cD0xMTQyNTA5NQ%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 8,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Harrison, Finley v. Gabriel Santos and Mila Wagner",
+            "citation": null,
+            "docket": "343, 2026",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Stinson v. State",
+            "citation": null,
+            "docket": "230, 2026",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "IsZo Capital LP v. Stephen Brandenburg",
+            "citation": null,
+            "docket": "12, 2026",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "del",
+      "round": 2,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "del",
+        "mappedCourt": "st-de-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 40,
+        "items_fetched": 16,
+        "items_imported": 16,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 3,
+        "embeddedChunks": 75,
+        "cursor": "cl-opinion-11422140",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=del&cursor=cD0xMTQxMjQzNg%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 16,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Montgomery v. State",
+            "citation": null,
+            "docket": "326, 2026",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Aikens v. State",
+            "citation": null,
+            "docket": "50, 2026",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Sheadrick Richards v. Shipwright SPAC I, LLC",
+            "citation": null,
+            "docket": "472, 2025",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "del",
+      "round": 3,
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "proofMode": false,
+        "clCourt": "del",
+        "mappedCourt": "st-de-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 4,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 60,
+        "items_fetched": 20,
+        "items_imported": 20,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 3,
+        "embeddedChunks": 40,
+        "cursor": "cl-opinion-11411446",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=del&cursor=cD0xMTQwMjkxNQ%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 20,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 9,
+        "sample": [
+          {
+            "title": "Jones v. State",
+            "citation": null,
+            "docket": "107, 2026",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Parker, Prince v. The Borsello Companies, Inc. IAB",
+            "citation": null,
+            "docket": "507, 2025",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Jean-Baptiste v. State",
+            "citation": null,
+            "docket": "455, 2024",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
         "featureAgents": "0"
       }
     }

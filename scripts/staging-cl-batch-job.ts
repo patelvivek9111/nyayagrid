@@ -8,7 +8,9 @@
  *   CL_COURT (required) — CourtListener court id
  *   CL_BATCH_SIZE (default 5) — max opinions this job processes
  *   CL_TARGET_MAX (default 20) — court target before status=completed
- *   CL_RATE_MS (default 1500) — base spacing between requests
+ *   CL_RATE_MS — base spacing between requests (default: dynamic from live limits, else 2200)
+ *   CL_BOOTSTRAP_USAGE=1 — fetch /api-usage/ once at start (does not consume user quota)
+ *   CL_MINUTE_TARGET / CL_HOUR_TARGET / CL_DAY_TARGET — optional safety ceilings
  *   CL_MAX_RETRIES (default 6)
  *   CL_PROOF=1 — discover/parse only, no persist
  *   DATABASE_URL, COURTLISTENER_API_KEY, OPENAI_API_KEY
@@ -16,7 +18,108 @@
 import { createHash, randomUUID } from "node:crypto";
 import postgres from "postgres";
 
+type QuotaWindow = { limit: number; used: number; remaining: number; resetAt?: string | null };
+
+type QuotaPlan = {
+  membershipLevel: string | null;
+  membershipActive: boolean | null;
+  windows: { minute: QuotaWindow; hour: QuotaWindow; day: QuotaWindow };
+  minuteTarget: number;
+  hourTarget: number;
+  dayTarget: number;
+  rateMs: number;
+  safeRequests: number;
+  elevated: boolean;
+};
+
 const CL_BASE = "https://www.courtlistener.com/api/rest/v4";
+
+function parseUsageRows(payload: unknown): QuotaPlan | null {
+  if (!payload || typeof payload !== "object") return null;
+  const root = payload as {
+    membership?: { level?: string; is_active?: boolean };
+    current_usage?: Array<Record<string, unknown>>;
+  };
+  const byPeriod: Partial<Record<"minute" | "hour" | "day", QuotaWindow>> = {};
+  for (const row of root.current_usage ?? []) {
+    if (String(row.scope ?? "").toLowerCase() !== "user") continue;
+    const rate = String(row.rate ?? "").toLowerCase();
+    const period = rate.includes("/min")
+      ? "minute"
+      : rate.includes("/hour")
+        ? "hour"
+        : rate.includes("/day")
+          ? "day"
+          : null;
+    if (!period) continue;
+    const limit = Number(row.limit);
+    const used = Number(row.used ?? row.usage ?? 0);
+    const remaining = Number(row.remaining ?? (Number.isFinite(limit) ? limit - used : 0));
+    byPeriod[period] = {
+      limit: Number.isFinite(limit) ? limit : 0,
+      used: Number.isFinite(used) ? used : 0,
+      remaining: Number.isFinite(remaining) ? remaining : 0,
+      resetAt: typeof row.reset_at === "string" ? row.reset_at : null,
+    };
+  }
+  if (!byPeriod.minute || !byPeriod.hour || !byPeriod.day) return null;
+  const windows = { minute: byPeriod.minute, hour: byPeriod.hour, day: byPeriod.day };
+  const minuteTarget = Math.max(
+    1,
+    Number.parseInt(process.env.CL_MINUTE_TARGET ?? "", 10) ||
+      Math.floor(windows.minute.limit * (14 / 15)),
+  );
+  const hourTarget = Math.max(
+    1,
+    Number.parseInt(process.env.CL_HOUR_TARGET ?? "", 10) ||
+      Math.floor(windows.hour.limit * (140 / 150)),
+  );
+  const dayReserve = Math.max(20, Math.round(windows.day.limit * (20 / 600)));
+  const dayTarget = Math.max(
+    1,
+    Number.parseInt(process.env.CL_DAY_TARGET ?? "", 10) || windows.day.limit - dayReserve,
+  );
+  const hourUsed = Math.max(0, windows.hour.limit - windows.hour.remaining);
+  const dayUsed = Math.max(0, windows.day.limit - windows.day.remaining);
+  const minuteRem = Math.max(0, Math.min(windows.minute.remaining, minuteTarget));
+  const hourRem = Math.max(0, Math.min(windows.hour.remaining, hourTarget - hourUsed));
+  const dayRem = Math.max(0, Math.min(windows.day.remaining, dayTarget - dayUsed));
+  const safeRequests = Math.max(0, Math.min(minuteRem, hourRem, dayRem));
+  // Prefer minute-safe spacing for batch throughput; hour/day protected via maxCalls.
+  const fromMinute = Math.ceil(60_000 / Math.max(1, minuteTarget));
+  const rateMs = Math.max(
+    Number.parseInt(process.env.CL_RATE_MS ?? "", 10) || 0,
+    fromMinute,
+  );
+  const elevated =
+    windows.minute.limit > 5 || windows.hour.limit > 50 || windows.day.limit > 125;
+  return {
+    membershipLevel: root.membership?.level ?? null,
+    membershipActive: root.membership?.is_active ?? null,
+    windows,
+    minuteTarget,
+    hourTarget,
+    dayTarget,
+    rateMs: Math.max(rateMs, 400),
+    safeRequests,
+    elevated,
+  };
+}
+
+async function bootstrapQuotaPlan(apiKey: string): Promise<QuotaPlan | null> {
+  try {
+    const res = await fetch(`${CL_BASE}/api-usage/`, {
+      headers: { Authorization: `Token ${apiKey}`, Accept: "application/json" },
+      signal: AbortSignal.timeout(30_000),
+    });
+    if (!res.ok) return null;
+    const json = await res.json();
+    return parseUsageRows(json);
+  } catch {
+    return null;
+  }
+}
+
 const EMBEDDING_MODEL = "text-embedding-3-small";
 const EMBEDDING_DIMS = 384;
 const EMBEDDING_BATCH_SIZE = 32;
@@ -212,7 +315,7 @@ function parseRetryAfterSec(res: Response): number | null {
   return null;
 }
 
-/** Single-flight CourtListener client — concurrency 1, Retry-After aware. */
+/** Single-flight CourtListener client — concurrency 1, Retry-After + quota-aware. */
 class ClRateLimiter {
   private chain: Promise<void> = Promise.resolve();
   private lastRequestAt = 0;
@@ -221,17 +324,34 @@ class ClRateLimiter {
   rateLimitHits = 0;
   lastRetryAfterSec: number | null = null;
   last429Endpoint: string | null = null;
+  quotaExhausted = false;
+  private maxCalls: number | null = null;
 
   constructor(
     private readonly apiKey: string,
-    private readonly rateMs: number,
+    private rateMs: number,
     private readonly maxRetries: number,
   ) {}
+
+  setRateMs(ms: number): void {
+    this.rateMs = Math.max(400, ms);
+  }
+
+  setMaxCalls(n: number | null): void {
+    this.maxCalls = n == null ? null : Math.max(0, n);
+  }
 
   async fetch(url: string): Promise<Response> {
     const run = async (): Promise<Response> => {
       let last: Response | null = null;
       for (let attempt = 0; attempt <= this.maxRetries; attempt++) {
+        if (this.maxCalls != null && this.apiCalls >= this.maxCalls) {
+          this.quotaExhausted = true;
+          return new Response(JSON.stringify({ detail: "quota_paused_local" }), {
+            status: 429,
+            headers: { "Retry-After": "60", "X-Nyaya-Quota-Paused": "1" },
+          });
+        }
         const now = Date.now();
         const pauseLeft = Math.max(0, this.globalPauseUntil - now);
         const sinceLast = now - this.lastRequestAt;
@@ -264,6 +384,11 @@ class ClRateLimiter {
 
         this.rateLimitHits += 1;
         this.last429Endpoint = url.split("?")[0] ?? url;
+        if (last.headers.get("X-Nyaya-Quota-Paused") === "1") {
+          this.quotaExhausted = true;
+          this.lastRetryAfterSec = 60;
+          return last;
+        }
         const retryAfter = parseRetryAfterSec(last) ?? Math.min(
           Math.floor((this.rateMs * Math.pow(2, attempt + 1) + Math.random() * 1000) / 1000),
           120,
@@ -779,8 +904,8 @@ async function main() {
   const proofMode = process.env.CL_PROOF === "1";
   const batchSize = Math.min(Math.max(Number.parseInt(process.env.CL_BATCH_SIZE ?? "5", 10) || 5, 1), 25);
   const targetMax = Math.min(Math.max(Number.parseInt(process.env.CL_TARGET_MAX ?? "20", 10) || 20, 1), 200);
-  const rateMs = Math.max(Number.parseInt(process.env.CL_RATE_MS ?? "1500", 10) || 1500, 400);
   const maxRetries = Math.min(Math.max(Number.parseInt(process.env.CL_MAX_RETRIES ?? "6", 10) || 6, 1), 10);
+  const bootstrapUsage = process.env.CL_BOOTSTRAP_USAGE !== "0";
 
   if (!clKey) {
     console.log(JSON.stringify({ ok: false, reason: "COURTLISTENER_API_KEY missing" }));
@@ -800,7 +925,26 @@ async function main() {
     process.exit(2);
   }
 
+  let quotaPlan: QuotaPlan | null = null;
+  if (bootstrapUsage) {
+    quotaPlan = await bootstrapQuotaPlan(clKey);
+  }
+  const rateMs = Math.max(
+    Number.parseInt(process.env.CL_RATE_MS ?? "", 10) || 0,
+    quotaPlan?.rateMs ?? 2200,
+    400,
+  );
+
   const cl = new ClRateLimiter(clKey, rateMs, maxRetries);
+  if (quotaPlan) {
+    // Minute window refills quickly; cap by hour/day remaining only for short batches.
+    const hourUsed = Math.max(0, quotaPlan.windows.hour.limit - quotaPlan.windows.hour.remaining);
+    const dayUsed = Math.max(0, quotaPlan.windows.day.limit - quotaPlan.windows.day.remaining);
+    const hourRem = Math.max(0, Math.min(quotaPlan.windows.hour.remaining, quotaPlan.hourTarget - hourUsed));
+    const dayRem = Math.max(0, Math.min(quotaPlan.windows.day.remaining, quotaPlan.dayTarget - dayUsed));
+    const batchBudget = Math.min(hourRem, dayRem, Math.max(batchSize * 12, 40));
+    if (batchBudget > 0) cl.setMaxCalls(batchBudget);
+  }
   let sql: postgres.Sql | null = null;
   let job: JobRow | null = null;
   const completed = new Set<string>();
@@ -879,11 +1023,12 @@ async function main() {
 
   let discoverRes = await cl.fetch(discoverUrl);
   if (discoverRes.status === 429) {
+    const paused = cl.quotaExhausted;
     await finish(
       {
         ok: true,
-        status: "rate_limited",
-        reason: "RATE LIMIT WINDOW REACHED",
+        status: paused ? "quota_paused" : "rate_limited",
+        reason: paused ? "LOCAL_QUOTA_SAFETY_FLOOR" : "RATE LIMIT WINDOW REACHED",
         clCourt,
         mappedCourt: mapped.courtId,
         discoverPath,
@@ -891,6 +1036,18 @@ async function main() {
         lastRetryAfterSec: cl.lastRetryAfterSec,
         rateLimitCount: cl.rateLimitHits,
         apiCalls: cl.apiCalls,
+        rateMs,
+        quota: quotaPlan
+          ? {
+              membershipLevel: quotaPlan.membershipLevel,
+              elevated: quotaPlan.elevated,
+              minuteTarget: quotaPlan.minuteTarget,
+              hourTarget: quotaPlan.hourTarget,
+              dayTarget: quotaPlan.dayTarget,
+              safeRequests: quotaPlan.safeRequests,
+              windows: quotaPlan.windows,
+            }
+          : null,
         cursor: job?.cursor ?? null,
         next_page_url: job?.next_page_url ?? null,
         completedCount: completed.size,
@@ -997,8 +1154,8 @@ async function main() {
           await finish(
             {
               ok: true,
-              status: "rate_limited",
-              reason: "RATE LIMIT WINDOW REACHED",
+              status: cl.quotaExhausted ? "quota_paused" : "rate_limited",
+              reason: cl.quotaExhausted ? "LOCAL_QUOTA_SAFETY_FLOOR" : "RATE LIMIT WINDOW REACHED",
               clCourt,
               mappedCourt: mapped.courtId,
               last429Endpoint: cl.last429Endpoint,
@@ -1035,8 +1192,8 @@ async function main() {
         await finish(
           {
             ok: true,
-            status: "rate_limited",
-            reason: "RATE LIMIT WINDOW REACHED",
+            status: cl.quotaExhausted ? "quota_paused" : "rate_limited",
+            reason: cl.quotaExhausted ? "LOCAL_QUOTA_SAFETY_FLOOR" : "RATE LIMIT WINDOW REACHED",
             clCourt,
             mappedCourt: mapped.courtId,
             last429Endpoint: cl.last429Endpoint,

@@ -1,0 +1,172 @@
+{
+  "wave": "2U",
+  "status": "PARTIAL",
+  "generatedAt": "2026-09-21T18:02:17.144Z",
+  "queue": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
+  },
+  "tier2": {
+    "membershipDetected": true,
+    "membershipLevel": "CL Membership - Tier 2",
+    "liveMinuteLimit": 30,
+    "liveHourLimit": 300,
+    "liveDayLimit": 1200,
+    "brochureExpected": {
+      "minute": 15,
+      "hour": 150,
+      "day": 600
+    },
+    "note": "Live limits elevated above brochure; pacing uses LIVE.",
+    "propagationStatus": "READY",
+    "probedAt": "2026-09-21T17:23:30.000Z",
+    "remainingAtProbe": {
+      "minute": 30,
+      "hour": 300,
+      "day": 950
+    }
+  },
+  "quotaController": {
+    "targetMinuteRate": 28,
+    "targetHourlyCeiling": 280,
+    "targetDailyCeiling": 1160,
+    "recommendedRateMs": 2143,
+    "dynamicPacing": "LIVE_LIMIT_AWARE",
+    "stopReason": "LOCAL_QUOTA_SAFETY_FLOOR",
+    "hourResumeAt": "2026-09-21T18:26:00.000Z"
+  },
+  "courtListener": {
+    "totalRequestsThisRun": 245,
+    "hard429Count": 0,
+    "post429Requests": 0,
+    "cooldown": false,
+    "orphanWorkers": 0,
+    "quotaPaused": true
+  },
+  "efficiency": {
+    "casesImported": 126,
+    "authoritiesImported": 126,
+    "requestsPerAuthority": 1.94,
+    "duplicateAuthoritiesSkipped": 0,
+    "duplicateRequestsAvoided": "cached_court_maps_no_rediscovery"
+  },
+  "wave1Highs": {
+    "NY": "COMPLETE>=20",
+    "CA": "COMPLETE>=20",
+    "PA": "COMPLETE>=20",
+    "NJ": "COMPLETE>=20",
+    "FL": "COMPLETE>=20",
+    "TX_civil": "COMPLETE>=20",
+    "TX_criminal": "COMPLETE>=20",
+    "IL": "COMPLETE>=20",
+    "MA": "COMPLETE>=20",
+    "VA": "COMPLETE>=20",
+    "DE": "COMPLETE>=20"
+  },
+  "intermediate": {
+    "started": [
+      "nyappdiv",
+      "calctapp",
+      "pasuperct"
+    ],
+    "nyappdiv": {
+      "status": "COMPLETE",
+      "cases": 15,
+      "cursor": "cl-opinion-11443015"
+    },
+    "calctapp": {
+      "status": "COMPLETE",
+      "cases": 15,
+      "cursor": "cl-opinion-11443170"
+    },
+    "pasuperct": {
+      "status": "quota_paused",
+      "cases": 0,
+      "cursor": "cl-opinion-11445968",
+      "next": "CL_COURT=pasuperct CL_CURSOR=cl-opinion-11445968 CL_TARGET_MAX=15 node scripts/run-staging-cl-wave1-intermediate.cjs"
+    }
+  },
+  "national": {
+    "jurisdictionsCompletedBaseline20": "Wave-1 highs only; national sweep not started this run",
+    "nextPriorities": [
+      "pasuperct",
+      "njsuperct/njapp",
+      "flaapp",
+      "texapp",
+      "illappct",
+      "massapp",
+      "vaapp",
+      "del",
+      "LA",
+      "DC",
+      "ID",
+      "MO",
+      "MS"
+    ]
+  },
+  "corpus": {
+    "authorities": 1799,
+    "cases": 488,
+    "clCases": 443,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "provenance": "100%",
+    "metadataNormalized": "1799/1799",
+    "citationNormalized": "1356/1356",
+    "lastChecked": 1664,
+    "chunksEmbeddings": "9833/9833",
+    "orphanChunks": 0
+  },
+  "coverage": {
+    "broader": 1,
+    "limited": 51,
+    "minimumCaseDeficit": 810,
+    "authorityGateDeficit": 3695,
+    "caseLt20": 41,
+    "noHighOrAppellate": 31
+  },
+  "citationGraph": {
+    "extracted": 3742,
+    "resolved": 102,
+    "newlyResolved": 0,
+    "TARGET_ABSENT": 3639,
+    "PARSER_GAP": 0,
+    "malformed": 1,
+    "ambiguous": 0
+  },
+  "retrieval": {
+    "exactCite": "PASS",
+    "caseName": "PASS",
+    "issue": "PASS",
+    "isolation": "PASS",
+    "highCourt": "PASS",
+    "intermediateAppellate": "PASS_NY_CA_PRESENT",
+    "safeMiss": "PASS",
+    "noWeb": true,
+    "federalCircuits": "ALL_REPRESENTED"
+  },
+  "paidMonthProjection": {
+    "observedCasesThisRun": 126,
+    "observedRequestsPerCase": 1.94,
+    "usableDayApprox": 910,
+    "estimatedCasesPerDayAtTier2": 469,
+    "estimatedDaysToClearCaseFloor20": 1.7,
+    "estimatedDaysNote": "case<20 floor only; authority-gate (~3695) and national depth dominate remaining #2",
+    "membershipEnds": "2026-10-20"
+  },
+  "nextAutomaticResume": {
+    "timestamp": "2026-09-21T18:26:00.000Z",
+    "command": "CL_COURT=pasuperct CL_CURSOR=cl-opinion-11445968 CL_TARGET_MAX=15 node scripts/run-staging-cl-wave1-intermediate.cjs",
+    "checkpoint": "pasuperct@cl-opinion-11445968"
+  },
+  "remainingWork": [
+    "Finish Wave-1 intermediates (PA→DE)",
+    "National high-court sweep from LA/DC/ID…",
+    "Drive case<20 and no-high/appellate to 0",
+    "Then deepen toward >100 authorities / citation TARGET_ABSENT"
+  ],
+  "productionClassification": "PARTIAL_TIER2_QUOTA_SAFETY_PAUSE"
+}

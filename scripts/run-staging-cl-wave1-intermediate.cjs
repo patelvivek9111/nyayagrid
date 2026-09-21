@@ -1,33 +1,30 @@
 /**
- * Wave-1 state HIGH courts only (no intermediate appellate).
- * Order: NY CA PA NJ FL TX IL MA VA DE
- * Respects soft Retry-After; hard-stops on rate_limited or Retry-After > 300.
- * Usage: node scripts/run-staging-cl-wave1-high.cjs [sha] [startCourt]
+ * Wave-1 intermediate appellate ingest (after high baselines).
+ * Usage: node scripts/run-staging-cl-wave1-intermediate.cjs [sha] [startCourt]
  */
 const { spawnSync } = require("node:child_process");
 const fs = require("node:fs");
 const path = require("node:path");
 
 const sha = process.argv[2] || "HEAD";
-const startCourt = (process.argv[3] || "ny").toLowerCase();
-const HIGH = [
-  { court: "ny", target: 20, batch: 5 },
-  { court: "cal", target: 20, batch: 5 },
-  { court: "pa", target: 20, batch: 5 },
-  { court: "nj", target: 20, batch: 5 },
-  { court: "fla", target: 20, batch: 5 },
-  { court: "tex", target: 20, batch: 5 },
-  { court: "texcrimapp", target: 20, batch: 8 },
-  { court: "ill", target: 20, batch: 8 },
-  { court: "mass", target: 20, batch: 8 },
-  { court: "va", target: 20, batch: 8 },
-  { court: "del", target: 20, batch: 8 },
+const startCourt = (process.argv[3] || "nyappdiv").toLowerCase();
+const PLAN = [
+  { court: "nyappdiv", target: 15, batch: 5 },
+  { court: "calctapp", target: 15, batch: 5 },
+  { court: "pasuperct", target: 15, batch: 5 },
+  { court: "pacommwlth", target: 10, batch: 5 },
+  { court: "njsuperct", target: 15, batch: 5 },
+  { court: "fladistctapp", target: 15, batch: 5 },
+  { court: "texapp", target: 15, batch: 5 },
+  { court: "illappct", target: 15, batch: 5 },
+  { court: "massappct", target: 15, batch: 5 },
+  { court: "vacapp", target: 15, batch: 5 },
 ];
 
-const startIdx = Math.max(0, HIGH.findIndex((h) => h.court === startCourt));
-const plan = HIGH.slice(startIdx < 0 ? 0 : startIdx);
+const startIdx = Math.max(0, PLAN.findIndex((h) => h.court === startCourt));
+const plan = PLAN.slice(startIdx < 0 ? 0 : startIdx);
 const results = [];
-const outPath = path.join(__dirname, "wave1-high-results.json");
+const outPath = path.join(__dirname, "wave1-intermediate-results.json");
 
 function sleep(ms) {
   spawnSync(process.execPath, [
@@ -40,7 +37,7 @@ function runOne(court, batch, target) {
   const r = spawnSync(
     process.execPath,
     [path.join(__dirname, "run-staging-cl-batch-job.cjs"), sha, court, String(batch), String(target)],
-    { encoding: "utf8", maxBuffer: 16_000_000 },
+    { encoding: "utf8", maxBuffer: 16_000_000, env: process.env },
   );
   const lines = (r.stdout || "").trim().split("\n").filter(Boolean);
   let last = null;
@@ -59,7 +56,7 @@ function runOne(court, batch, target) {
   return { exit: r.status, last };
 }
 
-console.log(JSON.stringify({ phase: "wave1_high_start", sha, plan: plan.map((p) => p.court) }));
+console.log(JSON.stringify({ phase: "wave1_intermediate_start", sha, plan: plan.map((p) => p.court) }));
 
 for (const item of plan) {
   let rounds = 0;
@@ -92,10 +89,7 @@ for (const item of plan) {
       fs.writeFileSync(outPath, JSON.stringify({ stopped: status || "rate_limited", results }, null, 2));
       process.exit(0);
     }
-    if (status === "rate_limited" && retrySec > 0 && retrySec <= 300) {
-      // soft Retry-After — fall through to soft_wait
-    } else if (status === "rate_limited" && !(retrySec > 0)) {
-      // Ambiguous local pause / missing Retry-After: soft wait then continue.
+    if (status === "rate_limited" && !(retrySec > 0)) {
       console.log(JSON.stringify({ phase: "soft_wait_ambiguous_429", court: item.court, waitMs: 15000 }));
       sleep(15_000);
       continue;

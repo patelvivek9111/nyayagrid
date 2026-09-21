@@ -1,0 +1,355 @@
+{
+  "stopped": "quota_paused",
+  "results": [
+    {
+      "court": "nyappdiv",
+      "round": 1,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "nyappdiv",
+        "mappedCourt": "st-ny-app",
+        "discoverPath": "opinions",
+        "batchProcessed": 5,
+        "batchSize": 5,
+        "targetMax": 15,
+        "items_discovered": 20,
+        "items_fetched": 5,
+        "items_imported": 5,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 1,
+        "embeddedChunks": 65,
+        "cursor": "cl-opinion-11443310",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nyappdiv&cursor=cD0xMTQ0MzA0MA%3D%3D&order_by=-id&page_size=10",
+        "completedCount": 5,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 11,
+        "sample": [
+          {
+            "title": "Beauchamp v. New York City Tr. Auth.",
+            "citation": null,
+            "docket": "Index No. 159757/17|Appeal No. 7013|Case No. 2025-04736|",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Delgado v. Donald J. Trump for President, Inc.",
+            "citation": null,
+            "docket": "Index No. 952333/23|Appeal No. 6781|Case No. 2025-01333|",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Hearns v. Blended Family LLC",
+            "citation": null,
+            "docket": "Appeal No. 6121|Case No. 2025-01282|",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "nyappdiv",
+      "round": 2,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "nyappdiv",
+        "mappedCourt": "st-ny-app",
+        "discoverPath": "opinions",
+        "batchProcessed": 5,
+        "batchSize": 5,
+        "targetMax": 15,
+        "items_discovered": 40,
+        "items_fetched": 10,
+        "items_imported": 10,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 0,
+        "embeddedChunks": 32,
+        "cursor": "cl-opinion-11443035",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nyappdiv&cursor=cD0xMTQ0MzAyMA%3D%3D&order_by=-id&page_size=10",
+        "completedCount": 10,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 11,
+        "sample": [
+          {
+            "title": "Batista v. Allerton Ave Estates, LLC",
+            "citation": null,
+            "docket": "2024-08921",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Bautista v. Supervalu, Inc.",
+            "citation": null,
+            "docket": "2024-11523",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Bellavia v. Hoppenstein",
+            "citation": null,
+            "docket": "2025-04438",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "nyappdiv",
+      "round": 3,
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "proofMode": false,
+        "clCourt": "nyappdiv",
+        "mappedCourt": "st-ny-app",
+        "discoverPath": "opinions",
+        "batchProcessed": 5,
+        "batchSize": 5,
+        "targetMax": 15,
+        "items_discovered": 60,
+        "items_fetched": 15,
+        "items_imported": 15,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 0,
+        "embeddedChunks": 28,
+        "cursor": "cl-opinion-11443015",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nyappdiv&cursor=cD0xMTQ0MzAwMA%3D%3D&order_by=-id&page_size=10",
+        "completedCount": 15,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 11,
+        "sample": [
+          {
+            "title": "Grannum v. Tanais's Deli Grocery Corp.",
+            "citation": null,
+            "docket": "2025-12755",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Greene v. Five Towns Premier Rehabilitation & Nursing Ctr.",
+            "citation": null,
+            "docket": "2025-02173",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Grey v. Grey",
+            "citation": null,
+            "docket": "2025-02963",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "calctapp",
+      "round": 1,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "calctapp",
+        "mappedCourt": "st-ca-app",
+        "discoverPath": "opinions",
+        "batchProcessed": 5,
+        "batchSize": 5,
+        "targetMax": 15,
+        "items_discovered": 20,
+        "items_fetched": 5,
+        "items_imported": 5,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 6,
+        "embeddedChunks": 161,
+        "cursor": "cl-opinion-11444577",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=calctapp&cursor=cD0xMTQ0NDQ3OQ%3D%3D&order_by=-id&page_size=10",
+        "completedCount": 5,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 11,
+        "sample": [
+          {
+            "title": "People v. Perdomo CA6",
+            "citation": null,
+            "docket": "H052899",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Irvine v. Irvine",
+            "citation": null,
+            "docket": "A172066",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "People v. Major CA5",
+            "citation": null,
+            "docket": "F088217",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "calctapp",
+      "round": 2,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "calctapp",
+        "mappedCourt": "st-ca-app",
+        "discoverPath": "opinions",
+        "batchProcessed": 5,
+        "batchSize": 5,
+        "targetMax": 15,
+        "items_discovered": 40,
+        "items_fetched": 10,
+        "items_imported": 10,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 1,
+        "embeddedChunks": 88,
+        "cursor": "cl-opinion-11443550",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=calctapp&cursor=cD0xMTQ0MzUxNA%3D%3D&order_by=-id&page_size=10",
+        "completedCount": 10,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 11,
+        "sample": [
+          {
+            "title": "In re A.S. CA4/2",
+            "citation": null,
+            "docket": "E087415",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "People v. Bloomberg CA4/1",
+            "citation": null,
+            "docket": "D086279",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "People v. Gonzalez CA4/1",
+            "citation": null,
+            "docket": "D085130",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "calctapp",
+      "round": 3,
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "proofMode": false,
+        "clCourt": "calctapp",
+        "mappedCourt": "st-ca-app",
+        "discoverPath": "opinions",
+        "batchProcessed": 5,
+        "batchSize": 5,
+        "targetMax": 15,
+        "items_discovered": 60,
+        "items_fetched": 15,
+        "items_imported": 15,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 0,
+        "embeddedChunks": 122,
+        "cursor": "cl-opinion-11443170",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=calctapp&cursor=cD0xMTQ0MjcwOQ%3D%3D&order_by=-id&page_size=10",
+        "completedCount": 15,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 11,
+        "sample": [
+          {
+            "title": "Sterling Home Showcase v. Champion Home Builders CA3",
+            "citation": null,
+            "docket": "C103539",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "People v. Superior Court",
+            "citation": null,
+            "docket": "F090616",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "People v. Williams",
+            "citation": null,
+            "docket": "E087071",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "pasuperct",
+      "round": 1,
+      "result": {
+        "ok": true,
+        "status": "quota_paused",
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+        "clCourt": "pasuperct",
+        "mappedCourt": "st-pa-super",
+        "last429Endpoint": null,
+        "lastRetryAfterSec": null,
+        "apiCalls": 1,
+        "cursor": "cl-opinion-11445968",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=pasuperct&cursor=cD0xMTQ0NDQ4OA%3D%3D&order_by=-id&page_size=10",
+        "items_discovered": 20,
+        "items_fetched": 1,
+        "items_imported": 0,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "last_successful_external_id": null,
+        "completedCount": 0,
+        "batchProcessed": 0,
+        "featureAgents": "0"
+      }
+    }
+  ]
+}
