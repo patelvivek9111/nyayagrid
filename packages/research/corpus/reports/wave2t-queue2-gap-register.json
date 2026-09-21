@@ -1,0 +1,25 @@
+{
+  "wave": "2T",
+  "generatedAt": "2026-09-21T16:03:30.000Z",
+  "queue2Open": true,
+  "queue9Closed": true,
+  "queue3NotOpen": true,
+  "blockedUntil": "2026-09-21T17:02:00.000Z",
+  "retryAfterSeconds": 3600,
+  "wave1HighProgress": {
+    "complete": ["ny", "cal", "pa", "nj", "fla", "tex"],
+    "partial": [{ "court": "texcrimapp", "n": 4, "checkpoint": "cl-opinion-11445812" }],
+    "incomplete": ["ill", "mass", "va", "del"],
+    "nextResume": "texcrimapp @ cl-opinion-11445812"
+  },
+  "coverageGaps": {
+    "broader": 1,
+    "limited": 51,
+    "minimumCaseDeficit": 882,
+    "authorityGateDeficit": 3821,
+    "caseBelow20": 45,
+    "noHighOrAppellate": 31
+  },
+  "nationalNext": ["LA", "DC", "ID", "MO", "MS"],
+  "externalLimitation": "CourtListener Retry-After 3600s mid-TX criminal ingest"
+}

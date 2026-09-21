@@ -2,369 +2,52 @@
   "stopped": "rate_limited",
   "results": [
     {
-      "court": "nj",
+      "court": "tex",
       "round": 1,
       "result": {
         "ok": true,
         "status": "paused",
         "proofMode": false,
-        "clCourt": "nj",
-        "mappedCourt": "st-nj-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 60,
-        "items_fetched": 14,
-        "items_imported": 13,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 3,
-        "embeddedChunks": 179,
-        "cursor": "cl-opinion-11385131",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nj&cursor=cD0xMTM4NTExNg%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 13,
-        "rateLimitCount": 2,
-        "lastRetryAfterSec": 22,
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/65635290/",
-        "apiCalls": 13,
-        "sample": [
-          {
-            "title": "State v. Deje M. Coviello",
-            "citation": null,
-            "docket": "A-54-21",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "State v. Terrell M. Chambers",
-            "citation": null,
-            "docket": "A-35-21",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "In the Matter of Officer Gregory DiGuglielmo and New Jersey Institute of Technol",
-            "citation": null,
-            "docket": "A-33-21",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "nj",
-      "round": 2,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "nj",
-        "mappedCourt": "st-nj-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 80,
-        "items_fetched": 19,
-        "items_imported": 18,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 15,
-        "embeddedChunks": 200,
-        "cursor": "cl-opinion-11385111",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nj&cursor=cD0xMTMzMjE5OA%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 18,
-        "rateLimitCount": 1,
-        "lastRetryAfterSec": 41,
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/59298878/",
-        "apiCalls": 12,
-        "sample": [
-          {
-            "title": "Kim Goulding v. NJ Friendship House, Inc.",
-            "citation": null,
-            "docket": "A-48-19",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "State v. Herby v. Desir",
-            "citation": null,
-            "docket": "A-43-19",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "In the Matter of the Request to Release Certain Pretrial Detainees",
-            "citation": null,
-            "docket": "M-550-20",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "nj",
-      "round": 3,
-      "result": {
-        "ok": true,
-        "status": "completed",
-        "proofMode": false,
-        "clCourt": "nj",
-        "mappedCourt": "st-nj-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 2,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 100,
-        "items_fetched": 21,
-        "items_imported": 20,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 6,
-        "embeddedChunks": 76,
-        "cursor": "cl-opinion-11324877",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nj&cursor=cD0xMTI2NDM0MQ%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 20,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 5,
-        "sample": [
-          {
-            "title": "State v. Nirav Patel",
-            "citation": null,
-            "docket": "A-64-24",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "State v. Thomas J. DiNapoli",
-            "citation": null,
-            "docket": "A-56-24",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "fla",
-      "round": 1,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "fla",
-        "mappedCourt": "st-fl-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 20,
-        "items_fetched": 5,
-        "items_imported": 5,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 7,
-        "embeddedChunks": 116,
-        "cursor": "cl-opinion-11433490",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=fla&cursor=cD0xMTM5MjY0Mg%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 5,
-        "rateLimitCount": 3,
-        "lastRetryAfterSec": 17,
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/74743829/",
-        "apiCalls": 14,
-        "sample": [
-          {
-            "title": "Benjamin Davis Smiley, Jr. v. State of Florida & Benjamin Davis Smiley, Jr. v. S",
-            "citation": null,
-            "docket": "SC2024-1361 & SC2025-0250",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "In Re: Amendments to Florida Family Law Rules of Procedure and Rule Regulating t",
-            "citation": null,
-            "docket": "SC2026-1262",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Khadafy Kareem Mullens v. State of Florida",
-            "citation": null,
-            "docket": "SC2026-0545",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "fla",
-      "round": 2,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "fla",
-        "mappedCourt": "st-fl-high",
+        "clCourt": "tex",
+        "mappedCourt": "st-tx-high",
         "discoverPath": "opinions",
         "batchProcessed": 5,
         "batchSize": 5,
         "targetMax": 20,
         "items_discovered": 40,
         "items_fetched": 10,
-        "items_imported": 10,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 36,
-        "embeddedChunks": 85,
-        "cursor": "cl-opinion-11351434",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=fla&cursor=cD0xMTM0MTE0Mg%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 10,
-        "rateLimitCount": 2,
-        "lastRetryAfterSec": 38,
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/73568303/",
-        "apiCalls": 13,
-        "sample": [
-          {
-            "title": "Scott Aron Stewart v. Mishelle Addys Perdomo Vindel",
-            "citation": null,
-            "docket": "SC2024-0428",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "The Florida Bar v. Christopher W. Crowley",
-            "citation": null,
-            "docket": "SC2020-0529",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Dennis Sochor v. State of Florida",
-            "citation": null,
-            "docket": "SC2026-0971",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "fla",
-      "round": 3,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "fla",
-        "mappedCourt": "st-fl-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 60,
-        "items_fetched": 15,
-        "items_imported": 15,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 12,
-        "embeddedChunks": 125,
-        "cursor": "cl-opinion-11337529",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=fla&cursor=cD0xMTMxMTI5MQ%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 15,
-        "rateLimitCount": 1,
-        "lastRetryAfterSec": 40,
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/73439680/",
-        "apiCalls": 12,
-        "sample": [
-          {
-            "title": "Isaac \"Ike\" Perlmutter v. Federal Insurance Company",
-            "citation": null,
-            "docket": "SC2024-0058",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Michael Lawrence Woodbury v. State of Florida & Michael Lawrence Woodbury v. Sec",
-            "citation": null,
-            "docket": "SC2024-0232 & SC2024-1127",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "The Florida Bar v. Kenneth Chesebro",
-            "citation": null,
-            "docket": "SC2024-1528",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "fla",
-      "round": 4,
-      "result": {
-        "ok": true,
-        "status": "completed",
-        "proofMode": false,
-        "clCourt": "fla",
-        "mappedCourt": "st-fl-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 80,
-        "items_fetched": 20,
-        "items_imported": 20,
+        "items_imported": 9,
         "items_skipped": 0,
         "items_failed": 0,
         "items_quarantined": 0,
         "citationEdges": 9,
-        "embeddedChunks": 111,
-        "cursor": "cl-opinion-11277828",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=fla&cursor=cD0xMTI0MTQ3Nw%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 20,
-        "rateLimitCount": 1,
-        "lastRetryAfterSec": 43,
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/72514716/",
-        "apiCalls": 12,
+        "embeddedChunks": 141,
+        "cursor": "cl-opinion-11341711",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=tex&cursor=cD0xMTMzODA5Mg%3D%3D&order_by=-id&page_size=10",
+        "completedCount": 9,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 11,
         "sample": [
           {
-            "title": "Joseph Zieler v. State of Florida",
+            "title": "River Creek Development Corporation and City of Hutto, Texas v. Preston Hollow C",
             "citation": null,
-            "docket": "SC2023-1003",
+            "docket": "24-1070",
             "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "Chadwick Willacy v. State of Florida & Chadwick Willacy v. State of Florida",
+            "title": "River Creek Development Corporation and City of Hutto, Texas v. Preston Hollow C",
             "citation": null,
-            "docket": "SC2026-0519 & SC2026-0526",
+            "docket": "24-1070",
             "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "In Re: Amendments to Florida Rules of Appellate Procedure",
+            "title": "The State of Texas and Kyle Madsen in His Official Capacity as Director of Right",
             "citation": null,
-            "docket": "SC2025-1458",
+            "docket": "24-0447",
             "citationStatus": "unreported",
             "persist": "imported"
           }
@@ -374,25 +57,173 @@
     },
     {
       "court": "tex",
+      "round": 2,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "tex",
+        "mappedCourt": "st-tx-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 5,
+        "batchSize": 5,
+        "targetMax": 20,
+        "items_discovered": 60,
+        "items_fetched": 15,
+        "items_imported": 14,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 11,
+        "embeddedChunks": 96,
+        "cursor": "cl-opinion-11333679",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=tex&cursor=cD0xMTMyODg2Mw%3D%3D&order_by=-id&page_size=10",
+        "completedCount": 14,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 11,
+        "sample": [
+          {
+            "title": "The State of Texas v. City of McAllen",
+            "citation": null,
+            "docket": "24-1060",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Huffman Asset Management, LLC and Prairie Capital, LLC v. Maurice Colter and Ni-",
+            "citation": null,
+            "docket": "24-0205",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Huffman Asset Management, LLC and Prairie Capital, LLC v. Maurice Colter and Ni-",
+            "citation": null,
+            "docket": "24-0205",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "tex",
+      "round": 3,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "tex",
+        "mappedCourt": "st-tx-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 5,
+        "batchSize": 5,
+        "targetMax": 20,
+        "items_discovered": 80,
+        "items_fetched": 20,
+        "items_imported": 19,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 17,
+        "embeddedChunks": 95,
+        "cursor": "cl-opinion-11328858",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=tex&cursor=cD0xMTMxNTAzMg%3D%3D&order_by=-id&page_size=10",
+        "completedCount": 19,
+        "rateLimitCount": 2,
+        "lastRetryAfterSec": 37,
+        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/73048966/",
+        "apiCalls": 14,
+        "sample": [
+          {
+            "title": "In Re State of Texas",
+            "citation": null,
+            "docket": "25-0687",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "In Re State of Texas",
+            "citation": null,
+            "docket": "25-0687",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Jonathan Timothy Noyes v. the State of Texas for the Protection of Samantha Jo V",
+            "citation": null,
+            "docket": "24-0023",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "tex",
+      "round": 4,
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "proofMode": false,
+        "clCourt": "tex",
+        "mappedCourt": "st-tx-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 1,
+        "batchSize": 5,
+        "targetMax": 20,
+        "items_discovered": 100,
+        "items_fetched": 21,
+        "items_imported": 20,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 5,
+        "embeddedChunks": 33,
+        "cursor": "cl-opinion-11315031",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=tex&cursor=cD0xMTI3NTE0MQ%3D%3D&order_by=-id&page_size=10",
+        "completedCount": 20,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 3,
+        "sample": [
+          {
+            "title": "In Re Bell Helicopter Services Inc. and Bell Helicopter Textron Inc.",
+            "citation": null,
+            "docket": "24-0883",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "texcrimapp",
       "round": 1,
       "result": {
         "ok": true,
         "status": "rate_limited",
         "reason": "RATE LIMIT WINDOW REACHED",
-        "clCourt": "tex",
-        "mappedCourt": "st-tx-high",
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/clusters/10877619/",
-        "lastRetryAfterSec": 390,
-        "apiCalls": 12,
-        "cursor": "cl-opinion-11345132",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=tex&cursor=cD0xMTM0NTExNw%3D%3D&order_by=-id&page_size=10",
+        "clCourt": "texcrimapp",
+        "mappedCourt": "st-tx-crim-high",
+        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/clusters/10978155/",
+        "lastRetryAfterSec": 3600,
+        "apiCalls": 13,
+        "cursor": "cl-opinion-11445812",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=texcrimapp&cursor=cD0xMTQ0NTc5Nw%3D%3D&order_by=-id&page_size=10",
         "items_discovered": 20,
         "items_fetched": 5,
         "items_imported": 4,
         "items_skipped": 0,
         "items_failed": 0,
         "items_quarantined": 0,
-        "last_successful_external_id": "cl-opinion-11437601",
+        "last_successful_external_id": "cl-opinion-11445813",
         "completedCount": 4,
         "batchProcessed": 4,
         "featureAgents": "0"
