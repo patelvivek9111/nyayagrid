@@ -1,10 +1,12 @@
 /**
  * Wave-1 intermediate appellate ingest (after high baselines).
  * Usage: node scripts/run-staging-cl-wave1-intermediate.cjs [sha] [startCourt]
+ * Skips courts with offline MAPPING_INVALID status (zero CL calls for those).
  */
 const { spawnSync } = require("node:child_process");
 const fs = require("node:fs");
 const path = require("node:path");
+const { getCourtEntry, shouldSkipIngest } = require("./cl-court-map-registry.cjs");
 
 const sha = process.argv[2] || "HEAD";
 const startCourt = (process.argv[3] || "nyappdiv").toLowerCase();
@@ -59,6 +61,24 @@ function runOne(court, batch, target) {
 console.log(JSON.stringify({ phase: "wave1_intermediate_start", sha, plan: plan.map((p) => p.court) }));
 
 for (const item of plan) {
+  const entry = getCourtEntry(item.court);
+  const gate = shouldSkipIngest(entry);
+  if (gate.skip) {
+    const skipped = {
+      ok: true,
+      status: "skipped_mapping",
+      reason: gate.reason,
+      clCourt: item.court,
+      courtName: entry?.courtName ?? null,
+      evidence: entry?.evidence ?? null,
+      courtListenerHttpCalls: 0,
+    };
+    console.log(JSON.stringify({ phase: "skip", ...skipped }));
+    results.push({ court: item.court, round: 0, result: skipped });
+    fs.writeFileSync(outPath, JSON.stringify({ ok: true, results }, null, 2));
+    continue;
+  }
+
   let rounds = 0;
   const maxRounds = Math.ceil(item.target / item.batch) + 6;
   while (rounds < maxRounds) {
@@ -88,6 +108,10 @@ for (const item of plan) {
       );
       fs.writeFileSync(outPath, JSON.stringify({ stopped: status || "rate_limited", results }, null, 2));
       process.exit(0);
+    }
+    if (status === "mapping_invalid" || status === "transient_retry") {
+      console.log(JSON.stringify({ ok: true, status, court: item.court, last }));
+      break;
     }
     if (status === "rate_limited" && !(retrySec > 0)) {
       console.log(JSON.stringify({ phase: "soft_wait_ambiguous_429", court: item.court, waitMs: 15000 }));

@@ -1,0 +1,51 @@
+{
+  "wave": "2W",
+  "status": "PASS",
+  "generatedAt": "2026-09-21T20:25:00.000Z",
+  "courtListenerHttpCalls": 0,
+  "queue": { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", "transition": "NONE" },
+  "summary": "Offline mapping repair: three Wave-1 intermediate CL ids marked MAPPING_INVALID with no fabricated replacements; texapp classified TRANSIENT_RETRY; court verification routed through ClRateLimiter + cache; unpaced probes disabled.",
+  "mappingRepair": {
+    "pacommwlth": {
+      "intendedCourt": "Commonwealth Court of Pennsylvania",
+      "oldMapping": "pacommwlth → st-pa-comm",
+      "newMapping": null,
+      "status": "MAPPING_INVALID / NEEDS_SINGLE_VERIFICATION_AFTER_COOLDOWN",
+      "evidence": "wave2v-court-verify.txt /courts/pacommwlth/ → 404"
+    },
+    "njsuperct": {
+      "intendedCourt": "Superior Court of New Jersey, Appellate Division",
+      "oldMapping": "njsuperct → st-nj-app",
+      "newMapping": null,
+      "status": "MAPPING_INVALID / NEEDS_SINGLE_VERIFICATION_AFTER_COOLDOWN",
+      "evidence": "wave2v-court-verify.txt /courts/njsuperct/ → 404"
+    },
+    "vacapp": {
+      "intendedCourt": "Court of Appeals of Virginia",
+      "oldMapping": "vacapp → st-va-app",
+      "newMapping": null,
+      "status": "MAPPING_INVALID / NEEDS_SINGLE_VERIFICATION_AFTER_COOLDOWN",
+      "evidence": "wave2v-court-verify.txt /courts/vacapp/ → 404"
+    },
+    "texapp": {
+      "mappingStatus": "VERIFIED",
+      "transientStatus": "TRANSIENT_RETRY",
+      "previousError": "discover_http_502",
+      "checkpoint": "cl-opinion-9944747",
+      "nextRetryAction": "resume paced opinion ingest after cooldown"
+    }
+  },
+  "quotaRouting": {
+    "before": "tmp-wave2v-court-verify*.cjs used raw fetch to /courts/{id}/ outside ClRateLimiter",
+    "after": "ensureCourtVerified() in staging-cl-batch-job uses ClRateLimiter; unpaced probes disabled; court-map-probe gated + paced",
+    "directBypassRemaining": "bootstrapQuotaPlan still uses direct fetch for /api-usage/ only (documented non-user-quota endpoint)"
+  },
+  "nextSafeIngestion": {
+    "court": "texapp",
+    "checkpoint": "cl-opinion-9944747",
+    "target": 15,
+    "resumeTimeLocalEastern": "4:03:39 PM",
+    "resumeTimeUtc": "2026-09-21T20:03:39.000Z",
+    "note": "Cooldown already elapsed at repair completion; resume when ready"
+  }
+}

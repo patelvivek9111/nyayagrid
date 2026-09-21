@@ -1,0 +1,63 @@
+{
+  "wave": "2W-offline-mapping-repair",
+  "generatedAt": "2026-09-21T20:20:00.000Z",
+  "courtListenerHttpCalls": 0,
+  "note": "Persisted verification cache. VERIFIED and MAPPING_INVALID entries must not re-hit /courts/{id}/.",
+  "sourceEvidence": [
+    "packages/research/corpus/reports/wave2v-court-verify.txt",
+    "successful Wave-1 opinion ingest checkpoints",
+    "scripts/cl-court-map-registry.cjs"
+  ],
+  "entries": {
+    "pacommwlth": {
+      "status": "MAPPING_INVALID",
+      "invalidCandidateId": "pacommwlth",
+      "canonicalClId": null,
+      "courtName": "Commonwealth Court of Pennsylvania",
+      "nyayaCourtId": "st-pa-comm",
+      "verifiedAt": "2026-09-21T19:02:00.000Z",
+      "evidence": "wave2v-court-verify.txt GET /courts/pacommwlth/ → 404; no alternate proven offline"
+    },
+    "njsuperct": {
+      "status": "MAPPING_INVALID",
+      "invalidCandidateId": "njsuperct",
+      "canonicalClId": null,
+      "courtName": "Superior Court of New Jersey, Appellate Division",
+      "nyayaCourtId": "st-nj-app",
+      "verifiedAt": "2026-09-21T19:02:00.000Z",
+      "evidence": "wave2v-court-verify.txt GET /courts/njsuperct/ → 404; no alternate proven offline"
+    },
+    "vacapp": {
+      "status": "MAPPING_INVALID",
+      "invalidCandidateId": "vacapp",
+      "canonicalClId": null,
+      "courtName": "Court of Appeals of Virginia",
+      "nyayaCourtId": "st-va-app",
+      "verifiedAt": "2026-09-21T19:02:00.000Z",
+      "evidence": "wave2v-court-verify.txt GET /courts/vacapp/ → 404; no alternate proven offline"
+    },
+    "texapp": {
+      "status": "VERIFIED",
+      "transientStatus": "TRANSIENT_RETRY",
+      "transientError": "discover_http_502",
+      "courtName": "Court of Appeals of Texas",
+      "nyayaCourtId": "st-tx-app",
+      "checkpoint": "cl-opinion-9944747",
+      "count": 4,
+      "target": 15,
+      "verifiedAt": "2026-09-21T19:02:00.000Z",
+      "evidence": "wave2v-court-verify.txt /courts/texapp/ → 200; prior ingest 4"
+    },
+    "la": { "status": "VERIFIED", "courtName": "Supreme Court of Louisiana", "evidence": "wave2v-court-verify.txt 200" },
+    "dc": { "status": "VERIFIED", "courtName": "District of Columbia Court of Appeals", "evidence": "wave2v-court-verify.txt 200" },
+    "idaho": { "status": "VERIFIED", "courtName": "Idaho Supreme Court", "evidence": "wave2v-court-verify.txt 200" },
+    "mo": { "status": "VERIFIED", "courtName": "Supreme Court of Missouri", "evidence": "wave2v-court-verify.txt 200" },
+    "miss": { "status": "VERIFIED", "courtName": "Mississippi Supreme Court", "evidence": "wave2v-court-verify.txt 200" }
+  },
+  "repeatVerificationPolicy": {
+    "VERIFIED": "never re-hit /courts/{id}/",
+    "MAPPING_INVALID": "never re-hit same invalid id; resolve via paced courts search once after cooldown",
+    "NEEDS_SINGLE_VERIFICATION": "exactly one paced /courts/{id}/ via ClRateLimiter",
+    "TRANSIENT_RETRY": "retry opinion discover after quota-safe window; do not invalidate mapping"
+  }
+}

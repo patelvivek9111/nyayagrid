@@ -1,23 +1,97 @@
 /**
  * Resolve Wave-1 CourtListener court ids via /courts/ metadata (no guessing).
- * Usage on Fly: CL_COURT_PROBE=1 node staging-cl-court-map-probe-bundled.cjs
+ * ALL requests go through ClRateLimiter — no unpaced bursts.
+ * Usage on Fly: CL_ALLOW_COURT_PROBE=1 CL_COURT_PROBE=1 node staging-cl-court-map-probe-bundled.cjs
+ *
+ * Hard gate: set CL_ALLOW_COURT_PROBE=1 explicitly. Prefer offline registry
+ * (scripts/cl-court-map-registry.cjs) + single paced verify in batch job.
  */
 const CL_BASE = "https://www.courtlistener.com/api/rest/v4";
 
+if (process.env.CL_ALLOW_COURT_PROBE !== "1") {
+  console.log(
+    JSON.stringify({
+      ok: false,
+      reason: "COURT_PROBE_DISABLED",
+      hint: "Use scripts/cl-court-map-registry.cjs offline. Live probe requires CL_ALLOW_COURT_PROBE=1 and uses paced ClRateLimiter.",
+      courtListenerHttpCalls: 0,
+    }),
+  );
+  process.exit(2);
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((r) => setTimeout(r, ms));
+}
+
+function parseRetryAfterSec(res: Response): number | null {
+  const h = res.headers.get("retry-after");
+  if (!h) return null;
+  const asInt = Number.parseInt(h, 10);
+  if (Number.isFinite(asInt) && asInt >= 0) return Math.min(asInt, 3600);
+  return null;
+}
+
+/** Minimal paced client — same contract as staging-cl-batch-job ClRateLimiter. */
+class ClRateLimiter {
+  apiCalls = 0;
+  rateLimitHits = 0;
+  lastRetryAfterSec: number | null = null;
+  private lastRequestAt = 0;
+  private globalPauseUntil = 0;
+  private chain: Promise<void> = Promise.resolve();
+
+  constructor(
+    private readonly apiKey: string,
+    private readonly rateMs: number,
+  ) {}
+
+  async fetch(url: string): Promise<Response> {
+    const run = async (): Promise<Response> => {
+      const now = Date.now();
+      const wait = Math.max(0, this.globalPauseUntil - now, this.rateMs - (now - this.lastRequestAt));
+      if (wait > 0) await sleep(wait);
+      this.apiCalls += 1;
+      this.lastRequestAt = Date.now();
+      const res = await fetch(url, {
+        headers: { Authorization: `Token ${this.apiKey}`, Accept: "application/json" },
+        signal: AbortSignal.timeout(90_000),
+      });
+      if (res.status === 429) {
+        this.rateLimitHits += 1;
+        const retryAfter = parseRetryAfterSec(res) ?? 60;
+        this.lastRetryAfterSec = retryAfter;
+        if (retryAfter > 300) return res;
+        this.globalPauseUntil = Date.now() + retryAfter * 1000;
+      }
+      return res;
+    };
+    const next = this.chain.then(run, run);
+    this.chain = next.then(
+      () => undefined,
+      () => undefined,
+    );
+    return next;
+  }
+}
+
 const WANTED = [
-  { state: "CA", roles: ["high", "appellate"], needles: ["supreme court of california", "court of appeal"] },
-  { state: "DE", roles: ["high"], needles: ["supreme court of delaware"] },
-  { state: "FL", roles: ["high", "appellate"], needles: ["supreme court of florida", "district court of appeal"] },
-  { state: "IL", roles: ["high", "appellate"], needles: ["supreme court of illinois", "appellate court of illinois"] },
-  { state: "MA", roles: ["high", "appellate"], needles: ["supreme judicial court", "appeals court"] },
-  { state: "NJ", roles: ["high", "appellate"], needles: ["supreme court of new jersey", "appellate division"] },
-  { state: "NY", roles: ["high", "appellate"], needles: ["court of appeals", "appellate division"] },
-  { state: "PA", roles: ["high", "appellate", "appellate"], needles: ["supreme court of pennsylvania", "superior court of pennsylvania", "commonwealth court"] },
-  { state: "TX", roles: ["high", "high", "appellate"], needles: ["supreme court of texas", "court of criminal appeals", "court of appeals"] },
-  { state: "VA", roles: ["high", "appellate"], needles: ["supreme court of virginia", "court of appeals of virginia"] },
+  { state: "CA", needles: ["supreme court of california", "court of appeal"] },
+  { state: "DE", needles: ["supreme court of delaware"] },
+  { state: "FL", needles: ["supreme court of florida", "district court of appeal"] },
+  { state: "IL", needles: ["supreme court of illinois", "appellate court of illinois"] },
+  { state: "MA", needles: ["supreme judicial court", "appeals court"] },
+  { state: "NJ", needles: ["supreme court of new jersey", "appellate division"] },
+  { state: "NY", needles: ["court of appeals", "appellate division"] },
+  {
+    state: "PA",
+    needles: ["supreme court of pennsylvania", "superior court of pennsylvania", "commonwealth court"],
+  },
+  { state: "TX", needles: ["supreme court of texas", "court of criminal appeals", "court of appeals"] },
+  { state: "VA", needles: ["supreme court of virginia", "court of appeals of virginia"] },
 ];
 
-const ASSUMED = {
+const ASSUMED: Record<string, string> = {
   cal: "st-ca-high",
   calctapp: "st-ca-app",
   del: "st-de-high",
@@ -47,33 +121,43 @@ async function main() {
     console.log(JSON.stringify({ ok: false, reason: "COURTLISTENER_API_KEY missing" }));
     process.exit(2);
   }
-  const rateMs = Math.max(Number.parseInt(process.env.CL_RATE_MS ?? "800", 10) || 800, 400);
-  const courts = [];
-  let url = `${CL_BASE}/courts/?page_size=100`;
+  const rateMs = Math.max(Number.parseInt(process.env.CL_RATE_MS ?? "2200", 10) || 2200, 2143);
+  const cl = new ClRateLimiter(key, rateMs);
+  const courts: Array<{ id: string; name: string; jurisdiction: string | null; in_use?: boolean }> = [];
+  let url: string | null = `${CL_BASE}/courts/?page_size=100`;
   let pages = 0;
   while (url && pages < 40) {
     pages += 1;
-    await new Promise((r) => setTimeout(r, rateMs));
-    const res = await fetch(url, {
-      headers: { Authorization: `Token ${key}`, Accept: "application/json" },
-    });
+    const res = await cl.fetch(url);
     if (res.status === 429) {
       console.log(
         JSON.stringify({
           ok: true,
           status: "rate_limited",
-          retryAfter: res.headers.get("retry-after"),
+          retryAfter: cl.lastRetryAfterSec,
           pages,
           courtsSoFar: courts.length,
+          apiCalls: cl.apiCalls,
+          hardStop: true,
         }),
       );
       process.exit(0);
     }
     if (!res.ok) {
-      console.log(JSON.stringify({ ok: false, reason: `courts_http_${res.status}`, pages }));
+      console.log(JSON.stringify({ ok: false, reason: `courts_http_${res.status}`, pages, apiCalls: cl.apiCalls }));
       process.exit(1);
     }
-    const body = await res.json();
+    const body = (await res.json()) as {
+      results?: Array<{
+        id: string;
+        full_name?: string;
+        short_name?: string;
+        name?: string;
+        jurisdiction?: string;
+        in_use?: boolean;
+      }>;
+      next?: string | null;
+    };
     for (const c of body.results || []) {
       courts.push({
         id: c.id,
@@ -89,15 +173,7 @@ async function main() {
   const unmatched = [];
   for (const want of WANTED) {
     for (const needle of want.needles) {
-      const found = courts.filter(
-        (c) =>
-          String(c.name).toLowerCase().includes(needle) &&
-          (want.state === "MA" ||
-            want.state === "NY" ||
-            String(c.jurisdiction || "").toLowerCase().includes(want.state.toLowerCase()) ||
-            String(c.id).toLowerCase().startsWith(want.state.toLowerCase().slice(0, 2)) ||
-            true),
-      );
+      const found = courts.filter((c) => String(c.name).toLowerCase().includes(needle));
       const top = found.slice(0, 5).map((c) => ({ id: c.id, name: c.name, jurisdiction: c.jurisdiction }));
       if (top.length === 0) unmatched.push({ state: want.state, needle });
       else matches.push({ state: want.state, needle, candidates: top });
@@ -122,6 +198,8 @@ async function main() {
         ok: true,
         courtsFetched: courts.length,
         pages,
+        apiCalls: cl.apiCalls,
+        paced: true,
         assumedValidated,
         missingAssumed: assumedValidated.filter((a) => !a.found),
         matches: matches.slice(0, 80),
@@ -135,6 +213,6 @@ async function main() {
 }
 
 main().catch((e) => {
-  console.log(JSON.stringify({ ok: false, err: String(e?.message || e).slice(0, 400) }));
+  console.log(JSON.stringify({ ok: false, err: String((e as Error)?.message || e).slice(0, 400) }));
   process.exit(1);
 });

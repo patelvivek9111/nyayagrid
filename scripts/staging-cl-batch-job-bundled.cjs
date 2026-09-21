@@ -2267,8 +2267,126 @@ var CL_COURT_MAP = {
   massappct: { courtId: "st-ma-app", courtLevel: "state_appellate", authorityState: "MA", courtName: "Massachusetts Appeals Court", federalCircuit: null, jurisdiction: "MA" },
   va: { courtId: "st-va-high", courtLevel: "state_high", authorityState: "VA", courtName: "Supreme Court of Virginia", federalCircuit: null, jurisdiction: "VA" },
   vacapp: { courtId: "st-va-app", courtLevel: "state_appellate", authorityState: "VA", courtName: "Court of Appeals of Virginia", federalCircuit: null, jurisdiction: "VA" },
-  del: { courtId: "st-de-high", courtLevel: "state_high", authorityState: "DE", courtName: "Supreme Court of Delaware", federalCircuit: null, jurisdiction: "DE" }
+  del: { courtId: "st-de-high", courtLevel: "state_high", authorityState: "DE", courtName: "Supreme Court of Delaware", federalCircuit: null, jurisdiction: "DE" },
+  // National highs — CL ids verified offline via wave2v-court-verify.txt (HTTP 200)
+  la: { courtId: "st-la-high", courtLevel: "state_high", authorityState: "LA", courtName: "Supreme Court of Louisiana", federalCircuit: null, jurisdiction: "LA" },
+  dc: { courtId: "st-dc-high", courtLevel: "state_high", authorityState: "DC", courtName: "District of Columbia Court of Appeals", federalCircuit: null, jurisdiction: "DC" },
+  idaho: { courtId: "st-id-high", courtLevel: "state_high", authorityState: "ID", courtName: "Idaho Supreme Court", federalCircuit: null, jurisdiction: "ID" },
+  mo: { courtId: "st-mo-high", courtLevel: "state_high", authorityState: "MO", courtName: "Supreme Court of Missouri", federalCircuit: null, jurisdiction: "MO" },
+  miss: { courtId: "st-ms-high", courtLevel: "state_high", authorityState: "MS", courtName: "Mississippi Supreme Court", federalCircuit: null, jurisdiction: "MS" }
 };
+var COURT_VERIFY_CACHE = {
+  pacommwlth: {
+    status: "MAPPING_INVALID",
+    verifiedAt: "2026-09-21T19:02:00.000Z",
+    evidence: "wave2v-court-verify.txt /courts/pacommwlth/ \u2192 404"
+  },
+  njsuperct: {
+    status: "MAPPING_INVALID",
+    verifiedAt: "2026-09-21T19:02:00.000Z",
+    evidence: "wave2v-court-verify.txt /courts/njsuperct/ \u2192 404"
+  },
+  vacapp: {
+    status: "MAPPING_INVALID",
+    verifiedAt: "2026-09-21T19:02:00.000Z",
+    evidence: "wave2v-court-verify.txt /courts/vacapp/ \u2192 404"
+  },
+  texapp: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T19:02:00.000Z",
+    fullName: "Court of Appeals of Texas",
+    evidence: "wave2v-court-verify.txt /courts/texapp/ \u2192 200; prior ingest>0"
+  },
+  la: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T19:02:00.000Z",
+    fullName: "Supreme Court of Louisiana",
+    evidence: "wave2v-court-verify.txt /courts/la/ \u2192 200"
+  },
+  dc: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T19:02:00.000Z",
+    fullName: "District of Columbia Court of Appeals",
+    evidence: "wave2v-court-verify.txt /courts/dc/ \u2192 200"
+  },
+  idaho: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T19:02:00.000Z",
+    fullName: "Idaho Supreme Court",
+    evidence: "wave2v-court-verify.txt /courts/idaho/ \u2192 200"
+  },
+  mo: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T19:02:00.000Z",
+    fullName: "Supreme Court of Missouri",
+    evidence: "wave2v-court-verify.txt /courts/mo/ \u2192 200"
+  },
+  miss: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T19:02:00.000Z",
+    fullName: "Mississippi Supreme Court",
+    evidence: "wave2v-court-verify.txt /courts/miss/ \u2192 200"
+  },
+  // Successful Wave-1 opinion ingest = verified without /courts/ re-hit
+  ny: { status: "VERIFIED", verifiedAt: "2026-09-21T17:50:00.000Z", evidence: "successful_opinion_ingest" },
+  cal: { status: "VERIFIED", verifiedAt: "2026-09-21T17:50:00.000Z", evidence: "successful_opinion_ingest" },
+  pa: { status: "VERIFIED", verifiedAt: "2026-09-21T17:50:00.000Z", evidence: "successful_opinion_ingest" },
+  nj: { status: "VERIFIED", verifiedAt: "2026-09-21T17:50:00.000Z", evidence: "successful_opinion_ingest" },
+  fla: { status: "VERIFIED", verifiedAt: "2026-09-21T17:50:00.000Z", evidence: "successful_opinion_ingest" },
+  tex: { status: "VERIFIED", verifiedAt: "2026-09-21T17:50:00.000Z", evidence: "successful_opinion_ingest" },
+  texcrimapp: { status: "VERIFIED", verifiedAt: "2026-09-21T17:50:00.000Z", evidence: "successful_opinion_ingest" },
+  ill: { status: "VERIFIED", verifiedAt: "2026-09-21T17:50:00.000Z", evidence: "successful_opinion_ingest" },
+  mass: { status: "VERIFIED", verifiedAt: "2026-09-21T17:50:00.000Z", evidence: "successful_opinion_ingest" },
+  va: { status: "VERIFIED", verifiedAt: "2026-09-21T17:50:00.000Z", evidence: "successful_opinion_ingest" },
+  del: { status: "VERIFIED", verifiedAt: "2026-09-21T17:50:00.000Z", evidence: "successful_opinion_ingest" },
+  nyappdiv: { status: "VERIFIED", verifiedAt: "2026-09-21T17:57:00.000Z", evidence: "successful_opinion_ingest" },
+  calctapp: { status: "VERIFIED", verifiedAt: "2026-09-21T17:57:00.000Z", evidence: "successful_opinion_ingest" },
+  pasuperct: { status: "VERIFIED", verifiedAt: "2026-09-21T18:41:00.000Z", evidence: "successful_opinion_ingest" },
+  fladistctapp: { status: "VERIFIED", verifiedAt: "2026-09-21T18:44:00.000Z", evidence: "successful_opinion_ingest" },
+  illappct: { status: "VERIFIED", verifiedAt: "2026-09-21T18:53:00.000Z", evidence: "successful_opinion_ingest" },
+  massappct: { status: "VERIFIED", verifiedAt: "2026-09-21T19:00:00.000Z", evidence: "successful_opinion_ingest" }
+};
+async function ensureCourtVerified(cl, clCourt) {
+  const cached = COURT_VERIFY_CACHE[clCourt];
+  if (cached?.status === "VERIFIED") {
+    return { ok: true, status: "VERIFIED", fromCache: true, fullName: cached.fullName ?? null };
+  }
+  if (cached?.status === "MAPPING_INVALID") {
+    return { ok: false, status: "MAPPING_INVALID", fromCache: true };
+  }
+  const res = await cl.fetch(`${CL_BASE}/courts/${encodeURIComponent(clCourt)}/`);
+  if (res.status === 429) {
+    return { ok: false, status: "rate_limited", fromCache: false, httpStatus: 429 };
+  }
+  if (res.status === 502 || res.status === 503 || res.status === 504) {
+    COURT_VERIFY_CACHE[clCourt] = {
+      status: "TRANSIENT_RETRY",
+      verifiedAt: (/* @__PURE__ */ new Date()).toISOString(),
+      evidence: `paced_/courts/${clCourt}/_${res.status}`
+    };
+    return { ok: false, status: "TRANSIENT_RETRY", fromCache: false, httpStatus: res.status };
+  }
+  if (res.status === 404) {
+    COURT_VERIFY_CACHE[clCourt] = {
+      status: "MAPPING_INVALID",
+      verifiedAt: (/* @__PURE__ */ new Date()).toISOString(),
+      evidence: `paced_/courts/${clCourt}/_404`
+    };
+    return { ok: false, status: "MAPPING_INVALID", fromCache: false, httpStatus: 404 };
+  }
+  if (!res.ok) {
+    return { ok: false, status: `verify_http_${res.status}`, fromCache: false, httpStatus: res.status };
+  }
+  const body = await res.json().catch(() => ({}));
+  const fullName = body.full_name || body.short_name || null;
+  COURT_VERIFY_CACHE[clCourt] = {
+    status: "VERIFIED",
+    verifiedAt: (/* @__PURE__ */ new Date()).toISOString(),
+    fullName,
+    evidence: `paced_/courts/${clCourt}/_200`
+  };
+  return { ok: true, status: "VERIFIED", fromCache: false, fullName, httpStatus: 200 };
+}
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
 }
@@ -2851,6 +2969,22 @@ async function main() {
     console.log(JSON.stringify({ ok: false, reason: `unmapped_court:${clCourt}`, status: "failed" }));
     process.exit(1);
   }
+  const cachedVerify = COURT_VERIFY_CACHE[clCourt];
+  if (cachedVerify?.status === "MAPPING_INVALID") {
+    console.log(
+      JSON.stringify({
+        ok: false,
+        status: "mapping_invalid",
+        reason: "MAPPING_INVALID_CACHED",
+        clCourt,
+        mappedCourt: mapped.courtId,
+        evidence: cachedVerify.evidence,
+        courtListenerHttpCalls: 0,
+        featureAgents: process.env.FEATURE_AGENTS ?? null
+      })
+    );
+    process.exit(1);
+  }
   if (!proofMode && (!databaseUrl || !openaiKey)) {
     console.log(JSON.stringify({ ok: false, reason: "DATABASE_URL/OPENAI_API_KEY required" }));
     process.exit(2);
@@ -2932,6 +3066,27 @@ async function main() {
       });
       return;
     }
+  }
+  const courtVerify = await ensureCourtVerified(cl, clCourt);
+  if (!courtVerify.ok) {
+    const status2 = courtVerify.status === "rate_limited" ? cl.quotaExhausted ? "quota_paused" : "rate_limited" : courtVerify.status === "TRANSIENT_RETRY" ? "transient_retry" : courtVerify.status === "MAPPING_INVALID" ? "mapping_invalid" : "failed";
+    await finish(
+      {
+        ok: status2 === "quota_paused" || status2 === "rate_limited" || status2 === "transient_retry",
+        status: status2,
+        reason: courtVerify.status,
+        clCourt,
+        mappedCourt: mapped.courtId,
+        courtVerify,
+        last429Endpoint: cl.last429Endpoint,
+        lastRetryAfterSec: cl.lastRetryAfterSec,
+        apiCalls: cl.apiCalls,
+        cursor: job?.cursor ?? null,
+        next_page_url: job?.next_page_url ?? null
+      },
+      status2 === "mapping_invalid" ? 1 : 0
+    );
+    return;
   }
   const pageSize = Math.min(batchSize * 2, 50);
   let discoverUrl = job?.next_page_url || `${CL_BASE}/opinions/?${new URLSearchParams({
