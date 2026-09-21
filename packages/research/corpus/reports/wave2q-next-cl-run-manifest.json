@@ -1,0 +1,16 @@
+{
+  "wave": "2Q",
+  "blockedUntil": "2026-09-21T13:57:28.000Z",
+  "purpose": "Next CL run after probe 429. Resume NJ discover then remaining Wave-1 highs. No rediscovery.",
+  "nextAction": "After blocked-until expires: exactly one probe; if 200 resume nj → fla → tex → texcrimapp → ill → mass → va → del",
+  "wave1HighComplete": ["ny", "cal", "pa"],
+  "wave1HighPending": ["nj", "fla", "tex", "texcrimapp", "ill", "mass", "va", "del"],
+  "checkpoints": {
+    "ny": "cl-opinion-11261629",
+    "cal": "cl-opinion-11116316",
+    "pa": "cl-opinion-11343156",
+    "nj": null
+  },
+  "nationalPriorityAfterWave1": ["LA", "DC", "ID", "MO", "MS"],
+  "sourcePriorityFile": "wave2o-coverage-priority.json"
+}

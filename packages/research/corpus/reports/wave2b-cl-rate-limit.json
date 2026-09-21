@@ -1,32 +1,31 @@
 {
-  "wave": "2P-wave1-high-resume",
+  "wave": "2Q-wave1-high-resume-from-nj",
   "branch": "COURTLISTENER_HARD_STOP",
-  "result": "RATE_LIMITED",
+  "result": "WAITING_FOR_CL",
   "cooldownCheck": {
-    "blockedUntil": "2026-09-20T20:02:02.000Z",
-    "checkedAt": "2026-09-20T20:33:11.598Z",
+    "blockedUntilPrior": "2026-09-20T21:33:57.000Z",
+    "checkedAt": "2026-09-21T01:13:08.852Z",
     "expired": true
   },
-  "probedAt": "2026-09-20T20:33:20.000Z",
+  "probedAt": "2026-09-21T01:13:08.852Z",
   "probe": {
     "endpoint": "GET /api/rest/v4/opinions/?cluster__docket__court=ca11&page_size=1",
-    "status": 200,
-    "retryAfterSeconds": null,
-    "ms": 788,
-    "resultCount": 20,
-    "sampleOpinionIdPresent": true,
-    "additionalClCallsBeforeResume": 0
+    "status": 429,
+    "retryAfterSeconds": 45859,
+    "ms": 469,
+    "resultCount": 0,
+    "additionalClCallsAfter429": 0
   },
   "hardStop": {
-    "at": "2026-09-20T20:55:53.987Z",
-    "court": "nj",
+    "at": "2026-09-21T01:13:08.852Z",
+    "court": "probe_pre_resume",
     "endpoint": "https://www.courtlistener.com/api/rest/v4/opinions/",
     "httpStatus": 429,
-    "retryAfterSeconds": 2250,
-    "blockedUntil": "2026-09-20T21:33:57.000Z",
+    "retryAfterSeconds": 45859,
+    "blockedUntil": "2026-09-21T13:57:28.000Z",
     "post429ExtraRequests": 0,
     "hardStopRegression": "PASS",
-    "notes": "NY/CA/PA high baselines complete. NJ first discover call hit Retry-After 2250; zero additional CL calls."
+    "notes": "Cooldown expired; exactly one probe before NJ resume; 429 Retry-After 45859; zero additional CL calls. NY/CA/PA remain complete."
   },
   "checkpoint": {
     "ny": { "cursor": "cl-opinion-11261629", "n": 20, "status": "complete" },
@@ -36,7 +35,7 @@
   },
   "resumeOrder": ["nj", "fla", "tex", "texcrimapp", "ill", "mass", "va", "del"],
   "notes": [
-    "Cooldown expired; single probe 200 before Wave-1 resume.",
-    "Hard-stop retained."
+    "Prior cooldown expired; single authenticated probe only.",
+    "Hard-stop retained; no Wave-1 ingest this run."
   ]
 }

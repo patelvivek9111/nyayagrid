@@ -1,0 +1,103 @@
+{
+  "verdict": "WAITING_FOR_CL",
+  "queue": 2,
+  "queue9": "CLOSED",
+  "queue3": "NOT_OPEN",
+  "transitionAllowed": false,
+  "wave": "2Q",
+  "featureAgents": "0",
+  "summary": "Prior cooldown expired. Exactly one authenticated CL probe returned 429 Retry-After 45859. Hard-stop with post-429 extra requests = 0. No Wave-1 ingest. NY/CA/PA high baselines unchanged. Resume NJ after blocked-until.",
+  "courtListener": {
+    "cooldownExpiredAtStart": true,
+    "priorBlockedUntil": "2026-09-20T21:33:57.000Z",
+    "probe": {
+      "status": 429,
+      "endpoint": "GET /api/rest/v4/opinions/?cluster__docket__court=ca11&page_size=1",
+      "retryAfterSeconds": 45859,
+      "ms": 469
+    },
+    "hardStop": {
+      "at": "2026-09-21T01:13:08.852Z",
+      "court": "probe_pre_resume",
+      "httpStatus": 429,
+      "retryAfterSeconds": 45859,
+      "blockedUntil": "2026-09-21T13:57:28.000Z",
+      "post429ExtraRequests": 0,
+      "hardStopRegression": "PASS"
+    },
+    "orphanWorkers": 0
+  },
+  "wave1Highs": {
+    "ny": { "count": 20, "checkpoint": "cl-opinion-11261629", "baseline": "COMPLETE" },
+    "cal": { "count": 20, "checkpoint": "cl-opinion-11116316", "baseline": "COMPLETE" },
+    "pa": { "count": 20, "checkpoint": "cl-opinion-11343156", "baseline": "COMPLETE" },
+    "nj": { "count": 0, "checkpoint": null, "baseline": "INCOMPLETE" },
+    "fla": { "count": 0, "checkpoint": null, "baseline": "NOT_STARTED" },
+    "tex": { "count": 0, "checkpoint": null, "baseline": "NOT_STARTED" },
+    "texcrimapp": { "count": 0, "checkpoint": null, "baseline": "NOT_STARTED" },
+    "ill": { "count": 0, "checkpoint": null, "baseline": "NOT_STARTED" },
+    "mass": { "count": 0, "checkpoint": null, "baseline": "NOT_STARTED" },
+    "va": { "count": 0, "checkpoint": null, "baseline": "NOT_STARTED" },
+    "del": { "count": 0, "checkpoint": null, "baseline": "NOT_STARTED" }
+  },
+  "resumeOrder": ["nj", "fla", "tex", "texcrimapp", "ill", "mass", "va", "del"],
+  "intermediateAppellate": { "started": false, "completed": false },
+  "nationalExpansion": { "started": false, "nextPriority": ["LA", "DC", "ID", "MO", "MS"] },
+  "corpus": {
+    "authorities": 1609,
+    "cases": 298,
+    "clCases": 253,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "provenanceCanonicalUrlPct": 100,
+    "metadataNormalized": "1609/1609",
+    "citationNormalized": "1356/1356 eligible",
+    "clUnreportedCitationExemptions": 253,
+    "lastChecked": 1474
+  },
+  "coverage": {
+    "broader": 1,
+    "limited": 51,
+    "minimumCaseDeficit": 936,
+    "authorityGateDeficit": 3885,
+    "caseBelow20": 48,
+    "noHighOrAppellate": 31
+  },
+  "citationGraph": {
+    "extracted": 3354,
+    "resolved": 91,
+    "newlyResolved": 0,
+    "unresolved": 3263,
+    "TARGET_ABSENT": 3262,
+    "PARSER_GAP": 0,
+    "MALFORMED": 1,
+    "AMBIGUOUS": 0
+  },
+  "retrieval": {
+    "note": "unchanged from wave2p; no new ingest this run",
+    "exactCite": "52/52 PASS",
+    "caseNameIssueSubject": "52/52 PASS",
+    "isolation": "PASS",
+    "safeMiss": "4/4 EXPECTED_MISS",
+    "noWeb": true,
+    "federalCircuitIsolation": "PASS"
+  },
+  "tests": {
+    "rateLimitHardStop": "PASS",
+    "probeOnly": "PASS (exactly 1 CL HTTP call)"
+  },
+  "operational": {
+    "commit": "pending",
+    "deploy": "not required",
+    "health": "ok",
+    "featureAgents": "0",
+    "orphanWorkers": 0
+  },
+  "remainingQueue2Work": [
+    "After blocked-until 2026-09-21T13:57:28.000Z: single probe then resume NJ→FL→TX(tex+texcrimapp)→IL→MA→VA→DE",
+    "Then Wave-1 intermediate appellate; then national highs LA→DC→ID→MO→MS…",
+    "Keep #2 open past floor=20"
+  ],
+  "productionClassification": "WAITING_FOR_CL — probe 429 before NJ resume; corpus unchanged"
+}

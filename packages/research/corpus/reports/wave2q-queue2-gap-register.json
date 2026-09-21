@@ -1,0 +1,15 @@
+{
+  "wave": "2Q",
+  "generatedAt": "2026-09-21T01:13:30.000Z",
+  "queue2Open": true,
+  "queue9Closed": true,
+  "queue3NotOpen": true,
+  "blockedUntil": "2026-09-21T13:57:28.000Z",
+  "retryAfterSeconds": 45859,
+  "wave1HighProgress": {
+    "complete": ["ny", "cal", "pa"],
+    "incomplete": ["nj", "fla", "tex", "texcrimapp", "ill", "mass", "va", "del"],
+    "nextResume": "nj @ discover (cursor null)"
+  },
+  "externalLimitation": "CourtListener probe 429 Retry-After 45859s (~12.7h) before any NJ ingest"
+}
