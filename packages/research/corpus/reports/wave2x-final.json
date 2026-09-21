@@ -1,0 +1,123 @@
+{
+  "wave": "2X",
+  "status": "PARTIAL",
+  "generatedAt": "2026-09-21T21:22:39.007Z",
+  "queue": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
+  },
+  "tier2": {
+    "liveLimits": {
+      "minute": 30,
+      "hour": 300,
+      "day": 1200
+    },
+    "remaining": {
+      "minute": 30,
+      "hour": 20,
+      "day": 303
+    },
+    "hourResetAt": "2026-09-21T21:43:50.000Z",
+    "hourResumeEt": "5:43:50 PM",
+    "daySafeRem": 263,
+    "hourSafeRem": 0
+  },
+  "courtListener": {
+    "apiCallsApproxSumRounds": 271,
+    "hard429": 0,
+    "post429": 0,
+    "safetyPauses": 1,
+    "verificationCalls": 0,
+    "orphanWorkers": 0
+  },
+  "efficiency": {
+    "casesImported": 106,
+    "authoritiesImported": 106,
+    "requestsPerAuthority": 2.56,
+    "note": "api sum includes per-round batch counters; verification 0 (cached VERIFIED)",
+    "duplicateSkips": 0
+  },
+  "wave1Intermediate": {
+    "texapp": {
+      "status": "PARTIAL",
+      "count": 9,
+      "target": 15,
+      "checkpoint": "cl-opinion-9944674",
+      "note": "single batch advanced 4→~9/10; needs orchestrated rounds to finish 15"
+    },
+    "gaps": [
+      "pacommwlth",
+      "njsuperct",
+      "vacapp"
+    ],
+    "overall": "valid courts mostly complete; texapp partial; 3 mapping gaps skipped"
+  },
+  "national": {
+    "la": {
+      "status": "COMPLETE",
+      "count": 20,
+      "cursor": "cl-opinion-11177011"
+    },
+    "dc": {
+      "status": "COMPLETE",
+      "count": 20,
+      "cursor": "cl-opinion-11402168"
+    },
+    "idaho": {
+      "status": "COMPLETE",
+      "count": 20,
+      "cursor": "cl-opinion-11298413"
+    },
+    "mo": {
+      "status": "COMPLETE",
+      "count": 22,
+      "note": "already_completed path / corpus 22"
+    },
+    "miss": {
+      "status": "quota_paused",
+      "count": 19,
+      "cursor": "cl-opinion-11337715",
+      "reason": "LOCAL_QUOTA_SAFETY_FLOOR"
+    },
+    "next": "miss@cl-opinion-11337715 then continue national priority"
+  },
+  "corpus": {
+    "authorities": 1969,
+    "cases": 658,
+    "clCases": 613,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "provenance": "100%",
+    "metadataNormalized": "1969/1969",
+    "citationNormalized": "1356/1356",
+    "lastChecked": 1834,
+    "chunksEmbeddings": "13712/13712",
+    "orphanChunks": 0
+  },
+  "coverage": {
+    "broader": 1,
+    "limited": 51,
+    "minimumCaseDeficit": 711,
+    "authorityGateDeficit": 3525,
+    "caseLt20": 37,
+    "noHighOrAppellate": 26
+  },
+  "citationGraph": {
+    "extracted": 4044,
+    "resolved": 105,
+    "newlyResolved": 3,
+    "TARGET_ABSENT": 3939,
+    "PARSER_GAP": 0,
+    "malformed": 1,
+    "ambiguous": 0
+  },
+  "nextAutomaticResume": {
+    "timestampUtc": "2026-09-21T21:43:50.000Z",
+    "timestampEt12h": "5:43:50 PM",
+    "command": "CL_COURT=miss CL_TARGET_MAX=20 node scripts/run-staging-cl-national-high.cjs HEAD miss",
+    "alsoFinishTexapp": "node scripts/run-staging-cl-wave1-intermediate.cjs HEAD texapp"
+  }
+}

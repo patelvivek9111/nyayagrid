@@ -1,0 +1,12 @@
+{
+  "wave": "2X",
+  "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+  "hard429": false,
+  "blockedUntil": "2026-09-21T21:43:50.000Z",
+  "blockedUntilEt": "5:43:50 PM",
+  "resumeCourt": "miss",
+  "resumeCursor": "cl-opinion-11337715",
+  "resumeCommand": "CL_COURT=miss CL_TARGET_MAX=20 node scripts/run-staging-cl-national-high.cjs HEAD miss",
+  "featureAgents": "0",
+  "writtenAt": "2026-09-21T21:22:39.008Z"
+}

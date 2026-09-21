@@ -1,0 +1,861 @@
+{
+  "stopped": "quota_paused",
+  "results": [
+    {
+      "court": "la",
+      "round": 1,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "la",
+        "mappedCourt": "st-la-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 20,
+        "items_fetched": 8,
+        "items_imported": 8,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 10,
+        "embeddedChunks": 281,
+        "cursor": "cl-opinion-11337837",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=la&cursor=cD0xMTI3MTY3NA%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 8,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "John T. Fuller v. State of Louisiana; Jeff Landry in His Official Capacity as Go",
+            "citation": null,
+            "docket": "2026-CD-00927",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "C/w 2026-c-00057 luba Workers Comp and Trucare Home Health, LLC v. Rebecca Sears",
+            "citation": null,
+            "docket": "2025-C-01379",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "In Re: Mma Law Firm, Pllc",
+            "citation": null,
+            "docket": "2026-CQ-00161",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "la",
+      "round": 2,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "la",
+        "mappedCourt": "st-la-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 40,
+        "items_fetched": 16,
+        "items_imported": 16,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 46,
+        "embeddedChunks": 258,
+        "cursor": "cl-opinion-11227639",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=la&cursor=cD0xMTE3NzAxNQ%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 16,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Michael B. Reis, Jr. v. Mandy Pohlmann Reis",
+            "citation": null,
+            "docket": "2025-C-00539",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Plaquemines Port Harbor & Terminal District v. Tuan Nguyen",
+            "citation": null,
+            "docket": "2025-C-00827",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Sarah Allen Davidson v. Terrance Hardy",
+            "citation": null,
+            "docket": "2025-CJ-00950",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "la",
+      "round": 3,
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "proofMode": false,
+        "clCourt": "la",
+        "mappedCourt": "st-la-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 4,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 60,
+        "items_fetched": 20,
+        "items_imported": 20,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 30,
+        "embeddedChunks": 117,
+        "cursor": "cl-opinion-11177011",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=la&cursor=cD0xMTA4NTI4NQ%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 20,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": 15,
+        "last429Endpoint": null,
+        "apiCalls": 10,
+        "sample": [
+          {
+            "title": "In Re: Judge Jennifer M. Medley",
+            "citation": null,
+            "docket": "2025-O-00879",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Lanell E. Darouse v. P.J.'s Coffee of New Orleans, LLC and New Orleans Roast, LL",
+            "citation": null,
+            "docket": "2025-CC-00078",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Sean Van Buren v. Kansas City Southern Railway Company",
+            "citation": null,
+            "docket": "2024-C-01564",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "dc",
+      "round": 1,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "dc",
+        "mappedCourt": "st-dc-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 20,
+        "items_fetched": 8,
+        "items_imported": 8,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 42,
+        "embeddedChunks": 202,
+        "cursor": "cl-opinion-11437994",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=dc&cursor=cD0xMTQzMzQ1Mg%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 8,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Delgado v. United States",
+            "citation": null,
+            "docket": "25-CF-0563",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Massachusetts Ave. Heights Citizens Association v. District of Columbia Board of",
+            "citation": null,
+            "docket": "24-CV-0759",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Young v. United States",
+            "citation": null,
+            "docket": "25-CM-0490",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "dc",
+      "round": 2,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "dc",
+        "mappedCourt": "st-dc-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 40,
+        "items_fetched": 16,
+        "items_imported": 16,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 52,
+        "embeddedChunks": 281,
+        "cursor": "cl-opinion-11421557",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=dc&cursor=cD0xMTQwODM5Mw%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 16,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Johnson v. United States",
+            "citation": null,
+            "docket": "24-CF-0525",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Brooks v. United States",
+            "citation": null,
+            "docket": "24-CF-0752",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Quarles v. United States",
+            "citation": null,
+            "docket": "25-CF-0019",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "dc",
+      "round": 3,
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "proofMode": false,
+        "clCourt": "dc",
+        "mappedCourt": "st-dc-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 4,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 60,
+        "items_fetched": 20,
+        "items_imported": 20,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 15,
+        "embeddedChunks": 104,
+        "cursor": "cl-opinion-11402168",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=dc&cursor=cD0xMTM0MTI0Mw%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 20,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 9,
+        "sample": [
+          {
+            "title": "Quinn, Racusin & Gazzola Chartered v. Pavich Law Group, P.C.",
+            "citation": null,
+            "docket": "25-CV-0086 & 25-CV-0229",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Allen v. United States",
+            "citation": null,
+            "docket": "24-CO-0716",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Lopez v. United States",
+            "citation": null,
+            "docket": "24-CF-1015",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "idaho",
+      "round": 1,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "idaho",
+        "mappedCourt": "st-id-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 20,
+        "items_fetched": 8,
+        "items_imported": 8,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 11,
+        "embeddedChunks": 266,
+        "cursor": "cl-opinion-11434902",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=idaho&cursor=cD0xMTM5NTgwMw%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 8,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Karen Shelstad v. Pacific Life Insurance Company",
+            "citation": null,
+            "docket": "52014",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Steven Ronald Ennis, Jr v. State of Idaho",
+            "citation": null,
+            "docket": "52856",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "State of Idaho v. William J. Satterfield",
+            "citation": null,
+            "docket": "53632",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "idaho",
+      "round": 2,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "idaho",
+        "mappedCourt": "st-id-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 40,
+        "items_fetched": 16,
+        "items_imported": 16,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 3,
+        "embeddedChunks": 290,
+        "cursor": "cl-opinion-11349797",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=idaho&cursor=cD0xMTMxNDU3Mw%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 16,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "HMI, HAMILTON MANUFACTURING, INC. an Idaho Corporation; And CHRISTY HAMILTON F/K",
+            "citation": null,
+            "docket": "52620",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Rhoda Shaw, Cynthia Beck v. Bobby Shaw, Deanna Fox Shaw and Thomas Spade",
+            "citation": null,
+            "docket": "52216",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "MICHAEL BUDIG, TODD BRINKMEYER, JOHN STOCKTON, and PRIEST LAKE CABIN OWNERS' ASS",
+            "citation": null,
+            "docket": "51870",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "idaho",
+      "round": 3,
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "proofMode": false,
+        "clCourt": "idaho",
+        "mappedCourt": "st-id-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 4,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 60,
+        "items_fetched": 20,
+        "items_imported": 20,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 8,
+        "embeddedChunks": 122,
+        "cursor": "cl-opinion-11298413",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=idaho&cursor=cD0xMTI1MjcyNw%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 20,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 9,
+        "sample": [
+          {
+            "title": "State v. Jane Doe (2024-29)",
+            "citation": null,
+            "docket": "51814",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "State v. Perez Garcia",
+            "citation": null,
+            "docket": "51585",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "State v. Lutz",
+            "citation": null,
+            "docket": "52554",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "mo",
+      "round": 1,
+      "result": null
+    },
+    {
+      "court": "mo",
+      "round": 2,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "mo",
+        "mappedCourt": "st-mo-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 20,
+        "items_fetched": 8,
+        "items_imported": 8,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 4,
+        "embeddedChunks": 155,
+        "cursor": "cl-opinion-11164243",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=mo&cursor=cD0xMTA5NDE1NA%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 8,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Comprehensive Health of Planned Parenthood Great Plains, et al., Respondents, vs",
+            "citation": null,
+            "docket": "SC101176",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Catharine Sue Carter, as Personal Representative of the Estate of David Carter (",
+            "citation": null,
+            "docket": "SC100999",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Kevin Rhodes, Appellant-Respondent, vs. Missouri Highways and Transportation Com",
+            "citation": null,
+            "docket": "SC100998",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "mo",
+      "round": 3,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "mo",
+        "mappedCourt": "st-mo-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 20,
+        "items_fetched": 8,
+        "items_imported": 0,
+        "items_skipped": 8,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 0,
+        "embeddedChunks": 0,
+        "cursor": "cl-opinion-11164243",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=mo&cursor=cD0xMTA5NDE1NA%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 8,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": 46,
+        "last429Endpoint": null,
+        "apiCalls": 21,
+        "sample": [
+          {
+            "title": "Comprehensive Health of Planned Parenthood Great Plains, et al., Respondents, vs",
+            "citation": null,
+            "docket": "SC101176",
+            "citationStatus": "unreported",
+            "persist": "skipped"
+          },
+          {
+            "title": "Catharine Sue Carter, as Personal Representative of the Estate of David Carter (",
+            "citation": null,
+            "docket": "SC100999",
+            "citationStatus": "unreported",
+            "persist": "skipped"
+          },
+          {
+            "title": "Kevin Rhodes, Appellant-Respondent, vs. Missouri Highways and Transportation Com",
+            "citation": null,
+            "docket": "SC100998",
+            "citationStatus": "unreported",
+            "persist": "skipped"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "mo",
+      "round": 4,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "mo",
+        "mappedCourt": "st-mo-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 40,
+        "items_fetched": 16,
+        "items_imported": 5,
+        "items_skipped": 11,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 3,
+        "embeddedChunks": 126,
+        "cursor": "cl-opinion-11094146",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=mo&cursor=cD0xMTA5NDEzNA%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 16,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "State ex rel. State of Missouri Department of Natural Resources, Relator v. The ",
+            "citation": null,
+            "docket": "SC100623",
+            "citationStatus": "unreported",
+            "persist": "skipped"
+          },
+          {
+            "title": "In re: Dan K. Purdy",
+            "citation": null,
+            "docket": "SC99818",
+            "citationStatus": "unreported",
+            "persist": "skipped"
+          },
+          {
+            "title": "Liana MacColl (formerly known as Liana M. Bradford) v. Missouri State Highway Pa",
+            "citation": null,
+            "docket": "SC99656",
+            "citationStatus": "unreported",
+            "persist": "skipped"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "mo",
+      "round": 5,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "mo",
+        "mappedCourt": "st-mo-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 40,
+        "items_fetched": 16,
+        "items_imported": 11,
+        "items_skipped": 5,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 1,
+        "embeddedChunks": 78,
+        "cursor": "cl-opinion-11094146",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=mo&cursor=cD0xMTA5NDEzNA%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 16,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": 26,
+        "last429Endpoint": null,
+        "apiCalls": 19,
+        "sample": [
+          {
+            "title": "State ex rel. State of Missouri Department of Natural Resources, Relator v. The ",
+            "citation": null,
+            "docket": "SC100623",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "In re: Dan K. Purdy",
+            "citation": null,
+            "docket": "SC99818",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Liana MacColl (formerly known as Liana M. Bradford) v. Missouri State Highway Pa",
+            "citation": null,
+            "docket": "SC99656",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "mo",
+      "round": 6,
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "clCourt": "mo",
+        "mappedCourt": "st-mo-high",
+        "reason": "already_completed",
+        "items_imported": 17,
+        "items_skipped": 3,
+        "apiCalls": 13,
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "miss",
+      "round": 1,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "miss",
+        "mappedCourt": "st-ms-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 20,
+        "items_fetched": 8,
+        "items_imported": 8,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 12,
+        "embeddedChunks": 214,
+        "cursor": "cl-opinion-11421809",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=miss&cursor=cD0xMTQxNjQ1MA%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 8,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Sea Breeze Condominiums & Resort Owners' Association, Inc. v. T. Jackson Lyons a",
+            "citation": null,
+            "docket": "2025-IA-00398-SCT",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Willie Jean Knighten v. VitalCore Health Strategies, LLC",
+            "citation": null,
+            "docket": "2025-CA-00413-SCT",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Jermaine White a/k/a Debow v. State of Mississippi",
+            "citation": null,
+            "docket": "2025-KA-00596-SCT",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "miss",
+      "round": 2,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "miss",
+        "mappedCourt": "st-ms-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 40,
+        "items_fetched": 16,
+        "items_imported": 16,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 13,
+        "embeddedChunks": 171,
+        "cursor": "cl-opinion-11347937",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=miss&cursor=cD0xMTM0MTI4NA%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 16,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Lisa Jo Chamberlin v. State of Mississippi",
+            "citation": null,
+            "docket": "2025-DR-01034-SCT",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Michael Cathey v. Allen \"Vashon\" Tanksley",
+            "citation": null,
+            "docket": "2025-EC-00724-SCT",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Anita Stamps v. Herbert Jones",
+            "citation": null,
+            "docket": "2026-IA-00260-SCT",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "miss",
+      "round": 3,
+      "result": {
+        "ok": true,
+        "status": "quota_paused",
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+        "clCourt": "miss",
+        "mappedCourt": "st-ms-high",
+        "last429Endpoint": null,
+        "lastRetryAfterSec": null,
+        "apiCalls": 8,
+        "cursor": "cl-opinion-11337715",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=miss&cursor=cD0xMTMxNDY2Mw%3D%3D&order_by=-id&page_size=16",
+        "items_discovered": 60,
+        "items_fetched": 20,
+        "items_imported": 19,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "last_successful_external_id": "cl-opinion-11337716",
+        "completedCount": 19,
+        "batchProcessed": 3,
+        "featureAgents": "0"
+      }
+    }
+  ]
+}
