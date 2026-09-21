@@ -1,0 +1,25 @@
+{
+  "wave": "2S",
+  "generatedAt": "2026-09-21T15:06:45.000Z",
+  "queue2Open": true,
+  "queue9Closed": true,
+  "queue3NotOpen": true,
+  "blockedUntil": "2026-09-21T15:12:02.000Z",
+  "retryAfterSeconds": 390,
+  "wave1HighProgress": {
+    "complete": ["ny", "cal", "pa", "nj", "fla"],
+    "partial": [{ "court": "tex", "n": 4, "checkpoint": "cl-opinion-11345132" }],
+    "incomplete": ["texcrimapp", "ill", "mass", "va", "del"],
+    "nextResume": "tex @ cl-opinion-11345132"
+  },
+  "coverageGaps": {
+    "broader": 1,
+    "limited": 51,
+    "minimumCaseDeficit": 896,
+    "authorityGateDeficit": 3841,
+    "caseBelow20": 46,
+    "noHighOrAppellate": 31
+  },
+  "nationalNext": ["LA", "DC", "ID", "MO", "MS"],
+  "externalLimitation": "CourtListener Retry-After 390s mid-TX civil ingest"
+}

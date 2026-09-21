@@ -1,32 +1,32 @@
 {
-  "wave": "2R-wave1-high-resume-from-nj",
+  "wave": "2S-wave1-high-resume-nj",
   "branch": "COURTLISTENER_HARD_STOP",
   "result": "RATE_LIMITED",
   "cooldownCheck": {
-    "blockedUntilPrior": "2026-09-21T13:57:28.000Z",
-    "checkedAt": "2026-09-21T14:04:33.750Z",
+    "blockedUntilPrior": "2026-09-21T14:26:07.000Z",
+    "checkedAt": "2026-09-21T14:47:53.401Z",
     "expired": true
   },
-  "probedAt": "2026-09-21T14:04:50.000Z",
+  "probedAt": "2026-09-21T14:48:10.000Z",
   "probe": {
     "endpoint": "GET /api/rest/v4/opinions/?cluster__docket__court=ca11&page_size=1",
     "status": 200,
     "retryAfterSeconds": null,
-    "ms": 9562,
+    "ms": 812,
     "resultCount": 20,
     "sampleOpinionIdPresent": true,
     "additionalClCallsBeforeResume": 0
   },
   "hardStop": {
-    "at": "2026-09-21T14:15:26.028Z",
-    "court": "nj",
-    "endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/73586523/",
+    "at": "2026-09-21T15:05:31.158Z",
+    "court": "tex",
+    "endpoint": "https://www.courtlistener.com/api/rest/v4/clusters/10877619/",
     "httpStatus": 429,
-    "retryAfterSeconds": 640,
-    "blockedUntil": "2026-09-21T14:26:07.000Z",
+    "retryAfterSeconds": 390,
+    "blockedUntil": "2026-09-21T15:12:02.000Z",
     "post429ExtraRequests": 0,
     "hardStopRegression": "PASS",
-    "notes": "Probe 200; NJ progressed 0→8 then Retry-After 640 hard-stop. Checkpoint cl-opinion-11385152."
+    "notes": "NJ+FL baselines complete. TX civil 4/20 then Retry-After 390 hard-stop."
   },
   "checkpoint": {
     "ny": {
@@ -45,15 +45,23 @@
       "status": "complete"
     },
     "nj": {
-      "cursor": "cl-opinion-11385152",
-      "n": 8,
+      "cursor": "cl-opinion-11324877",
+      "n": 20,
+      "status": "complete"
+    },
+    "fla": {
+      "cursor": "cl-opinion-11277828",
+      "n": 20,
+      "status": "complete"
+    },
+    "tex": {
+      "cursor": "cl-opinion-11345132",
+      "n": 4,
       "status": "rate_limited",
-      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nj&cursor=cD0xMTM4NTEzNg%3D%3D&order_by=-id&page_size=10"
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=tex&cursor=cD0xMTM0NTExNw%3D%3D&order_by=-id&page_size=10"
     }
   },
   "resumeOrder": [
-    "nj",
-    "fla",
     "tex",
     "texcrimapp",
     "ill",
@@ -62,7 +70,7 @@
     "del"
   ],
   "notes": [
-    "Cooldown expired; probe 200; NJ partial ingest then hard-stop.",
+    "Cooldown expired; probe 200; NJ 8→20 and FL 0→20 complete; TX civil partial.",
     "Hard-stop retained; zero post-429 CL calls."
   ]
 }

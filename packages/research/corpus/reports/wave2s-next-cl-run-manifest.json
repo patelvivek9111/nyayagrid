@@ -1,0 +1,17 @@
+{
+  "wave": "2S",
+  "blockedUntil": "2026-09-21T15:12:02.000Z",
+  "purpose": "Resume TX civil from checkpoint after cooldown; then remaining Wave-1 highs.",
+  "nextAction": "After blocked-until: single probe; if 200 resume tex from cl-opinion-11345132 → texcrimapp → ill → mass → va → del",
+  "wave1HighComplete": ["ny", "cal", "pa", "nj", "fla"],
+  "wave1HighPartial": {
+    "tex": {
+      "count": 4,
+      "checkpoint": "cl-opinion-11345132",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=tex&cursor=cD0xMTM0NTExNw%3D%3D&order_by=-id&page_size=10"
+    }
+  },
+  "wave1HighPending": ["texcrimapp", "ill", "mass", "va", "del"],
+  "nationalPriorityAfterWave1": ["LA", "DC", "ID", "MO", "MS"],
+  "sourcePriorityFile": "wave2o-coverage-priority.json"
+}
