@@ -2,54 +2,14 @@
   "stopped": "rate_limited",
   "results": [
     {
-      "court": "ny",
-      "round": 1,
-      "result": {
-        "ok": true,
-        "status": "completed",
-        "proofMode": false,
-        "clCourt": "ny",
-        "mappedCourt": "st-ny-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 1,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 120,
-        "items_fetched": 22,
-        "items_imported": 20,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 1,
-        "citationEdges": 3,
-        "embeddedChunks": 38,
-        "cursor": "cl-opinion-11261629",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ny&cursor=cD0xMTIzNzg0OQ%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 21,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 3,
-        "sample": [
-          {
-            "title": "People v. Guerrero",
-            "citation": null,
-            "docket": "No. 8",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "cal",
+      "court": "nj",
       "round": 1,
       "result": {
         "ok": true,
         "status": "paused",
         "proofMode": false,
-        "clCourt": "cal",
-        "mappedCourt": "st-ca-high",
+        "clCourt": "nj",
+        "mappedCourt": "st-nj-high",
         "discoverPath": "opinions",
         "batchProcessed": 5,
         "batchSize": 5,
@@ -60,412 +20,34 @@
         "items_skipped": 0,
         "items_failed": 0,
         "items_quarantined": 0,
-        "citationEdges": 12,
+        "citationEdges": 18,
         "embeddedChunks": 200,
-        "cursor": "cl-opinion-11419537",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=cal&cursor=cD0xMTM5OTcwMw%3D%3D&order_by=-id&page_size=10",
+        "cursor": "cl-opinion-11411331",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nj&cursor=cD0xMTM5NDcwNw%3D%3D&order_by=-id&page_size=10",
         "completedCount": 5,
-        "rateLimitCount": 3,
-        "lastRetryAfterSec": 19,
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/74657543/",
-        "apiCalls": 14,
-        "sample": [
-          {
-            "title": "People v. Hazlett",
-            "citation": null,
-            "docket": "S126387",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Mayor v. Workers' Comp. App. Bd. & Ross Valley Sanitation Dist.",
-            "citation": null,
-            "docket": "S287261",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Town of Apple Valley v. Apple Valley Ranchos Water",
-            "citation": null,
-            "docket": "S289391",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "cal",
-      "round": 2,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "cal",
-        "mappedCourt": "st-ca-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 40,
-        "items_fetched": 10,
-        "items_imported": 10,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 11,
-        "embeddedChunks": 183,
-        "cursor": "cl-opinion-11335519",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=cal&cursor=cD0xMTMwNTU3Ng%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 10,
-        "rateLimitCount": 2,
-        "lastRetryAfterSec": 39,
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/73421747/",
-        "apiCalls": 13,
-        "sample": [
-          {
-            "title": "Doe v. Marysville Joint Unified School Dist.",
-            "citation": null,
-            "docket": "S283639",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "People v. Espino",
-            "citation": null,
-            "docket": "S286987",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "People v. Cofer",
-            "citation": null,
-            "docket": "S286297",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "cal",
-      "round": 3,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "cal",
-        "mappedCourt": "st-ca-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 60,
-        "items_fetched": 15,
-        "items_imported": 15,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 16,
-        "embeddedChunks": 198,
-        "cursor": "cl-opinion-11241532",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=cal&cursor=cD0xMTEyNDY3Mg%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 15,
         "rateLimitCount": 1,
-        "lastRetryAfterSec": 26,
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/72148033/",
-        "apiCalls": 14,
-        "sample": [
-          {
-            "title": "People v. Morgan",
-            "citation": null,
-            "docket": "S286493",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Fuentes v. Empire Nissan",
-            "citation": null,
-            "docket": "S280256",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Sellers v. Super. Ct.",
-            "citation": null,
-            "docket": "S287164",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "cal",
-      "round": 4,
-      "result": {
-        "ok": true,
-        "status": "completed",
-        "proofMode": false,
-        "clCourt": "cal",
-        "mappedCourt": "st-ca-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 80,
-        "items_fetched": 20,
-        "items_imported": 20,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 14,
-        "embeddedChunks": 196,
-        "cursor": "cl-opinion-11116316",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=cal&cursor=cD0xMTA4MTkzNg%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 20,
-        "rateLimitCount": 1,
-        "lastRetryAfterSec": 34,
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/71051760/",
+        "lastRetryAfterSec": 223,
+        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/clusters/10945725/",
         "apiCalls": 12,
         "sample": [
           {
-            "title": "People v. Alvarez",
+            "title": "E.T. v. the Boys and Girls Club of Hudson County",
             "citation": null,
-            "docket": "S089619",
+            "docket": "A-69-24",
             "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "People v. Cannon",
+            "title": "State v. Jamar J. Myers",
             "citation": null,
-            "docket": "S277995",
+            "docket": "A-4-25",
             "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "Holland v. Silverscreen Healthcare, Inc.",
+            "title": "Borough of Seaside Park v. Shree Jyoti, LLC",
             "citation": null,
-            "docket": "S285429",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "pa",
-      "round": 1,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "pa",
-        "mappedCourt": "st-pa-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 20,
-        "items_fetched": 5,
-        "items_imported": 5,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 0,
-        "embeddedChunks": 5,
-        "cursor": "cl-opinion-11442009",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=pa&cursor=cD0xMTQwOTQxOA%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 5,
-        "rateLimitCount": 2,
-        "lastRetryAfterSec": 15,
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/74794337/",
-        "apiCalls": 13,
-        "sample": [
-          {
-            "title": "In re: Nomination Papers of Andrew Tupone; Appeal of: Moore, J.",
-            "citation": null,
-            "docket": "58 MAP 2026",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Commonwealth v. King, D.",
-            "citation": null,
-            "docket": "34 WAL 2024",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "In re: Nomination Papers of Christopher Gambino; Appeal of: Faulkner, L.",
-            "citation": null,
-            "docket": "55 MAP 2026",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "pa",
-      "round": 2,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "pa",
-        "mappedCourt": "st-pa-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 40,
-        "items_fetched": 10,
-        "items_imported": 10,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 0,
-        "embeddedChunks": 44,
-        "cursor": "cl-opinion-11402126",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=pa&cursor=cD0xMTQwMDg2NA%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 10,
-        "rateLimitCount": 1,
-        "lastRetryAfterSec": 40,
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/73661707/",
-        "apiCalls": 13,
-        "sample": [
-          {
-            "title": "Khalil, S., Aplt. v. Mary Jane Home Enrich Center",
-            "citation": null,
-            "docket": "16 EAP 2025",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Stroehmann, J. v. Lycoming Co. Voter Svcs.",
-            "citation": null,
-            "docket": "378 MAL 2024",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Arnold, M., Aplt. v. Hon. McMahon",
-            "citation": null,
-            "docket": "15 WAP 2026",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "pa",
-      "round": 3,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "pa",
-        "mappedCourt": "st-pa-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 60,
-        "items_fetched": 15,
-        "items_imported": 15,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 0,
-        "embeddedChunks": 86,
-        "cursor": "cl-opinion-11400859",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=pa&cursor=cD0xMTM0NzA3MQ%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 15,
-        "rateLimitCount": 1,
-        "lastRetryAfterSec": 37,
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/73645445/",
-        "apiCalls": 12,
-        "sample": [
-          {
-            "title": "Commonwealth v. Sutton, S., Aplt.",
-            "citation": null,
-            "docket": "90 MAP 2024",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Commonwealth v. Sutton, S., Aplt.",
-            "citation": null,
-            "docket": "90 MAP 2024",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "County of Chester v. Houser, D.",
-            "citation": null,
-            "docket": "260 MAL 2026",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "pa",
-      "round": 4,
-      "result": {
-        "ok": true,
-        "status": "completed",
-        "proofMode": false,
-        "clCourt": "pa",
-        "mappedCourt": "st-pa-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 20,
-        "items_discovered": 80,
-        "items_fetched": 20,
-        "items_imported": 20,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 1,
-        "embeddedChunks": 39,
-        "cursor": "cl-opinion-11343156",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=pa&cursor=cD0xMTM0MzE0MQ%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 20,
-        "rateLimitCount": 1,
-        "lastRetryAfterSec": 41,
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/73488736/",
-        "apiCalls": 12,
-        "sample": [
-          {
-            "title": "Sollenberger, S. v. Funk, J.",
-            "citation": null,
-            "docket": "443 MAL 2024",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Commonwealth, Aplt. v. Lowrey, M.",
-            "citation": null,
-            "docket": "57 MAP 2025",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Commonwealth, Aplt. v. Lowrey, M.",
-            "citation": null,
-            "docket": "57 MAP 2025",
+            "docket": "A-2-25",
             "citationStatus": "unreported",
             "persist": "imported"
           }
@@ -475,21 +57,27 @@
     },
     {
       "court": "nj",
-      "round": 1,
+      "round": 2,
       "result": {
         "ok": true,
         "status": "rate_limited",
         "reason": "RATE LIMIT WINDOW REACHED",
         "clCourt": "nj",
         "mappedCourt": "st-nj-high",
-        "discoverPath": "opinions",
-        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/opinions/",
-        "lastRetryAfterSec": 2250,
-        "rateLimitCount": 1,
-        "apiCalls": 1,
-        "cursor": null,
-        "next_page_url": null,
-        "completedCount": 0,
+        "last429Endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/73586523/",
+        "lastRetryAfterSec": 640,
+        "apiCalls": 9,
+        "cursor": "cl-opinion-11385152",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nj&cursor=cD0xMTM4NTEzNg%3D%3D&order_by=-id&page_size=10",
+        "items_discovered": 40,
+        "items_fetched": 9,
+        "items_imported": 8,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "last_successful_external_id": "cl-opinion-11385153",
+        "completedCount": 8,
+        "batchProcessed": 3,
         "featureAgents": "0"
       }
     }

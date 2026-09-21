@@ -1,41 +1,68 @@
 {
-  "wave": "2Q-wave1-high-resume-from-nj",
+  "wave": "2R-wave1-high-resume-from-nj",
   "branch": "COURTLISTENER_HARD_STOP",
-  "result": "WAITING_FOR_CL",
+  "result": "RATE_LIMITED",
   "cooldownCheck": {
-    "blockedUntilPrior": "2026-09-20T21:33:57.000Z",
-    "checkedAt": "2026-09-21T01:13:08.852Z",
+    "blockedUntilPrior": "2026-09-21T13:57:28.000Z",
+    "checkedAt": "2026-09-21T14:04:33.750Z",
     "expired": true
   },
-  "probedAt": "2026-09-21T01:13:08.852Z",
+  "probedAt": "2026-09-21T14:04:50.000Z",
   "probe": {
     "endpoint": "GET /api/rest/v4/opinions/?cluster__docket__court=ca11&page_size=1",
-    "status": 429,
-    "retryAfterSeconds": 45859,
-    "ms": 469,
-    "resultCount": 0,
-    "additionalClCallsAfter429": 0
+    "status": 200,
+    "retryAfterSeconds": null,
+    "ms": 9562,
+    "resultCount": 20,
+    "sampleOpinionIdPresent": true,
+    "additionalClCallsBeforeResume": 0
   },
   "hardStop": {
-    "at": "2026-09-21T01:13:08.852Z",
-    "court": "probe_pre_resume",
-    "endpoint": "https://www.courtlistener.com/api/rest/v4/opinions/",
+    "at": "2026-09-21T14:15:26.028Z",
+    "court": "nj",
+    "endpoint": "https://www.courtlistener.com/api/rest/v4/dockets/73586523/",
     "httpStatus": 429,
-    "retryAfterSeconds": 45859,
-    "blockedUntil": "2026-09-21T13:57:28.000Z",
+    "retryAfterSeconds": 640,
+    "blockedUntil": "2026-09-21T14:26:07.000Z",
     "post429ExtraRequests": 0,
     "hardStopRegression": "PASS",
-    "notes": "Cooldown expired; exactly one probe before NJ resume; 429 Retry-After 45859; zero additional CL calls. NY/CA/PA remain complete."
+    "notes": "Probe 200; NJ progressed 0→8 then Retry-After 640 hard-stop. Checkpoint cl-opinion-11385152."
   },
   "checkpoint": {
-    "ny": { "cursor": "cl-opinion-11261629", "n": 20, "status": "complete" },
-    "cal": { "cursor": "cl-opinion-11116316", "n": 20, "status": "complete" },
-    "pa": { "cursor": "cl-opinion-11343156", "n": 20, "status": "complete" },
-    "nj": { "cursor": null, "n": 0, "status": "rate_limited_before_import" }
+    "ny": {
+      "cursor": "cl-opinion-11261629",
+      "n": 20,
+      "status": "complete"
+    },
+    "cal": {
+      "cursor": "cl-opinion-11116316",
+      "n": 20,
+      "status": "complete"
+    },
+    "pa": {
+      "cursor": "cl-opinion-11343156",
+      "n": 20,
+      "status": "complete"
+    },
+    "nj": {
+      "cursor": "cl-opinion-11385152",
+      "n": 8,
+      "status": "rate_limited",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nj&cursor=cD0xMTM4NTEzNg%3D%3D&order_by=-id&page_size=10"
+    }
   },
-  "resumeOrder": ["nj", "fla", "tex", "texcrimapp", "ill", "mass", "va", "del"],
+  "resumeOrder": [
+    "nj",
+    "fla",
+    "tex",
+    "texcrimapp",
+    "ill",
+    "mass",
+    "va",
+    "del"
+  ],
   "notes": [
-    "Prior cooldown expired; single authenticated probe only.",
-    "Hard-stop retained; no Wave-1 ingest this run."
+    "Cooldown expired; probe 200; NJ partial ingest then hard-stop.",
+    "Hard-stop retained; zero post-429 CL calls."
   ]
 }

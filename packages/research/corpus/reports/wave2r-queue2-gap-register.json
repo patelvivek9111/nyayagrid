@@ -1,0 +1,25 @@
+{
+  "wave": "2R",
+  "generatedAt": "2026-09-21T14:16:30.000Z",
+  "queue2Open": true,
+  "queue9Closed": true,
+  "queue3NotOpen": true,
+  "blockedUntil": "2026-09-21T14:26:07.000Z",
+  "retryAfterSeconds": 640,
+  "wave1HighProgress": {
+    "complete": ["ny", "cal", "pa"],
+    "partial": [{ "court": "nj", "n": 8, "checkpoint": "cl-opinion-11385152" }],
+    "incomplete": ["fla", "tex", "texcrimapp", "ill", "mass", "va", "del"],
+    "nextResume": "nj @ cl-opinion-11385152"
+  },
+  "coverageGaps": {
+    "broader": 1,
+    "limited": 51,
+    "minimumCaseDeficit": 928,
+    "authorityGateDeficit": 3877,
+    "caseBelow20": 48,
+    "noHighOrAppellate": 31
+  },
+  "nationalNext": ["LA", "DC", "ID", "MO", "MS"],
+  "externalLimitation": "CourtListener Retry-After 640s mid-NJ ingest"
+}
