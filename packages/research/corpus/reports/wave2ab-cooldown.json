@@ -1,0 +1,14 @@
+{
+  "wave": "2AB",
+  "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+  "hard429": false,
+  "blockedUntil": "2026-09-22T22:33:47.128476+00:00",
+  "blockedUntilEt": "6:33:47 PM",
+  "resumeCourt": "ark",
+  "resumeCursor": "cl-opinion-11337524",
+  "resumeCommand": "CL_COURT=ark CL_TARGET_MAX=20 node scripts/run-staging-cl-national-high.cjs HEAD ark",
+  "featureAgents": "0",
+  "hourUsage": 280,
+  "dayRemaining": 556,
+  "writtenAt": "2026-09-22T22:19:15.843Z"
+}

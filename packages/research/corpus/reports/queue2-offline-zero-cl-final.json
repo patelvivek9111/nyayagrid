@@ -807,7 +807,7 @@
       "scripts/queue2-offline-finalize.cjs",
       "scripts/run-staging-cl-batch-job.cjs"
     ],
-    "commit": "pending",
+    "commit": "21dc39c",
     "deploy": "none",
     "health": "ok",
     "FEATURE_AGENTS": "0"

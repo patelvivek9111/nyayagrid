@@ -2283,7 +2283,17 @@ var CL_COURT_MAP = {
   okla: { courtId: "st-ok-high", courtLevel: "state_high", authorityState: "OK", courtName: "Supreme Court of Oklahoma", federalCircuit: null, jurisdiction: "OK" },
   sc: { courtId: "st-sc-high", courtLevel: "state_high", authorityState: "SC", courtName: "Supreme Court of South Carolina", federalCircuit: null, jurisdiction: "SC" },
   sd: { courtId: "st-sd-high", courtLevel: "state_high", authorityState: "SD", courtName: "South Dakota Supreme Court", federalCircuit: null, jurisdiction: "SD" },
-  tenn: { courtId: "st-tn-high", courtLevel: "state_high", authorityState: "TN", courtName: "Tennessee Supreme Court", federalCircuit: null, jurisdiction: "TN" }
+  tenn: { courtId: "st-tn-high", courtLevel: "state_high", authorityState: "TN", courtName: "Tennessee Supreme Court", federalCircuit: null, jurisdiction: "TN" },
+  utah: { courtId: "st-ut-high", courtLevel: "state_high", authorityState: "UT", courtName: "Utah Supreme Court", federalCircuit: null, jurisdiction: "UT" },
+  vt: { courtId: "st-vt-high", courtLevel: "state_high", authorityState: "VT", courtName: "Supreme Court of Vermont", federalCircuit: null, jurisdiction: "VT" },
+  wyo: { courtId: "st-wy-high", courtLevel: "state_high", authorityState: "WY", courtName: "Wyoming Supreme Court", federalCircuit: null, jurisdiction: "WY" },
+  alaska: { courtId: "st-ak-high", courtLevel: "state_high", authorityState: "AK", courtName: "Alaska Supreme Court", federalCircuit: null, jurisdiction: "AK" },
+  ala: { courtId: "st-al-high", courtLevel: "state_high", authorityState: "AL", courtName: "Supreme Court of Alabama", federalCircuit: null, jurisdiction: "AL" },
+  ark: { courtId: "st-ar-high", courtLevel: "state_high", authorityState: "AR", courtName: "Supreme Court of Arkansas", federalCircuit: null, jurisdiction: "AR" },
+  haw: { courtId: "st-hi-high", courtLevel: "state_high", authorityState: "HI", courtName: "Hawaii Supreme Court", federalCircuit: null, jurisdiction: "HI" },
+  iowa: { courtId: "st-ia-high", courtLevel: "state_high", authorityState: "IA", courtName: "Supreme Court of Iowa", federalCircuit: null, jurisdiction: "IA" },
+  kan: { courtId: "st-ks-high", courtLevel: "state_high", authorityState: "KS", courtName: "Supreme Court of Kansas", federalCircuit: null, jurisdiction: "KS" },
+  ky: { courtId: "st-ky-high", courtLevel: "state_high", authorityState: "KY", courtName: "Kentucky Supreme Court", federalCircuit: null, jurisdiction: "KY" }
 };
 var COURT_VERIFY_CACHE = {
   pacommwlth: {
@@ -2396,6 +2406,66 @@ var COURT_VERIFY_CACHE = {
     verifiedAt: "2026-09-21T21:53:00.000Z",
     fullName: "Tennessee Supreme Court",
     evidence: "wave2y-national-verify.txt /courts/tenn/ \u2192 200"
+  },
+  utah: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-22T21:40:00.000Z",
+    fullName: "Utah Supreme Court",
+    evidence: "wave2ab-national-verify.txt /courts/utah/ \u2192 200"
+  },
+  vt: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-22T21:40:00.000Z",
+    fullName: "Supreme Court of Vermont",
+    evidence: "wave2ab-national-verify.txt /courts/vt/ \u2192 200"
+  },
+  wyo: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-22T21:40:00.000Z",
+    fullName: "Wyoming Supreme Court",
+    evidence: "wave2ab-national-verify.txt /courts/wyo/ \u2192 200"
+  },
+  alaska: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-22T21:40:00.000Z",
+    fullName: "Alaska Supreme Court",
+    evidence: "wave2ab-national-verify.txt /courts/alaska/ \u2192 200"
+  },
+  ala: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-22T21:40:00.000Z",
+    fullName: "Supreme Court of Alabama",
+    evidence: "wave2ab-national-verify.txt /courts/ala/ \u2192 200"
+  },
+  ark: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-22T21:40:00.000Z",
+    fullName: "Supreme Court of Arkansas",
+    evidence: "wave2ab-national-verify.txt /courts/ark/ \u2192 200"
+  },
+  haw: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-22T21:40:00.000Z",
+    fullName: "Hawaii Supreme Court",
+    evidence: "wave2ab-national-verify.txt /courts/haw/ \u2192 200"
+  },
+  iowa: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-22T21:40:00.000Z",
+    fullName: "Supreme Court of Iowa",
+    evidence: "wave2ab-national-verify.txt /courts/iowa/ \u2192 200"
+  },
+  kan: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-22T21:40:00.000Z",
+    fullName: "Supreme Court of Kansas",
+    evidence: "wave2ab-national-verify.txt /courts/kan/ \u2192 200"
+  },
+  ky: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-22T21:40:00.000Z",
+    fullName: "Kentucky Supreme Court",
+    evidence: "wave2ab-national-verify.txt /courts/ky/ \u2192 200"
   },
   // Successful Wave-1 opinion ingest = verified without /courts/ re-hit
   ny: { status: "VERIFIED", verifiedAt: "2026-09-21T17:50:00.000Z", evidence: "successful_opinion_ingest" },

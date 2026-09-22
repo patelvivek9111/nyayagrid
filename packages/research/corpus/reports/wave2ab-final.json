@@ -1,0 +1,188 @@
+{
+  "wave": "2AB",
+  "status": "PARTIAL",
+  "generatedAt": "2026-09-22T22:19:15.842Z",
+  "queue": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
+  },
+  "quota": {
+    "liveLimits": {
+      "minute": 30,
+      "hour": 300,
+      "day": 1200
+    },
+    "starting": {
+      "minute": 30,
+      "hour": 300,
+      "day": 446,
+      "dayUsage": 754,
+      "atEt": "2:14:17 PM"
+    },
+    "ending": {
+      "minute": 20,
+      "hour": 20,
+      "day": 556,
+      "dayUsage": 644,
+      "hourSafeRem": 0,
+      "daySafeRem": 516
+    },
+    "totalRequestsApprox": 480,
+    "dayUsageDelta": -110,
+    "dayUsageNote": "rolling 24h aged out more than this run consumed; estimate ~480 from +204 auths × ~2.3 + 10 mapping",
+    "opinionRequests": 470,
+    "mappingRequests": 10,
+    "safetyPauses": 1,
+    "hard429": 0,
+    "nextResumeEt": "6:33:47 PM",
+    "nextResumeUtc": "2026-09-22T22:33:47.128476+00:00",
+    "resumeCommand": "CL_COURT=ark CL_TARGET_MAX=20 node scripts/run-staging-cl-national-high.cjs HEAD ark"
+  },
+  "efficiency": {
+    "casesAdded": 204,
+    "authoritiesAdded": 204,
+    "requestsPerAuthority": 2.35,
+    "duplicates": 0,
+    "mappingCalls": 10
+  },
+  "national": {
+    "NV": {
+      "status": "COMPLETE",
+      "count": 20
+    },
+    "OK": {
+      "status": "COMPLETE",
+      "count": 20
+    },
+    "SC": {
+      "status": "COMPLETE",
+      "count": 20
+    },
+    "SD": {
+      "status": "COMPLETE",
+      "count": 20
+    },
+    "TN": {
+      "status": "COMPLETE",
+      "count": 20
+    },
+    "additionalCompleted": [
+      "UT",
+      "VT",
+      "WY",
+      "AK",
+      "AL"
+    ],
+    "additionalCounts": {
+      "UT": 20,
+      "VT": 20,
+      "WY": 20,
+      "AK": 20,
+      "AL": 20,
+      "AR": 4
+    },
+    "partial": {
+      "AR": {
+        "status": "quota_paused",
+        "count": 4,
+        "cursor": "cl-opinion-11337524",
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR hour"
+      }
+    },
+    "next": [
+      "ark",
+      "haw",
+      "iowa",
+      "kan",
+      "ky"
+    ]
+  },
+  "mapping": {
+    "newVerified": [
+      "utah",
+      "vt",
+      "wyo",
+      "alaska",
+      "ala",
+      "ark",
+      "haw",
+      "iowa",
+      "kan",
+      "ky"
+    ],
+    "invalid": [
+      "pacommwlth",
+      "njsuperct",
+      "vacapp"
+    ],
+    "unresolved": [],
+    "requestsSpentMapping": 10
+  },
+  "corpus": {
+    "authorities": 2280,
+    "cases": 969,
+    "clCases": 924,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "chunksEmbeddings": "20874/20874",
+    "orphans": 0,
+    "provenance": "2280/2280"
+  },
+  "coverage": {
+    "broader": 0,
+    "limited": 51,
+    "minimumCaseDeficit": 406,
+    "authorityGateDeficit": 3214,
+    "caseLt20": 21,
+    "noHighOrAppellate": 10,
+    "noHighSample": [
+      "HI",
+      "IA",
+      "IN",
+      "KS",
+      "KY",
+      "ME",
+      "MN",
+      "OR",
+      "RI",
+      "WV"
+    ],
+    "delta": {
+      "caseDeficit": -204,
+      "authGate": -204,
+      "caseLt20": -10,
+      "noHigh": -11
+    }
+  },
+  "citation": {
+    "extracted": 4378,
+    "resolved": 111,
+    "newlyResolved": 4,
+    "TARGET_ABSENT": 4266,
+    "PARSER_GAP": 0,
+    "malformed": 1
+  },
+  "retrieval": {
+    "exactCite": "pass",
+    "caseName": "pass",
+    "issue": "pass",
+    "isolation": "pass",
+    "highCourt": "pass",
+    "safeMiss": "pass",
+    "noWeb": "pass"
+  },
+  "operational": {
+    "commit": "pending",
+    "deploy": "none",
+    "health": "ok",
+    "FEATURE_AGENTS": "0"
+  },
+  "nextAutomaticResume": {
+    "timestampUtc": "2026-09-22T22:33:47.128476+00:00",
+    "timestampEt12h": "6:33:47 PM",
+    "command": "CL_COURT=ark CL_TARGET_MAX=20 node scripts/run-staging-cl-national-high.cjs HEAD ark"
+  }
+}
