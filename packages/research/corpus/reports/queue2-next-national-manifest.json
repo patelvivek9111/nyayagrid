@@ -1,0 +1,186 @@
+{
+  "wave": "queue2-offline",
+  "courtListenerHttpCalls": 0,
+  "generatedAt": "2026-09-22T01:13:23.118Z",
+  "immediate": [
+    "nev",
+    "okla",
+    "sc",
+    "sd",
+    "tenn"
+  ],
+  "priority15": [
+    {
+      "jurisdiction": "NV",
+      "clCourt": "nev",
+      "score": 1365,
+      "caseDeficit": 20,
+      "authorityDeficit": 80,
+      "noHighAppellate": true
+    },
+    {
+      "jurisdiction": "OK",
+      "clCourt": "okla",
+      "score": 1365,
+      "caseDeficit": 20,
+      "authorityDeficit": 80,
+      "noHighAppellate": true
+    },
+    {
+      "jurisdiction": "SC",
+      "clCourt": "sc",
+      "score": 1365,
+      "caseDeficit": 20,
+      "authorityDeficit": 80,
+      "noHighAppellate": true
+    },
+    {
+      "jurisdiction": "SD",
+      "clCourt": "sd",
+      "score": 1365,
+      "caseDeficit": 20,
+      "authorityDeficit": 80,
+      "noHighAppellate": true
+    },
+    {
+      "jurisdiction": "TN",
+      "clCourt": "tenn",
+      "score": 1365,
+      "caseDeficit": 20,
+      "authorityDeficit": 80,
+      "noHighAppellate": true
+    },
+    {
+      "jurisdiction": "UT",
+      "clCourt": "utah",
+      "score": 1365,
+      "caseDeficit": 20,
+      "authorityDeficit": 80,
+      "noHighAppellate": true
+    },
+    {
+      "jurisdiction": "VT",
+      "clCourt": "vt",
+      "score": 1365,
+      "caseDeficit": 20,
+      "authorityDeficit": 80,
+      "noHighAppellate": true
+    },
+    {
+      "jurisdiction": "WY",
+      "clCourt": "wyo",
+      "score": 1365,
+      "caseDeficit": 20,
+      "authorityDeficit": 80,
+      "noHighAppellate": true
+    },
+    {
+      "jurisdiction": "AK",
+      "clCourt": "alaska",
+      "score": 1363,
+      "caseDeficit": 20,
+      "authorityDeficit": 79,
+      "noHighAppellate": true
+    },
+    {
+      "jurisdiction": "AL",
+      "clCourt": "ala",
+      "score": 1363,
+      "caseDeficit": 20,
+      "authorityDeficit": 79,
+      "noHighAppellate": true
+    },
+    {
+      "jurisdiction": "AR",
+      "clCourt": "ark",
+      "score": 1363,
+      "caseDeficit": 20,
+      "authorityDeficit": 79,
+      "noHighAppellate": true
+    },
+    {
+      "jurisdiction": "HI",
+      "clCourt": "haw",
+      "score": 1363,
+      "caseDeficit": 20,
+      "authorityDeficit": 79,
+      "noHighAppellate": true
+    },
+    {
+      "jurisdiction": "IA",
+      "clCourt": "iowa",
+      "score": 1363,
+      "caseDeficit": 20,
+      "authorityDeficit": 79,
+      "noHighAppellate": true
+    },
+    {
+      "jurisdiction": "KS",
+      "clCourt": "kan",
+      "score": 1363,
+      "caseDeficit": 20,
+      "authorityDeficit": 79,
+      "noHighAppellate": true
+    },
+    {
+      "jurisdiction": "KY",
+      "clCourt": "ky",
+      "score": 1363,
+      "caseDeficit": 20,
+      "authorityDeficit": 79,
+      "noHighAppellate": true
+    }
+  ],
+  "tomorrowPlan": [
+    {
+      "clCourt": "nev",
+      "jurisdiction": "NV",
+      "nyayaCourtId": "st-nv-high",
+      "status": "CACHED_VERIFIED",
+      "currentCount": 0,
+      "target": 20,
+      "checkpoint": null,
+      "estimatedRequests": 25
+    },
+    {
+      "clCourt": "okla",
+      "jurisdiction": "OK",
+      "nyayaCourtId": "st-ok-high",
+      "status": "CACHED_VERIFIED",
+      "currentCount": 0,
+      "target": 20,
+      "checkpoint": null,
+      "estimatedRequests": 25
+    },
+    {
+      "clCourt": "sc",
+      "jurisdiction": "SC",
+      "nyayaCourtId": "st-sc-high",
+      "status": "CACHED_VERIFIED",
+      "currentCount": 0,
+      "target": 20,
+      "checkpoint": null,
+      "estimatedRequests": 25
+    },
+    {
+      "clCourt": "sd",
+      "jurisdiction": "SD",
+      "nyayaCourtId": "st-sd-high",
+      "status": "CACHED_VERIFIED",
+      "currentCount": 0,
+      "target": 20,
+      "checkpoint": null,
+      "estimatedRequests": 25
+    },
+    {
+      "clCourt": "tenn",
+      "jurisdiction": "TN",
+      "nyayaCourtId": "st-tn-high",
+      "status": "CACHED_VERIFIED",
+      "currentCount": 0,
+      "target": 20,
+      "checkpoint": null,
+      "estimatedRequests": 25
+    }
+  ]
+}

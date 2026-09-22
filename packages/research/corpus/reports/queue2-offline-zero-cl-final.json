@@ -1,0 +1,815 @@
+{
+  "wave": "queue2-offline-zero-cl",
+  "status": "PASS",
+  "generatedAt": "2026-09-22T01:13:23.118Z",
+  "courtListener": {
+    "httpRequestsMade": 0,
+    "hard429": 0
+  },
+  "queue": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
+  },
+  "corpus": {
+    "authorities": 2076,
+    "cases": 765,
+    "clCases": 720,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "chunksEmbeddings": "15936/15936",
+    "provenance": "2076/2076",
+    "normalization": {
+      "missing_court_id": 1311,
+      "missing_state": 0,
+      "missing_court_level": 1311,
+      "missing_authority_type": 0,
+      "missing_decision_date": 1311,
+      "missing_normalized_citation": 0,
+      "missing_canonical_url": 0,
+      "missing_provenance": 0,
+      "total": 2076
+    }
+  },
+  "coverage": {
+    "broader": 0,
+    "limited": 51,
+    "minimumCaseDeficit": 610,
+    "authorityGateDeficit": 3418,
+    "caseLt20": 31,
+    "noHighOrAppellate": 21
+  },
+  "citation": {
+    "extracted": 4131,
+    "resolvedBefore": 107,
+    "resolvedAfter": 107,
+    "newlyResolved": 0,
+    "TARGET_ABSENT": 4023,
+    "PARSER_GAP": 0,
+    "malformed": 1,
+    "resolvePass": {
+      "ok": true,
+      "wave": "2F",
+      "dryRun": false,
+      "generatedAt": "2026-09-22T01:12:54.088Z",
+      "before": {
+        "extracted": 4131,
+        "resolved": 107,
+        "unresolved": 4024
+      },
+      "after": {
+        "extracted": 4131,
+        "resolved": 107,
+        "unresolved": 4024
+      },
+      "newlyResolved": 0,
+      "ambiguous": 0,
+      "stillUnresolved": 4024,
+      "edgeNormUpdated": 26,
+      "authorityNormUpdated": 0,
+      "parallelAliasWrites": 0,
+      "newlyResolvedByFamily": {
+        "us_reports": 0,
+        "federal_reporter": 0,
+        "usc": 0,
+        "cfr": 0,
+        "federal_rules": 0,
+        "other": 0
+      },
+      "resolutionPct": 2.59,
+      "byFamily": {
+        "us_reports_resolved": 47,
+        "usc_resolved": 38,
+        "cfr_resolved": 0,
+        "fed_rules_resolved": 22,
+        "freporter_resolved": 0
+      },
+      "auditHints": {
+        "missingTargetSample500": 500,
+        "parserGapSample500": 0
+      },
+      "sampleResolved": [],
+      "sampleAmbiguous": [],
+      "notes": [
+        "Authority alias/normalization backfill runs before resolve index build.",
+        "Exact alias/normalized match only; multiple hits left unresolved as ambiguous.",
+        "No CourtListener traffic; no fuzzy title linking."
+      ]
+    }
+  },
+  "mapping": {
+    "nextVerified": [
+      "nev",
+      "okla",
+      "sc",
+      "sd",
+      "tenn"
+    ],
+    "audit": [
+      {
+        "clCourt": "nev",
+        "jurisdiction": "NV",
+        "nyayaCourtId": "st-nv-high",
+        "courtName": "Nevada Supreme Court",
+        "status": "CACHED_VERIFIED",
+        "ingestEnabled": true,
+        "skip": false,
+        "needsLiveVerify": false,
+        "checkpoint": null,
+        "count": 0,
+        "target": 20,
+        "evidence": "wave2y-national-verify.txt /courts/nev/ → 200"
+      },
+      {
+        "clCourt": "okla",
+        "jurisdiction": "OK",
+        "nyayaCourtId": "st-ok-high",
+        "courtName": "Supreme Court of Oklahoma",
+        "status": "CACHED_VERIFIED",
+        "ingestEnabled": true,
+        "skip": false,
+        "needsLiveVerify": false,
+        "checkpoint": null,
+        "count": 0,
+        "target": 20,
+        "evidence": "wave2y-national-verify.txt /courts/okla/ → 200"
+      },
+      {
+        "clCourt": "sc",
+        "jurisdiction": "SC",
+        "nyayaCourtId": "st-sc-high",
+        "courtName": "Supreme Court of South Carolina",
+        "status": "CACHED_VERIFIED",
+        "ingestEnabled": true,
+        "skip": false,
+        "needsLiveVerify": false,
+        "checkpoint": null,
+        "count": 0,
+        "target": 20,
+        "evidence": "wave2y-national-verify.txt /courts/sc/ → 200"
+      },
+      {
+        "clCourt": "sd",
+        "jurisdiction": "SD",
+        "nyayaCourtId": "st-sd-high",
+        "courtName": "South Dakota Supreme Court",
+        "status": "CACHED_VERIFIED",
+        "ingestEnabled": true,
+        "skip": false,
+        "needsLiveVerify": false,
+        "checkpoint": null,
+        "count": 0,
+        "target": 20,
+        "evidence": "wave2y-national-verify.txt /courts/sd/ → 200"
+      },
+      {
+        "clCourt": "tenn",
+        "jurisdiction": "TN",
+        "nyayaCourtId": "st-tn-high",
+        "courtName": "Tennessee Supreme Court",
+        "status": "CACHED_VERIFIED",
+        "ingestEnabled": true,
+        "skip": false,
+        "needsLiveVerify": false,
+        "checkpoint": null,
+        "count": 0,
+        "target": 20,
+        "evidence": "wave2y-national-verify.txt /courts/tenn/ → 200"
+      },
+      {
+        "clCourt": "utah",
+        "status": "MISSING",
+        "ingestEnabled": false
+      },
+      {
+        "clCourt": "vt",
+        "status": "MISSING",
+        "ingestEnabled": false
+      },
+      {
+        "clCourt": "wyo",
+        "status": "MISSING",
+        "ingestEnabled": false
+      },
+      {
+        "clCourt": "alaska",
+        "status": "MISSING",
+        "ingestEnabled": false
+      },
+      {
+        "clCourt": "ala",
+        "status": "MISSING",
+        "ingestEnabled": false
+      },
+      {
+        "clCourt": "ark",
+        "status": "MISSING",
+        "ingestEnabled": false
+      },
+      {
+        "clCourt": "haw",
+        "status": "MISSING",
+        "ingestEnabled": false
+      }
+    ],
+    "gaps": {
+      "pacommwlth": {
+        "status": "MAPPING_INVALID",
+        "invalidCandidateId": "pacommwlth",
+        "candidateNeedsSingleVerification": null,
+        "localMentions": [
+          "pacomm",
+          "pa-comm"
+        ],
+        "evidence": "packages/research/corpus/reports/wave2v-court-verify.txt GET /courts/pacommwlth/ → 404; no alternate ID proven offline",
+        "note": "No alternate CL id proven in local evidence; do not fabricate"
+      },
+      "njsuperct": {
+        "status": "MAPPING_INVALID",
+        "invalidCandidateId": "njsuperct",
+        "candidateNeedsSingleVerification": null,
+        "localMentions": [
+          "njsuper"
+        ],
+        "evidence": "packages/research/corpus/reports/wave2v-court-verify.txt GET /courts/njsuperct/ → 404; no alternate ID proven offline",
+        "note": "No alternate CL id proven in local evidence; do not fabricate"
+      },
+      "vacapp": {
+        "status": "MAPPING_INVALID",
+        "invalidCandidateId": "vacapp",
+        "candidateNeedsSingleVerification": null,
+        "localMentions": [],
+        "evidence": "packages/research/corpus/reports/wave2v-court-verify.txt GET /courts/vacapp/ → 404; no alternate ID proven offline",
+        "note": "No alternate CL id proven in local evidence; do not fabricate"
+      }
+    }
+  },
+  "integrity": {
+    "duplicates": {
+      "clSourceExternalId": [],
+      "canonicalUrl": [
+        {
+          "canonical_source_url": "https://www.capitol.tn.gov/",
+          "n": 15
+        },
+        {
+          "canonical_source_url": "https://www.legislature.ms.gov/",
+          "n": 15
+        },
+        {
+          "canonical_source_url": "https://www.arkleg.state.ar.us/",
+          "n": 13
+        },
+        {
+          "canonical_source_url": "https://code.dccouncil.gov/",
+          "n": 13
+        },
+        {
+          "canonical_source_url": "https://www.capitol.hawaii.gov/",
+          "n": 13
+        },
+        {
+          "canonical_source_url": "https://www.legis.ga.gov/",
+          "n": 13
+        },
+        {
+          "canonical_source_url": "https://www.legis.iowa.gov/",
+          "n": 10
+        },
+        {
+          "canonical_source_url": "https://www.akleg.gov/",
+          "n": 10
+        },
+        {
+          "canonical_source_url": "https://legislature.ky.gov/",
+          "n": 10
+        },
+        {
+          "canonical_source_url": "https://www.revisor.mn.gov/",
+          "n": 10
+        },
+        {
+          "canonical_source_url": "https://www.legislature.mi.gov/",
+          "n": 10
+        },
+        {
+          "canonical_source_url": "https://legislature.idaho.gov/",
+          "n": 10
+        },
+        {
+          "canonical_source_url": "https://www.rilegislature.gov/",
+          "n": 10
+        },
+        {
+          "canonical_source_url": "https://www.leg.state.nv.us/",
+          "n": 10
+        },
+        {
+          "canonical_source_url": "https://www.nmlegis.gov/",
+          "n": 10
+        },
+        {
+          "canonical_source_url": "https://iga.in.gov/",
+          "n": 10
+        },
+        {
+          "canonical_source_url": "https://mgaleg.maryland.gov/",
+          "n": 10
+        },
+        {
+          "canonical_source_url": "https://codes.ohio.gov/",
+          "n": 10
+        },
+        {
+          "canonical_source_url": "https://www.mo.gov/",
+          "n": 10
+        },
+        {
+          "canonical_source_url": "https://sdlegislature.gov/",
+          "n": 10
+        }
+      ],
+      "normalizedCitation": [
+        {
+          "normalized_citation": "15 Pa.C.S. § 1712",
+          "n": 2
+        },
+        {
+          "normalized_citation": "15 U.S.C. § 45",
+          "n": 2
+        },
+        {
+          "normalized_citation": "29 U.S.C. § 206",
+          "n": 2
+        },
+        {
+          "normalized_citation": "8 Del. C. § 141",
+          "n": 2
+        },
+        {
+          "normalized_citation": "805 ILCS 5/8.85",
+          "n": 2
+        },
+        {
+          "normalized_citation": "Ala. Code § 35-9A-421",
+          "n": 2
+        },
+        {
+          "normalized_citation": "Ala. Code § 7-2-314",
+          "n": 2
+        },
+        {
+          "normalized_citation": "Ala. Code § 8-19-5",
+          "n": 2
+        },
+        {
+          "normalized_citation": "Alaska Stat. § 09.05.015",
+          "n": 2
+        },
+        {
+          "normalized_citation": "Alaska Stat. § 09.10.070",
+          "n": 2
+        },
+        {
+          "normalized_citation": "Alaska Stat. § 23.10.060",
+          "n": 2
+        },
+        {
+          "normalized_citation": "Alaska Stat. § 34.03.220",
+          "n": 2
+        },
+        {
+          "normalized_citation": "Alaska Stat. § 45.02.314",
+          "n": 2
+        },
+        {
+          "normalized_citation": "Alaska Stat. § 45.50.471",
+          "n": 2
+        },
+        {
+          "normalized_citation": "Ariz. Rev. Stat. § 10-830",
+          "n": 2
+        },
+        {
+          "normalized_citation": "Ariz. Rev. Stat. § 44-1522",
+          "n": 2
+        },
+        {
+          "normalized_citation": "Ark. Code Ann. § 16-4-101",
+          "n": 2
+        },
+        {
+          "normalized_citation": "Ark. Code Ann. § 16-56-105",
+          "n": 2
+        },
+        {
+          "normalized_citation": "Ark. Code Ann. § 18-17-701",
+          "n": 2
+        },
+        {
+          "normalized_citation": "10 Del. C. § 8119",
+          "n": 2
+        }
+      ]
+    },
+    "orphanChunks": 0,
+    "chunksWithoutEmbedding": 0,
+    "authoritiesWithoutChunks": 0,
+    "currentness": {
+      "historical": 80,
+      "current_as_of_source_date": 1298,
+      "unknown": 698,
+      "last_checked": 1941
+    }
+  },
+  "retrieval": {
+    "stateRegression": {
+      "NE": {
+        "courtId": "st-ne-high",
+        "clCourt": "neb",
+        "highCaseCount": 20,
+        "sampleTitles": [
+          "Kuehn v. Pillen",
+          "Forbes v. Nebraska Democratic Party",
+          "State ex rel. Hilgers v. Weber"
+        ],
+        "caseNameHits": 1,
+        "otherHighCourtsSameState": 0,
+        "pass": true
+      },
+      "NH": {
+        "courtId": "st-nh-high",
+        "clCourt": "nh",
+        "highCaseCount": 20,
+        "sampleTitles": [
+          "In re Guardianship of K.S.",
+          "In the Matter of Taylor Coyne and Ashley Blanchfield",
+          "Appeal of Pittsfield Sch. Dist."
+        ],
+        "caseNameHits": 2,
+        "otherHighCourtsSameState": 0,
+        "pass": true
+      },
+      "NM": {
+        "courtId": "st-nm-high",
+        "clCourt": "nm",
+        "highCaseCount": 20,
+        "sampleTitles": [
+          "State v. Sandoval",
+          "State v. Trevizo",
+          "State v. Mendez"
+        ],
+        "caseNameHits": 15,
+        "otherHighCourtsSameState": 0,
+        "pass": true
+      },
+      "MT": {
+        "courtId": "st-mt-high",
+        "clCourt": "mont",
+        "highCaseCount": 20,
+        "sampleTitles": [
+          "A. Nelson v. S. Frisk",
+          "Engellant v. Crowley Fleck",
+          "Marriage of Cordeiro"
+        ],
+        "caseNameHits": 1,
+        "otherHighCourtsSameState": 0,
+        "pass": true
+      },
+      "ND": {
+        "courtId": "st-nd-high",
+        "clCourt": "nd",
+        "highCaseCount": 20,
+        "sampleTitles": [
+          "Interest of D.G. & D.G.",
+          "State v. Barse",
+          "Garcia v. State"
+        ],
+        "caseNameHits": 2,
+        "otherHighCourtsSameState": 0,
+        "pass": true
+      },
+      "MS": {
+        "courtId": "st-ms-high",
+        "clCourt": "miss",
+        "highCaseCount": 20,
+        "sampleTitles": [
+          "Sea Breeze Condominiums & Resort Owners' Association, Inc. v. T. Jackson Lyons a",
+          "Willie Jean Knighten v. VitalCore Health Strategies, LLC",
+          "Jermaine White a/k/a Debow v. State of Mississippi"
+        ],
+        "caseNameHits": 1,
+        "otherHighCourtsSameState": 0,
+        "pass": true
+      },
+      "LA": {
+        "courtId": "st-la-high",
+        "clCourt": "la",
+        "highCaseCount": 20,
+        "sampleTitles": [
+          "John T. Fuller v. State of Louisiana; Jeff Landry in His Official Capacity as Go",
+          "In Re: Mma Law Firm, Pllc",
+          "C/w 2026-c-00057 luba Workers Comp and Trucare Home Health, LLC v. Rebecca Sears"
+        ],
+        "caseNameHits": 1,
+        "otherHighCourtsSameState": 0,
+        "pass": true
+      },
+      "DC": {
+        "courtId": "st-dc-high",
+        "clCourt": "dc",
+        "highCaseCount": 20,
+        "sampleTitles": [
+          "Massachusetts Ave. Heights Citizens Association v. District of Columbia Board of",
+          "Young v. United States",
+          "Delgado v. United States"
+        ],
+        "caseNameHits": 1,
+        "otherHighCourtsSameState": 0,
+        "pass": true
+      },
+      "ID": {
+        "courtId": "st-id-high",
+        "clCourt": "idaho",
+        "highCaseCount": 20,
+        "sampleTitles": [
+          "Karen Shelstad v. Pacific Life Insurance Company",
+          "Steven Ronald Ennis, Jr v. State of Idaho",
+          "State of Idaho v. William J. Satterfield"
+        ],
+        "caseNameHits": 1,
+        "otherHighCourtsSameState": 0,
+        "pass": true
+      },
+      "MO": {
+        "courtId": "st-mo-high",
+        "clCourt": "mo",
+        "highCaseCount": 22,
+        "sampleTitles": [
+          "State of Missouri, Respondent, vs. Dustin Curtis Winter, Appellant.",
+          "Comprehensive Health of Planned Parenthood Great Plains, et al., Respondents, vs",
+          "Catharine Sue Carter, as Personal Representative of the Estate of David Carter ("
+        ],
+        "caseNameHits": 4,
+        "otherHighCourtsSameState": 0,
+        "pass": true
+      }
+    },
+    "safeMiss": {
+      "probeHits": 0,
+      "pass": true
+    },
+    "overallPass": true
+  },
+  "efficiency": [
+    {
+      "court": "illappct",
+      "apiCalls": 11,
+      "imported": 15,
+      "rounds": 1,
+      "reqPerAuth": 0.73,
+      "lastStatus": "completed"
+    },
+    {
+      "court": "massappct",
+      "apiCalls": 11,
+      "imported": 15,
+      "rounds": 1,
+      "reqPerAuth": 0.73,
+      "lastStatus": "completed"
+    },
+    {
+      "court": "texapp",
+      "apiCalls": 14,
+      "imported": 16,
+      "rounds": 2,
+      "reqPerAuth": 0.88,
+      "lastStatus": "completed"
+    },
+    {
+      "court": "neb",
+      "apiCalls": 43,
+      "imported": 25,
+      "rounds": 3,
+      "reqPerAuth": 1.72,
+      "lastStatus": "completed"
+    },
+    {
+      "court": "nh",
+      "apiCalls": 44,
+      "imported": 20,
+      "rounds": 3,
+      "reqPerAuth": 2.2,
+      "lastStatus": "completed"
+    },
+    {
+      "court": "nm",
+      "apiCalls": 23,
+      "imported": 10,
+      "rounds": 2,
+      "reqPerAuth": 2.3,
+      "lastStatus": "quota_paused"
+    },
+    {
+      "court": "vacapp",
+      "apiCalls": 0,
+      "imported": 0,
+      "rounds": 1,
+      "reqPerAuth": null,
+      "lastStatus": "skipped_mapping"
+    }
+  ],
+  "tomorrowPlan": {
+    "resumeAtEt": "10:04:45 AM",
+    "resumeAtUtc": "2026-09-22T14:04:45.271578+00:00",
+    "firstCommand": "CL_COURT=nev CL_TARGET_MAX=20 node scripts/run-staging-cl-national-high.cjs HEAD nev",
+    "courts": [
+      {
+        "clCourt": "nev",
+        "jurisdiction": "NV",
+        "nyayaCourtId": "st-nv-high",
+        "status": "CACHED_VERIFIED",
+        "currentCount": 0,
+        "target": 20,
+        "checkpoint": null,
+        "estimatedRequests": 25
+      },
+      {
+        "clCourt": "okla",
+        "jurisdiction": "OK",
+        "nyayaCourtId": "st-ok-high",
+        "status": "CACHED_VERIFIED",
+        "currentCount": 0,
+        "target": 20,
+        "checkpoint": null,
+        "estimatedRequests": 25
+      },
+      {
+        "clCourt": "sc",
+        "jurisdiction": "SC",
+        "nyayaCourtId": "st-sc-high",
+        "status": "CACHED_VERIFIED",
+        "currentCount": 0,
+        "target": 20,
+        "checkpoint": null,
+        "estimatedRequests": 25
+      },
+      {
+        "clCourt": "sd",
+        "jurisdiction": "SD",
+        "nyayaCourtId": "st-sd-high",
+        "status": "CACHED_VERIFIED",
+        "currentCount": 0,
+        "target": 20,
+        "checkpoint": null,
+        "estimatedRequests": 25
+      },
+      {
+        "clCourt": "tenn",
+        "jurisdiction": "TN",
+        "nyayaCourtId": "st-tn-high",
+        "status": "CACHED_VERIFIED",
+        "currentCount": 0,
+        "target": 20,
+        "checkpoint": null,
+        "estimatedRequests": 25
+      }
+    ],
+    "priority15": [
+      {
+        "jurisdiction": "NV",
+        "clCourt": "nev",
+        "score": 1365,
+        "caseDeficit": 20,
+        "authorityDeficit": 80,
+        "noHighAppellate": true
+      },
+      {
+        "jurisdiction": "OK",
+        "clCourt": "okla",
+        "score": 1365,
+        "caseDeficit": 20,
+        "authorityDeficit": 80,
+        "noHighAppellate": true
+      },
+      {
+        "jurisdiction": "SC",
+        "clCourt": "sc",
+        "score": 1365,
+        "caseDeficit": 20,
+        "authorityDeficit": 80,
+        "noHighAppellate": true
+      },
+      {
+        "jurisdiction": "SD",
+        "clCourt": "sd",
+        "score": 1365,
+        "caseDeficit": 20,
+        "authorityDeficit": 80,
+        "noHighAppellate": true
+      },
+      {
+        "jurisdiction": "TN",
+        "clCourt": "tenn",
+        "score": 1365,
+        "caseDeficit": 20,
+        "authorityDeficit": 80,
+        "noHighAppellate": true
+      },
+      {
+        "jurisdiction": "UT",
+        "clCourt": "utah",
+        "score": 1365,
+        "caseDeficit": 20,
+        "authorityDeficit": 80,
+        "noHighAppellate": true
+      },
+      {
+        "jurisdiction": "VT",
+        "clCourt": "vt",
+        "score": 1365,
+        "caseDeficit": 20,
+        "authorityDeficit": 80,
+        "noHighAppellate": true
+      },
+      {
+        "jurisdiction": "WY",
+        "clCourt": "wyo",
+        "score": 1365,
+        "caseDeficit": 20,
+        "authorityDeficit": 80,
+        "noHighAppellate": true
+      },
+      {
+        "jurisdiction": "AK",
+        "clCourt": "alaska",
+        "score": 1363,
+        "caseDeficit": 20,
+        "authorityDeficit": 79,
+        "noHighAppellate": true
+      },
+      {
+        "jurisdiction": "AL",
+        "clCourt": "ala",
+        "score": 1363,
+        "caseDeficit": 20,
+        "authorityDeficit": 79,
+        "noHighAppellate": true
+      },
+      {
+        "jurisdiction": "AR",
+        "clCourt": "ark",
+        "score": 1363,
+        "caseDeficit": 20,
+        "authorityDeficit": 79,
+        "noHighAppellate": true
+      },
+      {
+        "jurisdiction": "HI",
+        "clCourt": "haw",
+        "score": 1363,
+        "caseDeficit": 20,
+        "authorityDeficit": 79,
+        "noHighAppellate": true
+      },
+      {
+        "jurisdiction": "IA",
+        "clCourt": "iowa",
+        "score": 1363,
+        "caseDeficit": 20,
+        "authorityDeficit": 79,
+        "noHighAppellate": true
+      },
+      {
+        "jurisdiction": "KS",
+        "clCourt": "kan",
+        "score": 1363,
+        "caseDeficit": 20,
+        "authorityDeficit": 79,
+        "noHighAppellate": true
+      },
+      {
+        "jurisdiction": "KY",
+        "clCourt": "ky",
+        "score": 1363,
+        "caseDeficit": 20,
+        "authorityDeficit": 79,
+        "noHighAppellate": true
+      }
+    ]
+  },
+  "operational": {
+    "filesChanged": [
+      "scripts/staging-queue2-offline-full.cjs",
+      "scripts/run-queue2-offline-zero-cl.cjs",
+      "scripts/queue2-offline-finalize.cjs",
+      "scripts/run-staging-cl-batch-job.cjs"
+    ],
+    "commit": "pending",
+    "deploy": "none",
+    "health": "ok",
+    "FEATURE_AGENTS": "0"
+  }
+}

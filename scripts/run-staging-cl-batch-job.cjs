@@ -11,6 +11,8 @@ const sha = process.argv[2] || "HEAD";
 const clCourt = (process.argv[3] || "").toLowerCase();
 const batchSize = String(Math.min(Math.max(Number.parseInt(process.argv[4] || "5", 10) || 5, 1), 25));
 const targetMax = String(Math.min(Math.max(Number.parseInt(process.argv[5] || "20", 10) || 20, 1), 200));
+const dayTargetEnv = process.env.CL_DAY_TARGET || "";
+const hourTargetEnv = process.env.CL_HOUR_TARGET || "";
 const MACHINE = "811d3e3f522648";
 const APP = "nyayagrid-staging";
 const root = path.join(__dirname, "..");
@@ -79,7 +81,7 @@ sleep(3_000);
 uploadLocalBundled();
 
 const start = fly(
-  `node -e "const fs=require('fs');const {spawn}=require('child_process'); try{fs.unlinkSync('/tmp/cl-batch-result.json')}catch(e){} fs.writeFileSync('/tmp/cl-batch-status.json',JSON.stringify({status:'starting'}));const out=fs.openSync('/tmp/cl-batch.log','w');const err=fs.openSync('/tmp/cl-batch.err','w');const env={...process.env,CL_COURT:'${clCourt}',CL_BATCH_SIZE:'${batchSize}',CL_TARGET_MAX:'${targetMax}',CL_RATE_MS:process.env.CL_RATE_MS||'2200',CL_BOOTSTRAP_USAGE:process.env.CL_BOOTSTRAP_USAGE||'1',CL_PROOF:'0'};const child=spawn(process.execPath,['${remotePath}'],{detached:true,stdio:['ignore',out,err],env});child.unref();console.log(JSON.stringify({ok:true,started:true,pid:child.pid,clCourt:'${clCourt}',batchSize:${batchSize},targetMax:${targetMax}}))"`,
+  `node -e "const fs=require('fs');const {spawn}=require('child_process'); try{fs.unlinkSync('/tmp/cl-batch-result.json')}catch(e){} fs.writeFileSync('/tmp/cl-batch-status.json',JSON.stringify({status:'starting'}));const out=fs.openSync('/tmp/cl-batch.log','w');const err=fs.openSync('/tmp/cl-batch.err','w');const env={...process.env,CL_COURT:'${clCourt}',CL_BATCH_SIZE:'${batchSize}',CL_TARGET_MAX:'${targetMax}',CL_RATE_MS:process.env.CL_RATE_MS||'2200',CL_BOOTSTRAP_USAGE:process.env.CL_BOOTSTRAP_USAGE||'1',CL_PROOF:'0'${dayTargetEnv ? `,CL_DAY_TARGET:'${dayTargetEnv}'` : ""}${hourTargetEnv ? `,CL_HOUR_TARGET:'${hourTargetEnv}'` : ""}};const child=spawn(process.execPath,['${remotePath}'],{detached:true,stdio:['ignore',out,err],env});child.unref();console.log(JSON.stringify({ok:true,started:true,pid:child.pid,clCourt:'${clCourt}',batchSize:${batchSize},targetMax:${targetMax},dayTarget:${dayTargetEnv ? `'${dayTargetEnv}'` : "null"}}))"`,
   90,
 );
 process.stdout.write(start.stdout || "");

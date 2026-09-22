@@ -1,0 +1,30 @@
+{
+  "wave": "2Z-eod",
+  "status": "NM_COMPLETE",
+  "generatedAt": "2026-09-22T00:46:10.000Z",
+  "objective": "end-of-day idle quota on NM only",
+  "dayTargetOverride": 1185,
+  "requestsUsed": 24,
+  "nm": {
+    "before": 10,
+    "after": 20,
+    "target": 20,
+    "status": "COMPLETE",
+    "checkpoint": "cl-opinion-11206407",
+    "authoritiesAdded": 10
+  },
+  "quotaEnd": {
+    "minuteRemaining": 26,
+    "hourRemaining": 160,
+    "dayRemaining": 16,
+    "dayUsage": 1184,
+    "hard429": 0
+  },
+  "nextResume": {
+    "timestampUtc": "2026-09-22T14:04:45.271578+00:00",
+    "timestampEt12h": "10:04:45 AM",
+    "command": "CL_COURT=nev CL_TARGET_MAX=20 node scripts/run-staging-cl-national-high.cjs HEAD nev",
+    "note": "day rem 16 at preferred reserve; do not start new jurisdiction until day reset"
+  },
+  "featureAgents": "0"
+}
