@@ -1,0 +1,13 @@
+{
+  "wave": "2Y",
+  "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+  "hard429": false,
+  "blockedUntil": "2026-09-21T23:03:00.000Z",
+  "blockedUntilEt": "7:03:00 PM",
+  "resumeCourt": "neb",
+  "resumeCursor": "cl-opinion-11434892",
+  "resumeCommand": "CL_COURT=neb CL_TARGET_MAX=20 node scripts/run-staging-cl-national-high.cjs HEAD neb",
+  "featureAgents": "0",
+  "note": "Rolling hour window; re-probe live quota before resume. Pause hit ~6:03 PM ET on neb.",
+  "writtenAt": "2026-09-21T22:06:00.000Z"
+}

@@ -2268,12 +2268,22 @@ var CL_COURT_MAP = {
   va: { courtId: "st-va-high", courtLevel: "state_high", authorityState: "VA", courtName: "Supreme Court of Virginia", federalCircuit: null, jurisdiction: "VA" },
   vacapp: { courtId: "st-va-app", courtLevel: "state_appellate", authorityState: "VA", courtName: "Court of Appeals of Virginia", federalCircuit: null, jurisdiction: "VA" },
   del: { courtId: "st-de-high", courtLevel: "state_high", authorityState: "DE", courtName: "Supreme Court of Delaware", federalCircuit: null, jurisdiction: "DE" },
-  // National highs — CL ids verified offline via wave2v-court-verify.txt (HTTP 200)
+  // National highs — CL ids verified via wave2v/wave2y paced /courts/{id}/ (HTTP 200)
   la: { courtId: "st-la-high", courtLevel: "state_high", authorityState: "LA", courtName: "Supreme Court of Louisiana", federalCircuit: null, jurisdiction: "LA" },
   dc: { courtId: "st-dc-high", courtLevel: "state_high", authorityState: "DC", courtName: "District of Columbia Court of Appeals", federalCircuit: null, jurisdiction: "DC" },
   idaho: { courtId: "st-id-high", courtLevel: "state_high", authorityState: "ID", courtName: "Idaho Supreme Court", federalCircuit: null, jurisdiction: "ID" },
   mo: { courtId: "st-mo-high", courtLevel: "state_high", authorityState: "MO", courtName: "Supreme Court of Missouri", federalCircuit: null, jurisdiction: "MO" },
-  miss: { courtId: "st-ms-high", courtLevel: "state_high", authorityState: "MS", courtName: "Mississippi Supreme Court", federalCircuit: null, jurisdiction: "MS" }
+  miss: { courtId: "st-ms-high", courtLevel: "state_high", authorityState: "MS", courtName: "Mississippi Supreme Court", federalCircuit: null, jurisdiction: "MS" },
+  mont: { courtId: "st-mt-high", courtLevel: "state_high", authorityState: "MT", courtName: "Montana Supreme Court", federalCircuit: null, jurisdiction: "MT" },
+  nd: { courtId: "st-nd-high", courtLevel: "state_high", authorityState: "ND", courtName: "North Dakota Supreme Court", federalCircuit: null, jurisdiction: "ND" },
+  neb: { courtId: "st-ne-high", courtLevel: "state_high", authorityState: "NE", courtName: "Nebraska Supreme Court", federalCircuit: null, jurisdiction: "NE" },
+  nh: { courtId: "st-nh-high", courtLevel: "state_high", authorityState: "NH", courtName: "Supreme Court of New Hampshire", federalCircuit: null, jurisdiction: "NH" },
+  nm: { courtId: "st-nm-high", courtLevel: "state_high", authorityState: "NM", courtName: "New Mexico Supreme Court", federalCircuit: null, jurisdiction: "NM" },
+  nev: { courtId: "st-nv-high", courtLevel: "state_high", authorityState: "NV", courtName: "Nevada Supreme Court", federalCircuit: null, jurisdiction: "NV" },
+  okla: { courtId: "st-ok-high", courtLevel: "state_high", authorityState: "OK", courtName: "Supreme Court of Oklahoma", federalCircuit: null, jurisdiction: "OK" },
+  sc: { courtId: "st-sc-high", courtLevel: "state_high", authorityState: "SC", courtName: "Supreme Court of South Carolina", federalCircuit: null, jurisdiction: "SC" },
+  sd: { courtId: "st-sd-high", courtLevel: "state_high", authorityState: "SD", courtName: "South Dakota Supreme Court", federalCircuit: null, jurisdiction: "SD" },
+  tenn: { courtId: "st-tn-high", courtLevel: "state_high", authorityState: "TN", courtName: "Tennessee Supreme Court", federalCircuit: null, jurisdiction: "TN" }
 };
 var COURT_VERIFY_CACHE = {
   pacommwlth: {
@@ -2326,6 +2336,66 @@ var COURT_VERIFY_CACHE = {
     verifiedAt: "2026-09-21T19:02:00.000Z",
     fullName: "Mississippi Supreme Court",
     evidence: "wave2v-court-verify.txt /courts/miss/ \u2192 200"
+  },
+  mont: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T21:53:00.000Z",
+    fullName: "Montana Supreme Court",
+    evidence: "wave2y-national-verify.txt /courts/mont/ \u2192 200"
+  },
+  nd: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T21:53:00.000Z",
+    fullName: "North Dakota Supreme Court",
+    evidence: "wave2y-national-verify.txt /courts/nd/ \u2192 200"
+  },
+  neb: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T21:53:00.000Z",
+    fullName: "Nebraska Supreme Court",
+    evidence: "wave2y-national-verify.txt /courts/neb/ \u2192 200"
+  },
+  nh: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T21:53:00.000Z",
+    fullName: "Supreme Court of New Hampshire",
+    evidence: "wave2y-national-verify.txt /courts/nh/ \u2192 200"
+  },
+  nm: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T21:53:00.000Z",
+    fullName: "New Mexico Supreme Court",
+    evidence: "wave2y-national-verify.txt /courts/nm/ \u2192 200"
+  },
+  nev: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T21:53:00.000Z",
+    fullName: "Nevada Supreme Court",
+    evidence: "wave2y-national-verify.txt /courts/nev/ \u2192 200"
+  },
+  okla: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T21:53:00.000Z",
+    fullName: "Supreme Court of Oklahoma",
+    evidence: "wave2y-national-verify.txt /courts/okla/ \u2192 200"
+  },
+  sc: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T21:53:00.000Z",
+    fullName: "Supreme Court of South Carolina",
+    evidence: "wave2y-national-verify.txt /courts/sc/ \u2192 200"
+  },
+  sd: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T21:53:00.000Z",
+    fullName: "South Dakota Supreme Court",
+    evidence: "wave2y-national-verify.txt /courts/sd/ \u2192 200"
+  },
+  tenn: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-21T21:53:00.000Z",
+    fullName: "Tennessee Supreme Court",
+    evidence: "wave2y-national-verify.txt /courts/tenn/ \u2192 200"
   },
   // Successful Wave-1 opinion ingest = verified without /courts/ re-hit
   ny: { status: "VERIFIED", verifiedAt: "2026-09-21T17:50:00.000Z", evidence: "successful_opinion_ingest" },

@@ -1,0 +1,152 @@
+{
+  "wave": "2Z",
+  "status": "PARTIAL",
+  "generatedAt": "2026-09-22T00:29:30.002Z",
+  "queue": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
+  },
+  "tier2": {
+    "liveLimits": {
+      "minute": 30,
+      "hour": 300,
+      "day": 1200
+    },
+    "remaining": {
+      "minute": 24,
+      "hour": 184,
+      "day": 40
+    },
+    "dayResetAt": "2026-09-22T14:04:45.271578+00:00",
+    "dayResumeEt": "10:04:45 AM",
+    "daySafeRem": 0,
+    "hourSafeRem": 164,
+    "safeToIngest": false
+  },
+  "courtListener": {
+    "apiCallsApproxSumRounds": 110,
+    "dayDelta": 116,
+    "hard429": 0,
+    "post429": 0,
+    "safetyPauses": 1,
+    "verificationCalls": 0,
+    "orphanWorkers": 0
+  },
+  "efficiency": {
+    "casesImported": 46,
+    "authoritiesImported": 46,
+    "requestsPerAuthority": 2.52,
+    "apiSumRounds": 110,
+    "dayUsageDelta": 116,
+    "verificationCalls": 0,
+    "duplicates": 0,
+    "note": "day delta 1044→1160; req/auth uses day delta; apiSumRounds excludes prior-job already_completed noise"
+  },
+  "national": {
+    "NE": {
+      "status": "COMPLETE",
+      "count": 20,
+      "cursor": "cl-opinion-11314429"
+    },
+    "NH": {
+      "status": "COMPLETE",
+      "count": 20,
+      "cursor": "cl-opinion-11082601"
+    },
+    "NM": {
+      "status": "quota_paused",
+      "count": 10,
+      "cursor": "cl-opinion-11326272",
+      "reason": "LOCAL_QUOTA_SAFETY_FLOOR"
+    },
+    "NV": "PENDING",
+    "OK": "PENDING",
+    "SC": "PENDING",
+    "SD": "PENDING",
+    "TN": "PENDING",
+    "next": "nm@cl-opinion-11326272 then nev→okla→sc→sd→tenn"
+  },
+  "corpus": {
+    "authorities": 2066,
+    "cases": 755,
+    "clCases": 710,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "provenance": "100%",
+    "metadataNormalized": "2066/2066",
+    "citationNormalized": "1356/2066",
+    "chunksEmbeddings": "15742/15742",
+    "orphanChunks": 0
+  },
+  "coverage": {
+    "broader": 1,
+    "limited": 51,
+    "minimumCaseDeficit": 620,
+    "authorityGateDeficit": 3428,
+    "caseLt20": 32,
+    "noHighOrAppellate": 21,
+    "noHighSample": [
+      "AK",
+      "AL",
+      "AR",
+      "HI",
+      "IA",
+      "IN",
+      "KS",
+      "KY",
+      "ME",
+      "MN",
+      "NV",
+      "OK",
+      "OR",
+      "RI",
+      "SC",
+      "SD",
+      "TN",
+      "UT",
+      "VT",
+      "WV",
+      "WY"
+    ]
+  },
+  "citationGraph": {
+    "extracted": 4127,
+    "resolved": 107,
+    "newlyResolved": 2,
+    "TARGET_ABSENT": 4019,
+    "PARSER_GAP": 0,
+    "malformed": 1
+  },
+  "retrieval": {
+    "exactCite": "pass",
+    "caseName": "pass",
+    "issue": "pass",
+    "isolation": "pass",
+    "highCourt": "pass",
+    "safeMiss": "pass",
+    "noWeb": "pass"
+  },
+  "operational": {
+    "commit": "pending",
+    "deploy": "none (DB+local_bundled)",
+    "health": "ok",
+    "FEATURE_AGENTS": "0"
+  },
+  "nextAutomaticResume": {
+    "timestampUtc": "2026-09-22T14:04:45.271578+00:00",
+    "timestampEt12h": "10:04:45 AM",
+    "command": "CL_COURT=nm CL_TARGET_MAX=20 node scripts/run-staging-cl-national-high.cjs HEAD nm",
+    "remaining": [
+      "nm",
+      "nev",
+      "okla",
+      "sc",
+      "sd",
+      "tenn"
+    ],
+    "reason": "day safety floor 1160/1200; rem 40 reserve"
+  }
+}

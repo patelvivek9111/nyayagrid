@@ -3,106 +3,52 @@
   "status": "plan_finished",
   "results": [
     {
-      "court": "pasuperct",
+      "court": "texapp",
       "round": 1,
       "result": {
         "ok": true,
         "status": "paused",
         "proofMode": false,
-        "clCourt": "pasuperct",
-        "mappedCourt": "st-pa-super",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 15,
-        "items_discovered": 40,
-        "items_fetched": 6,
-        "items_imported": 5,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 6,
-        "embeddedChunks": 123,
-        "cursor": "cl-opinion-11444483",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=pasuperct&cursor=cD0xMTQ0Mjc3OQ%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 5,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 11,
-        "sample": [
-          {
-            "title": "Com. v. Forestier, J.",
-            "citation": null,
-            "docket": "2684 EDA 2025",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Com. v. Harrison-El, A.",
-            "citation": null,
-            "docket": "2494 EDA 2024",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Com. v. Rutherford, J.",
-            "citation": null,
-            "docket": "1570 MDA 2025",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "pasuperct",
-      "round": 2,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "pasuperct",
-        "mappedCourt": "st-pa-super",
+        "clCourt": "texapp",
+        "mappedCourt": "st-tx-app",
         "discoverPath": "opinions",
         "batchProcessed": 5,
         "batchSize": 5,
         "targetMax": 15,
         "items_discovered": 60,
-        "items_fetched": 11,
-        "items_imported": 10,
+        "items_fetched": 15,
+        "items_imported": 14,
         "items_skipped": 0,
         "items_failed": 0,
-        "items_quarantined": 0,
+        "items_quarantined": 1,
         "citationEdges": 0,
-        "embeddedChunks": 55,
-        "cursor": "cl-opinion-11442774",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=pasuperct&cursor=cD0xMTQ0MjQ0OA%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 10,
+        "embeddedChunks": 49,
+        "cursor": "cl-opinion-9944089",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=texapp&cursor=cD05ODg1ODU4&order_by=-id&page_size=10",
+        "completedCount": 15,
         "rateLimitCount": 0,
         "lastRetryAfterSec": null,
         "last429Endpoint": null,
         "apiCalls": 11,
         "sample": [
           {
-            "title": "Com. v. Carroll, D.",
+            "title": "McCrory v. Wichita County",
             "citation": null,
-            "docket": "2401 EDA 2025",
+            "docket": "No. 15450",
             "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "Com. v. Cartagena, F.",
+            "title": "McCrory v. Wichita County",
             "citation": null,
-            "docket": "929 MDA 2025",
+            "docket": "No. 15450",
             "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "Com. v. Cartagena, F.",
+            "title": "Walker v. Hanes",
             "citation": null,
-            "docket": "929 MDA 2025",
+            "docket": "1288",
             "citationStatus": "unreported",
             "persist": "imported"
           }
@@ -111,16 +57,16 @@
       }
     },
     {
-      "court": "pasuperct",
-      "round": 3,
+      "court": "texapp",
+      "round": 2,
       "result": {
         "ok": true,
         "status": "completed",
         "proofMode": false,
-        "clCourt": "pasuperct",
-        "mappedCourt": "st-pa-super",
+        "clCourt": "texapp",
+        "mappedCourt": "st-tx-app",
         "discoverPath": "opinions",
-        "batchProcessed": 5,
+        "batchProcessed": 1,
         "batchSize": 5,
         "targetMax": 15,
         "items_discovered": 80,
@@ -128,496 +74,40 @@
         "items_imported": 15,
         "items_skipped": 0,
         "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 1,
-        "embeddedChunks": 108,
-        "cursor": "cl-opinion-11441953",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=pasuperct&cursor=cD0xMTQ0MTkzOA%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 15,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 11,
-        "sample": [
-          {
-            "title": "Com. v. Meeker, R.",
-            "citation": null,
-            "docket": "1052 WDA 2025",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Estate of: Mathias, H., Appeal of: Shipley, B.",
-            "citation": null,
-            "docket": "1141 WDA 2025",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Estate of: Tott, J., Appeal of: Torres, A.",
-            "citation": null,
-            "docket": "1144 WDA 2025",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "pacommwlth",
-      "round": 1,
-      "result": {
-        "ok": true,
-        "status": "completed",
-        "proofMode": false,
-        "clCourt": "pacommwlth",
-        "mappedCourt": "st-pa-comm",
-        "discoverPath": "search",
-        "batchProcessed": 0,
-        "batchSize": 5,
-        "targetMax": 10,
-        "items_discovered": 0,
-        "items_fetched": 0,
-        "items_imported": 0,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 0,
-        "embeddedChunks": 0,
-        "cursor": null,
-        "next_page_url": null,
-        "completedCount": 0,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 2,
-        "sample": [],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "njsuperct",
-      "round": 1,
-      "result": {
-        "ok": true,
-        "status": "completed",
-        "proofMode": false,
-        "clCourt": "njsuperct",
-        "mappedCourt": "st-nj-app",
-        "discoverPath": "search",
-        "batchProcessed": 0,
-        "batchSize": 5,
-        "targetMax": 15,
-        "items_discovered": 0,
-        "items_fetched": 0,
-        "items_imported": 0,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 0,
-        "embeddedChunks": 0,
-        "cursor": null,
-        "next_page_url": null,
-        "completedCount": 0,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 2,
-        "sample": [],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "fladistctapp",
-      "round": 1,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "fladistctapp",
-        "mappedCourt": "st-fl-app",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 15,
-        "items_discovered": 20,
-        "items_fetched": 5,
-        "items_imported": 5,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 0,
-        "embeddedChunks": 6,
-        "cursor": "cl-opinion-11444435",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=fladistctapp&cursor=cD0xMTQ0NDM0NQ%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 5,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 11,
-        "sample": [
-          {
-            "title": "William Paul Dabbs v. State of Florida",
-            "citation": null,
-            "docket": "4D2025-2459",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Harkness v. Wilds, Wilds",
-            "citation": null,
-            "docket": "1D2026-2730",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Destiny L. Aguilar v. Jesus Aguilar, Jr.",
-            "citation": null,
-            "docket": "6D2025-2485",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "fladistctapp",
-      "round": 2,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "fladistctapp",
-        "mappedCourt": "st-fl-app",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 15,
-        "items_discovered": 40,
-        "items_fetched": 10,
-        "items_imported": 10,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 0,
-        "embeddedChunks": 6,
-        "cursor": "cl-opinion-11444340",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=fladistctapp&cursor=cD0xMTQ0NDMyNQ%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 10,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 11,
-        "sample": [
-          {
-            "title": "Barese v. State of Florida",
-            "citation": null,
-            "docket": "2D2025-1824",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Bertrand v. Tedesco, Sarasota PH, LLC",
-            "citation": null,
-            "docket": "2D2026-0731",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Boykins v. State of Florida",
-            "citation": null,
-            "docket": "2D2025-2294",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "fladistctapp",
-      "round": 3,
-      "result": {
-        "ok": true,
-        "status": "completed",
-        "proofMode": false,
-        "clCourt": "fladistctapp",
-        "mappedCourt": "st-fl-app",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 15,
-        "items_discovered": 60,
-        "items_fetched": 15,
-        "items_imported": 15,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 0,
-        "embeddedChunks": 6,
-        "cursor": "cl-opinion-11444300",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=fladistctapp&cursor=cD0xMTQ0MzUwNQ%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 15,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 11,
-        "sample": [
-          {
-            "title": "Royster, Murray v. Commtow, LLC, Heller",
-            "citation": null,
-            "docket": "2D2025-0031",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Shaffer v. State of Florida",
-            "citation": null,
-            "docket": "2D2025-0859",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Toner v. State of Florida",
-            "citation": null,
-            "docket": "2D2025-2167",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "texapp",
-      "round": 1,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "texapp",
-        "mappedCourt": "st-tx-app",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 15,
-        "items_discovered": 20,
-        "items_fetched": 5,
-        "items_imported": 4,
-        "items_skipped": 0,
-        "items_failed": 0,
         "items_quarantined": 1,
-        "citationEdges": 1,
-        "embeddedChunks": 12,
-        "cursor": "cl-opinion-9944747",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=texapp&cursor=cD05OTQ0NzAz&order_by=-id&page_size=10",
-        "completedCount": 5,
+        "citationEdges": 0,
+        "embeddedChunks": 2,
+        "cursor": "cl-opinion-9885857",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=texapp&cursor=cD05ODc3NzAy&order_by=-id&page_size=10",
+        "completedCount": 16,
         "rateLimitCount": 0,
-        "lastRetryAfterSec": 18,
+        "lastRetryAfterSec": null,
         "last429Endpoint": null,
-        "apiCalls": 13,
+        "apiCalls": 3,
         "sample": [
           {
-            "title": "In re Wingfield",
+            "title": "Taylor v. Wheeler",
             "citation": null,
-            "docket": "No. 10-05-00054-CV",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Phillips v. Ivy",
-            "citation": null,
-            "docket": "No. 10-02-00266-CV",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Phillips v. Ivy",
-            "citation": null,
-            "docket": "No. 10-02-00266-CV",
+            "docket": "No. 3812.",
             "citationStatus": "unreported",
             "persist": "imported"
           }
         ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "texapp",
-      "round": 2,
-      "result": {
-        "ok": false,
-        "status": "failed",
-        "reason": "discover_http_502",
-        "clCourt": "texapp",
-        "mappedCourt": "st-tx-app",
-        "discoverPath": "opinions",
-        "apiCalls": 1,
-        "last_error": "discover_http_502",
         "featureAgents": "0"
       }
     },
     {
       "court": "illappct",
       "round": 1,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "illappct",
-        "mappedCourt": "st-il-app",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 15,
-        "items_discovered": 20,
-        "items_fetched": 5,
-        "items_imported": 5,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 3,
-        "embeddedChunks": 92,
-        "cursor": "cl-opinion-11445993",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=illappct&cursor=cD0xMTQ0NDUyNQ%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 5,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 11,
-        "sample": [
-          {
-            "title": "Bey v. Village of Midlothian Municipal Collections of America, Inc.",
-            "citation": null,
-            "docket": "1-25-1560",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Bey v. Village of Midlothian Municipal Collections of America, Inc.",
-            "citation": null,
-            "docket": "1-25-0272",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Brokerage, Inc. v. Great American Insurance Co.",
-            "citation": null,
-            "docket": "3-25-0447",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "illappct",
-      "round": 2,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "illappct",
-        "mappedCourt": "st-il-app",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 15,
-        "items_discovered": 40,
-        "items_fetched": 10,
-        "items_imported": 10,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 2,
-        "embeddedChunks": 158,
-        "cursor": "cl-opinion-11444520",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=illappct&cursor=cD0xMTQ0MzQyMA%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 10,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 11,
-        "sample": [
-          {
-            "title": "Gupta v. Siaw",
-            "citation": null,
-            "docket": "1-23-1461",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "In re Commitment of D.",
-            "citation": null,
-            "docket": "1-23-1954",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "In re Estate of Gerdes",
-            "citation": null,
-            "docket": "2-25-0400",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "illappct",
-      "round": 3,
       "result": {
         "ok": true,
         "status": "completed",
-        "proofMode": false,
         "clCourt": "illappct",
         "mappedCourt": "st-il-app",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 15,
-        "items_discovered": 60,
-        "items_fetched": 15,
+        "reason": "already_completed",
         "items_imported": 15,
         "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 3,
-        "embeddedChunks": 123,
-        "cursor": "cl-opinion-11443051",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=illappct&cursor=cD0xMTQ0MjAzNw%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 15,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
         "apiCalls": 11,
-        "sample": [
-          {
-            "title": "People v. Stovall",
-            "citation": null,
-            "docket": "5-25-0291",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Federal National Mortgage Ass'n v. Walker",
-            "citation": null,
-            "docket": "5-25-0418",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "In re Marriage of August",
-            "citation": null,
-            "docket": "2-24-0669",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
         "featureAgents": "0"
       }
     },
@@ -626,193 +116,27 @@
       "round": 1,
       "result": {
         "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "massappct",
-        "mappedCourt": "st-ma-app",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 15,
-        "items_discovered": 20,
-        "items_fetched": 5,
-        "items_imported": 5,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 12,
-        "embeddedChunks": 165,
-        "cursor": "cl-opinion-11439543",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=massappct&cursor=cD0xMTQwMjgyNw%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 5,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 11,
-        "sample": [
-          {
-            "title": "Commonwealth v. Beechman",
-            "citation": null,
-            "docket": "AC 25-P-1082",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Commonwealth v. Goulart",
-            "citation": null,
-            "docket": "AC 25-P-396",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Liz L. v. Ursel U.",
-            "citation": null,
-            "docket": "AC 25-P-281",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "massappct",
-      "round": 2,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "massappct",
-        "mappedCourt": "st-ma-app",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 15,
-        "items_discovered": 40,
-        "items_fetched": 10,
-        "items_imported": 10,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 5,
-        "embeddedChunks": 64,
-        "cursor": "cl-opinion-11402259",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=massappct&cursor=cD0xMTQwMTMyMw%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 10,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": 17,
-        "last429Endpoint": null,
-        "apiCalls": 12,
-        "sample": [
-          {
-            "title": "Commonwealth v. Salvatore Dicostanzo.",
-            "citation": null,
-            "docket": "25-P-0373",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "S.B. v. L.M.",
-            "citation": null,
-            "docket": "24-P-1224",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "BRIAN EVANS, Administrator v. RONALD A. MARVIN & Others.",
-            "citation": null,
-            "docket": "25-P-1491",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "massappct",
-      "round": 3,
-      "result": {
-        "ok": true,
         "status": "completed",
-        "proofMode": false,
         "clCourt": "massappct",
         "mappedCourt": "st-ma-app",
-        "discoverPath": "opinions",
-        "batchProcessed": 5,
-        "batchSize": 5,
-        "targetMax": 15,
-        "items_discovered": 60,
-        "items_fetched": 15,
+        "reason": "already_completed",
         "items_imported": 15,
         "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 3,
-        "embeddedChunks": 60,
-        "cursor": "cl-opinion-11400840",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=massappct&cursor=cD0xMTM5OTUxMg%3D%3D&order_by=-id&page_size=10",
-        "completedCount": 15,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
         "apiCalls": 11,
-        "sample": [
-          {
-            "title": "CASH ENERGY CONDOMINIUM ASSOCIATION v. MARTHA A. CASHINS & Others.",
-            "citation": null,
-            "docket": "25-P-1071",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Commonwealth v. Cara L. Rintala.",
-            "citation": null,
-            "docket": "24-P-0418",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Commonwealth v. Dartanyan Pledger.",
-            "citation": null,
-            "docket": "24-P-0240",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
         "featureAgents": "0"
       }
     },
     {
       "court": "vacapp",
-      "round": 1,
+      "round": 0,
       "result": {
         "ok": true,
-        "status": "completed",
-        "proofMode": false,
+        "status": "skipped_mapping",
+        "reason": "MAPPING_INVALID",
         "clCourt": "vacapp",
-        "mappedCourt": "st-va-app",
-        "discoverPath": "search",
-        "batchProcessed": 0,
-        "batchSize": 5,
-        "targetMax": 15,
-        "items_discovered": 0,
-        "items_fetched": 0,
-        "items_imported": 0,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 0,
-        "citationEdges": 0,
-        "embeddedChunks": 0,
-        "cursor": null,
-        "next_page_url": null,
-        "completedCount": 0,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 2,
-        "sample": [],
-        "featureAgents": "0"
+        "courtName": "Court of Appeals of Virginia",
+        "evidence": "packages/research/corpus/reports/wave2v-court-verify.txt GET /courts/vacapp/ → 404; no alternate ID proven offline",
+        "courtListenerHttpCalls": 0
       }
     }
   ]

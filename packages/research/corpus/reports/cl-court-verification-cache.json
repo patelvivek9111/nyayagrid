@@ -52,7 +52,17 @@
     "dc": { "status": "VERIFIED", "courtName": "District of Columbia Court of Appeals", "evidence": "wave2v-court-verify.txt 200" },
     "idaho": { "status": "VERIFIED", "courtName": "Idaho Supreme Court", "evidence": "wave2v-court-verify.txt 200" },
     "mo": { "status": "VERIFIED", "courtName": "Supreme Court of Missouri", "evidence": "wave2v-court-verify.txt 200" },
-    "miss": { "status": "VERIFIED", "courtName": "Mississippi Supreme Court", "evidence": "wave2v-court-verify.txt 200" }
+    "miss": { "status": "VERIFIED", "courtName": "Mississippi Supreme Court", "evidence": "wave2v-court-verify.txt 200" },
+    "mont": { "status": "VERIFIED", "courtName": "Montana Supreme Court", "evidence": "wave2y-national-verify.txt 200" },
+    "nd": { "status": "VERIFIED", "courtName": "North Dakota Supreme Court", "evidence": "wave2y-national-verify.txt 200" },
+    "neb": { "status": "VERIFIED", "courtName": "Nebraska Supreme Court", "evidence": "wave2y-national-verify.txt 200", "checkpoint": "cl-opinion-11314429", "count": 20, "target": 20 },
+    "nh": { "status": "VERIFIED", "courtName": "Supreme Court of New Hampshire", "evidence": "wave2y-national-verify.txt 200", "count": 20, "target": 20 },
+    "nm": { "status": "VERIFIED", "courtName": "New Mexico Supreme Court", "evidence": "wave2y-national-verify.txt 200", "checkpoint": "cl-opinion-11326272", "count": 10, "target": 20 },
+    "nev": { "status": "VERIFIED", "courtName": "Nevada Supreme Court", "evidence": "wave2y-national-verify.txt 200" },
+    "okla": { "status": "VERIFIED", "courtName": "Supreme Court of Oklahoma", "evidence": "wave2y-national-verify.txt 200" },
+    "sc": { "status": "VERIFIED", "courtName": "Supreme Court of South Carolina", "evidence": "wave2y-national-verify.txt 200" },
+    "sd": { "status": "VERIFIED", "courtName": "South Dakota Supreme Court", "evidence": "wave2y-national-verify.txt 200" },
+    "tenn": { "status": "VERIFIED", "courtName": "Tennessee Supreme Court", "evidence": "wave2y-national-verify.txt 200" }
   },
   "repeatVerificationPolicy": {
     "VERIFIED": "never re-hit /courts/{id}/",

@@ -18,6 +18,16 @@ const PLAN = [
   { court: "idaho", target: 20, batch: 8 },
   { court: "mo", target: 20, batch: 8 },
   { court: "miss", target: 20, batch: 8 },
+  { court: "mont", target: 20, batch: 8 },
+  { court: "nd", target: 20, batch: 8 },
+  { court: "neb", target: 20, batch: 8 },
+  { court: "nh", target: 20, batch: 8 },
+  { court: "nm", target: 20, batch: 8 },
+  { court: "nev", target: 20, batch: 8 },
+  { court: "okla", target: 20, batch: 8 },
+  { court: "sc", target: 20, batch: 8 },
+  { court: "sd", target: 20, batch: 8 },
+  { court: "tenn", target: 20, batch: 8 },
 ];
 
 const startIdx = Math.max(0, PLAN.findIndex((h) => h.court === startCourt));

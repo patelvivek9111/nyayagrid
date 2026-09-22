@@ -1,0 +1,176 @@
+{
+  "wave": "2Y",
+  "status": "PARTIAL",
+  "generatedAt": "2026-09-21T22:05:38.504Z",
+  "queue": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
+  },
+  "tier2": {
+    "liveLimits": {
+      "minute": 30,
+      "hour": 300,
+      "day": 1200
+    },
+    "remaining": {
+      "minute": 24,
+      "hour": 22,
+      "day": 156
+    },
+    "hourResetAt": "2026-09-21T23:03:00.000Z",
+    "hourResumeEt": "7:03:00 PM",
+    "daySafeRem": 116,
+    "hourSafeRem": 3,
+    "safeToIngest": false
+  },
+  "courtListener": {
+    "apiCallsApproxSumRounds": 146,
+    "hard429": 0,
+    "post429": 0,
+    "safetyPauses": 1,
+    "verificationCalls": 10,
+    "orphanWorkers": 0
+  },
+  "efficiency": {
+    "casesImported": 51,
+    "authoritiesImported": 51,
+    "requestsPerAuthority": 2.86,
+    "note": "api includes miss+texapp+10 paced verifies+national mont/nd/neb rounds",
+    "duplicateSkips": 0
+  },
+  "wave1Intermediate": {
+    "texapp": {
+      "status": "COMPLETE",
+      "count": 15,
+      "target": 15,
+      "checkpoint": "cl-opinion-9885857"
+    },
+    "gaps": [
+      "pacommwlth",
+      "njsuperct",
+      "vacapp"
+    ],
+    "overall": "texapp complete; 3 mapping gaps still skipped"
+  },
+  "national": {
+    "completedThisWavePrior": [
+      "LA",
+      "DC",
+      "ID",
+      "MO"
+    ],
+    "completedThisWave": [
+      "MS",
+      "MT",
+      "ND"
+    ],
+    "partial": {
+      "NE": {
+        "status": "quota_paused",
+        "count": 4,
+        "completedCount": 7,
+        "cursor": "cl-opinion-11434892",
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR"
+      }
+    },
+    "mappedReady": [
+      "nh",
+      "nm",
+      "nev",
+      "okla",
+      "sc",
+      "sd",
+      "tenn"
+    ],
+    "next": "neb@cl-opinion-11434892 then nh→nm→nev→okla→sc→sd→tenn"
+  },
+  "corpus": {
+    "authorities": 2020,
+    "cases": 709,
+    "clCases": 664,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "provenance": "100%",
+    "metadataNormalized": "2020/2020",
+    "citationNormalized": "1356/2020",
+    "lastChecked": 1885,
+    "chunksEmbeddings": "14590/14590",
+    "orphanChunks": 0
+  },
+  "coverage": {
+    "broader": 1,
+    "limited": 51,
+    "minimumCaseDeficit": 666,
+    "authorityGateDeficit": 3474,
+    "caseLt20": 34,
+    "noHighOrAppellate": 23,
+    "noHighSample": [
+      "AK",
+      "AL",
+      "AR",
+      "HI",
+      "IA",
+      "IN",
+      "KS",
+      "KY",
+      "ME",
+      "MN",
+      "NH",
+      "NM",
+      "NV",
+      "OK",
+      "OR",
+      "RI",
+      "SC",
+      "SD",
+      "TN",
+      "UT",
+      "VT",
+      "WV",
+      "WY"
+    ]
+  },
+  "citationGraph": {
+    "extracted": 4087,
+    "resolved": 105,
+    "TARGET_ABSENT": 3981,
+    "PARSER_GAP": 0,
+    "malformed": 1,
+    "ambiguous": 0
+  },
+  "retrieval": {
+    "exactCite": "pass",
+    "caseName": "pass",
+    "issue": "pass",
+    "isolation": "pass",
+    "highCourt": "pass",
+    "intermediate": "pass",
+    "safeMiss": "pass",
+    "noWeb": "pass",
+    "note": "wave2f smoke baseline; no regression this wave"
+  },
+  "operational": {
+    "commit": "pending (code+reports ready; not auto-committed)",
+    "deploy": "staging machine 811d3e3f522648; local_bundled upload",
+    "health": "ok",
+    "FEATURE_AGENTS": "0"
+  },
+  "nextAutomaticResume": {
+    "timestampUtc": "2026-09-21T23:03:00.000Z",
+    "timestampEt12h": "7:03:00 PM",
+    "command": "CL_COURT=neb CL_TARGET_MAX=20 node scripts/run-staging-cl-national-high.cjs HEAD neb",
+    "remaining": [
+      "neb",
+      "nh",
+      "nm",
+      "nev",
+      "okla",
+      "sc",
+      "sd",
+      "tenn"
+    ]
+  }
+}

@@ -1,0 +1,1336 @@
+{
+  "ok": true,
+  "wave": "2O-cooldown-prep",
+  "courtListenerHttpCalls": 0,
+  "featureAgents": "0",
+  "totals": {
+    "authorities": 2020,
+    "cases": 709,
+    "cl_cases": 664,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "with_normalized_citation": 1356,
+    "missing_normalized_citation": 0,
+    "metadata_normalized": 2020,
+    "with_canonical_url": 2020
+  },
+  "normGapByProvider": [
+    {
+      "source_provider": "us-primary-corpus",
+      "n": 1356,
+      "missing_norm_cite": 0,
+      "cases_without_reporter_cite": 0
+    },
+    {
+      "source_provider": "courtlistener",
+      "n": 664,
+      "missing_norm_cite": 0,
+      "cases_without_reporter_cite": 664
+    }
+  ],
+  "clChunks": {
+    "cl_authorities": 664,
+    "chunks": 14590,
+    "with_embedding": 14590,
+    "authorities_without_chunks": 0,
+    "embeddingDims": 384,
+    "embDimProbe": {
+      "sampled": 14590,
+      "avg_dims": 384
+    }
+  },
+  "orphanChunks": 0,
+  "duplicateClExternalIds": [],
+  "wave1Counts": [
+    {
+      "court_id": "st-mo-high",
+      "court_level": "state_high",
+      "authority_state": "MO",
+      "n": 22
+    },
+    {
+      "court_id": "st-pa-high",
+      "court_level": "state_high",
+      "authority_state": "PA",
+      "n": 20
+    },
+    {
+      "court_id": "st-mt-high",
+      "court_level": "state_high",
+      "authority_state": "MT",
+      "n": 20
+    },
+    {
+      "court_id": "st-dc-high",
+      "court_level": "state_high",
+      "authority_state": "DC",
+      "n": 20
+    },
+    {
+      "court_id": "st-nd-high",
+      "court_level": "state_high",
+      "authority_state": "ND",
+      "n": 20
+    },
+    {
+      "court_id": "st-tx-high",
+      "court_level": "state_high",
+      "authority_state": "TX",
+      "n": 20
+    },
+    {
+      "court_id": "st-id-high",
+      "court_level": "state_high",
+      "authority_state": "ID",
+      "n": 20
+    },
+    {
+      "court_id": "st-fl-high",
+      "court_level": "state_high",
+      "authority_state": "FL",
+      "n": 20
+    },
+    {
+      "court_id": "st-ny-high",
+      "court_level": "state_high",
+      "authority_state": "NY",
+      "n": 20
+    },
+    {
+      "court_id": "st-tx-crim-high",
+      "court_level": "state_high",
+      "authority_state": "TX",
+      "n": 20
+    },
+    {
+      "court_id": "st-de-high",
+      "court_level": "state_high",
+      "authority_state": "DE",
+      "n": 20
+    },
+    {
+      "court_id": "st-va-high",
+      "court_level": "state_high",
+      "authority_state": "VA",
+      "n": 20
+    },
+    {
+      "court_id": "st-nj-high",
+      "court_level": "state_high",
+      "authority_state": "NJ",
+      "n": 20
+    },
+    {
+      "court_id": "st-ms-high",
+      "court_level": "state_high",
+      "authority_state": "MS",
+      "n": 20
+    },
+    {
+      "court_id": "st-ca-high",
+      "court_level": "state_high",
+      "authority_state": "CA",
+      "n": 20
+    },
+    {
+      "court_id": "st-ma-high",
+      "court_level": "state_high",
+      "authority_state": "MA",
+      "n": 20
+    },
+    {
+      "court_id": "st-la-high",
+      "court_level": "state_high",
+      "authority_state": "LA",
+      "n": 20
+    },
+    {
+      "court_id": "st-il-high",
+      "court_level": "state_high",
+      "authority_state": "IL",
+      "n": 20
+    },
+    {
+      "court_id": "st-fl-app",
+      "court_level": "state_appellate",
+      "authority_state": "FL",
+      "n": 15
+    },
+    {
+      "court_id": "st-ma-app",
+      "court_level": "state_appellate",
+      "authority_state": "MA",
+      "n": 15
+    },
+    {
+      "court_id": "st-ny-app",
+      "court_level": "state_appellate",
+      "authority_state": "NY",
+      "n": 15
+    },
+    {
+      "court_id": "st-il-app",
+      "court_level": "state_appellate",
+      "authority_state": "IL",
+      "n": 15
+    },
+    {
+      "court_id": "st-ca-app",
+      "court_level": "state_appellate",
+      "authority_state": "CA",
+      "n": 15
+    },
+    {
+      "court_id": "st-pa-super",
+      "court_level": "state_appellate",
+      "authority_state": "PA",
+      "n": 15
+    },
+    {
+      "court_id": "st-tx-app",
+      "court_level": "state_appellate",
+      "authority_state": "TX",
+      "n": 15
+    },
+    {
+      "court_id": "st-ne-high",
+      "court_level": "state_high",
+      "authority_state": "NE",
+      "n": 4
+    }
+  ],
+  "wave1HighExpected": [
+    {
+      "j": "NY",
+      "cl": "ny",
+      "courtId": "st-ny-high",
+      "name": "New York Court of Appeals"
+    },
+    {
+      "j": "CA",
+      "cl": "cal",
+      "courtId": "st-ca-high",
+      "name": "Supreme Court of California"
+    },
+    {
+      "j": "PA",
+      "cl": "pa",
+      "courtId": "st-pa-high",
+      "name": "Supreme Court of Pennsylvania"
+    },
+    {
+      "j": "NJ",
+      "cl": "nj",
+      "courtId": "st-nj-high",
+      "name": "Supreme Court of New Jersey"
+    },
+    {
+      "j": "FL",
+      "cl": "fla",
+      "courtId": "st-fl-high",
+      "name": "Supreme Court of Florida"
+    },
+    {
+      "j": "TX",
+      "cl": "tex",
+      "courtId": "st-tx-high",
+      "name": "Supreme Court of Texas"
+    },
+    {
+      "j": "TX",
+      "cl": "texcrimapp",
+      "courtId": "st-tx-crim-high",
+      "name": "Texas Court of Criminal Appeals"
+    },
+    {
+      "j": "IL",
+      "cl": "ill",
+      "courtId": "st-il-high",
+      "name": "Supreme Court of Illinois"
+    },
+    {
+      "j": "MA",
+      "cl": "mass",
+      "courtId": "st-ma-high",
+      "name": "Supreme Judicial Court of Massachusetts"
+    },
+    {
+      "j": "VA",
+      "cl": "va",
+      "courtId": "st-va-high",
+      "name": "Supreme Court of Virginia"
+    },
+    {
+      "j": "DE",
+      "cl": "del",
+      "courtId": "st-de-high",
+      "name": "Supreme Court of Delaware"
+    }
+  ],
+  "jobs": [
+    {
+      "cl_court": "neb",
+      "court_id": "st-ne-high",
+      "status": "quota_paused",
+      "cursor": "cl-opinion-11434892",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=neb&cursor=cD0xMTQwMjI0MA%3D%3D&order_by=-id&page_size=16",
+      "items_imported": 4,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-21T22:03:33.289Z"
+    },
+    {
+      "cl_court": "nd",
+      "court_id": "st-nd-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11257771",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nd&cursor=cD0xMTI1MTIwNA%3D%3D&order_by=-id&page_size=16",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-21T22:02:27.818Z"
+    },
+    {
+      "cl_court": "mont",
+      "court_id": "st-mt-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11407193",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=mont&cursor=cD0xMTQwMTIyOQ%3D%3D&order_by=-id&page_size=16",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-21T21:58:09.515Z"
+    },
+    {
+      "cl_court": "massappct",
+      "court_id": "st-ma-app",
+      "status": "completed",
+      "cursor": "cl-opinion-11400840",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=massappct&cursor=cD0xMTM5OTUxMg%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 15,
+      "items_skipped": 0,
+      "target_max": 15,
+      "updated_at": "2026-09-21T21:51:16.003Z"
+    },
+    {
+      "cl_court": "illappct",
+      "court_id": "st-il-app",
+      "status": "completed",
+      "cursor": "cl-opinion-11443051",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=illappct&cursor=cD0xMTQ0MjAzNw%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 15,
+      "items_skipped": 0,
+      "target_max": 15,
+      "updated_at": "2026-09-21T21:50:45.457Z"
+    },
+    {
+      "cl_court": "texapp",
+      "court_id": "st-tx-app",
+      "status": "completed",
+      "cursor": "cl-opinion-9885857",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=texapp&cursor=cD05ODc3NzAy&order_by=-id&page_size=10",
+      "items_imported": 15,
+      "items_skipped": 0,
+      "target_max": 15,
+      "updated_at": "2026-09-21T21:50:24.084Z"
+    },
+    {
+      "cl_court": "miss",
+      "court_id": "st-ms-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11314662",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=miss&cursor=cD0xMTMwODM2Nw%3D%3D&order_by=-id&page_size=16",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-21T21:48:34.558Z"
+    },
+    {
+      "cl_court": "mo",
+      "court_id": "st-mo-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11094128",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=mo&cursor=cD0xMTA5NDExNA%3D%3D&order_by=-id&page_size=16",
+      "items_imported": 17,
+      "items_skipped": 3,
+      "target_max": 20,
+      "updated_at": "2026-09-21T21:15:33.556Z"
+    },
+    {
+      "cl_court": "idaho",
+      "court_id": "st-id-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11298413",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=idaho&cursor=cD0xMTI1MjcyNw%3D%3D&order_by=-id&page_size=16",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-21T21:00:01.481Z"
+    },
+    {
+      "cl_court": "dc",
+      "court_id": "st-dc-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11402168",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=dc&cursor=cD0xMTM0MTI0Mw%3D%3D&order_by=-id&page_size=16",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-21T20:56:41.152Z"
+    },
+    {
+      "cl_court": "la",
+      "court_id": "st-la-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11177011",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=la&cursor=cD0xMTA4NTI4NQ%3D%3D&order_by=-id&page_size=16",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-21T20:50:03.107Z"
+    },
+    {
+      "cl_court": "vacapp",
+      "court_id": "st-va-app",
+      "status": "completed",
+      "cursor": null,
+      "next_page_url": null,
+      "items_imported": 0,
+      "items_skipped": 0,
+      "target_max": 15,
+      "updated_at": "2026-09-21T19:00:35.371Z"
+    },
+    {
+      "cl_court": "fladistctapp",
+      "court_id": "st-fl-app",
+      "status": "completed",
+      "cursor": "cl-opinion-11444300",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=fladistctapp&cursor=cD0xMTQ0MzUwNQ%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 15,
+      "items_skipped": 0,
+      "target_max": 15,
+      "updated_at": "2026-09-21T18:44:42.623Z"
+    },
+    {
+      "cl_court": "njsuperct",
+      "court_id": "st-nj-app",
+      "status": "completed",
+      "cursor": null,
+      "next_page_url": null,
+      "items_imported": 0,
+      "items_skipped": 0,
+      "target_max": 15,
+      "updated_at": "2026-09-21T18:42:04.091Z"
+    },
+    {
+      "cl_court": "pacommwlth",
+      "court_id": "st-pa-comm",
+      "status": "completed",
+      "cursor": null,
+      "next_page_url": null,
+      "items_imported": 0,
+      "items_skipped": 0,
+      "target_max": 10,
+      "updated_at": "2026-09-21T18:41:23.450Z"
+    },
+    {
+      "cl_court": "pasuperct",
+      "court_id": "st-pa-super",
+      "status": "completed",
+      "cursor": "cl-opinion-11441953",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=pasuperct&cursor=cD0xMTQ0MTkzOA%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 15,
+      "items_skipped": 0,
+      "target_max": 15,
+      "updated_at": "2026-09-21T18:40:58.468Z"
+    },
+    {
+      "cl_court": "calctapp",
+      "court_id": "st-ca-app",
+      "status": "completed",
+      "cursor": "cl-opinion-11443170",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=calctapp&cursor=cD0xMTQ0MjcwOQ%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 15,
+      "items_skipped": 0,
+      "target_max": 15,
+      "updated_at": "2026-09-21T17:57:25.579Z"
+    },
+    {
+      "cl_court": "nyappdiv",
+      "court_id": "st-ny-app",
+      "status": "completed",
+      "cursor": "cl-opinion-11443015",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nyappdiv&cursor=cD0xMTQ0MzAwMA%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 15,
+      "items_skipped": 0,
+      "target_max": 15,
+      "updated_at": "2026-09-21T17:54:09.513Z"
+    },
+    {
+      "cl_court": "del",
+      "court_id": "st-de-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11411446",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=del&cursor=cD0xMTQwMjkxNQ%3D%3D&order_by=-id&page_size=16",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-21T17:50:29.460Z"
+    },
+    {
+      "cl_court": "va",
+      "court_id": "st-va-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11219196",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=va&cursor=cD0xMTA2MTI3Ng%3D%3D&order_by=-id&page_size=16",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-21T17:46:06.039Z"
+    },
+    {
+      "cl_court": "mass",
+      "court_id": "st-ma-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11336938",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=mass&cursor=cD0xMTMxOTAzMw%3D%3D&order_by=-id&page_size=16",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-21T17:42:17.671Z"
+    },
+    {
+      "cl_court": "ill",
+      "court_id": "st-il-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11093298",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ill&cursor=cD0xMDg1MDc5Mw%3D%3D&order_by=-id&page_size=16",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-21T17:38:00.472Z"
+    },
+    {
+      "cl_court": "texcrimapp",
+      "court_id": "st-tx-crim-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11327887",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=texcrimapp&cursor=cD0xMTMwNDkxNQ%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-21T17:31:07.910Z"
+    },
+    {
+      "cl_court": "tex",
+      "court_id": "st-tx-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11315031",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=tex&cursor=cD0xMTI3NTE0MQ%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-21T16:00:38.622Z"
+    },
+    {
+      "cl_court": "fla",
+      "court_id": "st-fl-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11277828",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=fla&cursor=cD0xMTI0MTQ3Nw%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-21T14:59:36.427Z"
+    },
+    {
+      "cl_court": "nj",
+      "court_id": "st-nj-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11324877",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nj&cursor=cD0xMTI2NDM0MQ%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-21T14:52:34.047Z"
+    },
+    {
+      "cl_court": "pa",
+      "court_id": "st-pa-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11343156",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=pa&cursor=cD0xMTM0MzE0MQ%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-20T20:55:31.662Z"
+    },
+    {
+      "cl_court": "cal",
+      "court_id": "st-ca-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11116316",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=cal&cursor=cD0xMTA4MTkzNg%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-20T20:45:40.006Z"
+    },
+    {
+      "cl_court": "ny",
+      "court_id": "st-ny-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11261629",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ny&cursor=cD0xMTIzNzg0OQ%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 20,
+      "items_skipped": 0,
+      "target_max": 20,
+      "updated_at": "2026-09-20T20:34:06.153Z"
+    },
+    {
+      "cl_court": "ca10",
+      "court_id": "us-ca-10",
+      "status": "completed",
+      "cursor": "cl-opinion-11431339",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ca10&cursor=cD0xMTQyODg5NA%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 10,
+      "items_skipped": 5,
+      "target_max": 15,
+      "updated_at": "2026-09-20T14:50:52.716Z"
+    },
+    {
+      "cl_court": "ca7",
+      "court_id": "us-ca-7",
+      "status": "paused",
+      "cursor": "cl-opinion-11420828",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ca7&cursor=cD0xMTQxNTExNw%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 12,
+      "items_skipped": 2,
+      "target_max": 15,
+      "updated_at": "2026-09-20T14:44:50.232Z"
+    },
+    {
+      "cl_court": "cafc",
+      "court_id": "us-ca-fed",
+      "status": "completed",
+      "cursor": "cl-opinion-11433727",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=cafc&cursor=cD0xMTQzMDQ2Ng%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 15,
+      "items_skipped": 0,
+      "target_max": 15,
+      "updated_at": "2026-09-20T14:25:47.627Z"
+    },
+    {
+      "cl_court": "cadc",
+      "court_id": "us-ca-dc",
+      "status": "completed",
+      "cursor": "cl-opinion-11413360",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=cadc&cursor=cD0xMTQwNTMwMw%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 10,
+      "items_skipped": 5,
+      "target_max": 15,
+      "updated_at": "2026-09-19T20:38:12.931Z"
+    },
+    {
+      "cl_court": "ca11",
+      "court_id": "us-ca-11",
+      "status": "completed",
+      "cursor": "cl-opinion-11437979",
+      "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ca11&cursor=cD0xMTQzNjYyMQ%3D%3D&order_by=-id&page_size=10",
+      "items_imported": 15,
+      "items_skipped": 0,
+      "target_max": 15,
+      "updated_at": "2026-09-19T20:14:39.314Z"
+    }
+  ],
+  "perJur": [
+    {
+      "j": "AK",
+      "authorities": 22,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 18,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "AL",
+      "authorities": 22,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 18,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "AR",
+      "authorities": 22,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 18,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "AZ",
+      "authorities": 26,
+      "cases": 1,
+      "high_court_cases": 1,
+      "intermediate_appellate_cases": 0,
+      "statutes": 15,
+      "regulations": 6,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "CA",
+      "authorities": 58,
+      "cases": 37,
+      "high_court_cases": 22,
+      "intermediate_appellate_cases": 15,
+      "statutes": 15,
+      "regulations": 0,
+      "rules": 6,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "CO",
+      "authorities": 23,
+      "cases": 1,
+      "high_court_cases": 1,
+      "intermediate_appellate_cases": 0,
+      "statutes": 15,
+      "regulations": 3,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "CT",
+      "authorities": 27,
+      "cases": 1,
+      "high_court_cases": 1,
+      "intermediate_appellate_cases": 0,
+      "statutes": 15,
+      "regulations": 7,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "DC",
+      "authorities": 41,
+      "cases": 20,
+      "high_court_cases": 20,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "DE",
+      "authorities": 48,
+      "cases": 22,
+      "high_court_cases": 22,
+      "intermediate_appellate_cases": 0,
+      "statutes": 16,
+      "regulations": 4,
+      "rules": 6,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "FL",
+      "authorities": 63,
+      "cases": 37,
+      "high_court_cases": 22,
+      "intermediate_appellate_cases": 15,
+      "statutes": 15,
+      "regulations": 4,
+      "rules": 7,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "GA",
+      "authorities": 27,
+      "cases": 1,
+      "high_court_cases": 1,
+      "intermediate_appellate_cases": 0,
+      "statutes": 15,
+      "regulations": 6,
+      "rules": 5,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "HI",
+      "authorities": 22,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 18,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "IA",
+      "authorities": 22,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 18,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "ID",
+      "authorities": 41,
+      "cases": 20,
+      "high_court_cases": 20,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "IL",
+      "authorities": 62,
+      "cases": 37,
+      "high_court_cases": 21,
+      "intermediate_appellate_cases": 15,
+      "statutes": 15,
+      "regulations": 4,
+      "rules": 6,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "IN",
+      "authorities": 27,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 18,
+      "regulations": 5,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "KS",
+      "authorities": 22,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 18,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "KY",
+      "authorities": 22,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 18,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "LA",
+      "authorities": 39,
+      "cases": 20,
+      "high_court_cases": 20,
+      "intermediate_appellate_cases": 0,
+      "statutes": 15,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "MA",
+      "authorities": 64,
+      "cases": 37,
+      "high_court_cases": 22,
+      "intermediate_appellate_cases": 15,
+      "statutes": 15,
+      "regulations": 6,
+      "rules": 6,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "MD",
+      "authorities": 23,
+      "cases": 1,
+      "high_court_cases": 1,
+      "intermediate_appellate_cases": 0,
+      "statutes": 15,
+      "regulations": 3,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "ME",
+      "authorities": 22,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 18,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "MI",
+      "authorities": 24,
+      "cases": 1,
+      "high_court_cases": 1,
+      "intermediate_appellate_cases": 0,
+      "statutes": 15,
+      "regulations": 4,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "MN",
+      "authorities": 27,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 6,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "MO",
+      "authorities": 43,
+      "cases": 22,
+      "high_court_cases": 22,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "MS",
+      "authorities": 41,
+      "cases": 20,
+      "high_court_cases": 20,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "MT",
+      "authorities": 41,
+      "cases": 20,
+      "high_court_cases": 20,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "NC",
+      "authorities": 24,
+      "cases": 1,
+      "high_court_cases": 1,
+      "intermediate_appellate_cases": 0,
+      "statutes": 15,
+      "regulations": 4,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "ND",
+      "authorities": 41,
+      "cases": 20,
+      "high_court_cases": 20,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "NE",
+      "authorities": 25,
+      "cases": 4,
+      "high_court_cases": 4,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "NH",
+      "authorities": 21,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "NJ",
+      "authorities": 44,
+      "cases": 22,
+      "high_court_cases": 22,
+      "intermediate_appellate_cases": 0,
+      "statutes": 16,
+      "regulations": 0,
+      "rules": 6,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "NM",
+      "authorities": 21,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "NV",
+      "authorities": 21,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "NY",
+      "authorities": 65,
+      "cases": 37,
+      "high_court_cases": 22,
+      "intermediate_appellate_cases": 15,
+      "statutes": 15,
+      "regulations": 7,
+      "rules": 6,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "OH",
+      "authorities": 23,
+      "cases": 1,
+      "high_court_cases": 1,
+      "intermediate_appellate_cases": 0,
+      "statutes": 15,
+      "regulations": 3,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "OK",
+      "authorities": 21,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "OR",
+      "authorities": 26,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 5,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "PA",
+      "authorities": 64,
+      "cases": 38,
+      "high_court_cases": 22,
+      "intermediate_appellate_cases": 16,
+      "statutes": 15,
+      "regulations": 4,
+      "rules": 7,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "RI",
+      "authorities": 27,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 6,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "SC",
+      "authorities": 21,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "SD",
+      "authorities": 21,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "TN",
+      "authorities": 21,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "TX",
+      "authorities": 82,
+      "cases": 57,
+      "high_court_cases": 41,
+      "intermediate_appellate_cases": 15,
+      "statutes": 15,
+      "regulations": 4,
+      "rules": 6,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "US",
+      "authorities": 343,
+      "cases": 207,
+      "high_court_cases": 29,
+      "intermediate_appellate_cases": 175,
+      "statutes": 64,
+      "regulations": 46,
+      "rules": 25,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "UT",
+      "authorities": 21,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "VA",
+      "authorities": 48,
+      "cases": 22,
+      "high_court_cases": 22,
+      "intermediate_appellate_cases": 0,
+      "statutes": 15,
+      "regulations": 4,
+      "rules": 7,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "VT",
+      "authorities": 21,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "WA",
+      "authorities": 23,
+      "cases": 1,
+      "high_court_cases": 1,
+      "intermediate_appellate_cases": 0,
+      "statutes": 15,
+      "regulations": 3,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "WI",
+      "authorities": 27,
+      "cases": 1,
+      "high_court_cases": 1,
+      "intermediate_appellate_cases": 0,
+      "statutes": 15,
+      "regulations": 6,
+      "rules": 5,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "WV",
+      "authorities": 27,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 6,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    },
+    {
+      "j": "WY",
+      "authorities": 21,
+      "cases": 0,
+      "high_court_cases": 0,
+      "intermediate_appellate_cases": 0,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "canonical_pct": 100,
+      "normalized_pct": 100,
+      "currentness_pct": 100
+    }
+  ],
+  "citations": {
+    "extracted": 4087,
+    "resolved": 105,
+    "unresolved": 3982
+  },
+  "currentness": {
+    "historical": 80,
+    "current_as_of_source_date": 1298,
+    "unknown": 642,
+    "last_checked": 1885
+  }
+}

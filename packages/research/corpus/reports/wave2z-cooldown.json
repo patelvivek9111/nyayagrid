@@ -1,0 +1,14 @@
+{
+  "wave": "2Z",
+  "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+  "hard429": false,
+  "blockedUntil": "2026-09-22T14:04:45.271578+00:00",
+  "blockedUntilEt": "10:04:45 AM",
+  "resumeCourt": "nm",
+  "resumeCursor": "cl-opinion-11326272",
+  "resumeCommand": "CL_COURT=nm CL_TARGET_MAX=20 node scripts/run-staging-cl-national-high.cjs HEAD nm",
+  "featureAgents": "0",
+  "dayUsage": 1160,
+  "dayRemaining": 40,
+  "writtenAt": "2026-09-22T00:29:30.003Z"
+}
