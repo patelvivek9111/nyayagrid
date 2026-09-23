@@ -1,107 +1,54 @@
 {
-  "stopped": "quota_paused",
+  "ok": true,
+  "status": "plan_finished",
   "results": [
     {
-      "court": "neb",
+      "court": "me",
       "round": 1,
       "result": {
         "ok": true,
         "status": "paused",
         "proofMode": false,
-        "clCourt": "neb",
-        "mappedCourt": "st-ne-high",
-        "discoverPath": "opinions",
-        "batchProcessed": 8,
-        "batchSize": 8,
-        "targetMax": 20,
-        "items_discovered": 40,
-        "items_fetched": 16,
-        "items_imported": 11,
-        "items_skipped": 0,
-        "items_failed": 0,
-        "items_quarantined": 4,
-        "citationEdges": 3,
-        "embeddedChunks": 204,
-        "cursor": "cl-opinion-11392901",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=neb&cursor=cD0xMTM0NDM3Ng%3D%3D&order_by=-id&page_size=16",
-        "completedCount": 15,
-        "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
-        "last429Endpoint": null,
-        "apiCalls": 18,
-        "sample": [
-          {
-            "title": "State v. McLemore",
-            "citation": null,
-            "docket": "S-25-646",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Stava v. Stava",
-            "citation": null,
-            "docket": "S-25-469",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          },
-          {
-            "title": "Park 'N Go v. Airport Authority",
-            "citation": null,
-            "docket": "S-25-409",
-            "citationStatus": "unreported",
-            "persist": "imported"
-          }
-        ],
-        "featureAgents": "0"
-      }
-    },
-    {
-      "court": "neb",
-      "round": 2,
-      "result": {
-        "ok": true,
-        "status": "paused",
-        "proofMode": false,
-        "clCourt": "neb",
-        "mappedCourt": "st-ne-high",
+        "clCourt": "me",
+        "mappedCourt": "st-me-high",
         "discoverPath": "opinions",
         "batchProcessed": 8,
         "batchSize": 8,
         "targetMax": 20,
         "items_discovered": 60,
-        "items_fetched": 24,
-        "items_imported": 18,
+        "items_fetched": 18,
+        "items_imported": 16,
         "items_skipped": 0,
         "items_failed": 0,
-        "items_quarantined": 5,
-        "citationEdges": 3,
-        "embeddedChunks": 218,
-        "cursor": "cl-opinion-11330678",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=neb&cursor=cD0xMTMxODk4OA%3D%3D&order_by=-id&page_size=16",
-        "completedCount": 23,
+        "items_quarantined": 1,
+        "citationEdges": 26,
+        "embeddedChunks": 183,
+        "cursor": "cl-opinion-11392588",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=me&cursor=cD0xMTMzMDIxNA%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 17,
         "rateLimitCount": 0,
         "lastRetryAfterSec": null,
         "last429Endpoint": null,
         "apiCalls": 18,
         "sample": [
           {
-            "title": "State v. Mielak",
+            "title": "Estate of Robert R. Young",
             "citation": null,
-            "docket": "S-24-064",
+            "docket": "Wal-25-390",
             "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "MLB Advanced Media v. Nebraska Dept. of Rev.",
+            "title": "Danielle Nadeau v. Jason D. Nadeau",
             "citation": null,
-            "docket": "S-25-144, S-25-145",
+            "docket": "Pen-25-308",
             "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "In re Interest of Mechi J.",
+            "title": "In Re Children of Johnathan R.",
             "citation": null,
-            "docket": "S-25-393, S-25-394",
+            "docket": "Han-25-136",
             "citationStatus": "unreported",
             "persist": "imported"
           }
@@ -110,45 +57,52 @@
       }
     },
     {
-      "court": "neb",
-      "round": 3,
+      "court": "me",
+      "round": 2,
       "result": {
         "ok": true,
         "status": "completed",
         "proofMode": false,
-        "clCourt": "neb",
-        "mappedCourt": "st-ne-high",
+        "clCourt": "me",
+        "mappedCourt": "st-me-high",
         "discoverPath": "opinions",
-        "batchProcessed": 2,
+        "batchProcessed": 5,
         "batchSize": 8,
         "targetMax": 20,
         "items_discovered": 80,
-        "items_fetched": 26,
+        "items_fetched": 23,
         "items_imported": 20,
         "items_skipped": 0,
         "items_failed": 0,
-        "items_quarantined": 5,
-        "citationEdges": 2,
-        "embeddedChunks": 80,
-        "cursor": "cl-opinion-11314429",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=neb&cursor=cD0xMTI3MTUxMA%3D%3D&order_by=-id&page_size=16",
-        "completedCount": 25,
+        "items_quarantined": 2,
+        "citationEdges": 5,
+        "embeddedChunks": 66,
+        "cursor": "cl-opinion-11316391",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=me&cursor=cD0xMTI3NjUxOQ%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 22,
         "rateLimitCount": 0,
-        "lastRetryAfterSec": 29,
+        "lastRetryAfterSec": null,
         "last429Endpoint": null,
-        "apiCalls": 7,
+        "apiCalls": 12,
         "sample": [
           {
-            "title": "Cramer v. Union Pacific RR. Co.",
+            "title": "Carissa Daniels v. Patrick R. O'Brien",
             "citation": null,
-            "docket": "S-24-960",
+            "docket": "Oxf-25-134",
             "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "Cramer v. Union Pacific RR. Co.",
+            "title": "Roberto Valmont-Oliver v. Envirovantage, Inc.",
             "citation": null,
-            "docket": "S-24-960",
+            "docket": "Cum-25-313",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Adult Guardianship and Conservatorship of R.",
+            "citation": null,
+            "docket": "Cum-25-331",
             "citationStatus": "unreported",
             "persist": "imported"
           }
@@ -157,14 +111,19 @@
       }
     },
     {
-      "court": "nh",
+      "court": "minn",
       "round": 1,
+      "result": null
+    },
+    {
+      "court": "minn",
+      "round": 2,
       "result": {
         "ok": true,
         "status": "paused",
         "proofMode": false,
-        "clCourt": "nh",
-        "mappedCourt": "st-nh-high",
+        "clCourt": "minn",
+        "mappedCourt": "st-mn-high",
         "discoverPath": "opinions",
         "batchProcessed": 8,
         "batchSize": 8,
@@ -175,34 +134,34 @@
         "items_skipped": 0,
         "items_failed": 0,
         "items_quarantined": 0,
-        "citationEdges": 0,
-        "embeddedChunks": 116,
-        "cursor": "cl-opinion-11158107",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nh&cursor=cD0xMTEyMDQxMA%3D%3D&order_by=-id&page_size=16",
+        "citationEdges": 13,
+        "embeddedChunks": 269,
+        "cursor": "cl-opinion-11416416",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=minn&cursor=cD0xMTQwMDMwMQ%3D%3D&order_by=-id&page_size=16",
         "completedCount": 8,
         "rateLimitCount": 0,
-        "lastRetryAfterSec": null,
+        "lastRetryAfterSec": 36,
         "last429Endpoint": null,
-        "apiCalls": 17,
+        "apiCalls": 20,
         "sample": [
           {
-            "title": "In re Guardianship of K.S.",
+            "title": "Jeremy McNitt, Respondent/Cross-Appellant v. Minnesota IT Services (MNIT), Appel",
             "citation": null,
-            "docket": "2024-0467",
+            "docket": "A231948",
             "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "In the Matter of Taylor Coyne and Ashley Blanchfield",
+            "title": "State of Minnesota v. Nicholas Norton Engel",
             "citation": null,
-            "docket": "2024-0419",
+            "docket": "A240271",
             "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "Appeal of Pittsfield Sch. Dist.",
+            "title": "Minnesota Voters Alliance v. City of Minneapolis, Casey Carl, in his official ..",
             "citation": null,
-            "docket": "2024-0445",
+            "docket": "A260997",
             "citationStatus": "unreported",
             "persist": "imported"
           }
@@ -211,14 +170,176 @@
       }
     },
     {
-      "court": "nh",
+      "court": "minn",
+      "round": 3,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "minn",
+        "mappedCourt": "st-mn-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 60,
+        "items_fetched": 17,
+        "items_imported": 17,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 5,
+        "embeddedChunks": 270,
+        "cursor": "cl-opinion-11275908",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=minn&cursor=cD0xMTIxNzA5Ng%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 17,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Petition of Minnesota Housing Finance New Certificate of Title After Mortgage Fo",
+            "citation": null,
+            "docket": "A240632",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "State of Minnesota v. Anthony Richard Smeby",
+            "citation": null,
+            "docket": "A230516",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "State of Minnesota v. Jeremiah Quan Turner",
+            "citation": null,
+            "docket": "A241173",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "minn",
+      "round": 4,
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "proofMode": false,
+        "clCourt": "minn",
+        "mappedCourt": "st-mn-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 3,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 80,
+        "items_fetched": 20,
+        "items_imported": 20,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 8,
+        "embeddedChunks": 82,
+        "cursor": "cl-opinion-11199203",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=minn&cursor=cD0xMTE3MzU3OA%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 20,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 7,
+        "sample": [
+          {
+            "title": "Benda for Common-sense, a Minnesota Non-Profit Corporation v. Denise Anderson, D",
+            "citation": null,
+            "docket": "A230302",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "State of Minnesota v. Brian Russell Lueck",
+            "citation": null,
+            "docket": "A240250",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Tescil Romalis Mason-Kimmons v. State of Minnesota",
+            "citation": null,
+            "docket": "A230914",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "or",
+      "round": 1,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "or",
+        "mappedCourt": "st-or-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 20,
+        "items_fetched": 8,
+        "items_imported": 8,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 9,
+        "embeddedChunks": 280,
+        "cursor": "cl-opinion-11402199",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=or&cursor=cD0xMTMzNzU5Mw%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 8,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "State v. Sarria",
+            "citation": null,
+            "docket": "S071459",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Lewis v. Dept. of Corrections",
+            "citation": null,
+            "docket": "S072160",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "State v. Sarria",
+            "citation": null,
+            "docket": "S071459",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "or",
       "round": 2,
       "result": {
         "ok": true,
         "status": "paused",
         "proofMode": false,
-        "clCourt": "nh",
-        "mappedCourt": "st-nh-high",
+        "clCourt": "or",
+        "mappedCourt": "st-or-high",
         "discoverPath": "opinions",
         "batchProcessed": 8,
         "batchSize": 8,
@@ -230,9 +351,9 @@
         "items_failed": 0,
         "items_quarantined": 0,
         "citationEdges": 2,
-        "embeddedChunks": 149,
-        "cursor": "cl-opinion-11115220",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nh&cursor=cD0xMTA4ODM5NA%3D%3D&order_by=-id&page_size=16",
+        "embeddedChunks": 254,
+        "cursor": "cl-opinion-11322878",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=or&cursor=cD0xMTI3NDU5OA%3D%3D&order_by=-id&page_size=16",
         "completedCount": 16,
         "rateLimitCount": 0,
         "lastRetryAfterSec": null,
@@ -240,23 +361,23 @@
         "apiCalls": 17,
         "sample": [
           {
-            "title": "State v. Moses",
+            "title": "State v. Benton",
             "citation": null,
-            "docket": "2023-0532",
+            "docket": "S072292",
             "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "135 NSS, LLC & a. v. City of Concord",
+            "title": "State v. Herring",
             "citation": null,
-            "docket": "2024-0224",
+            "docket": "S070999",
             "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "L.B. v. P.I.",
+            "title": "In re Ashton",
             "citation": null,
-            "docket": "2025-0017",
+            "docket": "S071535",
             "citationStatus": "unreported",
             "persist": "imported"
           }
@@ -265,14 +386,14 @@
       }
     },
     {
-      "court": "nh",
+      "court": "or",
       "round": 3,
       "result": {
         "ok": true,
         "status": "completed",
         "proofMode": false,
-        "clCourt": "nh",
-        "mappedCourt": "st-nh-high",
+        "clCourt": "or",
+        "mappedCourt": "st-or-high",
         "discoverPath": "opinions",
         "batchProcessed": 4,
         "batchSize": 8,
@@ -283,34 +404,34 @@
         "items_skipped": 0,
         "items_failed": 0,
         "items_quarantined": 0,
-        "citationEdges": 3,
-        "embeddedChunks": 74,
-        "cursor": "cl-opinion-11082601",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nh&cursor=cD0xMTA2MTI4Mg%3D%3D&order_by=-id&page_size=16",
+        "citationEdges": 1,
+        "embeddedChunks": 63,
+        "cursor": "cl-opinion-11247967",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=or&cursor=cD0xMTIyNzUzNw%3D%3D&order_by=-id&page_size=16",
         "completedCount": 20,
         "rateLimitCount": 0,
-        "lastRetryAfterSec": 15,
+        "lastRetryAfterSec": null,
         "last429Endpoint": null,
-        "apiCalls": 10,
+        "apiCalls": 9,
         "sample": [
           {
-            "title": "Kathryn Wolf v. Patrick Brown",
+            "title": "Robinson v. Hendricks",
             "citation": null,
-            "docket": "2024-0068",
+            "docket": "S072648",
             "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "Contoocook Valley Sch. Dist. v. State",
+            "title": "State v. Fletes",
             "citation": null,
-            "docket": "2024-0121",
+            "docket": "S072586",
             "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "Anthony Pivero v. Attorney General & a.",
+            "title": "State v. Roberts",
             "citation": null,
-            "docket": "2024-0142",
+            "docket": "S071661",
             "citationStatus": "unreported",
             "persist": "imported"
           }
@@ -319,14 +440,14 @@
       }
     },
     {
-      "court": "nm",
+      "court": "ri",
       "round": 1,
       "result": {
         "ok": true,
         "status": "paused",
         "proofMode": false,
-        "clCourt": "nm",
-        "mappedCourt": "st-nm-high",
+        "clCourt": "ri",
+        "mappedCourt": "st-ri-high",
         "discoverPath": "opinions",
         "batchProcessed": 8,
         "batchSize": 8,
@@ -337,10 +458,10 @@
         "items_skipped": 0,
         "items_failed": 0,
         "items_quarantined": 0,
-        "citationEdges": 19,
-        "embeddedChunks": 245,
-        "cursor": "cl-opinion-11386670",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nm&cursor=cD0xMTMyODEyMw%3D%3D&order_by=-id&page_size=16",
+        "citationEdges": 11,
+        "embeddedChunks": 229,
+        "cursor": "cl-opinion-11401743",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ri&cursor=cD0xMTM2MjUzNw%3D%3D&order_by=-id&page_size=16",
         "completedCount": 8,
         "rateLimitCount": 0,
         "lastRetryAfterSec": null,
@@ -348,24 +469,24 @@
         "apiCalls": 17,
         "sample": [
           {
-            "title": "State v. Sandoval",
+            "title": "In the Matter of Christopher L. Malcolm",
             "citation": null,
-            "docket": null,
-            "citationStatus": "citation_unknown",
+            "docket": "2026-0214-M.P.",
+            "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "State v. Trevizo",
+            "title": "In the Matter of Steven D. DiLibero",
             "citation": null,
-            "docket": null,
-            "citationStatus": "citation_unknown",
+            "docket": "2025-0076-M.P.",
+            "citationStatus": "unreported",
             "persist": "imported"
           },
           {
-            "title": "State v. Mendez",
+            "title": "Rhode Island Joint Reinsurance Association v. Brenda Ricci",
             "citation": null,
-            "docket": null,
-            "citationStatus": "citation_unknown",
+            "docket": "2023-0251-Appeal. and 2024-0246-Appeal.",
+            "citationStatus": "unreported",
             "persist": "imported"
           }
         ],
@@ -373,28 +494,272 @@
       }
     },
     {
-      "court": "nm",
+      "court": "ri",
       "round": 2,
       "result": {
         "ok": true,
-        "status": "quota_paused",
-        "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
-        "clCourt": "nm",
-        "mappedCourt": "st-nm-high",
-        "last429Endpoint": null,
-        "lastRetryAfterSec": null,
-        "apiCalls": 6,
-        "cursor": "cl-opinion-11326272",
-        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=nm&cursor=cD0xMTI0NjEyMA%3D%3D&order_by=-id&page_size=16",
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "ri",
+        "mappedCourt": "st-ri-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
         "items_discovered": 40,
-        "items_fetched": 11,
-        "items_imported": 10,
+        "items_fetched": 16,
+        "items_imported": 16,
         "items_skipped": 0,
         "items_failed": 0,
         "items_quarantined": 0,
-        "last_successful_external_id": "cl-opinion-11326273",
-        "completedCount": 10,
-        "batchProcessed": 2,
+        "citationEdges": 13,
+        "embeddedChunks": 129,
+        "cursor": "cl-opinion-11344602",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ri&cursor=cD0xMTMzMzA3Mw%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 16,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Bryan Edward Menge v. GEICO General Insurance Company",
+            "citation": null,
+            "docket": "2025-0158-Appeal.",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Ana Varela v. Daniel M. Monteiro",
+            "citation": null,
+            "docket": "2023-0299-Appeal.",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Rahim Caldwell v. George Pearson",
+            "citation": null,
+            "docket": "2025-0202-Appeal.",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "ri",
+      "round": 3,
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "proofMode": false,
+        "clCourt": "ri",
+        "mappedCourt": "st-ri-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 4,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 60,
+        "items_fetched": 20,
+        "items_imported": 20,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 8,
+        "embeddedChunks": 112,
+        "cursor": "cl-opinion-11331769",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=ri&cursor=cD0xMTMxODY2OQ%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 20,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 9,
+        "sample": [
+          {
+            "title": "William Fairhurst, Co-Executor v. James Fairhurst",
+            "citation": null,
+            "docket": "2024-0329-Appeal.",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Jay Patel v. John O. Mancini",
+            "citation": null,
+            "docket": "2024-0350-Appeal.",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Jay Patel v. LandingPartners LLC",
+            "citation": null,
+            "docket": "2024-0360-Appeal.",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "wva",
+      "round": 1,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "wva",
+        "mappedCourt": "st-wv-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 20,
+        "items_fetched": 8,
+        "items_imported": 8,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 1,
+        "embeddedChunks": 99,
+        "cursor": "cl-opinion-11447101",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=wva&cursor=cD0xMTQ0NzA4OQ%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 8,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Carlos Tilley v. Tom Harlan, Superintendent, Huttonsville Correctional",
+            "citation": null,
+            "docket": "25-252",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Donta Wade v. University Physicians and Surgeons, Inc.; Marshall Health Network,",
+            "citation": null,
+            "docket": "25-377",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "In re A.W. and L.J.",
+            "citation": null,
+            "docket": "25-726",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "wva",
+      "round": 2,
+      "result": {
+        "ok": true,
+        "status": "paused",
+        "proofMode": false,
+        "clCourt": "wva",
+        "mappedCourt": "st-wv-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 8,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 40,
+        "items_fetched": 16,
+        "items_imported": 16,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 0,
+        "embeddedChunks": 56,
+        "cursor": "cl-opinion-11425267",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=wva&cursor=cD0xMTQyNTI1NQ%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 16,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": null,
+        "last429Endpoint": null,
+        "apiCalls": 17,
+        "sample": [
+          {
+            "title": "Ryan L. Henson v. Curtis Dixon, Superintendent, Mt. Olive Correctional Complex a",
+            "citation": null,
+            "docket": "24-123",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Stonerise Healthcare v. Kimberly Dewitt",
+            "citation": null,
+            "docket": "26-208",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Joseph Kessler v. West Virginia Paving, Inc. (Separates Included)",
+            "citation": null,
+            "docket": "26-178",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
+        "featureAgents": "0"
+      }
+    },
+    {
+      "court": "wva",
+      "round": 3,
+      "result": {
+        "ok": true,
+        "status": "completed",
+        "proofMode": false,
+        "clCourt": "wva",
+        "mappedCourt": "st-wv-high",
+        "discoverPath": "opinions",
+        "batchProcessed": 4,
+        "batchSize": 8,
+        "targetMax": 20,
+        "items_discovered": 60,
+        "items_fetched": 20,
+        "items_imported": 20,
+        "items_skipped": 0,
+        "items_failed": 0,
+        "items_quarantined": 0,
+        "citationEdges": 1,
+        "embeddedChunks": 39,
+        "cursor": "cl-opinion-11425251",
+        "next_page_url": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=wva&cursor=cD0xMTQwMzQ2OQ%3D%3D&order_by=-id&page_size=16",
+        "completedCount": 20,
+        "rateLimitCount": 0,
+        "lastRetryAfterSec": 16,
+        "last429Endpoint": null,
+        "apiCalls": 10,
+        "sample": [
+          {
+            "title": "Jeffrey L. Finley v. Jonathan Frame, Superintendent, Mt. Olive Correctional Faci",
+            "citation": null,
+            "docket": "24-303",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Jimmy Lipscomb v. Pamela Hagedorn",
+            "citation": null,
+            "docket": "25-92",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          },
+          {
+            "title": "Marilyn Fay Minor v. Kevin Scott Ford",
+            "citation": null,
+            "docket": "25-229",
+            "citationStatus": "unreported",
+            "persist": "imported"
+          }
+        ],
         "featureAgents": "0"
       }
     }

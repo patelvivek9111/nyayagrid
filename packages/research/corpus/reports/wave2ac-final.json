@@ -1,0 +1,133 @@
+{
+  "wave": "2AC",
+  "status": "PASS",
+  "generatedAt": "2026-09-23T01:38:00.000Z",
+  "primaryMilestone": {
+    "noHighOrAppellate": 0,
+    "achieved": true,
+    "note": "Every limited jurisdiction now has >=1 high or intermediate appellate CL case. #2 remains OPEN — 20/jurisdiction is baseline only."
+  },
+  "queue": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
+  },
+  "quota": {
+    "liveLimits": { "minute": 30, "hour": 300, "day": 1200 },
+    "starting": {
+      "minute": 30,
+      "hour": 300,
+      "day": 556,
+      "dayUsage": 644,
+      "atEt": "8:06:35 PM"
+    },
+    "ending": {
+      "minute": 21,
+      "hour": 71,
+      "day": 189,
+      "dayUsage": 1011,
+      "hourSafeRem": 51,
+      "daySafeRem": 149,
+      "atEt": "9:36 PM"
+    },
+    "totalRequestsApprox": 480,
+    "dayUsageDelta": 367,
+    "dayUsageNote": "rolling 24h; estimate ~480 from ~223 auths × ~2.15 + 6 mapping (day delta 367 after aging)",
+    "opinionRequests": 474,
+    "mappingRequests": 6,
+    "safetyPauses": 2,
+    "hard429": 0,
+    "nextResumeEt": null,
+    "resumeCommand": null
+  },
+  "efficiency": {
+    "casesAdded": 223,
+    "authoritiesAdded": 223,
+    "requestsPerAuthority": 2.15,
+    "duplicates": 0,
+    "mappingCalls": 6,
+    "flag": false
+  },
+  "national": {
+    "AR": { "status": "COMPLETE", "count": 20 },
+    "HI": { "status": "COMPLETE", "count": 20 },
+    "IA": { "status": "COMPLETE", "count": 20 },
+    "KS": { "status": "COMPLETE", "count": 20 },
+    "KY": { "status": "COMPLETE", "count": 20 },
+    "IN": { "status": "COMPLETE", "count": 20 },
+    "ME": { "status": "COMPLETE", "count": 20 },
+    "MN": { "status": "COMPLETE", "count": 20 },
+    "OR": { "status": "COMPLETE", "count": 20 },
+    "RI": { "status": "COMPLETE", "count": 20 },
+    "WV": { "status": "COMPLETE", "count": 20 },
+    "completed": ["AR", "HI", "IA", "KS", "KY", "IN", "ME", "MN", "OR", "RI", "WV"],
+    "partial": {},
+    "unresolved": []
+  },
+  "mapping": {
+    "newVerified": ["ind", "me", "minn", "or", "ri", "wva"],
+    "invalid": ["pacommwlth", "njsuperct", "vacapp"],
+    "unresolved": [],
+    "requestsSpentMapping": 6,
+    "evidence": "packages/research/corpus/reports/wave2ac-nohigh-verify.txt"
+  },
+  "corpus": {
+    "authorities": 2503,
+    "cases": 1192,
+    "clCases": 1147,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "chunksEmbeddings": "26354/26354",
+    "orphans": 0,
+    "provenance": "2503/2503"
+  },
+  "coverage": {
+    "broader": 0,
+    "limited": 51,
+    "minimumCaseDeficit": 190,
+    "authorityGateDeficit": 2991,
+    "caseLt20": 10,
+    "noHighOrAppellate": 0,
+    "noHighSample": [],
+    "delta": {
+      "caseDeficit": -216,
+      "authGate": -223,
+      "caseLt20": -11,
+      "noHigh": -10
+    }
+  },
+  "citation": {
+    "extracted": 4756,
+    "resolved": 114,
+    "newlyResolved": 3,
+    "newlyResolvedNote": "111→114 vs wave2ab baseline; this-run resolver pass newlyResolved=0 (alias norm only)",
+    "TARGET_ABSENT": 4642,
+    "PARSER_GAP": 0
+  },
+  "retrieval": {
+    "exactCite": "pass",
+    "caseName": "pass",
+    "issue": "pass",
+    "isolation": "pass",
+    "highCourt": "pass",
+    "safeMiss": "pass",
+    "noWeb": "pass",
+    "smokePass": true
+  },
+  "operational": {
+    "commit": "pending",
+    "deploy": "none",
+    "health": "ok",
+    "FEATURE_AGENTS": "0",
+    "orphans": 0
+  },
+  "remainingQueue2": [
+    "case<20 → 0 (currently 10 jurisdictions under 20 cases)",
+    "authority-gate depth after case baseline",
+    "known intermediate gaps pacommwlth/njsuperct/vacapp — skip until new candidate IDs",
+    "citation TARGET_ABSENT reduction without fuzzy forcing"
+  ],
+  "productionClassification": "PRODUCTION — national high/appellate baseline closed (noHigh=0); #2 stays OPEN for depth"
+}

@@ -2293,7 +2293,13 @@ var CL_COURT_MAP = {
   haw: { courtId: "st-hi-high", courtLevel: "state_high", authorityState: "HI", courtName: "Hawaii Supreme Court", federalCircuit: null, jurisdiction: "HI" },
   iowa: { courtId: "st-ia-high", courtLevel: "state_high", authorityState: "IA", courtName: "Supreme Court of Iowa", federalCircuit: null, jurisdiction: "IA" },
   kan: { courtId: "st-ks-high", courtLevel: "state_high", authorityState: "KS", courtName: "Supreme Court of Kansas", federalCircuit: null, jurisdiction: "KS" },
-  ky: { courtId: "st-ky-high", courtLevel: "state_high", authorityState: "KY", courtName: "Kentucky Supreme Court", federalCircuit: null, jurisdiction: "KY" }
+  ky: { courtId: "st-ky-high", courtLevel: "state_high", authorityState: "KY", courtName: "Kentucky Supreme Court", federalCircuit: null, jurisdiction: "KY" },
+  ind: { courtId: "st-in-high", courtLevel: "state_high", authorityState: "IN", courtName: "Indiana Supreme Court", federalCircuit: null, jurisdiction: "IN" },
+  me: { courtId: "st-me-high", courtLevel: "state_high", authorityState: "ME", courtName: "Supreme Judicial Court of Maine", federalCircuit: null, jurisdiction: "ME" },
+  minn: { courtId: "st-mn-high", courtLevel: "state_high", authorityState: "MN", courtName: "Supreme Court of Minnesota", federalCircuit: null, jurisdiction: "MN" },
+  or: { courtId: "st-or-high", courtLevel: "state_high", authorityState: "OR", courtName: "Oregon Supreme Court", federalCircuit: null, jurisdiction: "OR" },
+  ri: { courtId: "st-ri-high", courtLevel: "state_high", authorityState: "RI", courtName: "Supreme Court of Rhode Island", federalCircuit: null, jurisdiction: "RI" },
+  wva: { courtId: "st-wv-high", courtLevel: "state_high", authorityState: "WV", courtName: "West Virginia Supreme Court", federalCircuit: null, jurisdiction: "WV" }
 };
 var COURT_VERIFY_CACHE = {
   pacommwlth: {
@@ -2466,6 +2472,42 @@ var COURT_VERIFY_CACHE = {
     verifiedAt: "2026-09-22T21:40:00.000Z",
     fullName: "Kentucky Supreme Court",
     evidence: "wave2ab-national-verify.txt /courts/ky/ \u2192 200"
+  },
+  ind: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T00:27:00.000Z",
+    fullName: "Indiana Supreme Court",
+    evidence: "wave2ac-nohigh-verify.txt /courts/ind/ \u2192 200"
+  },
+  me: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T00:27:00.000Z",
+    fullName: "Supreme Judicial Court of Maine",
+    evidence: "wave2ac-nohigh-verify.txt /courts/me/ \u2192 200"
+  },
+  minn: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T00:27:00.000Z",
+    fullName: "Supreme Court of Minnesota",
+    evidence: "wave2ac-nohigh-verify.txt /courts/minn/ \u2192 200"
+  },
+  or: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T00:27:00.000Z",
+    fullName: "Oregon Supreme Court",
+    evidence: "wave2ac-nohigh-verify.txt /courts/or/ \u2192 200"
+  },
+  ri: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T00:27:00.000Z",
+    fullName: "Supreme Court of Rhode Island",
+    evidence: "wave2ac-nohigh-verify.txt /courts/ri/ \u2192 200"
+  },
+  wva: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T00:27:00.000Z",
+    fullName: "West Virginia Supreme Court",
+    evidence: "wave2ac-nohigh-verify.txt /courts/wva/ \u2192 200"
   },
   // Successful Wave-1 opinion ingest = verified without /courts/ re-hit
   ny: { status: "VERIFIED", verifiedAt: "2026-09-21T17:50:00.000Z", evidence: "successful_opinion_ingest" },
