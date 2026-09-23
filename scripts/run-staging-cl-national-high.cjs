@@ -44,6 +44,17 @@ const PLAN = [
   { court: "or", target: 20, batch: 8 },
   { court: "ri", target: 20, batch: 8 },
   { court: "wva", target: 20, batch: 8 },
+  // Wave 2AD — case<20 baseline (jurisdictions already have 1 high; target 19 CL imports)
+  { court: "ariz", target: 19, batch: 8 },
+  { court: "colo", target: 19, batch: 8 },
+  { court: "conn", target: 19, batch: 8 },
+  { court: "ga", target: 19, batch: 8 },
+  { court: "md", target: 19, batch: 8 },
+  { court: "mich", target: 19, batch: 8 },
+  { court: "nc", target: 19, batch: 8 },
+  { court: "ohio", target: 19, batch: 8 },
+  { court: "wash", target: 19, batch: 8 },
+  { court: "wis", target: 19, batch: 8 },
 ];
 
 const startIdx = Math.max(0, PLAN.findIndex((h) => h.court === startCourt));

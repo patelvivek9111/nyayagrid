@@ -1,0 +1,19 @@
+{
+  "wave": "2AD",
+  "status": "WAITING_FOR_QUOTA",
+  "reason": "LOCAL_QUOTA_SAFETY_FLOOR day",
+  "generatedAt": "2026-09-23T02:32:00.000Z",
+  "resume": {
+    "whenEt": "when daySafeRem >= 45 (rolling; day reset_at ~2:15 PM ET Sep 23)",
+    "whenUtc": "2026-09-23T18:15:01.819030+00:00",
+    "command": "CL_COURT=ga CL_TARGET_MAX=19 node scripts/run-staging-cl-national-high.cjs HEAD ga",
+    "checkpoint": {
+      "court": "ga",
+      "cursor": "cl-opinion-11443412",
+      "completedCount": 4
+    },
+    "remaining": ["ga", "md", "mich", "nc", "ohio", "wash", "wis"]
+  },
+  "hard429": false,
+  "featureAgents": "0"
+}

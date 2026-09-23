@@ -78,7 +78,17 @@
     "minn": { "status": "VERIFIED", "courtName": "Supreme Court of Minnesota", "evidence": "wave2ac-nohigh-verify.txt 200" },
     "or": { "status": "VERIFIED", "courtName": "Oregon Supreme Court", "evidence": "wave2ac-nohigh-verify.txt 200" },
     "ri": { "status": "VERIFIED", "courtName": "Supreme Court of Rhode Island", "evidence": "wave2ac-nohigh-verify.txt 200" },
-    "wva": { "status": "VERIFIED", "courtName": "West Virginia Supreme Court", "evidence": "wave2ac-nohigh-verify.txt 200" }
+    "wva": { "status": "VERIFIED", "courtName": "West Virginia Supreme Court", "evidence": "wave2ac-nohigh-verify.txt 200" },
+    "ariz": { "status": "VERIFIED", "courtName": "Arizona Supreme Court", "evidence": "wave2ad-case20-verify.txt 200" },
+    "colo": { "status": "VERIFIED", "courtName": "Supreme Court of Colorado", "evidence": "wave2ad-case20-verify.txt 200" },
+    "conn": { "status": "VERIFIED", "courtName": "Supreme Court of Connecticut", "evidence": "wave2ad-case20-verify.txt 200" },
+    "ga": { "status": "VERIFIED", "courtName": "Supreme Court of Georgia", "evidence": "wave2ad-case20-verify.txt 200" },
+    "md": { "status": "VERIFIED", "courtName": "Court of Appeals of Maryland", "evidence": "wave2ad-case20-verify.txt 200" },
+    "mich": { "status": "VERIFIED", "courtName": "Michigan Supreme Court", "evidence": "wave2ad-case20-verify.txt 200" },
+    "nc": { "status": "VERIFIED", "courtName": "Supreme Court of North Carolina", "evidence": "wave2ad-case20-verify.txt 200" },
+    "ohio": { "status": "VERIFIED", "courtName": "Ohio Supreme Court", "evidence": "wave2ad-case20-verify.txt 200" },
+    "wash": { "status": "VERIFIED", "courtName": "Washington Supreme Court", "evidence": "wave2ad-case20-verify.txt 200" },
+    "wis": { "status": "VERIFIED", "courtName": "Wisconsin Supreme Court", "evidence": "wave2ad-case20-verify.txt 200" }
   },
   "repeatVerificationPolicy": {
     "VERIFIED": "never re-hit /courts/{id}/",

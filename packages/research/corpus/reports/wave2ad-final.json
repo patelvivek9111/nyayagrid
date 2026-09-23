@@ -1,0 +1,135 @@
+{
+  "wave": "2AD",
+  "status": "PARTIAL",
+  "waitingFor": "DAY_QUOTA",
+  "generatedAt": "2026-09-23T02:32:00.000Z",
+  "queue": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
+  },
+  "quota": {
+    "liveLimits": { "minute": 30, "hour": 300, "day": 1200 },
+    "starting": {
+      "minute": 30,
+      "hour": 73,
+      "day": 189,
+      "dayUsage": 1011,
+      "hourSafeRem": 53,
+      "daySafeRem": 149,
+      "atEt": "9:42:09 PM"
+    },
+    "ending": {
+      "minute": 21,
+      "hour": 106,
+      "day": 40,
+      "dayUsage": 1160,
+      "hourSafeRem": 86,
+      "daySafeRem": 0,
+      "atEt": "10:30:24 PM"
+    },
+    "totalRequestsApprox": 160,
+    "opinionRequests": 150,
+    "mappingRequests": 10,
+    "safetyPauses": 3,
+    "hard429": 0,
+    "nextResumeEt": "after day rolling rem recovers (day reset_at ~2:15 PM ET Sep 23 / live probe)",
+    "nextResumeUtc": "2026-09-23T18:15:01.819030+00:00",
+    "resumeCommand": "CL_COURT=ga CL_TARGET_MAX=19 node scripts/run-staging-cl-national-high.cjs HEAD ga"
+  },
+  "efficiency": {
+    "casesAdded": 61,
+    "authoritiesAdded": 61,
+    "requestsPerAuthority": 2.62,
+    "duplicates": 0,
+    "mappingCalls": 10,
+    "flag": false
+  },
+  "deficitJurisdictions": {
+    "starting": [
+      { "j": "AZ", "cases": 1, "deficit": 19 },
+      { "j": "CO", "cases": 1, "deficit": 19 },
+      { "j": "CT", "cases": 1, "deficit": 19 },
+      { "j": "GA", "cases": 1, "deficit": 19 },
+      { "j": "MD", "cases": 1, "deficit": 19 },
+      { "j": "MI", "cases": 1, "deficit": 19 },
+      { "j": "NC", "cases": 1, "deficit": 19 },
+      { "j": "OH", "cases": 1, "deficit": 19 },
+      { "j": "WA", "cases": 1, "deficit": 19 },
+      { "j": "WI", "cases": 1, "deficit": 19 }
+    ],
+    "ending": [
+      { "j": "AZ", "start": 1, "end": 20, "deficitRemoved": 19, "status": "COMPLETE", "court": "ariz" },
+      { "j": "CO", "start": 1, "end": 20, "deficitRemoved": 19, "status": "COMPLETE", "court": "colo" },
+      { "j": "CT", "start": 1, "end": 20, "deficitRemoved": 19, "status": "COMPLETE", "court": "conn" },
+      { "j": "GA", "start": 1, "end": 5, "deficitRemoved": 4, "status": "PARTIAL", "court": "ga", "cursor": "cl-opinion-11443412" },
+      { "j": "MD", "start": 1, "end": 1, "deficitRemoved": 0, "status": "PENDING", "court": "md" },
+      { "j": "MI", "start": 1, "end": 1, "deficitRemoved": 0, "status": "PENDING", "court": "mich" },
+      { "j": "NC", "start": 1, "end": 1, "deficitRemoved": 0, "status": "PENDING", "court": "nc" },
+      { "j": "OH", "start": 1, "end": 1, "deficitRemoved": 0, "status": "PENDING", "court": "ohio" },
+      { "j": "WA", "start": 1, "end": 1, "deficitRemoved": 0, "status": "PENDING", "court": "wash" },
+      { "j": "WI", "start": 1, "end": 1, "deficitRemoved": 0, "status": "PENDING", "court": "wis" }
+    ]
+  },
+  "mapping": {
+    "newVerified": ["ariz", "colo", "conn", "ga", "md", "mich", "nc", "ohio", "wash", "wis"],
+    "invalid": ["pacommwlth", "njsuperct", "vacapp"],
+    "requestsSpentMapping": 10
+  },
+  "corpus": {
+    "authorities": 2564,
+    "cases": 1253,
+    "clCases": 1208,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "chunksEmbeddings": "27744/27744",
+    "orphans": 0,
+    "provenance": "2564/2564"
+  },
+  "coverage": {
+    "caseLt20": 7,
+    "minimumCaseDeficit": 129,
+    "noHighOrAppellate": 0,
+    "authorityGateDeficit": 2930,
+    "delta": {
+      "caseLt20": -3,
+      "caseDeficit": -61,
+      "noHigh": 0,
+      "authGate": -61
+    }
+  },
+  "citation": {
+    "extracted": 4847,
+    "resolved": 115,
+    "newlyResolved": 1,
+    "TARGET_ABSENT": 4732,
+    "PARSER_GAP": 0
+  },
+  "retrieval": {
+    "exactCite": "pass",
+    "caseName": "pass",
+    "issue": "pass",
+    "isolation": "pass",
+    "highCourt": "pass",
+    "safeMiss": "pass",
+    "noWeb": "pass",
+    "smokePass": true
+  },
+  "authorityDepthManifest": null,
+  "authorityDepthNote": "Deferred until case<20=0 and min case deficit=0",
+  "operational": {
+    "commit": "pending",
+    "deploy": "none",
+    "health": "ok",
+    "FEATURE_AGENTS": "0",
+    "orphans": 0
+  },
+  "remainingQueue2": [
+    "Finish GA@cl-opinion-11443412 then MD/MI/NC/OH/WA/WI to close case<20=0",
+    "Then ranked authority-depth expansion (jurisdictions <=100 authorities)",
+    "Skip pacommwlth/njsuperct/vacapp until new candidate IDs"
+  ],
+  "productionClassification": "PRODUCTION — case<20 baseline PARTIAL; day safety floor; #2 OPEN"
+}

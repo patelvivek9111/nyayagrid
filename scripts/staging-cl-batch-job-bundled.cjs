@@ -2299,7 +2299,17 @@ var CL_COURT_MAP = {
   minn: { courtId: "st-mn-high", courtLevel: "state_high", authorityState: "MN", courtName: "Supreme Court of Minnesota", federalCircuit: null, jurisdiction: "MN" },
   or: { courtId: "st-or-high", courtLevel: "state_high", authorityState: "OR", courtName: "Oregon Supreme Court", federalCircuit: null, jurisdiction: "OR" },
   ri: { courtId: "st-ri-high", courtLevel: "state_high", authorityState: "RI", courtName: "Supreme Court of Rhode Island", federalCircuit: null, jurisdiction: "RI" },
-  wva: { courtId: "st-wv-high", courtLevel: "state_high", authorityState: "WV", courtName: "West Virginia Supreme Court", federalCircuit: null, jurisdiction: "WV" }
+  wva: { courtId: "st-wv-high", courtLevel: "state_high", authorityState: "WV", courtName: "West Virginia Supreme Court", federalCircuit: null, jurisdiction: "WV" },
+  ariz: { courtId: "st-az-high", courtLevel: "state_high", authorityState: "AZ", courtName: "Arizona Supreme Court", federalCircuit: null, jurisdiction: "AZ" },
+  colo: { courtId: "st-co-high", courtLevel: "state_high", authorityState: "CO", courtName: "Supreme Court of Colorado", federalCircuit: null, jurisdiction: "CO" },
+  conn: { courtId: "st-ct-high", courtLevel: "state_high", authorityState: "CT", courtName: "Supreme Court of Connecticut", federalCircuit: null, jurisdiction: "CT" },
+  ga: { courtId: "st-ga-high", courtLevel: "state_high", authorityState: "GA", courtName: "Supreme Court of Georgia", federalCircuit: null, jurisdiction: "GA" },
+  md: { courtId: "st-md-high", courtLevel: "state_high", authorityState: "MD", courtName: "Supreme Court of Maryland", federalCircuit: null, jurisdiction: "MD" },
+  mich: { courtId: "st-mi-high", courtLevel: "state_high", authorityState: "MI", courtName: "Michigan Supreme Court", federalCircuit: null, jurisdiction: "MI" },
+  nc: { courtId: "st-nc-high", courtLevel: "state_high", authorityState: "NC", courtName: "Supreme Court of North Carolina", federalCircuit: null, jurisdiction: "NC" },
+  ohio: { courtId: "st-oh-high", courtLevel: "state_high", authorityState: "OH", courtName: "Ohio Supreme Court", federalCircuit: null, jurisdiction: "OH" },
+  wash: { courtId: "st-wa-high", courtLevel: "state_high", authorityState: "WA", courtName: "Washington Supreme Court", federalCircuit: null, jurisdiction: "WA" },
+  wis: { courtId: "st-wi-high", courtLevel: "state_high", authorityState: "WI", courtName: "Wisconsin Supreme Court", federalCircuit: null, jurisdiction: "WI" }
 };
 var COURT_VERIFY_CACHE = {
   pacommwlth: {
@@ -2508,6 +2518,66 @@ var COURT_VERIFY_CACHE = {
     verifiedAt: "2026-09-23T00:27:00.000Z",
     fullName: "West Virginia Supreme Court",
     evidence: "wave2ac-nohigh-verify.txt /courts/wva/ \u2192 200"
+  },
+  ariz: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T01:44:00.000Z",
+    fullName: "Arizona Supreme Court",
+    evidence: "wave2ad-case20-verify.txt /courts/ariz/ \u2192 200"
+  },
+  colo: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T01:44:00.000Z",
+    fullName: "Supreme Court of Colorado",
+    evidence: "wave2ad-case20-verify.txt /courts/colo/ \u2192 200"
+  },
+  conn: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T01:44:00.000Z",
+    fullName: "Supreme Court of Connecticut",
+    evidence: "wave2ad-case20-verify.txt /courts/conn/ \u2192 200"
+  },
+  ga: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T01:44:00.000Z",
+    fullName: "Supreme Court of Georgia",
+    evidence: "wave2ad-case20-verify.txt /courts/ga/ \u2192 200"
+  },
+  md: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T01:44:00.000Z",
+    fullName: "Court of Appeals of Maryland",
+    evidence: "wave2ad-case20-verify.txt /courts/md/ \u2192 200"
+  },
+  mich: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T01:44:00.000Z",
+    fullName: "Michigan Supreme Court",
+    evidence: "wave2ad-case20-verify.txt /courts/mich/ \u2192 200"
+  },
+  nc: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T01:44:00.000Z",
+    fullName: "Supreme Court of North Carolina",
+    evidence: "wave2ad-case20-verify.txt /courts/nc/ \u2192 200"
+  },
+  ohio: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T01:44:00.000Z",
+    fullName: "Ohio Supreme Court",
+    evidence: "wave2ad-case20-verify.txt /courts/ohio/ \u2192 200"
+  },
+  wash: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T01:44:00.000Z",
+    fullName: "Washington Supreme Court",
+    evidence: "wave2ad-case20-verify.txt /courts/wash/ \u2192 200"
+  },
+  wis: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-23T01:44:00.000Z",
+    fullName: "Wisconsin Supreme Court",
+    evidence: "wave2ad-case20-verify.txt /courts/wis/ \u2192 200"
   },
   // Successful Wave-1 opinion ingest = verified without /courts/ re-hit
   ny: { status: "VERIFIED", verifiedAt: "2026-09-21T17:50:00.000Z", evidence: "successful_opinion_ingest" },
