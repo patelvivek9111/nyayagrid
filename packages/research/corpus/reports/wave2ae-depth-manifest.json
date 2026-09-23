@@ -1,0 +1,327 @@
+{
+  "ok": true,
+  "wave": "2AE",
+  "courtListenerHttpCalls": 0,
+  "generatedAt": "2026-09-23T23:16:38.961Z",
+  "featureAgents": "0",
+  "classCounts": {
+    "CRITICAL_DEPTH": 43,
+    "HIGH_DEPTH": 2,
+    "MEDIUM_DEPTH": 6,
+    "LOW_DEPTH": 1
+  },
+  "top10": [
+    {
+      "j": "LA",
+      "authorities": 39,
+      "cases": 20,
+      "statutes": 15,
+      "regulations": 0,
+      "rules": 4,
+      "authorityDeficitTo101": 62,
+      "highCourt": 20,
+      "intermediateAppellate": 0,
+      "currentnessPct": 100,
+      "canonicalPct": 100,
+      "citationTargetAbsent": 86,
+      "verifiedCourts": [
+        {
+          "cl": "la",
+          "nyaya": "st-la-high",
+          "level": "state_high"
+        }
+      ],
+      "preferredCourt": {
+        "cl": "la",
+        "nyaya": "st-la-high",
+        "level": "state_high"
+      },
+      "expectedCasesNeeded": 62,
+      "estimatedClRequests": 143,
+      "score": 824.3,
+      "class": "CRITICAL_DEPTH",
+      "reason": "weak/absent intermediate appellate depth"
+    },
+    {
+      "j": "DC",
+      "authorities": 41,
+      "cases": 20,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "authorityDeficitTo101": 60,
+      "highCourt": 20,
+      "intermediateAppellate": 0,
+      "currentnessPct": 100,
+      "canonicalPct": 100,
+      "citationTargetAbsent": 108,
+      "verifiedCourts": [
+        {
+          "cl": "dc",
+          "nyaya": "st-dc-high",
+          "level": "state_high"
+        }
+      ],
+      "preferredCourt": {
+        "cl": "dc",
+        "nyaya": "st-dc-high",
+        "level": "state_high"
+      },
+      "expectedCasesNeeded": 60,
+      "estimatedClRequests": 138,
+      "score": 805.4,
+      "class": "CRITICAL_DEPTH",
+      "reason": "weak/absent intermediate appellate depth"
+    },
+    {
+      "j": "TN",
+      "authorities": 41,
+      "cases": 20,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "authorityDeficitTo101": 60,
+      "highCourt": 20,
+      "intermediateAppellate": 0,
+      "currentnessPct": 100,
+      "canonicalPct": 100,
+      "citationTargetAbsent": 58,
+      "verifiedCourts": [
+        {
+          "cl": "tenn",
+          "nyaya": "st-tn-high",
+          "level": "state_high"
+        }
+      ],
+      "preferredCourt": {
+        "cl": "tenn",
+        "nyaya": "st-tn-high",
+        "level": "state_high"
+      },
+      "expectedCasesNeeded": 60,
+      "estimatedClRequests": 138,
+      "score": 802.9,
+      "class": "CRITICAL_DEPTH",
+      "reason": "weak/absent intermediate appellate depth"
+    },
+    {
+      "j": "NV",
+      "authorities": 41,
+      "cases": 20,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "authorityDeficitTo101": 60,
+      "highCourt": 20,
+      "intermediateAppellate": 0,
+      "currentnessPct": 100,
+      "canonicalPct": 100,
+      "citationTargetAbsent": 57,
+      "verifiedCourts": [
+        {
+          "cl": "nev",
+          "nyaya": "st-nv-high",
+          "level": "state_high"
+        }
+      ],
+      "preferredCourt": {
+        "cl": "nev",
+        "nyaya": "st-nv-high",
+        "level": "state_high"
+      },
+      "expectedCasesNeeded": 60,
+      "estimatedClRequests": 138,
+      "score": 802.85,
+      "class": "CRITICAL_DEPTH",
+      "reason": "weak/absent intermediate appellate depth"
+    },
+    {
+      "j": "MT",
+      "authorities": 41,
+      "cases": 20,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "authorityDeficitTo101": 60,
+      "highCourt": 20,
+      "intermediateAppellate": 0,
+      "currentnessPct": 100,
+      "canonicalPct": 100,
+      "citationTargetAbsent": 35,
+      "verifiedCourts": [
+        {
+          "cl": "mont",
+          "nyaya": "st-mt-high",
+          "level": "state_high"
+        }
+      ],
+      "preferredCourt": {
+        "cl": "mont",
+        "nyaya": "st-mt-high",
+        "level": "state_high"
+      },
+      "expectedCasesNeeded": 60,
+      "estimatedClRequests": 138,
+      "score": 801.75,
+      "class": "CRITICAL_DEPTH",
+      "reason": "weak/absent intermediate appellate depth"
+    },
+    {
+      "j": "MS",
+      "authorities": 41,
+      "cases": 20,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "authorityDeficitTo101": 60,
+      "highCourt": 20,
+      "intermediateAppellate": 0,
+      "currentnessPct": 100,
+      "canonicalPct": 100,
+      "citationTargetAbsent": 34,
+      "verifiedCourts": [
+        {
+          "cl": "miss",
+          "nyaya": "st-ms-high",
+          "level": "state_high"
+        }
+      ],
+      "preferredCourt": {
+        "cl": "miss",
+        "nyaya": "st-ms-high",
+        "level": "state_high"
+      },
+      "expectedCasesNeeded": 60,
+      "estimatedClRequests": 138,
+      "score": 801.7,
+      "class": "CRITICAL_DEPTH",
+      "reason": "weak/absent intermediate appellate depth"
+    },
+    {
+      "j": "NM",
+      "authorities": 41,
+      "cases": 20,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "authorityDeficitTo101": 60,
+      "highCourt": 20,
+      "intermediateAppellate": 0,
+      "currentnessPct": 100,
+      "canonicalPct": 100,
+      "citationTargetAbsent": 29,
+      "verifiedCourts": [
+        {
+          "cl": "nm",
+          "nyaya": "st-nm-high",
+          "level": "state_high"
+        }
+      ],
+      "preferredCourt": {
+        "cl": "nm",
+        "nyaya": "st-nm-high",
+        "level": "state_high"
+      },
+      "expectedCasesNeeded": 60,
+      "estimatedClRequests": 138,
+      "score": 801.45,
+      "class": "CRITICAL_DEPTH",
+      "reason": "weak/absent intermediate appellate depth"
+    },
+    {
+      "j": "UT",
+      "authorities": 41,
+      "cases": 20,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "authorityDeficitTo101": 60,
+      "highCourt": 20,
+      "intermediateAppellate": 0,
+      "currentnessPct": 100,
+      "canonicalPct": 100,
+      "citationTargetAbsent": 28,
+      "verifiedCourts": [
+        {
+          "cl": "utah",
+          "nyaya": "st-ut-high",
+          "level": "state_high"
+        }
+      ],
+      "preferredCourt": {
+        "cl": "utah",
+        "nyaya": "st-ut-high",
+        "level": "state_high"
+      },
+      "expectedCasesNeeded": 60,
+      "estimatedClRequests": 138,
+      "score": 801.4,
+      "class": "CRITICAL_DEPTH",
+      "reason": "weak/absent intermediate appellate depth"
+    },
+    {
+      "j": "SD",
+      "authorities": 41,
+      "cases": 20,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "authorityDeficitTo101": 60,
+      "highCourt": 20,
+      "intermediateAppellate": 0,
+      "currentnessPct": 100,
+      "canonicalPct": 100,
+      "citationTargetAbsent": 25,
+      "verifiedCourts": [
+        {
+          "cl": "sd",
+          "nyaya": "st-sd-high",
+          "level": "state_high"
+        }
+      ],
+      "preferredCourt": {
+        "cl": "sd",
+        "nyaya": "st-sd-high",
+        "level": "state_high"
+      },
+      "expectedCasesNeeded": 60,
+      "estimatedClRequests": 138,
+      "score": 801.25,
+      "class": "CRITICAL_DEPTH",
+      "reason": "weak/absent intermediate appellate depth"
+    },
+    {
+      "j": "ID",
+      "authorities": 41,
+      "cases": 20,
+      "statutes": 17,
+      "regulations": 0,
+      "rules": 4,
+      "authorityDeficitTo101": 60,
+      "highCourt": 20,
+      "intermediateAppellate": 0,
+      "currentnessPct": 100,
+      "canonicalPct": 100,
+      "citationTargetAbsent": 22,
+      "verifiedCourts": [
+        {
+          "cl": "idaho",
+          "nyaya": "st-id-high",
+          "level": "state_high"
+        }
+      ],
+      "preferredCourt": {
+        "cl": "idaho",
+        "nyaya": "st-id-high",
+        "level": "state_high"
+      },
+      "expectedCasesNeeded": 60,
+      "estimatedClRequests": 138,
+      "score": 801.1,
+      "class": "CRITICAL_DEPTH",
+      "reason": "weak/absent intermediate appellate depth"
+    }
+  ],
+  "allWithDeficit": 51,
+  "note": "Ranked for authority-depth expansion after national min-case baseline. Not vanity 101 fill."
+}

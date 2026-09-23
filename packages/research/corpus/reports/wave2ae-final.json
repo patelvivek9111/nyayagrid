@@ -1,0 +1,241 @@
+{
+  "wave": "2AE",
+  "status": "PASS",
+  "generatedAt": "2026-09-23T23:17:07.046Z",
+  "nationalMinimumCaseBaseline": "CLOSED",
+  "queue": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
+  },
+  "quota": {
+    "starting": {
+      "minute": 30,
+      "hour": 300,
+      "day": 446,
+      "dayUsage": 754,
+      "hourSafeRem": 280,
+      "daySafeRem": 406,
+      "atEt": "6:05:35 PM"
+    },
+    "ending": {
+      "minute": 23,
+      "hour": 87,
+      "day": 238,
+      "dayUsage": 962,
+      "hourSafeRem": 67,
+      "daySafeRem": 198,
+      "atEt": "7:15 PM"
+    },
+    "totalRequestsApprox": 220,
+    "opinionRequests": 220,
+    "mappingRequests": 0,
+    "safetyPauses": 1,
+    "hard429": 0,
+    "nextResumeEt": null
+  },
+  "efficiency": {
+    "casesAdded": 129,
+    "authoritiesAdded": 129,
+    "requestsPerAuthority": 1.71,
+    "duplicates": 0,
+    "note": "day delta +208 after aging; true batch cost closer to ~2.5"
+  },
+  "deficitJurisdictions": [
+    {
+      "j": "GA",
+      "start": 5,
+      "end": 20,
+      "status": "COMPLETE"
+    },
+    {
+      "j": "MD",
+      "start": 1,
+      "end": 20,
+      "status": "COMPLETE"
+    },
+    {
+      "j": "MI",
+      "start": 1,
+      "end": 20,
+      "status": "COMPLETE"
+    },
+    {
+      "j": "NC",
+      "start": 1,
+      "end": 20,
+      "status": "COMPLETE"
+    },
+    {
+      "j": "OH",
+      "start": 1,
+      "end": 20,
+      "status": "COMPLETE"
+    },
+    {
+      "j": "WA",
+      "start": 1,
+      "end": 20,
+      "status": "COMPLETE"
+    },
+    {
+      "j": "WI",
+      "start": 1,
+      "end": 20,
+      "status": "COMPLETE"
+    }
+  ],
+  "corpus": {
+    "authorities": 2693,
+    "cases": 1382,
+    "clCases": 1337,
+    "statutes": 900,
+    "regulations": 156,
+    "rules": 254,
+    "chunksEmbeddings": "31464/31464",
+    "orphans": 0
+  },
+  "coverage": {
+    "caseLt20": 0,
+    "minimumCaseDeficit": 0,
+    "noHighOrAppellate": 0,
+    "authorityGateDeficit": 2801,
+    "delta": {
+      "caseLt20": -7,
+      "caseDeficit": -129,
+      "authGate": -129,
+      "noHigh": 0
+    }
+  },
+  "citation": {
+    "extracted": 5154,
+    "resolved": 122,
+    "newlyResolved": 7,
+    "TARGET_ABSENT": 5032,
+    "PARSER_GAP": 0
+  },
+  "retrieval": {
+    "exactCite": "pass",
+    "caseName": "pass",
+    "issue": "pass",
+    "isolation": "pass",
+    "highCourt": "pass",
+    "safeMiss": "pass",
+    "noWeb": "pass"
+  },
+  "authorityDepth": {
+    "deferredBulk": true,
+    "reason": "hourSafeRem=67 insufficient for full #1 LA depth (~143 est); manifesto ready; no vanity high-only deepen when score driven by missing intermediate",
+    "classCounts": {
+      "CRITICAL_DEPTH": 43,
+      "HIGH_DEPTH": 2,
+      "MEDIUM_DEPTH": 6,
+      "LOW_DEPTH": 1
+    },
+    "top10": [
+      {
+        "j": "LA",
+        "authorities": 39,
+        "deficit": 62,
+        "class": "CRITICAL_DEPTH",
+        "preferred": "la",
+        "estReq": 143,
+        "reason": "weak/absent intermediate appellate depth"
+      },
+      {
+        "j": "DC",
+        "authorities": 41,
+        "deficit": 60,
+        "class": "CRITICAL_DEPTH",
+        "preferred": "dc",
+        "estReq": 138,
+        "reason": "weak/absent intermediate appellate depth"
+      },
+      {
+        "j": "TN",
+        "authorities": 41,
+        "deficit": 60,
+        "class": "CRITICAL_DEPTH",
+        "preferred": "tenn",
+        "estReq": 138,
+        "reason": "weak/absent intermediate appellate depth"
+      },
+      {
+        "j": "NV",
+        "authorities": 41,
+        "deficit": 60,
+        "class": "CRITICAL_DEPTH",
+        "preferred": "nev",
+        "estReq": 138,
+        "reason": "weak/absent intermediate appellate depth"
+      },
+      {
+        "j": "MT",
+        "authorities": 41,
+        "deficit": 60,
+        "class": "CRITICAL_DEPTH",
+        "preferred": "mont",
+        "estReq": 138,
+        "reason": "weak/absent intermediate appellate depth"
+      },
+      {
+        "j": "MS",
+        "authorities": 41,
+        "deficit": 60,
+        "class": "CRITICAL_DEPTH",
+        "preferred": "miss",
+        "estReq": 138,
+        "reason": "weak/absent intermediate appellate depth"
+      },
+      {
+        "j": "NM",
+        "authorities": 41,
+        "deficit": 60,
+        "class": "CRITICAL_DEPTH",
+        "preferred": "nm",
+        "estReq": 138,
+        "reason": "weak/absent intermediate appellate depth"
+      },
+      {
+        "j": "UT",
+        "authorities": 41,
+        "deficit": 60,
+        "class": "CRITICAL_DEPTH",
+        "preferred": "utah",
+        "estReq": 138,
+        "reason": "weak/absent intermediate appellate depth"
+      },
+      {
+        "j": "SD",
+        "authorities": 41,
+        "deficit": 60,
+        "class": "CRITICAL_DEPTH",
+        "preferred": "sd",
+        "estReq": 138,
+        "reason": "weak/absent intermediate appellate depth"
+      },
+      {
+        "j": "ID",
+        "authorities": 41,
+        "deficit": 60,
+        "class": "CRITICAL_DEPTH",
+        "preferred": "idaho",
+        "estReq": 138,
+        "reason": "weak/absent intermediate appellate depth"
+      }
+    ]
+  },
+  "operational": {
+    "commit": "pending",
+    "deploy": "none",
+    "health": "ok",
+    "FEATURE_AGENTS": "0"
+  },
+  "remainingQueue2": [
+    "AUTHORITY-DEPTH EXPANSION per wave2ae-depth-manifest.json top10",
+    "map missing intermediates where structure exists",
+    "skip pacommwlth/njsuperct/vacapp"
+  ],
+  "productionClassification": "PRODUCTION — national minimum case baseline CLOSED; #2 OPEN for depth"
+}
