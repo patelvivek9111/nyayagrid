@@ -79,6 +79,14 @@ const {
   assertArkCheckpointIntact,
 } = require("./queue2-autonomy-policy.cjs");
 const { applyLaneBSelection } = require("./queue2-dual-lane-controller.cjs");
+const {
+  runPreflight,
+  killSwitchStatus,
+  fingerprintProductionFiles,
+  detectCodeChange,
+  appendAuditEvent,
+  WORKER_VERSION,
+} = require("./queue2-worker-safety.cjs");
 
 const root = path.join(__dirname, "..");
 const reports = path.join(root, "packages/research/corpus/reports");
@@ -431,6 +439,29 @@ function startHeartbeatTimer() {
   runtime.heartbeatTimer = setInterval(() => {
     if (runtime.shuttingDown || !runtime.state) return;
     try {
+      if (runtime.codeFingerprint) {
+        const changed = detectCodeChange(runtime.codeFingerprint);
+        if (changed.changed) {
+          emit("CODE_CHANGE_DETECTED", {
+            lane: statusLaneFromState(runtime.state),
+            court: runtime.state.laneA?.court,
+            checkpoint: runtime.state.laneA?.checkpoint,
+            reason: "production_files_changed",
+          });
+          console.log(JSON.stringify({ tag: "CODE_CHANGE_DETECTED", stop: true }));
+          safeShutdown("CODE_CHANGE_DETECTED");
+          process.exit(4);
+        }
+      }
+      if (String(process.env.QUEUE2_WORKER_ENABLED || "") !== "1") {
+        emit("KILL_SWITCH_STOP", {
+          lane: statusLaneFromState(runtime.state),
+          checkpoint: runtime.state.laneA?.checkpoint,
+          reason: "QUEUE2_WORKER_DISABLED",
+        });
+        safeShutdown("KILL_SWITCH_STOP");
+        process.exit(3);
+      }
       const status =
         runtime.lastStatus ||
         buildOperatorStatus({
@@ -902,6 +933,43 @@ async function main() {
   }
 
   assertRoutineZeroAi({ system: { aiCalls: state.metrics?.aiCalls || 0, aiTokens: state.metrics?.aiTokens || 0 } });
+
+  // Hard kill switch — refuse mutating work unless explicitly enabled.
+  const ks = killSwitchStatus(process.env);
+  if (!ks.enabled) {
+    console.log("QUEUE2_WORKER_DISABLED");
+    console.log(JSON.stringify({ ok: false, code: ks.code, runtimeState: "STOPPED" }));
+    process.exit(3);
+  }
+
+  // Mandatory preflight before mutating lock acquisition.
+  const startedFingerprint = fingerprintProductionFiles();
+  runtime.codeFingerprint = startedFingerprint;
+  const preflight = runPreflight({
+    env: process.env,
+    state,
+    workerVersion: WORKER_VERSION,
+    dbReachable: process.env.QUEUE2_DB_REACHABLE !== "0",
+    storageReachable: process.env.QUEUE2_STORAGE_REACHABLE !== "0",
+    networkOk: process.env.QUEUE2_NETWORK_ONLINE !== "0",
+  });
+  fs.writeFileSync(path.join(reports, "queue2-preflight-last.json"), JSON.stringify(preflight, null, 2));
+  if (!preflight.ok) {
+    console.log("PREFLIGHT_FAIL");
+    console.log(`reasons=[${preflight.reasons.join(", ")}]`);
+    console.log(JSON.stringify({ ok: false, mutations: preflight.mutations, aiCalls: 0 }));
+    process.exit(2);
+  }
+  console.log("PREFLIGHT_PASS");
+  appendAuditEvent({
+    lane: statusLaneFromState(state),
+    task: "preflight",
+    nextActionReason: "PREFLIGHT_PASS",
+    workerId: WORKER_ID,
+    workerVersion: WORKER_VERSION,
+    priorCheckpoint: state.laneA?.checkpoint,
+    resultingCheckpoint: state.laneA?.checkpoint,
+  });
 
   // Optional connectivity probe result may be injected via env for tests; default assume online.
   if (process.env.QUEUE2_NETWORK_ONLINE === "0") {

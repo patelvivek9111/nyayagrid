@@ -3,21 +3,46 @@
   "queue": "#2",
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
-  "version": 1,
-  "generatedAt": "2026-09-24T18:00:55.909Z",
+  "version": 2,
+  "generatedAt": "2026-09-24T18:23:19.943Z",
+  "source": {
+    "type": "live_db_snapshot",
+    "snapshotPath": "packages/research/corpus/reports/queue2-lane-a-corpus-snapshot.json",
+    "snapshotGeneratedAt": "2026-09-24T18:20:53.144Z",
+    "mutationsDuringSnapshot": 0
+  },
   "rankingPolicy": [
     "authority-depth weakness",
     "missing appellate layer",
     "historical gaps",
     "doctrinal gaps",
     "citation TARGET_ABSENT demand",
-    "request efficiency tiebreaker"
+    "request efficiency tiebreaker",
+    "UNKNOWN never ranked as zero"
   ],
   "scope": {
     "states": 50,
     "dc": true,
     "federal": true,
     "overfeedStrongJurisdictions": false
+  },
+  "corpusTotals": {
+    "authorities": 2966,
+    "cases": 1649,
+    "cl_cases": 1604,
+    "statutes": 904,
+    "regulations": 158,
+    "rules": 254
+  },
+  "reconciliation": {
+    "ok": true,
+    "reasons": [],
+    "aggregateManifestStateCases": 1442,
+    "aggregateSnapshotCases": 1649,
+    "corpusCases": 1649,
+    "jurisdictionsPresent": 52,
+    "unknownCount": 0,
+    "falseZeroBlocked": 0
   },
   "activePartial": {
     "court": "ark",
@@ -26,36 +51,213 @@
     "target": 45,
     "checkpoint": "cl-opinion-9885161",
     "status": "PARTIAL",
-    "mappingStatus": "VERIFIED"
+    "mappingStatus": "VERIFIED",
+    "dataQuality": "LIVE_DB"
   },
+  "unknownCount": 0,
+  "falseZeroBlocked": 0,
   "targets": [
     {
-      "jurisdiction": "AK",
-      "name": "Alaska",
+      "jurisdiction": "AR",
+      "name": "Arkansas",
       "preferredCourts": [
-        "alaska"
+        "ark"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 55,
+      "currentCases": 33,
+      "clCases": 33,
+      "highCourtCount": 33,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1931,
+      "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 45,
+      "targetDelta": 12,
       "missingCourtLayers": [
-        "high"
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 63,
+      "citationTargetAbsent": 63,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 46,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": "cl-opinion-9885161",
+      "mappingStatus": "VERIFIED",
+      "status": "PARTIAL",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 900
+    },
+    {
+      "jurisdiction": "WI",
+      "name": "Wisconsin",
+      "preferredCourts": [
+        "wis"
+      ],
+      "currentAuthorities": 46,
+      "currentCases": 20,
+      "clCases": 19,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2003,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 120,
+      "citationTargetAbsent": 120,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 55,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 607
+    },
+    {
+      "jurisdiction": "MI",
+      "name": "Michigan",
+      "preferredCourts": [
+        "mich"
+      ],
+      "currentAuthorities": 43,
+      "currentCases": 20,
+      "clCases": 19,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1978,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 60,
+      "citationTargetAbsent": 60,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 58,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 439
+    },
+    {
+      "jurisdiction": "MA",
+      "name": "Massachusetts",
+      "preferredCourts": [
+        "mass"
+      ],
+      "currentAuthorities": 64,
+      "currentCases": 37,
+      "clCases": 35,
+      "highCourtCount": 22,
+      "intermediateAppellateCount": 15,
+      "earliestYear": 2002,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 8,
+      "missingCourtLayers": [],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 86,
+      "citationTargetAbsent": 86,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 37,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 433
+    },
+    {
+      "jurisdiction": "MN",
+      "name": "Minnesota",
+      "preferredCourts": [
+        "minn"
+      ],
+      "currentAuthorities": 54,
+      "currentCases": 27,
+      "clCases": 27,
+      "highCourtCount": 27,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2025,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 18,
+      "missingCourtLayers": [
+        "intermediate"
       ],
       "historicalGaps": [
-        "pre-2000"
+        "pre-2000",
+        "historical_thin"
       ],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 49,
+      "citationTargetAbsent": 49,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
+      "authorityDeficit": 47,
       "historicalGapScore": 40,
       "doctrinalGapScore": 5,
       "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
+      "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 411
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 422
+    },
+    {
+      "jurisdiction": "IN",
+      "name": "Indiana",
+      "preferredCourts": [
+        "ind"
+      ],
+      "currentAuthorities": 47,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2025,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [
+        "pre-2000",
+        "historical_thin"
+      ],
+      "doctrinalGaps": [],
+      "citationDemand": 39,
+      "citationTargetAbsent": 39,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 54,
+      "historicalGapScore": 40,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 420
     },
     {
       "jurisdiction": "AL",
@@ -63,110 +265,142 @@
       "preferredCourts": [
         "ala"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 42,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 45,
+      "targetDelta": 25,
       "missingCourtLayers": [
-        "high"
+        "intermediate"
       ],
       "historicalGaps": [
-        "pre-2000"
+        "pre-2000",
+        "historical_thin"
       ],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 32,
+      "citationTargetAbsent": 32,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
+      "authorityDeficit": 59,
       "historicalGapScore": 40,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 411
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 419
     },
     {
-      "jurisdiction": "AZ",
-      "name": "Arizona",
+      "jurisdiction": "KY",
+      "name": "Kentucky",
       "preferredCourts": [
-        "ariz"
+        "ky"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 42,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 45,
+      "targetDelta": 25,
       "missingCourtLayers": [
-        "high"
+        "intermediate"
       ],
       "historicalGaps": [
-        "pre-2000"
+        "pre-2000",
+        "historical_thin"
       ],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 31,
+      "citationTargetAbsent": 31,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
+      "authorityDeficit": 59,
       "historicalGapScore": 40,
       "doctrinalGapScore": 5,
       "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
+      "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 411
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 416
     },
     {
-      "jurisdiction": "CA",
-      "name": "California",
+      "jurisdiction": "NM",
+      "name": "New Mexico",
       "preferredCourts": [
-        "cal"
+        "nm"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 41,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2025,
+      "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 45,
+      "targetDelta": 25,
       "missingCourtLayers": [
-        "high"
+        "intermediate"
       ],
       "historicalGaps": [
-        "pre-2000"
+        "pre-2000",
+        "historical_thin"
       ],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 29,
+      "citationTargetAbsent": 29,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
+      "authorityDeficit": 60,
       "historicalGapScore": 40,
       "doctrinalGapScore": 5,
       "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
+      "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 411
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 414
     },
     {
-      "jurisdiction": "CO",
-      "name": "Colorado",
+      "jurisdiction": "UT",
+      "name": "Utah",
       "preferredCourts": [
-        "colo"
+        "utah"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 41,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2025,
+      "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 45,
+      "targetDelta": 25,
       "missingCourtLayers": [
-        "high"
+        "intermediate"
       ],
       "historicalGaps": [
-        "pre-2000"
+        "pre-2000",
+        "historical_thin"
       ],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 28,
+      "citationTargetAbsent": 28,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
+      "authorityDeficit": 60,
       "historicalGapScore": 40,
       "doctrinalGapScore": 5,
       "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
+      "mappingStatus": "VERIFIED",
       "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
       "score": 411
     },
     {
@@ -175,699 +409,32 @@
       "preferredCourts": [
         "conn"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 46,
+      "currentCases": 20,
+      "clCases": 19,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2003,
+      "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 45,
+      "targetDelta": 25,
       "missingCourtLayers": [
-        "high"
+        "intermediate"
       ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
+      "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 53,
+      "citationTargetAbsent": 53,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "DC",
-      "name": "District of Columbia",
-      "preferredCourts": [
-        "dc"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "DE",
-      "name": "Delaware",
-      "preferredCourts": [
-        "del"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "FL",
-      "name": "Florida",
-      "preferredCourts": [
-        "fla"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "GA",
-      "name": "Georgia",
-      "preferredCourts": [
-        "ga"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "HI",
-      "name": "Hawaii",
-      "preferredCourts": [
-        "haw"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "IA",
-      "name": "Iowa",
-      "preferredCourts": [
-        "iowa"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "ID",
-      "name": "Idaho",
-      "preferredCourts": [
-        "idaho"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
+      "authorityDeficit": 55,
+      "historicalGapScore": 10,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "IL",
-      "name": "Illinois",
-      "preferredCourts": [
-        "ill"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "IN",
-      "name": "Indiana",
-      "preferredCourts": [
-        "ind"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "KS",
-      "name": "Kansas",
-      "preferredCourts": [
-        "kan"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "KY",
-      "name": "Kentucky",
-      "preferredCourts": [
-        "ky"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "VERIFIED",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "LA",
-      "name": "Louisiana",
-      "preferredCourts": [
-        "la"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "MA",
-      "name": "Massachusetts",
-      "preferredCourts": [
-        "mass"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "MD",
-      "name": "Maryland",
-      "preferredCourts": [
-        "md"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "ME",
-      "name": "Maine",
-      "preferredCourts": [
-        "me"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "MI",
-      "name": "Michigan",
-      "preferredCourts": [
-        "mich"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "MN",
-      "name": "Minnesota",
-      "preferredCourts": [
-        "minn"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "MO",
-      "name": "Missouri",
-      "preferredCourts": [
-        "mo"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "MS",
-      "name": "Mississippi",
-      "preferredCourts": [
-        "miss"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "MT",
-      "name": "Montana",
-      "preferredCourts": [
-        "mont"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "NC",
-      "name": "North Carolina",
-      "preferredCourts": [
-        "nc"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "ND",
-      "name": "North Dakota",
-      "preferredCourts": [
-        "nd"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "NE",
-      "name": "Nebraska",
-      "preferredCourts": [
-        "neb"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "VERIFIED",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "NH",
-      "name": "New Hampshire",
-      "preferredCourts": [
-        "nh"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 406
     },
     {
       "jurisdiction": "NJ",
@@ -875,279 +442,32 @@
       "preferredCourts": [
         "nj"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 44,
+      "currentCases": 22,
+      "clCases": 20,
+      "highCourtCount": 22,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1960,
+      "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 45,
+      "targetDelta": 23,
       "missingCourtLayers": [
-        "high"
+        "intermediate"
       ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
+      "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 49,
+      "citationTargetAbsent": 49,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
+      "authorityDeficit": 57,
+      "historicalGapScore": 10,
       "doctrinalGapScore": 5,
       "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
+      "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "NM",
-      "name": "New Mexico",
-      "preferredCourts": [
-        "nm"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "NV",
-      "name": "Nevada",
-      "preferredCourts": [
-        "nev"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "NY",
-      "name": "New York",
-      "preferredCourts": [
-        "ny"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "OH",
-      "name": "Ohio",
-      "preferredCourts": [
-        "ohio"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "OK",
-      "name": "Oklahoma",
-      "preferredCourts": [
-        "okla"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "OR",
-      "name": "Oregon",
-      "preferredCourts": [
-        "or"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "PA",
-      "name": "Pennsylvania",
-      "preferredCourts": [
-        "pa"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "RI",
-      "name": "Rhode Island",
-      "preferredCourts": [
-        "ri"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "SC",
-      "name": "South Carolina",
-      "preferredCourts": [
-        "sc"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 402
     },
     {
       "jurisdiction": "SD",
@@ -1155,251 +475,176 @@
       "preferredCourts": [
         "sd"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 41,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 45,
+      "targetDelta": 25,
       "missingCourtLayers": [
-        "high"
+        "intermediate"
       ],
       "historicalGaps": [
-        "pre-2000"
+        "pre-2000",
+        "historical_thin"
       ],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 25,
+      "citationTargetAbsent": 25,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
+      "authorityDeficit": 60,
       "historicalGapScore": 40,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 411
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 402
     },
     {
-      "jurisdiction": "TN",
-      "name": "Tennessee",
+      "jurisdiction": "RI",
+      "name": "Rhode Island",
       "preferredCourts": [
-        "tenn"
+        "ri"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 47,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 45,
+      "targetDelta": 25,
       "missingCourtLayers": [
-        "high"
+        "intermediate"
       ],
       "historicalGaps": [
-        "pre-2000"
+        "pre-2000",
+        "historical_thin"
       ],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 32,
+      "citationTargetAbsent": 32,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
+      "authorityDeficit": 54,
       "historicalGapScore": 40,
       "doctrinalGapScore": 5,
       "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
+      "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 411
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 399
     },
     {
-      "jurisdiction": "TX",
-      "name": "Texas",
+      "jurisdiction": "ID",
+      "name": "Idaho",
       "preferredCourts": [
-        "tex"
+        "idaho"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 41,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 45,
+      "targetDelta": 25,
       "missingCourtLayers": [
-        "high"
+        "intermediate"
       ],
       "historicalGaps": [
-        "pre-2000"
+        "pre-2000",
+        "historical_thin"
       ],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 22,
+      "citationTargetAbsent": 22,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
+      "authorityDeficit": 60,
       "historicalGapScore": 40,
       "doctrinalGapScore": 5,
       "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
+      "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 411
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 393
     },
     {
-      "jurisdiction": "UT",
-      "name": "Utah",
+      "jurisdiction": "KS",
+      "name": "Kansas",
       "preferredCourts": [
-        "utah"
+        "kan"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 42,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 45,
+      "targetDelta": 25,
       "missingCourtLayers": [
-        "high"
+        "intermediate"
       ],
       "historicalGaps": [
-        "pre-2000"
+        "pre-2000",
+        "historical_thin"
       ],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 23,
+      "citationTargetAbsent": 23,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
+      "authorityDeficit": 59,
       "historicalGapScore": 40,
       "doctrinalGapScore": 5,
       "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
+      "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 411
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 392
     },
     {
-      "jurisdiction": "VA",
-      "name": "Virginia",
+      "jurisdiction": "NC",
+      "name": "North Carolina",
       "preferredCourts": [
-        "va"
+        "nc"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 43,
+      "currentCases": 20,
+      "clCases": 19,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2002,
+      "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 45,
+      "targetDelta": 25,
       "missingCourtLayers": [
-        "high"
+        "intermediate"
       ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
+      "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 41,
+      "citationTargetAbsent": 41,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
+      "authorityDeficit": 58,
+      "historicalGapScore": 10,
       "doctrinalGapScore": 5,
       "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
+      "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "VT",
-      "name": "Vermont",
-      "preferredCourts": [
-        "vt"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "WA",
-      "name": "Washington",
-      "preferredCourts": [
-        "wash"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "WI",
-      "name": "Wisconsin",
-      "preferredCourts": [
-        "wis"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
-    },
-    {
-      "jurisdiction": "WV",
-      "name": "West Virginia",
-      "preferredCourts": [
-        "wva"
-      ],
-      "currentAuthorities": null,
-      "currentCases": 0,
-      "targetCases": 45,
-      "targetDelta": 45,
-      "missingCourtLayers": [
-        "high"
-      ],
-      "historicalGaps": [
-        "pre-2000"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "CANDIDATE",
-      "status": "READY",
-      "score": 411
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 382
     },
     {
       "jurisdiction": "WY",
@@ -1407,51 +652,850 @@
       "preferredCourts": [
         "wyo"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 41,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 45,
+      "targetDelta": 25,
       "missingCourtLayers": [
-        "high"
+        "intermediate"
       ],
       "historicalGaps": [
-        "pre-2000"
+        "pre-2000",
+        "historical_thin"
       ],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 17,
+      "citationTargetAbsent": 17,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 81,
+      "authorityDeficit": 60,
       "historicalGapScore": 40,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 411
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 378
     },
     {
-      "jurisdiction": "AR",
-      "name": "Arkansas",
+      "jurisdiction": "CA",
+      "name": "California",
       "preferredCourts": [
-        "ark"
+        "cal"
       ],
-      "currentAuthorities": null,
-      "currentCases": 33,
+      "currentAuthorities": 58,
+      "currentCases": 37,
+      "clCases": 35,
+      "highCourtCount": 22,
+      "intermediateAppellateCount": 15,
+      "earliestYear": 1968,
+      "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 12,
+      "targetDelta": 8,
       "missingCourtLayers": [],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 59,
+      "citationTargetAbsent": 59,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 41,
+      "authorityDeficit": 43,
       "historicalGapScore": 10,
       "doctrinalGapScore": 5,
-      "checkpoint": "cl-opinion-9885161",
+      "checkpoint": null,
       "mappingStatus": "VERIFIED",
-      "status": "PARTIAL",
-      "score": 191
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 376
+    },
+    {
+      "jurisdiction": "VA",
+      "name": "Virginia",
+      "preferredCourts": [
+        "va"
+      ],
+      "currentAuthorities": 48,
+      "currentCases": 22,
+      "clCases": 20,
+      "highCourtCount": 22,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1984,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 23,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 44,
+      "citationTargetAbsent": 44,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 53,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 371
+    },
+    {
+      "jurisdiction": "FL",
+      "name": "Florida",
+      "preferredCourts": [
+        "fla"
+      ],
+      "currentAuthorities": 63,
+      "currentCases": 37,
+      "clCases": 35,
+      "highCourtCount": 22,
+      "intermediateAppellateCount": 15,
+      "earliestYear": 2004,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 8,
+      "missingCourtLayers": [],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 63,
+      "citationTargetAbsent": 63,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 38,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 368
+    },
+    {
+      "jurisdiction": "OH",
+      "name": "Ohio",
+      "preferredCourts": [
+        "ohio"
+      ],
+      "currentAuthorities": 42,
+      "currentCases": 20,
+      "clCases": 19,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1993,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 35,
+      "citationTargetAbsent": 35,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 59,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 368
+    },
+    {
+      "jurisdiction": "NE",
+      "name": "Nebraska",
+      "preferredCourts": [
+        "neb"
+      ],
+      "currentAuthorities": 41,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [
+        "pre-2000",
+        "historical_thin"
+      ],
+      "doctrinalGaps": [],
+      "citationDemand": 12,
+      "citationTargetAbsent": 12,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 60,
+      "historicalGapScore": 40,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 363
+    },
+    {
+      "jurisdiction": "HI",
+      "name": "Hawaii",
+      "preferredCourts": [
+        "haw"
+      ],
+      "currentAuthorities": 42,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [
+        "pre-2000",
+        "historical_thin"
+      ],
+      "doctrinalGaps": [],
+      "citationDemand": 13,
+      "citationTargetAbsent": 13,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 59,
+      "historicalGapScore": 40,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 362
+    },
+    {
+      "jurisdiction": "WA",
+      "name": "Washington",
+      "preferredCourts": [
+        "wash"
+      ],
+      "currentAuthorities": 42,
+      "currentCases": 20,
+      "clCases": 19,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1985,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 33,
+      "citationTargetAbsent": 33,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 59,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 362
+    },
+    {
+      "jurisdiction": "MO",
+      "name": "Missouri",
+      "preferredCourts": [
+        "mo"
+      ],
+      "currentAuthorities": 43,
+      "currentCases": 22,
+      "clCases": 22,
+      "highCourtCount": 22,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2022,
+      "latestYear": 2025,
+      "targetCases": 45,
+      "targetDelta": 23,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [
+        "pre-2000",
+        "historical_thin"
+      ],
+      "doctrinalGaps": [],
+      "citationDemand": 14,
+      "citationTargetAbsent": 14,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 58,
+      "historicalGapScore": 40,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 361
+    },
+    {
+      "jurisdiction": "IL",
+      "name": "Illinois",
+      "preferredCourts": [
+        "ill"
+      ],
+      "currentAuthorities": 62,
+      "currentCases": 37,
+      "clCases": 35,
+      "highCourtCount": 21,
+      "intermediateAppellateCount": 15,
+      "earliestYear": 1986,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 8,
+      "missingCourtLayers": [],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 59,
+      "citationTargetAbsent": 59,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 39,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 360
+    },
+    {
+      "jurisdiction": "SC",
+      "name": "South Carolina",
+      "preferredCourts": [
+        "sc"
+      ],
+      "currentAuthorities": 41,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [
+        "pre-2000",
+        "historical_thin"
+      ],
+      "doctrinalGaps": [],
+      "citationDemand": 6,
+      "citationTargetAbsent": 6,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 60,
+      "historicalGapScore": 40,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 345
+    },
+    {
+      "jurisdiction": "VT",
+      "name": "Vermont",
+      "preferredCourts": [
+        "vt"
+      ],
+      "currentAuthorities": 41,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [
+        "pre-2000",
+        "historical_thin"
+      ],
+      "doctrinalGaps": [],
+      "citationDemand": 6,
+      "citationTargetAbsent": 6,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 60,
+      "historicalGapScore": 40,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 345
+    },
+    {
+      "jurisdiction": "AK",
+      "name": "Alaska",
+      "preferredCourts": [
+        "alaska"
+      ],
+      "currentAuthorities": 42,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [
+        "pre-2000",
+        "historical_thin"
+      ],
+      "doctrinalGaps": [],
+      "citationDemand": 7,
+      "citationTargetAbsent": 7,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 59,
+      "historicalGapScore": 40,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 344
+    },
+    {
+      "jurisdiction": "AZ",
+      "name": "Arizona",
+      "preferredCourts": [
+        "ariz"
+      ],
+      "currentAuthorities": 45,
+      "currentCases": 20,
+      "clCases": 19,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2007,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 31,
+      "citationTargetAbsent": 31,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 56,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 344
+    },
+    {
+      "jurisdiction": "OR",
+      "name": "Oregon",
+      "preferredCourts": [
+        "or"
+      ],
+      "currentAuthorities": 46,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [
+        "pre-2000",
+        "historical_thin"
+      ],
+      "doctrinalGaps": [],
+      "citationDemand": 12,
+      "citationTargetAbsent": 12,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 55,
+      "historicalGapScore": 40,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 343
+    },
+    {
+      "jurisdiction": "NH",
+      "name": "New Hampshire",
+      "preferredCourts": [
+        "nh"
+      ],
+      "currentAuthorities": 41,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2025,
+      "latestYear": 2025,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [
+        "pre-2000",
+        "historical_thin"
+      ],
+      "doctrinalGaps": [],
+      "citationDemand": 5,
+      "citationTargetAbsent": 5,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 60,
+      "historicalGapScore": 40,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 342
+    },
+    {
+      "jurisdiction": "OK",
+      "name": "Oklahoma",
+      "preferredCourts": [
+        "okla"
+      ],
+      "currentAuthorities": 41,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [
+        "pre-2000",
+        "historical_thin"
+      ],
+      "doctrinalGaps": [],
+      "citationDemand": 4,
+      "citationTargetAbsent": 4,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 60,
+      "historicalGapScore": 40,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 339
+    },
+    {
+      "jurisdiction": "ND",
+      "name": "North Dakota",
+      "preferredCourts": [
+        "nd"
+      ],
+      "currentAuthorities": 41,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [
+        "pre-2000",
+        "historical_thin"
+      ],
+      "doctrinalGaps": [],
+      "citationDemand": 3,
+      "citationTargetAbsent": 3,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 60,
+      "historicalGapScore": 40,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 336
+    },
+    {
+      "jurisdiction": "WV",
+      "name": "West Virginia",
+      "preferredCourts": [
+        "wva"
+      ],
+      "currentAuthorities": 47,
+      "currentCases": 20,
+      "clCases": 20,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [
+        "pre-2000",
+        "historical_thin"
+      ],
+      "doctrinalGaps": [],
+      "citationDemand": 2,
+      "citationTargetAbsent": 2,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 54,
+      "historicalGapScore": 40,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 309
+    },
+    {
+      "jurisdiction": "GA",
+      "name": "Georgia",
+      "preferredCourts": [
+        "ga"
+      ],
+      "currentAuthorities": 46,
+      "currentCases": 20,
+      "clCases": 19,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1985,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 19,
+      "citationTargetAbsent": 19,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 55,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 304
+    },
+    {
+      "jurisdiction": "MD",
+      "name": "Maryland",
+      "preferredCourts": [
+        "md"
+      ],
+      "currentAuthorities": 42,
+      "currentCases": 20,
+      "clCases": 19,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1987,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 4,
+      "citationTargetAbsent": 4,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 59,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 275
+    },
+    {
+      "jurisdiction": "CO",
+      "name": "Colorado",
+      "preferredCourts": [
+        "colo"
+      ],
+      "currentAuthorities": 42,
+      "currentCases": 20,
+      "clCases": 19,
+      "highCourtCount": 20,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1993,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 25,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 3,
+      "citationTargetAbsent": 3,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 59,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 272
+    },
+    {
+      "jurisdiction": "DE",
+      "name": "Delaware",
+      "preferredCourts": [
+        "del"
+      ],
+      "currentAuthorities": 48,
+      "currentCases": 22,
+      "clCases": 20,
+      "highCourtCount": 22,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1976,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 23,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 9,
+      "citationTargetAbsent": 9,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 53,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 266
+    },
+    {
+      "jurisdiction": "NY",
+      "name": "New York",
+      "preferredCourts": [
+        "ny"
+      ],
+      "currentAuthorities": 65,
+      "currentCases": 37,
+      "clCases": 35,
+      "highCourtCount": 22,
+      "intermediateAppellateCount": 15,
+      "earliestYear": 1916,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 8,
+      "missingCourtLayers": [],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 11,
+      "citationTargetAbsent": 11,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 36,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 204
+    },
+    {
+      "jurisdiction": "PA",
+      "name": "Pennsylvania",
+      "preferredCourts": [
+        "pa"
+      ],
+      "currentAuthorities": 64,
+      "currentCases": 38,
+      "clCases": 35,
+      "highCourtCount": 22,
+      "intermediateAppellateCount": 16,
+      "earliestYear": 1983,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 7,
+      "missingCourtLayers": [],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 8,
+      "citationTargetAbsent": 8,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 37,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 199
     },
     {
       "jurisdiction": "US",
@@ -1459,25 +1503,33 @@
       "preferredCourts": [
         "scotus"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 349,
+      "currentCases": 207,
+      "clCases": 193,
+      "highCourtCount": 29,
+      "intermediateAppellateCount": 175,
+      "earliestYear": 1803,
+      "latestYear": 2026,
       "targetCases": 80,
-      "targetDelta": 20,
+      "targetDelta": null,
       "missingCourtLayers": [],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 3156,
+      "citationTargetAbsent": 3156,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 30,
+      "authorityDeficit": 0,
       "historicalGapScore": 5,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 137,
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB_FEDERAL_AGGREGATE",
       "federal": true,
-      "layer": "high"
+      "layer": "high",
+      "score": 10,
+      "note": "Per-circuit counts not separately projected; US aggregate used. UNKNOWN avoided."
     },
     {
       "jurisdiction": "US",
@@ -1485,27 +1537,33 @@
       "preferredCourts": [
         "ca1"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 349,
+      "currentCases": 207,
+      "clCases": 193,
+      "highCourtCount": 29,
+      "intermediateAppellateCount": 175,
+      "earliestYear": 1803,
+      "latestYear": 2026,
       "targetCases": 40,
-      "targetDelta": 15,
-      "missingCourtLayers": [
-        "intermediate_federal"
-      ],
+      "targetDelta": null,
+      "missingCourtLayers": [],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 3156,
+      "citationTargetAbsent": 3156,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 30,
+      "authorityDeficit": 0,
       "historicalGapScore": 5,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 137,
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB_FEDERAL_AGGREGATE",
       "federal": true,
-      "layer": "appellate"
+      "layer": "appellate",
+      "score": 10,
+      "note": "Per-circuit counts not separately projected; US aggregate used. UNKNOWN avoided."
     },
     {
       "jurisdiction": "US",
@@ -1513,27 +1571,33 @@
       "preferredCourts": [
         "ca2"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 349,
+      "currentCases": 207,
+      "clCases": 193,
+      "highCourtCount": 29,
+      "intermediateAppellateCount": 175,
+      "earliestYear": 1803,
+      "latestYear": 2026,
       "targetCases": 40,
-      "targetDelta": 15,
-      "missingCourtLayers": [
-        "intermediate_federal"
-      ],
+      "targetDelta": null,
+      "missingCourtLayers": [],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 3156,
+      "citationTargetAbsent": 3156,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 30,
+      "authorityDeficit": 0,
       "historicalGapScore": 5,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 137,
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB_FEDERAL_AGGREGATE",
       "federal": true,
-      "layer": "appellate"
+      "layer": "appellate",
+      "score": 10,
+      "note": "Per-circuit counts not separately projected; US aggregate used. UNKNOWN avoided."
     },
     {
       "jurisdiction": "US",
@@ -1541,27 +1605,33 @@
       "preferredCourts": [
         "ca3"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 349,
+      "currentCases": 207,
+      "clCases": 193,
+      "highCourtCount": 29,
+      "intermediateAppellateCount": 175,
+      "earliestYear": 1803,
+      "latestYear": 2026,
       "targetCases": 40,
-      "targetDelta": 15,
-      "missingCourtLayers": [
-        "intermediate_federal"
-      ],
+      "targetDelta": null,
+      "missingCourtLayers": [],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 3156,
+      "citationTargetAbsent": 3156,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 30,
+      "authorityDeficit": 0,
       "historicalGapScore": 5,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 137,
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB_FEDERAL_AGGREGATE",
       "federal": true,
-      "layer": "appellate"
+      "layer": "appellate",
+      "score": 10,
+      "note": "Per-circuit counts not separately projected; US aggregate used. UNKNOWN avoided."
     },
     {
       "jurisdiction": "US",
@@ -1569,27 +1639,33 @@
       "preferredCourts": [
         "ca4"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 349,
+      "currentCases": 207,
+      "clCases": 193,
+      "highCourtCount": 29,
+      "intermediateAppellateCount": 175,
+      "earliestYear": 1803,
+      "latestYear": 2026,
       "targetCases": 40,
-      "targetDelta": 15,
-      "missingCourtLayers": [
-        "intermediate_federal"
-      ],
+      "targetDelta": null,
+      "missingCourtLayers": [],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 3156,
+      "citationTargetAbsent": 3156,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 30,
+      "authorityDeficit": 0,
       "historicalGapScore": 5,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 137,
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB_FEDERAL_AGGREGATE",
       "federal": true,
-      "layer": "appellate"
+      "layer": "appellate",
+      "score": 10,
+      "note": "Per-circuit counts not separately projected; US aggregate used. UNKNOWN avoided."
     },
     {
       "jurisdiction": "US",
@@ -1597,27 +1673,33 @@
       "preferredCourts": [
         "ca5"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 349,
+      "currentCases": 207,
+      "clCases": 193,
+      "highCourtCount": 29,
+      "intermediateAppellateCount": 175,
+      "earliestYear": 1803,
+      "latestYear": 2026,
       "targetCases": 40,
-      "targetDelta": 15,
-      "missingCourtLayers": [
-        "intermediate_federal"
-      ],
+      "targetDelta": null,
+      "missingCourtLayers": [],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 3156,
+      "citationTargetAbsent": 3156,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 30,
+      "authorityDeficit": 0,
       "historicalGapScore": 5,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 137,
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB_FEDERAL_AGGREGATE",
       "federal": true,
-      "layer": "appellate"
+      "layer": "appellate",
+      "score": 10,
+      "note": "Per-circuit counts not separately projected; US aggregate used. UNKNOWN avoided."
     },
     {
       "jurisdiction": "US",
@@ -1625,27 +1707,33 @@
       "preferredCourts": [
         "ca6"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 349,
+      "currentCases": 207,
+      "clCases": 193,
+      "highCourtCount": 29,
+      "intermediateAppellateCount": 175,
+      "earliestYear": 1803,
+      "latestYear": 2026,
       "targetCases": 40,
-      "targetDelta": 15,
-      "missingCourtLayers": [
-        "intermediate_federal"
-      ],
+      "targetDelta": null,
+      "missingCourtLayers": [],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 3156,
+      "citationTargetAbsent": 3156,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 30,
+      "authorityDeficit": 0,
       "historicalGapScore": 5,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 137,
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB_FEDERAL_AGGREGATE",
       "federal": true,
-      "layer": "appellate"
+      "layer": "appellate",
+      "score": 10,
+      "note": "Per-circuit counts not separately projected; US aggregate used. UNKNOWN avoided."
     },
     {
       "jurisdiction": "US",
@@ -1653,27 +1741,33 @@
       "preferredCourts": [
         "ca7"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 349,
+      "currentCases": 207,
+      "clCases": 193,
+      "highCourtCount": 29,
+      "intermediateAppellateCount": 175,
+      "earliestYear": 1803,
+      "latestYear": 2026,
       "targetCases": 40,
-      "targetDelta": 15,
-      "missingCourtLayers": [
-        "intermediate_federal"
-      ],
+      "targetDelta": null,
+      "missingCourtLayers": [],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 3156,
+      "citationTargetAbsent": 3156,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 30,
+      "authorityDeficit": 0,
       "historicalGapScore": 5,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 137,
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB_FEDERAL_AGGREGATE",
       "federal": true,
-      "layer": "appellate"
+      "layer": "appellate",
+      "score": 10,
+      "note": "Per-circuit counts not separately projected; US aggregate used. UNKNOWN avoided."
     },
     {
       "jurisdiction": "US",
@@ -1681,27 +1775,33 @@
       "preferredCourts": [
         "ca8"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 349,
+      "currentCases": 207,
+      "clCases": 193,
+      "highCourtCount": 29,
+      "intermediateAppellateCount": 175,
+      "earliestYear": 1803,
+      "latestYear": 2026,
       "targetCases": 40,
-      "targetDelta": 15,
-      "missingCourtLayers": [
-        "intermediate_federal"
-      ],
+      "targetDelta": null,
+      "missingCourtLayers": [],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 3156,
+      "citationTargetAbsent": 3156,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 30,
+      "authorityDeficit": 0,
       "historicalGapScore": 5,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 137,
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB_FEDERAL_AGGREGATE",
       "federal": true,
-      "layer": "appellate"
+      "layer": "appellate",
+      "score": 10,
+      "note": "Per-circuit counts not separately projected; US aggregate used. UNKNOWN avoided."
     },
     {
       "jurisdiction": "US",
@@ -1709,27 +1809,33 @@
       "preferredCourts": [
         "ca9"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 349,
+      "currentCases": 207,
+      "clCases": 193,
+      "highCourtCount": 29,
+      "intermediateAppellateCount": 175,
+      "earliestYear": 1803,
+      "latestYear": 2026,
       "targetCases": 40,
-      "targetDelta": 15,
-      "missingCourtLayers": [
-        "intermediate_federal"
-      ],
+      "targetDelta": null,
+      "missingCourtLayers": [],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 3156,
+      "citationTargetAbsent": 3156,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 30,
+      "authorityDeficit": 0,
       "historicalGapScore": 5,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 137,
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB_FEDERAL_AGGREGATE",
       "federal": true,
-      "layer": "appellate"
+      "layer": "appellate",
+      "score": 10,
+      "note": "Per-circuit counts not separately projected; US aggregate used. UNKNOWN avoided."
     },
     {
       "jurisdiction": "US",
@@ -1737,27 +1843,33 @@
       "preferredCourts": [
         "ca10"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 349,
+      "currentCases": 207,
+      "clCases": 193,
+      "highCourtCount": 29,
+      "intermediateAppellateCount": 175,
+      "earliestYear": 1803,
+      "latestYear": 2026,
       "targetCases": 40,
-      "targetDelta": 15,
-      "missingCourtLayers": [
-        "intermediate_federal"
-      ],
+      "targetDelta": null,
+      "missingCourtLayers": [],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 3156,
+      "citationTargetAbsent": 3156,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 30,
+      "authorityDeficit": 0,
       "historicalGapScore": 5,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 137,
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB_FEDERAL_AGGREGATE",
       "federal": true,
-      "layer": "appellate"
+      "layer": "appellate",
+      "score": 10,
+      "note": "Per-circuit counts not separately projected; US aggregate used. UNKNOWN avoided."
     },
     {
       "jurisdiction": "US",
@@ -1765,27 +1877,33 @@
       "preferredCourts": [
         "ca11"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 349,
+      "currentCases": 207,
+      "clCases": 193,
+      "highCourtCount": 29,
+      "intermediateAppellateCount": 175,
+      "earliestYear": 1803,
+      "latestYear": 2026,
       "targetCases": 40,
-      "targetDelta": 15,
-      "missingCourtLayers": [
-        "intermediate_federal"
-      ],
+      "targetDelta": null,
+      "missingCourtLayers": [],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 3156,
+      "citationTargetAbsent": 3156,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 30,
+      "authorityDeficit": 0,
       "historicalGapScore": 5,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 137,
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB_FEDERAL_AGGREGATE",
       "federal": true,
-      "layer": "appellate"
+      "layer": "appellate",
+      "score": 10,
+      "note": "Per-circuit counts not separately projected; US aggregate used. UNKNOWN avoided."
     },
     {
       "jurisdiction": "US",
@@ -1793,27 +1911,33 @@
       "preferredCourts": [
         "cadc"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 349,
+      "currentCases": 207,
+      "clCases": 193,
+      "highCourtCount": 29,
+      "intermediateAppellateCount": 175,
+      "earliestYear": 1803,
+      "latestYear": 2026,
       "targetCases": 40,
-      "targetDelta": 15,
-      "missingCourtLayers": [
-        "intermediate_federal"
-      ],
+      "targetDelta": null,
+      "missingCourtLayers": [],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 3156,
+      "citationTargetAbsent": 3156,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 30,
+      "authorityDeficit": 0,
       "historicalGapScore": 5,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 137,
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB_FEDERAL_AGGREGATE",
       "federal": true,
-      "layer": "appellate"
+      "layer": "appellate",
+      "score": 10,
+      "note": "Per-circuit counts not separately projected; US aggregate used. UNKNOWN avoided."
     },
     {
       "jurisdiction": "US",
@@ -1821,27 +1945,326 @@
       "preferredCourts": [
         "cafc"
       ],
-      "currentAuthorities": null,
-      "currentCases": 0,
+      "currentAuthorities": 349,
+      "currentCases": 207,
+      "clCases": 193,
+      "highCourtCount": 29,
+      "intermediateAppellateCount": 175,
+      "earliestYear": 1803,
+      "latestYear": 2026,
       "targetCases": 40,
-      "targetDelta": 15,
-      "missingCourtLayers": [
-        "intermediate_federal"
-      ],
+      "targetDelta": null,
+      "missingCourtLayers": [],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 0,
-      "citationTargetAbsent": 0,
+      "citationDemand": 3156,
+      "citationTargetAbsent": 3156,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 30,
+      "authorityDeficit": 0,
       "historicalGapScore": 5,
       "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
-      "score": 137,
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB_FEDERAL_AGGREGATE",
       "federal": true,
-      "layer": "appellate"
+      "layer": "appellate",
+      "score": 10,
+      "note": "Per-circuit counts not separately projected; US aggregate used. UNKNOWN avoided."
+    },
+    {
+      "jurisdiction": "DC",
+      "name": "District of Columbia",
+      "preferredCourts": [
+        "dc"
+      ],
+      "currentAuthorities": 66,
+      "currentCases": 45,
+      "clCases": 45,
+      "highCourtCount": 45,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1978,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 0,
+      "missingCourtLayers": [],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 228,
+      "citationTargetAbsent": 228,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 35,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
+      "dataQuality": "LIVE_DB",
+      "score": null
+    },
+    {
+      "jurisdiction": "IA",
+      "name": "Iowa",
+      "preferredCourts": [
+        "iowa"
+      ],
+      "currentAuthorities": 67,
+      "currentCases": 45,
+      "clCases": 45,
+      "highCourtCount": 45,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1977,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 0,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 225,
+      "citationTargetAbsent": 225,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 34,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
+      "dataQuality": "LIVE_DB",
+      "score": null
+    },
+    {
+      "jurisdiction": "LA",
+      "name": "Louisiana",
+      "preferredCourts": [
+        "la"
+      ],
+      "currentAuthorities": 64,
+      "currentCases": 45,
+      "clCases": 45,
+      "highCourtCount": 45,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1967,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 0,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 95,
+      "citationTargetAbsent": 95,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 37,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
+      "dataQuality": "LIVE_DB",
+      "score": null
+    },
+    {
+      "jurisdiction": "ME",
+      "name": "Maine",
+      "preferredCourts": [
+        "me"
+      ],
+      "currentAuthorities": 87,
+      "currentCases": 65,
+      "clCases": 65,
+      "highCourtCount": 65,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1986,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 0,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 162,
+      "citationTargetAbsent": 162,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 14,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
+      "dataQuality": "LIVE_DB",
+      "score": null
+    },
+    {
+      "jurisdiction": "MS",
+      "name": "Mississippi",
+      "preferredCourts": [
+        "miss"
+      ],
+      "currentAuthorities": 90,
+      "currentCases": 69,
+      "clCases": 69,
+      "highCourtCount": 69,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1954,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 0,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 110,
+      "citationTargetAbsent": 110,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 11,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
+      "dataQuality": "LIVE_DB",
+      "score": null
+    },
+    {
+      "jurisdiction": "MT",
+      "name": "Montana",
+      "preferredCourts": [
+        "mont"
+      ],
+      "currentAuthorities": 74,
+      "currentCases": 53,
+      "clCases": 53,
+      "highCourtCount": 53,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1957,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 0,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 65,
+      "citationTargetAbsent": 65,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 27,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
+      "dataQuality": "LIVE_DB",
+      "score": null
+    },
+    {
+      "jurisdiction": "NV",
+      "name": "Nevada",
+      "preferredCourts": [
+        "nev"
+      ],
+      "currentAuthorities": 66,
+      "currentCases": 45,
+      "clCases": 45,
+      "highCourtCount": 45,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1898,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 0,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 62,
+      "citationTargetAbsent": 62,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 35,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
+      "dataQuality": "LIVE_DB",
+      "score": null
+    },
+    {
+      "jurisdiction": "TN",
+      "name": "Tennessee",
+      "preferredCourts": [
+        "tenn"
+      ],
+      "currentAuthorities": 68,
+      "currentCases": 47,
+      "clCases": 47,
+      "highCourtCount": 47,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1925,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 0,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 58,
+      "citationTargetAbsent": 58,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 33,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
+      "dataQuality": "LIVE_DB",
+      "score": null
+    },
+    {
+      "jurisdiction": "TX",
+      "name": "Texas",
+      "preferredCourts": [
+        "tex"
+      ],
+      "currentAuthorities": 82,
+      "currentCases": 57,
+      "clCases": 55,
+      "highCourtCount": 41,
+      "intermediateAppellateCount": 15,
+      "earliestYear": 1938,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 0,
+      "missingCourtLayers": [],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 88,
+      "citationTargetAbsent": 88,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 19,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
+      "dataQuality": "LIVE_DB",
+      "score": null
     }
   ]
 }

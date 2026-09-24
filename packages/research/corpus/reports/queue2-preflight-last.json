@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "result": "PREFLIGHT_PASS",
+  "reasons": [],
+  "mutations": 0,
+  "courtListenerHttpCalls": 0,
+  "aiCalls": 0,
+  "aiTokens": 0,
+  "killSwitch": {
+    "enabled": true,
+    "code": null
+  },
+  "clCredentialPresent": false,
+  "featureAgents": "0",
+  "queue": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN"
+  },
+  "ark": {
+    "count": 33,
+    "target": 45,
+    "checkpoint": "cl-opinion-9885161"
+  },
+  "resource": {
+    "ok": true,
+    "reasons": [],
+    "freeDiskBytes": 75356844032,
+    "tempFreeBytes": 75356844032
+  },
+  "generatedAt": "2026-09-24T18:24:23.047Z",
+  "codeFingerprint": "5b8a3a0ca3573991b6ab196b2ce89756b3cf454eef48db933db19c0271576e07",
+  "workerVersion": "queue2-safety-gate-1"
+}

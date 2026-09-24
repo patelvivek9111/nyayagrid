@@ -10,3 +10,4 @@
 {"timestamp":"2026-09-24T16:52:46.609Z","type":"LANE_B_START","lane":"LANE_B_OFFLINE","task":"us_reports_gap_analysis","court":"ark","checkpoint":"cl-opinion-9885161","reason":null}
 {"timestamp":"2026-09-24T16:52:47.908Z","type":"WORKER_STOP","lane":"LANE_B_OFFLINE","task":null,"court":"ark","checkpoint":"cl-opinion-9885161","reason":"PASS"}
 {"timestamp":"2026-09-24T18:03:33.544Z","type":"MILESTONE","lane":"STOPPED","task":null,"court":"ark","checkpoint":"cl-opinion-9885161","reason":"final_autonomy_hardening_ready","extra":{"workerStarted":false,"aiCalls":0}}
+{"timestamp":"2026-09-24T18:24:39.811Z","type":"MILESTONE","lane":"STOPPED","court":"ark","checkpoint":"cl-opinion-9885161","reason":"autonomous_worker_safety_gate_ready","extra":{"workerStarted":false,"aiCalls":0,"preflight":"PASS"}}

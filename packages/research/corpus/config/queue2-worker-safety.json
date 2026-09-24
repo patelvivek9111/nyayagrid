@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "killSwitchEnv": "QUEUE2_WORKER_ENABLED",
+  "budgets": {
+    "laneA": {
+      "maxClRequestsPerBatch": 40,
+      "maxAuthoritiesPerBatch": 25,
+      "maxRuntimeMs": 1200000,
+      "maxDbMutationsPerBatch": 200,
+      "maxBytesPerBatch": 25000000
+    },
+    "horizon": {
+      "maxExternalRequests": 200,
+      "maxNewAuthorities": 100,
+      "maxActiveRuntimeMs": 3600000
+    },
+    "resources": {
+      "minFreeDiskBytes": 2147483648,
+      "minTempFreeBytes": 536870912
+    },
+    "backpressure": {
+      "pendingChunksMax": 5000,
+      "pendingEmbeddingsMax": 5000,
+      "citationBacklogMax": 20000,
+      "failedIngestJobsMax": 25
+    }
+  },
+  "circuitBreakers": {
+    "courtlistener": {
+      "maxFailures": 3,
+      "cooldownMs": 1800000
+    },
+    "nonClPrimary": {
+      "maxFailures": 5,
+      "cooldownMs": 900000
+    },
+    "database": {
+      "maxFailures": 3,
+      "cooldownMs": 300000
+    },
+    "storage": {
+      "maxFailures": 3,
+      "cooldownMs": 600000
+    },
+    "embeddings": {
+      "maxFailures": 5,
+      "cooldownMs": 900000
+    },
+    "citations": {
+      "maxFailures": 5,
+      "cooldownMs": 900000
+    },
+    "retrieval": {
+      "maxFailures": 3,
+      "cooldownMs": 900000
+    }
+  },
+  "sourceContracts": {
+    "courtlistener": {
+      "requiredFields": [
+        "id",
+        "cluster",
+        "court",
+        "date_filed"
+      ],
+      "paginationShape": [
+        "next",
+        "results"
+      ]
+    }
+  }
+}

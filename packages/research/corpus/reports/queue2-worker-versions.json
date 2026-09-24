@@ -1,0 +1,10 @@
+{
+  "workerVersion": "queue2-safety-gate-1",
+  "configVersion": 1,
+  "laneAManifestVersion": 2,
+  "laneBRegistryVersion": 1,
+  "checkpointSchemaVersion": 1,
+  "corpusSchemaVersion": 1,
+  "codeFingerprint": "df1cc38c9705d714b431dd8f2d95266dde299def78433b5460da41c00d8814a4",
+  "updatedAt": "2026-09-24T18:23:19.949Z"
+}
