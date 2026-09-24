@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "queue": "#2",
+  "queue9": "CLOSED",
+  "queue3": "NOT_OPEN",
+  "featureAgents": "0",
+  "currentLane": "B",
+  "updatedAt": "2026-09-24T16:34:00.000Z",
+  "laneA": {
+    "court": "ark",
+    "jurisdiction": "AR",
+    "checkpoint": null,
+    "target": 45,
+    "count": 33,
+    "sequence": ["ark", "sd", "idaho", "wyo", "neb", "ala", "ky"],
+    "lock": null
+  },
+  "quota": {
+    "windows": {
+      "minute": { "limit": 30, "used": 0, "remaining": 30, "resetAt": null },
+      "hour": { "limit": 300, "used": 0, "remaining": 300, "resetAt": null },
+      "day": { "limit": 1200, "used": 1171, "remaining": 29, "resetAt": "2026-09-24T22:06:14.563161+00:00" }
+    },
+    "lastProbeAt": "2026-09-24T16:31:04.000Z",
+    "nextCheckAt": "2026-09-24T22:06:14.563Z",
+    "last429At": null,
+    "retryAfterSeconds": null,
+    "lastSafeRequests": 0
+  },
+  "laneB": {
+    "task": "us_reports_gap_analysis",
+    "checkpoint": "scorecard-v1",
+    "tasksCompleted": [
+      "us_reports_gap_analysis",
+      "us_reports_non_cl_intake",
+      "usc_cfr_federal_rules_depth",
+      "citation_re_resolution",
+      "depth_gap_analysis",
+      "historical_hole_detection",
+      "intermediate_court_research",
+      "corpus_integrity",
+      "retrieval_validation",
+      "depth_scorecard"
+    ]
+  },
+  "depthManifestVersion": 1,
+  "lastCitationResolve": "2026-09-24T16:34:00.000Z",
+  "lastIntegrityAudit": "2026-09-24T16:34:00.000Z",
+  "metrics": {
+    "laneAMs": 0,
+    "laneBMs": 36483,
+    "idleMs": 0,
+    "clAuthorities": 0,
+    "nonClAuthorities": 6,
+    "citationsResolved": 44,
+    "quotaChecks": 1,
+    "laneSwitches": 1
+  },
+  "switches": [
+    { "at": "2026-09-24T16:31:04.000Z", "from": "B", "to": "B", "reason": "quota_floor" }
+  ]
+}

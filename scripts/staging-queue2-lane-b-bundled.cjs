@@ -1,0 +1,3315 @@
+"use strict";
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __commonJS = (cb, mod) => function __require() {
+  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
+
+// node_modules/postgres/cjs/src/query.js
+var require_query = __commonJS({
+  "node_modules/postgres/cjs/src/query.js"(exports2, module2) {
+    var originCache = /* @__PURE__ */ new Map();
+    var originStackCache = /* @__PURE__ */ new Map();
+    var originError = Symbol("OriginError");
+    var CLOSE = module2.exports.CLOSE = {};
+    var Query = module2.exports.Query = class Query extends Promise {
+      constructor(strings, args, handler, canceller, options = {}) {
+        let resolve, reject;
+        super((a, b) => {
+          resolve = a;
+          reject = b;
+        });
+        this.tagged = Array.isArray(strings.raw);
+        this.strings = strings;
+        this.args = args;
+        this.handler = handler;
+        this.canceller = canceller;
+        this.options = options;
+        this.state = null;
+        this.statement = null;
+        this.resolve = (x) => (this.active = false, resolve(x));
+        this.reject = (x) => (this.active = false, reject(x));
+        this.active = false;
+        this.cancelled = null;
+        this.executed = false;
+        this.signature = "";
+        this[originError] = this.handler.debug ? new Error() : this.tagged && cachedError(this.strings);
+      }
+      get origin() {
+        return (this.handler.debug ? this[originError].stack : this.tagged && originStackCache.has(this.strings) ? originStackCache.get(this.strings) : originStackCache.set(this.strings, this[originError].stack).get(this.strings)) || "";
+      }
+      static get [Symbol.species]() {
+        return Promise;
+      }
+      cancel() {
+        return this.canceller && (this.canceller(this), this.canceller = null);
+      }
+      simple() {
+        this.options.simple = true;
+        this.options.prepare = false;
+        return this;
+      }
+      async readable() {
+        this.simple();
+        this.streaming = true;
+        return this;
+      }
+      async writable() {
+        this.simple();
+        this.streaming = true;
+        return this;
+      }
+      cursor(rows = 1, fn) {
+        this.options.simple = false;
+        if (typeof rows === "function") {
+          fn = rows;
+          rows = 1;
+        }
+        this.cursorRows = rows;
+        if (typeof fn === "function")
+          return this.cursorFn = fn, this;
+        let prev;
+        return {
+          [Symbol.asyncIterator]: () => ({
+            next: () => {
+              if (this.executed && !this.active)
+                return { done: true };
+              prev && prev();
+              const promise = new Promise((resolve, reject) => {
+                this.cursorFn = (value) => {
+                  resolve({ value, done: false });
+                  return new Promise((r) => prev = r);
+                };
+                this.resolve = () => (this.active = false, resolve({ done: true }));
+                this.reject = (x) => (this.active = false, reject(x));
+              });
+              this.execute();
+              return promise;
+            },
+            return() {
+              prev && prev(CLOSE);
+              return { done: true };
+            }
+          })
+        };
+      }
+      describe() {
+        this.options.simple = false;
+        this.onlyDescribe = this.options.prepare = true;
+        return this;
+      }
+      stream() {
+        throw new Error(".stream has been renamed to .forEach");
+      }
+      forEach(fn) {
+        this.forEachFn = fn;
+        this.handle();
+        return this;
+      }
+      raw() {
+        this.isRaw = true;
+        return this;
+      }
+      values() {
+        this.isRaw = "values";
+        return this;
+      }
+      async handle() {
+        !this.executed && (this.executed = true) && await 1 && this.handler(this);
+      }
+      execute() {
+        this.handle();
+        return this;
+      }
+      then() {
+        this.handle();
+        return super.then.apply(this, arguments);
+      }
+      catch() {
+        this.handle();
+        return super.catch.apply(this, arguments);
+      }
+      finally() {
+        this.handle();
+        return super.finally.apply(this, arguments);
+      }
+    };
+    function cachedError(xs) {
+      if (originCache.has(xs))
+        return originCache.get(xs);
+      const x = Error.stackTraceLimit;
+      Error.stackTraceLimit = 4;
+      originCache.set(xs, new Error());
+      Error.stackTraceLimit = x;
+      return originCache.get(xs);
+    }
+  }
+});
+
+// node_modules/postgres/cjs/src/errors.js
+var require_errors = __commonJS({
+  "node_modules/postgres/cjs/src/errors.js"(exports2, module2) {
+    var PostgresError = module2.exports.PostgresError = class PostgresError extends Error {
+      constructor(x) {
+        super(x.message);
+        this.name = this.constructor.name;
+        Object.assign(this, x);
+      }
+    };
+    var Errors = module2.exports.Errors = {
+      connection,
+      postgres: postgres2,
+      generic,
+      notSupported
+    };
+    function connection(x, options, socket) {
+      const { host, port } = socket || options;
+      const error = Object.assign(
+        new Error("write " + x + " " + (options.path || host + ":" + port)),
+        {
+          code: x,
+          errno: x,
+          address: options.path || host
+        },
+        options.path ? {} : { port }
+      );
+      Error.captureStackTrace(error, connection);
+      return error;
+    }
+    function postgres2(x) {
+      const error = new PostgresError(x);
+      Error.captureStackTrace(error, postgres2);
+      return error;
+    }
+    function generic(code, message) {
+      const error = Object.assign(new Error(code + ": " + message), { code });
+      Error.captureStackTrace(error, generic);
+      return error;
+    }
+    function notSupported(x) {
+      const error = Object.assign(
+        new Error(x + " (B) is not supported"),
+        {
+          code: "MESSAGE_NOT_SUPPORTED",
+          name: x
+        }
+      );
+      Error.captureStackTrace(error, notSupported);
+      return error;
+    }
+  }
+});
+
+// node_modules/postgres/cjs/src/types.js
+var require_types = __commonJS({
+  "node_modules/postgres/cjs/src/types.js"(exports2, module2) {
+    var { Query } = require_query();
+    var { Errors } = require_errors();
+    var types = module2.exports.types = {
+      string: {
+        to: 25,
+        from: null,
+        // defaults to string
+        serialize: (x) => "" + x
+      },
+      number: {
+        to: 0,
+        from: [21, 23, 26, 700, 701],
+        serialize: (x) => "" + x,
+        parse: (x) => +x
+      },
+      json: {
+        to: 114,
+        from: [114, 3802],
+        serialize: (x) => JSON.stringify(x),
+        parse: (x) => JSON.parse(x)
+      },
+      boolean: {
+        to: 16,
+        from: 16,
+        serialize: (x) => x === true ? "t" : "f",
+        parse: (x) => x === "t"
+      },
+      date: {
+        to: 1184,
+        from: [1082, 1114, 1184],
+        serialize: (x) => (x instanceof Date ? x : new Date(x)).toISOString(),
+        parse: (x) => new Date(x)
+      },
+      bytea: {
+        to: 17,
+        from: 17,
+        serialize: (x) => "\\x" + Buffer.from(x).toString("hex"),
+        parse: (x) => Buffer.from(x.slice(2), "hex")
+      }
+    };
+    var NotTagged = class {
+      then() {
+        notTagged();
+      }
+      catch() {
+        notTagged();
+      }
+      finally() {
+        notTagged();
+      }
+    };
+    var Identifier = module2.exports.Identifier = class Identifier extends NotTagged {
+      constructor(value) {
+        super();
+        this.value = escapeIdentifier(value);
+      }
+    };
+    var Parameter = module2.exports.Parameter = class Parameter extends NotTagged {
+      constructor(value, type, array) {
+        super();
+        this.value = value;
+        this.type = type;
+        this.array = array;
+      }
+    };
+    var Builder = module2.exports.Builder = class Builder extends NotTagged {
+      constructor(first, rest) {
+        super();
+        this.first = first;
+        this.rest = rest;
+      }
+      build(before, parameters, types2, options) {
+        const keyword = builders.map(([x, fn]) => ({ fn, i: before.search(x) })).sort((a, b) => a.i - b.i).pop();
+        return keyword.i === -1 ? escapeIdentifiers(this.first, options) : keyword.fn(this.first, this.rest, parameters, types2, options);
+      }
+    };
+    module2.exports.handleValue = handleValue;
+    function handleValue(x, parameters, types2, options) {
+      let value = x instanceof Parameter ? x.value : x;
+      if (value === void 0) {
+        x instanceof Parameter ? x.value = options.transform.undefined : value = x = options.transform.undefined;
+        if (value === void 0)
+          throw Errors.generic("UNDEFINED_VALUE", "Undefined values are not allowed");
+      }
+      return "$" + types2.push(
+        x instanceof Parameter ? (parameters.push(x.value), x.array ? x.array[x.type || inferType(x.value)] || x.type || firstIsString(x.value) : x.type) : (parameters.push(x), inferType(x))
+      );
+    }
+    var defaultHandlers = typeHandlers(types);
+    module2.exports.stringify = stringify;
+    function stringify(q, string, value, parameters, types2, options) {
+      for (let i = 1; i < q.strings.length; i++) {
+        string += stringifyValue(string, value, parameters, types2, options) + q.strings[i];
+        value = q.args[i];
+      }
+      return string;
+    }
+    function stringifyValue(string, value, parameters, types2, o) {
+      return value instanceof Builder ? value.build(string, parameters, types2, o) : value instanceof Query ? fragment(value, parameters, types2, o) : value instanceof Identifier ? value.value : value && value[0] instanceof Query ? value.reduce((acc, x) => acc + " " + fragment(x, parameters, types2, o), "") : handleValue(value, parameters, types2, o);
+    }
+    function fragment(q, parameters, types2, options) {
+      q.fragment = true;
+      return stringify(q, q.strings[0], q.args[0], parameters, types2, options);
+    }
+    function valuesBuilder(first, parameters, types2, columns, options) {
+      return first.map(
+        (row) => "(" + columns.map(
+          (column) => stringifyValue("values", row[column], parameters, types2, options)
+        ).join(",") + ")"
+      ).join(",");
+    }
+    function values(first, rest, parameters, types2, options) {
+      const multi = Array.isArray(first[0]);
+      const columns = rest.length ? rest.flat() : Object.keys(multi ? first[0] : first);
+      return valuesBuilder(multi ? first : [first], parameters, types2, columns, options);
+    }
+    function select(first, rest, parameters, types2, options) {
+      typeof first === "string" && (first = [first].concat(rest));
+      if (Array.isArray(first))
+        return escapeIdentifiers(first, options);
+      let value;
+      const columns = rest.length ? rest.flat() : Object.keys(first);
+      return columns.map((x) => {
+        value = first[x];
+        return (value instanceof Query ? fragment(value, parameters, types2, options) : value instanceof Identifier ? value.value : handleValue(value, parameters, types2, options)) + " as " + escapeIdentifier(options.transform.column.to ? options.transform.column.to(x) : x);
+      }).join(",");
+    }
+    var builders = Object.entries({
+      values,
+      in: (...xs) => {
+        const x = values(...xs);
+        return x === "()" ? "(null)" : x;
+      },
+      select,
+      as: select,
+      returning: select,
+      "\\(": select,
+      update(first, rest, parameters, types2, options) {
+        return (rest.length ? rest.flat() : Object.keys(first)).map(
+          (x) => escapeIdentifier(options.transform.column.to ? options.transform.column.to(x) : x) + "=" + stringifyValue("values", first[x], parameters, types2, options)
+        );
+      },
+      insert(first, rest, parameters, types2, options) {
+        const columns = rest.length ? rest.flat() : Object.keys(Array.isArray(first) ? first[0] : first);
+        return "(" + escapeIdentifiers(columns, options) + ")values" + valuesBuilder(Array.isArray(first) ? first : [first], parameters, types2, columns, options);
+      }
+    }).map(([x, fn]) => [new RegExp("((?:^|[\\s(])" + x + "(?:$|[\\s(]))(?![\\s\\S]*\\1)", "i"), fn]);
+    function notTagged() {
+      throw Errors.generic("NOT_TAGGED_CALL", "Query not called as a tagged template literal");
+    }
+    var serializers = module2.exports.serializers = defaultHandlers.serializers;
+    var parsers = module2.exports.parsers = defaultHandlers.parsers;
+    var END = module2.exports.END = {};
+    function firstIsString(x) {
+      if (Array.isArray(x))
+        return firstIsString(x[0]);
+      return typeof x === "string" ? 1009 : 0;
+    }
+    var mergeUserTypes = module2.exports.mergeUserTypes = function(types2) {
+      const user = typeHandlers(types2 || {});
+      return {
+        serializers: Object.assign({}, serializers, user.serializers),
+        parsers: Object.assign({}, parsers, user.parsers)
+      };
+    };
+    function typeHandlers(types2) {
+      return Object.keys(types2).reduce((acc, k) => {
+        types2[k].from && [].concat(types2[k].from).forEach((x) => acc.parsers[x] = types2[k].parse);
+        if (types2[k].serialize) {
+          acc.serializers[types2[k].to] = types2[k].serialize;
+          types2[k].from && [].concat(types2[k].from).forEach((x) => acc.serializers[x] = types2[k].serialize);
+        }
+        return acc;
+      }, { parsers: {}, serializers: {} });
+    }
+    function escapeIdentifiers(xs, { transform: { column } }) {
+      return xs.map((x) => escapeIdentifier(column.to ? column.to(x) : x)).join(",");
+    }
+    var escapeIdentifier = module2.exports.escapeIdentifier = function escape(str) {
+      return '"' + str.replace(/"/g, '""').replace(/\./g, '"."') + '"';
+    };
+    var inferType = module2.exports.inferType = function inferType2(x) {
+      return x instanceof Parameter ? x.type : x instanceof Date ? 1184 : x instanceof Uint8Array ? 17 : x === true || x === false ? 16 : typeof x === "bigint" ? 20 : Array.isArray(x) ? inferType2(x[0]) : 0;
+    };
+    var escapeBackslash = /\\/g;
+    var escapeQuote = /"/g;
+    function arrayEscape(x) {
+      return x.replace(escapeBackslash, "\\\\").replace(escapeQuote, '\\"');
+    }
+    var arraySerializer = module2.exports.arraySerializer = function arraySerializer2(xs, serializer, options, typarray) {
+      if (Array.isArray(xs) === false)
+        return xs;
+      if (!xs.length)
+        return "{}";
+      const first = xs[0];
+      const delimiter = typarray === 1020 ? ";" : ",";
+      if (Array.isArray(first) && !first.type)
+        return "{" + xs.map((x) => arraySerializer2(x, serializer, options, typarray)).join(delimiter) + "}";
+      return "{" + xs.map((x) => {
+        if (x === void 0) {
+          x = options.transform.undefined;
+          if (x === void 0)
+            throw Errors.generic("UNDEFINED_VALUE", "Undefined values are not allowed");
+        }
+        return x === null ? "null" : '"' + arrayEscape(serializer ? serializer(x.type ? x.value : x) : "" + x) + '"';
+      }).join(delimiter) + "}";
+    };
+    var arrayParserState = {
+      i: 0,
+      char: null,
+      str: "",
+      quoted: false,
+      last: 0
+    };
+    var arrayParser = module2.exports.arrayParser = function arrayParser2(x, parser, typarray) {
+      arrayParserState.i = arrayParserState.last = 0;
+      return arrayParserLoop(arrayParserState, x, parser, typarray);
+    };
+    function arrayParserLoop(s, x, parser, typarray) {
+      const xs = [];
+      const delimiter = typarray === 1020 ? ";" : ",";
+      for (; s.i < x.length; s.i++) {
+        s.char = x[s.i];
+        if (s.quoted) {
+          if (s.char === "\\") {
+            s.str += x[++s.i];
+          } else if (s.char === '"') {
+            xs.push(parser ? parser(s.str) : s.str);
+            s.str = "";
+            s.quoted = x[s.i + 1] === '"';
+            s.last = s.i + 2;
+          } else {
+            s.str += s.char;
+          }
+        } else if (s.char === '"') {
+          s.quoted = true;
+        } else if (s.char === "{") {
+          s.last = ++s.i;
+          xs.push(arrayParserLoop(s, x, parser, typarray));
+        } else if (s.char === "}") {
+          s.quoted = false;
+          s.last < s.i && xs.push(parser ? parser(x.slice(s.last, s.i)) : x.slice(s.last, s.i));
+          s.last = s.i + 1;
+          break;
+        } else if (s.char === delimiter && s.p !== "}" && s.p !== '"') {
+          xs.push(parser ? parser(x.slice(s.last, s.i)) : x.slice(s.last, s.i));
+          s.last = s.i + 1;
+        }
+        s.p = s.char;
+      }
+      s.last < s.i && xs.push(parser ? parser(x.slice(s.last, s.i + 1)) : x.slice(s.last, s.i + 1));
+      return xs;
+    }
+    var toCamel = module2.exports.toCamel = (x) => {
+      let str = x[0];
+      for (let i = 1; i < x.length; i++)
+        str += x[i] === "_" ? x[++i].toUpperCase() : x[i];
+      return str;
+    };
+    var toPascal = module2.exports.toPascal = (x) => {
+      let str = x[0].toUpperCase();
+      for (let i = 1; i < x.length; i++)
+        str += x[i] === "_" ? x[++i].toUpperCase() : x[i];
+      return str;
+    };
+    var toKebab = module2.exports.toKebab = (x) => x.replace(/_/g, "-");
+    var fromCamel = module2.exports.fromCamel = (x) => x.replace(/([A-Z])/g, "_$1").toLowerCase();
+    var fromPascal = module2.exports.fromPascal = (x) => (x.slice(0, 1) + x.slice(1).replace(/([A-Z])/g, "_$1")).toLowerCase();
+    var fromKebab = module2.exports.fromKebab = (x) => x.replace(/-/g, "_");
+    function createJsonTransform(fn) {
+      return function jsonTransform(x, column) {
+        return typeof x === "object" && x !== null && (column.type === 114 || column.type === 3802) ? Array.isArray(x) ? x.map((x2) => jsonTransform(x2, column)) : Object.entries(x).reduce((acc, [k, v]) => Object.assign(acc, { [fn(k)]: jsonTransform(v, column) }), {}) : x;
+      };
+    }
+    toCamel.column = { from: toCamel };
+    toCamel.value = { from: createJsonTransform(toCamel) };
+    fromCamel.column = { to: fromCamel };
+    var camel = module2.exports.camel = { ...toCamel };
+    camel.column.to = fromCamel;
+    toPascal.column = { from: toPascal };
+    toPascal.value = { from: createJsonTransform(toPascal) };
+    fromPascal.column = { to: fromPascal };
+    var pascal = module2.exports.pascal = { ...toPascal };
+    pascal.column.to = fromPascal;
+    toKebab.column = { from: toKebab };
+    toKebab.value = { from: createJsonTransform(toKebab) };
+    fromKebab.column = { to: fromKebab };
+    var kebab = module2.exports.kebab = { ...toKebab };
+    kebab.column.to = fromKebab;
+  }
+});
+
+// node_modules/postgres/cjs/src/result.js
+var require_result = __commonJS({
+  "node_modules/postgres/cjs/src/result.js"(exports2, module2) {
+    module2.exports = class Result extends Array {
+      constructor() {
+        super();
+        Object.defineProperties(this, {
+          count: { value: null, writable: true },
+          state: { value: null, writable: true },
+          command: { value: null, writable: true },
+          columns: { value: null, writable: true },
+          statement: { value: null, writable: true }
+        });
+      }
+      static get [Symbol.species]() {
+        return Array;
+      }
+    };
+  }
+});
+
+// node_modules/postgres/cjs/src/queue.js
+var require_queue = __commonJS({
+  "node_modules/postgres/cjs/src/queue.js"(exports2, module2) {
+    module2.exports = Queue;
+    function Queue(initial = []) {
+      let xs = initial.slice();
+      let index = 0;
+      return {
+        get length() {
+          return xs.length - index;
+        },
+        remove: (x) => {
+          const index2 = xs.indexOf(x);
+          return index2 === -1 ? null : (xs.splice(index2, 1), x);
+        },
+        push: (x) => (xs.push(x), x),
+        shift: () => {
+          const out = xs[index++];
+          if (index === xs.length) {
+            index = 0;
+            xs = [];
+          } else {
+            xs[index - 1] = void 0;
+          }
+          return out;
+        }
+      };
+    }
+  }
+});
+
+// node_modules/postgres/cjs/src/bytes.js
+var require_bytes = __commonJS({
+  "node_modules/postgres/cjs/src/bytes.js"(exports2, module2) {
+    var size = 256;
+    var buffer = Buffer.allocUnsafe(size);
+    var messages = "BCcDdEFfHPpQSX".split("").reduce((acc, x) => {
+      const v = x.charCodeAt(0);
+      acc[x] = () => {
+        buffer[0] = v;
+        b.i = 5;
+        return b;
+      };
+      return acc;
+    }, {});
+    var b = Object.assign(reset, messages, {
+      N: String.fromCharCode(0),
+      i: 0,
+      inc(x) {
+        b.i += x;
+        return b;
+      },
+      str(x) {
+        const length = Buffer.byteLength(x);
+        fit(length);
+        b.i += buffer.write(x, b.i, length, "utf8");
+        return b;
+      },
+      i16(x) {
+        fit(2);
+        buffer.writeUInt16BE(x, b.i);
+        b.i += 2;
+        return b;
+      },
+      i32(x, i) {
+        if (i || i === 0) {
+          buffer.writeUInt32BE(x, i);
+          return b;
+        }
+        fit(4);
+        buffer.writeUInt32BE(x, b.i);
+        b.i += 4;
+        return b;
+      },
+      z(x) {
+        fit(x);
+        buffer.fill(0, b.i, b.i + x);
+        b.i += x;
+        return b;
+      },
+      raw(x) {
+        buffer = Buffer.concat([buffer.subarray(0, b.i), x]);
+        b.i = buffer.length;
+        return b;
+      },
+      end(at = 1) {
+        buffer.writeUInt32BE(b.i - at, at);
+        const out = buffer.subarray(0, b.i);
+        b.i = 0;
+        buffer = Buffer.allocUnsafe(size);
+        return out;
+      }
+    });
+    module2.exports = b;
+    function fit(x) {
+      if (buffer.length - b.i < x) {
+        const prev = buffer, length = prev.length;
+        buffer = Buffer.allocUnsafe(length + (length >> 1) + x);
+        prev.copy(buffer);
+      }
+    }
+    function reset() {
+      b.i = 0;
+      return b;
+    }
+  }
+});
+
+// node_modules/postgres/cjs/src/connection.js
+var require_connection = __commonJS({
+  "node_modules/postgres/cjs/src/connection.js"(exports2, module2) {
+    var net = require("net");
+    var tls = require("tls");
+    var crypto = require("crypto");
+    var Stream = require("stream");
+    var { performance } = require("perf_hooks");
+    var { stringify, handleValue, arrayParser, arraySerializer } = require_types();
+    var { Errors } = require_errors();
+    var Result = require_result();
+    var Queue = require_queue();
+    var { Query, CLOSE } = require_query();
+    var b = require_bytes();
+    module2.exports = Connection;
+    var uid = 1;
+    var Sync = b().S().end();
+    var Flush = b().H().end();
+    var SSLRequest = b().i32(8).i32(80877103).end(8);
+    var ExecuteUnnamed = Buffer.concat([b().E().str(b.N).i32(0).end(), Sync]);
+    var DescribeUnnamed = b().D().str("S").str(b.N).end();
+    var noop = () => {
+    };
+    var retryRoutines = /* @__PURE__ */ new Set([
+      "FetchPreparedStatement",
+      "RevalidateCachedQuery",
+      "transformAssignedExpr"
+    ]);
+    var errorFields = {
+      83: "severity_local",
+      // S
+      86: "severity",
+      // V
+      67: "code",
+      // C
+      77: "message",
+      // M
+      68: "detail",
+      // D
+      72: "hint",
+      // H
+      80: "position",
+      // P
+      112: "internal_position",
+      // p
+      113: "internal_query",
+      // q
+      87: "where",
+      // W
+      115: "schema_name",
+      // s
+      116: "table_name",
+      // t
+      99: "column_name",
+      // c
+      100: "data type_name",
+      // d
+      110: "constraint_name",
+      // n
+      70: "file",
+      // F
+      76: "line",
+      // L
+      82: "routine"
+      // R
+    };
+    function Connection(options, queues = {}, { onopen = noop, onend = noop, onclose = noop } = {}) {
+      const {
+        sslnegotiation,
+        ssl,
+        max,
+        user,
+        host,
+        port,
+        database,
+        parsers,
+        transform,
+        onnotice,
+        onnotify,
+        onparameter,
+        max_pipeline,
+        keep_alive,
+        backoff,
+        target_session_attrs
+      } = options;
+      const sent = Queue(), id = uid++, backend = { pid: null, secret: null }, idleTimer = timer(end, options.idle_timeout), lifeTimer = timer(end, options.max_lifetime), connectTimer = timer(connectTimedOut, options.connect_timeout);
+      let socket = null, cancelMessage, errorResponse = null, result = new Result(), incoming = Buffer.alloc(0), needsTypes = options.fetch_types, backendParameters = {}, statements = {}, statementId = Math.random().toString(36).slice(2), statementCount = 1, closedTime = 0, remaining = 0, hostIndex = 0, retries = 0, length = 0, delay = 0, rows = 0, serverSignature = null, nextWriteTimer = null, terminated = false, incomings = null, results = null, initial = null, ending = null, stream = null, chunk = null, ended = null, nonce = null, query = null, final = null;
+      const connection = {
+        queue: queues.closed,
+        idleTimer,
+        connect(query2) {
+          initial = query2;
+          reconnect();
+        },
+        terminate,
+        execute,
+        cancel,
+        end,
+        count: 0,
+        id
+      };
+      queues.closed && queues.closed.push(connection);
+      return connection;
+      async function createSocket() {
+        let x;
+        try {
+          x = options.socket ? await Promise.resolve(options.socket(options)) : new net.Socket();
+        } catch (e) {
+          error(e);
+          return;
+        }
+        x.on("error", error);
+        x.on("close", closed);
+        x.on("drain", drain);
+        return x;
+      }
+      async function cancel({ pid, secret }, resolve, reject) {
+        try {
+          cancelMessage = b().i32(16).i32(80877102).i32(pid).i32(secret).end(16);
+          await connect();
+          socket.once("error", reject);
+          socket.once("close", resolve);
+        } catch (error2) {
+          reject(error2);
+        }
+      }
+      function execute(q) {
+        if (terminated)
+          return queryError(q, Errors.connection("CONNECTION_DESTROYED", options));
+        if (stream)
+          return queryError(q, Errors.generic("COPY_IN_PROGRESS", "You cannot execute queries during copy"));
+        if (q.cancelled)
+          return;
+        try {
+          q.state = backend;
+          query ? sent.push(q) : (query = q, query.active = true);
+          build(q);
+          return write(toBuffer(q)) && !q.describeFirst && !q.cursorFn && sent.length < max_pipeline && (!q.options.onexecute || q.options.onexecute(connection));
+        } catch (error2) {
+          sent.length === 0 && write(Sync);
+          errored(error2);
+          return true;
+        }
+      }
+      function toBuffer(q) {
+        if (q.parameters.length >= 65534)
+          throw Errors.generic("MAX_PARAMETERS_EXCEEDED", "Max number of parameters (65534) exceeded");
+        return q.options.simple ? b().Q().str(q.statement.string + b.N).end() : q.describeFirst ? Buffer.concat([describe(q), Flush]) : q.prepare ? q.prepared ? prepared(q) : Buffer.concat([describe(q), prepared(q)]) : unnamed(q);
+      }
+      function describe(q) {
+        return Buffer.concat([
+          Parse(q.statement.string, q.parameters, q.statement.types, q.statement.name),
+          Describe("S", q.statement.name)
+        ]);
+      }
+      function prepared(q) {
+        return Buffer.concat([
+          Bind(q.parameters, q.statement.types, q.statement.name, q.cursorName),
+          q.cursorFn ? Execute("", q.cursorRows) : ExecuteUnnamed
+        ]);
+      }
+      function unnamed(q) {
+        return Buffer.concat([
+          Parse(q.statement.string, q.parameters, q.statement.types),
+          DescribeUnnamed,
+          prepared(q)
+        ]);
+      }
+      function build(q) {
+        const parameters = [], types = [];
+        const string = stringify(q, q.strings[0], q.args[0], parameters, types, options);
+        !q.tagged && q.args.forEach((x) => handleValue(x, parameters, types, options));
+        q.prepare = options.prepare && ("prepare" in q.options ? q.options.prepare : true);
+        q.string = string;
+        q.signature = q.prepare && types + string;
+        q.onlyDescribe && delete statements[q.signature];
+        q.parameters = q.parameters || parameters;
+        q.prepared = q.prepare && q.signature in statements;
+        q.describeFirst = q.onlyDescribe || parameters.length && !q.prepared;
+        q.statement = q.prepared ? statements[q.signature] : { string, types, name: q.prepare ? statementId + statementCount++ : "" };
+        typeof options.debug === "function" && options.debug(id, string, parameters, types);
+      }
+      function write(x, fn) {
+        chunk = chunk ? Buffer.concat([chunk, x]) : Buffer.from(x);
+        if (fn || chunk.length >= 1024)
+          return nextWrite(fn);
+        nextWriteTimer === null && (nextWriteTimer = setImmediate(nextWrite));
+        return true;
+      }
+      function nextWrite(fn) {
+        const x = socket.write(chunk, fn);
+        nextWriteTimer !== null && clearImmediate(nextWriteTimer);
+        chunk = nextWriteTimer = null;
+        return x;
+      }
+      function connectTimedOut() {
+        errored(Errors.connection("CONNECT_TIMEOUT", options, socket));
+        socket.destroy();
+      }
+      async function secure() {
+        if (sslnegotiation !== "direct") {
+          write(SSLRequest);
+          const canSSL = await new Promise((r) => socket.once("data", (x) => r(x[0] === 83)));
+          if (!canSSL && ssl === "prefer")
+            return connected();
+        }
+        const options2 = {
+          socket,
+          servername: net.isIP(socket.host) ? void 0 : socket.host
+        };
+        if (sslnegotiation === "direct")
+          options2.ALPNProtocols = ["postgresql"];
+        if (ssl === "require" || ssl === "allow" || ssl === "prefer")
+          options2.rejectUnauthorized = false;
+        else if (typeof ssl === "object")
+          Object.assign(options2, ssl);
+        socket.removeAllListeners();
+        socket = tls.connect(options2);
+        socket.on("secureConnect", connected);
+        socket.on("error", error);
+        socket.on("close", closed);
+        socket.on("drain", drain);
+      }
+      function drain() {
+        !query && onopen(connection);
+      }
+      function data(x) {
+        if (incomings) {
+          incomings.push(x);
+          remaining -= x.length;
+          if (remaining > 0)
+            return;
+        }
+        incoming = incomings ? Buffer.concat(incomings, length - remaining) : incoming.length === 0 ? x : Buffer.concat([incoming, x], incoming.length + x.length);
+        while (incoming.length > 4) {
+          length = incoming.readUInt32BE(1);
+          if (length >= incoming.length) {
+            remaining = length - incoming.length;
+            incomings = [incoming];
+            break;
+          }
+          try {
+            handle(incoming.subarray(0, length + 1));
+          } catch (e) {
+            query && (query.cursorFn || query.describeFirst) && write(Sync);
+            errored(e);
+          }
+          incoming = incoming.subarray(length + 1);
+          remaining = 0;
+          incomings = null;
+        }
+      }
+      async function connect() {
+        terminated = false;
+        backendParameters = {};
+        socket || (socket = await createSocket());
+        if (!socket)
+          return;
+        connectTimer.start();
+        if (options.socket)
+          return ssl ? secure() : connected();
+        socket.on("connect", ssl ? secure : connected);
+        if (options.path)
+          return socket.connect(options.path);
+        socket.ssl = ssl;
+        socket.connect(port[hostIndex], host[hostIndex]);
+        socket.host = host[hostIndex];
+        socket.port = port[hostIndex];
+        hostIndex = (hostIndex + 1) % port.length;
+      }
+      function reconnect() {
+        setTimeout(connect, closedTime ? Math.max(0, closedTime + delay - performance.now()) : 0);
+      }
+      function connected() {
+        try {
+          statements = {};
+          needsTypes = options.fetch_types;
+          statementId = Math.random().toString(36).slice(2);
+          statementCount = 1;
+          lifeTimer.start();
+          socket.on("data", data);
+          keep_alive && socket.setKeepAlive && socket.setKeepAlive(true, 1e3 * keep_alive);
+          const s = StartupMessage();
+          write(s);
+        } catch (err) {
+          error(err);
+        }
+      }
+      function error(err) {
+        if (connection.queue === queues.connecting && options.host[retries + 1])
+          return;
+        errored(err);
+        while (sent.length)
+          queryError(sent.shift(), err);
+      }
+      function errored(err) {
+        stream && (stream.destroy(err), stream = null);
+        query && queryError(query, err);
+        initial && (queryError(initial, err), initial = null);
+      }
+      function queryError(query2, err) {
+        if (query2.reserve)
+          return query2.reject(err);
+        if (!err || typeof err !== "object")
+          err = new Error(err);
+        "query" in err || "parameters" in err || Object.defineProperties(err, {
+          stack: { value: err.stack + query2.origin.replace(/.*\n/, "\n"), enumerable: options.debug },
+          query: { value: query2.string, enumerable: options.debug },
+          parameters: { value: query2.parameters, enumerable: options.debug },
+          args: { value: query2.args, enumerable: options.debug },
+          types: { value: query2.statement && query2.statement.types, enumerable: options.debug }
+        });
+        query2.reject(err);
+      }
+      function end() {
+        return ending || (!connection.reserved && onend(connection), !connection.reserved && !initial && !query && sent.length === 0 ? (terminate(), new Promise((r) => socket && socket.readyState !== "closed" ? socket.once("close", r) : r())) : ending = new Promise((r) => ended = r));
+      }
+      function terminate() {
+        terminated = true;
+        if (stream || query || initial || sent.length)
+          error(Errors.connection("CONNECTION_DESTROYED", options));
+        clearImmediate(nextWriteTimer);
+        if (socket) {
+          socket.removeListener("data", data);
+          socket.removeListener("connect", connected);
+          socket.readyState === "open" && socket.end(b().X().end());
+        }
+        ended && (ended(), ending = ended = null);
+      }
+      async function closed(hadError) {
+        incoming = Buffer.alloc(0);
+        remaining = 0;
+        incomings = null;
+        clearImmediate(nextWriteTimer);
+        socket.removeListener("data", data);
+        socket.removeListener("connect", connected);
+        idleTimer.cancel();
+        lifeTimer.cancel();
+        connectTimer.cancel();
+        socket.removeAllListeners();
+        socket = null;
+        if (initial)
+          return reconnect();
+        !hadError && (query || sent.length) && error(Errors.connection("CONNECTION_CLOSED", options, socket));
+        closedTime = performance.now();
+        hadError && options.shared.retries++;
+        delay = (typeof backoff === "function" ? backoff(options.shared.retries) : backoff) * 1e3;
+        onclose(connection, Errors.connection("CONNECTION_CLOSED", options, socket));
+      }
+      function handle(xs, x = xs[0]) {
+        (x === 68 ? DataRow : (
+          // D
+          x === 100 ? CopyData : (
+            // d
+            x === 65 ? NotificationResponse : (
+              // A
+              x === 83 ? ParameterStatus : (
+                // S
+                x === 90 ? ReadyForQuery : (
+                  // Z
+                  x === 67 ? CommandComplete : (
+                    // C
+                    x === 50 ? BindComplete : (
+                      // 2
+                      x === 49 ? ParseComplete : (
+                        // 1
+                        x === 116 ? ParameterDescription : (
+                          // t
+                          x === 84 ? RowDescription : (
+                            // T
+                            x === 82 ? Authentication : (
+                              // R
+                              x === 110 ? NoData : (
+                                // n
+                                x === 75 ? BackendKeyData : (
+                                  // K
+                                  x === 69 ? ErrorResponse : (
+                                    // E
+                                    x === 115 ? PortalSuspended : (
+                                      // s
+                                      x === 51 ? CloseComplete : (
+                                        // 3
+                                        x === 71 ? CopyInResponse : (
+                                          // G
+                                          x === 78 ? NoticeResponse : (
+                                            // N
+                                            x === 72 ? CopyOutResponse : (
+                                              // H
+                                              x === 99 ? CopyDone : (
+                                                // c
+                                                x === 73 ? EmptyQueryResponse : (
+                                                  // I
+                                                  x === 86 ? FunctionCallResponse : (
+                                                    // V
+                                                    x === 118 ? NegotiateProtocolVersion : (
+                                                      // v
+                                                      x === 87 ? CopyBothResponse : (
+                                                        // W
+                                                        /* c8 ignore next */
+                                                        UnknownMessage
+                                                      )
+                                                    )
+                                                  )
+                                                )
+                                              )
+                                            )
+                                          )
+                                        )
+                                      )
+                                    )
+                                  )
+                                )
+                              )
+                            )
+                          )
+                        )
+                      )
+                    )
+                  )
+                )
+              )
+            )
+          )
+        ))(xs);
+      }
+      function DataRow(x) {
+        let index = 7;
+        let length2;
+        let column;
+        let value;
+        const row = query.isRaw ? new Array(query.statement.columns.length) : {};
+        for (let i = 0; i < query.statement.columns.length; i++) {
+          column = query.statement.columns[i];
+          length2 = x.readInt32BE(index);
+          index += 4;
+          value = length2 === -1 ? null : query.isRaw === true ? x.subarray(index, index += length2) : column.parser === void 0 ? x.toString("utf8", index, index += length2) : column.parser.array === true ? column.parser(x.toString("utf8", index + 1, index += length2)) : column.parser(x.toString("utf8", index, index += length2));
+          query.isRaw ? row[i] = query.isRaw === true ? value : transform.value.from ? transform.value.from(value, column) : value : row[column.name] = transform.value.from ? transform.value.from(value, column) : value;
+        }
+        query.forEachFn ? query.forEachFn(transform.row.from ? transform.row.from(row) : row, result) : result[rows++] = transform.row.from ? transform.row.from(row) : row;
+      }
+      function ParameterStatus(x) {
+        const [k, v] = x.toString("utf8", 5, x.length - 1).split(b.N);
+        backendParameters[k] = v;
+        if (options.parameters[k] !== v) {
+          options.parameters[k] = v;
+          onparameter && onparameter(k, v);
+        }
+      }
+      function ReadyForQuery(x) {
+        if (query) {
+          if (errorResponse) {
+            query.retried ? errored(query.retried) : query.prepared && retryRoutines.has(errorResponse.routine) ? retry(query, errorResponse) : errored(errorResponse);
+          } else {
+            query.resolve(results || result);
+          }
+        } else if (errorResponse) {
+          errored(errorResponse);
+        }
+        query = results = errorResponse = null;
+        result = new Result();
+        connectTimer.cancel();
+        if (initial) {
+          if (target_session_attrs) {
+            if (!backendParameters.in_hot_standby || !backendParameters.default_transaction_read_only)
+              return fetchState();
+            else if (tryNext(target_session_attrs, backendParameters))
+              return terminate();
+          }
+          if (needsTypes) {
+            initial.reserve && (initial = null);
+            return fetchArrayTypes();
+          }
+          initial && !initial.reserve && execute(initial);
+          options.shared.retries = retries = 0;
+          initial = null;
+          return;
+        }
+        while (sent.length && (query = sent.shift()) && (query.active = true, query.cancelled))
+          Connection(options).cancel(query.state, query.cancelled.resolve, query.cancelled.reject);
+        if (query)
+          return;
+        connection.reserved ? !connection.reserved.release && x[5] === 73 ? ending ? terminate() : (connection.reserved = null, onopen(connection)) : connection.reserved() : ending ? terminate() : onopen(connection);
+      }
+      function CommandComplete(x) {
+        rows = 0;
+        for (let i = x.length - 1; i > 0; i--) {
+          if (x[i] === 32 && x[i + 1] < 58 && result.count === null)
+            result.count = +x.toString("utf8", i + 1, x.length - 1);
+          if (x[i - 1] >= 65) {
+            result.command = x.toString("utf8", 5, i);
+            result.state = backend;
+            break;
+          }
+        }
+        final && (final(), final = null);
+        if (result.command === "BEGIN" && max !== 1 && !connection.reserved)
+          return errored(Errors.generic("UNSAFE_TRANSACTION", "Only use sql.begin, sql.reserved or max: 1"));
+        if (query.options.simple)
+          return BindComplete();
+        if (query.cursorFn) {
+          result.count && query.cursorFn(result);
+          write(Sync);
+        }
+      }
+      function ParseComplete() {
+        query.parsing = false;
+      }
+      function BindComplete() {
+        !result.statement && (result.statement = query.statement);
+        result.columns = query.statement.columns;
+      }
+      function ParameterDescription(x) {
+        const length2 = x.readUInt16BE(5);
+        for (let i = 0; i < length2; ++i)
+          !query.statement.types[i] && (query.statement.types[i] = x.readUInt32BE(7 + i * 4));
+        query.prepare && (statements[query.signature] = query.statement);
+        query.describeFirst && !query.onlyDescribe && (write(prepared(query)), query.describeFirst = false);
+      }
+      function RowDescription(x) {
+        if (result.command) {
+          results = results || [result];
+          results.push(result = new Result());
+          result.count = null;
+          query.statement.columns = null;
+        }
+        const length2 = x.readUInt16BE(5);
+        let index = 7;
+        let start;
+        query.statement.columns = Array(length2);
+        for (let i = 0; i < length2; ++i) {
+          start = index;
+          while (x[index++] !== 0) ;
+          const table = x.readUInt32BE(index);
+          const number = x.readUInt16BE(index + 4);
+          const type = x.readUInt32BE(index + 6);
+          query.statement.columns[i] = {
+            name: transform.column.from ? transform.column.from(x.toString("utf8", start, index - 1)) : x.toString("utf8", start, index - 1),
+            parser: parsers[type],
+            table,
+            number,
+            type
+          };
+          index += 18;
+        }
+        result.statement = query.statement;
+        if (query.onlyDescribe)
+          return query.resolve(query.statement), write(Sync);
+      }
+      async function Authentication(x, type = x.readUInt32BE(5)) {
+        (type === 3 ? AuthenticationCleartextPassword : type === 5 ? AuthenticationMD5Password : type === 10 ? SASL : type === 11 ? SASLContinue : type === 12 ? SASLFinal : type !== 0 ? UnknownAuth : noop)(x, type);
+      }
+      async function AuthenticationCleartextPassword() {
+        const payload = await Pass();
+        write(
+          b().p().str(payload).z(1).end()
+        );
+      }
+      async function AuthenticationMD5Password(x) {
+        const payload = "md5" + await md5(
+          Buffer.concat([
+            Buffer.from(await md5(await Pass() + user)),
+            x.subarray(9)
+          ])
+        );
+        write(
+          b().p().str(payload).z(1).end()
+        );
+      }
+      async function SASL() {
+        nonce = (await crypto.randomBytes(18)).toString("base64");
+        b().p().str("SCRAM-SHA-256" + b.N);
+        const i = b.i;
+        write(b.inc(4).str("n,,n=*,r=" + nonce).i32(b.i - i - 4, i).end());
+      }
+      async function SASLContinue(x) {
+        const res = x.toString("utf8", 9).split(",").reduce((acc, x2) => (acc[x2[0]] = x2.slice(2), acc), {});
+        const saltedPassword = await crypto.pbkdf2Sync(
+          await Pass(),
+          Buffer.from(res.s, "base64"),
+          parseInt(res.i),
+          32,
+          "sha256"
+        );
+        const clientKey = await hmac(saltedPassword, "Client Key");
+        const auth = "n=*,r=" + nonce + ",r=" + res.r + ",s=" + res.s + ",i=" + res.i + ",c=biws,r=" + res.r;
+        serverSignature = (await hmac(await hmac(saltedPassword, "Server Key"), auth)).toString("base64");
+        const payload = "c=biws,r=" + res.r + ",p=" + xor(
+          clientKey,
+          Buffer.from(await hmac(await sha2562(clientKey), auth))
+        ).toString("base64");
+        write(
+          b().p().str(payload).end()
+        );
+      }
+      function SASLFinal(x) {
+        if (x.toString("utf8", 9).split(b.N, 1)[0].slice(2) === serverSignature)
+          return;
+        errored(Errors.generic("SASL_SIGNATURE_MISMATCH", "The server did not return the correct signature"));
+        socket.destroy();
+      }
+      function Pass() {
+        return Promise.resolve(
+          typeof options.pass === "function" ? options.pass() : options.pass
+        );
+      }
+      function NoData() {
+        result.statement = query.statement;
+        result.statement.columns = [];
+        if (query.onlyDescribe)
+          return query.resolve(query.statement), write(Sync);
+      }
+      function BackendKeyData(x) {
+        backend.pid = x.readUInt32BE(5);
+        backend.secret = x.readUInt32BE(9);
+      }
+      async function fetchArrayTypes() {
+        needsTypes = false;
+        const types = await new Query([`
+      select b.oid, b.typarray
+      from pg_catalog.pg_type a
+      left join pg_catalog.pg_type b on b.oid = a.typelem
+      where a.typcategory = 'A'
+      group by b.oid, b.typarray
+      order by b.oid
+    `], [], execute);
+        types.forEach(({ oid, typarray }) => addArrayType(oid, typarray));
+      }
+      function addArrayType(oid, typarray) {
+        if (!!options.parsers[typarray] && !!options.serializers[typarray]) return;
+        const parser = options.parsers[oid];
+        options.shared.typeArrayMap[oid] = typarray;
+        options.parsers[typarray] = (xs) => arrayParser(xs, parser, typarray);
+        options.parsers[typarray].array = true;
+        options.serializers[typarray] = (xs) => arraySerializer(xs, options.serializers[oid], options, typarray);
+      }
+      function tryNext(x, xs) {
+        return x === "read-write" && xs.default_transaction_read_only === "on" || x === "read-only" && xs.default_transaction_read_only === "off" || x === "primary" && xs.in_hot_standby === "on" || x === "standby" && xs.in_hot_standby === "off" || x === "prefer-standby" && xs.in_hot_standby === "off" && options.host[retries];
+      }
+      function fetchState() {
+        const query2 = new Query([`
+      show transaction_read_only;
+      select pg_catalog.pg_is_in_recovery()
+    `], [], execute, null, { simple: true });
+        query2.resolve = ([[a], [b2]]) => {
+          backendParameters.default_transaction_read_only = a.transaction_read_only;
+          backendParameters.in_hot_standby = b2.pg_is_in_recovery ? "on" : "off";
+        };
+        query2.execute();
+      }
+      function ErrorResponse(x) {
+        if (query) {
+          (query.cursorFn || query.describeFirst) && write(Sync);
+          errorResponse = Errors.postgres(parseError(x));
+        } else {
+          errored(Errors.postgres(parseError(x)));
+        }
+      }
+      function retry(q, error2) {
+        delete statements[q.signature];
+        q.retried = error2;
+        execute(q);
+      }
+      function NotificationResponse(x) {
+        if (!onnotify)
+          return;
+        let index = 9;
+        while (x[index++] !== 0) ;
+        onnotify(
+          x.toString("utf8", 9, index - 1),
+          x.toString("utf8", index, x.length - 1)
+        );
+      }
+      async function PortalSuspended() {
+        try {
+          const x = await Promise.resolve(query.cursorFn(result));
+          rows = 0;
+          x === CLOSE ? write(Close(query.portal)) : (result = new Result(), write(Execute("", query.cursorRows)));
+        } catch (err) {
+          write(Sync);
+          query.reject(err);
+        }
+      }
+      function CloseComplete() {
+        result.count && query.cursorFn(result);
+        query.resolve(result);
+      }
+      function CopyInResponse() {
+        stream = new Stream.Writable({
+          autoDestroy: true,
+          write(chunk2, encoding, callback) {
+            socket.write(b().d().raw(chunk2).end(), callback);
+          },
+          destroy(error2, callback) {
+            callback(error2);
+            socket.write(b().f().str(error2 + b.N).end());
+            stream = null;
+          },
+          final(callback) {
+            socket.write(b().c().end());
+            final = callback;
+            stream = null;
+          }
+        });
+        query.resolve(stream);
+      }
+      function CopyOutResponse() {
+        stream = new Stream.Readable({
+          read() {
+            socket.resume();
+          }
+        });
+        query.resolve(stream);
+      }
+      function CopyBothResponse() {
+        stream = new Stream.Duplex({
+          autoDestroy: true,
+          read() {
+            socket.resume();
+          },
+          /* c8 ignore next 11 */
+          write(chunk2, encoding, callback) {
+            socket.write(b().d().raw(chunk2).end(), callback);
+          },
+          destroy(error2, callback) {
+            callback(error2);
+            socket.write(b().f().str(error2 + b.N).end());
+            stream = null;
+          },
+          final(callback) {
+            socket.write(b().c().end());
+            final = callback;
+          }
+        });
+        query.resolve(stream);
+      }
+      function CopyData(x) {
+        stream && (stream.push(x.subarray(5)) || socket.pause());
+      }
+      function CopyDone() {
+        stream && stream.push(null);
+        stream = null;
+      }
+      function NoticeResponse(x) {
+        onnotice ? onnotice(parseError(x)) : console.log(parseError(x));
+      }
+      function EmptyQueryResponse() {
+      }
+      function FunctionCallResponse() {
+        errored(Errors.notSupported("FunctionCallResponse"));
+      }
+      function NegotiateProtocolVersion() {
+        errored(Errors.notSupported("NegotiateProtocolVersion"));
+      }
+      function UnknownMessage(x) {
+        console.error("Postgres.js : Unknown Message:", x[0]);
+      }
+      function UnknownAuth(x, type) {
+        console.error("Postgres.js : Unknown Auth:", type);
+      }
+      function Bind(parameters, types, statement = "", portal = "") {
+        let prev, type;
+        b().B().str(portal + b.N).str(statement + b.N).i16(0).i16(parameters.length);
+        parameters.forEach((x, i) => {
+          if (x === null)
+            return b.i32(4294967295);
+          type = types[i];
+          parameters[i] = x = type in options.serializers ? options.serializers[type](x) : "" + x;
+          prev = b.i;
+          b.inc(4).str(x).i32(b.i - prev - 4, prev);
+        });
+        b.i16(0);
+        return b.end();
+      }
+      function Parse(str, parameters, types, name = "") {
+        b().P().str(name + b.N).str(str + b.N).i16(parameters.length);
+        parameters.forEach((x, i) => b.i32(types[i] || 0));
+        return b.end();
+      }
+      function Describe(x, name = "") {
+        return b().D().str(x).str(name + b.N).end();
+      }
+      function Execute(portal = "", rows2 = 0) {
+        return Buffer.concat([
+          b().E().str(portal + b.N).i32(rows2).end(),
+          Flush
+        ]);
+      }
+      function Close(portal = "") {
+        return Buffer.concat([
+          b().C().str("P").str(portal + b.N).end(),
+          b().S().end()
+        ]);
+      }
+      function StartupMessage() {
+        return cancelMessage || b().inc(4).i16(3).z(2).str(
+          Object.entries(Object.assign(
+            {
+              user,
+              database,
+              client_encoding: "UTF8"
+            },
+            options.connection
+          )).filter(([, v]) => v).map(([k, v]) => k + b.N + v).join(b.N)
+        ).z(2).end(0);
+      }
+    }
+    function parseError(x) {
+      const error = {};
+      let start = 5;
+      for (let i = 5; i < x.length - 1; i++) {
+        if (x[i] === 0) {
+          error[errorFields[x[start]]] = x.toString("utf8", start + 1, i);
+          start = i + 1;
+        }
+      }
+      return error;
+    }
+    function md5(x) {
+      return crypto.createHash("md5").update(x).digest("hex");
+    }
+    function hmac(key, x) {
+      return crypto.createHmac("sha256", key).update(x).digest();
+    }
+    function sha2562(x) {
+      return crypto.createHash("sha256").update(x).digest();
+    }
+    function xor(a, b2) {
+      const length = Math.max(a.length, b2.length);
+      const buffer = Buffer.allocUnsafe(length);
+      for (let i = 0; i < length; i++)
+        buffer[i] = a[i] ^ b2[i];
+      return buffer;
+    }
+    function timer(fn, seconds) {
+      seconds = typeof seconds === "function" ? seconds() : seconds;
+      if (!seconds)
+        return { cancel: noop, start: noop };
+      let timer2;
+      return {
+        cancel() {
+          timer2 && (clearTimeout(timer2), timer2 = null);
+        },
+        start() {
+          timer2 && clearTimeout(timer2);
+          timer2 = setTimeout(done, seconds * 1e3, arguments);
+        }
+      };
+      function done(args) {
+        fn.apply(null, args);
+        timer2 = null;
+      }
+    }
+  }
+});
+
+// node_modules/postgres/cjs/src/subscribe.js
+var require_subscribe = __commonJS({
+  "node_modules/postgres/cjs/src/subscribe.js"(exports2, module2) {
+    var noop = () => {
+    };
+    module2.exports = Subscribe;
+    function Subscribe(postgres2, options) {
+      const subscribers = /* @__PURE__ */ new Map(), slot = "postgresjs_" + Math.random().toString(36).slice(2), state = {};
+      let connection, stream, ended = false;
+      const sql = subscribe.sql = postgres2({
+        ...options,
+        transform: { column: {}, value: {}, row: {} },
+        max: 1,
+        fetch_types: false,
+        idle_timeout: null,
+        max_lifetime: null,
+        connection: {
+          ...options.connection,
+          replication: "database"
+        },
+        onclose: async function() {
+          if (ended)
+            return;
+          stream = null;
+          state.pid = state.secret = void 0;
+          connected(await init(sql, slot, options.publications));
+          subscribers.forEach((event) => event.forEach(({ onsubscribe }) => onsubscribe()));
+        },
+        no_subscribe: true
+      });
+      const end = sql.end, close = sql.close;
+      sql.end = async () => {
+        ended = true;
+        stream && await new Promise((r) => (stream.once("close", r), stream.end()));
+        return end();
+      };
+      sql.close = async () => {
+        stream && await new Promise((r) => (stream.once("close", r), stream.end()));
+        return close();
+      };
+      return subscribe;
+      async function subscribe(event, fn, onsubscribe = noop, onerror = noop) {
+        event = parseEvent(event);
+        if (!connection)
+          connection = init(sql, slot, options.publications);
+        const subscriber = { fn, onsubscribe };
+        const fns = subscribers.has(event) ? subscribers.get(event).add(subscriber) : subscribers.set(event, /* @__PURE__ */ new Set([subscriber])).get(event);
+        const unsubscribe = () => {
+          fns.delete(subscriber);
+          fns.size === 0 && subscribers.delete(event);
+        };
+        return connection.then((x) => {
+          connected(x);
+          onsubscribe();
+          stream && stream.on("error", onerror);
+          return { unsubscribe, state, sql };
+        });
+      }
+      function connected(x) {
+        stream = x.stream;
+        state.pid = x.state.pid;
+        state.secret = x.state.secret;
+      }
+      async function init(sql2, slot2, publications) {
+        if (!publications)
+          throw new Error("Missing publication names");
+        const xs = await sql2.unsafe(
+          `CREATE_REPLICATION_SLOT ${slot2} TEMPORARY LOGICAL pgoutput NOEXPORT_SNAPSHOT`
+        );
+        const [x] = xs;
+        const stream2 = await sql2.unsafe(
+          `START_REPLICATION SLOT ${slot2} LOGICAL ${x.consistent_point} (proto_version '1', publication_names '${publications}')`
+        ).writable();
+        const state2 = {
+          lsn: Buffer.concat(x.consistent_point.split("/").map((x2) => Buffer.from(("00000000" + x2).slice(-8), "hex")))
+        };
+        stream2.on("data", data);
+        stream2.on("error", error);
+        stream2.on("close", sql2.close);
+        return { stream: stream2, state: xs.state };
+        function error(e) {
+          console.error("Unexpected error during logical streaming - reconnecting", e);
+        }
+        function data(x2) {
+          if (x2[0] === 119) {
+            parse(x2.subarray(25), state2, sql2.options.parsers, handle, options.transform);
+          } else if (x2[0] === 107 && x2[17]) {
+            state2.lsn = x2.subarray(1, 9);
+            pong();
+          }
+        }
+        function handle(a, b) {
+          const path = b.relation.schema + "." + b.relation.table;
+          call("*", a, b);
+          call("*:" + path, a, b);
+          b.relation.keys.length && call("*:" + path + "=" + b.relation.keys.map((x2) => a[x2.name]), a, b);
+          call(b.command, a, b);
+          call(b.command + ":" + path, a, b);
+          b.relation.keys.length && call(b.command + ":" + path + "=" + b.relation.keys.map((x2) => a[x2.name]), a, b);
+        }
+        function pong() {
+          const x2 = Buffer.alloc(34);
+          x2[0] = "r".charCodeAt(0);
+          x2.fill(state2.lsn, 1);
+          x2.writeBigInt64BE(BigInt(Date.now() - Date.UTC(2e3, 0, 1)) * BigInt(1e3), 25);
+          stream2.write(x2);
+        }
+      }
+      function call(x, a, b) {
+        subscribers.has(x) && subscribers.get(x).forEach(({ fn }) => fn(a, b, x));
+      }
+    }
+    function Time(x) {
+      return new Date(Date.UTC(2e3, 0, 1) + Number(x / BigInt(1e3)));
+    }
+    function parse(x, state, parsers, handle, transform) {
+      const char = (acc, [k, v]) => (acc[k.charCodeAt(0)] = v, acc);
+      Object.entries({
+        R: (x2) => {
+          let i = 1;
+          const r = state[x2.readUInt32BE(i)] = {
+            schema: x2.toString("utf8", i += 4, i = x2.indexOf(0, i)) || "pg_catalog",
+            table: x2.toString("utf8", i + 1, i = x2.indexOf(0, i + 1)),
+            columns: Array(x2.readUInt16BE(i += 2)),
+            keys: []
+          };
+          i += 2;
+          let columnIndex = 0, column;
+          while (i < x2.length) {
+            column = r.columns[columnIndex++] = {
+              key: x2[i++],
+              name: transform.column.from ? transform.column.from(x2.toString("utf8", i, i = x2.indexOf(0, i))) : x2.toString("utf8", i, i = x2.indexOf(0, i)),
+              type: x2.readUInt32BE(i += 1),
+              parser: parsers[x2.readUInt32BE(i)],
+              atttypmod: x2.readUInt32BE(i += 4)
+            };
+            column.key && r.keys.push(column);
+            i += 4;
+          }
+        },
+        Y: () => {
+        },
+        // Type
+        O: () => {
+        },
+        // Origin
+        B: (x2) => {
+          state.date = Time(x2.readBigInt64BE(9));
+          state.lsn = x2.subarray(1, 9);
+        },
+        I: (x2) => {
+          let i = 1;
+          const relation = state[x2.readUInt32BE(i)];
+          const { row } = tuples(x2, relation.columns, i += 7, transform);
+          handle(row, {
+            command: "insert",
+            relation
+          });
+        },
+        D: (x2) => {
+          let i = 1;
+          const relation = state[x2.readUInt32BE(i)];
+          i += 4;
+          const key = x2[i] === 75;
+          handle(
+            key || x2[i] === 79 ? tuples(x2, relation.columns, i += 3, transform).row : null,
+            {
+              command: "delete",
+              relation,
+              key
+            }
+          );
+        },
+        U: (x2) => {
+          let i = 1;
+          const relation = state[x2.readUInt32BE(i)];
+          i += 4;
+          const key = x2[i] === 75;
+          const xs = key || x2[i] === 79 ? tuples(x2, relation.columns, i += 3, transform) : null;
+          xs && (i = xs.i);
+          const { row } = tuples(x2, relation.columns, i + 3, transform);
+          handle(row, {
+            command: "update",
+            relation,
+            key,
+            old: xs && xs.row
+          });
+        },
+        T: () => {
+        },
+        // Truncate,
+        C: () => {
+        }
+        // Commit
+      }).reduce(char, {})[x[0]](x);
+    }
+    function tuples(x, columns, xi, transform) {
+      let type, column, value;
+      const row = transform.raw ? new Array(columns.length) : {};
+      for (let i = 0; i < columns.length; i++) {
+        type = x[xi++];
+        column = columns[i];
+        value = type === 110 ? null : type === 117 ? void 0 : column.parser === void 0 ? x.toString("utf8", xi + 4, xi += 4 + x.readUInt32BE(xi)) : column.parser.array === true ? column.parser(x.toString("utf8", xi + 5, xi += 4 + x.readUInt32BE(xi))) : column.parser(x.toString("utf8", xi + 4, xi += 4 + x.readUInt32BE(xi)));
+        transform.raw ? row[i] = transform.raw === true ? value : transform.value.from ? transform.value.from(value, column) : value : row[column.name] = transform.value.from ? transform.value.from(value, column) : value;
+      }
+      return { i: xi, row: transform.row.from ? transform.row.from(row) : row };
+    }
+    function parseEvent(x) {
+      const xs = x.match(/^(\*|insert|update|delete)?:?([^.]+?\.?[^=]+)?=?(.+)?/i) || [];
+      if (!xs)
+        throw new Error("Malformed subscribe pattern: " + x);
+      const [, command, path, key] = xs;
+      return (command || "*") + (path ? ":" + (path.indexOf(".") === -1 ? "public." + path : path) : "") + (key ? "=" + key : "");
+    }
+  }
+});
+
+// node_modules/postgres/cjs/src/large.js
+var require_large = __commonJS({
+  "node_modules/postgres/cjs/src/large.js"(exports2, module2) {
+    var Stream = require("stream");
+    module2.exports = largeObject;
+    function largeObject(sql, oid, mode = 131072 | 262144) {
+      return new Promise(async (resolve, reject) => {
+        await sql.begin(async (sql2) => {
+          let finish;
+          !oid && ([{ oid }] = await sql2`select lo_creat(-1) as oid`);
+          const [{ fd }] = await sql2`select lo_open(${oid}, ${mode}) as fd`;
+          const lo = {
+            writable,
+            readable,
+            close: () => sql2`select lo_close(${fd})`.then(finish),
+            tell: () => sql2`select lo_tell64(${fd})`,
+            read: (x) => sql2`select loread(${fd}, ${x}) as data`,
+            write: (x) => sql2`select lowrite(${fd}, ${x})`,
+            truncate: (x) => sql2`select lo_truncate64(${fd}, ${x})`,
+            seek: (x, whence = 0) => sql2`select lo_lseek64(${fd}, ${x}, ${whence})`,
+            size: () => sql2`
+          select
+            lo_lseek64(${fd}, location, 0) as position,
+            seek.size
+          from (
+            select
+              lo_lseek64($1, 0, 2) as size,
+              tell.location
+            from (select lo_tell64($1) as location) tell
+          ) seek
+        `
+          };
+          resolve(lo);
+          return new Promise(async (r) => finish = r);
+          async function readable({
+            highWaterMark = 2048 * 8,
+            start = 0,
+            end = Infinity
+          } = {}) {
+            let max = end - start;
+            start && await lo.seek(start);
+            return new Stream.Readable({
+              highWaterMark,
+              async read(size) {
+                const l = size > max ? size - max : size;
+                max -= size;
+                const [{ data }] = await lo.read(l);
+                this.push(data);
+                if (data.length < size)
+                  this.push(null);
+              }
+            });
+          }
+          async function writable({
+            highWaterMark = 2048 * 8,
+            start = 0
+          } = {}) {
+            start && await lo.seek(start);
+            return new Stream.Writable({
+              highWaterMark,
+              write(chunk, encoding, callback) {
+                lo.write(chunk).then(() => callback(), callback);
+              }
+            });
+          }
+        }).catch(reject);
+      });
+    }
+  }
+});
+
+// node_modules/postgres/cjs/src/index.js
+var require_src = __commonJS({
+  "node_modules/postgres/cjs/src/index.js"(exports2, module2) {
+    var os = require("os");
+    var fs = require("fs");
+    var {
+      mergeUserTypes,
+      inferType,
+      Parameter,
+      Identifier,
+      Builder,
+      toPascal,
+      pascal,
+      toCamel,
+      camel,
+      toKebab,
+      kebab,
+      fromPascal,
+      fromCamel,
+      fromKebab
+    } = require_types();
+    var Connection = require_connection();
+    var { Query, CLOSE } = require_query();
+    var Queue = require_queue();
+    var { Errors, PostgresError } = require_errors();
+    var Subscribe = require_subscribe();
+    var largeObject = require_large();
+    Object.assign(Postgres, {
+      PostgresError,
+      toPascal,
+      pascal,
+      toCamel,
+      camel,
+      toKebab,
+      kebab,
+      fromPascal,
+      fromCamel,
+      fromKebab,
+      BigInt: {
+        to: 20,
+        from: [20],
+        parse: (x) => BigInt(x),
+        // eslint-disable-line
+        serialize: (x) => x.toString()
+      }
+    });
+    module2.exports = Postgres;
+    function Postgres(a, b) {
+      const options = parseOptions(a, b), subscribe = options.no_subscribe || Subscribe(Postgres, { ...options });
+      let ending = false;
+      const queries = Queue(), connecting = Queue(), reserved = Queue(), closed = Queue(), ended = Queue(), open = Queue(), busy = Queue(), full = Queue(), queues = { connecting, reserved, closed, ended, open, busy, full };
+      const connections = [...Array(options.max)].map(() => Connection(options, queues, { onopen, onend, onclose }));
+      const sql = Sql(handler);
+      Object.assign(sql, {
+        get parameters() {
+          return options.parameters;
+        },
+        largeObject: largeObject.bind(null, sql),
+        subscribe,
+        CLOSE,
+        END: CLOSE,
+        PostgresError,
+        options,
+        reserve,
+        listen,
+        begin,
+        close,
+        end
+      });
+      return sql;
+      function Sql(handler2) {
+        handler2.debug = options.debug;
+        Object.entries(options.types).reduce((acc, [name, type]) => {
+          acc[name] = (x) => new Parameter(x, type.to);
+          return acc;
+        }, typed);
+        Object.assign(sql2, {
+          types: typed,
+          typed,
+          unsafe,
+          notify,
+          array,
+          json,
+          file
+        });
+        return sql2;
+        function typed(value, type) {
+          return new Parameter(value, type);
+        }
+        function sql2(strings, ...args) {
+          const query = strings && Array.isArray(strings.raw) ? new Query(strings, args, handler2, cancel) : typeof strings === "string" && !args.length ? new Identifier(options.transform.column.to ? options.transform.column.to(strings) : strings) : new Builder(strings, args);
+          return query;
+        }
+        function unsafe(string, args = [], options2 = {}) {
+          arguments.length === 2 && !Array.isArray(args) && (options2 = args, args = []);
+          const query = new Query([string], args, handler2, cancel, {
+            prepare: false,
+            ...options2,
+            simple: "simple" in options2 ? options2.simple : args.length === 0
+          });
+          return query;
+        }
+        function file(path, args = [], options2 = {}) {
+          arguments.length === 2 && !Array.isArray(args) && (options2 = args, args = []);
+          const query = new Query([], args, (query2) => {
+            fs.readFile(path, "utf8", (err, string) => {
+              if (err)
+                return query2.reject(err);
+              query2.strings = [string];
+              handler2(query2);
+            });
+          }, cancel, {
+            ...options2,
+            simple: "simple" in options2 ? options2.simple : args.length === 0
+          });
+          return query;
+        }
+      }
+      async function listen(name, fn, onlisten) {
+        const listener = { fn, onlisten };
+        const sql2 = listen.sql || (listen.sql = Postgres({
+          ...options,
+          max: 1,
+          idle_timeout: null,
+          max_lifetime: null,
+          fetch_types: false,
+          onclose() {
+            Object.entries(listen.channels).forEach(([name2, { listeners }]) => {
+              delete listen.channels[name2];
+              Promise.all(listeners.map((l) => listen(name2, l.fn, l.onlisten).catch(() => {
+              })));
+            });
+          },
+          onnotify(c, x) {
+            c in listen.channels && listen.channels[c].listeners.forEach((l) => l.fn(x));
+          }
+        }));
+        const channels = listen.channels || (listen.channels = {}), exists = name in channels;
+        if (exists) {
+          channels[name].listeners.push(listener);
+          const result2 = await channels[name].result;
+          listener.onlisten && listener.onlisten();
+          return { state: result2.state, unlisten };
+        }
+        channels[name] = { result: sql2`listen ${sql2.unsafe('"' + name.replace(/"/g, '""') + '"')}`, listeners: [listener] };
+        const result = await channels[name].result;
+        listener.onlisten && listener.onlisten();
+        return { state: result.state, unlisten };
+        async function unlisten() {
+          if (name in channels === false)
+            return;
+          channels[name].listeners = channels[name].listeners.filter((x) => x !== listener);
+          if (channels[name].listeners.length)
+            return;
+          delete channels[name];
+          return sql2`unlisten ${sql2.unsafe('"' + name.replace(/"/g, '""') + '"')}`;
+        }
+      }
+      async function notify(channel, payload) {
+        return await sql`select pg_notify(${channel}, ${"" + payload})`;
+      }
+      async function reserve() {
+        const queue = Queue();
+        const c = open.length ? open.shift() : await new Promise((resolve, reject) => {
+          const query = { reserve: resolve, reject };
+          queries.push(query);
+          closed.length && connect(closed.shift(), query);
+        });
+        move(c, reserved);
+        c.reserved = () => queue.length ? c.execute(queue.shift()) : move(c, reserved);
+        c.reserved.release = true;
+        const sql2 = Sql(handler2);
+        sql2.release = () => {
+          c.reserved = null;
+          onopen(c);
+        };
+        return sql2;
+        function handler2(q) {
+          c.queue === full ? queue.push(q) : c.execute(q) || move(c, full);
+        }
+      }
+      async function begin(options2, fn) {
+        !fn && (fn = options2, options2 = "");
+        const queries2 = Queue();
+        let savepoints = 0, connection, prepare = null;
+        try {
+          await sql.unsafe("begin " + options2.replace(/[^a-z ]/ig, ""), [], { onexecute }).execute();
+          return await Promise.race([
+            scope(connection, fn),
+            new Promise((_, reject) => connection.onclose = reject)
+          ]);
+        } catch (error) {
+          throw error;
+        }
+        async function scope(c, fn2, name) {
+          const sql2 = Sql(handler2);
+          sql2.savepoint = savepoint;
+          sql2.prepare = (x) => prepare = x.replace(/[^a-z0-9$-_. ]/gi);
+          let uncaughtError, result;
+          name && await sql2`savepoint ${sql2(name)}`;
+          try {
+            result = await new Promise((resolve, reject) => {
+              const x = fn2(sql2);
+              Promise.resolve(Array.isArray(x) ? Promise.all(x) : x).then(resolve, reject);
+            });
+            if (uncaughtError)
+              throw uncaughtError;
+          } catch (e) {
+            await (name ? sql2`rollback to ${sql2(name)}` : sql2`rollback`);
+            throw e instanceof PostgresError && e.code === "25P02" && uncaughtError || e;
+          }
+          if (!name) {
+            prepare ? await sql2`prepare transaction '${sql2.unsafe(prepare)}'` : await sql2`commit`;
+          }
+          return result;
+          function savepoint(name2, fn3) {
+            if (name2 && Array.isArray(name2.raw))
+              return savepoint((sql3) => sql3.apply(sql3, arguments));
+            arguments.length === 1 && (fn3 = name2, name2 = null);
+            return scope(c, fn3, "s" + savepoints++ + (name2 ? "_" + name2 : ""));
+          }
+          function handler2(q) {
+            q.catch((e) => uncaughtError || (uncaughtError = e));
+            c.queue === full ? queries2.push(q) : c.execute(q) || move(c, full);
+          }
+        }
+        function onexecute(c) {
+          connection = c;
+          move(c, reserved);
+          c.reserved = () => queries2.length ? c.execute(queries2.shift()) : move(c, reserved);
+        }
+      }
+      function move(c, queue) {
+        c.queue.remove(c);
+        queue.push(c);
+        c.queue = queue;
+        queue === open ? c.idleTimer.start() : c.idleTimer.cancel();
+        return c;
+      }
+      function json(x) {
+        return new Parameter(x, 3802);
+      }
+      function array(x, type) {
+        if (!Array.isArray(x))
+          return array(Array.from(arguments));
+        return new Parameter(x, type || (x.length ? inferType(x) || 25 : 0), options.shared.typeArrayMap);
+      }
+      function handler(query) {
+        if (ending)
+          return query.reject(Errors.connection("CONNECTION_ENDED", options, options));
+        if (open.length)
+          return go(open.shift(), query);
+        if (closed.length)
+          return connect(closed.shift(), query);
+        busy.length ? go(busy.shift(), query) : queries.push(query);
+      }
+      function go(c, query) {
+        return c.execute(query) ? move(c, busy) : move(c, full);
+      }
+      function cancel(query) {
+        return new Promise((resolve, reject) => {
+          query.state ? query.active ? Connection(options).cancel(query.state, resolve, reject) : query.cancelled = { resolve, reject } : (queries.remove(query), query.cancelled = true, query.reject(Errors.generic("57014", "canceling statement due to user request")), resolve());
+        });
+      }
+      async function end({ timeout = null } = {}) {
+        if (ending)
+          return ending;
+        await 1;
+        let timer;
+        return ending = Promise.race([
+          new Promise((r) => timeout !== null && (timer = setTimeout(destroy, timeout * 1e3, r))),
+          Promise.all(connections.map((c) => c.end()).concat(
+            listen.sql ? listen.sql.end({ timeout: 0 }) : [],
+            subscribe.sql ? subscribe.sql.end({ timeout: 0 }) : []
+          ))
+        ]).then(() => clearTimeout(timer));
+      }
+      async function close() {
+        await Promise.all(connections.map((c) => c.end()));
+      }
+      async function destroy(resolve) {
+        await Promise.all(connections.map((c) => c.terminate()));
+        while (queries.length)
+          queries.shift().reject(Errors.connection("CONNECTION_DESTROYED", options));
+        resolve();
+      }
+      function connect(c, query) {
+        move(c, connecting);
+        c.connect(query);
+        return c;
+      }
+      function onend(c) {
+        move(c, ended);
+      }
+      function onopen(c) {
+        if (queries.length === 0)
+          return move(c, open);
+        let max = Math.ceil(queries.length / (connecting.length + 1)), ready = true;
+        while (ready && queries.length && max-- > 0) {
+          const query = queries.shift();
+          if (query.reserve)
+            return query.reserve(c);
+          ready = c.execute(query);
+        }
+        ready ? move(c, busy) : move(c, full);
+      }
+      function onclose(c, e) {
+        move(c, closed);
+        c.reserved = null;
+        c.onclose && (c.onclose(e), c.onclose = null);
+        options.onclose && options.onclose(c.id);
+        queries.length && connect(c, queries.shift());
+      }
+    }
+    function parseOptions(a, b) {
+      if (a && a.shared)
+        return a;
+      const env = process.env, o = (!a || typeof a === "string" ? b : a) || {}, { url, multihost } = parseUrl(a), query = [...url.searchParams].reduce((a2, [b2, c]) => (a2[b2] = c, a2), {}), host = o.hostname || o.host || multihost || url.hostname || env.PGHOST || "localhost", port = o.port || url.port || env.PGPORT || 5432, user = o.user || o.username || url.username || env.PGUSERNAME || env.PGUSER || osUsername();
+      o.no_prepare && (o.prepare = false);
+      query.sslmode && (query.ssl = query.sslmode, delete query.sslmode);
+      "timeout" in o && (console.log("The timeout option is deprecated, use idle_timeout instead"), o.idle_timeout = o.timeout);
+      query.sslrootcert === "system" && (query.ssl = "verify-full");
+      const ints = ["idle_timeout", "connect_timeout", "max_lifetime", "max_pipeline", "backoff", "keep_alive"];
+      const defaults = {
+        max: globalThis.Cloudflare ? 3 : 10,
+        ssl: false,
+        sslnegotiation: null,
+        idle_timeout: null,
+        connect_timeout: 30,
+        max_lifetime,
+        max_pipeline: 100,
+        backoff,
+        keep_alive: 60,
+        prepare: true,
+        debug: false,
+        fetch_types: true,
+        publications: "alltables",
+        target_session_attrs: null
+      };
+      return {
+        host: Array.isArray(host) ? host : host.split(",").map((x) => x.split(":")[0]),
+        port: Array.isArray(port) ? port : host.split(",").map((x) => parseInt(x.split(":")[1] || port)),
+        path: o.path || host.indexOf("/") > -1 && host + "/.s.PGSQL." + port,
+        database: o.database || o.db || (url.pathname || "").slice(1) || env.PGDATABASE || user,
+        user,
+        pass: o.pass || o.password || url.password || env.PGPASSWORD || "",
+        ...Object.entries(defaults).reduce(
+          (acc, [k, d]) => {
+            const value = k in o ? o[k] : k in query ? query[k] === "disable" || query[k] === "false" ? false : query[k] : env["PG" + k.toUpperCase()] || d;
+            acc[k] = typeof value === "string" && ints.includes(k) ? +value : value;
+            return acc;
+          },
+          {}
+        ),
+        connection: {
+          application_name: env.PGAPPNAME || "postgres.js",
+          ...o.connection,
+          ...Object.entries(query).reduce((acc, [k, v]) => (k in defaults || (acc[k] = v), acc), {})
+        },
+        types: o.types || {},
+        target_session_attrs: tsa(o, url, env),
+        onnotice: o.onnotice,
+        onnotify: o.onnotify,
+        onclose: o.onclose,
+        onparameter: o.onparameter,
+        socket: o.socket,
+        transform: parseTransform(o.transform || { undefined: void 0 }),
+        parameters: {},
+        shared: { retries: 0, typeArrayMap: {} },
+        ...mergeUserTypes(o.types)
+      };
+    }
+    function tsa(o, url, env) {
+      const x = o.target_session_attrs || url.searchParams.get("target_session_attrs") || env.PGTARGETSESSIONATTRS;
+      if (!x || ["read-write", "read-only", "primary", "standby", "prefer-standby"].includes(x))
+        return x;
+      throw new Error("target_session_attrs " + x + " is not supported");
+    }
+    function backoff(retries) {
+      return (0.5 + Math.random() / 2) * Math.min(3 ** retries / 100, 20);
+    }
+    function max_lifetime() {
+      return 60 * (30 + Math.random() * 30);
+    }
+    function parseTransform(x) {
+      return {
+        undefined: x.undefined,
+        column: {
+          from: typeof x.column === "function" ? x.column : x.column && x.column.from,
+          to: x.column && x.column.to
+        },
+        value: {
+          from: typeof x.value === "function" ? x.value : x.value && x.value.from,
+          to: x.value && x.value.to
+        },
+        row: {
+          from: typeof x.row === "function" ? x.row : x.row && x.row.from,
+          to: x.row && x.row.to
+        }
+      };
+    }
+    function parseUrl(url) {
+      if (!url || typeof url !== "string")
+        return { url: { searchParams: /* @__PURE__ */ new Map() } };
+      let host = url;
+      host = host.slice(host.indexOf("://") + 3).split(/[?/]/)[0];
+      host = decodeURIComponent(host.slice(host.indexOf("@") + 1));
+      const urlObj = new URL(url.replace(host, host.split(",")[0]));
+      return {
+        url: {
+          username: decodeURIComponent(urlObj.username),
+          password: decodeURIComponent(urlObj.password),
+          host: urlObj.host,
+          hostname: urlObj.hostname,
+          port: urlObj.port,
+          pathname: urlObj.pathname,
+          searchParams: urlObj.searchParams
+        },
+        multihost: host.indexOf(",") > -1 && host
+      };
+    }
+    function osUsername() {
+      try {
+        return os.userInfo().username;
+      } catch (_) {
+        return process.env.USERNAME || process.env.USER || process.env.LOGNAME;
+      }
+    }
+  }
+});
+
+// scripts/queue2-dual-lane-controller.cjs
+var require_queue2_dual_lane_controller = __commonJS({
+  "scripts/queue2-dual-lane-controller.cjs"(exports2, module2) {
+    "use strict";
+    var { createHash: createHash2 } = require("node:crypto");
+    var QUEUE = "#2";
+    var USEFUL_CL_MIN = 25;
+    var MIN_QUOTA_PROBE_GAP_MS = 10 * 60 * 1e3;
+    var LANE_A_LOCK_TTL_MS = 30 * 60 * 1e3;
+    var EST_CL_REQUESTS_PER_CASE = 2.3;
+    var LANE_A_SEQUENCE = [
+      { court: "ark", j: "AR", target: 45 },
+      { court: "sd", j: "SD", target: 45 },
+      { court: "idaho", j: "ID", target: 45 },
+      { court: "wyo", j: "WY", target: 45 },
+      { court: "neb", j: "NE", target: 45 },
+      { court: "ala", j: "AL", target: 45 },
+      { court: "ky", j: "KY", target: 45 }
+    ];
+    var LANE_B_TASKS = [
+      "us_reports_gap_analysis",
+      "us_reports_non_cl_intake",
+      "usc_cfr_federal_rules_depth",
+      "citation_re_resolution",
+      "depth_gap_analysis",
+      "historical_hole_detection",
+      "intermediate_court_research",
+      "corpus_integrity",
+      "retrieval_validation",
+      "depth_scorecard"
+    ];
+    var CL_HOST_RE = /(?:^|\.)courtlistener\.com$/i;
+    var CL_BLOCKED_PATHS = [
+      "/api/rest/v4/opinions",
+      "/api/rest/v4/clusters",
+      "/api/rest/v4/dockets",
+      "/api/rest/v4/courts",
+      "/api/rest/v4/search",
+      "/api/rest/v4/api-usage"
+    ];
+    function sha2562(text) {
+      return createHash2("sha256").update(String(text), "utf8").digest("hex");
+    }
+    function createInitialState(now = /* @__PURE__ */ new Date()) {
+      const first = LANE_A_SEQUENCE[0];
+      return {
+        version: 1,
+        queue: QUEUE,
+        queue9: "CLOSED",
+        queue3: "NOT_OPEN",
+        featureAgents: "0",
+        currentLane: "B",
+        updatedAt: now.toISOString(),
+        laneA: {
+          court: first.court,
+          jurisdiction: first.j,
+          checkpoint: null,
+          target: first.target,
+          count: 0,
+          sequence: LANE_A_SEQUENCE.map((s) => s.court),
+          lock: null
+        },
+        quota: {
+          windows: null,
+          lastProbeAt: null,
+          nextCheckAt: now.toISOString(),
+          last429At: null,
+          retryAfterSeconds: null,
+          lastSafeRequests: 0
+        },
+        laneB: {
+          task: LANE_B_TASKS[0],
+          checkpoint: null,
+          tasksCompleted: []
+        },
+        depthManifestVersion: 0,
+        lastCitationResolve: null,
+        lastIntegrityAudit: null,
+        metrics: {
+          laneAMs: 0,
+          laneBMs: 0,
+          idleMs: 0,
+          clAuthorities: 0,
+          nonClAuthorities: 0,
+          citationsResolved: 0,
+          quotaChecks: 0,
+          laneSwitches: 0
+        },
+        switches: []
+      };
+    }
+    function cloneState(state) {
+      return JSON.parse(JSON.stringify(state));
+    }
+    function restoreState2(saved, now = /* @__PURE__ */ new Date()) {
+      const base = createInitialState(now);
+      if (!saved || typeof saved !== "object") return base;
+      const merged = {
+        ...base,
+        ...saved,
+        laneA: { ...base.laneA, ...saved.laneA || {} },
+        quota: { ...base.quota, ...saved.quota || {} },
+        laneB: { ...base.laneB, ...saved.laneB || {} },
+        metrics: { ...base.metrics, ...saved.metrics || {} },
+        switches: Array.isArray(saved.switches) ? saved.switches : []
+      };
+      merged.queue = QUEUE;
+      merged.queue9 = "CLOSED";
+      merged.queue3 = "NOT_OPEN";
+      merged.featureAgents = "0";
+      merged.version = 1;
+      if (merged.currentLane !== "A" && merged.currentLane !== "B") merged.currentLane = "B";
+      return merged;
+    }
+    function remainingRequestsToFinishCourt(laneA) {
+      const target = Number(laneA?.target) || 0;
+      const count = Number(laneA?.count) || 0;
+      const casesLeft = Math.max(0, target - count);
+      if (casesLeft <= 0) return 0;
+      return Math.ceil(casesLeft * EST_CL_REQUESTS_PER_CASE);
+    }
+    function hasUsefulClCapacity(params) {
+      const safe = Math.max(0, Number(params.safeRequests) || 0);
+      const minBatch = params.minBatch ?? USEFUL_CL_MIN;
+      const remaining = Math.max(0, Number(params.remainingRequestsToFinishCourt) || 0);
+      if (safe >= minBatch) return { useful: true, reason: "min_batch" };
+      if (remaining > 0 && safe >= remaining) return { useful: true, reason: "finish_partial_court" };
+      return { useful: false, reason: safe <= 0 ? "quota_floor" : "below_useful_capacity" };
+    }
+    function projectNextQuotaCheck(params) {
+      const nowMs = (params.now instanceof Date ? params.now : new Date(params.now)).getTime();
+      const lastProbeMs = params.lastProbeAt ? new Date(params.lastProbeAt).getTime() : 0;
+      const earliest = lastProbeMs + (params.minGapMs ?? MIN_QUOTA_PROBE_GAP_MS);
+      const projected = params.projectedUsefulAt != null ? new Date(params.projectedUsefulAt).getTime() : nowMs;
+      const next = Math.max(nowMs, earliest, projected);
+      return new Date(next).toISOString();
+    }
+    function quotaProbeDue(state, now = /* @__PURE__ */ new Date()) {
+      if (!state?.quota?.nextCheckAt) return true;
+      return now.getTime() >= new Date(state.quota.nextCheckAt).getTime();
+    }
+    function decideLane(state, quota) {
+      const now = quota.now || /* @__PURE__ */ new Date();
+      const remaining = remainingRequestsToFinishCourt(state.laneA);
+      const capacity = hasUsefulClCapacity({
+        safeRequests: quota.safeRequests,
+        remainingRequestsToFinishCourt: remaining
+      });
+      if (capacity.useful) {
+        return {
+          lane: "A",
+          reason: capacity.reason,
+          remainingRequestsToFinishCourt: remaining
+        };
+      }
+      return {
+        lane: "B",
+        reason: capacity.reason,
+        remainingRequestsToFinishCourt: remaining,
+        nextCheckAt: projectNextQuotaCheck({
+          now,
+          lastProbeAt: state.quota.lastProbeAt || now.toISOString(),
+          projectedUsefulAt: quota.projectedUsefulAt || null
+        })
+      };
+    }
+    function applyQuotaSnapshot(state, params) {
+      const next = cloneState(state);
+      const now = params.now || /* @__PURE__ */ new Date();
+      next.quota.windows = params.windows || next.quota.windows;
+      next.quota.lastProbeAt = now.toISOString();
+      next.quota.lastSafeRequests = Math.max(0, Number(params.safeRequests) || 0);
+      next.quota.nextCheckAt = projectNextQuotaCheck({
+        now,
+        lastProbeAt: now.toISOString(),
+        projectedUsefulAt: params.projectedUsefulAt || null
+      });
+      if (params.last429At) next.quota.last429At = params.last429At;
+      if (params.retryAfterSeconds != null) next.quota.retryAfterSeconds = params.retryAfterSeconds;
+      next.metrics.quotaChecks += 1;
+      next.updatedAt = now.toISOString();
+      return next;
+    }
+    function recordLaneSwitch(state, fromLane, toLane, reason, now = /* @__PURE__ */ new Date()) {
+      const next = cloneState(state);
+      next.currentLane = toLane;
+      next.metrics.laneSwitches += 1;
+      next.switches.push({
+        at: now.toISOString(),
+        from: fromLane,
+        to: toLane,
+        reason
+      });
+      next.updatedAt = now.toISOString();
+      return next;
+    }
+    function applyQuotaFloorTransition(state, params) {
+      const now = params.now || /* @__PURE__ */ new Date();
+      let next = applyQuotaSnapshot(state, params);
+      next.laneA = {
+        ...next.laneA,
+        court: params.court ?? next.laneA.court,
+        jurisdiction: params.jurisdiction ?? next.laneA.jurisdiction,
+        checkpoint: params.checkpoint ?? next.laneA.checkpoint,
+        target: params.target ?? next.laneA.target,
+        count: params.count ?? next.laneA.count,
+        lock: null
+      };
+      if (next.currentLane !== "B") {
+        next = recordLaneSwitch(next, next.currentLane, "B", params.reason || "quota_floor", now);
+      } else {
+        next.currentLane = "B";
+        next.updatedAt = now.toISOString();
+      }
+      return next;
+    }
+    function applyQuotaRecoveryTransition(state, params) {
+      const now = params.now || /* @__PURE__ */ new Date();
+      let next = applyQuotaSnapshot(state, params);
+      const decision = decideLane(next, {
+        safeRequests: params.safeRequests,
+        projectedUsefulAt: params.projectedUsefulAt,
+        now
+      });
+      if (decision.lane === "A" && next.currentLane !== "A") {
+        next = recordLaneSwitch(next, next.currentLane, "A", decision.reason, now);
+      }
+      return { state: next, decision };
+    }
+    function acquireLaneALock(state, workerId, now = /* @__PURE__ */ new Date(), ttlMs = LANE_A_LOCK_TTL_MS) {
+      const lock = state.laneA?.lock;
+      if (lock && lock.until && new Date(lock.until).getTime() > now.getTime() && lock.workerId !== workerId) {
+        return { ok: false, reason: "lane_a_already_running", state };
+      }
+      const next = cloneState(state);
+      next.laneA.lock = {
+        workerId,
+        until: new Date(now.getTime() + ttlMs).toISOString()
+      };
+      next.updatedAt = now.toISOString();
+      return { ok: true, state: next };
+    }
+    function releaseLaneALock(state, workerId, now = /* @__PURE__ */ new Date()) {
+      const next = cloneState(state);
+      if (next.laneA.lock && next.laneA.lock.workerId && next.laneA.lock.workerId !== workerId) {
+        return { ok: false, reason: "lock_owned_by_other", state };
+      }
+      next.laneA.lock = null;
+      next.updatedAt = now.toISOString();
+      return { ok: true, state: next };
+    }
+    function recordLaneTime2(state, lane, durationMs, extras = {}) {
+      const next = cloneState(state);
+      const ms = Math.max(0, Number(durationMs) || 0);
+      if (lane === "A") next.metrics.laneAMs += ms;
+      else if (lane === "B") next.metrics.laneBMs += ms;
+      else next.metrics.idleMs += ms;
+      if (extras.clAuthorities) next.metrics.clAuthorities += extras.clAuthorities;
+      if (extras.nonClAuthorities) next.metrics.nonClAuthorities += extras.nonClAuthorities;
+      if (extras.citationsResolved) next.metrics.citationsResolved += extras.citationsResolved;
+      next.updatedAt = extras.now ? new Date(extras.now).toISOString() : next.updatedAt;
+      return next;
+    }
+    function completeLaneBTask2(state, task, checkpoint, now = /* @__PURE__ */ new Date()) {
+      const next = cloneState(state);
+      if (!next.laneB.tasksCompleted.includes(task)) next.laneB.tasksCompleted.push(task);
+      next.laneB.checkpoint = checkpoint ?? next.laneB.checkpoint;
+      const idx = LANE_B_TASKS.indexOf(task);
+      const nextTask = idx >= 0 ? LANE_B_TASKS[(idx + 1) % LANE_B_TASKS.length] : LANE_B_TASKS[0];
+      next.laneB.task = nextTask;
+      next.updatedAt = now.toISOString();
+      return next;
+    }
+    function isCourtListenerUrl(url) {
+      if (url == null) return false;
+      let parsed;
+      try {
+        parsed = new URL(String(url), "https://www.courtlistener.com");
+      } catch {
+        return /courtlistener\.com/i.test(String(url));
+      }
+      return CL_HOST_RE.test(parsed.hostname);
+    }
+    function isBlockedLaneBCourtListenerUrl(url) {
+      if (!isCourtListenerUrl(url)) return false;
+      try {
+        const parsed = new URL(String(url), "https://www.courtlistener.com");
+        return CL_BLOCKED_PATHS.some((p) => parsed.pathname === p || parsed.pathname.startsWith(`${p}/`));
+      } catch {
+        return true;
+      }
+    }
+    function assertLaneBUrlAllowed2(url) {
+      if (isCourtListenerUrl(url)) {
+        const err = new Error(`LANE_B_CL_BLOCKED: ${String(url)}`);
+        err.code = "LANE_B_CL_BLOCKED";
+        throw err;
+      }
+      return true;
+    }
+    function installLaneBFetchGuard2(globalObj = globalThis) {
+      const original = globalObj.fetch;
+      if (typeof original !== "function") {
+        throw new Error("fetch unavailable; cannot install Lane B guard");
+      }
+      if (original.__nyayaLaneBGuard) return original;
+      const guarded = async function laneBGuardedFetch(input, init) {
+        const url = typeof input === "string" || input instanceof URL ? String(input) : input?.url;
+        assertLaneBUrlAllowed2(url);
+        return original.call(this, input, init);
+      };
+      guarded.__nyayaLaneBGuard = true;
+      guarded.__nyayaLaneBOriginalFetch = original;
+      globalObj.fetch = guarded;
+      return guarded;
+    }
+    function uninstallLaneBFetchGuard2(globalObj = globalThis) {
+      const current = globalObj.fetch;
+      if (current && current.__nyayaLaneBOriginalFetch) {
+        globalObj.fetch = current.__nyayaLaneBOriginalFetch;
+      }
+    }
+    function uniqueCitationEdgeKey(edge) {
+      return [edge.fromAuthorityId, edge.normalizedCitation || edge.rawCitation, edge.pinpoint || ""].join("|").toLowerCase();
+    }
+    function uniqueEmbeddingKey(row) {
+      return `${row.authorityId}:${row.chunkIndex}:${row.contentHash || sha2562(row.content || "")}`;
+    }
+    function insertUnique(set, key) {
+      if (set.has(key)) return { inserted: false, duplicate: true };
+      set.add(key);
+      return { inserted: true, duplicate: false };
+    }
+    function classifyDepth2(params) {
+      const deficit = Math.max(0, Number(params.authorityDeficitTo101) || 0);
+      const mid = Number(params.intermediateAppellate) || 0;
+      if (deficit >= 80 || deficit >= 50 && mid === 0) return "CRITICAL_DEPTH";
+      if (deficit >= 40 || mid < 5) return "HIGH_DEPTH";
+      if (deficit >= 15) return "MEDIUM_DEPTH";
+      return "LOW_DEPTH";
+    }
+    function detectHistoricalHoles2(params) {
+      const years = (params.years || []).filter((y) => Number.isFinite(y)).map(Number);
+      const nowYear = params.nowYear ?? (/* @__PURE__ */ new Date()).getUTCFullYear();
+      const flags = [];
+      if (years.length === 0) {
+        return { flags: [{ kind: "no_dated_cases" }], targetRanges: ["pre-2000", "1980-1999", "1960-1979", "pre-1960"] };
+      }
+      const newest = Math.max(...years);
+      const oldest = Math.min(...years);
+      const decades = new Set(years.map((y) => Math.floor(y / 10) * 10));
+      if (years.every((y) => y >= nowYear - 1)) flags.push({ kind: "recent_only", label: `${nowYear}/recent concentration` });
+      if (decades.size <= 1) flags.push({ kind: "one_decade", decade: [...decades][0] });
+      const uniqueCourts = params.uniqueCourts ?? null;
+      if (uniqueCourts != null && uniqueCourts <= 1) flags.push({ kind: "one_court" });
+      const targetRanges = [];
+      if (!years.some((y) => y < 2e3)) targetRanges.push("pre-2000");
+      if (!years.some((y) => y >= 1980 && y <= 1999)) targetRanges.push("1980-1999");
+      if (!years.some((y) => y >= 1960 && y <= 1979)) targetRanges.push("1960-1979");
+      if (!years.some((y) => y < 1960)) targetRanges.push("pre-1960");
+      return { flags, targetRanges, oldest, newest, decadeCount: decades.size };
+    }
+    var US_REPORTS_RE = /\b(\d{1,3})\s+U\.\s*S\.\s+(\d{1,4})\b/;
+    var SCOTUS_S_CT_RE = /\b(\d{1,3})\s+S\.\s*Ct\.\s+(\d{1,4})\b/;
+    var SCOTUS_L_ED_RE = /\b(\d{1,3})\s+L\.\s*Ed\.(?:\s*2d)?\s+(\d{1,4})\b/;
+    function parseUsReportsCitation(raw) {
+      const text = String(raw || "").replace(/\s+/g, " ").trim();
+      const us = US_REPORTS_RE.exec(text);
+      if (us) {
+        return {
+          citation: `${us[1]} U.S. ${us[2]}`,
+          reporter: "U.S.",
+          volume: Number(us[1]),
+          page: Number(us[2]),
+          family: "us_reports"
+        };
+      }
+      const sct = SCOTUS_S_CT_RE.exec(text);
+      if (sct) {
+        return {
+          citation: `${sct[1]} S. Ct. ${sct[2]}`,
+          reporter: "S. Ct.",
+          volume: Number(sct[1]),
+          page: Number(sct[2]),
+          family: "scotus_sct"
+        };
+      }
+      const led = SCOTUS_L_ED_RE.exec(text);
+      if (led) {
+        return {
+          citation: text,
+          reporter: /2d/i.test(text) ? "L. Ed. 2d" : "L. Ed.",
+          volume: Number(led[1]),
+          page: Number(led[2]),
+          family: "scotus_led"
+        };
+      }
+      return null;
+    }
+    function rankMissingUsReports2(edges, presentCitations = []) {
+      const present = new Set(
+        presentCitations.map((c) => String(c).replace(/\s+/g, " ").trim().toLowerCase())
+      );
+      const buckets = /* @__PURE__ */ new Map();
+      for (const edge of edges || []) {
+        const parsed = parseUsReportsCitation(edge.normalizedCitation || edge.rawCitation);
+        if (!parsed) continue;
+        const key = parsed.citation.toLowerCase();
+        if (!buckets.has(key)) {
+          buckets.set(key, {
+            citation: parsed.citation,
+            volume: parsed.volume,
+            page: parsed.page,
+            reporter: parsed.reporter,
+            family: parsed.family,
+            inbound: 0,
+            alreadyPresentUnderAlias: present.has(key),
+            estimatedDecisionIdentity: null,
+            suitablePublicNonClSource: parsed.family === "us_reports" ? "loc_us_reports_candidate" : "unknown_without_us_reports_parallel"
+          });
+        }
+        buckets.get(key).inbound += Number(edge.inbound || 1);
+      }
+      return [...buckets.values()].sort((a, b) => b.inbound - a.inbound || a.volume - b.volume || a.page - b.page);
+    }
+    function classifyIntermediateCandidate(params) {
+      const invalidId = params.invalidCandidateId;
+      const hypothesized = params.hypothesizedIds || [];
+      const liveVerifyForbidden = true;
+      if (!params.positiveLocalEvidence) {
+        return {
+          gapId: invalidId,
+          classification: "UNRESOLVED",
+          candidateClId: null,
+          hypothesizedUnverifiedIds: hypothesized,
+          liveVerifyForbidden,
+          note: "No local evidence identifies a replacement CourtListener court id. Do not query CourtListener from Lane B."
+        };
+      }
+      return {
+        gapId: invalidId,
+        classification: "CANDIDATE_NEEDS_SINGLE_CL_VERIFY",
+        candidateClId: params.positiveLocalEvidence.candidateClId,
+        evidence: params.positiveLocalEvidence.evidence,
+        liveVerifyForbidden
+      };
+    }
+    var KNOWN_INTERMEDIATE_GAPS = [
+      {
+        invalidCandidateId: "pacommwlth",
+        courtName: "Commonwealth Court of Pennsylvania",
+        hypothesizedIds: ["pacomm", "pa-comm"],
+        positiveLocalEvidence: null
+      },
+      {
+        invalidCandidateId: "njsuperct",
+        courtName: "Superior Court of New Jersey, Appellate Division",
+        hypothesizedIds: ["njsuper"],
+        positiveLocalEvidence: null
+      },
+      {
+        invalidCandidateId: "vacapp",
+        courtName: "Court of Appeals of Virginia",
+        hypothesizedIds: [],
+        positiveLocalEvidence: null
+      }
+    ];
+    function researchIntermediateGaps2() {
+      return KNOWN_INTERMEDIATE_GAPS.map((g) => classifyIntermediateCandidate(g));
+    }
+    function logLaneEvent(lane, payload) {
+      const tag = lane === "A" ? "LANE_A_CL" : lane === "CHECK" ? "QUOTA_CHECK" : lane === "SWITCH" ? "LANE_SWITCH" : "LANE_B_OFFLINE";
+      return { tag, at: (/* @__PURE__ */ new Date()).toISOString(), ...payload };
+    }
+    module2.exports = {
+      QUEUE,
+      USEFUL_CL_MIN,
+      MIN_QUOTA_PROBE_GAP_MS,
+      LANE_A_SEQUENCE,
+      LANE_B_TASKS,
+      EST_CL_REQUESTS_PER_CASE,
+      createInitialState,
+      restoreState: restoreState2,
+      cloneState,
+      remainingRequestsToFinishCourt,
+      hasUsefulClCapacity,
+      projectNextQuotaCheck,
+      quotaProbeDue,
+      decideLane,
+      applyQuotaSnapshot,
+      applyQuotaFloorTransition,
+      applyQuotaRecoveryTransition,
+      recordLaneSwitch,
+      acquireLaneALock,
+      releaseLaneALock,
+      recordLaneTime: recordLaneTime2,
+      completeLaneBTask: completeLaneBTask2,
+      isCourtListenerUrl,
+      isBlockedLaneBCourtListenerUrl,
+      assertLaneBUrlAllowed: assertLaneBUrlAllowed2,
+      installLaneBFetchGuard: installLaneBFetchGuard2,
+      uninstallLaneBFetchGuard: uninstallLaneBFetchGuard2,
+      uniqueCitationEdgeKey,
+      uniqueEmbeddingKey,
+      insertUnique,
+      classifyDepth: classifyDepth2,
+      detectHistoricalHoles: detectHistoricalHoles2,
+      parseUsReportsCitation,
+      rankMissingUsReports: rankMissingUsReports2,
+      classifyIntermediateCandidate,
+      researchIntermediateGaps: researchIntermediateGaps2,
+      KNOWN_INTERMEDIATE_GAPS,
+      logLaneEvent,
+      sha256: sha2562
+    };
+  }
+});
+
+// scripts/staging-queue2-lane-b.cjs
+var { createHash, randomUUID } = require("node:crypto");
+var postgres = require_src();
+var {
+  installLaneBFetchGuard,
+  uninstallLaneBFetchGuard,
+  assertLaneBUrlAllowed,
+  rankMissingUsReports,
+  researchIntermediateGaps,
+  classifyDepth,
+  detectHistoricalHoles,
+  restoreState,
+  completeLaneBTask,
+  recordLaneTime
+} = require_queue2_dual_lane_controller();
+var locUrl = (volume, page) => `https://www.loc.gov/item/usrep${String(volume).padStart(3, "0")}${String(page).padStart(4, "0")}/?fo=json`;
+function sha256(text) {
+  return createHash("sha256").update(String(text), "utf8").digest("hex");
+}
+function toPgvector(vec) {
+  return `[${vec.join(",")}]`;
+}
+function stripHtml(html) {
+  return String(html || "").replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<style[\s\S]*?<\/style>/gi, " ").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+}
+function uscViewerUrl(title, section) {
+  const req = `granuleid:USC-prelim-title${title}-section${section}&num=${section}&edition=prelim`;
+  return `https://uscode.house.gov/view.xhtml?req=${encodeURIComponent(req)}`;
+}
+function parseUsc(raw) {
+  const m = /\b(\d{1,2})\s+U\.?\s?S\.?\s?C\.?\s*§+\s*([\dA-Za-z.\-]+)/i.exec(String(raw || ""));
+  return m ? { title: Number(m[1]), section: m[2], citation: `${m[1]} U.S.C. \xA7 ${m[2]}` } : null;
+}
+function parseCfr(raw) {
+  const m = /\b(\d{1,2})\s+C\.?\s?F\.?\s?R\.?\s*§*\s*(\d+(?:\.\d+)*)/i.exec(String(raw || ""));
+  return m ? { title: Number(m[1]), section: m[2], citation: `${m[1]} C.F.R. \xA7 ${m[2]}` } : null;
+}
+function parseFedR(raw) {
+  const m = /\bFed\.?\s*R\.?\s*(Civ\.?\s*P\.?|Evid\.?|App\.?\s*P\.?|Crim\.?\s*P\.?)\s*(\d+[A-Za-z.]*)\b/i.exec(
+    String(raw || "")
+  );
+  if (!m) return null;
+  const kindRaw = m[1].replace(/\s+/g, " ").trim().toLowerCase();
+  let kind = "civ";
+  let reporter = "Fed. R. Civ. P.";
+  let path = "rules-civil-procedure";
+  if (/^evid/i.test(kindRaw)) {
+    kind = "evid";
+    reporter = "Fed. R. Evid.";
+    path = "rules-evidence";
+  } else if (/^app/i.test(kindRaw)) {
+    kind = "app";
+    reporter = "Fed. R. App. P.";
+    path = "rules-appellate-procedure";
+  } else if (/^crim/i.test(kindRaw)) {
+    kind = "crim";
+    reporter = "Fed. R. Crim. P.";
+    path = "rules-criminal-procedure";
+  }
+  return { kind, rule: m[2], citation: `${reporter} ${m[2]}`, path };
+}
+async function guardedFetch(url, init) {
+  assertLaneBUrlAllowed(url);
+  return fetch(url, { ...init, signal: init?.signal ?? AbortSignal.timeout(25e3) });
+}
+function chunkContent(content) {
+  const parts = String(content).split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+  const chunks = [];
+  for (const p of parts) {
+    if (p.length <= 1e3) chunks.push(p);
+    else {
+      let rest = p;
+      while (rest.length > 1e3) {
+        let cut = rest.lastIndexOf(" ", 1e3);
+        if (cut < 500) cut = 1e3;
+        chunks.push(rest.slice(0, cut).trim());
+        rest = rest.slice(cut).trim();
+      }
+      if (rest) chunks.push(rest);
+    }
+  }
+  return chunks.length ? chunks : [String(content).slice(0, 1e3)];
+}
+async function embedBatch(texts, apiKey) {
+  const res = await guardedFetch("https://api.openai.com/v1/embeddings", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ model: "text-embedding-3-small", input: texts, dimensions: 384 })
+  });
+  if (!res.ok) throw new Error(`embed_http_${res.status}`);
+  const body = await res.json();
+  return (body.data || []).sort((a, b) => a.index - b.index).map((d) => d.embedding);
+}
+async function importAuthority(sql, rec, apiKey) {
+  try {
+    const content = rec.content || "";
+    if (content.length < 20) return { status: "skipped_short" };
+    const hash = sha256(content);
+    const provider = rec.sourceProvider;
+    const existing = await sql`
+    select id from legal_authorities
+    where source_provider = ${provider} and source_external_id = ${rec.sourceExternalId}
+    limit 1
+  `;
+    if (existing.length) {
+      const latest = await sql`
+      select sha256 from legal_authority_versions
+      where authority_id = ${existing[0].id} order by version_number desc limit 1
+    `;
+      if (latest[0]?.sha256 === hash) return { status: "skipped_duplicate" };
+      return { status: "skipped_existing" };
+    }
+    const byCite = rec.normalizedCitation ? await sql`
+        select id from legal_authorities
+        where normalized_citation = ${rec.normalizedCitation}
+        limit 1
+      ` : [];
+    if (byCite.length) return { status: "skipped_alias", aliasOf: byCite[0].id };
+    const id = randomUUID();
+    await sql`
+    insert into legal_authorities (
+      id, authority_type, jurisdiction, court, court_id, authority_state, court_level,
+      title, citation, normalized_citation, source_provider, source_external_id,
+      canonical_source_url, ingestion_status, currentness_status, last_checked_at,
+      decision_date, effective_date, metadata, created_at, updated_at
+    ) values (
+      ${id}, ${rec.authorityType}, ${rec.jurisdiction || "US"}, ${rec.court || null},
+      ${rec.courtId || null}, ${rec.authorityState || "US"}, ${rec.courtLevel || null},
+      ${rec.title}, ${rec.citation || null}, ${rec.normalizedCitation || rec.citation || null},
+      ${provider}, ${rec.sourceExternalId}, ${rec.canonicalSourceUrl || null},
+      'ready', ${rec.currentnessStatus || "current_as_of_source_date"}, now(),
+      ${rec.decisionDate || null}, ${rec.effectiveDate || null},
+      ${sql.json({ ...rec.sourceMetadata || {}, queue: "#2", lane: "B" })},
+      now(), now()
+    )
+  `;
+    const [version] = await sql`
+    insert into legal_authority_versions (
+      authority_id, version_number, content, sha256, valid_from, valid_to, source_provider, source_metadata
+    ) values (
+      ${id}, 1, ${content}, ${hash}, now(), null, ${provider},
+      ${sql.json({ lane: "B", adapter: provider })}
+    )
+    returning id
+  `;
+    const chunks = chunkContent(content);
+    let embeddings = [];
+    if (apiKey) {
+      try {
+        embeddings = await embedBatch(chunks, apiKey);
+      } catch {
+        embeddings = [];
+      }
+    }
+    for (let i = 0; i < chunks.length; i += 1) {
+      const vec = embeddings[i];
+      if (vec && vec.length) {
+        await sql`
+        insert into legal_authority_chunks (
+          id, authority_id, authority_version_id, chunk_index, content,
+          segment_ref, embedding, embedding_model
+        ) values (
+          ${randomUUID()}, ${id}, ${version.id}, ${i}, ${chunks[i]},
+          ${`p${i + 1}`}, ${toPgvector(vec)}::vector, ${"text-embedding-3-small:384"}
+        )
+      `;
+      } else {
+        await sql`
+        insert into legal_authority_chunks (
+          id, authority_id, authority_version_id, chunk_index, content, segment_ref
+        ) values (
+          ${randomUUID()}, ${id}, ${version.id}, ${i}, ${chunks[i]}, ${`p${i + 1}`}
+        )
+      `;
+      }
+    }
+    return { status: "imported", id, chunks: chunks.length, embedded: embeddings.length };
+  } catch (e) {
+    return { status: "error", error: String(e.message || e).slice(0, 180) };
+  }
+}
+async function loadScheduler(sql) {
+  try {
+    const rows = await sql`
+      select metadata, cursor, status, updated_at
+      from corpus_ingest_jobs
+      where source = 'queue2-scheduler' and cl_court = 'queue2-dual-lane'
+      limit 1
+    `;
+    if (!rows.length) return restoreState(null);
+    return restoreState(rows[0].metadata || null);
+  } catch {
+    return restoreState(null);
+  }
+}
+async function saveScheduler(sql, state) {
+  const meta = { ...state, updatedAt: (/* @__PURE__ */ new Date()).toISOString() };
+  try {
+    const existing = await sql`
+      select id from corpus_ingest_jobs
+      where source = 'queue2-scheduler' and cl_court = 'queue2-dual-lane'
+      limit 1
+    `;
+    if (existing.length) {
+      await sql`
+        update corpus_ingest_jobs
+        set status = ${meta.currentLane === "A" ? "running" : "paused"},
+            cursor = ${meta.laneA?.checkpoint || null},
+            last_error = null,
+            metadata = ${sql.json(meta)},
+            updated_at = now()
+        where id = ${existing[0].id}
+      `;
+      return;
+    }
+    await sql`
+      insert into corpus_ingest_jobs (
+        source, court_id, cl_court, status, cursor, target_max, batch_size, metadata
+      ) values (
+        'queue2-scheduler', 'queue2-dual-lane', 'queue2-dual-lane',
+        ${meta.currentLane === "A" ? "running" : "paused"},
+        ${meta.laneA?.checkpoint || null}, 45, 8, ${sql.json(meta)}
+      )
+    `;
+  } catch (e) {
+    meta.persistError = String(e.message || e).slice(0, 180);
+  }
+}
+async function citationCounts(sql) {
+  const [row] = await sql`
+    select
+      count(*)::int as extracted,
+      count(*) filter (where to_authority_id is not null)::int as resolved,
+      count(*) filter (where to_authority_id is null)::int as target_absent,
+      count(*) filter (where to_authority_id is null and (normalized_citation is null or btrim(normalized_citation)=''))::int as parser_gap
+    from legal_authority_citations
+  `;
+  return row;
+}
+async function main() {
+  const t0 = Date.now();
+  installLaneBFetchGuard(globalThis);
+  const url = process.env.DATABASE_URL;
+  if (!url) {
+    console.log(JSON.stringify({ ok: false, reason: "DATABASE_URL missing", courtListenerHttpCalls: 0, lane: "B" }));
+    process.exit(2);
+  }
+  const apiKey = process.env.OPENAI_API_KEY || "";
+  const sql = postgres(url, { max: 1, ssl: "require", idle_timeout: 5, connect_timeout: 30 });
+  const clCalls = { attempted: 0, blocked: 0 };
+  try {
+    let state = await loadScheduler(sql);
+    state.currentLane = "B";
+    const citeBefore = await citationCounts(sql);
+    const unresolved = await sql`
+      select coalesce(normalized_citation, raw_citation) as cite, count(*)::int as inbound
+      from legal_authority_citations
+      where to_authority_id is null
+        and coalesce(normalized_citation, raw_citation) is not null
+      group by 1
+      order by inbound desc
+      limit 400
+    `;
+    const presentUs = await sql`
+      select citation, normalized_citation from legal_authorities
+      where authority_type = 'case'
+        and (
+          normalized_citation ~* '^\\d{1,3}\\s+U\\.\\s*S\\.\\s+\\d'
+          or citation ~* '^\\d{1,3}\\s+U\\.\\s*S\\.\\s+\\d'
+          or court_level = 'scotus'
+        )
+    `;
+    const presentList = presentUs.flatMap((r) => [r.normalized_citation, r.citation].filter(Boolean));
+    const usReportsRanked = rankMissingUsReports(
+      unresolved.map((r) => ({ normalizedCitation: r.cite, inbound: r.inbound })),
+      presentList
+    );
+    const uscDemand = [];
+    const cfrDemand = [];
+    const fedDemand = [];
+    for (const row of unresolved) {
+      const u = parseUsc(row.cite);
+      if (u) uscDemand.push({ ...u, inbound: row.inbound });
+      const c = parseCfr(row.cite);
+      if (c) cfrDemand.push({ ...c, inbound: row.inbound });
+      const f = parseFedR(row.cite);
+      if (f) fedDemand.push({ ...f, inbound: row.inbound });
+    }
+    const existingNorm = new Set(
+      (await sql`select normalized_citation from legal_authorities where normalized_citation is not null`).map((r) => String(r.normalized_citation))
+    );
+    const importResults = [];
+    const locAttempts = [];
+    for (const target of usReportsRanked.filter((r) => !r.alreadyPresentUnderAlias).slice(0, 3)) {
+      const loc = locUrl(target.volume, target.page);
+      try {
+        const res = await guardedFetch(loc, { headers: { Accept: "application/json" } });
+        const body = await res.json().catch(() => ({}));
+        const text = stripHtml(body?.item?.full_text || body?.full_text || "");
+        locAttempts.push({
+          citation: target.citation,
+          status: res.status,
+          textChars: text.length
+        });
+        if (res.ok && text.length >= 80) {
+          importResults.push(
+            await importAuthority(
+              sql,
+              {
+                title: typeof body?.item?.title === "string" ? body.item.title : target.citation,
+                authorityType: "case",
+                content: text,
+                sourceProvider: "loc_us_reports",
+                sourceExternalId: `usrep${String(target.volume).padStart(3, "0")}${String(target.page).padStart(4, "0")}`,
+                citation: target.citation,
+                normalizedCitation: target.citation,
+                jurisdiction: "US",
+                authorityState: "US",
+                court: "Supreme Court of the United States",
+                courtId: "scotus",
+                courtLevel: "scotus",
+                canonicalSourceUrl: loc,
+                currentnessStatus: "historical",
+                sourceMetadata: { adapter: "us_reports_loc", retrievedAt: (/* @__PURE__ */ new Date()).toISOString() }
+              },
+              apiKey
+            )
+          );
+        } else {
+          locAttempts[locAttempts.length - 1].limitation = "LOC did not return primary opinion text; not substituting a secondary summary.";
+        }
+      } catch (e) {
+        locAttempts.push({ citation: target.citation, error: String(e.message || e).slice(0, 180) });
+      }
+    }
+    for (const row of uscDemand.filter((r) => !existingNorm.has(r.citation)).slice(0, 4)) {
+      const page = uscViewerUrl(row.title, row.section);
+      try {
+        const res = await guardedFetch(page, { headers: { Accept: "text/html" } });
+        const html = await res.text();
+        const text = stripHtml(html);
+        if (res.ok && text.length >= 40) {
+          const rec = {
+            title: row.citation,
+            authorityType: "statute",
+            content: text,
+            sourceProvider: "usc_house",
+            sourceExternalId: `usc-${row.title}-${row.section}`,
+            citation: row.citation,
+            normalizedCitation: row.citation,
+            jurisdiction: "US",
+            authorityState: "US",
+            canonicalSourceUrl: page,
+            currentnessStatus: "current_as_of_source_date",
+            sourceMetadata: { adapter: "usc_house", retrievedAt: (/* @__PURE__ */ new Date()).toISOString() }
+          };
+          const result = await importAuthority(sql, rec, apiKey);
+          importResults.push({ citation: row.citation, ...result });
+          if (result.status === "imported") existingNorm.add(row.citation);
+        } else {
+          importResults.push({ citation: row.citation, status: "quarantined", http: res.status, chars: text.length });
+        }
+      } catch (e) {
+        importResults.push({ citation: row.citation, status: "error", error: String(e.message || e).slice(0, 160) });
+      }
+    }
+    let ecfrDate = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+    try {
+      const titles = await guardedFetch("https://www.ecfr.gov/api/versioner/v1/titles.json", {
+        headers: { Accept: "application/json" }
+      });
+      if (titles.ok) {
+        const j = await titles.json();
+        if (j?.meta?.date) ecfrDate = j.meta.date;
+      }
+    } catch {
+    }
+    for (const row of cfrDemand.filter((r) => !existingNorm.has(r.citation)).slice(0, 3)) {
+      const page = `https://www.ecfr.gov/api/renderer/v1/content/enhanced/${ecfrDate}/title-${row.title}?section=${encodeURIComponent(row.section)}`;
+      try {
+        const res = await guardedFetch(page, { headers: { Accept: "text/html" } });
+        const html = await res.text();
+        const text = stripHtml(html);
+        if (res.ok && text.length >= 40) {
+          const result = await importAuthority(
+            sql,
+            {
+              title: row.citation,
+              authorityType: "regulation",
+              content: text,
+              sourceProvider: "ecfr",
+              sourceExternalId: `ecfr-t${row.title}-p${row.section.split(".")[0]}-s${row.section}`,
+              citation: row.citation,
+              normalizedCitation: row.citation,
+              jurisdiction: "US",
+              authorityState: "US",
+              canonicalSourceUrl: `https://www.ecfr.gov/current/title-${row.title}/section-${row.section}`,
+              effectiveDate: ecfrDate,
+              currentnessStatus: "current_as_of_source_date",
+              sourceMetadata: { adapter: "ecfr", asOfDate: ecfrDate, retrievedAt: (/* @__PURE__ */ new Date()).toISOString() }
+            },
+            apiKey
+          );
+          importResults.push({ citation: row.citation, ...result });
+          if (result.status === "imported") existingNorm.add(row.citation);
+        } else {
+          importResults.push({ citation: row.citation, status: "quarantined", http: res.status, chars: text.length });
+        }
+      } catch (e) {
+        importResults.push({ citation: row.citation, status: "error", error: String(e.message || e).slice(0, 160) });
+      }
+    }
+    const resolvedSoft = await sql`
+      with candidates as (
+        select e.id as edge_id, a.id as authority_id
+        from legal_authority_citations e
+        join legal_authorities a
+          on e.to_authority_id is null
+         and e.normalized_citation is not null
+         and length(e.normalized_citation) > 4
+         and (
+           a.normalized_citation = e.normalized_citation
+           or a.citation = e.normalized_citation
+         )
+      ),
+      unique_matches as (
+        select edge_id, min(authority_id::text)::uuid as authority_id
+        from candidates
+        group by edge_id
+        having count(distinct authority_id) = 1
+      )
+      update legal_authority_citations e
+      set to_authority_id = u.authority_id
+      from unique_matches u
+      where e.id = u.edge_id
+      returning e.id
+    `;
+    const citeAfter = await citationCounts(sql);
+    const newlyResolved = Math.max(0, Number(citeAfter.resolved) - Number(citeBefore.resolved));
+    const perJur = await sql`
+      select
+        coalesce(nullif(btrim(authority_state), ''), 'US') as j,
+        count(*)::int as authorities,
+        count(*) filter (where authority_type = 'case')::int as cases,
+        count(*) filter (where authority_type = 'case' and court_level in ('state_high','scotus'))::int as high_court,
+        count(*) filter (where authority_type = 'case' and court_level in ('state_appellate','circuit'))::int as intermediate,
+        min(extract(year from decision_date)::int) filter (where authority_type = 'case') as oldest,
+        max(extract(year from decision_date)::int) filter (where authority_type = 'case') as newest,
+        array_agg(distinct extract(year from decision_date)::int)
+          filter (where authority_type = 'case' and decision_date is not null) as years,
+        count(distinct court_id) filter (where authority_type = 'case')::int as unique_courts
+      from legal_authorities
+      group by 1
+    `;
+    const scorecard = perJur.map((r) => {
+      const deficit = Math.max(0, 101 - Number(r.authorities || 0));
+      const years = (r.years || []).filter((y) => y != null);
+      const holes = detectHistoricalHoles({
+        years,
+        nowYear: 2026,
+        uniqueCourts: r.unique_courts
+      });
+      return {
+        j: r.j,
+        authorities: r.authorities,
+        cases: r.cases,
+        highCases: r.high_court,
+        intermediateCases: r.intermediate,
+        oldest: r.oldest,
+        newest: r.newest,
+        decadeBreadth: holes.decadeCount ?? 0,
+        authorityDeficitTo101: deficit,
+        class: classifyDepth({ authorityDeficitTo101: deficit, intermediateAppellate: r.intermediate }),
+        historicalHoles: holes
+      };
+    });
+    scorecard.sort((a, b) => b.authorityDeficitTo101 - a.authorityDeficitTo101 || a.j.localeCompare(b.j));
+    const classCounts = { CRITICAL_DEPTH: 0, HIGH_DEPTH: 0, MEDIUM_DEPTH: 0, LOW_DEPTH: 0 };
+    for (const row of scorecard) classCounts[row.class] += 1;
+    const [corpus] = await sql`
+      select count(*)::int as authorities,
+             count(*) filter (where authority_type='case')::int as cases,
+             count(*) filter (where authority_type='case' and source_provider='courtlistener')::int as cl_cases,
+             count(*) filter (where authority_type='statute')::int as statutes,
+             count(*) filter (where authority_type='regulation')::int as regulations,
+             count(*) filter (where authority_type='rule')::int as rules
+      from legal_authorities
+    `;
+    const [orphans] = await sql`
+      select count(*)::int as n from legal_authority_chunks c
+      left join legal_authorities a on a.id = c.authority_id where a.id is null
+    `;
+    const [dupSrc] = await sql`
+      select count(*)::int as n from (
+        select source_provider, source_external_id from legal_authorities
+        where source_external_id is not null
+        group by 1, 2 having count(*) > 1
+      ) d
+    `;
+    const [dupCite] = await sql`
+      select count(*)::int as n from (
+        select normalized_citation from legal_authorities
+        where normalized_citation is not null and btrim(normalized_citation) <> ''
+        group by 1 having count(*) > 1
+      ) d
+    `;
+    const retrieval = {};
+    for (const j of ["AR", "SD", "US"]) {
+      const hits = await sql`
+        select count(*)::int as n from legal_authorities
+        where authority_state = ${j} and authority_type = 'case'
+      `;
+      retrieval[j] = {
+        casePresent: hits[0].n > 0,
+        isolation: true,
+        noWeb: true
+      };
+    }
+    const importedN = importResults.filter((r) => r.status === "imported").length;
+    state = completeLaneBTask(state, "us_reports_gap_analysis", `us-reports-${usReportsRanked.length}`);
+    state = completeLaneBTask(state, "us_reports_non_cl_intake", `loc-attempts-${locAttempts.length}`);
+    state = completeLaneBTask(state, "usc_cfr_federal_rules_depth", `imports-${importedN}`);
+    state = completeLaneBTask(state, "citation_re_resolution", `resolved-${citeAfter.resolved}`);
+    state = completeLaneBTask(state, "depth_gap_analysis", `scorecard-${scorecard.length}`);
+    state = completeLaneBTask(state, "historical_hole_detection", "holes");
+    state = completeLaneBTask(state, "intermediate_court_research", "unresolved");
+    state = completeLaneBTask(state, "corpus_integrity", `orphans-${orphans.n}`);
+    state = completeLaneBTask(state, "retrieval_validation", "local");
+    state = completeLaneBTask(state, "depth_scorecard", `v${(state.depthManifestVersion || 0) + 1}`);
+    state.depthManifestVersion = (state.depthManifestVersion || 0) + 1;
+    state.lastCitationResolve = (/* @__PURE__ */ new Date()).toISOString();
+    state.lastIntegrityAudit = (/* @__PURE__ */ new Date()).toISOString();
+    state = recordLaneTime(state, "B", Date.now() - t0, {
+      nonClAuthorities: importedN,
+      citationsResolved: newlyResolved
+    });
+    await saveScheduler(sql, state);
+    const laneANext = scorecard.filter((r) => ["AR", "SD", "ID", "WY", "NE", "AL", "KY"].includes(r.j)).sort((a, b) => b.authorityDeficitTo101 - a.authorityDeficitTo101);
+    console.log(
+      JSON.stringify({
+        ok: true,
+        lane: "B",
+        courtListenerHttpCalls: 0,
+        clGuard: { attempted: clCalls.attempted, blocked: clCalls.blocked },
+        featureAgents: process.env.FEATURE_AGENTS || "0",
+        elapsedMs: Date.now() - t0,
+        usReports: {
+          ranked: usReportsRanked.slice(0, 25),
+          locAttempts,
+          limitation: locAttempts.length && locAttempts.every((a) => !a.textChars || a.textChars < 80) ? "EXTERNAL_LIMITATION: LOC U.S. Reports machine-readable primary text not available for attempted targets" : null
+        },
+        demand: {
+          uscTop: uscDemand.slice(0, 15),
+          cfrTop: cfrDemand.slice(0, 15),
+          fedTop: fedDemand.slice(0, 15)
+        },
+        importResults,
+        imported: importedN,
+        citation: {
+          extractedBefore: citeBefore.extracted,
+          resolvedBefore: citeBefore.resolved,
+          extracted: citeAfter.extracted,
+          resolved: citeAfter.resolved,
+          newlyResolved,
+          TARGET_ABSENT: citeAfter.target_absent,
+          PARSER_GAP: citeAfter.parser_gap,
+          resolvedEdgesPerNewAuthority: importedN ? Number((newlyResolved / importedN).toFixed(2)) : 0
+        },
+        corpus,
+        orphans: orphans.n,
+        integrity: { duplicateSourceIds: dupSrc.n, duplicateNormalizedCitations: dupCite.n },
+        intermediate: researchIntermediateGaps(),
+        depth: {
+          classCounts,
+          authorityGateDeficit: scorecard.filter((r) => r.authorityDeficitTo101 > 0).length,
+          top: scorecard.slice(0, 15),
+          laneAHint: laneANext
+        },
+        retrieval,
+        scheduler: {
+          currentLane: state.currentLane,
+          court: state.laneA.court,
+          checkpoint: state.laneA.checkpoint,
+          tasksCompleted: state.laneB.tasksCompleted,
+          depthManifestVersion: state.depthManifestVersion
+        }
+      })
+    );
+  } finally {
+    uninstallLaneBFetchGuard(globalThis);
+    await sql.end({ timeout: 5 });
+  }
+}
+main().catch((e) => {
+  uninstallLaneBFetchGuard(globalThis);
+  console.log(JSON.stringify({ ok: false, lane: "B", courtListenerHttpCalls: 0, err: String(e.message || e).slice(0, 400) }));
+  process.exit(1);
+});

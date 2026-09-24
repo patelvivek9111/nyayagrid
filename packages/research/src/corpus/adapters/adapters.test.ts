@@ -3,6 +3,8 @@ import {
   emptyCheckpoint,
   sanitizeUntrustedLegalText,
   createCourtListenerAdapter,
+  createUsReportsLocAdapter,
+  createUscourtsRulesAdapter,
   runAdapterBatch,
 } from "./index";
 import { resolveCurrentnessStatus } from "../currentness";
@@ -142,3 +144,73 @@ describe("courtlistener missing api key", () => {
     fetchSpy.mockRestore();
   });
 });
+
+describe("us_reports_loc adapter", () => {
+  it("quarantines when LOC returns no primary opinion text", async () => {
+    const fetchImpl = vi.fn(async () =>
+      new Response(JSON.stringify({ item: { title: "United States Reports" } }), {
+        status: 200,
+        headers: { "content-type": "application/json" },
+      }),
+    );
+    const adapter = createUsReportsLocAdapter({
+      rateLimitMs: 0,
+      fetchImpl: fetchImpl as unknown as typeof fetch,
+      targets: [{ volume: 347, page: 483 }],
+    });
+    const discovered = await adapter.discover?.();
+    expect(discovered?.items[0]?.sourceExternalId).toBe("usrep3470483");
+    const fetched = await adapter.fetch?.(discovered!.items);
+    const parsed = await adapter.parse(fetched!);
+    expect(parsed.records).toEqual([]);
+    expect(parsed.quarantined[0]?.reason).toMatch(/primary opinion text/i);
+  });
+
+  it("imports only when primary text is present and does not invent a case name", async () => {
+    const fetchImpl = vi.fn(async () =>
+      new Response(
+        JSON.stringify({
+          item: {
+            title: "347 U.S. 483",
+            full_text:
+              "Opinion of the Court. The questions presented relate to the constitutionality of state-mandated segregation in public education as applied to the facts of this record. ".repeat(3),
+          },
+        }),
+        { status: 200, headers: { "content-type": "application/json" } },
+      ),
+    );
+    const adapter = createUsReportsLocAdapter({
+      rateLimitMs: 0,
+      fetchImpl: fetchImpl as unknown as typeof fetch,
+      targets: [{ volume: 347, page: 483 }],
+    });
+    const discovered = await adapter.discover?.();
+    const fetched = await adapter.fetch?.(discovered!.items);
+    const parsed = await adapter.parse(fetched!);
+    expect(parsed.quarantined).toEqual([]);
+    expect(parsed.records[0]?.citation).toBe("347 U.S. 483");
+    expect(parsed.records[0]?.sourceProvider).toBe("loc_us_reports");
+    expect(parsed.records[0]?.courtLevel).toBe("scotus");
+  });
+});
+
+describe("uscourts_rules adapter", () => {
+  it("parses official HTML and is idempotent on sourceExternalId", async () => {
+    const html =
+      "<html><body><h1>Rule 56. Summary Judgment</h1><p>The court shall grant summary judgment if the movant shows that there is no genuine dispute as to any material fact.</p></body></html>";
+    const fetchImpl = vi.fn(async () => new Response(html, { status: 200, headers: { "content-type": "text/html" } }));
+    const adapter = createUscourtsRulesAdapter({
+      rateLimitMs: 0,
+      fetchImpl: fetchImpl as unknown as typeof fetch,
+      targets: [{ kind: "civ", rule: "56", slug: "rule-56-summary-judgment" }],
+    });
+    const page = await adapter.discover?.();
+    const fetched = await adapter.fetch?.(page!.items);
+    const parsed = await adapter.parse(fetched!);
+    expect(parsed.records[0]?.normalizedCitation).toBe("Fed. R. Civ. P. 56");
+    expect(parsed.records[0]?.sourceExternalId).toBe("uscourts-civ-56");
+    const again = await adapter.parse(fetched!);
+    expect(again.records[0]?.sourceExternalId).toBe(parsed.records[0]?.sourceExternalId);
+  });
+});
+

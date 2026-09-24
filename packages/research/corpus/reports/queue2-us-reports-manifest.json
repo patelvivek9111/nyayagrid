@@ -1,0 +1,19 @@
+{
+  "generatedAt": "2026-09-24T16:34:00.000Z",
+  "courtListenerHttpCalls": 0,
+  "source": "local citation graph TARGET_ABSENT edges",
+  "note": "estimatedDecisionIdentity is null unless a source returns a title. Do not fabricate case names.",
+  "ranked": [
+    { "citation": "466 U.S. 668", "volume": 466, "page": 668, "inbound": 40, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate", "locProbe": "404" },
+    { "citation": "373 U.S. 83", "volume": 373, "page": 83, "inbound": 19, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate", "locProbe": "404" },
+    { "citation": "200 U.S. 321", "volume": 200, "page": 321, "inbound": 15, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate", "locProbe": "404" },
+    { "citation": "443 U.S. 307", "volume": 443, "page": 307, "inbound": 12, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate" },
+    { "citation": "509 U.S. 579", "volume": 509, "page": 579, "inbound": 12, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate" },
+    { "citation": "567 U.S. 460", "volume": 567, "page": 460, "inbound": 12, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate" },
+    { "citation": "597 U.S. 1", "volume": 597, "page": 1, "inbound": 12, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate" },
+    { "citation": "386 U.S. 738", "volume": 386, "page": 738, "inbound": 11, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate" },
+    { "citation": "507 U.S. 725", "volume": 507, "page": 725, "inbound": 11, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate" },
+    { "citation": "543 U.S. 551", "volume": 543, "page": 551, "inbound": 11, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate" }
+  ],
+  "limitation": "LOC item URLs constructed as /item/usrepVVVPPPP/ returned 404 for the top three targets. Adapter remains in place for a proven primary-text source. Secondary summaries were not substituted."
+}

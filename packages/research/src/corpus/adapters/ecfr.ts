@@ -120,7 +120,10 @@ export function createEcfrAdapter(options: EcfrAdapterOptions = {}): LegalSource
   const defaultTargets = options.sectionTargets ?? [
     { title: 28, part: "0", section: "0.1" },
     { title: 29, part: "541", section: "541.0" },
+    { title: 29, part: "1630", section: "1630.2" },
     { title: 42, part: "400", section: "400.200" },
+    { title: 45, part: "164", section: "164.502" },
+    { title: 8, part: "214", section: "214.1" },
   ];
 
   const adapter: LegalSourceAdapter = {

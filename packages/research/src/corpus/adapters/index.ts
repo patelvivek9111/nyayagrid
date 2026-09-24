@@ -20,8 +20,25 @@ export type { CourtListenerAdapterOptions } from "./courtlistener";
 export { createEcfrAdapter, fetchEcfrSection, resolveEcfrAsOfDate } from "./ecfr";
 export type { EcfrAdapterOptions } from "./ecfr";
 
-export { createUscHouseAdapter, normalizeUscCitation, uscViewerUrl } from "./usc";
+export { createUscHouseAdapter, normalizeUscCitation, uscViewerUrl, USC_DEFAULT_SECTIONS } from "./usc";
 export type { UscHouseAdapterOptions, UscSectionRef } from "./usc";
+
+export {
+  createUsReportsLocAdapter,
+  locUsReportsItemId,
+  locUsReportsItemUrl,
+  parseUsReportsTarget,
+  usReportsCitation,
+} from "./us-reports";
+export type { UsReportsAdapterOptions, UsReportsTarget } from "./us-reports";
+
+export {
+  createUscourtsRulesAdapter,
+  federalRuleCitation,
+  uscourtsRuleUrl,
+  DEFAULT_FEDERAL_RULE_TARGETS,
+} from "./uscourts-rules";
+export type { UscourtsRulesAdapterOptions, FederalRuleTarget, FederalRuleKind } from "./uscourts-rules";
 
 export {
   createStateStatuteAdapter,

@@ -1,0 +1,143 @@
+{
+  "ok": true,
+  "status": "PARTIAL",
+  "wave": "queue2-dual-lane",
+  "generatedAt": "2026-09-24T16:34:30.000Z",
+  "architecture": {
+    "dualLaneImplemented": true,
+    "schedulerPersisted": true,
+    "zeroIdleLogic": true,
+    "notes": [
+      "Controller decides Lane A vs B from useful-capacity (>=25 or finish-partial).",
+      "Lane B fetch guard throws LANE_B_CL_BLOCKED locally.",
+      "Scheduler state persisted in queue2-dual-lane-state.json and corpus_ingest_jobs (source=queue2-scheduler)."
+    ]
+  },
+  "courtListener": {
+    "laneBRequests": 0,
+    "quotaProbeThisRun": true,
+    "quotaProbeEndpoint": "GET /api/rest/v4/api-usage/",
+    "mustBeZeroExceptQuotaProbe": true,
+    "live": {
+      "membership": "CL Membership - Tier 2",
+      "minuteRemaining": 30,
+      "hourRemaining": 300,
+      "dayUsed": 1171,
+      "dayRemaining": 29,
+      "dayReserve": 40,
+      "safeRequests": 0,
+      "dayResetAt": "2026-09-24T22:06:14.563Z"
+    }
+  },
+  "laneA": {
+    "currentCourt": "ark",
+    "jurisdiction": "AR",
+    "checkpoint": null,
+    "target": 45,
+    "count": 33,
+    "remainingCasesApprox": 12,
+    "remainingRequestsApprox": 28,
+    "nextResumeCondition": "day rolling window recovers at ~2026-09-24T22:06:14Z (6:06 PM ET) AND safeRequests >= 25 or enough to finish AR"
+  },
+  "laneB": {
+    "ok": true,
+    "courtListenerHttpCalls": 0,
+    "elapsedMs": 36483,
+    "tasksCompleted": [
+      "us_reports_gap_analysis",
+      "us_reports_non_cl_intake",
+      "usc_cfr_federal_rules_depth",
+      "citation_re_resolution",
+      "depth_gap_analysis",
+      "historical_hole_detection",
+      "intermediate_court_research",
+      "corpus_integrity",
+      "retrieval_validation",
+      "depth_scorecard"
+    ],
+    "nonClAuthoritiesAdded": 6,
+    "imports": [
+      "8 U.S.C. § 1252",
+      "18 U.S.C. § 922",
+      "28 U.S.C. § 1291",
+      "18 U.S.C. § 3553",
+      "8 C.F.R. § 1208.16",
+      "29 C.F.R. § 4206.1"
+    ],
+    "usReportsAnalysis": {
+      "topMissing": [
+        { "citation": "466 U.S. 668", "inbound": 40 },
+        { "citation": "373 U.S. 83", "inbound": 19 },
+        { "citation": "200 U.S. 321", "inbound": 15 }
+      ],
+      "locAttempts": 3,
+      "locPrimaryText": false,
+      "limitation": "EXTERNAL_LIMITATION: loc.gov item URLs returned 404; no secondary summary substituted"
+    },
+    "uscCfrFederalRules": {
+      "uscImported": 4,
+      "cfrImported": 2,
+      "federalRulesImported": 0,
+      "note": "Demand-driven from TARGET_ABSENT. Fed. R. App. P. 34 is top missing rule (inbound 12) — uscourts fetch not in this bounded batch."
+    },
+    "intermediateMappingCandidates": "UNRESOLVED for pacommwlth, njsuperct, vacapp — no local evidence for a replacement CL id",
+    "integrityFindings": {
+      "orphans": 0,
+      "duplicateSourceIds": 0,
+      "duplicateNormalizedCitations": 186,
+      "duplicateCitationNote": "Existing citation-alias population; not force-merged. No inferred legal metadata."
+    }
+  },
+  "citation": {
+    "extracted": 5689,
+    "resolvedBefore": 135,
+    "resolved": 179,
+    "newlyResolved": 44,
+    "TARGET_ABSENT": 5510,
+    "PARSER_GAP": 0,
+    "resolvedEdgesPerNewAuthority": 7.33
+  },
+  "coverage": {
+    "authorities": 2966,
+    "cases": 1649,
+    "clCases": 1604,
+    "statutes": 904,
+    "regulations": 158,
+    "rules": 254,
+    "authorityGateDeficitJurisdictions": 51,
+    "depthClasses": {
+      "CRITICAL_DEPTH": 34,
+      "HIGH_DEPTH": 11,
+      "MEDIUM_DEPTH": 6,
+      "LOW_DEPTH": 1
+    },
+    "historicalGaps": "Most unfinished states remain 2026-only / one-court / one-decade. AR already has 1931–2026 high-court spread (HIGH_DEPTH). Lane A sequence remains AR → SD → ID → WY → NE → AL → KY."
+  },
+  "automation": {
+    "nextQuotaProbe": "2026-09-24T22:06:14.563Z",
+    "automaticLaneAResume": true,
+    "humanInterventionRequired": "no"
+  },
+  "operational": {
+    "tests": {
+      "controller": "14 passed (node scripts/queue2-dual-lane-controller.test.cjs)",
+      "adapters": "11 passed (vitest adapters.test.ts including us-reports + uscourts_rules)",
+      "quota": "4 passed (cl-quota-controller.test.cjs)"
+    },
+    "commit": "pending",
+    "deploy": "none (fly machine exec only; no image deploy)",
+    "health": {
+      "ready": 200,
+      "database": "ok",
+      "featureAgents": "0"
+    },
+    "FEATURE_AGENTS": "0",
+    "orphans": 0
+  },
+  "queue": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
+  }
+}

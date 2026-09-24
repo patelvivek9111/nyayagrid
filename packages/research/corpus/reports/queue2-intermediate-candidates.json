@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-09-24T16:17:00.000Z",
+  "courtListenerHttpCalls": 0,
+  "method": "local repo + persisted reports only",
+  "gaps": [
+    {
+      "gapId": "pacommwlth",
+      "courtName": "Commonwealth Court of Pennsylvania",
+      "invalidCandidateId": "pacommwlth",
+      "classification": "UNRESOLVED",
+      "candidateClId": null,
+      "hypothesizedUnverifiedIds": ["pacomm", "pa-comm"],
+      "evidence": "wave2v-court-verify.txt GET /courts/pacommwlth/ → 404; wave2v-court-search.txt name search HTTP 400 with empty hits; hypothesized ids never verified"
+    },
+    {
+      "gapId": "njsuperct",
+      "courtName": "Superior Court of New Jersey, Appellate Division",
+      "invalidCandidateId": "njsuperct",
+      "classification": "UNRESOLVED",
+      "candidateClId": null,
+      "hypothesizedUnverifiedIds": ["njsuper"],
+      "evidence": "wave2v-court-verify.txt GET /courts/njsuperct/ → 404; wave2v-court-search.txt HTTP 400 empty hits"
+    },
+    {
+      "gapId": "vacapp",
+      "courtName": "Court of Appeals of Virginia",
+      "invalidCandidateId": "vacapp",
+      "classification": "UNRESOLVED",
+      "candidateClId": null,
+      "hypothesizedUnverifiedIds": [],
+      "evidence": "wave2v-court-verify.txt GET /courts/vacapp/ → 404; wave2v-court-search.txt HTTP 400 empty hits"
+    }
+  ],
+  "note": "CANDIDATE_NEEDS_SINGLE_CL_VERIFY is withheld. No local evidence supports a replacement CourtListener court id."
+}

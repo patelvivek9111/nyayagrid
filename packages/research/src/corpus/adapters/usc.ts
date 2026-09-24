@@ -18,6 +18,9 @@ const HOUSE_VIEWER = "https://uscode.house.gov/view.xhtml";
 
 export type UscHouseAdapterOptions = {
   rateLimitMs?: number;
+  fetchImpl?: typeof fetch;
+  /** Additional/override House OLRC section targets for demand-driven discover. */
+  sectionTargets?: Array<{ title: number; section: string; label: string }>;
 };
 
 export type UscSectionRef = {
@@ -57,15 +60,25 @@ function stripHtml(html: string): string {
   );
 }
 
-const CURATED_DISCOVER: Array<{ title: number; section: string; label: string }> = [
+export const USC_DEFAULT_SECTIONS: Array<{ title: number; section: string; label: string }> = [
   { title: 28, section: "1331", label: "Federal question jurisdiction" },
   { title: 28, section: "1332", label: "Diversity of citizenship" },
+  { title: 28, section: "1367", label: "Supplemental jurisdiction" },
+  { title: 28, section: "1441", label: "Removal of civil actions" },
+  { title: 28, section: "1651", label: "All Writs Act" },
+  { title: 28, section: "2201", label: "Creation of remedy (declaratory judgment)" },
+  { title: 28, section: "2254", label: "State custody habeas" },
   { title: 29, section: "201", label: "FLSA definitions (stub)" },
   { title: 42, section: "1983", label: "Civil action for deprivation of rights" },
+  { title: 42, section: "1988", label: "Proceedings in vindication of civil rights" },
+  { title: 5, section: "552", label: "FOIA" },
+  { title: 5, section: "706", label: "APA scope of review" },
 ];
 
 export function createUscHouseAdapter(options: UscHouseAdapterOptions = {}): LegalSourceAdapter {
   const rateLimitMs = options.rateLimitMs ?? 400;
+  const fetchImpl = options.fetchImpl ?? fetch;
+  const curatedDiscover = options.sectionTargets ?? USC_DEFAULT_SECTIONS;
 
   const adapter: LegalSourceAdapter = {
     name: "usc_house",
@@ -79,7 +92,7 @@ export function createUscHouseAdapter(options: UscHouseAdapterOptions = {}): Leg
 
     async discover(cursor?: string, limit = 25) {
       const start = cursor ? Number.parseInt(cursor, 10) || 0 : 0;
-      const slice = CURATED_DISCOVER.slice(start, start + limit);
+      const slice = curatedDiscover.slice(start, start + limit);
       const items: AdapterDiscoverItem[] = slice.map((row) => ({
         sourceExternalId: `usc-${row.title}-${row.section}`,
         canonicalUrl: uscViewerUrl({ title: row.title, section: row.section }),
@@ -89,7 +102,7 @@ export function createUscHouseAdapter(options: UscHouseAdapterOptions = {}): Leg
       const next = start + slice.length;
       return {
         items,
-        nextCursor: next < CURATED_DISCOVER.length ? String(next) : undefined,
+        nextCursor: next < curatedDiscover.length ? String(next) : undefined,
       };
     },
 
@@ -114,7 +127,7 @@ export function createUscHouseAdapter(options: UscHouseAdapterOptions = {}): Leg
         const url = item.canonicalUrl ?? uscViewerUrl(ref);
         await sleep(rateLimitMs);
         try {
-          const res = await fetch(url, {
+          const res = await fetchImpl(url, {
             headers: { Accept: "text/html,application/xhtml+xml" },
           });
           if (!res.ok) {
