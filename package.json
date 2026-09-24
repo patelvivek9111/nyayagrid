@@ -57,7 +57,8 @@
     "staging:q9:acceptance": "tsx scripts/q9-staging-recovery-acceptance.ts",
     "queue2:worker": "node scripts/run-queue2-dual-lane.cjs --loop",
     "queue2:worker:once": "node scripts/run-queue2-dual-lane.cjs --once",
-    "queue2:milestone": "node scripts/queue2-milestone-push.cjs"
+    "queue2:milestone": "node scripts/queue2-milestone-push.cjs",
+    "queue2:validate": "node scripts/queue2-autonomy-policy.test.cjs && node scripts/queue2-worker-lock.test.cjs && node scripts/queue2-worker-observability.test.cjs && node scripts/queue2-dual-lane-controller.test.cjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",

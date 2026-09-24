@@ -50,6 +50,24 @@ const LANE_B_TASKS = [
   "depth_scorecard",
 ];
 
+/** Canonical registry IDs (see packages/research/corpus/config/queue2-offline-task-registry.json). */
+const LANE_B_REGISTRY_IDS = [
+  "US_REPORTS_GAP_ANALYSIS",
+  "NON_CL_PRIMARY_AUTHORITY_INTAKE",
+  "USC_DEPTH",
+  "CFR_DEPTH",
+  "FEDERAL_RULES_DEPTH",
+  "CITATION_RERESOLVE",
+  "DEPTH_MANIFEST_REFRESH",
+  "HISTORICAL_GAP_ANALYSIS",
+  "INTERMEDIATE_MAPPING_RESEARCH_NON_CL",
+  "CORPUS_INTEGRITY_AUDIT",
+  "RETRIEVAL_REGRESSION",
+  "CURRENTNESS_AUDIT_LOCAL",
+  "NEXT_CL_BATCH_PREPARATION",
+  "DAILY_SCORECARD_REFRESH",
+];
+
 const CL_HOST_RE = /(?:^|\.)courtlistener\.com$/i;
 const CL_BLOCKED_PATHS = [
   "/api/rest/v4/opinions",
@@ -105,22 +123,33 @@ function createInitialState(now = new Date()) {
       task: LANE_B_TASKS[0],
       checkpoint: null,
       tasksCompleted: [],
+      checkpoints: {},
+      lastByTask: {},
+      mutatingTaskActive: null,
     },
     depthManifestVersion: 0,
     lastCitationResolve: null,
     lastIntegrityAudit: null,
     laneStartedAt: null,
     lastHeartbeatAt: null,
+    idleSafe: false,
+    waitingForNetwork: false,
+    lastOnlineAt: null,
+    runtimeState: "STOPPED",
     humanReview: { required: false, reasons: [], details: [] },
     metrics: {
       laneAMs: 0,
       laneBMs: 0,
       idleMs: 0,
+      idleSafeMs: 0,
+      waitingNetworkMs: 0,
       clAuthorities: 0,
       nonClAuthorities: 0,
       citationsResolved: 0,
       quotaChecks: 0,
       laneSwitches: 0,
+      aiCalls: 0,
+      aiTokens: 0,
     },
     switches: [],
   };
@@ -154,6 +183,21 @@ function restoreState(saved, now = new Date()) {
   merged.featureAgents = "0";
   merged.version = 1;
   if (merged.currentLane !== "A" && merged.currentLane !== "B") merged.currentLane = "B";
+  merged.idleSafe = Boolean(merged.idleSafe);
+  merged.waitingForNetwork = Boolean(merged.waitingForNetwork);
+  merged.runtimeState = merged.runtimeState || "STOPPED";
+  merged.metrics = {
+    ...base.metrics,
+    ...(saved.metrics || {}),
+    aiCalls: 0,
+    aiTokens: 0,
+  };
+  merged.laneB = {
+    ...base.laneB,
+    ...(saved.laneB || {}),
+    checkpoints: { ...(base.laneB.checkpoints || {}), ...((saved.laneB && saved.laneB.checkpoints) || {}) },
+    lastByTask: { ...(base.laneB.lastByTask || {}), ...((saved.laneB && saved.laneB.lastByTask) || {}) },
+  };
   // Harden: never keep an active partial court with a null checkpoint.
   const check = validatePartialCheckpoint(merged.laneA);
   merged.laneA = check.laneA;
@@ -455,10 +499,42 @@ function completeLaneBTask(state, task, checkpoint, now = new Date()) {
   const next = cloneState(state);
   if (!next.laneB.tasksCompleted.includes(task)) next.laneB.tasksCompleted.push(task);
   next.laneB.checkpoint = checkpoint ?? next.laneB.checkpoint;
+  next.laneB.checkpoints = next.laneB.checkpoints || {};
+  next.laneB.lastByTask = next.laneB.lastByTask || {};
+  next.laneB.lastByTask[task] = now.toISOString();
+  if (checkpoint != null) {
+    // Prefer storing under both legacy and string forms.
+    next.laneB.checkpoints[task] = checkpoint;
+  }
+  next.laneB.mutatingTaskActive = null;
   const idx = LANE_B_TASKS.indexOf(task);
   const nextTask = idx >= 0 ? LANE_B_TASKS[(idx + 1) % LANE_B_TASKS.length] : LANE_B_TASKS[0];
   next.laneB.task = nextTask;
+  next.idleSafe = false;
   next.updatedAt = now.toISOString();
+  return next;
+}
+
+/**
+ * Apply registry selection result onto scheduler state (deterministic; no AI).
+ */
+function applyLaneBSelection(state, selection, now = new Date()) {
+  const next = cloneState(state);
+  next.updatedAt = now.toISOString();
+  if (selection.idleSafe || !selection.task) {
+    next.idleSafe = true;
+    next.currentLane = "B";
+    next.laneB.task = "NONE";
+    next.runtimeState = "IDLE_SAFE";
+    return next;
+  }
+  next.idleSafe = false;
+  next.currentLane = "B";
+  next.laneB.task = selection.task.id || selection.currentTask;
+  if (selection.task.mayMutate) {
+    next.laneB.mutatingTaskActive = selection.task.id;
+  }
+  next.runtimeState = "RUNNING";
   return next;
 }
 
@@ -703,6 +779,7 @@ module.exports = {
   MIN_QUOTA_PROBE_GAP_MS,
   LANE_A_SEQUENCE,
   LANE_B_TASKS,
+  LANE_B_REGISTRY_IDS,
   EST_CL_REQUESTS_PER_CASE,
   createInitialState,
   restoreState,
@@ -720,6 +797,7 @@ module.exports = {
   releaseLaneALock,
   recordLaneTime,
   completeLaneBTask,
+  applyLaneBSelection,
   isCourtListenerUrl,
   isBlockedLaneBCourtListenerUrl,
   assertLaneBUrlAllowed,

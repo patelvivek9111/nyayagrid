@@ -10,8 +10,19 @@ const path = require("node:path");
 const STATUS_LANES = Object.freeze([
   "LANE_A_CL",
   "LANE_B_OFFLINE",
+  "LANE_B_IDLE_SAFE",
   "QUOTA_CHECK",
   "HOLD",
+  "WAITING_FOR_NETWORK",
+  "HUMAN_REVIEW_REQUIRED",
+]);
+
+const RUNTIME_STATES = Object.freeze([
+  "RUNNING",
+  "IDLE_SAFE",
+  "WAITING_FOR_NETWORK",
+  "SUSPENDED_OR_OFFLINE",
+  "STOPPED",
   "HUMAN_REVIEW_REQUIRED",
 ]);
 
@@ -23,11 +34,15 @@ const EVENT_TYPES = Object.freeze([
   "QUOTA_FLOOR",
   "LANE_B_START",
   "OFFLINE_TASK_COMPLETE",
+  "LANE_B_IDLE_SAFE",
   "QUOTA_PROBE",
   "QUOTA_RECOVERED",
   "LANE_SWITCH",
   "CHECKPOINT",
   "MILESTONE",
+  "SYSTEM_RESUME_DETECTED",
+  "NETWORK_LOSS",
+  "NETWORK_RECOVERED",
   "HUMAN_REVIEW_REQUIRED",
   "ERROR",
   "WORKER_STOP",
@@ -51,6 +66,7 @@ const HUMAN_REVIEW_REASONS = Object.freeze({
   INTEGRITY_FAILURE: "INTEGRITY_FAILURE",
   STALE_HEARTBEAT: "STALE_HEARTBEAT",
   NO_PRODUCTIVE_LANE_B: "NO_PRODUCTIVE_LANE_B",
+  NO_PRODUCTIVE_STRATEGY_REMAINS: "NO_PRODUCTIVE_STRATEGY_REMAINS",
   QUEUE_2_COMPLETION_CANDIDATE: "QUEUE_2_COMPLETION_CANDIDATE",
   QUEUE_TRANSITION_REQUESTED: "QUEUE_TRANSITION_REQUESTED",
   CONFLICTING_MUTATOR_REPEATED: "CONFLICTING_MUTATOR_REPEATED",
@@ -58,6 +74,9 @@ const HUMAN_REVIEW_REASONS = Object.freeze({
   ACTIVE_PID_MISMATCHED_WORKER_ID: "ACTIVE_PID_MISMATCHED_WORKER_ID",
   CHECKPOINT_LOCK_DISAGREEMENT: "CHECKPOINT_LOCK_DISAGREEMENT",
   SCHEDULER_LOCK_CORRUPTION: "SCHEDULER_LOCK_CORRUPTION",
+  REPEATED_NETWORK_FAILURE: "REPEATED_NETWORK_FAILURE",
+  PROVIDER_TERMS_CHANGED: "PROVIDER_TERMS_CHANGED",
+  EXTERNAL_SOURCE_LIMITATION_BLOCKS_SCOPE: "EXTERNAL_SOURCE_LIMITATION_BLOCKS_SCOPE",
 });
 
 /** Local heartbeat cadence — zero AI usage. */
@@ -86,6 +105,8 @@ function formatEt(isoOrDate) {
 function statusLaneFromState(state) {
   if (state?.humanReview?.required) return "HUMAN_REVIEW_REQUIRED";
   if (state?.hold) return "HOLD";
+  if (state?.waitingForNetwork) return "WAITING_FOR_NETWORK";
+  if (state?.idleSafe || state?.currentLane === "IDLE_SAFE") return "LANE_B_IDLE_SAFE";
   if (state?.currentLane === "A") return "LANE_A_CL";
   if (state?.currentLane === "B") return "LANE_B_OFFLINE";
   return "LANE_B_OFFLINE";
@@ -217,6 +238,12 @@ function evaluateHumanReviewTriggers(signals = {}) {
   if (signals.activePidMismatchedWorkerId) reasons.push(HUMAN_REVIEW_REASONS.ACTIVE_PID_MISMATCHED_WORKER_ID);
   if (signals.checkpointLockDisagreement) reasons.push(HUMAN_REVIEW_REASONS.CHECKPOINT_LOCK_DISAGREEMENT);
   if (signals.schedulerLockCorruption) reasons.push(HUMAN_REVIEW_REASONS.SCHEDULER_LOCK_CORRUPTION);
+  if (signals.noProductiveStrategyRemains) reasons.push(HUMAN_REVIEW_REASONS.NO_PRODUCTIVE_STRATEGY_REMAINS);
+  if (signals.repeatedNetworkFailure) reasons.push(HUMAN_REVIEW_REASONS.REPEATED_NETWORK_FAILURE);
+  if (signals.providerTermsChanged) reasons.push(HUMAN_REVIEW_REASONS.PROVIDER_TERMS_CHANGED);
+  if (signals.externalSourceLimitationBlocksScope) {
+    reasons.push(HUMAN_REVIEW_REASONS.EXTERNAL_SOURCE_LIMITATION_BLOCKS_SCOPE);
+  }
   return { required: reasons.length > 0, reasons };
 }
 
@@ -246,6 +273,8 @@ function buildOperatorStatus(params = {}) {
     queue3: "NOT_OPEN",
     featureAgents: "0",
     currentLane,
+    runtimeState: params.runtimeState || "STOPPED",
+    freshness: params.freshness || null,
     currentTask: params.currentTask || state.laneB?.task || (currentLane === "LANE_A_CL" ? "cl_ingest" : null),
     currentCourt: laneA.court || null,
     currentJurisdiction: laneA.jurisdiction || null,
@@ -264,6 +293,14 @@ function buildOperatorStatus(params = {}) {
     lastUpdatedAt: nowIso,
     lastHeartbeatAt: params.lastHeartbeatAt || state.lastHeartbeatAt || null,
     nextQuotaCheckAt: quota.nextCheckAt || null,
+    network: {
+      waitingForNetwork: Boolean(state.waitingForNetwork || params.waitingForNetwork),
+      lastOnlineAt: params.lastOnlineAt || state.lastOnlineAt || null,
+    },
+    tokens: {
+      routineAiCalls: Number(params.aiCalls ?? state.metrics?.aiCalls ?? 0),
+      routineAiTokens: Number(params.aiTokens ?? state.metrics?.aiTokens ?? 0),
+    },
     quota: {
       minuteRemaining: windows.minute?.remaining ?? null,
       hourRemaining: windows.hour?.remaining ?? null,
@@ -288,6 +325,10 @@ function buildOperatorStatus(params = {}) {
       laneASeconds: Math.round(Number(today.laneASeconds ?? (state.metrics?.laneAMs || 0) / 1000)),
       laneBSeconds: Math.round(Number(today.laneBSeconds ?? (state.metrics?.laneBMs || 0) / 1000)),
       idleSeconds: Math.round(Number(today.idleSeconds ?? (state.metrics?.idleMs || 0) / 1000)),
+      idleSafeSeconds: Math.round(Number(today.idleSafeSeconds ?? (state.metrics?.idleSafeMs || 0) / 1000)),
+      waitingNetworkSeconds: Math.round(
+        Number(today.waitingNetworkSeconds ?? (state.metrics?.waitingNetworkMs || 0) / 1000),
+      ),
     },
     corpus: {
       authorities: corpus.authorities ?? null,
@@ -428,8 +469,15 @@ function formatHeartbeat(status, now = new Date()) {
   if (s.currentLane === "LANE_A_CL") {
     return `${stamp} LANE_A_CL | ${String(s.currentCourt || "?").toUpperCase()} ${s.currentCount ?? "?"}/${s.targetCount ?? "?"} | checkpoint=${s.checkpoint || "none"} | dayRem=${q.dayRemaining ?? "?"} | safe=${q.safeRequests ?? 0}`;
   }
-  if (s.currentLane === "HUMAN_REVIEW_REQUIRED") {
+  if (s.currentLane === "HUMAN_REVIEW_REQUIRED" || s.runtimeState === "HUMAN_REVIEW_REQUIRED") {
     return `${stamp} HUMAN_REVIEW_REQUIRED | ${(s.review?.reviewReasons || []).join(",") || "see status"} | court=${s.currentCourt || "n/a"}`;
+  }
+  if (s.currentLane === "LANE_B_IDLE_SAFE" || s.runtimeState === "IDLE_SAFE") {
+    const next = s.nextQuotaCheckAt || q.dayResetAt;
+    return `${stamp} LANE_B_IDLE_SAFE | task=NONE | nextProbe ${next ? formatEt(next) : "n/a"} | aiCalls=${s.tokens?.routineAiCalls ?? 0}`;
+  }
+  if (s.runtimeState === "WAITING_FOR_NETWORK" || s.currentLane === "WAITING_FOR_NETWORK") {
+    return `${stamp} WAITING_FOR_NETWORK | local heartbeat continues | checkpoint=${s.checkpoint || "none"}`;
   }
   const next = s.nextQuotaCheckAt || q.dayResetAt;
   return `${stamp} LANE_B_OFFLINE | ${s.currentTask || "offline"} | today +${(t.clAuthoritiesAdded || 0) + (t.nonClAuthoritiesAdded || 0)} auth | citations +${t.citationEdgesResolved || 0} | CL paused | nextProbe ${next ? formatEt(next) : "n/a"}`;
@@ -458,6 +506,7 @@ function writeObservabilityArtifacts(reportsDir, status, opts = {}) {
 
 module.exports = {
   STATUS_LANES,
+  RUNTIME_STATES,
   EVENT_TYPES,
   HUMAN_REVIEW_REASONS,
   HEARTBEAT_INTERVAL_MS,

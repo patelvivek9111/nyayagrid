@@ -10,9 +10,14 @@
  * Behavior:
  * - restores persisted scheduler state
  * - acquires Queue #2 ownership lock (refuses if another worker is active)
+ * - detects sleep/resume gaps and network state (deterministic; zero AI)
  * - probes quota when due and auto-selects Lane A or Lane B
+ * - Lane B tasks come only from the offline task registry (no AI planner)
+ * - idle-safe sleep when no eligible Lane B work
  * - local heartbeat every ~15 minutes (zero AI, no git push)
- * - continues until HUMAN_REVIEW_REQUIRED, SIGTERM/SIGINT, or QUEUE2_WORKER_ONCE=1
+ * - continues until HUMAN_REVIEW_REQUIRED, SIGTERM/SIGINT, or --once
+ *
+ * DO NOT invent free-form offline tasks. DO NOT open Queue #3.
  *
  * Env / flags:
  *   --loop | QUEUE2_WORKER_LOOP=1   — continuous loop (npm run queue2:worker)
@@ -64,6 +69,16 @@ const {
   HEARTBEAT_INTERVAL_MS: LOCK_HEARTBEAT_MS,
   ACTIVE_REFUSAL_CODE,
 } = require("./queue2-worker-lock.cjs");
+const {
+  detectSystemResume,
+  evaluateNetworkState,
+  deriveRuntimeState,
+  selectLaneBTask,
+  assertRoutineZeroAi,
+  neverOpenQueue3,
+  assertArkCheckpointIntact,
+} = require("./queue2-autonomy-policy.cjs");
+const { applyLaneBSelection } = require("./queue2-dual-lane-controller.cjs");
 
 const root = path.join(__dirname, "..");
 const reports = path.join(root, "packages/research/corpus/reports");
@@ -345,6 +360,9 @@ function publishStatus(state, extras = {}) {
     state,
     currentLane: extras.currentLane || statusLaneFromState(state),
     currentTask: extras.currentTask,
+    runtimeState: extras.runtimeState || state.runtimeState || "RUNNING",
+    freshness: extras.freshness || null,
+    waitingForNetwork: state.waitingForNetwork,
     laneStartedAt: state.laneStartedAt,
     lastHeartbeatAt: state.lastHeartbeatAt,
     today: extras.today,
@@ -364,6 +382,8 @@ function publishStatus(state, extras = {}) {
       featureAgents: "0",
       retrieval: "ok",
     },
+    aiCalls: 0,
+    aiTokens: 0,
     now: new Date(),
   });
   writeObservabilityArtifacts(reports, status, {
@@ -699,28 +719,56 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
 
   if (state.currentLane === "B" && !state.humanReview?.required) {
     try {
-      emit("LANE_B_START", {
-        lane: "LANE_B_OFFLINE",
-        task: state.laneB?.task,
-        court: state.laneA.court,
-        checkpoint: state.laneA.checkpoint,
+      const selection = selectLaneBTask({
+        now: new Date(),
+        networkOk: !state.waitingForNetwork,
+        corpusVersion: state.depthManifestVersion,
+        lastByTask: state.laneB?.lastByTask || {},
+        checkpoints: state.laneB?.checkpoints || {},
+        mutatingTaskActive: Boolean(state.laneB?.mutatingTaskActive),
+        nextQuotaCheckAt: state.quota?.nextCheckAt,
       });
-      if (process.env.QUEUE2_RUN_LANE_B === "1") {
-        laneBResult = runLaneB();
-        emit("OFFLINE_TASK_COMPLETE", {
-          lane: "LANE_B_OFFLINE",
-          task: state.laneB?.task,
-          reason: laneBResult?.ok === false ? "error" : "complete",
-          corpusDelta:
-            laneBResult?.imported != null ? { nonClAuthorities: laneBResult.imported } : null,
+      state = applyLaneBSelection(state, selection);
+
+      if (selection.idleSafe) {
+        emit("LANE_B_IDLE_SAFE", {
+          lane: "LANE_B_IDLE_SAFE",
+          task: "NONE",
+          court: state.laneA.court,
+          checkpoint: state.laneA.checkpoint,
+          reason: selection.reason,
         });
-      } else {
         laneBResult = {
           ok: true,
-          skippedRun: true,
-          note: "observability pass; set QUEUE2_RUN_LANE_B=1 to execute Lane B worker",
+          idleSafe: true,
           courtListenerHttpCalls: 0,
+          note: "no eligible Lane B task; healthy idle until next probe/eligibility",
         };
+      } else {
+        emit("LANE_B_START", {
+          lane: "LANE_B_OFFLINE",
+          task: selection.currentTask || state.laneB?.task,
+          court: state.laneA.court,
+          checkpoint: state.laneA.checkpoint,
+        });
+        if (process.env.QUEUE2_RUN_LANE_B === "1") {
+          laneBResult = runLaneB();
+          emit("OFFLINE_TASK_COMPLETE", {
+            lane: "LANE_B_OFFLINE",
+            task: state.laneB?.task,
+            reason: laneBResult?.ok === false ? "error" : "complete",
+            corpusDelta:
+              laneBResult?.imported != null ? { nonClAuthorities: laneBResult.imported } : null,
+          });
+        } else {
+          laneBResult = {
+            ok: true,
+            skippedRun: true,
+            selectedTask: selection.currentTask,
+            note: "observability pass; set QUEUE2_RUN_LANE_B=1 to execute Lane B worker",
+            courtListenerHttpCalls: 0,
+          };
+        }
       }
     } catch (e) {
       laneBResult = { ok: false, err: String(e.message || e).slice(0, 400), courtListenerHttpCalls: 0 };
@@ -730,22 +778,40 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
   }
 
   const health = healthCheck();
+  const runtime = deriveRuntimeState({
+    humanReviewRequired: Boolean(state.humanReview?.required),
+    processAlive: true,
+    waitingForNetwork: Boolean(state.waitingForNetwork),
+    idleSafe: Boolean(state.idleSafe),
+    lastHeartbeatAt: state.lastHeartbeatAt,
+  });
+  state.runtimeState = runtime.runtimeState;
   const status = publishStatus(state, {
-    currentLane: state.humanReview?.required ? "HUMAN_REVIEW_REQUIRED" : statusLaneFromState(state),
+    currentLane: state.humanReview?.required
+      ? "HUMAN_REVIEW_REQUIRED"
+      : state.idleSafe
+        ? "LANE_B_IDLE_SAFE"
+        : statusLaneFromState(state),
+    runtimeState: runtime.runtimeState,
+    freshness: runtime.freshness,
     currentTask: state.humanReview?.required
       ? "await_human_review"
-      : state.currentLane === "A"
-        ? "cl_ingest"
-        : state.laneB?.task || "offline",
+      : state.idleSafe
+        ? "NONE"
+        : state.currentLane === "A"
+          ? "cl_ingest"
+          : state.laneB?.task || "offline",
     laneReason: state.humanReview?.required
       ? (state.humanReview.reasons || []).join(", ")
-      : state.currentLane === "B"
-        ? "CourtListener day safety floor"
-        : "useful CL capacity",
+      : state.idleSafe
+        ? "no eligible Lane B task"
+        : state.currentLane === "B"
+          ? "CourtListener day safety floor"
+          : "useful CL capacity",
     citationSummary: laneBResult?.citation
       ? `resolved=${laneBResult.citation.resolved} TARGET_ABSENT=${laneBResult.citation.TARGET_ABSENT}`
       : `citationEdgesResolved cumulative: ${state.metrics?.citationsResolved || 0}`,
-    offlineSummary: `Lane B CL HTTP=${laneBResult?.courtListenerHttpCalls ?? 0}. Non-CL authorities cumulative=${state.metrics?.nonClAuthorities || 0}.`,
+    offlineSummary: `Lane B CL HTTP=${laneBResult?.courtListenerHttpCalls ?? 0}. Non-CL authorities cumulative=${state.metrics?.nonClAuthorities || 0}. idleSafe=${Boolean(state.idleSafe)}`,
     nextAction: state.humanReview?.required
       ? "Stop unsafe CL path; await human review."
       : `Automatically resume AR (${state.laneA.count}/${state.laneA.target}) when safeRequests meets threshold; checkpoint=${state.laneA.checkpoint}`,
@@ -805,9 +871,66 @@ function sleepMs(ms) {
 
 async function main() {
   fs.mkdirSync(reports, { recursive: true });
-  let state = loadLocalState();
+  let state = neverOpenQueue3(loadLocalState());
   const started = new Date();
   state.laneStartedAt = state.laneStartedAt || started.toISOString();
+
+  // Sleep/resume detection before any mutation.
+  const resume = detectSystemResume(state.lastHeartbeatAt, started);
+  if (resume.probableSuspend) {
+    emit("SYSTEM_RESUME_DETECTED", {
+      lane: statusLaneFromState(state),
+      court: state.laneA?.court,
+      checkpoint: state.laneA?.checkpoint,
+      reason: "wall_clock_gap",
+      extra: { gapMs: resume.gapMs },
+    });
+    // Do not assume quota probes ran while asleep — force re-evaluation path.
+    if (state.quota) state.quota.nextCheckAt = started.toISOString();
+  }
+
+  try {
+    assertArkCheckpointIntact(state);
+  } catch (err) {
+    if (err.code === "ARK_CHECKPOINT_MUTATED" && state.laneA?.court === "ark") {
+      state = setReview(
+        state,
+        HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
+        String(err.message),
+      );
+    }
+  }
+
+  assertRoutineZeroAi({ system: { aiCalls: state.metrics?.aiCalls || 0, aiTokens: state.metrics?.aiTokens || 0 } });
+
+  // Optional connectivity probe result may be injected via env for tests; default assume online.
+  if (process.env.QUEUE2_NETWORK_ONLINE === "0") {
+    const net = evaluateNetworkState({
+      online: false,
+      offlineSince: state.networkOfflineSince || started.toISOString(),
+      now: started,
+      wasWaiting: true,
+    });
+    state.waitingForNetwork = true;
+    state.runtimeState = net.runtimeState;
+    emit("NETWORK_LOSS", {
+      lane: "WAITING_FOR_NETWORK",
+      court: state.laneA?.court,
+      checkpoint: state.laneA?.checkpoint,
+      reason: net.action,
+    });
+  } else if (state.waitingForNetwork) {
+    const net = evaluateNetworkState({ online: true, wasWaiting: true, now: started });
+    state.waitingForNetwork = false;
+    state.lastOnlineAt = started.toISOString();
+    emit("NETWORK_RECOVERED", {
+      lane: statusLaneFromState(state),
+      court: state.laneA?.court,
+      checkpoint: state.laneA?.checkpoint,
+      reason: net.action,
+    });
+    if (state.quota) state.quota.nextCheckAt = started.toISOString();
+  }
 
   const acquired = acquireWorkerLock({
     reportsDir: reports,

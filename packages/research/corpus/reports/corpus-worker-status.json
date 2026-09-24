@@ -20,7 +20,7 @@
   "manifestVersion": 1,
   "jobStatus": "quota_paused",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastUpdatedAt": "2026-09-24T16:52:47.881Z",
+  "lastUpdatedAt": "2026-09-24T18:03:01.115Z",
   "lastHeartbeatAt": "2026-09-24T16:51:44.340Z",
   "nextQuotaCheckAt": "2026-09-24T22:06:14.563Z",
   "quota": {
@@ -63,5 +63,15 @@
   "review": {
     "humanReviewRequired": false,
     "reviewReasons": []
+  },
+  "runtimeState": "STOPPED",
+  "freshness": "STALE_PROCESS_STOPPED",
+  "tokens": {
+    "routineAiCalls": 0,
+    "routineAiTokens": 0
+  },
+  "network": {
+    "waitingForNetwork": false,
+    "lastOnlineAt": "2026-09-24T16:51:44.340Z"
   }
 }

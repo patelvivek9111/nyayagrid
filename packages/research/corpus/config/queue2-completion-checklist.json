@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "queue": "#2",
+  "queue3AutoOpen": false,
+  "featureAgents": "0",
+  "notes": "Queue #2 is complete only when ALL required items are true OR explicitly waived with documented external limitation. Authority >100 gate alone is NOT sufficient.",
+  "required": [
+    { "id": "all_jurisdictions_represented", "label": "All 50 states + DC + federal jurisdictions represented", "required": true },
+    { "id": "no_high_appellate_gap", "label": "No high/appellate coverage gap for in-scope jurisdictions", "required": true },
+    { "id": "case_minimum_baseline_closed", "label": "Case minimum baseline closed for production depth targets", "required": true },
+    { "id": "authority_depth_thresholds", "label": "Authority-depth thresholds satisfied or externally documented", "required": true },
+    { "id": "intermediate_appellate_coverage", "label": "Meaningful intermediate appellate coverage where applicable/available", "required": true },
+    { "id": "historical_range_acceptable", "label": "Historical range acceptable for production depth", "required": true },
+    { "id": "doctrinal_breadth_acceptable", "label": "Doctrinal breadth acceptable", "required": true },
+    { "id": "provenance_100", "label": "Provenance 100%", "required": true },
+    { "id": "normalization_complete", "label": "Normalization complete", "required": true },
+    { "id": "chunks_embeddings_integrity", "label": "Chunks/embeddings integrity", "required": true },
+    { "id": "no_orphan_records", "label": "No orphan records", "required": true },
+    { "id": "retrieval_regressions_passing", "label": "Retrieval regressions passing", "required": true },
+    { "id": "citation_parser_gap_acceptable", "label": "Citation parser gap acceptable", "required": true },
+    { "id": "source_limitations_documented", "label": "Source limitations documented", "required": true },
+    { "id": "unresolved_mapping_gaps_documented", "label": "Unresolved mapping gaps documented", "required": true },
+    { "id": "no_material_expansion_defect", "label": "No material internal corpus-expansion defect remaining", "required": true }
+  ],
+  "explicitNonCompleteSignals": [
+    "authority_gate_gt_100_alone",
+    "lane_b_temporarily_idle",
+    "quota_floor_only"
+  ],
+  "onComplete": {
+    "setLane": "HUMAN_REVIEW_REQUIRED",
+    "reviewReason": "QUEUE_2_COMPLETION_CANDIDATE",
+    "openQueue3": false,
+    "stopStrategicIngestion": true,
+    "pushMilestoneSnapshot": true
+  }
+}
