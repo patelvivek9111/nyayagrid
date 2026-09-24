@@ -1,0 +1,81 @@
+{
+  "wave": "2AF",
+  "phase": "AUTHORITY_DEPTH_WAVE_1",
+  "generatedAt": "2026-09-24T00:11:00.000Z",
+  "nationalMinimumBreadth": "CLOSED",
+  "beforeRank": ["LA", "DC", "TN", "NV", "MT", "MS", "NM", "UT", "SD", "ID"],
+  "afterAuditRank": ["LA", "DC", "NV", "TN", "MT", "MS", "NM", "UT", "SD", "ID"],
+  "rankChangeReason": "Re-ranked by production depth weakness: recent-only year concentration + citation TARGET_ABSENT + lowest authority count. TN dropped below NV because TN already has 2021–2026 year spread; NV/MT/MS/SD/ID are single-year 2026. DC kept #2 for highest TARGET_ABSENT (108) despite no intermediate layer (structural). Intermediate appellate CL IDs not VERIFIED for these jurisdictions — deepen via VERIFIED high courts with historical date windows; do not invent lacapp/tennctapp/etc.",
+  "wave1Top5": [
+    {
+      "rank": 1,
+      "j": "LA",
+      "clCourt": "la",
+      "nyayaCourt": "st-la-high",
+      "startAuthorities": 39,
+      "waveTargetCases": 45,
+      "expectedGain": 25,
+      "preferredCourts": ["la"],
+      "missingCourtLayer": "state_appellate (no VERIFIED CL id — skip)",
+      "targetCaseRange": "historical via CL_DATE_FILED_LTE=2018-12-31",
+      "expectedRequests": 55,
+      "reason": "Lowest authorities (39); 2025–2026 only; TARGET_ABSENT=86; high baseline healthy — expand historical high-court depth"
+    },
+    {
+      "rank": 2,
+      "j": "DC",
+      "clCourt": "dc",
+      "nyayaCourt": "st-dc-high",
+      "startAuthorities": 41,
+      "waveTargetCases": 45,
+      "expectedGain": 25,
+      "preferredCourts": ["dc"],
+      "missingCourtLayer": "none (DC Court of Appeals is highest; no state-style intermediate)",
+      "targetCaseRange": "historical via CL_DATE_FILED_LTE=2018-12-31",
+      "expectedRequests": 55,
+      "reason": "Highest TARGET_ABSENT (108); all cases 2026; deepen historically on verified high court"
+    },
+    {
+      "rank": 3,
+      "j": "NV",
+      "clCourt": "nev",
+      "nyayaCourt": "st-nv-high",
+      "startAuthorities": 41,
+      "waveTargetCases": 45,
+      "expectedGain": 25,
+      "preferredCourts": ["nev"],
+      "missingCourtLayer": "state_appellate (no VERIFIED CL id — skip)",
+      "targetCaseRange": "historical via CL_DATE_FILED_LTE=2018-12-31",
+      "expectedRequests": 55,
+      "reason": "Single-year 2026 corpus; TARGET_ABSENT=57; missing intermediate unverified"
+    },
+    {
+      "rank": 4,
+      "j": "TN",
+      "clCourt": "tenn",
+      "nyayaCourt": "st-tn-high",
+      "startAuthorities": 41,
+      "waveTargetCases": 45,
+      "expectedGain": 25,
+      "preferredCourts": ["tenn"],
+      "missingCourtLayer": "state_appellate (no VERIFIED CL id — skip)",
+      "targetCaseRange": "pre-2021 historical via CL_DATE_FILED_LTE=2015-12-31",
+      "expectedRequests": 55,
+      "reason": "TARGET_ABSENT=58; some year spread already — extend older historical; missing intermediate unverified"
+    },
+    {
+      "rank": 5,
+      "j": "MT",
+      "clCourt": "mont",
+      "nyayaCourt": "st-mt-high",
+      "startAuthorities": 41,
+      "waveTargetCases": 45,
+      "expectedGain": 25,
+      "preferredCourts": ["mont"],
+      "missingCourtLayer": "state_appellate (MT has limited intermediate structure; no VERIFIED CL id)",
+      "targetCaseRange": "historical via CL_DATE_FILED_LTE=2018-12-31",
+      "expectedRequests": 55,
+      "reason": "Single-year 2026; deepen historical high-court depth"
+    }
+  ]
+}

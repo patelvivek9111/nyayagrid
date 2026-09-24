@@ -13,6 +13,8 @@
  *   CL_MINUTE_TARGET / CL_HOUR_TARGET / CL_DAY_TARGET — optional safety ceilings
  *   CL_MAX_RETRIES (default 6)
  *   CL_PROOF=1 — discover/parse only, no persist
+ *   CL_DATE_FILED_LTE / CL_DATE_FILED_GTE — optional YYYY-MM-DD historical window (clears next_page)
+ *   CL_ORDER_BY — opinions order_by (default -id)
  *   DATABASE_URL, COURTLISTENER_API_KEY, OPENAI_API_KEY
  */
 import { createHash, randomUUID } from "node:crypto";
@@ -866,6 +868,7 @@ async function loadOrCreateJob(
   mapped: CourtMapEntry,
   targetMax: number,
   batchSize: number,
+  opts?: { clearNextPage?: boolean; dateFiledLte?: string; dateFiledGte?: string },
 ): Promise<JobRow> {
   const existing = await sql`
     select * from corpus_ingest_jobs
@@ -874,16 +877,39 @@ async function loadOrCreateJob(
   `;
   if (existing.length > 0) {
     const row = existing[0] as JobRow;
+    const done = Number(row.items_imported || 0);
+    // Reopen completed jobs when raising target_max for depth expansion.
+    // target_max is an imported-authority goal; skips do not count.
+    const reopen = done < targetMax;
+    const nextStatus = reopen ? "running" : row.status === "completed" ? "completed" : "running";
+    const page = row.next_page_url || "";
+    const lte = opts?.dateFiledLte || "";
+    const gte = opts?.dateFiledGte || "";
+    const pageMatchesWindow =
+      (!lte || page.includes(`date_filed__lte=${lte}`)) &&
+      (!gte || page.includes(`date_filed__gte=${gte}`));
+    const clearPage =
+      Boolean(opts?.clearNextPage) ||
+      (Boolean(lte || gte) && !pageMatchesWindow);
     await sql`
       update corpus_ingest_jobs set
-        status = ${row.status === "completed" ? "completed" : "running"},
+        status = ${nextStatus},
         target_max = ${targetMax},
         batch_size = ${batchSize},
+        next_page_url = ${clearPage ? null : row.next_page_url},
+        completed_at = ${reopen ? null : row.completed_at},
         started_at = coalesce(started_at, now()),
         updated_at = now()
       where id = ${row.id}
     `;
-    return { ...row, target_max: targetMax, batch_size: batchSize };
+    return {
+      ...row,
+      status: nextStatus,
+      target_max: targetMax,
+      batch_size: batchSize,
+      next_page_url: clearPage ? null : row.next_page_url,
+      completed_at: reopen ? null : row.completed_at,
+    };
   }
   const id = randomUUID();
   await sql`
@@ -1304,6 +1330,19 @@ async function main() {
   const targetMax = Math.min(Math.max(Number.parseInt(process.env.CL_TARGET_MAX ?? "20", 10) || 20, 1), 200);
   const maxRetries = Math.min(Math.max(Number.parseInt(process.env.CL_MAX_RETRIES ?? "6", 10) || 6, 1), 10);
   const bootstrapUsage = process.env.CL_BOOTSTRAP_USAGE !== "0";
+  // Depth-wave historical window (YYYY-MM-DD). When set, start a fresh discover page.
+  const dateFiledLte = (process.env.CL_DATE_FILED_LTE ?? "").trim();
+  const dateFiledGte = (process.env.CL_DATE_FILED_GTE ?? "").trim();
+  const orderBy = (process.env.CL_ORDER_BY ?? "-id").trim() || "-id";
+  const useDateWindow = Boolean(dateFiledLte || dateFiledGte);
+  if (dateFiledLte && !/^\d{4}-\d{2}-\d{2}$/.test(dateFiledLte)) {
+    console.log(JSON.stringify({ ok: false, reason: "CL_DATE_FILED_LTE must be YYYY-MM-DD" }));
+    process.exit(2);
+  }
+  if (dateFiledGte && !/^\d{4}-\d{2}-\d{2}$/.test(dateFiledGte)) {
+    console.log(JSON.stringify({ ok: false, reason: "CL_DATE_FILED_GTE must be YYYY-MM-DD" }));
+    process.exit(2);
+  }
 
   if (!clKey) {
     console.log(JSON.stringify({ ok: false, reason: "COURTLISTENER_API_KEY missing" }));
@@ -1408,9 +1447,12 @@ async function main() {
       onnotice: () => undefined,
     });
     await ensureJobTable(sql);
-    job = await loadOrCreateJob(sql, clCourt, mapped, targetMax, batchSize);
+    job = await loadOrCreateJob(sql, clCourt, mapped, targetMax, batchSize, {
+      dateFiledLte,
+      dateFiledGte,
+    });
     for (const id of asIdList(job.completed_external_ids)) completed.add(id);
-    if (job.status === "completed" && (job.items_imported + job.items_skipped) >= job.target_max) {
+    if (job.status === "completed" && job.items_imported >= job.target_max) {
       await finish({
         ok: true,
         status: "completed",
@@ -1457,16 +1499,18 @@ async function main() {
     return;
   }
 
-  // Discover page (resume from next_page_url when present)
+  // Discover page (resume from next_page_url when present; date windows force fresh URL)
   const pageSize = Math.min(batchSize * 2, 50);
+  const discoverParams = new URLSearchParams({
+    cluster__docket__court: clCourt,
+    order_by: orderBy,
+    page_size: String(pageSize),
+  });
+  if (dateFiledLte) discoverParams.set("cluster__date_filed__lte", dateFiledLte);
+  if (dateFiledGte) discoverParams.set("cluster__date_filed__gte", dateFiledGte);
   let discoverUrl =
-    job?.next_page_url ||
-    `${CL_BASE}/opinions/?${new URLSearchParams({
-      cluster__docket__court: clCourt,
-      order_by: "-id",
-      page_size: String(pageSize),
-    })}`;
-  let discoverPath: "opinions" | "search" = job?.next_page_url ? "opinions" : "opinions";
+    job?.next_page_url || `${CL_BASE}/opinions/?${discoverParams}`;
+  let discoverPath: "opinions" | "search" = "opinions";
 
   let discoverRes = await cl.fetch(discoverUrl);
   if (discoverRes.status === 429) {
@@ -1578,7 +1622,7 @@ async function main() {
   let processedThisBatch = 0;
   for (const hit of hits) {
     if (processedThisBatch >= batchSize) break;
-    if ((itemsImported + itemsSkipped) >= targetMax) break;
+    if (itemsImported >= targetMax) break;
 
     const id = resolveOpinionId(hit);
     if (!id) {
@@ -1784,11 +1828,11 @@ async function main() {
     }
   }
 
-  const totalDone = itemsImported + itemsSkipped;
   const status =
-    totalDone >= targetMax || (hits.length === 0 && !nextPage)
+    itemsImported >= targetMax || (hits.length === 0 && !nextPage)
       ? "completed"
       : "paused";
+  const totalDone = itemsImported + itemsSkipped;
 
   await finish({
     ok: true,

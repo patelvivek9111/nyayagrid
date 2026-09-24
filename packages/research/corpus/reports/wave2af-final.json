@@ -1,0 +1,128 @@
+{
+  "ok": true,
+  "wave": "2AF",
+  "status": "PARTIAL",
+  "queue": { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", "transition": "NONE" },
+  "nationalMinimumBreadth": "CLOSED",
+  "featureAgents": "0",
+  "quota": {
+    "start": { "minuteRem": 30, "hourRem": 274, "dayRem": 277, "hourSafeRem": 254, "daySafeRem": 237 },
+    "end": { "minuteRem": 21, "hourRem": 0, "dayRem": 367, "hourSafeRem": 0, "daySafeRem": 327 },
+    "totalRequestsApprox": 290,
+    "mappingVerificationRequests": 0,
+    "safetyPauses": 1,
+    "hard429": 0,
+    "nextResumeEt": "9:50 PM ET (hour window reset ~2026-09-24T01:50:46Z)"
+  },
+  "depthRescore": {
+    "before": ["LA", "DC", "TN", "NV", "MT", "MS", "NM", "UT", "SD", "ID"],
+    "afterAudit": ["LA", "DC", "NV", "TN", "MT", "MS", "NM", "UT", "SD", "ID"],
+    "whyChanged": "TN dropped below NV: TN already had 2021–2026 year spread; NV was single-year 2026. LA kept #1 (lowest authorities + recent-heavy + high TARGET_ABSENT). DC #2 for highest TARGET_ABSENT despite no intermediate layer (structural). No VERIFIED intermediate CL IDs for these jurs — deepen via historical high-court date windows."
+  },
+  "wave1": {
+    "selected": ["LA", "DC", "NV", "TN", "MT"],
+    "results": [
+      {
+        "j": "LA",
+        "startAuthorities": 39,
+        "endAuthorities": 64,
+        "courtLayersAdded": "none (historical high-court only; lacapp not VERIFIED)",
+        "casesAdded": 25,
+        "yearRangeBefore": "2025-2026",
+        "yearRangeAfter": "1967-2026",
+        "doctrinalBreadthDelta": "expanded via historical high opinions (multi-decade); no unsupported topic labels",
+        "citationTargetsResolved": 0,
+        "requestsApprox": 55,
+        "requestsPerAuthority": 2.2,
+        "depthClass": "HIGH_DEPTH"
+      },
+      {
+        "j": "DC",
+        "startAuthorities": 41,
+        "endAuthorities": 66,
+        "courtLayersAdded": "none (DC Court of Appeals is highest; no state-style intermediate)",
+        "casesAdded": 25,
+        "yearRangeBefore": "2026-2026",
+        "yearRangeAfter": "1978-2026",
+        "doctrinalBreadthDelta": "historical high-court spread 1978–2018 + recent",
+        "citationTargetsResolved": 0,
+        "requestsApprox": 55,
+        "requestsPerAuthority": 2.2,
+        "depthClass": "HIGH_DEPTH"
+      },
+      {
+        "j": "NV",
+        "startAuthorities": 41,
+        "endAuthorities": 66,
+        "courtLayersAdded": "none (nevapp not VERIFIED)",
+        "casesAdded": 25,
+        "yearRangeBefore": "2026-2026",
+        "yearRangeAfter": "1898-2026",
+        "doctrinalBreadthDelta": "deep historical range including 19th/20th century high-court",
+        "citationTargetsResolved": 0,
+        "requestsApprox": 60,
+        "requestsPerAuthority": 2.4,
+        "depthClass": "HIGH_DEPTH"
+      },
+      {
+        "j": "TN",
+        "startAuthorities": 41,
+        "endAuthorities": 68,
+        "courtLayersAdded": "none (tennctapp not VERIFIED)",
+        "casesAdded": 27,
+        "yearRangeBefore": "2021-2026",
+        "yearRangeAfter": "1925-2026",
+        "doctrinalBreadthDelta": "pre-2015 historical window extended decades",
+        "citationTargetsResolved": 0,
+        "requestsApprox": 70,
+        "requestsPerAuthority": 2.6,
+        "depthClass": "HIGH_DEPTH"
+      },
+      {
+        "j": "MT",
+        "startAuthorities": 41,
+        "endAuthorities": 51,
+        "courtLayersAdded": "none (partial run)",
+        "casesAdded": 10,
+        "yearRangeBefore": "2026-2026",
+        "yearRangeAfter": "1957-2026",
+        "doctrinalBreadthDelta": "partial historical deepen before hour floor",
+        "citationTargetsResolved": 0,
+        "requestsApprox": 50,
+        "requestsPerAuthority": 5.0,
+        "depthClass": "CRITICAL_DEPTH",
+        "stoppedReason": "RATE LIMIT WINDOW REACHED (hour floor); resume after hour reset"
+      }
+    ]
+  },
+  "corpus": {
+    "authorities": 2805,
+    "cases": 1494,
+    "clCases": 1449,
+    "statutes": 900,
+    "regs": 156,
+    "rules": 254,
+    "chunksEmbeddings": "35180/35180",
+    "orphans": 0
+  },
+  "coverage": {
+    "authorityGateDeficit": 2689,
+    "jurisdictionsUnderOrEqual100": 51,
+    "newlyOver100": 0
+  },
+  "citation": {
+    "extracted": 5304,
+    "resolved": 122,
+    "newlyResolved": 0,
+    "TARGET_ABSENT": 5182,
+    "PARSER_GAP": 0
+  },
+  "top10Next": ["IA", "ME", "MS", "AR", "SD", "ID", "WY", "NE", "AL", "KY"],
+  "remaining": [
+    "Finish MT to +25 historical (target_max 45) after hour reset",
+    "Continue depth wave on next CRITICAL_DEPTH recent-only jurisdictions (IA/ME/MS/…)",
+    "When concrete VERIFIED intermediate CL IDs exist for LA/TN/NV/etc., prefer court-layer diversity over more high-court",
+    "Citation graph resolution still flat — deepen resolve pass without CL",
+    "Do not call any jurisdiction production-depth complete at vanity 101"
+  ]
+}
