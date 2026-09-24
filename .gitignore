@@ -33,3 +33,6 @@ benchmarks/nyaya-bench/dogfood/completed/*_issues.csv
 .staging-dburl
 deploy-wave2.log
 
+# Temporary corpus/CL runner outputs (not canonical reports)
+scripts/*.json.tmp
+
