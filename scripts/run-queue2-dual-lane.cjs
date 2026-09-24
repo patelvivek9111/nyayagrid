@@ -1,10 +1,26 @@
 /**
- * Queue #2 dual-lane orchestrator.
+ * Queue #2 dual-lane orchestrator / canonical worker.
  *
- * Usage: node scripts/run-queue2-dual-lane.cjs
+ * Canonical start (preferred):
+ *   npm run queue2:worker
  *
- * One optional /api-usage/ probe when due. Lane B never talks to CourtListener.
- * FEATURE_AGENTS=0. Queue #3 is not opened.
+ * Equivalent:
+ *   node scripts/run-queue2-dual-lane.cjs
+ *
+ * Behavior:
+ * - restores persisted scheduler state
+ * - acquires Queue #2 ownership lock (refuses if another worker is active)
+ * - probes quota when due and auto-selects Lane A or Lane B
+ * - local heartbeat every ~15 minutes (zero AI, no git push)
+ * - continues until HUMAN_REVIEW_REQUIRED, SIGTERM/SIGINT, or QUEUE2_WORKER_ONCE=1
+ *
+ * Env / flags:
+ *   --loop | QUEUE2_WORKER_LOOP=1   — continuous loop (npm run queue2:worker)
+ *   --once | QUEUE2_WORKER_ONCE=1   — single cycle then exit (default)
+ *   QUEUE2_RUN_LANE_B=1             — execute Lane B offline worker
+ *   QUEUE2_FORCE_QUOTA_PROBE=1
+ *
+ * FEATURE_AGENTS=0. Queue #3 is not opened. No manual Lane A/B selection.
  */
 "use strict";
 
@@ -36,8 +52,18 @@ const {
   shouldEmitHeartbeat,
   evaluateHumanReviewTriggers,
   statusLaneFromState,
+  HEARTBEAT_INTERVAL_MS,
 } = require("./queue2-worker-observability.cjs");
 const { setHumanReview: setReview } = require("./queue2-dual-lane-controller.cjs");
+const {
+  acquireWorkerLock,
+  refreshWorkerHeartbeat,
+  releaseWorkerLock,
+  newWorkerId,
+  newProcessStartNonce,
+  HEARTBEAT_INTERVAL_MS: LOCK_HEARTBEAT_MS,
+  ACTIVE_REFUSAL_CODE,
+} = require("./queue2-worker-lock.cjs");
 
 const root = path.join(__dirname, "..");
 const reports = path.join(root, "packages/research/corpus/reports");
@@ -46,6 +72,10 @@ const finalPath = path.join(reports, "queue2-dual-lane-final.json");
 const eventsPath = path.join(reports, "corpus-worker-events.jsonl");
 const MACHINE = "811d3e3f522648";
 const APP = "nyayagrid-staging";
+
+const WORKER_ID = process.env.QUEUE2_WORKER_ID || newWorkerId();
+const PROCESS_NONCE = newProcessStartNonce();
+const HEARTBEAT_MS = Number(process.env.QUEUE2_HEARTBEAT_MS) || LOCK_HEARTBEAT_MS || HEARTBEAT_INTERVAL_MS;
 
 /** Proven durable ark job snapshot (queried 2026-09-24 from corpus_ingest_jobs). */
 const ARK_DURABLE_JOB_EVIDENCE = {
@@ -62,6 +92,14 @@ const ARK_DURABLE_JOB_EVIDENCE = {
   updated_at: "2026-09-24T03:55:31.381Z",
   evidence:
     "staging corpus_ingest_jobs row source=courtlistener cl_court=ark queried 2026-09-24; AR cases=33",
+};
+
+/** @type {{ shuttingDown: boolean, state: object|null, heartbeatTimer: NodeJS.Timeout|null }} */
+const runtime = {
+  shuttingDown: false,
+  state: null,
+  heartbeatTimer: null,
+  lastStatus: null,
 };
 
 function loadLocalState() {
@@ -257,20 +295,48 @@ function emit(type, fields) {
   return event;
 }
 
-function maybeHeartbeat(state, status) {
+function maybeHeartbeat(state, status, { force = false } = {}) {
   const now = new Date();
-  if (!shouldEmitHeartbeat(state.lastHeartbeatAt, now)) return state;
+  if (!force && !shouldEmitHeartbeat(state.lastHeartbeatAt, now, HEARTBEAT_MS)) return state;
   const line = formatHeartbeat(status, now);
   console.log(line);
   state.lastHeartbeatAt = now.toISOString();
-  emit("HEARTBEAT", {
-    lane: status.currentLane,
-    task: status.currentTask,
+
+  // Local-only lock + status refresh. ZERO AI. NO git commit/push.
+  refreshWorkerHeartbeat({
+    reportsDir: reports,
+    workerId: WORKER_ID,
+    processStartNonce: PROCESS_NONCE,
+    now,
+    currentLane: status.currentLane,
+    currentTask: status.currentTask,
     court: status.currentCourt,
     checkpoint: status.checkpoint,
-    reason: "interval",
-    extra: { heartbeat: line },
   });
+
+  const hbStatus = buildOperatorStatus({
+    state,
+    currentLane: status.currentLane,
+    currentTask: status.currentTask,
+    laneStartedAt: state.laneStartedAt,
+    lastHeartbeatAt: state.lastHeartbeatAt,
+    today: status.today,
+    corpus: status.corpus,
+    health: status.health,
+    now,
+  });
+  writeObservabilityArtifacts(reports, hbStatus, {
+    event: makeEvent("HEARTBEAT", {
+      lane: status.currentLane,
+      task: status.currentTask,
+      court: status.currentCourt,
+      checkpoint: status.checkpoint,
+      reason: "interval",
+      extra: { heartbeat: line, aiCalls: 0, gitPush: false },
+    }),
+  });
+  runtime.lastStatus = hbStatus;
+  saveLocalState(state);
   return state;
 }
 
@@ -309,6 +375,16 @@ function publishStatus(state, extras = {}) {
     },
     event: extras.event || null,
   });
+  runtime.lastStatus = status;
+  refreshWorkerHeartbeat({
+    reportsDir: reports,
+    workerId: WORKER_ID,
+    processStartNonce: PROCESS_NONCE,
+    currentLane: status.currentLane,
+    currentTask: status.currentTask,
+    court: status.currentCourt,
+    checkpoint: status.checkpoint,
+  });
   return status;
 }
 
@@ -330,47 +406,78 @@ function reconcileArkCheckpoint(state) {
   return { state: rec.state, reconciled: rec.ok, reason: rec.reason };
 }
 
-async function main() {
-  fs.mkdirSync(reports, { recursive: true });
-  let state = loadLocalState();
-  const started = new Date();
-  state.laneStartedAt = state.laneStartedAt || started.toISOString();
-  emit("WORKER_START", {
-    lane: statusLaneFromState(state),
-    task: state.laneB?.task || "boot",
-    court: state.laneA?.court,
-    checkpoint: state.laneA?.checkpoint,
-  });
+function startHeartbeatTimer() {
+  if (runtime.heartbeatTimer) clearInterval(runtime.heartbeatTimer);
+  runtime.heartbeatTimer = setInterval(() => {
+    if (runtime.shuttingDown || !runtime.state) return;
+    try {
+      const status =
+        runtime.lastStatus ||
+        buildOperatorStatus({
+          state: runtime.state,
+          lastHeartbeatAt: runtime.state.lastHeartbeatAt,
+        });
+      runtime.state = maybeHeartbeat(runtime.state, status, { force: true });
+    } catch (err) {
+      console.log(
+        JSON.stringify({
+          tag: "HEARTBEAT",
+          ok: false,
+          err: String(err.message || err).slice(0, 200),
+          aiCalls: 0,
+        }),
+      );
+    }
+  }, HEARTBEAT_MS);
+  if (typeof runtime.heartbeatTimer.unref === "function") runtime.heartbeatTimer.unref();
+}
 
-  // Checkpoint hardening: never leave AR partial with null resume position.
-  const recon = reconcileArkCheckpoint(state);
-  state = recon.state;
-  if (recon.reconciled && !recon.already) {
-    emit("CHECKPOINT", {
-      lane: "LANE_A_CL",
-      court: state.laneA.court,
-      checkpoint: state.laneA.checkpoint,
-      reason: "reconciled_from_corpus_ingest_jobs",
-      extra: {
-        cursor: state.laneA.cursor,
-        lastSuccessfulExternalId: state.laneA.lastSuccessfulExternalId,
-        count: state.laneA.count,
-        target: state.laneA.target,
-      },
-    });
-  } else if (!state.laneA?.checkpoint && Number(state.laneA?.count) > 0) {
-    state = setReview(
-      state,
-      HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
-      "AR partial without durable resume after reconcile attempt",
-    );
-    emit("HUMAN_REVIEW_REQUIRED", {
-      lane: "HUMAN_REVIEW_REQUIRED",
-      court: state.laneA.court,
-      reason: HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
-    });
+function stopHeartbeatTimer() {
+  if (runtime.heartbeatTimer) {
+    clearInterval(runtime.heartbeatTimer);
+    runtime.heartbeatTimer = null;
   }
+}
 
+function safeShutdown(reason = "signal") {
+  if (runtime.shuttingDown) return;
+  runtime.shuttingDown = true;
+  stopHeartbeatTimer();
+  try {
+    if (runtime.state) {
+      saveLocalState(runtime.state);
+      emit("WORKER_STOP", {
+        lane: statusLaneFromState(runtime.state),
+        court: runtime.state.laneA?.court,
+        checkpoint: runtime.state.laneA?.checkpoint,
+        reason,
+      });
+    }
+  } catch {
+    /* best effort */
+  }
+  try {
+    releaseWorkerLock({
+      reportsDir: reports,
+      workerId: WORKER_ID,
+      processStartNonce: PROCESS_NONCE,
+    });
+    emit("LOCK_RELEASED", {
+      lane: runtime.state ? statusLaneFromState(runtime.state) : null,
+      reason,
+      extra: { workerId: WORKER_ID },
+    });
+  } catch {
+    /* best effort */
+  }
+}
+
+/**
+ * One automated lane-decision + optional work cycle.
+ * Lane A vs B is chosen by the controller — never by human prompt.
+ */
+async function runWorkerCycle(state, cycleStarted = new Date()) {
+  const started = cycleStarted;
   let quota = {
     probed: false,
     safeRequests: Number(state.quota.lastSafeRequests || 0),
@@ -392,7 +499,6 @@ async function main() {
     });
     if (probe.parsed && (probe.parsed.ok !== false || probe.parsed.limits || probe.parsed.windows)) {
       const windowsRaw = windowsFromProbe(probe.parsed);
-      // Do not clobber known Tier-2 state with free-default parse failures.
       const prior = state.quota.windows;
       const windows =
         looksLikeFreeDefault(windowsRaw) && prior && !looksLikeFreeDefault(prior)
@@ -425,7 +531,11 @@ async function main() {
       });
       if (decision.needsHumanReview) {
         state = setReview(state, decision.reason, "decideLane blocked Lane A");
-        emit("HUMAN_REVIEW_REQUIRED", { lane: "HUMAN_REVIEW_REQUIRED", reason: decision.reason, court: state.laneA.court });
+        emit("HUMAN_REVIEW_REQUIRED", {
+          lane: "HUMAN_REVIEW_REQUIRED",
+          reason: decision.reason,
+          court: state.laneA.court,
+        });
       }
       if (decision.lane === "A") {
         const rec = applyQuotaRecoveryTransition(state, {
@@ -478,7 +588,14 @@ async function main() {
         }),
       );
     } else {
-      console.log(JSON.stringify({ tag: "QUOTA_CHECK", ok: false, note: "probe_unparsed_stay_lane_b", stderr: probe.stderr }));
+      console.log(
+        JSON.stringify({
+          tag: "QUOTA_CHECK",
+          ok: false,
+          note: "probe_unparsed_stay_lane_b",
+          stderr: probe.stderr,
+        }),
+      );
       state = applyQuotaSnapshot(state, {
         safeRequests: quota.safeRequests,
         projectedUsefulAt: state.quota.nextCheckAt,
@@ -535,7 +652,8 @@ async function main() {
           emit("LANE_A_BATCH_COMPLETE", {
             lane: "LANE_A_CL",
             court: state.laneA.court,
-            checkpoint: laneAResult?.cursor || laneAResult?.last_successful_external_id || state.laneA.checkpoint,
+            checkpoint:
+              laneAResult?.cursor || laneAResult?.last_successful_external_id || state.laneA.checkpoint,
             reason: status || "batch",
           });
           if (status === "quota_paused" || status === "rate_limited") {
@@ -587,14 +705,14 @@ async function main() {
         court: state.laneA.court,
         checkpoint: state.laneA.checkpoint,
       });
-      // Observability-only pass by default; set QUEUE2_RUN_LANE_B=1 to execute offline worker.
       if (process.env.QUEUE2_RUN_LANE_B === "1") {
         laneBResult = runLaneB();
         emit("OFFLINE_TASK_COMPLETE", {
           lane: "LANE_B_OFFLINE",
           task: state.laneB?.task,
           reason: laneBResult?.ok === false ? "error" : "complete",
-          corpusDelta: laneBResult?.imported != null ? { nonClAuthorities: laneBResult.imported } : null,
+          corpusDelta:
+            laneBResult?.imported != null ? { nonClAuthorities: laneBResult.imported } : null,
         });
       } else {
         laneBResult = {
@@ -613,20 +731,17 @@ async function main() {
 
   const health = healthCheck();
   const status = publishStatus(state, {
-    currentLane: state.humanReview?.required
-      ? "HUMAN_REVIEW_REQUIRED"
-      : statusLaneFromState(state),
+    currentLane: state.humanReview?.required ? "HUMAN_REVIEW_REQUIRED" : statusLaneFromState(state),
     currentTask: state.humanReview?.required
       ? "await_human_review"
       : state.currentLane === "A"
         ? "cl_ingest"
         : state.laneB?.task || "offline",
-    laneReason:
-      state.humanReview?.required
-        ? (state.humanReview.reasons || []).join(", ")
-        : state.currentLane === "B"
-          ? "CourtListener day safety floor"
-          : "useful CL capacity",
+    laneReason: state.humanReview?.required
+      ? (state.humanReview.reasons || []).join(", ")
+      : state.currentLane === "B"
+        ? "CourtListener day safety floor"
+        : "useful CL capacity",
     citationSummary: laneBResult?.citation
       ? `resolved=${laneBResult.citation.resolved} TARGET_ABSENT=${laneBResult.citation.TARGET_ABSENT}`
       : `citationEdgesResolved cumulative: ${state.metrics?.citationsResolved || 0}`,
@@ -655,6 +770,7 @@ async function main() {
   });
   state = maybeHeartbeat(state, status);
   saveLocalState(state);
+  runtime.state = state;
 
   const clDuringB = Number(laneBResult?.courtListenerHttpCalls ?? 0);
   const runStatus =
@@ -666,6 +782,178 @@ async function main() {
           ? "PARTIAL"
           : "PASS";
 
+  return {
+    state,
+    status,
+    health,
+    quota,
+    laneAResult,
+    laneBResult,
+    human,
+    runStatus,
+    clDuringB,
+  };
+}
+
+function sleepMs(ms) {
+  const n = Math.max(0, Number(ms) || 0);
+  if (n <= 0) return;
+  spawnSync(process.execPath, ["-e", `Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,${n})`], {
+    shell: false,
+  });
+}
+
+async function main() {
+  fs.mkdirSync(reports, { recursive: true });
+  let state = loadLocalState();
+  const started = new Date();
+  state.laneStartedAt = state.laneStartedAt || started.toISOString();
+
+  const acquired = acquireWorkerLock({
+    reportsDir: reports,
+    workerId: WORKER_ID,
+    processStartNonce: PROCESS_NONCE,
+    now: started,
+    currentLane: statusLaneFromState(state),
+    currentTask: state.laneB?.task || "boot",
+    court: state.laneA?.court || null,
+    checkpoint: state.laneA?.checkpoint || null,
+  });
+
+  if (!acquired.ok) {
+    console.log(acquired.refusal || ACTIVE_REFUSAL_CODE);
+    console.log(
+      JSON.stringify({
+        ok: false,
+        code: acquired.code || ACTIVE_REFUSAL_CODE,
+        lock: acquired.lock,
+      }),
+    );
+    process.exit(2);
+  }
+
+  emit("WORKER_START", {
+    lane: statusLaneFromState(state),
+    task: state.laneB?.task || "boot",
+    court: state.laneA?.court,
+    checkpoint: state.laneA?.checkpoint,
+    extra: { workerId: WORKER_ID, pid: process.pid },
+  });
+
+  if (acquired.recovered) {
+    emit("LOCK_RECOVERED", {
+      lane: statusLaneFromState(state),
+      court: state.laneA?.court,
+      checkpoint: state.laneA?.checkpoint,
+      reason: "stale_or_corrupt_lock",
+      extra: { workerId: WORKER_ID, archivedPath: acquired.archivedPath },
+    });
+  } else {
+    emit("LOCK_ACQUIRED", {
+      lane: statusLaneFromState(state),
+      court: state.laneA?.court,
+      checkpoint: state.laneA?.checkpoint,
+      extra: { workerId: WORKER_ID, pid: process.pid },
+    });
+  }
+
+  if (acquired.reviewReason) {
+    state = setReview(state, acquired.reviewReason, "lock acquisition noted ownership inconsistency");
+    emit("HUMAN_REVIEW_REQUIRED", {
+      lane: "HUMAN_REVIEW_REQUIRED",
+      reason: acquired.reviewReason,
+    });
+  }
+
+  const onSignal = (sig) => {
+    console.log(JSON.stringify({ tag: "WORKER_STOP", reason: sig }));
+    safeShutdown(sig);
+    process.exit(0);
+  };
+  process.on("SIGINT", () => onSignal("SIGINT"));
+  process.on("SIGTERM", () => onSignal("SIGTERM"));
+
+  // Checkpoint hardening: never leave AR partial with null resume position.
+  const recon = reconcileArkCheckpoint(state);
+  state = recon.state;
+  if (recon.reconciled && !recon.already) {
+    emit("CHECKPOINT", {
+      lane: "LANE_A_CL",
+      court: state.laneA.court,
+      checkpoint: state.laneA.checkpoint,
+      reason: "reconciled_from_corpus_ingest_jobs",
+      extra: {
+        cursor: state.laneA.cursor,
+        lastSuccessfulExternalId: state.laneA.lastSuccessfulExternalId,
+        count: state.laneA.count,
+        target: state.laneA.target,
+      },
+    });
+  } else if (!state.laneA?.checkpoint && Number(state.laneA?.count) > 0) {
+    state = setReview(
+      state,
+      HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
+      "AR partial without durable resume after reconcile attempt",
+    );
+    emit("HUMAN_REVIEW_REQUIRED", {
+      lane: "HUMAN_REVIEW_REQUIRED",
+      court: state.laneA.court,
+      reason: HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
+    });
+  }
+
+  runtime.state = state;
+  startHeartbeatTimer();
+
+  const wantLoop =
+    process.argv.includes("--loop") ||
+    (process.env.QUEUE2_WORKER_LOOP === "1" && !process.argv.includes("--once"));
+  const wantOnce =
+    process.argv.includes("--once") ||
+    process.env.QUEUE2_WORKER_ONCE === "1" ||
+    !wantLoop;
+  const loop = wantLoop && !wantOnce;
+  const maxCycles = Number(process.env.QUEUE2_WORKER_MAX_CYCLES || (loop ? 0 : 1));
+  let cycles = 0;
+  let lastCycle = null;
+
+  // eslint-disable-next-line no-constant-condition
+  while (!runtime.shuttingDown) {
+    cycles += 1;
+    lastCycle = await runWorkerCycle(runtime.state, new Date());
+    state = lastCycle.state;
+    runtime.state = state;
+
+    if (state.humanReview?.required) break;
+    if (!loop) break;
+    if (maxCycles > 0 && cycles >= maxCycles) break;
+
+    const nextProbe = state.quota?.nextCheckAt ? new Date(state.quota.nextCheckAt).getTime() : Date.now() + HEARTBEAT_MS;
+    const sleepFor = Math.min(
+      HEARTBEAT_MS,
+      Math.max(5_000, nextProbe - Date.now()),
+    );
+    console.log(
+      JSON.stringify({
+        tag: "WORKER_IDLE",
+        sleepMs: sleepFor,
+        nextQuotaCheckAt: state.quota?.nextCheckAt,
+        lane: state.currentLane,
+        aiCalls: 0,
+      }),
+    );
+    sleepMs(sleepFor);
+  }
+
+  const clDuringB = Number(lastCycle?.clDuringB ?? 0);
+  const runStatus = lastCycle?.runStatus || "PASS";
+  const health = lastCycle?.health || {};
+  const laneAResult = lastCycle?.laneAResult || null;
+  const laneBResult = lastCycle?.laneBResult || null;
+  const human = Boolean(lastCycle?.human || state.humanReview?.required);
+  const status = lastCycle?.status || publishStatus(state);
+  const quota = lastCycle?.quota || { probed: false };
+
   emit("WORKER_STOP", {
     lane: status.currentLane,
     court: state.laneA.court,
@@ -676,8 +964,20 @@ async function main() {
   const final = {
     ok: runStatus !== "HOLD",
     status: runStatus,
-    wave: "queue2-observability",
+    wave: "queue2-ownership-heartbeat",
     generatedAt: new Date().toISOString(),
+    worker: {
+      workerId: WORKER_ID,
+      pid: process.pid,
+      cycles,
+      heartbeatIntervalMs: HEARTBEAT_MS,
+      aiCallsForHeartbeat: 0,
+      gitPushesForHeartbeat: 0,
+      lockPath: "packages/research/corpus/reports/queue2-worker.lock.json",
+      canonicalCommand: "npm run queue2:worker",
+      manualLaneSelectionRequired: false,
+      osAutostartConfigured: false,
+    },
     checkpointSafety: {
       arDurableCheckpoint: state.laneA.checkpoint,
       cursor: state.laneA.cursor,
@@ -694,6 +994,7 @@ async function main() {
       dailyFile: "packages/research/corpus/reports/corpus-worker-daily.md",
       eventsFile: "packages/research/corpus/reports/corpus-worker-events.jsonl",
       heartbeat: true,
+      heartbeatIntervalMs: HEARTBEAT_MS,
     },
     courtListener: {
       laneBRequests: clDuringB,
@@ -713,21 +1014,38 @@ async function main() {
     automation: {
       nextQuotaProbe: state.quota.nextCheckAt,
       automaticLaneAResume: !state.humanReview?.required,
+      automaticLaneSwitch: true,
       humanInterventionRequired: human || state.humanReview?.required ? "yes" : "no",
     },
     operational: {
-      tests: "queue2-dual-lane-controller.test.cjs + queue2-worker-observability.test.cjs",
+      tests:
+        "queue2-dual-lane-controller.test.cjs + queue2-worker-observability.test.cjs + queue2-worker-lock.test.cjs",
       health,
       featureAgents: health?.featureAgents || health?.checks?.featureAgents || "0",
     },
     queue: { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", transition: "NONE" },
   };
   fs.writeFileSync(finalPath, JSON.stringify(final, null, 2));
-  console.log(JSON.stringify({ tag: "LANE_SWITCH", currentLane: state.currentLane, status: runStatus, checkpoint: state.laneA.checkpoint, finalPath }));
+  console.log(
+    JSON.stringify({
+      tag: "LANE_SWITCH",
+      currentLane: state.currentLane,
+      status: runStatus,
+      checkpoint: state.laneA.checkpoint,
+      finalPath,
+    }),
+  );
   console.log(JSON.stringify(final));
+
+  safeShutdown("normal");
 }
 
 main().catch((e) => {
   console.log(JSON.stringify({ ok: false, err: String(e.message || e).slice(0, 500) }));
+  try {
+    safeShutdown("error");
+  } catch {
+    /* ignore */
+  }
   process.exit(1);
 });

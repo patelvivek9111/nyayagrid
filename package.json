@@ -54,7 +54,10 @@
     "beta:smoke": "tsx scripts/beta-smoke.ts",
     "beta:canary": "tsx scripts/beta-smoke.ts --canary",
     "staging:auth:setup": "playwright test -c playwright.staging.config.ts --project=setup",
-    "staging:q9:acceptance": "tsx scripts/q9-staging-recovery-acceptance.ts"
+    "staging:q9:acceptance": "tsx scripts/q9-staging-recovery-acceptance.ts",
+    "queue2:worker": "node scripts/run-queue2-dual-lane.cjs --loop",
+    "queue2:worker:once": "node scripts/run-queue2-dual-lane.cjs --once",
+    "queue2:milestone": "node scripts/queue2-milestone-push.cjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",

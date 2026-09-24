@@ -1,15 +1,27 @@
 /**
  * Queue #2 offline orchestrator — ZERO CourtListener HTTP.
  * Usage: node scripts/run-queue2-offline-zero-cl.cjs
+ *
+ * Refuses to mutate if another Queue #2 worker owns the lock.
  */
 "use strict";
 
 const { spawnSync } = require("node:child_process");
 const fs = require("node:fs");
 const path = require("node:path");
+const {
+  refuseIfForeignOwner,
+  acquireWorkerLock,
+  releaseWorkerLock,
+  newWorkerId,
+  newProcessStartNonce,
+  ACTIVE_REFUSAL_CODE,
+} = require("./queue2-worker-lock.cjs");
 
 const root = path.join(__dirname, "..");
 const reports = path.join(root, "packages/research/corpus/reports");
+const WORKER_ID = process.env.QUEUE2_WORKER_ID || newWorkerId();
+const PROCESS_NONCE = newProcessStartNonce();
 
 function runFly(script, outFile) {
   console.error(`[offline] fly ${script}`);
@@ -34,6 +46,41 @@ function assertNoClHttp(file) {
     throw new Error(`CL HTTP suspected in output ${file}`);
   }
 }
+
+const blocked = refuseIfForeignOwner({
+  reportsDir: reports,
+  workerId: WORKER_ID,
+  processStartNonce: PROCESS_NONCE,
+});
+if (!blocked.ok) {
+  console.log(blocked.message || ACTIVE_REFUSAL_CODE);
+  console.log(JSON.stringify({ ok: false, code: blocked.code, lock: blocked.lock }));
+  process.exit(2);
+}
+
+const owned = acquireWorkerLock({
+  reportsDir: reports,
+  workerId: WORKER_ID,
+  processStartNonce: PROCESS_NONCE,
+  currentLane: "LANE_B_OFFLINE",
+  currentTask: "offline_zero_cl",
+});
+if (!owned.ok) {
+  console.log(owned.refusal || ACTIVE_REFUSAL_CODE);
+  process.exit(2);
+}
+
+process.on("exit", () => {
+  try {
+    releaseWorkerLock({
+      reportsDir: reports,
+      workerId: WORKER_ID,
+      processStartNonce: PROCESS_NONCE,
+    });
+  } catch {
+    /* ignore */
+  }
+});
 
 console.log(JSON.stringify({ phase: "start", courtListenerHttpCalls: 0, featureAgents: "0" }));
 

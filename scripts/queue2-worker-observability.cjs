@@ -17,6 +17,7 @@ const STATUS_LANES = Object.freeze([
 
 const EVENT_TYPES = Object.freeze([
   "WORKER_START",
+  "LOCK_ACQUIRED",
   "LANE_A_START",
   "LANE_A_BATCH_COMPLETE",
   "QUOTA_FLOOR",
@@ -26,9 +27,12 @@ const EVENT_TYPES = Object.freeze([
   "QUOTA_RECOVERED",
   "LANE_SWITCH",
   "CHECKPOINT",
+  "MILESTONE",
   "HUMAN_REVIEW_REQUIRED",
   "ERROR",
   "WORKER_STOP",
+  "LOCK_RELEASED",
+  "LOCK_RECOVERED",
   "HEARTBEAT",
 ]);
 
@@ -49,10 +53,17 @@ const HUMAN_REVIEW_REASONS = Object.freeze({
   NO_PRODUCTIVE_LANE_B: "NO_PRODUCTIVE_LANE_B",
   QUEUE_2_COMPLETION_CANDIDATE: "QUEUE_2_COMPLETION_CANDIDATE",
   QUEUE_TRANSITION_REQUESTED: "QUEUE_TRANSITION_REQUESTED",
+  CONFLICTING_MUTATOR_REPEATED: "CONFLICTING_MUTATOR_REPEATED",
+  LOCK_OWNERSHIP_INCONSISTENCY: "LOCK_OWNERSHIP_INCONSISTENCY",
+  ACTIVE_PID_MISMATCHED_WORKER_ID: "ACTIVE_PID_MISMATCHED_WORKER_ID",
+  CHECKPOINT_LOCK_DISAGREEMENT: "CHECKPOINT_LOCK_DISAGREEMENT",
+  SCHEDULER_LOCK_CORRUPTION: "SCHEDULER_LOCK_CORRUPTION",
 });
 
-const HEARTBEAT_INTERVAL_MS = 5 * 60 * 1000;
-const STALE_HEARTBEAT_MS = 20 * 60 * 1000;
+/** Local heartbeat cadence — zero AI usage. */
+const HEARTBEAT_INTERVAL_MS = 15 * 60 * 1000;
+/** Operator stale signal; lock stale detection uses 45m in queue2-worker-lock.cjs. */
+const STALE_HEARTBEAT_MS = 45 * 60 * 1000;
 const REQ_PER_AUTH_THRESHOLD = 3.0;
 const REQ_PER_AUTH_STREAK = 3;
 
@@ -201,6 +212,11 @@ function evaluateHumanReviewTriggers(signals = {}) {
   if (signals.noProductiveLaneB) reasons.push(HUMAN_REVIEW_REASONS.NO_PRODUCTIVE_LANE_B);
   if (signals.queue2CompletionCandidate) reasons.push(HUMAN_REVIEW_REASONS.QUEUE_2_COMPLETION_CANDIDATE);
   if (signals.queueTransitionRequested) reasons.push(HUMAN_REVIEW_REASONS.QUEUE_TRANSITION_REQUESTED);
+  if (signals.conflictingMutatorRepeated) reasons.push(HUMAN_REVIEW_REASONS.CONFLICTING_MUTATOR_REPEATED);
+  if (signals.lockOwnershipInconsistency) reasons.push(HUMAN_REVIEW_REASONS.LOCK_OWNERSHIP_INCONSISTENCY);
+  if (signals.activePidMismatchedWorkerId) reasons.push(HUMAN_REVIEW_REASONS.ACTIVE_PID_MISMATCHED_WORKER_ID);
+  if (signals.checkpointLockDisagreement) reasons.push(HUMAN_REVIEW_REASONS.CHECKPOINT_LOCK_DISAGREEMENT);
+  if (signals.schedulerLockCorruption) reasons.push(HUMAN_REVIEW_REASONS.SCHEDULER_LOCK_CORRUPTION);
   return { required: reasons.length > 0, reasons };
 }
 
