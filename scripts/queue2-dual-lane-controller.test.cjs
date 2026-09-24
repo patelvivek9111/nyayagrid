@@ -151,6 +151,8 @@ test("useful-capacity rule: trivial leftover does not leave Lane B", () => {
   const finish = createInitialState();
   finish.laneA.count = 40;
   finish.laneA.target = 45;
+  finish.laneA.checkpoint = "cl-opinion-finish";
+  finish.laneA.lastSuccessfulExternalId = "cl-opinion-finish";
   const remaining = remainingRequestsToFinishCourt(finish.laneA);
   assert.ok(remaining > 0 && remaining < USEFUL_CL_MIN);
   const enoughToFinish = decideLane(finish, { safeRequests: remaining, now: new Date() });

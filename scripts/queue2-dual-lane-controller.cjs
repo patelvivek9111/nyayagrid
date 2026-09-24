@@ -11,6 +11,14 @@
 "use strict";
 
 const { createHash } = require("node:crypto");
+const {
+  validatePartialCheckpoint,
+  reconcileLaneAFromJob,
+  setHumanReview,
+  HUMAN_REVIEW_REASONS,
+  isPartialLaneA,
+  hasDurableCheckpoint,
+} = require("./queue2-worker-observability.cjs");
 
 const QUEUE = "#2";
 const USEFUL_CL_MIN = 25;
@@ -70,6 +78,15 @@ function createInitialState(now = new Date()) {
       court: first.court,
       jurisdiction: first.j,
       checkpoint: null,
+      cursor: null,
+      lastSuccessfulExternalId: null,
+      nextPageUrl: null,
+      lastSuccessfulAt: null,
+      runner: "staging-cl-batch-job",
+      mappingStatus: null,
+      manifestVersion: 0,
+      jobStatus: null,
+      itemsImported: null,
       target: first.target,
       count: 0,
       sequence: LANE_A_SEQUENCE.map((s) => s.court),
@@ -82,6 +99,7 @@ function createInitialState(now = new Date()) {
       last429At: null,
       retryAfterSeconds: null,
       lastSafeRequests: 0,
+      hard429Count: 0,
     },
     laneB: {
       task: LANE_B_TASKS[0],
@@ -91,6 +109,9 @@ function createInitialState(now = new Date()) {
     depthManifestVersion: 0,
     lastCitationResolve: null,
     lastIntegrityAudit: null,
+    laneStartedAt: null,
+    lastHeartbeatAt: null,
+    humanReview: { required: false, reasons: [], details: [] },
     metrics: {
       laneAMs: 0,
       laneBMs: 0,
@@ -119,6 +140,12 @@ function restoreState(saved, now = new Date()) {
     quota: { ...base.quota, ...(saved.quota || {}) },
     laneB: { ...base.laneB, ...(saved.laneB || {}) },
     metrics: { ...base.metrics, ...(saved.metrics || {}) },
+    humanReview: {
+      required: false,
+      reasons: [],
+      details: [],
+      ...(saved.humanReview || {}),
+    },
     switches: Array.isArray(saved.switches) ? saved.switches : [],
   };
   merged.queue = QUEUE;
@@ -127,7 +154,94 @@ function restoreState(saved, now = new Date()) {
   merged.featureAgents = "0";
   merged.version = 1;
   if (merged.currentLane !== "A" && merged.currentLane !== "B") merged.currentLane = "B";
+  // Harden: never keep an active partial court with a null checkpoint.
+  const check = validatePartialCheckpoint(merged.laneA);
+  merged.laneA = check.laneA;
+  if (check.humanReviewRequired) {
+    Object.assign(
+      merged,
+      setHumanReview(merged, check.reason, "restoreState refused null checkpoint on partial court"),
+    );
+    if (merged.currentLane === "A") merged.currentLane = "B";
+  }
   return merged;
+}
+
+/**
+ * Persist Lane A progress. Rejects partial courts without durable checkpoint
+ * (never invents a resume position).
+ */
+function persistLaneAProgress(state, patch = {}, now = new Date()) {
+  const next = cloneState(state);
+  next.laneA = {
+    ...next.laneA,
+    ...patch,
+    checkpoint:
+      patch.checkpoint ??
+      patch.lastSuccessfulExternalId ??
+      next.laneA.checkpoint ??
+      next.laneA.lastSuccessfulExternalId ??
+      null,
+  };
+  if (patch.lastSuccessfulExternalId) {
+    next.laneA.lastSuccessfulExternalId = patch.lastSuccessfulExternalId;
+    if (!next.laneA.checkpoint) next.laneA.checkpoint = patch.lastSuccessfulExternalId;
+  }
+  next.updatedAt = now.toISOString();
+  const check = validatePartialCheckpoint(next.laneA);
+  next.laneA = check.laneA;
+  if (check.humanReviewRequired) {
+    return {
+      ok: false,
+      state: setHumanReview(next, check.reason, "persistLaneAProgress blocked null checkpoint"),
+      reason: check.reason,
+    };
+  }
+  return { ok: true, state: next, reason: null };
+}
+
+/**
+ * Copy proven durable job checkpoint into scheduler. Does not invent IDs.
+ */
+function applyDurableJobCheckpoint(state, job, extras = {}, now = new Date()) {
+  const next = cloneState(state);
+  const { state: laneA, reconciled, reason } = reconcileLaneAFromJob(next.laneA, job, extras);
+  next.laneA = laneA;
+  next.updatedAt = now.toISOString();
+  if (!reconciled) {
+    if (isPartialLaneA(next.laneA) && !hasDurableCheckpoint(next.laneA)) {
+      return {
+        ok: false,
+        state: setHumanReview(
+          next,
+          HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
+          reason || "durable job reconcile failed",
+        ),
+        reason: reason || HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
+      };
+    }
+    return { ok: false, state: next, reason: reason || "reconcile_failed" };
+  }
+  const check = validatePartialCheckpoint(next.laneA);
+  next.laneA = check.laneA;
+  if (check.humanReviewRequired) {
+    return {
+      ok: false,
+      state: setHumanReview(next, check.reason, "post-reconcile validation"),
+      reason: check.reason,
+    };
+  }
+  // Clear prior missing-checkpoint review if reconciled successfully.
+  if (next.humanReview?.reasons?.includes(HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT)) {
+    next.humanReview.reasons = next.humanReview.reasons.filter(
+      (r) => r !== HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
+    );
+    if (next.humanReview.reasons.length === 0) {
+      next.humanReview.required = false;
+      next.humanReview.details = [];
+    }
+  }
+  return { ok: true, state: next, reason: null };
 }
 
 function remainingRequestsToFinishCourt(laneA) {
@@ -174,6 +288,24 @@ function quotaProbeDue(state, now = new Date()) {
  */
 function decideLane(state, quota) {
   const now = quota.now || new Date();
+  if (state?.humanReview?.required) {
+    return {
+      lane: "B",
+      reason: "human_review_required",
+      remainingRequestsToFinishCourt: remainingRequestsToFinishCourt(state.laneA),
+      blocked: true,
+    };
+  }
+  const check = validatePartialCheckpoint(state.laneA);
+  if (check.humanReviewRequired) {
+    return {
+      lane: "B",
+      reason: check.reason,
+      remainingRequestsToFinishCourt: remainingRequestsToFinishCourt(state.laneA),
+      blocked: true,
+      needsHumanReview: true,
+    };
+  }
   const remaining = remainingRequestsToFinishCourt(state.laneA);
   const capacity = hasUsefulClCapacity({
     safeRequests: quota.safeRequests,
@@ -233,15 +365,32 @@ function recordLaneSwitch(state, fromLane, toLane, reason, now = new Date()) {
 function applyQuotaFloorTransition(state, params) {
   const now = params.now || new Date();
   let next = applyQuotaSnapshot(state, params);
+  const checkpoint =
+    params.checkpoint ??
+    params.lastSuccessfulExternalId ??
+    next.laneA.checkpoint ??
+    next.laneA.lastSuccessfulExternalId ??
+    null;
   next.laneA = {
     ...next.laneA,
     court: params.court ?? next.laneA.court,
     jurisdiction: params.jurisdiction ?? next.laneA.jurisdiction,
-    checkpoint: params.checkpoint ?? next.laneA.checkpoint,
+    checkpoint,
+    cursor: params.cursor ?? next.laneA.cursor,
+    lastSuccessfulExternalId:
+      params.lastSuccessfulExternalId ?? next.laneA.lastSuccessfulExternalId ?? checkpoint,
+    nextPageUrl: params.nextPageUrl ?? next.laneA.nextPageUrl,
+    lastSuccessfulAt: params.lastSuccessfulAt ?? next.laneA.lastSuccessfulAt,
     target: params.target ?? next.laneA.target,
     count: params.count ?? next.laneA.count,
+    jobStatus: params.jobStatus ?? next.laneA.jobStatus ?? "quota_paused",
     lock: null,
   };
+  const check = validatePartialCheckpoint(next.laneA);
+  next.laneA = check.laneA;
+  if (check.humanReviewRequired) {
+    next = setHumanReview(next, check.reason, "quota floor with missing durable checkpoint");
+  }
   if (next.currentLane !== "B") {
     next = recordLaneSwitch(next, next.currentLane, "B", params.reason || "quota_floor", now);
   } else {
@@ -588,4 +737,12 @@ module.exports = {
   KNOWN_INTERMEDIATE_GAPS,
   logLaneEvent,
   sha256,
+  persistLaneAProgress,
+  applyDurableJobCheckpoint,
+  validatePartialCheckpoint,
+  reconcileLaneAFromJob,
+  setHumanReview,
+  isPartialLaneA,
+  hasDurableCheckpoint,
+  HUMAN_REVIEW_REASONS,
 };

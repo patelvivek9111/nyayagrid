@@ -1,0 +1,11 @@
+{"timestamp":"2026-09-24T16:51:41.762Z","type":"WORKER_START","lane":"LANE_B_OFFLINE","task":"us_reports_gap_analysis","court":"ark","checkpoint":"cl-opinion-9885161","reason":null}
+{"timestamp":"2026-09-24T16:51:43.252Z","type":"QUOTA_PROBE","lane":"QUOTA_CHECK","task":null,"court":null,"checkpoint":null,"reason":"scheduled"}
+{"timestamp":"2026-09-24T16:51:43.254Z","type":"QUOTA_FLOOR","lane":"LANE_B_OFFLINE","task":null,"court":"ark","checkpoint":"cl-opinion-9885161","reason":"below_useful_capacity","quota":{"safeRequests":4,"dayRemaining":125}}
+{"timestamp":"2026-09-24T16:51:43.254Z","type":"LANE_B_START","lane":"LANE_B_OFFLINE","task":"us_reports_gap_analysis","court":"ark","checkpoint":"cl-opinion-9885161","reason":null}
+{"timestamp":"2026-09-24T16:51:44.340Z","type":"HEARTBEAT","lane":"LANE_B_OFFLINE","task":"us_reports_gap_analysis","court":"ark","checkpoint":"cl-opinion-9885161","reason":"interval","heartbeat":"[9/24/2026, 12:51:44 PM EDT] LANE_B_OFFLINE | us_reports_gap_analysis | today +6 auth | citations +44 | CL paused | nextProbe 9/24/2026, 1:01:41 PM EDT"}
+{"timestamp":"2026-09-24T16:51:44.341Z","type":"WORKER_STOP","lane":"LANE_B_OFFLINE","task":null,"court":"ark","checkpoint":"cl-opinion-9885161","reason":"PASS"}
+{"timestamp":"2026-09-24T16:52:45.180Z","type":"WORKER_START","lane":"LANE_B_OFFLINE","task":"us_reports_gap_analysis","court":"ark","checkpoint":"cl-opinion-9885161","reason":null}
+{"timestamp":"2026-09-24T16:52:46.605Z","type":"QUOTA_PROBE","lane":"QUOTA_CHECK","task":null,"court":null,"checkpoint":null,"reason":"scheduled"}
+{"timestamp":"2026-09-24T16:52:46.608Z","type":"QUOTA_FLOOR","lane":"LANE_B_OFFLINE","task":null,"court":"ark","checkpoint":"cl-opinion-9885161","reason":"quota_floor","quota":{"safeRequests":0,"dayRemaining":29}}
+{"timestamp":"2026-09-24T16:52:46.609Z","type":"LANE_B_START","lane":"LANE_B_OFFLINE","task":"us_reports_gap_analysis","court":"ark","checkpoint":"cl-opinion-9885161","reason":null}
+{"timestamp":"2026-09-24T16:52:47.908Z","type":"WORKER_STOP","lane":"LANE_B_OFFLINE","task":null,"court":"ark","checkpoint":"cl-opinion-9885161","reason":"PASS"}

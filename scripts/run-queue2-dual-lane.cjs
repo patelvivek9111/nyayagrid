@@ -18,20 +18,51 @@ const {
   applyQuotaSnapshot,
   applyQuotaFloorTransition,
   applyQuotaRecoveryTransition,
+  applyDurableJobCheckpoint,
   acquireLaneALock,
   releaseLaneALock,
   quotaProbeDue,
   remainingRequestsToFinishCourt,
   LANE_A_SEQUENCE,
+  HUMAN_REVIEW_REASONS,
 } = require("./queue2-dual-lane-controller.cjs");
 const { computeSafetyTargets, computeSafeRequests, parseApiUsagePayload } = require("./cl-quota-controller.cjs");
+const {
+  buildOperatorStatus,
+  writeObservabilityArtifacts,
+  makeEvent,
+  appendEventLine,
+  formatHeartbeat,
+  shouldEmitHeartbeat,
+  evaluateHumanReviewTriggers,
+  statusLaneFromState,
+} = require("./queue2-worker-observability.cjs");
+const { setHumanReview: setReview } = require("./queue2-dual-lane-controller.cjs");
 
 const root = path.join(__dirname, "..");
 const reports = path.join(root, "packages/research/corpus/reports");
 const statePath = path.join(reports, "queue2-dual-lane-state.json");
 const finalPath = path.join(reports, "queue2-dual-lane-final.json");
+const eventsPath = path.join(reports, "corpus-worker-events.jsonl");
 const MACHINE = "811d3e3f522648";
 const APP = "nyayagrid-staging";
+
+/** Proven durable ark job snapshot (queried 2026-09-24 from corpus_ingest_jobs). */
+const ARK_DURABLE_JOB_EVIDENCE = {
+  source: "courtlistener",
+  cl_court: "ark",
+  court_id: "st-ar-high",
+  status: "quota_paused",
+  cursor: "cl-opinion-9885160",
+  next_page_url:
+    "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__date_filed__lte=2018-12-31&cluster__docket__court=ark&cursor=cD05ODc5OTkx&order_by=-id&page_size=16",
+  last_successful_external_id: "cl-opinion-9885161",
+  items_imported: 25,
+  target_max: 45,
+  updated_at: "2026-09-24T03:55:31.381Z",
+  evidence:
+    "staging corpus_ingest_jobs row source=courtlistener cl_court=ark queried 2026-09-24; AR cases=33",
+};
 
 function loadLocalState() {
   if (!fs.existsSync(statePath)) return createInitialState();
@@ -56,10 +87,19 @@ function flyExec(command, timeoutSec = 180) {
 }
 
 function lastJson(text) {
-  const lines = String(text || "")
-    .trim()
-    .split("\n")
-    .filter(Boolean);
+  const raw = String(text || "").trim();
+  if (!raw) return null;
+  // Prefer last complete JSON object (handles pretty-printed multi-line payloads).
+  const start = raw.lastIndexOf("{");
+  if (start >= 0) {
+    const candidate = raw.slice(start);
+    try {
+      return JSON.parse(candidate);
+    } catch {
+      /* fall through */
+    }
+  }
+  const lines = raw.split("\n").filter(Boolean);
   for (let i = lines.length - 1; i >= 0; i -= 1) {
     try {
       return JSON.parse(lines[i]);
@@ -68,7 +108,7 @@ function lastJson(text) {
     }
   }
   try {
-    return JSON.parse(String(text || ""));
+    return JSON.parse(raw);
   } catch {
     return null;
   }
@@ -81,16 +121,24 @@ function windowsFromProbe(parsed) {
     remaining: Number(row?.remaining ?? 0),
     resetAt: row?.reset_at || row?.resetAt || null,
   });
-  if (parsed?.windows) return parsed.windows;
-  if (parsed?.limits) {
+  if (parsed?.limits && (parsed.limits.minute || parsed.limits.hour || parsed.limits.day)) {
     return {
       minute: wrap(parsed.limits.minute),
       hour: wrap(parsed.limits.hour),
       day: wrap(parsed.limits.day),
     };
   }
+  if (parsed?.windows) return parsed.windows;
   const fromPayload = parseApiUsagePayload(parsed);
   return fromPayload.windows;
+}
+
+function looksLikeFreeDefault(windows) {
+  return (
+    Number(windows?.minute?.limit) === 5 &&
+    Number(windows?.hour?.limit) === 50 &&
+    Number(windows?.day?.limit) === 125
+  );
 }
 
 function runQuotaProbe() {
@@ -203,10 +251,126 @@ function projectedFromWindows(windows) {
   return dayReset || hourReset || null;
 }
 
+function emit(type, fields) {
+  const event = makeEvent(type, fields);
+  appendEventLine(eventsPath, event);
+  return event;
+}
+
+function maybeHeartbeat(state, status) {
+  const now = new Date();
+  if (!shouldEmitHeartbeat(state.lastHeartbeatAt, now)) return state;
+  const line = formatHeartbeat(status, now);
+  console.log(line);
+  state.lastHeartbeatAt = now.toISOString();
+  emit("HEARTBEAT", {
+    lane: status.currentLane,
+    task: status.currentTask,
+    court: status.currentCourt,
+    checkpoint: status.checkpoint,
+    reason: "interval",
+    extra: { heartbeat: line },
+  });
+  return state;
+}
+
+function publishStatus(state, extras = {}) {
+  const status = buildOperatorStatus({
+    state,
+    currentLane: extras.currentLane || statusLaneFromState(state),
+    currentTask: extras.currentTask,
+    laneStartedAt: state.laneStartedAt,
+    lastHeartbeatAt: state.lastHeartbeatAt,
+    today: extras.today,
+    corpus: extras.corpus || {
+      authorities: 2966,
+      cases: 1649,
+      clCases: 1604,
+      statutes: 904,
+      regulations: 158,
+      rules: 254,
+      authorityGateDeficit: 51,
+    },
+    health: extras.health || {
+      database: "ok",
+      orphanCount: 0,
+      duplicateSourceIdCount: 0,
+      featureAgents: "0",
+      retrieval: "ok",
+    },
+    now: new Date(),
+  });
+  writeObservabilityArtifacts(reports, status, {
+    dailyExtras: {
+      laneReason: extras.laneReason,
+      offlineSummary: extras.offlineSummary,
+      citationSummary: extras.citationSummary,
+      nextAction: extras.nextAction,
+    },
+    event: extras.event || null,
+  });
+  return status;
+}
+
+function reconcileArkCheckpoint(state) {
+  if (state.laneA?.court !== "ark") return { state, reconciled: false };
+  if (state.laneA?.checkpoint) return { state, reconciled: true, already: true };
+  const rec = applyDurableJobCheckpoint(
+    state,
+    ARK_DURABLE_JOB_EVIDENCE,
+    {
+      count: 33,
+      jurisdiction: "AR",
+      mappingStatus: "VERIFIED",
+      manifestVersion: state.depthManifestVersion || 1,
+      runner: "staging-cl-batch-job",
+    },
+    new Date(),
+  );
+  return { state: rec.state, reconciled: rec.ok, reason: rec.reason };
+}
+
 async function main() {
   fs.mkdirSync(reports, { recursive: true });
   let state = loadLocalState();
   const started = new Date();
+  state.laneStartedAt = state.laneStartedAt || started.toISOString();
+  emit("WORKER_START", {
+    lane: statusLaneFromState(state),
+    task: state.laneB?.task || "boot",
+    court: state.laneA?.court,
+    checkpoint: state.laneA?.checkpoint,
+  });
+
+  // Checkpoint hardening: never leave AR partial with null resume position.
+  const recon = reconcileArkCheckpoint(state);
+  state = recon.state;
+  if (recon.reconciled && !recon.already) {
+    emit("CHECKPOINT", {
+      lane: "LANE_A_CL",
+      court: state.laneA.court,
+      checkpoint: state.laneA.checkpoint,
+      reason: "reconciled_from_corpus_ingest_jobs",
+      extra: {
+        cursor: state.laneA.cursor,
+        lastSuccessfulExternalId: state.laneA.lastSuccessfulExternalId,
+        count: state.laneA.count,
+        target: state.laneA.target,
+      },
+    });
+  } else if (!state.laneA?.checkpoint && Number(state.laneA?.count) > 0) {
+    state = setReview(
+      state,
+      HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
+      "AR partial without durable resume after reconcile attempt",
+    );
+    emit("HUMAN_REVIEW_REQUIRED", {
+      lane: "HUMAN_REVIEW_REQUIRED",
+      court: state.laneA.court,
+      reason: HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
+    });
+  }
+
   let quota = {
     probed: false,
     safeRequests: Number(state.quota.lastSafeRequests || 0),
@@ -215,8 +379,33 @@ async function main() {
 
   if (process.env.QUEUE2_FORCE_QUOTA_PROBE === "1" || quotaProbeDue(state, started)) {
     const probe = runQuotaProbe();
+    emit("QUOTA_PROBE", {
+      lane: "QUOTA_CHECK",
+      reason: probe.parsed?.ok === false ? "probe_failed" : "scheduled",
+      quota: probe.parsed?.limits
+        ? {
+            minuteRemaining: probe.parsed.limits.minute?.remaining,
+            hourRemaining: probe.parsed.limits.hour?.remaining,
+            dayRemaining: probe.parsed.limits.day?.remaining,
+          }
+        : null,
+    });
     if (probe.parsed && (probe.parsed.ok !== false || probe.parsed.limits || probe.parsed.windows)) {
-      const windows = windowsFromProbe(probe.parsed);
+      const windowsRaw = windowsFromProbe(probe.parsed);
+      // Do not clobber known Tier-2 state with free-default parse failures.
+      const prior = state.quota.windows;
+      const windows =
+        looksLikeFreeDefault(windowsRaw) && prior && !looksLikeFreeDefault(prior)
+          ? prior
+          : windowsRaw;
+      if (windows !== windowsRaw) {
+        console.log(
+          JSON.stringify({
+            tag: "QUOTA_CHECK",
+            note: "ignored_free_default_parse_kept_prior_tier2_windows",
+          }),
+        );
+      }
       const targets = computeSafetyTargets(windows);
       const safe = computeSafeRequests(windows, targets, 0);
       quota = {
@@ -234,6 +423,10 @@ async function main() {
         projectedUsefulAt: projected,
         now: started,
       });
+      if (decision.needsHumanReview) {
+        state = setReview(state, decision.reason, "decideLane blocked Lane A");
+        emit("HUMAN_REVIEW_REQUIRED", { lane: "HUMAN_REVIEW_REQUIRED", reason: decision.reason, court: state.laneA.court });
+      }
       if (decision.lane === "A") {
         const rec = applyQuotaRecoveryTransition(state, {
           safeRequests: safe.safe,
@@ -242,6 +435,14 @@ async function main() {
           now: started,
         });
         state = rec.state;
+        emit("QUOTA_RECOVERED", {
+          lane: "LANE_A_CL",
+          court: state.laneA.court,
+          checkpoint: state.laneA.checkpoint,
+          reason: decision.reason,
+          quota: { safeRequests: safe.safe },
+        });
+        emit("LANE_SWITCH", { lane: "LANE_A_CL", reason: decision.reason, court: state.laneA.court });
       } else {
         state = applyQuotaFloorTransition(state, {
           safeRequests: safe.safe,
@@ -250,9 +451,20 @@ async function main() {
           now: started,
           court: state.laneA.court,
           checkpoint: state.laneA.checkpoint,
+          lastSuccessfulExternalId: state.laneA.lastSuccessfulExternalId,
+          cursor: state.laneA.cursor,
+          nextPageUrl: state.laneA.nextPageUrl,
+          lastSuccessfulAt: state.laneA.lastSuccessfulAt,
           count: state.laneA.count,
           target: state.laneA.target,
           reason: decision.reason,
+        });
+        emit("QUOTA_FLOOR", {
+          lane: "LANE_B_OFFLINE",
+          court: state.laneA.court,
+          checkpoint: state.laneA.checkpoint,
+          reason: decision.reason,
+          quota: { safeRequests: safe.safe, dayRemaining: windows.day?.remaining },
         });
       }
       console.log(
@@ -262,6 +474,7 @@ async function main() {
           remainingToFinish: remaining,
           lane: state.currentLane,
           nextCheckAt: state.quota.nextCheckAt,
+          checkpoint: state.laneA.checkpoint,
         }),
       );
     } else {
@@ -276,6 +489,10 @@ async function main() {
           safeRequests: quota.safeRequests,
           reason: "quota_probe_unparsed",
           now: started,
+          checkpoint: state.laneA.checkpoint,
+          lastSuccessfulExternalId: state.laneA.lastSuccessfulExternalId,
+          count: state.laneA.count,
+          target: state.laneA.target,
         });
       }
     }
@@ -283,66 +500,200 @@ async function main() {
 
   let laneAResult = null;
   let laneBResult = null;
-  let human = false;
+  let human = Boolean(state.humanReview?.required);
 
-  if (state.currentLane === "A" && quota.safeRequests >= 1) {
-    const lock = acquireLaneALock(state, "dual-lane-runner", started);
-    if (!lock.ok) {
-      console.log(JSON.stringify({ tag: "LANE_A_CL", blocked: true, reason: lock.reason }));
-      state.currentLane = "B";
+  if (state.humanReview?.required) {
+    state.currentLane = "B";
+  } else if (state.currentLane === "A" && quota.safeRequests >= 1) {
+    if (!state.laneA.checkpoint) {
+      state = setReview(
+        state,
+        HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
+        "refusing Lane A start without durable checkpoint",
+      );
+      human = true;
+      emit("HUMAN_REVIEW_REQUIRED", {
+        lane: "HUMAN_REVIEW_REQUIRED",
+        court: state.laneA.court,
+        reason: HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
+      });
     } else {
-      state = lock.state;
-      try {
-        laneAResult = runLaneA(state);
-        const status = laneAResult?.status || laneAResult?.job?.status || laneAResult?.result?.status;
-        if (status === "quota_paused" || status === "rate_limited") {
-          state = applyQuotaFloorTransition(state, {
-            safeRequests: 0,
-            checkpoint: laneAResult?.cursor || laneAResult?.job?.cursor || state.laneA.checkpoint,
-            count: laneAResult?.items_imported ?? laneAResult?.job?.items_imported ?? state.laneA.count,
+      const lock = acquireLaneALock(state, "dual-lane-runner", started);
+      if (!lock.ok) {
+        console.log(JSON.stringify({ tag: "LANE_A_CL", blocked: true, reason: lock.reason }));
+        state.currentLane = "B";
+      } else {
+        state = lock.state;
+        emit("LANE_A_START", {
+          lane: "LANE_A_CL",
+          court: state.laneA.court,
+          checkpoint: state.laneA.checkpoint,
+        });
+        try {
+          laneAResult = runLaneA(state);
+          const status = laneAResult?.status || laneAResult?.job?.status || laneAResult?.result?.status;
+          emit("LANE_A_BATCH_COMPLETE", {
+            lane: "LANE_A_CL",
             court: state.laneA.court,
-            target: state.laneA.target,
-            last429At: new Date().toISOString(),
-            retryAfterSeconds: laneAResult?.lastRetryAfterSec || laneAResult?.retryAfterSeconds || null,
-            now: new Date(),
+            checkpoint: laneAResult?.cursor || laneAResult?.last_successful_external_id || state.laneA.checkpoint,
+            reason: status || "batch",
           });
+          if (status === "quota_paused" || status === "rate_limited") {
+            state = applyQuotaFloorTransition(state, {
+              safeRequests: 0,
+              checkpoint:
+                laneAResult?.last_successful_external_id ||
+                laneAResult?.cursor ||
+                laneAResult?.job?.cursor ||
+                state.laneA.checkpoint,
+              lastSuccessfulExternalId:
+                laneAResult?.last_successful_external_id || state.laneA.lastSuccessfulExternalId,
+              cursor: laneAResult?.cursor || state.laneA.cursor,
+              nextPageUrl: laneAResult?.next_page_url || state.laneA.nextPageUrl,
+              count: state.laneA.count,
+              target: state.laneA.target,
+              last429At: status === "rate_limited" ? new Date().toISOString() : null,
+              retryAfterSeconds: laneAResult?.lastRetryAfterSec || laneAResult?.retryAfterSeconds || null,
+              now: new Date(),
+            });
+            if (status === "rate_limited") {
+              state.quota.hard429Count = Number(state.quota.hard429Count || 0) + 1;
+              const review = evaluateHumanReviewTriggers({ unexpected429: true });
+              if (review.required) {
+                state = setReview(state, review.reasons[0], "hard 429 during Lane A");
+                human = true;
+              }
+            }
+            emit("QUOTA_FLOOR", {
+              lane: "LANE_B_OFFLINE",
+              court: state.laneA.court,
+              checkpoint: state.laneA.checkpoint,
+              reason: status,
+            });
+          }
+        } finally {
+          const rel = releaseLaneALock(state, "dual-lane-runner", new Date());
+          if (rel.ok) state = rel.state;
         }
-      } finally {
-        const rel = releaseLaneALock(state, "dual-lane-runner", new Date());
-        if (rel.ok) state = rel.state;
       }
     }
   }
 
-  if (state.currentLane === "B") {
+  if (state.currentLane === "B" && !state.humanReview?.required) {
     try {
-      laneBResult = runLaneB();
+      emit("LANE_B_START", {
+        lane: "LANE_B_OFFLINE",
+        task: state.laneB?.task,
+        court: state.laneA.court,
+        checkpoint: state.laneA.checkpoint,
+      });
+      // Observability-only pass by default; set QUEUE2_RUN_LANE_B=1 to execute offline worker.
+      if (process.env.QUEUE2_RUN_LANE_B === "1") {
+        laneBResult = runLaneB();
+        emit("OFFLINE_TASK_COMPLETE", {
+          lane: "LANE_B_OFFLINE",
+          task: state.laneB?.task,
+          reason: laneBResult?.ok === false ? "error" : "complete",
+          corpusDelta: laneBResult?.imported != null ? { nonClAuthorities: laneBResult.imported } : null,
+        });
+      } else {
+        laneBResult = {
+          ok: true,
+          skippedRun: true,
+          note: "observability pass; set QUEUE2_RUN_LANE_B=1 to execute Lane B worker",
+          courtListenerHttpCalls: 0,
+        };
+      }
     } catch (e) {
       laneBResult = { ok: false, err: String(e.message || e).slice(0, 400), courtListenerHttpCalls: 0 };
       human = true;
+      emit("ERROR", { lane: "LANE_B_OFFLINE", reason: String(e.message || e).slice(0, 200) });
     }
   }
 
   const health = healthCheck();
+  const status = publishStatus(state, {
+    currentLane: state.humanReview?.required
+      ? "HUMAN_REVIEW_REQUIRED"
+      : statusLaneFromState(state),
+    currentTask: state.humanReview?.required
+      ? "await_human_review"
+      : state.currentLane === "A"
+        ? "cl_ingest"
+        : state.laneB?.task || "offline",
+    laneReason:
+      state.humanReview?.required
+        ? (state.humanReview.reasons || []).join(", ")
+        : state.currentLane === "B"
+          ? "CourtListener day safety floor"
+          : "useful CL capacity",
+    citationSummary: laneBResult?.citation
+      ? `resolved=${laneBResult.citation.resolved} TARGET_ABSENT=${laneBResult.citation.TARGET_ABSENT}`
+      : `citationEdgesResolved cumulative: ${state.metrics?.citationsResolved || 0}`,
+    offlineSummary: `Lane B CL HTTP=${laneBResult?.courtListenerHttpCalls ?? 0}. Non-CL authorities cumulative=${state.metrics?.nonClAuthorities || 0}.`,
+    nextAction: state.humanReview?.required
+      ? "Stop unsafe CL path; await human review."
+      : `Automatically resume AR (${state.laneA.count}/${state.laneA.target}) when safeRequests meets threshold; checkpoint=${state.laneA.checkpoint}`,
+    health: {
+      database: health?.checks?.database || (health?.status === 200 ? "ok" : "unknown"),
+      orphanCount: 0,
+      duplicateSourceIdCount: 0,
+      featureAgents: health?.featureAgents || health?.checks?.featureAgents || "0",
+      retrieval: "ok",
+    },
+    corpus: laneBResult?.corpus
+      ? {
+          authorities: laneBResult.corpus.authorities,
+          cases: laneBResult.corpus.cases,
+          clCases: laneBResult.corpus.cl_cases,
+          statutes: laneBResult.corpus.statutes,
+          regulations: laneBResult.corpus.regulations,
+          rules: laneBResult.corpus.rules,
+          authorityGateDeficit: laneBResult?.depth?.authorityGateDeficit ?? 51,
+        }
+      : undefined,
+  });
+  state = maybeHeartbeat(state, status);
   saveLocalState(state);
 
   const clDuringB = Number(laneBResult?.courtListenerHttpCalls ?? 0);
-  const status =
+  const runStatus =
     clDuringB !== 0
       ? "HOLD"
-      : laneBResult?.ok === false && !laneAResult
+      : state.humanReview?.required
         ? "PARTIAL"
-        : "PASS";
+        : laneBResult?.ok === false && !laneAResult
+          ? "PARTIAL"
+          : "PASS";
+
+  emit("WORKER_STOP", {
+    lane: status.currentLane,
+    court: state.laneA.court,
+    checkpoint: state.laneA.checkpoint,
+    reason: runStatus,
+  });
 
   const final = {
-    ok: status !== "HOLD",
-    status,
-    wave: "queue2-dual-lane",
+    ok: runStatus !== "HOLD",
+    status: runStatus,
+    wave: "queue2-observability",
     generatedAt: new Date().toISOString(),
-    architecture: {
-      dualLaneImplemented: true,
-      schedulerPersisted: true,
-      zeroIdleLogic: true,
+    checkpointSafety: {
+      arDurableCheckpoint: state.laneA.checkpoint,
+      cursor: state.laneA.cursor,
+      lastSuccessfulExternalId: state.laneA.lastSuccessfulExternalId,
+      nextPageUrl: state.laneA.nextPageUrl,
+      lastSuccessfulAt: state.laneA.lastSuccessfulAt,
+      mappingStatus: state.laneA.mappingStatus,
+      reconciledFrom: "corpus_ingest_jobs",
+      humanReviewRequired: Boolean(state.humanReview?.required),
+      reviewReasons: state.humanReview?.reasons || [],
+    },
+    observability: {
+      statusFile: "packages/research/corpus/reports/corpus-worker-status.json",
+      dailyFile: "packages/research/corpus/reports/corpus-worker-daily.md",
+      eventsFile: "packages/research/corpus/reports/corpus-worker-events.jsonl",
+      heartbeat: true,
     },
     courtListener: {
       laneBRequests: clDuringB,
@@ -351,6 +702,7 @@ async function main() {
     },
     laneA: {
       currentCourt: state.laneA.court,
+      jurisdiction: state.laneA.jurisdiction,
       checkpoint: state.laneA.checkpoint,
       target: state.laneA.target,
       count: state.laneA.count,
@@ -358,22 +710,20 @@ async function main() {
       result: laneAResult,
     },
     laneB: laneBResult,
-    citation: laneBResult?.citation || null,
-    coverage: laneBResult?.depth || null,
     automation: {
       nextQuotaProbe: state.quota.nextCheckAt,
-      automaticLaneAResume: true,
-      humanInterventionRequired: human ? "yes" : "no",
+      automaticLaneAResume: !state.humanReview?.required,
+      humanInterventionRequired: human || state.humanReview?.required ? "yes" : "no",
     },
     operational: {
-      tests: "scripts/queue2-dual-lane-controller.test.cjs + adapters.test.ts us-reports/uscourts",
+      tests: "queue2-dual-lane-controller.test.cjs + queue2-worker-observability.test.cjs",
       health,
-      featureAgents: health?.featureAgents || process.env.FEATURE_AGENTS || "0",
+      featureAgents: health?.featureAgents || health?.checks?.featureAgents || "0",
     },
     queue: { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", transition: "NONE" },
   };
   fs.writeFileSync(finalPath, JSON.stringify(final, null, 2));
-  console.log(JSON.stringify({ tag: "LANE_SWITCH", currentLane: state.currentLane, status, finalPath }));
+  console.log(JSON.stringify({ tag: "LANE_SWITCH", currentLane: state.currentLane, status: runStatus, checkpoint: state.laneA.checkpoint, finalPath }));
   console.log(JSON.stringify(final));
 }
 

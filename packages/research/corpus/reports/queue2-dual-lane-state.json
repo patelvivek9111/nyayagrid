@@ -5,27 +5,60 @@
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
   "currentLane": "B",
-  "updatedAt": "2026-09-24T16:34:00.000Z",
+  "updatedAt": "2026-09-24T16:52:45.180Z",
   "laneA": {
     "court": "ark",
     "jurisdiction": "AR",
-    "checkpoint": null,
+    "checkpoint": "cl-opinion-9885161",
+    "cursor": "cl-opinion-9885160",
+    "lastSuccessfulExternalId": "cl-opinion-9885161",
+    "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__date_filed__lte=2018-12-31&cluster__docket__court=ark&cursor=cD05ODc5OTkx&order_by=-id&page_size=16",
+    "lastSuccessfulAt": "2026-09-24T03:55:31.381Z",
+    "runner": "staging-cl-batch-job",
+    "mappingStatus": "VERIFIED",
+    "manifestVersion": 1,
+    "jobStatus": "quota_paused",
+    "itemsImported": 25,
     "target": 45,
     "count": 33,
-    "sequence": ["ark", "sd", "idaho", "wyo", "neb", "ala", "ky"],
+    "sequence": [
+      "ark",
+      "sd",
+      "idaho",
+      "wyo",
+      "neb",
+      "ala",
+      "ky"
+    ],
     "lock": null
   },
   "quota": {
     "windows": {
-      "minute": { "limit": 30, "used": 0, "remaining": 30, "resetAt": null },
-      "hour": { "limit": 300, "used": 0, "remaining": 300, "resetAt": null },
-      "day": { "limit": 1200, "used": 1171, "remaining": 29, "resetAt": "2026-09-24T22:06:14.563161+00:00" }
+      "minute": {
+        "limit": 30,
+        "used": 0,
+        "remaining": 30,
+        "resetAt": null
+      },
+      "hour": {
+        "limit": 300,
+        "used": 0,
+        "remaining": 300,
+        "resetAt": null
+      },
+      "day": {
+        "limit": 1200,
+        "used": 1171,
+        "remaining": 29,
+        "resetAt": "2026-09-24T22:06:14.563161+00:00"
+      }
     },
-    "lastProbeAt": "2026-09-24T16:31:04.000Z",
+    "lastProbeAt": "2026-09-24T16:52:45.180Z",
     "nextCheckAt": "2026-09-24T22:06:14.563Z",
     "last429At": null,
     "retryAfterSeconds": null,
-    "lastSafeRequests": 0
+    "lastSafeRequests": 0,
+    "hard429Count": 0
   },
   "laneB": {
     "task": "us_reports_gap_analysis",
@@ -46,6 +79,13 @@
   "depthManifestVersion": 1,
   "lastCitationResolve": "2026-09-24T16:34:00.000Z",
   "lastIntegrityAudit": "2026-09-24T16:34:00.000Z",
+  "laneStartedAt": "2026-09-24T16:31:04.000Z",
+  "lastHeartbeatAt": "2026-09-24T16:51:44.340Z",
+  "humanReview": {
+    "required": false,
+    "reasons": [],
+    "details": []
+  },
   "metrics": {
     "laneAMs": 0,
     "laneBMs": 36483,
@@ -53,10 +93,25 @@
     "clAuthorities": 0,
     "nonClAuthorities": 6,
     "citationsResolved": 44,
-    "quotaChecks": 1,
+    "quotaChecks": 3,
     "laneSwitches": 1
   },
   "switches": [
-    { "at": "2026-09-24T16:31:04.000Z", "from": "B", "to": "B", "reason": "quota_floor" }
-  ]
+    {
+      "at": "2026-09-24T16:31:04.000Z",
+      "from": "B",
+      "to": "B",
+      "reason": "quota_floor"
+    }
+  ],
+  "checkpointEvidence": {
+    "source": "corpus_ingest_jobs",
+    "queryAt": "2026-09-24T16:45:00.000Z",
+    "cl_court": "ark",
+    "status": "quota_paused",
+    "last_successful_external_id": "cl-opinion-9885161",
+    "cursor": "cl-opinion-9885160",
+    "arCases": 33,
+    "note": "Reconciled from durable staging job row; not invented."
+  }
 }
