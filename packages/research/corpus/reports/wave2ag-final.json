@@ -1,0 +1,67 @@
+{
+  "ok": true,
+  "wave": "2AG",
+  "status": "PARTIAL",
+  "queue": { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", "transition": "NONE" },
+  "nationalMinimumBreadth": "CLOSED",
+  "featureAgents": "0",
+  "quota": {
+    "start": { "minuteRem": 30, "hourRem": 154, "dayRem": 420, "hourSafeRem": 134, "daySafeRem": 380 },
+    "end": { "minuteRem": 21, "hourRem": 117, "dayRem": 33, "hourSafeRem": 97, "daySafeRem": 0 },
+    "totalRequestsApprox": 390,
+    "mappingVerificationRequests": 0,
+    "safetyPauses": 2,
+    "hard429": 0,
+    "nextResumeEt": "after day rolling window recovers (reset ~2026-09-24T22:06Z / 6:06 PM ET)"
+  },
+  "jurisdictions": [
+    { "j": "MT", "status": "completed", "auth": "51→74", "cases": "30→53", "years": "1957–2026→1957–2026 (filled)", "layers": "none", "reqApprox": 50 },
+    { "j": "IA", "status": "completed", "auth": "42→67", "cases": "20→45", "years": "2026→1977–2026", "layers": "none", "reqApprox": 55 },
+    { "j": "ME", "status": "completed", "auth": "42→87", "cases": "20→65", "years": "2026→1986–2026", "layers": "none", "reqApprox": 140 },
+    { "j": "MS", "status": "completed", "auth": "41→90", "cases": "20→69", "years": "2026→1954–2026", "layers": "none", "reqApprox": 110 },
+    { "j": "AR", "status": "partial", "auth": "42→55", "cases": "20→33", "years": "2026→1931–2026", "layers": "none", "reqApprox": 40, "stopped": "LOCAL_QUOTA_SAFETY_FLOOR day" },
+    { "j": "SD", "status": "not_started", "auth": "41", "cases": "20", "years": "2026–2026" },
+    { "j": "ID", "status": "not_started", "auth": "41", "cases": "20", "years": "2026–2026" },
+    { "j": "WY", "status": "not_started", "auth": "41", "cases": "20", "years": "2026–2026" },
+    { "j": "NE", "status": "not_started", "auth": "41", "cases": "20", "years": "2026–2026" },
+    { "j": "AL", "status": "not_started", "auth": "42", "cases": "20", "years": "2026–2026" },
+    { "j": "KY", "status": "not_started", "auth": "42", "cases": "20", "years": "2026–2026" }
+  ],
+  "corpus": {
+    "authorities": 2960,
+    "cases": 1649,
+    "clCases": 1604,
+    "statutes": 900,
+    "regs": 156,
+    "rules": 254,
+    "chunksEmbeddings": "37933/37933",
+    "orphans": 0
+  },
+  "coverage": {
+    "note": "Recompute after day resume; none newly >100 this wave for the unfinished queue"
+  },
+  "citation": {
+    "extractedStart": 5304,
+    "resolvedStart": 122,
+    "extracted": 5689,
+    "resolved": 135,
+    "newlyResolved": 13,
+    "TARGET_ABSENT": 5554,
+    "PARSER_GAP": 0,
+    "recoveryNote": "Non-CL soft-normalize + USC/CFR/Fed.R deepen from case versions (+10 mid-wave, +3 from new imports linking); top TARGET_ABSENT remain U.S. Reports absent from corpus"
+  },
+  "retrieval": {
+    "MT": { "exactCite": "n/a-unreported", "caseName": true, "historical": true, "recent": true, "highCourt": true, "intermediate": false, "isolation": true, "safeMiss": true, "noWeb": true },
+    "IA": { "exactCite": "n/a-unreported", "caseName": true, "historical": true, "recent": true, "highCourt": true, "intermediate": false, "isolation": true, "safeMiss": true, "noWeb": true },
+    "ME": { "exactCite": "n/a-unreported", "caseName": true, "historical": true, "recent": true, "highCourt": true, "intermediate": false, "isolation": true, "safeMiss": true, "noWeb": true },
+    "MS": { "exactCite": "n/a-unreported", "caseName": true, "historical": true, "recent": true, "highCourt": true, "intermediate": false, "isolation": true, "safeMiss": true, "noWeb": true },
+    "AR": { "note": "partial deepen — smoke deferred to next resume" }
+  },
+  "remaining": [
+    "Finish AR to target_max 45 after day quota recovers",
+    "Continue SD → ID → WY → NE → AL → KY historical high-court deepen",
+    "No VERIFIED intermediate IDs for these jurs — do not invent",
+    "Citation TARGET_ABSENT dominated by missing SCOTUS reporter targets — needs curated/public US Reports intake (non-CL) in a later pass",
+    "#2 remains OPEN until production-depth scope genuinely complete"
+  ]
+}
