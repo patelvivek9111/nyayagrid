@@ -26,36 +26,141 @@ const RUNTIME_STATES = Object.freeze([
   "HUMAN_REVIEW_REQUIRED",
 ]);
 
+/**
+ * Canonical Queue #2 worker/watchdog event allowlist.
+ * Strict: makeEvent() rejects anything not listed here.
+ * Keep synchronized with production emit()/makeEvent() call sites
+ * (enforced by scanProductionEmittedEventTypes + tests).
+ */
 const EVENT_TYPES = Object.freeze([
+  // Startup / ownership
   "WORKER_START",
+  "WATCHDOG_SESSION_INIT",
+  "INITIAL_HEARTBEAT",
+  "HEARTBEAT",
   "LOCK_ACQUIRED",
-  "LANE_A_START",
-  "LANE_A_BATCH_COMPLETE",
-  "QUOTA_FLOOR",
-  "LANE_B_START",
-  "OFFLINE_TASK_COMPLETE",
-  "LANE_B_IDLE_SAFE",
-  "QUOTA_PROBE",
-  "QUOTA_RECOVERED",
-  "LANE_SWITCH",
-  "CHECKPOINT",
-  "MILESTONE",
-  "SYSTEM_RESUME_DETECTED",
-  "NETWORK_LOSS",
-  "NETWORK_RECOVERED",
-  "KILL_SWITCH_STOP",
-  "CODE_CHANGE_DETECTED",
-  "CLOCK_REVALIDATION",
-  "BACKPRESSURE_PAUSE",
-  "SELF_CHECK_BOUNDARY",
-  "HUMAN_REVIEW_REQUIRED",
-  "ERROR",
-  "WORKER_STOP",
   "LOCK_RELEASED",
   "LOCK_RECOVERED",
-  "HEARTBEAT",
+  "SYSTEM_RESUME_DETECTED",
+  // Quota / scheduling
+  "QUOTA_CHECK",
+  "QUOTA_PROBE",
+  "QUOTA_FLOOR",
+  "QUOTA_RECOVERED",
+  "BACKPRESSURE_PAUSE",
+  "WAITING_FOR_NETWORK",
+  "NETWORK_LOSS",
+  "NETWORK_RECOVERED",
+  "CLOCK_REVALIDATION",
+  // Lane A / Lane B
+  "LANE_A_START",
+  "LANE_A_BATCH_COMPLETE",
+  "LANE_B_START",
+  "LANE_B_TASK_COMPLETE",
+  "OFFLINE_TASK_COMPLETE",
+  "LANE_B_IDLE_SAFE",
+  "LANE_SWITCH",
+  "WORKER_IDLE",
+  // Progress / evidence
+  "CHECKPOINT",
+  "MILESTONE",
+  "SELF_CHECK_BOUNDARY",
+  // Safety / review / shutdown
+  "HUMAN_REVIEW_REQUIRED",
+  "HUMAN_REVIEW_CLEARED",
+  "CODE_CHANGE_DETECTED",
+  "KILL_SWITCH_STOP",
+  "WORKER_STOP",
+  "ERROR",
+  "EMERGENCY_STOP",
+  // Watchdog (shared schema; also written via appendWatchdogEvent)
+  "WATCHDOG_WARNING",
+  "WATCHDOG_CRITICAL",
+  "MEANINGFUL_PROGRESS",
+  "FALSE_ACTIVE_TASK_STATE",
+  "ALERT",
 ]);
 
+const EVENT_TYPE_SET = new Set(EVENT_TYPES);
+
+/** Production sources that emit Queue #2 events via makeEvent/emit. */
+const PRODUCTION_EVENT_SOURCE_FILES = Object.freeze([
+  "scripts/run-queue2-dual-lane.cjs",
+  "scripts/queue2-worker-observability.cjs",
+  "scripts/queue2-watchdog.cjs",
+]);
+
+function isRegisteredEventType(type) {
+  return EVENT_TYPE_SET.has(type);
+}
+
+/**
+ * Scan production Queue #2 sources for emit()/makeEvent() call-site literals,
+ * plus watchdog object literals written as type fields.
+ * Deterministic; no network.
+ */
+function scanProductionEmittedEventTypes(repoRoot = path.join(__dirname, "..")) {
+  const found = new Set();
+  const byFile = {};
+  const callPatterns = [
+    /\bemit\(\s*["']([A-Z][A-Z0-9_]+)["']\s*[,)]/g,
+    /\bmakeEvent\(\s*["']([A-Z][A-Z0-9_]+)["']\s*[,)]/g,
+  ];
+  const watchdogTypePattern = /\btype:\s*["']([A-Z][A-Z0-9_]+)["']/g;
+  // Ignore documentation placeholders accidentally matching the scanner.
+  const ignore = new Set(["NAME", "TYPE", "EVENT", "STRING"]);
+  for (const rel of PRODUCTION_EVENT_SOURCE_FILES) {
+    const abs = path.join(repoRoot, rel);
+    if (!fs.existsSync(abs)) continue;
+    // Strip block/line comments so JSDoc placeholders cannot pollute the scan.
+    const text = fs
+      .readFileSync(abs, "utf8")
+      .replace(/\/\*[\s\S]*?\*\//g, "")
+      .replace(/(^|[^:])\/\/.*$/gm, "$1");
+    const fileTypes = new Set();
+    for (const re of callPatterns) {
+      re.lastIndex = 0;
+      let m;
+      while ((m = re.exec(text)) !== null) {
+        if (ignore.has(m[1])) continue;
+        fileTypes.add(m[1]);
+        found.add(m[1]);
+      }
+    }
+    // Watchdog persists internal events as { type: "..." } without makeEvent().
+    if (rel.endsWith("queue2-watchdog.cjs")) {
+      watchdogTypePattern.lastIndex = 0;
+      let m;
+      while ((m = watchdogTypePattern.exec(text)) !== null) {
+        if (ignore.has(m[1])) continue;
+        fileTypes.add(m[1]);
+        found.add(m[1]);
+      }
+    }
+    byFile[rel] = [...fileTypes].sort();
+  }
+  return {
+    types: [...found].sort(),
+    byFile,
+    sources: PRODUCTION_EVENT_SOURCE_FILES.slice(),
+  };
+}
+
+/**
+ * Assert every production-emitted event type is in EVENT_TYPES.
+ * @returns {{ ok: boolean, missing: string[], emitted: string[], registered: string[] }}
+ */
+function assertProductionEventsRegistered(repoRoot = path.join(__dirname, "..")) {
+  const scanned = scanProductionEmittedEventTypes(repoRoot);
+  const missing = scanned.types.filter((t) => !isRegisteredEventType(t));
+  return {
+    ok: missing.length === 0,
+    missing,
+    emitted: scanned.types,
+    registered: EVENT_TYPES.slice(),
+    byFile: scanned.byFile,
+  };
+}
 const HUMAN_REVIEW_REASONS = Object.freeze({
   MISSING_DURABLE_RESUME_CHECKPOINT: "MISSING_DURABLE_RESUME_CHECKPOINT",
   UNEXPECTED_429: "UNEXPECTED_429",
@@ -628,7 +733,7 @@ function renderDailyMarkdown(status, extras = {}) {
 }
 
 function makeEvent(type, fields = {}) {
-  if (!EVENT_TYPES.includes(type)) {
+  if (!isRegisteredEventType(type)) {
     throw new Error(`unknown_event_type:${type}`);
   }
   const event = {
@@ -745,6 +850,10 @@ module.exports = {
   STATUS_LANES,
   RUNTIME_STATES,
   EVENT_TYPES,
+  isRegisteredEventType,
+  scanProductionEmittedEventTypes,
+  assertProductionEventsRegistered,
+  PRODUCTION_EVENT_SOURCE_FILES,
   HUMAN_REVIEW_REASONS,
   HEARTBEAT_INTERVAL_MS,
   STALE_HEARTBEAT_MS,

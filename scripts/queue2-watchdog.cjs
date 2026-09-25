@@ -1014,6 +1014,17 @@ function writeDiagnosticBundle(bundle, opts = {}) {
 }
 
 function appendWatchdogEvent(event, filePath = EVENTS_PATH) {
+  const type = event?.type;
+  // Prefer shared Queue #2 allowlist when observability module is available.
+  try {
+    const { isRegisteredEventType } = require("./queue2-worker-observability.cjs");
+    if (type && !isRegisteredEventType(type)) {
+      throw new Error(`unknown_event_type:${type}`);
+    }
+  } catch (e) {
+    if (String(e.message || e).startsWith("unknown_event_type:")) throw e;
+    // If circular require fails during load, still write (tests load watchdog alone).
+  }
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   const line = JSON.stringify({ timestamp: new Date().toISOString(), aiCalls: 0, ...event });
   fs.appendFileSync(filePath, line + "\n");

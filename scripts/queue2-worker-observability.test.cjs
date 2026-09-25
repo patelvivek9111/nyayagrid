@@ -39,6 +39,10 @@ const {
   resolveCorpusTotalsForStatus,
   isCanonicalReportsDir,
   CANONICAL_REPORTS_DIR,
+  EVENT_TYPES,
+  isRegisteredEventType,
+  scanProductionEmittedEventTypes,
+  assertProductionEventsRegistered,
 } = require("./queue2-worker-observability.cjs");
 
 let passed = 0;
@@ -399,4 +403,110 @@ test("canonical status after rebuild matches live floor and WI durable progress"
   assert.equal(state.humanReview.required, false);
 });
 
-console.log(JSON.stringify({ ok: true, tests: passed }));
+test("WATCHDOG_SESSION_INIT accepted", () => {
+  const ev = makeEvent("WATCHDOG_SESSION_INIT", {
+    lane: "LANE_B_OFFLINE",
+    court: "wis",
+    checkpoint: "cl-opinion-9886466",
+    extra: { workerId: "w1", processStartNonce: "n1" },
+  });
+  assert.equal(ev.type, "WATCHDOG_SESSION_INIT");
+});
+
+test("INITIAL_HEARTBEAT accepted", () => {
+  const ev = makeEvent("INITIAL_HEARTBEAT", {
+    lane: "LANE_B_OFFLINE",
+    court: "wis",
+    checkpoint: "cl-opinion-9886466",
+  });
+  assert.equal(ev.type, "INITIAL_HEARTBEAT");
+});
+
+test("all required startup/watchdog/quota event types accepted", () => {
+  const required = [
+    "WATCHDOG_SESSION_INIT",
+    "INITIAL_HEARTBEAT",
+    "WORKER_START",
+    "LOCK_ACQUIRED",
+    "LOCK_RELEASED",
+    "LOCK_RECOVERED",
+    "SYSTEM_RESUME_DETECTED",
+    "QUOTA_CHECK",
+    "QUOTA_RECOVERED",
+    "LANE_A_START",
+    "LANE_A_BATCH_COMPLETE",
+    "LANE_B_START",
+    "LANE_B_TASK_COMPLETE",
+    "LANE_SWITCH",
+    "CHECKPOINT",
+    "MILESTONE",
+    "WORKER_IDLE",
+    "WORKER_STOP",
+    "KILL_SWITCH_STOP",
+    "CODE_CHANGE_DETECTED",
+    "SELF_CHECK_BOUNDARY",
+    "BACKPRESSURE_PAUSE",
+    "WAITING_FOR_NETWORK",
+    "WATCHDOG_WARNING",
+    "HUMAN_REVIEW_REQUIRED",
+    "EMERGENCY_STOP",
+  ];
+  for (const type of required) {
+    assert.equal(isRegisteredEventType(type), true, `missing registry entry: ${type}`);
+    assert.equal(makeEvent(type, { lane: "LANE_A_CL" }).type, type);
+  }
+});
+
+test("unknown/random event still rejected", () => {
+  assert.throws(() => makeEvent("NOT_A_REAL_EVENT_XYZ", {}), /unknown_event_type:NOT_A_REAL_EVENT_XYZ/);
+  assert.throws(() => makeEvent("arbitrary_lowercase", {}), /unknown_event_type/);
+  assert.equal(isRegisteredEventType("TOTALLY_FAKE_EVENT"), false);
+});
+
+test("event registry and emitted-event scan remain synchronized", () => {
+  const sync = assertProductionEventsRegistered();
+  assert.equal(sync.ok, true, `unregistered production events: ${sync.missing.join(",")}`);
+  assert.ok(sync.emitted.includes("WATCHDOG_SESSION_INIT"));
+  assert.ok(sync.emitted.includes("INITIAL_HEARTBEAT"));
+  assert.ok(sync.emitted.includes("HUMAN_REVIEW_CLEARED"));
+  assert.ok(EVENT_TYPES.includes("WATCHDOG_SESSION_INIT"));
+  assert.ok(EVENT_TYPES.includes("INITIAL_HEARTBEAT"));
+});
+
+test("mocked startup sequence emits without unknown_event_type", () => {
+  const sequence = [
+    "WORKER_START",
+    "LOCK_ACQUIRED",
+    "WATCHDOG_SESSION_INIT",
+    "INITIAL_HEARTBEAT",
+    "QUOTA_CHECK",
+    "LANE_SWITCH",
+  ];
+  const events = [];
+  for (const type of sequence) {
+    events.push(
+      makeEvent(type, {
+        lane: type === "LANE_SWITCH" ? "LANE_A_CL" : "LANE_B_OFFLINE",
+        court: "wis",
+        checkpoint: "cl-opinion-9886466",
+        reason: type === "QUOTA_CHECK" ? "FINISH_TARGET" : "startup",
+      }),
+    );
+  }
+  assert.deepEqual(
+    events.map((e) => e.type),
+    sequence,
+  );
+  assert.equal(events.every((e) => e.checkpoint === "cl-opinion-9886466"), true);
+});
+
+test("durable WI state unchanged by event schema fix", () => {
+  const state = JSON.parse(
+    fs.readFileSync(path.join(CANONICAL_REPORTS_DIR, "queue2-dual-lane-state.json"), "utf8"),
+  );
+  assert.equal(state.laneA.count, 44);
+  assert.equal(state.laneA.target, 45);
+  assert.equal(state.laneA.checkpoint, "cl-opinion-9886466");
+});
+
+console.log(JSON.stringify({ ok: true, tests: passed, aiCalls: 0, corpusMutations: 0, workerStarted: false }));
