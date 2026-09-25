@@ -4,35 +4,26 @@
   "queue9": "CLOSED",
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
-  "currentLane": "B",
-  "updatedAt": "2026-09-25T15:13:36.725Z",
+  "currentLane": "STOPPED",
+  "updatedAt": "2026-09-25T15:57:35.222Z",
   "laneA": {
     "court": "mich",
     "jurisdiction": "MI",
+    "count": 20,
+    "target": 45,
     "checkpoint": null,
     "cursor": null,
     "lastSuccessfulExternalId": null,
-    "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__date_filed__lte=2018-12-31&cluster__docket__court=wis&cursor=cD05ODg2MzY4&order_by=-id&page_size=16",
-    "lastSuccessfulAt": "2026-09-25T00:42:40.438Z",
+    "nextPageUrl": null,
+    "lastSuccessfulAt": null,
     "runner": "staging-cl-batch-job",
     "mappingStatus": "VERIFIED",
-    "manifestVersion": 15,
+    "manifestVersion": null,
     "jobStatus": "ready",
-    "itemsImported": 45,
-    "target": 45,
-    "count": 20,
-    "sequence": [
-      "ark",
-      "sd",
-      "idaho",
-      "wyo",
-      "neb",
-      "ala",
-      "ky"
-    ],
-    "lock": null,
+    "itemsImported": 20,
     "targetStatus": "READY",
-    "completedCheckpoint": "cl-opinion-9886466"
+    "sequence": null,
+    "lock": null
   },
   "quota": {
     "windows": {
@@ -251,7 +242,13 @@
       "clCases": 45,
       "checkpoint": "cl-opinion-9886466",
       "jobLastSuccessfulExternalId": "cl-opinion-11344420",
-      "reconciledAt": "2026-09-25T15:13:36.723Z"
+      "reconciledAt": "2026-09-25T15:13:36.723Z",
+      "target": 45,
+      "cursor": "cl-opinion-9886466",
+      "lastSuccessfulExternalId": "cl-opinion-9886466",
+      "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__date_filed__lte=2018-12-31&cluster__docket__court=wis&cursor=cD05ODg2MzY4&order_by=-id&page_size=16",
+      "lastSuccessfulAt": "2026-09-25T00:42:40.438Z",
+      "jobStatus": "completed"
     }
   }
 }

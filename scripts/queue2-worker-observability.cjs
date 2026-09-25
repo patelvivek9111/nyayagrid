@@ -15,6 +15,9 @@ const STATUS_LANES = Object.freeze([
   "HOLD",
   "WAITING_FOR_NETWORK",
   "HUMAN_REVIEW_REQUIRED",
+  "STOPPED",
+  "STARTUP",
+  "WAIT_QUOTA_RESET",
 ]);
 
 const RUNTIME_STATES = Object.freeze([
@@ -400,14 +403,322 @@ function statusLaneFromState(state) {
   if (state?.humanReview?.required) return "HUMAN_REVIEW_REQUIRED";
   if (state?.hold) return "HOLD";
   if (state?.waitingForNetwork) return "WAITING_FOR_NETWORK";
-  // Lane A active always wins over stale idleSafe from a prior cycle.
+  // Active lane labels win over a stale STOPPED runtimeState left in durable files.
   if (state?.currentLane === "A") return "LANE_A_CL";
   if (state?.currentLane === "WAIT" || state?.runtimeState === "WAITING_QUOTA_RESET") {
     return "WAIT_QUOTA_RESET";
   }
   if (state?.idleSafe || state?.currentLane === "IDLE_SAFE") return "LANE_B_IDLE_SAFE";
   if (state?.currentLane === "B") return "LANE_B_OFFLINE";
+  if (state?.currentLane === "STOPPED" || state?.runtimeState === "STOPPED") return "STOPPED";
   return "LANE_B_OFFLINE";
+}
+
+/**
+ * Invariants for canonical corpus-worker-status consistency.
+ * @returns {{ ok: boolean, violations: string[] }}
+ */
+const COURT_TO_JURISDICTION = Object.freeze({
+  wis: "WI",
+  mich: "MI",
+  ark: "AR",
+  sd: "SD",
+  idaho: "ID",
+  wyo: "WY",
+  neb: "NE",
+  ala: "AL",
+  ky: "KY",
+  mass: "MA",
+  minn: "MN",
+  ind: "IN",
+});
+
+function assertCanonicalStatusConsistency(status = {}) {
+  const violations = [];
+  const reviewRequired = Boolean(status?.review?.humanReviewRequired);
+  const reasons = status?.review?.reasons || status?.review?.reviewReasons || [];
+  if (!reviewRequired && status.currentLane === "HUMAN_REVIEW_REQUIRED") {
+    violations.push("review=false cannot coexist with currentLane=HUMAN_REVIEW_REQUIRED");
+  }
+  if (!reviewRequired && status.freshness === "HUMAN_REVIEW_REQUIRED") {
+    violations.push("review=false cannot coexist with freshness=HUMAN_REVIEW_REQUIRED");
+  }
+  if (!reviewRequired && status.currentTask === "await_human_review") {
+    violations.push("review=false cannot coexist with currentTask=await_human_review");
+  }
+  if (reviewRequired && (!Array.isArray(reasons) || reasons.length === 0)) {
+    violations.push("review=true requires non-empty reasons");
+  }
+  const court = status.currentCourt || null;
+  const jur = status.currentJurisdiction || status.jurisdiction || null;
+  if (court === "mich" && jur && jur !== "MI") {
+    violations.push("currentCourt=mich cannot coexist with currentJurisdiction≠MI");
+  }
+  if (court === "wis" && jur && jur !== "WI") {
+    violations.push("currentCourt=wis cannot coexist with currentJurisdiction≠WI");
+  }
+  if (court && jur) {
+    const expected = COURT_TO_JURISDICTION[court];
+    if (expected && jur !== expected) {
+      violations.push(`currentCourt=${court} requires currentJurisdiction=${expected}, got ${jur}`);
+    }
+  }
+  // Active-target WI resume metadata must not appear under MI active fields.
+  if (court === "mich") {
+    if (status.cursor && String(status.cursor).includes("9886466")) {
+      violations.push("WI checkpoint/cursor must not remain on active MI status fields");
+    }
+    if (status.nextPageUrl && /docket__court=wis/.test(String(status.nextPageUrl))) {
+      violations.push("WI nextPageUrl must not remain on active MI status fields");
+    }
+  }
+  if (status.runtimeState === "STOPPED" && !reviewRequired) {
+    if (status.currentLane !== "STOPPED") {
+      violations.push("STOPPED runtime requires currentLane=STOPPED when review=false");
+    }
+    if (status.freshness !== "STOPPED" && status.freshness !== "STALE_PROCESS_STOPPED") {
+      violations.push("STOPPED runtime requires freshness=STOPPED|STALE_PROCESS_STOPPED");
+    }
+    if (status.currentTask && status.currentTask !== "NONE") {
+      violations.push("STOPPED runtime requires currentTask=NONE");
+    }
+  }
+  return { ok: violations.length === 0, violations };
+}
+
+/**
+ * Atomic transition to a clean STOPPED status after successful reconciliation.
+ * Clears stale HUMAN_REVIEW lane/task/freshness and aligns jurisdiction with court.
+ */
+function buildReconciledStoppedStatus(params = {}) {
+  const prior = params.priorStatus || {};
+  const state = params.state || {};
+  const laneA = state.laneA || {};
+  const court = laneA.court || params.currentCourt || null;
+  const jurisdiction =
+    laneA.jurisdiction ||
+    params.currentJurisdiction ||
+    (court ? COURT_TO_JURISDICTION[court] : null) ||
+    null;
+  const reviewRequired = Boolean(state.humanReview?.required);
+  const reasons = Array.isArray(state.humanReview?.reasons) ? state.humanReview.reasons : [];
+  const base = buildOperatorStatus({
+    state: { ...state, currentLane: "STOPPED", runtimeState: "STOPPED" },
+    runtimeState: "STOPPED",
+    currentLane: "STOPPED",
+    freshness: reviewRequired ? "HUMAN_REVIEW_REQUIRED" : "STOPPED",
+    currentTask: reviewRequired ? "await_human_review" : "NONE",
+    forceStoppedLane: true,
+    corpus: params.corpus || prior.corpus || {},
+    health: params.health || prior.health || {},
+    today: params.today || prior.today || {},
+    manifestVersion: params.manifestVersion ?? prior.manifestVersion,
+    lastHeartbeatAt: params.lastHeartbeatAt || prior.lastHeartbeatAt || null,
+    now: params.now || new Date(),
+  });
+  const status = {
+    ...prior,
+    ...base,
+    currentLane: reviewRequired ? "HUMAN_REVIEW_REQUIRED" : "STOPPED",
+    runtimeState: "STOPPED",
+    freshness: reviewRequired ? "HUMAN_REVIEW_REQUIRED" : "STOPPED",
+    currentTask: reviewRequired ? "await_human_review" : "NONE",
+    currentCourt: court,
+    currentJurisdiction: jurisdiction,
+    jurisdiction,
+    currentCount: laneA.count ?? null,
+    targetCount: laneA.target ?? null,
+    checkpoint: laneA.checkpoint || null,
+    cursor: laneA.cursor || null,
+    lastSuccessfulExternalId: laneA.lastSuccessfulExternalId || null,
+    nextPageUrl: laneA.nextPageUrl || null,
+    lastSuccessfulAt: laneA.lastSuccessfulAt || null,
+    jobStatus: laneA.jobStatus || null,
+    mappingStatus: laneA.mappingStatus || null,
+    review: {
+      humanReviewRequired: reviewRequired,
+      reasons,
+      reviewReasons: reasons,
+    },
+    laneReason: params.laneReason || prior.laneReason || null,
+    updatedAt: (params.now || new Date()).toISOString(),
+  };
+  const check = assertCanonicalStatusConsistency(status);
+  if (!check.ok) {
+    throw Object.assign(new Error("STATUS_INCONSISTENT"), {
+      code: "STATUS_INCONSISTENT",
+      violations: check.violations,
+    });
+  }
+  return status;
+}
+
+function buildOperatorStatus(params = {}) {
+  const state = params.state || {};
+  const laneA = state.laneA || {};
+  const quota = state.quota || {};
+  const windows = quota.windows || {};
+  const today = params.today || {};
+  const corpus = params.corpus || {};
+  const health = params.health || {};
+  const review = state.humanReview || { required: false, reasons: [] };
+  const reviewRequired = Boolean(review.required);
+  const reasons = Array.isArray(review.reasons) ? review.reasons : [];
+  let currentLane = params.currentLane || statusLaneFromState(state);
+  let runtimeState =
+    params.runtimeState != null
+      ? params.runtimeState
+      : state.runtimeState != null
+        ? state.runtimeState
+        : null;
+  if (runtimeState == null) {
+    runtimeState = reviewRequired
+      ? "HUMAN_REVIEW_REQUIRED"
+      : currentLane === "STOPPED"
+        ? "STOPPED"
+        : "RUNNING";
+  }
+  let freshness = params.freshness || null;
+  let currentTask =
+    params.currentTask ||
+    state.laneB?.task ||
+    (currentLane === "LANE_A_CL" ? "cl_ingest" : null);
+
+  // Atomic consistency: never leave HUMAN_REVIEW lane/task/freshness when review is false.
+  if (!reviewRequired) {
+    if (currentLane === "HUMAN_REVIEW_REQUIRED") {
+      currentLane =
+        runtimeState === "STOPPED"
+          ? "STOPPED"
+          : statusLaneFromState({ ...state, humanReview: { required: false }, runtimeState });
+    }
+    if (freshness === "HUMAN_REVIEW_REQUIRED") {
+      freshness = runtimeState === "STOPPED" ? "STOPPED" : null;
+    }
+    if (currentTask === "await_human_review") {
+      currentTask = "NONE";
+    }
+  }
+  if (runtimeState === "STOPPED" && !reviewRequired) {
+    // Only force STOPPED lane when caller/state explicitly selected STOPPED (not merely
+    // a durable runtimeState leftover while currentLane is still A/B).
+    const explicitStopped =
+      params.currentLane === "STOPPED" ||
+      state.currentLane === "STOPPED" ||
+      params.forceStoppedLane === true ||
+      (!state.currentLane && params.currentLane == null);
+    if (explicitStopped) {
+      currentLane = "STOPPED";
+      freshness = freshness && freshness !== "HUMAN_REVIEW_REQUIRED" ? freshness : "STOPPED";
+      if (freshness === "HUMAN_REVIEW_REQUIRED") freshness = "STOPPED";
+      currentTask = "NONE";
+    }
+  }
+
+  const court = laneA.court || null;
+  const jurisdiction =
+    laneA.jurisdiction || (court ? COURT_TO_JURISDICTION[court] : null) || null;
+  const nowIso = (params.now || new Date()).toISOString();
+
+  return {
+    schemaVersion: 1,
+    queue: "#2",
+    queue9: "CLOSED",
+    queue3: "NOT_OPEN",
+    featureAgents: "0",
+    currentLane,
+    runtimeState,
+    freshness,
+    currentTask,
+    currentCourt: court,
+    currentJurisdiction: jurisdiction,
+    jurisdiction,
+    currentCount: laneA.count ?? null,
+    targetCount: laneA.target ?? null,
+    checkpoint: laneA.checkpoint || null,
+    cursor: laneA.cursor || null,
+    lastSuccessfulExternalId: laneA.lastSuccessfulExternalId || null,
+    nextPageUrl: laneA.nextPageUrl || null,
+    lastSuccessfulAt: laneA.lastSuccessfulAt || null,
+    runner: laneA.runner || "staging-cl-batch-job",
+    mappingStatus: laneA.mappingStatus || null,
+    manifestVersion:
+      params.manifestVersion != null
+        ? params.manifestVersion
+        : laneA.manifestVersion ?? state.depthManifestVersion ?? null,
+    jobStatus: laneA.jobStatus || null,
+    laneStartedAt: params.laneStartedAt || state.laneStartedAt || null,
+    lastUpdatedAt: nowIso,
+    lastHeartbeatAt: params.lastHeartbeatAt || state.lastHeartbeatAt || null,
+    nextQuotaCheckAt: quota.nextCheckAt || null,
+    network: {
+      waitingForNetwork: Boolean(state.waitingForNetwork || params.waitingForNetwork),
+      lastOnlineAt: params.lastOnlineAt || state.lastOnlineAt || null,
+    },
+    tokens: {
+      routineAiCalls: Number(params.aiCalls ?? state.metrics?.aiCalls ?? 0),
+      routineAiTokens: Number(params.aiTokens ?? state.metrics?.aiTokens ?? 0),
+    },
+    quota: {
+      minuteRemaining: windows.minute?.remaining ?? null,
+      hourRemaining: windows.hour?.remaining ?? null,
+      dayRemaining: windows.day?.remaining ?? null,
+      safeRequests: quota.lastSafeRequests ?? 0,
+      lastProbeAt: quota.lastProbeAt || null,
+      hard429Count: Number(quota.hard429Count || 0),
+      dayResetAt: windows.day?.resetAt || null,
+      quotaStateObservedAt: quota.quotaStateObservedAt || quota.lastProbeAt || null,
+      quotaStateSource: quota.quotaStateSource || null,
+      quotaStateConfidence: quota.quotaStateConfidence || null,
+      quotaStateAgeMs:
+        quota.quotaStateAgeMs != null
+          ? Number(quota.quotaStateAgeMs)
+          : quota.quotaStateObservedAt || quota.lastProbeAt
+            ? Math.max(0, Date.now() - new Date(quota.quotaStateObservedAt || quota.lastProbeAt).getTime())
+            : null,
+    },
+    today: {
+      clRequests: Number(today.clRequests || 0),
+      clAuthoritiesAdded: Number(today.clAuthoritiesAdded || state.metrics?.clAuthorities || 0),
+      nonClAuthoritiesAdded: Number(today.nonClAuthoritiesAdded || state.metrics?.nonClAuthorities || 0),
+      totalAuthoritiesAdded: Number(
+        today.totalAuthoritiesAdded ??
+          Number(today.clAuthoritiesAdded || state.metrics?.clAuthorities || 0) +
+            Number(today.nonClAuthoritiesAdded || state.metrics?.nonClAuthorities || 0),
+      ),
+      casesAdded: Number(today.casesAdded || 0),
+      citationEdgesResolved: Number(today.citationEdgesResolved || state.metrics?.citationsResolved || 0),
+      jurisdictionsProcessed: Number(today.jurisdictionsProcessed || 0),
+      laneASeconds: Math.round(Number(today.laneASeconds ?? (state.metrics?.laneAMs || 0) / 1000)),
+      laneBSeconds: Math.round(Number(today.laneBSeconds ?? (state.metrics?.laneBMs || 0) / 1000)),
+      idleSeconds: Math.round(Number(today.idleSeconds ?? (state.metrics?.idleMs || 0) / 1000)),
+      idleSafeSeconds: Math.round(Number(today.idleSafeSeconds ?? (state.metrics?.idleSafeMs || 0) / 1000)),
+      waitingNetworkSeconds: Math.round(
+        Number(today.waitingNetworkSeconds ?? (state.metrics?.waitingNetworkMs || 0) / 1000),
+      ),
+    },
+    corpus: {
+      authorities: corpus.authorities ?? null,
+      cases: corpus.cases ?? null,
+      clCases: corpus.clCases ?? corpus.cl_cases ?? null,
+      statutes: corpus.statutes ?? null,
+      regulations: corpus.regulations ?? corpus.regs ?? null,
+      rules: corpus.rules ?? null,
+      authorityGateDeficit: corpus.authorityGateDeficit ?? null,
+    },
+    health: {
+      retrieval: health.retrieval ?? "unknown",
+      orphanCount: Number(health.orphanCount ?? 0),
+      duplicateSourceIdCount: Number(health.duplicateSourceIdCount ?? 0),
+      database: health.database ?? "unknown",
+      featureAgents: String(health.featureAgents ?? "0"),
+    },
+    review: {
+      humanReviewRequired: reviewRequired,
+      reasons,
+      reviewReasons: reasons,
+    },
+  };
 }
 
 /**
@@ -550,117 +861,6 @@ function isHeartbeatStale(lastHeartbeatAt, now = new Date(), thresholdMs = STALE
   const t = new Date(lastHeartbeatAt).getTime();
   if (Number.isNaN(t)) return true;
   return now.getTime() - t > thresholdMs;
-}
-
-function buildOperatorStatus(params = {}) {
-  const state = params.state || {};
-  const laneA = state.laneA || {};
-  const quota = state.quota || {};
-  const windows = quota.windows || {};
-  const today = params.today || {};
-  const corpus = params.corpus || {};
-  const health = params.health || {};
-  const review = state.humanReview || { required: false, reasons: [] };
-  const currentLane = params.currentLane || statusLaneFromState(state);
-  const nowIso = (params.now || new Date()).toISOString();
-
-  return {
-    schemaVersion: 1,
-    queue: "#2",
-    queue9: "CLOSED",
-    queue3: "NOT_OPEN",
-    featureAgents: "0",
-    currentLane,
-    runtimeState: params.runtimeState || "STOPPED",
-    freshness: params.freshness || null,
-    currentTask: params.currentTask || state.laneB?.task || (currentLane === "LANE_A_CL" ? "cl_ingest" : null),
-    currentCourt: laneA.court || null,
-    currentJurisdiction: laneA.jurisdiction || null,
-    currentCount: laneA.count ?? null,
-    targetCount: laneA.target ?? null,
-    checkpoint: laneA.checkpoint || laneA.lastSuccessfulExternalId || laneA.cursor || null,
-    cursor: laneA.cursor || null,
-    lastSuccessfulExternalId: laneA.lastSuccessfulExternalId || null,
-    nextPageUrl: laneA.nextPageUrl || null,
-    lastSuccessfulAt: laneA.lastSuccessfulAt || null,
-    runner: laneA.runner || "staging-cl-batch-job",
-    mappingStatus: laneA.mappingStatus || null,
-    manifestVersion:
-      params.manifestVersion != null
-        ? params.manifestVersion
-        : laneA.manifestVersion ?? state.depthManifestVersion ?? null,
-    jobStatus: laneA.jobStatus || null,
-    laneStartedAt: params.laneStartedAt || state.laneStartedAt || null,
-    lastUpdatedAt: nowIso,
-    lastHeartbeatAt: params.lastHeartbeatAt || state.lastHeartbeatAt || null,
-    nextQuotaCheckAt: quota.nextCheckAt || null,
-    network: {
-      waitingForNetwork: Boolean(state.waitingForNetwork || params.waitingForNetwork),
-      lastOnlineAt: params.lastOnlineAt || state.lastOnlineAt || null,
-    },
-    tokens: {
-      routineAiCalls: Number(params.aiCalls ?? state.metrics?.aiCalls ?? 0),
-      routineAiTokens: Number(params.aiTokens ?? state.metrics?.aiTokens ?? 0),
-    },
-    quota: {
-      minuteRemaining: windows.minute?.remaining ?? null,
-      hourRemaining: windows.hour?.remaining ?? null,
-      dayRemaining: windows.day?.remaining ?? null,
-      safeRequests: quota.lastSafeRequests ?? 0,
-      lastProbeAt: quota.lastProbeAt || null,
-      hard429Count: Number(quota.hard429Count || 0),
-      dayResetAt: windows.day?.resetAt || null,
-      quotaStateObservedAt: quota.quotaStateObservedAt || quota.lastProbeAt || null,
-      quotaStateSource: quota.quotaStateSource || null,
-      quotaStateConfidence: quota.quotaStateConfidence || null,
-      quotaStateAgeMs:
-        quota.quotaStateAgeMs != null
-          ? Number(quota.quotaStateAgeMs)
-          : quota.quotaStateObservedAt || quota.lastProbeAt
-            ? Math.max(0, Date.now() - new Date(quota.quotaStateObservedAt || quota.lastProbeAt).getTime())
-            : null,
-    },
-    today: {
-      clRequests: Number(today.clRequests || 0),
-      clAuthoritiesAdded: Number(today.clAuthoritiesAdded || state.metrics?.clAuthorities || 0),
-      nonClAuthoritiesAdded: Number(today.nonClAuthoritiesAdded || state.metrics?.nonClAuthorities || 0),
-      totalAuthoritiesAdded: Number(
-        today.totalAuthoritiesAdded ??
-          Number(today.clAuthoritiesAdded || state.metrics?.clAuthorities || 0) +
-            Number(today.nonClAuthoritiesAdded || state.metrics?.nonClAuthorities || 0),
-      ),
-      casesAdded: Number(today.casesAdded || 0),
-      citationEdgesResolved: Number(today.citationEdgesResolved || state.metrics?.citationsResolved || 0),
-      jurisdictionsProcessed: Number(today.jurisdictionsProcessed || 0),
-      laneASeconds: Math.round(Number(today.laneASeconds ?? (state.metrics?.laneAMs || 0) / 1000)),
-      laneBSeconds: Math.round(Number(today.laneBSeconds ?? (state.metrics?.laneBMs || 0) / 1000)),
-      idleSeconds: Math.round(Number(today.idleSeconds ?? (state.metrics?.idleMs || 0) / 1000)),
-      idleSafeSeconds: Math.round(Number(today.idleSafeSeconds ?? (state.metrics?.idleSafeMs || 0) / 1000)),
-      waitingNetworkSeconds: Math.round(
-        Number(today.waitingNetworkSeconds ?? (state.metrics?.waitingNetworkMs || 0) / 1000),
-      ),
-    },
-    corpus: {
-      authorities: corpus.authorities ?? null,
-      cases: corpus.cases ?? null,
-      clCases: corpus.clCases ?? corpus.cl_cases ?? null,
-      statutes: corpus.statutes ?? null,
-      regulations: corpus.regulations ?? corpus.regs ?? null,
-      rules: corpus.rules ?? null,
-      authorityGateDeficit: corpus.authorityGateDeficit ?? null,
-    },
-    health: {
-      retrieval: health.retrieval ?? "unknown",
-      orphanCount: Number(health.orphanCount ?? 0),
-      duplicateSourceIdCount: Number(health.duplicateSourceIdCount ?? 0),
-      database: health.database ?? "unknown",
-      featureAgents: String(health.featureAgents ?? "0"),
-    },
-    review: {
-      humanReviewRequired: Boolean(review.required),
-      reviewReasons: Array.isArray(review.reasons) ? review.reasons : [],
-    },
-  };
 }
 
 function renderDailyMarkdown(status, extras = {}) {
@@ -885,6 +1085,8 @@ module.exports = {
   evaluateHumanReviewTriggers,
   isHeartbeatStale,
   buildOperatorStatus,
+  buildReconciledStoppedStatus,
+  assertCanonicalStatusConsistency,
   renderDailyMarkdown,
   makeEvent,
   appendEventLine,

@@ -166,11 +166,14 @@ test("F: applyTargetAlreadyComplete updates runtime from canonical DB count", ()
       mappingStatus: "VERIFIED",
     },
   });
-  assert.equal(next.humanReview.required, false);
-  assert.ok(next.completedCourts.includes("wis"));
   assert.equal(next.laneA.court, "mich");
   assert.equal(next.laneA.count, 20);
   assert.equal(next.laneA.target, 45);
+  assert.equal(next.laneA.nextPageUrl, null);
+  assert.equal(next.laneA.cursor, null);
+  assert.equal(next.humanReview.required, false);
+  assert.ok(next.completedCourts.includes("wis"));
+  assert.equal(next.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
 });
 
 test("G: zero-progress only for true no-progress incomplete target", () => {

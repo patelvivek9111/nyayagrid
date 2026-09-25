@@ -314,27 +314,40 @@ function selectNextVerifiedIncompleteTarget(manifest, opts = {}) {
 
 /**
  * Apply target-complete reconciliation onto laneA state (pure).
+ * Prior-target resume metadata is relocated into completedCourtEvidence — never left as active MI/etc fields.
  */
 function applyTargetAlreadyComplete(state, params = {}) {
   const next = JSON.parse(JSON.stringify(state || {}));
-  const completedCourt = next.laneA?.court || params.court;
+  const prior = { ...(next.laneA || {}) };
+  const completedCourt = prior.court || params.court;
   const canonicalCount = Number(params.canonicalCount);
-  const target = Number(params.target ?? next.laneA?.target) || 45;
-  next.laneA = {
-    ...(next.laneA || {}),
-    count: Number.isFinite(canonicalCount) ? canonicalCount : next.laneA.count,
-    target,
-    jobStatus: "completed",
-    itemsImported: Number.isFinite(canonicalCount) ? canonicalCount : next.laneA.itemsImported,
-    targetStatus: "COMPLETE_FOR_CURRENT_DEPTH",
-  };
-  if (params.checkpoint) {
-    next.laneA.completedCheckpoint = params.checkpoint;
-  }
+  const target = Number(params.target ?? prior.target) || 45;
+
   next.completedCourts = Array.isArray(next.completedCourts) ? next.completedCourts : [];
   if (completedCourt && !next.completedCourts.includes(completedCourt)) {
     next.completedCourts.push(completedCourt);
   }
+  next.completedCourtEvidence = {
+    ...(next.completedCourtEvidence || {}),
+    ...(params.completedCourtEvidence || {}),
+  };
+  if (completedCourt) {
+    next.completedCourtEvidence[completedCourt] = {
+      ...(next.completedCourtEvidence[completedCourt] || {}),
+      status: "COMPLETE_FOR_CURRENT_DEPTH",
+      count: Number.isFinite(canonicalCount) ? canonicalCount : prior.count,
+      target,
+      checkpoint: params.checkpoint || prior.checkpoint || prior.lastSuccessfulExternalId || null,
+      cursor: prior.cursor || null,
+      lastSuccessfulExternalId: prior.lastSuccessfulExternalId || null,
+      nextPageUrl: prior.nextPageUrl || null,
+      lastSuccessfulAt: prior.lastSuccessfulAt || null,
+      jobStatus: "completed",
+      reconciledAt: (params.now || new Date()).toISOString?.() || new Date().toISOString(),
+      ...(params.completedEvidenceExtras || {}),
+    };
+  }
+
   // Clear false zero-progress review when reconciliation succeeds.
   if (next.humanReview?.required && Array.isArray(next.humanReview.reasons)) {
     next.humanReview.reasons = next.humanReview.reasons.filter(
@@ -346,21 +359,47 @@ function applyTargetAlreadyComplete(state, params = {}) {
     if (next.humanReview.reasons.length === 0) {
       next.humanReview.required = false;
     }
+  } else if (next.humanReview) {
+    next.humanReview.required = false;
+    next.humanReview.reasons = Array.isArray(next.humanReview.reasons)
+      ? next.humanReview.reasons.filter((r) => r !== "LANE_A_ZERO_PROGRESS")
+      : [];
   }
+
   const nxt = params.nextTarget || null;
   if (nxt?.court) {
-    next.laneA.court = nxt.court;
-    next.laneA.jurisdiction = nxt.jurisdiction;
-    next.laneA.count = Number(nxt.count) || 0;
-    next.laneA.target = Number(nxt.target) || 45;
-    next.laneA.checkpoint = nxt.checkpoint || null;
-    next.laneA.cursor = nxt.checkpoint || null;
-    next.laneA.lastSuccessfulExternalId = nxt.checkpoint || null;
-    next.laneA.jobStatus = nxt.status === "PARTIAL" ? "quota_paused" : "ready";
-    next.laneA.targetStatus = nxt.status || "READY";
-    next.laneA.mappingStatus = nxt.mappingStatus || "VERIFIED";
+    next.laneA = {
+      court: nxt.court,
+      jurisdiction: nxt.jurisdiction,
+      count: Number(nxt.count) || 0,
+      target: Number(nxt.target) || 45,
+      checkpoint: nxt.checkpoint || null,
+      cursor: null,
+      lastSuccessfulExternalId: null,
+      nextPageUrl: null,
+      lastSuccessfulAt: null,
+      runner: prior.runner || "staging-cl-batch-job",
+      mappingStatus: nxt.mappingStatus || "VERIFIED",
+      manifestVersion: prior.manifestVersion || null,
+      jobStatus: nxt.status === "PARTIAL" ? "quota_paused" : "ready",
+      itemsImported: Number(nxt.count) || 0,
+      targetStatus: nxt.status || "READY",
+      sequence: prior.sequence || null,
+      lock: null,
+    };
+  } else {
+    next.laneA = {
+      ...prior,
+      count: Number.isFinite(canonicalCount) ? canonicalCount : prior.count,
+      target,
+      jobStatus: "completed",
+      itemsImported: Number.isFinite(canonicalCount) ? canonicalCount : prior.itemsImported,
+      targetStatus: "COMPLETE_FOR_CURRENT_DEPTH",
+      completedCheckpoint: params.checkpoint || prior.checkpoint || null,
+    };
   }
   next.idleSafe = false;
+  next.runtimeState = params.runtimeState || next.runtimeState || "STOPPED";
   next.updatedAt = (params.now || new Date()).toISOString?.() || new Date().toISOString();
   return next;
 }
