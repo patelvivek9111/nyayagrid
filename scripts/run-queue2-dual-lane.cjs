@@ -89,11 +89,17 @@ const {
   detectCodeChange,
   appendAuditEvent,
   WORKER_VERSION,
+  MANIFEST_PATH,
 } = require("./queue2-worker-safety.cjs");
 const {
   remainingCasesToFinish,
   parseLaneARunnerOutput,
   classifyLaneABatchResult,
+  reconcileLaneACountSources,
+  shouldRaiseLaneAZeroProgress,
+  evaluateReconciliationCanary,
+  selectNextVerifiedIncompleteTarget,
+  applyTargetAlreadyComplete,
   resolveBindingResetAt,
   evaluateProductionCanaryGate,
   nextQuotaCheckAfterActiveBatch,
@@ -269,6 +275,36 @@ function runLaneA(state, opts = {}) {
   const stdout = (r.stdout || "") + (r.stderr || "");
   fs.writeFileSync(path.join(reports, "queue2-dual-lane-a.txt"), stdout);
   return { stdout, statusCode: r.status, mocked: false };
+}
+
+/**
+ * Read-only live DB count for a Lane A court. Injectable for tests.
+ * Returns qualifying/CL case counts; never mutates corpus.
+ */
+function queryLiveLaneACourtCounts(court, opts = {}) {
+  if (typeof opts.query === "function") return opts.query({ court });
+  if (typeof runtime.liveLaneACountQuery === "function") {
+    return runtime.liveLaneACountQuery({ court });
+  }
+  // Prefer last probe artifact when present (tests / offline); else null → reconciliation uses runner.
+  const probePath = path.join(reports, "queue2-lane-a-live-count-last.json");
+  if (fs.existsSync(probePath)) {
+    try {
+      const probe = JSON.parse(fs.readFileSync(probePath, "utf8"));
+      if (probe?.court === court && probe?.ok) return probe;
+    } catch {
+      /* ignore */
+    }
+  }
+  return null;
+}
+
+function loadManifestForSelection() {
+  try {
+    return JSON.parse(fs.readFileSync(MANIFEST_PATH, "utf8"));
+  } catch {
+    return { targets: [] };
+  }
 }
 
 function runLaneB() {
@@ -1002,10 +1038,54 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             priorCount,
             target: state.laneA.target,
           });
+          // Post-run live DB refresh BEFORE watchdog / complete / canary decisions.
+          const liveDb = queryLiveLaneACourtCounts(state.laneA.court, {
+            query: process.env.QUEUE2_MOCK_LANE_A_DB === "1" ? runtime.mockLaneADbQuery : null,
+          });
+          const manifest = loadManifestForSelection();
+          const manifestRow = (manifest.targets || []).find(
+            (t) => (t.preferredCourts || [])[0] === state.laneA.court || t.jurisdiction === state.laneA.jurisdiction,
+          );
+          const reconciled = reconcileLaneACountSources({
+            runtimeCount: priorCount,
+            statusCount: Number(runtime.lastStatus?.currentCount),
+            manifestCount: Number(manifestRow?.currentCases),
+            runnerCount: classified.itemsImported,
+            alreadyCompleted: classified.alreadyCompleted,
+            target: state.laneA.target,
+            db: liveDb
+              ? {
+                  qualifyingCases: liveDb.qualifyingCases ?? liveDb.highCourtClCases ?? liveDb.clCases,
+                  highCourtClCases: liveDb.highCourtClCases,
+                  clCases: liveDb.clCases,
+                  cases: liveDb.cases,
+                }
+              : {},
+            integrity: liveDb?.integrity || {
+              duplicateSourceIds: 0,
+              orphanCount: 0,
+              chunkHealthy: true,
+            },
+          });
+          emit("LANE_A_COUNT_RECONCILED", {
+            lane: "LANE_A_CL",
+            court: state.laneA.court,
+            checkpoint: state.laneA.checkpoint,
+            reason: reconciled.reason,
+            extra: {
+              canonicalCount: reconciled.canonicalCount,
+              classification: reconciled.classification,
+              targetSatisfied: reconciled.targetSatisfied,
+              dbPresent: Boolean(liveDb),
+            },
+          });
           laneAResult = {
             ...classified.parsed.result,
             classified,
+            reconciled,
+            liveDb,
             stdoutSource: classified.parsed.source,
+            postRunDbRefreshed: true,
           };
           emit("LANE_A_BATCH_COMPLETE", {
             lane: "LANE_A_CL",
@@ -1017,10 +1097,75 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
               productive: classified.productive,
               noProgress: classified.noProgress,
               remainingCases: remainingCasesToFinish(state.laneA),
+              canonicalCount: reconciled.canonicalCount,
+              classification: reconciled.classification,
             },
           });
 
-          if (classified.noProgress) {
+          if (reconciled.classification === "RECONCILIATION_FAILED" || reconciled.humanReviewRequired) {
+            state = setReview(
+              state,
+              HUMAN_REVIEW_REASONS.LANE_A_COUNT_RECONCILIATION_FAILED,
+              reconciled.detail || reconciled.reason || "Lane A count reconciliation failed",
+            );
+            human = true;
+            state.idleSafe = false;
+            emit("HUMAN_REVIEW_REQUIRED", {
+              lane: "HUMAN_REVIEW_REQUIRED",
+              court: state.laneA.court,
+              reason: HUMAN_REVIEW_REASONS.LANE_A_COUNT_RECONCILIATION_FAILED,
+            });
+          } else if (reconciled.classification === "TARGET_ALREADY_COMPLETE") {
+            emit("TARGET_ALREADY_COMPLETE", {
+              lane: "LANE_A_CL",
+              court: state.laneA.court,
+              checkpoint: state.laneA.checkpoint,
+              reason: "already_completed_db_confirmed",
+              extra: { canonicalCount: reconciled.canonicalCount, target: state.laneA.target },
+            });
+            const nextTarget = selectNextVerifiedIncompleteTarget(manifest, {
+              excludeCourt: state.laneA.court,
+            });
+            const completedCourt = state.laneA.court;
+            state = applyTargetAlreadyComplete(state, {
+              canonicalCount: reconciled.canonicalCount,
+              target: state.laneA.target,
+              checkpoint: state.laneA.checkpoint,
+              nextTarget,
+              now: new Date(),
+            });
+            const canaryEval = evaluateReconciliationCanary({
+              canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+              reconciled,
+            });
+            state.canary = {
+              ...(state.canary || {}),
+              reconciliationCanary: canaryEval.reconciliationCanary || null,
+              requireTinyRealCanaryOnNextTarget: Boolean(canaryEval.requireTinyRealCanaryOnNextTarget),
+              mode: canaryEval.mode,
+            };
+            // Do not promote to NORMAL solely from zero-call already_completed.
+            if (canaryEval.requireTinyRealCanaryOnNextTarget) {
+              state.canaryMode = "CANARY_REQUIRED";
+            }
+            state.quota.nextCheckAt = nextQuotaCheckAfterActiveBatch(new Date(), {
+              batchComplete: true,
+              productive: true,
+            });
+            state.idleSafe = false;
+            state.laneASelectedAt = null;
+            console.log(
+              JSON.stringify({
+                tag: "TARGET_ALREADY_COMPLETE",
+                completedCourt,
+                canonicalCount: reconciled.canonicalCount,
+                nextCourt: nextTarget?.court || null,
+                nextCount: nextTarget?.count ?? null,
+                nextTarget: nextTarget?.target ?? null,
+                canary: canaryEval,
+              }),
+            );
+          } else if (shouldRaiseLaneAZeroProgress({ classified, reconciled })) {
             emit("LANE_A_NO_PROGRESS", {
               lane: "LANE_A_CL",
               court: state.laneA.court,
@@ -1030,10 +1175,9 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
                 apiCalls: classified.apiCalls,
                 itemsImported: classified.itemsImported,
                 remoteStatus: classified.status,
+                canonicalCount: reconciled.canonicalCount,
               },
             });
-            // Remote already_completed with local partial remaining is a control-plane stop —
-            // do not sleep/reprobe forever. Preserve local WI durable counters.
             state = setReview(
               state,
               HUMAN_REVIEW_REASONS.LANE_A_ZERO_PROGRESS,
@@ -1050,7 +1194,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
                 classified.nextCheckpoint || state.laneA.lastSuccessfulExternalId,
               cursor: classified.nextCheckpoint || state.laneA.cursor,
               nextPageUrl: laneAResult?.next_page_url || state.laneA.nextPageUrl,
-              count: state.laneA.count,
+              count: reconciled.canonicalCount ?? state.laneA.count,
               target: state.laneA.target,
               last429At: classified.status === "rate_limited" ? new Date().toISOString() : null,
               retryAfterSeconds: laneAResult?.lastRetryAfterSec || laneAResult?.retryAfterSeconds || null,
@@ -1070,14 +1214,16 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
               checkpoint: state.laneA.checkpoint,
               reason: classified.status,
             });
-          } else if (classified.productive) {
-            // Persist progress locally when runner advanced checkpoint/count.
+          } else if (classified.productive || (reconciled.canonicalCount != null && reconciled.canonicalCount > priorCount)) {
+            // Persist progress from runner and/or live DB refresh.
             if (classified.checkpointAdvanced) {
               state.laneA.checkpoint = classified.nextCheckpoint;
               state.laneA.lastSuccessfulExternalId = classified.nextCheckpoint;
               state.laneA.cursor = classified.nextCheckpoint;
             }
-            if (classified.countAdvanced) {
+            if (reconciled.canonicalCount != null) {
+              state.laneA.count = reconciled.canonicalCount;
+            } else if (classified.countAdvanced) {
               state.laneA.count = classified.itemsImported;
             }
             state.laneA.lastSuccessfulAt = new Date().toISOString();
@@ -1087,8 +1233,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             });
             state.idleSafe = false;
             state.laneASelectedAt = null;
-            // WI finish (or any productive bounded canary) may promote fingerprint to known-good.
-            if (state.canaryMode === "CANARY_REQUIRED" && runtime.codeFingerprint) {
+            if (state.canaryMode === "CANARY_REQUIRED" && runtime.codeFingerprint && classified.apiCalls > 0) {
               const knownGoodOut = {
                 codeFingerprint: runtime.codeFingerprint,
                 workerVersion: WORKER_VERSION,
@@ -1097,7 +1242,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
                 count: state.laneA.count,
                 target: state.laneA.target,
                 checkpoint: state.laneA.checkpoint,
-                reason: "production_canary_pass",
+                reason: "production_mutation_canary_pass",
               };
               fs.writeFileSync(
                 path.join(reports, "queue2-watchdog-known-good.json"),

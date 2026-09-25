@@ -174,15 +174,18 @@ test("H: INITIAL_HEARTBEAT accepted", () => {
   assert.equal(makeEvent("INITIAL_HEARTBEAT", { lane: "STARTUP", task: "boot" }).type, "INITIAL_HEARTBEAT");
 });
 
-test("I: WI remains 44/45", () => {
+test("I: WI complete; active Lane A advanced", () => {
   const state = JSON.parse(fs.readFileSync(STATE_PATH, "utf8"));
-  assert.equal(state.laneA.count, 44);
+  assert.ok(state.completedCourts.includes("wis"));
+  assert.equal(state.completedCourtEvidence.wis.count, 45);
+  assert.equal(state.laneA.court, "mich");
+  assert.equal(state.laneA.count, 20);
   assert.equal(state.laneA.target, 45);
 });
 
-test("J: checkpoint remains cl-opinion-9886466", () => {
+test("J: WI completed checkpoint preserved in evidence", () => {
   const state = JSON.parse(fs.readFileSync(STATE_PATH, "utf8"));
-  assert.equal(state.laneA.checkpoint, "cl-opinion-9886466");
+  assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
 });
 
 test("K: AI calls = 0", () => {

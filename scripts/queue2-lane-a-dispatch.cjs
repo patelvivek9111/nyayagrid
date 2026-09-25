@@ -56,6 +56,7 @@ function parseLaneARunnerOutput(stdout) {
 
 /**
  * Classify Lane A runner outcome for control-plane decisions.
+ * Note: already_completed is NOT automatically zero-progress — reconcile against live DB.
  */
 function classifyLaneABatchResult(params = {}) {
   const priorCheckpoint = params.priorCheckpoint || null;
@@ -75,8 +76,10 @@ function classifyLaneABatchResult(params = {}) {
     null;
   const checkpointAdvanced = Boolean(nextCheckpoint && nextCheckpoint !== priorCheckpoint);
   const countAdvanced = itemsImported > priorCount;
-  const alreadyCompleted = reason === "already_completed" || (status === "completed" && apiCalls === 0);
-  const noProgress = alreadyCompleted || (apiCalls === 0 && !checkpointAdvanced && !countAdvanced);
+  const alreadyCompleted = reason === "already_completed" || (status === "completed" && apiCalls === 0 && itemsImported > 0);
+  // True zero-progress excludes already_completed — that requires DB reconciliation.
+  const noProgress =
+    !alreadyCompleted && apiCalls === 0 && !checkpointAdvanced && !countAdvanced && status !== "completed";
 
   return {
     ok: parsed.ok !== false,
@@ -94,6 +97,272 @@ function classifyLaneABatchResult(params = {}) {
     productive: checkpointAdvanced || countAdvanced || apiCalls > 0,
     runnerInvoked: true,
   };
+}
+
+/**
+ * Canonical live count for a Lane A court. Prefer DB qualifying/CL cases over caches.
+ */
+function canonicalLaneACount(sources = {}) {
+  const db = sources.db || {};
+  const prefer = [db.qualifyingCases, db.highCourtClCases, db.clCases, db.cases]
+    .map((n) => Number(n))
+    .find((n) => Number.isFinite(n) && n >= 0);
+  if (prefer != null) return prefer;
+  const caches = [sources.runnerCount, sources.runtimeCount, sources.statusCount, sources.manifestCount]
+    .map((n) => Number(n))
+    .filter((n) => Number.isFinite(n) && n >= 0);
+  if (!caches.length) return null;
+  return Math.max(...caches);
+}
+
+/**
+ * Reconcile outer worker / manifest / runner / live DB counts after a Lane A result.
+ */
+function reconcileLaneACountSources(params = {}) {
+  const target = Math.max(0, Number(params.target) || 0);
+  const runtimeCount = Number(params.runtimeCount);
+  const statusCount = Number(params.statusCount);
+  const manifestCount = Number(params.manifestCount);
+  const runnerCount = Number(params.runnerCount);
+  const dbCount = canonicalLaneACount({ db: params.db || {} });
+  const alreadyCompleted = Boolean(params.alreadyCompleted);
+  const integrity = params.integrity || {};
+
+  const hasDb = dbCount != null && Number.isFinite(dbCount);
+  const canonical = hasDb
+    ? dbCount
+    : canonicalLaneACount({
+        runnerCount,
+        runtimeCount,
+        statusCount,
+        manifestCount,
+      });
+
+  if (canonical == null) {
+    return {
+      ok: false,
+      reason: "LANE_A_COUNT_RECONCILIATION_FAILED",
+      humanReviewRequired: true,
+      classification: "RECONCILIATION_FAILED",
+      canonicalCount: null,
+      targetSatisfied: false,
+    };
+  }
+
+  const targetSatisfied = target > 0 && canonical >= target;
+  const runnerClaimsComplete = alreadyCompleted || (Number.isFinite(runnerCount) && runnerCount >= target);
+
+  // Runner says complete but live DB says incomplete → hard failure.
+  if (runnerClaimsComplete && hasDb && !targetSatisfied) {
+    return {
+      ok: false,
+      reason: "LANE_A_COUNT_RECONCILIATION_FAILED",
+      humanReviewRequired: true,
+      classification: "RECONCILIATION_FAILED",
+      canonicalCount: canonical,
+      targetSatisfied: false,
+      detail: `runner/items=${runnerCount} already_completed=${alreadyCompleted} but liveDB=${canonical} < target=${target}`,
+      sources: { runtimeCount, statusCount, manifestCount, runnerCount, dbCount },
+    };
+  }
+
+  // already_completed + DB target satisfied → successful convergence.
+  if (alreadyCompleted && targetSatisfied) {
+    const integrityOk =
+      Number(integrity.duplicateSourceIds || 0) === 0 &&
+      Number(integrity.orphanCount || 0) === 0 &&
+      (integrity.chunkHealthy !== false);
+    return {
+      ok: true,
+      reason: "TARGET_ALREADY_COMPLETE",
+      classification: "TARGET_ALREADY_COMPLETE",
+      humanReviewRequired: false,
+      zeroProgress: false,
+      canonicalCount: canonical,
+      targetSatisfied: true,
+      targetStatus: "COMPLETE_FOR_CURRENT_DEPTH",
+      reconciliationCanaryEligible: integrityOk,
+      sources: { runtimeCount, statusCount, manifestCount, runnerCount, dbCount },
+      integrity,
+    };
+  }
+
+  // Stale caches behind live DB — catch up without zero-progress.
+  if (hasDb && targetSatisfied) {
+    return {
+      ok: true,
+      reason: "TARGET_ALREADY_COMPLETE",
+      classification: "TARGET_ALREADY_COMPLETE",
+      humanReviewRequired: false,
+      zeroProgress: false,
+      canonicalCount: canonical,
+      targetSatisfied: true,
+      targetStatus: "COMPLETE_FOR_CURRENT_DEPTH",
+      reconciliationCanaryEligible: true,
+      sources: { runtimeCount, statusCount, manifestCount, runnerCount, dbCount },
+    };
+  }
+
+  // Material disagreement among non-DB sources without DB → review.
+  const cacheVals = [runtimeCount, statusCount, manifestCount, runnerCount].filter((n) => Number.isFinite(n));
+  if (!hasDb && cacheVals.length >= 2) {
+    const lo = Math.min(...cacheVals);
+    const hi = Math.max(...cacheVals);
+    if (hi - lo >= 2) {
+      return {
+        ok: false,
+        reason: "LANE_A_COUNT_RECONCILIATION_FAILED",
+        humanReviewRequired: true,
+        classification: "RECONCILIATION_FAILED",
+        canonicalCount: canonical,
+        targetSatisfied: false,
+        detail: `cache spread ${lo}..${hi} without live DB`,
+        sources: { runtimeCount, statusCount, manifestCount, runnerCount, dbCount },
+      };
+    }
+  }
+
+  return {
+    ok: true,
+    reason: "COUNTS_ALIGNED",
+    classification: "INCOMPLETE",
+    humanReviewRequired: false,
+    zeroProgress: false,
+    canonicalCount: canonical,
+    targetSatisfied: false,
+    targetStatus: canonical > 0 ? "PARTIAL" : "READY",
+    sources: { runtimeCount, statusCount, manifestCount, runnerCount, dbCount },
+  };
+}
+
+/**
+ * Decide whether zero-progress human review should fire.
+ */
+function shouldRaiseLaneAZeroProgress(params = {}) {
+  const classified = params.classified || {};
+  const reconciled = params.reconciled || {};
+  if (reconciled.classification === "TARGET_ALREADY_COMPLETE") return false;
+  if (classified.alreadyCompleted && reconciled.targetSatisfied) return false;
+  if (classified.alreadyCompleted && reconciled.classification === "RECONCILIATION_FAILED") return false;
+  if (!reconciled.targetSatisfied && classified.noProgress && classified.runnerInvoked) return true;
+  if (
+    !reconciled.targetSatisfied &&
+    classified.alreadyCompleted &&
+    reconciled.ok === false
+  ) {
+    return false; // reconciliation failure uses LANE_A_COUNT_RECONCILIATION_FAILED instead
+  }
+  return Boolean(classified.noProgress && !reconciled.targetSatisfied);
+}
+
+/**
+ * Canary handling when first target completes via reconciliation only (no CL mutation).
+ * Safer default: mark RECONCILIATION_CANARY pass for integrity, keep CANARY_REQUIRED
+ * for a tiny real canary on the next incomplete VERIFIED jurisdiction.
+ */
+function evaluateReconciliationCanary(params = {}) {
+  const canaryRequired = Boolean(params.canaryRequired);
+  const reconciled = params.reconciled || {};
+  if (!canaryRequired) {
+    return { mode: "NORMAL", promoteToNormal: true, reason: "canary_not_required" };
+  }
+  if (reconciled.classification !== "TARGET_ALREADY_COMPLETE") {
+    return { mode: "CANARY_REQUIRED", promoteToNormal: false, reason: "awaiting_mutation_canary" };
+  }
+  if (!reconciled.reconciliationCanaryEligible) {
+    return {
+      mode: "CANARY_REQUIRED",
+      promoteToNormal: false,
+      reason: "reconciliation_integrity_incomplete",
+    };
+  }
+  return {
+    mode: "CANARY_REQUIRED",
+    promoteToNormal: false,
+    reconciliationCanary: "PASS",
+    reason: "RECONCILIATION_CANARY_PASS_REQUIRE_NEXT_TARGET_MUTATION_CANARY",
+    requireTinyRealCanaryOnNextTarget: true,
+  };
+}
+
+/**
+ * Pick next highest-ranked VERIFIED incomplete Lane A target from manifest.
+ */
+function selectNextVerifiedIncompleteTarget(manifest, opts = {}) {
+  const excludeCourt = opts.excludeCourt || null;
+  const rows = (manifest?.targets || [])
+    .filter((t) => !t.federal)
+    .filter((t) => t.mappingStatus === "VERIFIED")
+    .filter((t) => !t.autonomousIngestBlocked)
+    .filter((t) => t.status === "READY" || t.status === "PARTIAL")
+    .filter((t) => Number(t.currentCases || 0) < Number(t.targetCases || 45))
+    .filter((t) => !excludeCourt || (t.preferredCourts || [])[0] !== excludeCourt)
+    .sort((a, b) => Number(b.score || 0) - Number(a.score || 0));
+  const top = rows[0] || null;
+  if (!top) return null;
+  return {
+    court: (top.preferredCourts || [])[0] || null,
+    jurisdiction: top.jurisdiction,
+    count: Number(top.currentCases) || 0,
+    target: Number(top.targetCases) || 45,
+    checkpoint: top.checkpoint || null,
+    status: top.status,
+    score: top.score,
+    mappingStatus: top.mappingStatus,
+  };
+}
+
+/**
+ * Apply target-complete reconciliation onto laneA state (pure).
+ */
+function applyTargetAlreadyComplete(state, params = {}) {
+  const next = JSON.parse(JSON.stringify(state || {}));
+  const completedCourt = next.laneA?.court || params.court;
+  const canonicalCount = Number(params.canonicalCount);
+  const target = Number(params.target ?? next.laneA?.target) || 45;
+  next.laneA = {
+    ...(next.laneA || {}),
+    count: Number.isFinite(canonicalCount) ? canonicalCount : next.laneA.count,
+    target,
+    jobStatus: "completed",
+    itemsImported: Number.isFinite(canonicalCount) ? canonicalCount : next.laneA.itemsImported,
+    targetStatus: "COMPLETE_FOR_CURRENT_DEPTH",
+  };
+  if (params.checkpoint) {
+    next.laneA.completedCheckpoint = params.checkpoint;
+  }
+  next.completedCourts = Array.isArray(next.completedCourts) ? next.completedCourts : [];
+  if (completedCourt && !next.completedCourts.includes(completedCourt)) {
+    next.completedCourts.push(completedCourt);
+  }
+  // Clear false zero-progress review when reconciliation succeeds.
+  if (next.humanReview?.required && Array.isArray(next.humanReview.reasons)) {
+    next.humanReview.reasons = next.humanReview.reasons.filter(
+      (r) => r !== "LANE_A_ZERO_PROGRESS",
+    );
+    next.humanReview.details = (next.humanReview.details || []).filter(
+      (d) => d.reason !== "LANE_A_ZERO_PROGRESS",
+    );
+    if (next.humanReview.reasons.length === 0) {
+      next.humanReview.required = false;
+    }
+  }
+  const nxt = params.nextTarget || null;
+  if (nxt?.court) {
+    next.laneA.court = nxt.court;
+    next.laneA.jurisdiction = nxt.jurisdiction;
+    next.laneA.count = Number(nxt.count) || 0;
+    next.laneA.target = Number(nxt.target) || 45;
+    next.laneA.checkpoint = nxt.checkpoint || null;
+    next.laneA.cursor = nxt.checkpoint || null;
+    next.laneA.lastSuccessfulExternalId = nxt.checkpoint || null;
+    next.laneA.jobStatus = nxt.status === "PARTIAL" ? "quota_paused" : "ready";
+    next.laneA.targetStatus = nxt.status || "READY";
+    next.laneA.mappingStatus = nxt.mappingStatus || "VERIFIED";
+  }
+  next.idleSafe = false;
+  next.updatedAt = (params.now || new Date()).toISOString?.() || new Date().toISOString();
+  return next;
 }
 
 /**
@@ -328,6 +597,12 @@ module.exports = {
   remainingCasesToFinish,
   parseLaneARunnerOutput,
   classifyLaneABatchResult,
+  canonicalLaneACount,
+  reconcileLaneACountSources,
+  shouldRaiseLaneAZeroProgress,
+  evaluateReconciliationCanary,
+  selectNextVerifiedIncompleteTarget,
+  applyTargetAlreadyComplete,
   resolveBindingResetAt,
   evaluateProductionCanaryGate,
   nextQuotaCheckAfterActiveBatch,

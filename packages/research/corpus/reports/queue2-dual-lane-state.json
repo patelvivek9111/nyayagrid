@@ -4,23 +4,23 @@
   "queue9": "CLOSED",
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
-  "currentLane": "A",
-  "updatedAt": "2026-09-25T14:55:09.656Z",
+  "currentLane": "B",
+  "updatedAt": "2026-09-25T15:13:36.725Z",
   "laneA": {
-    "court": "wis",
-    "jurisdiction": "WI",
-    "checkpoint": "cl-opinion-9886466",
-    "cursor": "cl-opinion-9886466",
-    "lastSuccessfulExternalId": "cl-opinion-9886466",
+    "court": "mich",
+    "jurisdiction": "MI",
+    "checkpoint": null,
+    "cursor": null,
+    "lastSuccessfulExternalId": null,
     "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__date_filed__lte=2018-12-31&cluster__docket__court=wis&cursor=cD05ODg2MzY4&order_by=-id&page_size=16",
     "lastSuccessfulAt": "2026-09-25T00:42:40.438Z",
     "runner": "staging-cl-batch-job",
     "mappingStatus": "VERIFIED",
-    "manifestVersion": 13,
-    "jobStatus": "quota_paused",
-    "itemsImported": 43,
+    "manifestVersion": 15,
+    "jobStatus": "ready",
+    "itemsImported": 45,
     "target": 45,
-    "count": 44,
+    "count": 20,
     "sequence": [
       "ark",
       "sd",
@@ -30,7 +30,9 @@
       "ala",
       "ky"
     ],
-    "lock": null
+    "lock": null,
+    "targetStatus": "READY",
+    "completedCheckpoint": "cl-opinion-9886466"
   },
   "quota": {
     "windows": {
@@ -53,17 +55,17 @@
         "resetAt": "2026-09-26T00:36:37.423499+00:00"
       }
     },
-    "lastProbeAt": "2026-09-25T14:54:34.642Z",
-    "nextCheckAt": "2026-09-25T14:54:34.642Z",
+    "lastProbeAt": "2026-09-25T15:07:09.647Z",
+    "nextCheckAt": "2026-09-25T15:37:43.260Z",
     "last429At": null,
     "retryAfterSeconds": null,
     "lastSafeRequests": 28,
     "currentUsableNow": 28,
-    "bindingWindow": null,
-    "bindingResetAt": "2026-09-26T00:36:37.423499+00:00",
+    "bindingWindow": "MINUTE",
+    "bindingResetAt": null,
     "hard429Count": 0,
     "courtEfficiency": {},
-    "probeRequests": 13,
+    "probeRequests": 14,
     "lastPlan": {
       "usableRequests": 28,
       "usableMinute": 28,
@@ -107,7 +109,7 @@
       "utilizationPercent": 7.899159663865546,
       "productiveQuotaUtilizationPercent": 7.899159663865546
     },
-    "quotaStateObservedAt": "2026-09-25T14:54:34.642Z",
+    "quotaStateObservedAt": "2026-09-25T15:07:09.647Z",
     "quotaStateSource": "probe.limits",
     "quotaStateConfidence": "AUTHORITATIVE_API",
     "quotaStateAgeMs": 0,
@@ -158,11 +160,11 @@
     "lastEligibility": null,
     "mutatingTaskActive": null
   },
-  "depthManifestVersion": 13,
+  "depthManifestVersion": 15,
   "lastCitationResolve": "2026-09-24T16:34:00.000Z",
   "lastIntegrityAudit": "2026-09-24T16:34:00.000Z",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastHeartbeatAt": "2026-09-25T14:47:47.056Z",
+  "lastHeartbeatAt": "2026-09-25T15:07:09.627Z",
   "idleSafe": false,
   "waitingForNetwork": false,
   "lastOnlineAt": null,
@@ -181,7 +183,7 @@
     "clAuthorities": 0,
     "nonClAuthorities": 6,
     "citationsResolved": 44,
-    "quotaChecks": 30,
+    "quotaChecks": 31,
     "laneSwitches": 2,
     "aiCalls": 0,
     "aiTokens": 0
@@ -211,11 +213,45 @@
     "note": "Reconciled from durable staging job row; not invented."
   },
   "watchdogSession": {
-    "workerId": "q2-d9256b436d0e",
-    "pid": 49524,
-    "processStartNonce": "06ebb82f95fef08c",
-    "startedAt": "2026-09-25T14:47:47.056Z",
-    "lastHeartbeatAt": "2026-09-25T14:47:47.056Z",
-    "lastWatchdogEvaluationAt": "2026-09-25T14:55:11.093Z"
+    "workerId": "q2-0cf117834f72",
+    "pid": 46052,
+    "processStartNonce": "b0d0650a89c706a0",
+    "startedAt": "2026-09-25T15:07:09.627Z",
+    "lastHeartbeatAt": "2026-09-25T15:07:09.627Z",
+    "lastWatchdogEvaluationAt": "2026-09-25T15:07:44.055Z"
+  },
+  "canaryMode": "CANARY_REQUIRED",
+  "canary": {
+    "required": true,
+    "reconciliationCanary": "PASS",
+    "requireTinyRealCanaryOnNextTarget": true,
+    "reason": "RECONCILIATION_CANARY_PASS_REQUIRE_NEXT_TARGET_MUTATION_CANARY"
+  },
+  "quotaProbeHistory": [
+    {
+      "at": "2026-09-25T15:07:09.647Z",
+      "minuteRemaining": 30,
+      "hourRemaining": 300,
+      "dayRemaining": 1106,
+      "quotaMode": "FINISH_TARGET",
+      "checkpoint": "cl-opinion-9886466",
+      "workBetween": false
+    }
+  ],
+  "laneASelectedAt": "2026-09-25T15:07:09.647Z",
+  "laneARunnerStartedAt": "2026-09-25T15:07:11.550Z",
+  "completedCourts": [
+    "wis"
+  ],
+  "completedCourtEvidence": {
+    "wis": {
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "count": 45,
+      "cases": 46,
+      "clCases": 45,
+      "checkpoint": "cl-opinion-9886466",
+      "jobLastSuccessfulExternalId": "cl-opinion-11344420",
+      "reconciledAt": "2026-09-25T15:13:36.723Z"
+    }
   }
 }

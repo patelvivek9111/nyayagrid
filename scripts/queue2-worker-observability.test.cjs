@@ -382,7 +382,7 @@ test("reconcileLaneAFromJob never invents checkpoint", () => {
   assert.equal(isPartialLaneA(empty.state), true);
 });
 
-test("canonical status after rebuild matches live floor and WI durable progress", () => {
+test("canonical status after rebuild matches live floor and reconciled Lane A progress", () => {
   const status = JSON.parse(
     fs.readFileSync(path.join(CANONICAL_REPORTS_DIR, "corpus-worker-status.json"), "utf8"),
   );
@@ -393,14 +393,17 @@ test("canonical status after rebuild matches live floor and WI durable progress"
   assert.ok(status.corpus.cases >= 1689);
   assert.ok(status.corpus.clCases >= 1644);
   assert.ok(status.manifestVersion >= 5);
-  assert.equal(status.currentCount, 44);
-  assert.equal(status.targetCount, 45);
-  assert.equal(status.checkpoint, "cl-opinion-9886466");
   assert.equal(status.runtimeState, "STOPPED");
   assert.equal(status.review.humanReviewRequired, false);
-  assert.equal(state.laneA.count, 44);
-  assert.equal(state.laneA.checkpoint, "cl-opinion-9886466");
+  assert.ok(state.completedCourts.includes("wis"));
+  assert.equal(state.completedCourtEvidence.wis.count, 45);
+  assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
+  assert.equal(state.laneA.court, "mich");
+  assert.equal(state.laneA.count, 20);
+  assert.equal(state.laneA.target, 45);
   assert.equal(state.humanReview.required, false);
+  assert.equal(status.currentCount, 20);
+  assert.equal(status.targetCount, 45);
 });
 
 test("WATCHDOG_SESSION_INIT accepted", () => {
@@ -500,13 +503,16 @@ test("mocked startup sequence emits without unknown_event_type", () => {
   assert.equal(events.every((e) => e.checkpoint === "cl-opinion-9886466"), true);
 });
 
-test("durable WI state unchanged by event schema fix", () => {
+test("durable WI complete after count reconciliation", () => {
   const state = JSON.parse(
     fs.readFileSync(path.join(CANONICAL_REPORTS_DIR, "queue2-dual-lane-state.json"), "utf8"),
   );
-  assert.equal(state.laneA.count, 44);
+  assert.ok(state.completedCourts.includes("wis"));
+  assert.equal(state.completedCourtEvidence.wis.count, 45);
+  assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
+  assert.equal(state.laneA.court, "mich");
+  assert.equal(state.laneA.count, 20);
   assert.equal(state.laneA.target, 45);
-  assert.equal(state.laneA.checkpoint, "cl-opinion-9886466");
 });
 
 console.log(JSON.stringify({ ok: true, tests: passed, aiCalls: 0, corpusMutations: 0, workerStarted: false }));
