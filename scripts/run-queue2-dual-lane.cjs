@@ -91,6 +91,17 @@ const {
   WORKER_VERSION,
 } = require("./queue2-worker-safety.cjs");
 const {
+  remainingCasesToFinish,
+  parseLaneARunnerOutput,
+  classifyLaneABatchResult,
+  resolveBindingResetAt,
+  evaluateProductionCanaryGate,
+  nextQuotaCheckAfterActiveBatch,
+  detectRedundantQuotaProbes,
+  detectLaneADispatchStall,
+  computePostCycleSleepMs,
+} = require("./queue2-lane-a-dispatch.cjs");
+const {
   formatMorningStartupSummary,
   formatWatchdogTerminalLine,
   runWatchdogCycle,
@@ -230,13 +241,18 @@ function healthCheck() {
   return lastJson(r.stdout || "") || { raw: (r.stdout || r.stderr || "").slice(0, 400) };
 }
 
-function runLaneA(state) {
+function runLaneA(state, opts = {}) {
   const court = state.laneA.court || LANE_A_SEQUENCE[0].court;
   const target = String(state.laneA.target || 45);
-  console.log(JSON.stringify({ tag: "LANE_A_CL", court, target }));
+  const batchSize = String(opts.batchSize || Math.min(8, Math.max(1, remainingCasesToFinish(state.laneA) || 1)));
+  console.log(JSON.stringify({ tag: "LANE_A_CL", court, target, batchSize }));
+  if (typeof opts.runner === "function") {
+    const stdout = opts.runner({ state, court, target, batchSize });
+    return { stdout: String(stdout || ""), mocked: true };
+  }
   const r = spawnSync(
     process.execPath,
-    [path.join(__dirname, "run-staging-cl-batch-job.cjs"), "HEAD", court, "8", target],
+    [path.join(__dirname, "run-staging-cl-batch-job.cjs"), "HEAD", court, batchSize, target],
     {
       encoding: "utf8",
       cwd: root,
@@ -250,8 +266,9 @@ function runLaneA(state) {
       },
     },
   );
-  fs.writeFileSync(path.join(reports, "queue2-dual-lane-a.txt"), (r.stdout || "") + (r.stderr || ""));
-  return lastJson(r.stdout || "");
+  const stdout = (r.stdout || "") + (r.stderr || "");
+  fs.writeFileSync(path.join(reports, "queue2-dual-lane-a.txt"), stdout);
+  return { stdout, statusCode: r.status, mocked: false };
 }
 
 function runLaneB() {
@@ -555,7 +572,53 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     windows: state.quota.windows,
   };
 
+  // Lane A selected but no runner within warning/critical thresholds.
+  if (state.currentLane === "A" && !state.humanReview?.required) {
+    const stall = detectLaneADispatchStall({
+      laneASelectedAt: state.laneASelectedAt,
+      now: started,
+      runnerStarted: Boolean(state.laneARunnerStartedAt || state.laneA?.lock),
+      warningMs: 2 * 60 * 1000,
+      criticalMs: 5 * 60 * 1000,
+    });
+    if (stall.stalled) {
+      emit(stall.severity === "CRITICAL" ? "WATCHDOG_CRITICAL" : "WATCHDOG_WARNING", {
+        lane: "LANE_A_CL",
+        court: state.laneA.court,
+        checkpoint: state.laneA.checkpoint,
+        reason: stall.reason,
+        extra: { ageMs: stall.ageMs, severity: stall.severity },
+      });
+      if (stall.severity === "CRITICAL") {
+        state = setReview(
+          state,
+          HUMAN_REVIEW_REASONS.LANE_A_DISPATCH_STALLED,
+          `Lane A selected but runner not started within ${Math.round(stall.ageMs / 1000)}s`,
+        );
+        emit("HUMAN_REVIEW_REQUIRED", {
+          lane: "HUMAN_REVIEW_REQUIRED",
+          court: state.laneA.court,
+          reason: HUMAN_REVIEW_REASONS.LANE_A_DISPATCH_STALLED,
+        });
+      }
+    }
+  }
+
+  // Hold redundant quota probing until reset / justified event.
   if (
+    state.quota?.redundantProbeHoldUntil &&
+    started.getTime() < new Date(state.quota.redundantProbeHoldUntil).getTime() &&
+    process.env.QUEUE2_FORCE_QUOTA_PROBE !== "1"
+  ) {
+    console.log(
+      JSON.stringify({
+        tag: "QUOTA_CHECK",
+        skipped: true,
+        reason: "REDUNDANT_QUOTA_PROBES",
+        holdUntil: state.quota.redundantProbeHoldUntil,
+      }),
+    );
+  } else if (
     process.env.QUEUE2_FORCE_QUOTA_PROBE === "1" ||
     runtime.morningSummaryPending ||
     quotaProbeDue(state, started)
@@ -619,7 +682,8 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           source: reconciled.quotaStateSource,
         };
         const projected = projectedFromWindows(windows);
-        const remaining = remainingRequestsToFinishCourt(state.laneA);
+        const remainingCases = remainingCasesToFinish(state.laneA);
+        const remainingRequestsEstimate = remainingRequestsToFinishCourt(state.laneA);
         const decision = decideLane(state, {
           safeRequests: safe.safe,
           windows,
@@ -724,10 +788,10 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             bindingWindow: decision.bindingWindow,
             bindingResetAt: decision.bindingResetAt || null,
             currentUsableNow: decision.currentUsableNow ?? decision.usableRequests,
-            estimatedRequestsNeeded: decision.estimatedRequestsNeeded,
+            remainingCases,
+            estimatedRequestsNeeded: decision.estimatedRequestsNeeded ?? remainingRequestsEstimate,
             requestsPerAuthorityEstimate: decision.requestsPerAuthorityEstimate,
             nextUsefulAt: decision.nextUsefulAt,
-            remainingToFinish: remaining,
             lane: state.currentLane,
             nextCheckAt: state.quota.nextCheckAt,
             checkpoint: state.laneA.checkpoint,
@@ -737,6 +801,50 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             hourRemaining: windows.hour?.remaining,
           }),
         );
+        // Track probe signatures for redundant-probe watchdog.
+        state.quotaProbeHistory = Array.isArray(state.quotaProbeHistory) ? state.quotaProbeHistory : [];
+        const lastProbe = state.quotaProbeHistory[state.quotaProbeHistory.length - 1];
+        const workBetween = Boolean(
+          state.laneARunnerStartedAt &&
+            lastProbe?.at &&
+            new Date(state.laneARunnerStartedAt).getTime() > new Date(lastProbe.at).getTime(),
+        );
+        state.quotaProbeHistory.push({
+          at: started.toISOString(),
+          minuteRemaining: windows.minute?.remaining,
+          hourRemaining: windows.hour?.remaining,
+          dayRemaining: windows.day?.remaining,
+          quotaMode: decision.quotaMode,
+          checkpoint: state.laneA.checkpoint,
+          workBetween,
+        });
+        if (state.quotaProbeHistory.length > 12) {
+          state.quotaProbeHistory = state.quotaProbeHistory.slice(-12);
+        }
+        const redundant = detectRedundantQuotaProbes(state.quotaProbeHistory, { minRepeats: 3 });
+        if (redundant.redundant) {
+          emit("WATCHDOG_WARNING", {
+            lane: statusLaneFromState(state),
+            court: state.laneA.court,
+            checkpoint: state.laneA.checkpoint,
+            reason: "REDUNDANT_QUOTA_PROBES",
+            extra: { count: redundant.count, signature: redundant.signature },
+          });
+          state.quota.redundantProbeHoldUntil = nextQuotaCheckAfterActiveBatch(started, {
+            deferMs: 30 * 60 * 1000,
+            noProgress: true,
+          });
+          state.quota.nextCheckAt = state.quota.redundantProbeHoldUntil;
+          state.metrics = state.metrics || {};
+          state.metrics.redundantQuotaProbes = Number(state.metrics.redundantQuotaProbes || 0) + 1;
+          console.log(
+            JSON.stringify({
+              tag: "WATCHDOG_WARNING",
+              reason: "REDUNDANT_QUOTA_PROBES",
+              holdUntil: state.quota.redundantProbeHoldUntil,
+            }),
+          );
+        }
         if (runtime.morningSummaryPending) {
           const pending = runtime.morningSummaryPending;
           runtime.morningSummaryPending = null;
@@ -835,6 +943,10 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
       }),
     );
   } else if (state.currentLane === "A" && quota.safeRequests >= 1) {
+    // Stale idleSafe from a prior cycle must not survive into active Lane A.
+    state.idleSafe = false;
+    state.runtimeState = "RUNNING";
+    state.laneASelectedAt = state.laneASelectedAt || started.toISOString();
     if (!state.laneA.checkpoint) {
       state = setReview(
         state,
@@ -859,35 +971,92 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           court: state.laneA.court,
           checkpoint: state.laneA.checkpoint,
         });
+        emit("LANE_A_RUNNER_START", {
+          lane: "LANE_A_CL",
+          court: state.laneA.court,
+          checkpoint: state.laneA.checkpoint,
+          task: "cl_ingest",
+        });
+        state.laneARunnerStartedAt = new Date().toISOString();
         try {
-          laneAResult = runLaneA(state);
-          const status = laneAResult?.status || laneAResult?.job?.status || laneAResult?.result?.status;
+          const priorCheckpoint = state.laneA.checkpoint;
+          const priorCount = Number(state.laneA.count) || 0;
+          const canaryBound =
+            state.canaryMode === "CANARY_REQUIRED"
+              ? {
+                  batchSize: String(
+                    Math.min(
+                      Number(state.canary?.maxQualifyingAuthorities || 3),
+                      Math.max(1, remainingCasesToFinish(state.laneA) || 1),
+                    ),
+                  ),
+                }
+              : {};
+          const raw = runLaneA(state, {
+            runner: process.env.QUEUE2_MOCK_LANE_A_RUNNER === "1" ? runtime.mockLaneARunner : null,
+            batchSize: canaryBound.batchSize,
+          });
+          const classified = classifyLaneABatchResult({
+            stdout: raw?.stdout || "",
+            priorCheckpoint,
+            priorCount,
+            target: state.laneA.target,
+          });
+          laneAResult = {
+            ...classified.parsed.result,
+            classified,
+            stdoutSource: classified.parsed.source,
+          };
           emit("LANE_A_BATCH_COMPLETE", {
             lane: "LANE_A_CL",
             court: state.laneA.court,
-            checkpoint:
-              laneAResult?.cursor || laneAResult?.last_successful_external_id || state.laneA.checkpoint,
-            reason: status || "batch",
+            checkpoint: classified.nextCheckpoint || state.laneA.checkpoint,
+            reason: classified.reason || classified.status || "batch",
+            extra: {
+              apiCalls: classified.apiCalls,
+              productive: classified.productive,
+              noProgress: classified.noProgress,
+              remainingCases: remainingCasesToFinish(state.laneA),
+            },
           });
-          if (status === "quota_paused" || status === "rate_limited") {
+
+          if (classified.noProgress) {
+            emit("LANE_A_NO_PROGRESS", {
+              lane: "LANE_A_CL",
+              court: state.laneA.court,
+              checkpoint: state.laneA.checkpoint,
+              reason: classified.reason || "zero_progress",
+              extra: {
+                apiCalls: classified.apiCalls,
+                itemsImported: classified.itemsImported,
+                remoteStatus: classified.status,
+              },
+            });
+            // Remote already_completed with local partial remaining is a control-plane stop —
+            // do not sleep/reprobe forever. Preserve local WI durable counters.
+            state = setReview(
+              state,
+              HUMAN_REVIEW_REASONS.LANE_A_ZERO_PROGRESS,
+              `Lane A runner returned no progress (reason=${classified.reason || classified.status || "unknown"}); local ${state.laneA.count}/${state.laneA.target} checkpoint=${state.laneA.checkpoint}`,
+            );
+            human = true;
+            state.quota.nextCheckAt = nextQuotaCheckAfterActiveBatch(new Date(), { noProgress: true });
+            state.idleSafe = false;
+          } else if (classified.status === "quota_paused" || classified.status === "rate_limited") {
             state = applyQuotaFloorTransition(state, {
               safeRequests: 0,
-              checkpoint:
-                laneAResult?.last_successful_external_id ||
-                laneAResult?.cursor ||
-                laneAResult?.job?.cursor ||
-                state.laneA.checkpoint,
+              checkpoint: classified.nextCheckpoint || state.laneA.checkpoint,
               lastSuccessfulExternalId:
-                laneAResult?.last_successful_external_id || state.laneA.lastSuccessfulExternalId,
-              cursor: laneAResult?.cursor || state.laneA.cursor,
+                classified.nextCheckpoint || state.laneA.lastSuccessfulExternalId,
+              cursor: classified.nextCheckpoint || state.laneA.cursor,
               nextPageUrl: laneAResult?.next_page_url || state.laneA.nextPageUrl,
               count: state.laneA.count,
               target: state.laneA.target,
-              last429At: status === "rate_limited" ? new Date().toISOString() : null,
+              last429At: classified.status === "rate_limited" ? new Date().toISOString() : null,
               retryAfterSeconds: laneAResult?.lastRetryAfterSec || laneAResult?.retryAfterSeconds || null,
               now: new Date(),
             });
-            if (status === "rate_limited") {
+            if (classified.status === "rate_limited") {
               state.quota.hard429Count = Number(state.quota.hard429Count || 0) + 1;
               const review = evaluateHumanReviewTriggers({ unexpected429: true });
               if (review.required) {
@@ -899,8 +1068,49 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
               lane: "LANE_B_OFFLINE",
               court: state.laneA.court,
               checkpoint: state.laneA.checkpoint,
-              reason: status,
+              reason: classified.status,
             });
+          } else if (classified.productive) {
+            // Persist progress locally when runner advanced checkpoint/count.
+            if (classified.checkpointAdvanced) {
+              state.laneA.checkpoint = classified.nextCheckpoint;
+              state.laneA.lastSuccessfulExternalId = classified.nextCheckpoint;
+              state.laneA.cursor = classified.nextCheckpoint;
+            }
+            if (classified.countAdvanced) {
+              state.laneA.count = classified.itemsImported;
+            }
+            state.laneA.lastSuccessfulAt = new Date().toISOString();
+            state.quota.nextCheckAt = nextQuotaCheckAfterActiveBatch(new Date(), {
+              batchComplete: true,
+              productive: true,
+            });
+            state.idleSafe = false;
+            state.laneASelectedAt = null;
+            // WI finish (or any productive bounded canary) may promote fingerprint to known-good.
+            if (state.canaryMode === "CANARY_REQUIRED" && runtime.codeFingerprint) {
+              const knownGoodOut = {
+                codeFingerprint: runtime.codeFingerprint,
+                workerVersion: WORKER_VERSION,
+                promotedAt: new Date().toISOString(),
+                court: state.laneA.court,
+                count: state.laneA.count,
+                target: state.laneA.target,
+                checkpoint: state.laneA.checkpoint,
+                reason: "production_canary_pass",
+              };
+              fs.writeFileSync(
+                path.join(reports, "queue2-watchdog-known-good.json"),
+                JSON.stringify(knownGoodOut, null, 2),
+              );
+              state.canaryMode = "NORMAL";
+              state.canary = { ...(state.canary || {}), required: false, status: "PASS" };
+              emit("CANARY_SKIPPED", {
+                lane: "LANE_A_CL",
+                reason: "canary_pass_promoted_known_good",
+                extra: { codeFingerprint: runtime.codeFingerprint },
+              });
+            }
           }
         } finally {
           const rel = releaseLaneALock(state, "dual-lane-runner", new Date());
@@ -908,6 +1118,16 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         }
       }
     }
+  } else if (state.currentLane === "A" && quota.safeRequests < 1) {
+    // Selected A but no usable quota — do not pretend Lane B idle without an explicit floor transition.
+    console.log(
+      JSON.stringify({
+        tag: "LANE_A_CL",
+        blocked: true,
+        reason: "usable_requests_exhausted",
+        safeRequests: quota.safeRequests,
+      }),
+    );
   }
 
   if (state.currentLane === "B" && !state.humanReview?.required) {
@@ -1029,17 +1249,19 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
   const status = publishStatus(state, {
     currentLane: state.humanReview?.required
       ? "HUMAN_REVIEW_REQUIRED"
-      : state.idleSafe
-        ? "LANE_B_IDLE_SAFE"
-        : statusLaneFromState(state),
+      : state.currentLane === "A"
+        ? "LANE_A_CL"
+        : state.idleSafe
+          ? "LANE_B_IDLE_SAFE"
+          : statusLaneFromState(state),
     runtimeState: derivedRuntime.runtimeState,
     freshness: derivedRuntime.freshness,
     currentTask: state.humanReview?.required
       ? "await_human_review"
-      : state.idleSafe
-        ? "NONE"
-        : state.currentLane === "A"
-          ? "cl_ingest"
+      : state.currentLane === "A"
+        ? "cl_ingest"
+        : state.idleSafe
+          ? "NONE"
           : state.laneB?.task || "offline",
     laneReason: state.humanReview?.required
       ? (state.humanReview.reasons || []).join(", ")
@@ -1239,14 +1461,32 @@ async function main() {
   } catch {
     knownGood = null;
   }
-  const canaryNeeded =
-    Boolean(knownGood?.workerVersion) && knownGood.workerVersion !== WORKER_VERSION;
+  // Do NOT treat queue2-worker-versions.json as known-good — that file tracks current
+  // fingerprints and would make canary always NOT_REQUIRED after any write.
+  const canaryGate = evaluateProductionCanaryGate({
+    currentFingerprint: startedFingerprint,
+    knownGoodFingerprint: knownGood?.codeFingerprint || knownGood?.fingerprint || null,
+  });
+  const canaryNeeded = canaryGate.required;
   // Morning summary deferred until AFTER fresh quota reconciliation (not stale persisted quota).
   runtime.morningSummaryPending = {
     preflight: "PASS",
-    canary: canaryNeeded ? "REQUIRED" : knownGood?.workerVersion ? "PASS" : "NOT_REQUIRED",
+    canary: canaryNeeded ? "REQUIRED" : "PASS",
     workerVersion: WORKER_VERSION,
+    canaryReason: canaryGate.reason,
   };
+  if (canaryNeeded) {
+    emit("CANARY_REQUIRED", {
+      lane: "STARTUP",
+      reason: canaryGate.reason,
+      extra: { currentFingerprint: startedFingerprint, prior: canaryGate.prior || null },
+    });
+    state.canaryMode = "CANARY_REQUIRED";
+    state.canary = { required: true, reason: canaryGate.reason, maxQualifyingAuthorities: 3, maxClRequests: 12 };
+  } else {
+    emit("CANARY_SKIPPED", { lane: "STARTUP", reason: canaryGate.reason });
+    state.canaryMode = "NORMAL";
+  }
   appendAuditEvent({
     lane: statusLaneFromState(state),
     task: "preflight",
@@ -1476,15 +1716,29 @@ async function main() {
     if (!loop) break;
     if (maxCycles > 0 && cycles >= maxCycles) break;
 
-    const nextProbe = state.quota?.wait?.nextUsefulAt
-      ? new Date(state.quota.wait.nextUsefulAt).getTime()
-      : state.quota?.nextCheckAt
-        ? new Date(state.quota.nextCheckAt).getTime()
-        : Date.now() + HEARTBEAT_MS;
-    const sleepFor =
-      state.currentLane === "WAIT"
-        ? Math.min(HEARTBEAT_MS, Math.max(2_000, nextProbe - Date.now()))
-        : Math.min(HEARTBEAT_MS, Math.max(5_000, nextProbe - Date.now()));
+    const classifiedNoProgress = Boolean(lastCycle?.laneAResult?.classified?.noProgress);
+    const sleepFor = computePostCycleSleepMs({
+      now: new Date(),
+      humanReviewRequired: Boolean(state.humanReview?.required),
+      noProgress: classifiedNoProgress,
+      lane: state.currentLane,
+      quotaMode: state.quota?.lastPlan?.quotaMode || state.quota?.wait?.quotaMode,
+      nextUsefulAt: state.quota?.wait?.nextUsefulAt || null,
+      nextCheckAt: state.quota?.nextCheckAt || null,
+      heartbeatMs: HEARTBEAT_MS,
+      awaitingBatch: false,
+    });
+    if (sleepFor <= 0) {
+      console.log(
+        JSON.stringify({
+          tag: state.currentLane === "A" ? "LANE_A_CONTINUE" : "CYCLE_CONTINUE",
+          sleepMs: 0,
+          lane: state.currentLane,
+          aiCalls: 0,
+        }),
+      );
+      continue;
+    }
     console.log(
       JSON.stringify({
         tag: state.currentLane === "WAIT" ? "WAIT_QUOTA_RESET" : "WORKER_IDLE",

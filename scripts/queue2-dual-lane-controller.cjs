@@ -32,6 +32,7 @@ const {
   remainingAuthoritiesNeeded: remainingAuthoritiesNeededAdaptive,
   estimateRequestsNeeded,
 } = require("./cl-adaptive-quota.cjs");
+const { resolveBindingResetAt, remainingCasesToFinish, nextQuotaCheckAfterActiveBatch } = require("./queue2-lane-a-dispatch.cjs");
 
 const QUEUE = "#2";
 /** @deprecated Fixed 25-request gate removed; kept for test/compat aliases only. */
@@ -521,9 +522,9 @@ function decideLane(state, quota = {}) {
   const activeNow = isActiveQuotaMode(plan.quotaMode) && plan.lane === "A";
   // Active modes: never inherit projected day/hour reset into nextUsefulAt.
   const nextUsefulAt = activeNow ? null : plan.nextUsefulAt || null;
-  const bindingResetAt =
-    plan.nextUsefulAt ||
-    (quota.projectedUsefulAt != null ? String(quota.projectedUsefulAt) : null);
+  const bindingResetAt = activeNow
+    ? resolveBindingResetAt(rawWindows, plan.bindingWindow)
+    : plan.nextUsefulAt || resolveBindingResetAt(rawWindows, plan.bindingWindow);
 
   const out = {
     lane: plan.lane,
@@ -544,7 +545,11 @@ function decideLane(state, quota = {}) {
   };
 
   if (plan.lane === "A") {
-    return { ...out, nextUsefulAt: null, nextCheckAt: now.toISOString() };
+    return {
+      ...out,
+      nextUsefulAt: null,
+      nextCheckAt: nextQuotaCheckAfterActiveBatch(now, { deferMs: 15 * 60 * 1000 }),
+    };
   }
 
   if (plan.lane === "WAIT") {
@@ -581,16 +586,23 @@ function applyQuotaSnapshot(state, params) {
   next.quota.lastSafeRequests = usableNow;
   next.quota.currentUsableNow = usableNow;
   if (params.bindingWindow != null) next.quota.bindingWindow = params.bindingWindow;
-  // Reset timestamps are metadata; they must not block active execution.
-  if (params.bindingResetAt != null || params.projectedUsefulAt != null) {
-    next.quota.bindingResetAt = params.bindingResetAt || params.projectedUsefulAt || null;
-  }
   const activeNow =
     params.wait === null ||
     isActiveQuotaMode(params.quotaMode) ||
     params.clearBlocking === true;
+  // Binding reset must match bindingWindow. Never attach day reset to MINUTE.
+  if (params.bindingResetAt !== undefined) {
+    next.quota.bindingResetAt = params.bindingResetAt;
+  } else if (!activeNow && params.projectedUsefulAt != null) {
+    next.quota.bindingResetAt = params.projectedUsefulAt;
+  } else if (activeNow && params.windows && params.bindingWindow) {
+    next.quota.bindingResetAt = resolveBindingResetAt(params.windows, params.bindingWindow);
+  }
   if (activeNow) {
-    next.quota.nextCheckAt = now.toISOString();
+    // Do not set nextCheckAt=now — that creates a 5-second reprobe loop.
+    next.quota.nextCheckAt =
+      params.nextCheckAt ||
+      nextQuotaCheckAfterActiveBatch(now, { deferMs: params.activeDeferMs || 15 * 60 * 1000 });
   } else {
     next.quota.nextCheckAt = projectNextQuotaCheck({
       now,
@@ -730,6 +742,19 @@ function applyQuotaRecoveryTransition(state, params) {
     next.quota.wait = null;
     next.idleSafe = false;
     next.runtimeState = "RUNNING";
+    next.laneASelectedAt = now.toISOString();
+    next.laneARunnerStartedAt = null;
+    next.quota.bindingWindow = decision.bindingWindow || next.quota.bindingWindow;
+    next.quota.bindingResetAt = decision.bindingResetAt ?? null;
+    // Prevent immediate 5s reprobe before the batch runs.
+    next.quota.nextCheckAt = nextQuotaCheckAfterActiveBatch(now, { deferMs: 15 * 60 * 1000 });
+  } else if (decision.lane === "A") {
+    next.idleSafe = false;
+    next.runtimeState = "RUNNING";
+    next.quota.wait = null;
+    next.quota.bindingWindow = decision.bindingWindow || next.quota.bindingWindow;
+    next.quota.bindingResetAt = decision.bindingResetAt ?? null;
+    next.quota.nextCheckAt = nextQuotaCheckAfterActiveBatch(now, { deferMs: 15 * 60 * 1000 });
   } else if (decision.lane === "WAIT") {
     next = applyQuotaFloorTransition(next, {
       ...params,
@@ -1090,6 +1115,7 @@ module.exports = {
   restoreState,
   cloneState,
   remainingRequestsToFinishCourt,
+  remainingCasesToFinish,
   hasUsefulClCapacity,
   projectNextQuotaCheck,
   quotaProbeDue,

@@ -286,7 +286,7 @@ test("H: FINISH_TARGET with usable quota now → nextUsefulAt null", () => {
   assert.ok(d.usableRequests >= 4);
 });
 
-test("I: FULL_BATCH with usable quota now → no future blocking nextCheckAt", () => {
+test("I: FULL_BATCH with usable quota now → deferred nextCheckAt (no immediate reprobe)", () => {
   const state = createInitialState();
   state.laneA.court = "mich";
   state.laneA.count = 20;
@@ -303,7 +303,8 @@ test("I: FULL_BATCH with usable quota now → no future blocking nextCheckAt", (
   assert.equal(d.quotaMode, QUOTA_MODES.FULL_BATCH);
   assert.equal(d.lane, "A");
   assert.equal(d.nextUsefulAt, null);
-  assert.ok(new Date(d.nextCheckAt).getTime() <= now.getTime() + 1000);
+  // Must NOT set nextCheckAt≈now (that caused the 5s quota reprobe loop).
+  assert.ok(new Date(d.nextCheckAt).getTime() >= now.getTime() + 14 * 60 * 1000);
 });
 
 test("J: WAIT_MINUTE → nextUsefulAt uses minute reset", () => {

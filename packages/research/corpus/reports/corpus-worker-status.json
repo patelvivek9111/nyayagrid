@@ -4,10 +4,10 @@
   "queue9": "CLOSED",
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
-  "currentLane": "STOPPED",
+  "currentLane": "LANE_A_CL",
   "runtimeState": "STOPPED",
-  "freshness": "STOPPED",
-  "currentTask": "NONE",
+  "freshness": "STALE_PROCESS_STOPPED",
+  "currentTask": "cl_ingest",
   "currentCourt": "wis",
   "currentJurisdiction": "WI",
   "currentCount": 44,
@@ -19,12 +19,12 @@
   "lastSuccessfulAt": "2026-09-25T00:42:40.438Z",
   "runner": "staging-cl-batch-job",
   "mappingStatus": "VERIFIED",
-  "manifestVersion": 9,
+  "manifestVersion": 13,
   "jobStatus": "quota_paused",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastUpdatedAt": "2026-09-25T14:20:00.165Z",
-  "lastHeartbeatAt": null,
-  "nextQuotaCheckAt": "2026-09-26T00:36:37.423Z",
+  "lastUpdatedAt": "2026-09-25T14:55:11.075Z",
+  "lastHeartbeatAt": "2026-09-25T14:47:47.056Z",
+  "nextQuotaCheckAt": "2026-09-25T14:54:34.642Z",
   "network": {
     "waitingForNetwork": false,
     "lastOnlineAt": null
@@ -36,12 +36,12 @@
   "quota": {
     "minuteRemaining": 30,
     "hourRemaining": 300,
-    "dayRemaining": 1115,
+    "dayRemaining": 1106,
     "safeRequests": 28,
-    "lastProbeAt": "2026-09-25T13:17:34.062Z",
+    "lastProbeAt": "2026-09-25T14:54:34.642Z",
     "hard429Count": 0,
     "dayResetAt": "2026-09-26T00:36:37.423499+00:00",
-    "quotaStateObservedAt": "2026-09-25T13:17:34.062Z",
+    "quotaStateObservedAt": "2026-09-25T14:54:34.642Z",
     "quotaStateSource": "probe.limits",
     "quotaStateConfidence": "AUTHORITATIVE_API",
     "quotaStateAgeMs": 0
@@ -79,5 +79,8 @@
   "review": {
     "humanReviewRequired": false,
     "reviewReasons": []
-  }
+  },
+  "updatedAt": "2026-09-25T15:04:15.861Z",
+  "workerAlive": false,
+  "processAlive": false
 }

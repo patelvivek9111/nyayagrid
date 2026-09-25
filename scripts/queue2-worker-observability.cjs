@@ -55,6 +55,10 @@ const EVENT_TYPES = Object.freeze([
   // Lane A / Lane B
   "LANE_A_START",
   "LANE_A_BATCH_COMPLETE",
+  "LANE_A_RUNNER_START",
+  "LANE_A_NO_PROGRESS",
+  "CANARY_REQUIRED",
+  "CANARY_SKIPPED",
   "LANE_B_START",
   "LANE_B_TASK_COMPLETE",
   "OFFLINE_TASK_COMPLETE",
@@ -188,6 +192,8 @@ const HUMAN_REVIEW_REASONS = Object.freeze({
   PROVIDER_TERMS_CHANGED: "PROVIDER_TERMS_CHANGED",
   EXTERNAL_SOURCE_LIMITATION_BLOCKS_SCOPE: "EXTERNAL_SOURCE_LIMITATION_BLOCKS_SCOPE",
   COURTLISTENER_QUOTA_STATE_AMBIGUOUS: "COURTLISTENER_QUOTA_STATE_AMBIGUOUS",
+  LANE_A_ZERO_PROGRESS: "LANE_A_ZERO_PROGRESS",
+  LANE_A_DISPATCH_STALLED: "LANE_A_DISPATCH_STALLED",
 });
 
 /** Local heartbeat cadence — zero AI usage. */
@@ -391,11 +397,12 @@ function statusLaneFromState(state) {
   if (state?.humanReview?.required) return "HUMAN_REVIEW_REQUIRED";
   if (state?.hold) return "HOLD";
   if (state?.waitingForNetwork) return "WAITING_FOR_NETWORK";
+  // Lane A active always wins over stale idleSafe from a prior cycle.
+  if (state?.currentLane === "A") return "LANE_A_CL";
   if (state?.currentLane === "WAIT" || state?.runtimeState === "WAITING_QUOTA_RESET") {
     return "WAIT_QUOTA_RESET";
   }
   if (state?.idleSafe || state?.currentLane === "IDLE_SAFE") return "LANE_B_IDLE_SAFE";
-  if (state?.currentLane === "A") return "LANE_A_CL";
   if (state?.currentLane === "B") return "LANE_B_OFFLINE";
   return "LANE_B_OFFLINE";
 }

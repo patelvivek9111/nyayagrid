@@ -4,8 +4,8 @@
   "queue9": "CLOSED",
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
-  "currentLane": "B",
-  "updatedAt": "2026-09-25T13:21:30.049Z",
+  "currentLane": "A",
+  "updatedAt": "2026-09-25T14:55:09.656Z",
   "laneA": {
     "court": "wis",
     "jurisdiction": "WI",
@@ -16,7 +16,7 @@
     "lastSuccessfulAt": "2026-09-25T00:42:40.438Z",
     "runner": "staging-cl-batch-job",
     "mappingStatus": "VERIFIED",
-    "manifestVersion": 9,
+    "manifestVersion": 13,
     "jobStatus": "quota_paused",
     "itemsImported": 43,
     "target": 45,
@@ -48,24 +48,27 @@
       },
       "day": {
         "limit": 1200,
-        "used": 85,
-        "remaining": 1115,
+        "used": 94,
+        "remaining": 1106,
         "resetAt": "2026-09-26T00:36:37.423499+00:00"
       }
     },
-    "lastProbeAt": "2026-09-25T13:17:34.062Z",
-    "nextCheckAt": "2026-09-26T00:36:37.423Z",
+    "lastProbeAt": "2026-09-25T14:54:34.642Z",
+    "nextCheckAt": "2026-09-25T14:54:34.642Z",
     "last429At": null,
     "retryAfterSeconds": null,
     "lastSafeRequests": 28,
+    "currentUsableNow": 28,
+    "bindingWindow": null,
+    "bindingResetAt": "2026-09-26T00:36:37.423499+00:00",
     "hard429Count": 0,
     "courtEfficiency": {},
-    "probeRequests": 1,
+    "probeRequests": 13,
     "lastPlan": {
       "usableRequests": 28,
       "usableMinute": 28,
       "usableHour": 295,
-      "usableDay": 1105,
+      "usableDay": 1096,
       "bindingWindow": "MINUTE",
       "estimatedRequestsNeeded": 4,
       "remainingAuthoritiesNeeded": 1,
@@ -79,12 +82,12 @@
       },
       "utilization": {
         "dayLimit": 1200,
-        "dayRemaining": 1115,
-        "dayUsed": 85,
+        "dayRemaining": 1106,
+        "dayUsed": 94,
         "reservedRequests": 10,
         "usableDailyBudget": 1190,
-        "utilizationPercent": 7.142857142857142,
-        "productiveQuotaUtilizationPercent": 7.142857142857142
+        "utilizationPercent": 7.899159663865546,
+        "productiveQuotaUtilizationPercent": 7.899159663865546
       },
       "microBatchMaxRequests": 4,
       "nextUsefulAt": null,
@@ -97,14 +100,14 @@
     "wait": null,
     "utilization": {
       "dayLimit": 1200,
-      "dayRemaining": 1115,
-      "dayUsed": 85,
+      "dayRemaining": 1106,
+      "dayUsed": 94,
       "reservedRequests": 10,
       "usableDailyBudget": 1190,
-      "utilizationPercent": 7.142857142857142,
-      "productiveQuotaUtilizationPercent": 7.142857142857142
+      "utilizationPercent": 7.899159663865546,
+      "productiveQuotaUtilizationPercent": 7.899159663865546
     },
-    "quotaStateObservedAt": "2026-09-25T13:17:34.062Z",
+    "quotaStateObservedAt": "2026-09-25T14:54:34.642Z",
     "quotaStateSource": "probe.limits",
     "quotaStateConfidence": "AUTHORITATIVE_API",
     "quotaStateAgeMs": 0,
@@ -155,12 +158,12 @@
     "lastEligibility": null,
     "mutatingTaskActive": null
   },
-  "depthManifestVersion": 9,
+  "depthManifestVersion": 13,
   "lastCitationResolve": "2026-09-24T16:34:00.000Z",
   "lastIntegrityAudit": "2026-09-24T16:34:00.000Z",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastHeartbeatAt": null,
-  "idleSafe": true,
+  "lastHeartbeatAt": "2026-09-25T14:47:47.056Z",
+  "idleSafe": false,
   "waitingForNetwork": false,
   "lastOnlineAt": null,
   "runtimeState": "STOPPED",
@@ -178,8 +181,8 @@
     "clAuthorities": 0,
     "nonClAuthorities": 6,
     "citationsResolved": 44,
-    "quotaChecks": 18,
-    "laneSwitches": 1,
+    "quotaChecks": 30,
+    "laneSwitches": 2,
     "aiCalls": 0,
     "aiTokens": 0
   },
@@ -189,6 +192,12 @@
       "from": "B",
       "to": "B",
       "reason": "quota_floor"
+    },
+    {
+      "at": "2026-09-25T14:47:47.076Z",
+      "from": "B",
+      "to": "A",
+      "reason": "finish_near_complete"
     }
   ],
   "checkpointEvidence": {
@@ -200,5 +209,13 @@
     "cursor": "cl-opinion-9885160",
     "arCases": 33,
     "note": "Reconciled from durable staging job row; not invented."
+  },
+  "watchdogSession": {
+    "workerId": "q2-d9256b436d0e",
+    "pid": 49524,
+    "processStartNonce": "06ebb82f95fef08c",
+    "startedAt": "2026-09-25T14:47:47.056Z",
+    "lastHeartbeatAt": "2026-09-25T14:47:47.056Z",
+    "lastWatchdogEvaluationAt": "2026-09-25T14:55:11.093Z"
   }
 }

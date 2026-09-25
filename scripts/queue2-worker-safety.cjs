@@ -188,10 +188,13 @@ function fingerprintProductionFiles(root = ROOT) {
   const files = [
     "scripts/run-queue2-dual-lane.cjs",
     "scripts/queue2-dual-lane-controller.cjs",
+    "scripts/queue2-lane-a-dispatch.cjs",
     "scripts/queue2-worker-observability.cjs",
     "scripts/queue2-worker-lock.cjs",
     "scripts/queue2-autonomy-policy.cjs",
     "scripts/queue2-worker-safety.cjs",
+    "scripts/queue2-watchdog.cjs",
+    "scripts/cl-adaptive-quota.cjs",
     "packages/research/corpus/config/queue2-offline-task-registry.json",
     "packages/research/corpus/config/queue2-completion-checklist.json",
     "packages/research/corpus/config/queue2-worker-safety.json",
