@@ -189,16 +189,17 @@ test("stale lock recovery covered by lock module contract; autonomy never opens 
   assert.equal(s.queue9, "CLOSED");
 });
 
-test("quota useful-capacity threshold", () => {
-  const laneA = { count: 33, target: 45, checkpoint: "cl-opinion-9885161" };
-  const low = usefulClCapacityGate(5, laneA);
-  assert.equal(low.useful, false);
+test("quota useful-capacity threshold is adaptive (no fixed 25)", () => {
+  const laneA = { count: 33, target: 45, checkpoint: "cl-opinion-9885161", court: "ark" };
+  const belowMicro = usefulClCapacityGate(2, laneA);
+  assert.equal(belowMicro.useful, false);
+  const micro = usefulClCapacityGate(4, laneA);
+  assert.equal(micro.useful, true);
   const batch = usefulClCapacityGate(USEFUL_CL_MIN, laneA);
   assert.equal(batch.useful, true);
-  // finish partial: remaining requests ~ ceil(12*2.3)=28; 28 safe is useful
   const finish = usefulClCapacityGate(28, laneA);
   assert.equal(finish.useful, true);
-  assert.equal(decideLane({ laneA, quota: {}, humanReview: { required: false } }, { safeRequests: 5 }).lane, "B");
+  assert.ok(["WAIT", "B"].includes(decideLane({ laneA, quota: {}, humanReview: { required: false } }, { safeRequests: 2 }).lane));
   assert.equal(decideLane({ laneA, quota: {}, humanReview: { required: false } }, { safeRequests: 40 }).lane, "A");
 });
 

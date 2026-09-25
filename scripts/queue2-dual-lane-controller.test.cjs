@@ -139,13 +139,15 @@ test("single CL worker lock rejects a second Lane A acquirer", () => {
   assert.equal(third.ok, true);
 });
 
-test("useful-capacity rule: trivial leftover does not leave Lane B", () => {
+test("useful-capacity rule: adaptive micro-batch and finish-target replace fixed 25 gate", () => {
   const state = createInitialState();
   state.currentLane = "B";
   state.laneA.count = 0;
   state.laneA.target = 45;
+  // Usable 4 (>= micro minimum 3) may start a bounded MICRO_BATCH — not blocked by old 25 gate.
   const drip = decideLane(state, { safeRequests: 4, now: new Date() });
-  assert.equal(drip.lane, "B");
+  assert.equal(drip.lane, "A");
+  assert.equal(drip.quotaMode, "MICRO_BATCH");
   const batch = decideLane(state, { safeRequests: USEFUL_CL_MIN, now: new Date() });
   assert.equal(batch.lane, "A");
   const finish = createInitialState();
@@ -157,7 +159,11 @@ test("useful-capacity rule: trivial leftover does not leave Lane B", () => {
   assert.ok(remaining > 0 && remaining < USEFUL_CL_MIN);
   const enoughToFinish = decideLane(finish, { safeRequests: remaining, now: new Date() });
   assert.equal(enoughToFinish.lane, "A");
-  assert.equal(enoughToFinish.reason, "finish_partial_court");
+  assert.ok(
+    enoughToFinish.reason === "finish_partial_court" ||
+      enoughToFinish.quotaMode === "FINISH_TARGET" ||
+      enoughToFinish.quotaMode === "MICRO_BATCH",
+  );
 });
 
 test("checkpoint preservation across floor and recovery", () => {

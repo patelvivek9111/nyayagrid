@@ -722,6 +722,17 @@ function runPreflight(opts = {}) {
     if (!v.ok) reasons.push(v.code);
   }
 
+  // Adaptive quota config
+  try {
+    const { validateAdaptiveQuotaConfig, loadAdaptiveQuotaConfig } = require("./cl-adaptive-quota.cjs");
+    const aq = validateAdaptiveQuotaConfig(opts.adaptiveQuota || loadAdaptiveQuotaConfig({ config: cfg }));
+    if (!aq.ok) {
+      for (const r of aq.reasons) reasons.push(r);
+    }
+  } catch (e) {
+    reasons.push(`ADAPTIVE_QUOTA_CONFIG_INVALID:${e.message}`);
+  }
+
   // Lock
   const lockPath = opts.lockPath || lockPathFor(opts.reportsDir || defaultReportsDir());
   const lock = readLockFile(lockPath);

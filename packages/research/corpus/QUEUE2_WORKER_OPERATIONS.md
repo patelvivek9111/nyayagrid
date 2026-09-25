@@ -76,6 +76,19 @@ Lane A may start only when confidence is authoritative. Ambiguous Tier 2 probes 
 
 Known Tier 2 limits: **30 / min**, **300 / hour**, **1200 / day**.
 
+### Adaptive usable capacity (no fixed 25-request gate)
+
+Lane A capacity is task-aware (`scripts/cl-adaptive-quota.cjs`, config `adaptiveQuota` in `queue2-worker-safety.json`):
+
+- `usableRequests = min(minuteRem-minuteReserve, hourRem-hourReserve, dayRem-dayReserve)`
+- Modes: `FINISH_TARGET` | `FULL_BATCH` | `MICRO_BATCH` | `WAIT_MINUTE` | `WAIT_HOUR` | `DAY_BLOCKED`
+- Near-complete courts (e.g. WI 44/45) finish when estimated need fits usable budget
+- Short minute blocks → `WAIT` until reset (not permanent stop); hour/day blocks → Lane B when eligible
+- Per-court EWMA request efficiency; >3.0 for 3 meaningful batches → `HUMAN_REVIEW_REQUIRED`
+- Do not re-probe every minute while waiting on a known reset timestamp
+
+Default reserves: minute **2**, hour **5**, day **10**. Minimum micro-batch: **3** requests. Uncertainty multiplier: **1.35**.
+
 ## LANE B STATUS SEMANTICS
 
 - `currentTask` means the task **actually executing now**

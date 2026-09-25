@@ -68,5 +68,22 @@
         "results"
       ]
     }
+  },
+  "adaptiveQuota": {
+    "minuteReserve": 2,
+    "hourReserve": 5,
+    "dayReserve": 10,
+    "minimumMicroBatchRequests": 3,
+    "uncertaintyMultiplier": 1.35,
+    "ewmaAlpha": 0.3,
+    "minMeaningfulBatchAuthorities": 2,
+    "nearCompleteThreshold": 3,
+    "shortMinuteWaitMs": 90000,
+    "wakeAfterResetMs": 3000,
+    "fullBatchRequests": 20,
+    "defaultRequestsPerAuthority": 2.3,
+    "efficiencyRegressionThreshold": 3.0,
+    "efficiencyRegressionBatches": 3,
+    "minProbeGapMs": 600000
   }
 }

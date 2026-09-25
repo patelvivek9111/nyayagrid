@@ -763,13 +763,17 @@ function assertRoutineZeroAi(metrics = {}) {
 }
 
 /**
- * Useful CL capacity — mirrors controller (≥25 or finish partial).
+ * Useful CL capacity — adaptive usable budget (no fixed 25-request gate).
  */
-function usefulClCapacityGate(safeRequests, laneA) {
+function usefulClCapacityGate(safeRequests, laneA, opts = {}) {
   return hasUsefulClCapacity({
     safeRequests,
+    windows: opts.windows || null,
     remainingRequestsToFinishCourt: remainingRequestsToFinishCourt(laneA),
-    minBatch: USEFUL_CL_MIN,
+    laneA,
+    efficiencyStore: opts.efficiencyStore,
+    config: opts.config,
+    now: opts.now,
   });
 }
 

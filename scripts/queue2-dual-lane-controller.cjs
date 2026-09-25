@@ -19,8 +19,22 @@ const {
   isPartialLaneA,
   hasDurableCheckpoint,
 } = require("./queue2-worker-observability.cjs");
+const {
+  QUOTA_MODES,
+  BINDING_WINDOWS,
+  loadAdaptiveQuotaConfig,
+  planAdaptiveQuota,
+  hasUsefulAdaptiveCapacity,
+  updateCourtEfficiency,
+  efficiencyRegressionTriggered,
+  shouldProbeQuota,
+  dayUtilization,
+  remainingAuthoritiesNeeded: remainingAuthoritiesNeededAdaptive,
+  estimateRequestsNeeded,
+} = require("./cl-adaptive-quota.cjs");
 
 const QUEUE = "#2";
+/** @deprecated Fixed 25-request gate removed; kept for test/compat aliases only. */
 const USEFUL_CL_MIN = 25;
 const MIN_QUOTA_PROBE_GAP_MS = 10 * 60 * 1000;
 const LANE_A_LOCK_TTL_MS = 30 * 60 * 1000;
@@ -118,6 +132,11 @@ function createInitialState(now = new Date()) {
       retryAfterSeconds: null,
       lastSafeRequests: 0,
       hard429Count: 0,
+      courtEfficiency: {},
+      probeRequests: 0,
+      lastPlan: null,
+      wait: null,
+      utilization: null,
       quotaStateObservedAt: null,
       quotaStateSource: null,
       quotaStateConfidence: null,
@@ -329,32 +348,59 @@ function applyDurableJobCheckpoint(state, job, extras = {}, now = new Date()) {
   return { ok: true, state: next, reason: null };
 }
 
-function remainingRequestsToFinishCourt(laneA) {
-  const target = Number(laneA?.target) || 0;
-  const count = Number(laneA?.count) || 0;
-  const casesLeft = Math.max(0, target - count);
-  if (casesLeft <= 0) return 0;
-  return Math.ceil(casesLeft * EST_CL_REQUESTS_PER_CASE);
+function remainingRequestsToFinishCourt(laneA, opts = {}) {
+  const need = remainingAuthoritiesNeededAdaptive(laneA);
+  if (need <= 0) return 0;
+  const cfg = opts.config || loadAdaptiveQuotaConfig();
+  const rpa =
+    opts.requestsPerAuthority != null
+      ? Number(opts.requestsPerAuthority)
+      : Number(cfg.defaultRequestsPerAuthority);
+  // Conservative estimate for finish budgeting (includes uncertainty when requested).
+  if (opts.withUncertainty) {
+    return estimateRequestsNeeded(need, rpa, cfg);
+  }
+  return Math.ceil(need * rpa);
 }
 
 /**
- * Resume Lane A only for a meaningful bounded batch, not a trivial drip.
- * @param {{ safeRequests: number, remainingRequestsToFinishCourt?: number, minBatch?: number }} params
+ * Resume Lane A when adaptive usable capacity supports finish / full / micro batch.
+ * The fixed safeRequests>=25 gate is removed.
+ *
+ * @param {{
+ *   safeRequests?: number,
+ *   windows?: object,
+ *   remainingRequestsToFinishCourt?: number,
+ *   minBatch?: number,
+ *   laneA?: object,
+ *   efficiencyStore?: object,
+ *   config?: object,
+ *   now?: Date,
+ *   laneBHasWork?: boolean,
+ * }} params
  */
 function hasUsefulClCapacity(params) {
-  const safe = Math.max(0, Number(params.safeRequests) || 0);
-  const minBatch = params.minBatch ?? USEFUL_CL_MIN;
-  const remaining = Math.max(0, Number(params.remainingRequestsToFinishCourt) || 0);
-  if (safe >= minBatch) return { useful: true, reason: "min_batch" };
-  if (remaining > 0 && safe >= remaining) return { useful: true, reason: "finish_partial_court" };
-  return { useful: false, reason: safe <= 0 ? "quota_floor" : "below_useful_capacity" };
+  // Legacy minBatch ignored as a universal gate; adaptive planner decides.
+  const capacity = hasUsefulAdaptiveCapacity({
+    windows: params.windows || null,
+    safeRequests: params.safeRequests,
+    remainingRequestsToFinishCourt: params.remainingRequestsToFinishCourt,
+    laneA: params.laneA || {
+      count: 0,
+      target: 45,
+      court: params.court || null,
+    },
+    efficiencyStore: params.efficiencyStore,
+    config: params.config,
+    now: params.now,
+    laneBHasWork: params.laneBHasWork,
+  });
+  return capacity;
 }
 
 function projectNextQuotaCheck(params) {
   const nowMs = (params.now instanceof Date ? params.now : new Date(params.now)).getTime();
-  const lastProbeMs = params.lastProbeAt
-    ? new Date(params.lastProbeAt).getTime()
-    : 0;
+  const lastProbeMs = params.lastProbeAt ? new Date(params.lastProbeAt).getTime() : 0;
   const earliest = lastProbeMs + (params.minGapMs ?? MIN_QUOTA_PROBE_GAP_MS);
   const projected =
     params.projectedUsefulAt != null ? new Date(params.projectedUsefulAt).getTime() : nowMs;
@@ -363,20 +409,29 @@ function projectNextQuotaCheck(params) {
 }
 
 function quotaProbeDue(state, now = new Date()) {
-  if (!state?.quota?.nextCheckAt) return true;
-  return now.getTime() >= new Date(state.quota.nextCheckAt).getTime();
+  return shouldProbeQuota(state, now).probe;
 }
 
 /**
  * @param {object} state
- * @param {{ safeRequests: number, windows?: object, projectedUsefulAt?: string|Date|null, now?: Date }} quota
+ * @param {{
+ *   safeRequests?: number,
+ *   windows?: object,
+ *   projectedUsefulAt?: string|Date|null,
+ *   now?: Date,
+ *   laneBHasWork?: boolean,
+ *   efficiencyStore?: object,
+ *   config?: object,
+ * }} quota
  */
-function decideLane(state, quota) {
+function decideLane(state, quota = {}) {
   const now = quota.now || new Date();
+  const cfg = quota.config || loadAdaptiveQuotaConfig();
   if (state?.humanReview?.required) {
     return {
       lane: "B",
       reason: "human_review_required",
+      quotaMode: QUOTA_MODES.DAY_BLOCKED,
       remainingRequestsToFinishCourt: remainingRequestsToFinishCourt(state.laneA),
       blocked: true,
     };
@@ -386,31 +441,108 @@ function decideLane(state, quota) {
     return {
       lane: "B",
       reason: check.reason,
+      quotaMode: QUOTA_MODES.DAY_BLOCKED,
       remainingRequestsToFinishCourt: remainingRequestsToFinishCourt(state.laneA),
       blocked: true,
       needsHumanReview: true,
     };
   }
-  const remaining = remainingRequestsToFinishCourt(state.laneA);
-  const capacity = hasUsefulClCapacity({
-    safeRequests: quota.safeRequests,
-    remainingRequestsToFinishCourt: remaining,
-  });
-  if (capacity.useful) {
+
+  if (efficiencyRegressionTriggered(state.quota?.courtEfficiency || {}, state.laneA?.court, cfg)) {
     return {
-      lane: "A",
-      reason: capacity.reason,
-      remainingRequestsToFinishCourt: remaining,
+      lane: "B",
+      reason: "COURTLISTENER_REQUEST_EFFICIENCY_REGRESSION",
+      quotaMode: QUOTA_MODES.DAY_BLOCKED,
+      remainingRequestsToFinishCourt: remainingRequestsToFinishCourt(state.laneA),
+      blocked: true,
+      needsHumanReview: true,
+      humanReviewReason: "COURTLISTENER_REQUEST_EFFICIENCY_REGRESSION",
     };
   }
+
+  const rawWindows = quota.windows || state.quota?.windows || null;
+  const windowsComplete = Boolean(
+    rawWindows &&
+      rawWindows.minute &&
+      rawWindows.hour &&
+      rawWindows.day &&
+      Number.isFinite(Number(rawWindows.minute.remaining)) &&
+      Number.isFinite(Number(rawWindows.hour.remaining)) &&
+      Number.isFinite(Number(rawWindows.day.remaining)),
+  );
+  const plan = planAdaptiveQuota({
+    windows: windowsComplete ? rawWindows : null,
+    usableRequestsOverride: windowsComplete
+      ? null
+      : quota.safeRequests != null
+        ? quota.safeRequests
+        : state.quota?.lastSafeRequests,
+    laneA: state.laneA,
+    efficiencyStore: quota.efficiencyStore || state.quota?.courtEfficiency || {},
+    config: cfg,
+    now,
+    laneBHasWork: quota.laneBHasWork,
+  });
+
+  // Legacy finish-partial: when only safeRequests provided and it covers estimated finish.
+  if (!windowsComplete && plan.lane !== "A") {
+    const legacyRemaining = remainingRequestsToFinishCourt(state.laneA);
+    const safe = Number(quota.safeRequests);
+    if (Number.isFinite(safe) && legacyRemaining > 0 && safe >= legacyRemaining) {
+      return {
+        lane: "A",
+        reason: "finish_partial_court",
+        quotaMode: QUOTA_MODES.FINISH_TARGET,
+        remainingRequestsToFinishCourt: legacyRemaining,
+        usableRequests: safe,
+        estimatedRequestsNeeded: legacyRemaining,
+        requestsPerAuthorityEstimate: plan.requestsPerAuthorityEstimate,
+        bindingWindow: plan.bindingWindow,
+        nextUsefulAt: null,
+        plan,
+      };
+    }
+  }
+
+  const out = {
+    lane: plan.lane,
+    reason: plan.reason,
+    quotaMode: plan.quotaMode,
+    remainingRequestsToFinishCourt: remainingRequestsToFinishCourt(state.laneA),
+    remainingAuthoritiesNeeded: plan.remainingAuthoritiesNeeded,
+    usableRequests: plan.usableRequests,
+    estimatedRequestsNeeded: plan.estimatedRequestsNeeded,
+    requestsPerAuthorityEstimate: plan.requestsPerAuthorityEstimate,
+    bindingWindow: plan.bindingWindow,
+    nextUsefulAt: plan.nextUsefulAt || quota.projectedUsefulAt || null,
+    microBatchMaxRequests: plan.microBatchMaxRequests,
+    nearComplete: plan.nearComplete,
+    plan,
+  };
+
+  if (plan.lane === "A") return out;
+
+  if (plan.lane === "WAIT") {
+    return {
+      ...out,
+      lane: "WAIT",
+      nextCheckAt: plan.nextUsefulAt
+        ? plan.nextUsefulAt
+        : projectNextQuotaCheck({
+            now,
+            lastProbeAt: state.quota?.lastProbeAt || now.toISOString(),
+            projectedUsefulAt: plan.nextUsefulAt || quota.projectedUsefulAt || null,
+          }),
+    };
+  }
+
   return {
+    ...out,
     lane: "B",
-    reason: capacity.reason,
-    remainingRequestsToFinishCourt: remaining,
     nextCheckAt: projectNextQuotaCheck({
       now,
-      lastProbeAt: state.quota.lastProbeAt || now.toISOString(),
-      projectedUsefulAt: quota.projectedUsefulAt || null,
+      lastProbeAt: state.quota?.lastProbeAt || now.toISOString(),
+      projectedUsefulAt: plan.nextUsefulAt || quota.projectedUsefulAt || null,
     }),
   };
 }
@@ -424,7 +556,7 @@ function applyQuotaSnapshot(state, params) {
   next.quota.nextCheckAt = projectNextQuotaCheck({
     now,
     lastProbeAt: now.toISOString(),
-    projectedUsefulAt: params.projectedUsefulAt || null,
+    projectedUsefulAt: params.projectedUsefulAt || params.nextUsefulAt || null,
   });
   if (params.last429At) next.quota.last429At = params.last429At;
   if (params.retryAfterSeconds != null) next.quota.retryAfterSeconds = params.retryAfterSeconds;
@@ -435,8 +567,21 @@ function applyQuotaSnapshot(state, params) {
   if (params.quotaStateAgeMs != null) next.quota.quotaStateAgeMs = params.quotaStateAgeMs;
   else next.quota.quotaStateAgeMs = 0;
   if (params.membership != null) next.quota.membership = params.membership;
+  if (params.plan) next.quota.lastPlan = params.plan;
+  if (params.wait !== undefined) next.quota.wait = params.wait;
+  if (params.windows) next.quota.utilization = dayUtilization(params.windows);
+  if (params.probeCounted) {
+    next.quota.probeRequests = Number(next.quota.probeRequests || 0) + 1;
+  }
   next.metrics.quotaChecks += 1;
   next.updatedAt = now.toISOString();
+  return next;
+}
+
+function recordCourtBatchEfficiency(state, batch) {
+  const next = cloneState(state);
+  next.quota.courtEfficiency = updateCourtEfficiency(next.quota.courtEfficiency || {}, batch);
+  next.updatedAt = new Date().toISOString();
   return next;
 }
 
@@ -456,7 +601,25 @@ function recordLaneSwitch(state, fromLane, toLane, reason, now = new Date()) {
 
 function applyQuotaFloorTransition(state, params) {
   const now = params.now || new Date();
-  let next = applyQuotaSnapshot(state, params);
+  const waitPayload =
+    params.wait !== undefined
+      ? params.wait
+      : params.nextUsefulAt
+        ? {
+            bindingWindow: params.bindingWindow || null,
+            nextUsefulAt: params.nextUsefulAt,
+            quotaMode: params.quotaMode || null,
+            usableRequests: params.safeRequests,
+            estimatedRequestsNeeded: params.estimatedRequestsNeeded || null,
+          }
+        : params.clearWait
+          ? null
+          : undefined;
+  let next = applyQuotaSnapshot(state, {
+    ...params,
+    projectedUsefulAt: params.projectedUsefulAt || params.nextUsefulAt || null,
+    wait: waitPayload,
+  });
   const checkpoint =
     params.checkpoint ??
     params.lastSuccessfulExternalId ??
@@ -483,6 +646,25 @@ function applyQuotaFloorTransition(state, params) {
   if (check.humanReviewRequired) {
     next = setHumanReview(next, check.reason, "quota floor with missing durable checkpoint");
   }
+
+  const mode = params.quotaMode || null;
+  const preferWait =
+    mode === QUOTA_MODES.WAIT_MINUTE ||
+    params.reason === "minute_window_blocked" ||
+    params.reason === "below_micro_batch_minimum";
+
+  if (preferWait && mode !== QUOTA_MODES.DAY_BLOCKED && mode !== QUOTA_MODES.WAIT_HOUR) {
+    if (next.currentLane !== "WAIT") {
+      next = recordLaneSwitch(next, next.currentLane, "WAIT", params.reason || "wait_minute", now);
+    } else {
+      next.currentLane = "WAIT";
+      next.updatedAt = now.toISOString();
+    }
+    next.idleSafe = true;
+    next.runtimeState = "WAITING_QUOTA_RESET";
+    return next;
+  }
+
   if (next.currentLane !== "B") {
     next = recordLaneSwitch(next, next.currentLane, "B", params.reason || "quota_floor", now);
   } else {
@@ -494,14 +676,30 @@ function applyQuotaFloorTransition(state, params) {
 
 function applyQuotaRecoveryTransition(state, params) {
   const now = params.now || new Date();
-  let next = applyQuotaSnapshot(state, params);
+  let next = applyQuotaSnapshot(state, { ...params, wait: null });
   const decision = decideLane(next, {
     safeRequests: params.safeRequests,
+    windows: params.windows || next.quota.windows,
     projectedUsefulAt: params.projectedUsefulAt,
     now,
+    laneBHasWork: params.laneBHasWork,
   });
+  next.quota.lastPlan = decision.plan || decision;
   if (decision.lane === "A" && next.currentLane !== "A") {
     next = recordLaneSwitch(next, next.currentLane, "A", decision.reason, now);
+    next.quota.wait = null;
+    next.idleSafe = false;
+    next.runtimeState = "RUNNING";
+  } else if (decision.lane === "WAIT") {
+    next = applyQuotaFloorTransition(next, {
+      ...params,
+      quotaMode: decision.quotaMode,
+      reason: decision.reason,
+      nextUsefulAt: decision.nextUsefulAt,
+      bindingWindow: decision.bindingWindow,
+      estimatedRequestsNeeded: decision.estimatedRequestsNeeded,
+      now,
+    });
   }
   return { state: next, decision };
 }
@@ -846,6 +1044,8 @@ module.exports = {
   LANE_B_TASKS,
   LANE_B_REGISTRY_IDS,
   EST_CL_REQUESTS_PER_CASE,
+  QUOTA_MODES,
+  BINDING_WINDOWS,
   createInitialState,
   restoreState,
   cloneState,
@@ -857,6 +1057,7 @@ module.exports = {
   applyQuotaSnapshot,
   applyQuotaFloorTransition,
   applyQuotaRecoveryTransition,
+  recordCourtBatchEfficiency,
   recordLaneSwitch,
   acquireLaneALock,
   releaseLaneALock,

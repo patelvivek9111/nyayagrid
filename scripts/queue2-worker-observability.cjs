@@ -112,6 +112,9 @@ function statusLaneFromState(state) {
   if (state?.humanReview?.required) return "HUMAN_REVIEW_REQUIRED";
   if (state?.hold) return "HOLD";
   if (state?.waitingForNetwork) return "WAITING_FOR_NETWORK";
+  if (state?.currentLane === "WAIT" || state?.runtimeState === "WAITING_QUOTA_RESET") {
+    return "WAIT_QUOTA_RESET";
+  }
   if (state?.idleSafe || state?.currentLane === "IDLE_SAFE") return "LANE_B_IDLE_SAFE";
   if (state?.currentLane === "A") return "LANE_A_CL";
   if (state?.currentLane === "B") return "LANE_B_OFFLINE";

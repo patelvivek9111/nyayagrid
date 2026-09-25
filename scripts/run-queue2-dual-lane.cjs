@@ -562,6 +562,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         const remaining = remainingRequestsToFinishCourt(state.laneA);
         const decision = decideLane(state, {
           safeRequests: safe.safe,
+          windows,
           projectedUsefulAt: projected,
           now: started,
         });
@@ -584,6 +585,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             windows,
             projectedUsefulAt: projected,
             now: started,
+            probeCounted: true,
             quotaStateObservedAt: reconciled.quotaStateObservedAt,
             quotaStateSource: reconciled.quotaStateSource,
             quotaStateConfidence: reconciled.quotaStateConfidence,
@@ -596,15 +598,26 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             court: state.laneA.court,
             checkpoint: state.laneA.checkpoint,
             reason: decision.reason,
-            quota: { safeRequests: safe.safe, confidence: reconciled.quotaStateConfidence },
+            quota: {
+              safeRequests: safe.safe,
+              usableRequests: decision.usableRequests,
+              quotaMode: decision.quotaMode,
+              estimatedRequestsNeeded: decision.estimatedRequestsNeeded,
+              confidence: reconciled.quotaStateConfidence,
+            },
           });
           emit("LANE_SWITCH", { lane: "LANE_A_CL", reason: decision.reason, court: state.laneA.court });
         } else {
           state = applyQuotaFloorTransition(state, {
             safeRequests: safe.safe,
             windows,
-            projectedUsefulAt: projected,
+            projectedUsefulAt: decision.nextUsefulAt || projected,
+            nextUsefulAt: decision.nextUsefulAt || projected,
+            quotaMode: decision.quotaMode,
+            bindingWindow: decision.bindingWindow,
+            estimatedRequestsNeeded: decision.estimatedRequestsNeeded,
             now: started,
+            probeCounted: true,
             court: state.laneA.court,
             checkpoint: state.laneA.checkpoint,
             lastSuccessfulExternalId: state.laneA.lastSuccessfulExternalId,
@@ -625,12 +638,17 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             membership: reconciled.membership,
           });
           emit("QUOTA_FLOOR", {
-            lane: "LANE_B_OFFLINE",
+            lane: decision.lane === "WAIT" ? "WAIT_QUOTA_RESET" : "LANE_B_OFFLINE",
             court: state.laneA.court,
             checkpoint: state.laneA.checkpoint,
             reason: decision.reason,
             quota: {
               safeRequests: safe.safe,
+              usableRequests: decision.usableRequests,
+              quotaMode: decision.quotaMode,
+              bindingWindow: decision.bindingWindow,
+              nextUsefulAt: decision.nextUsefulAt,
+              estimatedRequestsNeeded: decision.estimatedRequestsNeeded,
               dayRemaining: windows.day?.remaining,
               confidence: reconciled.quotaStateConfidence,
             },
@@ -640,6 +658,12 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           JSON.stringify({
             tag: "QUOTA_CHECK",
             safe: safe.safe,
+            usableRequests: decision.usableRequests,
+            quotaMode: decision.quotaMode,
+            bindingWindow: decision.bindingWindow,
+            estimatedRequestsNeeded: decision.estimatedRequestsNeeded,
+            requestsPerAuthorityEstimate: decision.requestsPerAuthorityEstimate,
+            nextUsefulAt: decision.nextUsefulAt,
             remainingToFinish: remaining,
             lane: state.currentLane,
             nextCheckAt: state.quota.nextCheckAt,
@@ -718,6 +742,19 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
 
   if (state.humanReview?.required) {
     state.currentLane = "B";
+  } else if (state.currentLane === "WAIT") {
+    console.log(
+      JSON.stringify({
+        tag: "WAIT_QUOTA_RESET",
+        quotaMode: state.quota?.lastPlan?.quotaMode || state.quota?.wait?.quotaMode || "WAIT_MINUTE",
+        bindingWindow: state.quota?.wait?.bindingWindow || null,
+        usableRequests: state.quota?.wait?.usableRequests ?? state.quota?.lastSafeRequests,
+        estimatedRequestsNeeded: state.quota?.wait?.estimatedRequestsNeeded || null,
+        nextUsefulAt: state.quota?.wait?.nextUsefulAt || state.quota?.nextCheckAt,
+        checkpoint: state.laneA.checkpoint,
+        court: state.laneA.court,
+      }),
+    );
   } else if (state.currentLane === "A" && quota.safeRequests >= 1) {
     if (!state.laneA.checkpoint) {
       state = setReview(
@@ -1210,16 +1247,21 @@ async function main() {
     if (!loop) break;
     if (maxCycles > 0 && cycles >= maxCycles) break;
 
-    const nextProbe = state.quota?.nextCheckAt ? new Date(state.quota.nextCheckAt).getTime() : Date.now() + HEARTBEAT_MS;
-    const sleepFor = Math.min(
-      HEARTBEAT_MS,
-      Math.max(5_000, nextProbe - Date.now()),
-    );
+    const nextProbe = state.quota?.wait?.nextUsefulAt
+      ? new Date(state.quota.wait.nextUsefulAt).getTime()
+      : state.quota?.nextCheckAt
+        ? new Date(state.quota.nextCheckAt).getTime()
+        : Date.now() + HEARTBEAT_MS;
+    const sleepFor =
+      state.currentLane === "WAIT"
+        ? Math.min(HEARTBEAT_MS, Math.max(2_000, nextProbe - Date.now()))
+        : Math.min(HEARTBEAT_MS, Math.max(5_000, nextProbe - Date.now()));
     console.log(
       JSON.stringify({
-        tag: "WORKER_IDLE",
+        tag: state.currentLane === "WAIT" ? "WAIT_QUOTA_RESET" : "WORKER_IDLE",
         sleepMs: sleepFor,
         nextQuotaCheckAt: state.quota?.nextCheckAt,
+        nextUsefulAt: state.quota?.wait?.nextUsefulAt || null,
         lane: state.currentLane,
         aiCalls: 0,
       }),
