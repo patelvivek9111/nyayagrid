@@ -34,6 +34,11 @@ const {
   STATUS_LANES,
   HEARTBEAT_INTERVAL_MS,
   STALE_HEARTBEAT_MS,
+  wouldRegressCorpusTotals,
+  protectCorpusTotalsFromRegression,
+  resolveCorpusTotalsForStatus,
+  isCanonicalReportsDir,
+  CANONICAL_REPORTS_DIR,
 } = require("./queue2-worker-observability.cjs");
 
 let passed = 0;
@@ -312,11 +317,86 @@ test("writeObservabilityArtifacts writes status+daily+optional event", () => {
   fs.rmSync(dir, { recursive: true, force: true });
 });
 
+test("anti-regression: stale fixture write cannot regress protected status totals", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "q2-obs-protect-"));
+  const productionLike = buildOperatorStatus({
+    state: createInitialState(),
+    corpus: { authorities: 3008, cases: 1691, clCases: 1646, statutes: 904, regulations: 158, rules: 254 },
+    manifestVersion: 9,
+  });
+  writeObservabilityArtifacts(dir, productionLike, { protectCorpusTotals: true });
+
+  const staleFixture = buildOperatorStatus({
+    state: createInitialState(),
+    corpus: { authorities: 2966, cases: 1649, clCases: 1604, statutes: 904, regulations: 158, rules: 254 },
+    manifestVersion: 1,
+  });
+  const result = writeObservabilityArtifacts(dir, staleFixture, { protectCorpusTotals: true });
+  assert.equal(result.corpusProtectionApplied, true);
+
+  const written = JSON.parse(fs.readFileSync(path.join(dir, "corpus-worker-status.json"), "utf8"));
+  assert.equal(written.corpus.authorities, 3008);
+  assert.equal(written.corpus.cases, 1691);
+  assert.equal(written.corpus.clCases, 1646);
+  assert.equal(written.manifestVersion, 9);
+  assert.equal(wouldRegressCorpusTotals(productionLike, staleFixture), true);
+
+  const protectedMerged = protectCorpusTotalsFromRegression(productionLike, staleFixture);
+  assert.equal(protectedMerged.corpus.authorities, 3008);
+  assert.equal(protectedMerged.manifestVersion, 9);
+
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
+test("tests must not target canonical production reports dir", () => {
+  const tmp = fs.mkdtempSync(path.join(os.tmpdir(), "q2-obs-tmp-"));
+  assert.equal(isCanonicalReportsDir(tmp), false);
+  assert.equal(isCanonicalReportsDir(CANONICAL_REPORTS_DIR), true);
+  // Observability unit tests always use temp dirs — never CANONICAL_REPORTS_DIR.
+  assert.notEqual(path.resolve(tmp), path.resolve(CANONICAL_REPORTS_DIR));
+  fs.rmSync(tmp, { recursive: true, force: true });
+});
+
+test("resolveCorpusTotalsForStatus never invents hardcoded 2966 fallback", () => {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), "q2-obs-resolve-"));
+  const empty = resolveCorpusTotalsForStatus({ reportsDir: dir, corpus: null });
+  assert.equal(empty.source, "unavailable");
+  assert.equal(empty.authorities, null);
+  const explicit = resolveCorpusTotalsForStatus({
+    reportsDir: dir,
+    corpus: { authorities: 3008, cases: 1691, clCases: 1646 },
+  });
+  assert.equal(explicit.source, "explicit");
+  assert.equal(explicit.authorities, 3008);
+  fs.rmSync(dir, { recursive: true, force: true });
+});
+
 test("reconcileLaneAFromJob never invents checkpoint", () => {
   const empty = reconcileLaneAFromJob({ court: "ark", count: 33, target: 45 }, { cl_court: "ark", status: "paused" });
   assert.equal(empty.reconciled, false);
   assert.equal(hasDurableCheckpoint(empty.state), false);
   assert.equal(isPartialLaneA(empty.state), true);
+});
+
+test("canonical status after rebuild matches live floor and WI durable progress", () => {
+  const status = JSON.parse(
+    fs.readFileSync(path.join(CANONICAL_REPORTS_DIR, "corpus-worker-status.json"), "utf8"),
+  );
+  const state = JSON.parse(
+    fs.readFileSync(path.join(CANONICAL_REPORTS_DIR, "queue2-dual-lane-state.json"), "utf8"),
+  );
+  assert.ok(status.corpus.authorities >= 3006);
+  assert.ok(status.corpus.cases >= 1689);
+  assert.ok(status.corpus.clCases >= 1644);
+  assert.ok(status.manifestVersion >= 5);
+  assert.equal(status.currentCount, 44);
+  assert.equal(status.targetCount, 45);
+  assert.equal(status.checkpoint, "cl-opinion-9886466");
+  assert.equal(status.runtimeState, "STOPPED");
+  assert.equal(status.review.humanReviewRequired, false);
+  assert.equal(state.laneA.count, 44);
+  assert.equal(state.laneA.checkpoint, "cl-opinion-9886466");
+  assert.equal(state.humanReview.required, false);
 });
 
 console.log(JSON.stringify({ ok: true, tests: passed }));

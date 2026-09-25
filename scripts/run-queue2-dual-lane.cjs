@@ -58,6 +58,8 @@ const {
   evaluateHumanReviewTriggers,
   statusLaneFromState,
   HEARTBEAT_INTERVAL_MS,
+  resolveCorpusTotalsForStatus,
+  resolveManifestVersionForStatus,
 } = require("./queue2-worker-observability.cjs");
 const { setHumanReview: setReview } = require("./queue2-dual-lane-controller.cjs");
 const {
@@ -317,6 +319,15 @@ function maybeHeartbeat(state, status, { force = false } = {}) {
     checkpoint: status.checkpoint,
   });
 
+  const resolvedCorpus = resolveCorpusTotalsForStatus({
+    reportsDir: reports,
+    corpus: status.corpus || runtime.lastStatus?.corpus || null,
+  });
+  const resolvedManifest = resolveManifestVersionForStatus({
+    reportsDir: reports,
+    state,
+    manifestVersion: status.manifestVersion ?? state.laneA?.manifestVersion,
+  });
   const hbStatus = buildOperatorStatus({
     state,
     currentLane: status.currentLane,
@@ -324,7 +335,8 @@ function maybeHeartbeat(state, status, { force = false } = {}) {
     laneStartedAt: state.laneStartedAt,
     lastHeartbeatAt: state.lastHeartbeatAt,
     today: status.today,
-    corpus: status.corpus,
+    corpus: resolvedCorpus,
+    manifestVersion: resolvedManifest,
     health: status.health,
     now,
   });
@@ -337,6 +349,7 @@ function maybeHeartbeat(state, status, { force = false } = {}) {
       reason: "interval",
       extra: { heartbeat: line, aiCalls: 0, gitPush: false },
     }),
+    protectCorpusTotals: true,
   });
   runtime.lastStatus = hbStatus;
   saveLocalState(state);
@@ -344,6 +357,29 @@ function maybeHeartbeat(state, status, { force = false } = {}) {
 }
 
 function publishStatus(state, extras = {}) {
+  const resolvedCorpus = resolveCorpusTotalsForStatus({
+    reportsDir: reports,
+    corpus: extras.corpus || null,
+  });
+  const resolvedManifest =
+    extras.manifestVersion != null
+      ? extras.manifestVersion
+      : resolveManifestVersionForStatus({
+          reportsDir: reports,
+          state,
+          manifestVersion: state.laneA?.manifestVersion,
+        });
+  // Keep durable state aligned with the best-known live manifest version.
+  if (
+    resolvedManifest != null &&
+    Number(state.laneA?.manifestVersion || 0) < Number(resolvedManifest)
+  ) {
+    state.laneA = { ...state.laneA, manifestVersion: resolvedManifest };
+    state.depthManifestVersion = Math.max(
+      Number(state.depthManifestVersion || 0),
+      Number(resolvedManifest),
+    );
+  }
   const status = buildOperatorStatus({
     state,
     currentLane: extras.currentLane || statusLaneFromState(state),
@@ -354,14 +390,15 @@ function publishStatus(state, extras = {}) {
     laneStartedAt: state.laneStartedAt,
     lastHeartbeatAt: state.lastHeartbeatAt,
     today: extras.today,
-    corpus: extras.corpus || {
-      authorities: 2966,
-      cases: 1649,
-      clCases: 1604,
-      statutes: 904,
-      regulations: 158,
-      rules: 254,
-      authorityGateDeficit: 51,
+    manifestVersion: resolvedManifest,
+    corpus: {
+      authorities: resolvedCorpus.authorities,
+      cases: resolvedCorpus.cases,
+      clCases: resolvedCorpus.clCases,
+      statutes: resolvedCorpus.statutes,
+      regulations: resolvedCorpus.regulations,
+      rules: resolvedCorpus.rules,
+      authorityGateDeficit: resolvedCorpus.authorityGateDeficit,
     },
     health: extras.health || {
       database: "ok",
@@ -382,6 +419,7 @@ function publishStatus(state, extras = {}) {
       nextAction: extras.nextAction,
     },
     event: extras.event || null,
+    protectCorpusTotals: true,
   });
   runtime.lastStatus = status;
   refreshWorkerHeartbeat({

@@ -1,10 +1,10 @@
 # Queue #2 Corpus Worker — Daily Status
 
-Generated: 2026-09-25T13:21:30.049Z (9/25/2026, 9:21:30 AM EDT)
+Generated: 2026-09-25T14:20:00.165Z (9/25/2026, 10:20:00 AM EDT)
 Queue: #2 OPEN | #9 CLOSED | #3 NOT OPEN | FEATURE_AGENTS=0
 
 ## CURRENT LANE
-LANE_B_IDLE_SAFE
+STOPPED
 
 ## CURRENT TASK
 NONE
@@ -32,10 +32,10 @@ quotaConfidence: AUTHORITATIVE_API source=probe.limits
 429: 0
 
 ## OFFLINE WORK
-Lane B tasks active when CL floor blocks useful ingest. CL HTTP during Lane B must be 0.
+Canonical status rebuilt from live DB snapshot (read-only). Worker stopped. Lock absent.
 
 ## CORPUS / DEPTH
-authorities=2966 cases=1649 clCases=1604 statutes=904 regs=158 rules=254
+authorities=3008 cases=1691 clCases=1646 statutes=904 regs=158 rules=254
 authorityGateDeficit=51
 
 ## CITATION GRAPH
@@ -48,4 +48,4 @@ database=ok orphans=0 duplicateSourceIds=0 retrieval=ok FEATURE_AGENTS=0
 Automatically resume WI (44/45) when FINISH_TARGET quota is available; checkpoint=cl-opinion-9886466.
 
 ## HUMAN REVIEW
-REQUIRED: none
+not required

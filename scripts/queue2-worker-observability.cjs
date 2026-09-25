@@ -92,6 +92,180 @@ const STALE_HEARTBEAT_MS = 45 * 60 * 1000;
 const REQ_PER_AUTH_THRESHOLD = 3.0;
 const REQ_PER_AUTH_STREAK = 3;
 
+/** Canonical production reports directory — never overwrite with fixture/stale totals. */
+const CANONICAL_REPORTS_DIR = path.resolve(
+  path.join(__dirname, "..", "packages", "research", "corpus", "reports"),
+);
+const CANONICAL_STATUS_FILENAME = "corpus-worker-status.json";
+const CANONICAL_SNAPSHOT_FILENAME = "queue2-lane-a-corpus-snapshot.json";
+const CANONICAL_MANIFEST_FILENAME = "queue2-lane-a-depth-manifest.json";
+
+function isCanonicalReportsDir(reportsDir) {
+  if (!reportsDir) return false;
+  try {
+    return path.resolve(reportsDir) === CANONICAL_REPORTS_DIR;
+  } catch {
+    return false;
+  }
+}
+
+function numOrNull(v) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : null;
+}
+
+function corpusMetricFloor(statusOrCorpus) {
+  const c = statusOrCorpus?.corpus || statusOrCorpus || {};
+  return {
+    authorities: numOrNull(c.authorities) ?? 0,
+    cases: numOrNull(c.cases) ?? 0,
+    clCases: numOrNull(c.clCases ?? c.cl_cases) ?? 0,
+    statutes: numOrNull(c.statutes),
+    regulations: numOrNull(c.regulations ?? c.regs),
+    rules: numOrNull(c.rules),
+    authorityGateDeficit: numOrNull(c.authorityGateDeficit),
+    manifestVersion: numOrNull(statusOrCorpus?.manifestVersion) ?? 0,
+  };
+}
+
+/**
+ * True when incoming corpus/manifest totals would regress below an existing floor.
+ * Null/missing incoming metrics are treated as regression when existing > 0.
+ */
+function wouldRegressCorpusTotals(existingStatus, incomingStatus) {
+  const a = corpusMetricFloor(existingStatus);
+  const incomingCorpus = incomingStatus?.corpus || {};
+  const bAuth = numOrNull(incomingCorpus.authorities);
+  const bCases = numOrNull(incomingCorpus.cases);
+  const bCl = numOrNull(incomingCorpus.clCases ?? incomingCorpus.cl_cases);
+  const bMan = numOrNull(incomingStatus?.manifestVersion);
+  if (a.authorities > 0 && (bAuth == null || bAuth < a.authorities)) return true;
+  if (a.cases > 0 && (bCases == null || bCases < a.cases)) return true;
+  if (a.clCases > 0 && (bCl == null || bCl < a.clCases)) return true;
+  if (a.manifestVersion > 0 && (bMan == null || bMan < a.manifestVersion)) return true;
+  return false;
+}
+
+function maxMetric(a, b) {
+  const na = numOrNull(a);
+  const nb = numOrNull(b);
+  if (na == null) return nb;
+  if (nb == null) return na;
+  return Math.max(na, nb);
+}
+
+/**
+ * Preserve monotonic corpus totals / manifestVersion when merging into canonical status.
+ */
+function protectCorpusTotalsFromRegression(existingStatus, incomingStatus) {
+  if (!existingStatus || !incomingStatus) return incomingStatus;
+  if (!wouldRegressCorpusTotals(existingStatus, incomingStatus)) return incomingStatus;
+  const prev = existingStatus.corpus || {};
+  const next = incomingStatus.corpus || {};
+  return {
+    ...incomingStatus,
+    manifestVersion: maxMetric(existingStatus.manifestVersion, incomingStatus.manifestVersion),
+    corpus: {
+      authorities: maxMetric(prev.authorities, next.authorities),
+      cases: maxMetric(prev.cases, next.cases),
+      clCases: maxMetric(prev.clCases ?? prev.cl_cases, next.clCases ?? next.cl_cases),
+      statutes: maxMetric(prev.statutes, next.statutes),
+      regulations: maxMetric(prev.regulations ?? prev.regs, next.regulations ?? next.regs),
+      rules: maxMetric(prev.rules, next.rules),
+      authorityGateDeficit:
+        numOrNull(next.authorityGateDeficit) != null
+          ? next.authorityGateDeficit
+          : prev.authorityGateDeficit ?? null,
+    },
+  };
+}
+
+function readJsonIfExists(filePath) {
+  try {
+    if (!fs.existsSync(filePath)) return null;
+    return JSON.parse(fs.readFileSync(filePath, "utf8"));
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Resolve corpus totals for status writes.
+ * Prefer live extras → prior status → lane-a snapshot. NEVER invent stale hardcoded totals.
+ */
+function resolveCorpusTotalsForStatus(params = {}) {
+  const reportsDir = params.reportsDir || CANONICAL_REPORTS_DIR;
+  const explicit = params.corpus || null;
+  if (explicit && numOrNull(explicit.authorities) != null && numOrNull(explicit.cases) != null) {
+    return {
+      authorities: Number(explicit.authorities),
+      cases: Number(explicit.cases),
+      clCases: numOrNull(explicit.clCases ?? explicit.cl_cases),
+      statutes: numOrNull(explicit.statutes),
+      regulations: numOrNull(explicit.regulations ?? explicit.regs),
+      rules: numOrNull(explicit.rules),
+      authorityGateDeficit: numOrNull(explicit.authorityGateDeficit),
+      source: "explicit",
+    };
+  }
+
+  const prior = readJsonIfExists(path.join(reportsDir, CANONICAL_STATUS_FILENAME));
+  if (prior?.corpus && numOrNull(prior.corpus.authorities) != null) {
+    return {
+      authorities: Number(prior.corpus.authorities),
+      cases: Number(prior.corpus.cases),
+      clCases: numOrNull(prior.corpus.clCases ?? prior.corpus.cl_cases),
+      statutes: numOrNull(prior.corpus.statutes),
+      regulations: numOrNull(prior.corpus.regulations),
+      rules: numOrNull(prior.corpus.rules),
+      authorityGateDeficit: numOrNull(prior.corpus.authorityGateDeficit),
+      source: "prior_status",
+      manifestVersion: numOrNull(prior.manifestVersion),
+    };
+  }
+
+  const snapshot = readJsonIfExists(path.join(reportsDir, CANONICAL_SNAPSHOT_FILENAME));
+  const snapCorpus = snapshot?.corpus;
+  if (snapCorpus && numOrNull(snapCorpus.authorities) != null) {
+    return {
+      authorities: Number(snapCorpus.authorities),
+      cases: Number(snapCorpus.cases),
+      clCases: numOrNull(snapCorpus.cl_cases ?? snapCorpus.clCases),
+      statutes: numOrNull(snapCorpus.statutes),
+      regulations: numOrNull(snapCorpus.regulations),
+      rules: numOrNull(snapCorpus.rules),
+      authorityGateDeficit: numOrNull(params.authorityGateDeficit),
+      source: "lane_a_snapshot",
+    };
+  }
+
+  return {
+    authorities: null,
+    cases: null,
+    clCases: null,
+    statutes: null,
+    regulations: null,
+    rules: null,
+    authorityGateDeficit: null,
+    source: "unavailable",
+  };
+}
+
+function resolveManifestVersionForStatus(params = {}) {
+  const reportsDir = params.reportsDir || CANONICAL_REPORTS_DIR;
+  const candidates = [
+    numOrNull(params.manifestVersion),
+    numOrNull(params.state?.laneA?.manifestVersion),
+    numOrNull(params.state?.depthManifestVersion),
+  ];
+  const manifest = readJsonIfExists(path.join(reportsDir, CANONICAL_MANIFEST_FILENAME));
+  if (manifest) candidates.push(numOrNull(manifest.version));
+  const prior = readJsonIfExists(path.join(reportsDir, CANONICAL_STATUS_FILENAME));
+  if (prior) candidates.push(numOrNull(prior.manifestVersion));
+  const nums = candidates.filter((n) => n != null && n >= 0);
+  return nums.length ? Math.max(...nums) : null;
+}
+
 function formatEt(isoOrDate) {
   const d = isoOrDate instanceof Date ? isoOrDate : new Date(isoOrDate);
   if (Number.isNaN(d.getTime())) return String(isoOrDate || "");
@@ -296,7 +470,10 @@ function buildOperatorStatus(params = {}) {
     lastSuccessfulAt: laneA.lastSuccessfulAt || null,
     runner: laneA.runner || "staging-cl-batch-job",
     mappingStatus: laneA.mappingStatus || null,
-    manifestVersion: laneA.manifestVersion ?? state.depthManifestVersion ?? null,
+    manifestVersion:
+      params.manifestVersion != null
+        ? params.manifestVersion
+        : laneA.manifestVersion ?? state.depthManifestVersion ?? null,
     jobStatus: laneA.jobStatus || null,
     laneStartedAt: params.laneStartedAt || state.laneStartedAt || null,
     lastUpdatedAt: nowIso,
@@ -512,16 +689,56 @@ function shouldEmitHeartbeat(lastHeartbeatAt, now = new Date(), intervalMs = HEA
 
 /**
  * Persist operator artifacts. Local continuous write; caller decides git push cadence.
+ *
+ * Anti-regression: when writing into the canonical production reports dir (or when
+ * opts.protectCorpusTotals is true), corpus totals + manifestVersion never decrease
+ * solely because a heartbeat/debug/test path omitted live corpus.
+ * Tests MUST pass a temp reportsDir — never the canonical path.
  */
 function writeObservabilityArtifacts(reportsDir, status, opts = {}) {
   fs.mkdirSync(reportsDir, { recursive: true });
   const statusPath = path.join(reportsDir, "corpus-worker-status.json");
   const dailyPath = path.join(reportsDir, "corpus-worker-daily.md");
   const eventsPath = path.join(reportsDir, "corpus-worker-events.jsonl");
-  fs.writeFileSync(statusPath, JSON.stringify(status, null, 2));
-  fs.writeFileSync(dailyPath, renderDailyMarkdown(status, opts.dailyExtras || {}));
+
+  const protect =
+    opts.protectCorpusTotals === true ||
+    (opts.protectCorpusTotals !== false && isCanonicalReportsDir(reportsDir));
+
+  let toWrite = status;
+  if (protect && fs.existsSync(statusPath)) {
+    const existing = readJsonIfExists(statusPath);
+    if (existing && wouldRegressCorpusTotals(existing, status)) {
+      toWrite = protectCorpusTotalsFromRegression(existing, status);
+      toWrite = {
+        ...toWrite,
+        _corpusProtection: {
+          applied: true,
+          reason: "refused_stale_or_fixture_regression",
+          prior: {
+            authorities: existing.corpus?.authorities,
+            cases: existing.corpus?.cases,
+            clCases: existing.corpus?.clCases,
+            manifestVersion: existing.manifestVersion,
+          },
+        },
+      };
+    }
+  }
+
+  // Strip internal marker before persist (keep evidence in return value only).
+  const { _corpusProtection, ...persisted } = toWrite;
+  fs.writeFileSync(statusPath, JSON.stringify(persisted, null, 2));
+  fs.writeFileSync(dailyPath, renderDailyMarkdown(persisted, opts.dailyExtras || {}));
   if (opts.event) appendEventLine(eventsPath, opts.event);
-  return { statusPath, dailyPath, eventsPath };
+  return {
+    statusPath,
+    dailyPath,
+    eventsPath,
+    status: persisted,
+    corpusProtectionApplied: Boolean(_corpusProtection?.applied),
+    corpusProtection: _corpusProtection || null,
+  };
 }
 
 module.exports = {
@@ -533,6 +750,8 @@ module.exports = {
   STALE_HEARTBEAT_MS,
   REQ_PER_AUTH_THRESHOLD,
   REQ_PER_AUTH_STREAK,
+  CANONICAL_REPORTS_DIR,
+  CANONICAL_STATUS_FILENAME,
   formatEt,
   statusLaneFromState,
   isPartialLaneA,
@@ -549,4 +768,10 @@ module.exports = {
   formatHeartbeat,
   shouldEmitHeartbeat,
   writeObservabilityArtifacts,
+  isCanonicalReportsDir,
+  wouldRegressCorpusTotals,
+  protectCorpusTotalsFromRegression,
+  resolveCorpusTotalsForStatus,
+  resolveManifestVersionForStatus,
+  corpusMetricFloor,
 };
