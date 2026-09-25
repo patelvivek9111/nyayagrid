@@ -36,7 +36,11 @@ function resolveLaneABatchBounds(params = {}) {
   const resourceMaxReq = Math.max(1, Number(params.resourceMaxClRequests) || 40);
   const canaryRequired = Boolean(params.canaryRequired);
   const canaryAuthCap = Math.max(1, Math.min(3, Number(params.maxQualifyingAuthorities) || 3));
-  const canaryReqCap = Math.max(1, Math.min(12, Number(params.maxClRequests) || 12));
+  // Stabilization canary: HARD cap <=5 current-session CL requests (not historical job totals).
+  const canaryReqCap = Math.max(
+    1,
+    Math.min(5, Number(params.maxClRequests != null ? params.maxClRequests : 5) || 5),
+  );
 
   let maxReq = Math.min(usable > 0 ? usable : resourceMaxReq, resourceMaxReq);
   let maxAuth = Math.min(remaining > 0 ? remaining : resourceMaxAuth, resourceMaxAuth);
@@ -65,91 +69,109 @@ function resolveLaneABatchBounds(params = {}) {
 
 /**
  * Extract the authoritative Lane A runner payload from multi-line stdout.
- * run-staging-cl-batch-job prints upload/start/poll lines; the result is in fileResult.
+ * Prefer terminal fileResult; never let STARTED/clCourt noise win over completion.
  */
 function parseLaneARunnerOutput(stdout) {
-  const text = String(stdout || "");
-  const lines = text
-    .split(/\r?\n/)
-    .map((l) => l.trim())
-    .filter(Boolean);
-  const objects = [];
-  for (const line of lines) {
-    try {
-      objects.push(JSON.parse(line));
-    } catch {
-      /* ignore non-json */
-    }
-  }
-  for (let i = objects.length - 1; i >= 0; i -= 1) {
-    const o = objects[i];
-    if (o && o.fileResult && typeof o.fileResult === "object") {
-      return {
-        ok: o.fileResult.ok !== false,
-        raw: o,
-        result: o.fileResult,
-        source: "fileResult",
-      };
-    }
-  }
-  for (let i = objects.length - 1; i >= 0; i -= 1) {
-    const o = objects[i];
-    if (o && (o.status || o.job || o.clCourt || o.reason)) {
-      return { ok: o.ok !== false, raw: o, result: o, source: "lastJson" };
-    }
-  }
-  return { ok: false, raw: null, result: null, source: "unparsed", objects };
+  const { parseLaneARunnerStdoutPreferTerminal } = require("./queue2-lane-a-child-lifecycle.cjs");
+  return parseLaneARunnerStdoutPreferTerminal(stdout);
 }
 
 /**
  * Classify Lane A runner outcome for control-plane decisions.
- * Note: already_completed is NOT automatically zero-progress — reconcile against live DB.
+ * STARTED/RUNNING are NON-TERMINAL — never zero-progress / canary-fail from them.
  */
 function classifyLaneABatchResult(params = {}) {
+  const {
+    mapRunnerResultToLifecycleState,
+    isTerminalRunnerState,
+    isNonTerminalRunnerState,
+    LANE_A_RUNNER_STATES,
+  } = require("./queue2-lane-a-child-lifecycle.cjs");
+
   const priorCheckpoint = params.priorCheckpoint || null;
   const priorCount = Number(params.priorCount) || 0;
   const target = Number(params.target) || 0;
   const parsed = params.parsed || parseLaneARunnerOutput(params.stdout || "");
   const result = parsed.result || {};
+  const lifecycleState = parsed.lifecycleState || mapRunnerResultToLifecycleState(result);
+  const terminal =
+    parsed.terminal != null ? Boolean(parsed.terminal) : isTerminalRunnerState(lifecycleState);
+  const nonTerminal = isNonTerminalRunnerState(lifecycleState) || !terminal;
+
   const status = result.status || result.job?.status || null;
   const reason = result.reason || null;
   const existingJob = result.job && typeof result.job === "object" ? result.job : null;
-  const apiCalls = Number(result.apiCalls ?? result.api_calls ?? existingJob?.api_calls ?? 0) || 0;
-  // Current-run batch delta vs historical durable job totals — never conflate.
-  const runnerBatchImported =
-    reason === "stale_running_guard"
+  // Session / current-batch calls only — never treat historical job.api_calls as session.
+  const sessionApiCalls =
+    Number(result.sessionApiCalls ?? result.batchApiCalls ?? result.apiCallsDelta) || 0;
+  const historicalJobApiCalls = Number(
+    existingJob?.api_calls ?? existingJob?.apiCalls ?? result.historicalApiCalls,
+  );
+  const rawResultApiCalls = Number(result.apiCalls ?? result.api_calls);
+  const apiCalls = nonTerminal
+    ? 0
+    : sessionApiCalls ||
+      (Number.isFinite(rawResultApiCalls) && !existingJob ? rawResultApiCalls : sessionApiCalls);
+
+  const runnerBatchImported = nonTerminal
+    ? 0
+    : reason === "stale_running_guard"
       ? 0
       : Number(result.batchImported ?? result.items_imported_delta ?? 0) || 0;
-  const existingJobItemsImported = Number(
-    existingJob?.items_imported ?? existingJob?.itemsImported ?? result.items_imported ?? result.itemsImported ?? 0,
-  ) || 0;
-  const itemsImported =
-    reason === "stale_running_guard" ? existingJobItemsImported : runnerBatchImported || existingJobItemsImported;
-  const nextCheckpoint =
-    result.last_successful_external_id ||
-    result.cursor ||
-    existingJob?.last_successful_external_id ||
-    existingJob?.cursor ||
-    null;
-  const checkpointAdvanced = Boolean(nextCheckpoint && nextCheckpoint !== priorCheckpoint);
-  const countAdvanced = runnerBatchImported > 0 && itemsImported > priorCount;
-  const alreadyCompleted = reason === "already_completed" || (status === "completed" && apiCalls === 0 && itemsImported > 0);
-  const staleRunningGuard = reason === "stale_running_guard";
-  // True zero-progress excludes already_completed and stale_running_guard (needs job reconcile).
-  const noProgress =
-    !alreadyCompleted &&
-    !staleRunningGuard &&
-    apiCalls === 0 &&
-    !checkpointAdvanced &&
-    !countAdvanced &&
-    status !== "completed";
+  const existingJobItemsImported =
+    Number(
+      existingJob?.items_imported ??
+        existingJob?.itemsImported ??
+        (reason === "stale_running_guard" ? result.items_imported ?? result.itemsImported : 0) ??
+        0,
+    ) || 0;
+  const absoluteImported =
+    Number(result.items_imported ?? result.itemsImported ?? 0) || 0;
+  const itemsImported = nonTerminal
+    ? 0
+    : reason === "stale_running_guard"
+      ? existingJobItemsImported
+      : runnerBatchImported || absoluteImported;
+  const nextCheckpoint = nonTerminal
+    ? priorCheckpoint
+    : result.last_successful_external_id ||
+      result.cursor ||
+      existingJob?.last_successful_external_id ||
+      existingJob?.cursor ||
+      null;
+  const checkpointAdvanced =
+    !nonTerminal && Boolean(nextCheckpoint && nextCheckpoint !== priorCheckpoint);
+  const countAdvanced =
+    !nonTerminal && (runnerBatchImported > 0 || (absoluteImported > 0 && absoluteImported > priorCount));
+  const alreadyCompleted =
+    !nonTerminal &&
+    (reason === "already_completed" ||
+      (status === "completed" && apiCalls === 0 && itemsImported > 0));
+  const staleRunningGuard = !nonTerminal && reason === "stale_running_guard";
+
+  // STARTED/RUNNING can NEVER be zero progress.
+  const noProgress = nonTerminal
+    ? false
+    : !alreadyCompleted &&
+      !staleRunningGuard &&
+      apiCalls === 0 &&
+      !checkpointAdvanced &&
+      !countAdvanced &&
+      status !== "completed" &&
+      lifecycleState !== LANE_A_RUNNER_STATES.QUOTA_PAUSED;
 
   return {
-    ok: parsed.ok !== false && !staleRunningGuard,
+    ok: nonTerminal ? true : parsed.ok !== false && !staleRunningGuard,
     parsed,
-    status,
-    reason,
+    status: nonTerminal ? lifecycleState : status,
+    reason: nonTerminal ? lifecycleState : reason,
+    lifecycleState,
+    terminal,
+    nonTerminal,
+    pid: result.pid || parsed.pid || null,
     apiCalls,
+    sessionApiCalls,
+    historicalJobApiCalls: Number.isFinite(historicalJobApiCalls) ? historicalJobApiCalls : null,
     itemsImported,
     runnerBatchImported,
     existingJobItemsImported,
@@ -161,7 +183,7 @@ function classifyLaneABatchResult(params = {}) {
     alreadyCompleted,
     noProgress,
     remainingCases: Math.max(0, target - priorCount),
-    productive: checkpointAdvanced || countAdvanced || apiCalls > 0,
+    productive: !nonTerminal && (checkpointAdvanced || countAdvanced || apiCalls > 0),
     runnerInvoked: true,
   };
 }
@@ -394,20 +416,33 @@ function reconcileLaneACountSources(params = {}) {
 
 /**
  * Decide whether zero-progress human review should fire.
+ * Never raise on STARTED/RUNNING / non-terminal classification.
  */
 function shouldRaiseLaneAZeroProgress(params = {}) {
   const classified = params.classified || {};
   const reconciled = params.reconciled || {};
+  const { mayEvaluateLaneAZeroProgress } = require("./queue2-lane-a-child-lifecycle.cjs");
+
+  if (classified.nonTerminal || classified.terminal === false) return false;
+  if (classified.lifecycleState === "STARTED" || classified.lifecycleState === "RUNNING") return false;
+
+  const gate = mayEvaluateLaneAZeroProgress({
+    terminal: classified.terminal === true,
+    freshDbReconciled: Boolean(params.freshDbReconciled ?? reconciled.freshDbReconciled),
+    jobRowRefreshed: Boolean(params.jobRowRefreshed ?? reconciled.jobRowRefreshed),
+    currentBatchRequestCount:
+      params.currentBatchRequestCount ??
+      classified.sessionApiCalls ??
+      classified.apiCalls,
+  });
+  if (!gate.ok) return false;
+
   if (reconciled.classification === "TARGET_ALREADY_COMPLETE") return false;
   if (classified.alreadyCompleted && reconciled.targetSatisfied) return false;
   if (classified.alreadyCompleted && reconciled.classification === "RECONCILIATION_FAILED") return false;
   if (!reconciled.targetSatisfied && classified.noProgress && classified.runnerInvoked) return true;
-  if (
-    !reconciled.targetSatisfied &&
-    classified.alreadyCompleted &&
-    reconciled.ok === false
-  ) {
-    return false; // reconciliation failure uses LANE_A_COUNT_RECONCILIATION_FAILED instead
+  if (!reconciled.targetSatisfied && classified.alreadyCompleted && reconciled.ok === false) {
+    return false;
   }
   return Boolean(classified.noProgress && !reconciled.targetSatisfied);
 }

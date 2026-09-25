@@ -191,7 +191,7 @@ test("H: canary resumes from durable job state with caps", () => {
   const bounds = resolveLaneABatchBounds({
     canaryRequired: true,
     maxQualifyingAuthorities: 3,
-    maxClRequests: 12,
+    maxClRequests: 5,
     remainingAuthorities: 25,
     usableRequests: 28,
     requestsPerAuthorityEstimate: 2.3,

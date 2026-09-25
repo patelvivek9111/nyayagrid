@@ -135,7 +135,7 @@ test("MI READY first-start fixture: Lane A MICRO/FULL, not DAY_BLOCKED, no missi
     checkpoint: null,
   });
   assert.ok(bounds.authorities <= 3);
-  assert.ok(bounds.maxClRequests <= 12);
+  assert.ok(bounds.maxClRequests <= 5);
   assert.equal(bounds.initialStart, true);
 });
 
@@ -228,7 +228,7 @@ test("quota F: canary cap reduces otherwise larger batch", () => {
     resourceMaxClRequests: 40,
   });
   assert.ok(withCanary.authorities <= 3);
-  assert.ok(withCanary.maxClRequests <= 12);
+  assert.ok(withCanary.maxClRequests <= 5);
   assert.ok(withCanary.authorities < without.authorities || without.authorities <= 3);
 });
 

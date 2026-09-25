@@ -9,6 +9,7 @@ const path = require("node:path");
 
 const STATUS_LANES = Object.freeze([
   "LANE_A_CL",
+  "LANE_A_RUNNING",
   "LANE_B_OFFLINE",
   "LANE_B_IDLE_SAFE",
   "QUOTA_CHECK",
@@ -22,6 +23,7 @@ const STATUS_LANES = Object.freeze([
 
 const RUNTIME_STATES = Object.freeze([
   "RUNNING",
+  "LANE_A_RUNNING",
   "IDLE_SAFE",
   "WAITING_FOR_NETWORK",
   "SUSPENDED_OR_OFFLINE",
@@ -405,6 +407,7 @@ function statusLaneFromState(state) {
   if (state?.humanReview?.required) return "HUMAN_REVIEW_REQUIRED";
   if (state?.hold) return "HOLD";
   if (state?.waitingForNetwork) return "WAITING_FOR_NETWORK";
+  if (state?.laneAChild && !state.laneAChild.terminal) return "LANE_A_RUNNING";
   // Active lane labels win over a stale STOPPED runtimeState left in durable files.
   if (state?.currentLane === "A") return "LANE_A_CL";
   if (state?.currentLane === "WAIT" || state?.runtimeState === "WAITING_QUOTA_RESET") {

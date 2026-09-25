@@ -118,6 +118,17 @@ const {
   JOB_CLASSIFICATIONS,
 } = require("./queue2-existing-job-reconcile.cjs");
 const {
+  LANE_A_RUNNER_STATES,
+  CANARY_MAX_SESSION_CL_REQUESTS,
+  createEmptySessionQuota,
+  createLaneAChildRecord,
+  mayLaunchLaneAChild,
+  markLaneAChildTerminal,
+  isFreshPostRunDbEvidence,
+  updateSessionQuotaAccounting,
+  evaluateCanaryAfterTerminal,
+} = require("./queue2-lane-a-child-lifecycle.cjs");
+const {
   formatMorningStartupSummary,
   formatWatchdogTerminalLine,
   runWatchdogCycle,
@@ -1008,6 +1019,30 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         reason: HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
       });
     } else {
+      const launchGate = mayLaunchLaneAChild(state, {
+        processAlive: process.env.QUEUE2_MOCK_LANE_A_CHILD_ALIVE === "1",
+        aliveOverride:
+          process.env.QUEUE2_MOCK_LANE_A_CHILD_ALIVE === "0"
+            ? false
+            : process.env.QUEUE2_MOCK_LANE_A_CHILD_ALIVE === "1"
+              ? true
+              : undefined,
+      });
+      if (!launchGate.ok) {
+        console.log(
+          JSON.stringify({
+            tag: "LANE_A_SINGLE_FLIGHT",
+            blocked: true,
+            reason: launchGate.reason,
+            pid: launchGate.pid,
+            court: launchGate.court,
+          }),
+        );
+        state.currentLane = "A";
+        state.runtimeState = "LANE_A_RUNNING";
+        state.idleSafe = false;
+        // Do not spawn; do not Lane B; do not zero-progress.
+      } else {
       const lock = acquireLaneALock(state, "dual-lane-runner", started);
       if (!lock.ok) {
         console.log(JSON.stringify({ tag: "LANE_A_CL", blocked: true, reason: lock.reason }));
@@ -1029,13 +1064,21 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           reason: initialStart ? "initial_start" : "resume",
         });
         state.laneARunnerStartedAt = new Date().toISOString();
+        state.sessionQuota = state.sessionQuota || createEmptySessionQuota();
         try {
           const priorCheckpoint = state.laneA.checkpoint;
           const priorCount = Number(state.laneA.count) || 0;
+          const canaryMaxCl =
+            state.canaryMode === "CANARY_REQUIRED"
+              ? Math.min(
+                  CANARY_MAX_SESSION_CL_REQUESTS,
+                  Number(state.canary?.maxClRequests || CANARY_MAX_SESSION_CL_REQUESTS),
+                )
+              : Number(state.canary?.maxClRequests || 12);
           const batchBounds = resolveLaneABatchBounds({
             canaryRequired: state.canaryMode === "CANARY_REQUIRED",
             maxQualifyingAuthorities: Number(state.canary?.maxQualifyingAuthorities || 3),
-            maxClRequests: Number(state.canary?.maxClRequests || 12),
+            maxClRequests: canaryMaxCl,
             remainingAuthorities: remainingCasesToFinish(state.laneA),
             usableRequests:
               Number(state.quota?.lastPlan?.microBatchMaxRequests) ||
@@ -1047,10 +1090,6 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             resourceMaxClRequests: 40,
             checkpoint: state.laneA.checkpoint,
           });
-          const raw = runLaneA(state, {
-            runner: process.env.QUEUE2_MOCK_LANE_A_RUNNER === "1" ? runtime.mockLaneARunner : null,
-            batchSize: batchBounds.batchSize,
-          });
           console.log(
             JSON.stringify({
               tag: "LANE_A_BATCH_BOUNDS",
@@ -1061,24 +1100,97 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
               canaryRequired: state.canaryMode === "CANARY_REQUIRED",
             }),
           );
+          const raw = runLaneA(state, {
+            runner: process.env.QUEUE2_MOCK_LANE_A_RUNNER === "1" ? runtime.mockLaneARunner : null,
+            batchSize: batchBounds.batchSize,
+          });
           const classified = classifyLaneABatchResult({
             stdout: raw?.stdout || "",
             priorCheckpoint,
             priorCount,
             target: state.laneA.target,
           });
-          // Post-run live DB refresh BEFORE watchdog / complete / canary decisions.
-          // Mandatory when stale_running_guard or an existing job is present.
-          let liveDb = queryLiveLaneACourtCounts(state.laneA.court, {
-            query: process.env.QUEUE2_MOCK_LANE_A_DB === "1" ? runtime.mockLaneADbQuery : null,
-          });
-          if (
-            !liveDb &&
-            (classified.staleRunningGuard || classified.existingJob) &&
-            typeof runtime.fetchLiveLaneACourtCounts === "function"
-          ) {
-            liveDb = runtime.fetchLiveLaneACourtCounts({ court: state.laneA.court }) || null;
+
+          // Persist single-flight child ownership from STARTED / pid.
+          if (classified.pid || classified.lifecycleState === LANE_A_RUNNER_STATES.STARTED) {
+            state.laneAChild = createLaneAChildRecord({
+              pid: classified.pid,
+              court: state.laneA.court,
+              workerId: WORKER_ID,
+              codeFingerprint: runtime.codeFingerprint,
+              expectedMaxAuthorities: batchBounds.authorities,
+              expectedMaxClRequests: batchBounds.maxClRequests,
+              now: new Date(state.laneARunnerStartedAt),
+            });
+            state.laneAChild.lifecycleState = classified.lifecycleState;
+            state.runtimeState = "LANE_A_RUNNING";
+            state.currentLane = "A";
+            state.idleSafe = false;
           }
+
+          // NON-TERMINAL: do not reconcile as zero-progress / canary fail / count fail.
+          if (classified.nonTerminal || classified.terminal === false) {
+            console.log(
+              JSON.stringify({
+                tag: "LANE_A_CHILD_NON_TERMINAL",
+                lifecycleState: classified.lifecycleState,
+                pid: classified.pid,
+                terminal: false,
+                zeroProgress: false,
+              }),
+            );
+            emit("LANE_A_RUNNER_START", {
+              lane: "LANE_A_RUNNING",
+              court: state.laneA.court,
+              checkpoint: state.laneA.checkpoint,
+              reason: classified.lifecycleState,
+              extra: { pid: classified.pid, terminal: false },
+            });
+            laneAResult = {
+              classified,
+              nonTerminal: true,
+              liveDb: null,
+              postRunDbRefreshed: false,
+            };
+            // Skip terminal classification path entirely.
+          } else {
+          const runnerTerminalAt = new Date().toISOString();
+          state = markLaneAChildTerminal(state, {
+            lifecycleState: classified.lifecycleState,
+            now: runnerTerminalAt,
+            exitCode: raw?.statusCode,
+          });
+
+          // Post-run live DB refresh — must be AFTER terminal; reject stale cache.
+          let liveDb = null;
+          if (typeof runtime.fetchLiveLaneACourtCounts === "function") {
+            liveDb = runtime.fetchLiveLaneACourtCounts({
+              court: state.laneA.court,
+              after: runnerTerminalAt,
+            }) || null;
+          }
+          if (!liveDb) {
+            liveDb = queryLiveLaneACourtCounts(state.laneA.court, {
+              query: process.env.QUEUE2_MOCK_LANE_A_DB === "1" ? runtime.mockLaneADbQuery : null,
+            });
+          }
+          const freshness = isFreshPostRunDbEvidence({
+            liveDb,
+            dbEvidenceObservedAt: liveDb?.generatedAt || liveDb?.observedAt || liveDb?.dbEvidenceObservedAt,
+            runnerTerminalAt,
+            laneARunnerStartedAt: state.laneARunnerStartedAt,
+          });
+          if (!freshness.ok) {
+            liveDb = null; // refuse stale cached evidence labeled as post-run
+          }
+
+          // Session request accounting (exclude historical job totals).
+          state.sessionQuota = updateSessionQuotaAccounting(state.sessionQuota, {
+            historicalJobApiCalls: classified.historicalJobApiCalls,
+            sessionClRequestDelta: classified.sessionApiCalls || classified.apiCalls || 0,
+            productive: classified.productive,
+          });
+
           const manifest = loadManifestForSelection();
           const manifestRow = (manifest.targets || []).find(
             (t) => (t.preferredCourts || [])[0] === state.laneA.court || t.jurisdiction === state.laneA.jurisdiction,
@@ -1093,7 +1205,11 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             alreadyCompleted: classified.alreadyCompleted,
             staleRunningGuard: classified.staleRunningGuard,
             existingJob: classified.existingJob,
-            requireLiveDb: Boolean(classified.staleRunningGuard || classified.existingJob),
+            requireLiveDb: Boolean(
+              classified.staleRunningGuard ||
+                classified.existingJob ||
+                state.canaryMode === "CANARY_REQUIRED",
+            ),
             target: state.laneA.target,
             db: liveDb
               ? {
@@ -1109,7 +1225,30 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
               chunkHealthy: true,
             },
           });
+          reconciled.freshDbReconciled = Boolean(freshness.ok && liveDb);
+          reconciled.jobRowRefreshed = Boolean(classified.existingJob || classified.status);
+          reconciled.dbEvidenceObservedAt = freshness.dbEvidenceObservedAt || null;
+          reconciled.runnerTerminalAt = runnerTerminalAt;
 
+          if (!freshness.ok && (classified.staleRunningGuard || state.canaryMode === "CANARY_REQUIRED")) {
+            state = setReview(
+              state,
+              HUMAN_REVIEW_REASONS.LIVE_DB_RECONCILIATION_UNAVAILABLE,
+              freshness.reason || "stale_or_missing_post_run_db_evidence",
+            );
+            human = true;
+            state.idleSafe = false;
+            laneAResult = {
+              classified,
+              reconciled: {
+                ...reconciled,
+                classification: "LIVE_DB_RECONCILIATION_UNAVAILABLE",
+                humanReviewRequired: true,
+              },
+              liveDb: null,
+              postRunDbRefreshed: false,
+            };
+          } else {
           // Existing job / stale_running_guard: adopt durable resume — do not treat as count failure.
           if (classified.staleRunningGuard || reconciled.classification === "STALE_RUNNING_GUARD") {
             const staleRec = reconcileStaleRunningGuard({
@@ -1159,7 +1298,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
                 ...(state.canary || {}),
                 required: true,
                 maxQualifyingAuthorities: 3,
-                maxClRequests: 12,
+                maxClRequests: CANARY_MAX_SESSION_CL_REQUESTS,
                 resumeFromExistingJob: true,
                 resumeFrom: staleRec.resumeFrom,
               };
@@ -1195,6 +1334,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
               reconciled: { ...reconciled, ...staleRec, classification: staleRec.classification },
               liveDb,
               staleRunningReconciled: true,
+              postRunDbRefreshed: Boolean(freshness.ok),
             };
           } else if (reconciled.classification === "LIVE_DB_RECONCILIATION_UNAVAILABLE") {
             state = setReview(
@@ -1311,7 +1451,15 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
                 canary: canaryEval,
               }),
             );
-          } else if (shouldRaiseLaneAZeroProgress({ classified, reconciled })) {
+          } else if (
+            shouldRaiseLaneAZeroProgress({
+              classified,
+              reconciled,
+              freshDbReconciled: Boolean(reconciled.freshDbReconciled),
+              jobRowRefreshed: Boolean(reconciled.jobRowRefreshed),
+              currentBatchRequestCount: classified.sessionApiCalls ?? classified.apiCalls ?? 0,
+            })
+          ) {
             emit("LANE_A_NO_PROGRESS", {
               lane: "LANE_A_CL",
               court: state.laneA.court,
@@ -1403,12 +1551,15 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
               });
             }
           }
-          } // end normal post-run reconcile path
+          } // end freshness-ok / terminal reconcile branches
+          } // end non-terminal else (terminal path)
+          } // end launchGate.ok + lock try body scope marker
         } finally {
           const rel = releaseLaneALock(state, "dual-lane-runner", new Date());
           if (rel.ok) state = rel.state;
         }
-      }
+      } // end lock.ok
+      } // end launchGate.ok
     }
   } else if (state.currentLane === "A" && quota.safeRequests < 1) {
     // Selected A but no usable quota — do not pretend Lane B idle without an explicit floor transition.

@@ -17,15 +17,15 @@
   "cursor": "cl-opinion-11250867",
   "lastSuccessfulExternalId": null,
   "nextPageUrl": null,
-  "lastSuccessfulAt": "2026-09-25T17:18:20.995Z",
+  "lastSuccessfulAt": "2026-09-25T17:33:47.647Z",
   "runner": "staging-cl-batch-job",
   "mappingStatus": "VERIFIED",
-  "manifestVersion": 19,
-  "jobStatus": "quota_paused",
+  "manifestVersion": 21,
+  "jobStatus": "paused",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastUpdatedAt": "2026-09-25T17:30:49.017Z",
-  "lastHeartbeatAt": "2026-09-25T17:18:01.661Z",
-  "nextQuotaCheckAt": "2026-09-25T17:33:01.712Z",
+  "lastUpdatedAt": "2026-09-25T18:09:38.290Z",
+  "lastHeartbeatAt": "2026-09-25T17:33:30.743Z",
+  "nextQuotaCheckAt": "2026-09-25T18:10:34.748Z",
   "network": {
     "waitingForNetwork": false,
     "lastOnlineAt": null
@@ -36,13 +36,13 @@
   },
   "quota": {
     "minuteRemaining": 30,
-    "hourRemaining": 300,
-    "dayRemaining": 1106,
+    "hourRemaining": 286,
+    "dayRemaining": 1092,
     "safeRequests": 28,
-    "lastProbeAt": "2026-09-25T17:18:01.712Z",
+    "lastProbeAt": "2026-09-25T17:33:30.763Z",
     "hard429Count": 0,
     "dayResetAt": "2026-09-26T00:36:37.423499+00:00",
-    "quotaStateObservedAt": "2026-09-25T17:18:01.712Z",
+    "quotaStateObservedAt": "2026-09-25T17:33:30.763Z",
     "quotaStateSource": "probe.limits",
     "quotaStateConfidence": "AUTHORITATIVE_API",
     "quotaStateAgeMs": 0
@@ -83,5 +83,5 @@
     "reviewReasons": []
   },
   "laneReason": null,
-  "updatedAt": "2026-09-25T17:30:49.017Z"
+  "updatedAt": "2026-09-25T18:09:38.290Z"
 }

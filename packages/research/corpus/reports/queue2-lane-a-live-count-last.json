@@ -7,12 +7,7 @@
   "clCases": 19,
   "highCourtClCases": 19,
   "authorities": 43,
-  "integrity": {
-    "duplicateSourceIds": 0,
-    "orphanCount": 0,
-    "chunkHealthy": true
-  },
-  "generatedAt": "2026-09-25T17:30:48.994Z",
+  "generatedAt": "2026-09-25T18:09:38.292Z",
   "mutations": 0,
   "courtListenerHttpCalls": 0
 }

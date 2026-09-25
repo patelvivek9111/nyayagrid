@@ -176,18 +176,55 @@ test("F: applyTargetAlreadyComplete updates runtime from canonical DB count", ()
   assert.equal(next.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
 });
 
-test("G: zero-progress only for true no-progress incomplete target", () => {
+test("G: zero-progress only for true no-progress incomplete target after terminal+fresh DB", () => {
   const classified = {
     alreadyCompleted: false,
     noProgress: true,
     runnerInvoked: true,
+    terminal: true,
+    nonTerminal: false,
+    lifecycleState: "COMPLETED",
+    sessionApiCalls: 2,
+    apiCalls: 2,
   };
-  const incomplete = { targetSatisfied: false, classification: "INCOMPLETE" };
-  assert.equal(shouldRaiseLaneAZeroProgress({ classified, reconciled: incomplete }), true);
+  const incomplete = {
+    targetSatisfied: false,
+    classification: "INCOMPLETE",
+    freshDbReconciled: true,
+    jobRowRefreshed: true,
+  };
+  assert.equal(
+    shouldRaiseLaneAZeroProgress({
+      classified,
+      reconciled: incomplete,
+      freshDbReconciled: true,
+      jobRowRefreshed: true,
+      currentBatchRequestCount: 2,
+    }),
+    true,
+  );
+  // STARTED/non-terminal never raises.
+  assert.equal(
+    shouldRaiseLaneAZeroProgress({
+      classified: {
+        alreadyCompleted: false,
+        noProgress: false,
+        runnerInvoked: true,
+        terminal: false,
+        nonTerminal: true,
+        lifecycleState: "STARTED",
+      },
+      reconciled: incomplete,
+      freshDbReconciled: true,
+      jobRowRefreshed: true,
+      currentBatchRequestCount: 0,
+    }),
+    false,
+  );
   const complete = { targetSatisfied: true, classification: "TARGET_ALREADY_COMPLETE" };
   assert.equal(
     shouldRaiseLaneAZeroProgress({
-      classified: { alreadyCompleted: true, noProgress: false, runnerInvoked: true },
+      classified: { alreadyCompleted: true, noProgress: false, runnerInvoked: true, terminal: true },
       reconciled: complete,
     }),
     false,

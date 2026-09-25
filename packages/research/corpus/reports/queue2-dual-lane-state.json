@@ -5,7 +5,7 @@
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
   "currentLane": "STOPPED",
-  "updatedAt": "2026-09-25T17:30:49.009Z",
+  "updatedAt": "2026-09-25T18:09:38.289Z",
   "laneA": {
     "court": "mich",
     "jurisdiction": "MI",
@@ -13,11 +13,11 @@
     "cursor": "cl-opinion-11250867",
     "lastSuccessfulExternalId": null,
     "nextPageUrl": null,
-    "lastSuccessfulAt": "2026-09-25T17:18:20.995Z",
+    "lastSuccessfulAt": "2026-09-25T17:33:47.647Z",
     "runner": "staging-cl-batch-job",
     "mappingStatus": "VERIFIED",
-    "manifestVersion": 19,
-    "jobStatus": "quota_paused",
+    "manifestVersion": 21,
+    "jobStatus": "paused",
     "itemsImported": 19,
     "target": 45,
     "count": 20,
@@ -37,19 +37,19 @@
       },
       "hour": {
         "limit": 300,
-        "used": 0,
-        "remaining": 300,
-        "resetAt": null
+        "used": 14,
+        "remaining": 286,
+        "resetAt": "2026-09-25T18:18:21.103538+00:00"
       },
       "day": {
         "limit": 1200,
-        "used": 94,
-        "remaining": 1106,
+        "used": 108,
+        "remaining": 1092,
         "resetAt": "2026-09-26T00:36:37.423499+00:00"
       }
     },
-    "lastProbeAt": "2026-09-25T17:18:01.712Z",
-    "nextCheckAt": "2026-09-25T17:33:01.712Z",
+    "lastProbeAt": "2026-09-25T17:33:30.763Z",
+    "nextCheckAt": "2026-09-25T18:10:34.748Z",
     "last429At": null,
     "retryAfterSeconds": null,
     "lastSafeRequests": 28,
@@ -58,12 +58,12 @@
     "bindingResetAt": null,
     "hard429Count": 0,
     "courtEfficiency": {},
-    "probeRequests": 16,
+    "probeRequests": 17,
     "lastPlan": {
       "usableRequests": 28,
       "usableMinute": 28,
-      "usableHour": 295,
-      "usableDay": 1096,
+      "usableHour": 281,
+      "usableDay": 1082,
       "bindingWindow": "MINUTE",
       "estimatedRequestsNeeded": 78,
       "remainingAuthoritiesNeeded": 25,
@@ -77,12 +77,12 @@
       },
       "utilization": {
         "dayLimit": 1200,
-        "dayRemaining": 1106,
-        "dayUsed": 94,
+        "dayRemaining": 1092,
+        "dayUsed": 108,
         "reservedRequests": 10,
         "usableDailyBudget": 1190,
-        "utilizationPercent": 7.899159663865546,
-        "productiveQuotaUtilizationPercent": 7.899159663865546
+        "utilizationPercent": 9.07563025210084,
+        "productiveQuotaUtilizationPercent": 9.07563025210084
       },
       "microBatchMaxRequests": 20,
       "nextUsefulAt": null,
@@ -95,14 +95,14 @@
     "wait": null,
     "utilization": {
       "dayLimit": 1200,
-      "dayRemaining": 1106,
-      "dayUsed": 94,
+      "dayRemaining": 1092,
+      "dayUsed": 108,
       "reservedRequests": 10,
       "usableDailyBudget": 1190,
-      "utilizationPercent": 7.899159663865546,
-      "productiveQuotaUtilizationPercent": 7.899159663865546
+      "utilizationPercent": 9.07563025210084,
+      "productiveQuotaUtilizationPercent": 9.07563025210084
     },
-    "quotaStateObservedAt": "2026-09-25T17:18:01.712Z",
+    "quotaStateObservedAt": "2026-09-25T17:33:30.763Z",
     "quotaStateSource": "probe.limits",
     "quotaStateConfidence": "AUTHORITATIVE_API",
     "quotaStateAgeMs": 0,
@@ -153,11 +153,11 @@
     "lastEligibility": null,
     "mutatingTaskActive": null
   },
-  "depthManifestVersion": 19,
+  "depthManifestVersion": 21,
   "lastCitationResolve": "2026-09-24T16:34:00.000Z",
   "lastIntegrityAudit": "2026-09-24T16:34:00.000Z",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastHeartbeatAt": "2026-09-25T17:18:01.661Z",
+  "lastHeartbeatAt": "2026-09-25T17:33:30.743Z",
   "idleSafe": false,
   "waitingForNetwork": false,
   "lastOnlineAt": null,
@@ -176,8 +176,8 @@
     "clAuthorities": 0,
     "nonClAuthorities": 6,
     "citationsResolved": 44,
-    "quotaChecks": 33,
-    "laneSwitches": 4,
+    "quotaChecks": 34,
+    "laneSwitches": 5,
     "aiCalls": 0,
     "aiTokens": 0
   },
@@ -205,6 +205,12 @@
       "from": "STOPPED",
       "to": "A",
       "reason": "full_batch_capacity"
+    },
+    {
+      "at": "2026-09-25T17:33:30.763Z",
+      "from": "STOPPED",
+      "to": "A",
+      "reason": "full_batch_capacity"
     }
   ],
   "checkpointEvidence": {
@@ -218,18 +224,19 @@
     "note": "Reconciled from durable staging job row; not invented."
   },
   "watchdogSession": {
-    "workerId": "q2-5a8c58eb0688",
-    "pid": 39124,
-    "processStartNonce": "dde057c264779ce0",
-    "startedAt": "2026-09-25T17:18:01.661Z",
-    "lastHeartbeatAt": "2026-09-25T17:18:01.661Z",
-    "lastWatchdogEvaluationAt": "2026-09-25T17:23:37.325Z"
+    "workerId": "q2-5f17d3ec26aa",
+    "pid": 48616,
+    "processStartNonce": "bb82dc438e0cc8f6",
+    "startedAt": "2026-09-25T17:33:30.742Z",
+    "lastHeartbeatAt": "2026-09-25T17:33:30.743Z",
+    "lastWatchdogEvaluationAt": "2026-09-25T17:40:35.637Z"
   },
   "canaryMode": "CANARY_REQUIRED",
   "canary": {
     "required": true,
+    "reason": "no_known_good_fingerprint",
     "maxQualifyingAuthorities": 3,
-    "maxClRequests": 12,
+    "maxClRequests": 5,
     "resumeFromExistingJob": true,
     "resumeFrom": "cl-opinion-11250867"
   },
@@ -260,10 +267,19 @@
       "quotaMode": "FULL_BATCH",
       "checkpoint": null,
       "workBetween": false
+    },
+    {
+      "at": "2026-09-25T17:33:30.763Z",
+      "minuteRemaining": 30,
+      "hourRemaining": 286,
+      "dayRemaining": 1092,
+      "quotaMode": "FULL_BATCH",
+      "checkpoint": "cl-opinion-11250867",
+      "workBetween": false
     }
   ],
-  "laneASelectedAt": "2026-09-25T17:18:01.712Z",
-  "laneARunnerStartedAt": "2026-09-25T17:18:03.637Z",
+  "laneASelectedAt": "2026-09-25T17:33:30.763Z",
+  "laneARunnerStartedAt": "2026-09-25T17:39:20.855Z",
   "completedCourts": [
     "wis"
   ],
@@ -284,5 +300,14 @@
       "jobStatus": "completed"
     }
   },
-  "laneALock": null
+  "laneALock": null,
+  "laneAChild": null,
+  "sessionQuota": {
+    "sessionClRequests": 0,
+    "productiveClRequests": 0,
+    "quotaProbeRequests": 0,
+    "retryRequests": 0,
+    "wastedClRequests": 0,
+    "historicalJobApiCallsBaseline": 9
+  }
 }
