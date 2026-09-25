@@ -1390,7 +1390,21 @@ async function main() {
   );
 
   const cl = new ClRateLimiter(clKey, rateMs, maxRetries);
-  if (quotaPlan) {
+  const sessionId = (process.env.CL_SESSION_ID ?? "").trim() || null;
+  const batchId = (process.env.CL_BATCH_ID ?? "").trim() || null;
+  const historicalApiCallsBaseline = Number.parseInt(
+    process.env.CL_HISTORICAL_API_CALLS_BASELINE ?? "",
+    10,
+  );
+  const sessionMaxRaw = Number.parseInt(process.env.CL_MAX_SESSION_CALLS ?? "", 10);
+  const sessionMaxCalls = Number.isFinite(sessionMaxRaw) && sessionMaxRaw >= 0 ? sessionMaxRaw : null;
+  // Bootstrap /api-usage/ is a CL request — count it against the session budget when present.
+  if (bootstrapUsage && quotaPlan && sessionMaxCalls != null) {
+    // bootstrap already consumed 1 CL call outside ClRateLimiter; shrink remaining budget.
+    cl.setMaxCalls(Math.max(0, sessionMaxCalls - 1));
+  } else if (sessionMaxCalls != null) {
+    cl.setMaxCalls(sessionMaxCalls);
+  } else if (quotaPlan) {
     // Minute window refills quickly; cap by hour/day remaining only for short batches.
     const hourUsed = Math.max(0, quotaPlan.windows.hour.limit - quotaPlan.windows.hour.remaining);
     const dayUsed = Math.max(0, quotaPlan.windows.day.limit - quotaPlan.windows.day.remaining);
@@ -1399,11 +1413,17 @@ async function main() {
     const batchBudget = Math.min(hourRem, dayRem, Math.max(batchSize * 12, 40));
     if (batchBudget > 0) cl.setMaxCalls(batchBudget);
   }
+  // When parent canary budget is set, never allow the loose batchBudget*12 path to override it.
+  if (sessionMaxCalls != null) {
+    cl.setMaxCalls(sessionMaxCalls - (bootstrapUsage && quotaPlan ? 1 : 0));
+  }
   let sql: postgres.Sql | null = null;
   let job: JobRow | null = null;
   const completed = new Set<string>();
 
   const finish = async (payload: Record<string, unknown>, exitCode = 0) => {
+    const sessionApiCalls =
+      Number(cl.apiCalls) + (bootstrapUsage && quotaPlan ? 1 : 0);
     if (sql && job) {
       try {
         await saveJob(sql, job.id, {
@@ -1427,12 +1447,23 @@ async function main() {
         // still emit result
       }
     }
-    console.log(JSON.stringify({ ok: payload.ok !== false, ...payload, featureAgents: process.env.FEATURE_AGENTS ?? null }));
+    const out = {
+      ok: payload.ok !== false,
+      ...payload,
+      sessionApiCalls,
+      batchApiCalls: sessionApiCalls,
+      apiCallsDelta: sessionApiCalls,
+      historicalApiCalls: Number.isFinite(historicalApiCallsBaseline)
+        ? historicalApiCallsBaseline
+        : job?.api_calls ?? null,
+      sessionId,
+      batchId,
+      maxSessionCalls: sessionMaxCalls,
+      featureAgents: process.env.FEATURE_AGENTS ?? null,
+    };
+    console.log(JSON.stringify(out));
     try {
-      require("node:fs").writeFileSync(
-        "/tmp/cl-batch-result.json",
-        JSON.stringify({ ok: payload.ok !== false, ...payload, featureAgents: process.env.FEATURE_AGENTS ?? null }),
-      );
+      require("node:fs").writeFileSync("/tmp/cl-batch-result.json", JSON.stringify(out));
     } catch {
       // ignore ephemeral fs failures
     }
@@ -1872,6 +1903,10 @@ main().catch(async (e) => {
     reason: isTimeout ? "fetch_timeout_soft_pause" : "unhandled_error",
     last_error: errText.slice(0, 400),
     err: errText,
+    sessionApiCalls: null,
+    historicalApiCalls: Number.parseInt(process.env.CL_HISTORICAL_API_CALLS_BASELINE ?? "", 10) || null,
+    sessionId: (process.env.CL_SESSION_ID ?? "").trim() || null,
+    batchId: (process.env.CL_BATCH_ID ?? "").trim() || null,
   };
   // Durable stop: always persist result file so local pollers exit (no orphan loops).
   try {
@@ -1881,6 +1916,7 @@ main().catch(async (e) => {
   }
   console.log(JSON.stringify(payload));
   // Best-effort: pause any running CL job so resume can continue from checkpoint.
+  // Never leave status=running after timeout when no owner will continue.
   try {
     const databaseUrl = process.env.DATABASE_URL?.trim();
     const clCourt = (process.env.CL_COURT ?? "").trim().toLowerCase();
@@ -1891,10 +1927,11 @@ main().catch(async (e) => {
           update corpus_ingest_jobs
           set status = ${isTimeout ? "paused" : "failed"},
               updated_at = now(),
-              last_error = ${errText.slice(0, 400)}
+              last_error = ${errText.slice(0, 400)},
+              completed_at = null
           where source = ${"courtlistener"}
             and cl_court = ${clCourt}
-            and status = ${"running"}
+            and status = any(${["running", "paused", "quota_paused"]})
         `;
       } finally {
         await sql.end({ timeout: 5 });

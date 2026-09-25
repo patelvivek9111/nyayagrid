@@ -127,6 +127,10 @@ const {
   isFreshPostRunDbEvidence,
   updateSessionQuotaAccounting,
   evaluateCanaryAfterTerminal,
+  createSharedClSession,
+  remainingChildClBudget,
+  mergeChildSessionAccounting,
+  assertChildWithinSessionBudget,
 } = require("./queue2-lane-a-child-lifecycle.cjs");
 const {
   CL_REQUEST_PURPOSES,
@@ -289,6 +293,11 @@ function runLaneA(state, opts = {}) {
     const stdout = opts.runner({ state, court, target, batchSize });
     return { stdout: String(stdout || ""), mocked: true };
   }
+  const session = opts.sharedSession || state.clSharedSession || null;
+  const remainingBudget =
+    opts.maxClRequests != null
+      ? Number(opts.maxClRequests)
+      : remainingChildClBudget(session);
   const r = spawnSync(
     process.execPath,
     [path.join(__dirname, "run-staging-cl-batch-job.cjs"), "HEAD", court, batchSize, target],
@@ -302,6 +311,19 @@ function runLaneA(state, opts = {}) {
         CL_HOUR_TARGET: process.env.CL_HOUR_TARGET || "280",
         CL_RATE_MS: process.env.CL_RATE_MS || "2200",
         CL_DATE_FILED_LTE: process.env.CL_DATE_FILED_LTE || "2018-12-31",
+        // Parent already probed; child must not burn a fresh quota probe.
+        CL_BOOTSTRAP_USAGE: process.env.CL_BOOTSTRAP_USAGE || "0",
+        CL_MAX_SESSION_CALLS:
+          remainingBudget != null && Number.isFinite(remainingBudget)
+            ? String(remainingBudget)
+            : process.env.CL_MAX_SESSION_CALLS || "",
+        CL_SESSION_ID: session?.sessionId || process.env.CL_SESSION_ID || "",
+        CL_BATCH_ID: session?.batchId || process.env.CL_BATCH_ID || "",
+        CL_HISTORICAL_API_CALLS_BASELINE: String(
+          session?.historicalJobApiCallsBaseline ??
+            state.sessionQuota?.historicalJobApiCallsBaseline ??
+            "",
+        ),
       },
     },
   );
@@ -313,23 +335,102 @@ function runLaneA(state, opts = {}) {
 /**
  * Read-only live DB count for a Lane A court. Injectable for tests.
  * Returns qualifying/CL case counts; never mutates corpus.
+ * When opts.after / requireFresh is set, refuse cache older than that timestamp
+ * and perform an actual fresh probe (timestamped).
  */
 function queryLiveLaneACourtCounts(court, opts = {}) {
-  if (typeof opts.query === "function") return opts.query({ court });
-  if (typeof runtime.liveLaneACountQuery === "function") {
-    return runtime.liveLaneACountQuery({ court });
+  if (typeof opts.query === "function") {
+    const q = opts.query({ court, after: opts.after, requireFresh: opts.requireFresh });
+    if (q && !q.generatedAt && !q.observedAt && !q.dbEvidenceObservedAt) {
+      return { ...q, generatedAt: new Date().toISOString(), dbEvidenceObservedAt: new Date().toISOString() };
+    }
+    return q;
   }
-  // Prefer last probe artifact when present (tests / offline); else null → reconciliation uses runner.
+  if (typeof runtime.liveLaneACountQuery === "function") {
+    return runtime.liveLaneACountQuery({ court, after: opts.after, requireFresh: opts.requireFresh });
+  }
+  if (typeof runtime.fetchLiveLaneACourtCounts === "function") {
+    return runtime.fetchLiveLaneACourtCounts({ court, after: opts.after });
+  }
+
+  const afterMs = opts.after ? Date.parse(opts.after) : NaN;
   const probePath = path.join(reports, "queue2-lane-a-live-count-last.json");
+
+  const acceptCached = (probe) => {
+    if (!probe?.ok || probe?.court !== court) return null;
+    const at = probe.generatedAt || probe.observedAt || probe.dbEvidenceObservedAt;
+    if (!at) return null;
+    if (Number.isFinite(afterMs) && Date.parse(at) < afterMs) return null;
+    return probe;
+  };
+
+  // Production post-terminal path: always attempt a fresh probe when required.
+  if (opts.requireFresh === true || Number.isFinite(afterMs)) {
+    const fresh = runFreshLaneALiveCountProbe(court, { after: opts.after });
+    if (fresh) {
+      try {
+        fs.writeFileSync(probePath, JSON.stringify(fresh, null, 2));
+      } catch {
+        /* ignore */
+      }
+      return fresh;
+    }
+    // Fall through: only accept cache if still fresh vs after.
+  }
+
   if (fs.existsSync(probePath)) {
     try {
       const probe = JSON.parse(fs.readFileSync(probePath, "utf8"));
-      if (probe?.court === court && probe?.ok) return probe;
+      const ok = acceptCached(probe);
+      if (ok) return ok;
     } catch {
       /* ignore */
     }
   }
   return null;
+}
+
+/**
+ * Fresh read-only Lane A court count via Fly staging SQL probe (zero CL HTTP).
+ */
+function runFreshLaneALiveCountProbe(court, opts = {}) {
+  const bundled = path.join(__dirname, "tmp-queue2-mi-job-reconcile-probe-bundled.cjs");
+  if (!fs.existsSync(bundled)) return null;
+  // Only mich probe script is currently bundled; generalize via court arg when available.
+  const r = spawnSync(
+    process.execPath,
+    [path.join(__dirname, "run-wave2f-fly-tool.cjs"), "scripts/tmp-queue2-mi-job-reconcile-probe-bundled.cjs"],
+    { encoding: "utf8", cwd: root, maxBuffer: 8_000_000 },
+  );
+  const parsed = lastJson(r.stdout || "");
+  if (!parsed?.ok) return null;
+  const nowIso = new Date().toISOString();
+  // Map MI probe shape → liveDb evidence. For non-mich courts return null (caller treats as unavailable).
+  if (String(court).toLowerCase() !== "mich" && String(court).toLowerCase() !== "mi") {
+    return null;
+  }
+  const mi = parsed.mi || {};
+  return {
+    ok: true,
+    court: "mich",
+    qualifyingCases: mi.high_court_cl_cases ?? mi.cases ?? null,
+    highCourtClCases: mi.high_court_cl_cases ?? null,
+    clCases: mi.cl_cases ?? null,
+    cases: mi.cases ?? null,
+    authorities: mi.authorities ?? null,
+    integrity: {
+      duplicateSourceIds: parsed.integrity?.duplicate_source_ids ?? 0,
+      orphanCount: parsed.integrity?.orphan_count ?? 0,
+      chunkHealthy: true,
+    },
+    jobs: parsed.jobs || [],
+    generatedAt: parsed.generatedAt || nowIso,
+    observedAt: parsed.generatedAt || nowIso,
+    dbEvidenceObservedAt: parsed.generatedAt || nowIso,
+    courtListenerHttpCalls: 0,
+    mutations: 0,
+    after: opts.after || null,
+  };
 }
 
 function loadManifestForSelection() {
@@ -1299,9 +1400,19 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
               canaryRequired: state.canaryMode === "CANARY_REQUIRED",
             }),
           );
+          state.clSharedSession = createSharedClSession({
+            sessionId: state.clRequestLedger?.sessionId || state.sessionQuota?.sessionId,
+            batchId: `lane-a-${state.laneA.court}-${Date.now()}`,
+            maxClRequests: batchBounds.maxClRequests,
+            alreadyUsed: Number(state.sessionQuota?.sessionClRequests) || 0,
+            historicalJobApiCallsBaseline: state.sessionQuota?.historicalJobApiCallsBaseline || 0,
+            workerFingerprint: runtime.codeFingerprint,
+          });
           const raw = runLaneA(state, {
             runner: process.env.QUEUE2_MOCK_LANE_A_RUNNER === "1" ? runtime.mockLaneARunner : null,
             batchSize: batchBounds.batchSize,
+            maxClRequests: remainingChildClBudget(state.clSharedSession),
+            sharedSession: state.clSharedSession,
           });
           const classified = classifyLaneABatchResult({
             stdout: raw?.stdout || "",
@@ -1371,7 +1482,17 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           if (!liveDb) {
             liveDb = queryLiveLaneACourtCounts(state.laneA.court, {
               query: process.env.QUEUE2_MOCK_LANE_A_DB === "1" ? runtime.mockLaneADbQuery : null,
+              after: runnerTerminalAt,
+              requireFresh: true,
             });
+          }
+          // Stamp query time if probe omitted it (injected mocks).
+          if (liveDb && !liveDb.generatedAt && !liveDb.dbEvidenceObservedAt && !liveDb.observedAt) {
+            liveDb = {
+              ...liveDb,
+              generatedAt: new Date().toISOString(),
+              dbEvidenceObservedAt: new Date().toISOString(),
+            };
           }
           const freshness = isFreshPostRunDbEvidence({
             liveDb,
@@ -1383,34 +1504,54 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             liveDb = null; // refuse stale cached evidence labeled as post-run
           }
 
-          // Session request accounting (exclude historical job totals).
-          const sessionDelta = Number(classified.sessionApiCalls || classified.apiCalls || 0) || 0;
+          // Session request accounting — merge child sessionApiCalls into parent identity.
+          const sessionDelta = Number(classified.sessionApiCalls || 0) || 0;
+          const parentBeforeChild = Number(state.sessionQuota?.sessionClRequests) || 0;
+          const desync = assertChildWithinSessionBudget({
+            maxClRequests: state.clSharedSession?.maxClRequests || CANARY_MAX_SESSION_CL_REQUESTS,
+            childSessionApiCalls: sessionDelta,
+            parentSessionClRequests: parentBeforeChild,
+          });
+          if (!desync.ok) {
+            console.log(JSON.stringify({ tag: "CL_SESSION_BUDGET", ...desync }));
+            if (desync.reason === "CHILD_EXCEEDED_SESSION_BUDGET") {
+              state = setReview(
+                state,
+                HUMAN_REVIEW_REASONS.CL_DEBUG_QUOTA_BUDGET_EXCEEDED || "CL_DEBUG_QUOTA_BUDGET_EXCEEDED",
+                `childSessionApiCalls=${sessionDelta} exceeded max=${desync.max}`,
+              );
+              human = true;
+            }
+          }
+          state.sessionQuota = mergeChildSessionAccounting(state.sessionQuota, {
+            sessionApiCalls: sessionDelta,
+            historicalJobApiCalls: classified.historicalJobApiCalls,
+            sessionId: state.clSharedSession?.sessionId,
+            batchId: state.clSharedSession?.batchId,
+            productive: classified.productive,
+          });
           state.sessionQuota = updateSessionQuotaAccounting(state.sessionQuota, {
             historicalJobApiCalls: classified.historicalJobApiCalls,
-            sessionClRequestDelta: sessionDelta,
-            productive: classified.productive,
             rollingDayObservedUsed: state.quota?.windows?.day?.used,
             rollingDayRemaining: state.quota?.windows?.day?.remaining,
           });
           if (sessionDelta > 0 && state.clRequestLedger) {
+            let ledger = state.clRequestLedger;
             const purpose = classified.productive
               ? CL_REQUEST_PURPOSES.INGEST_FETCH
               : CL_REQUEST_PURPOSES.INGEST_DISCOVERY;
-            // Record as one ledger entry representing the batch session delta (purpose-tagged).
-            let ledger = state.clRequestLedger;
             for (let i = 0; i < Math.min(sessionDelta, 40); i++) {
-              const useful = Boolean(classified.productive) && i === 0;
               const rec = recordClRequest(ledger, {
                 purpose: i === 0 ? purpose : CL_REQUEST_PURPOSES.INGEST_FETCH,
                 court: state.laneA.court,
                 jurisdiction: state.laneA.jurisdiction,
                 httpOutcome: 200,
-                usefulProgress: useful || (classified.productive && i < (classified.runnerBatchImported || 1)),
+                usefulProgress: Boolean(classified.productive),
                 authoritiesAdded: i === 0 && classified.productive ? Number(classified.runnerBatchImported) || 0 : 0,
                 checkpointAdvanced: i === 0 && Boolean(classified.checkpointAdvanced),
-                batchId: classified.jobId || "lane-a-batch",
+                batchId: state.clSharedSession?.batchId || classified.jobId || "lane-a-batch",
+                runId: state.clSharedSession?.sessionId || null,
                 workerFingerprint: runtime.codeFingerprint,
-                wasted: !classified.productive && Boolean(classified.reason?.includes?.("duplicate")),
               });
               ledger = rec.ledger;
             }

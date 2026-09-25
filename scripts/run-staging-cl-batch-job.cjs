@@ -16,6 +16,11 @@ const hourTargetEnv = process.env.CL_HOUR_TARGET || "";
 const dateFiledLteEnv = process.env.CL_DATE_FILED_LTE || "";
 const dateFiledGteEnv = process.env.CL_DATE_FILED_GTE || "";
 const orderByEnv = process.env.CL_ORDER_BY || "";
+const maxSessionCallsEnv = process.env.CL_MAX_SESSION_CALLS || "";
+const sessionIdEnv = process.env.CL_SESSION_ID || "";
+const batchIdEnv = process.env.CL_BATCH_ID || "";
+const bootstrapUsageEnv = process.env.CL_BOOTSTRAP_USAGE || "";
+const historicalBaselineEnv = process.env.CL_HISTORICAL_API_CALLS_BASELINE || "";
 const MACHINE = "811d3e3f522648";
 const APP = "nyayagrid-staging";
 const root = path.join(__dirname, "..");
@@ -84,7 +89,7 @@ sleep(3_000);
 uploadLocalBundled();
 
 const start = fly(
-  `node -e "const fs=require('fs');const {spawn}=require('child_process'); try{fs.unlinkSync('/tmp/cl-batch-result.json')}catch(e){} fs.writeFileSync('/tmp/cl-batch-status.json',JSON.stringify({status:'starting'}));const out=fs.openSync('/tmp/cl-batch.log','w');const err=fs.openSync('/tmp/cl-batch.err','w');const env={...process.env,CL_COURT:'${clCourt}',CL_BATCH_SIZE:'${batchSize}',CL_TARGET_MAX:'${targetMax}',CL_RATE_MS:process.env.CL_RATE_MS||'2200',CL_BOOTSTRAP_USAGE:process.env.CL_BOOTSTRAP_USAGE||'1',CL_PROOF:'0'${dayTargetEnv ? `,CL_DAY_TARGET:'${dayTargetEnv}'` : ""}${hourTargetEnv ? `,CL_HOUR_TARGET:'${hourTargetEnv}'` : ""}${dateFiledLteEnv ? `,CL_DATE_FILED_LTE:'${dateFiledLteEnv}'` : ""}${dateFiledGteEnv ? `,CL_DATE_FILED_GTE:'${dateFiledGteEnv}'` : ""}${orderByEnv ? `,CL_ORDER_BY:'${orderByEnv}'` : ""}};const child=spawn(process.execPath,['${remotePath}'],{detached:true,stdio:['ignore',out,err],env});child.unref();console.log(JSON.stringify({ok:true,started:true,pid:child.pid,clCourt:'${clCourt}',batchSize:${batchSize},targetMax:${targetMax},dateFiledLte:${dateFiledLteEnv ? `'${dateFiledLteEnv}'` : "null"},dayTarget:${dayTargetEnv ? `'${dayTargetEnv}'` : "null"}}))"`,
+  `node -e "const fs=require('fs');const {spawn}=require('child_process'); try{fs.unlinkSync('/tmp/cl-batch-result.json')}catch(e){} fs.writeFileSync('/tmp/cl-batch-status.json',JSON.stringify({status:'starting'}));const out=fs.openSync('/tmp/cl-batch.log','w');const err=fs.openSync('/tmp/cl-batch.err','w');const env={...process.env,CL_COURT:'${clCourt}',CL_BATCH_SIZE:'${batchSize}',CL_TARGET_MAX:'${targetMax}',CL_RATE_MS:process.env.CL_RATE_MS||'2200',CL_BOOTSTRAP_USAGE:${bootstrapUsageEnv ? `'${bootstrapUsageEnv}'` : "process.env.CL_BOOTSTRAP_USAGE||'0'"},CL_PROOF:'0'${dayTargetEnv ? `,CL_DAY_TARGET:'${dayTargetEnv}'` : ""}${hourTargetEnv ? `,CL_HOUR_TARGET:'${hourTargetEnv}'` : ""}${dateFiledLteEnv ? `,CL_DATE_FILED_LTE:'${dateFiledLteEnv}'` : ""}${dateFiledGteEnv ? `,CL_DATE_FILED_GTE:'${dateFiledGteEnv}'` : ""}${orderByEnv ? `,CL_ORDER_BY:'${orderByEnv}'` : ""}${maxSessionCallsEnv ? `,CL_MAX_SESSION_CALLS:'${maxSessionCallsEnv}'` : ""}${sessionIdEnv ? `,CL_SESSION_ID:'${sessionIdEnv}'` : ""}${batchIdEnv ? `,CL_BATCH_ID:'${batchIdEnv}'` : ""}${historicalBaselineEnv ? `,CL_HISTORICAL_API_CALLS_BASELINE:'${historicalBaselineEnv}'` : ""}};const child=spawn(process.execPath,['${remotePath}'],{detached:true,stdio:['ignore',out,err],env});child.unref();console.log(JSON.stringify({ok:true,started:true,pid:child.pid,clCourt:'${clCourt}',batchSize:${batchSize},targetMax:${targetMax},maxSessionCalls:${maxSessionCallsEnv ? Number(maxSessionCallsEnv) || null : "null"},sessionId:${sessionIdEnv ? `'${sessionIdEnv}'` : "null"},batchId:${batchIdEnv ? `'${batchIdEnv}'` : "null"},dateFiledLte:${dateFiledLteEnv ? `'${dateFiledLteEnv}'` : "null"},dayTarget:${dayTargetEnv ? `'${dayTargetEnv}'` : "null"}}))"`,
   90,
 );
 process.stdout.write(start.stdout || "");

@@ -390,6 +390,83 @@ function evaluateCanaryAfterTerminal(params = {}) {
   };
 }
 
+/**
+ * Parent+child shared session identity for CL request accounting.
+ */
+function createSharedClSession(params = {}) {
+  const sessionId = params.sessionId || `q2-session-${Date.now()}`;
+  const batchId = params.batchId || `q2-batch-${Date.now()}`;
+  const maxClRequests = Math.max(0, Number(params.maxClRequests) || CANARY_MAX_SESSION_CL_REQUESTS);
+  const alreadyUsed = Math.max(0, Number(params.alreadyUsed) || 0);
+  return {
+    sessionId,
+    batchId,
+    maxClRequests,
+    alreadyUsed,
+    remainingClRequests: Math.max(0, maxClRequests - alreadyUsed),
+    historicalJobApiCallsBaseline: Number(params.historicalJobApiCallsBaseline) || 0,
+    workerFingerprint: params.workerFingerprint || null,
+  };
+}
+
+function remainingChildClBudget(session) {
+  const max = Number(session?.maxClRequests);
+  const used = Number(session?.alreadyUsed ?? session?.sessionClRequests) || 0;
+  if (!Number.isFinite(max)) return null;
+  return Math.max(0, max - used);
+}
+
+/**
+ * Merge child-reported sessionApiCalls into parent session (never use historical job.api_calls).
+ */
+function mergeChildSessionAccounting(sessionQuota, child = {}) {
+  const next = { ...(sessionQuota || createEmptySessionQuota()) };
+  const childCalls = Number(child.sessionApiCalls ?? child.batchApiCalls ?? 0) || 0;
+  const historical = Number(child.historicalJobApiCalls);
+  if (Number.isFinite(historical) && next.historicalJobApiCallsBaseline == null) {
+    next.historicalJobApiCallsBaseline = historical;
+    next.existingJobHistoricalRequests = historical;
+  }
+  if (child.sessionId) next.sessionId = child.sessionId;
+  if (child.batchId) next.batchId = child.batchId;
+  if (childCalls > 0) {
+    next.sessionClRequests = (Number(next.sessionClRequests) || 0) + childCalls;
+    if (child.productive) next.productiveClRequests = (Number(next.productiveClRequests) || 0) + childCalls;
+    else next.overheadClRequests = (Number(next.overheadClRequests) || 0) + childCalls;
+  }
+  next.childSessionApiCalls = (Number(next.childSessionApiCalls) || 0) + childCalls;
+  return next;
+}
+
+/**
+ * Guard: child cannot exceed canary max while parent thinks session is tiny.
+ */
+function assertChildWithinSessionBudget(params = {}) {
+  const max = Number(params.maxClRequests);
+  const childCalls = Number(params.childSessionApiCalls) || 0;
+  const parentSession = Number(params.parentSessionClRequests) || 0;
+  if (!Number.isFinite(max)) return { ok: true, reason: "no_cap" };
+  if (childCalls > max) {
+    return {
+      ok: false,
+      reason: "CHILD_EXCEEDED_SESSION_BUDGET",
+      childCalls,
+      max,
+      parentSession,
+    };
+  }
+  // Detect the failure mode: 28 child requests while parent says session=1
+  if (childCalls >= 10 && parentSession <= 1) {
+    return {
+      ok: false,
+      reason: "PARENT_CHILD_ACCOUNTING_DESYNC",
+      childCalls,
+      parentSession,
+    };
+  }
+  return { ok: true, childCalls, max, parentSession };
+}
+
 module.exports = {
   LANE_A_RUNNER_STATES,
   TERMINAL_STATES,
@@ -409,4 +486,8 @@ module.exports = {
   canarySessionRequestCapExceeded,
   mayEvaluateLaneAZeroProgress,
   evaluateCanaryAfterTerminal,
+  createSharedClSession,
+  remainingChildClBudget,
+  mergeChildSessionAccounting,
+  assertChildWithinSessionBudget,
 };

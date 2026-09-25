@@ -15,12 +15,25 @@ const JOB_CLASSIFICATIONS = Object.freeze({
   CORRUPT_INCONSISTENT: "CORRUPT_INCONSISTENT",
 });
 
+/** Derived control-plane lifecycle (independent of raw DB status string). */
+const JOB_LIFECYCLE_STATES = Object.freeze({
+  RUNNING_ACTIVE: "RUNNING_ACTIVE",
+  PAUSED_RESUMABLE: "PAUSED_RESUMABLE",
+  FAILED_RESUMABLE: "FAILED_RESUMABLE",
+  FAILED_NONRESUMABLE: "FAILED_NONRESUMABLE",
+  COMPLETED: "COMPLETED",
+});
+
 const RESUME_EVIDENCE = Object.freeze({
   LAST_SUCCESSFUL_EXTERNAL_ID: "LAST_SUCCESSFUL_EXTERNAL_ID",
   CURSOR_ONLY: "CURSOR_ONLY",
   NEXT_PAGE_URL: "NEXT_PAGE_URL",
   NONE: "NONE",
 });
+
+function isTimeoutErrorText(text) {
+  return /TimeoutError|aborted due to timeout|AbortError|operation was aborted/i.test(String(text || ""));
+}
 
 function asJob(job) {
   if (!job || typeof job !== "object") return null;
@@ -274,7 +287,306 @@ function adoptExistingJobIntoLaneA(state, job, classified, opts = {}) {
 }
 
 /**
+ * Derive lifecycle when durable status=running but ownership/process is gone.
+ * Never resets cursor. Never deletes job. Never page-1 restart.
+ */
+function deriveJobLifecycleState(job, ctx = {}) {
+  const j = asJob(job);
+  if (!j) {
+    return {
+      lifecycle: null,
+      durableStatus: null,
+      clearOwnership: false,
+      reason: "no_job",
+    };
+  }
+  const status = String(j.status || "").toLowerCase();
+  const activeProcess = Boolean(ctx.activeProcess || ctx.ownerAlive || ctx.processAlive);
+  const resume = resolveResumeEvidence(j, { cursorValid: ctx.cursorValid !== false });
+  const imported = Math.max(0, Number(j.items_imported ?? j.itemsImported) || 0);
+  const targetMax = Math.max(0, Number(j.target_max ?? j.targetMax) || 0);
+  const lastError = j.last_error || j.lastError || null;
+  const timeout = Boolean(ctx.timeout || isTimeoutErrorText(lastError));
+
+  if (status === "completed" || (targetMax > 0 && imported >= targetMax)) {
+    return {
+      lifecycle: JOB_LIFECYCLE_STATES.COMPLETED,
+      durableStatus: "completed",
+      clearOwnership: true,
+      reason: "completed",
+      resume,
+    };
+  }
+
+  if (activeProcess && (status === "running" || status === "quota_paused" || status === "rate_limited")) {
+    return {
+      lifecycle: JOB_LIFECYCLE_STATES.RUNNING_ACTIVE,
+      durableStatus: status,
+      clearOwnership: false,
+      reason: "active_owner",
+      resume,
+      hold: true,
+    };
+  }
+
+  if (!resume.sufficient && imported > 0) {
+    return {
+      lifecycle: JOB_LIFECYCLE_STATES.FAILED_NONRESUMABLE,
+      durableStatus: "failed",
+      clearOwnership: true,
+      reason: "imported_without_resume_evidence",
+      resume,
+      humanReviewRequired: true,
+    };
+  }
+
+  if (timeout && resume.sufficient && !activeProcess) {
+    return {
+      lifecycle: JOB_LIFECYCLE_STATES.PAUSED_RESUMABLE,
+      durableStatus: "paused",
+      clearOwnership: true,
+      reason: "timeout_recoverable",
+      resume,
+      humanReviewRequired: false,
+    };
+  }
+
+  if (!activeProcess && resume.sufficient && (status === "running" || status === "paused" || status === "quota_paused")) {
+    return {
+      lifecycle: JOB_LIFECYCLE_STATES.PAUSED_RESUMABLE,
+      durableStatus: status === "running" ? "paused" : status === "quota_paused" ? "quota_paused" : "paused",
+      clearOwnership: true,
+      reason: status === "running" ? "stale_running_dead_owner" : "already_paused_resumable",
+      resume,
+      humanReviewRequired: false,
+    };
+  }
+
+  if (status === "failed" && resume.sufficient) {
+    return {
+      lifecycle: JOB_LIFECYCLE_STATES.FAILED_RESUMABLE,
+      durableStatus: "failed",
+      clearOwnership: true,
+      reason: "failed_with_resume",
+      resume,
+      humanReviewRequired: false,
+    };
+  }
+
+  if (status === "failed") {
+    return {
+      lifecycle: JOB_LIFECYCLE_STATES.FAILED_NONRESUMABLE,
+      durableStatus: "failed",
+      clearOwnership: true,
+      reason: "failed_no_resume",
+      resume,
+      humanReviewRequired: true,
+    };
+  }
+
+  return {
+    lifecycle: JOB_LIFECYCLE_STATES.PAUSED_RESUMABLE,
+    durableStatus: "paused",
+    clearOwnership: true,
+    reason: "default_paused_resumable",
+    resume,
+    humanReviewRequired: false,
+  };
+}
+
+/**
+ * Pure normalize: map stale RUNNING → PAUSED_RESUMABLE patch (no network).
+ */
+function normalizeStaleRunningJob(job, ctx = {}) {
+  const derived = deriveJobLifecycleState(job, { ...ctx, activeProcess: Boolean(ctx.activeProcess) });
+  const j = asJob(job);
+  if (!j) {
+    return { ok: false, reason: "no_job", derived };
+  }
+  if (derived.lifecycle === JOB_LIFECYCLE_STATES.RUNNING_ACTIVE) {
+    return {
+      ok: false,
+      hold: true,
+      reason: "ACTIVE_CHILD_PROCESS",
+      derived,
+      patch: null,
+    };
+  }
+  const patch = {
+    status: derived.durableStatus,
+    cursor: j.cursor, // never reset
+    last_successful_external_id: j.last_successful_external_id || j.lastSuccessfulExternalId || null,
+    next_page_url: j.next_page_url || j.nextPageUrl || null,
+    items_imported: j.items_imported ?? j.itemsImported,
+    api_calls: j.api_calls ?? j.apiCalls,
+    last_error: j.last_error || j.lastError || null,
+    clearOwnership: derived.clearOwnership,
+  };
+  return {
+    ok: true,
+    hold: false,
+    reason: derived.reason,
+    derived,
+    patch,
+    lifecycle: derived.lifecycle,
+    humanReviewRequired: Boolean(derived.humanReviewRequired),
+  };
+}
+
+/**
+ * Deterministic MI job-state + accounting replay (mocked; zero network).
+ */
+function replayMiJobStateAndAccountingFlow(opts = {}) {
+  const events = [];
+  const push = (type, extra = {}) => events.push({ type, ...extra });
+  const job = {
+    source: "courtlistener",
+    cl_court: "mich",
+    status: "running",
+    cursor: "cl-opinion-11250867",
+    last_successful_external_id: null,
+    next_page_url: null,
+    items_imported: 19,
+    items_fetched: 19,
+    api_calls: 9,
+    target_max: 45,
+    last_error: "TimeoutError: The operation was aborted due to timeout",
+    updated_at: "2026-09-25T18:36:49.406Z",
+    completed_at: null,
+  };
+  const activeProcess = opts.activeProcess === true;
+  push("PROCESS_CHECK", { activeProcess });
+  if (activeProcess) {
+    return {
+      ok: false,
+      hold: true,
+      reason: "ACTIVE_CHILD_PROCESS",
+      events,
+      courtListenerHttpCalls: 0,
+      mutations: 0,
+      aiCalls: 0,
+      queue3: "NOT_OPEN",
+    };
+  }
+
+  const normalized = normalizeStaleRunningJob(job, {
+    activeProcess: false,
+    timeout: true,
+    cursorValid: true,
+  });
+  push("NORMALIZE", normalized);
+  assertOk(normalized.ok && normalized.lifecycle === JOB_LIFECYCLE_STATES.PAUSED_RESUMABLE);
+
+  const runnerTerminalAt = "2026-09-25T18:41:56.447Z";
+  const staleDb = {
+    qualifyingCases: 20,
+    clCases: 19,
+    generatedAt: "2026-09-25T18:09:38.292Z",
+  };
+  const freshDb = {
+    qualifyingCases: 20,
+    highCourtClCases: 19,
+    clCases: 19,
+    cases: 20,
+    authorities: 43,
+    integrity: { duplicateSourceIds: 0, orphanCount: 0 },
+    generatedAt: "2026-09-25T18:42:00.000Z",
+    dbEvidenceObservedAt: "2026-09-25T18:42:00.000Z",
+  };
+  push("REJECT_STALE_DB", {
+    staleAt: staleDb.generatedAt,
+    terminalAt: runnerTerminalAt,
+    accepted: Date.parse(staleDb.generatedAt) >= Date.parse(runnerTerminalAt),
+  });
+  push("ACCEPT_FRESH_DB", {
+    freshAt: freshDb.generatedAt,
+    accepted: Date.parse(freshDb.generatedAt) >= Date.parse(runnerTerminalAt),
+  });
+
+  const classified = classifyExistingCorpusIngestJob(
+    { ...job, status: normalized.patch.status },
+    { ownerAlive: false, cursorValid: true, corpusClCases: 19 },
+  );
+  const state0 = {
+    laneA: {
+      court: "mich",
+      count: 20,
+      target: 45,
+      targetStatus: "PARTIAL",
+      checkpoint: "cl-opinion-11250867",
+      cursor: "cl-opinion-11250867",
+      mappingStatus: "VERIFIED",
+    },
+    humanReview: { required: false, reasons: [], details: [] },
+    queue3: "NOT_OPEN",
+  };
+  const staleRec = reconcileStaleRunningGuard({
+    state: state0,
+    job: { ...job, status: "paused" },
+    liveDb: freshDb,
+    ownerAlive: false,
+    processAlive: false,
+    cursorValid: true,
+    now: new Date("2026-09-25T18:42:01.000Z"),
+  });
+  push("STALE_GUARD", {
+    ok: staleRec.ok,
+    humanReviewRequired: staleRec.humanReviewRequired,
+    classification: staleRec.classification,
+  });
+
+  // Simulated next canary: child budget 5, 3 CL calls, 2 authorities
+  const session = {
+    sessionId: "mi-canary-session-1",
+    batchId: "mi-canary-batch-1",
+    historicalJobApiCalls: 9,
+    sessionClRequests: 0,
+    productiveClRequests: 0,
+    maxClRequests: 5,
+  };
+  const childCalls = 3;
+  assertOk(childCalls <= session.maxClRequests);
+  session.sessionClRequests += childCalls;
+  session.productiveClRequests += childCalls;
+  push("CANARY_CHILD", {
+    sessionClRequests: session.sessionClRequests,
+    productiveClRequests: session.productiveClRequests,
+    historicalJobApiCalls: session.historicalJobApiCalls,
+    checkpointAdvances: true,
+    page1Restart: false,
+  });
+
+  const ok =
+    normalized.lifecycle === JOB_LIFECYCLE_STATES.PAUSED_RESUMABLE &&
+    staleRec.ok === true &&
+    staleRec.humanReviewRequired === false &&
+    session.sessionClRequests === 3 &&
+    session.historicalJobApiCalls === 9 &&
+    state0.queue3 === "NOT_OPEN";
+
+  return {
+    ok,
+    hold: false,
+    events,
+    normalized,
+    staleRec,
+    session,
+    courtListenerHttpCalls: 0,
+    mutations: 0,
+    aiCalls: 0,
+    queue3: "NOT_OPEN",
+    checkpoint: "cl-opinion-11250867",
+    miCount: 20,
+  };
+}
+
+function assertOk(cond) {
+  if (!cond) throw new Error("replay_assertion_failed");
+}
+
+/**
  * Handle stale_running_guard without treating it as a zero-batch count failure.
+ * With fresh DB + dead owner + valid cursor → PAUSED_RESUMABLE, no human review.
  */
 function reconcileStaleRunningGuard(params = {}) {
   const job = asJob(params.job) || asJob(params.classified?.existingJob) || null;
@@ -312,9 +624,39 @@ function reconcileStaleRunningGuard(params = {}) {
     };
   }
 
-  const classified = classifyExistingCorpusIngestJob(job, {
-    ownerAlive: Boolean(params.ownerAlive),
-    processAlive: Boolean(params.processAlive),
+  const activeProcess = Boolean(params.ownerAlive || params.processAlive || params.activeProcess);
+  if (activeProcess) {
+    return {
+      ok: false,
+      hold: true,
+      classification: JOB_LIFECYCLE_STATES.RUNNING_ACTIVE,
+      humanReviewRequired: false,
+      reason: "ACTIVE_CHILD_PROCESS",
+      detail: "refusing normalize while staging-cl-batch child is alive",
+      runnerBatchImported: 0,
+      existingJobItemsImported: Number(job.items_imported ?? job.itemsImported) || 0,
+      canonicalDbCount: Number(
+        liveDb.qualifyingCases ?? liveDb.highCourtClCases ?? liveDb.clCases ?? liveDb.cases,
+      ),
+    };
+  }
+
+  const normalized = normalizeStaleRunningJob(job, {
+    activeProcess: false,
+    timeout: isTimeoutErrorText(job.last_error || job.lastError) || Boolean(params.timeout),
+    cursorValid: params.cursorValid !== false,
+  });
+
+  const jobForClassify = {
+    ...job,
+    status:
+      normalized.patch?.status ||
+      (normalized.lifecycle === JOB_LIFECYCLE_STATES.PAUSED_RESUMABLE ? "paused" : job.status),
+  };
+
+  const classified = classifyExistingCorpusIngestJob(jobForClassify, {
+    ownerAlive: false,
+    processAlive: false,
     cursorValid: params.cursorValid !== false,
     corpusClCases: liveDb.clCases ?? liveDb.highCourtClCases,
     qualifyingCases: liveDb.qualifyingCases ?? liveDb.highCourtClCases ?? liveDb.clCases,
@@ -333,13 +675,14 @@ function reconcileStaleRunningGuard(params = {}) {
       humanReviewRequired: true,
       reason: classified.reason,
       classified,
+      normalized,
       runnerBatchImported: 0,
       existingJobItemsImported,
       canonicalDbCount,
     };
   }
 
-  const adopted = adoptExistingJobIntoLaneA(params.state, job, classified, {
+  const adopted = adoptExistingJobIntoLaneA(params.state, jobForClassify, classified, {
     qualifyingCases: canonicalDbCount,
     corpusClCases: liveDb.clCases ?? liveDb.highCourtClCases,
     mappingStatus: params.mappingStatus || "VERIFIED",
@@ -347,19 +690,28 @@ function reconcileStaleRunningGuard(params = {}) {
     now: params.now,
   });
 
+  if (adopted.state?.laneA) {
+    adopted.state.laneA.jobStatus = "quota_paused";
+    adopted.state.laneA.jobLifecycle = normalized.lifecycle || JOB_LIFECYCLE_STATES.PAUSED_RESUMABLE;
+    adopted.state.laneAChild = null;
+  }
+
   return {
     ok: adopted.ok,
     classification: "EXISTING_JOB_RECONCILED",
     jobClassification: classified.classification,
-    humanReviewRequired: Boolean(adopted.humanReviewRequired),
+    jobLifecycle: normalized.lifecycle || JOB_LIFECYCLE_STATES.PAUSED_RESUMABLE,
+    humanReviewRequired: Boolean(adopted.humanReviewRequired || normalized.humanReviewRequired),
     state: adopted.state,
     classified,
+    normalized,
     resumeFrom: adopted.resumeFrom,
     runnerBatchImported: 0,
     existingJobItemsImported,
     canonicalDbCount,
     duplicateIngestionRisk: false,
     canaryResume: true,
+    courtListenerHttpCalls: 0,
   };
 }
 
@@ -371,12 +723,17 @@ function extractExistingJobFromRunnerResult(result) {
 
 module.exports = {
   JOB_CLASSIFICATIONS,
+  JOB_LIFECYCLE_STATES,
   RESUME_EVIDENCE,
   classifyExistingCorpusIngestJob,
   resolveResumeEvidence,
   isReadyAllowedGivenJob,
   adoptExistingJobIntoLaneA,
+  deriveJobLifecycleState,
+  normalizeStaleRunningJob,
   reconcileStaleRunningGuard,
   extractExistingJobFromRunnerResult,
   jobResumeFields,
+  isTimeoutErrorText,
+  replayMiJobStateAndAccountingFlow,
 };

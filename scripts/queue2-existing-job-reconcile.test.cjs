@@ -268,4 +268,147 @@ test("stale_running_guard + live DB → EXISTING_JOB_RECONCILED", () => {
   assert.equal(rec.canonicalDbCount, 20);
 });
 
+const {
+  JOB_LIFECYCLE_STATES,
+  deriveJobLifecycleState,
+  normalizeStaleRunningJob,
+  replayMiJobStateAndAccountingFlow,
+  isTimeoutErrorText,
+} = require("./queue2-existing-job-reconcile.cjs");
+const {
+  isFreshPostRunDbEvidence,
+  createSharedClSession,
+  remainingChildClBudget,
+  mergeChildSessionAccounting,
+  assertChildWithinSessionBudget,
+  createEmptySessionQuota,
+  CANARY_MAX_SESSION_CL_REQUESTS,
+} = require("./queue2-lane-a-child-lifecycle.cjs");
+
+test("stale RUNNING + dead child + valid cursor → PAUSED_RESUMABLE", () => {
+  const job = {
+    ...MI_JOB,
+    last_error: "TimeoutError: The operation was aborted due to timeout",
+  };
+  const d = deriveJobLifecycleState(job, { activeProcess: false, timeout: true, cursorValid: true });
+  assert.equal(d.lifecycle, JOB_LIFECYCLE_STATES.PAUSED_RESUMABLE);
+  assert.equal(d.durableStatus, "paused");
+  assert.equal(d.clearOwnership, true);
+  const n = normalizeStaleRunningJob(job, { activeProcess: false, timeout: true });
+  assert.equal(n.ok, true);
+  assert.equal(n.lifecycle, JOB_LIFECYCLE_STATES.PAUSED_RESUMABLE);
+  assert.equal(n.patch.status, "paused");
+  assert.equal(n.patch.cursor, "cl-opinion-11250867");
+  assert.equal(n.humanReviewRequired, false);
+});
+
+test("timeout clears RUNNING ownership; active child holds", () => {
+  assert.equal(isTimeoutErrorText("TimeoutError: aborted due to timeout"), true);
+  const active = normalizeStaleRunningJob(MI_JOB, { activeProcess: true });
+  assert.equal(active.hold, true);
+  assert.equal(active.ok, false);
+  assert.equal(active.reason, "ACTIVE_CHILD_PROCESS");
+});
+
+test("fresh DB query timestamp invariant; stale pre-run rejected", () => {
+  const terminalAt = "2026-09-25T18:41:56.447Z";
+  const stale = isFreshPostRunDbEvidence({
+    dbEvidenceObservedAt: "2026-09-25T18:09:38.292Z",
+    runnerTerminalAt: terminalAt,
+    laneARunnerStartedAt: "2026-09-25T18:30:00.000Z",
+  });
+  assert.equal(stale.ok, false);
+  assert.equal(stale.postRunDbRefreshed, false);
+  const fresh = isFreshPostRunDbEvidence({
+    dbEvidenceObservedAt: "2026-09-25T18:42:00.000Z",
+    runnerTerminalAt: terminalAt,
+    laneARunnerStartedAt: "2026-09-25T18:30:00.000Z",
+  });
+  assert.equal(fresh.ok, true);
+  assert.equal(fresh.postRunDbRefreshed, true);
+});
+
+test("child and parent share session request accounting; canary 5 enforced", () => {
+  const shared = createSharedClSession({
+    maxClRequests: 5,
+    alreadyUsed: 1,
+    historicalJobApiCallsBaseline: 9,
+  });
+  assert.equal(remainingChildClBudget(shared), 4);
+  assert.equal(CANARY_MAX_SESSION_CL_REQUESTS, 5);
+  let session = createEmptySessionQuota();
+  session.sessionClRequests = 1;
+  session = mergeChildSessionAccounting(session, {
+    sessionApiCalls: 3,
+    historicalJobApiCalls: 9,
+    sessionId: shared.sessionId,
+    batchId: shared.batchId,
+    productive: true,
+  });
+  assert.equal(session.sessionClRequests, 4);
+  assert.equal(session.productiveClRequests, 3);
+  assert.equal(session.historicalJobApiCallsBaseline, 9);
+  assert.notEqual(session.sessionClRequests, session.historicalJobApiCallsBaseline);
+});
+
+test("28 child requests cannot occur while parent says session=1", () => {
+  const bad = assertChildWithinSessionBudget({
+    maxClRequests: 5,
+    childSessionApiCalls: 28,
+    parentSessionClRequests: 1,
+  });
+  assert.equal(bad.ok, false);
+  assert.ok(
+    bad.reason === "CHILD_EXCEEDED_SESSION_BUDGET" || bad.reason === "PARENT_CHILD_ACCOUNTING_DESYNC",
+  );
+  const ok = assertChildWithinSessionBudget({
+    maxClRequests: 5,
+    childSessionApiCalls: 3,
+    parentSessionClRequests: 1,
+  });
+  assert.equal(ok.ok, true);
+});
+
+test("historical api_calls excluded from current session", () => {
+  let session = createEmptySessionQuota();
+  session = mergeChildSessionAccounting(session, {
+    sessionApiCalls: 3,
+    historicalJobApiCalls: 9,
+    productive: true,
+  });
+  assert.equal(session.sessionClRequests, 3);
+  assert.equal(session.historicalJobApiCallsBaseline, 9);
+});
+
+test("MI job-state replay: normalize + fresh DB + canary accounting", () => {
+  const replay = replayMiJobStateAndAccountingFlow({ activeProcess: false });
+  assert.equal(replay.ok, true);
+  assert.equal(replay.hold, false);
+  assert.equal(replay.courtListenerHttpCalls, 0);
+  assert.equal(replay.mutations, 0);
+  assert.equal(replay.aiCalls, 0);
+  assert.equal(replay.queue3, "NOT_OPEN");
+  assert.equal(replay.checkpoint, "cl-opinion-11250867");
+  assert.equal(replay.session.sessionClRequests, 3);
+  assert.equal(replay.session.historicalJobApiCalls, 9);
+  assert.equal(replay.normalized.lifecycle, JOB_LIFECYCLE_STATES.PAUSED_RESUMABLE);
+  assert.equal(replay.staleRec.humanReviewRequired, false);
+});
+
+test("active child replay → HOLD", () => {
+  const replay = replayMiJobStateAndAccountingFlow({ activeProcess: true });
+  assert.equal(replay.hold, true);
+  assert.equal(replay.reason, "ACTIVE_CHILD_PROCESS");
+});
+
+test("no duplicate child / no page-1 restart on normalize", () => {
+  const n = normalizeStaleRunningJob(
+    { ...MI_JOB, last_error: "TimeoutError: timeout" },
+    { activeProcess: false, timeout: true },
+  );
+  assert.equal(n.patch.cursor, "cl-opinion-11250867");
+  assert.notEqual(n.patch.cursor, null);
+  assert.equal(n.patch.status, "paused");
+});
+
 console.log(`queue2-existing-job-reconcile.test.cjs: ${passed} passed`);
