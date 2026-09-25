@@ -1,27 +1,18 @@
 {
   "ok": true,
-  "court": "wis",
-  "mutations": 0,
-  "courtListenerHttpCalls": 0,
-  "generatedAt": "2026-09-25T15:13:36.723Z",
-  "qualifyingCases": 45,
-  "highCourtClCases": 45,
-  "clCases": 45,
-  "cases": 46,
-  "authorities": 72,
-  "job": {
-    "status": "completed",
-    "items_imported": 45,
-    "target_max": 45,
-    "cursor": "cl-opinion-9886366",
-    "last_successful_external_id": "cl-opinion-11344420"
-  },
+  "court": "mich",
+  "jurisdiction": "MI",
+  "qualifyingCases": 20,
+  "cases": 20,
+  "clCases": 19,
+  "highCourtClCases": 19,
+  "authorities": 43,
   "integrity": {
     "duplicateSourceIds": 0,
     "orphanCount": 0,
-    "chunkHealthy": true,
-    "wiCasesWithChunks": 46,
-    "wiCases": 46
+    "chunkHealthy": true
   },
-  "source": "live_db_probe_2026-09-25T15:10:33.814Z"
+  "generatedAt": "2026-09-25T17:30:48.994Z",
+  "mutations": 0,
+  "courtListenerHttpCalls": 0
 }

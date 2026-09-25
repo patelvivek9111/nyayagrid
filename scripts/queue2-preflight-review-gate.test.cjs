@@ -147,12 +147,15 @@ test("E: READY first-start MI is not treated as CL partial missing checkpoint", 
   assert.equal(restored.humanReview.required, false);
 });
 
-test("F: MI 20/45 clean STOPPED state passes human-review gate", () => {
+test("F: MI 20/45 reconciled PARTIAL from existing job passes human-review gate", () => {
   const state = restoreState(JSON.parse(fs.readFileSync(STATE_PATH, "utf8")));
   assert.equal(state.laneA.court, "mich");
   assert.equal(state.laneA.count, 20);
   assert.equal(state.laneA.target, 45);
-  assert.equal(state.laneA.checkpoint, null);
+  // After existing-job reconciliation: not READY/null — durable cursor adopted.
+  assert.equal(state.laneA.targetStatus, "PARTIAL");
+  assert.equal(state.laneA.checkpoint, "cl-opinion-11250867");
+  assert.equal(state.laneA.cursor, "cl-opinion-11250867");
   assert.equal(state.humanReview.required, false);
   assert.ok(state.completedCourts.includes("wis"));
   const pf = runPreflight({

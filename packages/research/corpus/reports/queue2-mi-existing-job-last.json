@@ -1,0 +1,48 @@
+{
+  "ok": true,
+  "classification": "STALE_RESUMABLE",
+  "job": {
+    "source": "courtlistener",
+    "cl_court": "mich",
+    "court_id": "st-mi-high",
+    "status": "running",
+    "cursor": "cl-opinion-11250867",
+    "next_page_url": null,
+    "last_successful_external_id": null,
+    "items_discovered": 60,
+    "items_fetched": 19,
+    "items_imported": 19,
+    "items_skipped": 0,
+    "items_failed": 0,
+    "items_quarantined": 0,
+    "rate_limit_count": 0,
+    "api_calls": 9,
+    "target_max": 45,
+    "batch_size": 3,
+    "last_retry_after_sec": 27,
+    "last_error": null,
+    "started_at": "2026-09-23T22:13:41.420Z",
+    "updated_at": "2026-09-25T17:18:20.995Z",
+    "completed_at": null,
+    "metadata": {
+      "wave": "2b"
+    }
+  },
+  "live": {
+    "qualifyingCases": 20,
+    "cases": 20,
+    "clCases": 19,
+    "highCourtClCases": 19,
+    "authorities": 43,
+    "integrity": {
+      "duplicateSourceIds": 0,
+      "orphanCount": 0,
+      "chunkHealthy": true
+    }
+  },
+  "cursorValid": true,
+  "ownerAlive": false,
+  "generatedAt": "2026-09-25T17:30:49.003Z",
+  "mutations": 0,
+  "courtListenerHttpCalls": 0
+}

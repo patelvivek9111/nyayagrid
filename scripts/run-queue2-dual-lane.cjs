@@ -112,6 +112,12 @@ const {
   computePostCycleSleepMs,
 } = require("./queue2-lane-a-dispatch.cjs");
 const {
+  classifyExistingCorpusIngestJob,
+  adoptExistingJobIntoLaneA,
+  reconcileStaleRunningGuard,
+  JOB_CLASSIFICATIONS,
+} = require("./queue2-existing-job-reconcile.cjs");
+const {
   formatMorningStartupSummary,
   formatWatchdogTerminalLine,
   runWatchdogCycle,
@@ -1062,9 +1068,17 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             target: state.laneA.target,
           });
           // Post-run live DB refresh BEFORE watchdog / complete / canary decisions.
-          const liveDb = queryLiveLaneACourtCounts(state.laneA.court, {
+          // Mandatory when stale_running_guard or an existing job is present.
+          let liveDb = queryLiveLaneACourtCounts(state.laneA.court, {
             query: process.env.QUEUE2_MOCK_LANE_A_DB === "1" ? runtime.mockLaneADbQuery : null,
           });
+          if (
+            !liveDb &&
+            (classified.staleRunningGuard || classified.existingJob) &&
+            typeof runtime.fetchLiveLaneACourtCounts === "function"
+          ) {
+            liveDb = runtime.fetchLiveLaneACourtCounts({ court: state.laneA.court }) || null;
+          }
           const manifest = loadManifestForSelection();
           const manifestRow = (manifest.targets || []).find(
             (t) => (t.preferredCourts || [])[0] === state.laneA.court || t.jurisdiction === state.laneA.jurisdiction,
@@ -1073,8 +1087,13 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             runtimeCount: priorCount,
             statusCount: Number(runtime.lastStatus?.currentCount),
             manifestCount: Number(manifestRow?.currentCases),
-            runnerCount: classified.itemsImported,
+            runnerCount: classified.runnerBatchImported,
+            runnerBatchImported: classified.runnerBatchImported,
+            existingJobItemsImported: classified.existingJobItemsImported,
             alreadyCompleted: classified.alreadyCompleted,
+            staleRunningGuard: classified.staleRunningGuard,
+            existingJob: classified.existingJob,
+            requireLiveDb: Boolean(classified.staleRunningGuard || classified.existingJob),
             target: state.laneA.target,
             db: liveDb
               ? {
@@ -1090,42 +1109,146 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
               chunkHealthy: true,
             },
           });
-          emit("LANE_A_COUNT_RECONCILED", {
-            lane: "LANE_A_CL",
-            court: state.laneA.court,
-            checkpoint: state.laneA.checkpoint,
-            reason: reconciled.reason,
-            extra: {
-              canonicalCount: reconciled.canonicalCount,
-              classification: reconciled.classification,
-              targetSatisfied: reconciled.targetSatisfied,
-              dbPresent: Boolean(liveDb),
-            },
-          });
-          laneAResult = {
-            ...classified.parsed.result,
-            classified,
-            reconciled,
-            liveDb,
-            stdoutSource: classified.parsed.source,
-            postRunDbRefreshed: true,
-          };
-          emit("LANE_A_BATCH_COMPLETE", {
-            lane: "LANE_A_CL",
-            court: state.laneA.court,
-            checkpoint: classified.nextCheckpoint || state.laneA.checkpoint,
-            reason: classified.reason || classified.status || "batch",
-            extra: {
-              apiCalls: classified.apiCalls,
-              productive: classified.productive,
-              noProgress: classified.noProgress,
-              remainingCases: remainingCasesToFinish(state.laneA),
-              canonicalCount: reconciled.canonicalCount,
-              classification: reconciled.classification,
-            },
-          });
 
-          if (reconciled.classification === "RECONCILIATION_FAILED" || reconciled.humanReviewRequired) {
+          // Existing job / stale_running_guard: adopt durable resume — do not treat as count failure.
+          if (classified.staleRunningGuard || reconciled.classification === "STALE_RUNNING_GUARD") {
+            const staleRec = reconcileStaleRunningGuard({
+              state,
+              job: classified.existingJob,
+              classified,
+              liveDb: liveDb
+                ? {
+                    qualifyingCases: liveDb.qualifyingCases ?? liveDb.highCourtClCases ?? liveDb.clCases ?? liveDb.cases,
+                    highCourtClCases: liveDb.highCourtClCases,
+                    clCases: liveDb.clCases,
+                    cases: liveDb.cases,
+                  }
+                : null,
+              ownerAlive: false,
+              processAlive: false,
+              cursorValid: true,
+              mappingStatus: state.laneA.mappingStatus || "VERIFIED",
+              now: new Date(),
+            });
+            if (staleRec.classification === "LIVE_DB_RECONCILIATION_UNAVAILABLE") {
+              state = setReview(
+                state,
+                HUMAN_REVIEW_REASONS.LIVE_DB_RECONCILIATION_UNAVAILABLE,
+                staleRec.detail || staleRec.reason,
+              );
+              human = true;
+              state.idleSafe = false;
+              emit("HUMAN_REVIEW_REQUIRED", {
+                lane: "HUMAN_REVIEW_REQUIRED",
+                court: state.laneA.court,
+                reason: HUMAN_REVIEW_REASONS.LIVE_DB_RECONCILIATION_UNAVAILABLE,
+              });
+            } else if (!staleRec.ok) {
+              const reviewReason =
+                staleRec.reason === "MISSING_DURABLE_RESUME_CHECKPOINT" ||
+                staleRec.classification === JOB_CLASSIFICATIONS.STALE_NONRESUMABLE
+                  ? HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT
+                  : HUMAN_REVIEW_REASONS.CORRUPT_INCONSISTENT_INGEST_JOB;
+              state = setReview(state, reviewReason, staleRec.detail || staleRec.reason);
+              human = true;
+              state.idleSafe = false;
+            } else {
+              state = staleRec.state;
+              state.canaryMode = "CANARY_REQUIRED";
+              state.canary = {
+                ...(state.canary || {}),
+                required: true,
+                maxQualifyingAuthorities: 3,
+                maxClRequests: 12,
+                resumeFromExistingJob: true,
+                resumeFrom: staleRec.resumeFrom,
+              };
+              emit("CHECKPOINT", {
+                lane: "LANE_A_CL",
+                court: state.laneA.court,
+                checkpoint: state.laneA.checkpoint,
+                reason: "existing_job_reconciled",
+                extra: {
+                  jobClassification: staleRec.jobClassification,
+                  cursor: state.laneA.cursor,
+                  existingJobItemsImported: staleRec.existingJobItemsImported,
+                  canonicalDbCount: staleRec.canonicalDbCount,
+                  runnerBatchImported: 0,
+                },
+              });
+              console.log(
+                JSON.stringify({
+                  tag: "EXISTING_JOB_RECONCILED",
+                  court: state.laneA.court,
+                  classification: staleRec.jobClassification,
+                  targetStatus: state.laneA.targetStatus,
+                  checkpoint: state.laneA.checkpoint,
+                  cursor: state.laneA.cursor,
+                  count: state.laneA.count,
+                  existingJobItemsImported: staleRec.existingJobItemsImported,
+                  canonicalDbCount: staleRec.canonicalDbCount,
+                }),
+              );
+            }
+            laneAResult = {
+              classified,
+              reconciled: { ...reconciled, ...staleRec, classification: staleRec.classification },
+              liveDb,
+              staleRunningReconciled: true,
+            };
+          } else if (reconciled.classification === "LIVE_DB_RECONCILIATION_UNAVAILABLE") {
+            state = setReview(
+              state,
+              HUMAN_REVIEW_REASONS.LIVE_DB_RECONCILIATION_UNAVAILABLE,
+              reconciled.detail || reconciled.reason,
+            );
+            human = true;
+            state.idleSafe = false;
+            emit("HUMAN_REVIEW_REQUIRED", {
+              lane: "HUMAN_REVIEW_REQUIRED",
+              court: state.laneA.court,
+              reason: HUMAN_REVIEW_REASONS.LIVE_DB_RECONCILIATION_UNAVAILABLE,
+            });
+            laneAResult = { classified, reconciled, liveDb };
+          } else {
+            emit("LANE_A_COUNT_RECONCILED", {
+              lane: "LANE_A_CL",
+              court: state.laneA.court,
+              checkpoint: state.laneA.checkpoint,
+              reason: reconciled.reason,
+              extra: {
+                canonicalCount: reconciled.canonicalCount,
+                classification: reconciled.classification,
+                targetSatisfied: reconciled.targetSatisfied,
+                dbPresent: Boolean(liveDb),
+                runnerBatchImported: classified.runnerBatchImported,
+                existingJobItemsImported: classified.existingJobItemsImported,
+              },
+            });
+            laneAResult = {
+              ...(classified.parsed?.result || {}),
+              classified,
+              reconciled,
+              liveDb,
+              stdoutSource: classified.parsed?.source,
+              postRunDbRefreshed: true,
+            };
+            emit("LANE_A_BATCH_COMPLETE", {
+              lane: "LANE_A_CL",
+              court: state.laneA.court,
+              checkpoint: classified.nextCheckpoint || state.laneA.checkpoint,
+              reason: classified.reason || classified.status || "batch",
+              extra: {
+                apiCalls: classified.apiCalls,
+                productive: classified.productive,
+                noProgress: classified.noProgress,
+                remainingCases: remainingCasesToFinish(state.laneA),
+                canonicalCount: reconciled.canonicalCount,
+                classification: reconciled.classification,
+              },
+            });
+
+            if (reconciled.classification === "RECONCILIATION_FAILED" || reconciled.humanReviewRequired) {
             state = setReview(
               state,
               HUMAN_REVIEW_REASONS.LANE_A_COUNT_RECONCILIATION_FAILED,
@@ -1280,6 +1403,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
               });
             }
           }
+          } // end normal post-run reconcile path
         } finally {
           const rel = releaseLaneALock(state, "dual-lane-runner", new Date());
           if (rel.ok) state = rel.state;

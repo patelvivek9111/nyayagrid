@@ -113,28 +113,48 @@ function classifyLaneABatchResult(params = {}) {
   const result = parsed.result || {};
   const status = result.status || result.job?.status || null;
   const reason = result.reason || null;
-  const apiCalls = Number(result.apiCalls ?? result.api_calls ?? 0) || 0;
-  const itemsImported = Number(result.items_imported ?? result.itemsImported ?? 0) || 0;
+  const existingJob = result.job && typeof result.job === "object" ? result.job : null;
+  const apiCalls = Number(result.apiCalls ?? result.api_calls ?? existingJob?.api_calls ?? 0) || 0;
+  // Current-run batch delta vs historical durable job totals — never conflate.
+  const runnerBatchImported =
+    reason === "stale_running_guard"
+      ? 0
+      : Number(result.batchImported ?? result.items_imported_delta ?? 0) || 0;
+  const existingJobItemsImported = Number(
+    existingJob?.items_imported ?? existingJob?.itemsImported ?? result.items_imported ?? result.itemsImported ?? 0,
+  ) || 0;
+  const itemsImported =
+    reason === "stale_running_guard" ? existingJobItemsImported : runnerBatchImported || existingJobItemsImported;
   const nextCheckpoint =
     result.last_successful_external_id ||
     result.cursor ||
-    result.job?.last_successful_external_id ||
-    result.job?.cursor ||
+    existingJob?.last_successful_external_id ||
+    existingJob?.cursor ||
     null;
   const checkpointAdvanced = Boolean(nextCheckpoint && nextCheckpoint !== priorCheckpoint);
-  const countAdvanced = itemsImported > priorCount;
+  const countAdvanced = runnerBatchImported > 0 && itemsImported > priorCount;
   const alreadyCompleted = reason === "already_completed" || (status === "completed" && apiCalls === 0 && itemsImported > 0);
-  // True zero-progress excludes already_completed — that requires DB reconciliation.
+  const staleRunningGuard = reason === "stale_running_guard";
+  // True zero-progress excludes already_completed and stale_running_guard (needs job reconcile).
   const noProgress =
-    !alreadyCompleted && apiCalls === 0 && !checkpointAdvanced && !countAdvanced && status !== "completed";
+    !alreadyCompleted &&
+    !staleRunningGuard &&
+    apiCalls === 0 &&
+    !checkpointAdvanced &&
+    !countAdvanced &&
+    status !== "completed";
 
   return {
-    ok: parsed.ok !== false,
+    ok: parsed.ok !== false && !staleRunningGuard,
     parsed,
     status,
     reason,
     apiCalls,
     itemsImported,
+    runnerBatchImported,
+    existingJobItemsImported,
+    existingJob,
+    staleRunningGuard,
     nextCheckpoint: nextCheckpoint || priorCheckpoint,
     checkpointAdvanced,
     countAdvanced,
@@ -170,12 +190,62 @@ function reconcileLaneACountSources(params = {}) {
   const runtimeCount = Number(params.runtimeCount);
   const statusCount = Number(params.statusCount);
   const manifestCount = Number(params.manifestCount);
-  const runnerCount = Number(params.runnerCount);
+  // Prefer explicit current-run batch delta; do not treat historical job totals as runnerCount.
+  const runnerBatchImported =
+    params.runnerBatchImported != null ? Number(params.runnerBatchImported) : Number(params.runnerCount);
+  const existingJobItemsImported =
+    params.existingJobItemsImported != null ? Number(params.existingJobItemsImported) : null;
+  const runnerCount = runnerBatchImported;
   const dbCount = canonicalLaneACount({ db: params.db || {} });
   const alreadyCompleted = Boolean(params.alreadyCompleted);
+  const requireLiveDb = Boolean(params.requireLiveDb || params.staleRunningGuard || params.existingJob);
   const integrity = params.integrity || {};
 
   const hasDb = dbCount != null && Number.isFinite(dbCount);
+
+  if (requireLiveDb && !hasDb) {
+    return {
+      ok: false,
+      reason: "LIVE_DB_RECONCILIATION_UNAVAILABLE",
+      humanReviewRequired: true,
+      classification: "LIVE_DB_RECONCILIATION_UNAVAILABLE",
+      canonicalCount: null,
+      targetSatisfied: false,
+      detail: "live DB count mandatory for existing-job / stale_running reconciliation",
+      sources: {
+        runtimeCount,
+        statusCount,
+        manifestCount,
+        runnerCount,
+        runnerBatchImported,
+        existingJobItemsImported,
+        dbCount: null,
+      },
+    };
+  }
+
+  // stale_running_guard: do not fail on cache spread before job adoption path runs.
+  if (params.staleRunningGuard) {
+    return {
+      ok: true,
+      reason: "STALE_RUNNING_DEFER_TO_JOB_RECONCILE",
+      classification: "STALE_RUNNING_GUARD",
+      humanReviewRequired: false,
+      zeroProgress: false,
+      canonicalCount: hasDb ? dbCount : null,
+      targetSatisfied: hasDb && target > 0 && dbCount >= target,
+      sources: {
+        runtimeCount,
+        statusCount,
+        manifestCount,
+        runnerCount,
+        runnerBatchImported: 0,
+        existingJobItemsImported,
+        dbCount,
+      },
+    };
+  }
+
   const canonical = hasDb
     ? dbCount
     : canonicalLaneACount({
@@ -209,7 +279,15 @@ function reconcileLaneACountSources(params = {}) {
       canonicalCount: canonical,
       targetSatisfied: false,
       detail: `runner/items=${runnerCount} already_completed=${alreadyCompleted} but liveDB=${canonical} < target=${target}`,
-      sources: { runtimeCount, statusCount, manifestCount, runnerCount, dbCount },
+      sources: {
+        runtimeCount,
+        statusCount,
+        manifestCount,
+        runnerCount,
+        runnerBatchImported,
+        existingJobItemsImported,
+        dbCount,
+      },
     };
   }
 
@@ -218,7 +296,7 @@ function reconcileLaneACountSources(params = {}) {
     const integrityOk =
       Number(integrity.duplicateSourceIds || 0) === 0 &&
       Number(integrity.orphanCount || 0) === 0 &&
-      (integrity.chunkHealthy !== false);
+      integrity.chunkHealthy !== false;
     return {
       ok: true,
       reason: "TARGET_ALREADY_COMPLETE",
@@ -229,7 +307,15 @@ function reconcileLaneACountSources(params = {}) {
       targetSatisfied: true,
       targetStatus: "COMPLETE_FOR_CURRENT_DEPTH",
       reconciliationCanaryEligible: integrityOk,
-      sources: { runtimeCount, statusCount, manifestCount, runnerCount, dbCount },
+      sources: {
+        runtimeCount,
+        statusCount,
+        manifestCount,
+        runnerCount,
+        runnerBatchImported,
+        existingJobItemsImported,
+        dbCount,
+      },
       integrity,
     };
   }
@@ -246,7 +332,15 @@ function reconcileLaneACountSources(params = {}) {
       targetSatisfied: true,
       targetStatus: "COMPLETE_FOR_CURRENT_DEPTH",
       reconciliationCanaryEligible: true,
-      sources: { runtimeCount, statusCount, manifestCount, runnerCount, dbCount },
+      sources: {
+        runtimeCount,
+        statusCount,
+        manifestCount,
+        runnerCount,
+        runnerBatchImported,
+        existingJobItemsImported,
+        dbCount,
+      },
     };
   }
 
@@ -264,7 +358,15 @@ function reconcileLaneACountSources(params = {}) {
         canonicalCount: canonical,
         targetSatisfied: false,
         detail: `cache spread ${lo}..${hi} without live DB`,
-        sources: { runtimeCount, statusCount, manifestCount, runnerCount, dbCount },
+        sources: {
+          runtimeCount,
+          statusCount,
+          manifestCount,
+          runnerCount,
+          runnerBatchImported,
+          existingJobItemsImported,
+          dbCount,
+        },
       };
     }
   }
@@ -278,7 +380,15 @@ function reconcileLaneACountSources(params = {}) {
     canonicalCount: canonical,
     targetSatisfied: false,
     targetStatus: canonical > 0 ? "PARTIAL" : "READY",
-    sources: { runtimeCount, statusCount, manifestCount, runnerCount, dbCount },
+    sources: {
+      runtimeCount,
+      statusCount,
+      manifestCount,
+      runnerCount,
+      runnerBatchImported,
+      existingJobItemsImported,
+      dbCount,
+    },
   };
 }
 
@@ -415,7 +525,8 @@ function applyTargetAlreadyComplete(state, params = {}) {
 
   const nxt = params.nextTarget || null;
   if (nxt?.court) {
-    next.laneA = {
+    const existingJob = params.nextTargetJob || nxt.existingJob || null;
+    let nextLaneA = {
       court: nxt.court,
       jurisdiction: nxt.jurisdiction,
       count: Number(nxt.count) || 0,
@@ -434,6 +545,36 @@ function applyTargetAlreadyComplete(state, params = {}) {
       sequence: prior.sequence || null,
       lock: null,
     };
+    // Before READY + null checkpoint: adopt any prior resumable CL job for this court.
+    if (existingJob) {
+      const {
+        classifyExistingCorpusIngestJob,
+        adoptExistingJobIntoLaneA,
+        isReadyAllowedGivenJob,
+      } = require("./queue2-existing-job-reconcile.cjs");
+      if (!isReadyAllowedGivenJob(existingJob, { ownerAlive: false, cursorValid: true })) {
+        const classified = classifyExistingCorpusIngestJob(existingJob, {
+          ownerAlive: false,
+          cursorValid: true,
+          corpusClCases: Number(nxt.clCases ?? nxt.count) || null,
+        });
+        const adopted = adoptExistingJobIntoLaneA(
+          { laneA: nextLaneA, humanReview: { required: false, reasons: [], details: [] } },
+          existingJob,
+          classified,
+          {
+            qualifyingCases: Number(nxt.count) || 0,
+            mappingStatus: nxt.mappingStatus || "VERIFIED",
+            now: params.now || new Date(),
+          },
+        );
+        nextLaneA = adopted.state.laneA;
+        if (adopted.humanReviewRequired) {
+          next.humanReview = adopted.state.humanReview;
+        }
+      }
+    }
+    next.laneA = nextLaneA;
   } else {
     next.laneA = {
       ...prior,
