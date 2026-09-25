@@ -4,23 +4,23 @@
   "queue9": "CLOSED",
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
-  "currentLane": "B",
-  "updatedAt": "2026-09-25T00:17:34.255Z",
+  "currentLane": "A",
+  "updatedAt": "2026-09-25T00:50:48.887Z",
   "laneA": {
-    "court": "ark",
-    "jurisdiction": "AR",
-    "checkpoint": "cl-opinion-9885161",
-    "cursor": "cl-opinion-9885160",
-    "lastSuccessfulExternalId": "cl-opinion-9885161",
-    "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__date_filed__lte=2018-12-31&cluster__docket__court=ark&cursor=cD05ODc5OTkx&order_by=-id&page_size=16",
-    "lastSuccessfulAt": "2026-09-24T03:55:31.381Z",
+    "court": "wis",
+    "jurisdiction": "WI",
+    "checkpoint": "cl-opinion-9886466",
+    "cursor": "cl-opinion-9886466",
+    "lastSuccessfulExternalId": "cl-opinion-9886466",
+    "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__date_filed__lte=2018-12-31&cluster__docket__court=wis&cursor=cD05ODg2MzY4&order_by=-id&page_size=16",
+    "lastSuccessfulAt": "2026-09-25T00:42:40.438Z",
     "runner": "staging-cl-batch-job",
     "mappingStatus": "VERIFIED",
     "manifestVersion": 1,
     "jobStatus": "quota_paused",
-    "itemsImported": 25,
+    "itemsImported": 43,
     "target": 45,
-    "count": 33,
+    "count": 44,
     "sequence": [
       "ark",
       "sd",
@@ -36,30 +36,30 @@
     "windows": {
       "minute": {
         "limit": 30,
-        "used": 0,
-        "remaining": 30,
-        "resetAt": null
+        "used": 14,
+        "remaining": 16,
+        "resetAt": "2026-09-25T00:48:30.332655+00:00"
       },
       "hour": {
         "limit": 300,
-        "used": 0,
-        "remaining": 300,
-        "resetAt": null
+        "used": 85,
+        "remaining": 215,
+        "resetAt": "2026-09-25T01:36:37.423499+00:00"
       },
       "day": {
         "limit": 1200,
-        "used": 861,
-        "remaining": 339,
-        "resetAt": "2026-09-25T00:18:12.911002+00:00"
+        "used": 872,
+        "remaining": 328,
+        "resetAt": "2026-09-25T00:50:46.948468+00:00"
       }
     },
     "lastProbeAt": "2026-09-25T00:17:34.254Z",
     "nextCheckAt": "2026-09-25T00:27:34.255Z",
     "last429At": null,
     "retryAfterSeconds": null,
-    "lastSafeRequests": 28,
+    "lastSafeRequests": 16,
     "hard429Count": 0,
-    "quotaStateObservedAt": "2026-09-25T00:17:34.254Z",
+    "quotaStateObservedAt": "2026-09-25T00:50:48.888Z",
     "quotaStateSource": "probe.limits",
     "quotaStateConfidence": "AUTHORITATIVE_API",
     "quotaStateAgeMs": 0,
@@ -118,7 +118,7 @@
   "idleSafe": true,
   "waitingForNetwork": false,
   "lastOnlineAt": null,
-  "runtimeState": "IDLE_SAFE",
+  "runtimeState": "STOPPED",
   "humanReview": {
     "required": false,
     "reasons": [],

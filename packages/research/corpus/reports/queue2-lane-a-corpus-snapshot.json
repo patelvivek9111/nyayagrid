@@ -3,18 +3,18 @@
   "mutations": 0,
   "courtListenerHttpCalls": 0,
   "featureAgents": "0",
-  "generatedAt": "2026-09-24T18:20:53.144Z",
+  "generatedAt": "2026-09-25T00:50:33.801Z",
   "corpus": {
-    "authorities": 2966,
-    "cases": 1649,
-    "cl_cases": 1604,
+    "authorities": 3006,
+    "cases": 1689,
+    "cl_cases": 1644,
     "statutes": 904,
     "regulations": 158,
     "rules": 254
   },
   "orphans": 0,
   "duplicateSourceIds": 0,
-  "arkCases": 33,
+  "arkCases": 49,
   "jurisdictions": [
     {
       "j": "AK",
@@ -42,15 +42,15 @@
     },
     {
       "j": "AR",
-      "authorities": 55,
-      "cases": 33,
-      "clCases": 33,
-      "highCourt": 33,
+      "authorities": 71,
+      "cases": 49,
+      "clCases": 49,
+      "highCourt": 49,
       "intermediate": 0,
       "oldest": 1931,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 63
+      "citationTargetAbsent": 72
     },
     {
       "j": "AZ",
@@ -606,15 +606,15 @@
     },
     {
       "j": "WI",
-      "authorities": 46,
-      "cases": 20,
-      "clCases": 19,
-      "highCourt": 20,
+      "authorities": 70,
+      "cases": 44,
+      "clCases": 43,
+      "highCourt": 44,
       "intermediate": 0,
       "oldest": 2003,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 120
+      "citationTargetAbsent": 190
     },
     {
       "j": "WV",

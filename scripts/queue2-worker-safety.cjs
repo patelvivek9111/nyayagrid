@@ -514,7 +514,7 @@ function rebuildLaneAManifestFromSnapshot(snapshot, opts = {}) {
       count: arkLive ? arkLive.cases : null,
       target: 45,
       checkpoint: opts.arkCheckpoint || "cl-opinion-9885161",
-      status: "PARTIAL",
+      status: arkLive && Number(arkLive.cases) >= 45 ? "COMPLETE_FOR_CURRENT_DEPTH" : "PARTIAL",
       mappingStatus: "VERIFIED",
       dataQuality: "LIVE_DB",
     },
@@ -548,10 +548,11 @@ function reconcileManifestWithSnapshot(manifest, snapshot, opts = {}) {
     }
   }
   const ark = manifest.activePartial;
-  if (ark.count !== 33) reasons.push("ark_count_not_33");
+  if (ark.count == null || ark.count < 33) reasons.push("ark_count_regressed_below_33");
   if (ark.target !== 45) reasons.push("ark_target_not_45");
   if (ark.checkpoint !== (opts.arkCheckpoint || "cl-opinion-9885161")) reasons.push("ark_checkpoint_mismatch");
-  if (snapshot.arkCases != null && snapshot.arkCases !== 33) reasons.push("snapshot_ark_not_33");
+  if (snapshot.arkCases != null && snapshot.arkCases !== ark.count) reasons.push("snapshot_ark_mismatch");
+  if (snapshot.arkCases != null && snapshot.arkCases < 33) reasons.push("snapshot_ark_regressed_below_33");
 
   const sumCases = manifest.targets.filter((t) => !t.federal && t.currentCases != null).reduce((a, t) => a + t.currentCases, 0);
   // US counted once in jurisdictions; federal rows are aggregate annotations

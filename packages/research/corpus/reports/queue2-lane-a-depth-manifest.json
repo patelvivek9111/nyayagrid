@@ -3,12 +3,12 @@
   "queue": "#2",
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
-  "version": 2,
-  "generatedAt": "2026-09-24T18:23:19.943Z",
+  "version": 5,
+  "generatedAt": "2026-09-25T00:51:07.258Z",
   "source": {
     "type": "live_db_snapshot",
     "snapshotPath": "packages/research/corpus/reports/queue2-lane-a-corpus-snapshot.json",
-    "snapshotGeneratedAt": "2026-09-24T18:20:53.144Z",
+    "snapshotGeneratedAt": "2026-09-25T00:50:33.801Z",
     "mutationsDuringSnapshot": 0
   },
   "rankingPolicy": [
@@ -27,9 +27,9 @@
     "overfeedStrongJurisdictions": false
   },
   "corpusTotals": {
-    "authorities": 2966,
-    "cases": 1649,
-    "cl_cases": 1604,
+    "authorities": 3006,
+    "cases": 1689,
+    "cl_cases": 1644,
     "statutes": 904,
     "regulations": 158,
     "rules": 254
@@ -37,9 +37,9 @@
   "reconciliation": {
     "ok": true,
     "reasons": [],
-    "aggregateManifestStateCases": 1442,
-    "aggregateSnapshotCases": 1649,
-    "corpusCases": 1649,
+    "aggregateManifestStateCases": 1482,
+    "aggregateSnapshotCases": 1689,
+    "corpusCases": 1689,
     "jurisdictionsPresent": 52,
     "unknownCount": 0,
     "falseZeroBlocked": 0
@@ -47,10 +47,10 @@
   "activePartial": {
     "court": "ark",
     "jurisdiction": "AR",
-    "count": 33,
+    "count": 49,
     "target": 45,
-    "checkpoint": "cl-opinion-9885161",
-    "status": "PARTIAL",
+    "checkpoint": "cl-opinion-9879067",
+    "status": "COMPLETE_FOR_CURRENT_DEPTH",
     "mappingStatus": "VERIFIED",
     "dataQuality": "LIVE_DB"
   },
@@ -58,70 +58,37 @@
   "falseZeroBlocked": 0,
   "targets": [
     {
-      "jurisdiction": "AR",
-      "name": "Arkansas",
-      "preferredCourts": [
-        "ark"
-      ],
-      "currentAuthorities": 55,
-      "currentCases": 33,
-      "clCases": 33,
-      "highCourtCount": 33,
-      "intermediateAppellateCount": 0,
-      "earliestYear": 1931,
-      "latestYear": 2026,
-      "targetCases": 45,
-      "targetDelta": 12,
-      "missingCourtLayers": [
-        "intermediate"
-      ],
-      "historicalGaps": [],
-      "doctrinalGaps": [],
-      "citationDemand": 63,
-      "citationTargetAbsent": 63,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 46,
-      "historicalGapScore": 10,
-      "doctrinalGapScore": 5,
-      "checkpoint": "cl-opinion-9885161",
-      "mappingStatus": "VERIFIED",
-      "status": "PARTIAL",
-      "autonomousIngestBlocked": false,
-      "dataQuality": "LIVE_DB",
-      "score": 900
-    },
-    {
       "jurisdiction": "WI",
       "name": "Wisconsin",
       "preferredCourts": [
         "wis"
       ],
-      "currentAuthorities": 46,
-      "currentCases": 20,
-      "clCases": 19,
-      "highCourtCount": 20,
+      "currentAuthorities": 70,
+      "currentCases": 44,
+      "clCases": 43,
+      "highCourtCount": 44,
       "intermediateAppellateCount": 0,
       "earliestYear": 2003,
       "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 25,
+      "targetDelta": 1,
       "missingCourtLayers": [
         "intermediate"
       ],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 120,
-      "citationTargetAbsent": 120,
+      "citationDemand": 190,
+      "citationTargetAbsent": 190,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 55,
+      "authorityDeficit": 31,
       "historicalGapScore": 10,
       "doctrinalGapScore": 5,
-      "checkpoint": null,
+      "checkpoint": "cl-opinion-9886466",
       "mappingStatus": "VERIFIED",
-      "status": "READY",
+      "status": "PARTIAL",
       "autonomousIngestBlocked": false,
       "dataQuality": "LIVE_DB",
-      "score": 607
+      "score": 1221
     },
     {
       "jurisdiction": "MI",
@@ -1972,6 +1939,39 @@
       "layer": "appellate",
       "score": 10,
       "note": "Per-circuit counts not separately projected; US aggregate used. UNKNOWN avoided."
+    },
+    {
+      "jurisdiction": "AR",
+      "name": "Arkansas",
+      "preferredCourts": [
+        "ark"
+      ],
+      "currentAuthorities": 71,
+      "currentCases": 49,
+      "clCases": 49,
+      "highCourtCount": 49,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1931,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 0,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 72,
+      "citationTargetAbsent": 72,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 30,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": "cl-opinion-9879067",
+      "mappingStatus": "VERIFIED",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
+      "dataQuality": "LIVE_DB",
+      "score": null
     },
     {
       "jurisdiction": "DC",

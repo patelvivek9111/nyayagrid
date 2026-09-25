@@ -1,0 +1,31 @@
+{
+  "now": "2026-09-25T00:35:59.057Z",
+  "minuteRemaining": 30,
+  "hourRemaining": 300,
+  "dayRemaining": 411,
+  "safeRequests": 28,
+  "minuteRem": 28,
+  "hourRem": 280,
+  "dayRem": 371,
+  "quotaStateObservedAt": "2026-09-25T00:35:59.057Z",
+  "quotaStateSource": "probe.limits",
+  "quotaStateConfidence": "AUTHORITATIVE_API",
+  "ambiguous": false,
+  "humanReview": false,
+  "reviewReason": null,
+  "resets": {
+    "minute": null,
+    "hour": null,
+    "day": "2026-09-25T00:35:11.661073+00:00"
+  },
+  "targets": {
+    "minuteTarget": 28,
+    "hourTarget": 280,
+    "dayTarget": 1160,
+    "dayReserve": 40
+  },
+  "membership": {
+    "level": "CL Membership - Tier 2",
+    "is_active": true
+  }
+}

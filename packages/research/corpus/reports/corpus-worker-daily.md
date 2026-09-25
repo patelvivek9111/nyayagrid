@@ -1,50 +1,50 @@
 # Queue #2 Corpus Worker — Daily Status
 
-Generated: 2026-09-24T16:52:47.881Z (9/24/2026, 12:52:47 PM EDT)
+Generated: 2026-09-25T00:52:00.000Z (9/24/2026, 8:52:00 PM EDT)
 Queue: #2 OPEN | #9 CLOSED | #3 NOT OPEN | FEATURE_AGENTS=0
 
 ## CURRENT LANE
-LANE_B_OFFLINE
-Reason: CourtListener day safety floor
+STOPPED
+Reason: manual CourtListener run stopped at minute safety floor (safeRequests 16)
 
 ## CURRENT TASK
-us_reports_gap_analysis
-ARK 33/45 (AR)
-checkpoint: cl-opinion-9885161
+NONE
+WI 44/45
+checkpoint: cl-opinion-9886466
 
 ## TODAY'S PROGRESS
-+0 CL authorities
-+6 non-CL authorities
-+44 citation edges resolved
-total authorities added: 6
-laneA 0s | laneB 36s | idle 0s
++40 CL authorities
++0 non-CL authorities
++0 new citation edges resolved this pass
+total authorities added: 40
+Autonomous worker was not started.
 
 ## COURTLISTENER
-ark 33/45
-checkpoint: cl-opinion-9885161
-lastSuccessfulExternalId: cl-opinion-9885161
-cursor: cl-opinion-9885160
-mapping: VERIFIED | runner: staging-cl-batch-job
-safeRequests: 0
-dayRem: 29 | hourRem: 300 | minuteRem: 30
-next quota probe: 2026-09-24T22:06:14.563161+00:00 (9/24/2026, 6:06:14 PM EDT)
+Start probe: minute 30 | hour 300 | day 411 | safeRequests 28 | AUTHORITATIVE_API
+End probe: minute 16 | hour 215 | day 328 | safeRequests 16
+Requests used: 85
 429: 0
+AR 33 → 49 / 45 complete, checkpoint cl-opinion-9879067
+WI 20 → 44 / 45 partial, checkpoint cl-opinion-9886466
+next useful quota: 8:48:30 PM ET minute reset (observed reset 2026-09-25T00:48:30Z)
 
 ## OFFLINE WORK
-Lane B CL HTTP=0. Non-CL authorities cumulative=6.
+Citation re-resolution: extracted 5768, resolved 179 → 179, new resolved 0, TARGET_ABSENT 5589, parser gaps 0. CourtListener HTTP on that pass: 0.
 
 ## CORPUS / DEPTH
-authorities=2966 cases=1649 clCases=1604 statutes=904 regs=158 rules=254
-authorityGateDeficit=51
-
-## CITATION GRAPH
-citationEdgesResolved cumulative: 44
+authorities 2966 → 3006
+cases 1649 → 1689
+clCases 1604 → 1644
+statutes 904 | regs 158 | rules 254
+chunks 38598 | embeddings 38598
 
 ## HEALTH
 database=ok orphans=0 duplicateSourceIds=0 retrieval=ok FEATURE_AGENTS=0
+runtimeState=STOPPED
+worker lock absent
 
 ## NEXT ACTION
-Automatically resume AR (33/45) when safeRequests meets threshold; checkpoint=cl-opinion-9885161
+Resume WI (44/45) from cl-opinion-9886466 when minute safeRequests is at least 25. Do not start the autonomous loop until the deferred test window.
 
 ## HUMAN REVIEW
 not required
