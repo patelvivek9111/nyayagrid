@@ -129,6 +129,18 @@ const {
   evaluateCanaryAfterTerminal,
 } = require("./queue2-lane-a-child-lifecycle.cjs");
 const {
+  CL_REQUEST_PURPOSES,
+  CONSERVATION_REASONS,
+  createEmptyClRequestLedger,
+  recordClRequest,
+  evaluateClConservationGate,
+  evaluateQuotaProbeCache,
+  applyQuotaProbeCacheDecision,
+  evaluateRedundantQuotaProbeHardStop,
+  formatClRequestAccountingLine,
+  formatRollingDayObservedLine,
+} = require("./queue2-cl-quota-conservation.cjs");
+const {
   formatMorningStartupSummary,
   formatWatchdogTerminalLine,
   runWatchdogCycle,
@@ -680,6 +692,118 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     runtime.morningSummaryPending ||
     quotaProbeDue(state, started)
   ) {
+    state.sessionQuota = state.sessionQuota || createEmptySessionQuota();
+    state.clRequestLedger =
+      state.clRequestLedger ||
+      createEmptyClRequestLedger({
+        canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+        court: state.laneA?.court,
+        existingJobHistoricalRequests:
+          Number(state.sessionQuota.existingJobHistoricalRequests) ||
+          Number(state.sessionQuota.historicalJobApiCallsBaseline) ||
+          0,
+        rollingDayObservedUsed: state.quota?.windows?.day?.used,
+        rollingDayRemaining: state.quota?.windows?.day?.remaining,
+        workerFingerprint: runtime.codeFingerprint,
+      });
+    state.clRequestLedger.canaryRequired = state.canaryMode === "CANARY_REQUIRED";
+
+    const consBeforeProbe = evaluateClConservationGate(state.clRequestLedger, {
+      canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+    });
+    if (!consBeforeProbe.allow) {
+      state = setReview(state, consBeforeProbe.reason, consBeforeProbe.detail || consBeforeProbe.reason);
+      emit("HUMAN_REVIEW_REQUIRED", {
+        lane: "HUMAN_REVIEW_REQUIRED",
+        reason: consBeforeProbe.reason,
+        court: state.laneA.court,
+        checkpoint: state.laneA.checkpoint,
+      });
+      console.log(
+        JSON.stringify({
+          tag: "QUOTA_CHECK",
+          skipped: true,
+          reason: consBeforeProbe.reason,
+          detail: consBeforeProbe.detail,
+        }),
+      );
+    } else {
+      const cacheDecision = evaluateQuotaProbeCache(state.quotaProbeCache, {
+        now: started,
+        force: process.env.QUEUE2_FORCE_QUOTA_PROBE === "1",
+        reason: runtime.morningSummaryPending ? "cycle" : "scheduled",
+        invalidateReason: state.quota?.hard429Count > 0 && state.quota?.last429At ? null : null,
+      });
+      // Prefer reuse when cache is fresh — even if morningSummaryPending / scheduled.
+      if (
+        cacheDecision.reuse &&
+        cacheDecision.probe === false &&
+        process.env.QUEUE2_FORCE_QUOTA_PROBE !== "1" &&
+        state.quota?.windows
+      ) {
+        state.clRequestLedger = applyQuotaProbeCacheDecision(state.clRequestLedger, {
+          ...cacheDecision,
+          preventedRedundant: true,
+        });
+        state.sessionQuota.quotaProbeReuseCount =
+          Number(state.sessionQuota.quotaProbeReuseCount || 0) + 1;
+        state.sessionQuota.redundantQuotaProbesPrevented =
+          Number(state.sessionQuota.redundantQuotaProbesPrevented || 0) + 1;
+        console.log(
+          JSON.stringify({
+            tag: "QUOTA_CHECK",
+            skipped: true,
+            reason: "PROBE_CACHE_REUSE",
+            cacheReason: cacheDecision.reason,
+            reuseCount: state.sessionQuota.quotaProbeReuseCount,
+            prevented: state.sessionQuota.redundantQuotaProbesPrevented,
+          }),
+        );
+        // Re-decide lane from cached windows without a fresh CL HTTP call.
+        const windows = state.quota.windows;
+        const targets = computeSafetyTargets(windows);
+        const safe = computeSafeRequests(windows, targets, 0);
+        quota = {
+          probed: false,
+          reused: true,
+          safeRequests: safe.safe,
+          windows,
+          targets,
+          safe,
+          membership: state.quota.membership || null,
+          confidence: state.quota.quotaStateConfidence || QUOTA_CONFIDENCE.AUTHORITATIVE,
+          source: "probe_cache",
+        };
+        const decision = decideLane(state, {
+          safeRequests: safe.safe,
+          windows,
+          projectedUsefulAt: state.quota.wait?.nextUsefulAt || state.quota.nextCheckAt,
+          now: started,
+        });
+        if (decision.lane === "A" && !decision.needsHumanReview) {
+          state.currentLane = "A";
+        } else if (decision.lane === "WAIT") {
+          state.currentLane = "WAIT";
+        } else {
+          state.currentLane = "B";
+        }
+        if (runtime.morningSummaryPending) {
+          const pending = runtime.morningSummaryPending;
+          runtime.morningSummaryPending = null;
+          console.log(
+            formatMorningStartupSummary({
+              preflight: pending.preflight,
+              canary: pending.canary,
+              workerVersion: pending.workerVersion,
+              partial: `${state.laneA?.jurisdiction || state.laneA?.court || "?"} ${state.laneA?.count || 0}/${state.laneA?.target || "?"}`,
+              quota: `safe=${safe.safe} (cached)`,
+              lane: statusLaneFromState(state),
+              nextTarget: state.laneA?.court || "n/a",
+              watchdog: state.humanReview?.required ? "HUMAN_REVIEW" : "HEALTHY",
+            }),
+          );
+        }
+      } else {
     const probe = runQuotaProbe();
     emit("QUOTA_PROBE", {
       lane: "QUOTA_CHECK",
@@ -692,6 +816,28 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           }
         : null,
     });
+    // Per-request accounting: quota probe is overhead (never secrets).
+    {
+      const rec = recordClRequest(state.clRequestLedger, {
+        purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
+        court: state.laneA?.court,
+        jurisdiction: state.laneA?.jurisdiction,
+        httpOutcome: probe.status === 0 && probe.parsed ? 200 : probe.status,
+        usefulProgress: false,
+        batchId: "quota-probe",
+        workerFingerprint: runtime.codeFingerprint,
+        now: started,
+      });
+      state.clRequestLedger = rec.ledger;
+      state.sessionQuota = updateSessionQuotaAccounting(state.sessionQuota, {
+        sessionClRequestDelta: 1,
+        probe: true,
+        rollingDayObservedUsed: probe.parsed?.limits?.day
+          ? Number(probe.parsed.limits.day.limit) - Number(probe.parsed.limits.day.remaining)
+          : state.quota?.windows?.day?.used,
+        rollingDayRemaining: probe.parsed?.limits?.day?.remaining ?? state.quota?.windows?.day?.remaining,
+      });
+    }
     if (probe.parsed) {
       const reconciled = reconcileQuotaProbe({
         parsed: probe.parsed,
@@ -728,6 +874,17 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         const windows = reconciled.windows;
         const targets = reconciled.targets || computeSafetyTargets(windows);
         const safe = reconciled.safe || computeSafeRequests(windows, targets, 0);
+        // Fresh authoritative probe → cache for reuse (TTL in conservation module).
+        state.quotaProbeCache = {
+          observedAt: started.toISOString(),
+          minuteRemaining: windows.minute?.remaining,
+          hourRemaining: windows.hour?.remaining,
+          dayRemaining: windows.day?.remaining,
+          safeRequests: safe.safe,
+          had429: Boolean(state.quota?.last429At),
+          resetOccurred: false,
+          countersMateriallyChanged: false,
+        };
         quota = {
           probed: true,
           safeRequests: safe.safe,
@@ -879,13 +1036,16 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           state.quotaProbeHistory = state.quotaProbeHistory.slice(-12);
         }
         const redundant = detectRedundantQuotaProbes(state.quotaProbeHistory, { minRepeats: 3 });
-        if (redundant.redundant) {
+        const redundantHard = evaluateRedundantQuotaProbeHardStop(state.quotaProbeHistory, {
+          minRepeats: 3,
+        });
+        if (redundantHard.hardStop || redundant.redundant) {
           emit("WATCHDOG_WARNING", {
             lane: statusLaneFromState(state),
             court: state.laneA.court,
             checkpoint: state.laneA.checkpoint,
-            reason: "REDUNDANT_QUOTA_PROBES",
-            extra: { count: redundant.count, signature: redundant.signature },
+            reason: CONSERVATION_REASONS.REDUNDANT_QUOTA_PROBES,
+            extra: { count: redundant.count || redundantHard.count, signature: redundant.signature },
           });
           state.quota.redundantProbeHoldUntil = nextQuotaCheckAfterActiveBatch(started, {
             deferMs: 30 * 60 * 1000,
@@ -897,10 +1057,18 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           console.log(
             JSON.stringify({
               tag: "WATCHDOG_WARNING",
-              reason: "REDUNDANT_QUOTA_PROBES",
+              reason: CONSERVATION_REASONS.REDUNDANT_QUOTA_PROBES,
               holdUntil: state.quota.redundantProbeHoldUntil,
+              hardStop: Boolean(redundantHard.hardStop),
             }),
           );
+          if (redundantHard.hardStop) {
+            state = setReview(
+              state,
+              HUMAN_REVIEW_REASONS.REDUNDANT_QUOTA_PROBES,
+              `redundant quota probes count=${redundantHard.count}`,
+            );
+          }
         }
         if (runtime.morningSummaryPending) {
           const pending = runtime.morningSummaryPending;
@@ -978,6 +1146,8 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         });
       }
     }
+      } // end fresh-probe (cache miss) branch
+    } // end conservation-allow branch
   }
 
   let laneAResult = null;
@@ -1004,9 +1174,38 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     state.idleSafe = false;
     state.runtimeState = "RUNNING";
     state.laneASelectedAt = state.laneASelectedAt || started.toISOString();
-    // READY first-start may have null checkpoint — start from initial court query.
-    // Only refuse when a demonstrably resumable/partial target lacks resume evidence.
-    if (isMissingDurableResumeCheckpointFatal(state.laneA)) {
+    state.clRequestLedger =
+      state.clRequestLedger ||
+      createEmptyClRequestLedger({
+        canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+        court: state.laneA?.court,
+        workerFingerprint: runtime.codeFingerprint,
+      });
+    const consBeforeLaneA = evaluateClConservationGate(state.clRequestLedger, {
+      canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+    });
+    if (!consBeforeLaneA.allow) {
+      state = setReview(
+        state,
+        consBeforeLaneA.reason,
+        consBeforeLaneA.detail || consBeforeLaneA.reason,
+      );
+      human = true;
+      emit("HUMAN_REVIEW_REQUIRED", {
+        lane: "HUMAN_REVIEW_REQUIRED",
+        court: state.laneA.court,
+        checkpoint: state.laneA.checkpoint,
+        reason: consBeforeLaneA.reason,
+      });
+      console.log(
+        JSON.stringify({
+          tag: "LANE_A_CL",
+          blocked: true,
+          reason: consBeforeLaneA.reason,
+          detail: consBeforeLaneA.detail,
+        }),
+      );
+    } else if (isMissingDurableResumeCheckpointFatal(state.laneA)) {
       state = setReview(
         state,
         HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
@@ -1185,11 +1384,38 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           }
 
           // Session request accounting (exclude historical job totals).
+          const sessionDelta = Number(classified.sessionApiCalls || classified.apiCalls || 0) || 0;
           state.sessionQuota = updateSessionQuotaAccounting(state.sessionQuota, {
             historicalJobApiCalls: classified.historicalJobApiCalls,
-            sessionClRequestDelta: classified.sessionApiCalls || classified.apiCalls || 0,
+            sessionClRequestDelta: sessionDelta,
             productive: classified.productive,
+            rollingDayObservedUsed: state.quota?.windows?.day?.used,
+            rollingDayRemaining: state.quota?.windows?.day?.remaining,
           });
+          if (sessionDelta > 0 && state.clRequestLedger) {
+            const purpose = classified.productive
+              ? CL_REQUEST_PURPOSES.INGEST_FETCH
+              : CL_REQUEST_PURPOSES.INGEST_DISCOVERY;
+            // Record as one ledger entry representing the batch session delta (purpose-tagged).
+            let ledger = state.clRequestLedger;
+            for (let i = 0; i < Math.min(sessionDelta, 40); i++) {
+              const useful = Boolean(classified.productive) && i === 0;
+              const rec = recordClRequest(ledger, {
+                purpose: i === 0 ? purpose : CL_REQUEST_PURPOSES.INGEST_FETCH,
+                court: state.laneA.court,
+                jurisdiction: state.laneA.jurisdiction,
+                httpOutcome: 200,
+                usefulProgress: useful || (classified.productive && i < (classified.runnerBatchImported || 1)),
+                authoritiesAdded: i === 0 && classified.productive ? Number(classified.runnerBatchImported) || 0 : 0,
+                checkpointAdvanced: i === 0 && Boolean(classified.checkpointAdvanced),
+                batchId: classified.jobId || "lane-a-batch",
+                workerFingerprint: runtime.codeFingerprint,
+                wasted: !classified.productive && Boolean(classified.reason?.includes?.("duplicate")),
+              });
+              ledger = rec.ledger;
+            }
+            state.clRequestLedger = ledger;
+          }
 
           const manifest = loadManifestForSelection();
           const manifestRow = (manifest.targets || []).find(
@@ -1805,6 +2031,44 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
   } catch (wdErr) {
     console.log(JSON.stringify({ tag: "WATCHDOG", ok: false, err: String(wdErr.message || wdErr).slice(0, 200), aiCalls: 0 }));
   }
+
+  // End-of-cycle CL request accounting (session ≠ rolling-day used).
+  {
+    const ledger =
+      state.clRequestLedger ||
+      createEmptyClRequestLedger({
+        rollingDayObservedUsed: state.quota?.windows?.day?.used ?? state.sessionQuota?.rollingDayObservedUsed,
+        rollingDayRemaining: state.quota?.windows?.day?.remaining ?? state.sessionQuota?.rollingDayRemaining,
+        existingJobHistoricalRequests:
+          state.sessionQuota?.existingJobHistoricalRequests ??
+          state.sessionQuota?.historicalJobApiCallsBaseline ??
+          0,
+      });
+    if (state.quota?.windows?.day) {
+      ledger.rollingDayObservedUsed = state.quota.windows.day.used;
+      ledger.rollingDayRemaining = state.quota.windows.day.remaining;
+    }
+    console.log(formatClRequestAccountingLine(ledger));
+    console.log(formatRollingDayObservedLine(ledger));
+    console.log(
+      JSON.stringify({
+        tag: "CL_REQUEST_ACCOUNTING",
+        session: ledger.currentSessionRequests,
+        productive: ledger.productiveClRequests,
+        overhead: ledger.overheadClRequests,
+        wasted: ledger.wastedClRequests,
+        quotaProbes: ledger.quotaProbeRequests,
+        retries: ledger.retryRequests,
+        authoritiesAdded: ledger.authoritiesAdded,
+        checkpointAdvanced: ledger.checkpointAdvances > 0,
+        existingJobHistoricalRequests: ledger.existingJobHistoricalRequests,
+        rollingDayUsed: ledger.rollingDayObservedUsed,
+        rollingDayRemaining: ledger.rollingDayRemaining,
+        note: "session_requests_are_not_rolling_day_used",
+      }),
+    );
+  }
+
   state = maybeHeartbeat(state, status);
   saveLocalState(state);
   runtime.state = state;

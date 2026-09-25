@@ -6,6 +6,10 @@
  */
 "use strict";
 
+const {
+  MAX_TOTAL_CL_REQUESTS_BEFORE_FIRST_PROGRESS,
+} = require("./queue2-cl-quota-conservation.cjs");
+
 const LANE_A_RUNNER_STATES = Object.freeze({
   STARTED: "STARTED",
   RUNNING: "RUNNING",
@@ -33,16 +37,22 @@ const NON_TERMINAL_STATES = new Set([
 ]);
 
 /** Canary stabilization hard cap (current-session CL requests). */
-const CANARY_MAX_SESSION_CL_REQUESTS = 5;
+const CANARY_MAX_SESSION_CL_REQUESTS = MAX_TOTAL_CL_REQUESTS_BEFORE_FIRST_PROGRESS;
 
 function createEmptySessionQuota() {
   return {
     sessionClRequests: 0,
     productiveClRequests: 0,
+    overheadClRequests: 0,
     quotaProbeRequests: 0,
     retryRequests: 0,
     wastedClRequests: 0,
     historicalJobApiCallsBaseline: null,
+    existingJobHistoricalRequests: 0,
+    rollingDayObservedUsed: null,
+    rollingDayRemaining: null,
+    quotaProbeReuseCount: 0,
+    redundantQuotaProbesPrevented: 0,
   };
 }
 
@@ -286,12 +296,24 @@ function updateSessionQuotaAccounting(session, params = {}) {
   if (Number.isFinite(historical) && next.historicalJobApiCallsBaseline == null) {
     next.historicalJobApiCallsBaseline = historical;
   }
+  if (params.rollingDayObservedUsed != null) {
+    next.rollingDayObservedUsed = Number(params.rollingDayObservedUsed);
+  }
+  if (params.rollingDayRemaining != null) {
+    next.rollingDayRemaining = Number(params.rollingDayRemaining);
+  }
+  if (params.existingJobHistoricalRequests != null) {
+    next.existingJobHistoricalRequests = Number(params.existingJobHistoricalRequests) || 0;
+  }
   const delta = Number(params.sessionClRequestDelta);
   if (Number.isFinite(delta) && delta > 0) {
     next.sessionClRequests += delta;
     if (params.productive) next.productiveClRequests += delta;
     else if (params.retry) next.retryRequests += delta;
-    else if (params.probe) next.quotaProbeRequests += delta;
+    else if (params.probe) {
+      next.quotaProbeRequests += delta;
+      next.overheadClRequests += delta;
+    } else if (params.overhead) next.overheadClRequests += delta;
     else next.wastedClRequests += delta;
   } else if (
     Number.isFinite(historical) &&

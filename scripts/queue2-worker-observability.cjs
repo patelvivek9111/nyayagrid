@@ -204,6 +204,10 @@ const HUMAN_REVIEW_REASONS = Object.freeze({
   LANE_A_COUNT_RECONCILIATION_FAILED: "LANE_A_COUNT_RECONCILIATION_FAILED",
   LIVE_DB_RECONCILIATION_UNAVAILABLE: "LIVE_DB_RECONCILIATION_UNAVAILABLE",
   CORRUPT_INCONSISTENT_INGEST_JOB: "CORRUPT_INCONSISTENT_INGEST_JOB",
+  CL_DEBUG_QUOTA_BUDGET_EXCEEDED: "CL_DEBUG_QUOTA_BUDGET_EXCEEDED",
+  CL_NO_PRODUCTIVE_PROGRESS: "CL_NO_PRODUCTIVE_PROGRESS",
+  CL_NONPRODUCTIVE_REQUEST_SPIKE: "CL_NONPRODUCTIVE_REQUEST_SPIKE",
+  REDUNDANT_QUOTA_PROBES: "REDUNDANT_QUOTA_PROBES",
 });
 
 /** Local heartbeat cadence — zero AI usage. */
@@ -905,6 +909,18 @@ function evaluateHumanReviewTriggers(signals = {}) {
   if (signals.providerTermsChanged) reasons.push(HUMAN_REVIEW_REASONS.PROVIDER_TERMS_CHANGED);
   if (signals.externalSourceLimitationBlocksScope) {
     reasons.push(HUMAN_REVIEW_REASONS.EXTERNAL_SOURCE_LIMITATION_BLOCKS_SCOPE);
+  }
+  if (signals.clDebugQuotaBudgetExceeded) {
+    reasons.push(HUMAN_REVIEW_REASONS.CL_DEBUG_QUOTA_BUDGET_EXCEEDED);
+  }
+  if (signals.clNoProductiveProgress) {
+    reasons.push(HUMAN_REVIEW_REASONS.CL_NO_PRODUCTIVE_PROGRESS);
+  }
+  if (signals.clNonproductiveRequestSpike) {
+    reasons.push(HUMAN_REVIEW_REASONS.CL_NONPRODUCTIVE_REQUEST_SPIKE);
+  }
+  if (signals.redundantQuotaProbes) {
+    reasons.push(HUMAN_REVIEW_REASONS.REDUNDANT_QUOTA_PROBES);
   }
   return { required: reasons.length > 0, reasons };
 }
