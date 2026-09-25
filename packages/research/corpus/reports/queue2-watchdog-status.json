@@ -6,19 +6,101 @@
   "aiCalls": 0,
   "aiTokens": 0,
   "overallStatus": "HEALTHY_IDLE_SAFE",
-  "amIAlive": false,
+  "amIAlive": true,
   "amIProductive": false,
   "amIEfficient": true,
   "amIHealthy": true,
   "ifNotWhatIsWrong": null,
   "mode": "NORMAL",
-  "note": "Watchdog implemented; autonomous worker not started. WI 44/45 checkpoint preserved.",
-  "durablePartial": {
-    "jurisdiction": "WI",
-    "court": "wis",
-    "count": 44,
-    "target": 45,
-    "checkpoint": "cl-opinion-9886466"
+  "lastMeaningfulProgressAt": null,
+  "lastMeaningfulProgressReason": null,
+  "minutesSinceMeaningfulProgress": null,
+  "productiveWorkAvailable": true,
+  "identicalProductiveCycles": 1,
+  "lastCycleFingerprint": "c8918ad9600e10c5",
+  "currentTask": "cl_ingest",
+  "falseActiveTask": false,
+  "missedWake": null,
+  "quota": {
+    "underutilization": false,
+    "opportunityLossRequests": 28,
+    "unusedUsableCapacity": 28,
+    "stale": false
   },
-  "updatedAt": "2026-09-25T01:40:00.000Z"
+  "metrics": {
+    "authoritiesPerHour": 0,
+    "casesPerHour": 0,
+    "requestsPerAuthority": null,
+    "productiveRequestsPerHour": 0,
+    "successfulBatchesPerHour": 0,
+    "productiveMinutes": 0,
+    "waitingMinutes": 0,
+    "idleSafeMinutes": 0,
+    "selfRecoveryMinutes": 0
+  },
+  "quality": {
+    "orphans": 0,
+    "duplicateSourceIds": 0,
+    "missingEmbeddings": 0,
+    "missingChunks": 0,
+    "parserGaps": 0,
+    "quarantineRate": 0
+  },
+  "bottleneck": {
+    "name": "NONE",
+    "since": null,
+    "evidence": null
+  },
+  "failure": null,
+  "recovery": {
+    "selfRecoveryCount": 0,
+    "selfRecoverySuccessCount": 0,
+    "meanRecoveryTimeMs": null,
+    "lastClass": null
+  },
+  "canary": {
+    "required": false,
+    "status": "NOT_REQUIRED",
+    "lastSuccessfulCanaryAt": null
+  },
+  "knownGood": {
+    "workerVersion": null,
+    "commit": null,
+    "at": null
+  },
+  "evidence": {
+    "lastEvidenceUpdatedAt": null,
+    "lastMilestonePublishedAt": null,
+    "evidenceAgeMs": null
+  },
+  "slo": {
+    "mttdMs": [],
+    "mttrMs": [],
+    "meanMttdMs": null,
+    "meanMttrMs": null
+  },
+  "lastDiagnosticPath": "C:\\Users\\patel\\Documents\\nyayagrid\\packages\\research\\corpus\\reports\\diagnostics\\queue2-diagnostic-2026-09-25T13-21-30-043Z.json",
+  "updatedAt": "2026-09-25T13:21:30.043Z",
+  "answers": {
+    "AM_I_ALIVE": true,
+    "AM_I_PRODUCTIVE": false,
+    "AM_I_EFFICIENT": true,
+    "AM_I_HEALTHY": false,
+    "IF_NOT_WHAT_IS_WRONG": {
+      "subsystem": "OPS",
+      "reason": "HEARTBEAT_DEADMAN",
+      "severity": "CRITICAL",
+      "recoveryClass": "HUMAN_REVIEW_REQUIRED",
+      "firstDetectedAt": "2026-09-25T13:21:30.043Z",
+      "lastGoodAt": "2026-09-24T23:56:18.195Z",
+      "currentLane": "A",
+      "currentTask": "cl_ingest",
+      "checkpoint": "cl-opinion-9886466",
+      "quotaState": null,
+      "recentCorpusDelta": null,
+      "likelyCause": "Worker process missing or heartbeat stale while machine awake",
+      "recommendedOperatorAction": "Inspect process/lock; restart only after preflight.",
+      "evidence": null
+    }
+  }
 }

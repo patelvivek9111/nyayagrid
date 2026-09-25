@@ -5,7 +5,7 @@
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
   "currentLane": "A",
-  "updatedAt": "2026-09-25T00:50:48.887Z",
+  "updatedAt": "2026-09-25T13:21:30.049Z",
   "laneA": {
     "court": "wis",
     "jurisdiction": "WI",
@@ -36,30 +36,75 @@
     "windows": {
       "minute": {
         "limit": 30,
-        "used": 14,
-        "remaining": 16,
-        "resetAt": "2026-09-25T00:48:30.332655+00:00"
+        "used": 0,
+        "remaining": 30,
+        "resetAt": null
       },
       "hour": {
         "limit": 300,
-        "used": 85,
-        "remaining": 215,
-        "resetAt": "2026-09-25T01:36:37.423499+00:00"
+        "used": 0,
+        "remaining": 300,
+        "resetAt": null
       },
       "day": {
         "limit": 1200,
-        "used": 872,
-        "remaining": 328,
-        "resetAt": "2026-09-25T00:50:46.948468+00:00"
+        "used": 85,
+        "remaining": 1115,
+        "resetAt": "2026-09-26T00:36:37.423499+00:00"
       }
     },
-    "lastProbeAt": "2026-09-25T00:17:34.254Z",
-    "nextCheckAt": "2026-09-25T00:27:34.255Z",
+    "lastProbeAt": "2026-09-25T13:17:34.062Z",
+    "nextCheckAt": "2026-09-26T00:36:37.423Z",
     "last429At": null,
     "retryAfterSeconds": null,
-    "lastSafeRequests": 16,
+    "lastSafeRequests": 28,
     "hard429Count": 0,
-    "quotaStateObservedAt": "2026-09-25T00:50:48.888Z",
+    "courtEfficiency": {},
+    "probeRequests": 1,
+    "lastPlan": {
+      "usableRequests": 28,
+      "usableMinute": 28,
+      "usableHour": 295,
+      "usableDay": 1105,
+      "bindingWindow": "MINUTE",
+      "estimatedRequestsNeeded": 4,
+      "remainingAuthoritiesNeeded": 1,
+      "requestsPerAuthorityEstimate": 2.3,
+      "requestsPerAuthoritySource": "global_default",
+      "nearComplete": true,
+      "reserves": {
+        "minuteReserve": 2,
+        "hourReserve": 5,
+        "dayReserve": 10
+      },
+      "utilization": {
+        "dayLimit": 1200,
+        "dayRemaining": 1115,
+        "dayUsed": 85,
+        "reservedRequests": 10,
+        "usableDailyBudget": 1190,
+        "utilizationPercent": 7.142857142857142,
+        "productiveQuotaUtilizationPercent": 7.142857142857142
+      },
+      "microBatchMaxRequests": 4,
+      "nextUsefulAt": null,
+      "laneBPreferred": false,
+      "quotaMode": "FINISH_TARGET",
+      "reason": "finish_near_complete",
+      "lane": "A",
+      "useful": true
+    },
+    "wait": null,
+    "utilization": {
+      "dayLimit": 1200,
+      "dayRemaining": 1115,
+      "dayUsed": 85,
+      "reservedRequests": 10,
+      "usableDailyBudget": 1190,
+      "utilizationPercent": 7.142857142857142,
+      "productiveQuotaUtilizationPercent": 7.142857142857142
+    },
+    "quotaStateObservedAt": "2026-09-25T13:17:34.062Z",
     "quotaStateSource": "probe.limits",
     "quotaStateConfidence": "AUTHORITATIVE_API",
     "quotaStateAgeMs": 0,
@@ -114,11 +159,11 @@
   "lastCitationResolve": "2026-09-24T16:34:00.000Z",
   "lastIntegrityAudit": "2026-09-24T16:34:00.000Z",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastHeartbeatAt": "2026-09-24T23:56:18.195Z",
+  "lastHeartbeatAt": "2026-09-25T13:21:30.049Z",
   "idleSafe": true,
   "waitingForNetwork": false,
   "lastOnlineAt": null,
-  "runtimeState": "STOPPED",
+  "runtimeState": "IDLE_SAFE",
   "humanReview": {
     "required": false,
     "reasons": [],
@@ -133,7 +178,7 @@
     "clAuthorities": 0,
     "nonClAuthorities": 6,
     "citationsResolved": 44,
-    "quotaChecks": 17,
+    "quotaChecks": 18,
     "laneSwitches": 1,
     "aiCalls": 0,
     "aiTokens": 0

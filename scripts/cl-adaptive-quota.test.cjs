@@ -265,4 +265,79 @@ test("fixed 25-request gate removed: safe=16 near-complete is Lane A", () => {
   assert.equal(d.quotaMode, QUOTA_MODES.FINISH_TARGET);
 });
 
+test("H: FINISH_TARGET with usable quota now → nextUsefulAt null", () => {
+  const state = createInitialState();
+  state.laneA.court = "wis";
+  state.laneA.count = 44;
+  state.laneA.target = 45;
+  state.laneA.checkpoint = "cl-opinion-9886466";
+  state.laneA.lastSuccessfulExternalId = "cl-opinion-9886466";
+  state.quota.courtEfficiency = { wis: { ewmaRequestsPerAuthority: 2.13, sampleCount: 3 } };
+  const dayReset = "2026-09-26T00:36:37.000Z";
+  const d = decideLane(state, {
+    windows: windows(30, 300, 1115, { dayReset }),
+    safeRequests: 28,
+    projectedUsefulAt: dayReset,
+    now: new Date("2026-09-25T20:36:00.000Z"),
+  });
+  assert.equal(d.quotaMode, QUOTA_MODES.FINISH_TARGET);
+  assert.equal(d.lane, "A");
+  assert.equal(d.nextUsefulAt, null);
+  assert.ok(d.usableRequests >= 4);
+});
+
+test("I: FULL_BATCH with usable quota now → no future blocking nextCheckAt", () => {
+  const state = createInitialState();
+  state.laneA.court = "mich";
+  state.laneA.count = 20;
+  state.laneA.target = 45;
+  state.laneA.checkpoint = "cl-opinion-x";
+  state.laneA.lastSuccessfulExternalId = "cl-opinion-x";
+  const dayReset = "2026-09-26T00:36:37.000Z";
+  const now = new Date("2026-09-25T20:36:00.000Z");
+  const d = decideLane(state, {
+    windows: windows(30, 300, 400, { dayReset }),
+    projectedUsefulAt: dayReset,
+    now,
+  });
+  assert.equal(d.quotaMode, QUOTA_MODES.FULL_BATCH);
+  assert.equal(d.lane, "A");
+  assert.equal(d.nextUsefulAt, null);
+  assert.ok(new Date(d.nextCheckAt).getTime() <= now.getTime() + 1000);
+});
+
+test("J: WAIT_MINUTE → nextUsefulAt uses minute reset", () => {
+  const minuteReset = "2026-09-25T20:37:00.000Z";
+  const plan = planAdaptiveQuota({
+    windows: windows(0, 300, 400, { minuteReset }),
+    laneA: { court: "wis", count: 20, target: 45 },
+    config: CFG,
+    now: new Date("2026-09-25T20:36:00.000Z"),
+    laneBHasWork: false,
+  });
+  assert.equal(plan.quotaMode, QUOTA_MODES.WAIT_MINUTE);
+  assert.ok(plan.nextUsefulAt);
+  assert.ok(String(plan.nextUsefulAt).includes("2026-09-25T20:37") || plan.nextUsefulAt === minuteReset || new Date(plan.nextUsefulAt).getTime() >= new Date(minuteReset).getTime());
+});
+
+test("K: WAIT_HOUR → nextUsefulAt uses hour reset", () => {
+  const hourReset = "2026-09-25T21:00:00.000Z";
+  const plan = planAdaptiveQuota({
+    windows: windows(30, 0, 400, { hourReset }),
+    laneA: { court: "wis", count: 20, target: 45 },
+    config: CFG,
+    now: new Date("2026-09-25T20:36:00.000Z"),
+    laneBHasWork: true,
+  });
+  assert.equal(plan.quotaMode, QUOTA_MODES.WAIT_HOUR);
+  assert.ok(plan.nextUsefulAt);
+});
+
+test("M: generic checkpoint output does not use arDurableCheckpoint", () => {
+  const finalPath = path.join(__dirname, "../packages/research/corpus/reports/queue2-dual-lane-final.json");
+  const final = JSON.parse(fs.readFileSync(finalPath, "utf8"));
+  assert.equal(final.checkpointSafety?.arDurableCheckpoint, undefined);
+  assert.ok(final.checkpointSafety?.durableCheckpoint || final.laneA?.checkpoint);
+});
+
 console.log(JSON.stringify({ ok: true, tests: passed, suite: "cl-adaptive-quota", workerStarted: false, aiCalls: 0, corpusMutations: 0 }));

@@ -131,6 +131,9 @@ function createInitialState(now = new Date()) {
       last429At: null,
       retryAfterSeconds: null,
       lastSafeRequests: 0,
+      currentUsableNow: 0,
+      bindingWindow: null,
+      bindingResetAt: null,
       hard429Count: 0,
       courtEfficiency: {},
       probeRequests: 0,
@@ -408,6 +411,17 @@ function projectNextQuotaCheck(params) {
   return new Date(next).toISOString();
 }
 
+/** Quota modes that mean work is eligible NOW — nextUsefulAt must not block. */
+const ACTIVE_QUOTA_MODES = new Set([
+  QUOTA_MODES.FINISH_TARGET,
+  QUOTA_MODES.FULL_BATCH,
+  QUOTA_MODES.MICRO_BATCH,
+]);
+
+function isActiveQuotaMode(mode) {
+  return ACTIVE_QUOTA_MODES.has(mode);
+}
+
 function quotaProbeDue(state, now = new Date()) {
   return shouldProbeQuota(state, now).probe;
 }
@@ -504,6 +518,13 @@ function decideLane(state, quota = {}) {
     }
   }
 
+  const activeNow = isActiveQuotaMode(plan.quotaMode) && plan.lane === "A";
+  // Active modes: never inherit projected day/hour reset into nextUsefulAt.
+  const nextUsefulAt = activeNow ? null : plan.nextUsefulAt || null;
+  const bindingResetAt =
+    plan.nextUsefulAt ||
+    (quota.projectedUsefulAt != null ? String(quota.projectedUsefulAt) : null);
+
   const out = {
     lane: plan.lane,
     reason: plan.reason,
@@ -514,24 +535,28 @@ function decideLane(state, quota = {}) {
     estimatedRequestsNeeded: plan.estimatedRequestsNeeded,
     requestsPerAuthorityEstimate: plan.requestsPerAuthorityEstimate,
     bindingWindow: plan.bindingWindow,
-    nextUsefulAt: plan.nextUsefulAt || quota.projectedUsefulAt || null,
+    bindingResetAt,
+    currentUsableNow: plan.usableRequests,
+    nextUsefulAt,
     microBatchMaxRequests: plan.microBatchMaxRequests,
     nearComplete: plan.nearComplete,
     plan,
   };
 
-  if (plan.lane === "A") return out;
+  if (plan.lane === "A") {
+    return { ...out, nextUsefulAt: null, nextCheckAt: now.toISOString() };
+  }
 
   if (plan.lane === "WAIT") {
     return {
       ...out,
       lane: "WAIT",
-      nextCheckAt: plan.nextUsefulAt
-        ? plan.nextUsefulAt
+      nextCheckAt: nextUsefulAt
+        ? nextUsefulAt
         : projectNextQuotaCheck({
             now,
             lastProbeAt: state.quota?.lastProbeAt || now.toISOString(),
-            projectedUsefulAt: plan.nextUsefulAt || quota.projectedUsefulAt || null,
+            projectedUsefulAt: nextUsefulAt,
           }),
     };
   }
@@ -542,7 +567,7 @@ function decideLane(state, quota = {}) {
     nextCheckAt: projectNextQuotaCheck({
       now,
       lastProbeAt: state.quota?.lastProbeAt || now.toISOString(),
-      projectedUsefulAt: plan.nextUsefulAt || quota.projectedUsefulAt || null,
+      projectedUsefulAt: nextUsefulAt,
     }),
   };
 }
@@ -550,14 +575,29 @@ function decideLane(state, quota = {}) {
 function applyQuotaSnapshot(state, params) {
   const next = cloneState(state);
   const now = params.now || new Date();
+  const usableNow = Math.max(0, Number(params.safeRequests) || 0);
   next.quota.windows = params.windows || next.quota.windows;
   next.quota.lastProbeAt = now.toISOString();
-  next.quota.lastSafeRequests = Math.max(0, Number(params.safeRequests) || 0);
-  next.quota.nextCheckAt = projectNextQuotaCheck({
-    now,
-    lastProbeAt: now.toISOString(),
-    projectedUsefulAt: params.projectedUsefulAt || params.nextUsefulAt || null,
-  });
+  next.quota.lastSafeRequests = usableNow;
+  next.quota.currentUsableNow = usableNow;
+  if (params.bindingWindow != null) next.quota.bindingWindow = params.bindingWindow;
+  // Reset timestamps are metadata; they must not block active execution.
+  if (params.bindingResetAt != null || params.projectedUsefulAt != null) {
+    next.quota.bindingResetAt = params.bindingResetAt || params.projectedUsefulAt || null;
+  }
+  const activeNow =
+    params.wait === null ||
+    isActiveQuotaMode(params.quotaMode) ||
+    params.clearBlocking === true;
+  if (activeNow) {
+    next.quota.nextCheckAt = now.toISOString();
+  } else {
+    next.quota.nextCheckAt = projectNextQuotaCheck({
+      now,
+      lastProbeAt: now.toISOString(),
+      projectedUsefulAt: params.nextUsefulAt || params.projectedUsefulAt || null,
+    });
+  }
   if (params.last429At) next.quota.last429At = params.last429At;
   if (params.retryAfterSeconds != null) next.quota.retryAfterSeconds = params.retryAfterSeconds;
   if (params.quotaStateObservedAt != null) next.quota.quotaStateObservedAt = params.quotaStateObservedAt;
@@ -1054,6 +1094,8 @@ module.exports = {
   projectNextQuotaCheck,
   quotaProbeDue,
   decideLane,
+  isActiveQuotaMode,
+  ACTIVE_QUOTA_MODES,
   applyQuotaSnapshot,
   applyQuotaFloorTransition,
   applyQuotaRecoveryTransition,

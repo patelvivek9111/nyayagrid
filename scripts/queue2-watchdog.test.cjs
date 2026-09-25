@@ -423,4 +423,234 @@ test("runWatchdogCycle persists without secrets and corpus mutations=0", () => {
   assert.equal(diag.includes("sk-"), false);
 });
 
+const {
+  initWatchdogSession,
+  evaluateHeartbeatDeadman,
+  clearFalsePositiveHeartbeatDeadman,
+} = require("./queue2-watchdog.cjs");
+
+test("A: fresh worker with old persisted heartbeat → NO deadman", () => {
+  const now = new Date("2026-09-25T13:30:00.000Z");
+  const session = initWatchdogSession({
+    workerId: "worker-new",
+    processStartNonce: "nonce-new",
+    pid: 9999,
+    now,
+  });
+  const alert = evaluateHeartbeatDeadman({
+    snap: {
+      lastHeartbeatAt: "2026-09-24T12:00:00.000Z", // stale prior session
+      heartbeatWorkerId: "worker-old",
+      processStartNonce: "nonce-old",
+      processAlive: true,
+      machineAwake: true,
+      pidAlive: true,
+      lockMatchesSession: true,
+    },
+    session,
+    cfg: CFG,
+    now,
+    nowIso: now.toISOString(),
+    alive: true,
+  });
+  assert.equal(alert, null);
+});
+
+test("B: initWatchdogSession writes immediate lastHeartbeatAt", () => {
+  const now = new Date("2026-09-25T13:30:00.000Z");
+  const session = initWatchdogSession({
+    workerId: "w1",
+    processStartNonce: "n1",
+    now,
+  });
+  assert.equal(session.lastHeartbeatAt, now.toISOString());
+  assert.equal(session.startedAt, now.toISOString());
+  assert.equal(session.workerId, "w1");
+  assert.equal(session.processStartNonce, "n1");
+});
+
+test("C: startup grace blocks false deadman", () => {
+  const started = new Date("2026-09-25T13:00:00.000Z");
+  const now = new Date("2026-09-25T13:10:00.000Z"); // 10 min < 20 grace
+  const session = initWatchdogSession({
+    workerId: "w1",
+    processStartNonce: "n1",
+    now: started,
+  });
+  // Simulate no interval heartbeat yet but session baseline aged within grace
+  session.lastHeartbeatAt = started.toISOString();
+  const alert = evaluateHeartbeatDeadman({
+    snap: {
+      lastHeartbeatAt: started.toISOString(),
+      heartbeatWorkerId: "w1",
+      processStartNonce: "n1",
+      processAlive: true,
+      machineAwake: true,
+      pidAlive: true,
+      lockMatchesSession: true,
+    },
+    session,
+    cfg: CFG,
+    now,
+    nowIso: now.toISOString(),
+    alive: true,
+  });
+  assert.equal(alert, null);
+  assert.ok(Number(CFG.deadman.startupGraceMinutes) >= 20);
+});
+
+test("D: current worker heartbeat expires after threshold → real deadman", () => {
+  const started = new Date("2026-09-25T12:00:00.000Z");
+  const now = new Date("2026-09-25T13:00:00.000Z"); // 60 min past grace + threshold
+  const session = initWatchdogSession({
+    workerId: "w1",
+    processStartNonce: "n1",
+    now: started,
+  });
+  session.lastHeartbeatAt = "2026-09-25T12:05:00.000Z"; // 55 min stale
+  const alert = evaluateHeartbeatDeadman({
+    snap: {
+      lastHeartbeatAt: "2026-09-25T12:05:00.000Z",
+      heartbeatWorkerId: "w1",
+      processStartNonce: "n1",
+      processAlive: false,
+      machineAwake: true,
+      pidAlive: false,
+      lockMatchesSession: false,
+    },
+    session,
+    cfg: CFG,
+    now,
+    nowIso: now.toISOString(),
+    alive: false,
+  });
+  assert.ok(alert);
+  assert.equal(alert.reason, "HEARTBEAT_DEADMAN");
+});
+
+test("E: heartbeat from different workerId ignored for current liveness", () => {
+  const now = new Date("2026-09-25T13:30:00.000Z");
+  const session = initWatchdogSession({ workerId: "current", processStartNonce: "n1", now });
+  const alert = evaluateHeartbeatDeadman({
+    snap: {
+      lastHeartbeatAt: "2026-09-24T01:00:00.000Z",
+      heartbeatWorkerId: "other-worker",
+      processAlive: true,
+      machineAwake: true,
+    },
+    session,
+    cfg: CFG,
+    now,
+    nowIso: now.toISOString(),
+    alive: true,
+  });
+  assert.equal(alert, null);
+});
+
+test("F: processStartNonce mismatch prevents stale heartbeat reuse", () => {
+  const now = new Date("2026-09-25T13:30:00.000Z");
+  const session = initWatchdogSession({ workerId: "w1", processStartNonce: "nonce-B", now });
+  const alert = evaluateHeartbeatDeadman({
+    snap: {
+      lastHeartbeatAt: "2026-09-24T01:00:00.000Z",
+      heartbeatWorkerId: "w1",
+      processStartNonce: "nonce-A",
+      processAlive: true,
+      machineAwake: true,
+    },
+    session,
+    cfg: CFG,
+    now,
+    nowIso: now.toISOString(),
+    alive: true,
+  });
+  assert.equal(alert, null);
+});
+
+test("G: PID alive + matching lock/session during startup → healthy", () => {
+  const now = new Date("2026-09-25T13:00:05.000Z");
+  const session = initWatchdogSession({
+    workerId: "w1",
+    processStartNonce: "n1",
+    pid: 4242,
+    now: new Date("2026-09-25T13:00:00.000Z"),
+  });
+  const r = evaluateWatchdogTick({
+    now,
+    session,
+    snapshot: baseSnap(
+      {
+        processAlive: true,
+        pidAlive: true,
+        lockMatchesSession: true,
+        heartbeatWorkerId: "w1",
+        processStartNonce: "n1",
+        lastHeartbeatAt: session.lastHeartbeatAt,
+        watchdogSession: session,
+        productiveWorkAvailable: true,
+      },
+      now.toISOString(),
+    ),
+  });
+  assert.ok(!r.alerts.some((a) => a.reason === "HEARTBEAT_DEADMAN"));
+  assert.notEqual(r.state.overallStatus, OVERALL.HUMAN_REVIEW_REQUIRED);
+});
+
+test("L: startup summary uses fresh authoritative quota, not persisted stale", () => {
+  const stale = formatMorningStartupSummary({
+    preflight: "PASS",
+    partial: "WI 44/45",
+    quota: "safe=16",
+    lane: "LANE_B_IDLE_SAFE",
+  });
+  const fresh = formatMorningStartupSummary({
+    preflight: "PASS",
+    partial: "WI 44/45",
+    quota: "safe=28",
+    lane: "LANE_A_CL",
+    nextTarget: "wis",
+    watchdog: "HEALTHY",
+  });
+  assert.match(stale, /safe=16/);
+  assert.match(fresh, /safe=28/);
+  assert.match(fresh, /LANE_A_CL/);
+  assert.match(fresh, /WATCHDOG HEALTH HEALTHY/);
+  // Operator must print summary AFTER fresh probe — fresh string must not equal stale.
+  assert.notEqual(fresh, stale);
+});
+
+test("N: WI remains 44/45 in durable state", () => {
+  const statePath = path.join(__dirname, "../packages/research/corpus/reports/queue2-dual-lane-state.json");
+  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+  assert.equal(state.laneA.count, 44);
+  assert.equal(state.laneA.target, 45);
+});
+
+test("O: checkpoint remains cl-opinion-9886466", () => {
+  const statePath = path.join(__dirname, "../packages/research/corpus/reports/queue2-dual-lane-state.json");
+  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
+  assert.equal(state.laneA.checkpoint, "cl-opinion-9886466");
+});
+
+test("P: AI calls = 0", () => {
+  assert.equal(CFG.aiCallsAllowed, 0);
+  const cleared = clearFalsePositiveHeartbeatDeadman({
+    required: true,
+    reasons: ["HEARTBEAT_DEADMAN"],
+    details: [{ reason: "HEARTBEAT_DEADMAN" }],
+  });
+  assert.equal(cleared.required, false);
+  assert.equal(cleared.cleared, true);
+});
+
+test("clearFalsePositiveHeartbeatDeadman keeps unrelated reasons", () => {
+  const cleared = clearFalsePositiveHeartbeatDeadman({
+    required: true,
+    reasons: ["HEARTBEAT_DEADMAN", "ORPHANS_PRESENT"],
+    details: [{ reason: "HEARTBEAT_DEADMAN" }, { reason: "ORPHANS_PRESENT" }],
+  });
+  assert.equal(cleared.required, true);
+  assert.deepEqual(cleared.reasons, ["ORPHANS_PRESENT"]);
+});
+
 console.log(JSON.stringify({ ok: true, tests: passed, suite: "queue2-watchdog", workerStarted: false, aiCalls: 0, corpusMutations: 0 }));

@@ -1,24 +1,39 @@
 {
   "ok": true,
-  "status": "PASS",
-  "wave": "queue2-observability",
-  "generatedAt": "2026-09-24T16:52:47.909Z",
+  "status": "PARTIAL",
+  "wave": "queue2-ownership-heartbeat",
+  "generatedAt": "2026-09-25T13:21:30.054Z",
+  "worker": {
+    "workerId": "q2-94fef319977b",
+    "pid": 45916,
+    "cycles": 1,
+    "heartbeatIntervalMs": 900000,
+    "aiCallsForHeartbeat": 0,
+    "gitPushesForHeartbeat": 0,
+    "lockPath": "packages/research/corpus/reports/queue2-worker.lock.json",
+    "canonicalCommand": "npm run queue2:worker",
+    "manualLaneSelectionRequired": false,
+    "osAutostartConfigured": false
+  },
   "checkpointSafety": {
-    "arDurableCheckpoint": "cl-opinion-9885161",
-    "cursor": "cl-opinion-9885160",
-    "lastSuccessfulExternalId": "cl-opinion-9885161",
-    "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__date_filed__lte=2018-12-31&cluster__docket__court=ark&cursor=cD05ODc5OTkx&order_by=-id&page_size=16",
-    "lastSuccessfulAt": "2026-09-24T03:55:31.381Z",
+    "cursor": "cl-opinion-9886466",
+    "lastSuccessfulExternalId": "cl-opinion-9886466",
+    "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__date_filed__lte=2018-12-31&cluster__docket__court=wis&cursor=cD05ODg2MzY4&order_by=-id&page_size=16",
+    "lastSuccessfulAt": "2026-09-25T00:42:40.438Z",
     "mappingStatus": "VERIFIED",
     "reconciledFrom": "corpus_ingest_jobs",
     "humanReviewRequired": false,
-    "reviewReasons": []
+    "reviewReasons": [],
+    "durableCheckpoint": "cl-opinion-9886466",
+    "currentJurisdiction": "WI",
+    "currentCourt": "wis"
   },
   "observability": {
     "statusFile": "packages/research/corpus/reports/corpus-worker-status.json",
     "dailyFile": "packages/research/corpus/reports/corpus-worker-daily.md",
     "eventsFile": "packages/research/corpus/reports/corpus-worker-events.jsonl",
-    "heartbeat": true
+    "heartbeat": true,
+    "heartbeatIntervalMs": 900000
   },
   "courtListener": {
     "laneBRequests": 0,
@@ -26,27 +41,28 @@
     "mustBeZeroExceptQuotaProbe": true
   },
   "laneA": {
-    "currentCourt": "ark",
-    "jurisdiction": "AR",
-    "checkpoint": "cl-opinion-9885161",
+    "currentCourt": "wis",
+    "jurisdiction": "WI",
+    "checkpoint": "cl-opinion-9886466",
     "target": 45,
-    "count": 33,
-    "nextResumeCondition": "2026-09-24T22:06:14.563Z",
-    "result": null
+    "count": 44,
+    "nextResumeCondition": "2026-09-26T00:36:37.423Z",
+    "result": {
+      "uploaded": true,
+      "bytes": 144466,
+      "sha": "HEAD",
+      "source": "local_bundled"
+    }
   },
-  "laneB": {
-    "ok": true,
-    "skippedRun": true,
-    "note": "observability pass; set QUEUE2_RUN_LANE_B=1 to execute Lane B worker",
-    "courtListenerHttpCalls": 0
-  },
+  "laneB": null,
   "automation": {
-    "nextQuotaProbe": "2026-09-24T22:06:14.563Z",
-    "automaticLaneAResume": true,
-    "humanInterventionRequired": "no"
+    "nextQuotaProbe": "2026-09-26T00:36:37.423Z",
+    "automaticLaneAResume": false,
+    "automaticLaneSwitch": true,
+    "humanInterventionRequired": "yes"
   },
   "operational": {
-    "tests": "queue2-dual-lane-controller.test.cjs + queue2-worker-observability.test.cjs",
+    "tests": "queue2-dual-lane-controller.test.cjs + queue2-worker-observability.test.cjs + queue2-worker-lock.test.cjs",
     "health": {
       "status": 200,
       "body": "{\"ok\":true,\"checks\":{\"database\":\"ok\",\"storage\":\"ok\",\"redis\":\"ok\",\"ingest\":\"configured\",\"config\":\"ok\",\"appEnv\":\"staging\",\"featureAgents\":\"0\",\"providers\":{\"appEnv\":\"staging\",\"appEnvSource\":\"APP_ENV\",\"authProvider\":\"clerk\",\"aiProvider\":\"openai\",\"embeddingProvider\":\"openai\",\"storageProvider\":\"s3\",\"malwareScanner\":\"clamav\",\"ocrProvider\":\"none\",\"emailProvider\":\"smtp\",\"billingProvider\":\"database\",\"rateLimitProvider\":\"redis\",\"databaseConfigured\":true,\"storageBucketConfigured\":true}}}",

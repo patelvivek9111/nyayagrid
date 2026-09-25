@@ -92,6 +92,8 @@ const {
   formatMorningStartupSummary,
   formatWatchdogTerminalLine,
   runWatchdogCycle,
+  initWatchdogSession,
+  clearFalsePositiveHeartbeatDeadman,
   OVERALL,
 } = require("./queue2-watchdog.cjs");
 
@@ -124,12 +126,13 @@ const ARK_DURABLE_JOB_EVIDENCE = {
     "staging corpus_ingest_jobs row source=courtlistener cl_court=ark queried 2026-09-24; AR cases=33",
 };
 
-/** @type {{ shuttingDown: boolean, state: object|null, heartbeatTimer: NodeJS.Timeout|null }} */
-const runtime = {
+  const runtime = {
   shuttingDown: false,
   state: null,
   heartbeatTimer: null,
   lastStatus: null,
+  morningSummaryPending: null,
+  codeFingerprint: null,
 };
 
 function loadLocalState() {
@@ -294,6 +297,13 @@ function maybeHeartbeat(state, status, { force = false } = {}) {
   const line = formatHeartbeat(status, now);
   console.log(line);
   state.lastHeartbeatAt = now.toISOString();
+  if (state.watchdogSession) {
+    state.watchdogSession = {
+      ...state.watchdogSession,
+      lastHeartbeatAt: state.lastHeartbeatAt,
+      lastWatchdogEvaluationAt: state.watchdogSession.lastWatchdogEvaluationAt || state.lastHeartbeatAt,
+    };
+  }
 
   // Local-only lock + status refresh. ZERO AI. NO git commit/push.
   refreshWorkerHeartbeat({
@@ -505,7 +515,11 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     windows: state.quota.windows,
   };
 
-  if (process.env.QUEUE2_FORCE_QUOTA_PROBE === "1" || quotaProbeDue(state, started)) {
+  if (
+    process.env.QUEUE2_FORCE_QUOTA_PROBE === "1" ||
+    runtime.morningSummaryPending ||
+    quotaProbeDue(state, started)
+  ) {
     const probe = runQuotaProbe();
     emit("QUOTA_PROBE", {
       lane: "QUOTA_CHECK",
@@ -617,8 +631,9 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           state = applyQuotaFloorTransition(state, {
             safeRequests: safe.safe,
             windows,
-            projectedUsefulAt: decision.nextUsefulAt || projected,
-            nextUsefulAt: decision.nextUsefulAt || projected,
+            projectedUsefulAt: decision.nextUsefulAt || null,
+            nextUsefulAt: decision.nextUsefulAt || null,
+            bindingResetAt: decision.bindingResetAt || projected || null,
             quotaMode: decision.quotaMode,
             bindingWindow: decision.bindingWindow,
             estimatedRequestsNeeded: decision.estimatedRequestsNeeded,
@@ -667,6 +682,8 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             usableRequests: decision.usableRequests,
             quotaMode: decision.quotaMode,
             bindingWindow: decision.bindingWindow,
+            bindingResetAt: decision.bindingResetAt || null,
+            currentUsableNow: decision.currentUsableNow ?? decision.usableRequests,
             estimatedRequestsNeeded: decision.estimatedRequestsNeeded,
             requestsPerAuthorityEstimate: decision.requestsPerAuthorityEstimate,
             nextUsefulAt: decision.nextUsefulAt,
@@ -680,6 +697,22 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             hourRemaining: windows.hour?.remaining,
           }),
         );
+        if (runtime.morningSummaryPending) {
+          const pending = runtime.morningSummaryPending;
+          runtime.morningSummaryPending = null;
+          console.log(
+            formatMorningStartupSummary({
+              preflight: pending.preflight,
+              canary: pending.canary,
+              workerVersion: pending.workerVersion,
+              partial: `${state.laneA?.jurisdiction || state.laneA?.court || "?"} ${state.laneA?.count || 0}/${state.laneA?.target || "?"}`,
+              quota: `safe=${safe.safe}`,
+              lane: statusLaneFromState(state),
+              nextTarget: state.laneA?.court || "n/a",
+              watchdog: state.humanReview?.required ? "HUMAN_REVIEW" : "HEALTHY",
+            }),
+          );
+        }
       } else {
         console.log(
           JSON.stringify({
@@ -1004,7 +1037,13 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     const wdSnap = {
       processAlive: true,
       machineAwake: true,
-      lastHeartbeatAt: state.lastHeartbeatAt || new Date().toISOString(),
+      pidAlive: true,
+      lockMatchesSession: true,
+      lastHeartbeatAt: state.lastHeartbeatAt || state.watchdogSession?.lastHeartbeatAt || new Date().toISOString(),
+      heartbeatWorkerId: state.watchdogSession?.workerId || WORKER_ID,
+      workerId: state.watchdogSession?.workerId || WORKER_ID,
+      processStartNonce: state.watchdogSession?.processStartNonce || PROCESS_NONCE,
+      watchdogSession: state.watchdogSession || null,
       currentLane: state.currentLane,
       currentTask: state.currentLane === "A" ? "cl_ingest" : state.laneB?.task || "NONE",
       checkpoint: state.laneA?.checkpoint,
@@ -1016,7 +1055,8 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         state.currentLane === "A",
       quotaMode: state.quota?.lastPlan?.quotaMode || state.quota?.wait?.quotaMode || null,
       waitReason: state.quota?.wait?.quotaMode || null,
-      nextUsefulAt: state.quota?.wait?.nextUsefulAt || state.quota?.nextCheckAt || null,
+      nextUsefulAt: state.quota?.wait?.nextUsefulAt || null,
+      bindingResetAt: state.quota?.bindingResetAt || null,
       verifiedClWorkRemaining: Number(state.laneA?.count || 0) < Number(state.laneA?.target || 0),
       unusedUsableCapacity: state.quota?.lastPlan?.usableRequests || 0,
       orphans: status?.health?.orphanCount || 0,
@@ -1025,7 +1065,14 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
       queue3: state.queue3 || "NOT_OPEN",
       idleSafe: Boolean(state.idleSafe),
     };
-    const wd = runWatchdogCycle({ snapshot: wdSnap, persist: true });
+    const wd = runWatchdogCycle({
+      snapshot: wdSnap,
+      session: state.watchdogSession || null,
+      persist: true,
+    });
+    if (state.watchdogSession) {
+      state.watchdogSession.lastWatchdogEvaluationAt = new Date().toISOString();
+    }
     console.log(
       formatWatchdogTerminalLine(wd.state, {
         currentLane: statusLaneFromState(state),
@@ -1152,18 +1199,12 @@ async function main() {
   }
   const canaryNeeded =
     Boolean(knownGood?.workerVersion) && knownGood.workerVersion !== WORKER_VERSION;
-  console.log(
-    formatMorningStartupSummary({
-      preflight: "PASS",
-      canary: canaryNeeded ? "REQUIRED" : knownGood?.workerVersion ? "PASS" : "NOT_REQUIRED",
-      workerVersion: WORKER_VERSION,
-      partial: `${state.laneA?.jurisdiction || state.laneA?.court || "?"} ${state.laneA?.count || 0}/${state.laneA?.target || "?"}`,
-      quota: state.quota?.lastSafeRequests != null ? `safe=${state.quota.lastSafeRequests}` : "n/a",
-      lane: statusLaneFromState(state),
-      nextTarget: state.laneA?.court || "n/a",
-      watchdog: "READY",
-    }),
-  );
+  // Morning summary deferred until AFTER fresh quota reconciliation (not stale persisted quota).
+  runtime.morningSummaryPending = {
+    preflight: "PASS",
+    canary: canaryNeeded ? "REQUIRED" : knownGood?.workerVersion ? "PASS" : "NOT_REQUIRED",
+    workerVersion: WORKER_VERSION,
+  };
   appendAuditEvent({
     lane: statusLaneFromState(state),
     task: "preflight",
@@ -1250,6 +1291,69 @@ async function main() {
       extra: { workerId: WORKER_ID, pid: process.pid },
     });
   }
+
+  // WATCHDOG_SESSION_INIT — baseline from CURRENT worker session only.
+  const sessionNow = new Date();
+  state.watchdogSession = initWatchdogSession({
+    workerId: WORKER_ID,
+    pid: process.pid,
+    processStartNonce: PROCESS_NONCE,
+    now: sessionNow,
+  });
+  state.lastHeartbeatAt = state.watchdogSession.lastHeartbeatAt;
+  emit("WATCHDOG_SESSION_INIT", {
+    lane: statusLaneFromState(state),
+    court: state.laneA?.court,
+    checkpoint: state.laneA?.checkpoint,
+    extra: {
+      workerId: WORKER_ID,
+      pid: process.pid,
+      processStartNonce: PROCESS_NONCE,
+      startedAt: state.watchdogSession.startedAt,
+    },
+  });
+
+  // Clear only the known HEARTBEAT_DEADMAN false-positive; keep unrelated review reasons.
+  const clearedReview = clearFalsePositiveHeartbeatDeadman(state.humanReview);
+  if (clearedReview.cleared) {
+    state.humanReview = {
+      required: clearedReview.required,
+      reasons: clearedReview.reasons,
+      details: clearedReview.details,
+    };
+    emit("HUMAN_REVIEW_CLEARED", {
+      lane: statusLaneFromState(state),
+      reason: "HEARTBEAT_DEADMAN_FALSE_POSITIVE",
+      court: state.laneA?.court,
+      checkpoint: state.laneA?.checkpoint,
+      extra: { remainingReasons: clearedReview.reasons },
+    });
+  }
+
+  // INITIAL_HEARTBEAT immediately — do not wait 15 minutes.
+  {
+    const bootStatus = {
+      currentLane: statusLaneFromState(state),
+      currentTask: "boot",
+      currentCourt: state.laneA?.court,
+      checkpoint: state.laneA?.checkpoint,
+      today: {},
+      corpus: null,
+      health: null,
+    };
+    state = maybeHeartbeat(state, bootStatus, { force: true });
+    emit("INITIAL_HEARTBEAT", {
+      lane: statusLaneFromState(state),
+      court: state.laneA?.court,
+      checkpoint: state.laneA?.checkpoint,
+      extra: {
+        workerId: WORKER_ID,
+        processStartNonce: PROCESS_NONCE,
+        lastHeartbeatAt: state.lastHeartbeatAt,
+      },
+    });
+  }
+  saveLocalState(state);
 
   if (acquired.reviewReason) {
     state = setReview(state, acquired.reviewReason, "lock acquisition noted ownership inconsistency");
@@ -1378,7 +1482,9 @@ async function main() {
       osAutostartConfigured: false,
     },
     checkpointSafety: {
-      arDurableCheckpoint: state.laneA.checkpoint,
+      durableCheckpoint: state.laneA.checkpoint,
+      currentJurisdiction: state.laneA.jurisdiction || null,
+      currentCourt: state.laneA.court || null,
       cursor: state.laneA.cursor,
       lastSuccessfulExternalId: state.laneA.lastSuccessfulExternalId,
       nextPageUrl: state.laneA.nextPageUrl,

@@ -4,9 +4,9 @@
   "queue9": "CLOSED",
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
-  "currentLane": "STOPPED",
+  "currentLane": "LANE_B_IDLE_SAFE",
   "runtimeState": "STOPPED",
-  "freshness": "STOPPED",
+  "freshness": null,
   "currentTask": "NONE",
   "currentCourt": "wis",
   "currentJurisdiction": "WI",
@@ -16,15 +16,15 @@
   "cursor": "cl-opinion-9886466",
   "lastSuccessfulExternalId": "cl-opinion-9886466",
   "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__date_filed__lte=2018-12-31&cluster__docket__court=wis&cursor=cD05ODg2MzY4&order_by=-id&page_size=16",
-  "lastSuccessfulAt": "2026-09-25T00:49:00.000Z",
+  "lastSuccessfulAt": "2026-09-25T00:42:40.438Z",
   "runner": "staging-cl-batch-job",
   "mappingStatus": "VERIFIED",
-  "manifestVersion": 5,
+  "manifestVersion": 1,
   "jobStatus": "quota_paused",
-  "laneStartedAt": "2026-09-25T00:36:19.844Z",
-  "lastUpdatedAt": "2026-09-25T00:52:00.000Z",
-  "lastHeartbeatAt": null,
-  "nextQuotaCheckAt": "2026-09-25T00:48:30.332655+00:00",
+  "laneStartedAt": "2026-09-24T16:31:04.000Z",
+  "lastUpdatedAt": "2026-09-25T13:21:30.049Z",
+  "lastHeartbeatAt": "2026-09-25T13:21:30.049Z",
+  "nextQuotaCheckAt": "2026-09-26T00:36:37.423Z",
   "network": {
     "waitingForNetwork": false,
     "lastOnlineAt": null
@@ -34,73 +34,50 @@
     "routineAiTokens": 0
   },
   "quota": {
-    "minuteRemaining": 16,
-    "hourRemaining": 215,
-    "dayRemaining": 328,
-    "safeRequests": 16,
-    "lastProbeAt": "2026-09-25T00:49:00.000Z",
+    "minuteRemaining": 30,
+    "hourRemaining": 300,
+    "dayRemaining": 1115,
+    "safeRequests": 28,
+    "lastProbeAt": "2026-09-25T13:17:34.062Z",
     "hard429Count": 0,
-    "dayResetAt": "2026-09-25T00:50:46.948468+00:00",
-    "quotaStateObservedAt": "2026-09-25T00:49:00.000Z",
+    "dayResetAt": "2026-09-26T00:36:37.423499+00:00",
+    "quotaStateObservedAt": "2026-09-25T13:17:34.062Z",
     "quotaStateSource": "probe.limits",
-    "quotaStateConfidence": "AUTHORITATIVE_API"
+    "quotaStateConfidence": "AUTHORITATIVE_API",
+    "quotaStateAgeMs": 0
   },
   "today": {
-    "clRequests": 85,
-    "clAuthoritiesAdded": 40,
-    "nonClAuthoritiesAdded": 0,
-    "totalAuthoritiesAdded": 40,
-    "casesAdded": 40,
-    "citationEdgesResolved": 0,
-    "jurisdictionsProcessed": 2,
+    "clRequests": 0,
+    "clAuthoritiesAdded": 0,
+    "nonClAuthoritiesAdded": 6,
+    "totalAuthoritiesAdded": 6,
+    "casesAdded": 0,
+    "citationEdgesResolved": 44,
+    "jurisdictionsProcessed": 0,
     "laneASeconds": 0,
-    "laneBSeconds": 0,
+    "laneBSeconds": 36,
     "idleSeconds": 0,
     "idleSafeSeconds": 0,
     "waitingNetworkSeconds": 0
   },
   "corpus": {
-    "authorities": 3006,
-    "cases": 1689,
-    "clCases": 1644,
+    "authorities": 2966,
+    "cases": 1649,
+    "clCases": 1604,
     "statutes": 904,
     "regulations": 158,
     "rules": 254,
-    "authorityGateDeficit": 0
+    "authorityGateDeficit": 51
   },
   "health": {
     "retrieval": "ok",
     "orphanCount": 0,
     "duplicateSourceIdCount": 0,
-    "chunks": 38598,
-    "embeddings": 38598,
     "database": "ok",
     "featureAgents": "0"
   },
   "review": {
     "humanReviewRequired": false,
     "reviewReasons": []
-  },
-  "manualRun": {
-    "classification": "MANUAL_CL_PRODUCTIVE_RUN_COMPLETE",
-    "result": "PARTIAL",
-    "autonomousWorkerStarted": false,
-    "workerLock": false,
-    "aiCalls": 0,
-    "stopReason": "minute safeRequests 16 below useful threshold 25",
-    "arkansas": {
-      "start": 33,
-      "end": 49,
-      "target": 45,
-      "completed": true,
-      "checkpoint": "cl-opinion-9879067"
-    },
-    "wisconsin": {
-      "start": 20,
-      "end": 44,
-      "target": 45,
-      "completed": false,
-      "checkpoint": "cl-opinion-9886466"
-    }
   }
 }

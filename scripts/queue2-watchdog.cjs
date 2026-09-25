@@ -166,6 +166,7 @@ function createInitialWatchdogState(now = new Date()) {
       meanMttrMs: null,
     },
     lastDiagnosticPath: null,
+    session: null,
     updatedAt: now.toISOString(),
   };
 }
@@ -383,33 +384,20 @@ function evaluateWatchdogTick(input = {}) {
     updatedAt: nowIso,
   };
 
-  // Alive
+  // Alive / deadman — current session only
   const alive = Boolean(snap.processAlive ?? snap.workerAlive ?? input.processAlive);
   state.amIAlive = alive;
-  const hbAge = snap.lastHeartbeatAt ? minutesBetween(snap.lastHeartbeatAt, nowIso) : null;
-  const heartbeatInFuture =
-    snap.lastHeartbeatAt && new Date(snap.lastHeartbeatAt).getTime() > now.getTime();
-  if (
-    !heartbeatInFuture &&
-    (alive === false || (hbAge != null && hbAge >= cfg.deadman.heartbeatStaleMinutes))
-  ) {
-    // deadman only when machine considered awake
-    if (snap.machineAwake !== false) {
-      alerts.push(
-        localizeFailure({
-          reason: "HEARTBEAT_DEADMAN",
-          severity: SEVERITY.CRITICAL,
-          now: nowIso,
-          lastGoodAt: snap.lastHeartbeatAt,
-          currentLane: snap.currentLane,
-          currentTask: snap.currentTask,
-          checkpoint: snap.checkpoint,
-          likelyCause: "Worker process missing or heartbeat stale while machine awake",
-          recommendedOperatorAction: "Inspect process/lock; restart only after preflight.",
-        }),
-      );
-    }
-  }
+  const session = snap.watchdogSession || state.session || input.session || null;
+  if (session) state.session = session;
+  const deadmanAlert = evaluateHeartbeatDeadman({
+    snap,
+    session: state.session,
+    cfg,
+    now,
+    nowIso,
+    alive,
+  });
+  if (deadmanAlert) alerts.push(deadmanAlert);
 
   // Progress
   const progress = detectMeaningfulProgress(input.priorSnapshot || prev.lastSnapshot || null, snap);
@@ -849,6 +837,120 @@ function mean(arr) {
   return arr.reduce((a, b) => a + b, 0) / arr.length;
 }
 
+/**
+ * Initialize watchdog liveness for the CURRENT worker session.
+ * Prior persisted heartbeats are historical only.
+ */
+function initWatchdogSession(params = {}) {
+  const now = params.now instanceof Date ? params.now : new Date(params.now || Date.now());
+  const nowIso = now.toISOString();
+  return {
+    workerId: params.workerId || null,
+    pid: params.pid != null ? Number(params.pid) : process.pid,
+    processStartNonce: params.processStartNonce || null,
+    startedAt: nowIso,
+    lastHeartbeatAt: nowIso,
+    lastWatchdogEvaluationAt: nowIso,
+  };
+}
+
+/**
+ * HEARTBEAT_DEADMAN only for the current workerId/processStartNonce session.
+ * Startup grace blocks false positives before the first interval elapses.
+ */
+function evaluateHeartbeatDeadman(params = {}) {
+  const { snap = {}, session = null, cfg, now, nowIso, alive } = params;
+  if (snap.machineAwake === false) return null;
+  if (!session || !session.workerId) return null;
+
+  // Heartbeat identity must match current session (ignore older worker heartbeats).
+  // Heartbeats without workerId/nonce are historical only — never deadman on them.
+  if (snap.heartbeatWorkerId && snap.heartbeatWorkerId !== session.workerId) return null;
+  if (snap.workerId && snap.workerId !== session.workerId) return null;
+  if (
+    snap.processStartNonce &&
+    session.processStartNonce &&
+    snap.processStartNonce !== session.processStartNonce
+  ) {
+    return null;
+  }
+
+  const graceMin = Number(cfg?.deadman?.startupGraceMinutes ?? 20);
+  const sessionAgeMin = session.startedAt ? minutesBetween(session.startedAt, nowIso) : 0;
+  if (sessionAgeMin != null && sessionAgeMin < graceMin) {
+    // During grace, active PID + matching lock/session establishes liveness.
+    if (alive !== false && (snap.pidAlive !== false || snap.lockMatchesSession !== false)) {
+      return null;
+    }
+  }
+
+  // Prefer current-session heartbeat only when identity fields match.
+  const hbBelongsToSession =
+    snap.heartbeatWorkerId === session.workerId &&
+    (!session.processStartNonce ||
+      !snap.processStartNonce ||
+      snap.processStartNonce === session.processStartNonce);
+  const hbAt = hbBelongsToSession
+    ? snap.lastHeartbeatAt || session.lastHeartbeatAt
+    : session.lastHeartbeatAt;
+  if (!hbAt) return null;
+  if (new Date(hbAt).getTime() > now.getTime()) return null;
+
+  const hbAge = minutesBetween(hbAt, nowIso);
+  const threshold = Number(cfg?.deadman?.heartbeatStaleMinutes ?? 20);
+
+  // PID alive + matching lock/session is healthy even near threshold edges during active work.
+  if (alive !== false && snap.pidAlive && snap.lockMatchesSession && hbAge != null && hbAge < threshold) {
+    return null;
+  }
+
+  if (alive === false || (hbAge != null && hbAge >= threshold)) {
+    // True failure: stale current-session heartbeat (or process not alive) after grace.
+    if (sessionAgeMin != null && sessionAgeMin < graceMin && alive !== false && snap.pidAlive) {
+      return null;
+    }
+    return localizeFailure({
+      reason: "HEARTBEAT_DEADMAN",
+      severity: SEVERITY.CRITICAL,
+      now: nowIso,
+      lastGoodAt: hbAt,
+      currentLane: snap.currentLane,
+      currentTask: snap.currentTask,
+      checkpoint: snap.checkpoint,
+      likelyCause: "Current-session heartbeat stale or process not alive while machine awake",
+      recommendedOperatorAction: "Inspect process/lock; restart only after preflight.",
+      evidence: {
+        workerId: session.workerId,
+        processStartNonce: session.processStartNonce,
+        heartbeatAgeMinutes: hbAge,
+        startupGraceMinutes: graceMin,
+        sessionAgeMinutes: sessionAgeMin,
+      },
+    });
+  }
+  return null;
+}
+
+/**
+ * Clear only HEARTBEAT_DEADMAN from human review (known false-positive safe reset).
+ */
+function clearFalsePositiveHeartbeatDeadman(humanReview) {
+  if (!humanReview || typeof humanReview !== "object") {
+    return { required: false, reasons: [], details: [], cleared: false };
+  }
+  const reasons = Array.isArray(humanReview.reasons) ? humanReview.reasons.filter((r) => r !== "HEARTBEAT_DEADMAN") : [];
+  const details = Array.isArray(humanReview.details)
+    ? humanReview.details.filter((d) => d?.reason !== "HEARTBEAT_DEADMAN")
+    : [];
+  const cleared = (humanReview.reasons || []).includes("HEARTBEAT_DEADMAN");
+  return {
+    required: reasons.length > 0,
+    reasons,
+    details,
+    cleared,
+  };
+}
+
 function redactSecrets(value, depth = 0) {
   if (depth > 8) return "[truncated]";
   if (value == null) return value;
@@ -1117,6 +1219,9 @@ module.exports = {
   classifyFailure,
   localizeFailure,
   evaluateWatchdogTick,
+  initWatchdogSession,
+  evaluateHeartbeatDeadman,
+  clearFalsePositiveHeartbeatDeadman,
   classifyBottleneck,
   redactSecrets,
   buildDiagnosticBundle,

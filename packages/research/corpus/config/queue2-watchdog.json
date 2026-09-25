@@ -11,7 +11,8 @@
     "criticalMinutes": 5
   },
   "deadman": {
-    "heartbeatStaleMinutes": 20
+    "heartbeatStaleMinutes": 20,
+    "startupGraceMinutes": 20
   },
   "quotaUnderutilization": {
     "unusedUsableCapacityMin": 100,
