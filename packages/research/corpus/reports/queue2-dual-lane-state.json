@@ -5,7 +5,7 @@
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
   "currentLane": "STOPPED",
-  "updatedAt": "2026-09-25T18:54:36.391Z",
+  "updatedAt": "2026-09-25T19:09:46.994Z",
   "laneA": {
     "court": "mich",
     "jurisdiction": "MI",
@@ -16,7 +16,7 @@
     "lastSuccessfulAt": "2026-09-25T17:33:47.647Z",
     "runner": "staging-cl-batch-job",
     "mappingStatus": "VERIFIED",
-    "manifestVersion": 24,
+    "manifestVersion": 26,
     "jobStatus": "quota_paused",
     "itemsImported": 19,
     "target": 45,
@@ -38,19 +38,19 @@
       },
       "hour": {
         "limit": 300,
-        "used": 25,
-        "remaining": 275,
-        "resetAt": "2026-09-25T18:36:32.922292+00:00"
+        "used": 14,
+        "remaining": 286,
+        "resetAt": "2026-09-25T19:36:49.531427+00:00"
       },
       "day": {
         "limit": 1200,
-        "used": 136,
-        "remaining": 1064,
+        "used": 150,
+        "remaining": 1050,
         "resetAt": "2026-09-26T00:36:37.423499+00:00"
       }
     },
-    "lastProbeAt": "2026-09-25T18:36:29.475Z",
-    "nextCheckAt": "2026-09-25T18:51:29.475Z",
+    "lastProbeAt": "2026-09-25T19:06:23.945Z",
+    "nextCheckAt": "2026-09-25T19:21:23.945Z",
     "last429At": null,
     "retryAfterSeconds": null,
     "lastSafeRequests": 28,
@@ -59,12 +59,12 @@
     "bindingResetAt": null,
     "hard429Count": 0,
     "courtEfficiency": {},
-    "probeRequests": 18,
+    "probeRequests": 19,
     "lastPlan": {
       "usableRequests": 28,
       "usableMinute": 28,
-      "usableHour": 270,
-      "usableDay": 1054,
+      "usableHour": 281,
+      "usableDay": 1040,
       "bindingWindow": "MINUTE",
       "estimatedRequestsNeeded": 78,
       "remainingAuthoritiesNeeded": 25,
@@ -78,12 +78,12 @@
       },
       "utilization": {
         "dayLimit": 1200,
-        "dayRemaining": 1064,
-        "dayUsed": 136,
+        "dayRemaining": 1050,
+        "dayUsed": 150,
         "reservedRequests": 10,
         "usableDailyBudget": 1190,
-        "utilizationPercent": 11.428571428571429,
-        "productiveQuotaUtilizationPercent": 11.428571428571429
+        "utilizationPercent": 12.605042016806722,
+        "productiveQuotaUtilizationPercent": 12.605042016806722
       },
       "microBatchMaxRequests": 20,
       "nextUsefulAt": null,
@@ -96,14 +96,14 @@
     "wait": null,
     "utilization": {
       "dayLimit": 1200,
-      "dayRemaining": 1064,
-      "dayUsed": 136,
+      "dayRemaining": 1050,
+      "dayUsed": 150,
       "reservedRequests": 10,
       "usableDailyBudget": 1190,
-      "utilizationPercent": 11.428571428571429,
-      "productiveQuotaUtilizationPercent": 11.428571428571429
+      "utilizationPercent": 12.605042016806722,
+      "productiveQuotaUtilizationPercent": 12.605042016806722
     },
-    "quotaStateObservedAt": "2026-09-25T18:36:29.475Z",
+    "quotaStateObservedAt": "2026-09-25T19:06:23.945Z",
     "quotaStateSource": "probe.limits",
     "quotaStateConfidence": "AUTHORITATIVE_API",
     "quotaStateAgeMs": 0,
@@ -154,12 +154,12 @@
     "lastEligibility": null,
     "mutatingTaskActive": null
   },
-  "depthManifestVersion": 24,
+  "depthManifestVersion": 26,
   "lastCitationResolve": "2026-09-24T16:34:00.000Z",
   "lastIntegrityAudit": "2026-09-24T16:34:00.000Z",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastHeartbeatAt": "2026-09-25T18:36:29.453Z",
-  "idleSafe": true,
+  "lastHeartbeatAt": "2026-09-25T19:06:23.922Z",
+  "idleSafe": false,
   "waitingForNetwork": false,
   "lastOnlineAt": null,
   "runtimeState": "STOPPED",
@@ -177,8 +177,8 @@
     "clAuthorities": 0,
     "nonClAuthorities": 6,
     "citationsResolved": 44,
-    "quotaChecks": 35,
-    "laneSwitches": 6,
+    "quotaChecks": 36,
+    "laneSwitches": 7,
     "aiCalls": 0,
     "aiTokens": 0
   },
@@ -218,6 +218,12 @@
       "from": "STOPPED",
       "to": "A",
       "reason": "full_batch_capacity"
+    },
+    {
+      "at": "2026-09-25T19:06:23.945Z",
+      "from": "STOPPED",
+      "to": "A",
+      "reason": "full_batch_capacity"
     }
   ],
   "checkpointEvidence": {
@@ -231,12 +237,12 @@
     "note": "Reconciled from durable staging job row; not invented."
   },
   "watchdogSession": {
-    "workerId": "q2-e05eae49b92b",
-    "pid": 40820,
-    "processStartNonce": "d761086e0db1c44b",
-    "startedAt": "2026-09-25T18:36:29.453Z",
-    "lastHeartbeatAt": "2026-09-25T18:36:29.453Z",
-    "lastWatchdogEvaluationAt": "2026-09-25T18:41:57.837Z"
+    "workerId": "q2-227fa5711275",
+    "pid": 33840,
+    "processStartNonce": "241fc47f81d2cfd5",
+    "startedAt": "2026-09-25T19:06:23.921Z",
+    "lastHeartbeatAt": "2026-09-25T19:06:23.922Z",
+    "lastWatchdogEvaluationAt": "2026-09-25T19:06:27.072Z"
   },
   "canaryMode": "CANARY_REQUIRED",
   "canary": {
@@ -290,10 +296,19 @@
       "quotaMode": "FULL_BATCH",
       "checkpoint": "cl-opinion-11250867",
       "workBetween": false
+    },
+    {
+      "at": "2026-09-25T19:06:23.945Z",
+      "minuteRemaining": 30,
+      "hourRemaining": 286,
+      "dayRemaining": 1050,
+      "quotaMode": "FULL_BATCH",
+      "checkpoint": "cl-opinion-11250867",
+      "workBetween": false
     }
   ],
-  "laneASelectedAt": "2026-09-25T18:36:29.475Z",
-  "laneARunnerStartedAt": "2026-09-25T18:36:31.374Z",
+  "laneASelectedAt": "2026-09-25T19:06:23.945Z",
+  "laneARunnerStartedAt": null,
   "completedCourts": [
     "wis"
   ],
@@ -317,64 +332,119 @@
   "laneALock": null,
   "laneAChild": null,
   "sessionQuota": {
-    "sessionClRequests": 1,
+    "sessionClRequests": 0,
     "productiveClRequests": 0,
-    "quotaProbeRequests": 1,
+    "overheadClRequests": 0,
+    "quotaProbeRequests": 0,
     "retryRequests": 0,
     "wastedClRequests": 0,
     "historicalJobApiCallsBaseline": 9,
-    "rollingDayObservedUsed": 136,
-    "rollingDayRemaining": 1064,
-    "overheadClRequests": null
+    "existingJobHistoricalRequests": 9,
+    "rollingDayObservedUsed": 150,
+    "rollingDayRemaining": 1050,
+    "quotaProbeReuseCount": 0,
+    "redundantQuotaProbesPrevented": 0,
+    "sessionId": "cl-session-1790363386993-otcre0",
+    "childSessionApiCalls": 0
   },
   "clRequestLedger": {
     "version": 1,
-    "sessionId": "cl-session-1790361389476",
-    "workerFingerprint": "d8948de39f33eead3661060cf591dc47d4478305d80f679fb49251e69e47e93b",
+    "sessionId": "cl-session-1790363386993-otcre0",
+    "workerFingerprint": null,
+    "workerId": "offline-fix",
+    "processStartNonce": "offline-nonce",
     "court": "mich",
     "canaryRequired": true,
-    "entries": [
-      {
-        "n": 1,
-        "at": "2026-09-25T18:36:29.475Z",
-        "court": "mich",
-        "jurisdiction": "MI",
-        "purpose": "QUOTA_PROBE",
-        "httpOutcome": 200,
-        "usefulProgress": false,
-        "outcomeClass": "overhead",
-        "batchId": "quota-probe",
-        "runId": null,
-        "workerFingerprint": "d8948de39f33eead3661060cf591dc47d4478305d80f679fb49251e69e47e93b"
-      }
-    ],
-    "currentSessionRequests": 1,
+    "entries": [],
+    "currentSessionRequests": 0,
     "productiveClRequests": 0,
-    "overheadClRequests": 1,
+    "overheadClRequests": 0,
     "wastedClRequests": 0,
-    "quotaProbeRequests": 1,
+    "quotaProbeRequests": 0,
     "retryRequests": 0,
     "authoritiesAdded": 0,
     "casesAdded": 0,
     "checkpointAdvances": 0,
-    "sequentialNonproductiveBeforeProgress": 1,
+    "sequentialNonproductiveBeforeProgress": 0,
     "firstProgressAt": null,
     "existingJobHistoricalRequests": 9,
-    "rollingDayObservedUsed": 136,
-    "rollingDayRemaining": 1064,
+    "rollingDayObservedUsed": 150,
+    "rollingDayRemaining": 1050,
     "quotaProbeReuseCount": 0,
     "redundantQuotaProbesPrevented": 0,
     "lastQuotaProbeAt": null,
-    "lastQuotaProbeSignature": null
+    "lastQuotaProbeSignature": null,
+    "startedAt": "2026-09-25T19:09:46.993Z"
   },
   "quotaProbeCache": {
-    "observedAt": "2026-09-25T18:36:29.475Z",
+    "observedAt": "2026-09-25T19:06:23.945Z",
     "minuteRemaining": 30,
-    "hourRemaining": 275,
-    "dayRemaining": 1064,
+    "hourRemaining": 286,
+    "dayRemaining": 1050,
     "safeRequests": 28,
     "had429": false,
     "resetOccurred": false,
     "countersMateriallyChanged": false
-  }
+  },
+  "historicalClSessions": [
+    {
+      "version": 1,
+      "sessionId": "cl-session-1790361389476",
+      "workerFingerprint": "d8948de39f33eead3661060cf591dc47d4478305d80f679fb49251e69e47e93b",
+      "court": "mich",
+      "canaryRequired": true,
+      "entries": [
+        {
+          "n": 1,
+          "at": "2026-09-25T18:36:29.475Z",
+          "court": "mich",
+          "jurisdiction": "MI",
+          "purpose": "QUOTA_PROBE",
+          "httpOutcome": 200,
+          "usefulProgress": false,
+          "outcomeClass": "overhead",
+          "batchId": "quota-probe",
+          "runId": null,
+          "workerFingerprint": "d8948de39f33eead3661060cf591dc47d4478305d80f679fb49251e69e47e93b"
+        },
+        {
+          "n": 2,
+          "at": "2026-09-25T19:06:23.945Z",
+          "court": "mich",
+          "jurisdiction": "MI",
+          "purpose": "QUOTA_PROBE",
+          "httpOutcome": 200,
+          "usefulProgress": false,
+          "outcomeClass": "overhead",
+          "batchId": "quota-probe",
+          "runId": null,
+          "workerFingerprint": "47a210e2c3792b812f7bcef85eb7412ed973b13f2e47867b57ad3ab7bb3d12f0"
+        }
+      ],
+      "currentSessionRequests": 2,
+      "productiveClRequests": 0,
+      "overheadClRequests": 2,
+      "wastedClRequests": 0,
+      "quotaProbeRequests": 2,
+      "retryRequests": 0,
+      "authoritiesAdded": 0,
+      "casesAdded": 0,
+      "checkpointAdvances": 0,
+      "sequentialNonproductiveBeforeProgress": 2,
+      "firstProgressAt": null,
+      "existingJobHistoricalRequests": 9,
+      "rollingDayObservedUsed": 150,
+      "rollingDayRemaining": 1050,
+      "quotaProbeReuseCount": 0,
+      "redundantQuotaProbesPrevented": 0,
+      "lastQuotaProbeAt": null,
+      "lastQuotaProbeSignature": null,
+      "archivedAt": "2026-09-25T19:09:46.993Z",
+      "archiveReason": "session_boundary_fix"
+    }
+  ],
+  "clSharedSession": null,
+  "clSessionStartedAt": "2026-09-25T19:09:46.993Z",
+  "clSessionWorkerId": "offline-fix",
+  "clSessionProcessNonce": "offline-nonce"
 }

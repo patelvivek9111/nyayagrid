@@ -38,8 +38,10 @@ const QUOTA_PROBE_CACHE_TTL_MS = 7 * 60 * 1000; // 5–10m band; use 7m
 function createEmptyClRequestLedger(params = {}) {
   return {
     version: 1,
-    sessionId: params.sessionId || `cl-session-${Date.now()}`,
+    sessionId: params.sessionId || `cl-session-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
     workerFingerprint: params.workerFingerprint || null,
+    workerId: params.workerId || null,
+    processStartNonce: params.processStartNonce || null,
     court: params.court || null,
     canaryRequired: Boolean(params.canaryRequired),
     entries: [],
@@ -55,13 +57,275 @@ function createEmptyClRequestLedger(params = {}) {
     sequentialNonproductiveBeforeProgress: 0,
     firstProgressAt: null,
     existingJobHistoricalRequests: Number(params.existingJobHistoricalRequests) || 0,
-    rollingDayObservedUsed: Number(params.rollingDayObservedUsed) || null,
-    rollingDayRemaining: Number(params.rollingDayRemaining) || null,
+    rollingDayObservedUsed:
+      params.rollingDayObservedUsed == null ? null : Number(params.rollingDayObservedUsed),
+    rollingDayRemaining:
+      params.rollingDayRemaining == null ? null : Number(params.rollingDayRemaining),
     quotaProbeReuseCount: 0,
     redundantQuotaProbesPrevented: 0,
     lastQuotaProbeAt: null,
     lastQuotaProbeSignature: null,
+    startedAt: (params.now instanceof Date ? params.now : new Date(params.now || Date.now())).toISOString(),
   };
+}
+
+/**
+ * Archive prior active ledger and start a fresh session for a new worker process.
+ * Never copies counters into the new active session.
+ */
+function beginNewClRequestSession(state, opts = {}) {
+  const next = state && typeof state === "object" ? JSON.parse(JSON.stringify(state)) : {};
+  const now = opts.now instanceof Date ? opts.now : new Date(opts.now || Date.now());
+  const prior = next.clRequestLedger || null;
+  const archived = Array.isArray(next.historicalClSessions) ? next.historicalClSessions.slice() : [];
+  if (prior && (Number(prior.currentSessionRequests) > 0 || Array.isArray(prior.entries) && prior.entries.length > 0)) {
+    archived.push({
+      ...prior,
+      archivedAt: now.toISOString(),
+      archiveReason: opts.reason || "new_worker_process",
+    });
+  }
+  // Cap archive size for durable state.
+  next.historicalClSessions = archived.slice(-20);
+
+  next.clRequestLedger = createEmptyClRequestLedger({
+    sessionId: opts.sessionId,
+    workerFingerprint: opts.workerFingerprint || null,
+    workerId: opts.workerId || null,
+    processStartNonce: opts.processStartNonce || null,
+    court: next.laneA?.court || opts.court || null,
+    canaryRequired: next.canaryMode === "CANARY_REQUIRED" || Boolean(opts.canaryRequired),
+    existingJobHistoricalRequests:
+      Number(opts.existingJobHistoricalRequests) ||
+      Number(next.sessionQuota?.historicalJobApiCallsBaseline) ||
+      Number(prior?.existingJobHistoricalRequests) ||
+      0,
+    rollingDayObservedUsed: next.quota?.windows?.day?.used ?? prior?.rollingDayObservedUsed ?? null,
+    rollingDayRemaining: next.quota?.windows?.day?.remaining ?? prior?.rollingDayRemaining ?? null,
+    now,
+  });
+
+  // Reset active sessionQuota counters; keep historical baseline + rolling observations.
+  const prevSq = next.sessionQuota || {};
+  next.sessionQuota = {
+    sessionClRequests: 0,
+    productiveClRequests: 0,
+    overheadClRequests: 0,
+    quotaProbeRequests: 0,
+    retryRequests: 0,
+    wastedClRequests: 0,
+    historicalJobApiCallsBaseline:
+      prevSq.historicalJobApiCallsBaseline != null
+        ? prevSq.historicalJobApiCallsBaseline
+        : Number(opts.existingJobHistoricalRequests) || null,
+    existingJobHistoricalRequests:
+      Number(prevSq.existingJobHistoricalRequests) ||
+      Number(prevSq.historicalJobApiCallsBaseline) ||
+      0,
+    rollingDayObservedUsed: prevSq.rollingDayObservedUsed ?? next.quota?.windows?.day?.used ?? null,
+    rollingDayRemaining: prevSq.rollingDayRemaining ?? next.quota?.windows?.day?.remaining ?? null,
+    quotaProbeReuseCount: 0,
+    redundantQuotaProbesPrevented: 0,
+    sessionId: next.clRequestLedger.sessionId,
+    childSessionApiCalls: 0,
+  };
+
+  next.clSharedSession = null;
+  next.clSessionStartedAt = now.toISOString();
+  next.clSessionWorkerId = opts.workerId || null;
+  next.clSessionProcessNonce = opts.processStartNonce || null;
+
+  // Drop false CL_NO_PRODUCTIVE_PROGRESS holds that belonged to the prior session.
+  if (next.humanReview?.required && Array.isArray(next.humanReview.reasons)) {
+    const drop = new Set([
+      CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS,
+      CONSERVATION_REASONS.CL_NONPRODUCTIVE_REQUEST_SPIKE,
+      CONSERVATION_REASONS.CL_DEBUG_QUOTA_BUDGET_EXCEEDED,
+    ]);
+    next.humanReview.reasons = next.humanReview.reasons.filter((r) => !drop.has(r));
+    next.humanReview.details = (next.humanReview.details || []).filter((d) => !drop.has(d.reason));
+    if (next.humanReview.reasons.length === 0) {
+      next.humanReview.required = false;
+      next.humanReview.details = [];
+    }
+  }
+
+  return {
+    state: next,
+    priorSessionId: prior?.sessionId || null,
+    sessionId: next.clRequestLedger.sessionId,
+    archivedCount: next.historicalClSessions.length,
+    streak: 0,
+    currentSessionRequests: 0,
+  };
+}
+
+/**
+ * True when persisted ledger belongs to a different worker process/nonce.
+ */
+function shouldResetClSessionForNewWorker(state, opts = {}) {
+  const ledger = state?.clRequestLedger;
+  if (!ledger) return true;
+  if (opts.processStartNonce && ledger.processStartNonce && ledger.processStartNonce !== opts.processStartNonce) {
+    return true;
+  }
+  if (opts.workerId && ledger.workerId && ledger.workerId !== opts.workerId) {
+    return true;
+  }
+  // Always reset on explicit new process start (caller passes force or process nonce).
+  if (opts.force === true) return true;
+  if (opts.processStartNonce && !ledger.processStartNonce) return true;
+  return false;
+}
+
+/**
+ * Queue #2 CourtListener callers — inventory for instrumentation invariant.
+ * Autonomous Queue #2 paths must be ledger-instrumented (or zero-CL).
+ */
+const QUEUE2_CL_CALLERS = Object.freeze([
+  {
+    caller: "run-queue2-dual-lane.runQuotaProbe → tmp-cl-api-usage-probe",
+    purpose: "QUOTA_PROBE",
+    ledgerInstrumented: true,
+    typicalRequests: 1,
+    canRunWhileWorkerStopped: false,
+    notes: "Parent records QUOTA_PROBE; single /api-usage/ HTTP call",
+  },
+  {
+    caller: "run-staging-cl-batch-job → staging-cl-batch-job",
+    purpose: "INGEST_DISCOVERY/INGEST_FETCH/RETRY",
+    ledgerInstrumented: true,
+    typicalRequests: "1..CL_MAX_SESSION_CALLS",
+    canRunWhileWorkerStopped: true,
+    notes: "Detached child; must receive CL_SESSION_ID + CL_MAX_SESSION_CALLS; reports sessionApiCalls",
+  },
+  {
+    caller: "staging-cl-batch-job.bootstrapQuotaPlan",
+    purpose: "QUOTA_PROBE",
+    ledgerInstrumented: true,
+    typicalRequests: 1,
+    canRunWhileWorkerStopped: true,
+    notes: "Disabled when CL_BOOTSTRAP_USAGE=0 (Queue #2 default)",
+  },
+  {
+    caller: "queue2:preflight / queue2:validate / Lane B / watchdog / status",
+    purpose: "NONE",
+    ledgerInstrumented: true,
+    typicalRequests: 0,
+    canRunWhileWorkerStopped: true,
+    notes: "Hard zero-CL; covered by assertZeroClOperation tests",
+  },
+  {
+    caller: "tmp-wave2*-usage-probe / cl-ping / staging-cl-shape-probe / run-cl-shape-inline",
+    purpose: "OTHER_EXPLICIT (manual/ops)",
+    ledgerInstrumented: false,
+    typicalRequests: "1+",
+    canRunWhileWorkerStopped: true,
+    notes: "NOT part of Queue #2 autonomous worker; must not run during Q2 autonomy",
+  },
+  {
+    caller: "staging-cl-ingest-lean / staging-cl-court-map-probe",
+    purpose: "OTHER_EXPLICIT (legacy wave scripts)",
+    ledgerInstrumented: false,
+    typicalRequests: "many",
+    canRunWhileWorkerStopped: true,
+    notes: "NOT Queue #2 autonomous path; blocked by process policy during Q2",
+  },
+]);
+
+function assertQueue2AutonomousCallersInstrumented() {
+  const autonomous = QUEUE2_CL_CALLERS.filter(
+    (c) =>
+      c.caller.includes("run-queue2") ||
+      c.caller.includes("run-staging-cl-batch") ||
+      c.caller.includes("staging-cl-batch-job") ||
+      c.caller.includes("preflight") ||
+      c.caller.includes("Lane B"),
+  );
+  const bad = autonomous.filter((c) => c.ledgerInstrumented !== true && Number(c.typicalRequests) !== 0);
+  return { ok: bad.length === 0, bad, autonomous };
+}
+
+/**
+ * Replay: prior session A with streak=1 must not block new session B after one probe.
+ */
+function replayNewWorkerSessionBoundary(opts = {}) {
+  const events = [];
+  let state = {
+    canaryMode: "CANARY_REQUIRED",
+    laneA: { court: "mich", count: 20, target: 45, checkpoint: "cl-opinion-11250867" },
+    sessionQuota: {
+      sessionClRequests: 1,
+      productiveClRequests: 0,
+      overheadClRequests: 1,
+      quotaProbeRequests: 1,
+      historicalJobApiCallsBaseline: 9,
+    },
+    clRequestLedger: createEmptyClRequestLedger({
+      sessionId: "session-A",
+      canaryRequired: true,
+      existingJobHistoricalRequests: 9,
+    }),
+    humanReview: {
+      required: true,
+      reasons: [CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS],
+      details: [{ reason: CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS, detail: "streak=2" }],
+    },
+    queue3: "NOT_OPEN",
+  };
+  // Seed session A with one probe (streak=1).
+  state.clRequestLedger = recordClRequest(state.clRequestLedger, {
+    purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
+    usefulProgress: false,
+  }).ledger;
+  events.push({
+    type: "SESSION_A",
+    requests: state.clRequestLedger.currentSessionRequests,
+    streak: state.clRequestLedger.sequentialNonproductiveBeforeProgress,
+  });
+
+  const reset = beginNewClRequestSession(state, {
+    workerId: "worker-B",
+    processStartNonce: "nonce-B",
+    workerFingerprint: "fp-B",
+    reason: "new_worker_process",
+    now: new Date("2026-09-25T19:10:00.000Z"),
+  });
+  state = reset.state;
+  events.push({
+    type: "SESSION_B_START",
+    requests: state.clRequestLedger.currentSessionRequests,
+    streak: state.clRequestLedger.sequentialNonproductiveBeforeProgress,
+    priorArchived: Boolean(reset.priorSessionId),
+    hr: state.humanReview.required,
+  });
+
+  // One startup probe on B.
+  state.clRequestLedger = recordClRequest(state.clRequestLedger, {
+    purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
+    usefulProgress: false,
+  }).ledger;
+  const gate = evaluateClConservationGate(state.clRequestLedger, { canaryRequired: true });
+  events.push({
+    type: "AFTER_ONE_PROBE",
+    requests: state.clRequestLedger.currentSessionRequests,
+    streak: state.clRequestLedger.sequentialNonproductiveBeforeProgress,
+    allowLaneA: gate.allow,
+    reason: gate.reason,
+  });
+
+  const ok =
+    reset.currentSessionRequests === 0 &&
+    state.clRequestLedger.currentSessionRequests === 1 &&
+    state.clRequestLedger.sequentialNonproductiveBeforeProgress === 1 &&
+    gate.allow === true &&
+    gate.reason == null &&
+    state.humanReview.required === false &&
+    state.queue3 === "NOT_OPEN" &&
+    Array.isArray(state.historicalClSessions) &&
+    state.historicalClSessions.length >= 1;
+
+  return { ok, events, state, gate, courtListenerHttpCalls: 0, aiCalls: 0, mutations: 0 };
 }
 
 function classifyRequestPurpose(purpose) {
@@ -448,7 +712,12 @@ module.exports = {
   MAX_SEQUENTIAL_NONPRODUCTIVE_BEFORE_PROGRESS,
   MAX_REDUNDANT_QUOTA_PROBES,
   QUOTA_PROBE_CACHE_TTL_MS,
+  QUEUE2_CL_CALLERS,
   createEmptyClRequestLedger,
+  beginNewClRequestSession,
+  shouldResetClSessionForNewWorker,
+  assertQueue2AutonomousCallersInstrumented,
+  replayNewWorkerSessionBoundary,
   classifyRequestPurpose,
   classifyRequestOutcome,
   recordClRequest,

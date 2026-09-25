@@ -309,21 +309,128 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
 test("max total before first progress = 5 hard stop", () => {
   let ledger = createEmptyClRequestLedger({ canaryRequired: true });
   for (let i = 0; i < 5; i++) {
-    // Mark firstProgress artificially never; but avoid sequential stop by faking progress streak reset incorrectly —
-    // use overhead that increments total; after 2 seq we stop. So test the total gate with firstProgress null
-    // by resetting sequential counter while keeping total.
     ledger = recordClRequest(ledger, {
       purpose: CL_REQUEST_PURPOSES.VERIFY,
       usefulProgress: false,
     }).ledger;
   }
-  // After 2, sequential already blocks — that's correct early stop.
   const gate = evaluateClConservationGate(ledger, { canaryRequired: true });
   assert.equal(gate.allow, false);
   assert.ok(
     gate.reason === CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS ||
       gate.reason === CONSERVATION_REASONS.CL_DEBUG_QUOTA_BUDGET_EXCEEDED,
   );
+});
+
+const {
+  beginNewClRequestSession,
+  shouldResetClSessionForNewWorker,
+  replayNewWorkerSessionBoundary,
+  assertQueue2AutonomousCallersInstrumented,
+  QUEUE2_CL_CALLERS,
+} = require("./queue2-cl-quota-conservation.cjs");
+
+test("new worker resets active session counters; prior archived", () => {
+  let state = {
+    canaryMode: "CANARY_REQUIRED",
+    laneA: { court: "mich" },
+    sessionQuota: { sessionClRequests: 2, historicalJobApiCallsBaseline: 9 },
+    clRequestLedger: createEmptyClRequestLedger({ sessionId: "old", canaryRequired: true }),
+    humanReview: {
+      required: true,
+      reasons: [CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS],
+      details: [],
+    },
+  };
+  state.clRequestLedger = recordClRequest(state.clRequestLedger, {
+    purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
+    usefulProgress: false,
+  }).ledger;
+  state.clRequestLedger = recordClRequest(state.clRequestLedger, {
+    purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
+    usefulProgress: false,
+  }).ledger;
+  assert.equal(state.clRequestLedger.sequentialNonproductiveBeforeProgress, 2);
+
+  const reset = beginNewClRequestSession(state, {
+    workerId: "w2",
+    processStartNonce: "n2",
+    force: true,
+    reason: "new_worker_process",
+  });
+  state = reset.state;
+  assert.equal(state.clRequestLedger.currentSessionRequests, 0);
+  assert.equal(state.clRequestLedger.sequentialNonproductiveBeforeProgress, 0);
+  assert.equal(state.clRequestLedger.firstProgressAt, null);
+  assert.equal(state.sessionQuota.sessionClRequests, 0);
+  assert.notEqual(state.clRequestLedger.sessionId, "old");
+  assert.equal(state.historicalClSessions.length, 1);
+  assert.equal(state.historicalClSessions[0].sessionId, "old");
+  assert.equal(state.historicalClSessions[0].currentSessionRequests, 2);
+  assert.equal(state.humanReview.required, false);
+  assert.equal(shouldResetClSessionForNewWorker(state, { processStartNonce: "n3" }), true);
+});
+
+test("one startup probe does not block Lane A; two in SAME session do", () => {
+  const replay = replayNewWorkerSessionBoundary();
+  assert.equal(replay.ok, true);
+  assert.equal(replay.gate.allow, true);
+  const after = replay.events.find((e) => e.type === "AFTER_ONE_PROBE");
+  assert.equal(after.requests, 1);
+  assert.equal(after.streak, 1);
+  assert.equal(after.allowLaneA, true);
+
+  let ledger = createEmptyClRequestLedger({ canaryRequired: true });
+  ledger = recordClRequest(ledger, { purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE, usefulProgress: false }).ledger;
+  ledger = recordClRequest(ledger, { purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE, usefulProgress: false }).ledger;
+  const gate = evaluateClConservationGate(ledger, { canaryRequired: true });
+  assert.equal(gate.allow, false);
+  assert.equal(gate.reason, CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS);
+});
+
+test("previous-session + current-session requests do not combine for streak", () => {
+  let state = {
+    clRequestLedger: createEmptyClRequestLedger({ sessionId: "A", canaryRequired: true }),
+    sessionQuota: {},
+  };
+  state.clRequestLedger = recordClRequest(state.clRequestLedger, {
+    purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
+    usefulProgress: false,
+  }).ledger;
+  state = beginNewClRequestSession(state, { processStartNonce: "B", workerId: "w" }).state;
+  state.clRequestLedger = recordClRequest(state.clRequestLedger, {
+    purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
+    usefulProgress: false,
+  }).ledger;
+  assert.equal(state.clRequestLedger.sequentialNonproductiveBeforeProgress, 1);
+  assert.equal(evaluateClConservationGate(state.clRequestLedger, { canaryRequired: true }).allow, true);
+  assert.equal(state.historicalClSessions[0].sequentialNonproductiveBeforeProgress, 1);
+});
+
+test("all Queue #2 autonomous CL callers require ledger context", () => {
+  assert.ok(QUEUE2_CL_CALLERS.length >= 4);
+  const check = assertQueue2AutonomousCallersInstrumented();
+  assert.equal(check.ok, true, JSON.stringify(check.bad));
+});
+
+test("rolling day metrics never overwrite session metrics", () => {
+  let ledger = createEmptyClRequestLedger({
+    rollingDayObservedUsed: 150,
+    rollingDayRemaining: 1050,
+  });
+  ledger = recordClRequest(ledger, { purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE, usefulProgress: false }).ledger;
+  ledger.rollingDayObservedUsed = 150;
+  assert.equal(ledger.currentSessionRequests, 1);
+  assert.equal(ledger.rollingDayObservedUsed, 150);
+  assert.notEqual(ledger.currentSessionRequests, ledger.rollingDayObservedUsed);
+});
+
+test("Queue #3 remains NOT_OPEN; AI calls=0 in session replay", () => {
+  const replay = replayNewWorkerSessionBoundary();
+  assert.equal(replay.state.queue3, "NOT_OPEN");
+  assert.equal(replay.aiCalls, 0);
+  assert.equal(replay.mutations, 0);
+  assert.equal(replay.courtListenerHttpCalls, 0);
 });
 
 console.log(`\nqueue2-cl-quota-conservation.test.cjs: ${passed} passed`);

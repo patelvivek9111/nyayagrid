@@ -136,6 +136,8 @@ const {
   CL_REQUEST_PURPOSES,
   CONSERVATION_REASONS,
   createEmptyClRequestLedger,
+  beginNewClRequestSession,
+  shouldResetClSessionForNewWorker,
   recordClRequest,
   evaluateClConservationGate,
   evaluateQuotaProbeCache,
@@ -794,20 +796,23 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     quotaProbeDue(state, started)
   ) {
     state.sessionQuota = state.sessionQuota || createEmptySessionQuota();
-    state.clRequestLedger =
-      state.clRequestLedger ||
-      createEmptyClRequestLedger({
-        canaryRequired: state.canaryMode === "CANARY_REQUIRED",
-        court: state.laneA?.court,
-        existingJobHistoricalRequests:
-          Number(state.sessionQuota.existingJobHistoricalRequests) ||
-          Number(state.sessionQuota.historicalJobApiCallsBaseline) ||
-          0,
-        rollingDayObservedUsed: state.quota?.windows?.day?.used,
-        rollingDayRemaining: state.quota?.windows?.day?.remaining,
+    // Active ledger must already exist from process-start beginNewClRequestSession.
+    // Never revive a stale persisted ledger mid-cycle.
+    if (
+      !state.clRequestLedger ||
+      (state.clSessionProcessNonce && state.clRequestLedger.processStartNonce !== state.clSessionProcessNonce)
+    ) {
+      const reset = beginNewClRequestSession(state, {
+        workerId: WORKER_ID,
+        processStartNonce: PROCESS_NONCE,
         workerFingerprint: runtime.codeFingerprint,
+        reason: "missing_or_mismatched_active_session",
+        now: started,
       });
+      state = reset.state;
+    }
     state.clRequestLedger.canaryRequired = state.canaryMode === "CANARY_REQUIRED";
+    if (runtime.codeFingerprint) state.clRequestLedger.workerFingerprint = runtime.codeFingerprint;
 
     const consBeforeProbe = evaluateClConservationGate(state.clRequestLedger, {
       canaryRequired: state.canaryMode === "CANARY_REQUIRED",
@@ -1275,13 +1280,20 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     state.idleSafe = false;
     state.runtimeState = "RUNNING";
     state.laneASelectedAt = state.laneASelectedAt || started.toISOString();
-    state.clRequestLedger =
-      state.clRequestLedger ||
-      createEmptyClRequestLedger({
-        canaryRequired: state.canaryMode === "CANARY_REQUIRED",
-        court: state.laneA?.court,
+    if (
+      !state.clRequestLedger ||
+      state.clRequestLedger.processStartNonce !== PROCESS_NONCE
+    ) {
+      const reset = beginNewClRequestSession(state, {
+        workerId: WORKER_ID,
+        processStartNonce: PROCESS_NONCE,
         workerFingerprint: runtime.codeFingerprint,
+        reason: "lane_a_session_guard",
+        now: started,
       });
+      state = reset.state;
+    }
+    state.clRequestLedger.canaryRequired = state.canaryMode === "CANARY_REQUIRED";
     const consBeforeLaneA = evaluateClConservationGate(state.clRequestLedger, {
       canaryRequired: state.canaryMode === "CANARY_REQUIRED",
     });
@@ -2194,6 +2206,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     console.log(
       JSON.stringify({
         tag: "CL_REQUEST_ACCOUNTING",
+        sessionId: ledger.sessionId,
         session: ledger.currentSessionRequests,
         productive: ledger.productiveClRequests,
         overhead: ledger.overheadClRequests,
@@ -2202,7 +2215,11 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         retries: ledger.retryRequests,
         authoritiesAdded: ledger.authoritiesAdded,
         checkpointAdvanced: ledger.checkpointAdvances > 0,
+        sequentialNonproductiveBeforeProgress: ledger.sequentialNonproductiveBeforeProgress,
         existingJobHistoricalRequests: ledger.existingJobHistoricalRequests,
+        historicalSessions: Array.isArray(state.historicalClSessions)
+          ? state.historicalClSessions.length
+          : 0,
         rollingDayUsed: ledger.rollingDayObservedUsed,
         rollingDayRemaining: ledger.rollingDayRemaining,
         note: "session_requests_are_not_rolling_day_used",
@@ -2250,6 +2267,40 @@ async function main() {
   let state = neverOpenQueue3(loadLocalState());
   const started = new Date();
   state.laneStartedAt = state.laneStartedAt || started.toISOString();
+
+  // NEW WORKER PROCESS ⇒ NEW CL SESSION. Never inherit prior streak/counters.
+  {
+    const mustReset =
+      shouldResetClSessionForNewWorker(state, {
+        workerId: WORKER_ID,
+        processStartNonce: PROCESS_NONCE,
+        force: true,
+      }) || true;
+    if (mustReset) {
+      const reset = beginNewClRequestSession(state, {
+        workerId: WORKER_ID,
+        processStartNonce: PROCESS_NONCE,
+        workerFingerprint: runtime.codeFingerprint || null,
+        reason: "new_worker_process",
+        now: started,
+        canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+      });
+      state = reset.state;
+      console.log(
+        JSON.stringify({
+          tag: "CL_SESSION_RESET",
+          sessionId: reset.sessionId,
+          priorSessionId: reset.priorSessionId,
+          archivedCount: reset.archivedCount,
+          currentSessionRequests: reset.currentSessionRequests,
+          streak: reset.streak,
+          workerId: WORKER_ID,
+          processStartNonce: PROCESS_NONCE,
+        }),
+      );
+      saveLocalState(state);
+    }
+  }
 
   // Sleep/resume detection before any mutation.
   const resume = detectSystemResume(state.lastHeartbeatAt, started);
