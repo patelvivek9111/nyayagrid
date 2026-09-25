@@ -861,9 +861,10 @@ module.exports = {
   evaluateHorizon,
   runSelfCheck,
   runPreflight,
+  STATE_PATH,
+  REPORTS,
   topRankedLaneATargets,
   persistLaneAManifest,
   MANIFEST_PATH,
-  REPORTS,
   HUMAN_REVIEW_REASONS,
 };

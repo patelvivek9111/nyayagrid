@@ -376,7 +376,7 @@ test("resolveCorpusTotalsForStatus never invents hardcoded 2966 fallback", () =>
 });
 
 test("reconcileLaneAFromJob never invents checkpoint", () => {
-  const empty = reconcileLaneAFromJob({ court: "ark", count: 33, target: 45 }, { cl_court: "ark", status: "paused" });
+  const empty = reconcileLaneAFromJob({ court: "ark", count: 33, target: 45, jobStatus: "quota_paused", targetStatus: "PARTIAL" }, { cl_court: "ark", status: "paused" });
   assert.equal(empty.reconciled, false);
   assert.equal(hasDurableCheckpoint(empty.state), false);
   assert.equal(isPartialLaneA(empty.state), true);

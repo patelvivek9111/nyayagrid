@@ -21,7 +21,9 @@ const reports = path.join(root, "packages/research/corpus/reports");
 const opts = {
   env: process.env,
   safetyConfig: loadSafetyConfig(),
-  allowDisabledForDryRun: process.env.QUEUE2_PREFLIGHT_ALLOW_DISABLED === "1",
+  allowDisabledForDryRun:
+    process.env.QUEUE2_PREFLIGHT_ALLOW_DISABLED === "1" ||
+    process.env.QUEUE2_WORKER_ENABLED !== "1",
   featureAgents: process.env.FEATURE_AGENTS || "0",
   queue2Open: true,
   queue3Open: false,

@@ -723,16 +723,46 @@ function buildOperatorStatus(params = {}) {
 
 /**
  * Active/partial CL court requires a durable resume position.
- * Partial = count > 0 && count < target (or job status quota_paused/rate_limited/paused with unfinished target).
+ *
+ * IMPORTANT: A VERIFIED READY court may already have corpus cases (count>0)
+ * without ever starting CourtListener Lane A ingest. That is a first-start
+ * condition — null checkpoint is valid and must NOT raise human review.
+ *
+ * Active CL partial = unfinished depth with CL job/resume signals
+ * (quota_paused / PARTIAL / nextPageUrl / legacy mid-ingest without READY).
  */
+function isReadyFirstStartLaneA(laneA) {
+  if (!laneA) return false;
+  const jobStatus = String(laneA.jobStatus || "").toLowerCase();
+  const targetStatus = String(laneA.targetStatus || "").toUpperCase();
+  const noResume =
+    !laneA.checkpoint &&
+    !laneA.cursor &&
+    !laneA.lastSuccessfulExternalId &&
+    !laneA.nextPageUrl;
+  if (!noResume) return false;
+  if (targetStatus === "PARTIAL") return false;
+  if (["quota_paused", "rate_limited", "paused", "running"].includes(jobStatus)) return false;
+  if (targetStatus === "READY") return true;
+  if (jobStatus === "ready") return true;
+  return false;
+}
+
 function isPartialLaneA(laneA) {
   if (!laneA) return false;
-  const count = Number(laneA.count) || 0;
-  const target = Number(laneA.target) || 0;
+  const count = Math.max(0, Number(laneA.count) || 0);
+  const target = Math.max(0, Number(laneA.target) || 0);
   if (target <= 0) return false;
+  if (count >= target) return false;
+  // READY first-start with existing corpus cases and no CL resume metadata.
+  if (isReadyFirstStartLaneA(laneA)) return false;
+  const jobStatus = String(laneA.jobStatus || "").toLowerCase();
+  const targetStatus = String(laneA.targetStatus || "").toUpperCase();
+  if (["quota_paused", "rate_limited", "paused", "running"].includes(jobStatus)) return true;
+  if (targetStatus === "PARTIAL") return true;
+  if (laneA.nextPageUrl) return true;
+  // Legacy mid-ingest: unfinished depth with progress and no READY marker.
   if (count > 0 && count < target) return true;
-  const status = String(laneA.jobStatus || "");
-  if (["quota_paused", "rate_limited", "paused"].includes(status) && count < target) return true;
   return false;
 }
 
@@ -1078,6 +1108,7 @@ module.exports = {
   formatEt,
   statusLaneFromState,
   isPartialLaneA,
+  isReadyFirstStartLaneA,
   hasDurableCheckpoint,
   validatePartialCheckpoint,
   reconcileLaneAFromJob,

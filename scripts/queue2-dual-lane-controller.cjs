@@ -17,6 +17,7 @@ const {
   setHumanReview,
   HUMAN_REVIEW_REASONS,
   isPartialLaneA,
+  isReadyFirstStartLaneA,
   hasDurableCheckpoint,
 } = require("./queue2-worker-observability.cjs");
 const {
@@ -212,7 +213,14 @@ function restoreState(saved, now = new Date()) {
   merged.queue3 = "NOT_OPEN";
   merged.featureAgents = "0";
   merged.version = 1;
-  if (merged.currentLane !== "A" && merged.currentLane !== "B") merged.currentLane = "B";
+  if (merged.currentLane === "STOPPED" || merged.runtimeState === "STOPPED") {
+    // Preserve clean stopped scheduler state; do not coerce to Lane B.
+    if (merged.currentLane !== "A" && merged.currentLane !== "B" && merged.currentLane !== "WAIT") {
+      merged.currentLane = "STOPPED";
+    }
+  } else if (merged.currentLane !== "A" && merged.currentLane !== "B" && merged.currentLane !== "WAIT") {
+    merged.currentLane = "B";
+  }
   merged.idleSafe = Boolean(merged.idleSafe);
   merged.waitingForNetwork = Boolean(merged.waitingForNetwork);
   merged.runtimeState = merged.runtimeState || "STOPPED";
@@ -262,7 +270,8 @@ function restoreState(saved, now = new Date()) {
   if (merged.idleSafe || merged.runtimeState === "IDLE_SAFE") {
     merged.laneB.task = "NONE";
   }
-  // Harden: never keep an active partial court with a null checkpoint.
+  // Harden: never keep an active CL partial court with a null checkpoint.
+  // READY first-start courts (e.g. MI with existing corpus cases, no CL resume) are OK.
   const check = validatePartialCheckpoint(merged.laneA);
   merged.laneA = check.laneA;
   if (check.humanReviewRequired) {
@@ -271,6 +280,15 @@ function restoreState(saved, now = new Date()) {
       setHumanReview(merged, check.reason, "restoreState refused null checkpoint on partial court"),
     );
     if (merged.currentLane === "A") merged.currentLane = "B";
+  } else if (
+    merged.humanReview?.required &&
+    Array.isArray(merged.humanReview.reasons) &&
+    merged.humanReview.reasons.length === 1 &&
+    merged.humanReview.reasons[0] === HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT &&
+    isReadyFirstStartLaneA(merged.laneA)
+  ) {
+    // Clear stale false-positive review if state was previously poisoned by READY-as-partial.
+    merged.humanReview = { required: false, reasons: [], details: [] };
   }
   return merged;
 }
@@ -1155,6 +1173,7 @@ module.exports = {
   reconcileLaneAFromJob,
   setHumanReview,
   isPartialLaneA,
+  isReadyFirstStartLaneA,
   hasDurableCheckpoint,
   HUMAN_REVIEW_REASONS,
 };
