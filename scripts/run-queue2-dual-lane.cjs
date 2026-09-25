@@ -88,6 +88,12 @@ const {
   appendAuditEvent,
   WORKER_VERSION,
 } = require("./queue2-worker-safety.cjs");
+const {
+  formatMorningStartupSummary,
+  formatWatchdogTerminalLine,
+  runWatchdogCycle,
+  OVERALL,
+} = require("./queue2-watchdog.cjs");
 
 const root = path.join(__dirname, "..");
 const reports = path.join(root, "packages/research/corpus/reports");
@@ -993,6 +999,54 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         }
       : undefined,
   });
+  // Deterministic progress watchdog (zero AI / zero CL HTTP).
+  try {
+    const wdSnap = {
+      processAlive: true,
+      machineAwake: true,
+      lastHeartbeatAt: state.lastHeartbeatAt || new Date().toISOString(),
+      currentLane: state.currentLane,
+      currentTask: state.currentLane === "A" ? "cl_ingest" : state.laneB?.task || "NONE",
+      checkpoint: state.laneA?.checkpoint,
+      previousCheckpoint: state.laneA?.lastSuccessfulExternalId,
+      authorities: status?.corpus?.authorities,
+      cases: status?.corpus?.cases,
+      productiveWorkAvailable:
+        Number(state.laneA?.count || 0) < Number(state.laneA?.target || 0) ||
+        state.currentLane === "A",
+      quotaMode: state.quota?.lastPlan?.quotaMode || state.quota?.wait?.quotaMode || null,
+      waitReason: state.quota?.wait?.quotaMode || null,
+      nextUsefulAt: state.quota?.wait?.nextUsefulAt || state.quota?.nextCheckAt || null,
+      verifiedClWorkRemaining: Number(state.laneA?.count || 0) < Number(state.laneA?.target || 0),
+      unusedUsableCapacity: state.quota?.lastPlan?.usableRequests || 0,
+      orphans: status?.health?.orphanCount || 0,
+      duplicateSourceIds: status?.health?.duplicateSourceIdCount || 0,
+      workerVersion: WORKER_VERSION,
+      queue3: state.queue3 || "NOT_OPEN",
+      idleSafe: Boolean(state.idleSafe),
+    };
+    const wd = runWatchdogCycle({ snapshot: wdSnap, persist: true });
+    console.log(
+      formatWatchdogTerminalLine(wd.state, {
+        currentLane: statusLaneFromState(state),
+        jurisdiction: state.laneA?.jurisdiction || state.laneA?.court,
+        countLabel: `${state.laneA?.count || 0}/${state.laneA?.target || "?"}`,
+        quotaLabel: `${state.quota?.windows?.minute?.remaining ?? "?"}/${state.quota?.windows?.hour?.remaining ?? "?"}/${state.quota?.windows?.day?.remaining ?? "?"}`,
+        quotaMode: wdSnap.quotaMode,
+        nextUsefulAt: wdSnap.nextUsefulAt,
+      }),
+    );
+    if (wd.state.overallStatus === OVERALL.HUMAN_REVIEW_REQUIRED && wd.state.ifNotWhatIsWrong?.reason) {
+      state = setReview(state, wd.state.ifNotWhatIsWrong.reason, "watchdog critical");
+      human = true;
+    }
+    if (wd.state.overallStatus === OVERALL.EMERGENCY_STOP && wd.state.ifNotWhatIsWrong?.reason) {
+      state = setReview(state, wd.state.ifNotWhatIsWrong.reason, "watchdog emergency");
+      human = true;
+    }
+  } catch (wdErr) {
+    console.log(JSON.stringify({ tag: "WATCHDOG", ok: false, err: String(wdErr.message || wdErr).slice(0, 200), aiCalls: 0 }));
+  }
   state = maybeHeartbeat(state, status);
   saveLocalState(state);
   runtime.state = state;
@@ -1089,6 +1143,27 @@ async function main() {
     process.exit(2);
   }
   console.log("PREFLIGHT_PASS");
+  const knownGoodPath = path.join(reports, "queue2-watchdog-known-good.json");
+  let knownGood = null;
+  try {
+    knownGood = JSON.parse(fs.readFileSync(knownGoodPath, "utf8"));
+  } catch {
+    knownGood = null;
+  }
+  const canaryNeeded =
+    Boolean(knownGood?.workerVersion) && knownGood.workerVersion !== WORKER_VERSION;
+  console.log(
+    formatMorningStartupSummary({
+      preflight: "PASS",
+      canary: canaryNeeded ? "REQUIRED" : knownGood?.workerVersion ? "PASS" : "NOT_REQUIRED",
+      workerVersion: WORKER_VERSION,
+      partial: `${state.laneA?.jurisdiction || state.laneA?.court || "?"} ${state.laneA?.count || 0}/${state.laneA?.target || "?"}`,
+      quota: state.quota?.lastSafeRequests != null ? `safe=${state.quota.lastSafeRequests}` : "n/a",
+      lane: statusLaneFromState(state),
+      nextTarget: state.laneA?.court || "n/a",
+      watchdog: "READY",
+    }),
+  );
   appendAuditEvent({
     lane: statusLaneFromState(state),
     task: "preflight",

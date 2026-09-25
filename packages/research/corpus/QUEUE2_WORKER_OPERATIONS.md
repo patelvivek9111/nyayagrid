@@ -89,6 +89,28 @@ Lane A capacity is task-aware (`scripts/cl-adaptive-quota.cjs`, config `adaptive
 
 Default reserves: minute **2**, hour **5**, day **10**. Minimum micro-batch: **3** requests. Uncertainty multiplier: **1.35**.
 
+## WATCHDOG / AUTONOMOUS OPERATIONS
+
+Module: `scripts/queue2-watchdog.cjs`  
+Config: `packages/research/corpus/config/queue2-watchdog.json`  
+Status: `packages/research/corpus/reports/queue2-watchdog-status.json`
+
+The watchdog proves the worker is alive **and** productive. Heartbeat alone is not progress.
+
+Thresholds (defaults):
+
+- no-progress warning: **15m** / critical: **30m**
+- stuck identical productive cycles: **3**
+- missed wake: warning **2m** / critical **5m**
+- heartbeat deadman: **20m** (while machine awake)
+- quota underutilization: ≥**100** unused usable requests for **20m** warn / **40m** critical
+
+Legitimate waits (`WAIT_MINUTE`, `WAIT_HOUR`, `DAY_BLOCKED`, network, backpressure, idle-safe) do not false-alert when they carry a valid reason and expected next event.
+
+On `HUMAN_REVIEW_REQUIRED` / `EMERGENCY_STOP` the watchdog writes a redacted diagnostic under `packages/research/corpus/reports/diagnostics/`.
+
+Watchdog AI calls: **always 0**.
+
 ## LANE B STATUS SEMANTICS
 
 - `currentTask` means the task **actually executing now**

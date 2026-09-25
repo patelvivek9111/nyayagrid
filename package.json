@@ -59,7 +59,7 @@
     "queue2:worker:once": "node scripts/run-queue2-dual-lane.cjs --once",
     "queue2:preflight": "node scripts/queue2-preflight.cjs",
     "queue2:milestone": "node scripts/queue2-milestone-push.cjs",
-    "queue2:validate": "node scripts/queue2-autonomy-policy.test.cjs && node scripts/queue2-worker-lock.test.cjs && node scripts/queue2-worker-observability.test.cjs && node scripts/queue2-dual-lane-controller.test.cjs && node scripts/queue2-worker-safety.test.cjs && node scripts/cl-quota-controller.test.cjs && node scripts/cl-adaptive-quota.test.cjs && node scripts/queue2-lane-b-scheduler.test.cjs"
+    "queue2:validate": "node scripts/queue2-autonomy-policy.test.cjs && node scripts/queue2-worker-lock.test.cjs && node scripts/queue2-worker-observability.test.cjs && node scripts/queue2-dual-lane-controller.test.cjs && node scripts/queue2-worker-safety.test.cjs && node scripts/cl-quota-controller.test.cjs && node scripts/cl-adaptive-quota.test.cjs && node scripts/queue2-lane-b-scheduler.test.cjs && node scripts/queue2-watchdog.test.cjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",

@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "aiCallsAllowed": 0,
+  "progress": {
+    "warningMinutes": 15,
+    "criticalMinutes": 30,
+    "stuckIdenticalCycles": 3
+  },
+  "missedWake": {
+    "warningMinutes": 2,
+    "criticalMinutes": 5
+  },
+  "deadman": {
+    "heartbeatStaleMinutes": 20
+  },
+  "quotaUnderutilization": {
+    "unusedUsableCapacityMin": 100,
+    "warningMinutes": 20,
+    "criticalMinutes": 40
+  },
+  "yieldAnomaly": {
+    "requestsPerAuthorityMultiplier": 2.0,
+    "quarantineRateSpike": 0.35
+  },
+  "efficiencyHardStop": {
+    "requestsPerAuthority": 3.0,
+    "consecutiveMeaningfulBatches": 3
+  },
+  "canary": {
+    "maxQualifyingAuthorities": 3,
+    "maxClRequests": 12
+  },
+  "legitimateWaitModes": [
+    "WAIT_MINUTE",
+    "WAIT_HOUR",
+    "DAY_BLOCKED",
+    "WAITING_FOR_NETWORK",
+    "BACKPRESSURE_PAUSE",
+    "LANE_B_IDLE_SAFE",
+    "WAIT",
+    "WAITING_QUOTA_RESET"
+  ],
+  "slo": {
+    "productiveStallDetectionMinutes": 30,
+    "stuckSchedulerCycles": 3,
+    "missedQuotaResetMinutes": 5,
+    "heartbeatFailureMinutes": 20
+  }
+}

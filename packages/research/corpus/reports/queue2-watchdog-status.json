@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "queue": "#2",
+  "queue3": "NOT_OPEN",
+  "featureAgents": "0",
+  "aiCalls": 0,
+  "aiTokens": 0,
+  "overallStatus": "HEALTHY_IDLE_SAFE",
+  "amIAlive": false,
+  "amIProductive": false,
+  "amIEfficient": true,
+  "amIHealthy": true,
+  "ifNotWhatIsWrong": null,
+  "mode": "NORMAL",
+  "note": "Watchdog implemented; autonomous worker not started. WI 44/45 checkpoint preserved.",
+  "durablePartial": {
+    "jurisdiction": "WI",
+    "court": "wis",
+    "count": 44,
+    "target": 45,
+    "checkpoint": "cl-opinion-9886466"
+  },
+  "updatedAt": "2026-09-25T01:40:00.000Z"
+}
