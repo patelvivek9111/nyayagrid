@@ -128,13 +128,15 @@ const ARK_DURABLE_JOB_EVIDENCE = {
     "staging corpus_ingest_jobs row source=courtlistener cl_court=ark queried 2026-09-24; AR cases=33",
 };
 
-  const runtime = {
+/** Mutable worker runtime — must exist before any startup/cycle function uses it. */
+const runtime = {
   shuttingDown: false,
   state: null,
   heartbeatTimer: null,
   lastStatus: null,
   morningSummaryPending: null,
   codeFingerprint: null,
+  session: null,
 };
 
 function loadLocalState() {
@@ -1014,22 +1016,24 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
   }
 
   const health = healthCheck();
-  const runtime = deriveRuntimeState({
+  // IMPORTANT: do not name this `runtime` — that shadows the module-level runtime
+  // and puts earlier references (morningSummaryPending, etc.) into the TDZ.
+  const derivedRuntime = deriveRuntimeState({
     humanReviewRequired: Boolean(state.humanReview?.required),
     processAlive: true,
     waitingForNetwork: Boolean(state.waitingForNetwork),
     idleSafe: Boolean(state.idleSafe),
     lastHeartbeatAt: state.lastHeartbeatAt,
   });
-  state.runtimeState = runtime.runtimeState;
+  state.runtimeState = derivedRuntime.runtimeState;
   const status = publishStatus(state, {
     currentLane: state.humanReview?.required
       ? "HUMAN_REVIEW_REQUIRED"
       : state.idleSafe
         ? "LANE_B_IDLE_SAFE"
         : statusLaneFromState(state),
-    runtimeState: runtime.runtimeState,
-    freshness: runtime.freshness,
+    runtimeState: derivedRuntime.runtimeState,
+    freshness: derivedRuntime.freshness,
     currentTask: state.humanReview?.required
       ? "await_human_review"
       : state.idleSafe
@@ -1331,23 +1335,27 @@ async function main() {
   }
 
   // WATCHDOG_SESSION_INIT — baseline from CURRENT worker session only.
+  // Immutable session metadata is separate from mutable runtime lane/quota state.
   const sessionNow = new Date();
-  state.watchdogSession = initWatchdogSession({
+  const session = initWatchdogSession({
     workerId: WORKER_ID,
     pid: process.pid,
     processStartNonce: PROCESS_NONCE,
     now: sessionNow,
   });
-  state.lastHeartbeatAt = state.watchdogSession.lastHeartbeatAt;
+  runtime.session = session;
+  state.watchdogSession = session;
+  state.lastHeartbeatAt = session.lastHeartbeatAt;
   emit("WATCHDOG_SESSION_INIT", {
-    lane: statusLaneFromState(state),
+    lane: "STARTUP",
+    task: "boot",
     court: state.laneA?.court,
     checkpoint: state.laneA?.checkpoint,
     extra: {
       workerId: WORKER_ID,
       pid: process.pid,
       processStartNonce: PROCESS_NONCE,
-      startedAt: state.watchdogSession.startedAt,
+      startedAt: session.startedAt,
     },
   });
 
@@ -1369,10 +1377,13 @@ async function main() {
   }
 
   // INITIAL_HEARTBEAT immediately — do not wait 15 minutes.
+  // Use STARTUP lane label so we never print misleading LANE_B_IDLE_SAFE before
+  // fresh quota reconciliation / lane selection.
   {
     const bootStatus = {
-      currentLane: statusLaneFromState(state),
+      currentLane: "STARTUP",
       currentTask: "boot",
+      runtimeState: "STARTUP",
       currentCourt: state.laneA?.court,
       checkpoint: state.laneA?.checkpoint,
       today: {},
@@ -1381,7 +1392,8 @@ async function main() {
     };
     state = maybeHeartbeat(state, bootStatus, { force: true });
     emit("INITIAL_HEARTBEAT", {
-      lane: statusLaneFromState(state),
+      lane: "STARTUP",
+      task: "boot",
       court: state.laneA?.court,
       checkpoint: state.laneA?.checkpoint,
       extra: {

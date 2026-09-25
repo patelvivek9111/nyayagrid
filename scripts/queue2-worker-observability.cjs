@@ -768,6 +768,10 @@ function formatHeartbeat(status, now = new Date()) {
   const t = s.today || {};
   const q = s.quota || {};
   const stamp = `[${formatEt(now)}]`;
+  // Startup heartbeat must not look like a reconciled lane decision.
+  if (s.currentLane === "STARTUP" || s.currentTask === "boot" || s.runtimeState === "STARTUP") {
+    return `${stamp} STARTUP | initial heartbeat | checkpoint=${s.checkpoint || "none"} | aiCalls=${s.tokens?.routineAiCalls ?? 0}`;
+  }
   if (s.currentLane === "LANE_A_CL") {
     return `${stamp} LANE_A_CL | ${String(s.currentCourt || "?").toUpperCase()} ${s.currentCount ?? "?"}/${s.targetCount ?? "?"} | checkpoint=${s.checkpoint || "none"} | dayRem=${q.dayRemaining ?? "?"} | safe=${q.safeRequests ?? 0}`;
   }
