@@ -82,6 +82,7 @@ const HUMAN_REVIEW_REASONS = Object.freeze({
   REPEATED_NETWORK_FAILURE: "REPEATED_NETWORK_FAILURE",
   PROVIDER_TERMS_CHANGED: "PROVIDER_TERMS_CHANGED",
   EXTERNAL_SOURCE_LIMITATION_BLOCKS_SCOPE: "EXTERNAL_SOURCE_LIMITATION_BLOCKS_SCOPE",
+  COURTLISTENER_QUOTA_STATE_AMBIGUOUS: "COURTLISTENER_QUOTA_STATE_AMBIGUOUS",
 });
 
 /** Local heartbeat cadence — zero AI usage. */
@@ -314,6 +315,15 @@ function buildOperatorStatus(params = {}) {
       lastProbeAt: quota.lastProbeAt || null,
       hard429Count: Number(quota.hard429Count || 0),
       dayResetAt: windows.day?.resetAt || null,
+      quotaStateObservedAt: quota.quotaStateObservedAt || quota.lastProbeAt || null,
+      quotaStateSource: quota.quotaStateSource || null,
+      quotaStateConfidence: quota.quotaStateConfidence || null,
+      quotaStateAgeMs:
+        quota.quotaStateAgeMs != null
+          ? Number(quota.quotaStateAgeMs)
+          : quota.quotaStateObservedAt || quota.lastProbeAt
+            ? Math.max(0, Date.now() - new Date(quota.quotaStateObservedAt || quota.lastProbeAt).getTime())
+            : null,
     },
     today: {
       clRequests: Number(today.clRequests || 0),
@@ -406,7 +416,9 @@ function renderDailyMarkdown(status, extras = {}) {
     `mapping: ${s.mappingStatus || "n/a"} | runner: ${s.runner || "n/a"}`,
     `safeRequests: ${q.safeRequests ?? 0}`,
     `dayRem: ${q.dayRemaining ?? "?"} | hourRem: ${q.hourRemaining ?? "?"} | minuteRem: ${q.minuteRemaining ?? "?"}`,
-    `next quota probe: ${q.dayResetAt || s.nextQuotaCheckAt || "n/a"}${q.dayResetAt || s.nextQuotaCheckAt ? ` (${formatEt(q.dayResetAt || s.nextQuotaCheckAt)})` : ""}`,
+    `next quota probe: ${s.nextQuotaCheckAt || "n/a"}${s.nextQuotaCheckAt ? ` (${formatEt(s.nextQuotaCheckAt)})` : ""}`,
+    `dayResetAt: ${q.dayResetAt || "n/a"}${q.dayResetAt ? ` (${formatEt(q.dayResetAt)})` : ""}`,
+    `quotaConfidence: ${q.quotaStateConfidence || "n/a"} source=${q.quotaStateSource || "n/a"}`,
     `429: ${q.hard429Count ?? 0}`,
     ``,
     `## OFFLINE WORK`,

@@ -58,6 +58,32 @@ Do **not** pass Lane A / Lane B manually. The controller chooses from:
 - live Lane A depth manifest (`queue2-lane-a-depth-manifest.json`, rebuilt from DB)
 - Lane B offline task registry (14 deterministic tasks; no AI planner)
 
+## QUOTA FRESHNESS
+
+Quota probes must parse the **first complete** JSON object from probe stdout (never `lastIndexOf("{")`, which can latch onto nested `rawSample` fragments and look like free-tier defaults).
+
+Persisted quota fields:
+
+- `minuteRemaining` / `hourRemaining` / `dayRemaining`
+- reset timestamps
+- `lastProbeAt`
+- `quotaStateObservedAt`
+- `quotaStateSource`
+- `quotaStateConfidence` (`AUTHORITATIVE_API` | `AUTHORITATIVE_HEADER` | `DERIVED_ROLLING_WINDOW` | `STALE_FALLBACK` | `AMBIGUOUS`)
+- `quotaStateAgeMs`
+
+Lane A may start only when confidence is authoritative. Ambiguous Tier 2 probes raise `HUMAN_REVIEW_REQUIRED` / `COURTLISTENER_QUOTA_STATE_AMBIGUOUS` — do not guess. Stale Tier 2 windows past `dayResetAt` must not indefinitely keep `safeRequests=0` when a fresh live probe succeeds.
+
+Known Tier 2 limits: **30 / min**, **300 / hour**, **1200 / day**.
+
+## LANE B STATUS SEMANTICS
+
+- `currentTask` means the task **actually executing now**
+- Idle / not executing → `currentLane=LANE_B_IDLE_SAFE`, `currentTask=NONE`
+- Every wake cycle evaluates all 14 registry tasks; eligibility is written to `queue2-lane-b-eligibility.json`
+- Terminal may print `LANE_B_SELECT task=<id>` or `LANE_B_IDLE_SAFE nextEligible=...`
+- Completed tasks clear `currentTask`, set `lastRunAt` / `nextEligibleAt`, and reevaluate next cycle (no pinning)
+
 ## STOP
 
 `Ctrl+C` (SIGINT) or SIGTERM.

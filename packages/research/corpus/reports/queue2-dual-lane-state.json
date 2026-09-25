@@ -5,7 +5,7 @@
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
   "currentLane": "B",
-  "updatedAt": "2026-09-24T16:52:45.180Z",
+  "updatedAt": "2026-09-25T00:17:34.255Z",
   "laneA": {
     "court": "ark",
     "jurisdiction": "AR",
@@ -48,20 +48,28 @@
       },
       "day": {
         "limit": 1200,
-        "used": 1171,
-        "remaining": 29,
-        "resetAt": "2026-09-24T22:06:14.563161+00:00"
+        "used": 861,
+        "remaining": 339,
+        "resetAt": "2026-09-25T00:18:12.911002+00:00"
       }
     },
-    "lastProbeAt": "2026-09-24T16:52:45.180Z",
-    "nextCheckAt": "2026-09-24T22:06:14.563Z",
+    "lastProbeAt": "2026-09-25T00:17:34.254Z",
+    "nextCheckAt": "2026-09-25T00:27:34.255Z",
     "last429At": null,
     "retryAfterSeconds": null,
-    "lastSafeRequests": 0,
-    "hard429Count": 0
+    "lastSafeRequests": 28,
+    "hard429Count": 0,
+    "quotaStateObservedAt": "2026-09-25T00:17:34.254Z",
+    "quotaStateSource": "probe.limits",
+    "quotaStateConfidence": "AUTHORITATIVE_API",
+    "quotaStateAgeMs": 0,
+    "membership": {
+      "level": "CL Membership - Tier 2",
+      "is_active": true
+    }
   },
   "laneB": {
-    "task": "us_reports_gap_analysis",
+    "task": "NONE",
     "checkpoint": "scorecard-v1",
     "tasksCompleted": [
       "us_reports_gap_analysis",
@@ -74,13 +82,43 @@
       "corpus_integrity",
       "retrieval_validation",
       "depth_scorecard"
-    ]
+    ],
+    "checkpoints": {},
+    "lastByTask": {
+      "us_reports_gap_analysis": "2026-09-25T00:06:17.338Z",
+      "US_REPORTS_GAP_ANALYSIS": "2026-09-25T00:06:17.338Z",
+      "us_reports_non_cl_intake": "2026-09-25T00:06:17.338Z",
+      "NON_CL_PRIMARY_AUTHORITY_INTAKE": "2026-09-25T00:06:17.338Z",
+      "usc_cfr_federal_rules_depth": "2026-09-25T00:06:17.338Z",
+      "USC_DEPTH": "2026-09-25T00:06:17.338Z",
+      "citation_re_resolution": "2026-09-25T00:06:17.338Z",
+      "CITATION_RERESOLVE": "2026-09-25T00:06:17.338Z",
+      "depth_gap_analysis": "2026-09-25T00:06:17.338Z",
+      "DEPTH_MANIFEST_REFRESH": "2026-09-25T00:06:17.338Z",
+      "historical_hole_detection": "2026-09-25T00:06:17.338Z",
+      "HISTORICAL_GAP_ANALYSIS": "2026-09-25T00:06:17.338Z",
+      "intermediate_court_research": "2026-09-25T00:06:17.338Z",
+      "INTERMEDIATE_MAPPING_RESEARCH_NON_CL": "2026-09-25T00:06:17.338Z",
+      "corpus_integrity": "2026-09-25T00:06:17.338Z",
+      "CORPUS_INTEGRITY_AUDIT": "2026-09-25T00:06:17.338Z",
+      "retrieval_validation": "2026-09-25T00:06:17.338Z",
+      "RETRIEVAL_REGRESSION": "2026-09-25T00:06:17.338Z",
+      "depth_scorecard": "2026-09-25T00:06:17.338Z",
+      "DAILY_SCORECARD_REFRESH": "2026-09-25T00:06:17.338Z"
+    },
+    "nextEligibleAt": {},
+    "lastEligibility": null,
+    "mutatingTaskActive": null
   },
   "depthManifestVersion": 1,
   "lastCitationResolve": "2026-09-24T16:34:00.000Z",
   "lastIntegrityAudit": "2026-09-24T16:34:00.000Z",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastHeartbeatAt": "2026-09-24T16:51:44.340Z",
+  "lastHeartbeatAt": "2026-09-24T23:56:18.195Z",
+  "idleSafe": true,
+  "waitingForNetwork": false,
+  "lastOnlineAt": null,
+  "runtimeState": "IDLE_SAFE",
   "humanReview": {
     "required": false,
     "reasons": [],
@@ -90,11 +128,15 @@
     "laneAMs": 0,
     "laneBMs": 36483,
     "idleMs": 0,
+    "idleSafeMs": 0,
+    "waitingNetworkMs": 0,
     "clAuthorities": 0,
     "nonClAuthorities": 6,
     "citationsResolved": 44,
-    "quotaChecks": 3,
-    "laneSwitches": 1
+    "quotaChecks": 17,
+    "laneSwitches": 1,
+    "aiCalls": 0,
+    "aiTokens": 0
   },
   "switches": [
     {

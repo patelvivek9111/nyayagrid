@@ -1,7 +1,7 @@
 {
   "ok": true,
   "status": 200,
-  "ms": 1300,
+  "ms": 375,
   "membership": {
     "level": "CL Membership - Tier 2",
     "is_active": true
@@ -29,9 +29,9 @@
       "scope": "user",
       "period": "day",
       "limit": 1200,
-      "usage": 1171,
-      "remaining": 29,
-      "reset_at": "2026-09-24T22:06:14.563161+00:00",
+      "usage": 861,
+      "remaining": 339,
+      "reset_at": "2026-09-25T00:18:12.911002+00:00",
       "blocked": false
     }
   },
@@ -43,5 +43,5 @@
     "historical_usage",
     "membership"
   ],
-  "rawSample": "{\"current_usage\":[{\"scope\":\"user\",\"rate\":\"1200/day\",\"used\":1171,\"limit\":1200,\"remaining\":29,\"window_seconds\":86400,\"reset_at\":\"2026-09-24T22:06:14.563161+00:00\",\"blocked\":false},{\"scope\":\"api_usage\",\"rate\":\"10/min\",\"used\":1,\"limit\":10,\"remaining\":9,\"window_seconds\":60,\"reset_at\":\"2026-09-24T16:32:06.296178+00:00\",\"blocked\":false},{\"scope\":\"api_usage\",\"rate\":\"120/hour\",\"used\":1,\"limit\":120,\"remaining\":119,\"window_seconds\":3600,\"reset_at\":\"2026-09-24T17:31:06.296178+00:00\",\"blocked\":false},{\"scope\":\"user\",\"rate\":\"30/min\",\"used\":0,\"limit\":30,\"remaining\":30,\"window_seconds\":60,\"reset_at\":null,\"blocked\":false},{\"scope\":\"user\",\"rate\":\"300/hour\",\"used\":0,\"limit\":300,\"remaining\":300,\"window_seconds\":3600,\"reset_at\":null,\"blocked\":false},{\"scope\":\"citations\",\"rate\":\"60/min\",\"used\":0,\"limit\":60,\"remaining\":60,\"window_seconds\":60,\"reset_at\":null,\"blocked\":false},{\"scope\":\"fetch\",\"rate\":\"30/min\",\"used\":0,\"limit\":30,\"remaining\":30,\"window_seconds\":60,\"reset_at\":null,\"blocked\":false}],\"historical_usage\":{\"2026-09-17\":277,\"2026-09-19\":100,\"2026-09-20\":250,\"2026-09-21\":1167,\"2026-09-22\":1158,\"2026-09-23\":1129,\"total\":4081},\"membership\":{\"level\":\"CL Membership - Tier 2\",\"is_active\":true}}"
+  "rawSample": "{\"current_usage\":[{\"scope\":\"user\",\"rate\":\"1200/day\",\"used\":861,\"limit\":1200,\"remaining\":339,\"window_seconds\":86400,\"reset_at\":\"2026-09-25T00:18:12.911002+00:00\",\"blocked\":false},{\"scope\":\"api_usage\",\"rate\":\"10/min\",\"used\":2,\"limit\":10,\"remaining\":8,\"window_seconds\":60,\"reset_at\":\"2026-09-25T00:18:15.615594+00:00\",\"blocked\":false},{\"scope\":\"api_usage\",\"rate\":\"120/hour\",\"used\":7,\"limit\":120,\"remaining\":113,\"window_seconds\":3600,\"reset_at\":\"2026-09-25T00:26:16.690964+00:00\",\"blocked\":false},{\"scope\":\"user\",\"rate\":\"30/min\",\"used\":0,\"limit\":30,\"remaining\":30,\"window_seconds\":60,\"reset_at\":null,\"blocked\":false},{\"scope\":\"user\",\"rate\":\"300/hour\",\"used\":0,\"limit\":300,\"remaining\":300,\"window_seconds\":3600,\"reset_at\":null,\"blocked\":false},{\"scope\":\"citations\",\"rate\":\"60/min\",\"used\":0,\"limit\":60,\"remaining\":60,\"window_seconds\":60,\"reset_at\":null,\"blocked\":false},{\"scope\":\"fetch\",\"rate\":\"30/min\",\"used\":0,\"limit\":30,\"remaining\":30,\"window_seconds\":60,\"reset_at\":null,\"blocked\":false}],\"historical_usage\":{\"2026-09-17\":277,\"2026-09-19\":100,\"2026-09-20\":250,\"2026-09-21\":1167,\"2026-09-22\":1158,\"2026-09-23\":1129,\"total\":4081},\"membership\":{\"level\":\"CL Membership - Tier 2\",\"is_active\":true}}"
 }

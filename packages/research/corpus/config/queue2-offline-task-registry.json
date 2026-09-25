@@ -10,14 +10,21 @@
   "tasks": [
     {
       "id": "US_REPORTS_GAP_ANALYSIS",
-      "legacyIds": ["us_reports_gap_analysis"],
+      "legacyIds": [
+        "us_reports_gap_analysis"
+      ],
       "priority": 100,
       "enabled": true,
       "repeatable": true,
       "minimumIntervalMs": 21600000,
-      "eligibility": { "requiresCorpusChange": false, "requiresNetwork": false },
-      "completion": { "type": "checkpoint_advanced" },
-      "deterministicRunner": "scripts/staging-queue2-lane-b.cjs#usReportsGap",
+      "eligibility": {
+        "requiresCorpusChange": false,
+        "requiresNetwork": false
+      },
+      "completion": {
+        "type": "checkpoint_advanced"
+      },
+      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#usReportsGap",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -29,14 +36,22 @@
     },
     {
       "id": "NON_CL_PRIMARY_AUTHORITY_INTAKE",
-      "legacyIds": ["us_reports_non_cl_intake"],
+      "legacyIds": [
+        "us_reports_non_cl_intake"
+      ],
       "priority": 95,
       "enabled": true,
       "repeatable": true,
       "minimumIntervalMs": 3600000,
-      "eligibility": { "requiresCorpusChange": false, "requiresNetwork": true, "zeroCourtListener": true },
-      "completion": { "type": "batch_imported" },
-      "deterministicRunner": "scripts/staging-queue2-lane-b.cjs#nonClIntake",
+      "eligibility": {
+        "requiresCorpusChange": false,
+        "requiresNetwork": true,
+        "zeroCourtListener": true
+      },
+      "completion": {
+        "type": "batch_imported"
+      },
+      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#nonClIntake",
       "mayMutate": true,
       "mayUseNetwork": true,
       "mayUseAI": false,
@@ -48,14 +63,21 @@
     },
     {
       "id": "USC_DEPTH",
-      "legacyIds": ["usc_cfr_federal_rules_depth"],
+      "legacyIds": [
+        "usc_cfr_federal_rules_depth"
+      ],
       "priority": 90,
       "enabled": true,
       "repeatable": true,
       "minimumIntervalMs": 43200000,
-      "eligibility": { "requiresNetwork": true, "zeroCourtListener": true },
-      "completion": { "type": "depth_delta" },
-      "deterministicRunner": "scripts/staging-queue2-lane-b.cjs#uscDepth",
+      "eligibility": {
+        "requiresNetwork": true,
+        "zeroCourtListener": true
+      },
+      "completion": {
+        "type": "depth_delta"
+      },
+      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#uscDepth",
       "mayMutate": true,
       "mayUseNetwork": true,
       "mayUseAI": false,
@@ -72,9 +94,14 @@
       "enabled": true,
       "repeatable": true,
       "minimumIntervalMs": 43200000,
-      "eligibility": { "requiresNetwork": true, "zeroCourtListener": true },
-      "completion": { "type": "depth_delta" },
-      "deterministicRunner": "scripts/staging-queue2-lane-b.cjs#cfrDepth",
+      "eligibility": {
+        "requiresNetwork": true,
+        "zeroCourtListener": true
+      },
+      "completion": {
+        "type": "depth_delta"
+      },
+      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#cfrDepth",
       "mayMutate": true,
       "mayUseNetwork": true,
       "mayUseAI": false,
@@ -91,9 +118,14 @@
       "enabled": true,
       "repeatable": true,
       "minimumIntervalMs": 43200000,
-      "eligibility": { "requiresNetwork": true, "zeroCourtListener": true },
-      "completion": { "type": "depth_delta" },
-      "deterministicRunner": "scripts/staging-queue2-lane-b.cjs#federalRulesDepth",
+      "eligibility": {
+        "requiresNetwork": true,
+        "zeroCourtListener": true
+      },
+      "completion": {
+        "type": "depth_delta"
+      },
+      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#federalRulesDepth",
       "mayMutate": true,
       "mayUseNetwork": true,
       "mayUseAI": false,
@@ -105,14 +137,21 @@
     },
     {
       "id": "CITATION_RERESOLVE",
-      "legacyIds": ["citation_re_resolution"],
+      "legacyIds": [
+        "citation_re_resolution"
+      ],
       "priority": 85,
       "enabled": true,
       "repeatable": true,
       "minimumIntervalMs": 7200000,
-      "eligibility": { "requiresCorpusChange": true, "requiresNetwork": false },
-      "completion": { "type": "corpus_version_caught_up" },
-      "deterministicRunner": "scripts/staging-queue2-lane-b.cjs#citationReresolve",
+      "eligibility": {
+        "requiresCorpusChange": true,
+        "requiresNetwork": false
+      },
+      "completion": {
+        "type": "corpus_version_caught_up"
+      },
+      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#citationReresolve",
       "mayMutate": true,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -124,14 +163,21 @@
     },
     {
       "id": "DEPTH_MANIFEST_REFRESH",
-      "legacyIds": ["depth_gap_analysis"],
+      "legacyIds": [
+        "depth_gap_analysis"
+      ],
       "priority": 80,
       "enabled": true,
       "repeatable": true,
       "minimumIntervalMs": 21600000,
-      "eligibility": { "requiresCorpusChange": true, "requiresNetwork": false },
-      "completion": { "type": "manifest_version_bumped" },
-      "deterministicRunner": "scripts/queue2-autonomy-policy.cjs#refreshLaneAManifest",
+      "eligibility": {
+        "requiresCorpusChange": true,
+        "requiresNetwork": false
+      },
+      "completion": {
+        "type": "manifest_version_bumped"
+      },
+      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#refreshLaneAManifest",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -143,14 +189,20 @@
     },
     {
       "id": "HISTORICAL_GAP_ANALYSIS",
-      "legacyIds": ["historical_hole_detection"],
+      "legacyIds": [
+        "historical_hole_detection"
+      ],
       "priority": 75,
       "enabled": true,
       "repeatable": true,
       "minimumIntervalMs": 43200000,
-      "eligibility": { "requiresNetwork": false },
-      "completion": { "type": "analysis_written" },
-      "deterministicRunner": "scripts/staging-queue2-lane-b.cjs#historicalGaps",
+      "eligibility": {
+        "requiresNetwork": false
+      },
+      "completion": {
+        "type": "analysis_written"
+      },
+      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#historicalGaps",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -162,14 +214,21 @@
     },
     {
       "id": "INTERMEDIATE_MAPPING_RESEARCH_NON_CL",
-      "legacyIds": ["intermediate_court_research"],
+      "legacyIds": [
+        "intermediate_court_research"
+      ],
       "priority": 70,
       "enabled": true,
       "repeatable": true,
       "minimumIntervalMs": 86400000,
-      "eligibility": { "requiresNetwork": false, "zeroCourtListener": true },
-      "completion": { "type": "candidates_documented" },
-      "deterministicRunner": "scripts/staging-queue2-lane-b.cjs#intermediateMapping",
+      "eligibility": {
+        "requiresNetwork": false,
+        "zeroCourtListener": true
+      },
+      "completion": {
+        "type": "candidates_documented"
+      },
+      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#intermediateMapping",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -181,14 +240,21 @@
     },
     {
       "id": "CORPUS_INTEGRITY_AUDIT",
-      "legacyIds": ["corpus_integrity"],
+      "legacyIds": [
+        "corpus_integrity"
+      ],
       "priority": 65,
       "enabled": true,
       "repeatable": true,
       "minimumIntervalMs": 21600000,
-      "eligibility": { "requiresCorpusChange": true, "requiresNetwork": false },
-      "completion": { "type": "audit_timestamp" },
-      "deterministicRunner": "scripts/staging-queue2-lane-b.cjs#integrityAudit",
+      "eligibility": {
+        "requiresCorpusChange": true,
+        "requiresNetwork": false
+      },
+      "completion": {
+        "type": "audit_timestamp"
+      },
+      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#integrityAudit",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -200,14 +266,21 @@
     },
     {
       "id": "RETRIEVAL_REGRESSION",
-      "legacyIds": ["retrieval_validation"],
+      "legacyIds": [
+        "retrieval_validation"
+      ],
       "priority": 60,
       "enabled": true,
       "repeatable": true,
       "minimumIntervalMs": 21600000,
-      "eligibility": { "requiresCorpusChange": true, "requiresNetwork": false },
-      "completion": { "type": "corpus_version_caught_up" },
-      "deterministicRunner": "scripts/staging-queue2-lane-b.cjs#retrievalRegression",
+      "eligibility": {
+        "requiresCorpusChange": true,
+        "requiresNetwork": false
+      },
+      "completion": {
+        "type": "corpus_version_caught_up"
+      },
+      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#retrievalRegression",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -224,9 +297,13 @@
       "enabled": true,
       "repeatable": true,
       "minimumIntervalMs": 86400000,
-      "eligibility": { "requiresNetwork": false },
-      "completion": { "type": "audit_timestamp" },
-      "deterministicRunner": "scripts/staging-queue2-lane-b.cjs#currentnessAudit",
+      "eligibility": {
+        "requiresNetwork": false
+      },
+      "completion": {
+        "type": "audit_timestamp"
+      },
+      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#currentnessAudit",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -243,9 +320,13 @@
       "enabled": true,
       "repeatable": true,
       "minimumIntervalMs": 3600000,
-      "eligibility": { "requiresNetwork": false },
-      "completion": { "type": "prep_written" },
-      "deterministicRunner": "scripts/queue2-autonomy-policy.cjs#prepareNextClBatch",
+      "eligibility": {
+        "requiresNetwork": false
+      },
+      "completion": {
+        "type": "prep_written"
+      },
+      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#prepareNextClBatch",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -257,14 +338,20 @@
     },
     {
       "id": "DAILY_SCORECARD_REFRESH",
-      "legacyIds": ["depth_scorecard"],
+      "legacyIds": [
+        "depth_scorecard"
+      ],
       "priority": 40,
       "enabled": true,
       "repeatable": true,
       "minimumIntervalMs": 86400000,
-      "eligibility": { "requiresNetwork": false },
-      "completion": { "type": "scorecard_written" },
-      "deterministicRunner": "scripts/staging-queue2-lane-b.cjs#dailyScorecard",
+      "eligibility": {
+        "requiresNetwork": false
+      },
+      "completion": {
+        "type": "scorecard_written"
+      },
+      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#dailyScorecard",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,

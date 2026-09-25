@@ -210,9 +210,15 @@ test("idempotent non-CL intake keys and no duplicate embeddings or citation edge
 
 test("Lane B task checkpoint advances without CL", () => {
   let state = createInitialState();
-  state = completeLaneBTask(state, "us_reports_gap_analysis", "us-reports-v1");
+  state = completeLaneBTask(state, "us_reports_gap_analysis", "us-reports-v1", new Date(), {
+    minimumIntervalMs: 21600000,
+  });
   assert.ok(state.laneB.tasksCompleted.includes("us_reports_gap_analysis"));
   assert.equal(state.laneB.checkpoint, "us-reports-v1");
+  assert.equal(state.laneB.task, "NONE");
+  assert.equal(state.idleSafe, true);
+  assert.ok(state.laneB.lastByTask.us_reports_gap_analysis);
+  assert.ok(state.laneB.nextEligibleAt.us_reports_gap_analysis);
 });
 
 test("idle metrics stay zero when Lane B records work time", () => {

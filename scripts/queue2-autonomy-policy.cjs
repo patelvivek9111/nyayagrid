@@ -403,6 +403,7 @@ function evaluateLaneAStop(signals = {}) {
 
 /**
  * Deterministic Lane B task selection from registry.
+ * Evaluates every enabled task; never pins to a completed/ineligible task.
  */
 function selectLaneBTask(ctx = {}) {
   const registry = ctx.registry || loadOfflineTaskRegistry();
@@ -411,26 +412,79 @@ function selectLaneBTask(ctx = {}) {
   const corpusVersion = ctx.corpusVersion ?? null;
   const lastByTask = ctx.lastByTask || {};
   const checkpoints = ctx.checkpoints || {};
+  const nextEligibleAtMap = ctx.nextEligibleAt || {};
   const mutatingBusy = Boolean(ctx.mutatingTaskActive);
+  const executing = ctx.executing !== false;
 
+  const evaluations = [];
   const eligible = [];
   for (const task of registry.tasks) {
-    if (!task.enabled) continue;
-    if (task.mayUseAI === true) continue; // no AI-dependent tasks in routine path
-    if (task.mayMutate && mutatingBusy) continue;
-    if (task.eligibility?.requiresNetwork && !networkOk) continue;
-    if (task.eligibility?.requiresCorpusChange) {
-      const lastVer = checkpoints[task.checkpointKey];
-      if (corpusVersion != null && lastVer != null && String(lastVer) === String(corpusVersion)) {
-        continue; // already caught up — do not rerun expensive work
+    const lastAt = lastByTask[task.id] || lastByTask[task.legacyIds?.[0]] || null;
+    const nextEligibleAt =
+      nextEligibleAtMap[task.id] ||
+      (lastAt && task.minimumIntervalMs
+        ? new Date(new Date(lastAt).getTime() + Number(task.minimumIntervalMs)).toISOString()
+        : null);
+    const requiresCorpusChange = Boolean(task.eligibility?.requiresCorpusChange);
+    const corpusVersionAtLastRun = requiresCorpusChange
+      ? checkpoints[task.checkpointKey] ?? null
+      : null;
+    let eligibleFlag = true;
+    let reason = "eligible";
+    let minimumIntervalRemainingMs = 0;
+
+    if (!task.enabled) {
+      eligibleFlag = false;
+      reason = "disabled";
+    } else if (task.mayUseAI === true) {
+      eligibleFlag = false;
+      reason = "may_use_ai_blocked";
+    } else if (task.mayMutate && mutatingBusy) {
+      eligibleFlag = false;
+      reason = "mutating_task_active";
+    } else if (task.eligibility?.requiresNetwork && !networkOk) {
+      eligibleFlag = false;
+      reason = "network_required";
+    } else if (requiresCorpusChange) {
+      if (corpusVersion != null && corpusVersionAtLastRun != null && String(corpusVersionAtLastRun) === String(corpusVersion)) {
+        eligibleFlag = false;
+        reason = "corpus_version_unchanged";
       }
     }
-    const lastAt = lastByTask[task.id] || lastByTask[task.legacyIds?.[0]] || null;
-    if (lastAt && task.minimumIntervalMs) {
+
+    if (eligibleFlag && nextEligibleAt) {
+      const nextMs = new Date(nextEligibleAt).getTime();
+      if (Number.isFinite(nextMs) && nextMs > now.getTime()) {
+        eligibleFlag = false;
+        reason = "minimum_interval";
+        minimumIntervalRemainingMs = nextMs - now.getTime();
+      }
+    } else if (eligibleFlag && lastAt && task.minimumIntervalMs) {
       const age = now.getTime() - new Date(lastAt).getTime();
-      if (Number.isFinite(age) && age < task.minimumIntervalMs) continue;
+      if (Number.isFinite(age) && age < task.minimumIntervalMs) {
+        eligibleFlag = false;
+        reason = "minimum_interval";
+        minimumIntervalRemainingMs = task.minimumIntervalMs - age;
+      }
     }
-    eligible.push(task);
+
+    const row = {
+      taskId: task.id,
+      eligible: eligibleFlag,
+      reason,
+      nextEligibleAt: nextEligibleAt || null,
+      requiresCorpusChange,
+      corpusVersionAtLastRun,
+      currentCorpusVersion: corpusVersion,
+      minimumIntervalRemainingMs,
+      networkRequirement: Boolean(task.eligibility?.requiresNetwork),
+      checkpointState: checkpoints[task.checkpointKey] ?? checkpoints[task.id] ?? null,
+      priority: task.priority,
+      mayMutate: Boolean(task.mayMutate),
+      deterministicRunner: task.deterministicRunner || null,
+    };
+    evaluations.push(row);
+    if (eligibleFlag) eligible.push(task);
   }
 
   eligible.sort((a, b) => b.priority - a.priority || a.id.localeCompare(b.id));
@@ -442,19 +496,44 @@ function selectLaneBTask(ctx = {}) {
       currentTask: "NONE",
       idleSafe: true,
       humanReview: false,
+      executing: false,
       reason: "no_eligible_lane_b_task",
       sleepUntil: ctx.nextQuotaCheckAt || new Date(now.getTime() + NETWORK_RETRY_MS).toISOString(),
+      evaluations,
+      eligibleCount: 0,
+      evaluatedCount: evaluations.length,
     };
   }
 
   const chosen = eligible[0];
+  if (!executing) {
+    return {
+      task: chosen,
+      currentLane: "LANE_B_IDLE_SAFE",
+      currentTask: "NONE",
+      idleSafe: true,
+      humanReview: false,
+      executing: false,
+      reason: "eligible_but_not_executing",
+      selectedWouldRun: chosen.id,
+      sleepUntil: ctx.nextQuotaCheckAt || null,
+      evaluations,
+      eligibleCount: eligible.length,
+      evaluatedCount: evaluations.length,
+    };
+  }
+
   return {
     task: chosen,
     currentLane: "LANE_B_OFFLINE",
     currentTask: chosen.id,
     idleSafe: false,
     humanReview: false,
+    executing: true,
     reason: "highest_priority_eligible",
+    evaluations,
+    eligibleCount: eligible.length,
+    evaluatedCount: evaluations.length,
   };
 }
 

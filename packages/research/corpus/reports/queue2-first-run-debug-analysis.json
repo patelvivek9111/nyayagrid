@@ -1,0 +1,41 @@
+{
+  "title": "FIRST_AUTONOMOUS_RUN_DEBUG",
+  "at": "2026-09-25T00:18:01.544Z",
+  "issue1": {
+    "rootCause": "lastJson used lastIndexOf({) on pretty-printed probe stdout; nested rawSample membership fragment parsed as probe → free-default windows → ignored_free_default_parse_kept_prior_tier2_windows retained dayRem=29 after dayResetAt passed → computeSafeRequests stayed 0",
+    "liveProbe": {
+      "minuteRemaining": 30,
+      "hourRemaining": 300,
+      "dayRemaining": 339,
+      "safeRequests": 28,
+      "confidence": "AUTHORITATIVE_API",
+      "membership": "CL Membership - Tier 2"
+    },
+    "staleStateBug": true,
+    "parserBug": true,
+    "safeRequestsFixed": true
+  },
+  "issue2": {
+    "rootCause": "selectLaneBTask always re-chose US_REPORTS_GAP_ANALYSIS because lastByTask stayed {}; orchestrator overwrote Lane B completion state; QUEUE2_RUN_LANE_B!=1 still emitted LANE_B_START and status currentTask=US_REPORTS while not executing; completeLaneBTask formerly round-robin pinned next task name",
+    "schedulerStuck": true,
+    "note": "stuck as repeated reselection of same highest-priority eligible task due to empty lastByTask — not a separate deadlock",
+    "all14RunnersWired": true,
+    "reevaluationFixed": true,
+    "idleSafeFixed": true,
+    "currentTaskStaleFixed": true
+  },
+  "safety": {
+    "corpusMutations": 0,
+    "ar": "33/45",
+    "checkpoint": "cl-opinion-9885161",
+    "aiCalls": 0,
+    "humanReviewRequired": false,
+    "workerRunning": false
+  },
+  "queues": {
+    "q2": "OPEN",
+    "q9": "CLOSED",
+    "q3": "NOT_OPEN",
+    "transition": "NONE"
+  }
+}

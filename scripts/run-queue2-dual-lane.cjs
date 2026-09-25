@@ -47,7 +47,7 @@ const {
   LANE_A_SEQUENCE,
   HUMAN_REVIEW_REASONS,
 } = require("./queue2-dual-lane-controller.cjs");
-const { computeSafetyTargets, computeSafeRequests, parseApiUsagePayload } = require("./cl-quota-controller.cjs");
+const { computeSafetyTargets, computeSafeRequests, extractJsonObject, reconcileQuotaProbe, laneAConfidenceSufficient, QUOTA_CONFIDENCE } = require("./cl-quota-controller.cjs");
 const {
   buildOperatorStatus,
   writeObservabilityArtifacts,
@@ -78,7 +78,8 @@ const {
   neverOpenQueue3,
   assertArkCheckpointIntact,
 } = require("./queue2-autonomy-policy.cjs");
-const { applyLaneBSelection } = require("./queue2-dual-lane-controller.cjs");
+const { applyLaneBSelection, completeLaneBTask } = require("./queue2-dual-lane-controller.cjs");
+const { runRegistryTask } = require("./queue2-lane-b-runners.cjs");
 const {
   runPreflight,
   killSwitchStatus,
@@ -148,58 +149,7 @@ function flyExec(command, timeoutSec = 180) {
 }
 
 function lastJson(text) {
-  const raw = String(text || "").trim();
-  if (!raw) return null;
-  // Prefer last complete JSON object (handles pretty-printed multi-line payloads).
-  const start = raw.lastIndexOf("{");
-  if (start >= 0) {
-    const candidate = raw.slice(start);
-    try {
-      return JSON.parse(candidate);
-    } catch {
-      /* fall through */
-    }
-  }
-  const lines = raw.split("\n").filter(Boolean);
-  for (let i = lines.length - 1; i >= 0; i -= 1) {
-    try {
-      return JSON.parse(lines[i]);
-    } catch {
-      /* continue */
-    }
-  }
-  try {
-    return JSON.parse(raw);
-  } catch {
-    return null;
-  }
-}
-
-function windowsFromProbe(parsed) {
-  const wrap = (row) => ({
-    limit: Number(row?.limit || 0),
-    used: Number(row?.usage ?? row?.used ?? 0),
-    remaining: Number(row?.remaining ?? 0),
-    resetAt: row?.reset_at || row?.resetAt || null,
-  });
-  if (parsed?.limits && (parsed.limits.minute || parsed.limits.hour || parsed.limits.day)) {
-    return {
-      minute: wrap(parsed.limits.minute),
-      hour: wrap(parsed.limits.hour),
-      day: wrap(parsed.limits.day),
-    };
-  }
-  if (parsed?.windows) return parsed.windows;
-  const fromPayload = parseApiUsagePayload(parsed);
-  return fromPayload.windows;
-}
-
-function looksLikeFreeDefault(windows) {
-  return (
-    Number(windows?.minute?.limit) === 5 &&
-    Number(windows?.hour?.limit) === 50 &&
-    Number(windows?.day?.limit) === 125
-  );
+  return extractJsonObject(text);
 }
 
 function runQuotaProbe() {
@@ -212,6 +162,20 @@ function runQuotaProbe() {
   const parsed = lastJson(r.stdout || "");
   fs.writeFileSync(path.join(reports, "queue2-dual-lane-quota-probe.txt"), (r.stdout || "") + (r.stderr || ""));
   return { parsed, status: r.status, stderr: (r.stderr || "").slice(0, 400), stdoutHead: (r.stdout || "").slice(0, 400) };
+}
+
+function persistLaneBEligibility(selection) {
+  const artifact = {
+    observedAt: new Date().toISOString(),
+    idleSafe: Boolean(selection.idleSafe),
+    currentTask: selection.currentTask || "NONE",
+    reason: selection.reason || null,
+    eligibleCount: selection.eligibleCount ?? 0,
+    evaluatedCount: selection.evaluatedCount ?? 0,
+    evaluations: selection.evaluations || [],
+  };
+  fs.writeFileSync(path.join(reports, "queue2-lane-b-eligibility.json"), JSON.stringify(artifact, null, 2));
+  return artifact;
 }
 
 function bundleLaneB() {
@@ -548,96 +512,176 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           }
         : null,
     });
-    if (probe.parsed && (probe.parsed.ok !== false || probe.parsed.limits || probe.parsed.windows)) {
-      const windowsRaw = windowsFromProbe(probe.parsed);
-      const prior = state.quota.windows;
-      const windows =
-        looksLikeFreeDefault(windowsRaw) && prior && !looksLikeFreeDefault(prior)
-          ? prior
-          : windowsRaw;
-      if (windows !== windowsRaw) {
+    if (probe.parsed) {
+      const reconciled = reconcileQuotaProbe({
+        parsed: probe.parsed,
+        priorWindows: state.quota.windows,
+        priorMembership: state.quota.membership || null,
+        priorObservedAt: state.quota.quotaStateObservedAt || state.quota.lastProbeAt || null,
+        now: started,
+      });
+      if (reconciled.note) {
         console.log(
           JSON.stringify({
             tag: "QUOTA_CHECK",
-            note: "ignored_free_default_parse_kept_prior_tier2_windows",
+            note: reconciled.note,
+            confidence: reconciled.quotaStateConfidence,
+            source: reconciled.quotaStateSource,
           }),
         );
       }
-      const targets = computeSafetyTargets(windows);
-      const safe = computeSafeRequests(windows, targets, 0);
-      quota = {
-        probed: true,
-        safeRequests: safe.safe,
-        windows,
-        targets,
-        safe,
-        membership: probe.parsed.membership || null,
-      };
-      const projected = projectedFromWindows(windows);
-      const remaining = remainingRequestsToFinishCourt(state.laneA);
-      const decision = decideLane(state, {
-        safeRequests: safe.safe,
-        projectedUsefulAt: projected,
-        now: started,
-      });
-      if (decision.needsHumanReview) {
-        state = setReview(state, decision.reason, "decideLane blocked Lane A");
+      if (reconciled.humanReview || reconciled.quotaStateConfidence === QUOTA_CONFIDENCE.AMBIGUOUS) {
+        state = setReview(
+          state,
+          HUMAN_REVIEW_REASONS.COURTLISTENER_QUOTA_STATE_AMBIGUOUS ||
+            reconciled.reviewReason ||
+            "COURTLISTENER_QUOTA_STATE_AMBIGUOUS",
+          reconciled.note || "quota probe ambiguous",
+        );
         emit("HUMAN_REVIEW_REQUIRED", {
           lane: "HUMAN_REVIEW_REQUIRED",
-          reason: decision.reason,
+          reason: "COURTLISTENER_QUOTA_STATE_AMBIGUOUS",
           court: state.laneA.court,
         });
       }
-      if (decision.lane === "A") {
-        const rec = applyQuotaRecoveryTransition(state, {
+      if (reconciled.windows) {
+        const windows = reconciled.windows;
+        const targets = reconciled.targets || computeSafetyTargets(windows);
+        const safe = reconciled.safe || computeSafeRequests(windows, targets, 0);
+        quota = {
+          probed: true,
           safeRequests: safe.safe,
           windows,
+          targets,
+          safe,
+          membership: reconciled.membership || null,
+          confidence: reconciled.quotaStateConfidence,
+          source: reconciled.quotaStateSource,
+        };
+        const projected = projectedFromWindows(windows);
+        const remaining = remainingRequestsToFinishCourt(state.laneA);
+        const decision = decideLane(state, {
+          safeRequests: safe.safe,
           projectedUsefulAt: projected,
           now: started,
         });
-        state = rec.state;
-        emit("QUOTA_RECOVERED", {
-          lane: "LANE_A_CL",
-          court: state.laneA.court,
-          checkpoint: state.laneA.checkpoint,
-          reason: decision.reason,
-          quota: { safeRequests: safe.safe },
-        });
-        emit("LANE_SWITCH", { lane: "LANE_A_CL", reason: decision.reason, court: state.laneA.court });
+        // Lane A only when confidence is authoritative.
+        const canLaneA =
+          decision.lane === "A" &&
+          laneAConfidenceSufficient(reconciled.quotaStateConfidence) &&
+          !reconciled.humanReview;
+        if (decision.needsHumanReview) {
+          state = setReview(state, decision.reason, "decideLane blocked Lane A");
+          emit("HUMAN_REVIEW_REQUIRED", {
+            lane: "HUMAN_REVIEW_REQUIRED",
+            reason: decision.reason,
+            court: state.laneA.court,
+          });
+        }
+        if (canLaneA) {
+          const rec = applyQuotaRecoveryTransition(state, {
+            safeRequests: safe.safe,
+            windows,
+            projectedUsefulAt: projected,
+            now: started,
+            quotaStateObservedAt: reconciled.quotaStateObservedAt,
+            quotaStateSource: reconciled.quotaStateSource,
+            quotaStateConfidence: reconciled.quotaStateConfidence,
+            quotaStateAgeMs: reconciled.quotaStateAgeMs,
+            membership: reconciled.membership,
+          });
+          state = rec.state;
+          emit("QUOTA_RECOVERED", {
+            lane: "LANE_A_CL",
+            court: state.laneA.court,
+            checkpoint: state.laneA.checkpoint,
+            reason: decision.reason,
+            quota: { safeRequests: safe.safe, confidence: reconciled.quotaStateConfidence },
+          });
+          emit("LANE_SWITCH", { lane: "LANE_A_CL", reason: decision.reason, court: state.laneA.court });
+        } else {
+          state = applyQuotaFloorTransition(state, {
+            safeRequests: safe.safe,
+            windows,
+            projectedUsefulAt: projected,
+            now: started,
+            court: state.laneA.court,
+            checkpoint: state.laneA.checkpoint,
+            lastSuccessfulExternalId: state.laneA.lastSuccessfulExternalId,
+            cursor: state.laneA.cursor,
+            nextPageUrl: state.laneA.nextPageUrl,
+            lastSuccessfulAt: state.laneA.lastSuccessfulAt,
+            count: state.laneA.count,
+            target: state.laneA.target,
+            reason: reconciled.humanReview
+              ? "quota_ambiguous"
+              : !laneAConfidenceSufficient(reconciled.quotaStateConfidence)
+                ? "quota_confidence_insufficient"
+                : decision.reason,
+            quotaStateObservedAt: reconciled.quotaStateObservedAt,
+            quotaStateSource: reconciled.quotaStateSource,
+            quotaStateConfidence: reconciled.quotaStateConfidence,
+            quotaStateAgeMs: reconciled.quotaStateAgeMs,
+            membership: reconciled.membership,
+          });
+          emit("QUOTA_FLOOR", {
+            lane: "LANE_B_OFFLINE",
+            court: state.laneA.court,
+            checkpoint: state.laneA.checkpoint,
+            reason: decision.reason,
+            quota: {
+              safeRequests: safe.safe,
+              dayRemaining: windows.day?.remaining,
+              confidence: reconciled.quotaStateConfidence,
+            },
+          });
+        }
+        console.log(
+          JSON.stringify({
+            tag: "QUOTA_CHECK",
+            safe: safe.safe,
+            remainingToFinish: remaining,
+            lane: state.currentLane,
+            nextCheckAt: state.quota.nextCheckAt,
+            checkpoint: state.laneA.checkpoint,
+            confidence: reconciled.quotaStateConfidence,
+            dayRemaining: windows.day?.remaining,
+            minuteRemaining: windows.minute?.remaining,
+            hourRemaining: windows.hour?.remaining,
+          }),
+        );
       } else {
-        state = applyQuotaFloorTransition(state, {
-          safeRequests: safe.safe,
-          windows,
-          projectedUsefulAt: projected,
+        console.log(
+          JSON.stringify({
+            tag: "QUOTA_CHECK",
+            ok: false,
+            note: reconciled.note || "probe_unparsed_stay_lane_b",
+            confidence: reconciled.quotaStateConfidence,
+            stderr: probe.stderr,
+          }),
+        );
+        state = applyQuotaSnapshot(state, {
+          safeRequests: 0,
+          projectedUsefulAt: state.quota.nextCheckAt,
           now: started,
-          court: state.laneA.court,
-          checkpoint: state.laneA.checkpoint,
-          lastSuccessfulExternalId: state.laneA.lastSuccessfulExternalId,
-          cursor: state.laneA.cursor,
-          nextPageUrl: state.laneA.nextPageUrl,
-          lastSuccessfulAt: state.laneA.lastSuccessfulAt,
-          count: state.laneA.count,
-          target: state.laneA.target,
-          reason: decision.reason,
+          quotaStateObservedAt: reconciled.quotaStateObservedAt,
+          quotaStateSource: reconciled.quotaStateSource,
+          quotaStateConfidence: reconciled.quotaStateConfidence,
+          quotaStateAgeMs: reconciled.quotaStateAgeMs,
+          membership: reconciled.membership,
         });
-        emit("QUOTA_FLOOR", {
-          lane: "LANE_B_OFFLINE",
-          court: state.laneA.court,
-          checkpoint: state.laneA.checkpoint,
-          reason: decision.reason,
-          quota: { safeRequests: safe.safe, dayRemaining: windows.day?.remaining },
-        });
+        if (state.currentLane !== "B") {
+          state = applyQuotaFloorTransition(state, {
+            safeRequests: 0,
+            reason: "quota_probe_unparsed",
+            now: started,
+            checkpoint: state.laneA.checkpoint,
+            lastSuccessfulExternalId: state.laneA.lastSuccessfulExternalId,
+            count: state.laneA.count,
+            target: state.laneA.target,
+          });
+        }
       }
-      console.log(
-        JSON.stringify({
-          tag: "QUOTA_CHECK",
-          safe: safe.safe,
-          remainingToFinish: remaining,
-          lane: state.currentLane,
-          nextCheckAt: state.quota.nextCheckAt,
-          checkpoint: state.laneA.checkpoint,
-        }),
-      );
     } else {
       console.log(
         JSON.stringify({
@@ -651,6 +695,8 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         safeRequests: quota.safeRequests,
         projectedUsefulAt: state.quota.nextCheckAt,
         now: started,
+        quotaStateConfidence: QUOTA_CONFIDENCE.AMBIGUOUS,
+        quotaStateSource: "unparsed",
       });
       if (state.currentLane !== "B") {
         state = applyQuotaFloorTransition(state, {
@@ -750,18 +796,34 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
 
   if (state.currentLane === "B" && !state.humanReview?.required) {
     try {
+      const runLaneBEnabled = process.env.QUEUE2_RUN_LANE_B === "1";
       const selection = selectLaneBTask({
         now: new Date(),
         networkOk: !state.waitingForNetwork,
         corpusVersion: state.depthManifestVersion,
         lastByTask: state.laneB?.lastByTask || {},
         checkpoints: state.laneB?.checkpoints || {},
+        nextEligibleAt: state.laneB?.nextEligibleAt || {},
         mutatingTaskActive: Boolean(state.laneB?.mutatingTaskActive),
         nextQuotaCheckAt: state.quota?.nextCheckAt,
+        executing: runLaneBEnabled,
       });
+      persistLaneBEligibility(selection);
       state = applyLaneBSelection(state, selection);
 
-      if (selection.idleSafe) {
+      if (selection.idleSafe || !selection.executing) {
+        const nextEligible =
+          (selection.evaluations || [])
+            .filter((e) => !e.eligible && e.nextEligibleAt)
+            .sort((a, b) => String(a.nextEligibleAt).localeCompare(String(b.nextEligibleAt)))[0] || null;
+        console.log(
+          JSON.stringify({
+            tag: "LANE_B_IDLE_SAFE",
+            nextEligible: nextEligible
+              ? `${nextEligible.taskId}@${nextEligible.nextEligibleAt}`
+              : selection.reason || "none",
+          }),
+        );
         emit("LANE_B_IDLE_SAFE", {
           lane: "LANE_B_IDLE_SAFE",
           task: "NONE",
@@ -773,37 +835,66 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           ok: true,
           idleSafe: true,
           courtListenerHttpCalls: 0,
-          note: "no eligible Lane B task; healthy idle until next probe/eligibility",
+          selectedWouldRun: selection.selectedWouldRun || null,
+          note: runLaneBEnabled
+            ? "no eligible Lane B task; healthy idle until next probe/eligibility"
+            : "Lane B execution disabled this cycle; status cleared to IDLE_SAFE/NONE",
         };
       } else {
+        console.log(JSON.stringify({ tag: "LANE_B_SELECT", task: selection.currentTask }));
         emit("LANE_B_START", {
           lane: "LANE_B_OFFLINE",
-          task: selection.currentTask || state.laneB?.task,
+          task: selection.currentTask,
           court: state.laneA.court,
           checkpoint: state.laneA.checkpoint,
         });
-        if (process.env.QUEUE2_RUN_LANE_B === "1") {
+        if (process.env.QUEUE2_LANE_B_MONOLITH === "1") {
           laneBResult = runLaneB();
-          emit("OFFLINE_TASK_COMPLETE", {
-            lane: "LANE_B_OFFLINE",
-            task: state.laneB?.task,
-            reason: laneBResult?.ok === false ? "error" : "complete",
-            corpusDelta:
-              laneBResult?.imported != null ? { nonClAuthorities: laneBResult.imported } : null,
-          });
         } else {
-          laneBResult = {
-            ok: true,
-            skippedRun: true,
-            selectedTask: selection.currentTask,
-            note: "observability pass; set QUEUE2_RUN_LANE_B=1 to execute Lane B worker",
-            courtListenerHttpCalls: 0,
-          };
+          laneBResult = runRegistryTask(selection.task, {
+            corpusVersion: state.depthManifestVersion,
+            allowMutation: process.env.QUEUE2_LANE_B_ALLOW_MUTATION === "1",
+            state,
+          });
         }
+        const taskId = selection.currentTask || selection.task?.id;
+        const noDelta = Boolean(laneBResult?.noDelta || laneBResult?.imported === 0);
+        state = completeLaneBTask(
+          state,
+          taskId,
+          laneBResult?.checkpoint ||
+            laneBResult?.citation?.resolved ||
+            `done-${taskId}-${new Date().toISOString()}`,
+          new Date(),
+          {
+            minimumIntervalMs: selection.task?.minimumIntervalMs,
+            checkpointKey: selection.task?.checkpointKey,
+            noDelta,
+          },
+        );
+        // Mirror registry + legacy ids into lastByTask so intervals apply after restart.
+        if (taskId) {
+          state.laneB.lastByTask[taskId] = state.laneB.lastByTask[taskId] || new Date().toISOString();
+          for (const leg of selection.task?.legacyIds || []) {
+            state.laneB.lastByTask[leg] = state.laneB.lastByTask[taskId];
+          }
+        }
+        if (selection.task?.checkpointKey && laneBResult?.checkpoint != null) {
+          state.laneB.checkpoints[selection.task.checkpointKey] = laneBResult.checkpoint;
+        }
+        emit("OFFLINE_TASK_COMPLETE", {
+          lane: "LANE_B_OFFLINE",
+          task: taskId,
+          reason: laneBResult?.ok === false ? "error" : noDelta ? "NO_DELTA" : "complete",
+          corpusDelta:
+            laneBResult?.imported != null ? { nonClAuthorities: laneBResult.imported } : null,
+        });
       }
     } catch (e) {
       laneBResult = { ok: false, err: String(e.message || e).slice(0, 400), courtListenerHttpCalls: 0 };
       human = true;
+      state.laneB.task = "NONE";
+      state.idleSafe = true;
       emit("ERROR", { lane: "LANE_B_OFFLINE", reason: String(e.message || e).slice(0, 200) });
     }
   }

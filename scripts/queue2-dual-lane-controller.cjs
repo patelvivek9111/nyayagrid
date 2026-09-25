@@ -118,13 +118,20 @@ function createInitialState(now = new Date()) {
       retryAfterSeconds: null,
       lastSafeRequests: 0,
       hard429Count: 0,
+      quotaStateObservedAt: null,
+      quotaStateSource: null,
+      quotaStateConfidence: null,
+      quotaStateAgeMs: null,
+      membership: null,
     },
     laneB: {
-      task: LANE_B_TASKS[0],
+      task: "NONE",
       checkpoint: null,
       tasksCompleted: [],
       checkpoints: {},
       lastByTask: {},
+      nextEligibleAt: {},
+      lastEligibility: null,
       mutatingTaskActive: null,
     },
     depthManifestVersion: 0,
@@ -197,7 +204,41 @@ function restoreState(saved, now = new Date()) {
     ...(saved.laneB || {}),
     checkpoints: { ...(base.laneB.checkpoints || {}), ...((saved.laneB && saved.laneB.checkpoints) || {}) },
     lastByTask: { ...(base.laneB.lastByTask || {}), ...((saved.laneB && saved.laneB.lastByTask) || {}) },
+    nextEligibleAt: {
+      ...(base.laneB.nextEligibleAt || {}),
+      ...((saved.laneB && saved.laneB.nextEligibleAt) || {}),
+    },
   };
+  // Hydrate lastByTask from tasksCompleted when intervals were never persisted
+  // (first-run bug: monolithic Lane B wrote tasksCompleted but orchestrator
+  // overwrote lastByTask {}). Prevents permanent US_REPORTS pinning.
+  if (
+    Array.isArray(merged.laneB.tasksCompleted) &&
+    merged.laneB.tasksCompleted.length > 0 &&
+    Object.keys(merged.laneB.lastByTask || {}).length === 0
+  ) {
+    const seedAt = saved.updatedAt || saved.lastHeartbeatAt || now.toISOString();
+    const legacyToId = {
+      us_reports_gap_analysis: "US_REPORTS_GAP_ANALYSIS",
+      us_reports_non_cl_intake: "NON_CL_PRIMARY_AUTHORITY_INTAKE",
+      usc_cfr_federal_rules_depth: "USC_DEPTH",
+      citation_re_resolution: "CITATION_RERESOLVE",
+      depth_gap_analysis: "DEPTH_MANIFEST_REFRESH",
+      historical_hole_detection: "HISTORICAL_GAP_ANALYSIS",
+      intermediate_court_research: "INTERMEDIATE_MAPPING_RESEARCH_NON_CL",
+      corpus_integrity: "CORPUS_INTEGRITY_AUDIT",
+      retrieval_validation: "RETRIEVAL_REGRESSION",
+      depth_scorecard: "DAILY_SCORECARD_REFRESH",
+    };
+    for (const id of merged.laneB.tasksCompleted) {
+      merged.laneB.lastByTask[id] = seedAt;
+      const canon = legacyToId[id];
+      if (canon) merged.laneB.lastByTask[canon] = seedAt;
+    }
+  }
+  if (merged.idleSafe || merged.runtimeState === "IDLE_SAFE") {
+    merged.laneB.task = "NONE";
+  }
   // Harden: never keep an active partial court with a null checkpoint.
   const check = validatePartialCheckpoint(merged.laneA);
   merged.laneA = check.laneA;
@@ -387,6 +428,13 @@ function applyQuotaSnapshot(state, params) {
   });
   if (params.last429At) next.quota.last429At = params.last429At;
   if (params.retryAfterSeconds != null) next.quota.retryAfterSeconds = params.retryAfterSeconds;
+  if (params.quotaStateObservedAt != null) next.quota.quotaStateObservedAt = params.quotaStateObservedAt;
+  else next.quota.quotaStateObservedAt = now.toISOString();
+  if (params.quotaStateSource != null) next.quota.quotaStateSource = params.quotaStateSource;
+  if (params.quotaStateConfidence != null) next.quota.quotaStateConfidence = params.quotaStateConfidence;
+  if (params.quotaStateAgeMs != null) next.quota.quotaStateAgeMs = params.quotaStateAgeMs;
+  else next.quota.quotaStateAgeMs = 0;
+  if (params.membership != null) next.quota.membership = params.membership;
   next.metrics.quotaChecks += 1;
   next.updatedAt = now.toISOString();
   return next;
@@ -495,33 +543,48 @@ function recordLaneTime(state, lane, durationMs, extras = {}) {
   return next;
 }
 
-function completeLaneBTask(state, task, checkpoint, now = new Date()) {
+function completeLaneBTask(state, task, checkpoint, now = new Date(), opts = {}) {
   const next = cloneState(state);
-  if (!next.laneB.tasksCompleted.includes(task)) next.laneB.tasksCompleted.push(task);
+  const taskId = String(task || "");
+  if (taskId && !next.laneB.tasksCompleted.includes(taskId)) next.laneB.tasksCompleted.push(taskId);
   next.laneB.checkpoint = checkpoint ?? next.laneB.checkpoint;
   next.laneB.checkpoints = next.laneB.checkpoints || {};
   next.laneB.lastByTask = next.laneB.lastByTask || {};
-  next.laneB.lastByTask[task] = now.toISOString();
-  if (checkpoint != null) {
-    // Prefer storing under both legacy and string forms.
-    next.laneB.checkpoints[task] = checkpoint;
+  next.laneB.nextEligibleAt = next.laneB.nextEligibleAt || {};
+  if (taskId) next.laneB.lastByTask[taskId] = now.toISOString();
+  if (checkpoint != null && taskId) {
+    next.laneB.checkpoints[taskId] = checkpoint;
+  }
+  if (opts.checkpointKey && checkpoint != null) {
+    next.laneB.checkpoints[opts.checkpointKey] = checkpoint;
+  }
+  if (opts.minimumIntervalMs && taskId) {
+    next.laneB.nextEligibleAt[taskId] = new Date(now.getTime() + Number(opts.minimumIntervalMs)).toISOString();
+  }
+  if (opts.noDelta && taskId) {
+    next.laneB.lastOutcome = next.laneB.lastOutcome || {};
+    next.laneB.lastOutcome[taskId] = { at: now.toISOString(), result: "NO_DELTA" };
   }
   next.laneB.mutatingTaskActive = null;
-  const idx = LANE_B_TASKS.indexOf(task);
-  const nextTask = idx >= 0 ? LANE_B_TASKS[(idx + 1) % LANE_B_TASKS.length] : LANE_B_TASKS[0];
-  next.laneB.task = nextTask;
-  next.idleSafe = false;
+  // Clear active task so the next wake cycle reevaluates the full registry.
+  // Do not round-robin pin to a sibling task name.
+  next.laneB.task = "NONE";
+  next.idleSafe = true;
+  next.runtimeState = "IDLE_SAFE";
   next.updatedAt = now.toISOString();
   return next;
 }
 
 /**
  * Apply registry selection result onto scheduler state (deterministic; no AI).
+ * currentTask means the task actually executing now — idle clears to NONE.
  */
 function applyLaneBSelection(state, selection, now = new Date()) {
   const next = cloneState(state);
   next.updatedAt = now.toISOString();
-  if (selection.idleSafe || !selection.task) {
+  next.laneB = next.laneB || {};
+  next.laneB.lastEligibility = selection.evaluations || next.laneB.lastEligibility || null;
+  if (selection.idleSafe || !selection.task || selection.executing === false) {
     next.idleSafe = true;
     next.currentLane = "B";
     next.laneB.task = "NONE";
@@ -533,6 +596,8 @@ function applyLaneBSelection(state, selection, now = new Date()) {
   next.laneB.task = selection.task.id || selection.currentTask;
   if (selection.task.mayMutate) {
     next.laneB.mutatingTaskActive = selection.task.id;
+  } else {
+    next.laneB.mutatingTaskActive = null;
   }
   next.runtimeState = "RUNNING";
   return next;

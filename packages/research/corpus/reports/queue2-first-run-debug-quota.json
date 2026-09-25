@@ -1,0 +1,54 @@
+{
+  "at": "2026-09-25T00:17:17.617Z",
+  "probeOk": true,
+  "membership": {
+    "level": "CL Membership - Tier 2",
+    "is_active": true
+  },
+  "live": {
+    "minute": {
+      "scope": "user",
+      "period": "minute",
+      "limit": 30,
+      "usage": 0,
+      "remaining": 30,
+      "reset_at": null,
+      "blocked": false
+    },
+    "hour": {
+      "scope": "user",
+      "period": "hour",
+      "limit": 300,
+      "usage": 0,
+      "remaining": 300,
+      "reset_at": null,
+      "blocked": false
+    },
+    "day": {
+      "scope": "user",
+      "period": "day",
+      "limit": 1200,
+      "usage": 861,
+      "remaining": 339,
+      "reset_at": "2026-09-25T00:18:12.911002+00:00",
+      "blocked": false
+    }
+  },
+  "reconciled": {
+    "confidence": "AUTHORITATIVE_API",
+    "source": "probe.limits",
+    "safe": 28,
+    "dayRemaining": 339,
+    "hourRemaining": 300,
+    "minuteRemaining": 30,
+    "dayResetAt": "2026-09-25T00:18:12.911002+00:00",
+    "humanReview": false
+  },
+  "ark": {
+    "count": 33,
+    "target": 45,
+    "checkpoint": "cl-opinion-9885161"
+  },
+  "corpusMutations": 0,
+  "workerStarted": false
+}
