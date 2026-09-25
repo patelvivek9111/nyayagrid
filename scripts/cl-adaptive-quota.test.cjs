@@ -338,9 +338,23 @@ test("K: WAIT_HOUR → nextUsefulAt uses hour reset", () => {
 
 test("M: generic checkpoint output does not use arDurableCheckpoint", () => {
   const finalPath = path.join(__dirname, "../packages/research/corpus/reports/queue2-dual-lane-final.json");
+  const statePath = path.join(__dirname, "../packages/research/corpus/reports/queue2-dual-lane-state.json");
   const final = JSON.parse(fs.readFileSync(finalPath, "utf8"));
+  const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
   assert.equal(final.checkpointSafety?.arDurableCheckpoint, undefined);
-  assert.ok(final.checkpointSafety?.durableCheckpoint || final.laneA?.checkpoint);
+  const readyFirstStart =
+    String(state.laneA?.targetStatus || "").toUpperCase() === "READY" &&
+    !state.laneA?.checkpoint &&
+    !state.laneA?.cursor &&
+    !state.laneA?.lastSuccessfulExternalId;
+  // READY first-start may have null checkpoint; resumable partial must have durable evidence.
+  assert.ok(
+    readyFirstStart ||
+      final.checkpointSafety?.durableCheckpoint ||
+      final.laneA?.checkpoint ||
+      state.laneA?.checkpoint,
+    "expected durable checkpoint unless READY first-start",
+  );
 });
 
 console.log(JSON.stringify({ ok: true, tests: passed, suite: "cl-adaptive-quota", workerStarted: false, aiCalls: 0, corpusMutations: 0 }));

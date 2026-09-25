@@ -60,6 +60,9 @@ const {
   HEARTBEAT_INTERVAL_MS,
   resolveCorpusTotalsForStatus,
   resolveManifestVersionForStatus,
+  isMissingDurableResumeCheckpointFatal,
+  isReadyFirstStartLaneA,
+  validatePartialCheckpoint,
 } = require("./queue2-worker-observability.cjs");
 const { setHumanReview: setReview } = require("./queue2-dual-lane-controller.cjs");
 const {
@@ -93,6 +96,7 @@ const {
 } = require("./queue2-worker-safety.cjs");
 const {
   remainingCasesToFinish,
+  resolveLaneABatchBounds,
   parseLaneARunnerOutput,
   classifyLaneABatchResult,
   reconcileLaneACountSources,
@@ -983,11 +987,13 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     state.idleSafe = false;
     state.runtimeState = "RUNNING";
     state.laneASelectedAt = state.laneASelectedAt || started.toISOString();
-    if (!state.laneA.checkpoint) {
+    // READY first-start may have null checkpoint — start from initial court query.
+    // Only refuse when a demonstrably resumable/partial target lacks resume evidence.
+    if (isMissingDurableResumeCheckpointFatal(state.laneA)) {
       state = setReview(
         state,
         HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
-        "refusing Lane A start without durable checkpoint",
+        "refusing Lane A resume without durable checkpoint",
       );
       human = true;
       emit("HUMAN_REVIEW_REQUIRED", {
@@ -1002,36 +1008,53 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         state.currentLane = "B";
       } else {
         state = lock.state;
+        const initialStart = isReadyFirstStartLaneA(state.laneA) || !state.laneA.checkpoint;
         emit("LANE_A_START", {
           lane: "LANE_A_CL",
           court: state.laneA.court,
           checkpoint: state.laneA.checkpoint,
+          reason: initialStart ? "initial_start" : "resume",
         });
         emit("LANE_A_RUNNER_START", {
           lane: "LANE_A_CL",
           court: state.laneA.court,
           checkpoint: state.laneA.checkpoint,
           task: "cl_ingest",
+          reason: initialStart ? "initial_start" : "resume",
         });
         state.laneARunnerStartedAt = new Date().toISOString();
         try {
           const priorCheckpoint = state.laneA.checkpoint;
           const priorCount = Number(state.laneA.count) || 0;
-          const canaryBound =
-            state.canaryMode === "CANARY_REQUIRED"
-              ? {
-                  batchSize: String(
-                    Math.min(
-                      Number(state.canary?.maxQualifyingAuthorities || 3),
-                      Math.max(1, remainingCasesToFinish(state.laneA) || 1),
-                    ),
-                  ),
-                }
-              : {};
+          const batchBounds = resolveLaneABatchBounds({
+            canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+            maxQualifyingAuthorities: Number(state.canary?.maxQualifyingAuthorities || 3),
+            maxClRequests: Number(state.canary?.maxClRequests || 12),
+            remainingAuthorities: remainingCasesToFinish(state.laneA),
+            usableRequests:
+              Number(state.quota?.lastPlan?.microBatchMaxRequests) ||
+              Number(quota.safeRequests) ||
+              0,
+            requestsPerAuthorityEstimate:
+              Number(state.quota?.lastPlan?.requestsPerAuthorityEstimate) || 2.3,
+            resourceMaxAuthorities: 8,
+            resourceMaxClRequests: 40,
+            checkpoint: state.laneA.checkpoint,
+          });
           const raw = runLaneA(state, {
             runner: process.env.QUEUE2_MOCK_LANE_A_RUNNER === "1" ? runtime.mockLaneARunner : null,
-            batchSize: canaryBound.batchSize,
+            batchSize: batchBounds.batchSize,
           });
+          console.log(
+            JSON.stringify({
+              tag: "LANE_A_BATCH_BOUNDS",
+              court: state.laneA.court,
+              authorities: batchBounds.authorities,
+              maxClRequests: batchBounds.maxClRequests,
+              initialStart: batchBounds.initialStart,
+              canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+            }),
+          );
           const classified = classifyLaneABatchResult({
             stdout: raw?.stdout || "",
             priorCheckpoint,
@@ -1375,7 +1398,8 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
       laneBResult = { ok: false, err: String(e.message || e).slice(0, 400), courtListenerHttpCalls: 0 };
       human = true;
       state.laneB.task = "NONE";
-      state.idleSafe = true;
+      // Never paint healthy-idle while human review is required.
+      state.idleSafe = false;
       emit("ERROR", { lane: "LANE_B_OFFLINE", reason: String(e.message || e).slice(0, 200) });
     }
   }
@@ -1472,7 +1496,10 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
       duplicateSourceIds: status?.health?.duplicateSourceIdCount || 0,
       workerVersion: WORKER_VERSION,
       queue3: state.queue3 || "NOT_OPEN",
-      idleSafe: Boolean(state.idleSafe),
+      idleSafe: Boolean(state.idleSafe) && !state.humanReview?.required,
+      humanReviewRequired: Boolean(state.humanReview?.required),
+      humanReviewReasons: state.humanReview?.reasons || [],
+      humanReviewReason: (state.humanReview?.reasons || [])[0] || null,
     };
     const wd = runWatchdogCycle({
       snapshot: wdSnap,
@@ -1806,7 +1833,8 @@ async function main() {
   process.on("SIGINT", () => onSignal("SIGINT"));
   process.on("SIGTERM", () => onSignal("SIGTERM"));
 
-  // Checkpoint hardening: never leave AR partial with null resume position.
+  // Checkpoint hardening: never leave an active CL partial with null resume position.
+  // READY first-start (baseline corpus count, no CL resume metadata) is valid.
   const recon = reconcileArkCheckpoint(state);
   state = recon.state;
   if (recon.reconciled && !recon.already) {
@@ -1822,17 +1850,26 @@ async function main() {
         target: state.laneA.target,
       },
     });
-  } else if (!state.laneA?.checkpoint && Number(state.laneA?.count) > 0) {
+  } else if (isMissingDurableResumeCheckpointFatal(state.laneA)) {
     state = setReview(
       state,
       HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
-      "AR partial without durable resume after reconcile attempt",
+      "partial CL target without durable resume after reconcile attempt",
     );
     emit("HUMAN_REVIEW_REQUIRED", {
       lane: "HUMAN_REVIEW_REQUIRED",
       court: state.laneA.court,
       reason: HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
     });
+  } else if (
+    state.humanReview?.required &&
+    Array.isArray(state.humanReview.reasons) &&
+    state.humanReview.reasons.length === 1 &&
+    state.humanReview.reasons[0] === HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT &&
+    isReadyFirstStartLaneA(state.laneA)
+  ) {
+    // Clear stale false-positive from prior poisoned runs (READY first-start).
+    state.humanReview = { required: false, reasons: [], details: [] };
   }
 
   runtime.state = state;

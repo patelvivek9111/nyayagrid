@@ -167,12 +167,50 @@ test("restart recovery preserves lane/court/count/target/checkpoint/quota/offlin
   assert.equal(restored.laneB.checkpoint, "scorecard-v1");
 });
 
-test("decideLane blocks Lane A when checkpoint missing", () => {
+test("decideLane blocks Lane A when PARTIAL checkpoint missing", () => {
   const state = createInitialState();
-  state.laneA = { ...state.laneA, court: "ark", count: 33, target: 45, checkpoint: null };
+  state.laneA = {
+    ...state.laneA,
+    court: "ark",
+    count: 33,
+    target: 45,
+    checkpoint: null,
+    targetStatus: "PARTIAL",
+    jobStatus: "quota_paused",
+  };
   const d = decideLane(state, { safeRequests: 100, now: new Date() });
   assert.equal(d.lane, "B");
   assert.equal(d.needsHumanReview, true);
+});
+
+test("decideLane allows READY first-start with null checkpoint", () => {
+  const state = createInitialState();
+  state.laneA = {
+    ...state.laneA,
+    court: "mich",
+    count: 20,
+    target: 45,
+    checkpoint: null,
+    cursor: null,
+    lastSuccessfulExternalId: null,
+    nextPageUrl: null,
+    targetStatus: "READY",
+    jobStatus: "ready",
+    mappingStatus: "VERIFIED",
+  };
+  state.humanReview = { required: false, reasons: [], details: [] };
+  const d = decideLane(state, {
+    windows: {
+      minute: { remaining: 30, limit: 30 },
+      hour: { remaining: 300, limit: 300 },
+      day: { remaining: 1106, limit: 1200 },
+    },
+    safeRequests: 28,
+    now: new Date(),
+  });
+  assert.equal(d.lane, "A");
+  assert.notEqual(d.needsHumanReview, true);
+  assert.notEqual(d.quotaMode, "DAY_BLOCKED");
 });
 
 test("quota recovery resumes only with durable checkpoint", () => {

@@ -10,6 +10,7 @@
   "currentTask": "NONE",
   "currentCourt": "mich",
   "currentJurisdiction": "MI",
+  "jurisdiction": "MI",
   "currentCount": 20,
   "targetCount": 45,
   "checkpoint": null,
@@ -19,12 +20,12 @@
   "lastSuccessfulAt": null,
   "runner": "staging-cl-batch-job",
   "mappingStatus": "VERIFIED",
-  "manifestVersion": 15,
+  "manifestVersion": 18,
   "jobStatus": "ready",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastUpdatedAt": "2026-09-25T15:57:35.229Z",
-  "lastHeartbeatAt": "2026-09-25T15:07:09.627Z",
-  "nextQuotaCheckAt": "2026-09-25T15:37:43.260Z",
+  "lastUpdatedAt": "2026-09-25T16:15:52.516Z",
+  "lastHeartbeatAt": "2026-09-25T16:07:29.312Z",
+  "nextQuotaCheckAt": "2026-09-25T16:17:29.332Z",
   "network": {
     "waitingForNetwork": false,
     "lastOnlineAt": null
@@ -38,10 +39,10 @@
     "hourRemaining": 300,
     "dayRemaining": 1106,
     "safeRequests": 28,
-    "lastProbeAt": "2026-09-25T15:07:09.647Z",
+    "lastProbeAt": "2026-09-25T16:07:29.332Z",
     "hard429Count": 0,
     "dayResetAt": "2026-09-26T00:36:37.423499+00:00",
-    "quotaStateObservedAt": "2026-09-25T15:07:09.647Z",
+    "quotaStateObservedAt": "2026-09-25T16:07:29.332Z",
     "quotaStateSource": "probe.limits",
     "quotaStateConfidence": "AUTHORITATIVE_API",
     "quotaStateAgeMs": 0
@@ -81,7 +82,6 @@
     "reasons": [],
     "reviewReasons": []
   },
-  "jurisdiction": "MI",
-  "updatedAt": "2026-09-25T15:57:35.229Z",
-  "laneReason": "WI COMPLETE_FOR_CURRENT_DEPTH; next=mich"
+  "laneReason": null,
+  "updatedAt": "2026-09-25T16:15:52.516Z"
 }

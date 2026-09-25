@@ -19,6 +19,8 @@ const {
   isPartialLaneA,
   isReadyFirstStartLaneA,
   hasDurableCheckpoint,
+  requiresDurableResumeCheckpoint,
+  isMissingDurableResumeCheckpointFatal,
 } = require("./queue2-worker-observability.cjs");
 const {
   QUOTA_MODES,
@@ -335,7 +337,7 @@ function applyDurableJobCheckpoint(state, job, extras = {}, now = new Date()) {
   next.laneA = laneA;
   next.updatedAt = now.toISOString();
   if (!reconciled) {
-    if (isPartialLaneA(next.laneA) && !hasDurableCheckpoint(next.laneA)) {
+    if (isMissingDurableResumeCheckpointFatal(next.laneA)) {
       return {
         ok: false,
         state: setHumanReview(
@@ -1175,5 +1177,7 @@ module.exports = {
   isPartialLaneA,
   isReadyFirstStartLaneA,
   hasDurableCheckpoint,
+  requiresDurableResumeCheckpoint,
+  isMissingDurableResumeCheckpointFatal,
   HUMAN_REVIEW_REASONS,
 };

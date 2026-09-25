@@ -773,17 +773,35 @@ function hasDurableCheckpoint(laneA) {
 }
 
 /**
+ * Shared predicate: does this Lane A target require a durable CL resume checkpoint?
+ *
+ * TRUE only when there is evidence a CourtListener ingest job already started and
+ * must resume (PARTIAL / ACTIVE / QUOTA_PAUSED / resume cursor / prior CL progress).
+ *
+ * FALSE for READY first-start (including baseline corpus count > 0 with null
+ * checkpoint/cursor/nextPageUrl) — missing checkpoint is not fatal in that case.
+ */
+function requiresDurableResumeCheckpoint(laneA) {
+  return isPartialLaneA(laneA);
+}
+
+/**
+ * Shared fatal rule used by preflight, runtime, reconcile, and watchdog paths.
+ * Missing checkpoint is fatal iff the target requires resume AND has no durable evidence.
+ */
+function isMissingDurableResumeCheckpointFatal(laneA) {
+  return requiresDurableResumeCheckpoint(laneA) && !hasDurableCheckpoint(laneA);
+}
+
+/**
  * Validate scheduler Lane A partial safety. Never invent a checkpoint.
  * @returns {{ ok: boolean, humanReviewRequired: boolean, reason: string|null, laneA: object }}
  */
 function validatePartialCheckpoint(laneA) {
   const next = { ...(laneA || {}) };
-  if (!isPartialLaneA(next)) {
-    return { ok: true, humanReviewRequired: false, reason: null, laneA: next };
-  }
-  if (hasDurableCheckpoint(next)) {
-    // Prefer lastSuccessfulExternalId as canonical checkpoint identity when present.
-    if (!next.checkpoint && next.lastSuccessfulExternalId) {
+  if (!isMissingDurableResumeCheckpointFatal(next)) {
+    if (hasDurableCheckpoint(next) && !next.checkpoint && next.lastSuccessfulExternalId) {
+      // Prefer lastSuccessfulExternalId as canonical checkpoint identity when present.
       next.checkpoint = next.lastSuccessfulExternalId;
     }
     return { ok: true, humanReviewRequired: false, reason: null, laneA: next };
@@ -1110,6 +1128,8 @@ module.exports = {
   isPartialLaneA,
   isReadyFirstStartLaneA,
   hasDurableCheckpoint,
+  requiresDurableResumeCheckpoint,
+  isMissingDurableResumeCheckpointFatal,
   validatePartialCheckpoint,
   reconcileLaneAFromJob,
   setHumanReview,

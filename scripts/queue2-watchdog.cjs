@@ -748,6 +748,26 @@ function evaluateWatchdogTick(input = {}) {
     );
   }
 
+  // Operator / runtime already raised human review — never report HEALTHY_IDLE.
+  if (snap.humanReviewRequired || snap.currentLane === "HUMAN_REVIEW_REQUIRED") {
+    const reason =
+      (Array.isArray(snap.humanReviewReasons) && snap.humanReviewReasons[0]) ||
+      snap.humanReviewReason ||
+      "HUMAN_REVIEW_REQUIRED";
+    alerts.push(
+      localizeFailure({
+        reason,
+        severity: SEVERITY.CRITICAL,
+        now: nowIso,
+        currentLane: "HUMAN_REVIEW_REQUIRED",
+        evidence: {
+          humanReviewRequired: true,
+          reasons: snap.humanReviewReasons || [reason],
+        },
+      }),
+    );
+  }
+
   // Overall status
   const emergency = alerts.find((a) => a.severity === SEVERITY.EMERGENCY || a.recoveryClass === RECOVERY.EMERGENCY_STOP);
   const critical = alerts.find((a) => a.severity === SEVERITY.CRITICAL);
@@ -758,11 +778,25 @@ function evaluateWatchdogTick(input = {}) {
     state.amIHealthy = false;
     state.amIProductive = false;
     state.ifNotWhatIsWrong = emergency;
-  } else if (critical && critical.recoveryClass === RECOVERY.HUMAN_REVIEW_REQUIRED) {
+  } else if (
+    snap.humanReviewRequired ||
+    snap.currentLane === "HUMAN_REVIEW_REQUIRED" ||
+    (critical && critical.recoveryClass === RECOVERY.HUMAN_REVIEW_REQUIRED)
+  ) {
     state.overallStatus = OVERALL.HUMAN_REVIEW_REQUIRED;
     state.amIHealthy = false;
     state.amIProductive = false;
-    state.ifNotWhatIsWrong = critical;
+    state.ifNotWhatIsWrong =
+      critical && critical.recoveryClass === RECOVERY.HUMAN_REVIEW_REQUIRED
+        ? critical
+        : localizeFailure({
+            reason:
+              (Array.isArray(snap.humanReviewReasons) && snap.humanReviewReasons[0]) ||
+              snap.humanReviewReason ||
+              "HUMAN_REVIEW_REQUIRED",
+            severity: SEVERITY.CRITICAL,
+            now: nowIso,
+          });
   } else if (warning && (warning.recoveryClass === RECOVERY.SELF_RECOVERABLE || warning.recoveryClass === RECOVERY.WAIT_AND_RETRY)) {
     state.overallStatus = OVERALL.DEGRADED_SELF_RECOVERING;
     state.amIHealthy = true;

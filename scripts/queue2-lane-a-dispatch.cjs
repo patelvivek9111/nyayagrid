@@ -17,6 +17,53 @@ function remainingCasesToFinish(laneA) {
 }
 
 /**
+ * Bound Lane A batch size by the tightest of canary / adaptive quota / resource caps.
+ * Targets may progress across many batches — never require finishing in one quota window.
+ *
+ * @returns {{
+ *   authorities: number,
+ *   maxClRequests: number,
+ *   batchSize: string,
+ *   initialStart: boolean,
+ *   caps: { canaryAuth: number|null, canaryReq: number|null, quotaAuth: number, resourceAuth: number }
+ * }}
+ */
+function resolveLaneABatchBounds(params = {}) {
+  const remaining = Math.max(0, Number(params.remainingAuthorities) || 0);
+  const usable = Math.max(0, Number(params.usableRequests) || 0);
+  const rpa = Math.max(0.1, Number(params.requestsPerAuthorityEstimate) || 2.3);
+  const resourceMaxAuth = Math.max(1, Number(params.resourceMaxAuthorities) || 40);
+  const resourceMaxReq = Math.max(1, Number(params.resourceMaxClRequests) || 40);
+  const canaryRequired = Boolean(params.canaryRequired);
+  const canaryAuthCap = Math.max(1, Math.min(3, Number(params.maxQualifyingAuthorities) || 3));
+  const canaryReqCap = Math.max(1, Math.min(12, Number(params.maxClRequests) || 12));
+
+  let maxReq = Math.min(usable > 0 ? usable : resourceMaxReq, resourceMaxReq);
+  let maxAuth = Math.min(remaining > 0 ? remaining : resourceMaxAuth, resourceMaxAuth);
+  if (canaryRequired) {
+    maxAuth = Math.min(maxAuth, canaryAuthCap);
+    maxReq = Math.min(maxReq, canaryReqCap);
+  }
+  const authFromReq = Math.max(1, Math.floor(maxReq / rpa));
+  const authorities =
+    remaining <= 0 ? 0 : Math.max(1, Math.min(maxAuth, authFromReq, remaining));
+  const clRequests =
+    authorities <= 0 ? 0 : Math.min(maxReq, Math.ceil(authorities * rpa));
+  return {
+    authorities,
+    maxClRequests: clRequests,
+    batchSize: String(Math.max(0, authorities)),
+    initialStart: Boolean(params.checkpoint == null || params.checkpoint === ""),
+    caps: {
+      canaryAuth: canaryRequired ? canaryAuthCap : null,
+      canaryReq: canaryRequired ? canaryReqCap : null,
+      quotaAuth: usable > 0 ? Math.max(1, Math.floor(usable / rpa)) : null,
+      resourceAuth: resourceMaxAuth,
+    },
+  };
+}
+
+/**
  * Extract the authoritative Lane A runner payload from multi-line stdout.
  * run-staging-cl-batch-job prints upload/start/poll lines; the result is in fileResult.
  */
@@ -634,6 +681,7 @@ function runMockedLaneAStartupFlow(params = {}) {
 
 module.exports = {
   remainingCasesToFinish,
+  resolveLaneABatchBounds,
   parseLaneARunnerOutput,
   classifyLaneABatchResult,
   canonicalLaneACount,
