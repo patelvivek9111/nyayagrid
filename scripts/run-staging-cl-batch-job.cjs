@@ -43,7 +43,10 @@ const root = path.join(__dirname, "..");
 const localBundled = path.join(__dirname, "staging-cl-batch-job-bundled.cjs");
 const remotePath = "/tmp/staging-cl-batch-job-bundled.cjs";
 const CHUNK = 8_000;
-const FLY_EXEC_TIMEOUT_SEC = Number(process.env.CL_FLY_EXEC_TIMEOUT_SEC) || 900;
+const FLY_EXEC_TIMEOUT_SEC = Math.min(
+  540,
+  Number(process.env.CL_FLY_EXEC_TIMEOUT_SEC) || 540,
+);
 
 // Self-check: runtime spawn must never reintroduce detach (comments excluded).
 {
@@ -235,7 +238,28 @@ child.on('exit',(code,signal)=>{
 });
 `;
 
-const run = fly(`node -e ${JSON.stringify(ownerJs)}`, FLY_EXEC_TIMEOUT_SEC);
+// flyctl on Windows strips backslashes in `node -e` source (`\n` becomes `n`).
+// Write the attached owner as base64, then exec the file. Still detached:false.
+const ownerRemote = "/tmp/cl-batch-owner.cjs";
+const ownerB64 = Buffer.from(ownerJs, "utf8").toString("base64");
+{
+  const w = fly(
+    `node -e "require('fs').writeFileSync('${ownerRemote}',Buffer.from('${ownerB64}','base64'))"`,
+    90,
+  );
+  if (w.status !== 0) {
+    console.log(
+      JSON.stringify({
+        ok: false,
+        step: "upload_owner",
+        err: (w.stderr || w.stdout || "").slice(0, 400),
+        courtListenerHttpCalls: 0,
+      }),
+    );
+    process.exit(1);
+  }
+}
+const run = fly(`node ${ownerRemote}`, FLY_EXEC_TIMEOUT_SEC);
 process.stdout.write(run.stdout || "");
 if (run.stderr) process.stderr.write(String(run.stderr).slice(0, 800));
 

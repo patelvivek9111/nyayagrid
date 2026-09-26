@@ -7,26 +7,26 @@
   "currentLane": "STOPPED",
   "updatedAt": "2026-09-25T19:09:46.994Z",
   "laneA": {
-    "court": "mich",
-    "jurisdiction": "MI",
-    "checkpoint": "cl-opinion-11250867",
-    "cursor": "cl-opinion-11250867",
-    "lastSuccessfulExternalId": null,
+    "court": "sd",
+    "jurisdiction": "SD",
+    "checkpoint": "cl-opinion-11198423",
+    "cursor": "cl-opinion-11198423",
+    "lastSuccessfulExternalId": "cl-opinion-11198423",
     "nextPageUrl": null,
-    "lastSuccessfulAt": "2026-09-25T17:33:47.647Z",
+    "lastSuccessfulAt": "2026-09-26T15:24:00.000Z",
     "runner": "staging-cl-batch-job",
     "mappingStatus": "VERIFIED",
-    "manifestVersion": 26,
-    "jobStatus": "quota_paused",
-    "itemsImported": 19,
+    "manifestVersion": 31,
+    "jobStatus": "completed",
+    "itemsImported": 45,
     "target": 45,
-    "count": 20,
+    "count": 45,
     "sequence": null,
     "lock": null,
-    "targetStatus": "PARTIAL",
-    "existingJobClassification": "STALE_RESUMABLE",
+    "targetStatus": "COMPLETE_FOR_CURRENT_DEPTH",
+    "existingJobClassification": "COMPLETE_FOR_CURRENT_DEPTH",
     "resumeEvidenceKind": "CURSOR_ONLY",
-    "jobLifecycle": "PAUSED_RESUMABLE"
+    "jobLifecycle": "COMPLETED"
   },
   "quota": {
     "windows": {
@@ -310,7 +310,11 @@
   "laneASelectedAt": "2026-09-25T19:06:23.945Z",
   "laneARunnerStartedAt": null,
   "completedCourts": [
-    "wis"
+    "wis",
+    "mich",
+    "nm",
+    "utah",
+    "sd"
   ],
   "completedCourtEvidence": {
     "wis": {

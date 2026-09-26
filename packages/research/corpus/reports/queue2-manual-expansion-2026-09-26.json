@@ -1,0 +1,57 @@
+{
+  "classification": "QUEUE2_MANUAL_CORPUS_EXPANSION_PROGRESS",
+  "generatedAt": "2026-09-26T15:25:30.000Z",
+  "queue": { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", "transition": "NONE" },
+  "worker": "STOPPED",
+  "michigan": {
+    "qualifyingBefore": 20,
+    "qualifyingAfter": 45,
+    "authoritiesBefore": 43,
+    "authoritiesAfter": 68,
+    "clCasesBefore": 19,
+    "clCasesAfter": 44,
+    "completeForCurrentDepth": true,
+    "checkpoint": "cl-opinion-10837401",
+    "clRequests": 58
+  },
+  "newMexico": {
+    "qualifyingBefore": 20,
+    "qualifyingAfter": 45,
+    "authoritiesAdded": 25,
+    "clRequests": 57,
+    "checkpoint": "cl-opinion-11168352",
+    "status": "COMPLETE_FOR_CURRENT_DEPTH"
+  },
+  "utah": {
+    "qualifyingBefore": 20,
+    "qualifyingAfter": 45,
+    "authoritiesAdded": 25,
+    "clRequests": 57,
+    "checkpoint": "cl-opinion-11120454",
+    "status": "COMPLETE_FOR_CURRENT_DEPTH"
+  },
+  "southDakota": {
+    "qualifyingBefore": 20,
+    "qualifyingAfter": 45,
+    "authoritiesAdded": 25,
+    "clRequests": 58,
+    "checkpoint": "cl-opinion-11198423",
+    "status": "COMPLETE_FOR_CURRENT_DEPTH"
+  },
+  "corpus": {
+    "authorities": "3008 → 3108",
+    "cases": "1691 → 1791",
+    "clCases": "1646 → 1746",
+    "chunks": 42118,
+    "embeddings": 42118,
+    "duplicateSourceIds": 0,
+    "orphanCount": 0
+  },
+  "citations": {
+    "extracted": "5768 → 6058",
+    "resolved": "179 → 181",
+    "targetAbsent": "5589 → 5877"
+  },
+  "nextJurisdiction": "ID",
+  "nextCourt": "idaho"
+}

@@ -19,6 +19,7 @@
  */
 import { createHash, randomUUID } from "node:crypto";
 import postgres from "postgres";
+import { pageResumeUrl } from "./cl-batch-resume-cursor.cjs";
 
 type QuotaWindow = { limit: number; used: number; remaining: number; resetAt?: string | null };
 
@@ -1651,6 +1652,16 @@ async function main() {
     : { hasCurrentness: false, hasLastChecked: false, hasCitations: false };
 
   let processedThisBatch = 0;
+  let lastSeenExternalId: string | null = null;
+  const resumeUrlNow = () =>
+    pageResumeUrl({
+      processedCount: processedThisBatch,
+      hitCount: hits.length,
+      nextPage,
+      discoverUrl,
+      lastSeenExternalId,
+      pageSize: batchSize,
+    });
   for (const hit of hits) {
     if (processedThisBatch >= batchSize) break;
     if (itemsImported >= targetMax) break;
@@ -1664,6 +1675,7 @@ async function main() {
     if (completed.has(sourceExternalId)) {
       itemsSkipped += 1;
       processedThisBatch += 1;
+      lastSeenExternalId = sourceExternalId;
       continue;
     }
 
@@ -1684,8 +1696,8 @@ async function main() {
               lastRetryAfterSec: cl.lastRetryAfterSec,
               rateLimitCount: cl.rateLimitHits,
               apiCalls: cl.apiCalls,
-              cursor: sourceExternalId,
-              next_page_url: nextPage,
+              cursor: lastSuccessful ?? sourceExternalId,
+              next_page_url: resumeUrlNow(),
               items_discovered: itemsDiscovered,
               items_fetched: itemsFetched,
               items_imported: itemsImported,
@@ -1703,6 +1715,7 @@ async function main() {
         if (!opRes.ok) {
           itemsFailed += 1;
           processedThisBatch += 1;
+          lastSeenExternalId = sourceExternalId;
           continue;
         }
         raw = (await opRes.json()) as ClHit;
@@ -1721,8 +1734,8 @@ async function main() {
             last429Endpoint: cl.last429Endpoint,
             lastRetryAfterSec: cl.lastRetryAfterSec,
             apiCalls: cl.apiCalls,
-            cursor: sourceExternalId,
-            next_page_url: nextPage,
+            cursor: lastSuccessful ?? sourceExternalId,
+            next_page_url: resumeUrlNow(),
             items_discovered: itemsDiscovered,
             items_fetched: itemsFetched,
             items_imported: itemsImported,
@@ -1744,6 +1757,7 @@ async function main() {
         itemsQuarantined += 1;
         completed.add(sourceExternalId);
         processedThisBatch += 1;
+        lastSeenExternalId = sourceExternalId;
         continue;
       }
       const citation = pickCitation(raw);
@@ -1756,6 +1770,7 @@ async function main() {
       if (!citation && !docket && !sourceExternalId) {
         itemsQuarantined += 1;
         processedThisBatch += 1;
+        lastSeenExternalId = sourceExternalId;
         continue;
       }
       // Still require docket OR citation for legal identity beyond CL id alone for quarantine clarity —
@@ -1794,6 +1809,7 @@ async function main() {
         });
         completed.add(sourceExternalId);
         processedThisBatch += 1;
+        lastSeenExternalId = sourceExternalId;
         continue;
       }
 
@@ -1807,6 +1823,7 @@ async function main() {
       }
       completed.add(sourceExternalId);
       lastSuccessful = sourceExternalId;
+      lastSeenExternalId = sourceExternalId;
       processedThisBatch += 1;
       batchSample.push({
         title: opinion.title.slice(0, 80),
@@ -1821,7 +1838,7 @@ async function main() {
         await saveJob(sql, job.id, {
           status: "running",
           cursor: sourceExternalId,
-          next_page_url: nextPage,
+          next_page_url: resumeUrlNow(),
           last_successful_external_id: lastSuccessful,
           completed_external_ids: [...completed],
           items_discovered: itemsDiscovered,
@@ -1841,8 +1858,8 @@ async function main() {
       if (job && sql) {
         await saveJob(sql, job.id, {
           status: "running",
-          cursor: sourceExternalId,
-          next_page_url: nextPage,
+          cursor: lastSuccessful ?? sourceExternalId,
+          next_page_url: resumeUrlNow(),
           last_successful_external_id: lastSuccessful,
           completed_external_ids: [...completed],
           items_discovered: itemsDiscovered,
@@ -1884,7 +1901,8 @@ async function main() {
     citationEdges,
     embeddedChunks,
     cursor: lastSuccessful,
-    next_page_url: nextPage,
+    next_page_url: resumeUrlNow(),
+    last_successful_external_id: lastSuccessful,
     completedCount: completed.size,
     rateLimitCount: cl.rateLimitHits,
     lastRetryAfterSec: cl.lastRetryAfterSec,

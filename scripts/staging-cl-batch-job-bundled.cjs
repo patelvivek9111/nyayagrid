@@ -4,6 +4,9 @@ var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __getProtoOf = Object.getPrototypeOf;
 var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __commonJS = (cb, mod) => function __require() {
+  return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+};
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
     for (let key of __getOwnPropNames(from))
@@ -20,6 +23,38 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
+
+// scripts/cl-batch-resume-cursor.cjs
+var require_cl_batch_resume_cursor = __commonJS({
+  "scripts/cl-batch-resume-cursor.cjs"(exports2, module2) {
+    "use strict";
+    function resumeCursorUrl(discoverUrl, sourceExternalId, pageSize) {
+      const id = String(sourceExternalId || "").replace(/^cl-opinion-/, "");
+      if (!/^\d+$/.test(id)) return null;
+      let url;
+      try {
+        url = new URL(String(discoverUrl || ""));
+      } catch {
+        return null;
+      }
+      const token = Buffer.from(`p=${id}`).toString("base64");
+      url.searchParams.set("cursor", token);
+      if (!url.searchParams.get("order_by")) url.searchParams.set("order_by", "-id");
+      const size2 = Math.min(Math.max(Number(pageSize) || 5, 1), 50);
+      url.searchParams.set("page_size", String(size2));
+      return url.toString();
+    }
+    function pageResumeUrl2(opts) {
+      const processed = Number(opts?.processedCount) || 0;
+      const hits = Number(opts?.hitCount) || 0;
+      if (hits > 0 && processed < hits) {
+        return resumeCursorUrl(opts.discoverUrl, opts.lastSeenExternalId, opts.pageSize) || opts.discoverUrl || opts.nextPage || null;
+      }
+      return opts?.nextPage || null;
+    }
+    module2.exports = { resumeCursorUrl, pageResumeUrl: pageResumeUrl2 };
+  }
+});
 
 // scripts/staging-cl-batch-job.ts
 var import_node_crypto = require("node:crypto");
@@ -2147,6 +2182,7 @@ function osUsername() {
 }
 
 // scripts/staging-cl-batch-job.ts
+var import_cl_batch_resume_cursor = __toESM(require_cl_batch_resume_cursor());
 var CL_BASE = "https://www.courtlistener.com/api/rest/v4";
 function parseUsageRows(payload) {
   if (!payload || typeof payload !== "object") return null;
@@ -3503,6 +3539,15 @@ async function main() {
     hasCitations: await hasCitationsTable(sql)
   } : { hasCurrentness: false, hasLastChecked: false, hasCitations: false };
   let processedThisBatch = 0;
+  let lastSeenExternalId = null;
+  const resumeUrlNow = () => (0, import_cl_batch_resume_cursor.pageResumeUrl)({
+    processedCount: processedThisBatch,
+    hitCount: hits.length,
+    nextPage,
+    discoverUrl,
+    lastSeenExternalId,
+    pageSize: batchSize
+  });
   for (const hit of hits) {
     if (processedThisBatch >= batchSize) break;
     if (itemsImported >= targetMax) break;
@@ -3515,6 +3560,7 @@ async function main() {
     if (completed.has(sourceExternalId)) {
       itemsSkipped += 1;
       processedThisBatch += 1;
+      lastSeenExternalId = sourceExternalId;
       continue;
     }
     try {
@@ -3534,8 +3580,8 @@ async function main() {
               lastRetryAfterSec: cl.lastRetryAfterSec,
               rateLimitCount: cl.rateLimitHits,
               apiCalls: cl.apiCalls,
-              cursor: sourceExternalId,
-              next_page_url: nextPage,
+              cursor: lastSuccessful ?? sourceExternalId,
+              next_page_url: resumeUrlNow(),
               items_discovered: itemsDiscovered,
               items_fetched: itemsFetched,
               items_imported: itemsImported,
@@ -3553,6 +3599,7 @@ async function main() {
         if (!opRes.ok) {
           itemsFailed += 1;
           processedThisBatch += 1;
+          lastSeenExternalId = sourceExternalId;
           continue;
         }
         raw = await opRes.json();
@@ -3570,8 +3617,8 @@ async function main() {
             last429Endpoint: cl.last429Endpoint,
             lastRetryAfterSec: cl.lastRetryAfterSec,
             apiCalls: cl.apiCalls,
-            cursor: sourceExternalId,
-            next_page_url: nextPage,
+            cursor: lastSuccessful ?? sourceExternalId,
+            next_page_url: resumeUrlNow(),
             items_discovered: itemsDiscovered,
             items_fetched: itemsFetched,
             items_imported: itemsImported,
@@ -3592,6 +3639,7 @@ async function main() {
         itemsQuarantined += 1;
         completed.add(sourceExternalId);
         processedThisBatch += 1;
+        lastSeenExternalId = sourceExternalId;
         continue;
       }
       const citation = pickCitation(raw);
@@ -3599,6 +3647,7 @@ async function main() {
       if (!citation && !docket && !sourceExternalId) {
         itemsQuarantined += 1;
         processedThisBatch += 1;
+        lastSeenExternalId = sourceExternalId;
         continue;
       }
       const title = sanitizeUntrustedLegalText(
@@ -3631,6 +3680,7 @@ async function main() {
         });
         completed.add(sourceExternalId);
         processedThisBatch += 1;
+        lastSeenExternalId = sourceExternalId;
         continue;
       }
       const result = await persistOne(sql, mapped, opinion, openaiKey, opts);
@@ -3643,6 +3693,7 @@ async function main() {
       }
       completed.add(sourceExternalId);
       lastSuccessful = sourceExternalId;
+      lastSeenExternalId = sourceExternalId;
       processedThisBatch += 1;
       batchSample.push({
         title: opinion.title.slice(0, 80),
@@ -3655,7 +3706,7 @@ async function main() {
         await saveJob(sql, job.id, {
           status: "running",
           cursor: sourceExternalId,
-          next_page_url: nextPage,
+          next_page_url: resumeUrlNow(),
           last_successful_external_id: lastSuccessful,
           completed_external_ids: [...completed],
           items_discovered: itemsDiscovered,
@@ -3675,8 +3726,8 @@ async function main() {
       if (job && sql) {
         await saveJob(sql, job.id, {
           status: "running",
-          cursor: sourceExternalId,
-          next_page_url: nextPage,
+          cursor: lastSuccessful ?? sourceExternalId,
+          next_page_url: resumeUrlNow(),
           last_successful_external_id: lastSuccessful,
           completed_external_ids: [...completed],
           items_discovered: itemsDiscovered,
@@ -3713,7 +3764,8 @@ async function main() {
     citationEdges,
     embeddedChunks,
     cursor: lastSuccessful,
-    next_page_url: nextPage,
+    next_page_url: resumeUrlNow(),
+    last_successful_external_id: lastSuccessful,
     completedCount: completed.size,
     rateLimitCount: cl.rateLimitHits,
     lastRetryAfterSec: cl.lastRetryAfterSec,

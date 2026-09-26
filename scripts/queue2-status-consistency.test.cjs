@@ -174,8 +174,8 @@ test("canonical committed status is consistent", () => {
   );
   const check = assertCanonicalStatusConsistency(status);
   assert.equal(check.ok, true, check.violations.join("; "));
-  assert.equal(status.currentCourt, "mich");
-  assert.equal(status.currentJurisdiction, "MI");
+  assert.equal(status.currentCourt, "sd");
+  assert.equal(status.currentJurisdiction, "SD");
   assert.equal(status.runtimeState, "STOPPED");
   assert.equal(status.review.humanReviewRequired, false);
 });
