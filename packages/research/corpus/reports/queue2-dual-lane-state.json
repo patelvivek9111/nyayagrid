@@ -249,7 +249,7 @@
     "required": true,
     "reason": "no_known_good_fingerprint",
     "maxQualifyingAuthorities": 3,
-    "maxClRequests": 12
+    "maxClRequests": 5
   },
   "quotaProbeHistory": [
     {

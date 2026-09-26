@@ -2664,7 +2664,12 @@ async function main() {
       extra: { currentFingerprint: startedFingerprint, prior: canaryGate.prior || null },
     });
     state.canaryMode = "CANARY_REQUIRED";
-    state.canary = { required: true, reason: canaryGate.reason, maxQualifyingAuthorities: 3, maxClRequests: 12 };
+    state.canary = {
+      required: true,
+      reason: canaryGate.reason,
+      maxQualifyingAuthorities: 3,
+      maxClRequests: CANARY_MAX_SESSION_CL_REQUESTS,
+    };
   } else {
     emit("CANARY_SKIPPED", { lane: "STARTUP", reason: canaryGate.reason });
     state.canaryMode = "NORMAL";
