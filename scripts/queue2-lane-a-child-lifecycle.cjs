@@ -183,16 +183,23 @@ function createLaneAChildRecord(params = {}) {
   const now = params.now instanceof Date ? params.now : new Date(params.now || Date.now());
   return {
     pid: params.pid != null ? Number(params.pid) : null,
+    ppid: params.ppid != null ? Number(params.ppid) : null,
     court: params.court || null,
     batchId: params.batchId || `lane-a-${params.court || "unk"}-${now.getTime()}`,
+    sessionId: params.sessionId || null,
     startedAt: now.toISOString(),
     workerId: params.workerId || null,
+    processStartNonce: params.processStartNonce || null,
     codeFingerprint: params.codeFingerprint || null,
+    command: params.command || "staging-cl-batch-job-bundled.cjs",
+    commandFingerprint: params.commandFingerprint || null,
     expectedMaxAuthorities: Number(params.expectedMaxAuthorities) || 3,
     expectedMaxClRequests: Number(params.expectedMaxClRequests) || CANARY_MAX_SESSION_CL_REQUESTS,
     lifecycleState: LANE_A_RUNNER_STATES.STARTED,
     terminal: false,
     terminalAt: null,
+    detachedForbidden: true,
+    supervised: true,
   };
 }
 
@@ -213,10 +220,11 @@ function mayLaunchLaneAChild(state, opts = {}) {
   if (isLaneAChildAlive(child, opts)) {
     return {
       ok: false,
-      reason: "LANE_A_CHILD_STILL_ALIVE",
+      reason: "LANE_A_CHILD_ALREADY_ACTIVE",
       pid: child.pid,
       court: child.court,
       batchId: child.batchId,
+      sessionId: child.sessionId || null,
     };
   }
   return { ok: true, reason: "prior_child_dead_may_relaunch", deadChild: child };

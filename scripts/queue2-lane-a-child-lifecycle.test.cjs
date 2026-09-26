@@ -87,7 +87,7 @@ test("no second child while first alive", () => {
   });
   const blocked = mayLaunchLaneAChild(state, { processAlive: true });
   assert.equal(blocked.ok, false);
-  assert.equal(blocked.reason, "LANE_A_CHILD_STILL_ALIVE");
+  assert.equal(blocked.reason, "LANE_A_CHILD_ALREADY_ACTIVE");
   assert.equal(blocked.pid, 15394);
 });
 

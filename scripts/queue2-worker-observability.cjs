@@ -208,6 +208,13 @@ const HUMAN_REVIEW_REASONS = Object.freeze({
   CL_NO_PRODUCTIVE_PROGRESS: "CL_NO_PRODUCTIVE_PROGRESS",
   CL_NONPRODUCTIVE_REQUEST_SPIKE: "CL_NONPRODUCTIVE_REQUEST_SPIKE",
   REDUNDANT_QUOTA_PROBES: "REDUNDANT_QUOTA_PROBES",
+  ORPHAN_LANE_A_CHILD: "ORPHAN_LANE_A_CHILD",
+  MULTIPLE_LANE_A_CHILDREN: "MULTIPLE_LANE_A_CHILDREN",
+  LANE_A_CHILD_ALREADY_ACTIVE: "LANE_A_CHILD_ALREADY_ACTIVE",
+  LANE_A_CHILD_OWNERSHIP_LOST: "LANE_A_CHILD_OWNERSHIP_LOST",
+  LANE_A_CHILD_PID_MISMATCH: "LANE_A_CHILD_PID_MISMATCH",
+  LANE_A_CHILD_SURVIVED_PARENT: "LANE_A_CHILD_SURVIVED_PARENT",
+  LANE_A_DUPLICATE_SPAWN_ATTEMPT: "LANE_A_DUPLICATE_SPAWN_ATTEMPT",
 });
 
 /** Local heartbeat cadence — zero AI usage. */
@@ -921,6 +928,24 @@ function evaluateHumanReviewTriggers(signals = {}) {
   }
   if (signals.redundantQuotaProbes) {
     reasons.push(HUMAN_REVIEW_REASONS.REDUNDANT_QUOTA_PROBES);
+  }
+  if (signals.orphanLaneAChild) {
+    reasons.push(HUMAN_REVIEW_REASONS.ORPHAN_LANE_A_CHILD);
+  }
+  if (signals.multipleLaneAChildren) {
+    reasons.push(HUMAN_REVIEW_REASONS.MULTIPLE_LANE_A_CHILDREN);
+  }
+  if (signals.laneAChildOwnershipLost) {
+    reasons.push(HUMAN_REVIEW_REASONS.LANE_A_CHILD_OWNERSHIP_LOST);
+  }
+  if (signals.laneAChildPidMismatch) {
+    reasons.push(HUMAN_REVIEW_REASONS.LANE_A_CHILD_PID_MISMATCH);
+  }
+  if (signals.laneAChildSurvivedParent) {
+    reasons.push(HUMAN_REVIEW_REASONS.LANE_A_CHILD_SURVIVED_PARENT);
+  }
+  if (signals.laneADuplicateSpawnAttempt) {
+    reasons.push(HUMAN_REVIEW_REASONS.LANE_A_DUPLICATE_SPAWN_ATTEMPT);
   }
   return { required: reasons.length > 0, reasons };
 }

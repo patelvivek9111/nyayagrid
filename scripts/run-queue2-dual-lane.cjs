@@ -133,6 +133,15 @@ const {
   assertChildWithinSessionBudget,
 } = require("./queue2-lane-a-child-lifecycle.cjs");
 const {
+  LANE_A_REMOTE_COMMAND,
+  REMOTE_CHILD_REASONS,
+  parseRemoteLaneAProcesses,
+  evaluateLaneAProcessGate,
+  maySpawnLaneARemoteChild,
+  planRemoteChildTermination,
+  clearLaneAChildOwnership,
+} = require("./queue2-lane-a-remote-child.cjs");
+const {
   CL_REQUEST_PURPOSES,
   CONSERVATION_REASONS,
   createEmptyClRequestLedger,
@@ -326,6 +335,10 @@ function runLaneA(state, opts = {}) {
             state.sessionQuota?.historicalJobApiCallsBaseline ??
             "",
         ),
+        QUEUE2_WORKER_ID: opts.workerId || WORKER_ID,
+        QUEUE2_PROCESS_START_NONCE: opts.processStartNonce || PROCESS_NONCE,
+        QUEUE2_REQUIRE_CL_LEDGER: "1",
+        QUEUE2_LANE_A_CHILD_JSON: opts.laneAChildJson || process.env.QUEUE2_LANE_A_CHILD_JSON || "",
       },
     },
   );
@@ -699,12 +712,136 @@ function stopHeartbeatTimer() {
   }
 }
 
+function listRemoteLaneAProcessesForGate(opts = {}) {
+  if (typeof opts.query === "function") return opts.query();
+  if (typeof runtime.listRemoteLaneAProcesses === "function") {
+    return runtime.listRemoteLaneAProcesses();
+  }
+  if (process.env.QUEUE2_MOCK_REMOTE_LANE_A_PS != null) {
+    return parseRemoteLaneAProcesses(process.env.QUEUE2_MOCK_REMOTE_LANE_A_PS);
+  }
+  if (
+    process.env.QUEUE2_SKIP_REMOTE_PROCESS_GATE === "1" ||
+    process.env.QUEUE2_MOCK_LANE_A_RUNNER === "1"
+  ) {
+    return [];
+  }
+  try {
+    const r = flyExec("ps -o pid,ppid,args", 60);
+    return parseRemoteLaneAProcesses((r.stdout || "") + (r.stderr || ""));
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * TERM → wait → KILL owned remote Lane A child. Zero CL HTTP.
+ * Injectable via runtime.cleanupLaneARemoteChild for tests.
+ */
+function cleanupOwnedLaneARemoteChild(reason = "signal") {
+  const child = runtime.state?.laneAChild || null;
+  const plan = planRemoteChildTermination(child, { graceMs: 8000 });
+  console.log(
+    JSON.stringify({
+      tag: "LANE_A_CHILD_CLEANUP",
+      reason,
+      plan,
+      pid: child?.pid || null,
+      command: child?.command || LANE_A_REMOTE_COMMAND,
+    }),
+  );
+  if (typeof runtime.cleanupLaneARemoteChild === "function") {
+    const r = runtime.cleanupLaneARemoteChild({ child, reason, plan });
+    if (runtime.state) {
+      runtime.state = clearLaneAChildOwnership(runtime.state, {
+        clearRecord: true,
+        jobPaused: true,
+        reason: `cleanup_${reason}`,
+        exitCode: r?.exitCode,
+      });
+      try {
+        saveLocalState(runtime.state);
+      } catch {
+        /* best effort */
+      }
+    }
+    return r;
+  }
+  if (
+    process.env.QUEUE2_MOCK_LANE_A_RUNNER === "1" ||
+    process.env.QUEUE2_SKIP_REMOTE_CLEANUP === "1"
+  ) {
+    if (runtime.state) {
+      runtime.state = clearLaneAChildOwnership(runtime.state, {
+        clearRecord: true,
+        jobPaused: true,
+        reason: `cleanup_${reason}_mocked`,
+      });
+    }
+    return { ok: true, mocked: true, plan };
+  }
+  if (!plan.ok && !child) {
+    // No durable ownership — still attempt owner-file cleanup if a matching process exists.
+    const procs = listRemoteLaneAProcessesForGate();
+    if (procs.length === 1) {
+      const env = {
+        ...process.env,
+        QUEUE2_LANE_A_CLEANUP_PID: String(procs[0].pid),
+        QUEUE2_LANE_A_CLEANUP_COMMAND: LANE_A_REMOTE_COMMAND,
+      };
+      const r = spawnSync(
+        process.execPath,
+        [path.join(__dirname, "run-staging-cl-batch-job.cjs"), "HEAD", "cleanup", "1", "1"],
+        { encoding: "utf8", cwd: root, env, maxBuffer: 4_000_000 },
+      );
+      return { ok: (r.status || 0) === 0, status: r.status, stdout: r.stdout };
+    }
+    return { ok: true, skipped: true, reason: "no_owned_pid" };
+  }
+  const env = {
+    ...process.env,
+    QUEUE2_LANE_A_CLEANUP_PID: String(child.pid),
+    QUEUE2_LANE_A_CLEANUP_COMMAND: child.command || LANE_A_REMOTE_COMMAND,
+    QUEUE2_LANE_A_CLEANUP_SESSION: child.sessionId || "",
+    QUEUE2_LANE_A_CLEANUP_BATCH: child.batchId || "",
+  };
+  const r = spawnSync(
+    process.execPath,
+    [path.join(__dirname, "run-staging-cl-batch-job.cjs"), "HEAD", "cleanup", "1", "1"],
+    { encoding: "utf8", cwd: root, env, maxBuffer: 4_000_000 },
+  );
+  if (runtime.state) {
+    runtime.state = clearLaneAChildOwnership(runtime.state, {
+      clearRecord: true,
+      jobPaused: true,
+      reason: `cleanup_${reason}`,
+      exitCode: r.status,
+    });
+    try {
+      saveLocalState(runtime.state);
+    } catch {
+      /* best effort */
+    }
+  }
+  return { ok: (r.status || 0) === 0, status: r.status, stdout: r.stdout, plan };
+}
+
 function safeShutdown(reason = "signal") {
   if (runtime.shuttingDown) return;
   runtime.shuttingDown = true;
   stopHeartbeatTimer();
   try {
+    cleanupOwnedLaneARemoteChild(reason);
+  } catch {
+    /* best effort — must not leave orphans if we can help it */
+  }
+  try {
     if (runtime.state) {
+      if (runtime.state.laneA && !runtime.state.laneA.jobLifecycle) {
+        runtime.state.laneA.jobLifecycle = "PAUSED_RESUMABLE";
+        runtime.state.laneA.jobStatus = runtime.state.laneA.jobStatus || "quota_paused";
+      }
+      runtime.state.runtimeState = "STOPPED";
       saveLocalState(runtime.state);
       emit("WORKER_STOP", {
         lane: statusLaneFromState(runtime.state),
@@ -1331,6 +1468,69 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         reason: HUMAN_REVIEW_REASONS.MISSING_DURABLE_RESUME_CHECKPOINT,
       });
     } else {
+      // Zero-CL remote process gate before any Lane A spawn.
+      const remoteProcs = listRemoteLaneAProcessesForGate({
+        query:
+          process.env.QUEUE2_MOCK_REMOTE_LANE_A_PS != null ||
+          typeof runtime.listRemoteLaneAProcesses === "function"
+            ? () => listRemoteLaneAProcessesForGate()
+            : process.env.QUEUE2_SKIP_REMOTE_PROCESS_GATE === "1"
+              ? () => []
+              : undefined,
+      });
+      const processGate = evaluateLaneAProcessGate({
+        processes: remoteProcs,
+        laneAChild: state.laneAChild,
+      });
+      console.log(
+        JSON.stringify({
+          tag: "LANE_A_PROCESS_GATE",
+          reason: processGate.reason,
+          count: processGate.count,
+          allowLaunch: processGate.allowLaunch,
+          emergencyStop: processGate.emergencyStop,
+          courtListenerHttpCalls: 0,
+        }),
+      );
+      if (processGate.emergencyStop || processGate.reason === REMOTE_CHILD_REASONS.MULTIPLE_LANE_A_CHILDREN) {
+        state = setReview(
+          state,
+          HUMAN_REVIEW_REASONS.MULTIPLE_LANE_A_CHILDREN,
+          `matching ${LANE_A_REMOTE_COMMAND} processes=${processGate.count}`,
+        );
+        human = true;
+        emit("HUMAN_REVIEW_REQUIRED", {
+          lane: "HUMAN_REVIEW_REQUIRED",
+          court: state.laneA.court,
+          reason: HUMAN_REVIEW_REASONS.MULTIPLE_LANE_A_CHILDREN,
+          extra: { count: processGate.count, processes: processGate.processes },
+        });
+      } else if (processGate.reason === REMOTE_CHILD_REASONS.ORPHAN_LANE_A_CHILD) {
+        state = setReview(
+          state,
+          HUMAN_REVIEW_REASONS.ORPHAN_LANE_A_CHILD,
+          `orphan remote Lane A child pid=${processGate.orphanPid}`,
+        );
+        human = true;
+        emit("HUMAN_REVIEW_REQUIRED", {
+          lane: "HUMAN_REVIEW_REQUIRED",
+          court: state.laneA.court,
+          reason: HUMAN_REVIEW_REASONS.ORPHAN_LANE_A_CHILD,
+          extra: { orphanPid: processGate.orphanPid, processes: processGate.processes },
+        });
+      } else if (
+        processGate.reason === REMOTE_CHILD_REASONS.LANE_A_CHILD_PID_MISMATCH ||
+        processGate.reason === REMOTE_CHILD_REASONS.LANE_A_CHILD_OWNERSHIP_LOST
+      ) {
+        state = setReview(state, processGate.reason, processGate.reason);
+        human = true;
+        emit("HUMAN_REVIEW_REQUIRED", {
+          lane: "HUMAN_REVIEW_REQUIRED",
+          court: state.laneA.court,
+          reason: processGate.reason,
+        });
+      } else {
+      const spawnGate = maySpawnLaneARemoteChild(state, processGate);
       const launchGate = mayLaunchLaneAChild(state, {
         processAlive: process.env.QUEUE2_MOCK_LANE_A_CHILD_ALIVE === "1",
         aliveOverride:
@@ -1340,20 +1540,39 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
               ? true
               : undefined,
       });
-      if (!launchGate.ok) {
+      if (!spawnGate.ok || !launchGate.ok) {
+        const blockReason =
+          !spawnGate.ok ? spawnGate.reason : launchGate.reason;
         console.log(
           JSON.stringify({
             tag: "LANE_A_SINGLE_FLIGHT",
             blocked: true,
-            reason: launchGate.reason,
-            pid: launchGate.pid,
-            court: launchGate.court,
+            reason: blockReason,
+            pid: launchGate.pid || state.laneAChild?.pid,
+            court: launchGate.court || state.laneA.court,
           }),
         );
-        state.currentLane = "A";
-        state.runtimeState = "LANE_A_RUNNING";
-        state.idleSafe = false;
-        // Do not spawn; do not Lane B; do not zero-progress.
+        if (
+          blockReason === REMOTE_CHILD_REASONS.LANE_A_CHILD_ALREADY_ACTIVE ||
+          blockReason === "LANE_A_CHILD_ALREADY_ACTIVE"
+        ) {
+          state.currentLane = "A";
+          state.runtimeState = "LANE_A_RUNNING";
+          state.idleSafe = false;
+          // Do not spawn; supervise existing owned child.
+        } else {
+          state = setReview(
+            state,
+            HUMAN_REVIEW_REASONS.LANE_A_DUPLICATE_SPAWN_ATTEMPT || blockReason,
+            blockReason,
+          );
+          human = true;
+          emit("HUMAN_REVIEW_REQUIRED", {
+            lane: "HUMAN_REVIEW_REQUIRED",
+            court: state.laneA.court,
+            reason: blockReason,
+          });
+        }
       } else {
       const lock = acquireLaneALock(state, "dual-lane-runner", started);
       if (!lock.ok) {
@@ -1420,11 +1639,29 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             historicalJobApiCallsBaseline: state.sessionQuota?.historicalJobApiCallsBaseline || 0,
             workerFingerprint: runtime.codeFingerprint,
           });
+          // Durable ownership intent before spawn (pid filled after supervised start).
+          state.laneAChild = createLaneAChildRecord({
+            pid: null,
+            court: state.laneA.court,
+            batchId: state.clSharedSession.batchId,
+            sessionId: state.clSharedSession.sessionId,
+            workerId: WORKER_ID,
+            processStartNonce: PROCESS_NONCE,
+            codeFingerprint: runtime.codeFingerprint,
+            command: LANE_A_REMOTE_COMMAND,
+            expectedMaxAuthorities: batchBounds.authorities,
+            expectedMaxClRequests: batchBounds.maxClRequests,
+            now: new Date(state.laneARunnerStartedAt),
+          });
+          saveLocalState(state);
           const raw = runLaneA(state, {
             runner: process.env.QUEUE2_MOCK_LANE_A_RUNNER === "1" ? runtime.mockLaneARunner : null,
             batchSize: batchBounds.batchSize,
             maxClRequests: remainingChildClBudget(state.clSharedSession),
             sharedSession: state.clSharedSession,
+            workerId: WORKER_ID,
+            processStartNonce: PROCESS_NONCE,
+            laneAChildJson: JSON.stringify(state.laneAChild),
           });
           const classified = classifyLaneABatchResult({
             stdout: raw?.stdout || "",
@@ -1433,21 +1670,54 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             target: state.laneA.target,
           });
 
-          // Persist single-flight child ownership from STARTED / pid.
+          // Persist remote PID / identity from supervised start or terminal output.
           if (classified.pid || classified.lifecycleState === LANE_A_RUNNER_STATES.STARTED) {
-            state.laneAChild = createLaneAChildRecord({
-              pid: classified.pid,
-              court: state.laneA.court,
-              workerId: WORKER_ID,
-              codeFingerprint: runtime.codeFingerprint,
-              expectedMaxAuthorities: batchBounds.authorities,
-              expectedMaxClRequests: batchBounds.maxClRequests,
-              now: new Date(state.laneARunnerStartedAt),
-            });
-            state.laneAChild.lifecycleState = classified.lifecycleState;
+            state.laneAChild = {
+              ...state.laneAChild,
+              ...createLaneAChildRecord({
+                pid: classified.pid,
+                court: state.laneA.court,
+                batchId: state.clSharedSession.batchId,
+                sessionId: state.clSharedSession.sessionId,
+                workerId: WORKER_ID,
+                processStartNonce: PROCESS_NONCE,
+                codeFingerprint: runtime.codeFingerprint,
+                command: LANE_A_REMOTE_COMMAND,
+                expectedMaxAuthorities: batchBounds.authorities,
+                expectedMaxClRequests: batchBounds.maxClRequests,
+                now: new Date(state.laneARunnerStartedAt),
+              }),
+              lifecycleState: classified.lifecycleState,
+            };
             state.runtimeState = "LANE_A_RUNNING";
             state.currentLane = "A";
             state.idleSafe = false;
+            saveLocalState(state);
+          }
+
+          // Gate / ownership failures from launcher (no CL).
+          if (
+            classified.reason === REMOTE_CHILD_REASONS.MULTIPLE_LANE_A_CHILDREN ||
+            classified.reason === REMOTE_CHILD_REASONS.ORPHAN_LANE_A_CHILD ||
+            classified.reason === "LANE_A_CHILD_SURVIVED_PARENT" ||
+            /ORPHAN_LANE_A_CHILD|MULTIPLE_LANE_A_CHILDREN|LANE_A_CHILD_SURVIVED_PARENT/.test(
+              raw?.stdout || "",
+            )
+          ) {
+            const reason =
+              classified.reason ||
+              (String(raw?.stdout || "").includes("MULTIPLE_LANE_A_CHILDREN")
+                ? REMOTE_CHILD_REASONS.MULTIPLE_LANE_A_CHILDREN
+                : String(raw?.stdout || "").includes("ORPHAN_LANE_A_CHILD")
+                  ? REMOTE_CHILD_REASONS.ORPHAN_LANE_A_CHILD
+                  : HUMAN_REVIEW_REASONS.LANE_A_CHILD_SURVIVED_PARENT);
+            state = setReview(state, reason, reason);
+            human = true;
+            state = clearLaneAChildOwnership(state, {
+              clearRecord: false,
+              jobPaused: true,
+              reason,
+            });
           }
 
           // NON-TERMINAL: do not reconcile as zero-progress / canary fail / count fail.
@@ -1481,6 +1751,14 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             lifecycleState: classified.lifecycleState,
             now: runnerTerminalAt,
             exitCode: raw?.statusCode,
+          });
+          // Ownership cleared only after confirmed terminal exit (attached supervisor returned).
+          state = clearLaneAChildOwnership(state, {
+            clearRecord: true,
+            jobPaused: false,
+            reason: "confirmed_supervised_exit",
+            exitCode: raw?.statusCode,
+            now: runnerTerminalAt,
           });
 
           // Post-run live DB refresh — must be AFTER terminal; reject stale cache.
@@ -1938,7 +2216,8 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           if (rel.ok) state = rel.state;
         }
       } // end lock.ok
-      } // end launchGate.ok
+      } // end launchGate.ok / spawn allowed
+      } // end processGate clear-to-spawn
     }
   } else if (state.currentLane === "A" && quota.safeRequests < 1) {
     // Selected A but no usable quota — do not pretend Lane B idle without an explicit floor transition.
