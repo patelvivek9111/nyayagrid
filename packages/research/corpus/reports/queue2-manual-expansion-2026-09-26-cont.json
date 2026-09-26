@@ -1,0 +1,34 @@
+{
+  "classification": "QUEUE2_MANUAL_CORPUS_EXPANSION_PROGRESS",
+  "generatedAt": "2026-09-26T16:20:00.000Z",
+  "queue": { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", "transition": "NONE" },
+  "worker": "STOPPED",
+  "continuation": {
+    "idaho": { "qualifying": "20→45", "authoritiesAdded": 25, "clRequests": 56, "checkpoint": "cl-opinion-11247992", "status": "COMPLETE_FOR_CURRENT_DEPTH" },
+    "wyoming": { "qualifying": "20→45", "authoritiesAdded": 25, "clRequests": 55, "checkpoint": "cl-opinion-11306104", "status": "COMPLETE_FOR_CURRENT_DEPTH" },
+    "nebraska": { "qualifying": "20→45", "authoritiesAdded": 25, "clRequests": 56, "checkpoint": "cl-opinion-11259775", "status": "COMPLETE_FOR_CURRENT_DEPTH" },
+    "southCarolina": { "qualifying": "20→45", "authoritiesAdded": 25, "clRequests": 55, "checkpoint": "cl-opinion-11201513", "status": "COMPLETE_FOR_CURRENT_DEPTH" }
+  },
+  "corpus": {
+    "authorities": "3108 → 3208",
+    "cases": "1791 → 1891",
+    "clCases": "1746 → 1846",
+    "chunks": 44793,
+    "embeddings": 44793,
+    "duplicateSourceIds": 0,
+    "orphanCount": 0
+  },
+  "citations": {
+    "extracted": "6058 → 6223",
+    "resolved": "181 → 181"
+  },
+  "quota": {
+    "start": { "minute": 30, "hour": 84, "day": 866 },
+    "end": { "minute": 30, "hour": 33, "day": 634 },
+    "sessionCalls": 222,
+    "429": 0,
+    "stopReason": "hour remaining 33 < ~57 needed for Vermont"
+  },
+  "nextJurisdiction": "VT",
+  "nextCourt": "vt"
+}

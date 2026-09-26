@@ -376,7 +376,7 @@ test("WI complete in durable evidence; active court advanced", () => {
   assert.ok(state.completedCourts.includes("wis"));
   assert.equal(state.completedCourtEvidence.wis.count, 45);
   assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
-  assert.equal(state.laneA.court, "sd");
+  assert.equal(state.laneA.court, "sc");
   assert.equal(state.laneA.count, 45);
   assert.equal(state.laneA.target, 45);
 });
@@ -626,7 +626,7 @@ test("N: WI complete; active Lane A advanced in durable state", () => {
   const state = JSON.parse(fs.readFileSync(statePath, "utf8"));
   assert.ok(state.completedCourts.includes("wis"));
   assert.equal(state.completedCourtEvidence.wis.count, 45);
-  assert.equal(state.laneA.court, "sd");
+  assert.equal(state.laneA.court, "sc");
   assert.equal(state.laneA.count, 45);
   assert.equal(state.laneA.target, 45);
 });

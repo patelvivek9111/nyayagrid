@@ -245,7 +245,7 @@ test("durable WI complete; next active Lane A is VERIFIED incomplete", () => {
   assert.equal(state.completedCourtEvidence.wis.status, "COMPLETE_FOR_CURRENT_DEPTH");
   assert.equal(state.completedCourtEvidence.wis.count, 45);
   assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
-  assert.equal(state.laneA.court, "sd");
+  assert.equal(state.laneA.court, "sc");
   assert.equal(state.laneA.count, 45);
   assert.equal(state.laneA.target, 45);
   assert.equal(state.humanReview.required, false);
