@@ -87,11 +87,13 @@ test("manual completed courts are skipped and Vermont is next on the live manife
   });
   assert.equal(plan.nextCourt, "vt");
   assert.equal(plan.state.laneA.jurisdiction, "VT");
-  assert.ok(plan.state.laneA.count >= 20 && plan.state.laneA.count <= 22, `count=${plan.state.laneA.count}`);
+  assert.ok(plan.state.laneA.count >= 20 && plan.state.laneA.count <= 23, `count=${plan.state.laneA.count}`);
   assert.equal(plan.state.laneA.target, 45);
   assert.equal(plan.state.laneA.mappingStatus, "VERIFIED");
   assert.ok(
-    plan.state.laneA.checkpoint == null || plan.state.laneA.checkpoint === "cl-opinion-9925231",
+    plan.state.laneA.checkpoint == null ||
+      plan.state.laneA.checkpoint === "cl-opinion-9925231" ||
+      plan.state.laneA.checkpoint === "cl-opinion-9925230",
     `checkpoint=${plan.state.laneA.checkpoint}`,
   );
   for (const court of COMPLETED) {
@@ -305,7 +307,7 @@ test("DB recovery clears the external block, keeps Vermont, and does not trust s
   assert.equal(recovered.allowCourtListener, true);
   assert.equal(recovered.nextCourt, "vt");
   assert.ok(
-    recovered.state.laneA.count >= 20 && recovered.state.laneA.count <= 22,
+    recovered.state.laneA.count >= 20 && recovered.state.laneA.count <= 23,
     `count=${recovered.state.laneA.count}`,
   );
   assert.equal(recovered.state.laneA.target, 45);

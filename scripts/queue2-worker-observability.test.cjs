@@ -444,9 +444,9 @@ test("canonical status after rebuild matches live floor and reconciled Lane A pr
   assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
   assert.equal(state.completedCourtEvidence.sc.checkpoint, "cl-opinion-11201513");
   assert.equal(state.laneA.court, "vt");
-  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 22, `count=${state.laneA.count}`);
+  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 23, `count=${state.laneA.count}`);
   assert.ok(
-    state.laneA.qualifyingCaseCount >= 20 && state.laneA.qualifyingCaseCount <= 22,
+    state.laneA.qualifyingCaseCount >= 20 && state.laneA.qualifyingCaseCount <= 23,
     `qualifyingCaseCount=${state.laneA.qualifyingCaseCount}`,
   );
   assert.equal(state.laneA.target, 45);
@@ -455,14 +455,16 @@ test("canonical status after rebuild matches live floor and reconciled Lane A pr
     `jobLifecycle=${state.laneA.jobLifecycle}`,
   );
   assert.ok(
-    state.laneA.checkpoint == null || state.laneA.checkpoint === "cl-opinion-9925231",
+    state.laneA.checkpoint == null ||
+      state.laneA.checkpoint === "cl-opinion-9925231" ||
+      state.laneA.checkpoint === "cl-opinion-9925230",
     `checkpoint=${state.laneA.checkpoint}`,
   );
   assert.equal(state.humanReview.required, false);
   assert.ok(!((state.humanReview.reasons || []).includes("UNKNOWN_DB_FAILURE")));
   assert.ok(!((state.humanReview.reasons || []).includes("LIVE_DB_RECONCILIATION_UNAVAILABLE")));
   assert.equal(status.currentCourt, "vt");
-  assert.ok(status.currentCount >= 20 && status.currentCount <= 22, `currentCount=${status.currentCount}`);
+  assert.ok(status.currentCount >= 20 && status.currentCount <= 23, `currentCount=${status.currentCount}`);
   assert.equal(status.targetCount, 45);
 });
 
@@ -573,7 +575,7 @@ test("durable WI complete after count reconciliation", () => {
   assert.equal(state.completedCourtEvidence.wis.count, 45);
   assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
   assert.equal(state.laneA.court, "vt");
-  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 22, `count=${state.laneA.count}`);
+  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 23, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
 });
 

@@ -93,13 +93,24 @@ test("active quota does not cause 5-second reprobe loop", () => {
   const now = new Date("2026-09-25T15:00:00.000Z");
   const next = nextQuotaCheckAfterActiveBatch(now, { deferMs: 15 * 60 * 1000 });
   assert.ok(new Date(next).getTime() - now.getTime() >= 14 * 60 * 1000);
-  const sleep = computePostCycleSleepMs({
+  // Immediate continue only while supervising a confirmed owned child.
+  const sleepOwned = computePostCycleSleepMs({
     now,
     lane: "A",
     quotaMode: "FINISH_TARGET",
     nextCheckAt: now.toISOString(),
+    ownedChildAlive: true,
   });
-  assert.equal(sleep, 0);
+  assert.equal(sleepOwned, 0);
+  // Without owned child, never sleepMs=0 (blocks zero-sleep relaunch spin).
+  const sleepNoChild = computePostCycleSleepMs({
+    now,
+    lane: "A",
+    quotaMode: "FINISH_TARGET",
+    nextCheckAt: now.toISOString(),
+    ownedChildAlive: false,
+  });
+  assert.ok(sleepNoChild >= 2000);
 });
 
 test("redundant quota probe detection", () => {
@@ -246,7 +257,7 @@ test("durable WI complete; next active Lane A is VERIFIED incomplete", () => {
   assert.equal(state.completedCourtEvidence.wis.count, 45);
   assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
   assert.equal(state.laneA.court, "vt");
-  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 22, `count=${state.laneA.count}`);
+  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 23, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
   assert.equal(state.humanReview.required, false);
 });

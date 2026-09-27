@@ -26,11 +26,14 @@ const CONSERVATION_REASONS = Object.freeze({
   CL_NO_PRODUCTIVE_PROGRESS: "CL_NO_PRODUCTIVE_PROGRESS",
   CL_NONPRODUCTIVE_REQUEST_SPIKE: "CL_NONPRODUCTIVE_REQUEST_SPIKE",
   REDUNDANT_QUOTA_PROBES: "REDUNDANT_QUOTA_PROBES",
+  SESSION_BUDGET_EXHAUSTED: "SESSION_BUDGET_EXHAUSTED",
 });
 
 /** Canary / new-code hard ceilings (independent of daily CL quota). */
 const MAX_NONPRODUCTIVE_CL_REQUESTS = 5;
+/** Hard canary session TOTAL (probes + discovery + fetch + retry + verify). Never exceed. */
 const MAX_TOTAL_CL_REQUESTS_BEFORE_FIRST_PROGRESS = 5;
+const MAX_CANARY_SESSION_CL_REQUESTS = MAX_TOTAL_CL_REQUESTS_BEFORE_FIRST_PROGRESS;
 const MAX_SEQUENTIAL_NONPRODUCTIVE_BEFORE_PROGRESS = 2;
 const MAX_REDUNDANT_QUOTA_PROBES = 3;
 const QUOTA_PROBE_CACHE_TTL_MS = 7 * 60 * 1000; // 5–10m band; use 7m
@@ -423,12 +426,20 @@ function evaluateClConservationGate(ledger, opts = {}) {
       detail: `nonproductive=${nonprod} >= ${MAX_NONPRODUCTIVE_CL_REQUESTS}`,
     };
   }
-  if (canary && !hasProgress && total >= MAX_TOTAL_CL_REQUESTS_BEFORE_FIRST_PROGRESS) {
+  // Hard canary TOTAL session cap — applies even AFTER first productive progress.
+  // Probes + discovery + fetch + retry + verify all count toward this ceiling.
+  if (canary && total >= MAX_CANARY_SESSION_CL_REQUESTS) {
     return {
       allow: false,
-      humanReviewRequired: true,
-      reason: CONSERVATION_REASONS.CL_DEBUG_QUOTA_BUDGET_EXCEEDED,
-      detail: `total=${total} before first progress >= ${MAX_TOTAL_CL_REQUESTS_BEFORE_FIRST_PROGRESS}`,
+      humanReviewRequired: !hasProgress,
+      reason: hasProgress
+        ? CONSERVATION_REASONS.SESSION_BUDGET_EXHAUSTED
+        : CONSERVATION_REASONS.CL_DEBUG_QUOTA_BUDGET_EXCEEDED,
+      detail: hasProgress
+        ? `session total=${total} >= canary max=${MAX_CANARY_SESSION_CL_REQUESTS} (SESSION_BUDGET_EXHAUSTED)`
+        : `total=${total} before first progress >= ${MAX_TOTAL_CL_REQUESTS_BEFORE_FIRST_PROGRESS}`,
+      classification: hasProgress ? CONSERVATION_REASONS.SESSION_BUDGET_EXHAUSTED : null,
+      remainingSessionBudget: 0,
     };
   }
   if (!hasProgress && seq >= MAX_SEQUENTIAL_NONPRODUCTIVE_BEFORE_PROGRESS) {
@@ -439,7 +450,14 @@ function evaluateClConservationGate(ledger, opts = {}) {
       detail: `sequentialNonproductiveBeforeProgress=${seq}`,
     };
   }
-  return { allow: true, humanReviewRequired: false, reason: null };
+  return {
+    allow: true,
+    humanReviewRequired: false,
+    reason: null,
+    remainingSessionBudget: canary
+      ? Math.max(0, MAX_CANARY_SESSION_CL_REQUESTS - total)
+      : null,
+  };
 }
 
 /**
@@ -709,6 +727,7 @@ module.exports = {
   CONSERVATION_REASONS,
   MAX_NONPRODUCTIVE_CL_REQUESTS,
   MAX_TOTAL_CL_REQUESTS_BEFORE_FIRST_PROGRESS,
+  MAX_CANARY_SESSION_CL_REQUESTS,
   MAX_SEQUENTIAL_NONPRODUCTIVE_BEFORE_PROGRESS,
   MAX_REDUNDANT_QUOTA_PROBES,
   QUOTA_PROBE_CACHE_TTL_MS,

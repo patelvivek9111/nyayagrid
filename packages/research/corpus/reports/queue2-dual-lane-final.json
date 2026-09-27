@@ -2,11 +2,11 @@
   "ok": true,
   "status": "PARTIAL",
   "wave": "queue2-ownership-heartbeat",
-  "generatedAt": "2026-09-27T13:41:33.674Z",
+  "generatedAt": "2026-09-27T14:27:09.304Z",
   "worker": {
-    "workerId": "q2-2a06b8fc61cd",
-    "pid": 48912,
-    "cycles": 1,
+    "workerId": "q2-737169431166",
+    "pid": 19692,
+    "cycles": 52,
     "heartbeatIntervalMs": 900000,
     "aiCallsForHeartbeat": 0,
     "gitPushesForHeartbeat": 0,
@@ -16,18 +16,18 @@
     "osAutostartConfigured": false
   },
   "checkpointSafety": {
-    "durableCheckpoint": null,
+    "durableCheckpoint": "cl-opinion-9925230",
     "currentJurisdiction": "VT",
     "currentCourt": "vt",
-    "cursor": null,
-    "lastSuccessfulExternalId": null,
-    "nextPageUrl": null,
+    "cursor": "cl-opinion-9925230",
+    "lastSuccessfulExternalId": "cl-opinion-9925230",
+    "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=vt&order_by=-id&page_size=2&cluster__date_filed__lte=2018-12-31&cursor=cD05OTI1MjMw",
     "lastSuccessfulAt": null,
     "mappingStatus": "VERIFIED",
     "reconciledFrom": "corpus_ingest_jobs",
     "humanReviewRequired": true,
     "reviewReasons": [
-      "LIVE_DB_RECONCILIATION_UNAVAILABLE"
+      "UNKNOWN_DB_FAILURE"
     ]
   },
   "observability": {
@@ -39,38 +39,19 @@
   },
   "courtListener": {
     "laneBRequests": 0,
-    "quotaProbeThisRun": true,
+    "quotaProbeThisRun": false,
     "mustBeZeroExceptQuotaProbe": true
   },
   "laneA": {
     "court": "vt",
-    "jurisdiction": "VT",
-    "checkpoint": "cl-opinion-9925231",
-    "cursor": "cl-opinion-9925231",
-    "lastSuccessfulExternalId": "cl-opinion-9925231",
-    "nextPageUrl": null,
-    "lastSuccessfulAt": null,
-    "runner": "staging-cl-batch-job",
-    "mappingStatus": "VERIFIED",
-    "manifestVersion": 47,
-    "jobStatus": "quota_paused",
-    "itemsImported": 20,
+    "count": 23,
     "target": 45,
-    "count": 22,
-    "sequence": null,
-    "lock": null,
-    "qualifyingCaseCount": 22,
-    "clCaseCount": 22,
-    "totalCaseCount": 22,
-    "authorityCount": 43,
-    "jobLifecycle": "PAUSED_RESUMABLE",
-    "targetStatus": "PARTIAL",
-    "priorCompletedCourt": "sc",
-    "priorCompletedCheckpoint": "cl-opinion-11201513"
+    "checkpoint": "cl-opinion-9925230",
+    "jobStatus": "quota_paused"
   },
   "laneB": null,
   "automation": {
-    "nextQuotaProbe": "2026-09-27T13:55:44.979Z",
+    "nextQuotaProbe": "2026-09-27T14:37:54.074Z",
     "automaticLaneAResume": false,
     "automaticLaneSwitch": true,
     "humanInterventionRequired": "yes"
@@ -84,46 +65,12 @@
     },
     "featureAgents": "0"
   },
-  "queue": {
-    "#2": "OPEN",
-    "#9": "CLOSED",
-    "#3": "NOT_OPEN",
-    "transition": "NONE"
-  },
-  "humanReview": {
-    "required": false,
-    "reasons": [],
-    "details": []
-  },
-  "classification": "RECOVERED_PREVIOUS_CANARY_PASS",
-  "canary": {
-    "required": false,
-    "reason": "no_known_good_fingerprint",
-    "maxQualifyingAuthorities": 3,
-    "maxClRequests": 5,
-    "status": "PASS",
-    "recoveredPreviousCanaryPass": true,
-    "recoveredAt": "2026-09-27T13:49:05.661Z",
-    "classification": "RECOVERED_PREVIOUS_CANARY_PASS",
-    "qualifyingAuthoritiesAdded": 2,
-    "sessionClRequests": 5
-  },
-  "priorCanaryRecovery": {
-    "classification": "RECOVERED_PREVIOUS_CANARY_PASS",
-    "court": "vt",
-    "priorQualifyingCount": 20,
-    "qualifyingCaseCount": 22,
-    "delta": 2,
-    "checkpoint": "cl-opinion-9925231",
-    "sessionClRequests": 5,
-    "dbEvidenceObservedAt": "2026-09-27T13:47:33.914Z",
-    "runnerTerminalAt": "2026-09-27T13:41:25.529Z",
-    "recoveredAt": "2026-09-27T13:49:05.661Z",
-    "courtListenerHttpCalls": 0,
-    "mutations": 0,
-    "aiCalls": 0
-  },
+  "queue": "#2",
+  "classification": "QUEUE2_POST_CANARY_LOOP_AND_BUDGET_FIXED",
+  "queue9": "CLOSED",
+  "queue3": "NOT_OPEN",
   "courtListenerHttpCalls": 0,
   "mutations": 0,
-  "aiCalls": 0
+  "aiCalls": 0,
+  "updatedAt": "2026-09-27T14:27:49.332Z"
 }

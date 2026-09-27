@@ -11,21 +11,21 @@
   "currentCourt": "vt",
   "currentJurisdiction": "VT",
   "jurisdiction": "VT",
-  "currentCount": 22,
+  "currentCount": 23,
   "targetCount": 45,
-  "checkpoint": "cl-opinion-9925231",
-  "cursor": "cl-opinion-9925231",
-  "lastSuccessfulExternalId": "cl-opinion-9925231",
-  "nextPageUrl": null,
+  "checkpoint": "cl-opinion-9925230",
+  "cursor": "cl-opinion-9925230",
+  "lastSuccessfulExternalId": "cl-opinion-9925230",
+  "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=vt&order_by=-id&page_size=2&cluster__date_filed__lte=2018-12-31&cursor=cD05OTI1MjMw",
   "lastSuccessfulAt": null,
   "runner": "staging-cl-batch-job",
   "mappingStatus": "VERIFIED",
-  "manifestVersion": 47,
+  "manifestVersion": 52,
   "jobStatus": "quota_paused",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastUpdatedAt": "2026-09-27T13:49:05.663Z",
-  "lastHeartbeatAt": "2026-09-27T13:40:44.958Z",
-  "nextQuotaCheckAt": "2026-09-27T13:55:44.979Z",
+  "lastUpdatedAt": "2026-09-27T14:27:09.281Z",
+  "lastHeartbeatAt": "2026-09-27T14:12:28.668Z",
+  "nextQuotaCheckAt": "2026-09-27T14:37:54.074Z",
   "network": {
     "waitingForNetwork": false,
     "lastOnlineAt": null
@@ -36,13 +36,13 @@
   },
   "quota": {
     "minuteRemaining": 30,
-    "hourRemaining": 296,
-    "dayRemaining": 722,
+    "hourRemaining": 292,
+    "dayRemaining": 714,
     "safeRequests": 28,
-    "lastProbeAt": "2026-09-27T13:40:44.979Z",
+    "lastProbeAt": "2026-09-27T14:22:54.074Z",
     "hard429Count": 0,
     "dayResetAt": "2026-09-27T14:28:39.007524+00:00",
-    "quotaStateObservedAt": "2026-09-27T13:40:44.979Z",
+    "quotaStateObservedAt": "2026-09-27T14:22:54.074Z",
     "quotaStateSource": "probe.limits",
     "quotaStateConfidence": "AUTHORITATIVE_API",
     "quotaStateAgeMs": 0
@@ -80,6 +80,7 @@
   "review": {
     "humanReviewRequired": false,
     "reasons": [],
-    "reviewReasons": []
-  }
+    "details": []
+  },
+  "updatedAt": "2026-09-27T14:29:46.932Z"
 }

@@ -115,8 +115,13 @@ function classifyLaneABatchResult(params = {}) {
   if (networkLaunchFailure && (pid == null || pid === undefined)) {
     lifecycleState = LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK;
   }
+  // Bare UNKNOWN (no network class, no pid) is NOT a productive non-terminal child.
+  // It must reconcile / safe-stop — never spin as LANE_A_CHILD_NON_TERMINAL forever.
+  const isBareUnknown =
+    lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN && !networkLaunchFailure;
+  const unresolvedUnknown = isBareUnknown && (pid == null || pid === undefined);
   const terminal =
-    lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK
+    lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK || unresolvedUnknown
       ? false
       : parsed.terminal != null
         ? Boolean(parsed.terminal)
@@ -124,7 +129,7 @@ function classifyLaneABatchResult(params = {}) {
   const nonTerminal =
     lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK ||
     isNonTerminalRunnerState(lifecycleState) ||
-    !terminal;
+    (!terminal && !unresolvedUnknown);
 
   const status = result.status || result.job?.status || null;
   const reason =
@@ -199,6 +204,7 @@ function classifyLaneABatchResult(params = {}) {
     lifecycleState,
     terminal,
     nonTerminal,
+    unresolvedUnknown,
     pid: pid,
     unknownDueToNetwork: lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK,
     networkUnavailable: lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK,
@@ -790,6 +796,13 @@ function detectLaneADispatchStall(params = {}) {
 function computePostCycleSleepMs(params = {}) {
   const now = params.now instanceof Date ? params.now : new Date(params.now || Date.now());
   if (params.humanReviewRequired) return 0;
+  // Session budget exhausted / unresolved UNKNOWN: never sleepMs=0 spin.
+  if (params.sessionBudgetExhausted) {
+    return Math.max(5 * 60 * 1000, Number(params.budgetExhaustedSleepMs || 0));
+  }
+  if (params.unresolvedUnknown || params.classification === "RUNNER_RESULT_UNRESOLVED") {
+    return Math.max(30_000, Number(params.unresolvedBackoffMs || 0));
+  }
   if (params.noProgress) return Math.max(30 * 60 * 1000, Number(params.noProgressSleepMs || 0));
   if (params.lane === "A" && params.awaitingBatch) return 0;
   if (params.lane === "WAIT" && params.nextUsefulAt) {
@@ -803,7 +816,12 @@ function computePostCycleSleepMs(params = {}) {
     params.quotaMode &&
     ["FINISH_TARGET", "FULL_BATCH", "MICRO_BATCH"].includes(params.quotaMode)
   ) {
-    return Number(params.activeLaneSleepMs ?? 0);
+    const active = Number(params.activeLaneSleepMs ?? 0);
+    // Zero-sleep immediate continue only when an owned child is being supervised.
+    if (active <= 0 && params.ownedChildAlive !== true) {
+      return Math.max(2_000, Number(params.minActiveLaneSleepMs || 2_000));
+    }
+    return active;
   }
   const next = params.nextCheckAt ? new Date(params.nextCheckAt).getTime() : now.getTime() + 60_000;
   return Math.min(Number(params.heartbeatMs || 15 * 60 * 1000), Math.max(5_000, next - now.getTime()));

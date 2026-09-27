@@ -6,9 +6,10 @@
   "courtListenerHttpCalls": 0,
   "aiCalls": 0,
   "aiTokens": 0,
+  "dbWritability": "not_probed_by_preflight",
   "killSwitch": {
-    "enabled": true,
-    "code": null
+    "enabled": false,
+    "code": "QUEUE2_WORKER_DISABLED"
   },
   "clCredentialPresent": false,
   "featureAgents": "0",
@@ -18,17 +19,17 @@
     "#3": "NOT_OPEN"
   },
   "ark": {
-    "count": 33,
+    "count": 23,
     "target": 45,
-    "checkpoint": "cl-opinion-9885161"
+    "checkpoint": "cl-opinion-9925230"
   },
   "resource": {
     "ok": true,
     "reasons": [],
-    "freeDiskBytes": 80176590848,
-    "tempFreeBytes": 80176590848
+    "freeDiskBytes": 78757068800,
+    "tempFreeBytes": 78757068800
   },
-  "generatedAt": "2026-09-25T00:17:46.823Z",
-  "codeFingerprint": "e39a83de1564eccaab7f39fbbfda016e070d935a64f3c50505b210bc5394ea9a",
+  "generatedAt": "2026-09-27T14:29:49.822Z",
+  "codeFingerprint": "9cbe69ce258a63e3aa8503832579b7540792b6f2a70094facca83e0bf631b8e2",
   "workerVersion": "queue2-safety-gate-1"
 }

@@ -177,6 +177,18 @@ const {
   FIRST_RECOVERY_CANARY,
   evaluateIngestDbWriteReadiness,
 } = require("./queue2-recovery-path.cjs");
+const {
+  SESSION_BUDGET_EXHAUSTED,
+  SAFE_IDLE,
+  RUNNER_RESULT_UNRESOLVED,
+  NORMAL_BOUNDED_LANE_A,
+  remainingSessionClBudget,
+  evaluateCanarySessionHardCap,
+  classifyUnresolvedLaneAChild,
+  resolvePostCycleWait,
+  resolveCanaryModeAfterKnownGood,
+  shouldPromoteCanaryAfterProgress,
+} = require("./queue2-post-canary-session-guard.cjs");
 
 const root = path.join(__dirname, "..");
 const reports = path.join(root, "packages/research/corpus/reports");
@@ -1149,7 +1161,8 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
   }
 
   if (gated.recovered && runtime.dbWriteReady && !processGateBlocksCl) {
-    // Exact recovery path after DATABASE_QUOTA_BLOCKED: refresh + VT + first-recovery canary.
+    // Exact recovery path after DATABASE_QUOTA_BLOCKED: refresh + VT.
+    // Do NOT blindly re-force first-recovery canary when known-good fingerprint still matches.
     const recovery = planDatabaseQuotaRecovery({
       state,
       manifest: loadManifestForSelection(),
@@ -1161,15 +1174,52 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     });
     if (recovery.ok) {
       state = recovery.state;
-      state.canaryMode = "CANARY_REQUIRED";
-      state.canary = {
-        required: true,
-        reason: FIRST_RECOVERY_CANARY.reason,
-        maxQualifyingAuthorities: FIRST_RECOVERY_CANARY.maxQualifyingAuthorities,
-        maxClRequests: FIRST_RECOVERY_CANARY.maxClRequests,
-        firstRecovery: true,
-      };
-      state.firstRecoveryCanaryPending = true;
+      let knownGoodFp = null;
+      try {
+        const kg = JSON.parse(
+          fs.readFileSync(path.join(reports, "queue2-watchdog-known-good.json"), "utf8"),
+        );
+        knownGoodFp = kg?.codeFingerprint || kg?.fingerprint || null;
+      } catch {
+        knownGoodFp = null;
+      }
+      const fpGate = evaluateProductionCanaryGate({
+        currentFingerprint: runtime.codeFingerprint,
+        knownGoodFingerprint: knownGoodFp,
+      });
+      const canaryResolve = resolveCanaryModeAfterKnownGood({
+        gate: fpGate,
+        firstRecoveryPending: Boolean(state.firstRecoveryCanaryPending),
+        dbJustRecovered: true,
+      });
+      if (canaryResolve.canaryMode === "CANARY_REQUIRED") {
+        state.canaryMode = "CANARY_REQUIRED";
+        state.canary = {
+          required: true,
+          reason: canaryResolve.reason || FIRST_RECOVERY_CANARY.reason,
+          maxQualifyingAuthorities: FIRST_RECOVERY_CANARY.maxQualifyingAuthorities,
+          maxClRequests: FIRST_RECOVERY_CANARY.maxClRequests,
+          firstRecovery: true,
+        };
+        state.firstRecoveryCanaryPending = true;
+      } else {
+        state.canaryMode = "NORMAL";
+        state.canary = {
+          ...(state.canary || {}),
+          required: false,
+          reason: canaryResolve.reason || "known_good_honored",
+          mode: NORMAL_BOUNDED_LANE_A,
+        };
+        state.firstRecoveryCanaryPending = false;
+        console.log(
+          JSON.stringify({
+            tag: "CANARY_MODE",
+            mode: NORMAL_BOUNDED_LANE_A,
+            reason: canaryResolve.reason,
+            fingerprint: runtime.codeFingerprint,
+          }),
+        );
+      }
     } else if (recovery.hold) {
       state = recovery.state;
       if (recovery.allowCourtListener === false) {
@@ -1271,22 +1321,64 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     const consBeforeProbe = evaluateClConservationGate(state.clRequestLedger, {
       canaryRequired: state.canaryMode === "CANARY_REQUIRED",
     });
-    if (!consBeforeProbe.allow) {
-      state = setReview(state, consBeforeProbe.reason, consBeforeProbe.detail || consBeforeProbe.reason);
-      emit("HUMAN_REVIEW_REQUIRED", {
-        lane: "HUMAN_REVIEW_REQUIRED",
-        reason: consBeforeProbe.reason,
-        court: state.laneA.court,
-        checkpoint: state.laneA.checkpoint,
-      });
-      console.log(
-        JSON.stringify({
-          tag: "QUOTA_CHECK",
-          skipped: true,
-          reason: consBeforeProbe.reason,
-          detail: consBeforeProbe.detail,
-        }),
-      );
+    const sessionBudgetProbe = remainingSessionClBudget({
+      sessionClRequests:
+        Number(state.clRequestLedger?.currentSessionRequests) ||
+        Number(state.sessionQuota?.sessionClRequests) ||
+        0,
+      canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+      maxClRequests:
+        state.canaryMode === "CANARY_REQUIRED"
+          ? Number(state.canary?.maxClRequests || CANARY_MAX_SESSION_CL_REQUESTS)
+          : null,
+    });
+    const hardCapProbe = evaluateCanarySessionHardCap({
+      canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+      sessionClRequests: sessionBudgetProbe.used,
+      maxClRequests: sessionBudgetProbe.max,
+      purpose: "QUOTA_PROBE",
+    });
+    if (!consBeforeProbe.allow || !hardCapProbe.allow || sessionBudgetProbe.exhausted) {
+      const reason =
+        (!hardCapProbe.allow && hardCapProbe.reason) ||
+        (sessionBudgetProbe.exhausted && SESSION_BUDGET_EXHAUSTED) ||
+        consBeforeProbe.reason;
+      const isBudget =
+        reason === SESSION_BUDGET_EXHAUSTED ||
+        reason === CONSERVATION_REASONS.SESSION_BUDGET_EXHAUSTED ||
+        consBeforeProbe.classification === SESSION_BUDGET_EXHAUSTED;
+      if (isBudget) {
+        state.runtimeState = SESSION_BUDGET_EXHAUSTED;
+        state.currentLane = "WAIT";
+        state.idleSafe = true;
+        state.sessionBudgetExhausted = true;
+        console.log(
+          JSON.stringify({
+            tag: "QUOTA_CHECK",
+            skipped: true,
+            reason: SESSION_BUDGET_EXHAUSTED,
+            detail: hardCapProbe.detail || consBeforeProbe.detail,
+            remainingSessionBudget: 0,
+            allowHttp: false,
+          }),
+        );
+      } else {
+        state = setReview(state, reason, consBeforeProbe.detail || hardCapProbe.detail || reason);
+        emit("HUMAN_REVIEW_REQUIRED", {
+          lane: "HUMAN_REVIEW_REQUIRED",
+          reason,
+          court: state.laneA.court,
+          checkpoint: state.laneA.checkpoint,
+        });
+        console.log(
+          JSON.stringify({
+            tag: "QUOTA_CHECK",
+            skipped: true,
+            reason,
+            detail: consBeforeProbe.detail || hardCapProbe.detail,
+          }),
+        );
+      }
     } else {
       const cacheDecision = evaluateQuotaProbeCache(state.quotaProbeCache, {
         now: started,
@@ -1754,27 +1846,69 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     const consBeforeLaneA = evaluateClConservationGate(state.clRequestLedger, {
       canaryRequired: state.canaryMode === "CANARY_REQUIRED",
     });
-    if (!consBeforeLaneA.allow) {
-      state = setReview(
-        state,
-        consBeforeLaneA.reason,
-        consBeforeLaneA.detail || consBeforeLaneA.reason,
-      );
-      human = true;
-      emit("HUMAN_REVIEW_REQUIRED", {
-        lane: "HUMAN_REVIEW_REQUIRED",
-        court: state.laneA.court,
-        checkpoint: state.laneA.checkpoint,
-        reason: consBeforeLaneA.reason,
-      });
-      console.log(
-        JSON.stringify({
-          tag: "LANE_A_CL",
-          blocked: true,
-          reason: consBeforeLaneA.reason,
-          detail: consBeforeLaneA.detail,
-        }),
-      );
+    const sessionBudgetLaneA = remainingSessionClBudget({
+      sessionClRequests:
+        Number(state.clRequestLedger?.currentSessionRequests) ||
+        Number(state.sessionQuota?.sessionClRequests) ||
+        0,
+      canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+      maxClRequests:
+        state.canaryMode === "CANARY_REQUIRED"
+          ? Number(state.canary?.maxClRequests || CANARY_MAX_SESSION_CL_REQUESTS)
+          : null,
+    });
+    const hardCapLaneA = evaluateCanarySessionHardCap({
+      canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+      sessionClRequests: sessionBudgetLaneA.used,
+      maxClRequests: sessionBudgetLaneA.max,
+    });
+    if (!consBeforeLaneA.allow || !hardCapLaneA.allow || sessionBudgetLaneA.exhausted) {
+      const reason =
+        (!hardCapLaneA.allow && hardCapLaneA.reason) ||
+        (sessionBudgetLaneA.exhausted && SESSION_BUDGET_EXHAUSTED) ||
+        consBeforeLaneA.reason;
+      const isBudget =
+        reason === SESSION_BUDGET_EXHAUSTED ||
+        reason === CONSERVATION_REASONS.SESSION_BUDGET_EXHAUSTED ||
+        consBeforeLaneA.classification === SESSION_BUDGET_EXHAUSTED;
+      if (isBudget) {
+        state.runtimeState = SESSION_BUDGET_EXHAUSTED;
+        state.currentLane = "WAIT";
+        state.idleSafe = true;
+        state.sessionBudgetExhausted = true;
+        console.log(
+          JSON.stringify({
+            tag: "LANE_A_CL",
+            blocked: true,
+            reason: SESSION_BUDGET_EXHAUSTED,
+            detail: hardCapLaneA.detail || consBeforeLaneA.detail,
+            remainingSessionBudget: 0,
+            allowHttp: false,
+            allowChildLaunch: false,
+          }),
+        );
+      } else {
+        state = setReview(
+          state,
+          reason,
+          consBeforeLaneA.detail || hardCapLaneA.detail || reason,
+        );
+        human = true;
+        emit("HUMAN_REVIEW_REQUIRED", {
+          lane: "HUMAN_REVIEW_REQUIRED",
+          court: state.laneA.court,
+          checkpoint: state.laneA.checkpoint,
+          reason,
+        });
+        console.log(
+          JSON.stringify({
+            tag: "LANE_A_CL",
+            blocked: true,
+            reason,
+            detail: consBeforeLaneA.detail || hardCapLaneA.detail,
+          }),
+        );
+      }
     } else if (isMissingDurableResumeCheckpointFatal(state.laneA)) {
       state = setReview(
         state,
@@ -2159,9 +2293,88 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           }
 
           // NON-TERMINAL: do not reconcile as zero-progress / canary fail / count fail.
+          // Bare UNKNOWN + pid=null is NOT a productive non-terminal child — reconcile / safe-stop.
           if (networkLaunchBlocked) {
             // Already handled: WAITING_FOR_NETWORK / UNKNOWN_DUE_TO_NETWORK.
-          } else if (classified.nonTerminal || classified.terminal === false) {
+          } else if (classified.unresolvedUnknown || classified.lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN) {
+            const processCount =
+              Number(state.laneAProcessGate?.count) ||
+              Number(state.laneAChild?.processCount) ||
+              (state.laneAChild?.pid != null ? 1 : 0);
+            const unresolved = classifyUnresolvedLaneAChild({
+              lifecycleState: classified.lifecycleState,
+              pid: classified.pid,
+              unknownDueToNetwork: classified.unknownDueToNetwork,
+              processCount,
+              ownedChildAlive: Boolean(state.laneAChild?.pid != null && classified.pid != null),
+            });
+            console.log(
+              JSON.stringify({
+                tag: "LANE_A_CHILD_UNRESOLVED",
+                lifecycleState: classified.lifecycleState,
+                pid: classified.pid,
+                class: unresolved.class,
+                action: unresolved.action,
+                classification: unresolved.classification || RUNNER_RESULT_UNRESOLVED,
+                terminal: false,
+                nonTerminal: false,
+                spin: false,
+              }),
+            );
+            // One deterministic process reconciliation: if no owned process, safe idle.
+            if (
+              unresolved.action === "RECONCILE_ONCE" ||
+              unresolved.action === SAFE_IDLE ||
+              unresolved.class === "B_CONFIRMED_NO_CHILD" ||
+              unresolved.class === "D_RUNNER_NO_TERMINAL_PARSE"
+            ) {
+              state = clearLaneAChildOwnership(state, {
+                clearRecord: true,
+                jobPaused: false,
+                reason: unresolved.reason || RUNNER_RESULT_UNRESOLVED,
+              });
+              state.runtimeState = SAFE_IDLE;
+              state.currentLane = "B";
+              state.idleSafe = true;
+              state.unresolvedUnknown = true;
+              state.quota = state.quota || {};
+              state.quota.nextCheckAt = nextQuotaCheckAfterActiveBatch(new Date(), {
+                noProgress: false,
+                deferMs: 60_000,
+              });
+              laneAResult = {
+                classified: {
+                  ...classified,
+                  nonTerminal: false,
+                  terminal: false,
+                  unresolvedUnknown: true,
+                  noProgress: false,
+                  classification: RUNNER_RESULT_UNRESOLVED,
+                },
+                nonTerminal: false,
+                unresolvedUnknown: true,
+                liveDb: null,
+                postRunDbRefreshed: false,
+              };
+              emit("LANE_B_IDLE_SAFE", {
+                lane: "LANE_B_OFFLINE",
+                court: state.laneA.court,
+                checkpoint: state.laneA.checkpoint,
+                reason: RUNNER_RESULT_UNRESOLVED,
+                extra: { class: unresolved.class, sleepBackoff: true },
+              });
+            } else if (unresolved.nonTerminal) {
+              // Owned-alive or network-unknown — supervise / wait, never zero-sleep relaunch.
+              laneAResult = {
+                classified: { ...classified, nonTerminal: true },
+                nonTerminal: true,
+                liveDb: null,
+                postRunDbRefreshed: false,
+              };
+              state.currentLane = "A";
+              state.idleSafe = false;
+            }
+          } else if (classified.nonTerminal) {
             console.log(
               JSON.stringify({
                 tag: "LANE_A_CHILD_NON_TERMINAL",
@@ -2583,6 +2796,20 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             state.quota.nextCheckAt = nextQuotaCheckAfterActiveBatch(new Date(), { noProgress: true });
             state.idleSafe = false;
           } else if (classified.status === "quota_paused" || classified.status === "rate_limited") {
+            // Persist any count/checkpoint advanced before quota floor (productive canary must promote).
+            if (classified.checkpointAdvanced) {
+              state.laneA.checkpoint = classified.nextCheckpoint;
+              state.laneA.lastSuccessfulExternalId = classified.nextCheckpoint;
+              state.laneA.cursor = classified.nextCheckpoint;
+            }
+            if (reconciled.canonicalCount != null) {
+              state.laneA.count = reconciled.canonicalCount;
+            } else if (classified.countAdvanced) {
+              state.laneA.count = classified.itemsImported;
+            }
+            if (reconciled.canonicalCount != null && reconciled.canonicalCount > priorCount) {
+              state.laneA.lastSuccessfulAt = new Date().toISOString();
+            }
             state = applyQuotaFloorTransition(state, {
               safeRequests: 0,
               checkpoint: classified.nextCheckpoint || state.laneA.checkpoint,
@@ -2610,6 +2837,51 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
               checkpoint: state.laneA.checkpoint,
               reason: classified.status,
             });
+            // Productive quota_paused still clears canary / promotes known-good.
+            if (
+              shouldPromoteCanaryAfterProgress({
+                canaryMode: state.canaryMode,
+                codeFingerprint: runtime.codeFingerprint,
+                terminal: true,
+                productive: classified.productive,
+                checkpointAdvanced: classified.checkpointAdvanced,
+                countAdvanced:
+                  classified.countAdvanced ||
+                  (reconciled.canonicalCount != null && reconciled.canonicalCount > priorCount),
+                qualifyingDelta:
+                  reconciled.canonicalCount != null
+                    ? Number(reconciled.canonicalCount) - priorCount
+                    : 0,
+              })
+            ) {
+              const knownGoodOut = {
+                codeFingerprint: runtime.codeFingerprint,
+                workerVersion: WORKER_VERSION,
+                promotedAt: new Date().toISOString(),
+                court: state.laneA.court,
+                count: state.laneA.count,
+                target: state.laneA.target,
+                checkpoint: state.laneA.checkpoint,
+                reason: "production_mutation_canary_pass_quota_paused",
+              };
+              fs.writeFileSync(
+                path.join(reports, "queue2-watchdog-known-good.json"),
+                JSON.stringify(knownGoodOut, null, 2),
+              );
+              state.canaryMode = "NORMAL";
+              state.canary = {
+                ...(state.canary || {}),
+                required: false,
+                status: "PASS",
+                mode: NORMAL_BOUNDED_LANE_A,
+              };
+              state.firstRecoveryCanaryPending = false;
+              emit("CANARY_SKIPPED", {
+                lane: "LANE_A_CL",
+                reason: "canary_pass_promoted_known_good",
+                extra: { codeFingerprint: runtime.codeFingerprint, via: "quota_paused" },
+              });
+            }
           } else if (classified.productive || (reconciled.canonicalCount != null && reconciled.canonicalCount > priorCount)) {
             // Persist progress from runner and/or live DB refresh.
             if (classified.checkpointAdvanced) {
@@ -3380,7 +3652,22 @@ async function main() {
     if (maxCycles > 0 && cycles >= maxCycles) break;
 
     const classifiedNoProgress = Boolean(lastCycle?.laneAResult?.classified?.noProgress);
-    const sleepFor = computePostCycleSleepMs({
+    const unresolvedUnknown = Boolean(
+      lastCycle?.laneAResult?.unresolvedUnknown ||
+        lastCycle?.laneAResult?.classified?.unresolvedUnknown ||
+        state.unresolvedUnknown,
+    );
+    const sessionBudgetExhausted = Boolean(
+      state.sessionBudgetExhausted ||
+        state.runtimeState === SESSION_BUDGET_EXHAUSTED ||
+        lastCycle?.laneAResult?.classified?.classification === SESSION_BUDGET_EXHAUSTED,
+    );
+    const ownedChildAlive = Boolean(
+      state.laneAChild?.pid != null &&
+        lastCycle?.laneAResult?.nonTerminal === true &&
+        lastCycle?.laneAResult?.classified?.pid != null,
+    );
+    const rawSleep = computePostCycleSleepMs({
       now: new Date(),
       humanReviewRequired: Boolean(state.humanReview?.required),
       noProgress: classifiedNoProgress,
@@ -3390,25 +3677,75 @@ async function main() {
       nextCheckAt: state.quota?.nextCheckAt || null,
       heartbeatMs: HEARTBEAT_MS,
       awaitingBatch: false,
+      sessionBudgetExhausted,
+      unresolvedUnknown,
+      ownedChildAlive,
+      classification: unresolvedUnknown ? RUNNER_RESULT_UNRESOLVED : null,
     });
+    const wait = resolvePostCycleWait({
+      computedSleepMs: rawSleep,
+      lane: state.currentLane,
+      sessionBudgetExhausted,
+      unresolvedUnknown,
+      ownedChildAlive,
+      classification: unresolvedUnknown ? RUNNER_RESULT_UNRESOLVED : null,
+      budget: remainingSessionClBudget({
+        sessionClRequests:
+          Number(state.clRequestLedger?.currentSessionRequests) ||
+          Number(state.sessionQuota?.sessionClRequests) ||
+          0,
+        canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+        maxClRequests:
+          state.canaryMode === "CANARY_REQUIRED"
+            ? Number(state.canary?.maxClRequests || CANARY_MAX_SESSION_CL_REQUESTS)
+            : null,
+      }),
+    });
+    const sleepFor = wait.sleepMs;
+    if (wait.runtimeState) state.runtimeState = wait.runtimeState;
+    if (wait.currentLane) state.currentLane = wait.currentLane;
+    state.unresolvedUnknown = false;
     if (sleepFor <= 0) {
+      // Only allow immediate continue when supervising a confirmed owned child.
+      if (ownedChildAlive) {
+        console.log(
+          JSON.stringify({
+            tag: "LANE_A_CONTINUE",
+            sleepMs: 0,
+            lane: state.currentLane,
+            supervise: true,
+            aiCalls: 0,
+          }),
+        );
+        continue;
+      }
       console.log(
         JSON.stringify({
-          tag: state.currentLane === "A" ? "LANE_A_CONTINUE" : "CYCLE_CONTINUE",
-          sleepMs: 0,
+          tag: "WORKER_IDLE",
+          sleepMs: 2000,
           lane: state.currentLane,
+          reason: "blocked_zero_sleep_relaunch",
           aiCalls: 0,
         }),
       );
+      sleepMs(2000);
       continue;
     }
     console.log(
       JSON.stringify({
-        tag: state.currentLane === "WAIT" ? "WAIT_QUOTA_RESET" : "WORKER_IDLE",
+        tag:
+          sessionBudgetExhausted
+            ? SESSION_BUDGET_EXHAUSTED
+            : unresolvedUnknown
+              ? RUNNER_RESULT_UNRESOLVED
+              : state.currentLane === "WAIT"
+                ? "WAIT_QUOTA_RESET"
+                : "WORKER_IDLE",
         sleepMs: sleepFor,
         nextQuotaCheckAt: state.quota?.nextCheckAt,
         nextUsefulAt: state.quota?.wait?.nextUsefulAt || null,
         lane: state.currentLane,
+        classification: wait.classification || null,
         aiCalls: 0,
       }),
     );
