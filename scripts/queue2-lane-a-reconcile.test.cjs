@@ -52,7 +52,7 @@ test("A: status 44 / DB 45 / already_completed → reconcile 45 COMPLETE, no zer
     runnerCount: 45,
     alreadyCompleted: true,
     target: 45,
-    db: { clCases: 45, highCourtClCases: 45, cases: 46 },
+    db: { qualifyingCases: 45, highCourtClCases: 45, clCases: 45, cases: 46 },
     integrity: { duplicateSourceIds: 0, orphanCount: 0, chunkHealthy: true },
   });
   assert.equal(reconciled.classification, "TARGET_ALREADY_COMPLETE");
@@ -69,7 +69,7 @@ test("B: status 44 / DB 44 / runner already_completed 45 → reconciliation fail
     runnerCount: 45,
     alreadyCompleted: true,
     target: 45,
-    db: { clCases: 44, highCourtClCases: 44, cases: 44 },
+    db: { qualifyingCases: 44, highCourtClCases: 44, clCases: 44, cases: 44 },
   });
   assert.equal(reconciled.classification, "RECONCILIATION_FAILED");
   assert.equal(reconciled.humanReviewRequired, true);
@@ -82,7 +82,7 @@ test("C: already_completed with target satisfied → target complete", () => {
     runnerCount: 45,
     alreadyCompleted: true,
     target: 45,
-    db: { clCases: 45 },
+    db: { qualifyingCases: 45 },
   });
   assert.equal(r.targetStatus, "COMPLETE_FOR_CURRENT_DEPTH");
   assert.equal(r.targetSatisfied, true);
@@ -105,7 +105,7 @@ test("D: already_completed with target unsatisfied (no DB) still incomplete or f
     runnerCount: 40,
     alreadyCompleted: true,
     target: 45,
-    db: { clCases: 40 },
+    db: { qualifyingCases: 40 },
   });
   assert.equal(r2.classification, "RECONCILIATION_FAILED");
 });
@@ -120,7 +120,7 @@ test("E: post-run DB refresh happens before watchdog progress classification", (
   // Simulate ordering: classify → db → reconcile → zero-progress decision
   const steps = [];
   steps.push("classify");
-  const db = { clCases: 45, highCourtClCases: 45, cases: 46 };
+  const db = { qualifyingCases: 45, highCourtClCases: 45, clCases: 45, cases: 46 };
   steps.push("db_refresh");
   const reconciled = reconcileLaneACountSources({
     runtimeCount: 44,

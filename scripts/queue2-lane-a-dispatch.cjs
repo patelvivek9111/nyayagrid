@@ -8,10 +8,16 @@ const crypto = require("node:crypto");
 
 /**
  * True remaining qualifying authorities to finish the current court target.
- * Literally: max(0, target - count). NOT a request estimate.
+ * Literally: max(0, target - qualifyingCaseCount). NOT a request estimate.
+ * Prefer explicit qualifyingCaseCount; never use totalCaseCount / raw clCaseCount.
  */
 function remainingCasesToFinish(laneA) {
-  const count = Math.max(0, Number(laneA?.count) || 0);
+  const count = Math.max(
+    0,
+    Number(
+      laneA?.qualifyingCaseCount != null ? laneA.qualifyingCaseCount : laneA?.count,
+    ) || 0,
+  );
   const target = Math.max(0, Number(laneA?.target) || 0);
   return Math.max(0, target - count);
 }
@@ -35,7 +41,11 @@ function resolveLaneABatchBounds(params = {}) {
   const resourceMaxAuth = Math.max(1, Number(params.resourceMaxAuthorities) || 40);
   const resourceMaxReq = Math.max(1, Number(params.resourceMaxClRequests) || 40);
   const canaryRequired = Boolean(params.canaryRequired);
-  const canaryAuthCap = Math.max(1, Math.min(3, Number(params.maxQualifyingAuthorities) || 3));
+  // Normal canary <=3; first recovery after DB quota block uses <=2 when provided.
+  const canaryAuthCap = Math.max(
+    1,
+    Math.min(3, Number(params.maxQualifyingAuthorities != null ? params.maxQualifyingAuthorities : 3) || 3),
+  );
   // Stabilization canary: HARD cap <=5 current-session CL requests (not historical job totals).
   const canaryReqCap = Math.max(
     1,
@@ -189,19 +199,48 @@ function classifyLaneABatchResult(params = {}) {
 }
 
 /**
- * Canonical live count for a Lane A court. Prefer DB qualifying/CL cases over caches.
+ * Canonical live count for a Lane A court = qualifying high/appellate cases only.
+ * Raw clCases / total cases must never substitute for target progress.
  */
 function canonicalLaneACount(sources = {}) {
   const db = sources.db || {};
-  const prefer = [db.qualifyingCases, db.highCourtClCases, db.clCases, db.cases]
+  const prefer = [
+    db.qualifyingCaseCount,
+    db.qualifyingCases,
+    db.qualifying_high_appellate,
+    db.highCourtClCases,
+  ]
     .map((n) => Number(n))
     .find((n) => Number.isFinite(n) && n >= 0);
   if (prefer != null) return prefer;
+  // Named non-qualifying fields are intentionally ignored for target progress.
+  if (db.clCaseCount != null || db.clCases != null || db.cases != null || db.totalCaseCount != null) {
+    return null;
+  }
   const caches = [sources.runnerCount, sources.runtimeCount, sources.statusCount, sources.manifestCount]
     .map((n) => Number(n))
     .filter((n) => Number.isFinite(n) && n >= 0);
   if (!caches.length) return null;
   return Math.max(...caches);
+}
+
+/**
+ * Explicit named counts for status / reconcile surfaces.
+ */
+function namedLaneACounts(sources = {}) {
+  const db = sources.db || {};
+  return {
+    qualifyingCaseCount: canonicalLaneACount(sources),
+    clCaseCount: Number.isFinite(Number(db.clCaseCount ?? db.clCases))
+      ? Number(db.clCaseCount ?? db.clCases)
+      : null,
+    totalCaseCount: Number.isFinite(Number(db.totalCaseCount ?? db.cases))
+      ? Number(db.totalCaseCount ?? db.cases)
+      : null,
+    authorityCount: Number.isFinite(Number(db.authorityCount ?? db.authorities))
+      ? Number(db.authorityCount ?? db.authorities)
+      : null,
+  };
 }
 
 /**
@@ -861,6 +900,7 @@ module.exports = {
   parseLaneARunnerOutput,
   classifyLaneABatchResult,
   canonicalLaneACount,
+  namedLaneACounts,
   reconcileLaneACountSources,
   shouldRaiseLaneAZeroProgress,
   evaluateReconciliationCanary,

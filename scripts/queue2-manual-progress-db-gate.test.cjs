@@ -301,6 +301,7 @@ test("DB recovery clears the external block, keeps Vermont, and does not trust s
   assert.equal(recovered.state.quota.quotaStatus, "UNKNOWN_FOR_EXECUTION");
   assert.equal(recovered.state.quota.windows.day.remaining, 1050);
   assert.equal(recovered.canaryMaxClRequests, 5);
+  assert.equal(recovered.canaryMaxQualifyingAuthorities, 2);
   assert.equal(CANARY_MAX_SESSION_CL_REQUESTS, 5);
   assert.equal(recovered.childLaunches, 0);
   assert.equal(recovered.clRequests, 0);

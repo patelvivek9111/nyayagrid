@@ -165,6 +165,11 @@ const {
 } = require("./queue2-watchdog.cjs");
 const { selectNextProductionDepthTarget, planManualProgressStartup } = require("./queue2-manual-progress.cjs");
 const { assertCourtListenerAllowed } = require("./queue2-db-readiness.cjs");
+const {
+  planDatabaseQuotaRecovery,
+  FIRST_RECOVERY_CANARY,
+  evaluateIngestDbWriteReadiness,
+} = require("./queue2-recovery-path.cjs");
 
 const root = path.join(__dirname, "..");
 const reports = path.join(root, "packages/research/corpus/reports");
@@ -952,10 +957,12 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
 
   // Database writability before any CourtListener probe, including /api-usage/.
   runtime.dbWriteReady = false;
+  const dbProbe = runStagingDbWriteProbe();
+  const ingestDb = evaluateIngestDbWriteReadiness(dbProbe);
   const gated = planManualProgressStartup({
     state,
     manifest: loadManifestForSelection(),
-    dbProbe: runStagingDbWriteProbe(),
+    dbProbe,
     now: started,
     executing: process.env.QUEUE2_RUN_LANE_B === "1",
     laneB: {
@@ -968,7 +975,33 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     },
   });
   state = gated.state;
-  runtime.dbWriteReady = gated.allowCourtListener === true;
+  runtime.dbWriteReady = gated.allowCourtListener === true && ingestDb.dbWriteReady === true;
+  if (gated.recovered && runtime.dbWriteReady) {
+    // Exact recovery path after DATABASE_QUOTA_BLOCKED: refresh + VT + first-recovery canary.
+    const recovery = planDatabaseQuotaRecovery({
+      state,
+      manifest: loadManifestForSelection(),
+      dbProbe,
+      remoteProcesses: [],
+      targetJob: null,
+      jobInspection: { blocked: false },
+      now: started,
+    });
+    if (recovery.ok) {
+      state = recovery.state;
+      state.canaryMode = "CANARY_REQUIRED";
+      state.canary = {
+        required: true,
+        reason: FIRST_RECOVERY_CANARY.reason,
+        maxQualifyingAuthorities: FIRST_RECOVERY_CANARY.maxQualifyingAuthorities,
+        maxClRequests: FIRST_RECOVERY_CANARY.maxClRequests,
+        firstRecovery: true,
+      };
+      state.firstRecoveryCanaryPending = true;
+    } else if (recovery.hold) {
+      state = recovery.state;
+    }
+  }
   if (!runtime.dbWriteReady) {
     quota = {
       probed: false,
@@ -1696,9 +1729,22 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
                   Number(state.canary?.maxClRequests || CANARY_MAX_SESSION_CL_REQUESTS),
                 )
               : Number(state.canary?.maxClRequests || 12);
+          const canaryMaxAuth =
+            state.canaryMode === "CANARY_REQUIRED"
+              ? Math.min(
+                  3,
+                  Number(
+                    state.canary?.maxQualifyingAuthorities != null
+                      ? state.canary.maxQualifyingAuthorities
+                      : state.firstRecoveryCanaryPending
+                        ? 2
+                        : 3,
+                  ) || 3,
+                )
+              : Number(state.canary?.maxQualifyingAuthorities || 8);
           const batchBounds = resolveLaneABatchBounds({
             canaryRequired: state.canaryMode === "CANARY_REQUIRED",
-            maxQualifyingAuthorities: Number(state.canary?.maxQualifyingAuthorities || 3),
+            maxQualifyingAuthorities: canaryMaxAuth,
             maxClRequests: canaryMaxCl,
             remainingAuthorities: remainingCasesToFinish(state.laneA),
             usableRequests:

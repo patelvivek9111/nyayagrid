@@ -76,7 +76,11 @@ function selectNextProductionDepthTarget(manifest, opts = {}) {
     .filter((t) => !t.autonomousIngestBlocked)
     .filter((t) => t.status === "READY" || t.status === "PARTIAL")
     .filter((t) => t.status !== "COMPLETE_FOR_CURRENT_DEPTH")
-    .filter((t) => Number(t.currentCases || 0) < Number(t.targetCases || 45))
+    .filter((t) => {
+      const q =
+        t.qualifyingCaseCount != null ? Number(t.qualifyingCaseCount) : Number(t.currentCases || 0);
+      return q < Number(t.targetCases || 45);
+    })
     .filter((t) => {
       const court = courtOf(t);
       return court && !exclude.has(court);
@@ -90,12 +94,18 @@ function selectNextProductionDepthTarget(manifest, opts = {}) {
   );
   const top = rows[0] || null;
   if (!top) return null;
+  const qualifyingCaseCount =
+    top.qualifyingCaseCount != null ? Number(top.qualifyingCaseCount) : Number(top.currentCases) || 0;
   const checkpoint =
     typeof top.checkpoint === "string" && top.checkpoint.length > 0 ? top.checkpoint : null;
   return {
     court: courtOf(top),
     jurisdiction: top.jurisdiction,
-    count: Number(top.currentCases) || 0,
+    count: qualifyingCaseCount,
+    qualifyingCaseCount,
+    clCaseCount: top.clCases != null ? Number(top.clCases) : null,
+    totalCaseCount: top.totalCases != null ? Number(top.totalCases) : null,
+    authorityCount: top.currentAuthorities != null ? Number(top.currentAuthorities) : null,
     target: Number(top.targetCases) || 45,
     checkpoint,
     status: top.status,
@@ -147,7 +157,12 @@ function reconcileManualDepthProgress(state, manifest, opts = {}) {
       next.laneA = {
         court: nxt.court,
         jurisdiction: nxt.jurisdiction,
-        count: nxt.count,
+        count: nxt.qualifyingCaseCount != null ? nxt.qualifyingCaseCount : Number(nxt.count) || 0,
+        qualifyingCaseCount:
+          nxt.qualifyingCaseCount != null ? nxt.qualifyingCaseCount : Number(nxt.count) || 0,
+        clCaseCount: nxt.clCaseCount != null ? nxt.clCaseCount : null,
+        totalCaseCount: nxt.totalCaseCount != null ? nxt.totalCaseCount : null,
+        authorityCount: nxt.authorityCount != null ? nxt.authorityCount : null,
         target: nxt.target,
         checkpoint: nxt.checkpoint,
         cursor: null,
@@ -158,7 +173,7 @@ function reconcileManualDepthProgress(state, manifest, opts = {}) {
         mappingStatus: nxt.mappingStatus || "VERIFIED",
         manifestVersion: manifest?.version || next.laneA?.manifestVersion || null,
         jobStatus: "ready",
-        itemsImported: nxt.count,
+        itemsImported: nxt.qualifyingCaseCount != null ? nxt.qualifyingCaseCount : Number(nxt.count) || 0,
         targetStatus: nxt.status || "READY",
         sequence: null,
         lock: null,
@@ -274,9 +289,17 @@ function planManualProgressStartup(params = {}) {
   state.queue3 = "NOT_OPEN";
   state.featureAgents = "0";
   state.metrics = { ...(state.metrics || {}), aiCalls: 0, aiTokens: 0 };
-  if (!recovered) {
-    // Healthy DB with no quota block keeps the caller's quota object.
-    // A recovered block has already marked counters UNKNOWN_FOR_EXECUTION.
+  if (recovered) {
+    const { FIRST_RECOVERY_CANARY } = require("./queue2-recovery-path.cjs");
+    state.canaryMode = "CANARY_REQUIRED";
+    state.canary = {
+      required: true,
+      reason: FIRST_RECOVERY_CANARY.reason,
+      maxQualifyingAuthorities: FIRST_RECOVERY_CANARY.maxQualifyingAuthorities,
+      maxClRequests: FIRST_RECOVERY_CANARY.maxClRequests,
+      firstRecovery: true,
+    };
+    state.firstRecoveryCanaryPending = true;
   }
   return {
     state,
@@ -291,7 +314,12 @@ function planManualProgressStartup(params = {}) {
     inventedCheckpoints: reconciled.inventedCheckpoints,
     nextCourt: state.laneA?.court || null,
     quotaUsableForExecution: quotaUsableForExecution(state.quota),
-    canaryMaxClRequests: CANARY_MAX_SESSION_CL_REQUESTS,
+    canaryMaxClRequests: recovered
+      ? require("./queue2-recovery-path.cjs").FIRST_RECOVERY_CANARY.maxClRequests
+      : CANARY_MAX_SESSION_CL_REQUESTS,
+    canaryMaxQualifyingAuthorities: recovered
+      ? require("./queue2-recovery-path.cjs").FIRST_RECOVERY_CANARY.maxQualifyingAuthorities
+      : 3,
     queue2: state.queue,
     queue3: state.queue3,
   };

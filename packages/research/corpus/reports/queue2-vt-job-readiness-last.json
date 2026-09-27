@@ -1,0 +1,46 @@
+{
+  "classification": "VT_JOB_READINESS_READ_ONLY",
+  "generatedAt": "2026-09-27T03:35:00.000Z",
+  "court": "vt",
+  "jurisdiction": "VT",
+  "liveInspection": {
+    "attempted": false,
+    "reason": "DATABASE_QUOTA_BLOCKED",
+    "sqlstate": "53000",
+    "note": "Neon staging rejects DB access; one prior hold already established SQLSTATE 53000. No additional Neon hammering in this task."
+  },
+  "evidence": {
+    "source": [
+      "packages/research/corpus/reports/queue2-manual-neon-quota-hold-2026-09-27.json",
+      "packages/research/corpus/reports/queue2-manual-expansion-2026-09-26-cont.json",
+      "packages/research/corpus/reports/queue2-lane-a-depth-manifest.json",
+      "packages/research/corpus/reports/corpus-worker-status.json"
+    ],
+    "vermontIngestStarted": false,
+    "qualifyingCaseCount": 20,
+    "target": 45,
+    "mappingStatus": "VERIFIED"
+  },
+  "job": null,
+  "fields": {
+    "status": null,
+    "cursor": null,
+    "next_page_url": null,
+    "last_successful_external_id": null,
+    "items_imported": null,
+    "api_calls": null,
+    "target_max": null,
+    "batch_size": null,
+    "last_error": null,
+    "started_at": null,
+    "updated_at": null
+  },
+  "classificationResult": "READY_FIRST_START",
+  "safeFirstStart": true,
+  "safeResume": false,
+  "hold": false,
+  "mutations": 0,
+  "courtListenerHttpCalls": 0,
+  "aiCalls": 0,
+  "note": "Last successful Vermont truth probe before Neon quota exhaustion reported no VT productive ingest; Vermont was next and not started. Live job row re-check deferred until DATABASE_URL accepts connections."
+}
