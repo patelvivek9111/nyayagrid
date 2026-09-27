@@ -1,0 +1,53 @@
+{
+  "classification": "MANUAL_QUEUE2_RAPID_INGEST",
+  "generatedAt": "2026-09-27T18:45:00.000Z",
+  "queue": { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", "transition": "NONE" },
+  "worker": "STOPPED",
+  "start": {
+    "jurisdiction": "VT",
+    "qualifying": 35,
+    "checkpoint": "cl-opinion-9886193",
+    "quota": { "minute": 30, "hour": 292, "day": 1145 }
+  },
+  "end": {
+    "jurisdiction": "AL",
+    "qualifying": 45,
+    "authoritiesAdded": 110,
+    "checkpoint": "cl-opinion-11271527",
+    "nextJurisdiction": "KY",
+    "nextCourt": "ky",
+    "nextQualifying": 20
+  },
+  "jurisdictions": [
+    { "j": "VT", "court": "vt", "start": 35, "end": 45, "added": 10, "clRequests": 22, "checkpoint": "cl-opinion-11197326" },
+    { "j": "NH", "court": "nh", "start": 20, "end": 45, "added": 25, "clRequests": 54, "checkpoint": "cl-opinion-11197353" },
+    { "j": "OK", "court": "okla", "start": 20, "end": 45, "added": 25, "clRequests": 54, "checkpoint": "cl-opinion-11271504" },
+    { "j": "ND", "court": "nd", "start": 20, "end": 45, "added": 25, "clRequests": 57, "checkpoint": "cl-opinion-11271496" },
+    { "j": "AL", "court": "ala", "start": 20, "end": 45, "added": 25, "clRequests": 55, "checkpoint": "cl-opinion-11271527" }
+  ],
+  "corpus": {
+    "authorities": "3223 → 3333",
+    "cases": "1906 → 2016",
+    "clCases": "1861 → 1971",
+    "chunks": 47313,
+    "embeddings": 47313,
+    "duplicateSourceIds": 0,
+    "orphanCount": 0
+  },
+  "citations": { "extracted": "6273 → 6439", "resolved": "181 → 182" },
+  "quota": {
+    "start": { "minute": 30, "hour": 292, "day": 1145 },
+    "end": { "minute": 27, "hour": 48, "day": 901 },
+    "totalCl": 244,
+    "productive": 242,
+    "probes": 2,
+    "retries": 0,
+    "wasted": 0,
+    "hard429": 0,
+    "requestsPerAuthority": 2.2
+  },
+  "nextJurisdiction": "KY",
+  "nextCourt": "ky",
+  "safeToContinue": false,
+  "stopReason": "hour remaining 48 < ~54 for next 25-case jurisdiction"
+}
