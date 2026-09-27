@@ -58,6 +58,10 @@ function createEmptyClRequestLedger(params = {}) {
     casesAdded: 0,
     checkpointAdvances: 0,
     sequentialNonproductiveBeforeProgress: 0,
+    /** Productive Lane A ingestion attempts (not probes / network-only cycles). */
+    productiveAttemptCount: 0,
+    /** Alias / mirror of sequential streak for productive attempts only. */
+    sequentialNonproductiveProductiveAttempts: 0,
     firstProgressAt: null,
     existingJobHistoricalRequests: Number(params.existingJobHistoricalRequests) || 0,
     rollingDayObservedUsed:
@@ -276,7 +280,7 @@ function replayNewWorkerSessionBoundary(opts = {}) {
     },
     queue3: "NOT_OPEN",
   };
-  // Seed session A with one probe (streak=1).
+  // Seed session A with one probe (streak stays 0 — probes are not productive attempts).
   state.clRequestLedger = recordClRequest(state.clRequestLedger, {
     purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
     usefulProgress: false,
@@ -285,6 +289,7 @@ function replayNewWorkerSessionBoundary(opts = {}) {
     type: "SESSION_A",
     requests: state.clRequestLedger.currentSessionRequests,
     streak: state.clRequestLedger.sequentialNonproductiveBeforeProgress,
+    productiveAttempts: state.clRequestLedger.productiveAttemptCount,
   });
 
   const reset = beginNewClRequestSession(state, {
@@ -303,7 +308,7 @@ function replayNewWorkerSessionBoundary(opts = {}) {
     hr: state.humanReview.required,
   });
 
-  // One startup probe on B.
+  // One startup probe on B — still not a productive-attempt strike.
   state.clRequestLedger = recordClRequest(state.clRequestLedger, {
     purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
     usefulProgress: false,
@@ -313,6 +318,7 @@ function replayNewWorkerSessionBoundary(opts = {}) {
     type: "AFTER_ONE_PROBE",
     requests: state.clRequestLedger.currentSessionRequests,
     streak: state.clRequestLedger.sequentialNonproductiveBeforeProgress,
+    productiveAttempts: state.clRequestLedger.productiveAttemptCount,
     allowLaneA: gate.allow,
     reason: gate.reason,
   });
@@ -320,7 +326,8 @@ function replayNewWorkerSessionBoundary(opts = {}) {
   const ok =
     reset.currentSessionRequests === 0 &&
     state.clRequestLedger.currentSessionRequests === 1 &&
-    state.clRequestLedger.sequentialNonproductiveBeforeProgress === 1 &&
+    state.clRequestLedger.sequentialNonproductiveBeforeProgress === 0 &&
+    state.clRequestLedger.productiveAttemptCount === 0 &&
     gate.allow === true &&
     gate.reason == null &&
     state.humanReview.required === false &&
@@ -335,6 +342,30 @@ function classifyRequestPurpose(purpose) {
   const p = String(purpose || "").toUpperCase();
   if (CL_REQUEST_PURPOSES[p]) return CL_REQUEST_PURPOSES[p];
   return CL_REQUEST_PURPOSES.OTHER_EXPLICIT;
+}
+
+/**
+ * Whether this CL request was a productive Lane A ingestion attempt.
+ * Quota probes / verify / network-only cycles are NOT productive attempts.
+ */
+function isProductiveAttemptRequest(params = {}) {
+  if (params.productiveAttempt === true) return true;
+  if (params.productiveAttempt === false) return false;
+  const purpose = classifyRequestPurpose(params.purpose);
+  if (purpose === CL_REQUEST_PURPOSES.QUOTA_PROBE) return false;
+  if (purpose === CL_REQUEST_PURPOSES.VERIFY) return false;
+  if (purpose === CL_REQUEST_PURPOSES.OTHER_EXPLICIT && !params.productiveAttempt) return false;
+  if (
+    purpose === CL_REQUEST_PURPOSES.INGEST_DISCOVERY ||
+    purpose === CL_REQUEST_PURPOSES.INGEST_FETCH ||
+    purpose === CL_REQUEST_PURPOSES.RETRY
+  ) {
+    // Child must have actually launched / consumed ingest CL work.
+    if (params.childLaunched === false) return false;
+    if (params.networkUnavailable === true) return false;
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -360,11 +391,15 @@ function classifyRequestOutcome(params = {}) {
 
 /**
  * Record one CL request into the session ledger (no secrets).
+ *
+ * Session totals / overhead still count EVERY CL HTTP request (including probes).
+ * sequentialNonproductiveBeforeProgress ONLY advances for productive ingestion attempts.
  */
 function recordClRequest(ledger, params = {}) {
   const next = JSON.parse(JSON.stringify(ledger || createEmptyClRequestLedger()));
   const purpose = classifyRequestPurpose(params.purpose);
   const outcomeClass = classifyRequestOutcome({ ...params, purpose });
+  const productiveAttempt = isProductiveAttemptRequest({ ...params, purpose });
   const nowIso = (params.now instanceof Date ? params.now : new Date(params.now || Date.now())).toISOString();
   const entry = {
     n: next.currentSessionRequests + 1,
@@ -374,6 +409,7 @@ function recordClRequest(ledger, params = {}) {
     purpose,
     httpOutcome: params.httpOutcome || null,
     usefulProgress: Boolean(params.usefulProgress),
+    productiveAttempt,
     outcomeClass,
     batchId: params.batchId || null,
     runId: params.runId || null,
@@ -388,20 +424,33 @@ function recordClRequest(ledger, params = {}) {
   if (outcomeClass === CL_REQUEST_CLASSES.PRODUCTIVE) {
     next.productiveClRequests += 1;
     next.sequentialNonproductiveBeforeProgress = 0;
+    next.sequentialNonproductiveProductiveAttempts = 0;
     if (!next.firstProgressAt) next.firstProgressAt = nowIso;
   } else if (outcomeClass === CL_REQUEST_CLASSES.OVERHEAD) {
     next.overheadClRequests += 1;
-    if (!next.firstProgressAt) next.sequentialNonproductiveBeforeProgress += 1;
   } else {
     next.wastedClRequests += 1;
-    if (!next.firstProgressAt) next.sequentialNonproductiveBeforeProgress += 1;
   }
+
+  // Productive-attempt failure streak — independent of probe/overhead HTTP accounting.
+  if (productiveAttempt) {
+    next.productiveAttemptCount = (Number(next.productiveAttemptCount) || 0) + 1;
+    if (outcomeClass === CL_REQUEST_CLASSES.PRODUCTIVE || params.usefulProgress) {
+      next.sequentialNonproductiveBeforeProgress = 0;
+      next.sequentialNonproductiveProductiveAttempts = 0;
+    } else if (!next.firstProgressAt) {
+      next.sequentialNonproductiveBeforeProgress =
+        (Number(next.sequentialNonproductiveBeforeProgress) || 0) + 1;
+      next.sequentialNonproductiveProductiveAttempts = next.sequentialNonproductiveBeforeProgress;
+    }
+  }
+
   if (purpose === CL_REQUEST_PURPOSES.QUOTA_PROBE) next.quotaProbeRequests += 1;
   if (purpose === CL_REQUEST_PURPOSES.RETRY) next.retryRequests += 1;
   if (params.authoritiesAdded) next.authoritiesAdded += Number(params.authoritiesAdded) || 0;
   if (params.casesAdded) next.casesAdded += Number(params.casesAdded) || 0;
   if (params.checkpointAdvanced) next.checkpointAdvances += 1;
-  return { ledger: next, entry, outcomeClass };
+  return { ledger: next, entry, outcomeClass, productiveAttempt };
 }
 
 function nonproductiveCount(ledger) {
@@ -447,7 +496,7 @@ function evaluateClConservationGate(ledger, opts = {}) {
       allow: false,
       humanReviewRequired: true,
       reason: CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS,
-      detail: `sequentialNonproductiveBeforeProgress=${seq}`,
+      detail: `sequentialNonproductiveProductiveAttempts=${seq} (productiveAttemptCount=${Number(ledger?.productiveAttemptCount) || 0})`,
     };
   }
   return {
@@ -457,6 +506,104 @@ function evaluateClConservationGate(ledger, opts = {}) {
     remainingSessionBudget: canary
       ? Math.max(0, MAX_CANARY_SESSION_CL_REQUESTS - total)
       : null,
+  };
+}
+
+/**
+ * Clear false CL_NO_PRODUCTIVE_PROGRESS when evidence shows probe-only /
+ * network-unavailable cycles with no productive child attempts.
+ * Does not clear unrelated review reasons.
+ */
+function clearFalseClNoProductiveProgressReview(state, evidence = {}) {
+  const next = state && typeof state === "object" ? JSON.parse(JSON.stringify(state)) : {};
+  const reasons = Array.isArray(next.humanReview?.reasons) ? [...next.humanReview.reasons] : [];
+  if (!reasons.includes(CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS)) {
+    return { state: next, cleared: false, reason: "reason_not_present" };
+  }
+
+  const productiveAttempts =
+    Number(evidence.productiveAttemptCount ?? next.clRequestLedger?.productiveAttemptCount) || 0;
+  const childLaunches = Number(evidence.childLaunches ?? 0) || 0;
+  const session =
+    Number(evidence.sessionClRequests ?? next.clRequestLedger?.currentSessionRequests) || 0;
+  const probes =
+    Number(evidence.quotaProbes ?? next.clRequestLedger?.quotaProbeRequests) || 0;
+  const authoritiesAdded =
+    Number(evidence.authoritiesAdded ?? next.clRequestLedger?.authoritiesAdded) || 0;
+  const checkpointAdvanced = Boolean(
+    evidence.checkpointAdvanced ?? (Number(next.clRequestLedger?.checkpointAdvances) || 0) > 0,
+  );
+  const streak =
+    Number(
+      evidence.sequentialNonproductiveProductiveAttempts ??
+        next.clRequestLedger?.sequentialNonproductiveProductiveAttempts ??
+        next.clRequestLedger?.sequentialNonproductiveBeforeProgress,
+    ) || 0;
+
+  const probeOnly =
+    productiveAttempts === 0 &&
+    childLaunches === 0 &&
+    !checkpointAdvanced &&
+    authoritiesAdded === 0 &&
+    (probes >= session || session === probes);
+
+  const networkOnly = evidence.networkUnavailableCycle === true && childLaunches === 0;
+
+  if (!probeOnly && !networkOnly && !(productiveAttempts === 0 && streak === 0)) {
+    return {
+      state: next,
+      cleared: false,
+      reason: "insufficient_false_positive_evidence",
+      productiveAttempts,
+      childLaunches,
+      probes,
+      session,
+    };
+  }
+
+  next.humanReview = next.humanReview || { required: false, reasons: [], details: [] };
+  next.humanReview.reasons = reasons.filter(
+    (r) => r !== CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS,
+  );
+  next.humanReview.details = (next.humanReview.details || []).filter(
+    (d) => d?.reason !== CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS,
+  );
+  next.humanReview.required = next.humanReview.reasons.length > 0;
+
+  if (next.clRequestLedger) {
+    next.clRequestLedger.sequentialNonproductiveBeforeProgress = 0;
+    next.clRequestLedger.sequentialNonproductiveProductiveAttempts = 0;
+  }
+
+  if (!next.humanReview.required && next.runtimeState === "HUMAN_REVIEW_REQUIRED") {
+    next.runtimeState = "STOPPED";
+    next.currentLane = "STOPPED";
+  }
+
+  next.falseProgressReviewCleared = {
+    reason: CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS,
+    classification: "FALSE_CONTROL_PLANE_CLASSIFICATION",
+    clearedAt: (evidence.now instanceof Date
+      ? evidence.now
+      : new Date(evidence.now || Date.now())
+    ).toISOString(),
+    productiveAttempts,
+    childLaunches,
+    probes,
+    session,
+    courtListenerHttpCalls: 0,
+    mutations: 0,
+    aiCalls: 0,
+  };
+
+  return {
+    state: next,
+    cleared: true,
+    reason: "FALSE_CONTROL_PLANE_CLASSIFICATION",
+    productiveAttempts,
+    childLaunches,
+    probes,
+    session,
   };
 }
 
@@ -739,9 +886,11 @@ module.exports = {
   replayNewWorkerSessionBoundary,
   classifyRequestPurpose,
   classifyRequestOutcome,
+  isProductiveAttemptRequest,
   recordClRequest,
   nonproductiveCount,
   evaluateClConservationGate,
+  clearFalseClNoProductiveProgressReview,
   evaluateQuotaProbeCache,
   applyQuotaProbeCacheDecision,
   evaluateRedundantQuotaProbeHardStop,

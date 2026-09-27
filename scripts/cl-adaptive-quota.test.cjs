@@ -234,7 +234,7 @@ test("N: WI complete in durable evidence; active court advanced", () => {
   assert.equal(state.completedCourtEvidence.wis.count, 45);
   assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
   assert.equal(state.laneA.court, "vt");
-  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 23, `count=${state.laneA.count}`);
+  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 24, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
 });
 
@@ -305,7 +305,7 @@ test("I: FULL_BATCH with usable quota now ? deferred nextCheckAt (no immediate r
   assert.equal(d.quotaMode, QUOTA_MODES.FULL_BATCH);
   assert.equal(d.lane, "A");
   assert.equal(d.nextUsefulAt, null);
-  // Must NOT set nextCheckAt˜now (that caused the 5s quota reprobe loop).
+  // Must NOT set nextCheckAtï¿½now (that caused the 5s quota reprobe loop).
   assert.ok(new Date(d.nextCheckAt).getTime() >= now.getTime() + 14 * 60 * 1000);
 });
 

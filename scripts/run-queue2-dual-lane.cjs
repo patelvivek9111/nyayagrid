@@ -2490,6 +2490,8 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
                 jurisdiction: state.laneA.jurisdiction,
                 httpOutcome: 200,
                 usefulProgress: Boolean(classified.productive),
+                productiveAttempt: true,
+                childLaunched: true,
                 authoritiesAdded: i === 0 && classified.productive ? Number(classified.runnerBatchImported) || 0 : 0,
                 checkpointAdvanced: i === 0 && Boolean(classified.checkpointAdvanced),
                 batchId: state.clSharedSession?.batchId || classified.jobId || "lane-a-batch",
@@ -3213,6 +3215,10 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         authoritiesAdded: ledger.authoritiesAdded,
         checkpointAdvanced: ledger.checkpointAdvances > 0,
         sequentialNonproductiveBeforeProgress: ledger.sequentialNonproductiveBeforeProgress,
+        sequentialNonproductiveProductiveAttempts:
+          ledger.sequentialNonproductiveProductiveAttempts ??
+          ledger.sequentialNonproductiveBeforeProgress,
+        productiveAttemptCount: ledger.productiveAttemptCount || 0,
         existingJobHistoricalRequests: ledger.existingJobHistoricalRequests,
         historicalSessions: Array.isArray(state.historicalClSessions)
           ? state.historicalClSessions.length

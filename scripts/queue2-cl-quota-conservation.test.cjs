@@ -149,21 +149,66 @@ test("fresh probe reused; redundant probe blocked", () => {
   assert.equal(forced.probe, true);
 });
 
-test("2 requests without progress triggers early stop", () => {
+test("2 productive ingest attempts without progress triggers early stop", () => {
+  let ledger = createEmptyClRequestLedger({ canaryRequired: true });
+  // Probe must NOT count toward the productive-failure streak.
+  ledger = recordClRequest(ledger, {
+    purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
+    usefulProgress: false,
+  }).ledger;
+  assert.equal(ledger.sequentialNonproductiveBeforeProgress, 0);
+  ledger = recordClRequest(ledger, {
+    purpose: CL_REQUEST_PURPOSES.INGEST_DISCOVERY,
+    usefulProgress: false,
+    productiveAttempt: true,
+  }).ledger;
+  ledger = recordClRequest(ledger, {
+    purpose: CL_REQUEST_PURPOSES.INGEST_FETCH,
+    usefulProgress: false,
+    productiveAttempt: true,
+  }).ledger;
+  assert.equal(ledger.productiveAttemptCount, 2);
+  assert.equal(ledger.sequentialNonproductiveBeforeProgress, 2);
+  const gate = evaluateClConservationGate(ledger, { canaryRequired: true });
+  assert.equal(gate.allow, false);
+  assert.equal(gate.reason, CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS);
+  assert.equal(gate.humanReviewRequired, true);
+});
+
+test("quota probe does not increment productive-failure streak", () => {
   let ledger = createEmptyClRequestLedger({ canaryRequired: true });
   ledger = recordClRequest(ledger, {
     purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
     usefulProgress: false,
   }).ledger;
   ledger = recordClRequest(ledger, {
-    purpose: CL_REQUEST_PURPOSES.INGEST_DISCOVERY,
+    purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
     usefulProgress: false,
   }).ledger;
-  assert.equal(ledger.sequentialNonproductiveBeforeProgress, 2);
-  const gate = evaluateClConservationGate(ledger, { canaryRequired: true });
-  assert.equal(gate.allow, false);
-  assert.equal(gate.reason, CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS);
-  assert.equal(gate.humanReviewRequired, true);
+  assert.equal(ledger.currentSessionRequests, 2);
+  assert.equal(ledger.quotaProbeRequests, 2);
+  assert.equal(ledger.overheadClRequests, 2);
+  assert.equal(ledger.productiveAttemptCount, 0);
+  assert.equal(ledger.sequentialNonproductiveBeforeProgress, 0);
+  assert.equal(evaluateClConservationGate(ledger, { canaryRequired: true }).allow, true);
+});
+
+test("NETWORK_UNAVAILABLE / no child launch does not increment streak", () => {
+  let ledger = createEmptyClRequestLedger({ canaryRequired: true });
+  ledger = recordClRequest(ledger, {
+    purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
+    usefulProgress: false,
+  }).ledger;
+  // Simulated failed launch: no ingest record; network flag would skip if present.
+  ledger = recordClRequest(ledger, {
+    purpose: CL_REQUEST_PURPOSES.INGEST_DISCOVERY,
+    usefulProgress: false,
+    childLaunched: false,
+    networkUnavailable: true,
+    productiveAttempt: false,
+  }).ledger;
+  assert.equal(ledger.productiveAttemptCount, 0);
+  assert.equal(ledger.sequentialNonproductiveBeforeProgress, 0);
 });
 
 test("5 nonproductive canary requests hard-stop", () => {
@@ -189,10 +234,11 @@ test("productive batch resets progress streak", () => {
     purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
     usefulProgress: false,
   }).ledger;
-  assert.equal(ledger.sequentialNonproductiveBeforeProgress, 1);
+  assert.equal(ledger.sequentialNonproductiveBeforeProgress, 0);
   ledger = recordClRequest(ledger, {
     purpose: CL_REQUEST_PURPOSES.INGEST_FETCH,
     usefulProgress: true,
+    productiveAttempt: true,
     authoritiesAdded: 1,
     checkpointAdvanced: true,
   }).ledger;
@@ -302,7 +348,7 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
     `currentLane=${state.currentLane}`,
   );
   assert.equal(state.laneA.court, "vt");
-  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 23, `count=${state.laneA.count}`);
+  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 24, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
   assert.ok(
     state.laneA.targetStatus === "READY" || state.laneA.targetStatus === "PARTIAL",
@@ -315,7 +361,8 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
   assert.ok(
     state.laneA.checkpoint == null ||
       state.laneA.checkpoint === "cl-opinion-9925231" ||
-      state.laneA.checkpoint === "cl-opinion-9925230",
+      state.laneA.checkpoint === "cl-opinion-9925230" ||
+      state.laneA.checkpoint === "cl-opinion-9887733",
     `checkpoint=${state.laneA.checkpoint}`,
   );
   assert.equal(state.completedCourtEvidence.sc.checkpoint, "cl-opinion-11201513");
@@ -334,11 +381,14 @@ test("max total before first progress = 5 hard stop", () => {
       usefulProgress: false,
     }).ledger;
   }
+  // VERIFY is overhead (counted in session total) but not a productive-attempt streak.
+  assert.equal(ledger.sequentialNonproductiveBeforeProgress, 0);
+  assert.equal(ledger.currentSessionRequests, 5);
   const gate = evaluateClConservationGate(ledger, { canaryRequired: true });
   assert.equal(gate.allow, false);
   assert.ok(
-    gate.reason === CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS ||
-      gate.reason === CONSERVATION_REASONS.CL_DEBUG_QUOTA_BUDGET_EXCEEDED,
+    gate.reason === CONSERVATION_REASONS.CL_DEBUG_QUOTA_BUDGET_EXCEEDED ||
+      gate.reason === CONSERVATION_REASONS.SESSION_BUDGET_EXHAUSTED,
   );
 });
 
@@ -370,7 +420,15 @@ test("new worker resets active session counters; prior archived", () => {
     purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
     usefulProgress: false,
   }).ledger;
-  assert.equal(state.clRequestLedger.sequentialNonproductiveBeforeProgress, 2);
+  // Probes count toward session totals/overhead but NOT the productive-failure streak.
+  assert.equal(state.clRequestLedger.sequentialNonproductiveBeforeProgress, 0);
+  assert.equal(state.clRequestLedger.currentSessionRequests, 2);
+  // Seed a false HR that new-session reset must clear.
+  state.humanReview = {
+    required: true,
+    reasons: [CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS],
+    details: [],
+  };
 
   const reset = beginNewClRequestSession(state, {
     workerId: "w2",
@@ -391,21 +449,22 @@ test("new worker resets active session counters; prior archived", () => {
   assert.equal(shouldResetClSessionForNewWorker(state, { processStartNonce: "n3" }), true);
 });
 
-test("one startup probe does not block Lane A; two in SAME session do", () => {
+test("one startup probe does not block Lane A; two probes do NOT trigger CL_NO_PRODUCTIVE_PROGRESS", () => {
   const replay = replayNewWorkerSessionBoundary();
   assert.equal(replay.ok, true);
   assert.equal(replay.gate.allow, true);
   const after = replay.events.find((e) => e.type === "AFTER_ONE_PROBE");
   assert.equal(after.requests, 1);
-  assert.equal(after.streak, 1);
+  assert.equal(after.streak, 0);
   assert.equal(after.allowLaneA, true);
 
   let ledger = createEmptyClRequestLedger({ canaryRequired: true });
   ledger = recordClRequest(ledger, { purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE, usefulProgress: false }).ledger;
   ledger = recordClRequest(ledger, { purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE, usefulProgress: false }).ledger;
   const gate = evaluateClConservationGate(ledger, { canaryRequired: true });
-  assert.equal(gate.allow, false);
-  assert.equal(gate.reason, CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS);
+  assert.equal(gate.allow, true);
+  assert.equal(ledger.sequentialNonproductiveBeforeProgress, 0);
+  assert.equal(ledger.productiveAttemptCount, 0);
 });
 
 test("previous-session + current-session requests do not combine for streak", () => {
@@ -422,9 +481,51 @@ test("previous-session + current-session requests do not combine for streak", ()
     purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE,
     usefulProgress: false,
   }).ledger;
-  assert.equal(state.clRequestLedger.sequentialNonproductiveBeforeProgress, 1);
+  assert.equal(state.clRequestLedger.sequentialNonproductiveBeforeProgress, 0);
   assert.equal(evaluateClConservationGate(state.clRequestLedger, { canaryRequired: true }).allow, true);
-  assert.equal(state.historicalClSessions[0].sequentialNonproductiveBeforeProgress, 1);
+  assert.equal(state.historicalClSessions[0].sequentialNonproductiveBeforeProgress, 0);
+});
+
+test("false CL_NO_PRODUCTIVE_PROGRESS clears from probe-only evidence", () => {
+  const { clearFalseClNoProductiveProgressReview } = require("./queue2-cl-quota-conservation.cjs");
+  let ledger = createEmptyClRequestLedger({ canaryRequired: true });
+  ledger = recordClRequest(ledger, { purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE, usefulProgress: false }).ledger;
+  ledger = recordClRequest(ledger, { purpose: CL_REQUEST_PURPOSES.QUOTA_PROBE, usefulProgress: false }).ledger;
+  const state = {
+    humanReview: {
+      required: true,
+      reasons: [CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS],
+      details: [{ reason: CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS, detail: "streak=2" }],
+    },
+    clRequestLedger: ledger,
+    runtimeState: "HUMAN_REVIEW_REQUIRED",
+    currentLane: "HUMAN_REVIEW_REQUIRED",
+  };
+  const cleared = clearFalseClNoProductiveProgressReview(state, {
+    childLaunches: 0,
+    networkUnavailableCycle: true,
+  });
+  assert.equal(cleared.cleared, true);
+  assert.equal(cleared.state.humanReview.required, false);
+  assert.ok(!cleared.state.humanReview.reasons.includes(CONSERVATION_REASONS.CL_NO_PRODUCTIVE_PROGRESS));
+  assert.equal(cleared.state.clRequestLedger.sequentialNonproductiveBeforeProgress, 0);
+});
+
+test("matching fingerprint => NORMAL; mismatch => CANARY_REQUIRED for documented reason", () => {
+  const { evaluateProductionCanaryGate } = require("./queue2-lane-a-dispatch.cjs");
+  const { resolveCanaryModeAfterKnownGood, NORMAL_BOUNDED_LANE_A } = require("./queue2-post-canary-session-guard.cjs");
+  const match = evaluateProductionCanaryGate({
+    currentFingerprint: "fp-same",
+    knownGoodFingerprint: "fp-same",
+  });
+  assert.equal(match.required, false);
+  assert.equal(resolveCanaryModeAfterKnownGood({ gate: match }).mode, NORMAL_BOUNDED_LANE_A);
+  const miss = evaluateProductionCanaryGate({
+    currentFingerprint: "fp-new",
+    knownGoodFingerprint: "fp-old",
+  });
+  assert.equal(miss.required, true);
+  assert.equal(miss.reason, "code_fingerprint_changed");
 });
 
 test("all Queue #2 autonomous CL callers require ledger context", () => {
