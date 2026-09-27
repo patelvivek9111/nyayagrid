@@ -189,6 +189,14 @@ const {
   resolveCanaryModeAfterKnownGood,
   shouldPromoteCanaryAfterProgress,
 } = require("./queue2-post-canary-session-guard.cjs");
+const {
+  BATCH_BUDGET_EXHAUSTED,
+  WAIT_FOR_QUOTA,
+  LANE_A_CHILD_NO_BUDGET,
+  resolveLaneABatchClBudget,
+  evaluateProbeUsefulnessForNextBatch,
+  classifyPreLaunchNoBudget,
+} = require("./queue2-lane-a-batch-budget.cjs");
 
 const root = path.join(__dirname, "..");
 const reports = path.join(root, "packages/research/corpus/reports");
@@ -1318,6 +1326,70 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     state.clRequestLedger.canaryRequired = state.canaryMode === "CANARY_REQUIRED";
     if (runtime.codeFingerprint) state.clRequestLedger.workerFingerprint = runtime.codeFingerprint;
 
+    // Preview next-batch budget BEFORE spending a probe (avoid probe→LANE_A_CHILD_NO_BUDGET).
+    {
+      const previewBounds = resolveLaneABatchBounds({
+        canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+        maxQualifyingAuthorities:
+          state.canaryMode === "CANARY_REQUIRED"
+            ? Math.min(3, Number(state.canary?.maxQualifyingAuthorities || 2) || 2)
+            : Number(state.canary?.maxQualifyingAuthorities || 8),
+        maxClRequests:
+          state.canaryMode === "CANARY_REQUIRED"
+            ? Number(state.canary?.maxClRequests || CANARY_MAX_SESSION_CL_REQUESTS)
+            : Number(state.canary?.maxClRequests || 40),
+        remainingAuthorities: remainingCasesToFinish(state.laneA),
+        usableRequests:
+          Number(state.quota?.lastPlan?.microBatchMaxRequests) ||
+          Number(state.quota?.lastPlan?.usableRequests) ||
+          Number(state.quota?.currentUsableNow) ||
+          0,
+        requestsPerAuthorityEstimate:
+          Number(state.quota?.lastPlan?.requestsPerAuthorityEstimate) || 2.3,
+        resourceMaxAuthorities: 8,
+        resourceMaxClRequests: 40,
+        checkpoint: state.laneA?.checkpoint,
+      });
+      const probeUse = evaluateProbeUsefulnessForNextBatch({
+        canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+        batchMaxClRequests: previewBounds.maxClRequests,
+        workerSessionRequests:
+          Number(state.clRequestLedger?.currentSessionRequests) ||
+          Number(state.sessionQuota?.sessionClRequests) ||
+          0,
+        canaryMaxClRequests: Number(state.canary?.maxClRequests || CANARY_MAX_SESSION_CL_REQUESTS),
+        usableRequests: previewBounds.maxClRequests,
+        quotaCacheFresh: Boolean(state.quotaProbeCache?.observedAt),
+        clSharedSession: state.clSharedSession,
+      });
+      if (probeUse.refreshBatchBudget) {
+        state.clSharedSession = null;
+        state.laneABatchBudget = null;
+        console.log(
+          JSON.stringify({
+            tag: "BATCH_BUDGET",
+            action: "REFRESH_BEFORE_PROBE",
+            reason: probeUse.detail,
+            workerSessionRequests: probeUse.budget?.workerSessionRequests,
+            nextBatchBudget: probeUse.budget?.batchBudget,
+          }),
+        );
+      }
+      if (!probeUse.allowProbe) {
+        state.runtimeState = probeUse.reason || WAIT_FOR_QUOTA;
+        state.currentLane = "WAIT";
+        state.idleSafe = true;
+        console.log(
+          JSON.stringify({
+            tag: "QUOTA_CHECK",
+            skipped: true,
+            reason: probeUse.reason,
+            detail: probeUse.detail,
+            allowHttp: false,
+          }),
+        );
+        // Skip the probe body entirely.
+      } else {
     const consBeforeProbe = evaluateClConservationGate(state.clRequestLedger, {
       canaryRequired: state.canaryMode === "CANARY_REQUIRED",
     });
@@ -1803,6 +1875,8 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     }
       } // end fresh-probe (cache miss) branch
     } // end conservation-allow branch
+      } // end probeUse.allowProbe else
+    } // end next-batch budget preview
   }
 
   let laneAResult = null;
@@ -2116,11 +2190,63 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
               canaryRequired: state.canaryMode === "CANARY_REQUIRED",
             }),
           );
+          state.laneABatchBudget = resolveLaneABatchClBudget({
+            canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+            batchMaxClRequests: batchBounds.maxClRequests,
+            workerSessionRequests: Number(state.sessionQuota?.sessionClRequests) || 0,
+            canaryMaxClRequests: Number(
+              state.canary?.maxClRequests || CANARY_MAX_SESSION_CL_REQUESTS,
+            ),
+          });
+          console.log(
+            JSON.stringify({
+              tag: "LANE_A_BATCH_BUDGET",
+              mode: state.laneABatchBudget.mode,
+              workerSessionRequests: state.laneABatchBudget.workerSessionRequests,
+              batchBudget: state.laneABatchBudget.batchBudget,
+              alreadyUsed: state.laneABatchBudget.alreadyUsed,
+              remainingClRequests: state.laneABatchBudget.remainingClRequests,
+              allowChildLaunch: state.laneABatchBudget.allowChildLaunch,
+            }),
+          );
+          if (!state.laneABatchBudget.allowChildLaunch) {
+            const noBudget = classifyPreLaunchNoBudget({
+              reason: LANE_A_CHILD_NO_BUDGET,
+              canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+              remainingClBudget: 0,
+              detail: state.laneABatchBudget.detail,
+            });
+            console.log(
+              JSON.stringify({
+                tag: "LANE_A_CL",
+                blocked: true,
+                reason: noBudget.classification,
+                detail: noBudget.detail,
+                childLaunches: 0,
+              }),
+            );
+            state.runtimeState = noBudget.runtimeState;
+            state.currentLane = "WAIT";
+            state.idleSafe = true;
+            state.clSharedSession = null;
+            laneAResult = {
+              classified: {
+                ...noBudget,
+                lifecycleState: null,
+                unresolvedUnknown: false,
+              },
+              nonTerminal: false,
+              unresolvedUnknown: false,
+              preLaunchNoBudget: true,
+              liveDb: null,
+              postRunDbRefreshed: false,
+            };
+          } else {
           state.clSharedSession = createSharedClSession({
             sessionId: state.clRequestLedger?.sessionId || state.sessionQuota?.sessionId,
             batchId: `lane-a-${state.laneA.court}-${Date.now()}`,
-            maxClRequests: batchBounds.maxClRequests,
-            alreadyUsed: Number(state.sessionQuota?.sessionClRequests) || 0,
+            maxClRequests: state.laneABatchBudget.childMaxClRequests,
+            alreadyUsed: state.laneABatchBudget.alreadyUsed,
             historicalJobApiCallsBaseline: state.sessionQuota?.historicalJobApiCallsBaseline || 0,
             workerFingerprint: runtime.codeFingerprint,
           });
@@ -2144,6 +2270,11 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             now: new Date(state.laneARunnerStartedAt),
           });
           saveLocalState(state);
+          // Heartbeat before potentially long Lane A operation.
+          {
+            const preLaneStatus = publishStatus(state, { currentTask: "lane_a_cl" });
+            state = maybeHeartbeat(state, preLaneStatus, { force: true });
+          }
           const raw = runLaneA(state, {
             runner: process.env.QUEUE2_MOCK_LANE_A_RUNNER === "1" ? runtime.mockLaneARunner : null,
             batchSize: batchBounds.batchSize,
@@ -2159,6 +2290,49 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             priorCount,
             target: state.laneA.target,
           });
+
+          // Pre-launch no-budget: deterministic, not UNKNOWN / RUNNER_RESULT_UNRESOLVED.
+          const preLaunchNoBudget = classifyPreLaunchNoBudget({
+            stdout: raw?.stdout || "",
+            canaryRequired: state.canaryMode === "CANARY_REQUIRED",
+            remainingClBudget: remainingChildClBudget(state.clSharedSession),
+          });
+          if (preLaunchNoBudget.matched) {
+            console.log(
+              JSON.stringify({
+                tag: "LANE_A_CHILD_NO_BUDGET",
+                classification: preLaunchNoBudget.classification,
+                childLaunched: false,
+                pid: null,
+                unresolvedUnknown: false,
+                detail: preLaunchNoBudget.detail,
+              }),
+            );
+            state = clearLaneAChildOwnership(state, {
+              clearRecord: true,
+              jobPaused: false,
+              reason: preLaunchNoBudget.classification,
+            });
+            state.clSharedSession = null;
+            state.laneABatchBudget = null;
+            state.runtimeState = preLaunchNoBudget.runtimeState;
+            state.currentLane = "WAIT";
+            state.idleSafe = true;
+            state.unresolvedUnknown = false;
+            laneAResult = {
+              classified: {
+                ...classified,
+                ...preLaunchNoBudget,
+                unresolvedUnknown: false,
+                nonTerminal: false,
+              },
+              nonTerminal: false,
+              unresolvedUnknown: false,
+              preLaunchNoBudget: true,
+              liveDb: null,
+              postRunDbRefreshed: false,
+            };
+          } else {
 
           // Fly control-plane / DNS failure after parent quota probe, before confirmed child start.
           // Do not assume child exists or does not; preserve probe accounting; no human review.
@@ -2929,6 +3103,8 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           }
           } // end freshness-ok / terminal reconcile branches
           } // end non-terminal else (terminal path)
+          } // end preLaunchNoBudget else (child launch path)
+          } // end allowChildLaunch else
           } // end launchGate.ok + lock try body scope marker
         } finally {
           const rel = releaseLaneALock(state, "dual-lane-runner", new Date());
@@ -3131,6 +3307,9 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
       processStartNonce: state.watchdogSession?.processStartNonce || PROCESS_NONCE,
       watchdogSession: state.watchdogSession || null,
       currentLane: state.currentLane,
+      runtimeState: state.runtimeState || null,
+      intentionalIdleUntil: state.intentionalIdleUntil || null,
+      intentionalIdleReason: state.intentionalIdleReason || null,
       currentTask: state.currentLane === "A" ? "cl_ingest" : state.laneB?.task || "NONE",
       checkpoint: state.laneA?.checkpoint,
       previousCheckpoint: state.laneA?.lastSuccessfulExternalId,
@@ -3755,7 +3934,27 @@ async function main() {
         aiCalls: 0,
       }),
     );
+    // Force heartbeat before intentional long sleep so deadman cannot fire on healthy idle.
+    {
+      const idleStatus = publishStatus(state, {
+        currentTask: state.currentLane === "WAIT" ? "wait_quota" : "worker_idle",
+      });
+      state.intentionalIdleUntil = new Date(Date.now() + sleepFor + 60_000).toISOString();
+      state.intentionalIdleReason = wait.classification || state.runtimeState || "WORKER_IDLE";
+      state = maybeHeartbeat(state, idleStatus, { force: true });
+      runtime.state = state;
+      saveLocalState(state);
+    }
     sleepMs(sleepFor);
+    // Refresh heartbeat after waking from intentional idle.
+    {
+      state.intentionalIdleUntil = null;
+      state.intentionalIdleReason = null;
+      const wakeStatus = publishStatus(state, { currentTask: "post_idle_wake" });
+      state = maybeHeartbeat(state, wakeStatus, { force: true });
+      runtime.state = state;
+      saveLocalState(state);
+    }
   }
 
   const clDuringB = Number(lastCycle?.clDuringB ?? 0);

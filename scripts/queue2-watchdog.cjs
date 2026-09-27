@@ -930,6 +930,15 @@ function evaluateHeartbeatDeadman(params = {}) {
   if (!hbAt) return null;
   if (new Date(hbAt).getTime() > now.getTime()) return null;
 
+  // Intentional healthy idle window declared before sleepMs — not a dead worker.
+  const idleUntil = snap.intentionalIdleUntil || session.intentionalIdleUntil || null;
+  if (idleUntil) {
+    const untilMs = new Date(idleUntil).getTime();
+    if (Number.isFinite(untilMs) && now.getTime() <= untilMs && alive !== false) {
+      return null;
+    }
+  }
+
   const hbAge = minutesBetween(hbAt, nowIso);
   const threshold = Number(cfg?.deadman?.heartbeatStaleMinutes ?? 20);
 

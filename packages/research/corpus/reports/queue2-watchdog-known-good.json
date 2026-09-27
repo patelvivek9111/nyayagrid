@@ -1,11 +1,10 @@
 {
-  "codeFingerprint": "95d9828aff42620af8912f421d9e5efb8b0c4402371425b6118e03d7b0973e7a",
-  "workerVersion": "queue2-dual-lane",
-  "promotedAt": "2026-09-27T15:10:56.769Z",
+  "codeFingerprint": "044549f1a11ae95eb893c89a7405bc0e7e4ed2a41841a163cfba048112dd907f",
+  "workerVersion": "queue2-safety-gate-1",
+  "promotedAt": "2026-09-27T16:12:26.416Z",
   "court": "vt",
-  "count": 24,
+  "count": 31,
   "target": 45,
-  "checkpoint": "cl-opinion-9887733",
-  "reason": "db_confirmed_post_canary_progress",
-  "aiCalls": 0
+  "checkpoint": "cl-opinion-9886400",
+  "reason": "production_mutation_canary_pass_quota_paused"
 }

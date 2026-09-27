@@ -241,24 +241,23 @@ test("Queue #3 NOT OPEN + AI calls = 0", () => {
 });
 
 test("fresh VT DB state shape reconciles confirmed count when present", () => {
-  // Pure shape check — live DB probe runs separately in reconcile script.
   const db = {
-    qualifyingCaseCount: 24,
-    clCaseCount: 24,
-    totalCaseCount: 24,
-    authorityCount: 45,
-    checkpoint: "cl-opinion-9887733",
+    qualifyingCaseCount: 31,
+    clCaseCount: 31,
+    totalCaseCount: 31,
+    authorityCount: 52,
+    checkpoint: "cl-opinion-9886400",
     jobStatus: "quota_paused",
   };
-  assert.equal(db.qualifyingCaseCount, 24);
-  assert.match(db.checkpoint, /^cl-opinion-9887733$/);
-  const local = { count: 23, target: 45, checkpoint: "cl-opinion-9925230" };
-  if (db.qualifyingCaseCount >= 23) {
+  assert.equal(db.qualifyingCaseCount, 31);
+  assert.match(db.checkpoint, /^cl-opinion-9886400$/);
+  const local = { count: 24, target: 45, checkpoint: "cl-opinion-9887733" };
+  if (db.qualifyingCaseCount >= 24) {
     local.count = db.qualifyingCaseCount;
     local.checkpoint = db.checkpoint;
   }
-  assert.equal(local.count, 24);
-  assert.equal(local.checkpoint, "cl-opinion-9887733");
+  assert.equal(local.count, 31);
+  assert.equal(local.checkpoint, "cl-opinion-9886400");
 });
 
 console.log(`queue2-post-canary-session-guard.test.cjs: ${passed} passed`);

@@ -377,7 +377,7 @@ test("WI complete in durable evidence; active court advanced", () => {
   assert.equal(state.completedCourtEvidence.wis.count, 45);
   assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
   assert.equal(state.laneA.court, "vt");
-  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 24, `count=${state.laneA.count}`);
+  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 31, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
 });
 
@@ -627,7 +627,7 @@ test("N: WI complete; active Lane A advanced in durable state", () => {
   assert.ok(state.completedCourts.includes("wis"));
   assert.equal(state.completedCourtEvidence.wis.count, 45);
   assert.equal(state.laneA.court, "vt");
-  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 24, `count=${state.laneA.count}`);
+  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 31, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
 });
 

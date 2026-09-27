@@ -11,21 +11,21 @@
   "currentCourt": "vt",
   "currentJurisdiction": "VT",
   "jurisdiction": "VT",
-  "currentCount": 24,
+  "currentCount": 31,
   "targetCount": 45,
-  "checkpoint": "cl-opinion-9887733",
-  "cursor": "cl-opinion-9887733",
-  "lastSuccessfulExternalId": "cl-opinion-9887733",
-  "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=vt&order_by=-id&page_size=2&cluster__date_filed__lte=2018-12-31&cursor=cD05OTI1MjMw",
-  "lastSuccessfulAt": null,
+  "checkpoint": "cl-opinion-9886400",
+  "cursor": "cl-opinion-9886400",
+  "lastSuccessfulExternalId": "cl-opinion-9886400",
+  "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=vt&order_by=-id&page_size=8&cluster__date_filed__lte=2018-12-31&cursor=cD05ODg2NDAw",
+  "lastSuccessfulAt": "2026-09-27T15:26:28.781Z",
   "runner": "staging-cl-batch-job",
   "mappingStatus": "VERIFIED",
-  "manifestVersion": 55,
+  "manifestVersion": 56,
   "jobStatus": "quota_paused",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastUpdatedAt": "2026-09-27T14:48:01.333Z",
-  "lastHeartbeatAt": "2026-09-27T14:48:01.333Z",
-  "nextQuotaCheckAt": "2026-09-27T15:02:50.868Z",
+  "lastUpdatedAt": "2026-09-27T15:36:58.566Z",
+  "lastHeartbeatAt": "2026-09-27T15:36:58.566Z",
+  "nextQuotaCheckAt": "2026-09-27T15:37:57.719Z",
   "network": {
     "waitingForNetwork": false,
     "lastOnlineAt": null
@@ -36,13 +36,13 @@
   },
   "quota": {
     "minuteRemaining": 30,
-    "hourRemaining": 291,
-    "dayRemaining": 770,
+    "hourRemaining": 283,
+    "dayRemaining": 934,
     "safeRequests": 28,
-    "lastProbeAt": "2026-09-27T14:47:50.868Z",
+    "lastProbeAt": "2026-09-27T15:36:28.856Z",
     "hard429Count": 0,
-    "dayResetAt": "2026-09-27T14:49:40.109991+00:00",
-    "quotaStateObservedAt": "2026-09-27T14:47:50.868Z",
+    "dayResetAt": "2026-09-27T15:41:37.664353+00:00",
+    "quotaStateObservedAt": "2026-09-27T15:36:28.856Z",
     "quotaStateSource": "probe.limits",
     "quotaStateConfidence": "AUTHORITATIVE_API",
     "quotaStateAgeMs": 0
@@ -82,5 +82,5 @@
     "reasons": [],
     "details": []
   },
-  "updatedAt": "2026-09-27T15:11:27.389Z"
+  "updatedAt": "2026-09-27T16:12:01.531Z"
 }
