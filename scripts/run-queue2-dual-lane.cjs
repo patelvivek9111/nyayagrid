@@ -200,6 +200,12 @@ const {
   classifyPreLaunchNoBudget,
   assertParentChildBudgetAgreement,
 } = require("./queue2-lane-a-batch-budget.cjs");
+const {
+  createInterruptibleSleep,
+  beginShutdown,
+  shouldSkipWorkForShutdown,
+  windowsNpmShutdownContract,
+} = require("./queue2-interruptible-shutdown.cjs");
 
 const root = path.join(__dirname, "..");
 const reports = path.join(root, "packages/research/corpus/reports");
@@ -241,7 +247,12 @@ const runtime = {
   session: null,
   dbWriteReady: false,
   dbWriteProbe: null,
+  sleepController: null,
+  shutdownInvoked: false,
 };
+
+/** Interruptible idle sleep — never spawnSync/Atomics.wait (blocks SIGINT). */
+runtime.sleepController = createInterruptibleSleep(runtime);
 
 function loadLocalState() {
   if (!fs.existsSync(statePath)) return createInitialState();
@@ -539,11 +550,17 @@ function loadManifestForSelection() {
   }
 }
 
-function runLaneB() {
+async function runLaneB() {
   console.log(JSON.stringify({ tag: "LANE_B_OFFLINE", phase: "start", courtListenerHttpCalls: 0 }));
+  if (shouldSkipWorkForShutdown(runtime)) {
+    return { ok: false, skippedForShutdown: true, courtListenerHttpCalls: 0, lane: "B" };
+  }
   bundleLaneB();
   let lastErr = "";
   for (let attempt = 1; attempt <= 3; attempt += 1) {
+    if (shouldSkipWorkForShutdown(runtime)) {
+      return { ok: false, skippedForShutdown: true, courtListenerHttpCalls: 0, lane: "B" };
+    }
     const r = spawnSync(
       process.execPath,
       [path.join(__dirname, "run-wave2f-fly-tool.cjs"), "scripts/staging-queue2-lane-b-bundled.cjs"],
@@ -556,7 +573,10 @@ function runLaneB() {
     lastErr = (out || `exit ${r.status}`).slice(-400);
     console.log(JSON.stringify({ tag: "LANE_B_OFFLINE", attempt, retry: attempt < 3 }));
     if (attempt < 3) {
-      spawnSync(process.execPath, ["-e", "Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,8000)"]);
+      await sleepMs(8000);
+      if (shouldSkipWorkForShutdown(runtime)) {
+        return { ok: false, skippedForShutdown: true, courtListenerHttpCalls: 0, lane: "B" };
+      }
     }
   }
   throw new Error(lastErr || "lane_b_failed");
@@ -926,46 +946,80 @@ function cleanupOwnedLaneARemoteChild(reason = "signal") {
 }
 
 function safeShutdown(reason = "signal") {
-  if (runtime.shuttingDown) return;
-  runtime.shuttingDown = true;
-  stopHeartbeatTimer();
-  try {
-    cleanupOwnedLaneARemoteChild(reason);
-  } catch {
-    /* best effort — must not leave orphans if we can help it */
-  }
-  try {
-    if (runtime.state) {
+  // Single path: shuttingDown=true + cancel sleep FIRST, then cleanup once.
+  const result = beginShutdown(runtime, {
+    reason,
+    sleepController: runtime.sleepController,
+    stopHeartbeat: stopHeartbeatTimer,
+    cleanupOwnedChild: (r) => {
+      console.log(
+        JSON.stringify({
+          tag: "LANE_A_CHILD_CLEANUP",
+          reason: r,
+          hasChild: Boolean(runtime.state?.laneAChild?.pid),
+          pid: runtime.state?.laneAChild?.pid || null,
+        }),
+      );
+      return cleanupOwnedLaneARemoteChild(r);
+    },
+    persistStopped: (r) => {
+      if (!runtime.state) return;
       if (runtime.state.laneA && !runtime.state.laneA.jobLifecycle) {
         runtime.state.laneA.jobLifecycle = "PAUSED_RESUMABLE";
         runtime.state.laneA.jobStatus = runtime.state.laneA.jobStatus || "quota_paused";
       }
       runtime.state.runtimeState = "STOPPED";
+      runtime.state.intentionalIdleUntil = null;
+      runtime.state.intentionalIdleReason = null;
+      runtime.state.currentLane = "STOPPED";
+      runtime.state.idleSafe = true;
       saveLocalState(runtime.state);
       emit("WORKER_STOP", {
         lane: statusLaneFromState(runtime.state),
         court: runtime.state.laneA?.court,
         checkpoint: runtime.state.laneA?.checkpoint,
-        reason,
+        reason: r,
       });
-    }
-  } catch {
-    /* best effort */
-  }
-  try {
-    releaseWorkerLock({
-      reportsDir: reports,
-      workerId: WORKER_ID,
-      processStartNonce: PROCESS_NONCE,
-    });
-    emit("LOCK_RELEASED", {
-      lane: runtime.state ? statusLaneFromState(runtime.state) : null,
-      reason,
-      extra: { workerId: WORKER_ID },
-    });
-  } catch {
-    /* best effort */
-  }
+    },
+    releaseLock: (r) => {
+      releaseWorkerLock({
+        reportsDir: reports,
+        workerId: WORKER_ID,
+        processStartNonce: PROCESS_NONCE,
+      });
+      emit("LOCK_RELEASED", {
+        lane: runtime.state ? statusLaneFromState(runtime.state) : null,
+        reason: r,
+        extra: { workerId: WORKER_ID },
+      });
+      console.log(
+        JSON.stringify({
+          tag: "LOCK_RELEASED",
+          reason: r,
+          workerId: WORKER_ID,
+        }),
+      );
+    },
+  });
+  runtime.shutdownInvoked = true;
+  return result;
+}
+
+function emptyCycleAfterShutdown(state) {
+  return {
+    state,
+    status: state ? publishStatus(state) : null,
+    health: {},
+    quota: { probed: false, safeRequests: 0, windows: state?.quota?.windows },
+    laneAResult: null,
+    laneBResult: null,
+    human: Boolean(state?.humanReview?.required),
+    runStatus: "STOPPED",
+    clDuringB: 0,
+    skippedForShutdown: true,
+    courtListenerHttpCalls: 0,
+    childLaunches: 0,
+  };
 }
 
 /**
@@ -973,6 +1027,18 @@ function safeShutdown(reason = "signal") {
  * Lane A vs B is chosen by the controller — never by human prompt.
  */
 async function runWorkerCycle(state, cycleStarted = new Date()) {
+  if (shouldSkipWorkForShutdown(runtime)) {
+    console.log(
+      JSON.stringify({
+        tag: "WORKER_CYCLE_SKIPPED",
+        reason: "shutting_down",
+        courtListenerHttpCalls: 0,
+        childLaunches: 0,
+        mutations: 0,
+      }),
+    );
+    return emptyCycleAfterShutdown(state);
+  }
   const started = cycleStarted;
   let quota = {
     probed: false,
@@ -1013,6 +1079,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
   }
 
   // Database writability before any CourtListener probe, including /api-usage/.
+  if (shouldSkipWorkForShutdown(runtime)) return emptyCycleAfterShutdown(state);
   runtime.dbWriteReady = false;
   const dbProbe = runStagingDbWriteProbe();
   const ingestDb = evaluateIngestDbWriteReadiness(dbProbe);
@@ -1310,6 +1377,17 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     runtime.morningSummaryPending ||
     quotaProbeDue(state, started)
   ) {
+    if (shouldSkipWorkForShutdown(runtime)) {
+      console.log(
+        JSON.stringify({
+          tag: "QUOTA_CHECK",
+          skipped: true,
+          reason: "shutting_down",
+          clRequests: 0,
+          childLaunches: 0,
+        }),
+      );
+    } else {
     state.sessionQuota = state.sessionQuota || createEmptySessionQuota();
     // Active ledger must already exist from process-start beginNewClRequestSession.
     // Never revive a stale persisted ledger mid-cycle.
@@ -1882,6 +1960,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     } // end conservation-allow branch
       } // end probeUse.allowProbe else
     } // end next-batch budget preview
+    } // end !shuttingDown quota-probe else
   }
 
   let laneAResult = null;
@@ -1904,6 +1983,17 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
       }),
     );
   } else if (state.currentLane === "A" && quota.safeRequests >= 1) {
+    if (shouldSkipWorkForShutdown(runtime)) {
+      console.log(
+        JSON.stringify({
+          tag: "LANE_A_CL",
+          skipped: true,
+          reason: "shutting_down",
+          courtListenerHttpCalls: 0,
+          childLaunches: 0,
+        }),
+      );
+    } else {
     // Stale idleSafe from a prior cycle must not survive into active Lane A.
     state.idleSafe = false;
     state.runtimeState = "RUNNING";
@@ -3144,6 +3234,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
       } // end launchGate.ok / spawn allowed
       } // end processGate clear-to-spawn
     }
+    } // end !shuttingDown Lane A else
   } else if (state.currentLane === "A" && quota.safeRequests < 1) {
     // Selected A but no usable quota — do not pretend Lane B idle without an explicit floor transition.
     console.log(
@@ -3157,7 +3248,23 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
   }
 
   if (state.currentLane === "B" && !state.humanReview?.required) {
-    try {
+    if (shouldSkipWorkForShutdown(runtime)) {
+      console.log(
+        JSON.stringify({
+          tag: "LANE_B_OFFLINE",
+          skipped: true,
+          reason: "shutting_down",
+          courtListenerHttpCalls: 0,
+          mutations: 0,
+        }),
+      );
+      laneBResult = {
+        ok: true,
+        idleSafe: true,
+        skippedForShutdown: true,
+        courtListenerHttpCalls: 0,
+      };
+    } else try {
       const runLaneBEnabled = process.env.QUEUE2_RUN_LANE_B === "1";
       const selection = selectLaneBTask({
         now: new Date(),
@@ -3212,7 +3319,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           checkpoint: state.laneA.checkpoint,
         });
         if (process.env.QUEUE2_LANE_B_MONOLITH === "1") {
-          laneBResult = runLaneB();
+          laneBResult = await runLaneB();
         } else {
           laneBResult = runRegistryTask(selection.task, {
             corpusVersion: state.depthManifestVersion,
@@ -3466,15 +3573,47 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
   };
 }
 
-function sleepMs(ms) {
-  const n = Math.max(0, Number(ms) || 0);
-  if (n <= 0) return;
-  spawnSync(process.execPath, ["-e", `Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,${n})`], {
-    shell: false,
-  });
+/**
+ * Interruptible idle sleep. NEVER use spawnSync/Atomics.wait — that blocks the
+ * event loop so SIGINT only kills the wait child and the parent resumes the loop.
+ */
+async function sleepMs(ms) {
+  if (shouldSkipWorkForShutdown(runtime)) {
+    return { sleptMs: 0, cancelled: true, reason: "shutting_down" };
+  }
+  if (!runtime.sleepController) {
+    runtime.sleepController = createInterruptibleSleep(runtime);
+  }
+  return runtime.sleepController.sleep(ms, { chunkMs: 250 });
 }
 
 async function main() {
+  // Make the worker identifiable under Windows Task Manager / Get-Process.
+  try {
+    process.title = `nyayagrid-q2 ${WORKER_ID}`;
+  } catch {
+    /* ignore */
+  }
+  // Keep stdin open so Windows console Ctrl+C is delivered to this process
+  // when launched via `npm run queue2:worker` (npm may otherwise detach oddly).
+  try {
+    if (process.stdin && typeof process.stdin.resume === "function") {
+      process.stdin.resume();
+    }
+  } catch {
+    /* ignore */
+  }
+  console.log(
+    JSON.stringify({
+      tag: "WORKER_BOOT",
+      workerId: WORKER_ID,
+      pid: process.pid,
+      ppid: process.ppid,
+      canonicalCommand: windowsNpmShutdownContract().canonicalCommand,
+      sleep: windowsNpmShutdownContract().sleepImplementation,
+      aiCalls: 0,
+    }),
+  );
   fs.mkdirSync(reports, { recursive: true });
   let state = neverOpenQueue3(loadLocalState());
   const started = new Date();
@@ -3794,12 +3933,19 @@ async function main() {
   }
 
   const onSignal = (sig) => {
+    // Immediate: flag + cancel sleep so the event loop never starts another cycle.
     console.log(JSON.stringify({ tag: "WORKER_STOP", reason: sig }));
     safeShutdown(sig);
     process.exit(0);
   };
   process.on("SIGINT", () => onSignal("SIGINT"));
   process.on("SIGTERM", () => onSignal("SIGTERM"));
+  // Windows console close / npm parent death — treat as stop when available.
+  try {
+    process.on("SIGHUP", () => onSignal("SIGHUP"));
+  } catch {
+    /* not on all platforms */
+  }
 
   // Checkpoint hardening: never leave an active CL partial with null resume position.
   // READY first-start (baseline corpus count, no CL resume metadata) is valid.
@@ -3943,7 +4089,8 @@ async function main() {
           aiCalls: 0,
         }),
       );
-      sleepMs(2000);
+      await sleepMs(2000);
+      if (runtime.shuttingDown) break;
       continue;
     }
     console.log(
@@ -3975,7 +4122,8 @@ async function main() {
       runtime.state = state;
       saveLocalState(state);
     }
-    sleepMs(sleepFor);
+    await sleepMs(sleepFor);
+    if (runtime.shuttingDown) break;
     // Refresh heartbeat after waking from intentional idle.
     {
       state.intentionalIdleUntil = null;

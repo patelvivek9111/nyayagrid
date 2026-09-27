@@ -297,8 +297,14 @@ test("process gate before CL; attached child invariants unchanged", () => {
 test("worker process gate precedes parent quota probe (live path order)", () => {
   const src = fs.readFileSync(path.join(__dirname, "run-queue2-dual-lane.cjs"), "utf8");
   const cycleStart = src.indexOf("async function runWorkerCycle");
-  const cycleEnd = src.indexOf("\nfunction sleepMs", cycleStart);
+  const cycleEnd = src.indexOf("\nasync function sleepMs", cycleStart);
   const cycle = src.slice(cycleStart, cycleEnd > 0 ? cycleEnd : undefined);
+  const sleepIdx = src.indexOf("async function sleepMs");
+  assert.ok(sleepIdx > 0, "async sleepMs required");
+  const sleepBody = src.slice(sleepIdx, sleepIdx + 800);
+  assert.equal(/Atomics\.wait/.test(sleepBody), false, "blocking Atomics.wait sleep must be removed");
+  assert.ok(src.includes("createInterruptibleSleep"), "interruptible sleep required");
+  assert.ok(src.includes("shouldSkipWorkForShutdown"), "shutdown guards required");
   const preCl = cycle.indexOf("LANE_A_PROCESS_GATE_PRE_CL");
   const quotaFn = cycle.indexOf("runQuotaProbe(");
   const processGateBlocks = cycle.indexOf("processGateBlocksCl");
