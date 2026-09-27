@@ -1,0 +1,43 @@
+{
+  "classification": "HOLD",
+  "reason": "STAGING_NEON_QUOTA_EXCEEDED",
+  "generatedAt": "2026-09-27T02:02:30.000Z",
+  "queue": { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", "transition": "NONE" },
+  "worker": "STOPPED",
+  "courtListenerQuota": {
+    "source": "AUTHORITATIVE_API",
+    "membership": "CL Membership - Tier 2",
+    "minuteRemaining": 30,
+    "hourRemaining": 300,
+    "dayRemaining": 726,
+    "dayResetAt": "2026-09-27T14:28:39.007524+00:00",
+    "hard429Count": 0
+  },
+  "blocker": {
+    "kind": "database_platform_quota",
+    "provider": "neon",
+    "host": "ep-jolly-brook-auhdpay3-pooler.c-10.us-east-1.aws.neon.tech",
+    "code": "53000",
+    "message": "Your account or project has exceeded the quota. Upgrade your plan to increase limits.",
+    "impact": "Cannot read or write staging legal_authorities / corpus_ingest_jobs; Vermont ingest cannot start safely"
+  },
+  "intendedNext": {
+    "jurisdiction": "VT",
+    "court": "vt",
+    "mapping": "VERIFIED",
+    "qualifyingCurrent": 20,
+    "target": 45
+  },
+  "corpusLastKnown": {
+    "authorities": 3208,
+    "cases": 1891,
+    "clCases": 1846,
+    "chunks": 44793,
+    "embeddings": 44793,
+    "duplicateSourceIds": 0,
+    "orphanCount": 0
+  },
+  "mutations": 0,
+  "courtListenerHttpCallsThisSession": 1,
+  "git": { "commit": null, "pushed": false }
+}
