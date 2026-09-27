@@ -412,21 +412,6 @@ function planDatabaseQuotaRecovery(params = {}) {
     authorityCount: next.currentAuthorities,
   });
   const progress = targetProgressFromCounts(counts, next.target);
-  state.laneA = {
-    ...(state.laneA || {}),
-    court: next.court,
-    jurisdiction: next.jurisdiction,
-    qualifyingCaseCount: progress.qualifyingCaseCount,
-    clCaseCount: counts.clCaseCount,
-    totalCaseCount: counts.totalCaseCount,
-    authorityCount: counts.authorityCount,
-    count: progress.qualifyingCaseCount,
-    target: next.target,
-    mappingStatus: next.mappingStatus || "VERIFIED",
-    checkpoint: next.checkpoint,
-    targetStatus: next.status || "READY",
-    jobStatus: state.laneA?.jobStatus === "completed" ? "ready" : state.laneA?.jobStatus || "ready",
-  };
   push("SELECT_TARGET", true, {
     court: next.court,
     jurisdiction: next.jurisdiction,
@@ -473,6 +458,37 @@ function planDatabaseQuotaRecovery(params = {}) {
     };
   }
 
+  state.laneA = {
+    ...(state.laneA || {}),
+    court: next.court,
+    jurisdiction: next.jurisdiction,
+    qualifyingCaseCount: progress.qualifyingCaseCount,
+    clCaseCount: counts.clCaseCount,
+    totalCaseCount: counts.totalCaseCount,
+    authorityCount: counts.authorityCount,
+    count: progress.qualifyingCaseCount,
+    target: next.target,
+    mappingStatus: next.mappingStatus || "VERIFIED",
+    checkpoint: next.checkpoint,
+    targetStatus: next.status || "READY",
+    jobStatus: state.laneA?.jobStatus === "completed" ? "ready" : state.laneA?.jobStatus || "ready",
+  };
+  // First-start must not inherit another court's resume cursor/checkpoint.
+  if (jobReady.safeFirstStart === true || jobReady.classification === VT_READINESS.READY_FIRST_START) {
+    state.laneA.jobLifecycle = "READY_FIRST_START";
+    state.laneA.checkpoint = null;
+    state.laneA.cursor = null;
+    state.laneA.lastSuccessfulExternalId = null;
+    state.laneA.nextPageUrl = null;
+  } else if (jobReady.safeResume === true && jobReady.resumeFrom) {
+    state.laneA.jobLifecycle = "PAUSED_RESUMABLE";
+    state.laneA.checkpoint =
+      jobReady.resumeFrom.lastSuccessfulExternalId || jobReady.resumeFrom.cursor || next.checkpoint;
+    state.laneA.cursor = jobReady.resumeFrom.cursor || null;
+    state.laneA.lastSuccessfulExternalId = jobReady.resumeFrom.lastSuccessfulExternalId || null;
+    state.laneA.nextPageUrl = jobReady.resumeFrom.nextPageUrl || null;
+  }
+
   const processGate = evaluateLaneAProcessGate({
     processes: params.remoteProcesses || [],
     laneAChild: state.laneAChild || null,
@@ -486,9 +502,20 @@ function planDatabaseQuotaRecovery(params = {}) {
     count: processGate.count,
   });
   if (!processOk) {
+    state.humanReview = {
+      required: true,
+      reasons: [processGate.reason || REMOTE_CHILD_REASONS.ORPHAN_LANE_A_CHILD],
+      details: [
+        {
+          reason: processGate.reason || REMOTE_CHILD_REASONS.ORPHAN_LANE_A_CHILD,
+          count: processGate.count,
+          orphanPid: processGate.orphanPid || null,
+        },
+      ],
+    };
     return {
       ok: false,
-      hold: processGate.emergencyStop || processGate.count > 0,
+      hold: true,
       reason: processGate.reason || REMOTE_CHILD_REASONS.ORPHAN_LANE_A_CHILD,
       steps,
       state,

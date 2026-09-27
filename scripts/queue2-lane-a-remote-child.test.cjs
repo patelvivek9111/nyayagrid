@@ -13,6 +13,7 @@ const {
   createRemoteChildOwnership,
   parseRemoteLaneAProcesses,
   evaluateLaneAProcessGate,
+  processGateBlocksCourtListener,
   maySpawnLaneARemoteChild,
   assertChildMayMakeClRequest,
   planRemoteChildTermination,
@@ -82,6 +83,35 @@ test("process gate: 1 orphan PPID=1 → ORPHAN_LANE_A_CHILD", () => {
   assert.equal(g.reason, REMOTE_CHILD_REASONS.ORPHAN_LANE_A_CHILD);
   assert.equal(g.humanReviewRequired, true);
   assert.equal(g.courtListenerHttpCallsAllowed, false);
+  assert.equal(processGateBlocksCourtListener(g), true);
+});
+
+test("processGateBlocksCourtListener: clear allows CL; multi/orphan block; owned-active does not", () => {
+  assert.equal(
+    processGateBlocksCourtListener({
+      allowLaunch: true,
+      count: 0,
+      reason: "NO_MATCHING_PROCESS",
+      emergencyStop: false,
+    }),
+    false,
+  );
+  assert.equal(
+    processGateBlocksCourtListener({
+      reason: REMOTE_CHILD_REASONS.MULTIPLE_LANE_A_CHILDREN,
+      emergencyStop: true,
+      courtListenerHttpCallsAllowed: false,
+    }),
+    true,
+  );
+  assert.equal(
+    processGateBlocksCourtListener({
+      reason: REMOTE_CHILD_REASONS.LANE_A_CHILD_ALREADY_ACTIVE,
+      allowLaunch: false,
+      superviseExisting: true,
+    }),
+    false,
+  );
 });
 
 test("process gate: >1 → MULTIPLE_LANE_A_CHILDREN emergency", () => {
@@ -96,6 +126,7 @@ test("process gate: >1 → MULTIPLE_LANE_A_CHILDREN emergency", () => {
   assert.equal(g.emergencyStop, true);
   assert.equal(g.reason, REMOTE_CHILD_REASONS.MULTIPLE_LANE_A_CHILDREN);
   assert.equal(g.allowLaunch, false);
+  assert.equal(processGateBlocksCourtListener(g), true);
 });
 
 test("second spawn blocked while owned child alive", () => {

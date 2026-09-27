@@ -137,6 +137,7 @@ const {
   REMOTE_CHILD_REASONS,
   parseRemoteLaneAProcesses,
   evaluateLaneAProcessGate,
+  processGateBlocksCourtListener,
   maySpawnLaneARemoteChild,
   planRemoteChildTermination,
   clearLaneAChildOwnership,
@@ -976,13 +977,73 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
   });
   state = gated.state;
   runtime.dbWriteReady = gated.allowCourtListener === true && ingestDb.dbWriteReady === true;
-  if (gated.recovered && runtime.dbWriteReady) {
+
+  // Remote process gate BEFORE recovery canary wiring and BEFORE any CourtListener
+  // (including the parent /api-usage/ quota probe). Orphan/multi → 0 CL.
+  let processGateBlocksCl = false;
+  let remoteProcsForGate = [];
+  if (runtime.dbWriteReady) {
+    remoteProcsForGate = listRemoteLaneAProcessesForGate({
+      query:
+        process.env.QUEUE2_MOCK_REMOTE_LANE_A_PS != null ||
+        typeof runtime.listRemoteLaneAProcesses === "function"
+          ? () => listRemoteLaneAProcessesForGate()
+          : process.env.QUEUE2_SKIP_REMOTE_PROCESS_GATE === "1"
+            ? () => []
+            : undefined,
+    });
+    const earlyGate = evaluateLaneAProcessGate({
+      processes: remoteProcsForGate,
+      laneAChild: state.laneAChild,
+    });
+    console.log(
+      JSON.stringify({
+        tag: "LANE_A_PROCESS_GATE_PRE_CL",
+        reason: earlyGate.reason,
+        count: earlyGate.count,
+        allowLaunch: earlyGate.allowLaunch,
+        emergencyStop: earlyGate.emergencyStop,
+        courtListenerHttpCalls: 0,
+      }),
+    );
+    if (processGateBlocksCourtListener(earlyGate)) {
+      processGateBlocksCl = true;
+      const reviewReason =
+        earlyGate.reason === REMOTE_CHILD_REASONS.MULTIPLE_LANE_A_CHILDREN
+          ? HUMAN_REVIEW_REASONS.MULTIPLE_LANE_A_CHILDREN
+          : earlyGate.reason === REMOTE_CHILD_REASONS.ORPHAN_LANE_A_CHILD
+            ? HUMAN_REVIEW_REASONS.ORPHAN_LANE_A_CHILD
+            : earlyGate.reason;
+      state = setReview(
+        state,
+        reviewReason,
+        earlyGate.reason === REMOTE_CHILD_REASONS.MULTIPLE_LANE_A_CHILDREN
+          ? `matching ${LANE_A_REMOTE_COMMAND} processes=${earlyGate.count}`
+          : earlyGate.reason === REMOTE_CHILD_REASONS.ORPHAN_LANE_A_CHILD
+            ? `orphan remote Lane A child pid=${earlyGate.orphanPid}`
+            : String(earlyGate.reason),
+      );
+      emit("HUMAN_REVIEW_REQUIRED", {
+        lane: "HUMAN_REVIEW_REQUIRED",
+        court: state.laneA?.court,
+        reason: reviewReason,
+        extra: {
+          count: earlyGate.count,
+          orphanPid: earlyGate.orphanPid || null,
+          processes: earlyGate.processes,
+          courtListenerHttpCalls: 0,
+        },
+      });
+    }
+  }
+
+  if (gated.recovered && runtime.dbWriteReady && !processGateBlocksCl) {
     // Exact recovery path after DATABASE_QUOTA_BLOCKED: refresh + VT + first-recovery canary.
     const recovery = planDatabaseQuotaRecovery({
       state,
       manifest: loadManifestForSelection(),
       dbProbe,
-      remoteProcesses: [],
+      remoteProcesses: remoteProcsForGate,
       targetJob: null,
       jobInspection: { blocked: false },
       now: started,
@@ -1000,7 +1061,22 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
       state.firstRecoveryCanaryPending = true;
     } else if (recovery.hold) {
       state = recovery.state;
+      if (recovery.allowCourtListener === false) {
+        processGateBlocksCl = true;
+      }
     }
+  } else if (gated.recovered && processGateBlocksCl) {
+    // Still converge target selection without allowing CL.
+    const recovery = planDatabaseQuotaRecovery({
+      state,
+      manifest: loadManifestForSelection(),
+      dbProbe,
+      remoteProcesses: remoteProcsForGate,
+      targetJob: null,
+      jobInspection: { blocked: false },
+      now: started,
+    });
+    state = recovery.state;
   }
   if (!runtime.dbWriteReady) {
     quota = {
@@ -1032,6 +1108,16 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         skipped: true,
         reason: gated.db?.classification || "DATABASE_NOT_WRITABLE",
         clRequests: 0,
+      }),
+    );
+  } else if (processGateBlocksCl) {
+    console.log(
+      JSON.stringify({
+        tag: "QUOTA_CHECK",
+        skipped: true,
+        reason: state.humanReview?.reasons?.[0] || "PROCESS_GATE_BLOCKS_CL",
+        clRequests: 0,
+        childLaunches: 0,
       }),
     );
   } else if (

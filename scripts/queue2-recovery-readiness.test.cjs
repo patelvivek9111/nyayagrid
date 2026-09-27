@@ -260,6 +260,27 @@ test("process gate before CL; attached child invariants unchanged", () => {
   assert.equal(orphan.ok, false);
   assert.equal(orphan.allowCourtListener, false);
   assert.equal(orphan.clRequests, 0);
+  assert.equal(orphan.childLaunches, 0);
+  assert.equal(orphan.humanReview?.required ?? orphan.state.humanReview?.required, true);
+  assert.ok(
+    (orphan.state.humanReview?.reasons || []).includes("ORPHAN_LANE_A_CHILD") ||
+      orphan.reason === "ORPHAN_LANE_A_CHILD",
+  );
+
+  const multi = planDatabaseQuotaRecovery({
+    state: blockedState(),
+    manifest: load(MANIFEST),
+    dbProbe: { ok: true, writable: true, mutations: 0 },
+    remoteProcesses: [
+      { pid: 1, ppid: 1, args: "staging-cl-batch-job-bundled.cjs" },
+      { pid: 2, ppid: 1, args: "staging-cl-batch-job-bundled.cjs" },
+    ],
+    now: NOW,
+  });
+  assert.equal(multi.ok, false);
+  assert.equal(multi.allowCourtListener, false);
+  assert.equal(multi.clRequests, 0);
+  assert.equal(multi.reason, "MULTIPLE_LANE_A_CHILDREN");
 
   const launcher = fs.readFileSync(path.join(__dirname, "run-staging-cl-batch-job.cjs"), "utf8");
   assert.equal(assertLauncherForbidsDetach(launcher).ok, true);
@@ -268,6 +289,50 @@ test("process gate before CL; attached child invariants unchanged", () => {
     { allowLaunch: true },
   );
   assert.equal(spawn.ok, false);
+});
+
+test("worker process gate precedes parent quota probe (live path order)", () => {
+  const src = fs.readFileSync(path.join(__dirname, "run-queue2-dual-lane.cjs"), "utf8");
+  const cycleStart = src.indexOf("async function runWorkerCycle");
+  const cycleEnd = src.indexOf("\nfunction sleepMs", cycleStart);
+  const cycle = src.slice(cycleStart, cycleEnd > 0 ? cycleEnd : undefined);
+  const preCl = cycle.indexOf("LANE_A_PROCESS_GATE_PRE_CL");
+  const quotaFn = cycle.indexOf("runQuotaProbe(");
+  const processGateBlocks = cycle.indexOf("processGateBlocksCl");
+  assert.ok(preCl > 0, "missing LANE_A_PROCESS_GATE_PRE_CL");
+  assert.ok(processGateBlocks > 0, "missing processGateBlocksCl");
+  assert.ok(quotaFn > preCl, "runQuotaProbe must follow pre-CL process gate");
+  assert.equal(cycle.includes("remoteProcesses: []"), false);
+});
+
+test("VT first-start clears inherited SC resume fields", () => {
+  const state = blockedState();
+  state.laneA = {
+    court: "sc",
+    jurisdiction: "SC",
+    checkpoint: "cl-opinion-11201513",
+    cursor: "cl-opinion-11201513",
+    lastSuccessfulExternalId: "cl-opinion-11201513",
+    targetStatus: "COMPLETE_FOR_CURRENT_DEPTH",
+    jobStatus: "completed",
+    count: 45,
+    target: 45,
+  };
+  const plan = planDatabaseQuotaRecovery({
+    state,
+    manifest: load(MANIFEST),
+    dbProbe: { ok: true, writable: true, mutations: 0 },
+    remoteProcesses: [],
+    targetJob: null,
+    now: NOW,
+  });
+  assert.equal(plan.ok, true);
+  assert.equal(plan.state.laneA.court, "vt");
+  assert.equal(plan.state.laneA.jobLifecycle, "READY_FIRST_START");
+  assert.equal(plan.state.laneA.checkpoint, null);
+  assert.equal(plan.state.laneA.cursor, null);
+  assert.equal(plan.state.laneA.lastSuccessfulExternalId, null);
+  assert.equal(plan.state.laneA.nextPageUrl, null);
 });
 
 test("page subset checkpoint resumes from last opinion actually handled", () => {

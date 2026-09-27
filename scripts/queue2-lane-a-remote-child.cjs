@@ -152,6 +152,21 @@ function evaluateLaneAProcessGate(params = {}) {
 }
 
 /**
+ * True when remote process gate must block ALL CourtListener HTTP
+ * (including the parent quota probe) and all child launches.
+ */
+function processGateBlocksCourtListener(gate) {
+  if (!gate || typeof gate !== "object") return false;
+  if (gate.emergencyStop === true) return true;
+  if (gate.courtListenerHttpCallsAllowed === false) return true;
+  if (gate.reason === REMOTE_CHILD_REASONS.ORPHAN_LANE_A_CHILD) return true;
+  if (gate.reason === REMOTE_CHILD_REASONS.MULTIPLE_LANE_A_CHILDREN) return true;
+  if (gate.reason === REMOTE_CHILD_REASONS.LANE_A_CHILD_PID_MISMATCH) return true;
+  if (gate.reason === REMOTE_CHILD_REASONS.LANE_A_CHILD_OWNERSHIP_LOST) return true;
+  return false;
+}
+
+/**
  * Single-flight: may we spawn a NEW remote child?
  */
 function maySpawnLaneARemoteChild(state, processGate) {
@@ -405,6 +420,7 @@ module.exports = {
   createRemoteChildOwnership,
   parseRemoteLaneAProcesses,
   evaluateLaneAProcessGate,
+  processGateBlocksCourtListener,
   maySpawnLaneARemoteChild,
   assertChildMayMakeClRequest,
   planRemoteChildTermination,
