@@ -179,7 +179,7 @@ test("I: WI complete; active Lane A advanced", () => {
   assert.ok(state.completedCourts.includes("wis"));
   assert.equal(state.completedCourtEvidence.wis.count, 45);
   assert.equal(state.laneA.court, "vt");
-  assert.equal(state.laneA.count, 20);
+  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 22, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
 });
 

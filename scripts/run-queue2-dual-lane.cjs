@@ -456,43 +456,54 @@ function queryLiveLaneACourtCounts(court, opts = {}) {
 
 /**
  * Fresh read-only Lane A court count via Fly staging SQL probe (zero CL HTTP).
+ * Generic for any verified CL court — never Michigan-only, never silent cross-court fallback.
  */
 function runFreshLaneALiveCountProbe(court, opts = {}) {
-  const bundled = path.join(__dirname, "tmp-queue2-mi-job-reconcile-probe-bundled.cjs");
-  if (!fs.existsSync(bundled)) return null;
-  // Only mich probe script is currently bundled; generalize via court arg when available.
+  const {
+    normalizeLiveCountProbeResult,
+  } = require("./queue2-prior-canary-reconcile.cjs");
+  const requested = String(court || "")
+    .trim()
+    .toLowerCase();
+  if (!requested) return null;
+
+  const src = path.join(__dirname, "tmp-queue2-lane-a-live-count-probe.cjs");
+  const bundled = path.join(__dirname, "tmp-queue2-lane-a-live-count-probe-bundled.cjs");
+  if (!fs.existsSync(bundled)) {
+    if (!fs.existsSync(src)) return null;
+    const es = spawnSync(
+      "npx",
+      [
+        "esbuild",
+        src,
+        "--bundle",
+        "--platform=node",
+        "--format=cjs",
+        `--outfile=${bundled}`,
+      ],
+      { encoding: "utf8", cwd: root, shell: true },
+    );
+    if (es.status !== 0 || !fs.existsSync(bundled)) return null;
+  }
+
   const r = spawnSync(
     process.execPath,
-    [path.join(__dirname, "run-wave2f-fly-tool.cjs"), "scripts/tmp-queue2-mi-job-reconcile-probe-bundled.cjs"],
+    [
+      path.join(__dirname, "run-wave2f-fly-tool.cjs"),
+      "scripts/tmp-queue2-lane-a-live-count-probe-bundled.cjs",
+      requested,
+    ],
     { encoding: "utf8", cwd: root, maxBuffer: 8_000_000 },
   );
-  const parsed = lastJson(r.stdout || "");
+  const parsed = lastJson(`${r.stdout || ""}\n${r.stderr || ""}`);
   if (!parsed?.ok) return null;
-  const nowIso = new Date().toISOString();
-  // Map MI probe shape → liveDb evidence. For non-mich courts return null (caller treats as unavailable).
-  if (String(court).toLowerCase() !== "mich" && String(court).toLowerCase() !== "mi") {
-    return null;
-  }
-  const mi = parsed.mi || {};
+  const normalized = normalizeLiveCountProbeResult(parsed, requested);
+  if (!normalized) return null;
+  // Hard reject cross-court contamination.
+  const got = String(normalized.court || "").toLowerCase();
+  if (got !== requested && !(requested === "mi" && got === "mich")) return null;
   return {
-    ok: true,
-    court: "mich",
-    qualifyingCases: mi.high_court_cl_cases ?? mi.cases ?? null,
-    highCourtClCases: mi.high_court_cl_cases ?? null,
-    clCases: mi.cl_cases ?? null,
-    cases: mi.cases ?? null,
-    authorities: mi.authorities ?? null,
-    integrity: {
-      duplicateSourceIds: parsed.integrity?.duplicate_source_ids ?? 0,
-      orphanCount: parsed.integrity?.orphan_count ?? 0,
-      chunkHealthy: true,
-    },
-    jobs: parsed.jobs || [],
-    generatedAt: parsed.generatedAt || nowIso,
-    observedAt: parsed.generatedAt || nowIso,
-    dbEvidenceObservedAt: parsed.generatedAt || nowIso,
-    courtListenerHttpCalls: 0,
-    mutations: 0,
+    ...normalized,
     after: opts.after || null,
   };
 }
@@ -2299,10 +2310,15 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             target: state.laneA.target,
             db: liveDb
               ? {
-                  qualifyingCases: liveDb.qualifyingCases ?? liveDb.highCourtClCases ?? liveDb.clCases,
+                  qualifyingCaseCount: liveDb.qualifyingCaseCount ?? liveDb.qualifyingCases,
+                  qualifyingCases:
+                    liveDb.qualifyingCaseCount ?? liveDb.qualifyingCases ?? liveDb.highCourtClCases,
                   highCourtClCases: liveDb.highCourtClCases,
-                  clCases: liveDb.clCases,
-                  cases: liveDb.cases,
+                  clCases: liveDb.clCases ?? liveDb.clCaseCount,
+                  clCaseCount: liveDb.clCaseCount ?? liveDb.clCases,
+                  cases: liveDb.cases ?? liveDb.totalCaseCount,
+                  totalCaseCount: liveDb.totalCaseCount ?? liveDb.cases,
+                  authorityCount: liveDb.authorityCount ?? liveDb.authorities,
                 }
               : {},
             integrity: liveDb?.integrity || {

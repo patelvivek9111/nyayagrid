@@ -2,11 +2,11 @@
   "ok": true,
   "status": "PARTIAL",
   "wave": "queue2-ownership-heartbeat",
-  "generatedAt": "2026-09-27T13:17:06.828Z",
+  "generatedAt": "2026-09-27T13:41:33.674Z",
   "worker": {
-    "workerId": "q2-5a0bf93a7398",
-    "pid": 3472,
-    "cycles": 2,
+    "workerId": "q2-2a06b8fc61cd",
+    "pid": 48912,
+    "cycles": 1,
     "heartbeatIntervalMs": 900000,
     "aiCallsForHeartbeat": 0,
     "gitPushesForHeartbeat": 0,
@@ -27,7 +27,7 @@
     "reconciledFrom": "corpus_ingest_jobs",
     "humanReviewRequired": true,
     "reviewReasons": [
-      "UNKNOWN_DB_FAILURE"
+      "LIVE_DB_RECONCILIATION_UNAVAILABLE"
     ]
   },
   "observability": {
@@ -39,21 +39,38 @@
   },
   "courtListener": {
     "laneBRequests": 0,
-    "quotaProbeThisRun": false,
+    "quotaProbeThisRun": true,
     "mustBeZeroExceptQuotaProbe": true
   },
   "laneA": {
-    "currentCourt": "vt",
+    "court": "vt",
     "jurisdiction": "VT",
-    "checkpoint": null,
+    "checkpoint": "cl-opinion-9925231",
+    "cursor": "cl-opinion-9925231",
+    "lastSuccessfulExternalId": "cl-opinion-9925231",
+    "nextPageUrl": null,
+    "lastSuccessfulAt": null,
+    "runner": "staging-cl-batch-job",
+    "mappingStatus": "VERIFIED",
+    "manifestVersion": 47,
+    "jobStatus": "quota_paused",
+    "itemsImported": 20,
     "target": 45,
-    "count": 20,
-    "nextResumeCondition": "2026-09-27T13:31:10.093Z",
-    "result": null
+    "count": 22,
+    "sequence": null,
+    "lock": null,
+    "qualifyingCaseCount": 22,
+    "clCaseCount": 22,
+    "totalCaseCount": 22,
+    "authorityCount": 43,
+    "jobLifecycle": "PAUSED_RESUMABLE",
+    "targetStatus": "PARTIAL",
+    "priorCompletedCourt": "sc",
+    "priorCompletedCheckpoint": "cl-opinion-11201513"
   },
   "laneB": null,
   "automation": {
-    "nextQuotaProbe": "2026-09-27T13:31:10.093Z",
+    "nextQuotaProbe": "2026-09-27T13:55:44.979Z",
     "automaticLaneAResume": false,
     "automaticLaneSwitch": true,
     "humanInterventionRequired": "yes"
@@ -61,7 +78,9 @@
   "operational": {
     "tests": "queue2-dual-lane-controller.test.cjs + queue2-worker-observability.test.cjs + queue2-worker-lock.test.cjs",
     "health": {
-      "raw": "Warning: Metrics send issue: failed to send metrics: Post \"https://flyctl-metrics.fly.dev/metrics_post\": dial tcp: lookup flyctl-metrics.fly.dev: no such host\nError: could not get machine 811d3e3f522648: failed to get VM 811d3e3f522648: Get \"https://api.machines.dev/v1/apps/nyayagrid-staging/machines/811d3e3f522648\": dial tcp: lookup api.machines.dev: no such host\n"
+      "status": 200,
+      "body": "{\"ok\":true,\"checks\":{\"database\":\"ok\",\"storage\":\"ok\",\"redis\":\"ok\",\"ingest\":\"configured\",\"config\":\"ok\",\"appEnv\":\"staging\",\"featureAgents\":\"0\",\"providers\":{\"appEnv\":\"staging\",\"appEnvSource\":\"APP_ENV\",\"authProvider\":\"clerk\",\"aiProvider\":\"openai\",\"embeddingProvider\":\"openai\",\"storageProvider\":\"s3\",\"malwareScanner\":\"clamav\",\"ocrProvider\":\"none\",\"emailProvider\":\"smtp\",\"billingProvider\":\"database\",\"rateLimitProvider\":\"redis\",\"databaseConfigured\":true,\"storageBucketConfigured\":true}}}",
+      "featureAgents": "0"
     },
     "featureAgents": "0"
   },
@@ -73,8 +92,38 @@
   },
   "humanReview": {
     "required": false,
-    "reasons": []
+    "reasons": [],
+    "details": []
   },
-  "waitingForNetwork": true,
-  "classification": "NETWORK_UNAVAILABLE"
+  "classification": "RECOVERED_PREVIOUS_CANARY_PASS",
+  "canary": {
+    "required": false,
+    "reason": "no_known_good_fingerprint",
+    "maxQualifyingAuthorities": 3,
+    "maxClRequests": 5,
+    "status": "PASS",
+    "recoveredPreviousCanaryPass": true,
+    "recoveredAt": "2026-09-27T13:49:05.661Z",
+    "classification": "RECOVERED_PREVIOUS_CANARY_PASS",
+    "qualifyingAuthoritiesAdded": 2,
+    "sessionClRequests": 5
+  },
+  "priorCanaryRecovery": {
+    "classification": "RECOVERED_PREVIOUS_CANARY_PASS",
+    "court": "vt",
+    "priorQualifyingCount": 20,
+    "qualifyingCaseCount": 22,
+    "delta": 2,
+    "checkpoint": "cl-opinion-9925231",
+    "sessionClRequests": 5,
+    "dbEvidenceObservedAt": "2026-09-27T13:47:33.914Z",
+    "runnerTerminalAt": "2026-09-27T13:41:25.529Z",
+    "recoveredAt": "2026-09-27T13:49:05.661Z",
+    "courtListenerHttpCalls": 0,
+    "mutations": 0,
+    "aiCalls": 0
+  },
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "aiCalls": 0
 }

@@ -1,0 +1,11 @@
+{
+  "codeFingerprint": "95d9828aff42620af8912f421d9e5efb8b0c4402371425b6118e03d7b0973e7a",
+  "workerVersion": "queue2-dual-lane",
+  "promotedAt": "2026-09-27T13:49:05.661Z",
+  "court": "vt",
+  "count": 22,
+  "target": 45,
+  "checkpoint": "cl-opinion-9925231",
+  "reason": "RECOVERED_PREVIOUS_CANARY_PASS",
+  "aiCalls": 0
+}

@@ -60,7 +60,11 @@ function uploadBundled(filePath) {
 }
 
 uploadBundled(localBundled);
-const r = flyExec(`node ${remotePath}`, 180);
+const extraArgs = process.argv
+  .slice(3)
+  .map((a) => `'${String(a).replace(/'/g, `'\\''`)}'`)
+  .join(" ");
+const r = flyExec(`node ${remotePath}${extraArgs ? ` ${extraArgs}` : ""}`, 180);
 process.stdout.write(r.stdout || "");
 process.stderr.write((r.stderr || "").slice(0, 2000));
 process.exit(r.status ?? 1);

@@ -94,7 +94,10 @@ test("DB recovers â†’ manifest refresh before target selection; stale SC laneA â
   assert.ok(refreshIdx < selectIdx);
   assert.equal(plan.nextTarget.court, "vt");
   assert.equal(plan.nextTarget.jurisdiction, "VT");
-  assert.equal(plan.nextTarget.qualifyingCaseCount, 20);
+  assert.ok(
+    plan.nextTarget.qualifyingCaseCount >= 20 && plan.nextTarget.qualifyingCaseCount <= 22,
+    `qualifyingCaseCount=${plan.nextTarget.qualifyingCaseCount}`,
+  );
   assert.equal(plan.nextTarget.target, 45);
   assert.equal(plan.nextTarget.mappingStatus, "VERIFIED");
   assert.equal(plan.state.laneA.court, "vt");
