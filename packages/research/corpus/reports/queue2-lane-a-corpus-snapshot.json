@@ -3,11 +3,11 @@
   "mutations": 0,
   "courtListenerHttpCalls": 0,
   "featureAgents": "0",
-  "generatedAt": "2026-09-25T14:19:59.717Z",
+  "generatedAt": "2026-09-27T18:54:52.420Z",
   "corpus": {
-    "authorities": 3008,
-    "cases": 1691,
-    "cl_cases": 1646,
+    "authorities": 3333,
+    "cases": 2016,
+    "cl_cases": 1971,
     "statutes": 904,
     "regulations": 158,
     "rules": 254
@@ -30,15 +30,15 @@
     },
     {
       "j": "AL",
-      "authorities": 42,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 67,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
       "oldest": 2026,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 32
+      "citationTargetAbsent": 99
     },
     {
       "j": "AR",
@@ -174,15 +174,15 @@
     },
     {
       "j": "ID",
-      "authorities": 41,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 66,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
       "oldest": 2026,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 22
+      "citationTargetAbsent": 65
     },
     {
       "j": "IL",
@@ -282,15 +282,15 @@
     },
     {
       "j": "MI",
-      "authorities": 43,
-      "cases": 20,
-      "clCases": 19,
-      "highCourt": 20,
+      "authorities": 68,
+      "cases": 45,
+      "clCases": 44,
+      "highCourt": 45,
       "intermediate": 0,
       "oldest": 1978,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 60
+      "citationTargetAbsent": 122
     },
     {
       "j": "MN",
@@ -354,39 +354,39 @@
     },
     {
       "j": "ND",
-      "authorities": 41,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 66,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
       "oldest": 2026,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 3
+      "citationTargetAbsent": 16
     },
     {
       "j": "NE",
-      "authorities": 41,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 66,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
       "oldest": 2026,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 12
+      "citationTargetAbsent": 90
     },
     {
       "j": "NH",
-      "authorities": 41,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 66,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
       "oldest": 2025,
       "newest": 2025,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 5
+      "citationTargetAbsent": 20
     },
     {
       "j": "NJ",
@@ -402,15 +402,15 @@
     },
     {
       "j": "NM",
-      "authorities": 41,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 66,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
-      "oldest": 2025,
+      "oldest": 2024,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 29
+      "citationTargetAbsent": 118
     },
     {
       "j": "NV",
@@ -450,15 +450,15 @@
     },
     {
       "j": "OK",
-      "authorities": 41,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 66,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
-      "oldest": 2026,
+      "oldest": 2025,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 4
+      "citationTargetAbsent": 28
     },
     {
       "j": "OR",
@@ -498,27 +498,27 @@
     },
     {
       "j": "SC",
-      "authorities": 41,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 66,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
-      "oldest": 2026,
+      "oldest": 2025,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 6
+      "citationTargetAbsent": 22
     },
     {
       "j": "SD",
-      "authorities": 41,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 66,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
-      "oldest": 2026,
+      "oldest": 2025,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 25
+      "citationTargetAbsent": 103
     },
     {
       "j": "TN",
@@ -558,15 +558,15 @@
     },
     {
       "j": "UT",
-      "authorities": 41,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 66,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
       "oldest": 2025,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 28
+      "citationTargetAbsent": 87
     },
     {
       "j": "VA",
@@ -582,15 +582,15 @@
     },
     {
       "j": "VT",
-      "authorities": 41,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 66,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
-      "oldest": 2026,
+      "oldest": 1950,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 6
+      "citationTargetAbsent": 102
     },
     {
       "j": "WA",
@@ -630,15 +630,15 @@
     },
     {
       "j": "WY",
-      "authorities": 41,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 66,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
       "oldest": 2026,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 17
+      "citationTargetAbsent": 45
     }
   ]
 }

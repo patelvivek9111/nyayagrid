@@ -1,0 +1,27 @@
+{
+  "ok": true,
+  "wave": "2F",
+  "generatedAt": "2026-09-27T18:53:51.500Z",
+  "dryRun": false,
+  "before": {
+    "total": 3333,
+    "with_citation": 1362,
+    "with_normalized": 1362,
+    "missing_normalized": 0
+  },
+  "after": {
+    "total": 3333,
+    "with_citation": 1362,
+    "with_normalized": 1362,
+    "missing_normalized": 0
+  },
+  "candidates": 0,
+  "eligibleUpdates": 0,
+  "updated": 0,
+  "skipped": {
+    "low_confidence": 0,
+    "no_change": 0,
+    "garbage": 0
+  },
+  "sampleUpdates": []
+}

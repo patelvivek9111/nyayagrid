@@ -1,0 +1,22 @@
+{
+  "at": "2026-09-27T18:57:24.809Z",
+  "duplicateSourceIds": 0,
+  "orphanChunks": 0,
+  "clSourceExternalIdDuplicates": 0,
+  "missingEmbeddings": 0,
+  "authoritiesWithoutChunks": 0,
+  "chunks": 47313,
+  "embeddings": 47313,
+  "normalization": {
+    "missing_court_id": 1317,
+    "missing_state": 0,
+    "missing_court_level": 1317,
+    "missing_authority_type": 0,
+    "missing_decision_date": 1317,
+    "missing_normalized_citation": 0,
+    "missing_canonical_url": 0,
+    "missing_provenance": 0,
+    "total": 3333
+  },
+  "pass": true
+}

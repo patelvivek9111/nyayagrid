@@ -1,0 +1,323 @@
+{
+  "ok": true,
+  "wave": "2F",
+  "generatedAt": "2026-09-27T18:53:31.981Z",
+  "citationGraph": {
+    "total": 6439,
+    "resolved": 182,
+    "unresolved": 6257
+  },
+  "authorityNormalizationGap": {
+    "with_citation": 1362,
+    "missing_normalized": 0
+  },
+  "families": {
+    "us_reports": 3003,
+    "federal_reporter": 2764,
+    "federal_supplement": 220,
+    "regional_reporter": 0,
+    "usc": 349,
+    "cfr": 47,
+    "federal_rules": 55,
+    "state_statute": 0,
+    "state_regulation": 0,
+    "state_court_rules": 0,
+    "slip_unreported": 0,
+    "docket_like": 0,
+    "malformed_partial": 1,
+    "unknown": 0
+  },
+  "whyUnresolved": {
+    "A_target_absent": 6256,
+    "B_normalization_mismatch": 0,
+    "C_parser_gap": 0,
+    "D_ambiguous": 0,
+    "E_malformed": 1,
+    "F_unsupported_family": 0
+  },
+  "sqlUnresolvedHints": {
+    "us_reports": 3003,
+    "federal_reporter": 2764,
+    "federal_supplement": 221,
+    "usc": 349,
+    "cfr": 47,
+    "unresolved_total": 6257
+  },
+  "samples": {
+    "us_reports": [
+      {
+        "raw": "304 U.S. 64",
+        "normalized": "304 U.S. 64",
+        "why": null,
+        "resolved": true
+      },
+      {
+        "raw": "419 U.S. 565",
+        "normalized": "419 U.S. 565",
+        "why": "A_target_absent",
+        "resolved": false
+      },
+      {
+        "raw": "419 U.S. 565",
+        "normalized": "419 U.S. 565",
+        "why": "A_target_absent",
+        "resolved": false
+      },
+      {
+        "raw": "527 U.S. 706",
+        "normalized": "527 U.S. 706",
+        "why": "A_target_absent",
+        "resolved": false
+      },
+      {
+        "raw": "567 U.S. 460",
+        "normalized": "567 U.S. 460",
+        "why": "A_target_absent",
+        "resolved": false
+      }
+    ],
+    "federal_reporter": [
+      {
+        "raw": "294 F.2d 150",
+        "normalized": "294 F.2D 150",
+        "why": "A_target_absent",
+        "resolved": false
+      },
+      {
+        "raw": "799 F.2d 955",
+        "normalized": "799 F.2d 955",
+        "why": "A_target_absent",
+        "resolved": false
+      },
+      {
+        "raw": "683 F.2d 938",
+        "normalized": "683 F.2d 938",
+        "why": "A_target_absent",
+        "resolved": false
+      },
+      {
+        "raw": "764 F.2d 773",
+        "normalized": "764 F.2d 773",
+        "why": "A_target_absent",
+        "resolved": false
+      },
+      {
+        "raw": "52 F.2d 764",
+        "normalized": "52 F.2d 764",
+        "why": "A_target_absent",
+        "resolved": false
+      }
+    ],
+    "federal_supplement": [
+      {
+        "raw": "411 F. Supp. 429",
+        "normalized": "411 F. SUPP. 429",
+        "why": "A_target_absent",
+        "resolved": false
+      },
+      {
+        "raw": "678 F. Supp. 151",
+        "normalized": "678 F. SUPP. 151",
+        "why": "A_target_absent",
+        "resolved": false
+      },
+      {
+        "raw": "287 F. Supp. 269",
+        "normalized": "287 F. SUPP. 269",
+        "why": "A_target_absent",
+        "resolved": false
+      },
+      {
+        "raw": "489 F. Supp. 901",
+        "normalized": "489 F. SUPP. 901",
+        "why": "A_target_absent",
+        "resolved": false
+      },
+      {
+        "raw": "518 F. Supp. 1127",
+        "normalized": "518 F. SUPP. 1127",
+        "why": "A_target_absent",
+        "resolved": false
+      }
+    ],
+    "regional_reporter": [],
+    "usc": [
+      {
+        "raw": "18 U.S.C. § 3553",
+        "normalized": "18 U.S.C. § 3553",
+        "why": null,
+        "resolved": true
+      },
+      {
+        "raw": "28 U.S.C. § 1446",
+        "normalized": "28 U.S.C. § 1446",
+        "why": null,
+        "resolved": true
+      },
+      {
+        "raw": "28 U.S.C. § 1446",
+        "normalized": "28 U.S.C. § 1446",
+        "why": null,
+        "resolved": true
+      },
+      {
+        "raw": "28 U.S.C. § 1332",
+        "normalized": "28 U.S.C. § 1332",
+        "why": null,
+        "resolved": true
+      },
+      {
+        "raw": "42 U.S.C. § 1983",
+        "normalized": "42 U.S.C. § 1983",
+        "why": null,
+        "resolved": true
+      }
+    ],
+    "cfr": [
+      {
+        "raw": "29 C.F.R. § 4206.1",
+        "normalized": "29 C.F.R. § 4206.1",
+        "why": null,
+        "resolved": true
+      },
+      {
+        "raw": "8 C.F.R. § 1208.16",
+        "normalized": "8 C.F.R. § 1208.16",
+        "why": null,
+        "resolved": true
+      },
+      {
+        "raw": "29 C.F.R. § 4206.1",
+        "normalized": "29 C.F.R. § 4206.1",
+        "why": null,
+        "resolved": true
+      },
+      {
+        "raw": "8 C.F.R. § 1208.16",
+        "normalized": "8 C.F.R. § 1208.16",
+        "why": null,
+        "resolved": true
+      },
+      {
+        "raw": "8 C.F.R. § 1208.16",
+        "normalized": "8 C.F.R. § 1208.16",
+        "why": null,
+        "resolved": true
+      }
+    ],
+    "federal_rules": [
+      {
+        "raw": "Fed. R. Civ. P. 12",
+        "normalized": "Fed. R. Civ. P. 12",
+        "why": null,
+        "resolved": true
+      },
+      {
+        "raw": "Fed. R. Evid. 702",
+        "normalized": "Fed. R. Evid. 702",
+        "why": null,
+        "resolved": true
+      },
+      {
+        "raw": "Fed.R.Civ.P. 36",
+        "normalized": "Fed. R. Civ. P. 36",
+        "why": "A_target_absent",
+        "resolved": false
+      },
+      {
+        "raw": "Fed.R.Civ.P. 72",
+        "normalized": "Fed. R. Civ. P. 72",
+        "why": "A_target_absent",
+        "resolved": false
+      },
+      {
+        "raw": "Fed. R. App. P. 34",
+        "normalized": "Fed. R. App. P. 34",
+        "why": "A_target_absent",
+        "resolved": false
+      }
+    ],
+    "state_statute": [],
+    "state_regulation": [],
+    "state_court_rules": [],
+    "slip_unreported": [],
+    "docket_like": [],
+    "malformed_partial": [
+      {
+        "raw": "30552 F. Supp. 3",
+        "normalized": "30552 F. SUPP. 3",
+        "why": "E_malformed",
+        "resolved": false
+      }
+    ],
+    "unknown": []
+  },
+  "whySamples": {
+    "A_target_absent": [
+      {
+        "raw": "419 U.S. 565",
+        "normalized": "419 U.S. 565",
+        "family": "us_reports"
+      },
+      {
+        "raw": "419 U.S. 565",
+        "normalized": "419 U.S. 565",
+        "family": "us_reports"
+      },
+      {
+        "raw": "294 F.2d 150",
+        "normalized": "294 F.2D 150",
+        "family": "federal_reporter"
+      },
+      {
+        "raw": "527 U.S. 706",
+        "normalized": "527 U.S. 706",
+        "family": "us_reports"
+      },
+      {
+        "raw": "567 U.S. 460",
+        "normalized": "567 U.S. 460",
+        "family": "us_reports"
+      }
+    ],
+    "B_normalization_mismatch": [],
+    "C_parser_gap": [],
+    "D_ambiguous": [],
+    "E_malformed": [
+      {
+        "raw": "30552 F. Supp. 3",
+        "normalized": "30552 F. SUPP. 3",
+        "family": "malformed_partial"
+      }
+    ],
+    "F_unsupported_family": []
+  },
+  "meta": {
+    "familyBuckets": [
+      "us_reports",
+      "federal_reporter",
+      "federal_supplement",
+      "regional_reporter",
+      "usc",
+      "cfr",
+      "federal_rules",
+      "state_statute",
+      "state_regulation",
+      "state_court_rules",
+      "slip_unreported",
+      "docket_like",
+      "malformed_partial",
+      "unknown"
+    ],
+    "whyCodes": [
+      "A_target_absent",
+      "B_normalization_mismatch",
+      "C_parser_gap",
+      "D_ambiguous",
+      "E_malformed",
+      "F_unsupported_family"
+    ],
+    "edgesAudited": 6439,
+    "authoritiesIndexed": 3333
+  }
+}

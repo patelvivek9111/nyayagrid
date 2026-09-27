@@ -20,10 +20,10 @@
   "lastSuccessfulAt": null,
   "runner": "staging-cl-batch-job",
   "mappingStatus": "VERIFIED",
-  "manifestVersion": 60,
+  "manifestVersion": 63,
   "jobStatus": "ready",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastUpdatedAt": "2026-09-27T18:45:15.421Z",
+  "lastUpdatedAt": "2026-09-27T18:57:24.809Z",
   "lastHeartbeatAt": "2026-09-27T18:00:10.679Z",
   "nextQuotaCheckAt": "2026-09-27T18:10:09.485Z",
   "network": {
@@ -77,7 +77,7 @@
     "statutes": 904,
     "regulations": 158,
     "rules": 254,
-    "authorityGateDeficit": null
+    "authorityGateDeficit": 2167
   },
   "health": {
     "retrieval": "ok",

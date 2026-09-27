@@ -1,0 +1,16 @@
+{
+  "at": "2026-09-27T18:57:24.809Z",
+  "source": "legal_authorities.currentness_status (local DB metadata only)",
+  "counts": {
+    "historical": 80,
+    "current_as_of_source_date": 1304,
+    "unknown": 1949,
+    "last_checked": 3198
+  },
+  "missingEffectiveOrCurrentness": 1949,
+  "historical": 80,
+  "currentAsOfSourceDate": 1304,
+  "missingDecisionDate": 1317,
+  "note": "Audit only — does not claim currency without corpus evidence",
+  "courtListenerHttpCalls": 0
+}

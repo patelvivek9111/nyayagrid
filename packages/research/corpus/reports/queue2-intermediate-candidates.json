@@ -1,35 +1,35 @@
 {
-  "generatedAt": "2026-09-24T16:17:00.000Z",
-  "courtListenerHttpCalls": 0,
-  "method": "local repo + persisted reports only",
-  "gaps": [
+  "at": "2026-09-27T18:58:08.707Z",
+  "candidates": [
     {
       "gapId": "pacommwlth",
-      "courtName": "Commonwealth Court of Pennsylvania",
-      "invalidCandidateId": "pacommwlth",
       "classification": "UNRESOLVED",
       "candidateClId": null,
-      "hypothesizedUnverifiedIds": ["pacomm", "pa-comm"],
-      "evidence": "wave2v-court-verify.txt GET /courts/pacommwlth/ → 404; wave2v-court-search.txt name search HTTP 400 with empty hits; hypothesized ids never verified"
+      "hypothesizedUnverifiedIds": [
+        "pacomm",
+        "pa-comm"
+      ],
+      "liveVerifyForbidden": true,
+      "note": "No local evidence identifies a replacement CourtListener court id. Do not query CourtListener from Lane B."
     },
     {
       "gapId": "njsuperct",
-      "courtName": "Superior Court of New Jersey, Appellate Division",
-      "invalidCandidateId": "njsuperct",
       "classification": "UNRESOLVED",
       "candidateClId": null,
-      "hypothesizedUnverifiedIds": ["njsuper"],
-      "evidence": "wave2v-court-verify.txt GET /courts/njsuperct/ → 404; wave2v-court-search.txt HTTP 400 empty hits"
+      "hypothesizedUnverifiedIds": [
+        "njsuper"
+      ],
+      "liveVerifyForbidden": true,
+      "note": "No local evidence identifies a replacement CourtListener court id. Do not query CourtListener from Lane B."
     },
     {
       "gapId": "vacapp",
-      "courtName": "Court of Appeals of Virginia",
-      "invalidCandidateId": "vacapp",
       "classification": "UNRESOLVED",
       "candidateClId": null,
       "hypothesizedUnverifiedIds": [],
-      "evidence": "wave2v-court-verify.txt GET /courts/vacapp/ → 404; wave2v-court-search.txt HTTP 400 empty hits"
+      "liveVerifyForbidden": true,
+      "note": "No local evidence identifies a replacement CourtListener court id. Do not query CourtListener from Lane B."
     }
   ],
-  "note": "CANDIDATE_NEEDS_SINGLE_CL_VERIFY is withheld. No local evidence supports a replacement CourtListener court id."
+  "bounded": true
 }
