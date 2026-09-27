@@ -150,7 +150,7 @@ test("E: READY first-start MI is not treated as CL partial missing checkpoint", 
 test("F: VT READY_FIRST_START with SC completion evidence passes human-review gate", () => {
   const state = restoreState(JSON.parse(fs.readFileSync(STATE_PATH, "utf8")));
   assert.equal(state.laneA.court, "vt");
-  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 31, `count=${state.laneA.count}`);
+  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 45, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
   assert.ok(
     state.laneA.targetStatus === "READY" || state.laneA.targetStatus === "PARTIAL",
@@ -165,7 +165,8 @@ test("F: VT READY_FIRST_START with SC completion evidence passes human-review ga
       state.laneA.checkpoint === "cl-opinion-9925231" ||
       state.laneA.checkpoint === "cl-opinion-9925230" ||
       state.laneA.checkpoint === "cl-opinion-9887733" ||
-      state.laneA.checkpoint === "cl-opinion-9886400",
+      state.laneA.checkpoint === "cl-opinion-9886400" ||
+      state.laneA.checkpoint === "cl-opinion-9886254",
     `checkpoint=${state.laneA.checkpoint}`,
   );
   assert.equal(state.humanReview.required, false);

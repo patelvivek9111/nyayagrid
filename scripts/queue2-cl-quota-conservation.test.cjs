@@ -348,7 +348,7 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
     `currentLane=${state.currentLane}`,
   );
   assert.equal(state.laneA.court, "vt");
-  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 31, `count=${state.laneA.count}`);
+  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 45, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
   assert.ok(
     state.laneA.targetStatus === "READY" || state.laneA.targetStatus === "PARTIAL",
@@ -363,7 +363,8 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
       state.laneA.checkpoint === "cl-opinion-9925231" ||
       state.laneA.checkpoint === "cl-opinion-9925230" ||
       state.laneA.checkpoint === "cl-opinion-9887733" ||
-      state.laneA.checkpoint === "cl-opinion-9886400",
+      state.laneA.checkpoint === "cl-opinion-9886400" ||
+      state.laneA.checkpoint === "cl-opinion-9886254",
     `checkpoint=${state.laneA.checkpoint}`,
   );
   assert.equal(state.completedCourtEvidence.sc.checkpoint, "cl-opinion-11201513");

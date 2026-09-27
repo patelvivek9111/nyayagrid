@@ -193,9 +193,12 @@ const {
   BATCH_BUDGET_EXHAUSTED,
   WAIT_FOR_QUOTA,
   LANE_A_CHILD_NO_BUDGET,
+  CANARY_BUDGET_INSUFFICIENT_FOR_PRODUCTIVE_BATCH,
+  remainingClRequestsForChild,
   resolveLaneABatchClBudget,
   evaluateProbeUsefulnessForNextBatch,
   classifyPreLaunchNoBudget,
+  assertParentChildBudgetAgreement,
 } = require("./queue2-lane-a-batch-budget.cjs");
 
 const root = path.join(__dirname, "..");
@@ -1361,6 +1364,8 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         usableRequests: previewBounds.maxClRequests,
         quotaCacheFresh: Boolean(state.quotaProbeCache?.observedAt),
         clSharedSession: state.clSharedSession,
+        // If one more probe would leave canary unable to run a useful child, skip probe.
+        previewAfterNextProbe: state.canaryMode === "CANARY_REQUIRED",
       });
       if (probeUse.refreshBatchBudget) {
         state.clSharedSession = null;
@@ -2197,41 +2202,62 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             canaryMaxClRequests: Number(
               state.canary?.maxClRequests || CANARY_MAX_SESSION_CL_REQUESTS,
             ),
+            // Parent already probed this cycle; probe is inside sessionClRequests.
+            parentProbeCountedInSession: true,
+            childBootstrapOverhead: 0,
           });
+          // Canonical child handoff — never recompute separately.
+          const childClMax = state.laneABatchBudget.remainingClRequestsForChild;
+          const budgetAgreement = assertParentChildBudgetAgreement(
+            state.laneABatchBudget,
+            childClMax,
+          );
           console.log(
             JSON.stringify({
               tag: "LANE_A_BATCH_BUDGET",
               mode: state.laneABatchBudget.mode,
+              canaryBudgetScope: state.laneABatchBudget.canaryBudgetScope,
               workerSessionRequests: state.laneABatchBudget.workerSessionRequests,
               batchBudget: state.laneABatchBudget.batchBudget,
               alreadyUsed: state.laneABatchBudget.alreadyUsed,
               remainingClRequests: state.laneABatchBudget.remainingClRequests,
+              remainingClRequestsForChild: childClMax,
+              clMaxSessionCalls: state.laneABatchBudget.clMaxSessionCalls,
               allowChildLaunch: state.laneABatchBudget.allowChildLaunch,
+              budgetAgreementOk: budgetAgreement.ok,
             }),
           );
           if (!state.laneABatchBudget.allowChildLaunch) {
             const noBudget = classifyPreLaunchNoBudget({
               reason: LANE_A_CHILD_NO_BUDGET,
+              preLaunch: true,
               canaryRequired: state.canaryMode === "CANARY_REQUIRED",
-              remainingClBudget: 0,
+              remainingClBudget: childClMax,
+              classification: state.laneABatchBudget.classification,
               detail: state.laneABatchBudget.detail,
             });
             console.log(
               JSON.stringify({
                 tag: "LANE_A_CL",
                 blocked: true,
-                reason: noBudget.classification,
+                reason:
+                  state.laneABatchBudget.classification ||
+                  noBudget.classification ||
+                  CANARY_BUDGET_INSUFFICIENT_FOR_PRODUCTIVE_BATCH,
                 detail: noBudget.detail,
                 childLaunches: 0,
+                remainingClRequestsForChild: childClMax,
               }),
             );
-            state.runtimeState = noBudget.runtimeState;
+            state.runtimeState =
+              state.laneABatchBudget.classification || noBudget.runtimeState;
             state.currentLane = "WAIT";
             state.idleSafe = true;
             state.clSharedSession = null;
             laneAResult = {
               classified: {
                 ...noBudget,
+                classification: state.laneABatchBudget.classification || noBudget.classification,
                 lifecycleState: null,
                 unresolvedUnknown: false,
               },
@@ -2242,11 +2268,13 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
               postRunDbRefreshed: false,
             };
           } else {
+          // Shared session: child allowance as max + alreadyUsed=0 so
+          // remainingChildClBudget === remainingClRequestsForChild (no double-subtract).
           state.clSharedSession = createSharedClSession({
             sessionId: state.clRequestLedger?.sessionId || state.sessionQuota?.sessionId,
             batchId: `lane-a-${state.laneA.court}-${Date.now()}`,
-            maxClRequests: state.laneABatchBudget.childMaxClRequests,
-            alreadyUsed: state.laneABatchBudget.alreadyUsed,
+            maxClRequests: childClMax,
+            alreadyUsed: 0,
             historicalJobApiCallsBaseline: state.sessionQuota?.historicalJobApiCallsBaseline || 0,
             workerFingerprint: runtime.codeFingerprint,
           });
@@ -2275,10 +2303,11 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             const preLaneStatus = publishStatus(state, { currentTask: "lane_a_cl" });
             state = maybeHeartbeat(state, preLaneStatus, { force: true });
           }
+          // CL_MAX_SESSION_CALLS = canonical remaining (same value as allowChildLaunch gate).
           const raw = runLaneA(state, {
             runner: process.env.QUEUE2_MOCK_LANE_A_RUNNER === "1" ? runtime.mockLaneARunner : null,
             batchSize: batchBounds.batchSize,
-            maxClRequests: remainingChildClBudget(state.clSharedSession),
+            maxClRequests: childClMax,
             sharedSession: state.clSharedSession,
             workerId: WORKER_ID,
             processStartNonce: PROCESS_NONCE,
@@ -2291,11 +2320,11 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             target: state.laneA.target,
           });
 
-          // Pre-launch no-budget: deterministic, not UNKNOWN / RUNNER_RESULT_UNRESOLVED.
+          // Child-reported NO_BUDGET only (never invent from default reason / remaining>0).
           const preLaunchNoBudget = classifyPreLaunchNoBudget({
             stdout: raw?.stdout || "",
             canaryRequired: state.canaryMode === "CANARY_REQUIRED",
-            remainingClBudget: remainingChildClBudget(state.clSharedSession),
+            remainingClBudget: childClMax,
           });
           if (preLaunchNoBudget.matched) {
             console.log(
@@ -2306,6 +2335,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
                 pid: null,
                 unresolvedUnknown: false,
                 detail: preLaunchNoBudget.detail,
+                remainingClRequestsForChild: childClMax,
               }),
             );
             state = clearLaneAChildOwnership(state, {

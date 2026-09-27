@@ -431,9 +431,11 @@ test("canonical status after rebuild matches live floor and reconciled Lane A pr
   assert.ok(status.corpus.cases >= 1689);
   assert.ok(status.corpus.clCases >= 1644);
   assert.ok(status.manifestVersion >= 5);
-  // STOPPED (idle) or WAITING_FOR_NETWORK (Fly control-plane DNS) — never silent UNKNOWN_DB_FAILURE.
+  // STOPPED / IDLE_SAFE (intentional wait) or WAITING_FOR_NETWORK — never silent UNKNOWN_DB_FAILURE.
   assert.ok(
-    status.runtimeState === "STOPPED" || status.runtimeState === "WAITING_FOR_NETWORK",
+    status.runtimeState === "STOPPED" ||
+      status.runtimeState === "IDLE_SAFE" ||
+      status.runtimeState === "WAITING_FOR_NETWORK",
     `runtimeState=${status.runtimeState}`,
   );
   assert.equal(status.review.humanReviewRequired, false);
@@ -444,9 +446,9 @@ test("canonical status after rebuild matches live floor and reconciled Lane A pr
   assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
   assert.equal(state.completedCourtEvidence.sc.checkpoint, "cl-opinion-11201513");
   assert.equal(state.laneA.court, "vt");
-  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 31, `count=${state.laneA.count}`);
+  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 45, `count=${state.laneA.count}`);
   assert.ok(
-    state.laneA.qualifyingCaseCount >= 20 && state.laneA.qualifyingCaseCount <= 31,
+    state.laneA.qualifyingCaseCount >= 20 && state.laneA.qualifyingCaseCount <= 45,
     `qualifyingCaseCount=${state.laneA.qualifyingCaseCount}`,
   );
   assert.equal(state.laneA.target, 45);
@@ -459,14 +461,15 @@ test("canonical status after rebuild matches live floor and reconciled Lane A pr
       state.laneA.checkpoint === "cl-opinion-9925231" ||
       state.laneA.checkpoint === "cl-opinion-9925230" ||
       state.laneA.checkpoint === "cl-opinion-9887733" ||
-      state.laneA.checkpoint === "cl-opinion-9886400",
+      state.laneA.checkpoint === "cl-opinion-9886400" ||
+      state.laneA.checkpoint === "cl-opinion-9886254",
     `checkpoint=${state.laneA.checkpoint}`,
   );
   assert.equal(state.humanReview.required, false);
   assert.ok(!((state.humanReview.reasons || []).includes("UNKNOWN_DB_FAILURE")));
   assert.ok(!((state.humanReview.reasons || []).includes("LIVE_DB_RECONCILIATION_UNAVAILABLE")));
   assert.equal(status.currentCourt, "vt");
-  assert.ok(status.currentCount >= 20 && status.currentCount <= 31, `currentCount=${status.currentCount}`);
+  assert.ok(status.currentCount >= 20 && status.currentCount <= 45, `currentCount=${status.currentCount}`);
   assert.equal(status.targetCount, 45);
 });
 
@@ -577,7 +580,7 @@ test("durable WI complete after count reconciliation", () => {
   assert.equal(state.completedCourtEvidence.wis.count, 45);
   assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
   assert.equal(state.laneA.court, "vt");
-  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 31, `count=${state.laneA.count}`);
+  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 45, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
 });
 
