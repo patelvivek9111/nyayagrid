@@ -1,0 +1,62 @@
+{
+  "classification": "MANUAL_QUEUE2_RAPID_INGEST_CONTINUATION",
+  "generatedAt": "2026-09-27T19:58:00.000Z",
+  "queue": { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", "transition": "NONE" },
+  "worker": "STOPPED",
+  "start": {
+    "jurisdiction": "KY",
+    "qualifying": 20,
+    "checkpoint": null,
+    "jobCursor": "cl-opinion-11314457",
+    "quota": { "minute": 30, "hour": 203, "day": 901 }
+  },
+  "end": {
+    "jurisdiction": "CT",
+    "qualifying": 46,
+    "authoritiesAdded": 128,
+    "checkpoint": "cl-opinion-11299467",
+    "nextJurisdiction": "GA",
+    "nextCourt": "ga",
+    "nextQualifying": 20
+  },
+  "jurisdictions": [
+    { "j": "KY", "court": "ky", "start": 20, "end": 45, "added": 25, "clRequests": 54, "checkpoint": "cl-opinion-11262760" },
+    { "j": "AK", "court": "alaska", "start": 20, "end": 45, "added": 25, "clRequests": 54, "checkpoint": "cl-opinion-11411783" },
+    { "j": "AZ", "court": "ariz", "start": 20, "end": 46, "added": 26, "clRequests": 56, "checkpoint": "cl-opinion-10477030" },
+    { "j": "CO", "court": "colo", "start": 20, "end": 46, "added": 26, "clRequests": 57, "checkpoint": "cl-opinion-11437571" },
+    { "j": "CT", "court": "conn", "start": 20, "end": 46, "added": 26, "clRequests": 56, "checkpoint": "cl-opinion-11299467" }
+  ],
+  "corpus": {
+    "authorities": "3333 → 3461",
+    "cases": "2016 → 2144",
+    "clCases": "1971 → 2099",
+    "statutes": 904,
+    "regulations": 158,
+    "rules": 254,
+    "chunks": 50620,
+    "embeddings": 50620,
+    "duplicateSourceIds": 0,
+    "orphanCount": 0
+  },
+  "citations": { "extracted": "6439 → 6751", "resolved": "182 → 190" },
+  "quota": {
+    "start": { "minute": 30, "hour": 203, "day": 901 },
+    "endAccounting": {
+      "productive": 277,
+      "estimatedHourRemaining": 23,
+      "dayRemainingEstimate": 624,
+      "note": "Hour window reset near session start; accounting uses fresh ~300 hour budget minus 277 productive"
+    },
+    "totalCl": 278,
+    "productive": 277,
+    "probes": 1,
+    "retries": 0,
+    "wasted": 0,
+    "hard429": 0,
+    "requestsPerAuthority": 2.16
+  },
+  "nextJurisdiction": "GA",
+  "nextCourt": "ga",
+  "safeToContinue": false,
+  "stopReason": "hour remaining ~23 < ~54 for next full jurisdiction (GA)"
+}

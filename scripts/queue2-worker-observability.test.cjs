@@ -446,8 +446,10 @@ test("canonical status after rebuild matches live floor and reconciled Lane A pr
   assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
   assert.equal(state.completedCourtEvidence.sc.checkpoint, "cl-opinion-11201513");
   assert.equal(state.completedCourtEvidence.ala.checkpoint, "cl-opinion-11271527");
+  assert.equal(state.completedCourtEvidence.ky.checkpoint, "cl-opinion-11262760");
+  assert.equal(state.completedCourtEvidence.conn.checkpoint, "cl-opinion-11299467");
   assert.equal(state.completedCourtEvidence.vt.checkpoint, "cl-opinion-11197326");
-  assert.equal(state.laneA.court, "ky");
+  assert.equal(state.laneA.court, "ga");
   assert.ok(state.laneA.count >= 20 && state.laneA.count <= 45, `count=${state.laneA.count}`);
   assert.ok(
     state.laneA.qualifyingCaseCount >= 20 && state.laneA.qualifyingCaseCount <= 45,
@@ -465,7 +467,7 @@ test("canonical status after rebuild matches live floor and reconciled Lane A pr
   assert.equal(state.humanReview.required, false);
   assert.ok(!((state.humanReview.reasons || []).includes("UNKNOWN_DB_FAILURE")));
   assert.ok(!((state.humanReview.reasons || []).includes("LIVE_DB_RECONCILIATION_UNAVAILABLE")));
-  assert.equal(status.currentCourt, "ky");
+  assert.equal(status.currentCourt, "ga");
   assert.ok(status.currentCount >= 20 && status.currentCount <= 45, `currentCount=${status.currentCount}`);
   assert.equal(status.targetCount, 45);
 });
@@ -576,7 +578,7 @@ test("durable WI complete after count reconciliation", () => {
   assert.ok(state.completedCourts.includes("wis"));
   assert.equal(state.completedCourtEvidence.wis.count, 45);
   assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
-  assert.equal(state.laneA.court, "ky");
+  assert.equal(state.laneA.court, "ga");
   assert.ok(state.laneA.count >= 20 && state.laneA.count <= 45, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
 });
