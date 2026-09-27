@@ -178,8 +178,8 @@ test("I: WI complete; active Lane A advanced", () => {
   const state = JSON.parse(fs.readFileSync(STATE_PATH, "utf8"));
   assert.ok(state.completedCourts.includes("wis"));
   assert.equal(state.completedCourtEvidence.wis.count, 45);
-  assert.equal(state.laneA.court, "sc");
-  assert.equal(state.laneA.count, 45);
+  assert.equal(state.laneA.court, "vt");
+  assert.equal(state.laneA.count, 20);
   assert.equal(state.laneA.target, 45);
 });
 

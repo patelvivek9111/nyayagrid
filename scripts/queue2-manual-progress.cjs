@@ -47,18 +47,30 @@ function isValidCompletionEvidence(evidence, targetCases = 45) {
 }
 
 function evidenceFromCanonicalTarget(target, nowIso) {
+  const court = courtOf(target);
   const checkpoint =
     typeof target.checkpoint === "string" && target.checkpoint.length > 0 ? target.checkpoint : null;
+  const qualifyingCaseCount = Number(target.qualifyingCaseCount ?? target.currentCases) || 0;
   return {
+    jurisdiction: target.jurisdiction || null,
+    court,
     status: "COMPLETE_FOR_CURRENT_DEPTH",
-    count: Number(target.currentCases) || 0,
-    cases: Number(target.currentCases) || 0,
+    qualifyingCaseCount,
+    count: qualifyingCaseCount,
+    cases: Number(target.currentCases) || qualifyingCaseCount,
     clCases: target.clCases != null ? Number(target.clCases) : null,
     target: Number(target.targetCases) || 45,
     checkpoint,
-    source: "canonical_manifest",
+    cursor: null,
+    lastSuccessfulExternalId: checkpoint,
+    nextPageUrl: null,
+    lastSuccessfulAt: null,
+    jobStatus: "completed",
     mappingStatus: target.mappingStatus || null,
     reconciledAt: nowIso,
+    completedAt: nowIso,
+    source: "canonical_manifest_reconciliation",
+    evidenceSource: "canonical_manifest",
     manualProgressSupported: true,
   };
 }
@@ -173,6 +185,7 @@ function reconcileManualDepthProgress(state, manifest, opts = {}) {
         mappingStatus: nxt.mappingStatus || "VERIFIED",
         manifestVersion: manifest?.version || next.laneA?.manifestVersion || null,
         jobStatus: "ready",
+        jobLifecycle: nxt.checkpoint ? "PAUSED_RESUMABLE" : "READY_FIRST_START",
         itemsImported: nxt.qualifyingCaseCount != null ? nxt.qualifyingCaseCount : Number(nxt.count) || 0,
         targetStatus: nxt.status || "READY",
         sequence: null,

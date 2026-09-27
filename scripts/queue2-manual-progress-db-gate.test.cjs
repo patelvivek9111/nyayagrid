@@ -172,7 +172,7 @@ test("completion evidence is rebuilt from the manifest and does not invent a che
   };
   const rec = reconcileManualDepthProgress(state, manifest, { now: NOW });
   assert.equal(rec.state.completedCourtEvidence.me.checkpoint, null);
-  assert.equal(rec.state.completedCourtEvidence.me.source, "canonical_manifest");
+  assert.equal(rec.state.completedCourtEvidence.me.source, "canonical_manifest_reconciliation");
   assert.equal(rec.state.completedCourtEvidence.sc.checkpoint, "cl-opinion-11201513");
   assert.equal(rec.inventedCheckpoints.length, 0);
   assert.equal(rec.nextCourt, "vt");

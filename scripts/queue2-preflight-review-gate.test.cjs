@@ -147,16 +147,18 @@ test("E: READY first-start MI is not treated as CL partial missing checkpoint", 
   assert.equal(restored.humanReview.required, false);
 });
 
-test("F: SC 45/45 complete depth passes human-review gate", () => {
+test("F: VT READY_FIRST_START with SC completion evidence passes human-review gate", () => {
   const state = restoreState(JSON.parse(fs.readFileSync(STATE_PATH, "utf8")));
-  assert.equal(state.laneA.court, "sc");
-  assert.equal(state.laneA.count, 45);
+  assert.equal(state.laneA.court, "vt");
+  assert.equal(state.laneA.count, 20);
   assert.equal(state.laneA.target, 45);
-  assert.equal(state.laneA.targetStatus, "COMPLETE_FOR_CURRENT_DEPTH");
-  assert.equal(state.laneA.checkpoint, "cl-opinion-11201513");
-  assert.equal(state.laneA.cursor, "cl-opinion-11201513");
+  assert.equal(state.laneA.targetStatus, "READY");
+  assert.equal(state.laneA.jobLifecycle, "READY_FIRST_START");
+  assert.equal(state.laneA.checkpoint, null);
   assert.equal(state.humanReview.required, false);
   assert.ok(state.completedCourts.includes("wis"));
+  assert.ok(state.completedCourts.includes("sc"));
+  assert.equal(state.completedCourtEvidence.sc.checkpoint, "cl-opinion-11201513");
   const pf = runPreflight({
     state,
     allowDisabledForDryRun: true,

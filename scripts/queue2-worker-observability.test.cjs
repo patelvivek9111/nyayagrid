@@ -434,13 +434,19 @@ test("canonical status after rebuild matches live floor and reconciled Lane A pr
   assert.equal(status.runtimeState, "STOPPED");
   assert.equal(status.review.humanReviewRequired, false);
   assert.ok(state.completedCourts.includes("wis"));
+  assert.ok(state.completedCourts.includes("sc"));
   assert.equal(state.completedCourtEvidence.wis.count, 45);
   assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
-  assert.equal(state.laneA.court, "sc");
-  assert.equal(state.laneA.count, 45);
+  assert.equal(state.completedCourtEvidence.sc.checkpoint, "cl-opinion-11201513");
+  assert.equal(state.laneA.court, "vt");
+  assert.equal(state.laneA.count, 20);
+  assert.equal(state.laneA.qualifyingCaseCount, 20);
   assert.equal(state.laneA.target, 45);
+  assert.equal(state.laneA.jobLifecycle, "READY_FIRST_START");
+  assert.equal(state.laneA.checkpoint, null);
   assert.equal(state.humanReview.required, false);
-  assert.equal(status.currentCount, 45);
+  assert.equal(status.currentCourt, "vt");
+  assert.equal(status.currentCount, 20);
   assert.equal(status.targetCount, 45);
 });
 
@@ -548,8 +554,8 @@ test("durable WI complete after count reconciliation", () => {
   assert.ok(state.completedCourts.includes("wis"));
   assert.equal(state.completedCourtEvidence.wis.count, 45);
   assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
-  assert.equal(state.laneA.court, "sc");
-  assert.equal(state.laneA.count, 45);
+  assert.equal(state.laneA.court, "vt");
+  assert.equal(state.laneA.count, 20);
   assert.equal(state.laneA.target, 45);
 });
 
