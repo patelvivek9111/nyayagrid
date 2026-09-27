@@ -14,9 +14,12 @@ const { CANARY_MAX_SESSION_CL_REQUESTS } = require("./queue2-lane-a-child-lifecy
 const { selectLaneBTask } = require("./queue2-autonomy-policy.cjs");
 const {
   DATABASE_QUOTA_BLOCKED,
+  NETWORK_UNAVAILABLE,
   evaluateDbWriteReadiness,
   applyDatabaseQuotaBlock,
   recoverDatabaseQuotaBlock,
+  applyNetworkUnavailable,
+  clearTransientNetworkHumanReview,
   assertCourtListenerAllowed,
   quotaUsableForExecution,
 } = require("./queue2-db-readiness.cjs");
@@ -229,6 +232,11 @@ function planManualProgressStartup(params = {}) {
     }
     if (db.classification === DATABASE_QUOTA_BLOCKED) {
       state = applyDatabaseQuotaBlock(state, now);
+    } else if (db.classification === NETWORK_UNAVAILABLE) {
+      state = applyNetworkUnavailable(state, now, {
+        source: "db_probe_fly_control_plane",
+        message: params.dbProbe?.message || params.dbProbe?.err || null,
+      });
     } else {
       state.dbWriteReady = false;
       state.currentLane = "B";
@@ -252,6 +260,10 @@ function planManualProgressStartup(params = {}) {
       if (db.classification === DATABASE_QUOTA_BLOCKED) {
         state.healthyIdle = { status: "HEALTHY_IDLE_SAFE", reason: DATABASE_QUOTA_BLOCKED };
         state.runtimeState = "IDLE_SAFE";
+      } else if (db.classification === NETWORK_UNAVAILABLE) {
+        state.healthyIdle = { status: "WAITING_FOR_NETWORK", reason: NETWORK_UNAVAILABLE };
+        state.runtimeState = "WAITING_FOR_NETWORK";
+        state.waitingForNetwork = true;
       }
     } else {
       state.idleSafe = false;
@@ -259,13 +271,30 @@ function planManualProgressStartup(params = {}) {
       state.currentLane = "B";
       state.laneB = { ...(state.laneB || {}), task: laneB.currentTask };
     }
-    if (!state.humanReview || db.classification === DATABASE_QUOTA_BLOCKED) {
-      const priorReasons = (state.humanReview?.reasons || []).filter((r) => r !== DATABASE_QUOTA_BLOCKED);
-      state.humanReview = {
-        required: priorReasons.length > 0,
-        reasons: priorReasons,
-        details: state.humanReview?.details || [],
-      };
+    if (
+      !state.humanReview ||
+      db.classification === DATABASE_QUOTA_BLOCKED ||
+      db.classification === NETWORK_UNAVAILABLE
+    ) {
+      const priorReasons = (state.humanReview?.reasons || []).filter(
+        (r) => r !== DATABASE_QUOTA_BLOCKED && r !== NETWORK_UNAVAILABLE && r !== "UNKNOWN_DB_FAILURE",
+      );
+      // NETWORK_UNAVAILABLE must never become HUMAN_REVIEW_REQUIRED.
+      if (db.classification === NETWORK_UNAVAILABLE) {
+        state.humanReview = {
+          required: priorReasons.length > 0,
+          reasons: priorReasons,
+          details: (state.humanReview?.details || []).filter(
+            (d) => d?.reason !== NETWORK_UNAVAILABLE && d?.reason !== "UNKNOWN_DB_FAILURE",
+          ),
+        };
+      } else {
+        state.humanReview = {
+          required: priorReasons.length > 0,
+          reasons: priorReasons,
+          details: state.humanReview?.details || [],
+        };
+      }
     }
     if (db.classification === "UNKNOWN_DB_FAILURE") {
       const reasons = [...new Set([...(state.humanReview?.reasons || []), "UNKNOWN_DB_FAILURE"])];
@@ -276,6 +305,7 @@ function planManualProgressStartup(params = {}) {
       };
       state.healthyIdle = null;
       state.idleSafe = false;
+      state.waitingForNetwork = false;
     }
     state.metrics = { ...(state.metrics || {}), aiCalls: 0, aiTokens: 0 };
     return {
@@ -294,7 +324,22 @@ function planManualProgressStartup(params = {}) {
       queue2: state.queue,
       queue3: state.queue3,
       canaryMaxClRequests: CANARY_MAX_SESSION_CL_REQUESTS,
+      networkUnavailable: db.classification === NETWORK_UNAVAILABLE,
     };
+  }
+
+  // DB writable again: clear transient network wait / misclassified UNKNOWN_DB_FAILURE.
+  if (state.waitingForNetwork || state.networkBlock?.classification === NETWORK_UNAVAILABLE) {
+    const cleared = clearTransientNetworkHumanReview(state, {
+      processGateSafe: params.processGateSafe === true,
+      markRecovered: params.processGateSafe === true,
+      clearUnknownChild: params.processGateSafe === true && params.clearUnknownChild !== false,
+      now,
+    });
+    state = cleared.state;
+    if (params.processGateSafe === true) {
+      state.waitingForNetwork = false;
+    }
   }
 
   state.dbWriteReady = true;

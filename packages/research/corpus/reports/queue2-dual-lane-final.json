@@ -2,11 +2,11 @@
   "ok": true,
   "status": "PARTIAL",
   "wave": "queue2-ownership-heartbeat",
-  "generatedAt": "2026-09-25T13:21:30.054Z",
+  "generatedAt": "2026-09-27T13:17:06.828Z",
   "worker": {
-    "workerId": "q2-94fef319977b",
-    "pid": 45916,
-    "cycles": 1,
+    "workerId": "q2-5a0bf93a7398",
+    "pid": 3472,
+    "cycles": 2,
     "heartbeatIntervalMs": 900000,
     "aiCallsForHeartbeat": 0,
     "gitPushesForHeartbeat": 0,
@@ -16,17 +16,19 @@
     "osAutostartConfigured": false
   },
   "checkpointSafety": {
-    "cursor": "cl-opinion-9886466",
-    "lastSuccessfulExternalId": "cl-opinion-9886466",
-    "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__date_filed__lte=2018-12-31&cluster__docket__court=wis&cursor=cD05ODg2MzY4&order_by=-id&page_size=16",
-    "lastSuccessfulAt": "2026-09-25T00:42:40.438Z",
+    "durableCheckpoint": null,
+    "currentJurisdiction": "VT",
+    "currentCourt": "vt",
+    "cursor": null,
+    "lastSuccessfulExternalId": null,
+    "nextPageUrl": null,
+    "lastSuccessfulAt": null,
     "mappingStatus": "VERIFIED",
     "reconciledFrom": "corpus_ingest_jobs",
-    "humanReviewRequired": false,
-    "reviewReasons": [],
-    "durableCheckpoint": "cl-opinion-9886466",
-    "currentJurisdiction": "WI",
-    "currentCourt": "wis"
+    "humanReviewRequired": true,
+    "reviewReasons": [
+      "UNKNOWN_DB_FAILURE"
+    ]
   },
   "observability": {
     "statusFile": "packages/research/corpus/reports/corpus-worker-status.json",
@@ -37,26 +39,21 @@
   },
   "courtListener": {
     "laneBRequests": 0,
-    "quotaProbeThisRun": true,
+    "quotaProbeThisRun": false,
     "mustBeZeroExceptQuotaProbe": true
   },
   "laneA": {
-    "currentCourt": "wis",
-    "jurisdiction": "WI",
-    "checkpoint": "cl-opinion-9886466",
+    "currentCourt": "vt",
+    "jurisdiction": "VT",
+    "checkpoint": null,
     "target": 45,
-    "count": 44,
-    "nextResumeCondition": "2026-09-26T00:36:37.423Z",
-    "result": {
-      "uploaded": true,
-      "bytes": 144466,
-      "sha": "HEAD",
-      "source": "local_bundled"
-    }
+    "count": 20,
+    "nextResumeCondition": "2026-09-27T13:31:10.093Z",
+    "result": null
   },
   "laneB": null,
   "automation": {
-    "nextQuotaProbe": "2026-09-26T00:36:37.423Z",
+    "nextQuotaProbe": "2026-09-27T13:31:10.093Z",
     "automaticLaneAResume": false,
     "automaticLaneSwitch": true,
     "humanInterventionRequired": "yes"
@@ -64,9 +61,7 @@
   "operational": {
     "tests": "queue2-dual-lane-controller.test.cjs + queue2-worker-observability.test.cjs + queue2-worker-lock.test.cjs",
     "health": {
-      "status": 200,
-      "body": "{\"ok\":true,\"checks\":{\"database\":\"ok\",\"storage\":\"ok\",\"redis\":\"ok\",\"ingest\":\"configured\",\"config\":\"ok\",\"appEnv\":\"staging\",\"featureAgents\":\"0\",\"providers\":{\"appEnv\":\"staging\",\"appEnvSource\":\"APP_ENV\",\"authProvider\":\"clerk\",\"aiProvider\":\"openai\",\"embeddingProvider\":\"openai\",\"storageProvider\":\"s3\",\"malwareScanner\":\"clamav\",\"ocrProvider\":\"none\",\"emailProvider\":\"smtp\",\"billingProvider\":\"database\",\"rateLimitProvider\":\"redis\",\"databaseConfigured\":true,\"storageBucketConfigured\":true}}}",
-      "featureAgents": "0"
+      "raw": "Warning: Metrics send issue: failed to send metrics: Post \"https://flyctl-metrics.fly.dev/metrics_post\": dial tcp: lookup flyctl-metrics.fly.dev: no such host\nError: could not get machine 811d3e3f522648: failed to get VM 811d3e3f522648: Get \"https://api.machines.dev/v1/apps/nyayagrid-staging/machines/811d3e3f522648\": dial tcp: lookup api.machines.dev: no such host\n"
     },
     "featureAgents": "0"
   },
@@ -75,5 +70,11 @@
     "#9": "CLOSED",
     "#3": "NOT_OPEN",
     "transition": "NONE"
-  }
+  },
+  "humanReview": {
+    "required": false,
+    "reasons": []
+  },
+  "waitingForNetwork": true,
+  "classification": "NETWORK_UNAVAILABLE"
 }

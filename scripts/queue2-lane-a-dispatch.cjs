@@ -97,19 +97,40 @@ function classifyLaneABatchResult(params = {}) {
     isNonTerminalRunnerState,
     LANE_A_RUNNER_STATES,
   } = require("./queue2-lane-a-child-lifecycle.cjs");
+  const { isFlyOrControlPlaneNetworkFailure, NETWORK_UNAVAILABLE } = require("./queue2-db-readiness.cjs");
 
   const priorCheckpoint = params.priorCheckpoint || null;
   const priorCount = Number(params.priorCount) || 0;
   const target = Number(params.target) || 0;
-  const parsed = params.parsed || parseLaneARunnerOutput(params.stdout || "");
+  const stdout = params.stdout || "";
+  const parsed = params.parsed || parseLaneARunnerOutput(stdout);
+  const networkLaunchFailure =
+    Boolean(params.networkLaunchFailure) ||
+    isFlyOrControlPlaneNetworkFailure(stdout) ||
+    isFlyOrControlPlaneNetworkFailure(parsed?.raw) ||
+    isFlyOrControlPlaneNetworkFailure(parsed?.result);
   const result = parsed.result || {};
-  const lifecycleState = parsed.lifecycleState || mapRunnerResultToLifecycleState(result);
+  let lifecycleState = parsed.lifecycleState || mapRunnerResultToLifecycleState(result);
+  const pid = result.pid || parsed.pid || null;
+  if (networkLaunchFailure && (pid == null || pid === undefined)) {
+    lifecycleState = LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK;
+  }
   const terminal =
-    parsed.terminal != null ? Boolean(parsed.terminal) : isTerminalRunnerState(lifecycleState);
-  const nonTerminal = isNonTerminalRunnerState(lifecycleState) || !terminal;
+    lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK
+      ? false
+      : parsed.terminal != null
+        ? Boolean(parsed.terminal)
+        : isTerminalRunnerState(lifecycleState);
+  const nonTerminal =
+    lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK ||
+    isNonTerminalRunnerState(lifecycleState) ||
+    !terminal;
 
   const status = result.status || result.job?.status || null;
-  const reason = result.reason || null;
+  const reason =
+    lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK
+      ? NETWORK_UNAVAILABLE
+      : result.reason || null;
   const existingJob = result.job && typeof result.job === "object" ? result.job : null;
   // Session / current-batch calls only — never treat historical job.api_calls as session.
   const sessionApiCalls =
@@ -159,7 +180,7 @@ function classifyLaneABatchResult(params = {}) {
       (status === "completed" && apiCalls === 0 && itemsImported > 0));
   const staleRunningGuard = !nonTerminal && reason === "stale_running_guard";
 
-  // STARTED/RUNNING can NEVER be zero progress.
+  // STARTED/RUNNING / UNKNOWN_DUE_TO_NETWORK can NEVER be zero progress.
   const noProgress = nonTerminal
     ? false
     : !alreadyCompleted &&
@@ -178,7 +199,9 @@ function classifyLaneABatchResult(params = {}) {
     lifecycleState,
     terminal,
     nonTerminal,
-    pid: result.pid || parsed.pid || null,
+    pid: pid,
+    unknownDueToNetwork: lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK,
+    networkUnavailable: lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK,
     apiCalls,
     sessionApiCalls,
     historicalJobApiCalls: Number.isFinite(historicalJobApiCalls) ? historicalJobApiCalls : null,

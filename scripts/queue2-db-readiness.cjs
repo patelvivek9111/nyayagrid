@@ -11,6 +11,7 @@
 "use strict";
 
 const DATABASE_QUOTA_BLOCKED = "DATABASE_QUOTA_BLOCKED";
+const NETWORK_UNAVAILABLE = "NETWORK_UNAVAILABLE";
 const DB_DEPENDENCY = Object.freeze({
   DB_REQUIRED: "DB_REQUIRED",
   DB_READ_ONLY: "DB_READ_ONLY",
@@ -50,20 +51,45 @@ const LANE_B_DB_DEPENDENCY = Object.freeze({
 
 const NEON_QUOTA_MESSAGE = /exceeded the quota/i;
 
+/** Fly control-plane / DNS / transient network — never a SQL/database classification. */
+const FLY_CONTROL_PLANE_NETWORK_RE =
+  /api\.machines\.dev|flyctl-metrics\.fly\.dev|fly\.dev|could not (?:get|exec)(?:\s+command)?\s+on\s+machine|failed to (?:get|exec)(?:\s+on)?\s+VM|dial tcp:\s*lookup|lookup\s+[\w.-]+\s*:\s*no such host|getaddrinfo|ENOTFOUND|EAI_AGAIN|ENETUNREACH|EHOSTUNREACH|ECONNRESET|ECONNREFUSED|network is unreachable|temporary failure in name resolution|wsarecv:.*(?:aborted|forcibly closed)/i;
+
 function textOf(input) {
   if (input == null) return "";
   if (typeof input === "string") return input;
-  return String(input.message || input.err || input.reason || "");
+  return String(
+    input.message ||
+      input.err ||
+      input.reason ||
+      input.stderr ||
+      input.stdout ||
+      input.raw ||
+      "",
+  );
 }
 
 function codeOf(input) {
   if (input == null || typeof input === "string") return null;
-  return input.code || input.sqlstate || input.SQLSTATE || null;
+  return input.code || input.sqlstate || input.SQLSTATE || input.errno || null;
 }
 
 /**
- * Classify a database failure. 53000 is never a CourtListener, parser,
- * mapping, checkpoint, or source failure.
+ * True for Fly control-plane / DNS / local network transport failures.
+ * flyctl-metrics DNS noise is network, never UNKNOWN_DB_FAILURE.
+ */
+function isFlyOrControlPlaneNetworkFailure(input) {
+  const code = String(codeOf(input) || "");
+  if (["ENOTFOUND", "EAI_AGAIN", "ENETUNREACH", "EHOSTUNREACH"].includes(code)) return true;
+  const text = textOf(input);
+  if (!text) return false;
+  return FLY_CONTROL_PLANE_NETWORK_RE.test(text);
+}
+
+/**
+ * Classify a database / infrastructure probe failure.
+ * SQLSTATE 53000 remains DATABASE_QUOTA_BLOCKED.
+ * Fly/DNS/network is NETWORK_UNAVAILABLE (WAIT_AND_RETRY), never UNKNOWN_DB_FAILURE.
  */
 function classifyDatabaseFailure(input) {
   const code = codeOf(input);
@@ -75,26 +101,50 @@ function classifyDatabaseFailure(input) {
       sqlstate: sqlstate || "53000",
       external: true,
       temporary: true,
+      severity: "EXTERNAL_BLOCK",
       courtListenerFailure: false,
       ingestionParserFailure: false,
       mappingFailure: false,
       checkpointCorruption: false,
       sourceFailure: false,
+      networkFailure: false,
+    };
+  }
+  if (isFlyOrControlPlaneNetworkFailure(input)) {
+    return {
+      classification: NETWORK_UNAVAILABLE,
+      sqlstate: sqlstate || null,
+      external: true,
+      temporary: true,
+      severity: "WAIT_AND_RETRY",
+      courtListenerFailure: false,
+      ingestionParserFailure: false,
+      mappingFailure: false,
+      checkpointCorruption: false,
+      sourceFailure: false,
+      networkFailure: true,
+      flyControlPlane: /api\.machines\.dev|could not (?:get|exec)|failed to (?:get|exec)/i.test(message),
+      metricsNoiseOnly:
+        /flyctl-metrics\.fly\.dev/i.test(message) &&
+        !/api\.machines\.dev/i.test(message) &&
+        !/could not (?:get|exec)/i.test(message),
     };
   }
   if (!input || input.ok === true) {
-    return { classification: null, sqlstate: sqlstate || null, external: false };
+    return { classification: null, sqlstate: sqlstate || null, external: false, networkFailure: false };
   }
   return {
     classification: "UNKNOWN_DB_FAILURE",
     sqlstate: sqlstate || null,
     external: true,
     temporary: false,
+    severity: "HUMAN_REVIEW_REQUIRED",
     courtListenerFailure: false,
     ingestionParserFailure: false,
     mappingFailure: false,
     checkpointCorruption: false,
     sourceFailure: false,
+    networkFailure: false,
   };
 }
 
@@ -125,6 +175,20 @@ function evaluateDbWriteReadiness(probe) {
       courtListenerHttpCalls: 0,
     };
   }
+  if (failure.classification === NETWORK_UNAVAILABLE) {
+    return {
+      dbWriteReady: false,
+      classification: NETWORK_UNAVAILABLE,
+      reason: NETWORK_UNAVAILABLE,
+      severity: "WAIT_AND_RETRY",
+      temporary: true,
+      networkFailure: true,
+      flyControlPlane: Boolean(failure.flyControlPlane),
+      mutations: 0,
+      courtListenerHttpCalls: 0,
+      childLaunches: 0,
+    };
+  }
   if (probe.writable === false || probe.readOnly === true) {
     return {
       dbWriteReady: false,
@@ -151,6 +215,92 @@ function evaluateDbWriteReadiness(probe) {
     mutations: 0,
     courtListenerHttpCalls: 0,
   };
+}
+
+/**
+ * Strip transient network / misclassified UNKNOWN_DB_FAILURE review reasons when
+ * the only open review items are those transient classes and recovery is safe.
+ */
+function clearTransientNetworkHumanReview(state, opts = {}) {
+  const next = state && typeof state === "object" ? JSON.parse(JSON.stringify(state)) : {};
+  const reasons = Array.isArray(next.humanReview?.reasons) ? [...next.humanReview.reasons] : [];
+  const transient = new Set([NETWORK_UNAVAILABLE, "UNKNOWN_DB_FAILURE"]);
+  const kept = reasons.filter((r) => !transient.has(r));
+  const cleared = reasons.filter((r) => transient.has(r));
+  if (cleared.length === 0 && !next.waitingForNetwork && !next.networkBlock) {
+    return { state: next, cleared: false, clearedReasons: [] };
+  }
+  if (opts.processGateSafe !== true && kept.length === 0 && cleared.length > 0) {
+    // Caller must prove process gate before clearing when child state was unknown.
+    if (next.laneAChild?.unknownDueToNetwork || next.laneAChild?.lifecycleState === "UNKNOWN_DUE_TO_NETWORK") {
+      return { state: next, cleared: false, clearedReasons: [], hold: "PROCESS_GATE_REQUIRED" };
+    }
+  }
+  next.humanReview = {
+    required: kept.length > 0,
+    reasons: kept,
+    details: Array.isArray(next.humanReview?.details)
+      ? next.humanReview.details.filter((d) => !transient.has(d?.reason))
+      : [],
+  };
+  if (opts.markRecovered === true) {
+    next.waitingForNetwork = false;
+    next.networkBlock = next.networkBlock
+      ? {
+          ...next.networkBlock,
+          recovered: true,
+          recoveredAt: (opts.now instanceof Date ? opts.now : new Date(opts.now || Date.now())).toISOString(),
+        }
+      : null;
+    if (
+      next.laneAChild &&
+      (next.laneAChild.unknownDueToNetwork || next.laneAChild.lifecycleState === "UNKNOWN_DUE_TO_NETWORK")
+    ) {
+      if (opts.clearUnknownChild === true) {
+        next.laneAChild = null;
+      }
+    }
+  }
+  return { state: next, cleared: cleared.length > 0, clearedReasons: cleared };
+}
+
+function applyNetworkUnavailable(state, now = new Date(), detail = {}) {
+  const next = JSON.parse(JSON.stringify(state || {}));
+  const nowIso = (now instanceof Date ? now : new Date(now)).toISOString();
+  const checkpoint = next.laneA ? next.laneA.checkpoint ?? null : null;
+  next.waitingForNetwork = true;
+  next.runtimeState = "WAITING_FOR_NETWORK";
+  next.dbWriteReady = false;
+  next.networkBlock = {
+    classification: NETWORK_UNAVAILABLE,
+    severity: "WAIT_AND_RETRY",
+    since: next.networkBlock?.since || nowIso,
+    recovered: false,
+    source: detail.source || "fly_control_plane",
+    detail: detail.message ? String(detail.message).slice(0, 400) : null,
+  };
+  next.currentLane = "WAITING_FOR_NETWORK";
+  next.queue = "#2";
+  next.queue9 = "CLOSED";
+  next.queue3 = "NOT_OPEN";
+  next.featureAgents = "0";
+  next.idleSafe = true;
+  next.healthyIdle = { status: "WAITING_FOR_NETWORK", reason: NETWORK_UNAVAILABLE };
+  if (next.laneA) next.laneA.checkpoint = checkpoint;
+  // Never raise HUMAN_REVIEW for transient network; strip misclassified UNKNOWN_DB_FAILURE.
+  const prior = Array.isArray(next.humanReview?.reasons) ? next.humanReview.reasons : [];
+  const kept = prior.filter((r) => r !== NETWORK_UNAVAILABLE && r !== "UNKNOWN_DB_FAILURE");
+  next.humanReview = {
+    required: kept.length > 0,
+    reasons: kept,
+    details: Array.isArray(next.humanReview?.details)
+      ? next.humanReview.details.filter(
+          (d) => d?.reason !== NETWORK_UNAVAILABLE && d?.reason !== "UNKNOWN_DB_FAILURE",
+        )
+      : [],
+  };
+  next.metrics = { ...(next.metrics || {}), aiCalls: 0, aiTokens: 0 };
+  return next;
 }
 
 function assertCourtListenerAllowed(params = {}) {
@@ -272,8 +422,10 @@ function auditLaneBDbDependency(registry) {
 
 module.exports = {
   DATABASE_QUOTA_BLOCKED,
+  NETWORK_UNAVAILABLE,
   DB_DEPENDENCY,
   LANE_B_DB_DEPENDENCY,
+  isFlyOrControlPlaneNetworkFailure,
   classifyDatabaseFailure,
   evaluateDbWriteReadiness,
   assertCourtListenerAllowed,
@@ -282,5 +434,7 @@ module.exports = {
   quotaUsableForExecution,
   applyDatabaseQuotaBlock,
   recoverDatabaseQuotaBlock,
+  applyNetworkUnavailable,
+  clearTransientNetworkHumanReview,
   auditLaneBDbDependency,
 };

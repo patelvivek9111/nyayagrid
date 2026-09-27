@@ -20,6 +20,7 @@ const LANE_A_RUNNER_STATES = Object.freeze({
   ALREADY_COMPLETED: "ALREADY_COMPLETED",
   TIMEOUT: "TIMEOUT",
   UNKNOWN: "UNKNOWN",
+  UNKNOWN_DUE_TO_NETWORK: "UNKNOWN_DUE_TO_NETWORK",
 });
 
 const TERMINAL_STATES = new Set([
@@ -34,6 +35,7 @@ const TERMINAL_STATES = new Set([
 const NON_TERMINAL_STATES = new Set([
   LANE_A_RUNNER_STATES.STARTED,
   LANE_A_RUNNER_STATES.RUNNING,
+  LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK,
 ]);
 
 /** Canary stabilization hard cap (current-session CL requests). */
@@ -61,6 +63,9 @@ function createEmptySessionQuota() {
  */
 function mapRunnerResultToLifecycleState(result = {}) {
   if (!result || typeof result !== "object") return LANE_A_RUNNER_STATES.UNKNOWN;
+  if (result.unknownDueToNetwork === true || result.lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK) {
+    return LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK;
+  }
   if (result.reason === "stale_running_guard") return LANE_A_RUNNER_STATES.STALE_RUNNING_GUARD;
   if (result.reason === "already_completed") return LANE_A_RUNNER_STATES.ALREADY_COMPLETED;
   if (result.started === true && !result.status && !result.fileResult) {
@@ -205,6 +210,13 @@ function createLaneAChildRecord(params = {}) {
 
 function isLaneAChildAlive(child, opts = {}) {
   if (!child || child.terminal) return false;
+  // Do not assume a child exists when Fly control-plane left pid unknown.
+  if (
+    child.unknownDueToNetwork === true ||
+    child.lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK
+  ) {
+    return false;
+  }
   if (opts.aliveOverride != null) return Boolean(opts.aliveOverride);
   if (child.pid == null) return false;
   // Without a live probe, treat non-terminal child with pid as potentially alive.
@@ -217,6 +229,20 @@ function mayLaunchLaneAChild(state, opts = {}) {
   const child = state?.laneAChild || null;
   if (!child) return { ok: true, reason: "no_existing_child" };
   if (child.terminal) return { ok: true, reason: "prior_child_terminal" };
+  // Unknown remote-child after Fly DNS — do not relaunch until process gate reconciles.
+  if (
+    child.unknownDueToNetwork === true ||
+    child.lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK
+  ) {
+    return {
+      ok: false,
+      reason: "UNKNOWN_DUE_TO_NETWORK",
+      pid: null,
+      court: child.court,
+      batchId: child.batchId,
+      sessionId: child.sessionId || null,
+    };
+  }
   if (isLaneAChildAlive(child, opts)) {
     return {
       ok: false,

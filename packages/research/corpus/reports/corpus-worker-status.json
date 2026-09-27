@@ -4,10 +4,10 @@
   "queue9": "CLOSED",
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
-  "currentLane": "STOPPED",
-  "runtimeState": "STOPPED",
-  "freshness": "STOPPED",
-  "currentTask": "NONE",
+  "currentLane": "WAITING_FOR_NETWORK",
+  "runtimeState": "WAITING_FOR_NETWORK",
+  "freshness": "WAITING_FOR_NETWORK",
+  "currentTask": "await_network",
   "currentCourt": "vt",
   "currentJurisdiction": "VT",
   "jurisdiction": "VT",
@@ -20,42 +20,34 @@
   "lastSuccessfulAt": null,
   "runner": "staging-cl-batch-job",
   "mappingStatus": "VERIFIED",
-  "manifestVersion": 37,
+  "manifestVersion": 39,
   "jobStatus": "ready",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastUpdatedAt": "2026-09-27T03:13:54.416Z",
-  "lastHeartbeatAt": "2026-09-25T19:06:23.922Z",
-  "nextQuotaCheckAt": "2026-09-25T19:21:23.945Z",
+  "lastUpdatedAt": "2026-09-27T13:30:04.229Z",
+  "lastHeartbeatAt": "2026-09-27T13:16:10.038Z",
+  "nextQuotaCheckAt": "2026-09-27T13:31:10.093Z",
   "network": {
-    "waitingForNetwork": false,
-    "lastOnlineAt": null
+    "waitingForNetwork": true,
+    "lastOnlineAt": null,
+    "classification": "NETWORK_UNAVAILABLE",
+    "severity": "WAIT_AND_RETRY"
   },
   "tokens": {
     "routineAiCalls": 0,
     "routineAiTokens": 0
   },
   "quota": {
-    "minuteRemaining": null,
-    "hourRemaining": null,
-    "dayRemaining": null,
-    "safeRequests": null,
-    "lastProbeAt": "2026-09-25T19:06:23.945Z",
+    "minuteRemaining": 30,
+    "hourRemaining": 300,
+    "dayRemaining": 726,
+    "safeRequests": 28,
+    "lastProbeAt": "2026-09-27T13:16:10.093Z",
     "hard429Count": 0,
-    "dayResetAt": "2026-09-26T00:36:37.423499+00:00",
-    "quotaStateObservedAt": "2026-09-25T19:06:23.945Z",
-    "quotaStateSource": "historical_not_for_execution",
-    "quotaStateConfidence": "STALE",
-    "quotaStateAgeMs": 0,
-    "executionAuthority": false,
-    "freshness": "STALE",
-    "reason": "DB_BLOCKED_BEFORE_CL_PROBE",
-    "historicalObservation": {
-      "minuteRemaining": 30,
-      "hourRemaining": 286,
-      "dayRemaining": 1050,
-      "lastProbeAt": "2026-09-25T19:06:23.945Z"
-    },
-    "usableForExecution": false
+    "dayResetAt": "2026-09-27T14:28:39.007524+00:00",
+    "quotaStateObservedAt": "2026-09-27T13:16:10.093Z",
+    "quotaStateSource": "probe.limits",
+    "quotaStateConfidence": "AUTHORITATIVE_API",
+    "quotaStateAgeMs": 0
   },
   "today": {
     "clRequests": 0,
@@ -78,52 +70,18 @@
     "statutes": 904,
     "regulations": 158,
     "rules": 254,
-    "authorityGateDeficit": null
+    "authorityGateDeficit": 0
   },
   "health": {
     "retrieval": "ok",
     "orphanCount": 0,
     "duplicateSourceIdCount": 0,
-    "database": "external_block",
-    "featureAgents": "0",
-    "databaseConnectivity": "unknown"
+    "database": "unknown",
+    "featureAgents": "0"
   },
   "review": {
     "humanReviewRequired": false,
     "reasons": [],
     "reviewReasons": []
-  },
-  "worker": "STOPPED",
-  "lock": null,
-  "transition": "NONE",
-  "qualifyingCaseCount": 20,
-  "depthStatus": "READY",
-  "jobLifecycle": "READY_FIRST_START",
-  "nextCourt": "vt",
-  "nextJurisdiction": "VT",
-  "completedCourts": [
-    "wis",
-    "mich",
-    "nm",
-    "utah",
-    "sd",
-    "idaho",
-    "wyo",
-    "neb",
-    "sc"
-  ],
-  "completedCourtEvidenceCount": 9,
-  "execution": {
-    "databaseWriteReady": false,
-    "blockReason": "DATABASE_QUOTA_BLOCKED",
-    "database": {
-      "executionReady": false,
-      "state": "DATABASE_QUOTA_BLOCKED",
-      "sqlState": "53000",
-      "externalBlock": true
-    },
-    "courtListenerAllowed": false,
-    "childLaunches": 0,
-    "clRequests": 0
   }
 }

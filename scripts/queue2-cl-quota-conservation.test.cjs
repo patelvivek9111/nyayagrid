@@ -293,7 +293,10 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
   assert.equal(state.queue3, "NOT_OPEN");
   assert.equal(state.queue, "#2");
   assert.equal(state.queue9, "CLOSED");
-  assert.equal(state.currentLane, "STOPPED");
+  assert.ok(
+    state.currentLane === "STOPPED" || state.currentLane === "WAITING_FOR_NETWORK",
+    `currentLane=${state.currentLane}`,
+  );
   assert.equal(state.laneA.court, "vt");
   assert.equal(state.laneA.count, 20);
   assert.equal(state.laneA.target, 45);
@@ -302,6 +305,7 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
   assert.equal(state.laneA.checkpoint, null);
   assert.equal(state.completedCourtEvidence.sc.checkpoint, "cl-opinion-11201513");
   assert.equal(state.humanReview?.required, false);
+  assert.ok(!((state.humanReview?.reasons || []).includes("UNKNOWN_DB_FAILURE")));
   assert.equal(state.laneA.lock, null);
   // WI complete — Lane B offline court not the active partial.
   assert.notEqual(state.laneA.court, "wis");

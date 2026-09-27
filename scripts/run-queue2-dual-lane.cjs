@@ -165,7 +165,13 @@ const {
   OVERALL,
 } = require("./queue2-watchdog.cjs");
 const { selectNextProductionDepthTarget, planManualProgressStartup } = require("./queue2-manual-progress.cjs");
-const { assertCourtListenerAllowed } = require("./queue2-db-readiness.cjs");
+const {
+  assertCourtListenerAllowed,
+  NETWORK_UNAVAILABLE,
+  applyNetworkUnavailable,
+  clearTransientNetworkHumanReview,
+  isFlyOrControlPlaneNetworkFailure,
+} = require("./queue2-db-readiness.cjs");
 const {
   planDatabaseQuotaRecovery,
   FIRST_RECOVERY_CANARY,
@@ -771,8 +777,24 @@ function listRemoteLaneAProcessesForGate(opts = {}) {
   }
   try {
     const r = flyExec("ps -o pid,ppid,args", 60);
-    return parseRemoteLaneAProcesses((r.stdout || "") + (r.stderr || ""));
-  } catch {
+    const text = `${r.stdout || ""}\n${r.stderr || ""}`;
+    if (isFlyOrControlPlaneNetworkFailure(text) || isFlyOrControlPlaneNetworkFailure(r)) {
+      const err = new Error(NETWORK_UNAVAILABLE);
+      err.code = NETWORK_UNAVAILABLE;
+      err.networkUnavailable = true;
+      err.message = text.slice(0, 400) || NETWORK_UNAVAILABLE;
+      throw err;
+    }
+    return parseRemoteLaneAProcesses(text);
+  } catch (e) {
+    if (e?.networkUnavailable || e?.code === NETWORK_UNAVAILABLE) throw e;
+    if (isFlyOrControlPlaneNetworkFailure(e)) {
+      const err = new Error(NETWORK_UNAVAILABLE);
+      err.code = NETWORK_UNAVAILABLE;
+      err.networkUnavailable = true;
+      err.message = String(e?.message || e).slice(0, 400);
+      throw err;
+    }
     return [];
   }
 }
@@ -966,6 +988,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     dbProbe,
     now: started,
     executing: process.env.QUEUE2_RUN_LANE_B === "1",
+    processGateSafe: false,
     laneB: {
       networkOk: !state.waitingForNetwork,
       corpusVersion: state.depthManifestVersion,
@@ -976,22 +999,55 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     },
   });
   state = gated.state;
-  runtime.dbWriteReady = gated.allowCourtListener === true && ingestDb.dbWriteReady === true;
+  const probeReady =
+    gated.allowCourtListener === true &&
+    ingestDb.dbWriteReady === true &&
+    gated.db?.classification !== NETWORK_UNAVAILABLE;
+  runtime.dbWriteReady = false;
 
   // Remote process gate BEFORE recovery canary wiring and BEFORE any CourtListener
   // (including the parent /api-usage/ quota probe). Orphan/multi → 0 CL.
   let processGateBlocksCl = false;
   let remoteProcsForGate = [];
-  if (runtime.dbWriteReady) {
-    remoteProcsForGate = listRemoteLaneAProcessesForGate({
-      query:
-        process.env.QUEUE2_MOCK_REMOTE_LANE_A_PS != null ||
-        typeof runtime.listRemoteLaneAProcesses === "function"
-          ? () => listRemoteLaneAProcessesForGate()
-          : process.env.QUEUE2_SKIP_REMOTE_PROCESS_GATE === "1"
-            ? () => []
-            : undefined,
-    });
+  let processGateNetworkBlocked = false;
+  if (probeReady || state.waitingForNetwork || gated.db?.classification === NETWORK_UNAVAILABLE) {
+    try {
+      remoteProcsForGate = listRemoteLaneAProcessesForGate({
+        query:
+          process.env.QUEUE2_MOCK_REMOTE_LANE_A_PS != null ||
+          typeof runtime.listRemoteLaneAProcesses === "function"
+            ? () => listRemoteLaneAProcessesForGate()
+            : process.env.QUEUE2_SKIP_REMOTE_PROCESS_GATE === "1"
+              ? () => []
+              : undefined,
+      });
+    } catch (e) {
+      if (e?.networkUnavailable || e?.code === NETWORK_UNAVAILABLE || isFlyOrControlPlaneNetworkFailure(e)) {
+        processGateNetworkBlocked = true;
+        state = applyNetworkUnavailable(state, started, {
+          source: "process_gate_fly_control_plane",
+          message: String(e?.message || e).slice(0, 400),
+        });
+        console.log(
+          JSON.stringify({
+            tag: "NETWORK_GATE",
+            classification: NETWORK_UNAVAILABLE,
+            severity: "WAIT_AND_RETRY",
+            phase: "process_gate",
+            allowCourtListener: false,
+            clRequests: 0,
+            childLaunches: 0,
+            mutations: 0,
+          }),
+        );
+      } else {
+        remoteProcsForGate = [];
+      }
+    }
+  }
+  if (processGateNetworkBlocked) {
+    runtime.dbWriteReady = false;
+  } else if (probeReady) {
     const earlyGate = evaluateLaneAProcessGate({
       processes: remoteProcsForGate,
       laneAChild: state.laneAChild,
@@ -1034,7 +1090,51 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           courtListenerHttpCalls: 0,
         },
       });
+    } else {
+      if (
+        state.waitingForNetwork ||
+        state.networkBlock?.classification === NETWORK_UNAVAILABLE ||
+        state.laneAChild?.unknownDueToNetwork ||
+        state.laneAChild?.lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK
+      ) {
+        const cleared = clearTransientNetworkHumanReview(state, {
+          processGateSafe: true,
+          markRecovered: true,
+          clearUnknownChild: earlyGate.count === 0,
+          now: started,
+        });
+        state = cleared.state;
+        state.waitingForNetwork = false;
+        if (state.sessionQuota?.skipImmediateReprobe) {
+          state.sessionQuota = {
+            ...state.sessionQuota,
+            skipImmediateReprobe: false,
+            networkRecoveryProcessGateOk: true,
+          };
+        }
+        emit("NETWORK_RECOVERED", {
+          lane: statusLaneFromState(state),
+          court: state.laneA?.court,
+          checkpoint: state.laneA?.checkpoint,
+          reason: NETWORK_UNAVAILABLE,
+          extra: { processGateCount: earlyGate.count, clearedReasons: cleared.clearedReasons },
+        });
+      }
+      runtime.dbWriteReady = true;
     }
+  } else if (gated.db?.classification === NETWORK_UNAVAILABLE || state.waitingForNetwork) {
+    console.log(
+      JSON.stringify({
+        tag: "NETWORK_GATE",
+        classification: NETWORK_UNAVAILABLE,
+        severity: "WAIT_AND_RETRY",
+        allowCourtListener: false,
+        clRequests: 0,
+        childLaunches: 0,
+        mutations: 0,
+        humanReviewRequired: Boolean(state.humanReview?.required),
+      }),
+    );
   }
 
   if (gated.recovered && runtime.dbWriteReady && !processGateBlocksCl) {
@@ -1769,6 +1869,24 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           state.runtimeState = "LANE_A_RUNNING";
           state.idleSafe = false;
           // Do not spawn; supervise existing owned child.
+        } else if (blockReason === "UNKNOWN_DUE_TO_NETWORK" || blockReason === NETWORK_UNAVAILABLE) {
+          state = applyNetworkUnavailable(state, started, {
+            source: "lane_a_launch_gate_unknown_network",
+            message: blockReason,
+          });
+          runtime.dbWriteReady = false;
+          console.log(
+            JSON.stringify({
+              tag: "NETWORK_UNAVAILABLE",
+              classification: NETWORK_UNAVAILABLE,
+              severity: "WAIT_AND_RETRY",
+              reason: blockReason,
+              clRequests: 0,
+              childLaunches: 0,
+              mutations: 0,
+              humanReviewRequired: false,
+            }),
+          );
         } else {
           state = setReview(
             state,
@@ -1897,8 +2015,89 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             target: state.laneA.target,
           });
 
+          // Fly control-plane / DNS failure after parent quota probe, before confirmed child start.
+          // Do not assume child exists or does not; preserve probe accounting; no human review.
+          let networkLaunchBlocked = false;
+          if (
+            classified.unknownDueToNetwork ||
+            classified.lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK ||
+            (classified.pid == null &&
+              isFlyOrControlPlaneNetworkFailure(raw?.stdout || raw?.stderr || ""))
+          ) {
+            networkLaunchBlocked = true;
+            const checkpointPreserved = state.laneA?.checkpoint ?? null;
+            const probeAlreadyUsed = Number(state.sessionQuota?.sessionClRequests) || 0;
+            state.laneAChild = {
+              ...(state.laneAChild || {}),
+              pid: null,
+              lifecycleState: LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK,
+              unknownDueToNetwork: true,
+              assumedExists: false,
+              assumedAbsent: false,
+              court: state.laneA.court,
+              batchId: state.clSharedSession?.batchId || null,
+              sessionId: state.clSharedSession?.sessionId || null,
+              workerId: WORKER_ID,
+              processStartNonce: PROCESS_NONCE,
+              codeFingerprint: runtime.codeFingerprint,
+              command: LANE_A_REMOTE_COMMAND,
+            };
+            state = applyNetworkUnavailable(state, new Date(), {
+              source: "lane_a_fly_control_plane_launch",
+              message: String(raw?.stdout || raw?.stderr || "").slice(0, 400),
+            });
+            if (state.laneA) state.laneA.checkpoint = checkpointPreserved;
+            // Preserve already-consumed parent quota probe; do not re-probe immediately.
+            state.sessionQuota = {
+              ...(state.sessionQuota || {}),
+              sessionClRequests: probeAlreadyUsed,
+              lastProbePreserved: true,
+              lastProbePurpose: "parent_api_usage",
+              skipImmediateReprobe: true,
+            };
+            state.productiveProgress = false;
+            runtime.dbWriteReady = false;
+            console.log(
+              JSON.stringify({
+                tag: "NETWORK_UNAVAILABLE",
+                classification: NETWORK_UNAVAILABLE,
+                severity: "WAIT_AND_RETRY",
+                lifecycleState: LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK,
+                pid: null,
+                clRequestsAdditional: 0,
+                childLaunches: 0,
+                mutations: 0,
+                checkpoint: checkpointPreserved,
+                parentProbePreserved: probeAlreadyUsed,
+                humanReviewRequired: Boolean(state.humanReview?.required),
+              }),
+            );
+            emit("NETWORK_UNAVAILABLE", {
+              lane: "WAITING_FOR_NETWORK",
+              court: state.laneA?.court,
+              checkpoint: checkpointPreserved,
+              reason: NETWORK_UNAVAILABLE,
+              extra: {
+                unknownDueToNetwork: true,
+                parentProbePreserved: probeAlreadyUsed,
+                courtListenerHttpCalls: 0,
+              },
+            });
+            laneAResult = {
+              classified,
+              nonTerminal: true,
+              unknownDueToNetwork: true,
+              liveDb: null,
+              postRunDbRefreshed: false,
+            };
+            saveLocalState(state);
+          }
+
           // Persist remote PID / identity from supervised start or terminal output.
-          if (classified.pid || classified.lifecycleState === LANE_A_RUNNER_STATES.STARTED) {
+          if (
+            !networkLaunchBlocked &&
+            (classified.pid || classified.lifecycleState === LANE_A_RUNNER_STATES.STARTED)
+          ) {
             state.laneAChild = {
               ...state.laneAChild,
               ...createLaneAChildRecord({
@@ -1924,12 +2123,13 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
 
           // Gate / ownership failures from launcher (no CL).
           if (
-            classified.reason === REMOTE_CHILD_REASONS.MULTIPLE_LANE_A_CHILDREN ||
+            !networkLaunchBlocked &&
+            (classified.reason === REMOTE_CHILD_REASONS.MULTIPLE_LANE_A_CHILDREN ||
             classified.reason === REMOTE_CHILD_REASONS.ORPHAN_LANE_A_CHILD ||
             classified.reason === "LANE_A_CHILD_SURVIVED_PARENT" ||
             /ORPHAN_LANE_A_CHILD|MULTIPLE_LANE_A_CHILDREN|LANE_A_CHILD_SURVIVED_PARENT/.test(
               raw?.stdout || "",
-            )
+            ))
           ) {
             const reason =
               classified.reason ||
@@ -1948,7 +2148,9 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
           }
 
           // NON-TERMINAL: do not reconcile as zero-progress / canary fail / count fail.
-          if (classified.nonTerminal || classified.terminal === false) {
+          if (networkLaunchBlocked) {
+            // Already handled: WAITING_FOR_NETWORK / UNKNOWN_DUE_TO_NETWORK.
+          } else if (classified.nonTerminal || classified.terminal === false) {
             console.log(
               JSON.stringify({
                 tag: "LANE_A_CHILD_NON_TERMINAL",
@@ -2913,6 +3115,8 @@ async function main() {
   });
 
   // Optional connectivity probe result may be injected via env for tests; default assume online.
+  // Fly control-plane NETWORK_UNAVAILABLE must NOT be cleared here — only after a cycle
+  // proves DB probe + zero-CL process gate are safe.
   if (process.env.QUEUE2_NETWORK_ONLINE === "0") {
     const net = evaluateNetworkState({
       online: false,
@@ -2928,6 +3132,24 @@ async function main() {
       checkpoint: state.laneA?.checkpoint,
       reason: net.action,
     });
+  } else if (
+    state.waitingForNetwork &&
+    (state.networkBlock?.classification === NETWORK_UNAVAILABLE ||
+      state.laneAChild?.unknownDueToNetwork ||
+      state.laneAChild?.lifecycleState === LANE_A_RUNNER_STATES.UNKNOWN_DUE_TO_NETWORK)
+  ) {
+    state.runtimeState = "WAITING_FOR_NETWORK";
+    console.log(
+      JSON.stringify({
+        tag: "NETWORK_GATE",
+        classification: NETWORK_UNAVAILABLE,
+        severity: "WAIT_AND_RETRY",
+        phase: "startup_hold",
+        allowCourtListener: false,
+        clRequests: 0,
+        note: "recovery deferred to process_gate",
+      }),
+    );
   } else if (state.waitingForNetwork) {
     const net = evaluateNetworkState({ online: true, wasWaiting: true, now: started });
     state.waitingForNetwork = false;

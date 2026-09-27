@@ -176,8 +176,12 @@ test("canonical committed status is consistent", () => {
   assert.equal(check.ok, true, check.violations.join("; "));
   assert.equal(status.currentCourt, "vt");
   assert.equal(status.currentJurisdiction, "VT");
-  assert.equal(status.runtimeState, "STOPPED");
+  assert.ok(
+    status.runtimeState === "STOPPED" || status.runtimeState === "WAITING_FOR_NETWORK",
+    `runtimeState=${status.runtimeState}`,
+  );
   assert.equal(status.review.humanReviewRequired, false);
+  assert.ok(!((status.review.reasons || []).includes("UNKNOWN_DB_FAILURE")));
 });
 
 test("no corpus mutation / no AI / Queue #3 never opens", () => {

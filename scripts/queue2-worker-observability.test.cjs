@@ -431,8 +431,13 @@ test("canonical status after rebuild matches live floor and reconciled Lane A pr
   assert.ok(status.corpus.cases >= 1689);
   assert.ok(status.corpus.clCases >= 1644);
   assert.ok(status.manifestVersion >= 5);
-  assert.equal(status.runtimeState, "STOPPED");
+  // STOPPED (idle) or WAITING_FOR_NETWORK (Fly control-plane DNS) — never silent UNKNOWN_DB_FAILURE.
+  assert.ok(
+    status.runtimeState === "STOPPED" || status.runtimeState === "WAITING_FOR_NETWORK",
+    `runtimeState=${status.runtimeState}`,
+  );
   assert.equal(status.review.humanReviewRequired, false);
+  assert.ok(!((status.review.reasons || []).includes("UNKNOWN_DB_FAILURE")));
   assert.ok(state.completedCourts.includes("wis"));
   assert.ok(state.completedCourts.includes("sc"));
   assert.equal(state.completedCourtEvidence.wis.count, 45);
@@ -442,9 +447,13 @@ test("canonical status after rebuild matches live floor and reconciled Lane A pr
   assert.equal(state.laneA.count, 20);
   assert.equal(state.laneA.qualifyingCaseCount, 20);
   assert.equal(state.laneA.target, 45);
-  assert.equal(state.laneA.jobLifecycle, "READY_FIRST_START");
+  assert.ok(
+    state.laneA.jobLifecycle === "READY_FIRST_START" || state.laneA.jobLifecycle === "PAUSED_RESUMABLE",
+    `jobLifecycle=${state.laneA.jobLifecycle}`,
+  );
   assert.equal(state.laneA.checkpoint, null);
   assert.equal(state.humanReview.required, false);
+  assert.ok(!((state.humanReview.reasons || []).includes("UNKNOWN_DB_FAILURE")));
   assert.equal(status.currentCourt, "vt");
   assert.equal(status.currentCount, 20);
   assert.equal(status.targetCount, 45);
@@ -494,6 +503,8 @@ test("all required startup/watchdog/quota event types accepted", () => {
     "SELF_CHECK_BOUNDARY",
     "BACKPRESSURE_PAUSE",
     "WAITING_FOR_NETWORK",
+    "NETWORK_UNAVAILABLE",
+    "NETWORK_RECOVERED",
     "WATCHDOG_WARNING",
     "HUMAN_REVIEW_REQUIRED",
     "EMERGENCY_STOP",
