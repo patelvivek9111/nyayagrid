@@ -56,11 +56,23 @@ fs.writeFileSync(
   ),
 );
 
-if (result.ok) {
+if (result.result === "PREFLIGHT_EXTERNAL_BLOCK") {
+  console.log("PREFLIGHT_EXTERNAL_BLOCK");
+  console.log(`reason=${result.externalBlock?.reason || result.reasons?.[0] || "DATABASE_QUOTA_BLOCKED"}`);
+} else if (result.ok) {
   console.log("PREFLIGHT_PASS");
 } else {
   console.log("PREFLIGHT_FAIL");
-  console.log(`reasons=[${result.reasons.join(", ")}]`);
+  console.log(`reasons=[${(result.reasons || []).join(", ")}]`);
 }
-console.log(JSON.stringify({ mutations: result.mutations, aiCalls: result.aiCalls, outPath }));
-process.exit(result.ok ? 0 : 2);
+console.log(
+  JSON.stringify({
+    result: result.result,
+    mutations: result.mutations,
+    courtListenerHttpCalls: result.courtListenerHttpCalls ?? 0,
+    aiCalls: result.aiCalls,
+    dbWritability: result.dbWritability || "not_probed_by_preflight",
+    outPath,
+  }),
+);
+process.exit(result.result === "PREFLIGHT_EXTERNAL_BLOCK" ? 2 : result.ok ? 0 : 2);

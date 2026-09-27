@@ -642,6 +642,15 @@ function applyQuotaSnapshot(state, params) {
   if (params.plan) next.quota.lastPlan = params.plan;
   if (params.wait !== undefined) next.quota.wait = params.wait;
   if (params.windows) next.quota.utilization = dayUtilization(params.windows);
+  if (
+    params.windows &&
+    (params.quotaStateConfidence === "AUTHORITATIVE_API" ||
+      params.quotaStateConfidence === "AUTHORITATIVE_HEADER")
+  ) {
+    next.quota.quotaStatus = "FRESH";
+    next.quota.executionAuthority = params.quotaStateSource || "probe";
+    next.quota.usableForExecution = true;
+  }
   if (params.probeCounted) {
     next.quota.probeRequests = Number(next.quota.probeRequests || 0) + 1;
   }

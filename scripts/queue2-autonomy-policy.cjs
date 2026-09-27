@@ -468,10 +468,16 @@ function selectLaneBTask(ctx = {}) {
       }
     }
 
+    if (eligibleFlag && ctx.dbWriteReady === false && task.dbDependency !== "NO_DB_REQUIRED") {
+      eligibleFlag = false;
+      reason = "database_quota_blocked";
+    }
+
     const row = {
       taskId: task.id,
       eligible: eligibleFlag,
       reason,
+      dbDependency: task.dbDependency || null,
       nextEligibleAt: nextEligibleAt || null,
       requiresCorpusChange,
       corpusVersionAtLastRun,

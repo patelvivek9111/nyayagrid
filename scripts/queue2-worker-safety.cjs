@@ -671,6 +671,27 @@ function runPreflight(opts = {}) {
   const reasons = [];
   const mutations = 0;
 
+  if (opts.dbProbe) {
+    const { evaluateDbWriteReadiness, DATABASE_QUOTA_BLOCKED } = require("./queue2-db-readiness.cjs");
+    const db = evaluateDbWriteReadiness(opts.dbProbe);
+    if (db.classification === DATABASE_QUOTA_BLOCKED) {
+      return {
+        ok: false,
+        result: "PREFLIGHT_EXTERNAL_BLOCK",
+        reasons: [DATABASE_QUOTA_BLOCKED],
+        externalBlock: { reason: DATABASE_QUOTA_BLOCKED, classification: db.classification },
+        mutations: 0,
+        courtListenerHttpCalls: 0,
+        aiCalls: 0,
+        aiTokens: 0,
+        featureAgents: String(env.FEATURE_AGENTS || opts.featureAgents || "0"),
+        queue: { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN" },
+        dbWritability: "DATABASE_QUOTA_BLOCKED",
+        generatedAt: new Date().toISOString(),
+      };
+    }
+  }
+
   const ks = killSwitchStatus(env);
   if (!ks.enabled && !opts.allowDisabledForDryRun) reasons.push("QUEUE2_WORKER_DISABLED");
 
@@ -791,6 +812,7 @@ function runPreflight(opts = {}) {
     courtListenerHttpCalls: 0,
     aiCalls: 0,
     aiTokens: 0,
+    dbWritability: opts.dbProbe ? "probed" : "not_probed_by_preflight",
     killSwitch: ks,
     clCredentialPresent: clKeyPresent,
     featureAgents: String(env.FEATURE_AGENTS || "0"),

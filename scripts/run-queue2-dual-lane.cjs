@@ -163,6 +163,8 @@ const {
   clearFalsePositiveHeartbeatDeadman,
   OVERALL,
 } = require("./queue2-watchdog.cjs");
+const { selectNextProductionDepthTarget, planManualProgressStartup } = require("./queue2-manual-progress.cjs");
+const { assertCourtListenerAllowed } = require("./queue2-db-readiness.cjs");
 
 const root = path.join(__dirname, "..");
 const reports = path.join(root, "packages/research/corpus/reports");
@@ -202,6 +204,8 @@ const runtime = {
   morningSummaryPending: null,
   codeFingerprint: null,
   session: null,
+  dbWriteReady: false,
+  dbWriteProbe: null,
 };
 
 function loadLocalState() {
@@ -230,7 +234,34 @@ function lastJson(text) {
   return extractJsonObject(text);
 }
 
+function runStagingDbWriteProbe() {
+  if (typeof runtime.dbWriteProbe === "function") return runtime.dbWriteProbe();
+  const r = spawnSync(
+    process.execPath,
+    [path.join(__dirname, "run-tmp-fly-node.cjs"), "scripts/tmp-db-ping-bundled.cjs"],
+    { encoding: "utf8", cwd: root, maxBuffer: 4_000_000 },
+  );
+  const parsed = lastJson(`${r.stdout || ""}\n${r.stderr || ""}`);
+  if (parsed && typeof parsed === "object") {
+    return { ...parsed, mutations: 0, courtListenerHttpCalls: 0 };
+  }
+  const text = `${r.stdout || ""}\n${r.stderr || ""}`.slice(0, 500);
+  return {
+    ok: false,
+    code: /53000/.test(text) ? "53000" : null,
+    message: text,
+    mutations: 0,
+    courtListenerHttpCalls: 0,
+  };
+}
+
 function runQuotaProbe() {
+  const gate = assertCourtListenerAllowed({ dbWriteReady: runtime.dbWriteReady });
+  if (!gate.ok) {
+    const err = new Error(gate.reason);
+    err.code = gate.reason;
+    throw err;
+  }
   console.log(JSON.stringify({ tag: "QUOTA_CHECK", phase: "start" }));
   const r = spawnSync(
     process.execPath,
@@ -296,6 +327,12 @@ function healthCheck() {
 }
 
 function runLaneA(state, opts = {}) {
+  const gate = assertCourtListenerAllowed({ dbWriteReady: runtime.dbWriteReady });
+  if (!gate.ok) {
+    const err = new Error(gate.reason);
+    err.code = gate.reason;
+    throw err;
+  }
   const court = state.laneA.court || LANE_A_SEQUENCE[0].court;
   const target = String(state.laneA.target || 45);
   const batchSize = String(opts.batchSize || Math.min(8, Math.max(1, remainingCasesToFinish(state.laneA) || 1)));
@@ -913,8 +950,58 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
     }
   }
 
+  // Database writability before any CourtListener probe, including /api-usage/.
+  runtime.dbWriteReady = false;
+  const gated = planManualProgressStartup({
+    state,
+    manifest: loadManifestForSelection(),
+    dbProbe: runStagingDbWriteProbe(),
+    now: started,
+    executing: process.env.QUEUE2_RUN_LANE_B === "1",
+    laneB: {
+      networkOk: !state.waitingForNetwork,
+      corpusVersion: state.depthManifestVersion,
+      lastByTask: state.laneB?.lastByTask || {},
+      checkpoints: state.laneB?.checkpoints || {},
+      nextEligibleAt: state.laneB?.nextEligibleAt || {},
+      mutatingTaskActive: Boolean(state.laneB?.mutatingTaskActive),
+    },
+  });
+  state = gated.state;
+  runtime.dbWriteReady = gated.allowCourtListener === true;
+  if (!runtime.dbWriteReady) {
+    quota = {
+      probed: false,
+      safeRequests: 0,
+      windows: null,
+      skippedReason: gated.db?.classification || "DATABASE_NOT_WRITABLE",
+    };
+    state.currentLane = state.currentLane === "A" ? "B" : state.currentLane;
+    console.log(
+      JSON.stringify({
+        tag: "DB_GATE",
+        classification: gated.db?.classification || null,
+        allowCourtListener: false,
+        clRequests: 0,
+        childLaunches: 0,
+        mutations: 0,
+        nextCourt: state.laneA?.court || null,
+        healthyIdle: state.healthyIdle || null,
+      }),
+    );
+  }
+
   // Hold redundant quota probing until reset / justified event.
-  if (
+  if (!runtime.dbWriteReady) {
+    console.log(
+      JSON.stringify({
+        tag: "QUOTA_CHECK",
+        skipped: true,
+        reason: gated.db?.classification || "DATABASE_NOT_WRITABLE",
+        clRequests: 0,
+      }),
+    );
+  } else if (
     state.quota?.redundantProbeHoldUntil &&
     started.getTime() < new Date(state.quota.redundantProbeHoldUntil).getTime() &&
     process.env.QUEUE2_FORCE_QUOTA_PROBE !== "1"
@@ -982,7 +1069,10 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         cacheDecision.reuse &&
         cacheDecision.probe === false &&
         process.env.QUEUE2_FORCE_QUOTA_PROBE !== "1" &&
-        state.quota?.windows
+        state.quota?.windows &&
+        state.quota?.quotaStatus !== "UNKNOWN_FOR_EXECUTION" &&
+        state.quota?.executionAuthority !== "STALE" &&
+        state.quota?.usableForExecution !== false
       ) {
         state.clRequestLedger = applyQuotaProbeCacheDecision(state.clRequestLedger, {
           ...cacheDecision,
@@ -1639,6 +1729,11 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
             historicalJobApiCallsBaseline: state.sessionQuota?.historicalJobApiCallsBaseline || 0,
             workerFingerprint: runtime.codeFingerprint,
           });
+          if (runtime.dbWriteReady !== true) {
+            const err = new Error("INVARIANT_CL_WHILE_DB_NOT_WRITABLE");
+            err.code = "INVARIANT_CL_WHILE_DB_NOT_WRITABLE";
+            throw err;
+          }
           // Durable ownership intent before spawn (pid filled after supervised start).
           state.laneAChild = createLaneAChildRecord({
             pid: null,
@@ -2066,8 +2161,8 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
               reason: "already_completed_db_confirmed",
               extra: { canonicalCount: reconciled.canonicalCount, target: state.laneA.target },
             });
-            const nextTarget = selectNextVerifiedIncompleteTarget(manifest, {
-              excludeCourt: state.laneA.court,
+            const nextTarget = selectNextProductionDepthTarget(manifest, {
+              excludeCourts: [...(state.completedCourts || []), state.laneA.court].filter(Boolean),
             });
             const completedCourt = state.laneA.court;
             state = applyTargetAlreadyComplete(state, {
@@ -2244,6 +2339,7 @@ async function runWorkerCycle(state, cycleStarted = new Date()) {
         mutatingTaskActive: Boolean(state.laneB?.mutatingTaskActive),
         nextQuotaCheckAt: state.quota?.nextCheckAt,
         executing: runLaneBEnabled,
+        dbWriteReady: state.dbWriteReady,
       });
       persistLaneBEligibility(selection);
       state = applyLaneBSelection(state, selection);
