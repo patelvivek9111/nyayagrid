@@ -1,0 +1,1238 @@
+{
+  "classification": "MANUAL_QUEUE2_CITATION_TARGET_PRIORITY_ANALYSIS",
+  "generatedAt": "2026-09-28T16:41:28.383Z",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "citationBaseline": {
+    "extracted": 7220,
+    "resolved": 197,
+    "unresolved": 7023,
+    "targetAbsent": 7023,
+    "resolutionRatePct": 2.73,
+    "uniqueAbsentTargets": 5030,
+    "malformedUnusable": 1,
+    "targetPresentButNotMatchedGroups": 0,
+    "targetPresentButNotMatchedEdges": 0,
+    "top10ShareOfAbsentEdgesPct": 3.26,
+    "top100ShareOfAbsentEdgesPct": 12.19,
+    "totalAbsentEdges": 7022
+  },
+  "inventory": {
+    "unresolvedEdges": 7023,
+    "uniqueNormalizedAbsentTargets": 5030,
+    "ambiguousOrPresentMismatchTargets": 0,
+    "malformedUnusableTargets": 1
+  },
+  "top20": [
+    {
+      "rank": 1,
+      "normalizedCitation": "466 U.S. 668",
+      "sampleRaw": "466 U.S. 668",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 466,
+      "page": 668,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 66,
+      "uniqueCitingAuthorities": 66,
+      "citingJurisdictions": [
+        "CT",
+        "DC",
+        "FL",
+        "GA",
+        "ID",
+        "IL",
+        "KY",
+        "LA",
+        "ME",
+        "MI",
+        "MN",
+        "MO",
+        "MS",
+        "MT",
+        "NC",
+        "ND",
+        "NE",
+        "NH",
+        "NM",
+        "PA",
+        "RI",
+        "SD",
+        "TX",
+        "UT",
+        "WI",
+        "WV",
+        "WY"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 2,
+      "normalizedCitation": "373 U.S. 83",
+      "sampleRaw": "373 U.S. 83",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 373,
+      "page": 83,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 30,
+      "uniqueCitingAuthorities": 30,
+      "citingJurisdictions": [
+        "AR",
+        "CT",
+        "DC",
+        "FL",
+        "GA",
+        "IL",
+        "KS",
+        "KY",
+        "MA",
+        "MD",
+        "ME",
+        "MT",
+        "NC",
+        "NH",
+        "NJ",
+        "NM",
+        "TX",
+        "US",
+        "UT",
+        "VA"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 3,
+      "normalizedCitation": "567 U.S. 460",
+      "sampleRaw": "567 U.S. 460",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 567,
+      "page": 460,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 24,
+      "uniqueCitingAuthorities": 24,
+      "citingJurisdictions": [
+        "AR",
+        "CA",
+        "IA",
+        "IL",
+        "IN",
+        "LA",
+        "MI",
+        "MS",
+        "MT",
+        "NC",
+        "OH",
+        "WA"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 4,
+      "normalizedCitation": "543 U.S. 551",
+      "sampleRaw": "543 US 551",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 543,
+      "page": 551,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 17,
+      "uniqueCitingAuthorities": 17,
+      "citingJurisdictions": [
+        "IA",
+        "IN",
+        "LA",
+        "MI",
+        "MT",
+        "NY",
+        "OH",
+        "TN",
+        "WA"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 5,
+      "normalizedCitation": "386 U.S. 738",
+      "sampleRaw": "386 U.S. 738",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 386,
+      "page": 738,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 16,
+      "uniqueCitingAuthorities": 16,
+      "citingJurisdictions": [
+        "AZ",
+        "IA",
+        "IL",
+        "NC",
+        "US",
+        "WY"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 6,
+      "normalizedCitation": "392 U.S. 1",
+      "sampleRaw": "392 U.S. 1",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 392,
+      "page": 1,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 16,
+      "uniqueCitingAuthorities": 16,
+      "citingJurisdictions": [
+        "AL",
+        "CT",
+        "DC",
+        "IA",
+        "ID",
+        "KS",
+        "MA",
+        "MI",
+        "NE",
+        "NM",
+        "US"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 7,
+      "normalizedCitation": "443 U.S. 307",
+      "sampleRaw": "443 U.S. 307",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 443,
+      "page": 307,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 16,
+      "uniqueCitingAuthorities": 16,
+      "citingJurisdictions": [
+        "DC",
+        "GA",
+        "KY",
+        "LA",
+        "MA",
+        "MT",
+        "TX",
+        "US"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 8,
+      "normalizedCitation": "509 U.S. 579",
+      "sampleRaw": "509 U.S. 579",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 509,
+      "page": 579,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 16,
+      "uniqueCitingAuthorities": 16,
+      "citingJurisdictions": [
+        "CT",
+        "DC",
+        "GA",
+        "KY",
+        "LA",
+        "MA",
+        "NE",
+        "NH",
+        "SD",
+        "US",
+        "WY"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 9,
+      "normalizedCitation": "200 U.S. 321",
+      "sampleRaw": "200 U. S. 321",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 200,
+      "page": 321,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 15,
+      "uniqueCitingAuthorities": 15,
+      "citingJurisdictions": [
+        "US"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 10,
+      "normalizedCitation": "424 U.S. 319",
+      "sampleRaw": "424 U.S. 319",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 424,
+      "page": 319,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 13,
+      "uniqueCitingAuthorities": 13,
+      "citingJurisdictions": [
+        "AK",
+        "AZ",
+        "DE",
+        "IA",
+        "KY",
+        "RI",
+        "SD",
+        "US"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 11,
+      "normalizedCitation": "507 U.S. 725",
+      "sampleRaw": "507 U.S. 725",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 507,
+      "page": 725,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 13,
+      "uniqueCitingAuthorities": 13,
+      "citingJurisdictions": [
+        "CA",
+        "DC",
+        "ME",
+        "MN",
+        "SD",
+        "US",
+        "UT",
+        "WI"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 12,
+      "normalizedCitation": "560 U.S. 48",
+      "sampleRaw": "560 US 48",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 560,
+      "page": 48,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 13,
+      "uniqueCitingAuthorities": 13,
+      "citingJurisdictions": [
+        "IA",
+        "IN",
+        "MI",
+        "MS",
+        "MT",
+        "NY",
+        "WA"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 13,
+      "normalizedCitation": "597 U.S. 1",
+      "sampleRaw": "597 U.S. 1",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 597,
+      "page": 1,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 13,
+      "uniqueCitingAuthorities": 13,
+      "citingJurisdictions": [
+        "DC",
+        "IL",
+        "KS",
+        "TX",
+        "US"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 14,
+      "normalizedCitation": "462 U.S. 213",
+      "sampleRaw": "462 U.S. 213",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 462,
+      "page": 213,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 12,
+      "uniqueCitingAuthorities": 12,
+      "citingJurisdictions": [
+        "DC",
+        "GA",
+        "KS",
+        "MI",
+        "MN",
+        "MS",
+        "NC",
+        "US",
+        "VT",
+        "WY"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 15,
+      "normalizedCitation": "602 U.S. 680",
+      "sampleRaw": "602 U.S. 680",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 602,
+      "page": 680,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 12,
+      "uniqueCitingAuthorities": 12,
+      "citingJurisdictions": [
+        "IA",
+        "KS",
+        "TX",
+        "US"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 16,
+      "normalizedCitation": "Fed. R. App. P. 34",
+      "sampleRaw": "Fed. R. App. P. 34",
+      "reporter": "Fed. R. App. P.",
+      "family": "federal_rules",
+      "volume": null,
+      "page": null,
+      "series": null,
+      "section": "34",
+      "estimatedCitationEdgesUnlocked": 12,
+      "uniqueCitingAuthorities": 12,
+      "citingJurisdictions": [
+        "US"
+      ],
+      "likelyTargetJurisdiction": "federal_primary",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "Existing USC/CFR/federal-rules Lane B depth (non-CL)",
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "zeroClSource": "FEDERAL_RULES_DEPTH",
+      "hierarchyWeight": 70
+    },
+    {
+      "rank": 17,
+      "normalizedCitation": "393 U.S. 440",
+      "sampleRaw": "393 U.S. 440",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 393,
+      "page": 440,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 11,
+      "uniqueCitingAuthorities": 11,
+      "citingJurisdictions": [
+        "AL"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 18,
+      "normalizedCitation": "396 U.S. 367",
+      "sampleRaw": "396 U.S. 367",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 396,
+      "page": 367,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 11,
+      "uniqueCitingAuthorities": 11,
+      "citingJurisdictions": [
+        "AL"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 19,
+      "normalizedCitation": "426 U.S. 696",
+      "sampleRaw": "426 U.S. 696",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 426,
+      "page": 696,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 11,
+      "uniqueCitingAuthorities": 11,
+      "citingJurisdictions": [
+        "AL"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    },
+    {
+      "rank": 20,
+      "normalizedCitation": "443 U.S. 595",
+      "sampleRaw": "443 U.S. 595",
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "volume": 443,
+      "page": 595,
+      "series": null,
+      "section": null,
+      "estimatedCitationEdgesUnlocked": 11,
+      "uniqueCitingAuthorities": 11,
+      "citingJurisdictions": [
+        "AL"
+      ],
+      "likelyTargetJurisdiction": "federal_scotus",
+      "presentInCorpus": false,
+      "sourceFeasibility": "HIGH",
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "zeroClSource": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "hierarchyWeight": 100
+    }
+  ],
+  "reporterGaps": [
+    {
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "unresolvedEdges": 3470,
+      "uniqueTargets": 1899,
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 49.42,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "F.3d",
+      "family": "federal_reporter",
+      "unresolvedEdges": 1715,
+      "uniqueTargets": 1543,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 24.42,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "F.4th",
+      "family": "federal_reporter",
+      "unresolvedEdges": 691,
+      "uniqueTargets": 611,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 9.84,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "F.2d",
+      "family": "federal_reporter",
+      "unresolvedEdges": 536,
+      "uniqueTargets": 485,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 7.63,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "U.S.C.",
+      "family": "usc",
+      "unresolvedEdges": 264,
+      "uniqueTargets": 196,
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 3.76,
+      "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
+    },
+    {
+      "reporter": "F. Supp.",
+      "family": "federal_supplement",
+      "unresolvedEdges": 108,
+      "uniqueTargets": 100,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 1.54,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "F. Supp. 3d",
+      "family": "federal_supplement",
+      "unresolvedEdges": 104,
+      "uniqueTargets": 87,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 1.48,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "F. Supp. 2d",
+      "family": "federal_supplement",
+      "unresolvedEdges": 47,
+      "uniqueTargets": 43,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 0.67,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "C.F.R.",
+      "family": "cfr",
+      "unresolvedEdges": 42,
+      "uniqueTargets": 41,
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 0.6,
+      "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
+    },
+    {
+      "reporter": "Fed. R. App. P.",
+      "family": "federal_rules",
+      "unresolvedEdges": 21,
+      "uniqueTargets": 6,
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 0.3,
+      "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
+    },
+    {
+      "reporter": "F.",
+      "family": "federal_reporter",
+      "unresolvedEdges": 14,
+      "uniqueTargets": 11,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 0.2,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "Fed. R. Civ. P.",
+      "family": "federal_rules",
+      "unresolvedEdges": 7,
+      "uniqueTargets": 6,
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 0.1,
+      "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
+    },
+    {
+      "reporter": "Fed. R. Evid.",
+      "family": "federal_rules",
+      "unresolvedEdges": 3,
+      "uniqueTargets": 2,
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 0.04,
+      "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
+    }
+  ],
+  "jurisdictionGaps": [
+    {
+      "jurisdiction": "federal_scotus",
+      "unresolvedEdges": 3470,
+      "uniqueTargets": 1899,
+      "topTargets": [
+        {
+          "citation": "466 U.S. 668",
+          "edges": 66
+        },
+        {
+          "citation": "373 U.S. 83",
+          "edges": 30
+        },
+        {
+          "citation": "567 U.S. 460",
+          "edges": 24
+        },
+        {
+          "citation": "543 U.S. 551",
+          "edges": 17
+        },
+        {
+          "citation": "386 U.S. 738",
+          "edges": 16
+        }
+      ],
+      "sharePct": 49.42
+    },
+    {
+      "jurisdiction": "federal_circuit",
+      "unresolvedEdges": 2956,
+      "uniqueTargets": 2650,
+      "topTargets": [
+        {
+          "citation": "124 F.4th 218",
+          "edges": 5
+        },
+        {
+          "citation": "572 F.3d 455",
+          "edges": 5
+        },
+        {
+          "citation": "918 F.3d 1025",
+          "edges": 5
+        },
+        {
+          "citation": "516 F.3d 382",
+          "edges": 4
+        },
+        {
+          "citation": "590 F.3d 1034",
+          "edges": 4
+        }
+      ],
+      "sharePct": 42.1
+    },
+    {
+      "jurisdiction": "federal_primary",
+      "unresolvedEdges": 337,
+      "uniqueTargets": 251,
+      "topTargets": [
+        {
+          "citation": "Fed. R. App. P. 34",
+          "edges": 12
+        },
+        {
+          "citation": "8 U.S.C. ┬º 1101",
+          "edges": 6
+        },
+        {
+          "citation": "8 U.S.C. ┬º 1158",
+          "edges": 6
+        },
+        {
+          "citation": "18 U.S.C. ┬º 924",
+          "edges": 4
+        },
+        {
+          "citation": "28 U.S.C. ┬º 1331.",
+          "edges": 4
+        }
+      ],
+      "sharePct": 4.8
+    },
+    {
+      "jurisdiction": "federal_district",
+      "unresolvedEdges": 259,
+      "uniqueTargets": 230,
+      "topTargets": [
+        {
+          "citation": "1 F. Supp. 2d 628",
+          "edges": 2
+        },
+        {
+          "citation": "101 F. Supp. 3d 1010",
+          "edges": 2
+        },
+        {
+          "citation": "112 F. Supp. 3d 817",
+          "edges": 2
+        },
+        {
+          "citation": "168 F. Supp. 2d 751",
+          "edges": 2
+        },
+        {
+          "citation": "293 F. Supp. 792",
+          "edges": 2
+        }
+      ],
+      "sharePct": 3.69
+    }
+  ],
+  "coverageDiagnosis": {
+    "depthWaveOverlap": "WEAK_OVERLAP_STATE_DEPTH_VS_FEDERAL_CITATION_DEMAND",
+    "evidence": {
+      "federalTargetAbsentSharePct": 100,
+      "topReporter": "U.S.",
+      "topReporterSharePct": 49.42,
+      "usReportsEdges": 3470,
+      "f2dEdges": 536,
+      "f3dEdges": 1715,
+      "fSuppEdges": 259
+    },
+    "narrative": [
+      "Unresolved edges are overwhelmingly TARGET_ABSENT after exact alias resolve.",
+      "Dominant demand is federal reporters (U.S. / F.2d / F.3d / F. Supp.*), while Lane A depth wave adds state high-court cases.",
+      "State high-court expansion increases extracted edges but rarely supplies the missing federal targets those edges cite."
+    ]
+  },
+  "zeroClOpportunities": [
+    {
+      "family": "us_reports",
+      "uniqueTargets": 1899,
+      "unresolvedEdges": 3470,
+      "source": "US_REPORTS_NON_CL_INTAKE (Lane B; mutation gated)",
+      "mutationPathEnabled": false,
+      "safeToExecuteNow": false,
+      "note": "ANALYZE ONLY ΓÇö Lane B mutation not enabled in this prompt"
+    },
+    {
+      "family": "usc",
+      "uniqueTargets": 196,
+      "unresolvedEdges": 264,
+      "source": "USC_DEPTH",
+      "mutationPathEnabled": false,
+      "safeToExecuteNow": false,
+      "note": "ANALYZE ONLY ΓÇö Lane B mutation not enabled in this prompt"
+    },
+    {
+      "family": "cfr",
+      "uniqueTargets": 41,
+      "unresolvedEdges": 42,
+      "source": "CFR_DEPTH",
+      "mutationPathEnabled": false,
+      "safeToExecuteNow": false,
+      "note": "ANALYZE ONLY ΓÇö Lane B mutation not enabled in this prompt"
+    },
+    {
+      "family": "federal_rules",
+      "uniqueTargets": 14,
+      "unresolvedEdges": 31,
+      "source": "FEDERAL_RULES_DEPTH",
+      "mutationPathEnabled": false,
+      "safeToExecuteNow": false,
+      "note": "ANALYZE ONLY ΓÇö Lane B mutation not enabled in this prompt"
+    }
+  ],
+  "proposedQueues": {
+    "A1": {
+      "resumeFirst": {
+        "jurisdiction": "WV",
+        "court": "wva",
+        "qualifying": 39,
+        "target": 45,
+        "note": "PAUSED_RESUMABLE from durable state; verify live before next CL window"
+      },
+      "then": [
+        "finish remaining depth-wave incompletes in current Lane A order"
+      ],
+      "note": "Do not auto-replace depth wave with citation recovery"
+    },
+    "A2_top25": [
+      {
+        "rank": 1,
+        "citation": "466 U.S. 668",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 66,
+        "uniqueCitingAuthorities": 66,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 66 edges / 66 citing authorities"
+      },
+      {
+        "rank": 2,
+        "citation": "373 U.S. 83",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 30,
+        "uniqueCitingAuthorities": 30,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 30 edges / 30 citing authorities"
+      },
+      {
+        "rank": 3,
+        "citation": "567 U.S. 460",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 24,
+        "uniqueCitingAuthorities": 24,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 24 edges / 24 citing authorities"
+      },
+      {
+        "rank": 4,
+        "citation": "543 U.S. 551",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 17,
+        "uniqueCitingAuthorities": 17,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 17 edges / 17 citing authorities"
+      },
+      {
+        "rank": 5,
+        "citation": "386 U.S. 738",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 16,
+        "uniqueCitingAuthorities": 16,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 16 edges / 16 citing authorities"
+      },
+      {
+        "rank": 6,
+        "citation": "392 U.S. 1",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 16,
+        "uniqueCitingAuthorities": 16,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 16 edges / 16 citing authorities"
+      },
+      {
+        "rank": 7,
+        "citation": "443 U.S. 307",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 16,
+        "uniqueCitingAuthorities": 16,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 16 edges / 16 citing authorities"
+      },
+      {
+        "rank": 8,
+        "citation": "509 U.S. 579",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 16,
+        "uniqueCitingAuthorities": 16,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 16 edges / 16 citing authorities"
+      },
+      {
+        "rank": 9,
+        "citation": "200 U.S. 321",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 15,
+        "uniqueCitingAuthorities": 15,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 15 edges / 15 citing authorities"
+      },
+      {
+        "rank": 10,
+        "citation": "424 U.S. 319",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 13,
+        "uniqueCitingAuthorities": 13,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 13 edges / 13 citing authorities"
+      },
+      {
+        "rank": 11,
+        "citation": "507 U.S. 725",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 13,
+        "uniqueCitingAuthorities": 13,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 13 edges / 13 citing authorities"
+      },
+      {
+        "rank": 12,
+        "citation": "560 U.S. 48",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 13,
+        "uniqueCitingAuthorities": 13,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 13 edges / 13 citing authorities"
+      },
+      {
+        "rank": 13,
+        "citation": "597 U.S. 1",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 13,
+        "uniqueCitingAuthorities": 13,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 13 edges / 13 citing authorities"
+      },
+      {
+        "rank": 14,
+        "citation": "462 U.S. 213",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 12,
+        "uniqueCitingAuthorities": 12,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 12 edges / 12 citing authorities"
+      },
+      {
+        "rank": 15,
+        "citation": "602 U.S. 680",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 12,
+        "uniqueCitingAuthorities": 12,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 12 edges / 12 citing authorities"
+      },
+      {
+        "rank": 16,
+        "citation": "393 U.S. 440",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 11,
+        "uniqueCitingAuthorities": 11,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 11 edges / 11 citing authorities"
+      },
+      {
+        "rank": 17,
+        "citation": "396 U.S. 367",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 11,
+        "uniqueCitingAuthorities": 11,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 11 edges / 11 citing authorities"
+      },
+      {
+        "rank": 18,
+        "citation": "426 U.S. 696",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 11,
+        "uniqueCitingAuthorities": 11,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 11 edges / 11 citing authorities"
+      },
+      {
+        "rank": 19,
+        "citation": "443 U.S. 595",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 11,
+        "uniqueCitingAuthorities": 11,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 11 edges / 11 citing authorities"
+      },
+      {
+        "rank": 20,
+        "citation": "504 U.S. 555",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 11,
+        "uniqueCitingAuthorities": 11,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 11 edges / 11 citing authorities"
+      },
+      {
+        "rank": 21,
+        "citation": "554 U.S. 570",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 11,
+        "uniqueCitingAuthorities": 11,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 11 edges / 11 citing authorities"
+      },
+      {
+        "rank": 22,
+        "citation": "395 U.S. 238",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 10,
+        "uniqueCitingAuthorities": 10,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 10 edges / 10 citing authorities"
+      },
+      {
+        "rank": 23,
+        "citation": "541 U.S. 36",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 10,
+        "uniqueCitingAuthorities": 10,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 10 edges / 10 citing authorities"
+      },
+      {
+        "rank": 24,
+        "citation": "577 U.S. 190",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 10,
+        "uniqueCitingAuthorities": 10,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 10 edges / 10 citing authorities"
+      },
+      {
+        "rank": 25,
+        "citation": "547 U.S. 398",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 9,
+        "uniqueCitingAuthorities": 9,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 9 edges / 9 citing authorities"
+      }
+    ]
+  },
+  "interleavingRecommendation": {
+    "evidenceSupported": true,
+    "policy": [
+      "Always finish resumable depth target first (currently WV 39/45) before opening a new court.",
+      "Within a CL window after resumable completion: majority budget remains A1 depth-wave incompletes.",
+      "Reserve a bounded A2 pilot slice only after A1 makes durable progress in the same window.",
+      "A2 pilot size: top N US Reports / F.2d targets by edge unlock, capped so expected requests stay within remaining safe hour budget after A1 needs.",
+      "Measure after each A2 pilot: delta resolved / CL requests. Continue A2 only if resolved increases materially."
+    ],
+    "percentages": {
+      "inventPercentages": false,
+      "reason": "Insufficient multi-window A2 outcome data; recommend bounded pilot instead of fixed X%/Y% split",
+      "boundedPilotSuggestion": "After WV completes: one A1 jurisdiction batch, then Γëñ15 productive CL requests on top US Reports A2 targets; compare resolved delta before expanding A2 share"
+    }
+  },
+  "nextClTarget": {
+    "jurisdiction": "WV",
+    "court": "wva",
+    "qualifyingHint": 39,
+    "target": 45,
+    "remainsFirst": true,
+    "reason": "Durable PAUSED_RESUMABLE depth target; no production-safety reason to skip"
+  },
+  "integrity": {
+    "duplicateSourceIds": 0,
+    "orphanCount": 0,
+    "missingEmbeddings": 0,
+    "chunks": 57238,
+    "embeddings": 57238
+  }
+}

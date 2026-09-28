@@ -1,0 +1,404 @@
+{
+  "classification": "QUEUE2_CITATION_REPORTER_GAP",
+  "generatedAt": "2026-09-28T16:41:28.383Z",
+  "courtListenerHttpCalls": 0,
+  "baseline": {
+    "extracted": 7220,
+    "resolved": 197,
+    "unresolved": 7023,
+    "targetAbsent": 7023,
+    "resolutionRatePct": 2.73,
+    "uniqueAbsentTargets": 5030,
+    "malformedUnusable": 1,
+    "targetPresentButNotMatchedGroups": 0,
+    "targetPresentButNotMatchedEdges": 0,
+    "top10ShareOfAbsentEdgesPct": 3.26,
+    "top100ShareOfAbsentEdgesPct": 12.19,
+    "totalAbsentEdges": 7022
+  },
+  "reporterGaps": [
+    {
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "unresolvedEdges": 3470,
+      "uniqueTargets": 1899,
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 49.42,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "F.3d",
+      "family": "federal_reporter",
+      "unresolvedEdges": 1715,
+      "uniqueTargets": 1543,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 24.42,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "F.4th",
+      "family": "federal_reporter",
+      "unresolvedEdges": 691,
+      "uniqueTargets": 611,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 9.84,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "F.2d",
+      "family": "federal_reporter",
+      "unresolvedEdges": 536,
+      "uniqueTargets": 485,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 7.63,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "U.S.C.",
+      "family": "usc",
+      "unresolvedEdges": 264,
+      "uniqueTargets": 196,
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 3.76,
+      "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
+    },
+    {
+      "reporter": "F. Supp.",
+      "family": "federal_supplement",
+      "unresolvedEdges": 108,
+      "uniqueTargets": 100,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 1.54,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "F. Supp. 3d",
+      "family": "federal_supplement",
+      "unresolvedEdges": 104,
+      "uniqueTargets": 87,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 1.48,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "F. Supp. 2d",
+      "family": "federal_supplement",
+      "unresolvedEdges": 47,
+      "uniqueTargets": 43,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 0.67,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "C.F.R.",
+      "family": "cfr",
+      "unresolvedEdges": 42,
+      "uniqueTargets": 41,
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 0.6,
+      "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
+    },
+    {
+      "reporter": "Fed. R. App. P.",
+      "family": "federal_rules",
+      "unresolvedEdges": 21,
+      "uniqueTargets": 6,
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 0.3,
+      "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
+    },
+    {
+      "reporter": "F.",
+      "family": "federal_reporter",
+      "unresolvedEdges": 14,
+      "uniqueTargets": 11,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 0.2,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "Fed. R. Civ. P.",
+      "family": "federal_rules",
+      "unresolvedEdges": 7,
+      "uniqueTargets": 6,
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 0.1,
+      "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
+    },
+    {
+      "reporter": "Fed. R. Evid.",
+      "family": "federal_rules",
+      "unresolvedEdges": 3,
+      "uniqueTargets": 2,
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 0.04,
+      "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
+    }
+  ],
+  "jurisdictionGaps": [
+    {
+      "jurisdiction": "federal_scotus",
+      "unresolvedEdges": 3470,
+      "uniqueTargets": 1899,
+      "topTargets": [
+        {
+          "citation": "466 U.S. 668",
+          "edges": 66
+        },
+        {
+          "citation": "373 U.S. 83",
+          "edges": 30
+        },
+        {
+          "citation": "567 U.S. 460",
+          "edges": 24
+        },
+        {
+          "citation": "543 U.S. 551",
+          "edges": 17
+        },
+        {
+          "citation": "386 U.S. 738",
+          "edges": 16
+        }
+      ],
+      "sharePct": 49.42
+    },
+    {
+      "jurisdiction": "federal_circuit",
+      "unresolvedEdges": 2956,
+      "uniqueTargets": 2650,
+      "topTargets": [
+        {
+          "citation": "124 F.4th 218",
+          "edges": 5
+        },
+        {
+          "citation": "572 F.3d 455",
+          "edges": 5
+        },
+        {
+          "citation": "918 F.3d 1025",
+          "edges": 5
+        },
+        {
+          "citation": "516 F.3d 382",
+          "edges": 4
+        },
+        {
+          "citation": "590 F.3d 1034",
+          "edges": 4
+        }
+      ],
+      "sharePct": 42.1
+    },
+    {
+      "jurisdiction": "federal_primary",
+      "unresolvedEdges": 337,
+      "uniqueTargets": 251,
+      "topTargets": [
+        {
+          "citation": "Fed. R. App. P. 34",
+          "edges": 12
+        },
+        {
+          "citation": "8 U.S.C. ┬º 1101",
+          "edges": 6
+        },
+        {
+          "citation": "8 U.S.C. ┬º 1158",
+          "edges": 6
+        },
+        {
+          "citation": "18 U.S.C. ┬º 924",
+          "edges": 4
+        },
+        {
+          "citation": "28 U.S.C. ┬º 1331.",
+          "edges": 4
+        }
+      ],
+      "sharePct": 4.8
+    },
+    {
+      "jurisdiction": "federal_district",
+      "unresolvedEdges": 259,
+      "uniqueTargets": 230,
+      "topTargets": [
+        {
+          "citation": "1 F. Supp. 2d 628",
+          "edges": 2
+        },
+        {
+          "citation": "101 F. Supp. 3d 1010",
+          "edges": 2
+        },
+        {
+          "citation": "112 F. Supp. 3d 817",
+          "edges": 2
+        },
+        {
+          "citation": "168 F. Supp. 2d 751",
+          "edges": 2
+        },
+        {
+          "citation": "293 F. Supp. 792",
+          "edges": 2
+        }
+      ],
+      "sharePct": 3.69
+    }
+  ],
+  "citingJurisdictionDemand": [
+    {
+      "jurisdiction": "US",
+      "unresolvedEdges": 3156
+    },
+    {
+      "jurisdiction": "DC",
+      "unresolvedEdges": 228
+    },
+    {
+      "jurisdiction": "IA",
+      "unresolvedEdges": 225
+    },
+    {
+      "jurisdiction": "WI",
+      "unresolvedEdges": 190
+    },
+    {
+      "jurisdiction": "CT",
+      "unresolvedEdges": 165
+    },
+    {
+      "jurisdiction": "ME",
+      "unresolvedEdges": 162
+    },
+    {
+      "jurisdiction": "AZ",
+      "unresolvedEdges": 129
+    },
+    {
+      "jurisdiction": "WA",
+      "unresolvedEdges": 124
+    },
+    {
+      "jurisdiction": "MI",
+      "unresolvedEdges": 122
+    },
+    {
+      "jurisdiction": "NM",
+      "unresolvedEdges": 118
+    },
+    {
+      "jurisdiction": "MS",
+      "unresolvedEdges": 110
+    },
+    {
+      "jurisdiction": "NC",
+      "unresolvedEdges": 106
+    },
+    {
+      "jurisdiction": "SD",
+      "unresolvedEdges": 103
+    },
+    {
+      "jurisdiction": "VT",
+      "unresolvedEdges": 102
+    },
+    {
+      "jurisdiction": "AL",
+      "unresolvedEdges": 99
+    },
+    {
+      "jurisdiction": "LA",
+      "unresolvedEdges": 95
+    },
+    {
+      "jurisdiction": "KS",
+      "unresolvedEdges": 95
+    },
+    {
+      "jurisdiction": "IN",
+      "unresolvedEdges": 94
+    },
+    {
+      "jurisdiction": "KY",
+      "unresolvedEdges": 93
+    },
+    {
+      "jurisdiction": "NE",
+      "unresolvedEdges": 90
+    },
+    {
+      "jurisdiction": "TX",
+      "unresolvedEdges": 88
+    },
+    {
+      "jurisdiction": "UT",
+      "unresolvedEdges": 87
+    },
+    {
+      "jurisdiction": "MA",
+      "unresolvedEdges": 86
+    },
+    {
+      "jurisdiction": "OH",
+      "unresolvedEdges": 75
+    },
+    {
+      "jurisdiction": "AR",
+      "unresolvedEdges": 72
+    },
+    {
+      "jurisdiction": "ID",
+      "unresolvedEdges": 65
+    },
+    {
+      "jurisdiction": "MT",
+      "unresolvedEdges": 65
+    },
+    {
+      "jurisdiction": "RI",
+      "unresolvedEdges": 64
+    },
+    {
+      "jurisdiction": "FL",
+      "unresolvedEdges": 63
+    },
+    {
+      "jurisdiction": "NV",
+      "unresolvedEdges": 62
+    }
+  ],
+  "coverageDiagnosis": {
+    "depthWaveOverlap": "WEAK_OVERLAP_STATE_DEPTH_VS_FEDERAL_CITATION_DEMAND",
+    "evidence": {
+      "federalTargetAbsentSharePct": 100,
+      "topReporter": "U.S.",
+      "topReporterSharePct": 49.42,
+      "usReportsEdges": 3470,
+      "f2dEdges": 536,
+      "f3dEdges": 1715,
+      "fSuppEdges": 259
+    },
+    "narrative": [
+      "Unresolved edges are overwhelmingly TARGET_ABSENT after exact alias resolve.",
+      "Dominant demand is federal reporters (U.S. / F.2d / F.3d / F. Supp.*), while Lane A depth wave adds state high-court cases.",
+      "State high-court expansion increases extracted edges but rarely supplies the missing federal targets those edges cite."
+    ]
+  }
+}

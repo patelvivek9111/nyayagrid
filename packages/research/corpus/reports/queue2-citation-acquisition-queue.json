@@ -1,0 +1,547 @@
+{
+  "classification": "QUEUE2_CITATION_ACQUISITION_QUEUE",
+  "generatedAt": "2026-09-28T16:41:28.383Z",
+  "courtListenerHttpCalls": 0,
+  "A1_depthCompletion": {
+    "resumeFirst": {
+      "jurisdiction": "WV",
+      "court": "wva",
+      "qualifying": 39,
+      "target": 45,
+      "note": "PAUSED_RESUMABLE from durable state; verify live before next CL window"
+    },
+    "then": [
+      "finish remaining depth-wave incompletes in current Lane A order"
+    ],
+    "note": "Do not auto-replace depth wave with citation recovery"
+  },
+  "A2_citationTargetRecovery": {
+    "candidates": [
+      {
+        "rank": 1,
+        "citation": "466 U.S. 668",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 66,
+        "uniqueCitingAuthorities": 66,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 66 edges / 66 citing authorities"
+      },
+      {
+        "rank": 2,
+        "citation": "373 U.S. 83",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 30,
+        "uniqueCitingAuthorities": 30,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 30 edges / 30 citing authorities"
+      },
+      {
+        "rank": 3,
+        "citation": "567 U.S. 460",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 24,
+        "uniqueCitingAuthorities": 24,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 24 edges / 24 citing authorities"
+      },
+      {
+        "rank": 4,
+        "citation": "543 U.S. 551",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 17,
+        "uniqueCitingAuthorities": 17,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 17 edges / 17 citing authorities"
+      },
+      {
+        "rank": 5,
+        "citation": "386 U.S. 738",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 16,
+        "uniqueCitingAuthorities": 16,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 16 edges / 16 citing authorities"
+      },
+      {
+        "rank": 6,
+        "citation": "392 U.S. 1",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 16,
+        "uniqueCitingAuthorities": 16,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 16 edges / 16 citing authorities"
+      },
+      {
+        "rank": 7,
+        "citation": "443 U.S. 307",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 16,
+        "uniqueCitingAuthorities": 16,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 16 edges / 16 citing authorities"
+      },
+      {
+        "rank": 8,
+        "citation": "509 U.S. 579",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 16,
+        "uniqueCitingAuthorities": 16,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 16 edges / 16 citing authorities"
+      },
+      {
+        "rank": 9,
+        "citation": "200 U.S. 321",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 15,
+        "uniqueCitingAuthorities": 15,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 15 edges / 15 citing authorities"
+      },
+      {
+        "rank": 10,
+        "citation": "424 U.S. 319",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 13,
+        "uniqueCitingAuthorities": 13,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 13 edges / 13 citing authorities"
+      },
+      {
+        "rank": 11,
+        "citation": "507 U.S. 725",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 13,
+        "uniqueCitingAuthorities": 13,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 13 edges / 13 citing authorities"
+      },
+      {
+        "rank": 12,
+        "citation": "560 U.S. 48",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 13,
+        "uniqueCitingAuthorities": 13,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 13 edges / 13 citing authorities"
+      },
+      {
+        "rank": 13,
+        "citation": "597 U.S. 1",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 13,
+        "uniqueCitingAuthorities": 13,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 13 edges / 13 citing authorities"
+      },
+      {
+        "rank": 14,
+        "citation": "462 U.S. 213",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 12,
+        "uniqueCitingAuthorities": 12,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 12 edges / 12 citing authorities"
+      },
+      {
+        "rank": 15,
+        "citation": "602 U.S. 680",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 12,
+        "uniqueCitingAuthorities": 12,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 12 edges / 12 citing authorities"
+      },
+      {
+        "rank": 16,
+        "citation": "393 U.S. 440",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 11,
+        "uniqueCitingAuthorities": 11,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 11 edges / 11 citing authorities"
+      },
+      {
+        "rank": 17,
+        "citation": "396 U.S. 367",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 11,
+        "uniqueCitingAuthorities": 11,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 11 edges / 11 citing authorities"
+      },
+      {
+        "rank": 18,
+        "citation": "426 U.S. 696",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 11,
+        "uniqueCitingAuthorities": 11,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 11 edges / 11 citing authorities"
+      },
+      {
+        "rank": 19,
+        "citation": "443 U.S. 595",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 11,
+        "uniqueCitingAuthorities": 11,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 11 edges / 11 citing authorities"
+      },
+      {
+        "rank": 20,
+        "citation": "504 U.S. 555",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 11,
+        "uniqueCitingAuthorities": 11,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 11 edges / 11 citing authorities"
+      },
+      {
+        "rank": 21,
+        "citation": "554 U.S. 570",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 11,
+        "uniqueCitingAuthorities": 11,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 11 edges / 11 citing authorities"
+      },
+      {
+        "rank": 22,
+        "citation": "395 U.S. 238",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 10,
+        "uniqueCitingAuthorities": 10,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 10 edges / 10 citing authorities"
+      },
+      {
+        "rank": 23,
+        "citation": "541 U.S. 36",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 10,
+        "uniqueCitingAuthorities": 10,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 10 edges / 10 citing authorities"
+      },
+      {
+        "rank": 24,
+        "citation": "577 U.S. 190",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 10,
+        "uniqueCitingAuthorities": 10,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 10 edges / 10 citing authorities"
+      },
+      {
+        "rank": 25,
+        "citation": "547 U.S. 398",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 9,
+        "uniqueCitingAuthorities": 9,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 9 edges / 9 citing authorities"
+      },
+      {
+        "rank": 26,
+        "citation": "555 U.S. 7",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 9,
+        "uniqueCitingAuthorities": 9,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 9 edges / 9 citing authorities"
+      },
+      {
+        "rank": 27,
+        "citation": "573 U.S. 373",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 9,
+        "uniqueCitingAuthorities": 9,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 9 edges / 9 citing authorities"
+      },
+      {
+        "rank": 28,
+        "citation": "339 U.S. 306",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 8,
+        "uniqueCitingAuthorities": 8,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 8 edges / 8 citing authorities"
+      },
+      {
+        "rank": 29,
+        "citation": "400 U.S. 25",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 8,
+        "uniqueCitingAuthorities": 8,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 8 edges / 8 citing authorities"
+      },
+      {
+        "rank": 30,
+        "citation": "527 U.S. 263",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 8,
+        "uniqueCitingAuthorities": 8,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 8 edges / 8 citing authorities"
+      },
+      {
+        "rank": 31,
+        "citation": "530 U.S. 57",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 8,
+        "uniqueCitingAuthorities": 8,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 8 edges / 8 citing authorities"
+      },
+      {
+        "rank": 32,
+        "citation": "536 U.S. 304",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 8,
+        "uniqueCitingAuthorities": 8,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 8 edges / 8 citing authorities"
+      },
+      {
+        "rank": 33,
+        "citation": "552 U.S. 38",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 8,
+        "uniqueCitingAuthorities": 8,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 8 edges / 8 citing authorities"
+      },
+      {
+        "rank": 34,
+        "citation": "562 U.S. 86",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 8,
+        "uniqueCitingAuthorities": 8,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 8 edges / 8 citing authorities"
+      },
+      {
+        "rank": 35,
+        "citation": "563 U.S. 452",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 8,
+        "uniqueCitingAuthorities": 8,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 8 edges / 8 citing authorities"
+      },
+      {
+        "rank": 36,
+        "citation": "378 U.S. 368",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 7,
+        "uniqueCitingAuthorities": 7,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 7 edges / 7 citing authorities"
+      },
+      {
+        "rank": 37,
+        "citation": "386 U.S. 18",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 7,
+        "uniqueCitingAuthorities": 7,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 7 edges / 7 citing authorities"
+      },
+      {
+        "rank": 38,
+        "citation": "411 U.S. 792",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 7,
+        "uniqueCitingAuthorities": 7,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 7 edges / 7 citing authorities"
+      },
+      {
+        "rank": 39,
+        "citation": "412 U.S. 218",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 7,
+        "uniqueCitingAuthorities": 7,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 7 edges / 7 citing authorities"
+      },
+      {
+        "rank": 40,
+        "citation": "445 U.S. 573",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 7,
+        "uniqueCitingAuthorities": 7,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 7 edges / 7 citing authorities"
+      },
+      {
+        "rank": 41,
+        "citation": "468 U.S. 897",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 7,
+        "uniqueCitingAuthorities": 7,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 7 edges / 7 citing authorities"
+      },
+      {
+        "rank": 42,
+        "citation": "476 U.S. 79",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 7,
+        "uniqueCitingAuthorities": 7,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 7 edges / 7 citing authorities"
+      },
+      {
+        "rank": 43,
+        "citation": "483 U.S. 756",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 7,
+        "uniqueCitingAuthorities": 7,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 7 edges / 7 citing authorities"
+      },
+      {
+        "rank": 44,
+        "citation": "528 U.S. 119",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 7,
+        "uniqueCitingAuthorities": 7,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 7 edges / 7 citing authorities"
+      },
+      {
+        "rank": 45,
+        "citation": "538 U.S. 343",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 7,
+        "uniqueCitingAuthorities": 7,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 7 edges / 7 citing authorities"
+      },
+      {
+        "rank": 46,
+        "citation": "555 U.S. 135",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 7,
+        "uniqueCitingAuthorities": 7,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 7 edges / 7 citing authorities"
+      },
+      {
+        "rank": 47,
+        "citation": "561 U.S. 742",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 7,
+        "uniqueCitingAuthorities": 7,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 7 edges / 7 citing authorities"
+      },
+      {
+        "rank": 48,
+        "citation": "594 U.S. 413",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 7,
+        "uniqueCitingAuthorities": 7,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 7 edges / 7 citing authorities"
+      },
+      {
+        "rank": 49,
+        "citation": "328 U.S. 750",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 6,
+        "uniqueCitingAuthorities": 6,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 6 edges / 6 citing authorities"
+      },
+      {
+        "rank": 50,
+        "citation": "367 U.S. 643",
+        "likelyCourtJurisdiction": "federal_scotus",
+        "edgesPotentiallyUnlocked": 6,
+        "uniqueCitingAuthorities": 6,
+        "acquisitionConfidence": "HIGH",
+        "estimatedClCost": "~2ΓÇô3 requests/authority if opinion fetch+cluster (manual baseline ~2.2)",
+        "whyA2": "TARGET_ABSENT us_reports; 6 edges / 6 citing authorities"
+      }
+    ],
+    "ordering": "edges unlocked desc, then unique citing authorities, then hierarchy",
+    "note": "Future CL windows only; zero requests this run"
+  },
+  "interleavingRecommendation": {
+    "evidenceSupported": true,
+    "policy": [
+      "Always finish resumable depth target first (currently WV 39/45) before opening a new court.",
+      "Within a CL window after resumable completion: majority budget remains A1 depth-wave incompletes.",
+      "Reserve a bounded A2 pilot slice only after A1 makes durable progress in the same window.",
+      "A2 pilot size: top N US Reports / F.2d targets by edge unlock, capped so expected requests stay within remaining safe hour budget after A1 needs.",
+      "Measure after each A2 pilot: delta resolved / CL requests. Continue A2 only if resolved increases materially."
+    ],
+    "percentages": {
+      "inventPercentages": false,
+      "reason": "Insufficient multi-window A2 outcome data; recommend bounded pilot instead of fixed X%/Y% split",
+      "boundedPilotSuggestion": "After WV completes: one A1 jurisdiction batch, then Γëñ15 productive CL requests on top US Reports A2 targets; compare resolved delta before expanding A2 share"
+    }
+  },
+  "nextClTarget": {
+    "jurisdiction": "WV",
+    "court": "wva",
+    "qualifyingHint": 39,
+    "target": 45,
+    "remainsFirst": true,
+    "reason": "Durable PAUSED_RESUMABLE depth target; no production-safety reason to skip"
+  }
+}
