@@ -3,12 +3,12 @@
   "queue": "#2",
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
-  "version": 65,
-  "generatedAt": "2026-09-28T14:41:34.574Z",
+  "version": 69,
+  "generatedAt": "2026-09-28T15:48:15.689Z",
   "source": {
     "type": "live_db_snapshot",
     "snapshotPath": "packages/research/corpus/reports/queue2-lane-a-corpus-snapshot.json",
-    "snapshotGeneratedAt": "2026-09-28T14:40:02.261Z",
+    "snapshotGeneratedAt": "2026-09-28T15:44:25.826Z",
     "mutationsDuringSnapshot": 0
   },
   "rankingPolicy": [
@@ -27,9 +27,9 @@
     "overfeedStrongJurisdictions": false
   },
   "corpusTotals": {
-    "authorities": 3588,
-    "cases": 2271,
-    "cl_cases": 2226,
+    "authorities": 3709,
+    "cases": 2392,
+    "cl_cases": 2347,
     "statutes": 904,
     "regulations": 158,
     "rules": 254
@@ -37,23 +37,23 @@
   "reconciliation": {
     "ok": true,
     "reasons": [],
-    "aggregateManifestStateCases": 2064,
-    "aggregateSnapshotCases": 2271,
-    "corpusCases": 2271,
+    "aggregateManifestStateCases": 2185,
+    "aggregateSnapshotCases": 2392,
+    "corpusCases": 2392,
     "jurisdictionsPresent": 52,
     "unknownCount": 0,
     "falseZeroBlocked": 0
   },
   "activePartial": {
-    "court": "ohio",
-    "jurisdiction": "OH",
-    "count": 20,
+    "court": "wash",
+    "jurisdiction": "WA",
+    "count": 32,
     "target": 45,
-    "checkpoint": "cl-opinion-9885161",
-    "status": "READY",
+    "checkpoint": "cl-opinion-11264687",
+    "status": "PARTIAL",
     "mappingStatus": "VERIFIED",
     "dataQuality": "LIVE_DB",
-    "jobLifecycle": "READY_FIRST_START"
+    "jobLifecycle": "PAUSED_RESUMABLE"
   },
   "unknownCount": 0,
   "falseZeroBlocked": 0,
@@ -1052,6 +1052,39 @@
       "score": 485
     },
     {
+      "jurisdiction": "NC",
+      "name": "North Carolina",
+      "preferredCourts": [
+        "nc"
+      ],
+      "currentAuthorities": 69,
+      "currentCases": 46,
+      "clCases": 45,
+      "highCourtCount": 46,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2002,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 0,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 106,
+      "citationTargetAbsent": 106,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 32,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": "cl-opinion-11125345",
+      "mappingStatus": "VERIFIED",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
+      "dataQuality": "LIVE_DB",
+      "score": 473
+    },
+    {
       "jurisdiction": "VT",
       "name": "Vermont",
       "preferredCourts": [
@@ -1116,6 +1149,39 @@
       "autonomousIngestBlocked": true,
       "dataQuality": "LIVE_DB",
       "score": 460
+    },
+    {
+      "jurisdiction": "WA",
+      "name": "Washington",
+      "preferredCourts": [
+        "wash"
+      ],
+      "currentAuthorities": 54,
+      "currentCases": 32,
+      "clCases": 31,
+      "highCourtCount": 32,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 1985,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 13,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 78,
+      "citationTargetAbsent": 78,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 47,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": "cl-opinion-11264687",
+      "mappingStatus": "VERIFIED",
+      "status": "PARTIAL",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 449
     },
     {
       "jurisdiction": "MA",
@@ -1287,73 +1353,37 @@
       "score": 401
     },
     {
-      "jurisdiction": "RI",
-      "name": "Rhode Island",
+      "jurisdiction": "OH",
+      "name": "Ohio",
       "preferredCourts": [
-        "ri"
+        "ohio"
       ],
-      "currentAuthorities": 47,
-      "currentCases": 20,
-      "clCases": 20,
-      "highCourtCount": 20,
+      "currentAuthorities": 68,
+      "currentCases": 46,
+      "clCases": 45,
+      "highCourtCount": 46,
       "intermediateAppellateCount": 0,
-      "earliestYear": 2026,
+      "earliestYear": 1993,
       "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 25,
-      "missingCourtLayers": [
-        "intermediate"
-      ],
-      "historicalGaps": [
-        "pre-2000",
-        "historical_thin"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 32,
-      "citationTargetAbsent": 32,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 54,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "VERIFIED",
-      "status": "READY",
-      "autonomousIngestBlocked": false,
-      "dataQuality": "LIVE_DB",
-      "score": 399
-    },
-    {
-      "jurisdiction": "NC",
-      "name": "North Carolina",
-      "preferredCourts": [
-        "nc"
-      ],
-      "currentAuthorities": 43,
-      "currentCases": 20,
-      "clCases": 19,
-      "highCourtCount": 20,
-      "intermediateAppellateCount": 0,
-      "earliestYear": 2002,
-      "latestYear": 2026,
-      "targetCases": 45,
-      "targetDelta": 25,
+      "targetDelta": 0,
       "missingCourtLayers": [
         "intermediate"
       ],
       "historicalGaps": [],
       "doctrinalGaps": [],
-      "citationDemand": 41,
-      "citationTargetAbsent": 41,
+      "citationDemand": 75,
+      "citationTargetAbsent": 75,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 58,
+      "authorityDeficit": 33,
       "historicalGapScore": 10,
       "doctrinalGapScore": 5,
-      "checkpoint": null,
+      "checkpoint": "cl-opinion-11336890",
       "mappingStatus": "VERIFIED",
-      "status": "READY",
-      "autonomousIngestBlocked": false,
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
       "dataQuality": "LIVE_DB",
-      "score": 382
+      "score": 384
     },
     {
       "jurisdiction": "CA",
@@ -1451,37 +1481,40 @@
       "score": 368
     },
     {
-      "jurisdiction": "OH",
-      "name": "Ohio",
+      "jurisdiction": "RI",
+      "name": "Rhode Island",
       "preferredCourts": [
-        "ohio"
+        "ri"
       ],
-      "currentAuthorities": 42,
-      "currentCases": 20,
-      "clCases": 19,
-      "highCourtCount": 20,
+      "currentAuthorities": 79,
+      "currentCases": 52,
+      "clCases": 52,
+      "highCourtCount": 52,
       "intermediateAppellateCount": 0,
-      "earliestYear": 1993,
+      "earliestYear": 2026,
       "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 25,
+      "targetDelta": 0,
       "missingCourtLayers": [
         "intermediate"
       ],
-      "historicalGaps": [],
+      "historicalGaps": [
+        "pre-2000",
+        "historical_thin"
+      ],
       "doctrinalGaps": [],
-      "citationDemand": 35,
-      "citationTargetAbsent": 35,
+      "citationDemand": 64,
+      "citationTargetAbsent": 64,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 59,
-      "historicalGapScore": 10,
+      "authorityDeficit": 22,
+      "historicalGapScore": 40,
       "doctrinalGapScore": 5,
-      "checkpoint": null,
+      "checkpoint": "cl-opinion-11247322",
       "mappingStatus": "VERIFIED",
-      "status": "READY",
-      "autonomousIngestBlocked": false,
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
       "dataQuality": "LIVE_DB",
-      "score": 368
+      "score": 367
     },
     {
       "jurisdiction": "TX",
@@ -1546,39 +1579,6 @@
       "autonomousIngestBlocked": true,
       "dataQuality": "LIVE_DB",
       "score": 363
-    },
-    {
-      "jurisdiction": "WA",
-      "name": "Washington",
-      "preferredCourts": [
-        "wash"
-      ],
-      "currentAuthorities": 42,
-      "currentCases": 20,
-      "clCases": 19,
-      "highCourtCount": 20,
-      "intermediateAppellateCount": 0,
-      "earliestYear": 1985,
-      "latestYear": 2026,
-      "targetCases": 45,
-      "targetDelta": 25,
-      "missingCourtLayers": [
-        "intermediate"
-      ],
-      "historicalGaps": [],
-      "doctrinalGaps": [],
-      "citationDemand": 33,
-      "citationTargetAbsent": 33,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 59,
-      "historicalGapScore": 10,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "VERIFIED",
-      "status": "READY",
-      "autonomousIngestBlocked": false,
-      "dataQuality": "LIVE_DB",
-      "score": 362
     },
     {
       "jurisdiction": "WY",
@@ -1715,42 +1715,6 @@
       "autonomousIngestBlocked": true,
       "dataQuality": "LIVE_DB",
       "score": 353
-    },
-    {
-      "jurisdiction": "OR",
-      "name": "Oregon",
-      "preferredCourts": [
-        "or"
-      ],
-      "currentAuthorities": 46,
-      "currentCases": 20,
-      "clCases": 20,
-      "highCourtCount": 20,
-      "intermediateAppellateCount": 0,
-      "earliestYear": 2026,
-      "latestYear": 2026,
-      "targetCases": 45,
-      "targetDelta": 25,
-      "missingCourtLayers": [
-        "intermediate"
-      ],
-      "historicalGaps": [
-        "pre-2000",
-        "historical_thin"
-      ],
-      "doctrinalGaps": [],
-      "citationDemand": 12,
-      "citationTargetAbsent": 12,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 55,
-      "historicalGapScore": 40,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "VERIFIED",
-      "status": "READY",
-      "autonomousIngestBlocked": false,
-      "dataQuality": "LIVE_DB",
-      "score": 343
     },
     {
       "jurisdiction": "AK",
@@ -1958,6 +1922,42 @@
       "autonomousIngestBlocked": false,
       "dataQuality": "LIVE_DB",
       "score": 309
+    },
+    {
+      "jurisdiction": "OR",
+      "name": "Oregon",
+      "preferredCourts": [
+        "or"
+      ],
+      "currentAuthorities": 71,
+      "currentCases": 45,
+      "clCases": 45,
+      "highCourtCount": 45,
+      "intermediateAppellateCount": 0,
+      "earliestYear": 2025,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 0,
+      "missingCourtLayers": [
+        "intermediate"
+      ],
+      "historicalGaps": [
+        "pre-2000",
+        "historical_thin"
+      ],
+      "doctrinalGaps": [],
+      "citationDemand": 30,
+      "citationTargetAbsent": 30,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 30,
+      "historicalGapScore": 40,
+      "doctrinalGapScore": 5,
+      "checkpoint": "cl-opinion-11154325",
+      "mappingStatus": "VERIFIED",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
+      "dataQuality": "LIVE_DB",
+      "score": 297
     },
     {
       "jurisdiction": "SC",

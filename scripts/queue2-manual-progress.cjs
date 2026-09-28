@@ -102,6 +102,9 @@ function selectNextProductionDepthTarget(manifest, opts = {}) {
     });
   rows.sort(
     (a, b) =>
+      // Prefer resuming a verified PARTIAL with durable checkpoint over a higher-deficit READY start.
+      Number(b.status === "PARTIAL" && b.checkpoint ? 1 : 0) -
+        Number(a.status === "PARTIAL" && a.checkpoint ? 1 : 0) ||
       (Number(b.authorityDeficit) || 0) - (Number(a.authorityDeficit) || 0) ||
       (Number(a.highCourtCount) || 0) - (Number(b.highCourtCount) || 0) ||
       (Number(b.score) || 0) - (Number(a.score) || 0) ||

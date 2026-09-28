@@ -1,0 +1,110 @@
+{
+  "classification": "MANUAL_QUEUE2_CITATION_FIRST_RAPID_INGEST",
+  "generatedAt": "2026-09-28T15:45:00.000Z",
+  "queue": { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", "transition": "NONE" },
+  "worker": "STOPPED",
+  "citationsBeforeIngest": {
+    "extracted": 6969,
+    "resolved": 197,
+    "unresolved": 6772,
+    "targetAbsent": 6771,
+    "otherUnresolved": 1,
+    "resolutionRatePct": 2.83,
+    "newlyResolvedThisPass": 0,
+    "edgeNormUpdated": 0,
+    "authorityNormUpdated": 0,
+    "parallelAliasWrites": 0,
+    "classification": {
+      "A_TARGET_ABSENT": 6771,
+      "B_TARGET_PRESENT_BUT_NOT_MATCHED": 0,
+      "C_AMBIGUOUS": 0,
+      "D_MALFORMED": 1,
+      "E_OTHER": 0
+    },
+    "resolverDefectsFound": false,
+    "resolverDefectsFixed": false,
+    "diagnose": {
+      "matchableExactAlias": 0,
+      "sqlExactNormOverlapUnresolved": 0
+    }
+  },
+  "quotaProbe": {
+    "minuteRemaining": 30,
+    "hourRemaining": 179,
+    "dayRemaining": 351,
+    "probes": 1
+  },
+  "start": {
+    "jurisdiction": "OH",
+    "court": "ohio",
+    "qualifying": 20,
+    "checkpoint": null,
+    "jobCursor": "cl-opinion-11414719"
+  },
+  "end": {
+    "jurisdiction": "WA",
+    "court": "wash",
+    "qualifying": 32,
+    "checkpoint": "cl-opinion-11264687",
+    "nextJurisdiction": "WA",
+    "nextCourt": "wash",
+    "nextQualifying": 32,
+    "remainingAfterList": ["WV", "DE", "MO", "NJ", "VA"]
+  },
+  "jurisdictions": [
+    { "j": "OH", "court": "ohio", "start": 20, "end": 46, "added": 26, "clRequests": 56, "checkpoint": "cl-opinion-11336890", "status": "COMPLETE_FOR_CURRENT_DEPTH" },
+    { "j": "NC", "court": "nc", "start": 20, "end": 46, "added": 26, "clRequests": 58, "checkpoint": "cl-opinion-11125345", "status": "COMPLETE_FOR_CURRENT_DEPTH", "note": "first attempt fetch_timeout_soft_pause zero-progress; one genuine retry succeeded" },
+    { "j": "OR", "court": "or", "start": 20, "end": 45, "added": 25, "clRequests": 54, "checkpoint": "cl-opinion-11154325", "status": "COMPLETE_FOR_CURRENT_DEPTH" },
+    { "j": "RI", "court": "ri", "start": 20, "end": 52, "added": 32, "clRequests": 17, "checkpoint": "cl-opinion-11247322", "status": "COMPLETE_FOR_CURRENT_DEPTH", "note": "single batch imported 32 via page catch-up (items_imported 44, skipped 8)" },
+    { "j": "WA", "court": "wash", "start": 20, "end": 32, "added": 12, "clRequests": 28, "checkpoint": "cl-opinion-11264687", "status": "PARTIAL", "note": "stopped on RATE LIMIT WINDOW REACHED; lastRetryAfterSec≈818" }
+  ],
+  "citationsAfterIngest": {
+    "extracted": 7169,
+    "resolved": 197,
+    "unresolved": 6972,
+    "targetAbsent": 6971,
+    "resolutionRatePct": 2.75,
+    "newlyResolved": 0,
+    "newlyExtracted": 200,
+    "targetAbsentDelta": 200,
+    "previouslyUnresolvedNewlyResolved": 0,
+    "jurisdictionsUnlockingMatches": [],
+    "edgeNormUpdated": 61
+  },
+  "citationHealthGate": {
+    "verdict": "A_EXPECTED_COVERAGE_GAP",
+    "detail": "121 authorities added; resolved unchanged at 197; target_absent rose +200 with newly extracted US Reports / F.2d / F.Supp edges pointing outside current corpus. Audit B_normalization_mismatch=0 and matchableExactAlias=0 — not a resolver defect."
+  },
+  "corpus": {
+    "authorities": "3588 → 3709",
+    "cases": "2271 → 2392",
+    "clCases": "2226 → 2347",
+    "statutes": 904,
+    "regulations": 158,
+    "rules": 254,
+    "chunks": 56544,
+    "embeddings": 56544,
+    "duplicateSourceIds": 0,
+    "orphanCount": 0
+  },
+  "depth": {
+    "newlyCompleted": ["ohio", "nc", "or", "ri"],
+    "totalCompleted": 38,
+    "nextTarget": { "jurisdiction": "WA", "court": "wash", "qualifying": 32, "target": 45, "checkpoint": "cl-opinion-11264687" }
+  },
+  "quota": {
+    "start": { "minute": 30, "hour": 179, "day": 351 },
+    "totalCl": 215,
+    "productive": 212,
+    "probes": 1,
+    "retries": 1,
+    "wasted": 2,
+    "hard429": 1,
+    "requestsPerAuthority": 1.75,
+    "baselineCompare": "2.16–2.20; RI catch-up batch pulled average down; excluding RI ≈2.19",
+    "stopReason": "WA rate_limited (429 window); lastRetryAfterSec≈818",
+    "safeToContinue": false,
+    "estimatedHourRemaining": "unknown_no_reprobe",
+    "estimatedDayRemaining": "unknown_no_reprobe_day_reset_mid_session"
+  }
+}

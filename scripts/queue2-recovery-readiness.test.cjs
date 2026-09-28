@@ -92,32 +92,32 @@ test("DB recovers â†’ manifest refresh before target selection; stale SC laneA â
   const refreshIdx = plan.steps.findIndex((s) => s.id === "REFRESH_MANIFEST");
   const selectIdx = plan.steps.findIndex((s) => s.id === "SELECT_TARGET");
   assert.ok(refreshIdx < selectIdx);
-  assert.equal(plan.nextTarget.court, "ohio");
-  assert.equal(plan.nextTarget.jurisdiction, "OH");
+  assert.equal(plan.nextTarget.court, "wash");
+  assert.equal(plan.nextTarget.jurisdiction, "WA");
   assert.ok(
     plan.nextTarget.qualifyingCaseCount >= 20 && plan.nextTarget.qualifyingCaseCount <= 45,
     `qualifyingCaseCount=${plan.nextTarget.qualifyingCaseCount}`,
   );
   assert.equal(plan.nextTarget.target, 45);
   assert.equal(plan.nextTarget.mappingStatus, "VERIFIED");
-  assert.equal(plan.state.laneA.court, "ohio");
-  assert.notEqual(plan.state.laneA.court, "md");
+  assert.equal(plan.state.laneA.court, "wash");
+  assert.notEqual(plan.state.laneA.court, "ri");
   assert.deepEqual(plan.inventedCheckpoints, []);
   assert.equal(plan.queue2, "#2");
   assert.equal(plan.queue3, "NOT_OPEN");
 });
 
-test("manual progress can change OH count before resume; already complete skips OH", () => {
+test("manual progress can change WA count before resume; already complete skips WA", () => {
   const manifest = load(MANIFEST);
   const drifted = planDatabaseQuotaRecovery({
     state: blockedState(),
     manifest,
     dbProbe: { ok: true, writable: true, mutations: 0 },
-    liveCountsByCourt: { ohio: { qualifyingCaseCount: 28, clCaseCount: 28, authorityCount: 49 } },
+    liveCountsByCourt: { wash: { qualifyingCaseCount: 28, clCaseCount: 28, authorityCount: 49 } },
     remoteProcesses: [],
     now: NOW,
   });
-  assert.equal(drifted.nextTarget.court, "ohio");
+  assert.equal(drifted.nextTarget.court, "wash");
   assert.equal(drifted.nextTarget.qualifyingCaseCount, 28);
   assert.equal(drifted.state.laneA.qualifyingCaseCount, 28);
 
@@ -125,12 +125,12 @@ test("manual progress can change OH count before resume; already complete skips 
     state: blockedState(),
     manifest,
     dbProbe: { ok: true, writable: true, mutations: 0 },
-    liveCountsByCourt: { ohio: { qualifyingCaseCount: 45, clCaseCount: 45 } },
+    liveCountsByCourt: { wash: { qualifyingCaseCount: 45, clCaseCount: 45 } },
     remoteProcesses: [],
     now: NOW,
   });
-  assert.notEqual(done.nextTarget.court, "ohio");
-  assert.ok(done.state.completedCourts.includes("ohio"));
+  assert.notEqual(done.nextTarget.court, "wash");
+  assert.ok(done.state.completedCourts.includes("wash"));
 });
 
 test("VT READY_FIRST_START / PAUSED_RESUMABLE / invalid HOLD", () => {
@@ -336,7 +336,7 @@ test("VT first-start clears inherited SC resume fields", () => {
     now: NOW,
   });
   assert.equal(plan.ok, true);
-  assert.equal(plan.state.laneA.court, "ohio");
+  assert.equal(plan.state.laneA.court, "wash");
   assert.equal(plan.state.laneA.jobLifecycle, "READY_FIRST_START");
   assert.equal(plan.state.laneA.checkpoint, null);
   assert.equal(plan.state.laneA.cursor, null);

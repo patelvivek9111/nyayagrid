@@ -347,7 +347,7 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
       state.currentLane === "WAIT",
     `currentLane=${state.currentLane}`,
   );
-  assert.equal(state.laneA.court, "ohio");
+  assert.equal(state.laneA.court, "wash");
   assert.ok(state.laneA.count >= 20 && state.laneA.count <= 45, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
   assert.ok(
@@ -359,7 +359,7 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
     `jobLifecycle=${state.laneA.jobLifecycle}`,
   );
   assert.ok(
-    state.laneA.checkpoint == null,
+    state.laneA.checkpoint === "cl-opinion-11264687" || state.laneA.checkpoint == null,
     `checkpoint=${state.laneA.checkpoint}`,
   );
   assert.equal(state.completedCourtEvidence.sc.checkpoint, "cl-opinion-11201513");
@@ -368,6 +368,16 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
   assert.equal(state.completedCourtEvidence.conn.checkpoint, "cl-opinion-11299467");
   assert.equal(state.completedCourtEvidence.ga.checkpoint, "cl-opinion-11335741");
   assert.equal(state.completedCourtEvidence.md.checkpoint, "cl-opinion-11246774");
+  assert.equal(state.completedCourtEvidence.ohio.checkpoint, "cl-opinion-11336890");
+  assert.equal(state.completedCourtEvidence.nc.checkpoint, "cl-opinion-11125345");
+  assert.equal(state.completedCourtEvidence.or.checkpoint, "cl-opinion-11154325");
+  assert.equal(state.completedCourtEvidence.ri.checkpoint, "cl-opinion-11247322");
+  assert.equal(state.completedCourtEvidence.ga.checkpoint, "cl-opinion-11335741");
+  assert.equal(state.completedCourtEvidence.md.checkpoint, "cl-opinion-11246774");
+  assert.equal(state.completedCourtEvidence.ohio.checkpoint, "cl-opinion-11336890");
+  assert.equal(state.completedCourtEvidence.nc.checkpoint, "cl-opinion-11125345");
+  assert.equal(state.completedCourtEvidence.or.checkpoint, "cl-opinion-11154325");
+  assert.equal(state.completedCourtEvidence.ri.checkpoint, "cl-opinion-11247322");
   assert.equal(state.completedCourtEvidence.vt.checkpoint, "cl-opinion-11197326");
   assert.equal(state.humanReview?.required, false);
   assert.ok(!((state.humanReview?.reasons || []).includes("UNKNOWN_DB_FAILURE")));
