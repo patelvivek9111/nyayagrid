@@ -1,6 +1,6 @@
 # Queue #2 Corpus Worker — Daily Status
 
-Generated: 2026-09-28T19:12:00.000Z (9/28/2026, 3:12:00 PM EDT)
+Generated: 2026-09-28T22:20:00.000Z (9/28/2026, 6:20:00 PM EDT)
 Queue: #2 OPEN | #9 CLOSED | #3 NOT OPEN | transition NONE | FEATURE_AGENTS=0
 
 ## CURRENT LANE
@@ -10,26 +10,23 @@ STOPPED
 NONE
 Worker STOPPED. Manual A1+A2 window.
 
-Next: Delaware (`del`) 29/45 PAUSED_RESUMABLE
-checkpoint: cl-opinion-11400894
+Next: California (`cal`) 37/45 READY_FIRST_START
 
 ## THIS WINDOW
-A1 MO 22→46 (+24, 53 CL) COMPLETE
-A1 NJ 22→46 (+24, 51 CL) COMPLETE
-A1 VA 22→46 (+24, 51 CL) COMPLETE
-A1 DE 22→29 (+7, 19 CL) PARTIAL quota_paused
-A2 10 U.S. Reports targets / 20 CL / +129 resolutions (MIXED vs pilot 13.21/req)
-total ~194 CL · +89 authorities
+A1 DE 29→45 (+16, 34 CL) COMPLETE
+A1 MN 27→51 (+24, 51 CL) COMPLETE
+A2 9/10 U.S. Reports / 20 CL / +94 resolutions (MIXED 4.70/req vs 6.45 prior / 13.21 pilot)
+total ~105 CL · +49 authorities
 
 ## CITATIONS
-before: 7220 / 382 / 6838 (5.29%)
-after A2 reresolve: 7265 / 515 / 6750 (7.09%)
-final: 7415 / 519 / 6896 (~7.0%)
+before A2: 7421 / 520 / 6901 (7.01%)
+after A2 reresolve: 7421 / 614 / 6807 (8.27%)
+final: 7492 / 619 / 6873 (~8.26%)
 
 ## CORPUS
-authorities=3844 cases=2527 clCases=2482
-chunks=59852 embeddings=59852
+authorities=3893 cases=2576 clCases=2531
+chunks=61082 embeddings=61082
 duplicates=0 orphans=0
 
 ## NEXT
-Resume DE from cl-opinion-11400894 when hour recovers; continue A2 bounded batches.
+Resume CA from READY_FIRST_START; continue bounded A2 (smaller budgets as edge unlocks decline).

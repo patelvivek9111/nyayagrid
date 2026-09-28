@@ -1,0 +1,76 @@
+{
+  "classification": "MANUAL_QUEUE2_A1_A2_CITATION_RECOVERY_WINDOW",
+  "generatedAt": "2026-09-28T22:20:00.000Z",
+  "result": "PASS",
+  "start": {
+    "a1Target": "DE",
+    "startCount": 29,
+    "quota": { "minute": 30, "hour": 300, "day": 300 }
+  },
+  "A1": [
+    {
+      "j": "DE",
+      "start": 29,
+      "end": 45,
+      "added": 16,
+      "clRequests": 34,
+      "checkpoint": "cl-opinion-11384699",
+      "status": "COMPLETE"
+    },
+    {
+      "j": "MN",
+      "start": 27,
+      "end": 51,
+      "added": 24,
+      "clRequests": 51,
+      "checkpoint": "cl-opinion-11171686",
+      "status": "COMPLETE"
+    }
+  ],
+  "A2": {
+    "targetsAttempted": 10,
+    "targetsAcquired": 9,
+    "clRequests": 20,
+    "authoritiesAdded": 9,
+    "newlyResolved": 94,
+    "resolutionsPerClRequest": 4.7,
+    "resolutionsPerAuthority": 10.44,
+    "classification": "MIXED",
+    "classificationNote": "4.70/req below prior 6.45 and pilot 13.21; exact edge unlock on 9/9 acquired; 2 CL wasted on 573 U.S. 373 no_verified_search_match; per-target unlocks 9-11."
+  },
+  "citationsBefore": {
+    "extracted": 7421,
+    "resolved": 520,
+    "unresolved": 6901,
+    "targetAbsent": 6901,
+    "resolutionRatePct": 7.01
+  },
+  "citationsAfterA2Reresolve": {
+    "extracted": 7421,
+    "resolved": 614,
+    "unresolved": 6807,
+    "targetAbsent": 6807,
+    "resolutionRatePct": 8.27
+  },
+  "citationsFinal": {
+    "extracted": 7492,
+    "resolved": 619,
+    "unresolved": 6873,
+    "targetAbsent": 6873,
+    "resolutionRatePct": 8.26
+  },
+  "improvementA2": {
+    "newlyResolved": 94,
+    "targetAbsentReduction": 94,
+    "resolutionRateIncreasePctPoints": 1.26,
+    "resolutionsPerClRequest": 4.7,
+    "resolutionsPerAuthority": 10.44
+  },
+  "next": {
+    "jurisdiction": "CA",
+    "court": "cal",
+    "count": 37,
+    "checkpoint": null,
+    "jobLifecycle": "READY_FIRST_START"
+  }
+}

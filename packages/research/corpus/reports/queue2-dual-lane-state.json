@@ -5,27 +5,27 @@
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
   "currentLane": "STOPPED",
-  "updatedAt": "2026-09-28T19:11:37.059Z",
+  "updatedAt": "2026-09-28T22:15:18.644Z",
   "laneA": {
-    "court": "del",
-    "jurisdiction": "DE",
-    "count": 29,
-    "qualifyingCaseCount": 29,
-    "clCaseCount": 27,
-    "authorityCount": 55,
+    "court": "cal",
+    "jurisdiction": "CA",
+    "count": 37,
+    "qualifyingCaseCount": 37,
+    "clCaseCount": 35,
+    "authorityCount": 58,
     "target": 45,
-    "checkpoint": "cl-opinion-11400894",
-    "cursor": "cl-opinion-11400894",
-    "lastSuccessfulExternalId": "cl-opinion-11400894",
-    "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=del&cursor=cD0xMTQwMDg5NA%3D%3D&order_by=-id&page_size=8",
-    "targetStatus": "PARTIAL",
-    "jobStatus": "quota_paused",
-    "jobLifecycle": "PAUSED_RESUMABLE",
+    "checkpoint": null,
+    "cursor": null,
+    "lastSuccessfulExternalId": null,
+    "nextPageUrl": null,
+    "targetStatus": "READY",
+    "jobStatus": "ready",
+    "jobLifecycle": "READY_FIRST_START",
     "mappingStatus": "VERIFIED",
-    "lastSuccessfulAt": "2026-09-28T19:11:37.048Z",
-    "priorCompletedCourt": "va",
-    "priorCompletedCheckpoint": "cl-opinion-10751405",
-    "lock": null
+    "priorCompletedCourt": "minn",
+    "priorCompletedCheckpoint": "cl-opinion-11171686",
+    "lock": null,
+    "lastSuccessfulAt": "2026-09-28T22:15:18.644Z"
   },
   "quota": {
     "windows": {
@@ -753,7 +753,9 @@
     "wva",
     "mo",
     "nj",
-    "va"
+    "va",
+    "del",
+    "minn"
   ],
   "completedCourtEvidence": {
     "wis": {
@@ -1593,7 +1595,7 @@
       "mappingStatus": "VERIFIED",
       "reconciledAt": "2026-09-28T18:32:13.150Z",
       "completedAt": "2026-09-28T18:32:13.150Z",
-      "source": "canonical_manifest_reconciliation",
+      "source": "manual",
       "evidenceSource": "canonical_manifest_and_durable_state"
     },
     "mo": {
@@ -1656,6 +1658,48 @@
       "mappingStatus": "VERIFIED",
       "reconciledAt": "2026-09-28T19:11:37.048Z",
       "completedAt": "2026-09-28T19:11:37.048Z",
+      "source": "manual",
+      "evidenceSource": "canonical_manifest_and_durable_state"
+    },
+    "del": {
+      "jurisdiction": "DE",
+      "court": "del",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "qualifyingCaseCount": 45,
+      "count": 45,
+      "cases": 45,
+      "clCases": 43,
+      "target": 45,
+      "checkpoint": "cl-opinion-11384699",
+      "cursor": null,
+      "lastSuccessfulExternalId": "cl-opinion-11384699",
+      "nextPageUrl": null,
+      "lastSuccessfulAt": null,
+      "jobStatus": "completed",
+      "mappingStatus": "VERIFIED",
+      "reconciledAt": "2026-09-28T22:12:39.820Z",
+      "completedAt": "2026-09-28T22:12:39.820Z",
+      "source": "manual",
+      "evidenceSource": "canonical_manifest_and_durable_state"
+    },
+    "minn": {
+      "jurisdiction": "MN",
+      "court": "minn",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "qualifyingCaseCount": 51,
+      "count": 51,
+      "cases": 51,
+      "clCases": 51,
+      "target": 45,
+      "checkpoint": "cl-opinion-11171686",
+      "cursor": null,
+      "lastSuccessfulExternalId": "cl-opinion-11171686",
+      "nextPageUrl": null,
+      "lastSuccessfulAt": null,
+      "jobStatus": "completed",
+      "mappingStatus": "VERIFIED",
+      "reconciledAt": "2026-09-28T22:12:39.820Z",
+      "completedAt": "2026-09-28T22:12:39.820Z",
       "source": "manual",
       "evidenceSource": "canonical_manifest_and_durable_state"
     }
@@ -2600,13 +2644,13 @@
     "recovered": true
   },
   "dbWriteReady": true,
-  "laneAStatus": "READY",
-  "stateConvergedAt": "2026-09-28T19:11:37.059Z",
+  "laneAStatus": "IDLE",
+  "stateConvergedAt": "2026-09-28T22:15:18.644Z",
   "stateConvergence": {
-    "fromCourt": "del",
-    "toCourt": "del",
+    "fromCourt": "cal",
+    "toCourt": "cal",
     "advanced": false,
-    "completedEvidenceCount": 43
+    "completedEvidenceCount": 45
   },
   "firstRecoveryCanaryPending": false,
   "healthyIdle": {
@@ -2705,5 +2749,6 @@
     "detail": null
   },
   "lock": null,
-  "generatedAt": "2026-09-28T18:32:13.150Z"
+  "generatedAt": "2026-09-28T18:32:13.150Z",
+  "transition": "NONE"
 }

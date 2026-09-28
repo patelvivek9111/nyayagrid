@@ -8,22 +8,22 @@
   "runtimeState": "STOPPED",
   "freshness": "STOPPED",
   "currentTask": "NONE",
-  "currentCourt": "del",
-  "currentJurisdiction": "DE",
-  "jurisdiction": "DE",
-  "currentCount": 29,
+  "currentCourt": "cal",
+  "currentJurisdiction": "CA",
+  "jurisdiction": "CA",
+  "currentCount": 37,
   "targetCount": 45,
-  "checkpoint": "cl-opinion-11400894",
-  "cursor": "cl-opinion-11400894",
-  "lastSuccessfulExternalId": "cl-opinion-11400894",
-  "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=del&cursor=cD0xMTQwMDg5NA%3D%3D&order_by=-id&page_size=8",
-  "lastSuccessfulAt": "2026-09-28T19:11:37.048Z",
+  "checkpoint": null,
+  "cursor": null,
+  "lastSuccessfulExternalId": null,
+  "nextPageUrl": null,
+  "lastSuccessfulAt": "2026-09-28T22:15:18.644Z",
   "runner": "staging-cl-batch-job",
   "mappingStatus": "VERIFIED",
   "manifestVersion": 66,
-  "jobStatus": "quota_paused",
+  "jobStatus": "ready",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastUpdatedAt": "2026-09-28T19:11:37.048Z",
+  "lastUpdatedAt": "2026-09-28T22:15:18.644Z",
   "lastHeartbeatAt": "2026-09-27T18:00:10.679Z",
   "nextQuotaCheckAt": "2026-09-27T18:10:09.485Z",
   "network": {
@@ -35,36 +35,35 @@
     "routineAiTokens": 0
   },
   "quota": {
-    "minuteRemaining": null,
-    "hourRemaining": null,
-    "dayRemaining": null,
+    "minuteRemaining": 30,
+    "hourRemaining": 293,
+    "dayRemaining": 1148,
     "safeRequests": 0,
-    "lastProbeAt": "2026-09-28T18:39:23.000Z",
+    "lastProbeAt": "2026-09-27T18:00:09.485Z",
     "hard429Count": 0,
     "dayResetAt": "2026-09-28T13:16:37.312888+00:00",
     "quotaStateObservedAt": "2026-09-27T18:00:09.485Z",
     "quotaStateSource": "probe.limits",
     "quotaStateConfidence": "AUTHORITATIVE_API",
     "quotaStateAgeMs": 0,
-    "executionAuthority": false,
-    "freshness": "STALE",
-    "reason": "HOUR_SAFETY_FLOOR_DE_PARTIAL",
+    "executionAuthority": true,
+    "freshness": "FRESH",
+    "reason": null,
     "historicalObservation": {
       "minuteRemaining": 30,
-      "hourRemaining": 265,
-      "dayRemaining": 219,
-      "lastProbeAt": "2026-09-28T18:39:23.000Z",
-      "sessionProductiveCl": 194
+      "hourRemaining": 293,
+      "dayRemaining": 1148,
+      "lastProbeAt": "2026-09-27T18:00:09.485Z"
     }
   },
   "today": {
-    "clRequests": 194,
-    "clAuthoritiesAdded": 89,
+    "clRequests": 0,
+    "clAuthoritiesAdded": 0,
     "nonClAuthoritiesAdded": 6,
-    "totalAuthoritiesAdded": 89,
-    "casesAdded": 89,
-    "citationEdgesResolved": 129,
-    "jurisdictionsProcessed": 4,
+    "totalAuthoritiesAdded": 6,
+    "casesAdded": 0,
+    "citationEdgesResolved": 44,
+    "jurisdictionsProcessed": 0,
     "laneASeconds": 0,
     "laneBSeconds": 36,
     "idleSeconds": 0,
@@ -72,12 +71,13 @@
     "waitingNetworkSeconds": 0
   },
   "corpus": {
-    "authorities": 3844,
-    "cases": 2527,
-    "clCases": 2482,
+    "authorities": 3893,
+    "cases": 2576,
+    "clCases": 2531,
     "statutes": 904,
     "regulations": 158,
-    "rules": 254
+    "rules": 254,
+    "authorityGateDeficit": null
   },
   "health": {
     "retrieval": "ok",
@@ -95,11 +95,11 @@
   "worker": "STOPPED",
   "lock": null,
   "transition": "NONE",
-  "qualifyingCaseCount": 29,
-  "depthStatus": "PARTIAL",
-  "jobLifecycle": "PAUSED_RESUMABLE",
-  "nextCourt": "del",
-  "nextJurisdiction": "DE",
+  "qualifyingCaseCount": 37,
+  "depthStatus": "READY",
+  "jobLifecycle": "READY_FIRST_START",
+  "nextCourt": "cal",
+  "nextJurisdiction": "CA",
   "completedCourts": [
     "wis",
     "mich",
@@ -143,9 +143,11 @@
     "wva",
     "mo",
     "nj",
-    "va"
+    "va",
+    "del",
+    "minn"
   ],
-  "completedCourtEvidenceCount": 43,
+  "completedCourtEvidenceCount": 45,
   "execution": {
     "databaseWriteReady": true,
     "blockReason": null,
@@ -160,8 +162,8 @@
     "clRequests": 0
   },
   "citations": {
-    "extracted": 7415,
-    "resolved": 519,
-    "targetAbsent": 6896
+    "extracted": 7492,
+    "resolved": 619,
+    "targetAbsent": 6873
   }
 }

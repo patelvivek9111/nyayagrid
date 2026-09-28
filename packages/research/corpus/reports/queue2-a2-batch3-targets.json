@@ -1,0 +1,83 @@
+﻿[
+  {
+    "citation": "554 U.S. 570",
+    "authorityId": "a472eea5-d8a0-439c-9bae-b225e79db19b",
+    "clRequests": 2,
+    "expectedEdges": 11,
+    "actualResolved": 11,
+    "title": "District of Columbia v. Heller"
+  },
+  {
+    "citation": "504 U.S. 555",
+    "authorityId": "fd732538-090e-4952-9fab-10913ec36ad2",
+    "clRequests": 2,
+    "expectedEdges": 11,
+    "actualResolved": 11,
+    "title": "Lujan v. Defenders of Wildlife"
+  },
+  {
+    "citation": "541 U.S. 36",
+    "authorityId": "747d714c-788d-4b10-b05f-9e7f3c172724",
+    "clRequests": 2,
+    "expectedEdges": 11,
+    "actualResolved": 11,
+    "title": "Crawford v. Washington"
+  },
+  {
+    "citation": "443 U.S. 595",
+    "authorityId": "43029392-0cc7-4b9e-8fc6-d42195510ac8",
+    "clRequests": 2,
+    "expectedEdges": 11,
+    "actualResolved": 11,
+    "title": "Jones v. Wolf"
+  },
+  {
+    "citation": "426 U.S. 696",
+    "authorityId": "4412a8c1-e460-4ea9-842a-b02a1bb016a8",
+    "clRequests": 2,
+    "expectedEdges": 11,
+    "actualResolved": 11,
+    "title": "Serbian Eastern Orthodox Diocese for United States and Canada v. Milivojevich"
+  },
+  {
+    "citation": "577 U.S. 190",
+    "authorityId": "1f9076e2-ca51-4757-9eed-e2d2b5408583",
+    "clRequests": 2,
+    "expectedEdges": 10,
+    "actualResolved": 10,
+    "title": "Montgomery v. Louisiana"
+  },
+  {
+    "citation": "536 U.S. 304",
+    "authorityId": "b2eb3480-8be9-4079-bbb8-1d9f852287b2",
+    "clRequests": 2,
+    "expectedEdges": 10,
+    "actualResolved": 10,
+    "title": "Atkins v. Virginia"
+  },
+  {
+    "citation": "395 U.S. 238",
+    "authorityId": "e2b223a0-ee34-4aa1-8c3b-572b6933784d",
+    "clRequests": 2,
+    "expectedEdges": 10,
+    "actualResolved": 10,
+    "title": "Boykin v. Alabama"
+  },
+  {
+    "citation": "555 U.S. 7",
+    "authorityId": "4d017135-d4ad-42dd-8828-1455324a67fb",
+    "clRequests": 2,
+    "expectedEdges": 9,
+    "actualResolved": 9,
+    "title": "Winter v. Natural Resources Defense Council, Inc."
+  },
+  {
+    "citation": "573 U.S. 373",
+    "authorityId": null,
+    "clRequests": 2,
+    "expectedEdges": 9,
+    "actualResolved": 0,
+    "title": null,
+    "status": "skipped_no_verified_search_match"
+  }
+]

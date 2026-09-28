@@ -3,8 +3,8 @@
   "queue": "#2",
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
-  "version": 76,
-  "generatedAt": "2026-09-28T19:13:38.606Z",
+  "version": 81,
+  "generatedAt": "2026-09-28T22:15:54.510Z",
   "source": {
     "type": "live_db_snapshot",
     "snapshotPath": "packages/research/corpus/reports/queue2-lane-a-corpus-snapshot.json",
@@ -1187,37 +1187,6 @@
       "score": 449
     },
     {
-      "jurisdiction": "MA",
-      "name": "Massachusetts",
-      "preferredCourts": [
-        "mass"
-      ],
-      "currentAuthorities": 64,
-      "currentCases": 37,
-      "clCases": 35,
-      "highCourtCount": 22,
-      "intermediateAppellateCount": 15,
-      "earliestYear": 2002,
-      "latestYear": 2026,
-      "targetCases": 45,
-      "targetDelta": 8,
-      "missingCourtLayers": [],
-      "historicalGaps": [],
-      "doctrinalGaps": [],
-      "citationDemand": 86,
-      "citationTargetAbsent": 86,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 37,
-      "historicalGapScore": 10,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "VERIFIED",
-      "status": "READY",
-      "autonomousIngestBlocked": false,
-      "dataQuality": "LIVE_DB",
-      "score": 433
-    },
-    {
       "jurisdiction": "ID",
       "name": "Idaho",
       "preferredCourts": [
@@ -1259,15 +1228,15 @@
       "preferredCourts": [
         "minn"
       ],
-      "currentAuthorities": 54,
-      "currentCases": 27,
-      "clCases": 27,
-      "highCourtCount": 27,
+      "currentAuthorities": 78,
+      "currentCases": 51,
+      "clCases": 51,
+      "highCourtCount": 51,
       "intermediateAppellateCount": 0,
       "earliestYear": 2025,
       "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 18,
+      "targetDelta": 0,
       "missingCourtLayers": [
         "intermediate"
       ],
@@ -1282,12 +1251,43 @@
       "authorityDeficit": 47,
       "historicalGapScore": 40,
       "doctrinalGapScore": 5,
+      "checkpoint": "cl-opinion-11171686",
+      "mappingStatus": "VERIFIED",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 422
+    },
+    {
+      "jurisdiction": "MA",
+      "name": "Massachusetts",
+      "preferredCourts": [
+        "mass"
+      ],
+      "currentAuthorities": 64,
+      "currentCases": 37,
+      "clCases": 35,
+      "highCourtCount": 37,
+      "intermediateAppellateCount": 15,
+      "earliestYear": 2002,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 8,
+      "missingCourtLayers": [],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 86,
+      "citationTargetAbsent": 86,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 32,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
       "checkpoint": null,
       "mappingStatus": "VERIFIED",
       "status": "READY",
       "autonomousIngestBlocked": false,
       "dataQuality": "LIVE_DB",
-      "score": 422
+      "score": 413
     },
     {
       "jurisdiction": "NJ",
@@ -1389,37 +1389,6 @@
       "score": 384
     },
     {
-      "jurisdiction": "CA",
-      "name": "California",
-      "preferredCourts": [
-        "cal"
-      ],
-      "currentAuthorities": 58,
-      "currentCases": 37,
-      "clCases": 35,
-      "highCourtCount": 22,
-      "intermediateAppellateCount": 15,
-      "earliestYear": 1968,
-      "latestYear": 2026,
-      "targetCases": 45,
-      "targetDelta": 8,
-      "missingCourtLayers": [],
-      "historicalGaps": [],
-      "doctrinalGaps": [],
-      "citationDemand": 59,
-      "citationTargetAbsent": 59,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 43,
-      "historicalGapScore": 10,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "VERIFIED",
-      "status": "READY",
-      "autonomousIngestBlocked": false,
-      "dataQuality": "LIVE_DB",
-      "score": 376
-    },
-    {
       "jurisdiction": "VA",
       "name": "Virginia",
       "preferredCourts": [
@@ -1451,37 +1420,6 @@
       "autonomousIngestBlocked": true,
       "dataQuality": "LIVE_DB",
       "score": 371
-    },
-    {
-      "jurisdiction": "FL",
-      "name": "Florida",
-      "preferredCourts": [
-        "fla"
-      ],
-      "currentAuthorities": 63,
-      "currentCases": 37,
-      "clCases": 35,
-      "highCourtCount": 22,
-      "intermediateAppellateCount": 15,
-      "earliestYear": 2004,
-      "latestYear": 2026,
-      "targetCases": 45,
-      "targetDelta": 8,
-      "missingCourtLayers": [],
-      "historicalGaps": [],
-      "doctrinalGaps": [],
-      "citationDemand": 63,
-      "citationTargetAbsent": 63,
-      "requestEfficiency": 2.3,
-      "authorityDeficit": 38,
-      "historicalGapScore": 10,
-      "doctrinalGapScore": 5,
-      "checkpoint": null,
-      "mappingStatus": "VERIFIED",
-      "status": "READY",
-      "autonomousIngestBlocked": false,
-      "dataQuality": "LIVE_DB",
-      "score": 368
     },
     {
       "jurisdiction": "RI",
@@ -1656,17 +1594,17 @@
       "score": 361
     },
     {
-      "jurisdiction": "IL",
-      "name": "Illinois",
+      "jurisdiction": "CA",
+      "name": "California",
       "preferredCourts": [
-        "ill"
+        "cal"
       ],
-      "currentAuthorities": 62,
+      "currentAuthorities": 58,
       "currentCases": 37,
       "clCases": 35,
-      "highCourtCount": 21,
+      "highCourtCount": 37,
       "intermediateAppellateCount": 15,
-      "earliestYear": 1986,
+      "earliestYear": 1968,
       "latestYear": 2026,
       "targetCases": 45,
       "targetDelta": 8,
@@ -1676,7 +1614,7 @@
       "citationDemand": 59,
       "citationTargetAbsent": 59,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 39,
+      "authorityDeficit": 38,
       "historicalGapScore": 10,
       "doctrinalGapScore": 5,
       "checkpoint": null,
@@ -1684,7 +1622,7 @@
       "status": "READY",
       "autonomousIngestBlocked": false,
       "dataQuality": "LIVE_DB",
-      "score": 360
+      "score": 356
     },
     {
       "jurisdiction": "NV",
@@ -1718,6 +1656,68 @@
       "autonomousIngestBlocked": true,
       "dataQuality": "LIVE_DB",
       "score": 353
+    },
+    {
+      "jurisdiction": "FL",
+      "name": "Florida",
+      "preferredCourts": [
+        "fla"
+      ],
+      "currentAuthorities": 63,
+      "currentCases": 37,
+      "clCases": 35,
+      "highCourtCount": 37,
+      "intermediateAppellateCount": 15,
+      "earliestYear": 2004,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 8,
+      "missingCourtLayers": [],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 63,
+      "citationTargetAbsent": 63,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 33,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 348
+    },
+    {
+      "jurisdiction": "IL",
+      "name": "Illinois",
+      "preferredCourts": [
+        "ill"
+      ],
+      "currentAuthorities": 62,
+      "currentCases": 37,
+      "clCases": 35,
+      "highCourtCount": 36,
+      "intermediateAppellateCount": 15,
+      "earliestYear": 1986,
+      "latestYear": 2026,
+      "targetCases": 45,
+      "targetDelta": 9,
+      "missingCourtLayers": [],
+      "historicalGaps": [],
+      "doctrinalGaps": [],
+      "citationDemand": 59,
+      "citationTargetAbsent": 59,
+      "requestEfficiency": 2.3,
+      "authorityDeficit": 36,
+      "historicalGapScore": 10,
+      "doctrinalGapScore": 5,
+      "checkpoint": null,
+      "mappingStatus": "VERIFIED",
+      "status": "READY",
+      "autonomousIngestBlocked": false,
+      "dataQuality": "LIVE_DB",
+      "score": 348
     },
     {
       "jurisdiction": "AK",
@@ -2148,15 +2148,15 @@
       "preferredCourts": [
         "del"
       ],
-      "currentAuthorities": 55,
-      "currentCases": 29,
-      "clCases": 27,
-      "highCourtCount": 29,
+      "currentAuthorities": 71,
+      "currentCases": 45,
+      "clCases": 43,
+      "highCourtCount": 45,
       "intermediateAppellateCount": 0,
       "earliestYear": 1976,
       "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 16,
+      "targetDelta": 0,
       "missingCourtLayers": [
         "intermediate"
       ],
@@ -2168,9 +2168,9 @@
       "authorityDeficit": 53,
       "historicalGapScore": 10,
       "doctrinalGapScore": 5,
-      "checkpoint": "cl-opinion-11400894",
+      "checkpoint": "cl-opinion-11384699",
       "mappingStatus": "VERIFIED",
-      "status": "PARTIAL",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
       "autonomousIngestBlocked": false,
       "dataQuality": "LIVE_DB",
       "score": 266
@@ -2184,7 +2184,7 @@
       "currentAuthorities": 65,
       "currentCases": 37,
       "clCases": 35,
-      "highCourtCount": 22,
+      "highCourtCount": 37,
       "intermediateAppellateCount": 15,
       "earliestYear": 1916,
       "latestYear": 2026,
@@ -2196,7 +2196,7 @@
       "citationDemand": 11,
       "citationTargetAbsent": 11,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 36,
+      "authorityDeficit": 31,
       "historicalGapScore": 10,
       "doctrinalGapScore": 5,
       "checkpoint": null,
@@ -2204,7 +2204,7 @@
       "status": "READY",
       "autonomousIngestBlocked": false,
       "dataQuality": "LIVE_DB",
-      "score": 204
+      "score": 184
     },
     {
       "jurisdiction": "PA",
@@ -2215,7 +2215,7 @@
       "currentAuthorities": 64,
       "currentCases": 38,
       "clCases": 35,
-      "highCourtCount": 22,
+      "highCourtCount": 38,
       "intermediateAppellateCount": 16,
       "earliestYear": 1983,
       "latestYear": 2026,
@@ -2227,7 +2227,7 @@
       "citationDemand": 8,
       "citationTargetAbsent": 8,
       "requestEfficiency": 2.3,
-      "authorityDeficit": 37,
+      "authorityDeficit": 30,
       "historicalGapScore": 10,
       "doctrinalGapScore": 5,
       "checkpoint": null,
@@ -2235,7 +2235,7 @@
       "status": "READY",
       "autonomousIngestBlocked": false,
       "dataQuality": "LIVE_DB",
-      "score": 199
+      "score": 171
     },
     {
       "jurisdiction": "CO",
