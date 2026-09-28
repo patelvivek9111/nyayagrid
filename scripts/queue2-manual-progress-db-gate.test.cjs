@@ -85,8 +85,8 @@ test("manual completed courts are skipped and Vermont is next on the live manife
     now: NOW,
     executing: false,
   });
-  assert.equal(plan.nextCourt, "ga");
-  assert.equal(plan.state.laneA.jurisdiction, "GA");
+  assert.equal(plan.nextCourt, "ohio");
+  assert.equal(plan.state.laneA.jurisdiction, "OH");
   assert.ok(plan.state.laneA.count >= 20 && plan.state.laneA.count <= 45, `count=${plan.state.laneA.count}`);
   assert.equal(plan.state.laneA.target, 45);
   assert.equal(plan.state.laneA.mappingStatus, "VERIFIED");
@@ -303,7 +303,7 @@ test("DB recovery clears the external block, keeps Vermont, and does not trust s
   assert.equal(recovered.state.databaseBlock.classification, "RECOVERED");
   assert.equal(recovered.state.databaseBlock.recoveredFrom, DATABASE_QUOTA_BLOCKED);
   assert.equal(recovered.allowCourtListener, true);
-  assert.equal(recovered.nextCourt, "ga");
+  assert.equal(recovered.nextCourt, "ohio");
   assert.ok(
     recovered.state.laneA.count >= 20 && recovered.state.laneA.count <= 45,
     `count=${recovered.state.laneA.count}`,

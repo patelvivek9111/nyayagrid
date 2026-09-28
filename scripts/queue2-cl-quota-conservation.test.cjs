@@ -347,7 +347,7 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
       state.currentLane === "WAIT",
     `currentLane=${state.currentLane}`,
   );
-  assert.equal(state.laneA.court, "ga");
+  assert.equal(state.laneA.court, "ohio");
   assert.ok(state.laneA.count >= 20 && state.laneA.count <= 45, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
   assert.ok(
@@ -366,6 +366,8 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
   assert.equal(state.completedCourtEvidence.ala.checkpoint, "cl-opinion-11271527");
   assert.equal(state.completedCourtEvidence.ky.checkpoint, "cl-opinion-11262760");
   assert.equal(state.completedCourtEvidence.conn.checkpoint, "cl-opinion-11299467");
+  assert.equal(state.completedCourtEvidence.ga.checkpoint, "cl-opinion-11335741");
+  assert.equal(state.completedCourtEvidence.md.checkpoint, "cl-opinion-11246774");
   assert.equal(state.completedCourtEvidence.vt.checkpoint, "cl-opinion-11197326");
   assert.equal(state.humanReview?.required, false);
   assert.ok(!((state.humanReview?.reasons || []).includes("UNKNOWN_DB_FAILURE")));

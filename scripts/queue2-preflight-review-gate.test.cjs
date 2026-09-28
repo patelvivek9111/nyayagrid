@@ -149,7 +149,7 @@ test("E: READY first-start MI is not treated as CL partial missing checkpoint", 
 
 test("F: VT READY_FIRST_START with SC completion evidence passes human-review gate", () => {
   const state = restoreState(JSON.parse(fs.readFileSync(STATE_PATH, "utf8")));
-  assert.equal(state.laneA.court, "ga");
+  assert.equal(state.laneA.court, "ohio");
   assert.ok(state.laneA.count >= 20 && state.laneA.count <= 45, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
   assert.ok(
@@ -171,6 +171,8 @@ test("F: VT READY_FIRST_START with SC completion evidence passes human-review ga
   assert.equal(state.completedCourtEvidence.ala.checkpoint, "cl-opinion-11271527");
   assert.equal(state.completedCourtEvidence.ky.checkpoint, "cl-opinion-11262760");
   assert.equal(state.completedCourtEvidence.conn.checkpoint, "cl-opinion-11299467");
+  assert.equal(state.completedCourtEvidence.ga.checkpoint, "cl-opinion-11335741");
+  assert.equal(state.completedCourtEvidence.md.checkpoint, "cl-opinion-11246774");
   assert.equal(state.completedCourtEvidence.vt.checkpoint, "cl-opinion-11197326");
   const pf = runPreflight({
     state,

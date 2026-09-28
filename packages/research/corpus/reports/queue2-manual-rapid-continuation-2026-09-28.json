@@ -1,0 +1,61 @@
+{
+  "classification": "MANUAL_QUEUE2_RAPID_INGEST_CONTINUATION",
+  "generatedAt": "2026-09-28T14:10:30.000Z",
+  "queue": { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", "transition": "NONE" },
+  "worker": "STOPPED",
+  "start": {
+    "jurisdiction": "GA",
+    "qualifying": 20,
+    "checkpoint": null,
+    "jobCursor": "cl-opinion-11349677",
+    "quota": { "minute": 30, "hour": 300, "day": 624 }
+  },
+  "end": {
+    "jurisdiction": "MD",
+    "qualifying": 46,
+    "authoritiesAdded": 127,
+    "checkpoint": "cl-opinion-11246774",
+    "nextJurisdiction": "OH",
+    "nextCourt": "ohio",
+    "nextQualifying": 20
+  },
+  "jurisdictions": [
+    { "j": "GA", "court": "ga", "start": 20, "end": 46, "added": 26, "clRequests": 56, "checkpoint": "cl-opinion-11335741" },
+    { "j": "HI", "court": "haw", "start": 20, "end": 45, "added": 25, "clRequests": 54, "checkpoint": "cl-opinion-11404005" },
+    { "j": "IN", "court": "ind", "start": 20, "end": 45, "added": 25, "clRequests": 58, "checkpoint": "cl-opinion-10770025" },
+    { "j": "KS", "court": "kan", "start": 20, "end": 45, "added": 25, "clRequests": 54, "checkpoint": "cl-opinion-11278590" },
+    { "j": "MD", "court": "md", "start": 20, "end": 46, "added": 26, "clRequests": 57, "checkpoint": "cl-opinion-11246774" }
+  ],
+  "corpus": {
+    "authorities": "3461 → 3588",
+    "cases": "2144 → 2271",
+    "clCases": "2099 → 2226",
+    "statutes": 904,
+    "regulations": 158,
+    "rules": 254,
+    "chunks": 53213,
+    "embeddings": 53213,
+    "duplicateSourceIds": 0,
+    "orphanCount": 0
+  },
+  "citations": { "extracted": "6751 → 6969", "resolved": "190 → 192" },
+  "quota": {
+    "start": { "minute": 30, "hour": 300, "day": 624 },
+    "endAccounting": {
+      "productive": 279,
+      "estimatedHourRemaining": 21,
+      "note": "Day window reset mid-session; hour accounting uses 300 − 279"
+    },
+    "totalCl": 280,
+    "productive": 279,
+    "probes": 1,
+    "retries": 0,
+    "wasted": 0,
+    "hard429": 0,
+    "requestsPerAuthority": 2.2
+  },
+  "nextJurisdiction": "OH",
+  "nextCourt": "ohio",
+  "safeToContinue": false,
+  "stopReason": "hour remaining ~21 < ~54 for next full jurisdiction (OH)"
+}
