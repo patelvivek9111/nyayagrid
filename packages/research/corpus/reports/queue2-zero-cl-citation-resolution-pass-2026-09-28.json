@@ -1,12 +1,47 @@
 {
-  "classification": "QUEUE2_CITATION_TARGET_PRIORITY_SCORECARD",
-  "generatedAt": "2026-09-28T20:01:38.934Z",
+  "classification": "MANUAL_QUEUE2_ZERO_CL_CITATION_RESOLUTION_PASS",
+  "generatedAt": "2026-09-28T20:01:38.931Z",
   "courtListenerHttpCalls": 0,
+  "result": "PASS",
+  "citationsBefore": {
+    "extracted": 7415,
+    "resolved": 519,
+    "unresolved": 6896,
+    "targetAbsent": 6896,
+    "malformed": 0,
+    "presentButNotMatched": 0,
+    "ambiguous": 0,
+    "resolutionRatePct": 7
+  },
+  "resolvePass": {
+    "newlyResolved": 0,
+    "edgeNormUpdated": 45,
+    "parallelAliasWrites": 10,
+    "ambiguous": 0,
+    "why": "No new exact-alias matches against current corpus"
+  },
+  "presentButNotMatched": {
+    "categoryA_definitelyPresentMatchable": 0,
+    "categoryB_ambiguous": 0,
+    "categoryC_notPresent": 6896,
+    "vrpOnlyPotentialGap": 0,
+    "catAExamples": [],
+    "vrpOnlyExamples": [],
+    "verdict": "NO_DETERMINISTIC_PRESENT_BUT_UNMATCHED"
+  },
+  "citationsAfter": {
+    "extracted": 7415,
+    "resolved": 519,
+    "unresolved": 6896,
+    "targetAbsent": 6896,
+    "resolutionRatePct": 7
+  },
   "improvement": {
     "newlyResolved": 0,
     "targetAbsentReduction": 0,
     "resolutionRateDeltaPctPoints": 0
   },
+  "verdict": "Current corpus offers no further deterministic resolution gain without adding missing authorities.",
   "nextA1": {
     "jurisdiction": "DE",
     "court": "del",
@@ -218,6 +253,23 @@
       "estimatedClCost": "~2-3 req/authority"
     }
   ],
+  "expectedA2EdgesTop20": 156,
+  "estimatedA2ClCostTop20": "~40-60 requests (20 targets * ~2-3)",
+  "integrity": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "corpus": {
+      "authorities": 3844,
+      "cases": 2527,
+      "cl_cases": 2482
+    },
+    "chunks": {
+      "chunks": 59852,
+      "embeddings": 59852,
+      "missing_embeddings": 0
+    }
+  },
   "familyAbsent": {
     "us_reports": 3296,
     "federal_rules": 31,
@@ -226,5 +278,18 @@
     "federal_supplement": 266,
     "malformed_partial": 1,
     "cfr": 42
+  },
+  "zeroClGating": {
+    "US_REPORTS_NON_CL_INTAKE": "gated by QUEUE2_LANE_B_ALLOW_MUTATION",
+    "USC_DEPTH": "gated allowMutation",
+    "CFR_DEPTH": "gated allowMutation",
+    "FEDERAL_RULES_DEPTH": "gated allowMutation",
+    "mutatedThisRun": false
+  },
+  "queue": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
   }
 }
