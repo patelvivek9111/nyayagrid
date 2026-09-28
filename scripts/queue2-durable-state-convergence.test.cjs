@@ -47,8 +47,8 @@ test("stale completed laneA converges to VT without fabricating a checkpoint", (
     now: NOW,
   });
   assert.equal(result.ok, true);
-  assert.equal(result.state.laneA.court, "wva");
-  assert.equal(result.state.laneA.jurisdiction, "WV");
+  assert.equal(result.state.laneA.court, "mo");
+  assert.equal(result.state.laneA.jurisdiction, "MO");
   assert.ok(
     result.state.laneA.qualifyingCaseCount >= 20 && result.state.laneA.qualifyingCaseCount <= 45,
     `qualifyingCaseCount=${result.state.laneA.qualifyingCaseCount}`,
@@ -136,7 +136,7 @@ test("manual completion recognized and next target selected", () => {
     neonHold: loadNeonHoldArtifact(),
     now: NOW,
   });
-  assert.equal(result.state.laneA.court, "wva");
+  assert.equal(result.state.laneA.court, "mo");
   assert.ok(result.state.completedCourts.includes("sc"));
   assert.equal(result.state.completedCourtEvidence.mich.source, "manual");
 });
@@ -154,8 +154,8 @@ test("status current target matches state; DB block separated from app health; q
     corpus: { authorities: 3208, cases: 1891, clCases: 1846 },
     health: { databaseConnectivity: "unknown", retrieval: "ok" },
   });
-  assert.equal(status.currentCourt, "wva");
-  assert.equal(status.currentJurisdiction, "WV");
+  assert.equal(status.currentCourt, "mo");
+  assert.equal(status.currentJurisdiction, "MO");
   assert.ok(
     status.qualifyingCaseCount >= 20 && status.qualifyingCaseCount <= 45,
     `qualifyingCaseCount=${status.qualifyingCaseCount}`,
@@ -255,8 +255,8 @@ test("atomic write; reconciliation failure leaves old files intact", () => {
   assert.equal(ok.persisted, true);
   const written = JSON.parse(fs.readFileSync(statePath, "utf8"));
   const status = JSON.parse(fs.readFileSync(statusPath, "utf8"));
-  assert.equal(written.laneA.court, "wva");
-  assert.equal(status.currentCourt, "wva");
+  assert.equal(written.laneA.court, "mo");
+  assert.equal(status.currentCourt, "mo");
   assert.equal(ok.clRequests, 0);
   assert.equal(ok.childLaunches, 0);
   assert.equal(ok.mutations, 0);
@@ -281,7 +281,7 @@ test("dry-run reconciliation makes 0 CL calls / children / mutations", () => {
   assert.equal(dry.ok, true);
   assert.equal(dry.persisted, false);
   assert.equal(dry.dryRun, true);
-  assert.equal(dry.state.laneA.court, "wva");
+  assert.equal(dry.state.laneA.court, "mo");
   assert.equal(fs.existsSync(statusPath), false);
   assert.equal(dry.clRequests, 0);
   assert.equal(dry.childLaunches, 0);

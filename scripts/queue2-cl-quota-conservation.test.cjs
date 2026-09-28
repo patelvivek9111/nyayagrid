@@ -347,7 +347,7 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
       state.currentLane === "WAIT",
     `currentLane=${state.currentLane}`,
   );
-  assert.equal(state.laneA.court, "wva");
+  assert.equal(state.laneA.court, "mo");
   assert.ok(state.laneA.count >= 20 && state.laneA.count <= 45, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
   assert.ok(

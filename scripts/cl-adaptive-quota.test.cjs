@@ -233,9 +233,11 @@ test("N: WI complete in durable evidence; active court advanced", () => {
   assert.ok(state.completedCourts.includes("wis"));
   assert.equal(state.completedCourtEvidence.wis.count, 45);
   assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
-  assert.equal(state.laneA.court, "wva");
+  assert.equal(state.laneA.court, "mo");
   assert.ok(state.laneA.count >= 20 && state.laneA.count <= 45, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
+  assert.ok(state.completedCourts.includes("wva"));
+  assert.equal(state.completedCourtEvidence.wva.checkpoint, "cl-opinion-11347349");
 });
 
 test("O: AI calls remain 0 in adaptive config module surface", () => {

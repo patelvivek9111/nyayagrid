@@ -1,0 +1,135 @@
+{
+  "classification": "MANUAL_QUEUE2_CITATION_RESOLUTION_IMPROVEMENT_PILOT",
+  "generatedAt": "2026-09-28T18:29:30.000Z",
+  "result": "PASS",
+  "pilotClassification": "STRONG",
+  "safety": {
+    "localQueue2Worker": false,
+    "remoteClIngestionChild": false,
+    "laneAChild": null,
+    "ownershipConflict": false,
+    "queue3": "NOT_OPEN"
+  },
+  "quotaProbeSession": {
+    "note": "Single authoritative probe at session start (rolling day window)",
+    "minuteRemaining": 30,
+    "hourRemaining": 271,
+    "dayRemaining": 4,
+    "probedAt": "2026-09-28T17:23:51.000Z"
+  },
+  "WV": {
+    "start": 39,
+    "end": 45,
+    "status": "COMPLETE_FOR_CURRENT_DEPTH",
+    "checkpoint": "cl-opinion-11347349",
+    "clRequestsApprox": 20,
+    "note": "Resumable finish via manual oneshot micro-batches; final batch apiCalls=3"
+  },
+  "A2_pilot": {
+    "targetsAttempted": 7,
+    "targetsAcquired": 7,
+    "targetsSkipped": 0,
+    "clRequests": 14,
+    "authoritiesAdded": 7,
+    "method": "citation-lookup + opinion/cluster verify + production persist path",
+    "maxBudget": 15,
+    "targets": [
+      { "citation": "466 U.S. 668", "title": "Strickland v. Washington", "edges": 66, "clRequests": 2, "authorityId": "6321aee3-313a-4c1c-936a-e9674c1f3ad2" },
+      { "citation": "373 U.S. 83", "title": "Brady v. Maryland", "edges": 30, "clRequests": 2, "authorityId": "d9fad4bd-381b-4d3b-a071-619a87181d0b" },
+      { "citation": "567 U.S. 460", "title": "Miller v. Alabama", "edges": 24, "clRequests": 2, "authorityId": "9004b5b8-0f3c-4106-93b2-c6f4c10b44eb" },
+      { "citation": "543 U.S. 551", "title": "Roper v. Simmons", "edges": 17, "clRequests": 2, "authorityId": "bb5d2f89-b134-4c07-81b1-3997e4b601f8" },
+      { "citation": "386 U.S. 738", "title": "Anders v. California", "edges": 16, "clRequests": 2, "authorityId": "27089ca0-ec11-4657-9d4d-8a5f219e2c57" },
+      { "citation": "392 U.S. 1", "title": "Terry v. Ohio", "edges": 16, "clRequests": 2, "authorityId": "79420ce6-667b-4e2d-9fa6-a43d8675b454" },
+      { "citation": "443 U.S. 307", "title": "Jackson v. Virginia", "edges": 16, "clRequests": 2, "authorityId": "95f739b3-e39a-480d-9ac5-f58e19bf806c" }
+    ]
+  },
+  "citationsBefore": {
+    "extracted": 7220,
+    "resolved": 197,
+    "unresolved": 7023,
+    "targetAbsent": 7023,
+    "resolutionRatePct": 2.73,
+    "uniqueAbsentTargets": 5030
+  },
+  "citationsAfter": {
+    "extracted": 7220,
+    "resolved": 382,
+    "unresolved": 6838,
+    "targetAbsent": 6838,
+    "resolutionRatePct": 5.29
+  },
+  "improvement": {
+    "newlyResolved": 185,
+    "targetAbsentReduction": 185,
+    "resolutionRateIncreasePctPoints": 2.56,
+    "resolutionsPerClRequest": 13.21,
+    "resolutionsPerAuthority": 26.43
+  },
+  "pilotClassificationMetrics": {
+    "label": "STRONG",
+    "newResolutions": 185,
+    "clRequests": 14,
+    "resolutionsPerRequest": 13.21,
+    "resolutionRateDeltaPctPoints": 2.56,
+    "rationale": "185 new resolutions from 14 productive CL requests (13.21/req); exact match to expected edge unlocks; 0 skips/failures"
+  },
+  "strategyRecommendation": "Expand A2 citation-target recovery in future windows for high-repeat U.S. Reports / federal reporter targets. Keep depth-wave A1 for coverage; do not replace A1. Also prepare gated zero-CL US Reports path for scale beyond CL day quota.",
+  "usReportsNonCl": {
+    "gated": true,
+    "gateEnv": "QUEUE2_LANE_B_ALLOW_MUTATION=1",
+    "gateCodePaths": [
+      "scripts/queue2-lane-b-runners.cjs::nonClIntake",
+      "scripts/run-queue2-dual-lane.cjs (allowMutation: process.env.QUEUE2_LANE_B_ALLOW_MUTATION === \"1\")",
+      "scripts/staging-queue2-lane-b.cjs (LOC usrep intake implementation)"
+    ],
+    "whyGated": "Lane B NON_CL_PRIMARY_AUTHORITY_INTAKE refuses mutation unless allowMutation===true or QUEUE2_LANE_B_ALLOW_MUTATION=1; default worker/check mode returns noDelta skip.",
+    "sourceProvenanceControls": [
+      "source_provider=loc_us_reports",
+      "source_external_id=usrep{volume:03d}{page:04d}",
+      "canonical_source_url=loc.gov usrep item JSON",
+      "adapter metadata us_reports_loc + retrievedAt",
+      "Lane B fetch guard blocks CourtListener URLs"
+    ],
+    "dedupeProtections": [
+      "rankMissingUsReports skips alreadyPresentUnderAlias",
+      "existing normalized_citation set check before statute/reg ingest",
+      "importAuthority idempotent on source_provider+source_external_id"
+    ],
+    "citationVerificationRequirements": [
+      "Target parsed as volume + U.S. + page before LOC fetch",
+      "Do not substitute secondary summary when LOC lacks primary opinion text (min ~80 chars)",
+      "normalized_citation must equal target citation form used by resolver aliases"
+    ],
+    "expectedTestCoverage": [
+      "scripts/queue2-lane-b-scheduler.test.cjs",
+      "scripts/queue2-lane-b-runners nonClIntake gated skip",
+      "scripts/queue2-dual-lane-controller.test.cjs Lane B task completion",
+      "Need production enablement tests: identity match, LOC empty-text quarantine, dedupe, citation reresolve delta"
+    ],
+    "productionSafeguardsNeeded": [
+      "Explicit QUEUE2_LANE_B_ALLOW_MUTATION only in supervised windows",
+      "Bounded batch size (current staging script slices top 3 US Reports)",
+      "Reject LOC responses without primary opinion text",
+      "Post-ingest integrity: duplicates=0 orphans=0 embeddings complete",
+      "Immediate CITATION_RERESOLVE and attribution before expanding batch",
+      "No fabricated SCOTUS opinion text"
+    ],
+    "mutatedThisRun": false
+  },
+  "corpusAfter": {
+    "authorities": 3755,
+    "cases": 2438,
+    "cl_cases": 2393,
+    "chunks": 57556,
+    "embeddings": 57556,
+    "missing_embeddings": 0,
+    "duplicates": 0,
+    "orphans": 0
+  },
+  "queue": {
+    "2": "OPEN",
+    "9": "CLOSED",
+    "3": "NOT_OPEN",
+    "transition": "NONE"
+  }
+}

@@ -92,32 +92,32 @@ test("DB recovers â†’ manifest refresh before target selection; stale SC laneA â
   const refreshIdx = plan.steps.findIndex((s) => s.id === "REFRESH_MANIFEST");
   const selectIdx = plan.steps.findIndex((s) => s.id === "SELECT_TARGET");
   assert.ok(refreshIdx < selectIdx);
-  assert.equal(plan.nextTarget.court, "wva");
-  assert.equal(plan.nextTarget.jurisdiction, "WV");
+  assert.equal(plan.nextTarget.court, "mo");
+  assert.equal(plan.nextTarget.jurisdiction, "MO");
   assert.ok(
     plan.nextTarget.qualifyingCaseCount >= 20 && plan.nextTarget.qualifyingCaseCount <= 45,
     `qualifyingCaseCount=${plan.nextTarget.qualifyingCaseCount}`,
   );
   assert.equal(plan.nextTarget.target, 45);
   assert.equal(plan.nextTarget.mappingStatus, "VERIFIED");
-  assert.equal(plan.state.laneA.court, "wva");
-  assert.notEqual(plan.state.laneA.court, "ri");
+  assert.equal(plan.state.laneA.court, "mo");
+  assert.notEqual(plan.state.laneA.court, "wva");
   assert.deepEqual(plan.inventedCheckpoints, []);
   assert.equal(plan.queue2, "#2");
   assert.equal(plan.queue3, "NOT_OPEN");
 });
 
-test("manual progress can change WV count before resume; already complete skips WV", () => {
+test("manual progress can change MO count before resume; already complete skips MO", () => {
   const manifest = load(MANIFEST);
   const drifted = planDatabaseQuotaRecovery({
     state: blockedState(),
     manifest,
     dbProbe: { ok: true, writable: true, mutations: 0 },
-    liveCountsByCourt: { wva: { qualifyingCaseCount: 28, clCaseCount: 28, authorityCount: 49 } },
+    liveCountsByCourt: { mo: { qualifyingCaseCount: 28, clCaseCount: 28, authorityCount: 49 } },
     remoteProcesses: [],
     now: NOW,
   });
-  assert.equal(drifted.nextTarget.court, "wva");
+  assert.equal(drifted.nextTarget.court, "mo");
   assert.equal(drifted.nextTarget.qualifyingCaseCount, 28);
   assert.equal(drifted.state.laneA.qualifyingCaseCount, 28);
 
@@ -125,11 +125,12 @@ test("manual progress can change WV count before resume; already complete skips 
     state: blockedState(),
     manifest,
     dbProbe: { ok: true, writable: true, mutations: 0 },
-    liveCountsByCourt: { wva: { qualifyingCaseCount: 45, clCaseCount: 45 } },
+    liveCountsByCourt: { mo: { qualifyingCaseCount: 45, clCaseCount: 45 } },
     remoteProcesses: [],
     now: NOW,
   });
-  assert.notEqual(done.nextTarget.court, "wva");
+  assert.notEqual(done.nextTarget.court, "mo");
+  assert.ok(done.state.completedCourts.includes("mo"));
   assert.ok(done.state.completedCourts.includes("wva"));
 });
 
@@ -336,7 +337,7 @@ test("VT first-start clears inherited SC resume fields", () => {
     now: NOW,
   });
   assert.equal(plan.ok, true);
-  assert.equal(plan.state.laneA.court, "wva");
+  assert.equal(plan.state.laneA.court, "mo");
   assert.equal(plan.state.laneA.jobLifecycle, "READY_FIRST_START");
   assert.equal(plan.state.laneA.checkpoint, null);
   assert.equal(plan.state.laneA.cursor, null);

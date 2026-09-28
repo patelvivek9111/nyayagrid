@@ -19,17 +19,17 @@
     "#3": "NOT_OPEN"
   },
   "ark": {
-    "count": 39,
+    "count": 22,
     "target": 45,
-    "checkpoint": "cl-opinion-11347355"
+    "checkpoint": null
   },
   "resource": {
     "ok": true,
     "reasons": [],
-    "freeDiskBytes": 80534958080,
-    "tempFreeBytes": 80534958080
+    "freeDiskBytes": 79666315264,
+    "tempFreeBytes": 79666315264
   },
-  "generatedAt": "2026-09-28T16:42:03.720Z",
+  "generatedAt": "2026-09-28T18:34:24.924Z",
   "codeFingerprint": "de35db200ac519a4940e81842c71c95be627c456f87fa7eda4890605a4ddd772",
   "workerVersion": "queue2-safety-gate-1"
 }

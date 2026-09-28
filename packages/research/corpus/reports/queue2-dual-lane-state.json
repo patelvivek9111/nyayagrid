@@ -5,27 +5,33 @@
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
   "currentLane": "STOPPED",
-  "updatedAt": "2026-09-28T16:32:34.578Z",
+  "updatedAt": "2026-09-28T18:33:15.571Z",
   "laneA": {
-    "court": "wva",
-    "jurisdiction": "WV",
-    "count": 39,
-    "qualifyingCaseCount": 39,
-    "clCaseCount": 39,
-    "authorityCount": 66,
+    "court": "mo",
+    "jurisdiction": "MO",
+    "count": 22,
+    "qualifyingCaseCount": 22,
+    "clCaseCount": 22,
+    "totalCaseCount": null,
+    "authorityCount": 43,
     "target": 45,
-    "checkpoint": "cl-opinion-11347355",
-    "cursor": "cl-opinion-11347355",
-    "lastSuccessfulExternalId": "cl-opinion-11347355",
+    "checkpoint": null,
+    "cursor": null,
+    "lastSuccessfulExternalId": null,
     "nextPageUrl": null,
-    "targetStatus": "PARTIAL",
-    "jobStatus": "rate_limited",
-    "jobLifecycle": "PAUSED_RESUMABLE",
+    "lastSuccessfulAt": null,
+    "runner": "staging-cl-batch-job",
     "mappingStatus": "VERIFIED",
-    "lastSuccessfulAt": "2026-09-28T16:32:34.570Z",
-    "priorCompletedCourt": "wash",
-    "priorCompletedCheckpoint": "cl-opinion-11264673",
-    "lock": null
+    "manifestVersion": 72,
+    "jobStatus": "ready",
+    "jobLifecycle": "READY_FIRST_START",
+    "itemsImported": 22,
+    "targetStatus": "READY",
+    "sequence": null,
+    "lock": null,
+    "priorCompletedCourt": "wva",
+    "priorCompletedCheckpoint": "cl-opinion-11347349",
+    "child": null
   },
   "quota": {
     "windows": {
@@ -749,7 +755,8 @@
     "nc",
     "or",
     "ri",
-    "wash"
+    "wash",
+    "wva"
   ],
   "completedCourtEvidence": {
     "wis": {
@@ -1570,6 +1577,28 @@
       "completedAt": "2026-09-28T16:32:34.570Z",
       "source": "manual",
       "evidenceSource": "canonical_manifest_and_durable_state"
+    },
+    "wva": {
+      "jurisdiction": "WV",
+      "court": "wva",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "qualifyingCaseCount": 45,
+      "count": 45,
+      "cases": 45,
+      "clCases": 45,
+      "target": 45,
+      "checkpoint": "cl-opinion-11347349",
+      "cursor": null,
+      "lastSuccessfulExternalId": "cl-opinion-11347349",
+      "nextPageUrl": null,
+      "lastSuccessfulAt": null,
+      "jobStatus": "completed",
+      "mappingStatus": "VERIFIED",
+      "reconciledAt": "2026-09-28T18:32:13.150Z",
+      "completedAt": "2026-09-28T18:32:13.150Z",
+      "source": "canonical_manifest_reconciliation",
+      "evidenceSource": "canonical_manifest",
+      "manualProgressSupported": true
     }
   },
   "laneALock": null,
@@ -2616,5 +2645,6 @@
     "classification": null,
     "detail": null
   },
-  "lock": null
+  "lock": null,
+  "generatedAt": "2026-09-28T18:32:13.150Z"
 }
