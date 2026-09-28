@@ -149,7 +149,7 @@ test("E: READY first-start MI is not treated as CL partial missing checkpoint", 
 
 test("F: VT READY_FIRST_START with SC completion evidence passes human-review gate", () => {
   const state = restoreState(JSON.parse(fs.readFileSync(STATE_PATH, "utf8")));
-  assert.equal(state.laneA.court, "wash");
+  assert.equal(state.laneA.court, "wva");
   assert.ok(state.laneA.count >= 20 && state.laneA.count <= 45, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
   assert.ok(
@@ -161,7 +161,8 @@ test("F: VT READY_FIRST_START with SC completion evidence passes human-review ga
     `jobLifecycle=${state.laneA.jobLifecycle}`,
   );
   assert.ok(
-    state.laneA.checkpoint === "cl-opinion-11264687" || state.laneA.checkpoint == null,
+    state.laneA.checkpoint === "cl-opinion-11264687" || state.laneA.checkpoint == null ||
+      state.laneA.checkpoint === "cl-opinion-11347355",
     `checkpoint=${state.laneA.checkpoint}`,
   );
   assert.equal(state.humanReview.required, false);
@@ -173,12 +174,14 @@ test("F: VT READY_FIRST_START with SC completion evidence passes human-review ga
   assert.equal(state.completedCourtEvidence.conn.checkpoint, "cl-opinion-11299467");
   assert.equal(state.completedCourtEvidence.ga.checkpoint, "cl-opinion-11335741");
   assert.equal(state.completedCourtEvidence.md.checkpoint, "cl-opinion-11246774");
+  assert.equal(state.completedCourtEvidence.wash.checkpoint, "cl-opinion-11264673");
   assert.equal(state.completedCourtEvidence.ohio.checkpoint, "cl-opinion-11336890");
   assert.equal(state.completedCourtEvidence.nc.checkpoint, "cl-opinion-11125345");
   assert.equal(state.completedCourtEvidence.or.checkpoint, "cl-opinion-11154325");
   assert.equal(state.completedCourtEvidence.ri.checkpoint, "cl-opinion-11247322");
   assert.equal(state.completedCourtEvidence.ga.checkpoint, "cl-opinion-11335741");
   assert.equal(state.completedCourtEvidence.md.checkpoint, "cl-opinion-11246774");
+  assert.equal(state.completedCourtEvidence.wash.checkpoint, "cl-opinion-11264673");
   assert.equal(state.completedCourtEvidence.ohio.checkpoint, "cl-opinion-11336890");
   assert.equal(state.completedCourtEvidence.nc.checkpoint, "cl-opinion-11125345");
   assert.equal(state.completedCourtEvidence.or.checkpoint, "cl-opinion-11154325");

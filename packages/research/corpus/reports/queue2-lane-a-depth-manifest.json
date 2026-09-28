@@ -3,8 +3,8 @@
   "queue": "#2",
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
-  "version": 69,
-  "generatedAt": "2026-09-28T15:48:15.689Z",
+  "version": 71,
+  "generatedAt": "2026-09-28T16:33:51.003Z",
   "source": {
     "type": "live_db_snapshot",
     "snapshotPath": "packages/research/corpus/reports/queue2-lane-a-corpus-snapshot.json",
@@ -27,12 +27,13 @@
     "overfeedStrongJurisdictions": false
   },
   "corpusTotals": {
-    "authorities": 3709,
-    "cases": 2392,
+    "authorities": 3742,
+    "cases": 2425,
     "cl_cases": 2347,
     "statutes": 904,
     "regulations": 158,
-    "rules": 254
+    "rules": 254,
+    "clCases": 2380
   },
   "reconciliation": {
     "ok": true,
@@ -45,11 +46,11 @@
     "falseZeroBlocked": 0
   },
   "activePartial": {
-    "court": "wash",
-    "jurisdiction": "WA",
-    "count": 32,
+    "court": "wva",
+    "jurisdiction": "WV",
+    "count": 39,
     "target": 45,
-    "checkpoint": "cl-opinion-11264687",
+    "checkpoint": "cl-opinion-11347355",
     "status": "PARTIAL",
     "mappingStatus": "VERIFIED",
     "dataQuality": "LIVE_DB",
@@ -1156,15 +1157,15 @@
       "preferredCourts": [
         "wash"
       ],
-      "currentAuthorities": 54,
-      "currentCases": 32,
-      "clCases": 31,
-      "highCourtCount": 32,
+      "currentAuthorities": 68,
+      "currentCases": 46,
+      "clCases": 45,
+      "highCourtCount": 46,
       "intermediateAppellateCount": 0,
       "earliestYear": 1985,
       "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 13,
+      "targetDelta": 0,
       "missingCourtLayers": [
         "intermediate"
       ],
@@ -1176,10 +1177,10 @@
       "authorityDeficit": 47,
       "historicalGapScore": 10,
       "doctrinalGapScore": 5,
-      "checkpoint": "cl-opinion-11264687",
+      "checkpoint": "cl-opinion-11264673",
       "mappingStatus": "VERIFIED",
-      "status": "PARTIAL",
-      "autonomousIngestBlocked": false,
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
       "dataQuality": "LIVE_DB",
       "score": 449
     },
@@ -1893,15 +1894,15 @@
       "preferredCourts": [
         "wva"
       ],
-      "currentAuthorities": 47,
-      "currentCases": 20,
-      "clCases": 20,
-      "highCourtCount": 20,
+      "currentAuthorities": 66,
+      "currentCases": 39,
+      "clCases": 39,
+      "highCourtCount": 39,
       "intermediateAppellateCount": 0,
       "earliestYear": 2026,
       "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 25,
+      "targetDelta": 6,
       "missingCourtLayers": [
         "intermediate"
       ],
@@ -1916,9 +1917,9 @@
       "authorityDeficit": 54,
       "historicalGapScore": 40,
       "doctrinalGapScore": 5,
-      "checkpoint": null,
+      "checkpoint": "cl-opinion-11347355",
       "mappingStatus": "VERIFIED",
-      "status": "READY",
+      "status": "PARTIAL",
       "autonomousIngestBlocked": false,
       "dataQuality": "LIVE_DB",
       "score": 309

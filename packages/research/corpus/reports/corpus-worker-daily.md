@@ -1,34 +1,37 @@
-# Queue #2 Daily Scorecard — 2026-09-28
+# Queue #2 Corpus Worker — Daily Status
 
-Classification: MANUAL_QUEUE2_LANE_B_DELTA_PASS
+Generated: 2026-09-28T16:35:00.000Z (9/28/2026, 12:35:00 PM EDT)
+Queue: #2 OPEN | #9 CLOSED | #3 NOT OPEN | transition NONE | FEATURE_AGENTS=0
 
-## Corpus
-- authorities: 3588
-- cases: 2271
-- CL cases: 2226
-- statutes: 904
-- regulations: 158
-- rules: 254
-- chunks/embeddings: 53213/53213
-- duplicates: 0
-- orphans: 0
+## CURRENT LANE
+STOPPED
 
-## Citations
-- extracted: 6969
-- resolved: 197
-- unresolved: 6772
-- target absent: 6771
-- newly resolved: 5
+## CURRENT TASK
+NONE
+Worker runtime STOPPED. Manual rapid CourtListener ingest.
 
-## Depth
-- complete: 34
-- incomplete: 17
-- next Lane A: OH 20/45 READY_FIRST_START
+Next: West Virginia (`wva`) 39/45 PAUSED_RESUMABLE
+checkpoint: cl-opinion-11347355
+Prior complete: WA 46/45 checkpoint cl-opinion-11264673
 
-## Today
-- authorities added: 127
-- CL requests: 279
-- requests/authority: 2.2
+## THIS SESSION
+OH/NC/OR/RI already complete at session start (skipped)
+WA 32→46 (+14, 30 CL) COMPLETE
+WV 20→39 (+19, 47 CL) PARTIAL rate_limited — STOPPED
+total +33 authorities / 76 productive CL (+1 zero-progress rate-limit call)
+Citation re-resolve: +0 newly resolved (197→197)
 
-## CL this Lane B delta session
-- CourtListener HTTP: 0
+## CORPUS
+authorities=3742 cases=2425 clCases=2380
+statutes=904 regulations=158 rules=254
+chunks=57238 embeddings=57238
+duplicateSourceIds=0 orphanCount=0
+citations extracted=7220 resolved=197 targetAbsent=7023
+
+## COURTLISTENER
+session start probe: minuteRem 30 | hourRem 0 | dayRem 68
+Stopped after hour/rate-limit exhaustion during WV.
+Worker stays STOPPED.
+
+## NEXT
+Resume WV (`wva`) from cl-opinion-11347355 when hour quota recovers.

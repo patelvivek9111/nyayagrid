@@ -5,32 +5,27 @@
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
   "currentLane": "STOPPED",
-  "updatedAt": "2026-09-28T15:44:57.842Z",
+  "updatedAt": "2026-09-28T16:32:34.578Z",
   "laneA": {
-    "court": "wash",
-    "jurisdiction": "WA",
-    "count": 32,
-    "qualifyingCaseCount": 32,
-    "clCaseCount": 31,
-    "totalCaseCount": null,
-    "authorityCount": 54,
+    "court": "wva",
+    "jurisdiction": "WV",
+    "count": 39,
+    "qualifyingCaseCount": 39,
+    "clCaseCount": 39,
+    "authorityCount": 66,
     "target": 45,
-    "checkpoint": "cl-opinion-11264687",
-    "cursor": "cl-opinion-11264687",
-    "lastSuccessfulExternalId": "cl-opinion-11264687",
-    "nextPageUrl": "https://www.courtlistener.com/api/rest/v4/opinions/?cluster__docket__court=wash&cursor=cD0xMTI2NDY4Nw%3D%3D&order_by=-id&page_size=8",
-    "lastSuccessfulAt": "2026-09-28T15:44:57.842Z",
-    "runner": "staging-cl-batch-job",
-    "mappingStatus": "VERIFIED",
-    "manifestVersion": 66,
+    "checkpoint": "cl-opinion-11347355",
+    "cursor": "cl-opinion-11347355",
+    "lastSuccessfulExternalId": "cl-opinion-11347355",
+    "nextPageUrl": null,
+    "targetStatus": "PARTIAL",
     "jobStatus": "rate_limited",
     "jobLifecycle": "PAUSED_RESUMABLE",
-    "itemsImported": 31,
-    "targetStatus": "PARTIAL",
-    "sequence": null,
-    "lock": null,
-    "priorCompletedCourt": "ri",
-    "priorCompletedCheckpoint": "cl-opinion-11247322"
+    "mappingStatus": "VERIFIED",
+    "lastSuccessfulAt": "2026-09-28T16:32:34.570Z",
+    "priorCompletedCourt": "wash",
+    "priorCompletedCheckpoint": "cl-opinion-11264673",
+    "lock": null
   },
   "quota": {
     "windows": {
@@ -753,7 +748,8 @@
     "ohio",
     "nc",
     "or",
-    "ri"
+    "ri",
+    "wash"
   ],
   "completedCourtEvidence": {
     "wis": {
@@ -1551,6 +1547,27 @@
       "mappingStatus": "VERIFIED",
       "reconciledAt": "2026-09-28T15:44:57.842Z",
       "completedAt": "2026-09-28T15:44:57.842Z",
+      "source": "manual",
+      "evidenceSource": "canonical_manifest_and_durable_state"
+    },
+    "wash": {
+      "jurisdiction": "WA",
+      "court": "wash",
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "qualifyingCaseCount": 46,
+      "count": 46,
+      "cases": 46,
+      "clCases": 45,
+      "target": 45,
+      "checkpoint": "cl-opinion-11264673",
+      "cursor": null,
+      "lastSuccessfulExternalId": "cl-opinion-11264673",
+      "nextPageUrl": null,
+      "lastSuccessfulAt": "2026-09-28T16:32:34.570Z",
+      "jobStatus": "completed",
+      "mappingStatus": "VERIFIED",
+      "reconciledAt": "2026-09-28T16:32:34.570Z",
+      "completedAt": "2026-09-28T16:32:34.570Z",
       "source": "manual",
       "evidenceSource": "canonical_manifest_and_durable_state"
     }
@@ -2496,12 +2513,12 @@
   },
   "dbWriteReady": true,
   "laneAStatus": "READY",
-  "stateConvergedAt": "2026-09-28T15:44:57.842Z",
+  "stateConvergedAt": "2026-09-28T16:32:34.578Z",
   "stateConvergence": {
-    "fromCourt": "wash",
-    "toCourt": "wash",
+    "fromCourt": "wva",
+    "toCourt": "wva",
     "advanced": false,
-    "completedEvidenceCount": 38
+    "completedEvidenceCount": 39
   },
   "firstRecoveryCanaryPending": false,
   "healthyIdle": {

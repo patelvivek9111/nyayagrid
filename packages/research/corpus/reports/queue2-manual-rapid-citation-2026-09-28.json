@@ -1,0 +1,56 @@
+{
+  "classification": "MANUAL_QUEUE2_RAPID_INGEST_WITH_CITATION_TRACKING",
+  "generatedAt": "2026-09-28T16:35:00.000Z",
+  "queue": { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", "transition": "NONE" },
+  "worker": "STOPPED",
+  "start": {
+    "expectedJurisdiction": "OH",
+    "dbTruth": "OH already COMPLETE_FOR_CURRENT_DEPTH at 46; skipped OH/NC/OR/RI",
+    "firstProductive": "WA",
+    "startCount": 32,
+    "checkpoint": "cl-opinion-11264687",
+    "quota": { "minute": 30, "hour": 0, "day": 68 },
+    "citationBaseline": { "extracted": 7169, "resolved": 197, "unresolved": 6972, "targetAbsent": 6972 }
+  },
+  "jurisdictions": [
+    { "j": "OH", "court": "ohio", "action": "SKIP_ALREADY_COMPLETE", "end": 46, "checkpoint": "cl-opinion-11336890" },
+    { "j": "NC", "court": "nc", "action": "SKIP_ALREADY_COMPLETE", "end": 46, "checkpoint": "cl-opinion-11125345" },
+    { "j": "OR", "court": "or", "action": "SKIP_ALREADY_COMPLETE", "end": 45, "checkpoint": "cl-opinion-11154325" },
+    { "j": "RI", "court": "ri", "action": "SKIP_ALREADY_COMPLETE", "end": 52, "checkpoint": "cl-opinion-11247322" },
+    { "j": "WA", "court": "wash", "start": 32, "end": 46, "added": 14, "clRequests": 30, "checkpoint": "cl-opinion-11264673" },
+    { "j": "WV", "court": "wva", "start": 20, "end": 39, "added": 19, "clRequests": 47, "checkpoint": "cl-opinion-11347355", "status": "PARTIAL_RATE_LIMITED" }
+  ],
+  "stopReason": "WV rate_limited at 39/45; zero qualifying progress on last batch; hour exhausted",
+  "corpus": {
+    "authorities": "3709 → 3742",
+    "cases": "2392 → 2425",
+    "clCases": "2347 → 2380",
+    "chunks": 57238,
+    "embeddings": 57238,
+    "duplicateSourceIds": 0,
+    "orphanCount": 0
+  },
+  "citations": {
+    "before": { "extracted": 7169, "resolved": 197, "unresolved": 6972, "targetAbsent": 6972 },
+    "after": { "extracted": 7220, "resolved": 197, "unresolved": 7023, "targetAbsent": 7023 },
+    "newlyResolved": 0,
+    "resolutionRateBefore": 0.0275,
+    "resolutionRateAfter": 0.0273,
+    "targetAbsentDelta": 51,
+    "jurisdictionsUnlockingMatches": []
+  },
+  "quota": {
+    "start": { "minute": 30, "hour": 0, "day": 68 },
+    "totalCl": 77,
+    "productive": 76,
+    "probes": 1,
+    "retries": 0,
+    "hard429": 0,
+    "rateLimitedStops": 1,
+    "requestsPerAuthority": 2.33
+  },
+  "nextJurisdiction": "WV",
+  "nextCourt": "wva",
+  "nextCount": 39,
+  "safeToContinue": false
+}
