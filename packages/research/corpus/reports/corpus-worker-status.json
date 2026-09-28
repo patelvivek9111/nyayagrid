@@ -20,10 +20,10 @@
   "lastSuccessfulAt": null,
   "runner": "staging-cl-batch-job",
   "mappingStatus": "VERIFIED",
-  "manifestVersion": 71,
+  "manifestVersion": 64,
   "jobStatus": "ready",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastUpdatedAt": "2026-09-28T14:10:18.703Z",
+  "lastUpdatedAt": "2026-09-28T14:41:21.729Z",
   "lastHeartbeatAt": "2026-09-27T18:00:10.679Z",
   "nextQuotaCheckAt": "2026-09-27T18:10:09.485Z",
   "network": {
@@ -78,7 +78,8 @@
     "clCases": 2226,
     "statutes": 904,
     "regulations": 158,
-    "rules": 254
+    "rules": 254,
+    "authorityGateDeficit": 1912
   },
   "health": {
     "retrieval": "ok",
@@ -86,7 +87,10 @@
     "duplicateSourceIdCount": 0,
     "database": "unknown",
     "featureAgents": "0",
-    "databaseConnectivity": "unknown"
+    "databaseConnectivity": "unknown",
+    "chunks": 53213,
+    "embeddings": 53213,
+    "missingEmbeddings": 0
   },
   "review": {
     "humanReviewRequired": false,

@@ -5,7 +5,7 @@
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
   "currentLane": "STOPPED",
-  "updatedAt": "2026-09-28T14:10:18.714Z",
+  "updatedAt": "2026-09-28T14:41:21.729Z",
   "laneA": {
     "court": "ohio",
     "jurisdiction": "OH",
@@ -22,7 +22,7 @@
     "lastSuccessfulAt": null,
     "runner": "staging-cl-batch-job",
     "mappingStatus": "VERIFIED",
-    "manifestVersion": 71,
+    "manifestVersion": 64,
     "jobStatus": "ready",
     "jobLifecycle": "READY_FIRST_START",
     "itemsImported": 20,
@@ -123,7 +123,7 @@
   },
   "laneB": {
     "task": "NONE",
-    "checkpoint": "manual-lane-b-2026-09-27",
+    "checkpoint": "manual-lane-b-delta-2026-09-28",
     "tasksCompleted": [
       "us_reports_gap_analysis",
       "us_reports_non_cl_intake",
@@ -145,21 +145,21 @@
       "usc_cfr_federal_rules_depth": "2026-09-25T00:06:17.338Z",
       "USC_DEPTH": "2026-09-25T00:06:17.338Z",
       "citation_re_resolution": "2026-09-25T00:06:17.338Z",
-      "CITATION_RERESOLVE": "2026-09-27T18:57:24.809Z",
+      "CITATION_RERESOLVE": "2026-09-28T14:41:21.729Z",
       "depth_gap_analysis": "2026-09-25T00:06:17.338Z",
-      "DEPTH_MANIFEST_REFRESH": "2026-09-27T18:57:24.809Z",
+      "DEPTH_MANIFEST_REFRESH": "2026-09-28T14:41:21.729Z",
       "historical_hole_detection": "2026-09-25T00:06:17.338Z",
-      "HISTORICAL_GAP_ANALYSIS": "2026-09-27T18:57:24.809Z",
+      "HISTORICAL_GAP_ANALYSIS": "2026-09-28T14:41:21.729Z",
       "intermediate_court_research": "2026-09-25T00:06:17.338Z",
       "INTERMEDIATE_MAPPING_RESEARCH_NON_CL": "2026-09-27T18:57:24.809Z",
       "corpus_integrity": "2026-09-25T00:06:17.338Z",
-      "CORPUS_INTEGRITY_AUDIT": "2026-09-27T18:57:24.809Z",
+      "CORPUS_INTEGRITY_AUDIT": "2026-09-28T14:41:21.729Z",
       "retrieval_validation": "2026-09-25T00:06:17.338Z",
-      "RETRIEVAL_REGRESSION": "2026-09-27T18:57:24.809Z",
+      "RETRIEVAL_REGRESSION": "2026-09-28T14:41:21.729Z",
       "depth_scorecard": "2026-09-25T00:06:17.338Z",
-      "DAILY_SCORECARD_REFRESH": "2026-09-27T18:57:24.809Z",
-      "CURRENTNESS_AUDIT_LOCAL": "2026-09-27T18:57:24.809Z",
-      "NEXT_CL_BATCH_PREPARATION": "2026-09-27T18:57:24.809Z"
+      "DAILY_SCORECARD_REFRESH": "2026-09-28T14:41:21.729Z",
+      "CURRENTNESS_AUDIT_LOCAL": "2026-09-28T14:41:21.729Z",
+      "NEXT_CL_BATCH_PREPARATION": "2026-09-28T14:41:21.729Z"
     },
     "nextEligibleAt": {},
     "lastEligibility": [
@@ -390,9 +390,9 @@
     ],
     "mutatingTaskActive": null
   },
-  "depthManifestVersion": 63,
-  "lastCitationResolve": "2026-09-27T18:57:24.809Z",
-  "lastIntegrityAudit": "2026-09-27T18:57:24.809Z",
+  "depthManifestVersion": 64,
+  "lastCitationResolve": "2026-09-28T14:41:21.729Z",
+  "lastIntegrityAudit": "2026-09-28T14:41:21.729Z",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
   "lastHeartbeatAt": "2026-09-27T18:00:10.679Z",
   "idleSafe": true,
@@ -2407,7 +2407,7 @@
     "recovered": true
   },
   "dbWriteReady": true,
-  "laneAStatus": "STOPPED",
+  "laneAStatus": "READY",
   "stateConvergedAt": "2026-09-28T14:10:18.714Z",
   "stateConvergence": {
     "fromCourt": "md",

@@ -1,0 +1,366 @@
+{
+  "classification": "MANUAL_QUEUE2_LANE_B_DELTA_PASS",
+  "generatedAt": "2026-09-28T14:41:21.729Z",
+  "result": "PASS",
+  "courtListenerHttpCalls": 0,
+  "aiCalls": 0,
+  "queue": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
+  },
+  "safety": {
+    "localWorker": "STOPPED",
+    "laneAChild": null,
+    "queue2": "OPEN",
+    "queue3": "NOT_OPEN"
+  },
+  "tasksRun": [
+    "CITATION_RERESOLVE",
+    "DEPTH_MANIFEST_REFRESH",
+    "CORPUS_INTEGRITY_AUDIT",
+    "RETRIEVAL_REGRESSION",
+    "NEXT_CL_BATCH_PREPARATION",
+    "DAILY_SCORECARD_REFRESH",
+    "CURRENTNESS_AUDIT_LOCAL",
+    "HISTORICAL_GAP_ANALYSIS"
+  ],
+  "tasksSkipped": [
+    {
+      "task": "US_REPORTS_GAP_ANALYSIS",
+      "why": "no US Reports corpus delta; local manifest unchanged value"
+    },
+    {
+      "task": "INTERMEDIATE_MAPPING_RESEARCH_NON_CL",
+      "why": "Lane A wave was high-court only; intermediate mapping unchanged"
+    },
+    {
+      "task": "NON_CL_PRIMARY_AUTHORITY_INTAKE",
+      "why": "mutation not enabled"
+    },
+    {
+      "task": "USC_DEPTH",
+      "why": "mutation/network not enabled"
+    },
+    {
+      "task": "CFR_DEPTH",
+      "why": "mutation/network not enabled"
+    },
+    {
+      "task": "FEDERAL_RULES_DEPTH",
+      "why": "mutation/network not enabled"
+    }
+  ],
+  "citations": {
+    "extracted": 6969,
+    "resolved": 197,
+    "unresolved": 6772,
+    "targetAbsent": 6771,
+    "before": {
+      "extracted": 6969,
+      "resolved": 192,
+      "unresolved": 6777,
+      "targetAbsent": 6771
+    },
+    "after": {
+      "extracted": 6969,
+      "resolved": 197,
+      "unresolved": 6772,
+      "targetAbsent": 6771
+    },
+    "newlyResolved": 5,
+    "edgeNormUpdated": 201,
+    "parallelAliasWrites": 0
+  },
+  "citationLowValueUntilNextExpansion": false,
+  "corpus": {
+    "authorities": 3588,
+    "cases": 2271,
+    "clCases": 2226,
+    "statutes": 904,
+    "regulations": 158,
+    "rules": 254,
+    "chunks": 53213,
+    "embeddings": 53213,
+    "duplicates": 0,
+    "orphans": 0
+  },
+  "depth": {
+    "completed": 34,
+    "incomplete": 17,
+    "next10": [
+      {
+        "jurisdiction": "OH",
+        "court": "ohio",
+        "qualifyingCaseCount": 20,
+        "highCourtCount": 20,
+        "clCases": 19,
+        "target": 45,
+        "deficit": 25,
+        "mappingStatus": "VERIFIED",
+        "checkpoint": null,
+        "jobLifecycle": "READY_FIRST_START"
+      },
+      {
+        "jurisdiction": "NC",
+        "court": "nc",
+        "qualifyingCaseCount": 20,
+        "highCourtCount": 20,
+        "clCases": 19,
+        "target": 45,
+        "deficit": 25,
+        "mappingStatus": "VERIFIED",
+        "checkpoint": null,
+        "jobLifecycle": "READY"
+      },
+      {
+        "jurisdiction": "OR",
+        "court": "or",
+        "qualifyingCaseCount": 20,
+        "highCourtCount": 20,
+        "clCases": 20,
+        "target": 45,
+        "deficit": 25,
+        "mappingStatus": "VERIFIED",
+        "checkpoint": null,
+        "jobLifecycle": "READY"
+      },
+      {
+        "jurisdiction": "RI",
+        "court": "ri",
+        "qualifyingCaseCount": 20,
+        "highCourtCount": 20,
+        "clCases": 20,
+        "target": 45,
+        "deficit": 25,
+        "mappingStatus": "VERIFIED",
+        "checkpoint": null,
+        "jobLifecycle": "READY"
+      },
+      {
+        "jurisdiction": "WA",
+        "court": "wash",
+        "qualifyingCaseCount": 20,
+        "highCourtCount": 20,
+        "clCases": 19,
+        "target": 45,
+        "deficit": 25,
+        "mappingStatus": "VERIFIED",
+        "checkpoint": null,
+        "jobLifecycle": "READY"
+      },
+      {
+        "jurisdiction": "WV",
+        "court": "wva",
+        "qualifyingCaseCount": 20,
+        "highCourtCount": 20,
+        "clCases": 20,
+        "target": 45,
+        "deficit": 25,
+        "mappingStatus": "VERIFIED",
+        "checkpoint": null,
+        "jobLifecycle": "READY"
+      },
+      {
+        "jurisdiction": "DE",
+        "court": "del",
+        "qualifyingCaseCount": 22,
+        "highCourtCount": 22,
+        "clCases": 20,
+        "target": 45,
+        "deficit": 23,
+        "mappingStatus": "VERIFIED",
+        "checkpoint": null,
+        "jobLifecycle": "READY"
+      },
+      {
+        "jurisdiction": "MO",
+        "court": "mo",
+        "qualifyingCaseCount": 22,
+        "highCourtCount": 22,
+        "clCases": 22,
+        "target": 45,
+        "deficit": 23,
+        "mappingStatus": "VERIFIED",
+        "checkpoint": null,
+        "jobLifecycle": "READY"
+      },
+      {
+        "jurisdiction": "NJ",
+        "court": "nj",
+        "qualifyingCaseCount": 22,
+        "highCourtCount": 22,
+        "clCases": 20,
+        "target": 45,
+        "deficit": 23,
+        "mappingStatus": "VERIFIED",
+        "checkpoint": null,
+        "jobLifecycle": "READY"
+      },
+      {
+        "jurisdiction": "VA",
+        "court": "va",
+        "qualifyingCaseCount": 22,
+        "highCourtCount": 22,
+        "clCases": 20,
+        "target": 45,
+        "deficit": 23,
+        "mappingStatus": "VERIFIED",
+        "checkpoint": null,
+        "jobLifecycle": "READY"
+      }
+    ],
+    "oh": {
+      "jurisdiction": "OH",
+      "court": "ohio",
+      "qualifyingCaseCount": 20,
+      "highCourtCount": 20,
+      "clCases": 19,
+      "target": 45,
+      "deficit": 25,
+      "mappingStatus": "VERIFIED",
+      "checkpoint": null,
+      "jobLifecycle": "READY_FIRST_START",
+      "expectedRequests": 56,
+      "estimatedRpa": 2.2,
+      "mappingVerified": true,
+      "execute": false,
+      "note": "PREPARE_ONLY_NO_CL_HTTP"
+    },
+    "recentComplete": [
+      "GA",
+      "HI",
+      "IN",
+      "KS",
+      "MD"
+    ]
+  },
+  "integrity": {
+    "at": "2026-09-28T14:41:21.729Z",
+    "duplicateSourceIds": 0,
+    "orphanChunks": 0,
+    "clSourceExternalIdDuplicates": 0,
+    "missingEmbeddings": 0,
+    "authoritiesWithoutChunks": 0,
+    "chunks": 53213,
+    "embeddings": 53213,
+    "normalization": {
+      "missing_court_id": 1317,
+      "missing_state": 0,
+      "missing_court_level": 1317,
+      "missing_authority_type": 0,
+      "missing_decision_date": 1317,
+      "missing_normalized_citation": 0,
+      "missing_canonical_url": 0,
+      "missing_provenance": 0,
+      "total": 3588
+    },
+    "pass": true
+  },
+  "retrieval": {
+    "smokePass": true,
+    "newStateIsolationPass": true,
+    "newStates": {
+      "GA": {
+        "clCourt": "ga",
+        "courtId": "st-ga-high",
+        "highCaseCount": 46,
+        "stateCaseCount": 46,
+        "otherHighCourtsSameState": 0,
+        "crossStateLeakageOnCourtId": 0,
+        "sampleTitles": [
+          "Walker v. State",
+          "Ware v. State",
+          "Wilson v. State"
+        ],
+        "pass": true
+      },
+      "HI": {
+        "clCourt": "hawaii",
+        "courtId": "st-hi-high",
+        "highCaseCount": 45,
+        "stateCaseCount": 45,
+        "otherHighCourtsSameState": 0,
+        "crossStateLeakageOnCourtId": 0,
+        "sampleTitles": [
+          "In re: L.F.",
+          "Patrickson v. DOW Chemical Company and Del Monte Fresh Produce N.A",
+          "Fevella v. Nago"
+        ],
+        "pass": true
+      },
+      "IN": {
+        "clCourt": "ind",
+        "courtId": "st-in-high",
+        "highCaseCount": 45,
+        "stateCaseCount": 45,
+        "otherHighCourtsSameState": 0,
+        "crossStateLeakageOnCourtId": 0,
+        "sampleTitles": [
+          "State of Indiana v. Augustine Armando Gomez, Jr.",
+          "State of Indiana v. Emareion T Jones",
+          "Jada Sha'nel Monroe v. State of Indiana"
+        ],
+        "pass": true
+      },
+      "KS": {
+        "clCourt": "kan",
+        "courtId": "st-ks-high",
+        "highCaseCount": 45,
+        "stateCaseCount": 45,
+        "otherHighCourtsSameState": 0,
+        "crossStateLeakageOnCourtId": 0,
+        "sampleTitles": [
+          "Martin v. City of Topeka",
+          "Cooper-Clark Foundation v. Scout Energy Management",
+          "State v. Contreras"
+        ],
+        "pass": true
+      },
+      "MD": {
+        "clCourt": "md",
+        "courtId": "st-md-high",
+        "highCaseCount": 46,
+        "stateCaseCount": 46,
+        "otherHighCourtsSameState": 0,
+        "crossStateLeakageOnCourtId": 0,
+        "sampleTitles": [
+          "Attorney Grievance Comm'n v. Saleh",
+          "Sweat v. P.G. Cnty. Board of Elections",
+          "Russell v. State Board of Elections"
+        ],
+        "pass": true
+      }
+    }
+  },
+  "currentnessDelta": {
+    "at": "2026-09-28T14:41:21.729Z",
+    "source": "delta vs prior Lane B baseline (2026-09-27)",
+    "prior": {
+      "historical": 80,
+      "current_as_of_source_date": 1304,
+      "unknown": 1949,
+      "last_checked": 3198
+    },
+    "current": {
+      "historical": 80,
+      "current_as_of_source_date": 1304,
+      "unknown": 2204,
+      "last_checked": 3453
+    },
+    "delta": {
+      "historical": 0,
+      "current_as_of_source_date": 0,
+      "unknown": 255,
+      "last_checked": 255
+    },
+    "missingDecisionDate": 1317,
+    "note": "Audit delta only — no currency claims without evidence",
+    "courtListenerHttpCalls": 0
+  },
+  "historicalGaps": {
+    "ok": true,
+    "note": null
+  }
+}

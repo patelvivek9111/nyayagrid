@@ -1,20 +1,20 @@
 {
   "ok": true,
   "wave": "2F",
-  "generatedAt": "2026-09-27T18:54:00.161Z",
+  "generatedAt": "2026-09-28T14:39:07.353Z",
   "citationGraph": {
-    "total": 6439,
-    "resolved": 182,
-    "unresolved": 6257
+    "total": 6969,
+    "resolved": 197,
+    "unresolved": 6772
   },
   "authorityNormalizationGap": {
     "with_citation": 1362,
     "missing_normalized": 0
   },
   "families": {
-    "us_reports": 3003,
-    "federal_reporter": 2764,
-    "federal_supplement": 220,
+    "us_reports": 3365,
+    "federal_reporter": 2904,
+    "federal_supplement": 248,
     "regional_reporter": 0,
     "usc": 349,
     "cfr": 47,
@@ -28,7 +28,7 @@
     "unknown": 0
   },
   "whyUnresolved": {
-    "A_target_absent": 6256,
+    "A_target_absent": 6771,
     "B_normalization_mismatch": 0,
     "C_parser_gap": 0,
     "D_ambiguous": 0,
@@ -36,12 +36,12 @@
     "F_unsupported_family": 0
   },
   "sqlUnresolvedHints": {
-    "us_reports": 3003,
-    "federal_reporter": 2764,
-    "federal_supplement": 221,
+    "us_reports": 3365,
+    "federal_reporter": 2904,
+    "federal_supplement": 249,
     "usc": 349,
     "cfr": 47,
-    "unresolved_total": 6257
+    "unresolved_total": 6772
   },
   "samples": {
     "us_reports": [
@@ -317,7 +317,7 @@
       "E_malformed",
       "F_unsupported_family"
     ],
-    "edgesAudited": 6439,
-    "authoritiesIndexed": 3333
+    "edgesAudited": 6969,
+    "authoritiesIndexed": 3588
   }
 }

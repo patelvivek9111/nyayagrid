@@ -1,20 +1,20 @@
 {
   "ok": true,
   "wave": "2F",
-  "generatedAt": "2026-09-27T18:53:31.981Z",
+  "generatedAt": "2026-09-28T14:38:33.637Z",
   "citationGraph": {
-    "total": 6439,
-    "resolved": 182,
-    "unresolved": 6257
+    "total": 6969,
+    "resolved": 192,
+    "unresolved": 6777
   },
   "authorityNormalizationGap": {
     "with_citation": 1362,
     "missing_normalized": 0
   },
   "families": {
-    "us_reports": 3003,
-    "federal_reporter": 2764,
-    "federal_supplement": 220,
+    "us_reports": 3365,
+    "federal_reporter": 2904,
+    "federal_supplement": 248,
     "regional_reporter": 0,
     "usc": 349,
     "cfr": 47,
@@ -28,7 +28,7 @@
     "unknown": 0
   },
   "whyUnresolved": {
-    "A_target_absent": 6256,
+    "A_target_absent": 6771,
     "B_normalization_mismatch": 0,
     "C_parser_gap": 0,
     "D_ambiguous": 0,
@@ -36,12 +36,12 @@
     "F_unsupported_family": 0
   },
   "sqlUnresolvedHints": {
-    "us_reports": 3003,
-    "federal_reporter": 2764,
-    "federal_supplement": 221,
+    "us_reports": 3365,
+    "federal_reporter": 2904,
+    "federal_supplement": 249,
     "usc": 349,
     "cfr": 47,
-    "unresolved_total": 6257
+    "unresolved_total": 6777
   },
   "samples": {
     "us_reports": [
@@ -78,12 +78,6 @@
     ],
     "federal_reporter": [
       {
-        "raw": "294 F.2d 150",
-        "normalized": "294 F.2D 150",
-        "why": "A_target_absent",
-        "resolved": false
-      },
-      {
         "raw": "799 F.2d 955",
         "normalized": "799 F.2d 955",
         "why": "A_target_absent",
@@ -106,36 +100,42 @@
         "normalized": "52 F.2d 764",
         "why": "A_target_absent",
         "resolved": false
+      },
+      {
+        "raw": "692 F.2d 1189",
+        "normalized": "692 F.2d 1189",
+        "why": "A_target_absent",
+        "resolved": false
       }
     ],
     "federal_supplement": [
       {
-        "raw": "411 F. Supp. 429",
-        "normalized": "411 F. SUPP. 429",
-        "why": "A_target_absent",
-        "resolved": false
-      },
-      {
         "raw": "678 F. Supp. 151",
-        "normalized": "678 F. SUPP. 151",
+        "normalized": "678 F. Supp. 151",
         "why": "A_target_absent",
         "resolved": false
       },
       {
         "raw": "287 F. Supp. 269",
-        "normalized": "287 F. SUPP. 269",
+        "normalized": "287 F. Supp. 269",
         "why": "A_target_absent",
         "resolved": false
       },
       {
         "raw": "489 F. Supp. 901",
-        "normalized": "489 F. SUPP. 901",
+        "normalized": "489 F. Supp. 901",
         "why": "A_target_absent",
         "resolved": false
       },
       {
         "raw": "518 F. Supp. 1127",
-        "normalized": "518 F. SUPP. 1127",
+        "normalized": "518 F. Supp. 1127",
+        "why": "A_target_absent",
+        "resolved": false
+      },
+      {
+        "raw": "554 F. Supp. 1212",
+        "normalized": "554 F. Supp. 1212",
         "why": "A_target_absent",
         "resolved": false
       }
@@ -265,11 +265,6 @@
         "family": "us_reports"
       },
       {
-        "raw": "294 F.2d 150",
-        "normalized": "294 F.2D 150",
-        "family": "federal_reporter"
-      },
-      {
         "raw": "527 U.S. 706",
         "normalized": "527 U.S. 706",
         "family": "us_reports"
@@ -277,6 +272,11 @@
       {
         "raw": "567 U.S. 460",
         "normalized": "567 U.S. 460",
+        "family": "us_reports"
+      },
+      {
+        "raw": "253 U.S. 113",
+        "normalized": "253 U.S. 113",
         "family": "us_reports"
       }
     ],
@@ -317,7 +317,7 @@
       "E_malformed",
       "F_unsupported_family"
     ],
-    "edgesAudited": 6439,
-    "authoritiesIndexed": 3333
+    "edgesAudited": 6969,
+    "authoritiesIndexed": 3588
   }
 }

@@ -3,24 +3,24 @@
   "wave": "queue2-offline-full",
   "courtListenerHttpCalls": 0,
   "featureAgents": "0",
-  "generatedAt": "2026-09-27T18:53:22.918Z",
+  "generatedAt": "2026-09-28T14:38:23.767Z",
   "totals": {
-    "authorities": 3333,
-    "cases": 2016,
-    "cl_cases": 1971,
+    "authorities": 3588,
+    "cases": 2271,
+    "cl_cases": 2226,
     "statutes": 904,
     "regulations": 158,
     "rules": 254,
     "with_normalized_citation": 1362,
-    "metadata_normalized": 3333,
-    "with_canonical_url": 3333
+    "metadata_normalized": 3588,
+    "with_canonical_url": 3588
   },
   "perJur": [
     {
       "j": "AK",
-      "authorities": 42,
-      "cases": 20,
-      "high_court_cases": 20,
+      "authorities": 67,
+      "cases": 45,
+      "high_court_cases": 45,
       "intermediate_appellate_cases": 0,
       "statutes": 18,
       "regulations": 0,
@@ -57,9 +57,9 @@
     },
     {
       "j": "AZ",
-      "authorities": 45,
-      "cases": 20,
-      "high_court_cases": 20,
+      "authorities": 71,
+      "cases": 46,
+      "high_court_cases": 46,
       "intermediate_appellate_cases": 0,
       "statutes": 15,
       "regulations": 6,
@@ -83,9 +83,9 @@
     },
     {
       "j": "CO",
-      "authorities": 42,
-      "cases": 20,
-      "high_court_cases": 20,
+      "authorities": 68,
+      "cases": 46,
+      "high_court_cases": 46,
       "intermediate_appellate_cases": 0,
       "statutes": 15,
       "regulations": 3,
@@ -96,9 +96,9 @@
     },
     {
       "j": "CT",
-      "authorities": 46,
-      "cases": 20,
-      "high_court_cases": 20,
+      "authorities": 72,
+      "cases": 46,
+      "high_court_cases": 46,
       "intermediate_appellate_cases": 0,
       "statutes": 15,
       "regulations": 7,
@@ -148,9 +148,9 @@
     },
     {
       "j": "GA",
-      "authorities": 46,
-      "cases": 20,
-      "high_court_cases": 20,
+      "authorities": 72,
+      "cases": 46,
+      "high_court_cases": 46,
       "intermediate_appellate_cases": 0,
       "statutes": 15,
       "regulations": 6,
@@ -161,9 +161,9 @@
     },
     {
       "j": "HI",
-      "authorities": 42,
-      "cases": 20,
-      "high_court_cases": 20,
+      "authorities": 67,
+      "cases": 45,
+      "high_court_cases": 45,
       "intermediate_appellate_cases": 0,
       "statutes": 18,
       "regulations": 0,
@@ -213,9 +213,9 @@
     },
     {
       "j": "IN",
-      "authorities": 47,
-      "cases": 20,
-      "high_court_cases": 20,
+      "authorities": 72,
+      "cases": 45,
+      "high_court_cases": 45,
       "intermediate_appellate_cases": 0,
       "statutes": 18,
       "regulations": 5,
@@ -226,9 +226,9 @@
     },
     {
       "j": "KS",
-      "authorities": 42,
-      "cases": 20,
-      "high_court_cases": 20,
+      "authorities": 67,
+      "cases": 45,
+      "high_court_cases": 45,
       "intermediate_appellate_cases": 0,
       "statutes": 18,
       "regulations": 0,
@@ -239,9 +239,9 @@
     },
     {
       "j": "KY",
-      "authorities": 42,
-      "cases": 20,
-      "high_court_cases": 20,
+      "authorities": 67,
+      "cases": 45,
+      "high_court_cases": 45,
       "intermediate_appellate_cases": 0,
       "statutes": 18,
       "regulations": 0,
@@ -278,9 +278,9 @@
     },
     {
       "j": "MD",
-      "authorities": 42,
-      "cases": 20,
-      "high_court_cases": 20,
+      "authorities": 68,
+      "cases": 46,
+      "high_court_cases": 46,
       "intermediate_appellate_cases": 0,
       "statutes": 15,
       "regulations": 3,
@@ -694,9 +694,9 @@
     }
   ],
   "clChunks": {
-    "cl_authorities": 1971,
-    "chunks": 44689,
-    "with_embedding": 44689,
+    "cl_authorities": 2226,
+    "chunks": 50589,
+    "with_embedding": 50589,
     "authorities_without_chunks": 0,
     "chunks_without_embedding": 0
   },
@@ -713,15 +713,7 @@
         "n": 15
       },
       {
-        "canonical_source_url": "https://www.legis.ga.gov/",
-        "n": 13
-      },
-      {
         "canonical_source_url": "https://code.dccouncil.gov/",
-        "n": 13
-      },
-      {
-        "canonical_source_url": "https://www.capitol.hawaii.gov/",
         "n": 13
       },
       {
@@ -729,23 +721,15 @@
         "n": 13
       },
       {
-        "canonical_source_url": "https://www.ncleg.gov/",
-        "n": 10
+        "canonical_source_url": "https://www.capitol.hawaii.gov/",
+        "n": 13
+      },
+      {
+        "canonical_source_url": "https://www.legis.ga.gov/",
+        "n": 13
       },
       {
         "canonical_source_url": "https://legislature.vermont.gov/",
-        "n": 10
-      },
-      {
-        "canonical_source_url": "https://www.rilegislature.gov/",
-        "n": 10
-      },
-      {
-        "canonical_source_url": "https://www.wyoleg.gov/",
-        "n": 10
-      },
-      {
-        "canonical_source_url": "https://www.revisor.mn.gov/",
         "n": 10
       },
       {
@@ -753,27 +737,7 @@
         "n": 10
       },
       {
-        "canonical_source_url": "https://iga.in.gov/",
-        "n": 10
-      },
-      {
-        "canonical_source_url": "https://sdlegislature.gov/",
-        "n": 10
-      },
-      {
-        "canonical_source_url": "https://www.mo.gov/",
-        "n": 10
-      },
-      {
-        "canonical_source_url": "https://mgaleg.maryland.gov/",
-        "n": 10
-      },
-      {
-        "canonical_source_url": "https://www.leg.state.nv.us/",
-        "n": 10
-      },
-      {
-        "canonical_source_url": "https://www.legis.iowa.gov/",
+        "canonical_source_url": "https://www.rilegislature.gov/",
         "n": 10
       },
       {
@@ -781,7 +745,43 @@
         "n": 10
       },
       {
+        "canonical_source_url": "https://www.revisor.mn.gov/",
+        "n": 10
+      },
+      {
         "canonical_source_url": "https://www.kslegislature.gov/",
+        "n": 10
+      },
+      {
+        "canonical_source_url": "https://www.ncleg.gov/",
+        "n": 10
+      },
+      {
+        "canonical_source_url": "https://iga.in.gov/",
+        "n": 10
+      },
+      {
+        "canonical_source_url": "https://www.mo.gov/",
+        "n": 10
+      },
+      {
+        "canonical_source_url": "https://www.legis.iowa.gov/",
+        "n": 10
+      },
+      {
+        "canonical_source_url": "https://www.leg.state.nv.us/",
+        "n": 10
+      },
+      {
+        "canonical_source_url": "https://sdlegislature.gov/",
+        "n": 10
+      },
+      {
+        "canonical_source_url": "https://mgaleg.maryland.gov/",
+        "n": 10
+      },
+      {
+        "canonical_source_url": "https://www.wyoleg.gov/",
         "n": 10
       }
     ],
@@ -877,15 +877,105 @@
     "missing_normalized_citation": 0,
     "missing_canonical_url": 0,
     "missing_provenance": 0,
-    "total": 3333
+    "total": 3588
   },
   "currentness": {
     "historical": 80,
     "current_as_of_source_date": 1304,
-    "unknown": 1949,
-    "last_checked": 3198
+    "unknown": 2204,
+    "last_checked": 3453
   },
   "corpusIngestJobs": [
+    {
+      "cl_court": "md",
+      "court_id": "st-md-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11246774",
+      "items_imported": 45,
+      "target_max": 45,
+      "updated_at": "2026-09-28T14:09:18.750Z"
+    },
+    {
+      "cl_court": "kan",
+      "court_id": "st-ks-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11278590",
+      "items_imported": 45,
+      "target_max": 45,
+      "updated_at": "2026-09-28T14:02:38.692Z"
+    },
+    {
+      "cl_court": "ind",
+      "court_id": "st-in-high",
+      "status": "completed",
+      "cursor": "cl-opinion-10770025",
+      "items_imported": 45,
+      "target_max": 45,
+      "updated_at": "2026-09-28T13:55:37.962Z"
+    },
+    {
+      "cl_court": "haw",
+      "court_id": "st-hi-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11404005",
+      "items_imported": 45,
+      "target_max": 45,
+      "updated_at": "2026-09-28T13:42:56.454Z"
+    },
+    {
+      "cl_court": "ga",
+      "court_id": "st-ga-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11335741",
+      "items_imported": 45,
+      "target_max": 45,
+      "updated_at": "2026-09-28T13:37:22.502Z"
+    },
+    {
+      "cl_court": "conn",
+      "court_id": "st-ct-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11299467",
+      "items_imported": 45,
+      "target_max": 45,
+      "updated_at": "2026-09-27T19:56:38.356Z"
+    },
+    {
+      "cl_court": "colo",
+      "court_id": "st-co-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11437571",
+      "items_imported": 45,
+      "target_max": 45,
+      "updated_at": "2026-09-27T19:52:06.108Z"
+    },
+    {
+      "cl_court": "ariz",
+      "court_id": "st-az-high",
+      "status": "completed",
+      "cursor": "cl-opinion-10477030",
+      "items_imported": 45,
+      "target_max": 45,
+      "updated_at": "2026-09-27T19:45:19.460Z"
+    },
+    {
+      "cl_court": "alaska",
+      "court_id": "st-ak-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11411783",
+      "items_imported": 45,
+      "target_max": 45,
+      "updated_at": "2026-09-27T19:38:10.816Z"
+    },
+    {
+      "cl_court": "ky",
+      "court_id": "st-ky-high",
+      "status": "completed",
+      "cursor": "cl-opinion-11262760",
+      "items_imported": 45,
+      "target_max": 45,
+      "updated_at": "2026-09-27T19:34:02.256Z"
+    },
     {
       "cl_court": "ala",
       "court_id": "st-al-high",
@@ -1121,51 +1211,6 @@
       "updated_at": "2026-09-23T22:30:27.110Z"
     },
     {
-      "cl_court": "md",
-      "court_id": "st-md-high",
-      "status": "completed",
-      "cursor": "cl-opinion-11344718",
-      "items_imported": 19,
-      "target_max": 19,
-      "updated_at": "2026-09-23T22:13:25.598Z"
-    },
-    {
-      "cl_court": "ga",
-      "court_id": "st-ga-high",
-      "status": "completed",
-      "cursor": "cl-opinion-11349677",
-      "items_imported": 19,
-      "target_max": 19,
-      "updated_at": "2026-09-23T22:08:30.784Z"
-    },
-    {
-      "cl_court": "conn",
-      "court_id": "st-ct-high",
-      "status": "completed",
-      "cursor": "cl-opinion-11391933",
-      "items_imported": 19,
-      "target_max": 19,
-      "updated_at": "2026-09-23T02:29:10.780Z"
-    },
-    {
-      "cl_court": "colo",
-      "court_id": "st-co-high",
-      "status": "completed",
-      "cursor": "cl-opinion-11442180",
-      "items_imported": 19,
-      "target_max": 19,
-      "updated_at": "2026-09-23T02:22:08.597Z"
-    },
-    {
-      "cl_court": "ariz",
-      "court_id": "st-az-high",
-      "status": "completed",
-      "cursor": "cl-opinion-11146078",
-      "items_imported": 19,
-      "target_max": 19,
-      "updated_at": "2026-09-23T01:48:22.168Z"
-    },
-    {
       "cl_court": "wva",
       "court_id": "st-wv-high",
       "status": "completed",
@@ -1200,51 +1245,6 @@
       "items_imported": 20,
       "target_max": 20,
       "updated_at": "2026-09-23T01:22:02.286Z"
-    },
-    {
-      "cl_court": "ind",
-      "court_id": "st-in-high",
-      "status": "completed",
-      "cursor": "cl-opinion-11138297",
-      "items_imported": 20,
-      "target_max": 20,
-      "updated_at": "2026-09-23T00:32:39.063Z"
-    },
-    {
-      "cl_court": "ky",
-      "court_id": "st-ky-high",
-      "status": "completed",
-      "cursor": "cl-opinion-11314457",
-      "items_imported": 20,
-      "target_max": 20,
-      "updated_at": "2026-09-23T00:26:01.548Z"
-    },
-    {
-      "cl_court": "kan",
-      "court_id": "st-ks-high",
-      "status": "completed",
-      "cursor": "cl-opinion-11315084",
-      "items_imported": 20,
-      "target_max": 20,
-      "updated_at": "2026-09-23T00:21:41.373Z"
-    },
-    {
-      "cl_court": "haw",
-      "court_id": "st-hi-high",
-      "status": "completed",
-      "cursor": "cl-opinion-11428185",
-      "items_imported": 20,
-      "target_max": 20,
-      "updated_at": "2026-09-23T00:13:24.095Z"
-    },
-    {
-      "cl_court": "alaska",
-      "court_id": "st-ak-high",
-      "status": "completed",
-      "cursor": "cl-opinion-11421907",
-      "items_imported": 20,
-      "target_max": 20,
-      "updated_at": "2026-09-22T22:12:45.595Z"
     },
     {
       "cl_court": "massappct",
@@ -1516,7 +1516,7 @@
       "n": 45
     },
     {
-      "court_id": "st-vt-high",
+      "court_id": "st-ok-high",
       "n": 45
     },
     {
@@ -1524,39 +1524,19 @@
       "n": 45
     },
     {
-      "court_id": "st-nv-high",
-      "n": 45
-    },
-    {
-      "court_id": "st-la-high",
-      "n": 45
-    },
-    {
-      "court_id": "st-id-high",
-      "n": 45
-    },
-    {
-      "court_id": "st-al-high",
-      "n": 45
-    },
-    {
-      "court_id": "st-nd-high",
-      "n": 45
-    },
-    {
       "court_id": "st-nh-high",
       "n": 45
     },
     {
-      "court_id": "st-dc-high",
+      "court_id": "st-in-high",
       "n": 45
     },
     {
-      "court_id": "st-nm-high",
+      "court_id": "st-md-high",
       "n": 45
     },
     {
-      "court_id": "st-ok-high",
+      "court_id": "st-hi-high",
       "n": 45
     },
     {
@@ -1576,7 +1556,67 @@
       "n": 45
     },
     {
+      "court_id": "st-dc-high",
+      "n": 45
+    },
+    {
+      "court_id": "st-nm-high",
+      "n": 45
+    },
+    {
+      "court_id": "st-id-high",
+      "n": 45
+    },
+    {
+      "court_id": "st-al-high",
+      "n": 45
+    },
+    {
+      "court_id": "st-nd-high",
+      "n": 45
+    },
+    {
+      "court_id": "st-ky-high",
+      "n": 45
+    },
+    {
+      "court_id": "st-az-high",
+      "n": 45
+    },
+    {
+      "court_id": "st-vt-high",
+      "n": 45
+    },
+    {
+      "court_id": "st-ga-high",
+      "n": 45
+    },
+    {
+      "court_id": "st-ct-high",
+      "n": 45
+    },
+    {
+      "court_id": "st-ks-high",
+      "n": 45
+    },
+    {
+      "court_id": "st-la-high",
+      "n": 45
+    },
+    {
       "court_id": "st-sc-high",
+      "n": 45
+    },
+    {
+      "court_id": "st-co-high",
+      "n": 45
+    },
+    {
+      "court_id": "st-ak-high",
+      "n": 45
+    },
+    {
+      "court_id": "st-nv-high",
       "n": 45
     },
     {
@@ -1592,7 +1632,7 @@
       "n": 22
     },
     {
-      "court_id": "st-ca-high",
+      "court_id": "st-va-high",
       "n": 20
     },
     {
@@ -1600,31 +1640,7 @@
       "n": 20
     },
     {
-      "court_id": "st-ri-high",
-      "n": 20
-    },
-    {
-      "court_id": "st-va-high",
-      "n": 20
-    },
-    {
-      "court_id": "st-in-high",
-      "n": 20
-    },
-    {
       "court_id": "st-wv-high",
-      "n": 20
-    },
-    {
-      "court_id": "st-hi-high",
-      "n": 20
-    },
-    {
-      "court_id": "st-pa-high",
-      "n": 20
-    },
-    {
-      "court_id": "st-ky-high",
       "n": 20
     },
     {
@@ -1636,19 +1652,15 @@
       "n": 20
     },
     {
+      "court_id": "st-ca-high",
+      "n": 20
+    },
+    {
       "court_id": "st-il-high",
       "n": 20
     },
     {
       "court_id": "st-or-high",
-      "n": 20
-    },
-    {
-      "court_id": "st-ks-high",
-      "n": 20
-    },
-    {
-      "court_id": "st-ma-high",
       "n": 20
     },
     {
@@ -1660,7 +1672,11 @@
       "n": 20
     },
     {
-      "court_id": "st-ak-high",
+      "court_id": "st-ri-high",
+      "n": 20
+    },
+    {
+      "court_id": "st-pa-high",
       "n": 20
     },
     {
@@ -1668,27 +1684,11 @@
       "n": 20
     },
     {
-      "court_id": "st-oh-high",
-      "n": 19
-    },
-    {
-      "court_id": "st-ga-high",
-      "n": 19
-    },
-    {
-      "court_id": "st-co-high",
-      "n": 19
-    },
-    {
-      "court_id": "st-md-high",
-      "n": 19
+      "court_id": "st-ma-high",
+      "n": 20
     },
     {
       "court_id": "st-nc-high",
-      "n": 19
-    },
-    {
-      "court_id": "st-ct-high",
       "n": 19
     },
     {
@@ -1696,27 +1696,11 @@
       "n": 19
     },
     {
-      "court_id": "st-az-high",
+      "court_id": "st-oh-high",
       "n": 19
     },
     {
-      "court_id": "st-tx-app",
-      "n": 15
-    },
-    {
-      "court_id": "st-ma-app",
-      "n": 15
-    },
-    {
-      "court_id": "st-ny-app",
-      "n": 15
-    },
-    {
-      "court_id": "st-fl-app",
-      "n": 15
-    },
-    {
-      "court_id": "st-il-app",
+      "court_id": "st-pa-super",
       "n": 15
     },
     {
@@ -1724,7 +1708,23 @@
       "n": 15
     },
     {
-      "court_id": "st-pa-super",
+      "court_id": "st-il-app",
+      "n": 15
+    },
+    {
+      "court_id": "st-fl-app",
+      "n": 15
+    },
+    {
+      "court_id": "st-ny-app",
+      "n": 15
+    },
+    {
+      "court_id": "st-tx-app",
+      "n": 15
+    },
+    {
+      "court_id": "st-ma-app",
       "n": 15
     }
   ],

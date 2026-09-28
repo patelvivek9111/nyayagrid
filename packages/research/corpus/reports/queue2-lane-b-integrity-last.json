@@ -1,12 +1,12 @@
 {
-  "at": "2026-09-27T18:57:24.809Z",
+  "at": "2026-09-28T14:41:21.729Z",
   "duplicateSourceIds": 0,
   "orphanChunks": 0,
   "clSourceExternalIdDuplicates": 0,
   "missingEmbeddings": 0,
   "authoritiesWithoutChunks": 0,
-  "chunks": 47313,
-  "embeddings": 47313,
+  "chunks": 53213,
+  "embeddings": 53213,
   "normalization": {
     "missing_court_id": 1317,
     "missing_state": 0,
@@ -16,7 +16,7 @@
     "missing_normalized_citation": 0,
     "missing_canonical_url": 0,
     "missing_provenance": 0,
-    "total": 3333
+    "total": 3588
   },
   "pass": true
 }

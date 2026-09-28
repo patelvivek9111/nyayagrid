@@ -1,16 +1,16 @@
 {
   "ok": true,
   "wave": "2F",
-  "generatedAt": "2026-09-27T18:53:51.500Z",
+  "generatedAt": "2026-09-28T14:38:55.581Z",
   "dryRun": false,
   "before": {
-    "total": 3333,
+    "total": 3588,
     "with_citation": 1362,
     "with_normalized": 1362,
     "missing_normalized": 0
   },
   "after": {
-    "total": 3333,
+    "total": 3588,
     "with_citation": 1362,
     "with_normalized": 1362,
     "missing_normalized": 0

@@ -3,11 +3,11 @@
   "mutations": 0,
   "courtListenerHttpCalls": 0,
   "featureAgents": "0",
-  "generatedAt": "2026-09-27T18:54:52.420Z",
+  "generatedAt": "2026-09-28T14:40:02.261Z",
   "corpus": {
-    "authorities": 3333,
-    "cases": 2016,
-    "cl_cases": 1971,
+    "authorities": 3588,
+    "cases": 2271,
+    "cl_cases": 2226,
     "statutes": 904,
     "regulations": 158,
     "rules": 254
@@ -18,15 +18,15 @@
   "jurisdictions": [
     {
       "j": "AK",
-      "authorities": 42,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 67,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
       "oldest": 2026,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 7
+      "citationTargetAbsent": 39
     },
     {
       "j": "AL",
@@ -54,15 +54,15 @@
     },
     {
       "j": "AZ",
-      "authorities": 45,
-      "cases": 20,
-      "clCases": 19,
-      "highCourt": 20,
+      "authorities": 71,
+      "cases": 46,
+      "clCases": 45,
+      "highCourt": 46,
       "intermediate": 0,
       "oldest": 2007,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 31
+      "citationTargetAbsent": 129
     },
     {
       "j": "CA",
@@ -78,10 +78,10 @@
     },
     {
       "j": "CO",
-      "authorities": 42,
-      "cases": 20,
-      "clCases": 19,
-      "highCourt": 20,
+      "authorities": 68,
+      "cases": 46,
+      "clCases": 45,
+      "highCourt": 46,
       "intermediate": 0,
       "oldest": 1993,
       "newest": 2026,
@@ -90,15 +90,15 @@
     },
     {
       "j": "CT",
-      "authorities": 46,
-      "cases": 20,
-      "clCases": 19,
-      "highCourt": 20,
+      "authorities": 72,
+      "cases": 46,
+      "clCases": 45,
+      "highCourt": 46,
       "intermediate": 0,
       "oldest": 2003,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 53
+      "citationTargetAbsent": 165
     },
     {
       "j": "DC",
@@ -138,27 +138,27 @@
     },
     {
       "j": "GA",
-      "authorities": 46,
-      "cases": 20,
-      "clCases": 19,
-      "highCourt": 20,
+      "authorities": 72,
+      "cases": 46,
+      "clCases": 45,
+      "highCourt": 46,
       "intermediate": 0,
       "oldest": 1985,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 19
+      "citationTargetAbsent": 48
     },
     {
       "j": "HI",
-      "authorities": 42,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 67,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
       "oldest": 2026,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 13
+      "citationTargetAbsent": 15
     },
     {
       "j": "IA",
@@ -198,39 +198,39 @@
     },
     {
       "j": "IN",
-      "authorities": 47,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 72,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
+      "intermediate": 0,
+      "oldest": 2024,
+      "newest": 2026,
+      "uniqueCourts": 1,
+      "citationTargetAbsent": 94
+    },
+    {
+      "j": "KS",
+      "authorities": 67,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
       "oldest": 2025,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 39
-    },
-    {
-      "j": "KS",
-      "authorities": 42,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
-      "intermediate": 0,
-      "oldest": 2026,
-      "newest": 2026,
-      "uniqueCourts": 1,
-      "citationTargetAbsent": 23
+      "citationTargetAbsent": 95
     },
     {
       "j": "KY",
-      "authorities": 42,
-      "cases": 20,
-      "clCases": 20,
-      "highCourt": 20,
+      "authorities": 67,
+      "cases": 45,
+      "clCases": 45,
+      "highCourt": 45,
       "intermediate": 0,
       "oldest": 2026,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 31
+      "citationTargetAbsent": 93
     },
     {
       "j": "LA",
@@ -258,15 +258,15 @@
     },
     {
       "j": "MD",
-      "authorities": 42,
-      "cases": 20,
-      "clCases": 19,
-      "highCourt": 20,
+      "authorities": 68,
+      "cases": 46,
+      "clCases": 45,
+      "highCourt": 46,
       "intermediate": 0,
       "oldest": 1987,
       "newest": 2026,
       "uniqueCourts": 1,
-      "citationTargetAbsent": 4
+      "citationTargetAbsent": 57
     },
     {
       "j": "ME",

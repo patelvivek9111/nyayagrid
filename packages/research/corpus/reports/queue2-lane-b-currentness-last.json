@@ -1,16 +1,25 @@
 {
-  "at": "2026-09-27T18:57:24.809Z",
-  "source": "legal_authorities.currentness_status (local DB metadata only)",
-  "counts": {
+  "at": "2026-09-28T14:41:21.729Z",
+  "source": "delta vs prior Lane B baseline (2026-09-27)",
+  "prior": {
     "historical": 80,
     "current_as_of_source_date": 1304,
     "unknown": 1949,
     "last_checked": 3198
   },
-  "missingEffectiveOrCurrentness": 1949,
-  "historical": 80,
-  "currentAsOfSourceDate": 1304,
+  "current": {
+    "historical": 80,
+    "current_as_of_source_date": 1304,
+    "unknown": 2204,
+    "last_checked": 3453
+  },
+  "delta": {
+    "historical": 0,
+    "current_as_of_source_date": 0,
+    "unknown": 255,
+    "last_checked": 255
+  },
   "missingDecisionDate": 1317,
-  "note": "Audit only — does not claim currency without corpus evidence",
+  "note": "Audit delta only — no currency claims without evidence",
   "courtListenerHttpCalls": 0
 }

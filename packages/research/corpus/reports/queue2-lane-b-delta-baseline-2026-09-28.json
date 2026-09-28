@@ -1,0 +1,17 @@
+{
+  "at": "2026-09-28T14:37:52.222Z",
+  "prior": {
+    "corpus": {
+      "authorities": 3333,
+      "cases": 2016,
+      "clCases": 1971,
+      "chunks": 47313
+    },
+    "currentness": {
+      "historical": 80,
+      "current_as_of_source_date": 1304,
+      "unknown": 1949,
+      "last_checked": 3198
+    }
+  }
+}
