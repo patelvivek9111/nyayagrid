@@ -47,8 +47,8 @@ test("stale completed laneA converges to VT without fabricating a checkpoint", (
     now: NOW,
   });
   assert.equal(result.ok, true);
-  assert.equal(result.state.laneA.court, "mo");
-  assert.equal(result.state.laneA.jurisdiction, "MO");
+  assert.equal(result.state.laneA.court, "del");
+  assert.equal(result.state.laneA.jurisdiction, "DE");
   assert.ok(
     result.state.laneA.qualifyingCaseCount >= 20 && result.state.laneA.qualifyingCaseCount <= 45,
     `qualifyingCaseCount=${result.state.laneA.qualifyingCaseCount}`,
@@ -67,8 +67,8 @@ test("stale completed laneA converges to VT without fabricating a checkpoint", (
   );
   assert.ok(
     result.state.laneA.checkpoint === "cl-opinion-11264687" || result.state.laneA.checkpoint == null ||
-      result.state.laneA.checkpoint === "cl-opinion-11347355" ||
-      state.laneA.checkpoint === "cl-opinion-11347355",
+      result.state.laneA.checkpoint === "cl-opinion-11400894" ||
+      state.laneA.checkpoint === "cl-opinion-11400894",
     `checkpoint=${result.state.laneA.checkpoint}`,
   );
   assert.deepEqual(result.inventedCheckpoints, []);
@@ -136,7 +136,7 @@ test("manual completion recognized and next target selected", () => {
     neonHold: loadNeonHoldArtifact(),
     now: NOW,
   });
-  assert.equal(result.state.laneA.court, "mo");
+  assert.equal(result.state.laneA.court, "del");
   assert.ok(result.state.completedCourts.includes("sc"));
   assert.equal(result.state.completedCourtEvidence.mich.source, "manual");
 });
@@ -154,8 +154,8 @@ test("status current target matches state; DB block separated from app health; q
     corpus: { authorities: 3208, cases: 1891, clCases: 1846 },
     health: { databaseConnectivity: "unknown", retrieval: "ok" },
   });
-  assert.equal(status.currentCourt, "mo");
-  assert.equal(status.currentJurisdiction, "MO");
+  assert.equal(status.currentCourt, "del");
+  assert.equal(status.currentJurisdiction, "DE");
   assert.ok(
     status.qualifyingCaseCount >= 20 && status.qualifyingCaseCount <= 45,
     `qualifyingCaseCount=${status.qualifyingCaseCount}`,
@@ -171,7 +171,7 @@ test("status current target matches state; DB block separated from app health; q
   );
   assert.ok(
     status.checkpoint === "cl-opinion-11264687" || status.checkpoint == null ||
-      status.checkpoint === "cl-opinion-11347355",
+      status.checkpoint === "cl-opinion-11400894",
     `checkpoint=${status.checkpoint}`,
   );
   assert.equal(status.worker, "STOPPED");
@@ -255,8 +255,8 @@ test("atomic write; reconciliation failure leaves old files intact", () => {
   assert.equal(ok.persisted, true);
   const written = JSON.parse(fs.readFileSync(statePath, "utf8"));
   const status = JSON.parse(fs.readFileSync(statusPath, "utf8"));
-  assert.equal(written.laneA.court, "mo");
-  assert.equal(status.currentCourt, "mo");
+  assert.equal(written.laneA.court, "del");
+  assert.equal(status.currentCourt, "del");
   assert.equal(ok.clRequests, 0);
   assert.equal(ok.childLaunches, 0);
   assert.equal(ok.mutations, 0);
@@ -281,7 +281,7 @@ test("dry-run reconciliation makes 0 CL calls / children / mutations", () => {
   assert.equal(dry.ok, true);
   assert.equal(dry.persisted, false);
   assert.equal(dry.dryRun, true);
-  assert.equal(dry.state.laneA.court, "mo");
+  assert.equal(dry.state.laneA.court, "del");
   assert.equal(fs.existsSync(statusPath), false);
   assert.equal(dry.clRequests, 0);
   assert.equal(dry.childLaunches, 0);

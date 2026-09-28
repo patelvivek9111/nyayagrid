@@ -1,0 +1,12 @@
+[
+  {"citation":"509 U.S. 579","authorityId":"21e48c5d-1258-4ca0-87d9-17fe11b86b60","clRequests":2,"expectedEdges":16,"title":"Daubert v. Merrell Dow Pharmaceuticals, Inc."},
+  {"citation":"200 U.S. 321","authorityId":"a3e0f1b9-8e86-4662-ab86-79ff415bdcd3","clRequests":2,"expectedEdges":15,"title":"United States v. Detroit Timber & Lumber Co."},
+  {"citation":"424 U.S. 319","authorityId":"f6129486-04e5-4e7a-90cf-3df2255ad310","clRequests":2,"expectedEdges":13,"title":"Mathews v. Eldridge"},
+  {"citation":"507 U.S. 725","authorityId":"1e07cdbc-8e06-4fdc-a300-58ec84ce1040","clRequests":2,"expectedEdges":13,"title":"United States v. Olano"},
+  {"citation":"560 U.S. 48","authorityId":"27a11b5c-d2bf-42d4-8082-4866e9a30f4e","clRequests":2,"expectedEdges":13,"title":"Graham v. Florida"},
+  {"citation":"597 U.S. 1","authorityId":"fc5082c4-6a39-4c38-a827-bb93db9d4967","clRequests":2,"expectedEdges":13,"title":"New York State Rifle & Pistol Assn., Inc. v. Bruen"},
+  {"citation":"462 U.S. 213","authorityId":"83949afa-33e2-4cec-8fe5-1e7b0138eef9","clRequests":2,"expectedEdges":12,"title":"Illinois v. Gates"},
+  {"citation":"602 U.S. 680","authorityId":"2faa7e9d-be1d-457c-a225-4ce13e013ea4","clRequests":2,"expectedEdges":12,"title":"United States v. Rahimi"},
+  {"citation":"393 U.S. 440","authorityId":"fb2b041d-8df2-464c-bf78-0be11ab9c917","clRequests":2,"expectedEdges":11,"title":"Presbyterian Church in US v. Mary Elizabeth Blue Hull Memorial Presbyterian Church"},
+  {"citation":"396 U.S. 367","authorityId":"faede4b2-95c7-4861-98cf-1043cc88f43d","clRequests":2,"expectedEdges":11,"title":"Maryland & Virginia Eldership of the Churches of God v. Church of God at Sharpsburg, Inc."}
+]

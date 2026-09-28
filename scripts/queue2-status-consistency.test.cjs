@@ -174,8 +174,8 @@ test("canonical committed status is consistent", () => {
   );
   const check = assertCanonicalStatusConsistency(status);
   assert.equal(check.ok, true, check.violations.join("; "));
-  assert.equal(status.currentCourt, "mo");
-  assert.equal(status.currentJurisdiction, "MO");
+  assert.equal(status.currentCourt, "del");
+  assert.equal(status.currentJurisdiction, "DE");
   assert.ok(
     status.runtimeState === "STOPPED" || status.runtimeState === "WAITING_FOR_NETWORK",
     `runtimeState=${status.runtimeState}`,

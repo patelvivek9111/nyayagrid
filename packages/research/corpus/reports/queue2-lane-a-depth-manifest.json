@@ -3,8 +3,8 @@
   "queue": "#2",
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
-  "version": 73,
-  "generatedAt": "2026-09-28T18:34:23.031Z",
+  "version": 76,
+  "generatedAt": "2026-09-28T19:13:38.606Z",
   "source": {
     "type": "live_db_snapshot",
     "snapshotPath": "packages/research/corpus/reports/queue2-lane-a-corpus-snapshot.json",
@@ -27,13 +27,13 @@
     "overfeedStrongJurisdictions": false
   },
   "corpusTotals": {
-    "authorities": 3742,
-    "cases": 2425,
+    "authorities": 3844,
+    "cases": 2527,
     "cl_cases": 2347,
     "statutes": 904,
     "regulations": 158,
     "rules": 254,
-    "clCases": 2380
+    "clCases": 2482
   },
   "reconciliation": {
     "ok": true,
@@ -48,15 +48,15 @@
     "wvCompleteAt": "2026-09-28T18:32:13.150Z"
   },
   "activePartial": {
-    "court": "mo",
-    "jurisdiction": "MO",
-    "count": 22,
+    "court": "del",
+    "jurisdiction": "DE",
+    "count": 29,
     "target": 45,
-    "checkpoint": "cl-opinion-9885161",
-    "status": "READY",
+    "checkpoint": "cl-opinion-11400894",
+    "status": "PARTIAL",
     "mappingStatus": "VERIFIED",
     "dataQuality": "LIVE_DB",
-    "jobLifecycle": "READY_FIRST_START"
+    "jobLifecycle": "PAUSED_RESUMABLE"
   },
   "unknownCount": 0,
   "falseZeroBlocked": 0,
@@ -1295,15 +1295,15 @@
       "preferredCourts": [
         "nj"
       ],
-      "currentAuthorities": 44,
-      "currentCases": 22,
-      "clCases": 20,
-      "highCourtCount": 22,
+      "currentAuthorities": 68,
+      "currentCases": 46,
+      "clCases": 44,
+      "highCourtCount": 46,
       "intermediateAppellateCount": 0,
       "earliestYear": 1960,
       "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 23,
+      "targetDelta": 0,
       "missingCourtLayers": [
         "intermediate"
       ],
@@ -1315,10 +1315,10 @@
       "authorityDeficit": 57,
       "historicalGapScore": 10,
       "doctrinalGapScore": 5,
-      "checkpoint": null,
+      "checkpoint": "cl-opinion-11214059",
       "mappingStatus": "VERIFIED",
-      "status": "READY",
-      "autonomousIngestBlocked": false,
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
       "dataQuality": "LIVE_DB",
       "score": 402
     },
@@ -1425,15 +1425,15 @@
       "preferredCourts": [
         "va"
       ],
-      "currentAuthorities": 48,
-      "currentCases": 22,
-      "clCases": 20,
-      "highCourtCount": 22,
+      "currentAuthorities": 72,
+      "currentCases": 46,
+      "clCases": 44,
+      "highCourtCount": 46,
       "intermediateAppellateCount": 0,
       "earliestYear": 1984,
       "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 23,
+      "targetDelta": 0,
       "missingCourtLayers": [
         "intermediate"
       ],
@@ -1445,10 +1445,10 @@
       "authorityDeficit": 53,
       "historicalGapScore": 10,
       "doctrinalGapScore": 5,
-      "checkpoint": null,
+      "checkpoint": "cl-opinion-10751405",
       "mappingStatus": "VERIFIED",
-      "status": "READY",
-      "autonomousIngestBlocked": false,
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
       "dataQuality": "LIVE_DB",
       "score": 371
     },
@@ -1625,15 +1625,15 @@
       "preferredCourts": [
         "mo"
       ],
-      "currentAuthorities": 43,
-      "currentCases": 22,
-      "clCases": 22,
-      "highCourtCount": 22,
+      "currentAuthorities": 67,
+      "currentCases": 46,
+      "clCases": 46,
+      "highCourtCount": 46,
       "intermediateAppellateCount": 0,
       "earliestYear": 2022,
       "latestYear": 2025,
       "targetCases": 45,
-      "targetDelta": 23,
+      "targetDelta": 0,
       "missingCourtLayers": [
         "intermediate"
       ],
@@ -1648,10 +1648,10 @@
       "authorityDeficit": 58,
       "historicalGapScore": 40,
       "doctrinalGapScore": 5,
-      "checkpoint": null,
+      "checkpoint": "cl-opinion-11094090",
       "mappingStatus": "VERIFIED",
-      "status": "READY",
-      "autonomousIngestBlocked": false,
+      "status": "COMPLETE_FOR_CURRENT_DEPTH",
+      "autonomousIngestBlocked": true,
       "dataQuality": "LIVE_DB",
       "score": 361
     },
@@ -2148,15 +2148,15 @@
       "preferredCourts": [
         "del"
       ],
-      "currentAuthorities": 48,
-      "currentCases": 22,
-      "clCases": 20,
-      "highCourtCount": 22,
+      "currentAuthorities": 55,
+      "currentCases": 29,
+      "clCases": 27,
+      "highCourtCount": 29,
       "intermediateAppellateCount": 0,
       "earliestYear": 1976,
       "latestYear": 2026,
       "targetCases": 45,
-      "targetDelta": 23,
+      "targetDelta": 16,
       "missingCourtLayers": [
         "intermediate"
       ],
@@ -2168,9 +2168,9 @@
       "authorityDeficit": 53,
       "historicalGapScore": 10,
       "doctrinalGapScore": 5,
-      "checkpoint": null,
+      "checkpoint": "cl-opinion-11400894",
       "mappingStatus": "VERIFIED",
-      "status": "READY",
+      "status": "PARTIAL",
       "autonomousIngestBlocked": false,
       "dataQuality": "LIVE_DB",
       "score": 266

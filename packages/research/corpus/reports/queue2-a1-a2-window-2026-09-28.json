@@ -1,0 +1,41 @@
+{
+  "classification": "MANUAL_QUEUE2_A1_A2_CITATION_RECOVERY_WINDOW",
+  "generatedAt": "2026-09-28T19:12:00.000Z",
+  "result": "PASS",
+  "start": {
+    "a1Target": "MO",
+    "startCount": 22,
+    "quota": { "minute": 30, "hour": 265, "day": 219 }
+  },
+  "A1": [
+    { "j": "MO", "start": 22, "end": 46, "added": 24, "clRequests": 53, "checkpoint": "cl-opinion-11094090" },
+    { "j": "NJ", "start": 22, "end": 46, "added": 24, "clRequests": 51, "checkpoint": "cl-opinion-11214059" },
+    { "j": "VA", "start": 22, "end": 46, "added": 24, "clRequests": 51, "checkpoint": "cl-opinion-10751405" },
+    { "j": "DE", "start": 22, "end": 29, "added": 7, "clRequests": 19, "checkpoint": "cl-opinion-11400894", "status": "PARTIAL_QUOTA_PAUSED" }
+  ],
+  "A2": {
+    "targetsAttempted": 10,
+    "targetsAcquired": 10,
+    "clRequests": 20,
+    "authoritiesAdded": 10,
+    "newlyResolved": 129,
+    "resolutionsPerClRequest": 6.45,
+    "resolutionsPerAuthority": 12.9,
+    "classification": "MIXED",
+    "classificationNote": "Exact edge unlock matched expected (129–130). Efficiency 6.45/req below pilot 13.21 because per-target edge unlocks were smaller (11–16 vs 16–66), not because of misses/failures."
+  },
+  "citationsBefore": { "extracted": 7220, "resolved": 382, "unresolved": 6838, "targetAbsent": 6838, "resolutionRatePct": 5.29 },
+  "citationsAfterA2Reresolve": { "extracted": 7265, "resolved": 515, "unresolved": 6750, "targetAbsent": 6750, "resolutionRatePct": 7.09 },
+  "citationsFinal": { "extracted": 7415, "resolved": 519, "unresolved": 6896, "targetAbsent": 6896, "resolutionRatePct": 7.0 },
+  "improvementA2": {
+    "newlyResolved": 133,
+    "fromBaseline382to515": 133,
+    "reresolveNewResolved": 129,
+    "targetAbsentReductionAtReresolve": 88,
+    "resolutionRateIncreasePctPoints": 1.8,
+    "resolutionsPerClRequest": 6.45,
+    "resolutionsPerAuthority": 12.9
+  },
+  "stopReason": "DE LOCAL_QUOTA_SAFETY_FLOOR / hour exhausted; durable DE 29/45",
+  "next": { "jurisdiction": "DE", "court": "del", "count": 29, "checkpoint": "cl-opinion-11400894" }
+}

@@ -85,15 +85,15 @@ test("manual completed courts are skipped and Vermont is next on the live manife
     now: NOW,
     executing: false,
   });
-  assert.equal(plan.nextCourt, "mo");
-  assert.equal(plan.state.laneA.jurisdiction, "MO");
+  assert.equal(plan.nextCourt, "del");
+  assert.equal(plan.state.laneA.jurisdiction, "DE");
   assert.ok(plan.state.laneA.count >= 20 && plan.state.laneA.count <= 45, `count=${plan.state.laneA.count}`);
   assert.equal(plan.state.laneA.target, 45);
   assert.equal(plan.state.laneA.mappingStatus, "VERIFIED");
   assert.ok(
     plan.state.laneA.checkpoint === "cl-opinion-11264687" || plan.state.laneA.checkpoint == null ||
-      plan.state.laneA.checkpoint === "cl-opinion-11347355" ||
-      state.laneA.checkpoint === "cl-opinion-11347355",
+      plan.state.laneA.checkpoint === "cl-opinion-11400894" ||
+      state.laneA.checkpoint === "cl-opinion-11400894",
     `checkpoint=${plan.state.laneA.checkpoint}`,
   );
   for (const court of COMPLETED) {
@@ -305,7 +305,7 @@ test("DB recovery clears the external block, keeps Vermont, and does not trust s
   assert.equal(recovered.state.databaseBlock.classification, "RECOVERED");
   assert.equal(recovered.state.databaseBlock.recoveredFrom, DATABASE_QUOTA_BLOCKED);
   assert.equal(recovered.allowCourtListener, true);
-  assert.equal(recovered.nextCourt, "mo");
+  assert.equal(recovered.nextCourt, "del");
   assert.ok(
     recovered.state.laneA.count >= 20 && recovered.state.laneA.count <= 45,
     `count=${recovered.state.laneA.count}`,

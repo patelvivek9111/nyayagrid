@@ -61,6 +61,9 @@ const MANUAL_COMPLETION_COURTS = new Set([
   "or",
   "ri",
   "wash",
+  "mo",
+  "nj",
+  "va",
 ]);
 const AUTONOMOUS_COMPLETION_COURTS = new Set(["wis"]);
 

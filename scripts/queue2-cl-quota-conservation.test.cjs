@@ -347,7 +347,7 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
       state.currentLane === "WAIT",
     `currentLane=${state.currentLane}`,
   );
-  assert.equal(state.laneA.court, "mo");
+  assert.equal(state.laneA.court, "del");
   assert.ok(state.laneA.count >= 20 && state.laneA.count <= 45, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
   assert.ok(
@@ -360,7 +360,7 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
   );
   assert.ok(
     state.laneA.checkpoint === "cl-opinion-11264687" || state.laneA.checkpoint == null ||
-      state.laneA.checkpoint === "cl-opinion-11347355",
+      state.laneA.checkpoint === "cl-opinion-11400894",
     `checkpoint=${state.laneA.checkpoint}`,
   );
   assert.equal(state.completedCourtEvidence.sc.checkpoint, "cl-opinion-11201513");
@@ -370,6 +370,8 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
   assert.equal(state.completedCourtEvidence.ga.checkpoint, "cl-opinion-11335741");
   assert.equal(state.completedCourtEvidence.md.checkpoint, "cl-opinion-11246774");
   assert.equal(state.completedCourtEvidence.wash.checkpoint, "cl-opinion-11264673");
+  assert.equal(state.completedCourtEvidence.mo.checkpoint, "cl-opinion-11094090");
+  assert.equal(state.completedCourtEvidence.va.checkpoint, "cl-opinion-10751405");
   assert.equal(state.completedCourtEvidence.ohio.checkpoint, "cl-opinion-11336890");
   assert.equal(state.completedCourtEvidence.nc.checkpoint, "cl-opinion-11125345");
   assert.equal(state.completedCourtEvidence.or.checkpoint, "cl-opinion-11154325");
@@ -377,6 +379,8 @@ test("Queue #3 never opens in replay; durable MI fixture matches preserve truth"
   assert.equal(state.completedCourtEvidence.ga.checkpoint, "cl-opinion-11335741");
   assert.equal(state.completedCourtEvidence.md.checkpoint, "cl-opinion-11246774");
   assert.equal(state.completedCourtEvidence.wash.checkpoint, "cl-opinion-11264673");
+  assert.equal(state.completedCourtEvidence.mo.checkpoint, "cl-opinion-11094090");
+  assert.equal(state.completedCourtEvidence.va.checkpoint, "cl-opinion-10751405");
   assert.equal(state.completedCourtEvidence.ohio.checkpoint, "cl-opinion-11336890");
   assert.equal(state.completedCourtEvidence.nc.checkpoint, "cl-opinion-11125345");
   assert.equal(state.completedCourtEvidence.or.checkpoint, "cl-opinion-11154325");
