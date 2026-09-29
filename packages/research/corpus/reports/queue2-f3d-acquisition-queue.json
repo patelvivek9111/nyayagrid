@@ -1,0 +1,44 @@
+{
+  "classification": "QUEUE2_CITATION_ACQUISITION_QUEUE",
+  "generatedAt": "2026-09-29T16:39:39.120Z",
+  "courtListenerHttpCalls": 0,
+  "source": "post_f3d_verified_pilot",
+  "A1_depthCompletion": {
+    "status": "COMPLETE",
+    "completed": 51,
+    "remaining": 0
+  },
+  "deny": [
+    "573 U.S. 373",
+    "573 U.S. 149"
+  ],
+  "F3D_citationTargetRecovery": {
+    "pilotClassification": "MIXED",
+    "acquired": [
+      "572 F.3d 455",
+      "918 F.3d 1025",
+      "516 F.3d 382",
+      "590 F.3d 1034",
+      "616 F.3d 321"
+    ],
+    "deferred": [],
+    "remainingHighDensityNote": "max remaining F.3d edges typically <=4 after pilot"
+  },
+  "compare": {
+    "f3d": 2.2,
+    "usRecent": 2.9
+  },
+  "federalGap": {
+    "us_reports": 2980,
+    "f3d": 1737,
+    "f2d": 554,
+    "f4th": 700,
+    "f_supp": 273,
+    "usc": 264,
+    "cfr": 42,
+    "federal_rules": 31,
+    "bestNextFamily": "us_reports",
+    "a2StillCostEffective": false,
+    "note": "U.S. still largest absences; F.3d acquireable with low waste but yield ~2.2/CL. LOC non-CL remains HOLD."
+  }
+}

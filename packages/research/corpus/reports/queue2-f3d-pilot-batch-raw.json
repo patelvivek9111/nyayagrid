@@ -1,0 +1,153 @@
+{
+  "ok": true,
+  "classification": "A2_F3D_VERIFIED_MICRO_BATCH",
+  "maxCalls": 15,
+  "acquireLimit": 5,
+  "courtListenerHttpCalls": 10,
+  "rateLimited": false,
+  "considered": 7,
+  "preverified": 5,
+  "acquired": 5,
+  "deferred": [],
+  "preverify": [
+    {
+      "citation": "572 F.3d 455",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 1449618,
+      "clRequests": 1
+    },
+    {
+      "citation": "918 F.3d 1025",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 4603409,
+      "clRequests": 1
+    },
+    {
+      "citation": "516 F.3d 382",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 1262428,
+      "clRequests": 1
+    },
+    {
+      "citation": "590 F.3d 1034",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 1434187,
+      "clRequests": 1
+    },
+    {
+      "citation": "616 F.3d 321",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 152732,
+      "clRequests": 1
+    }
+  ],
+  "results": [
+    {
+      "citation": "572 F.3d 455",
+      "status": "imported",
+      "authorityId": "ca959fcf-e1ee-4db3-995b-9792e4e56b22",
+      "sourceExternalId": "cl-opinion-1449618",
+      "clusterId": "1449618",
+      "opinionId": "1449618",
+      "embeddedChunks": 41,
+      "title": "United States v. Feemster",
+      "circuit": null,
+      "court": "United States Court of Appeals",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/1449618/",
+      "reporter": "F.3d"
+    },
+    {
+      "citation": "918 F.3d 1025",
+      "status": "imported",
+      "authorityId": "456327aa-0109-40c9-896d-4942bcb4b913",
+      "sourceExternalId": "cl-opinion-4380662",
+      "clusterId": "4603409",
+      "opinionId": "4380662",
+      "embeddedChunks": 22,
+      "title": "Jose Duran-Rodriguez v. William Barr",
+      "circuit": null,
+      "court": "United States Court of Appeals",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/4603409/",
+      "reporter": "F.3d"
+    },
+    {
+      "citation": "516 F.3d 382",
+      "status": "imported",
+      "authorityId": "16f1cb23-b87c-46ce-a5b2-460547ee1868",
+      "sourceExternalId": "cl-opinion-9845589",
+      "clusterId": "1262428",
+      "opinionId": "9845589",
+      "embeddedChunks": 32,
+      "title": "United States v. Vonner",
+      "circuit": null,
+      "court": "United States Court of Appeals",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/1262428/",
+      "reporter": "F.3d"
+    },
+    {
+      "citation": "590 F.3d 1034",
+      "status": "imported",
+      "authorityId": "fb7f4d71-2bdd-4ee4-9e8f-61c1b64ac1ec",
+      "sourceExternalId": "cl-opinion-1434187",
+      "clusterId": "1434187",
+      "opinionId": "1434187",
+      "embeddedChunks": 41,
+      "title": "Shrestha v. Holder",
+      "circuit": null,
+      "court": "United States Court of Appeals",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/1434187/",
+      "reporter": "F.3d"
+    },
+    {
+      "citation": "616 F.3d 321",
+      "status": "imported",
+      "authorityId": "3b667bd0-38b5-47e2-bf0b-92f13edac34b",
+      "sourceExternalId": "cl-opinion-152732",
+      "clusterId": "152732",
+      "opinionId": "152732",
+      "embeddedChunks": 41,
+      "title": "United States v. Lighty",
+      "circuit": null,
+      "court": "United States Court of Appeals",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/152732/",
+      "reporter": "F.3d"
+    }
+  ],
+  "corpus": {
+    "authorities": 4002,
+    "cases": 2685,
+    "cl_cases": 2640
+  },
+  "chunks": {
+    "chunks": 64302,
+    "embeddings": 64302,
+    "missing_embeddings": 0
+  },
+  "duplicateSourceIds": 0,
+  "orphans": 0
+}

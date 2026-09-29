@@ -1,0 +1,99 @@
+{
+  "classification": "MANUAL_QUEUE2_F3D_VERIFIED_RECOVERY_PILOT",
+  "generatedAt": "2026-09-29T16:40:00.000Z",
+  "result": "PARTIAL",
+  "quotaStart": { "minute": 30, "hour": 251, "day": 631 },
+  "quotaEndEstimated": { "minute": null, "hour": 241, "day": 621 },
+  "f3dInventory": {
+    "targetCount": 180,
+    "topDensities": [5, 5, 4, 4, 4, 4, 4, 3],
+    "preVerificationSuccessRate": 1.0,
+    "note": "Top F.3d absences max at 5 edges (expectedYield 2.5/CL)"
+  },
+  "pilot": {
+    "targetsAttempted": 5,
+    "targetsAcquired": 5,
+    "clRequests": 10,
+    "lookupWaste": 0,
+    "authoritiesAdded": 5,
+    "newlyResolved": 22,
+    "resolutionRateDeltaPctPoints": 0.29,
+    "resolutionsPerCl": 2.2,
+    "resolutionsPerAuthority": 4.4,
+    "classification": "MIXED"
+  },
+  "scaleUp": {
+    "performed": false,
+    "reason": "MIXED and remaining F.3d candidates do not exceed pilot average density (4.4 edges/auth); next are mostly 3–4 edges"
+  },
+  "topTargets": [
+    { "citation": "572 F.3d 455", "title": "United States v. Feemster", "circuit": null, "expected": 5, "actual": 5, "cl": 2, "authorityId": "ca959fcf-e1ee-4db3-995b-9792e4e56b22", "status": "imported" },
+    { "citation": "918 F.3d 1025", "title": "Jose Duran-Rodriguez v. William Barr", "circuit": null, "expected": 5, "actual": 5, "cl": 2, "authorityId": "456327aa-0109-40c9-896d-4942bcb4b913", "status": "imported" },
+    { "citation": "516 F.3d 382", "title": "United States v. Vonner", "circuit": null, "expected": 4, "actual": 4, "cl": 2, "authorityId": "16f1cb23-b87c-46ce-a5b2-460547ee1868", "status": "imported" },
+    { "citation": "590 F.3d 1034", "title": "Shrestha v. Holder", "circuit": null, "expected": 4, "actual": 4, "cl": 2, "authorityId": "fb7f4d71-2bdd-4ee4-9e8f-61c1b64ac1ec", "status": "imported" },
+    { "citation": "616 F.3d 321", "title": "United States v. Lighty", "circuit": null, "expected": 4, "actual": 4, "cl": 2, "authorityId": "3b667bd0-38b5-47e2-bf0b-92f13edac34b", "status": "imported" }
+  ],
+  "skipsFailures": [],
+  "compare": {
+    "f3dResPerCl": 2.2,
+    "usReportsRecentResPerCl": 2.9,
+    "betterCurrentFamily": "us_reports_when_density_available",
+    "note": "F.3d pre-verify works (0 waste) but max edge density is too low to beat recent U.S. Reports efficiency or clear STRONG (>=3.0)."
+  },
+  "fallback": {
+    "f2dTopDensity": 3,
+    "f4thTopDensity": 5,
+    "recommendation": "Do not spend heavily on F.2d/F.4th; F.4th top equals F.3d top (5). Prefer waiting for denser absences or improving court mapping / alternate strategies."
+  },
+  "citationsStart": {
+    "extracted": 7581,
+    "resolved": 959,
+    "unresolved": 6622,
+    "targetAbsent": 6622,
+    "resolutionRatePct": 12.65
+  },
+  "citationsEnd": {
+    "extracted": 7581,
+    "resolved": 981,
+    "unresolved": 6600,
+    "targetAbsent": 6600,
+    "resolutionRatePct": 12.94
+  },
+  "corpus": {
+    "authorities": 4002,
+    "cases": 2685,
+    "cl_cases": 2640,
+    "chunks": 64302,
+    "embeddings": 64302,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0
+  },
+  "federalGap": {
+    "us_reports": 2980,
+    "f3d": 1737,
+    "f2d": 554,
+    "f4th": 700,
+    "f_supp": 273,
+    "usc": 264,
+    "cfr": 42,
+    "federal_rules": 31,
+    "bestNextFamily": "us_reports",
+    "a2StillCostEffective": false,
+    "note": "U.S. still largest absences; F.3d acquireable with low waste but yield ~2.2/CL. LOC non-CL remains HOLD."
+  },
+  "queue2Assessment": {
+    "remainingMaterialGaps": [
+      "federal TARGET_ABSENT still 6600 edges",
+      "U.S. Reports high-density A2 exhausted",
+      "F.3d verified path works but below STRONG efficiency floor",
+      "F.2d/F.4th similar or worse density",
+      "LOC U.S. Reports non-CL PDF-only HOLD",
+      "USC/CFR/Fed.Rules zero-CL depth gated"
+    ],
+    "completionCandidate": false,
+    "humanReviewRequired": false
+  },
+  "locNonCl": { "status": "HOLD_UNTOUCHED", "mutation": "OFF" },
+  "circuitMappingNote": "Pilot authorities ingested with generic circuit court label when CL court slug was not in local map; citation identity and provenance URL intact. Improve court_id mapping in a follow-up."
+}
