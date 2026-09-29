@@ -8,22 +8,22 @@
   "runtimeState": "STOPPED",
   "freshness": "STOPPED",
   "currentTask": "NONE",
-  "currentCourt": "cal",
-  "currentJurisdiction": "CA",
-  "jurisdiction": "CA",
-  "currentCount": 37,
+  "currentCourt": "pa",
+  "currentJurisdiction": "PA",
+  "jurisdiction": "PA",
+  "currentCount": 46,
   "targetCount": 45,
-  "checkpoint": null,
-  "cursor": null,
-  "lastSuccessfulExternalId": null,
+  "checkpoint": "cl-opinion-11342775",
+  "cursor": "cl-opinion-11342775",
+  "lastSuccessfulExternalId": "cl-opinion-11342775",
   "nextPageUrl": null,
-  "lastSuccessfulAt": "2026-09-28T22:15:18.644Z",
+  "lastSuccessfulAt": "2026-09-29T00:29:33.874Z",
   "runner": "staging-cl-batch-job",
   "mappingStatus": "VERIFIED",
   "manifestVersion": 66,
-  "jobStatus": "ready",
+  "jobStatus": "completed",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastUpdatedAt": "2026-09-28T22:15:18.644Z",
+  "lastUpdatedAt": "2026-09-29T00:29:33.874Z",
   "lastHeartbeatAt": "2026-09-27T18:00:10.679Z",
   "nextQuotaCheckAt": "2026-09-27T18:10:09.485Z",
   "network": {
@@ -71,9 +71,9 @@
     "waitingNetworkSeconds": 0
   },
   "corpus": {
-    "authorities": 3893,
-    "cases": 2576,
-    "clCases": 2531,
+    "authorities": 3959,
+    "cases": 2642,
+    "clCases": 2597,
     "statutes": 904,
     "regulations": 158,
     "rules": 254,
@@ -95,11 +95,11 @@
   "worker": "STOPPED",
   "lock": null,
   "transition": "NONE",
-  "qualifyingCaseCount": 37,
-  "depthStatus": "READY",
-  "jobLifecycle": "READY_FIRST_START",
-  "nextCourt": "cal",
-  "nextJurisdiction": "CA",
+  "qualifyingCaseCount": 46,
+  "depthStatus": "COMPLETE_FOR_CURRENT_DEPTH",
+  "jobLifecycle": "COMPLETE",
+  "nextCourt": "pa",
+  "nextJurisdiction": "PA",
   "completedCourts": [
     "wis",
     "mich",
@@ -145,9 +145,15 @@
     "nj",
     "va",
     "del",
-    "minn"
+    "minn",
+    "cal",
+    "ill",
+    "fla",
+    "mass",
+    "ny",
+    "pa"
   ],
-  "completedCourtEvidenceCount": 45,
+  "completedCourtEvidenceCount": 51,
   "execution": {
     "databaseWriteReady": true,
     "blockReason": null,
@@ -162,8 +168,8 @@
     "clRequests": 0
   },
   "citations": {
-    "extracted": 7492,
-    "resolved": 619,
-    "targetAbsent": 6873
+    "extracted": 7581,
+    "resolved": 712,
+    "targetAbsent": 6869
   }
 }

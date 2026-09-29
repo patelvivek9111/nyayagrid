@@ -58,6 +58,29 @@ function blockedState() {
   return state;
 }
 
+/** Depth wave is complete in live reports; reopen PA as READY for selection-path tests. */
+function incompleteManifest(overrides = {}) {
+  const manifest = JSON.parse(JSON.stringify(load(MANIFEST)));
+  const target = (manifest.targets || []).find((t) => (t.preferredCourts || [])[0] === "pa");
+  assert.ok(target, "PA target missing from manifest");
+  target.status = "READY";
+  target.highCourtCount = overrides.high ?? 28;
+  target.currentCases = overrides.high ?? 28;
+  target.qualifyingCaseCount = overrides.high ?? 28;
+  target.targetDelta = 45 - (overrides.high ?? 28);
+  target.checkpoint = null;
+  target.autonomousIngestBlocked = false;
+  // Exclude PA from completedCourts in caller by using liveCounts or by cloning state.
+  return manifest;
+}
+
+function stateWithoutPaComplete() {
+  const state = blockedState();
+  state.completedCourts = (state.completedCourts || []).filter((c) => c !== "pa");
+  if (state.completedCourtEvidence) delete state.completedCourtEvidence.pa;
+  return state;
+}
+
 test("DB blocked → recovery does not launch CourtListener or children", () => {
   const plan = planDatabaseQuotaRecovery({
     state: blockedState(),
@@ -77,7 +100,7 @@ test("DB blocked → recovery does not launch CourtListener or children", () => 
   assert.equal(plan.steps[0].ok, false);
 });
 
-test("DB recovers → manifest refresh before target selection; stale SC laneA → VT", () => {
+test("DB recovers → manifest refresh; depth wave complete yields NO_INCOMPLETE_TARGET", () => {
   const plan = planDatabaseQuotaRecovery({
     state: blockedState(),
     manifest: load(MANIFEST),
@@ -86,51 +109,42 @@ test("DB recovers → manifest refresh before target selection; stale SC laneA �
     targetJob: null,
     now: NOW,
   });
-  assert.equal(plan.ok, true);
+  assert.equal(plan.ok, false);
+  assert.equal(plan.reason, "NO_INCOMPLETE_TARGET");
   assert.equal(plan.steps.find((s) => s.id === "REFRESH_MANIFEST").ok, true);
-  assert.equal(plan.steps.find((s) => s.id === "SELECT_TARGET").ok, true);
-  const refreshIdx = plan.steps.findIndex((s) => s.id === "REFRESH_MANIFEST");
-  const selectIdx = plan.steps.findIndex((s) => s.id === "SELECT_TARGET");
-  assert.ok(refreshIdx < selectIdx);
-  assert.equal(plan.nextTarget.court, "cal");
-  assert.equal(plan.nextTarget.jurisdiction, "CA");
-  assert.ok(
-    plan.nextTarget.qualifyingCaseCount >= 20 && plan.nextTarget.qualifyingCaseCount <= 45,
-    `qualifyingCaseCount=${plan.nextTarget.qualifyingCaseCount}`,
-  );
-  assert.equal(plan.nextTarget.target, 45);
-  assert.equal(plan.nextTarget.mappingStatus, "VERIFIED");
-  assert.equal(plan.state.laneA.court, "cal");
-  assert.notEqual(plan.state.laneA.court, "wva");
-  assert.deepEqual(plan.inventedCheckpoints, []);
+  assert.equal(plan.steps.find((s) => s.id === "SELECT_TARGET").ok, false);
+  assert.equal(plan.allowCourtListener, false);
+  assert.equal(plan.clRequests, 0);
+  assert.equal(plan.childLaunches, 0);
   assert.equal(plan.queue2, "#2");
   assert.equal(plan.queue3, "NOT_OPEN");
 });
 
-test("manual progress can change CA count before resume; already complete skips CA", () => {
-  const manifest = load(MANIFEST);
+test("synthetic incomplete reopens selection; completing it advances past that court", () => {
+  const synthetic = incompleteManifest({ high: 28 });
   const drifted = planDatabaseQuotaRecovery({
-    state: blockedState(),
-    manifest,
+    state: stateWithoutPaComplete(),
+    manifest: synthetic,
     dbProbe: { ok: true, writable: true, mutations: 0 },
-    liveCountsByCourt: { cal: { qualifyingCaseCount: 28, clCaseCount: 28, authorityCount: 49 } },
+    liveCountsByCourt: { pa: { qualifyingCaseCount: 28, clCaseCount: 28, authorityCount: 49 } },
     remoteProcesses: [],
     now: NOW,
   });
-  assert.equal(drifted.nextTarget.court, "cal");
+  assert.equal(drifted.ok, true);
+  assert.equal(drifted.nextTarget.court, "pa");
   assert.equal(drifted.nextTarget.qualifyingCaseCount, 28);
   assert.equal(drifted.state.laneA.qualifyingCaseCount, 28);
 
   const done = planDatabaseQuotaRecovery({
-    state: blockedState(),
-    manifest,
+    state: stateWithoutPaComplete(),
+    manifest: synthetic,
     dbProbe: { ok: true, writable: true, mutations: 0 },
-    liveCountsByCourt: { cal: { qualifyingCaseCount: 45, clCaseCount: 45 } },
+    liveCountsByCourt: { pa: { qualifyingCaseCount: 45, clCaseCount: 45 } },
     remoteProcesses: [],
     now: NOW,
   });
-  assert.notEqual(done.nextTarget.court, "cal");
-  assert.ok(done.state.completedCourts.includes("cal"));
+  assert.notEqual(done.nextTarget?.court || null, "pa");
+  assert.ok(done.state.completedCourts.includes("pa"));
 });
 
 test("VT READY_FIRST_START / PAUSED_RESUMABLE / invalid HOLD", () => {
@@ -235,8 +249,8 @@ test("first recovery canary <=2 authorities and <=5 CL; one parent probe; child 
   assert.equal(bounds.caps.canaryReq, 5);
 
   const plan = planDatabaseQuotaRecovery({
-    state: blockedState(),
-    manifest: load(MANIFEST),
+    state: stateWithoutPaComplete(),
+    manifest: incompleteManifest({ high: 28 }),
     dbProbe: { ok: true, writable: true, mutations: 0 },
     remoteProcesses: [],
     now: NOW,
@@ -254,8 +268,8 @@ test("first recovery canary <=2 authorities and <=5 CL; one parent probe; child 
 
 test("process gate before CL; attached child invariants unchanged", () => {
   const orphan = planDatabaseQuotaRecovery({
-    state: blockedState(),
-    manifest: load(MANIFEST),
+    state: stateWithoutPaComplete(),
+    manifest: incompleteManifest({ high: 28 }),
     dbProbe: { ok: true, writable: true, mutations: 0 },
     remoteProcesses: [{ pid: 9, ppid: 1, args: "staging-cl-batch-job-bundled.cjs" }],
     now: NOW,
@@ -271,8 +285,8 @@ test("process gate before CL; attached child invariants unchanged", () => {
   );
 
   const multi = planDatabaseQuotaRecovery({
-    state: blockedState(),
-    manifest: load(MANIFEST),
+    state: stateWithoutPaComplete(),
+    manifest: incompleteManifest({ high: 28 }),
     dbProbe: { ok: true, writable: true, mutations: 0 },
     remoteProcesses: [
       { pid: 1, ppid: 1, args: "staging-cl-batch-job-bundled.cjs" },
@@ -315,7 +329,7 @@ test("worker process gate precedes parent quota probe (live path order)", () => 
 });
 
 test("VT first-start clears inherited SC resume fields", () => {
-  const state = blockedState();
+  const state = stateWithoutPaComplete();
   state.laneA = {
     court: "sc",
     jurisdiction: "SC",
@@ -329,14 +343,14 @@ test("VT first-start clears inherited SC resume fields", () => {
   };
   const plan = planDatabaseQuotaRecovery({
     state,
-    manifest: load(MANIFEST),
+    manifest: incompleteManifest({ high: 28 }),
     dbProbe: { ok: true, writable: true, mutations: 0 },
     remoteProcesses: [],
     targetJob: null,
     now: NOW,
   });
   assert.equal(plan.ok, true);
-  assert.equal(plan.state.laneA.court, "cal");
+  assert.equal(plan.state.laneA.court, "pa");
   assert.equal(plan.state.laneA.jobLifecycle, "READY_FIRST_START");
   assert.equal(plan.state.laneA.checkpoint, null);
   assert.equal(plan.state.laneA.cursor, null);

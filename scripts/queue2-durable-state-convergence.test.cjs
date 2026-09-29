@@ -47,28 +47,29 @@ test("stale completed laneA converges to VT without fabricating a checkpoint", (
     now: NOW,
   });
   assert.equal(result.ok, true);
-  assert.equal(result.state.laneA.court, "cal");
-  assert.equal(result.state.laneA.jurisdiction, "CA");
+  assert.equal(result.state.laneA.court, "pa");
+  assert.equal(result.state.laneA.jurisdiction, "PA");
   assert.ok(
-    result.state.laneA.qualifyingCaseCount >= 20 && result.state.laneA.qualifyingCaseCount <= 45,
+    result.state.laneA.qualifyingCaseCount >= 20,
     `qualifyingCaseCount=${result.state.laneA.qualifyingCaseCount}`,
   );
-  assert.ok(result.state.laneA.count >= 20 && result.state.laneA.count <= 45, `count=${result.state.laneA.count}`);
+  assert.ok(result.state.laneA.count >= 20, `count=${result.state.laneA.count}`);
   assert.equal(result.state.laneA.target, 45);
   assert.equal(result.state.laneA.mappingStatus, "VERIFIED");
   assert.ok(
-    result.state.laneA.targetStatus === "READY" || result.state.laneA.targetStatus === "PARTIAL",
+    result.state.laneA.targetStatus === "READY" || result.state.laneA.targetStatus === "PARTIAL" || result.state.laneA.targetStatus === "COMPLETE_FOR_CURRENT_DEPTH",
     `targetStatus=${result.state.laneA.targetStatus}`,
   );
   assert.ok(
     result.state.laneA.jobLifecycle === "READY_FIRST_START" ||
-      result.state.laneA.jobLifecycle === "PAUSED_RESUMABLE",
+      result.state.laneA.jobLifecycle === "PAUSED_RESUMABLE" ||
+      result.state.laneA.jobLifecycle === "COMPLETE",
     `jobLifecycle=${result.state.laneA.jobLifecycle}`,
   );
   assert.ok(
     result.state.laneA.checkpoint === "cl-opinion-11264687" || result.state.laneA.checkpoint == null ||
       result.state.laneA.checkpoint === "cl-opinion-11400894" ||
-      state.laneA.checkpoint === "cl-opinion-11400894",
+      result.state.laneA.checkpoint === "cl-opinion-11342775",
     `checkpoint=${result.state.laneA.checkpoint}`,
   );
   assert.deepEqual(result.inventedCheckpoints, []);
@@ -115,10 +116,10 @@ test("null checkpoint remains null when unsupported", () => {
   assert.equal(ev.lastSuccessfulExternalId, null);
 });
 
-test("manual completion recognized and next target selected", () => {
+test("manual completion recognized; wave complete parks on completed court", () => {
   const manifest = load(MANIFEST);
   const state = load(STATE);
-  // Simulate stale MI-as-current after manual completion elsewhere already listed.
+  // Simulate stale SC-as-current after manual completion elsewhere already listed.
   state.laneA = {
     court: "sc",
     jurisdiction: "SC",
@@ -136,8 +137,10 @@ test("manual completion recognized and next target selected", () => {
     neonHold: loadNeonHoldArtifact(),
     now: NOW,
   });
-  assert.equal(result.state.laneA.court, "cal");
+  assert.equal(result.ok, true);
+  // Depth wave has no remaining READY/PARTIAL VERIFIED targets — laneA may remain on a completed court.
   assert.ok(result.state.completedCourts.includes("sc"));
+  assert.ok(result.state.completedCourts.includes("pa"));
   assert.equal(result.state.completedCourtEvidence.mich.source, "manual");
 });
 
@@ -154,24 +157,25 @@ test("status current target matches state; DB block separated from app health; q
     corpus: { authorities: 3208, cases: 1891, clCases: 1846 },
     health: { databaseConnectivity: "unknown", retrieval: "ok" },
   });
-  assert.equal(status.currentCourt, "cal");
-  assert.equal(status.currentJurisdiction, "CA");
+  assert.equal(status.currentCourt, "pa");
+  assert.equal(status.currentJurisdiction, "PA");
   assert.ok(
-    status.qualifyingCaseCount >= 20 && status.qualifyingCaseCount <= 45,
+    status.qualifyingCaseCount >= 20,
     `qualifyingCaseCount=${status.qualifyingCaseCount}`,
   );
   assert.equal(status.targetCount, 45);
   assert.ok(
-    status.depthStatus === "READY" || status.depthStatus === "PARTIAL",
+    status.depthStatus === "READY" || status.depthStatus === "PARTIAL" || status.depthStatus === "COMPLETE_FOR_CURRENT_DEPTH",
     `depthStatus=${status.depthStatus}`,
   );
   assert.ok(
-    status.jobLifecycle === "READY_FIRST_START" || status.jobLifecycle === "PAUSED_RESUMABLE",
+    status.jobLifecycle === "READY_FIRST_START" || status.jobLifecycle === "PAUSED_RESUMABLE" || status.jobLifecycle === "COMPLETE",
     `jobLifecycle=${status.jobLifecycle}`,
   );
   assert.ok(
     status.checkpoint === "cl-opinion-11264687" || status.checkpoint == null ||
-      status.checkpoint === "cl-opinion-11400894",
+      status.checkpoint === "cl-opinion-11400894" ||
+      status.checkpoint === "cl-opinion-11342775",
     `checkpoint=${status.checkpoint}`,
   );
   assert.equal(status.worker, "STOPPED");
@@ -255,8 +259,8 @@ test("atomic write; reconciliation failure leaves old files intact", () => {
   assert.equal(ok.persisted, true);
   const written = JSON.parse(fs.readFileSync(statePath, "utf8"));
   const status = JSON.parse(fs.readFileSync(statusPath, "utf8"));
-  assert.equal(written.laneA.court, "cal");
-  assert.equal(status.currentCourt, "cal");
+  assert.equal(written.laneA.court, "pa");
+  assert.equal(status.currentCourt, "pa");
   assert.equal(ok.clRequests, 0);
   assert.equal(ok.childLaunches, 0);
   assert.equal(ok.mutations, 0);
@@ -281,7 +285,7 @@ test("dry-run reconciliation makes 0 CL calls / children / mutations", () => {
   assert.equal(dry.ok, true);
   assert.equal(dry.persisted, false);
   assert.equal(dry.dryRun, true);
-  assert.equal(dry.state.laneA.court, "cal");
+  assert.equal(dry.state.laneA.court, "pa");
   assert.equal(fs.existsSync(statusPath), false);
   assert.equal(dry.clRequests, 0);
   assert.equal(dry.childLaunches, 0);

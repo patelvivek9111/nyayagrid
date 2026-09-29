@@ -1,0 +1,37 @@
+{
+  "classification": "MANUAL_QUEUE2_MULTI_STATE_A1_BOUNDED_A2_WINDOW",
+  "generatedAt": "2026-09-29T00:35:00.000Z",
+  "result": "PASS",
+  "start": {
+    "a1Target": "CA",
+    "startCount": 37,
+    "quota": { "minute": 30, "hour": 300, "day": 193 }
+  },
+  "A1": [
+    { "j": "CA", "start": 37, "end": 45, "added": 8, "clRequests": 17, "checkpoint": "cl-opinion-10838788" },
+    { "j": "IL", "start": 36, "end": 52, "added": 16, "clRequests": 36, "checkpoint": "cl-opinion-10787135" },
+    { "j": "FL", "start": 37, "end": 45, "added": 8, "clRequests": 17, "checkpoint": "cl-opinion-11227428" },
+    { "j": "MA", "start": 37, "end": 45, "added": 8, "clRequests": 17, "checkpoint": "cl-opinion-11309277" },
+    { "j": "NY", "start": 37, "end": 45, "added": 8, "clRequests": 17, "checkpoint": "cl-opinion-11237841" },
+    { "j": "PA", "start": 38, "end": 46, "added": 8, "clRequests": 17, "checkpoint": "cl-opinion-11342775" }
+  ],
+  "A2": {
+    "targetsAttempted": 10,
+    "targetsAcquired": 10,
+    "clRequests": 20,
+    "authoritiesAdded": 10,
+    "newlyResolved": 85,
+    "resolutionsPerClRequest": 4.25,
+    "classification": "CONTINUE_BOUNDED",
+    "note": "4.25/req above 3.0 stop threshold"
+  },
+  "citationsBeforeA2": { "extracted": 7581, "resolved": 627, "unresolved": 6954, "resolutionRatePct": 8.27 },
+  "citationsAfterA2": { "extracted": 7581, "resolved": 712, "unresolved": 6869, "resolutionRatePct": 9.39 },
+  "depth": {
+    "newlyCompleted": ["CA", "IL", "FL", "MA", "NY", "PA"],
+    "totalCompleted": 51,
+    "remainingIncomplete": [],
+    "nextTarget": null,
+    "waveStatus": "DEPTH_WAVE_COMPLETE"
+  }
+}

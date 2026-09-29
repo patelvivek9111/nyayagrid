@@ -468,29 +468,32 @@ test("canonical status after rebuild matches live floor and reconciled Lane A pr
   assert.equal(state.completedCourtEvidence.ri.checkpoint, "cl-opinion-11247322");
   assert.equal(state.completedCourtEvidence.vt.checkpoint, "cl-opinion-11197326");
   assert.equal(state.completedCourtEvidence.wva.checkpoint, "cl-opinion-11347349");
-  assert.equal(state.laneA.court, "cal");
-  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 45, `count=${state.laneA.count}`);
+  assert.equal(state.laneA.court, "pa");
+  assert.ok(state.laneA.count >= 45, `count=${state.laneA.count}`);
   assert.ok(
-    state.laneA.qualifyingCaseCount >= 20 && state.laneA.qualifyingCaseCount <= 45,
+    state.laneA.qualifyingCaseCount >= 45,
     `qualifyingCaseCount=${state.laneA.qualifyingCaseCount}`,
   );
   assert.equal(state.laneA.target, 45);
   assert.ok(
-    state.laneA.jobLifecycle === "READY_FIRST_START" || state.laneA.jobLifecycle === "PAUSED_RESUMABLE",
+    state.laneA.jobLifecycle === "COMPLETE" ||
+      state.laneA.jobLifecycle === "READY_FIRST_START" ||
+      state.laneA.jobLifecycle === "PAUSED_RESUMABLE",
     `jobLifecycle=${state.laneA.jobLifecycle}`,
   );
   assert.ok(
     state.laneA.checkpoint == null ||
       state.laneA.checkpoint === "cl-opinion-11264687" ||
       state.laneA.checkpoint === "cl-opinion-11400894" ||
-      state.laneA.checkpoint === "cl-opinion-11347349",
+      state.laneA.checkpoint === "cl-opinion-11347349" ||
+      state.laneA.checkpoint === "cl-opinion-11342775",
     `checkpoint=${state.laneA.checkpoint}`,
   );
   assert.equal(state.humanReview.required, false);
   assert.ok(!((state.humanReview.reasons || []).includes("UNKNOWN_DB_FAILURE")));
   assert.ok(!((state.humanReview.reasons || []).includes("LIVE_DB_RECONCILIATION_UNAVAILABLE")));
-  assert.equal(status.currentCourt, "cal");
-  assert.ok(status.currentCount >= 20 && status.currentCount <= 45, `currentCount=${status.currentCount}`);
+  assert.equal(status.currentCourt, "pa");
+  assert.ok(status.currentCount >= 45, `currentCount=${status.currentCount}`);
   assert.equal(status.targetCount, 45);
 });
 
@@ -600,8 +603,8 @@ test("durable WI complete after count reconciliation", () => {
   assert.ok(state.completedCourts.includes("wis"));
   assert.equal(state.completedCourtEvidence.wis.count, 45);
   assert.equal(state.completedCourtEvidence.wis.checkpoint, "cl-opinion-9886466");
-  assert.equal(state.laneA.court, "cal");
-  assert.ok(state.laneA.count >= 20 && state.laneA.count <= 45, `count=${state.laneA.count}`);
+  assert.equal(state.laneA.court, "pa");
+  assert.ok(state.laneA.count >= 45, `count=${state.laneA.count}`);
   assert.equal(state.laneA.target, 45);
 });
 

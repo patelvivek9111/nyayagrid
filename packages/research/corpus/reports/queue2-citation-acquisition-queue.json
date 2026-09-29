@@ -1,8 +1,8 @@
 {
   "classification": "QUEUE2_CITATION_ACQUISITION_QUEUE",
-  "generatedAt": "2026-09-28T22:16:24.186Z",
+  "generatedAt": "2026-09-29T00:29:33.874Z",
   "courtListenerHttpCalls": 0,
-  "source": "post_a2_batch3_refresh_remove_acquired",
+  "source": "post_multi_state_a1_a2_window",
   "A1_depthCompletion": {
     "resumeFirst": {
       "jurisdiction": "CA",
@@ -36,116 +36,6 @@
       },
       {
         "rank": 2,
-        "citation": "547 U.S. 398",
-        "likelyCourtJurisdiction": "federal_appellate",
-        "edgesPotentiallyUnlocked": 9,
-        "uniqueCitingAuthorities": 9,
-        "acquisitionConfidence": "HIGH",
-        "estimatedClCost": "~2-3 requests/authority",
-        "whyA2": "TARGET_ABSENT us_reports; 9 edges",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 3,
-        "citation": "562 U.S. 86",
-        "likelyCourtJurisdiction": "federal_appellate",
-        "edgesPotentiallyUnlocked": 9,
-        "uniqueCitingAuthorities": 9,
-        "acquisitionConfidence": "HIGH",
-        "estimatedClCost": "~2-3 requests/authority",
-        "whyA2": "TARGET_ABSENT us_reports; 9 edges",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 4,
-        "citation": "527 U.S. 263",
-        "likelyCourtJurisdiction": "federal_appellate",
-        "edgesPotentiallyUnlocked": 8,
-        "uniqueCitingAuthorities": 8,
-        "acquisitionConfidence": "HIGH",
-        "estimatedClCost": "~2-3 requests/authority",
-        "whyA2": "TARGET_ABSENT us_reports; 8 edges",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 5,
-        "citation": "386 U.S. 18",
-        "likelyCourtJurisdiction": "federal_appellate",
-        "edgesPotentiallyUnlocked": 8,
-        "uniqueCitingAuthorities": 8,
-        "acquisitionConfidence": "HIGH",
-        "estimatedClCost": "~2-3 requests/authority",
-        "whyA2": "TARGET_ABSENT us_reports; 8 edges",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 6,
-        "citation": "563 U.S. 452",
-        "likelyCourtJurisdiction": "federal_appellate",
-        "edgesPotentiallyUnlocked": 8,
-        "uniqueCitingAuthorities": 8,
-        "acquisitionConfidence": "HIGH",
-        "estimatedClCost": "~2-3 requests/authority",
-        "whyA2": "TARGET_ABSENT us_reports; 8 edges",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 7,
-        "citation": "339 U.S. 306",
-        "likelyCourtJurisdiction": "federal_appellate",
-        "edgesPotentiallyUnlocked": 8,
-        "uniqueCitingAuthorities": 8,
-        "acquisitionConfidence": "HIGH",
-        "estimatedClCost": "~2-3 requests/authority",
-        "whyA2": "TARGET_ABSENT us_reports; 8 edges",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 8,
-        "citation": "328 U.S. 750",
-        "likelyCourtJurisdiction": "federal_appellate",
-        "edgesPotentiallyUnlocked": 8,
-        "uniqueCitingAuthorities": 8,
-        "acquisitionConfidence": "HIGH",
-        "estimatedClCost": "~2-3 requests/authority",
-        "whyA2": "TARGET_ABSENT us_reports; 8 edges",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 9,
-        "citation": "445 U.S. 573",
-        "likelyCourtJurisdiction": "federal_appellate",
-        "edgesPotentiallyUnlocked": 8,
-        "uniqueCitingAuthorities": 8,
-        "acquisitionConfidence": "HIGH",
-        "estimatedClCost": "~2-3 requests/authority",
-        "whyA2": "TARGET_ABSENT us_reports; 8 edges",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 10,
-        "citation": "412 U.S. 218",
-        "likelyCourtJurisdiction": "federal_appellate",
-        "edgesPotentiallyUnlocked": 8,
-        "uniqueCitingAuthorities": 8,
-        "acquisitionConfidence": "HIGH",
-        "estimatedClCost": "~2-3 requests/authority",
-        "whyA2": "TARGET_ABSENT us_reports; 8 edges",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 11,
-        "citation": "552 U.S. 38",
-        "likelyCourtJurisdiction": "federal_appellate",
-        "edgesPotentiallyUnlocked": 8,
-        "uniqueCitingAuthorities": 8,
-        "acquisitionConfidence": "HIGH",
-        "estimatedClCost": "~2-3 requests/authority",
-        "whyA2": "TARGET_ABSENT us_reports; 8 edges",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 12,
         "citation": "530 U.S. 57",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 8,
@@ -156,7 +46,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 13,
+        "rank": 3,
         "citation": "400 U.S. 25",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 8,
@@ -167,7 +57,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 14,
+        "rank": 4,
         "citation": "378 U.S. 368",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 7,
@@ -178,7 +68,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 15,
+        "rank": 5,
         "citation": "468 U.S. 897",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 7,
@@ -189,7 +79,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 16,
+        "rank": 6,
         "citation": "561 U.S. 742",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 7,
@@ -200,7 +90,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 17,
+        "rank": 7,
         "citation": "555 U.S. 135",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 7,
@@ -211,7 +101,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 18,
+        "rank": 8,
         "citation": "483 U.S. 756",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 7,
@@ -222,7 +112,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 19,
+        "rank": 9,
         "citation": "411 U.S. 792",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 7,
@@ -233,7 +123,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 20,
+        "rank": 10,
         "citation": "528 U.S. 119",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 7,
@@ -244,7 +134,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 21,
+        "rank": 11,
         "citation": "594 U.S. 413",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 7,
@@ -255,7 +145,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 22,
+        "rank": 12,
         "citation": "476 U.S. 79",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 7,
@@ -266,7 +156,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 23,
+        "rank": 13,
         "citation": "538 U.S. 343",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 7,
@@ -277,7 +167,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 24,
+        "rank": 14,
         "citation": "514 U.S. 419",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 6,
@@ -288,7 +178,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 25,
+        "rank": 15,
         "citation": "569 U.S. 1",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 6,
@@ -299,7 +189,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 26,
+        "rank": 16,
         "citation": "573 U.S. 149",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 6,
@@ -310,7 +200,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 27,
+        "rank": 17,
         "citation": "389 U.S. 347",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 6,
@@ -321,7 +211,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 28,
+        "rank": 18,
         "citation": "554 U.S. 237",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 6,
@@ -332,7 +222,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 29,
+        "rank": 19,
         "citation": "367 U.S. 643",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 6,
@@ -343,7 +233,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 30,
+        "rank": 20,
         "citation": "564 U.S. 229",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 6,
@@ -354,7 +244,7 @@
         "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
       },
       {
-        "rank": 31,
+        "rank": 21,
         "citation": "401 U.S. 37",
         "likelyCourtJurisdiction": "federal_appellate",
         "edgesPotentiallyUnlocked": 6,
@@ -367,16 +257,15 @@
     ]
   },
   "citationBaseline": {
-    "extracted": 7492,
-    "resolved": 619,
-    "unresolved": 6873,
-    "targetAbsent": 6873,
-    "resolutionRatePct": 8.26,
-    "note": "final after MN A1; A2 reresolve boundary was 7421/614"
+    "extracted": 7581,
+    "resolved": 712,
+    "unresolved": 6869,
+    "targetAbsent": 6869,
+    "resolutionRatePct": 9.39
   },
   "corpus": {
-    "authorities": 3893,
-    "cases": 2576,
-    "cl_cases": 2531
+    "authorities": 3959,
+    "cases": 2642,
+    "cl_cases": 2597
   }
 }

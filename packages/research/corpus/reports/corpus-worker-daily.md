@@ -1,32 +1,31 @@
 # Queue #2 Corpus Worker — Daily Status
 
-Generated: 2026-09-28T22:20:00.000Z (9/28/2026, 6:20:00 PM EDT)
+Generated: 2026-09-29T00:35:00.000Z
 Queue: #2 OPEN | #9 CLOSED | #3 NOT OPEN | transition NONE | FEATURE_AGENTS=0
 
 ## CURRENT LANE
-STOPPED
-
-## CURRENT TASK
-NONE
-Worker STOPPED. Manual A1+A2 window.
-
-Next: California (`cal`) 37/45 READY_FIRST_START
+STOPPED — DEPTH_WAVE_COMPLETE (parked on PA)
 
 ## THIS WINDOW
-A1 DE 29→45 (+16, 34 CL) COMPLETE
-A1 MN 27→51 (+24, 51 CL) COMPLETE
-A2 9/10 U.S. Reports / 20 CL / +94 resolutions (MIXED 4.70/req vs 6.45 prior / 13.21 pilot)
-total ~105 CL · +49 authorities
+A1 CA 37→45 (+8, 17 CL) COMPLETE
+A1 IL 36→52 (+16, 36 CL) COMPLETE
+A1 FL 37→45 (+8, 17 CL) COMPLETE
+A1 MA 37→45 (+8, 17 CL) COMPLETE
+A1 NY 37→45 (+8, 17 CL) COMPLETE
+A1 PA 38→46 (+8, 17 CL) COMPLETE
+A2 10/10 U.S. Reports / 20 CL / +85 resolutions (4.25/req ≥ 3.0)
+total ~141 CL · +66 authorities
 
 ## CITATIONS
-before A2: 7421 / 520 / 6901 (7.01%)
-after A2 reresolve: 7421 / 614 / 6807 (8.27%)
-final: 7492 / 619 / 6873 (~8.26%)
+before A2: 7581 / 627 / 6954 (8.27%)
+after A2: 7581 / 712 / 6869 (9.39%)
 
 ## CORPUS
-authorities=3893 cases=2576 clCases=2531
-chunks=61082 embeddings=61082
+authorities=3959 cases=2642 clCases=2597
+chunks=62847 embeddings=62847
 duplicates=0 orphans=0
 
-## NEXT
-Resume CA from READY_FIRST_START; continue bounded A2 (smaller budgets as edge unlocks decline).
+## DEPTH
+total completed = 51
+remaining incomplete VERIFIED depth targets = none
+next A1 = none (wave complete)
