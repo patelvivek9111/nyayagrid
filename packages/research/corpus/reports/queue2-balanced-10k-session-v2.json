@@ -1,0 +1,200 @@
+{
+  "classification": "MANUAL_QUEUE2_BALANCED_10K_SESSION_V2",
+  "startedAt": "2026-09-29T18:06:51.714Z",
+  "maxTotal": 160,
+  "a2": {
+    "skipped": true,
+    "reason": "no_verified_target_expected_res_per_cl_gte_3; 573_U.S._373_deferred; top~6_edges/~2.5cl~2.4"
+  },
+  "batches": [
+    {
+      "lane": "G3",
+      "clCourt": "ca3",
+      "tag": "g3-ca3-r1",
+      "exit": 0,
+      "status": "paused",
+      "cl": 16,
+      "imported": 4,
+      "mappingStatus": null,
+      "checkpoint": "cl-opinion-11451563",
+      "ok": true
+    },
+    {
+      "lane": "G3",
+      "clCourt": "ca4",
+      "tag": "g3-ca4-r1",
+      "exit": 0,
+      "status": "paused",
+      "cl": 14,
+      "imported": 6,
+      "mappingStatus": null,
+      "checkpoint": "cl-opinion-11451680",
+      "ok": true
+    },
+    {
+      "lane": "G3",
+      "clCourt": "ca6",
+      "tag": "g3-ca6-r1",
+      "exit": 1,
+      "status": "LANE_A_CHILD_SURVIVED_PARENT",
+      "cl": 0,
+      "imported": 0,
+      "mappingStatus": null,
+      "checkpoint": null,
+      "ok": false
+    },
+    {
+      "lane": "G3",
+      "clCourt": "ca2",
+      "tag": "g3-ca2-r2",
+      "exit": 0,
+      "status": "paused",
+      "cl": 14,
+      "imported": 12,
+      "mappingStatus": null,
+      "checkpoint": "cl-opinion-11451139",
+      "ok": true
+    },
+    {
+      "lane": "G1",
+      "clCourt": "wisctapp",
+      "tag": "g1-wisctapp-r1",
+      "exit": 0,
+      "status": "paused",
+      "cl": 14,
+      "imported": 6,
+      "mappingStatus": null,
+      "checkpoint": "cl-opinion-11450597",
+      "ok": true
+    },
+    {
+      "lane": "G1",
+      "clCourt": "connappct",
+      "tag": "g1-connappct-r1",
+      "exit": 1,
+      "status": "LANE_A_CHILD_SURVIVED_PARENT",
+      "cl": 0,
+      "imported": 0,
+      "mappingStatus": null,
+      "checkpoint": null,
+      "ok": false
+    },
+    {
+      "lane": "G1",
+      "clCourt": "arizctapp",
+      "tag": "g1-arizctapp-r1",
+      "exit": 0,
+      "status": "failed",
+      "cl": 3,
+      "imported": 0,
+      "mappingStatus": null,
+      "checkpoint": null,
+      "ok": true
+    },
+    {
+      "lane": "G1",
+      "clCourt": "nmctapp",
+      "tag": "g1-nmctapp-r1",
+      "exit": 0,
+      "status": "failed",
+      "cl": 2,
+      "imported": 0,
+      "mappingStatus": null,
+      "checkpoint": null,
+      "ok": true
+    },
+    {
+      "lane": "G1",
+      "clCourt": "indctapp",
+      "tag": "g1-indctapp-r1",
+      "exit": 0,
+      "status": "transient_retry",
+      "cl": 1,
+      "imported": 0,
+      "mappingStatus": null,
+      "checkpoint": null,
+      "ok": true
+    },
+    {
+      "lane": "G2",
+      "clCourt": "neb",
+      "tag": "g2-neb-r1",
+      "exit": 0,
+      "status": "failed",
+      "cl": 2,
+      "imported": 0,
+      "mappingStatus": null,
+      "checkpoint": null,
+      "ok": true
+    },
+    {
+      "lane": "G2",
+      "clCourt": "kan",
+      "tag": "g2-kan-r1",
+      "exit": 1,
+      "status": "LANE_A_CHILD_SURVIVED_PARENT",
+      "cl": 0,
+      "imported": 0,
+      "mappingStatus": null,
+      "checkpoint": null,
+      "ok": false
+    },
+    {
+      "lane": "G3",
+      "clCourt": "ca8",
+      "tag": "g3-ca8-r1",
+      "exit": 0,
+      "status": "paused",
+      "cl": 15,
+      "imported": 6,
+      "mappingStatus": null,
+      "checkpoint": "cl-opinion-11445911",
+      "ok": true
+    },
+    {
+      "lane": "G3",
+      "clCourt": "cadc",
+      "tag": "g3-cadc-r1",
+      "exit": 0,
+      "status": "unknown",
+      "cl": 0,
+      "imported": 0,
+      "mappingStatus": null,
+      "checkpoint": null,
+      "ok": true
+    },
+    {
+      "lane": "G3",
+      "clCourt": "cafc",
+      "tag": "g3-cafc-r1",
+      "exit": 0,
+      "status": "unknown",
+      "cl": 0,
+      "imported": 0,
+      "mappingStatus": null,
+      "checkpoint": null,
+      "ok": true
+    }
+  ],
+  "byLane": {
+    "A2": {
+      "cl": 0,
+      "casesAdded": 0
+    },
+    "G1": {
+      "cl": 20,
+      "casesAdded": 6
+    },
+    "G2": {
+      "cl": 2,
+      "casesAdded": 0
+    },
+    "G3": {
+      "cl": 59,
+      "casesAdded": 28
+    }
+  },
+  "totalCl": 81,
+  "stopReason": "plan_complete",
+  "finishedAt": "2026-09-29T19:13:03.246Z"
+}

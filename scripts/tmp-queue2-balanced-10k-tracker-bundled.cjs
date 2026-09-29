@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 "use strict";
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __commonJS = (cb, mod) => function __require() {
@@ -1211,7 +1212,7 @@ var require_connection = __commonJS({
         serverSignature = (await hmac(await hmac(saltedPassword, "Server Key"), auth)).toString("base64");
         const payload = "c=biws,r=" + res.r + ",p=" + xor(
           clientKey,
-          Buffer.from(await hmac(await sha2562(clientKey), auth))
+          Buffer.from(await hmac(await sha256(clientKey), auth))
         ).toString("base64");
         write(
           b().p().str(payload).end()
@@ -1446,7 +1447,7 @@ var require_connection = __commonJS({
     function hmac(key, x) {
       return crypto.createHmac("sha256", key).update(x).digest();
     }
-    function sha2562(x) {
+    function sha256(x) {
       return crypto.createHash("sha256").update(x).digest();
     }
     function xor(a, b2) {
@@ -2197,209 +2198,141 @@ var require_src = __commonJS({
   }
 });
 
-// scripts/tmp-queue2-b1-cfr-pilot.cjs
-var { createHash, randomUUID } = require("node:crypto");
+// scripts/tmp-queue2-balanced-10k-tracker.cjs
 var postgres = require_src();
-var MAX = Math.min(Math.max(Number.parseInt(process.env.B1_MAX || "5", 10) || 5, 1), 12);
-var MIN_CHARS = 200;
-function sha256(text) {
-  return createHash("sha256").update(String(text), "utf8").digest("hex");
-}
-function toPgvector(vec) {
-  return `[${vec.join(",")}]`;
-}
-function stripHtml(html) {
-  return String(html || "").replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<style[\s\S]*?<\/style>/gi, " ").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-}
-function chunkContent(content) {
-  const parts = String(content).split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
-  const chunks = [];
-  for (const p of parts) {
-    if (p.length <= 1e3) chunks.push(p);
-    else {
-      let rest = p;
-      while (rest.length > 1e3) {
-        let cut = rest.lastIndexOf(" ", 1e3);
-        if (cut < 500) cut = 1e3;
-        chunks.push(rest.slice(0, cut).trim());
-        rest = rest.slice(cut).trim();
-      }
-      if (rest) chunks.push(rest);
-    }
-  }
-  return chunks.length ? chunks : [String(content).slice(0, 1e3)];
-}
-function parseCfr(raw) {
-  const m = /\b(\d{1,2})\s+C\.?\s?F\.?\s?R\.?\s*§*\s*(\d+(?:\.\d+)*)/i.exec(String(raw || ""));
-  return m ? { title: Number(m[1]), section: m[2], citation: `${m[1]} C.F.R. \xA7 ${m[2]}` } : null;
-}
-async function embedBatch(texts, apiKey) {
-  const res = await fetch("https://api.openai.com/v1/embeddings", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ model: "text-embedding-3-small", input: texts, dimensions: 384 })
-  });
-  if (!res.ok) throw new Error(`embed_http_${res.status}`);
-  const body = await res.json();
-  return (body.data || []).sort((a, b) => a.index - b.index).map((d) => d.embedding);
-}
-async function embedAll(texts, apiKey) {
-  const out = [];
-  for (let i = 0; i < texts.length; i += 32) out.push(...await embedBatch(texts.slice(i, i + 32), apiKey));
-  return out;
-}
-async function importOne(sql, rec, apiKey) {
-  const content = rec.content || "";
-  if (content.length < MIN_CHARS) return { status: "skipped_short", chars: content.length };
-  const hash = sha256(content);
-  const existing = await sql`
-    select id from legal_authorities
-    where source_provider = ${rec.sourceProvider} and source_external_id = ${rec.sourceExternalId}
-    limit 1
-  `;
-  if (existing.length) return { status: "skipped_duplicate", id: existing[0].id };
-  const byCite = await sql`
-    select id from legal_authorities where normalized_citation = ${rec.normalizedCitation} limit 1
-  `;
-  if (byCite.length) return { status: "skipped_alias", aliasOf: byCite[0].id };
-  const id = randomUUID();
-  await sql`
-    insert into legal_authorities (
-      id, authority_type, jurisdiction, court, court_id, authority_state, court_level,
-      title, citation, normalized_citation, source_provider, source_external_id,
-      canonical_source_url, ingestion_status, currentness_status, last_checked_at,
-      decision_date, effective_date, metadata, created_at, updated_at
-    ) values (
-      ${id}, ${"regulation"}::authority_type, ${"US"}, ${null}, ${null}, ${"US"}, ${null},
-      ${rec.title}, ${rec.citation}, ${rec.normalizedCitation},
-      ${rec.sourceProvider}, ${rec.sourceExternalId}, ${rec.canonicalSourceUrl},
-      'ready'::authority_ingestion_status, 'current_as_of_source_date'::authority_currentness_status, now(),
-      ${null}, ${rec.effectiveDate},
-      ${sql.json(rec.sourceMetadata)}, now(), now()
-    )
-  `;
-  const [version] = await sql`
-    insert into legal_authority_versions (
-      id, authority_id, version_number, content, effective_from, effective_to,
-      source_provider, source_metadata, sha256
-    ) values (
-      ${randomUUID()}, ${id}, 1, ${content}, ${rec.effectiveDate}, ${null},
-      ${rec.sourceProvider}, ${sql.json(rec.sourceMetadata)}, ${hash}
-    )
-    returning id
-  `;
-  const chunks = chunkContent(content);
-  const vectors = await embedAll(chunks, apiKey);
-  for (let i = 0; i < chunks.length; i++) {
-    await sql`
-      insert into legal_authority_chunks (
-        id, authority_id, authority_version_id, chunk_index, content,
-        segment_ref, embedding, embedding_model
-      ) values (
-        ${randomUUID()}, ${id}, ${version.id}, ${i}, ${chunks[i]},
-        ${`p${i + 1}`}, ${toPgvector(vectors[i])}::vector, ${"text-embedding-3-small:384"}
-      )
-    `;
-  }
-  return { status: "imported", id, chunks: chunks.length, embedded: vectors.length, chars: content.length };
-}
+var STATE_CODES = [
+  "AL",
+  "AK",
+  "AZ",
+  "AR",
+  "CA",
+  "CO",
+  "CT",
+  "DE",
+  "DC",
+  "FL",
+  "GA",
+  "HI",
+  "ID",
+  "IL",
+  "IN",
+  "IA",
+  "KS",
+  "KY",
+  "LA",
+  "ME",
+  "MD",
+  "MA",
+  "MI",
+  "MN",
+  "MS",
+  "MO",
+  "MT",
+  "NE",
+  "NV",
+  "NH",
+  "NJ",
+  "NM",
+  "NY",
+  "NC",
+  "ND",
+  "OH",
+  "OK",
+  "OR",
+  "PA",
+  "RI",
+  "SC",
+  "SD",
+  "TN",
+  "TX",
+  "UT",
+  "VT",
+  "VA",
+  "WA",
+  "WV",
+  "WI",
+  "WY"
+];
+var STATE_TARGET = 150;
+var STATE_TOTAL_TARGET = 7650;
+var FEDERAL_TARGET = 2350;
+var CASE_TARGET = 1e4;
+var HAS_INTERMEDIATE = /* @__PURE__ */ new Set([
+  "AL",
+  "AK",
+  "AZ",
+  "AR",
+  "CA",
+  "CO",
+  "CT",
+  "FL",
+  "GA",
+  "HI",
+  "ID",
+  "IL",
+  "IN",
+  "IA",
+  "KS",
+  "KY",
+  "LA",
+  "MD",
+  "MA",
+  "MI",
+  "MN",
+  "MS",
+  "MO",
+  "NE",
+  "NV",
+  "NJ",
+  "NM",
+  "NY",
+  "NC",
+  "OH",
+  "OK",
+  "OR",
+  "PA",
+  "SC",
+  "TN",
+  "TX",
+  "UT",
+  "VA",
+  "WA",
+  "WI"
+]);
+var CIRCUIT_CL = {
+  scotus: "SCOTUS",
+  ca1: "1st Circuit",
+  ca2: "2nd Circuit",
+  ca3: "3rd Circuit",
+  ca4: "4th Circuit",
+  ca5: "5th Circuit",
+  ca6: "6th Circuit",
+  ca7: "7th Circuit",
+  ca8: "8th Circuit",
+  ca9: "9th Circuit",
+  ca10: "10th Circuit",
+  ca11: "11th Circuit",
+  cadc: "D.C. Circuit",
+  cafc: "Federal Circuit"
+};
 async function main() {
-  const databaseUrl = process.env.DATABASE_URL?.trim();
-  const openaiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!databaseUrl || !openaiKey) {
-    console.log(JSON.stringify({ ok: false, reason: "missing_env", courtListenerHttpCalls: 0 }));
+  const url = process.env.DATABASE_URL;
+  if (!url) {
+    console.log(JSON.stringify({ ok: false, reason: "no_db" }));
     process.exit(2);
   }
-  const sql = postgres(databaseUrl, { max: 1, ssl: "require", idle_timeout: 5, connect_timeout: 30 });
+  const sql = postgres(url, { max: 1, ssl: "require", idle_timeout: 5, connect_timeout: 30 });
   try {
-    const unresolved = await sql`
-      select coalesce(normalized_citation, raw_citation) as cite, count(*)::int as edges,
-             count(distinct from_authority_id)::int as citing
-      from legal_authority_citations
-      where to_authority_id is null
-        and coalesce(normalized_citation, raw_citation) ~* 'C\\.?\\s*F\\.?\\s*R'
-      group by 1
-      order by edges desc
-      limit 40
-    `;
-    const existing = new Set(
-      (await sql`select normalized_citation from legal_authorities where normalized_citation is not null`).map(
-        (r) => String(r.normalized_citation)
-      )
-    );
-    let ecfrDate = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
-    try {
-      const titles = await fetch("https://www.ecfr.gov/api/versioner/v1/titles.json", {
-        headers: { Accept: "application/json" },
-        signal: AbortSignal.timeout(2e4)
-      });
-      if (titles.ok) {
-        const j = await titles.json();
-        if (j?.meta?.date) ecfrDate = j.meta.date;
-      }
-    } catch {
-    }
-    const candidates = [];
-    for (const row of unresolved) {
-      const p = parseCfr(row.cite);
-      if (!p) continue;
-      if (existing.has(p.citation)) continue;
-      candidates.push({ ...p, edges: row.edges, citing: row.citing });
-    }
-    const results = [];
-    let imported = 0;
-    for (const c of candidates) {
-      if (imported >= MAX) break;
-      const page = `https://www.ecfr.gov/api/renderer/v1/content/enhanced/${ecfrDate}/title-${c.title}?section=${encodeURIComponent(c.section)}`;
-      try {
-        const res = await fetch(page, { headers: { Accept: "text/html" }, signal: AbortSignal.timeout(3e4) });
-        const text = stripHtml(await res.text());
-        const sectionToken = c.section;
-        const identityOk = res.ok && text.length >= MIN_CHARS && text.includes(sectionToken);
-        if (!identityOk) {
-          results.push({
-            citation: c.citation,
-            status: "quarantined",
-            http: res.status,
-            chars: text.length,
-            reason: !res.ok ? `http_${res.status}` : text.length < MIN_CHARS ? "short_text" : "section_token_missing",
-            edges: c.edges
-          });
-          continue;
-        }
-        const rec = {
-          title: c.citation,
-          content: text,
-          sourceProvider: "ecfr",
-          sourceExternalId: `ecfr-t${c.title}-s${c.section}`,
-          citation: c.citation,
-          normalizedCitation: c.citation,
-          canonicalSourceUrl: `https://www.ecfr.gov/current/title-${c.title}/section-${c.section}`,
-          effectiveDate: ecfrDate,
-          sourceMetadata: {
-            adapter: "queue2-b1-cfr-pilot",
-            asOfDate: ecfrDate,
-            retrievedAt: (/* @__PURE__ */ new Date()).toISOString(),
-            expectedEdges: c.edges,
-            queue: "#2",
-            lane: "B1"
-          }
-        };
-        const result = await importOne(sql, rec, openaiKey);
-        results.push({ citation: c.citation, edges: c.edges, citing: c.citing, ...result, url: rec.canonicalSourceUrl });
-        if (result.status === "imported") {
-          imported += 1;
-          existing.add(c.citation);
-        }
-      } catch (e) {
-        results.push({ citation: c.citation, status: "error", error: String(e.message || e).slice(0, 160), edges: c.edges });
-      }
-    }
     const [corpus] = await sql`
-      select count(*)::int as authorities,
-             count(*) filter (where authority_type='case')::int as cases,
-             count(*) filter (where authority_type='case' and source_provider='courtlistener')::int as cl_cases,
-             count(*) filter (where authority_type='regulation')::int as regulations
+      select
+        count(*)::int as authorities,
+        count(*) filter (where authority_type='case')::int as cases,
+        count(*) filter (where authority_type='case' and source_provider='courtlistener')::int as cl_cases,
+        count(*) filter (where authority_type='statute')::int as statutes,
+        count(*) filter (where authority_type='regulation')::int as regulations,
+        count(*) filter (where authority_type='rule')::int as rules,
+        count(*) filter (where authority_type='case' and authority_state='US')::int as federal_cases,
+        count(*) filter (where authority_type='case' and authority_state is not null and authority_state <> 'US')::int as state_dc_cases
       from legal_authorities
     `;
     const [chunks] = await sql`
@@ -2411,34 +2344,178 @@ async function main() {
     const [dupes] = await sql`
       select count(*)::int as n from (
         select 1 from legal_authorities where source_external_id is not null
-        group by source_provider, source_external_id having count(*)>1
+        group by source_provider, source_external_id having count(*) > 1
       ) d
     `;
     const [orphans] = await sql`
       select count(*)::int as n from legal_authority_chunks c
-      left join legal_authorities a on a.id=c.authority_id where a.id is null
+      left join legal_authorities a on a.id = c.authority_id where a.id is null
     `;
-    console.log(
-      JSON.stringify({
-        ok: true,
-        classification: "B1_CFR_ZERO_CL_PILOT",
-        generatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-        courtListenerHttpCalls: 0,
-        max: MAX,
-        ecfrDate,
-        imported,
-        results,
+    const [cite] = await sql`
+      select count(*)::int as extracted,
+             count(*) filter (where to_authority_id is not null)::int as resolved,
+             count(*) filter (where to_authority_id is null)::int as unresolved
+      from legal_authority_citations
+    `;
+    const stateRows = await sql`
+      select
+        authority_state as j,
+        count(*)::int as cases,
+        count(*) filter (where court_level in ('state_high','scotus') or court_level='high')::int as high_raw,
+        count(*) filter (where court_level = 'state_high')::int as high_court,
+        count(*) filter (where court_level in ('state_appellate','circuit','appellate'))::int as intermediate,
+        count(*) filter (where decision_date is not null and extract(year from decision_date)::int < 2000)::int as pre_2000,
+        min(extract(year from decision_date)::int) filter (where decision_date is not null) as earliest_year,
+        max(extract(year from decision_date)::int) filter (where decision_date is not null) as latest_year
+      from legal_authorities
+      where authority_type = 'case'
+        and authority_state = any(${STATE_CODES})
+      group by 1
+    `;
+    const byState = Object.fromEntries(stateRows.map((r) => [r.j, r]));
+    const citeDemand = await sql`
+      select a.authority_state as j, count(*)::int as absent_edges
+      from legal_authority_citations e
+      join legal_authorities a on a.id = e.from_authority_id
+      where e.to_authority_id is null
+        and a.authority_state = any(${STATE_CODES})
+      group by 1
+    `;
+    const demandBy = Object.fromEntries(citeDemand.map((r) => [r.j, r.absent_edges]));
+    const states = STATE_CODES.map((j) => {
+      const r = byState[j] || {
+        cases: 0,
+        high_court: 0,
+        intermediate: 0,
+        pre_2000: 0,
+        earliest_year: null,
+        latest_year: null
+      };
+      const cases = Number(r.cases || 0);
+      const high = Number(r.high_court || 0);
+      const mid = Number(r.intermediate || 0);
+      const pre2000 = Number(r.pre_2000 || 0);
+      const deficit = Math.max(0, STATE_TARGET - cases);
+      const midGap = HAS_INTERMEDIATE.has(j) && mid === 0 ? 1 : 0;
+      const histGap = pre2000 === 0 || r.earliest_year != null && Number(r.earliest_year) >= 2e3 ? 1 : 0;
+      const demand = Number(demandBy[j] || 0);
+      const over = Math.max(0, cases - STATE_TARGET);
+      const balancedPriority = deficit * 3 + midGap * 80 + histGap * 40 + Math.min(demand, 200) * 0.15 - over * 2;
+      return {
+        jurisdiction: j,
+        cases,
+        highCourt: high,
+        intermediateAppellate: mid,
+        earliestYear: r.earliest_year,
+        latestYear: r.latest_year,
+        pre2000,
+        planningTarget: STATE_TARGET,
+        deficit,
+        intermediateLayerGap: midGap === 1,
+        historicalGap: histGap === 1,
+        citationDemand: demand,
+        balancedPriority: Number(balancedPriority.toFixed(2))
+      };
+    }).sort((a, b) => b.balancedPriority - a.balancedPriority || b.deficit - a.deficit);
+    const fedRows = await sql`
+      select
+        coalesce(metadata->>'clCourt', court_id, 'unknown') as bucket,
+        count(*)::int as cases,
+        count(*) filter (where decision_date is not null and extract(year from decision_date)::int < 2000)::int as pre_2000,
+        min(extract(year from decision_date)::int) filter (where decision_date is not null) as earliest_year,
+        max(extract(year from decision_date)::int) filter (where decision_date is not null) as latest_year
+      from legal_authorities
+      where authority_type = 'case'
+        and authority_state = 'US'
+      group by 1
+      order by cases desc
+    `;
+    const federalBuckets = fedRows.map((r) => {
+      const key = String(r.bucket || "unknown").toLowerCase();
+      const label = CIRCUIT_CL[key] || key;
+      return {
+        bucket: key,
+        label,
+        cases: r.cases,
+        pre2000: r.pre_2000,
+        earliestYear: r.earliest_year,
+        latestYear: r.latest_year,
+        historicalWeakness: Number(r.pre_2000 || 0) === 0
+      };
+    });
+    const scotus = federalBuckets.find((b) => b.bucket === "scotus" || /scotus|supreme/i.test(b.label));
+    const circuits = Object.keys(CIRCUIT_CL).filter((k) => k !== "scotus").map((k) => {
+      const hit = federalBuckets.find((b) => b.bucket === k || b.bucket.includes(k));
+      return hit || { bucket: k, label: CIRCUIT_CL[k], cases: 0, pre2000: 0, earliestYear: null, latestYear: null, historicalWeakness: true };
+    });
+    const districtish = federalBuckets.filter(
+      (b) => !CIRCUIT_CL[b.bucket] && !/scotus|ca\d|cadc|cafc/i.test(b.bucket)
+    );
+    const out = {
+      ok: true,
+      classification: "QUEUE2_BALANCED_10K_TRACKER",
+      generatedAt: (/* @__PURE__ */ new Date()).toISOString(),
+      courtListenerHttpCalls: 0,
+      mutations: 0,
+      targets: {
+        totalCases: CASE_TARGET,
+        stateDc: STATE_TOTAL_TARGET,
+        federal: FEDERAL_TARGET,
+        perStatePlanning: STATE_TARGET
+      },
+      baseline: {
         corpus,
         chunks,
-        duplicateSourceIds: dupes[0]?.n || 0,
-        orphanCount: orphans[0]?.n || 0
-      })
-    );
+        duplicates: dupes.n,
+        orphans: orphans.n,
+        citations: {
+          ...cite,
+          targetAbsent: cite.unresolved,
+          resolutionRatePct: cite.extracted ? Number((100 * cite.resolved / cite.extracted).toFixed(2)) : 0
+        }
+      },
+      progress: {
+        casesCurrent: corpus.cases,
+        casesRemaining: Math.max(0, CASE_TARGET - corpus.cases),
+        pctComplete: Number((100 * corpus.cases / CASE_TARGET).toFixed(2)),
+        stateDcCurrent: corpus.state_dc_cases,
+        stateDcRemaining: Math.max(0, STATE_TOTAL_TARGET - corpus.state_dc_cases),
+        federalCurrent: corpus.federal_cases,
+        federalRemaining: Math.max(0, FEDERAL_TARGET - corpus.federal_cases)
+      },
+      states,
+      topUnderrepresented: states.slice(0, 10),
+      topOverrepresented: [...states].sort((a, b) => b.cases - a.cases).slice(0, 10),
+      federal: {
+        total: corpus.federal_cases,
+        scotus: scotus || { cases: 0 },
+        circuits,
+        districtBuckets: districtish.slice(0, 30),
+        weakest: [...circuits, scotus].filter(Boolean).sort((a, b) => a.cases - b.cases).slice(0, 10)
+      },
+      lanes: {
+        G1: states.filter((s) => s.deficit > 0).slice(0, 15).map((s) => ({
+          jurisdiction: s.jurisdiction,
+          deficit: s.deficit,
+          intermediateLayerGap: s.intermediateLayerGap,
+          priority: s.balancedPriority
+        })),
+        G2: states.filter((s) => s.historicalGap).sort((a, b) => b.balancedPriority - a.balancedPriority).slice(0, 15).map((s) => ({
+          jurisdiction: s.jurisdiction,
+          earliestYear: s.earliestYear,
+          latestYear: s.latestYear,
+          pre2000: s.pre2000,
+          priority: s.balancedPriority
+        })),
+        G3: [...circuits, scotus].filter(Boolean).sort((a, b) => a.cases - b.cases).slice(0, 15)
+      }
+    };
+    console.log(JSON.stringify(out));
   } finally {
     await sql.end({ timeout: 5 });
   }
 }
 main().catch((e) => {
-  console.log(JSON.stringify({ ok: false, err: String(e.message || e).slice(0, 400), courtListenerHttpCalls: 0 }));
+  console.log(JSON.stringify({ ok: false, err: String(e.message || e).slice(0, 400) }));
   process.exit(1);
 });

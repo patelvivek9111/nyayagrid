@@ -9,7 +9,7 @@
 const { createHash, randomUUID } = require("node:crypto");
 const postgres = require("postgres");
 
-const MAX = Math.min(Math.max(Number.parseInt(process.env.B1_MAX || "5", 10) || 5, 1), 5);
+const MAX = Math.min(Math.max(Number.parseInt(process.env.B1_MAX || "5", 10) || 5, 1), 12);
 const MIN_CHARS = 200;
 
 function sha256(text) {

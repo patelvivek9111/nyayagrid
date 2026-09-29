@@ -1,0 +1,79 @@
+{
+  "ok": true,
+  "classification": "B1_CFR_ZERO_CL_PILOT",
+  "generatedAt": "2026-09-29T17:47:47.369Z",
+  "courtListenerHttpCalls": 0,
+  "max": 5,
+  "ecfrDate": "2026-09-25",
+  "imported": 5,
+  "results": [
+    {
+      "citation": "11 C.F.R. ┬º 109.20",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "4580a581-5985-432a-acb5-184d938c0057",
+      "chunks": 2,
+      "embedded": 2,
+      "chars": 1021,
+      "url": "https://www.ecfr.gov/current/title-11/section-109.20"
+    },
+    {
+      "citation": "20 C.F.R. ┬º 718.204",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "b00cdbf0-01b7-4f13-b136-8389805815b9",
+      "chunks": 9,
+      "embedded": 9,
+      "chars": 8113,
+      "url": "https://www.ecfr.gov/current/title-20/section-718.204"
+    },
+    {
+      "citation": "20 C.F.R. ┬º 725.202",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "6c38855d-b12d-4bc6-9e77-81e1a2661a51",
+      "chunks": 4,
+      "embedded": 4,
+      "chars": 3154,
+      "url": "https://www.ecfr.gov/current/title-20/section-725.202"
+    },
+    {
+      "citation": "20 C.F.R. ┬º 725.493",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "5fcf3c91-d878-487f-8141-7eb34b66a54d",
+      "chunks": 6,
+      "embedded": 6,
+      "chars": 5149,
+      "url": "https://www.ecfr.gov/current/title-20/section-725.493"
+    },
+    {
+      "citation": "27 C.F.R. ┬º 479.62",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "429aad47-e468-4993-ab2d-af1921f92413",
+      "chunks": 4,
+      "embedded": 4,
+      "chars": 3811,
+      "url": "https://www.ecfr.gov/current/title-27/section-479.62"
+    }
+  ],
+  "corpus": {
+    "authorities": 4012,
+    "cases": 2685,
+    "cl_cases": 2640,
+    "regulations": 168
+  },
+  "chunks": {
+    "chunks": 64384,
+    "embeddings": 64384,
+    "missing_embeddings": 0
+  },
+  "duplicateSourceIds": 0,
+  "orphanCount": 0
+}

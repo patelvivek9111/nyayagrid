@@ -224,6 +224,16 @@ const CL_COURT_MAP: Record<string, CourtMapEntry> = {
   ohio: { courtId: "st-oh-high", courtLevel: "state_high", authorityState: "OH", courtName: "Ohio Supreme Court", federalCircuit: null, jurisdiction: "OH" },
   wash: { courtId: "st-wa-high", courtLevel: "state_high", authorityState: "WA", courtName: "Washington Supreme Court", federalCircuit: null, jurisdiction: "WA" },
   wis: { courtId: "st-wi-high", courtLevel: "state_high", authorityState: "WI", courtName: "Wisconsin Supreme Court", federalCircuit: null, jurisdiction: "WI" },
+  // Intermediate appellate — IDs confirmed by paced ensureCourtVerified on first ingest
+  wisctapp: { courtId: "st-wi-app", courtLevel: "state_appellate", authorityState: "WI", courtName: "Wisconsin Court of Appeals", federalCircuit: null, jurisdiction: "WI" },
+  connappct: { courtId: "st-ct-app", courtLevel: "state_appellate", authorityState: "CT", courtName: "Connecticut Appellate Court", federalCircuit: null, jurisdiction: "CT" },
+  arizctapp: { courtId: "st-az-app", courtLevel: "state_appellate", authorityState: "AZ", courtName: "Arizona Court of Appeals", federalCircuit: null, jurisdiction: "AZ" },
+  nmctapp: { courtId: "st-nm-app", courtLevel: "state_appellate", authorityState: "NM", courtName: "New Mexico Court of Appeals", federalCircuit: null, jurisdiction: "NM" },
+  indctapp: { courtId: "st-in-app", courtLevel: "state_appellate", authorityState: "IN", courtName: "Indiana Court of Appeals", federalCircuit: null, jurisdiction: "IN" },
+  nebrctapp: { courtId: "st-ne-app", courtLevel: "state_appellate", authorityState: "NE", courtName: "Nebraska Court of Appeals", federalCircuit: null, jurisdiction: "NE" },
+  kanctapp: { courtId: "st-ks-app", courtLevel: "state_appellate", authorityState: "KS", courtName: "Kansas Court of Appeals", federalCircuit: null, jurisdiction: "KS" },
+  kyctapp: { courtId: "st-ky-app", courtLevel: "state_appellate", authorityState: "KY", courtName: "Kentucky Court of Appeals", federalCircuit: null, jurisdiction: "KY" },
+  utahctapp: { courtId: "st-ut-app", courtLevel: "state_appellate", authorityState: "UT", courtName: "Utah Court of Appeals", federalCircuit: null, jurisdiction: "UT" },
 };
 
 /**

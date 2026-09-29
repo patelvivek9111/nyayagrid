@@ -1,0 +1,125 @@
+{
+  "classification": "MANUAL_QUEUE2_BALANCED_10K_AND_CITATION_EXPANSION",
+  "generatedAt": "2026-09-29T19:35:00.000Z",
+  "queue": { "q2": "OPEN", "q9": "CLOSED", "q3": "NOT_OPEN", "transition": "NONE" },
+  "safety": {
+    "queue2Worker": "STOPPED",
+    "laneAChild": null,
+    "queue2LaneBAllowMutation": "OFF",
+    "locUsReportsMutation": "HOLD",
+    "uscFederalRulesMutation": "HOLD"
+  },
+  "quotaStart": {
+    "source": "packages/research/corpus/reports/queue2-manual-cl-quota-probe-raw.json",
+    "minute": 30,
+    "hour": 300,
+    "day": 411,
+    "sessionBudgetChosen": 220
+  },
+  "quotaEnd": {
+    "minute": 30,
+    "hour": 300,
+    "day": 288,
+    "note": "End fly quota probe failed (staging key eval); day remaining estimated from start usage 789 + ~123 session CL ≈ 912/1200"
+  },
+  "caseProgress": {
+    "target": 10000,
+    "casesStart": 2685,
+    "casesEnd": 2759,
+    "casesAdded": 74,
+    "pctComplete": 27.59,
+    "stateDcStart": 2399,
+    "stateDcEnd": 2428,
+    "stateDcTarget": 7650,
+    "federalStart": 286,
+    "federalEnd": 331,
+    "federalTarget": 2350
+  },
+  "a2": {
+    "executed": false,
+    "reason": "No verified TARGET_ABSENT with expected >=3.0 res/CL; top U.S. Reports ~6 edges / ~2.5 CL ~2.4; 573 U.S. 373 deferred",
+    "cl": 0,
+    "newResolved": 0
+  },
+  "caseGrowth": {
+    "G1": {
+      "courts": ["wisctapp", "utahctapp", "connappct (blocked/failed mapping)", "arizctapp/nmctapp/indctapp (verify pending)"],
+      "casesAddedReported": 24,
+      "clReported": 49,
+      "notes": "WI intermediate +12; UT appellate +6; connappct orphan gate"
+    },
+    "G2": {
+      "courts": ["neb (historical window failed)", "kan (aborted)"],
+      "casesAddedReported": 0,
+      "clReported": 2,
+      "notes": "Historical date-window batches need court-id verification before retry"
+    },
+    "G3": {
+      "courts": ["ca2", "ca3", "ca4", "cafc", "ca11", "ca5 (duplicate quarantine)", "ca6 (408 orphan)"],
+      "casesAddedReported": 50,
+      "clReported": 72,
+      "notes": "Federal circuit depth +45 net federal cases in DB"
+    }
+  },
+  "zeroCl": {
+    "cfrAuthoritiesAdded": 5,
+    "cl": 0,
+    "citationReresolveNewResolved": 5,
+    "artifacts": ["queue2-b1-cfr-batch.json", "queue2-cite-reresolve-last.json"]
+  },
+  "citations": {
+    "extractedStart": 7581,
+    "extractedEnd": 8130,
+    "resolvedStart": 987,
+    "resolvedEnd": 1021,
+    "targetAbsentStart": 6594,
+    "targetAbsentEnd": 7109,
+    "resolutionRateStartPct": 13.02,
+    "resolutionRateEndPct": 12.56,
+    "note": "Absolute resolved +34; rate down because new case edges added faster than federal-primary targets resolved"
+  },
+  "corpusEnd": {
+    "authorities": 4086,
+    "cases": 2759,
+    "clCases": 2714,
+    "statutes": 904,
+    "regulations": 168,
+    "rules": 254,
+    "chunks": 65891,
+    "embeddings": 65891,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0
+  },
+  "requests": {
+    "a2Cl": 0,
+    "g1Cl": 49,
+    "g2Cl": 2,
+    "g3Cl": 72,
+    "totalClApprox": 123,
+    "productiveCaseImportsApprox": 74,
+    "retriesOrWasted": "ca5 quarantine-heavy; fly 408 orphan waits",
+    "429": 0
+  },
+  "validation": {
+    "queue2Validate": "PASS",
+    "queue2Preflight": "PREFLIGHT_PASS"
+  },
+  "verdict": "PARTIAL",
+  "remainingGaps": [
+    "10k case target ~72% remaining",
+    "Federal still recent-heavy (most circuits pre-2000 ~0)",
+    "Many state intermediate layers unmapped or unverified (connappct, arizctapp, nmctapp, indctapp)",
+    "A2 U.S. Reports yield below 3.0 res/CL — continue G1/G2/G3",
+    "USC / Federal Rules / LOC U.S. Reports remain HOLD"
+  ],
+  "completionCandidate": false,
+  "humanReviewRequired": false,
+  "artifacts": [
+    "queue2-balanced-10k-tracker.json",
+    "queue2-balanced-10k-tracker-end.json",
+    "queue2-balanced-10k-session-v2.json",
+    "queue2-balanced-10k-finish.json",
+    "queue2-citation-target-priority-last.json"
+  ]
+}
