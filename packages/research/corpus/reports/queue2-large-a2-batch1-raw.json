@@ -1,0 +1,144 @@
+{
+  "ok": true,
+  "classification": "A2_VERIFIED_MICRO_BATCH",
+  "maxCalls": 25,
+  "acquireLimit": 5,
+  "courtListenerHttpCalls": 10,
+  "rateLimited": false,
+  "lastRetryAfter": null,
+  "considered": 10,
+  "preverified": 5,
+  "acquired": 5,
+  "deferred": [],
+  "preverify": [
+    {
+      "citation": "489 U.S. 602",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 112219,
+      "clRequests": 1
+    },
+    {
+      "citation": "499 U.S. 279",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 112566,
+      "clRequests": 1
+    },
+    {
+      "citation": "514 U.S. 419",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 117923,
+      "clRequests": 1
+    },
+    {
+      "citation": "526 U.S. 137",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 118271,
+      "clRequests": 1
+    },
+    {
+      "citation": "547 U.S. 813",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 145641,
+      "clRequests": 1
+    }
+  ],
+  "results": [
+    {
+      "citation": "489 U.S. 602",
+      "status": "imported",
+      "authorityId": "5e9542eb-b05b-4bda-b712-dbb52059bccb",
+      "sourceExternalId": "cl-opinion-9431607",
+      "clusterId": "112219",
+      "opinionId": "9431607",
+      "embeddedChunks": 2,
+      "title": "Skinner v. Railway Labor Executives' Assn.",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/112219/",
+      "reporter": "U.S."
+    },
+    {
+      "citation": "499 U.S. 279",
+      "status": "imported",
+      "authorityId": "73e0ea50-e6c4-41fb-a3a8-74325b316fee",
+      "sourceExternalId": "cl-opinion-9432242",
+      "clusterId": "112566",
+      "opinionId": "9432242",
+      "embeddedChunks": 3,
+      "title": "Arizona v. Fulminante",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/112566/",
+      "reporter": "U.S."
+    },
+    {
+      "citation": "514 U.S. 419",
+      "status": "imported",
+      "authorityId": "87b16fba-b0e7-44c4-ae4a-0a1412301add",
+      "sourceExternalId": "cl-opinion-9433122",
+      "clusterId": "117923",
+      "opinionId": "9433122",
+      "embeddedChunks": 41,
+      "title": "Kyles v. Whitley",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/117923/",
+      "reporter": "U.S."
+    },
+    {
+      "citation": "526 U.S. 137",
+      "status": "imported",
+      "authorityId": "d70fd679-b7fa-42bb-98eb-6d5122f921fc",
+      "sourceExternalId": "cl-opinion-9433765",
+      "clusterId": "118271",
+      "opinionId": "9433765",
+      "embeddedChunks": 35,
+      "title": "Kumho Tire Co. v. Carmichael",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/118271/",
+      "reporter": "U.S."
+    },
+    {
+      "citation": "547 U.S. 813",
+      "status": "imported",
+      "authorityId": "45b56e4e-37a0-4c51-97a7-2e061e6a44df",
+      "sourceExternalId": "cl-opinion-145641",
+      "clusterId": "145641",
+      "opinionId": "145641",
+      "embeddedChunks": 41,
+      "title": "Davis v. Washington",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/145641/",
+      "reporter": "U.S."
+    }
+  ],
+  "corpus": {
+    "authorities": 3993,
+    "cases": 2676,
+    "cl_cases": 2631
+  },
+  "chunks": {
+    "chunks": 63961,
+    "embeddings": 63961,
+    "missing_embeddings": 0
+  },
+  "duplicateSourceIds": 0,
+  "orphans": 0
+}

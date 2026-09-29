@@ -1,0 +1,144 @@
+{
+  "ok": true,
+  "classification": "A2_VERIFIED_MICRO_BATCH",
+  "maxCalls": 25,
+  "acquireLimit": 5,
+  "courtListenerHttpCalls": 10,
+  "rateLimited": false,
+  "lastRetryAfter": null,
+  "considered": 20,
+  "preverified": 5,
+  "acquired": 5,
+  "deferred": [],
+  "preverify": [
+    {
+      "citation": "410 U.S. 113",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 108713,
+      "clRequests": 1
+    },
+    {
+      "citation": "424 U.S. 1",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 109380,
+      "clRequests": 1
+    },
+    {
+      "citation": "428 U.S. 153",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 109532,
+      "clRequests": 1
+    },
+    {
+      "citation": "437 U.S. 385",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 109905,
+      "clRequests": 1
+    },
+    {
+      "citation": "440 U.S. 648",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 110045,
+      "clRequests": 1
+    }
+  ],
+  "results": [
+    {
+      "citation": "410 U.S. 113",
+      "status": "imported",
+      "authorityId": "f1f4882a-213f-4d68-80c5-ecb57342a06d",
+      "sourceExternalId": "cl-opinion-9425157",
+      "clusterId": "108713",
+      "opinionId": "9425157",
+      "embeddedChunks": 41,
+      "title": "Roe v. Wade",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/108713/",
+      "reporter": "U.S."
+    },
+    {
+      "citation": "424 U.S. 1",
+      "status": "imported",
+      "authorityId": "e89ed88e-2b3a-48a0-bc66-c400b8926777",
+      "sourceExternalId": "cl-opinion-109380",
+      "clusterId": "109380",
+      "opinionId": "109380",
+      "embeddedChunks": 41,
+      "title": "Buckley v. Valeo",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/109380/",
+      "reporter": "U.S."
+    },
+    {
+      "citation": "428 U.S. 153",
+      "status": "imported",
+      "authorityId": "d4730028-a1f0-4919-8095-ca2b918415ab",
+      "sourceExternalId": "cl-opinion-9426555",
+      "clusterId": "109532",
+      "opinionId": "9426555",
+      "embeddedChunks": 41,
+      "title": "Gregg v. Georgia",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/109532/",
+      "reporter": "U.S."
+    },
+    {
+      "citation": "437 U.S. 385",
+      "status": "imported",
+      "authorityId": "7d45942c-fd6d-4762-8625-39414292afdc",
+      "sourceExternalId": "cl-opinion-109905",
+      "clusterId": "109905",
+      "opinionId": "109905",
+      "embeddedChunks": 41,
+      "title": "Mincey v. Arizona",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/109905/",
+      "reporter": "U.S."
+    },
+    {
+      "citation": "440 U.S. 648",
+      "status": "imported",
+      "authorityId": "e7f12c4c-8162-428e-a4f5-69f4714358dd",
+      "sourceExternalId": "cl-opinion-9427510",
+      "clusterId": "110045",
+      "opinionId": "9427510",
+      "embeddedChunks": 1,
+      "title": "Delaware v. Prouse",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/110045/",
+      "reporter": "U.S."
+    }
+  ],
+  "corpus": {
+    "authorities": 3988,
+    "cases": 2671,
+    "cl_cases": 2626
+  },
+  "chunks": {
+    "chunks": 63839,
+    "embeddings": 63839,
+    "missing_embeddings": 0
+  },
+  "duplicateSourceIds": 0,
+  "orphans": 0
+}

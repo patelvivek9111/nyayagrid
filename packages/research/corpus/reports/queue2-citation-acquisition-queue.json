@@ -1,8 +1,8 @@
 {
   "classification": "QUEUE2_CITATION_ACQUISITION_QUEUE",
-  "generatedAt": "2026-09-29T01:43:54.472Z",
+  "generatedAt": "2026-09-29T16:22:36.954Z",
   "courtListenerHttpCalls": 0,
-  "source": "end_of_day_a2_post_window",
+  "source": "large_a2_post_window",
   "A1_depthCompletion": {
     "status": "COMPLETE",
     "completed": 51,
@@ -10,187 +10,62 @@
   },
   "citationBaseline": {
     "extracted": 7581,
-    "resolved": 789,
-    "unresolved": 6792,
-    "targetAbsent": 6792,
-    "resolutionRatePct": 10.41,
-    "uniqueAbsentTargets": 5137,
+    "resolved": 817,
+    "unresolved": 6764,
+    "targetAbsent": 6764,
+    "resolutionRatePct": 10.78,
+    "uniqueAbsentTargets": 5133,
     "malformedUnusable": 1,
     "targetPresentButNotMatchedGroups": 0,
     "targetPresentButNotMatchedEdges": 0,
-    "top10ShareOfAbsentEdgesPct": 1.12,
-    "top100ShareOfAbsentEdgesPct": 7.64,
-    "totalAbsentEdges": 6791
+    "top10ShareOfAbsentEdgesPct": 1.06,
+    "top100ShareOfAbsentEdgesPct": 7.5,
+    "totalAbsentEdges": 6763
   },
+  "deny": [
+    "573 U.S. 373"
+  ],
   "A2_citationTargetRecovery": {
     "candidates": [
       {
         "rank": 1,
-        "citation": "573 U.S. 373",
-        "edgesPotentiallyUnlocked": 9,
-        "uniqueCitingAuthorities": 9,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 2,
-        "citation": "483 U.S. 756",
-        "edgesPotentiallyUnlocked": 7,
-        "uniqueCitingAuthorities": 7,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 3,
-        "citation": "528 U.S. 119",
-        "edgesPotentiallyUnlocked": 7,
-        "uniqueCitingAuthorities": 7,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 4,
-        "citation": "555 U.S. 135",
-        "edgesPotentiallyUnlocked": 7,
-        "uniqueCitingAuthorities": 7,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 5,
-        "citation": "376 U.S. 254",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 6,
-        "citation": "401 U.S. 37",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 7,
-        "citation": "405 U.S. 150",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 8,
-        "citation": "415 U.S. 308",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 9,
-        "citation": "422 U.S. 806",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 10,
-        "citation": "455 U.S. 745",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 11,
-        "citation": "477 U.S. 399",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 12,
         "citation": "489 U.S. 602",
         "edgesPotentiallyUnlocked": 6,
         "uniqueCitingAuthorities": 6,
         "family": "us_reports",
-        "recommendedPath": "cl_a2"
+        "recommendedPath": "cl_a2_verified"
       },
       {
-        "rank": 13,
+        "rank": 2,
         "citation": "499 U.S. 279",
         "edgesPotentiallyUnlocked": 6,
         "uniqueCitingAuthorities": 6,
         "family": "us_reports",
-        "recommendedPath": "cl_a2"
+        "recommendedPath": "cl_a2_verified"
       },
       {
-        "rank": 14,
+        "rank": 3,
         "citation": "514 U.S. 419",
         "edgesPotentiallyUnlocked": 6,
         "uniqueCitingAuthorities": 6,
         "family": "us_reports",
-        "recommendedPath": "cl_a2"
+        "recommendedPath": "cl_a2_verified"
       },
       {
-        "rank": 15,
+        "rank": 4,
         "citation": "526 U.S. 137",
         "edgesPotentiallyUnlocked": 6,
         "uniqueCitingAuthorities": 6,
         "family": "us_reports",
-        "recommendedPath": "cl_a2"
+        "recommendedPath": "cl_a2_verified"
       },
       {
-        "rank": 16,
+        "rank": 5,
         "citation": "547 U.S. 813",
         "edgesPotentiallyUnlocked": 6,
         "uniqueCitingAuthorities": 6,
         "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 17,
-        "citation": "554 U.S. 237",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 18,
-        "citation": "564 U.S. 229",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 19,
-        "citation": "567 U.S. 387",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 20,
-        "citation": "573 U.S. 149",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
-      },
-      {
-        "rank": 21,
-        "citation": "545 U.S. 469",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 5,
-        "family": "us_reports",
-        "recommendedPath": "cl_a2"
+        "recommendedPath": "cl_a2_verified"
       }
     ]
   },
@@ -198,11 +73,11 @@
     {
       "reporter": "U.S.",
       "family": "us_reports",
-      "unresolvedEdges": 3153,
-      "uniqueTargets": 1928,
+      "unresolvedEdges": 3125,
+      "uniqueTargets": 1924,
       "clObtainable": true,
       "zeroClCandidate": true,
-      "shareOfTargetAbsentEdgesPct": 46.43,
+      "shareOfTargetAbsentEdgesPct": 46.21,
       "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
     },
     {
@@ -212,7 +87,7 @@
       "uniqueTargets": 1584,
       "clObtainable": true,
       "zeroClCandidate": false,
-      "shareOfTargetAbsentEdgesPct": 25.9,
+      "shareOfTargetAbsentEdgesPct": 26.01,
       "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
     },
     {
@@ -222,7 +97,7 @@
       "uniqueTargets": 619,
       "clObtainable": true,
       "zeroClCandidate": false,
-      "shareOfTargetAbsentEdgesPct": 10.31,
+      "shareOfTargetAbsentEdgesPct": 10.35,
       "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
     },
     {
@@ -232,7 +107,7 @@
       "uniqueTargets": 502,
       "clObtainable": true,
       "zeroClCandidate": false,
-      "shareOfTargetAbsentEdgesPct": 8.16,
+      "shareOfTargetAbsentEdgesPct": 8.19,
       "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
     },
     {
@@ -242,7 +117,7 @@
       "uniqueTargets": 196,
       "clObtainable": false,
       "zeroClCandidate": true,
-      "shareOfTargetAbsentEdgesPct": 3.89,
+      "shareOfTargetAbsentEdgesPct": 3.9,
       "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
     },
     {
@@ -252,7 +127,7 @@
       "uniqueTargets": 104,
       "clObtainable": true,
       "zeroClCandidate": false,
-      "shareOfTargetAbsentEdgesPct": 1.66,
+      "shareOfTargetAbsentEdgesPct": 1.67,
       "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
     },
     {
@@ -262,7 +137,7 @@
       "uniqueTargets": 92,
       "clObtainable": true,
       "zeroClCandidate": false,
-      "shareOfTargetAbsentEdgesPct": 1.62,
+      "shareOfTargetAbsentEdgesPct": 1.63,
       "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
     },
     {
@@ -326,24 +201,35 @@
       "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
     }
   ],
-  "quotaBudget": {
+  "quotaStart": {
     "minute": 30,
-    "hour": 280,
-    "day": 27,
-    "chosenRequestBudget": 16,
-    "safetyMarginTarget": 11
+    "hour": 300,
+    "day": 633,
+    "sessionBudget": 200,
+    "hardBudget": 240
+  },
+  "sessionSeed": {
+    "acquired": 5,
+    "cl": 10,
+    "newlyResolved": 33,
+    "resolved": 850,
+    "targetAbsent": 6731,
+    "rate": 11.21
   },
   "postWindow": {
     "acquired": [
-      "367 U.S. 643",
-      "411 U.S. 792",
-      "438 U.S. 154",
-      "476 U.S. 79"
+      "483 U.S. 756",
+      "528 U.S. 119",
+      "555 U.S. 135",
+      "376 U.S. 254",
+      "401 U.S. 37",
+      "554 U.S. 237",
+      "564 U.S. 229",
+      "567 U.S. 387",
+      "545 U.S. 469"
     ],
-    "skipped": [
-      "573 U.S. 373"
-    ],
-    "newlyResolved": 28,
-    "resolutionRatePct": 10.78
+    "newlyResolved": 142,
+    "resolutionRatePct": 12.65,
+    "clRequests": 49
   }
 }

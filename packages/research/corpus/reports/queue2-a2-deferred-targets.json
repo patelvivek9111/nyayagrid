@@ -1,0 +1,18 @@
+{
+  "classification": "QUEUE2_A2_DEFERRED_TARGETS",
+  "generatedAt": "2026-09-29T16:22:36.952Z",
+  "deferred": [
+    {
+      "citation": "573 U.S. 373",
+      "reason": "prior_no_verified_search_match",
+      "clCost": 0,
+      "retry": "defer"
+    },
+    {
+      "citation": "573 U.S. 149",
+      "reason": "no_verified_cluster_match",
+      "clCost": 1,
+      "retry": "defer"
+    }
+  ]
+}

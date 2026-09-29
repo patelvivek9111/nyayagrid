@@ -1,0 +1,114 @@
+{
+  "classification": "MANUAL_QUEUE2_LARGE_A2_FEDERAL_RECOVERY",
+  "startedAt": "2026-09-29T16:18:38.802Z",
+  "quotaStart": {
+    "minute": 30,
+    "hour": 300,
+    "day": 633
+  },
+  "sessionBudget": 160,
+  "hardBudget": 200,
+  "totalCl": 10,
+  "productiveCl": 10,
+  "lookupWasteCl": 0,
+  "acquired": 5,
+  "attempted": 5,
+  "skipped": [],
+  "successes": [
+    {
+      "citation": "489 U.S. 602",
+      "title": "Skinner v. Railway Labor Executives' Assn.",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": null,
+      "cl": 2,
+      "authorityId": "5e9542eb-b05b-4bda-b712-dbb52059bccb"
+    },
+    {
+      "citation": "499 U.S. 279",
+      "title": "Arizona v. Fulminante",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": null,
+      "cl": 2,
+      "authorityId": "73e0ea50-e6c4-41fb-a3a8-74325b316fee"
+    },
+    {
+      "citation": "514 U.S. 419",
+      "title": "Kyles v. Whitley",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": null,
+      "cl": 2,
+      "authorityId": "87b16fba-b0e7-44c4-ae4a-0a1412301add"
+    },
+    {
+      "citation": "526 U.S. 137",
+      "title": "Kumho Tire Co. v. Carmichael",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": null,
+      "cl": 2,
+      "authorityId": "d70fd679-b7fa-42bb-98eb-6d5122f921fc"
+    },
+    {
+      "citation": "547 U.S. 813",
+      "title": "Davis v. Washington",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": null,
+      "cl": 2,
+      "authorityId": "45b56e4e-37a0-4c51-97a7-2e061e6a44df"
+    }
+  ],
+  "microBatches": [
+    {
+      "batch": 1,
+      "targetCount": 5,
+      "clRequests": 10,
+      "newlyResolved": 30,
+      "cumulativeResolved": 30,
+      "overallResPerCl": 3,
+      "productiveResPerCl": 3,
+      "resolutionRateDelta": 0.39,
+      "afterRate": 12.33,
+      "corpus": {
+        "authorities": 3993,
+        "cases": 2676,
+        "cl_cases": 2631
+      },
+      "deferredThisBatch": []
+    }
+  ],
+  "deferred": [
+    {
+      "citation": "573 U.S. 373",
+      "reason": "prior_no_verified_search_match",
+      "clRequests": 0,
+      "retry": "defer"
+    }
+  ],
+  "citationsStart": {
+    "extracted": 7581,
+    "resolved": 905,
+    "unresolved": 6676,
+    "targetAbsent": 6676,
+    "resolutionRatePct": 11.94
+  },
+  "citationsEnd": {
+    "extracted": 7581,
+    "resolved": 935,
+    "unresolved": 6646,
+    "targetAbsent": 6646,
+    "resolutionRatePct": 12.33
+  },
+  "stopReason": "no_candidates",
+  "finishedAt": "2026-09-29T16:19:25.048Z",
+  "totals": {
+    "newlyResolved": 30,
+    "targetAbsentReduction": 30,
+    "overallResPerCl": 3,
+    "productiveResPerCl": 3,
+    "resPerAuthority": 6
+  }
+}

@@ -1,0 +1,384 @@
+{
+  "classification": "MANUAL_QUEUE2_LARGE_A2_FEDERAL_RECOVERY",
+  "generatedAt": "2026-09-29T16:22:36.951Z",
+  "result": "PARTIAL",
+  "quotaStart": {
+    "minute": 30,
+    "hour": 300,
+    "day": 633,
+    "selectedBudget": 200
+  },
+  "quotaEnd": {
+    "minute": 21,
+    "hour": 251,
+    "day": 587
+  },
+  "A2": {
+    "targetsConsidered": 50,
+    "preVerified": 10,
+    "attempted": 10,
+    "acquired": 24,
+    "skipped": 2,
+    "clRequests": 49,
+    "authoritiesAdded": 24,
+    "lookupWasteCl": 1,
+    "productiveCl": 48
+  },
+  "microBatches": [
+    {
+      "batch": "M1",
+      "targetCount": 5,
+      "clRequests": 10,
+      "newlyResolved": 33,
+      "overallResPerCl": 3.3,
+      "productiveResPerCl": 3.3,
+      "resolutionRateDelta": 0.43,
+      "afterRate": 11.21
+    },
+    {
+      "batch": "O1-1",
+      "targetCount": 5,
+      "clRequests": 10,
+      "newlyResolved": 30,
+      "overallResPerCl": 3,
+      "productiveResPerCl": 3,
+      "resolutionRateDelta": 0.4,
+      "afterRate": 11.61
+    },
+    {
+      "batch": "O1-2",
+      "targetCount": 5,
+      "clRequests": 10,
+      "newlyResolved": 25,
+      "overallResPerCl": 2.75,
+      "productiveResPerCl": 2.75,
+      "resolutionRateDelta": 0.33,
+      "afterRate": 11.94,
+      "note": "lower-density targets"
+    },
+    {
+      "batch": "O2-ge6",
+      "targetCount": 5,
+      "clRequests": 10,
+      "newlyResolved": 30,
+      "overallResPerCl": 3,
+      "productiveResPerCl": 3,
+      "resolutionRateDelta": 0.39,
+      "afterRate": 12.33
+    },
+    {
+      "batch": "M-ge6-final",
+      "targetCount": 4,
+      "clRequests": 9,
+      "newlyResolved": 24,
+      "overallResPerCl": 2.667,
+      "productiveResPerCl": 3,
+      "resolutionRateDelta": 0.32,
+      "afterRate": 12.65
+    }
+  ],
+  "topSuccessfulTargets": [
+    {
+      "citation": "483 U.S. 756",
+      "title": "Greer v. Miller",
+      "reporter": "U.S.",
+      "expected": 7,
+      "actual": 7,
+      "cl": 2,
+      "authorityId": "04fbf34e-0691-419d-aa96-ff8eafc301ed"
+    },
+    {
+      "citation": "528 U.S. 119",
+      "title": "Illinois v. Wardlow",
+      "reporter": "U.S.",
+      "expected": 7,
+      "actual": 7,
+      "cl": 2,
+      "authorityId": "63a4ff12-ee6b-4923-9209-3e16e6d54a37"
+    },
+    {
+      "citation": "555 U.S. 135",
+      "title": "Herring v. United States",
+      "reporter": "U.S.",
+      "expected": 7,
+      "actual": 7,
+      "cl": 2,
+      "authorityId": "053ec210-42cd-4790-b8b7-2e3e0d50fb99"
+    },
+    {
+      "citation": "376 U.S. 254",
+      "title": "New York Times Co. v. Sullivan",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2,
+      "authorityId": "5253624a-0a4b-4ea8-9770-d98313d8f111"
+    },
+    {
+      "citation": "401 U.S. 37",
+      "title": "Younger v. Harris",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2,
+      "authorityId": "4eaaa7ab-2722-4387-8d50-f6e08dce2e00"
+    },
+    {
+      "citation": "554 U.S. 237",
+      "title": "Greenlaw v. United States",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2,
+      "authorityId": "7682c037-19da-4cee-8897-f3175dba2021"
+    },
+    {
+      "citation": "564 U.S. 229",
+      "title": "Davis v. United States",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2,
+      "authorityId": "e67d1763-da45-4c07-b2e8-625309542a1f"
+    },
+    {
+      "citation": "567 U.S. 387",
+      "title": "Arizona v. United States",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2,
+      "authorityId": "831ea75a-870d-473c-8bdd-f370a62acb1b"
+    },
+    {
+      "citation": "545 U.S. 469",
+      "title": "Kelo v. City of New London",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2,
+      "authorityId": "a6b366fd-e83a-47c9-b72b-a886a2c67852"
+    },
+    {
+      "citation": "410 U.S. 113",
+      "title": "Roe v. Wade",
+      "reporter": "U.S.",
+      "expected": 5,
+      "actual": 5,
+      "cl": 2,
+      "authorityId": "f1f4882a-213f-4d68-80c5-ecb57342a06d"
+    },
+    {
+      "citation": "424 U.S. 1",
+      "title": "Buckley v. Valeo",
+      "reporter": "U.S.",
+      "expected": 5,
+      "actual": 5,
+      "cl": 2,
+      "authorityId": "e89ed88e-2b3a-48a0-bc66-c400b8926777"
+    },
+    {
+      "citation": "428 U.S. 153",
+      "title": "Gregg v. Georgia",
+      "reporter": "U.S.",
+      "expected": 5,
+      "actual": 5,
+      "cl": 2,
+      "authorityId": "d4730028-a1f0-4919-8095-ca2b918415ab"
+    },
+    {
+      "citation": "437 U.S. 385",
+      "title": "Mincey v. Arizona",
+      "reporter": "U.S.",
+      "expected": 5,
+      "actual": 5,
+      "cl": 2,
+      "authorityId": "7d45942c-fd6d-4762-8625-39414292afdc"
+    },
+    {
+      "citation": "440 U.S. 648",
+      "title": "Delaware v. Prouse",
+      "reporter": "U.S.",
+      "expected": 5,
+      "actual": 5,
+      "cl": 2,
+      "authorityId": "e7f12c4c-8162-428e-a4f5-69f4714358dd"
+    },
+    {
+      "citation": "489 U.S. 602",
+      "title": "Skinner v. Railway Labor Executives' Assn.",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2,
+      "authorityId": "5e9542eb-b05b-4bda-b712-dbb52059bccb"
+    },
+    {
+      "citation": "499 U.S. 279",
+      "title": "Arizona v. Fulminante",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2,
+      "authorityId": "73e0ea50-e6c4-41fb-a3a8-74325b316fee"
+    },
+    {
+      "citation": "514 U.S. 419",
+      "title": "Kyles v. Whitley",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2,
+      "authorityId": "87b16fba-b0e7-44c4-ae4a-0a1412301add"
+    },
+    {
+      "citation": "526 U.S. 137",
+      "title": "Kumho Tire Co. v. Carmichael",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2,
+      "authorityId": "d70fd679-b7fa-42bb-98eb-6d5122f921fc"
+    },
+    {
+      "citation": "547 U.S. 813",
+      "title": "Davis v. Washington",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2,
+      "authorityId": "45b56e4e-37a0-4c51-97a7-2e061e6a44df"
+    },
+    {
+      "citation": "405 U.S. 150",
+      "title": "Giglio v. United States",
+      "authorityId": "546299b3-6d5e-4be5-a78a-86aba4a3c646",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2
+    },
+    {
+      "citation": "415 U.S. 308",
+      "title": "Davis v. Alaska",
+      "authorityId": "81613e6c-1309-4c11-8e77-5ab320a58b52",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2
+    },
+    {
+      "citation": "422 U.S. 806",
+      "title": "Faretta v. California",
+      "authorityId": "b6acb128-d102-4eb6-8975-56d06361756e",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2
+    },
+    {
+      "citation": "455 U.S. 745",
+      "title": "Santosky v. Kramer",
+      "authorityId": "1c4f8c57-fc35-4d2b-8d90-6c116c5f68c1",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2
+    },
+    {
+      "citation": "477 U.S. 399",
+      "title": "Ford v. Wainwright",
+      "authorityId": "70d53905-3d6b-4169-b1ac-708d12a33b52",
+      "reporter": "U.S.",
+      "expected": 6,
+      "actual": 6,
+      "cl": 2
+    }
+  ],
+  "skipsFailures": [
+    {
+      "citation": "573 U.S. 373",
+      "reason": "prior_no_verified_search_match",
+      "clCost": 0,
+      "retry": "defer"
+    },
+    {
+      "citation": "573 U.S. 149",
+      "reason": "no_verified_cluster_match",
+      "clCost": 1,
+      "retry": "defer"
+    }
+  ],
+  "citationsStart": {
+    "extracted": 7581,
+    "resolved": 817,
+    "unresolved": 6764,
+    "targetAbsent": 6764,
+    "resolutionRatePct": 10.78
+  },
+  "citationsEnd": {
+    "extracted": 7581,
+    "resolved": 959,
+    "unresolved": 6622,
+    "targetAbsent": 6622,
+    "resolutionRatePct": 12.65
+  },
+  "improvement": {
+    "newlyResolved": 142,
+    "targetAbsentReduction": 142,
+    "resolutionRateIncreasePctPoints": 1.87,
+    "resolutionsPerTotalCl": 2.898,
+    "resolutionsPerAuthority": 5.917,
+    "productiveResolutionsPerAcquisitionCl": 2.958
+  },
+  "efficiency": {
+    "overall": 2.898,
+    "productive": 2.958,
+    "thresholdTriggered": true,
+    "reason": "After O1-2 dropped productive efficiency to 2.75 on ~5-edge targets, continued only expected>=6. Remaining high-density U.S. Reports targets exhausted; further U.S. A2 would be <=2.5 res/CL."
+  },
+  "federalGap": {
+    "us_reports": 2980,
+    "f3d": 1759,
+    "f2d": 554,
+    "f4th": 700,
+    "f_supp": 273,
+    "usc": 264,
+    "cfr": 42,
+    "federal_rules": 31,
+    "nextBestFamily": "us_reports",
+    "a2StillCostEffective": false,
+    "note": "U.S. still largest absences but A2 yield for remaining densest targets is at/below floor. Build verified F.3d path or wait for quota+re-rank; LOC non-CL remains HOLD."
+  },
+  "corpus": {
+    "authorities": 3997,
+    "cases": 2680,
+    "cl_cases": 2635,
+    "chunks": 64125,
+    "embeddings": 64125,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0
+  },
+  "depth": {
+    "completed": 51,
+    "remaining": 0,
+    "status": "COMPLETE"
+  },
+  "queue2Assessment": {
+    "remainingMaterialGaps": [
+      "federal TARGET_ABSENT still 6622 edges",
+      "U.S. Reports A2 density now typically <=5 edges/target",
+      "F.3d/F.2d/F.4th verified A2 path not implemented",
+      "LOC U.S. Reports non-CL PDF-only HOLD",
+      "USC/CFR/Fed.Rules zero-CL depth gated",
+      "state historical/appellate qualitative gaps remain despite 51/51 depth counts"
+    ],
+    "completionCandidate": false,
+    "humanReviewRequired": false
+  },
+  "locNonCl": {
+    "status": "HOLD_UNTOUCHED",
+    "mutation": "OFF"
+  }
+}
