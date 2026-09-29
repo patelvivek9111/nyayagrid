@@ -23,7 +23,7 @@
   "manifestVersion": 66,
   "jobStatus": "completed",
   "laneStartedAt": "2026-09-24T16:31:04.000Z",
-  "lastUpdatedAt": "2026-09-29T00:29:33.874Z",
+  "lastUpdatedAt": "2026-09-29T01:15:06.328Z",
   "lastHeartbeatAt": "2026-09-27T18:00:10.679Z",
   "nextQuotaCheckAt": "2026-09-27T18:10:09.485Z",
   "network": {
@@ -71,9 +71,9 @@
     "waitingNetworkSeconds": 0
   },
   "corpus": {
-    "authorities": 3959,
-    "cases": 2642,
-    "clCases": 2597,
+    "authorities": 3969,
+    "cases": 2652,
+    "clCases": 2607,
     "statutes": 904,
     "regulations": 158,
     "rules": 254,
@@ -169,7 +169,7 @@
   },
   "citations": {
     "extracted": 7581,
-    "resolved": 712,
-    "targetAbsent": 6869
+    "resolved": 789,
+    "targetAbsent": 6792
   }
 }

@@ -1,0 +1,47 @@
+{
+  "classification": "MANUAL_QUEUE2_FEDERAL_CITATION_RECOVERY_WINDOW",
+  "generatedAt": "2026-09-29T01:20:00.000Z",
+  "result": "PASS",
+  "quota": { "minute": 30, "hour": 172, "day": 47, "cooldown": false },
+  "A2": {
+    "targetsAttempted": 10,
+    "targetsAcquired": 10,
+    "clRequests": 20,
+    "authoritiesAdded": 10,
+    "midCheckpoint": { "afterTargets": 5, "clRequests": 10, "newlyResolved": 42, "resPerCl": 4.2 },
+    "final": { "newlyResolved": 77, "resPerCl": 3.85, "resPerAuthority": 7.7 },
+    "efficiencyFloorTriggered": false
+  },
+  "targets": [
+    { "citation": "389 U.S. 347", "title": "Katz v. United States", "expected": 9, "actual": 9, "cl": 2 },
+    { "citation": "400 U.S. 25", "title": "North Carolina v. Alford", "expected": 9, "actual": 9, "cl": 2 },
+    { "citation": "594 U.S. 413", "title": "TransUnion LLC v. Ramirez", "expected": 8, "actual": 8, "cl": 2 },
+    { "citation": "538 U.S. 343", "title": "Virginia v. Black", "expected": 8, "actual": 8, "cl": 2 },
+    { "citation": "530 U.S. 57", "title": "Troxel v. Granville", "expected": 8, "actual": 8, "cl": 2 },
+    { "citation": "378 U.S. 368", "title": "Jackson v. Denno", "expected": 7, "actual": 7, "cl": 2 },
+    { "citation": "569 U.S. 1", "title": "Florida v. Jardines", "expected": 7, "actual": 7, "cl": 2 },
+    { "citation": "585 U.S. 296", "title": "Carpenter v. United States", "expected": 7, "actual": 7, "cl": 2 },
+    { "citation": "468 U.S. 897", "title": "United States v. Leon", "expected": 7, "actual": 7, "cl": 2 },
+    { "citation": "561 U.S. 742", "title": "McDonald v. City of Chicago", "expected": 7, "actual": 7, "cl": 2 }
+  ],
+  "citationsBefore": { "extracted": 7581, "resolved": 712, "unresolved": 6869, "targetAbsent": 6869, "resolutionRatePct": 9.39 },
+  "citationsAfter": { "extracted": 7581, "resolved": 789, "unresolved": 6792, "targetAbsent": 6792, "resolutionRatePct": 10.41 },
+  "familyAbsentAfter": {
+    "us_reports": 3153,
+    "federal_reporter": 3029,
+    "federal_supplement": 272,
+    "usc": 264,
+    "cfr": 42,
+    "federal_rules": 31
+  },
+  "bestNextFamily": "us_reports",
+  "bestNextReason": "Top remaining US Reports unlock 7-9 edges vs F.3d/F.4th max 5; CL path still ~2 req/auth. Non-CL US Reports intake gated and would unlock scale beyond day quota once enabled.",
+  "zeroClPathStatus": {
+    "US_REPORTS_NON_CL_INTAKE": "gated by QUEUE2_LANE_B_ALLOW_MUTATION; would be more efficient at scale than declining CL A2 for bulk US Reports",
+    "USC_DEPTH": "gated allowMutation; analysis-only this window",
+    "CFR_DEPTH": "gated allowMutation; analysis-only this window",
+    "FEDERAL_RULES_DEPTH": "gated allowMutation; analysis-only this window",
+    "mutatedThisRun": false
+  },
+  "depth": { "completed": 51, "remaining": 0, "status": "DEPTH_WAVE_COMPLETE" }
+}

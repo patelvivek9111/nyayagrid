@@ -1,0 +1,1404 @@
+{
+  "ok": true,
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "generatedAt": "2026-09-29T01:14:37.167Z",
+  "citationBaseline": {
+    "extracted": 7581,
+    "resolved": 789,
+    "unresolved": 6792,
+    "targetAbsent": 6792,
+    "malformed": 0,
+    "presentButNotMatched_aliasExact": 0,
+    "ambiguous": 0,
+    "vrpPresentAliasMiss": 0,
+    "resolutionRatePct": 10.41
+  },
+  "presentButNotMatched": {
+    "categoryA_definitelyPresentMatchable": 0,
+    "categoryB_ambiguous": 0,
+    "categoryC_notPresent": 6792,
+    "vrpOnlyPotentialGap": 0,
+    "catAExamples": [],
+    "vrpOnlyExamples": [],
+    "verdict": "NO_DETERMINISTIC_PRESENT_BUT_UNMATCHED"
+  },
+  "familyAbsent": {
+    "us_reports": 3153,
+    "federal_reporter": 3029,
+    "federal_rules": 31,
+    "usc": 264,
+    "federal_supplement": 272,
+    "malformed_partial": 1,
+    "cfr": 42
+  },
+  "topAbsentRemaining": [
+    {
+      "citation": "Fed. R. App. P. 34",
+      "family": "federal_rules",
+      "reporter": null,
+      "unresolvedEdges": 12,
+      "uniqueCitingAuthorities": 12,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake"
+    },
+    {
+      "citation": "573 U.S. 373",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 9,
+      "uniqueCitingAuthorities": 9,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "367 U.S. 643",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 7,
+      "uniqueCitingAuthorities": 7,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "555 U.S. 135",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 7,
+      "uniqueCitingAuthorities": 7,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "483 U.S. 756",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 7,
+      "uniqueCitingAuthorities": 7,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "411 U.S. 792",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 7,
+      "uniqueCitingAuthorities": 7,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "528 U.S. 119",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 7,
+      "uniqueCitingAuthorities": 7,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "438 U.S. 154",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 7,
+      "uniqueCitingAuthorities": 7,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "476 U.S. 79",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 7,
+      "uniqueCitingAuthorities": 7,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "514 U.S. 419",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "573 U.S. 149",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "554 U.S. 237",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "489 U.S. 602",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "564 U.S. 229",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "401 U.S. 37",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "567 U.S. 387",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "8 U.S.C. ?? 1158",
+      "family": "usc",
+      "reporter": null,
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake"
+    },
+    {
+      "citation": "8 U.S.C. ?? 1101",
+      "family": "usc",
+      "reporter": null,
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake"
+    },
+    {
+      "citation": "526 U.S. 137",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "422 U.S. 806",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "376 U.S. 254",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "405 U.S. 150",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "545 U.S. 469",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "415 U.S. 308",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "499 U.S. 279",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "455 U.S. 745",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "547 U.S. 813",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "477 U.S. 399",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "428 U.S. 153",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "455 U.S. 104",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "549 U.S. 1",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "424 U.S. 1",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "568 U.S. 165",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "124 F.4th 218",
+      "family": "federal_reporter",
+      "reporter": "F.4th",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "579 U.S. 500",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "530 U.S. 466",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "437 U.S. 385",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "441 U.S. 520",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "232 U.S. 383",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "598 U.S. 631",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    }
+  ],
+  "top50UsReportsRemaining": [
+    {
+      "citation": "573 U.S. 373",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 9,
+      "uniqueCitingAuthorities": 9,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "367 U.S. 643",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 7,
+      "uniqueCitingAuthorities": 7,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "555 U.S. 135",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 7,
+      "uniqueCitingAuthorities": 7,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "483 U.S. 756",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 7,
+      "uniqueCitingAuthorities": 7,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "411 U.S. 792",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 7,
+      "uniqueCitingAuthorities": 7,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "528 U.S. 119",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 7,
+      "uniqueCitingAuthorities": 7,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "438 U.S. 154",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 7,
+      "uniqueCitingAuthorities": 7,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "476 U.S. 79",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 7,
+      "uniqueCitingAuthorities": 7,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "514 U.S. 419",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "573 U.S. 149",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "554 U.S. 237",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "489 U.S. 602",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "564 U.S. 229",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "401 U.S. 37",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "567 U.S. 387",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "526 U.S. 137",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "422 U.S. 806",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "376 U.S. 254",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "405 U.S. 150",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "545 U.S. 469",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "415 U.S. 308",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "499 U.S. 279",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "455 U.S. 745",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "547 U.S. 813",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "477 U.S. 399",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 6,
+      "uniqueCitingAuthorities": 6,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "428 U.S. 153",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "455 U.S. 104",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "549 U.S. 1",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "424 U.S. 1",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "568 U.S. 165",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "579 U.S. 500",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "530 U.S. 466",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "437 U.S. 385",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "441 U.S. 520",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "232 U.S. 383",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "598 U.S. 631",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "463 U.S. 248",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "481 U.S. 739",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "558 U.S. 310",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "391 U.S. 123",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "598 U.S. 411",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "501 U.S. 429",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "513 U.S. 298",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "583 U.S. 48",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "488 U.S. 75",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "578 U.S. 330",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "602 U.S. 821",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "440 U.S. 648",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "315 U.S. 568",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    },
+    {
+      "citation": "522 U.S. 136",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+    }
+  ],
+  "top50FederalReporterRemaining": [
+    {
+      "citation": "918 F.3d 1025",
+      "family": "federal_reporter",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "124 F.4th 218",
+      "family": "federal_reporter",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "572 F.3d 455",
+      "family": "federal_reporter",
+      "unresolvedEdges": 5,
+      "uniqueCitingAuthorities": 5,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "665 F.3d 768",
+      "family": "federal_reporter",
+      "unresolvedEdges": 4,
+      "uniqueCitingAuthorities": 4,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "924 F.3d 718",
+      "family": "federal_reporter",
+      "unresolvedEdges": 4,
+      "uniqueCitingAuthorities": 4,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "590 F.3d 1034",
+      "family": "federal_reporter",
+      "unresolvedEdges": 4,
+      "uniqueCitingAuthorities": 4,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "516 F.3d 382",
+      "family": "federal_reporter",
+      "unresolvedEdges": 4,
+      "uniqueCitingAuthorities": 4,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "8 F.4th 531",
+      "family": "federal_reporter",
+      "unresolvedEdges": 4,
+      "uniqueCitingAuthorities": 4,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "616 F.3d 321",
+      "family": "federal_reporter",
+      "unresolvedEdges": 4,
+      "uniqueCitingAuthorities": 4,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "972 F.3d 442",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "950 F.2d 13",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "168 F.4th 2",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "167 F.4th 677",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "760 F.3d 1165",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "957 F.3d 218",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "140 F.4th 68",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "863 F.2d 835",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "631 F.3d 802",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "137 F.4th 944",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "650 F.2d 534",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "750 F.3d 1036",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "153 F.4th 213",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "888 F.2d 1014",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "919 F.3d 437",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "169 F.4th 727",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "93 F.4th 619",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "88 F.4th 1080",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "515 F.3d 327",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "49 F.4th 1000",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "495 F.3d 888",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "300 F.3d 466",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "270 F.3d 536",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "371 F.3d 865",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "178 F.4th 1113",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "112 F.4th 45",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "252 F.3d 986",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "484 F.2d 820",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "593 F.2d 1375",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "10 F.3d 554",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "130 F.4th 420",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "885 F.3d 436",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "625 F.3d 97",
+      "family": "federal_reporter",
+      "unresolvedEdges": 3,
+      "uniqueCitingAuthorities": 3,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "175 F.4th 61",
+      "family": "federal_reporter",
+      "unresolvedEdges": 2,
+      "uniqueCitingAuthorities": 2,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "105 F.2d 348",
+      "family": "federal_reporter",
+      "unresolvedEdges": 2,
+      "uniqueCitingAuthorities": 2,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "175 F.4th 713",
+      "family": "federal_reporter",
+      "unresolvedEdges": 2,
+      "uniqueCitingAuthorities": 2,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "175 F.4th 1258",
+      "family": "federal_reporter",
+      "unresolvedEdges": 2,
+      "uniqueCitingAuthorities": 2,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "174 F.4th 942",
+      "family": "federal_reporter",
+      "unresolvedEdges": 2,
+      "uniqueCitingAuthorities": 2,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "175 F.4th 34",
+      "family": "federal_reporter",
+      "unresolvedEdges": 2,
+      "uniqueCitingAuthorities": 2,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "175 F.4th 828",
+      "family": "federal_reporter",
+      "unresolvedEdges": 2,
+      "uniqueCitingAuthorities": 2,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    },
+    {
+      "citation": "170 F.4th 1128",
+      "family": "federal_reporter",
+      "unresolvedEdges": 2,
+      "uniqueCitingAuthorities": 2,
+      "present": false,
+      "authorityId": null,
+      "recommendedPath": "next_cl_a2"
+    }
+  ],
+  "alreadyPresentHighImpact": [],
+  "corpus": {
+    "authorities": 3969,
+    "cases": 2652,
+    "cl_cases": 2607
+  },
+  "chunks": {
+    "chunks": 63209,
+    "embeddings": 63209,
+    "missing_embeddings": 0
+  },
+  "orphanCount": 0,
+  "duplicateSourceIds": 0
+}
