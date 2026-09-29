@@ -1,0 +1,501 @@
+{
+  "classification": "MANUAL_QUEUE2_PRODUCTION_CORPUS_GAP_CLOSURE",
+  "generatedAt": "2026-09-29T17:33:51.027Z",
+  "result": "PASS",
+  "courtListenerHttpCalls": 0,
+  "corpusGapMap": {
+    "federalHighCourt": {
+      "authorities": 103,
+      "cases": 103,
+      "earliest": 1803,
+      "latest": 2026
+    },
+    "circuits": [
+      {
+        "courtId": "us-ca-7",
+        "name": "United States Court of Appeals for the Seventh Circuit",
+        "authorities": 17,
+        "cases": 17,
+        "earliest": 2026,
+        "latest": 2026,
+        "citationDemandNote": "see familyAbsent f2d/f3d/f4th aggregate",
+        "depthJustification": "thin_for_production"
+      },
+      {
+        "courtId": "us-ca-dc",
+        "name": "United States Court of Appeals for the District of Columbia Circuit",
+        "authorities": 17,
+        "cases": 17,
+        "earliest": 2001,
+        "latest": 2026,
+        "citationDemandNote": "see familyAbsent f2d/f3d/f4th aggregate",
+        "depthJustification": "thin_for_production"
+      },
+      {
+        "courtId": "us-ca-10",
+        "name": "United States Court of Appeals for the Tenth Circuit",
+        "authorities": 16,
+        "cases": 16,
+        "earliest": 2026,
+        "latest": 2026,
+        "citationDemandNote": "see familyAbsent f2d/f3d/f4th aggregate",
+        "depthJustification": "thin_for_production"
+      },
+      {
+        "courtId": "us-ca-9",
+        "name": "United States Court of Appeals for the Ninth Circuit",
+        "authorities": 16,
+        "cases": 16,
+        "earliest": 2016,
+        "latest": 2026,
+        "citationDemandNote": "see familyAbsent f2d/f3d/f4th aggregate",
+        "depthJustification": "thin_for_production"
+      },
+      {
+        "courtId": "us-ca-8",
+        "name": "United States Court of Appeals for the Eighth Circuit",
+        "authorities": 15,
+        "cases": 15,
+        "earliest": 2026,
+        "latest": 2026,
+        "citationDemandNote": "see familyAbsent f2d/f3d/f4th aggregate",
+        "depthJustification": "thin_for_production"
+      },
+      {
+        "courtId": "us-ca-11",
+        "name": "United States Court of Appeals for the Eleventh Circuit",
+        "authorities": 15,
+        "cases": 15,
+        "earliest": 2026,
+        "latest": 2026,
+        "citationDemandNote": "see familyAbsent f2d/f3d/f4th aggregate",
+        "depthJustification": "thin_for_production"
+      },
+      {
+        "courtId": "us-ca-fed",
+        "name": "United States Court of Appeals for the Federal Circuit",
+        "authorities": 15,
+        "cases": 15,
+        "earliest": 2026,
+        "latest": 2026,
+        "citationDemandNote": "see familyAbsent f2d/f3d/f4th aggregate",
+        "depthJustification": "thin_for_production"
+      },
+      {
+        "courtId": "us-ca-6",
+        "name": "United States Court of Appeals for the Sixth Circuit",
+        "authorities": 13,
+        "cases": 13,
+        "earliest": 1992,
+        "latest": 2026,
+        "citationDemandNote": "see familyAbsent f2d/f3d/f4th aggregate",
+        "depthJustification": "thin_for_production"
+      },
+      {
+        "courtId": "us-ca-4",
+        "name": "United States Court of Appeals for the Fourth Circuit",
+        "authorities": 12,
+        "cases": 12,
+        "earliest": 2026,
+        "latest": 2026,
+        "citationDemandNote": "see familyAbsent f2d/f3d/f4th aggregate",
+        "depthJustification": "thin_for_production"
+      },
+      {
+        "courtId": "us-ca-3",
+        "name": "United States Court of Appeals for the Third Circuit",
+        "authorities": 11,
+        "cases": 11,
+        "earliest": 2026,
+        "latest": 2026,
+        "citationDemandNote": "see familyAbsent f2d/f3d/f4th aggregate",
+        "depthJustification": "thin_for_production"
+      },
+      {
+        "courtId": "us-ca-1",
+        "name": "United States Court of Appeals for the First Circuit",
+        "authorities": 11,
+        "cases": 11,
+        "earliest": 2026,
+        "latest": 2026,
+        "citationDemandNote": "see familyAbsent f2d/f3d/f4th aggregate",
+        "depthJustification": "thin_for_production"
+      },
+      {
+        "courtId": "us-ca-5",
+        "name": "United States Court of Appeals for the Fifth Circuit",
+        "authorities": 10,
+        "cases": 10,
+        "earliest": 2026,
+        "latest": 2026,
+        "citationDemandNote": "see familyAbsent f2d/f3d/f4th aggregate",
+        "depthJustification": "thin_for_production"
+      },
+      {
+        "courtId": "us-ca-2",
+        "name": "United States Court of Appeals for the Second Circuit",
+        "authorities": 10,
+        "cases": 10,
+        "earliest": 2026,
+        "latest": 2026,
+        "citationDemandNote": "see familyAbsent f2d/f3d/f4th aggregate",
+        "depthJustification": "thin_for_production"
+      },
+      {
+        "courtId": "us-ca-unknown",
+        "name": "United States Court of Appeals",
+        "authorities": 5,
+        "cases": 5,
+        "earliest": 2008,
+        "latest": 2019,
+        "citationDemandNote": "see familyAbsent f2d/f3d/f4th aggregate",
+        "depthJustification": "thin_for_production"
+      }
+    ],
+    "district": {
+      "authorities": 0,
+      "cases": 0,
+      "earliest": null,
+      "latest": null
+    },
+    "uscAbsentEdges": 264,
+    "cfrAbsentEdges": 42,
+    "federalRulesAbsentEdges": 31,
+    "historicalTop10": [
+      {
+        "jurisdiction": "RI",
+        "earliestYear": 2026,
+        "latestYear": 2026,
+        "currentCount": 52,
+        "high": 52,
+        "intermediate": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "historicalGap": "missing_pre-2000",
+        "impactScore": 101,
+        "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+      },
+      {
+        "jurisdiction": "MN",
+        "earliestYear": 2024,
+        "latestYear": 2026,
+        "currentCount": 51,
+        "high": 51,
+        "intermediate": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "historicalGap": "missing_pre-2000",
+        "impactScore": 101,
+        "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+      },
+      {
+        "jurisdiction": "MO",
+        "earliestYear": 2022,
+        "latestYear": 2025,
+        "currentCount": 46,
+        "high": 46,
+        "intermediate": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "historicalGap": "missing_pre-2000",
+        "impactScore": 98,
+        "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+      },
+      {
+        "jurisdiction": "AK",
+        "earliestYear": 2026,
+        "latestYear": 2026,
+        "currentCount": 45,
+        "high": 45,
+        "intermediate": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "historicalGap": "missing_pre-2000",
+        "impactScore": 98,
+        "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+      },
+      {
+        "jurisdiction": "AL",
+        "earliestYear": 2026,
+        "latestYear": 2026,
+        "currentCount": 45,
+        "high": 45,
+        "intermediate": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "historicalGap": "missing_pre-2000",
+        "impactScore": 98,
+        "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+      },
+      {
+        "jurisdiction": "HI",
+        "earliestYear": 2026,
+        "latestYear": 2026,
+        "currentCount": 45,
+        "high": 45,
+        "intermediate": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "historicalGap": "missing_pre-2000",
+        "impactScore": 98,
+        "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+      },
+      {
+        "jurisdiction": "ID",
+        "earliestYear": 2026,
+        "latestYear": 2026,
+        "currentCount": 45,
+        "high": 45,
+        "intermediate": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "historicalGap": "missing_pre-2000",
+        "impactScore": 98,
+        "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+      },
+      {
+        "jurisdiction": "IN",
+        "earliestYear": 2024,
+        "latestYear": 2026,
+        "currentCount": 45,
+        "high": 45,
+        "intermediate": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "historicalGap": "missing_pre-2000",
+        "impactScore": 98,
+        "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+      },
+      {
+        "jurisdiction": "KS",
+        "earliestYear": 2025,
+        "latestYear": 2026,
+        "currentCount": 45,
+        "high": 45,
+        "intermediate": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "historicalGap": "missing_pre-2000",
+        "impactScore": 98,
+        "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+      },
+      {
+        "jurisdiction": "KY",
+        "earliestYear": 2026,
+        "latestYear": 2026,
+        "currentCount": 45,
+        "high": 45,
+        "intermediate": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "historicalGap": "missing_pre-2000",
+        "impactScore": 98,
+        "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+      }
+    ],
+    "appellateTop10": [
+      {
+        "jurisdiction": "MS",
+        "highCourtCases": 69,
+        "intermediateCases": 0,
+        "totalCases": 69,
+        "material": true,
+        "thin": true,
+        "impactScore": 83.8
+      },
+      {
+        "jurisdiction": "ME",
+        "highCourtCases": 65,
+        "intermediateCases": 0,
+        "totalCases": 65,
+        "material": true,
+        "thin": true,
+        "impactScore": 83
+      },
+      {
+        "jurisdiction": "MT",
+        "highCourtCases": 53,
+        "intermediateCases": 0,
+        "totalCases": 53,
+        "material": true,
+        "thin": true,
+        "impactScore": 80.6
+      },
+      {
+        "jurisdiction": "RI",
+        "highCourtCases": 52,
+        "intermediateCases": 0,
+        "totalCases": 52,
+        "material": true,
+        "thin": true,
+        "impactScore": 80.4
+      },
+      {
+        "jurisdiction": "MN",
+        "highCourtCases": 51,
+        "intermediateCases": 0,
+        "totalCases": 51,
+        "material": true,
+        "thin": true,
+        "impactScore": 80.2
+      },
+      {
+        "jurisdiction": "AR",
+        "highCourtCases": 49,
+        "intermediateCases": 0,
+        "totalCases": 49,
+        "material": true,
+        "thin": true,
+        "impactScore": 79.8
+      },
+      {
+        "jurisdiction": "TN",
+        "highCourtCases": 47,
+        "intermediateCases": 0,
+        "totalCases": 47,
+        "material": true,
+        "thin": true,
+        "impactScore": 79.4
+      },
+      {
+        "jurisdiction": "AZ",
+        "highCourtCases": 46,
+        "intermediateCases": 0,
+        "totalCases": 46,
+        "material": true,
+        "thin": true,
+        "impactScore": 79.2
+      },
+      {
+        "jurisdiction": "CO",
+        "highCourtCases": 46,
+        "intermediateCases": 0,
+        "totalCases": 46,
+        "material": true,
+        "thin": true,
+        "impactScore": 79.2
+      },
+      {
+        "jurisdiction": "CT",
+        "highCourtCases": 46,
+        "intermediateCases": 0,
+        "totalCases": 46,
+        "material": true,
+        "thin": true,
+        "impactScore": 79.2
+      }
+    ],
+    "familyAbsent": {
+      "us_reports": 2980,
+      "f3d": 1737,
+      "f2d": 554,
+      "f4th": 700,
+      "f_supp": 273,
+      "usc": 264,
+      "cfr": 42,
+      "federal_rules": 31,
+      "other": 19
+    }
+  },
+  "zeroClPaths": {
+    "USC": {
+      "safeNow": false,
+      "blocker": "House viewer returns ~208-char shell for probed sections"
+    },
+    "CFR": {
+      "safeNow": true,
+      "note": "eCFR renderer returns primary text; gated in worker, piloted bounded"
+    },
+    "FederalRules": {
+      "safeNow": false,
+      "blocker": "no ingest loop; uscourts index 404/no per-rule body"
+    },
+    "NonClIntake": {
+      "safeNow": false,
+      "blocker": "mutation gated; US Reports LOC often PDF-only"
+    }
+  },
+  "safePilot": {
+    "executed": true,
+    "path": "CFR_DEPTH via eCFR",
+    "authoritiesAdded": 5,
+    "authorities": [
+      {
+        "citation": "8 C.F.R. § 236.1",
+        "id": "03fdc368-6cc3-44fb-aef2-ad677122c2b2",
+        "edges": 2,
+        "chars": 18258
+      },
+      {
+        "citation": "11 C.F.R. § 110.1",
+        "id": "3df3e39b-e72c-4832-beac-0d3f7253ad4d",
+        "edges": 1,
+        "chars": 24672
+      },
+      {
+        "citation": "11 C.F.R. § 110.6",
+        "id": "377b9d68-8f60-41b6-8f2c-2bd7304918bb",
+        "edges": 1,
+        "chars": 7562
+      },
+      {
+        "citation": "20 C.F.R. § 718.201",
+        "id": "7c637881-dfb0-486a-8aff-7ef6de2cba63",
+        "edges": 1,
+        "chars": 1690
+      },
+      {
+        "citation": "20 C.F.R. § 718.202",
+        "id": "4edbdba3-0b76-49e7-bb0b-7b9a658ddd34",
+        "edges": 1,
+        "chars": 2238
+      }
+    ],
+    "citationGains": {
+      "before": {
+        "extracted": 7581,
+        "resolved": 981,
+        "unresolved": 6600
+      },
+      "after": {
+        "extracted": 7581,
+        "resolved": 987,
+        "unresolved": 6594
+      },
+      "newlyResolved": 6,
+      "rateBefore": 12.94,
+      "rateAfter": 13.02,
+      "rateDeltaPctPoints": 0.08,
+      "resolutionsPerAuthority": 1.2
+    },
+    "courtListenerHttpCalls": 0
+  },
+  "nextActionQueuesSummary": {
+    "B1": 18,
+    "B2": 12,
+    "B3": 12,
+    "A2Eligible": 1,
+    "A2Deferred": 10
+  },
+  "citations": {
+    "before": {
+      "extracted": 7581,
+      "resolved": 981,
+      "unresolved": 6600,
+      "resolutionRatePct": 12.94
+    },
+    "after": {
+      "extracted": 7581,
+      "resolved": 987,
+      "unresolved": 6594,
+      "resolutionRatePct": 13.02
+    },
+    "newlyResolved": 6
+  },
+  "queue": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
+  }
+}

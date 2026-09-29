@@ -1,0 +1,75 @@
+{
+  "classification": "QUEUE2_COMPLETION_GAP_CHECKLIST",
+  "generatedAt": "2026-09-29T17:33:51.025Z",
+  "courtListenerHttpCalls": 0,
+  "COMPLETE": [
+    "51/51 state/DC high-court depth wave",
+    "corpus integrity duplicates=0 orphans=0 embeddings healthy (post-pilot)",
+    "citation resolver exact-alias correctness (0 present-but-unmatched in prior pass)",
+    "Lane A child ownership / Queue #3 NOT_OPEN controls",
+    "bounded A2 citation-target recovery validated (STRONG)/F.3d pilot economics measured"
+  ],
+  "OPEN_MATERIAL_WORK": [
+    {
+      "item": "federal SCOTUS depth beyond opportunistic A2",
+      "status": "OPEN",
+      "requiredForCompletion": true
+    },
+    {
+      "item": "per-circuit federal appellate depth + historical",
+      "status": "OPEN",
+      "requiredForCompletion": true
+    },
+    {
+      "item": "federal district coverage (thin)",
+      "status": "OPEN",
+      "requiredForCompletion": "maybe later phase"
+    },
+    {
+      "item": "U.S. Reports TARGET_ABSENT (~2980 edges)",
+      "status": "OPEN",
+      "requiredForCompletion": true
+    },
+    {
+      "item": "F.2d/F.3d/F.4th TARGET_ABSENT",
+      "status": "OPEN",
+      "requiredForCompletion": true
+    },
+    {
+      "item": "historical pre-2000 state high courts (recent-heavy)",
+      "status": "OPEN",
+      "requiredForCompletion": true
+    },
+    {
+      "item": "state intermediate appellate layers",
+      "status": "OPEN",
+      "requiredForCompletion": true
+    },
+    {
+      "item": "USC primary authority (House viewer quality gate failed)",
+      "status": "OPEN",
+      "requiredForCompletion": true
+    },
+    {
+      "item": "CFR primary authority (B1 pilot started)",
+      "status": "PARTIAL"
+    },
+    {
+      "item": "Federal Rules primary authority ingest path",
+      "status": "BLOCKED",
+      "requiredForCompletion": true
+    },
+    {
+      "item": "case currentness_status unknown mass",
+      "status": "OPEN",
+      "requiredForCompletion": "metadata hygiene"
+    },
+    {
+      "item": "US Reports zero-CL LOC path (PDF-only)",
+      "status": "BLOCKED"
+    }
+  ],
+  "completionCandidate": false,
+  "humanReviewRequiredReady": false,
+  "note": "Do NOT close Queue #2. Material federal/historical/primary-authority gaps remain."
+}

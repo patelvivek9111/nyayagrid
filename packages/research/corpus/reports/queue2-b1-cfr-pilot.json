@@ -1,0 +1,79 @@
+{
+  "ok": true,
+  "classification": "B1_CFR_ZERO_CL_PILOT",
+  "generatedAt": "2026-09-29T17:33:07.808Z",
+  "courtListenerHttpCalls": 0,
+  "max": 5,
+  "ecfrDate": "2026-09-25",
+  "imported": 5,
+  "results": [
+    {
+      "citation": "8 C.F.R. § 236.1",
+      "edges": 2,
+      "citing": 2,
+      "status": "imported",
+      "id": "03fdc368-6cc3-44fb-aef2-ad677122c2b2",
+      "chunks": 19,
+      "embedded": 19,
+      "chars": 18258,
+      "url": "https://www.ecfr.gov/current/title-8/section-236.1"
+    },
+    {
+      "citation": "11 C.F.R. § 110.1",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "3df3e39b-e72c-4832-beac-0d3f7253ad4d",
+      "chunks": 25,
+      "embedded": 25,
+      "chars": 24672,
+      "url": "https://www.ecfr.gov/current/title-11/section-110.1"
+    },
+    {
+      "citation": "11 C.F.R. § 110.6",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "377b9d68-8f60-41b6-8f2c-2bd7304918bb",
+      "chunks": 8,
+      "embedded": 8,
+      "chars": 7562,
+      "url": "https://www.ecfr.gov/current/title-11/section-110.6"
+    },
+    {
+      "citation": "20 C.F.R. § 718.201",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "7c637881-dfb0-486a-8aff-7ef6de2cba63",
+      "chunks": 2,
+      "embedded": 2,
+      "chars": 1690,
+      "url": "https://www.ecfr.gov/current/title-20/section-718.201"
+    },
+    {
+      "citation": "20 C.F.R. § 718.202",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "4edbdba3-0b76-49e7-bb0b-7b9a658ddd34",
+      "chunks": 3,
+      "embedded": 3,
+      "chars": 2238,
+      "url": "https://www.ecfr.gov/current/title-20/section-718.202"
+    }
+  ],
+  "corpus": {
+    "authorities": 4007,
+    "cases": 2685,
+    "cl_cases": 2640,
+    "regulations": 163
+  },
+  "chunks": {
+    "chunks": 64359,
+    "embeddings": 64359,
+    "missing_embeddings": 0
+  },
+  "duplicateSourceIds": 0,
+  "orphanCount": 0
+}

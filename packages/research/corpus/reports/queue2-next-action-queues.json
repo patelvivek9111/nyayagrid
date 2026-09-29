@@ -1,0 +1,594 @@
+{
+  "classification": "QUEUE2_NEXT_ACTION_QUEUES",
+  "generatedAt": "2026-09-29T17:33:51.024Z",
+  "courtListenerHttpCalls": 0,
+  "B1_ZERO_CL_PRIMARY_AUTHORITY": [
+    {
+      "priority": 1,
+      "target": "Fed. R. App. P. 34",
+      "reason": "TARGET_ABSENT federal rules",
+      "expectedBenefit": "12 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "BLOCKED — no per-rule ingest path",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 2,
+      "target": "Fed. R. App. P. 12",
+      "reason": "TARGET_ABSENT federal rules",
+      "expectedBenefit": "3 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "BLOCKED — no per-rule ingest path",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 3,
+      "target": "Fed. R. App. P. 43",
+      "reason": "TARGET_ABSENT federal rules",
+      "expectedBenefit": "3 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "BLOCKED — no per-rule ingest path",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 4,
+      "target": "Fed. R. Civ. P. 73",
+      "reason": "TARGET_ABSENT federal rules",
+      "expectedBenefit": "2 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "BLOCKED — no per-rule ingest path",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 5,
+      "target": "Fed. R. Evid. 201",
+      "reason": "TARGET_ABSENT federal rules",
+      "expectedBenefit": "2 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "BLOCKED — no per-rule ingest path",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 10,
+      "target": "8 U.S.C. § 1101",
+      "reason": "TARGET_ABSENT USC",
+      "expectedBenefit": "6 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "NOT SAFE YET — House viewer returns ~208char shell not primary text",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 11,
+      "target": "8 U.S.C. § 1158",
+      "reason": "TARGET_ABSENT USC",
+      "expectedBenefit": "6 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "NOT SAFE YET — House viewer returns ~208char shell not primary text",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 12,
+      "target": "18 U.S.C. § 924",
+      "reason": "TARGET_ABSENT USC",
+      "expectedBenefit": "4 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "NOT SAFE YET — House viewer returns ~208char shell not primary text",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 13,
+      "target": "28 U.S.C. § 1331",
+      "reason": "TARGET_ABSENT USC",
+      "expectedBenefit": "4 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "NOT SAFE YET — House viewer returns ~208char shell not primary text",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 14,
+      "target": "28 U.S.C. § 636",
+      "reason": "TARGET_ABSENT USC",
+      "expectedBenefit": "4 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "NOT SAFE YET — House viewer returns ~208char shell not primary text",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 20,
+      "target": "8 C.F.R. § 236.1",
+      "reason": "TARGET_ABSENT CFR",
+      "expectedBenefit": "2 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "PILOTED_OK",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 21,
+      "target": "11 C.F.R. § 109.20",
+      "reason": "TARGET_ABSENT CFR",
+      "expectedBenefit": "1 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "SAFE_BOUNDED_ECFR",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 22,
+      "target": "11 C.F.R. § 110.1",
+      "reason": "TARGET_ABSENT CFR",
+      "expectedBenefit": "1 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "PILOTED_OK",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 23,
+      "target": "11 C.F.R. § 110.6",
+      "reason": "TARGET_ABSENT CFR",
+      "expectedBenefit": "1 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "PILOTED_OK",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 24,
+      "target": "20 C.F.R. § 718.201",
+      "reason": "TARGET_ABSENT CFR",
+      "expectedBenefit": "1 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "PILOTED_OK",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 25,
+      "target": "20 C.F.R. § 718.202",
+      "reason": "TARGET_ABSENT CFR",
+      "expectedBenefit": "1 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "PILOTED_OK",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 26,
+      "target": "20 C.F.R. § 718.204",
+      "reason": "TARGET_ABSENT CFR",
+      "expectedBenefit": "1 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "SAFE_BOUNDED_ECFR",
+      "priorityBand": "B1"
+    },
+    {
+      "priority": 27,
+      "target": "20 C.F.R. § 725.202",
+      "reason": "TARGET_ABSENT CFR",
+      "expectedBenefit": "1 edges",
+      "expectedRequestCost": 0,
+      "zeroCl": true,
+      "safety": "SAFE_BOUNDED_ECFR",
+      "priorityBand": "B1"
+    }
+  ],
+  "B2_HISTORICAL_GAP_RECOVERY": [
+    {
+      "priority": 1,
+      "target": "RI",
+      "reason": "missing_pre-2000",
+      "expectedBenefit": "historical retrieval coverage; earliest=2026",
+      "expectedRequestCost": "CL date-window batches (bounded)",
+      "zeroCl": false,
+      "safety": "requires CL cooldown clear",
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)",
+      "priorityBand": "B2",
+      "currentCount": 52,
+      "earliest": 2026,
+      "latest": 2026
+    },
+    {
+      "priority": 2,
+      "target": "MN",
+      "reason": "missing_pre-2000",
+      "expectedBenefit": "historical retrieval coverage; earliest=2024",
+      "expectedRequestCost": "CL date-window batches (bounded)",
+      "zeroCl": false,
+      "safety": "requires CL cooldown clear",
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)",
+      "priorityBand": "B2",
+      "currentCount": 51,
+      "earliest": 2024,
+      "latest": 2026
+    },
+    {
+      "priority": 3,
+      "target": "MO",
+      "reason": "missing_pre-2000",
+      "expectedBenefit": "historical retrieval coverage; earliest=2022",
+      "expectedRequestCost": "CL date-window batches (bounded)",
+      "zeroCl": false,
+      "safety": "requires CL cooldown clear",
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)",
+      "priorityBand": "B2",
+      "currentCount": 46,
+      "earliest": 2022,
+      "latest": 2025
+    },
+    {
+      "priority": 4,
+      "target": "AK",
+      "reason": "missing_pre-2000",
+      "expectedBenefit": "historical retrieval coverage; earliest=2026",
+      "expectedRequestCost": "CL date-window batches (bounded)",
+      "zeroCl": false,
+      "safety": "requires CL cooldown clear",
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)",
+      "priorityBand": "B2",
+      "currentCount": 45,
+      "earliest": 2026,
+      "latest": 2026
+    },
+    {
+      "priority": 5,
+      "target": "AL",
+      "reason": "missing_pre-2000",
+      "expectedBenefit": "historical retrieval coverage; earliest=2026",
+      "expectedRequestCost": "CL date-window batches (bounded)",
+      "zeroCl": false,
+      "safety": "requires CL cooldown clear",
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)",
+      "priorityBand": "B2",
+      "currentCount": 45,
+      "earliest": 2026,
+      "latest": 2026
+    },
+    {
+      "priority": 6,
+      "target": "HI",
+      "reason": "missing_pre-2000",
+      "expectedBenefit": "historical retrieval coverage; earliest=2026",
+      "expectedRequestCost": "CL date-window batches (bounded)",
+      "zeroCl": false,
+      "safety": "requires CL cooldown clear",
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)",
+      "priorityBand": "B2",
+      "currentCount": 45,
+      "earliest": 2026,
+      "latest": 2026
+    },
+    {
+      "priority": 7,
+      "target": "ID",
+      "reason": "missing_pre-2000",
+      "expectedBenefit": "historical retrieval coverage; earliest=2026",
+      "expectedRequestCost": "CL date-window batches (bounded)",
+      "zeroCl": false,
+      "safety": "requires CL cooldown clear",
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)",
+      "priorityBand": "B2",
+      "currentCount": 45,
+      "earliest": 2026,
+      "latest": 2026
+    },
+    {
+      "priority": 8,
+      "target": "IN",
+      "reason": "missing_pre-2000",
+      "expectedBenefit": "historical retrieval coverage; earliest=2024",
+      "expectedRequestCost": "CL date-window batches (bounded)",
+      "zeroCl": false,
+      "safety": "requires CL cooldown clear",
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)",
+      "priorityBand": "B2",
+      "currentCount": 45,
+      "earliest": 2024,
+      "latest": 2026
+    },
+    {
+      "priority": 9,
+      "target": "KS",
+      "reason": "missing_pre-2000",
+      "expectedBenefit": "historical retrieval coverage; earliest=2025",
+      "expectedRequestCost": "CL date-window batches (bounded)",
+      "zeroCl": false,
+      "safety": "requires CL cooldown clear",
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)",
+      "priorityBand": "B2",
+      "currentCount": 45,
+      "earliest": 2025,
+      "latest": 2026
+    },
+    {
+      "priority": 10,
+      "target": "KY",
+      "reason": "missing_pre-2000",
+      "expectedBenefit": "historical retrieval coverage; earliest=2026",
+      "expectedRequestCost": "CL date-window batches (bounded)",
+      "zeroCl": false,
+      "safety": "requires CL cooldown clear",
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)",
+      "priorityBand": "B2",
+      "currentCount": 45,
+      "earliest": 2026,
+      "latest": 2026
+    },
+    {
+      "priority": 11,
+      "target": "ND",
+      "reason": "missing_pre-2000",
+      "expectedBenefit": "historical retrieval coverage; earliest=2026",
+      "expectedRequestCost": "CL date-window batches (bounded)",
+      "zeroCl": false,
+      "safety": "requires CL cooldown clear",
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)",
+      "priorityBand": "B2",
+      "currentCount": 45,
+      "earliest": 2026,
+      "latest": 2026
+    },
+    {
+      "priority": 12,
+      "target": "NE",
+      "reason": "missing_pre-2000",
+      "expectedBenefit": "historical retrieval coverage; earliest=2026",
+      "expectedRequestCost": "CL date-window batches (bounded)",
+      "zeroCl": false,
+      "safety": "requires CL cooldown clear",
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)",
+      "priorityBand": "B2",
+      "currentCount": 45,
+      "earliest": 2026,
+      "latest": 2026
+    }
+  ],
+  "B3_APPELLATE_LAYER_COMPLETION": [
+    {
+      "priority": 1,
+      "target": "MS",
+      "reason": "high court present; intermediate missing/thin",
+      "expectedBenefit": "intermediateCases=0 high=69",
+      "expectedRequestCost": "CL intermediate court mapping + ingest",
+      "zeroCl": false,
+      "safety": "do not auto-ingest all; material=true",
+      "priorityBand": "B3",
+      "intermediateCases": 0,
+      "highCourtCases": 69,
+      "impactScore": 83.8
+    },
+    {
+      "priority": 2,
+      "target": "ME",
+      "reason": "high court present; intermediate missing/thin",
+      "expectedBenefit": "intermediateCases=0 high=65",
+      "expectedRequestCost": "CL intermediate court mapping + ingest",
+      "zeroCl": false,
+      "safety": "do not auto-ingest all; material=true",
+      "priorityBand": "B3",
+      "intermediateCases": 0,
+      "highCourtCases": 65,
+      "impactScore": 83
+    },
+    {
+      "priority": 3,
+      "target": "MT",
+      "reason": "high court present; intermediate missing/thin",
+      "expectedBenefit": "intermediateCases=0 high=53",
+      "expectedRequestCost": "CL intermediate court mapping + ingest",
+      "zeroCl": false,
+      "safety": "do not auto-ingest all; material=true",
+      "priorityBand": "B3",
+      "intermediateCases": 0,
+      "highCourtCases": 53,
+      "impactScore": 80.6
+    },
+    {
+      "priority": 4,
+      "target": "RI",
+      "reason": "high court present; intermediate missing/thin",
+      "expectedBenefit": "intermediateCases=0 high=52",
+      "expectedRequestCost": "CL intermediate court mapping + ingest",
+      "zeroCl": false,
+      "safety": "do not auto-ingest all; material=true",
+      "priorityBand": "B3",
+      "intermediateCases": 0,
+      "highCourtCases": 52,
+      "impactScore": 80.4
+    },
+    {
+      "priority": 5,
+      "target": "MN",
+      "reason": "high court present; intermediate missing/thin",
+      "expectedBenefit": "intermediateCases=0 high=51",
+      "expectedRequestCost": "CL intermediate court mapping + ingest",
+      "zeroCl": false,
+      "safety": "do not auto-ingest all; material=true",
+      "priorityBand": "B3",
+      "intermediateCases": 0,
+      "highCourtCases": 51,
+      "impactScore": 80.2
+    },
+    {
+      "priority": 6,
+      "target": "AR",
+      "reason": "high court present; intermediate missing/thin",
+      "expectedBenefit": "intermediateCases=0 high=49",
+      "expectedRequestCost": "CL intermediate court mapping + ingest",
+      "zeroCl": false,
+      "safety": "do not auto-ingest all; material=true",
+      "priorityBand": "B3",
+      "intermediateCases": 0,
+      "highCourtCases": 49,
+      "impactScore": 79.8
+    },
+    {
+      "priority": 7,
+      "target": "TN",
+      "reason": "high court present; intermediate missing/thin",
+      "expectedBenefit": "intermediateCases=0 high=47",
+      "expectedRequestCost": "CL intermediate court mapping + ingest",
+      "zeroCl": false,
+      "safety": "do not auto-ingest all; material=true",
+      "priorityBand": "B3",
+      "intermediateCases": 0,
+      "highCourtCases": 47,
+      "impactScore": 79.4
+    },
+    {
+      "priority": 8,
+      "target": "AZ",
+      "reason": "high court present; intermediate missing/thin",
+      "expectedBenefit": "intermediateCases=0 high=46",
+      "expectedRequestCost": "CL intermediate court mapping + ingest",
+      "zeroCl": false,
+      "safety": "do not auto-ingest all; material=true",
+      "priorityBand": "B3",
+      "intermediateCases": 0,
+      "highCourtCases": 46,
+      "impactScore": 79.2
+    },
+    {
+      "priority": 9,
+      "target": "CO",
+      "reason": "high court present; intermediate missing/thin",
+      "expectedBenefit": "intermediateCases=0 high=46",
+      "expectedRequestCost": "CL intermediate court mapping + ingest",
+      "zeroCl": false,
+      "safety": "do not auto-ingest all; material=true",
+      "priorityBand": "B3",
+      "intermediateCases": 0,
+      "highCourtCases": 46,
+      "impactScore": 79.2
+    },
+    {
+      "priority": 10,
+      "target": "CT",
+      "reason": "high court present; intermediate missing/thin",
+      "expectedBenefit": "intermediateCases=0 high=46",
+      "expectedRequestCost": "CL intermediate court mapping + ingest",
+      "zeroCl": false,
+      "safety": "do not auto-ingest all; material=true",
+      "priorityBand": "B3",
+      "intermediateCases": 0,
+      "highCourtCases": 46,
+      "impactScore": 79.2
+    },
+    {
+      "priority": 11,
+      "target": "GA",
+      "reason": "high court present; intermediate missing/thin",
+      "expectedBenefit": "intermediateCases=0 high=46",
+      "expectedRequestCost": "CL intermediate court mapping + ingest",
+      "zeroCl": false,
+      "safety": "do not auto-ingest all; material=true",
+      "priorityBand": "B3",
+      "intermediateCases": 0,
+      "highCourtCases": 46,
+      "impactScore": 79.2
+    },
+    {
+      "priority": 12,
+      "target": "MD",
+      "reason": "high court present; intermediate missing/thin",
+      "expectedBenefit": "intermediateCases=0 high=46",
+      "expectedRequestCost": "CL intermediate court mapping + ingest",
+      "zeroCl": false,
+      "safety": "do not auto-ingest all; material=true",
+      "priorityBand": "B3",
+      "intermediateCases": 0,
+      "highCourtCases": 46,
+      "impactScore": 79.2
+    }
+  ],
+  "A2_OPPORTUNISTIC_CITATION_RECOVERY": {
+    "eligible": [
+      {
+        "priority": 1,
+        "target": "573 U.S. 373",
+        "reason": "expected resolutions/CL >= ~3.0 or high edge density",
+        "expectedBenefit": "9 edges / ~3.6 res/CL",
+        "expectedRequestCost": "~2-3 CL req",
+        "zeroCl": false,
+        "safety": "opportunistic only when CL available",
+        "priorityBand": "A2",
+        "family": "us_reports",
+        "meetsFloor": true
+      }
+    ],
+    "deferredThin": [
+      {
+        "target": "573 U.S. 149",
+        "edges": 6,
+        "expectedResolutionsPerCl": 2.4,
+        "action": "DEFER"
+      },
+      {
+        "target": "232 U.S. 383",
+        "edges": 5,
+        "expectedResolutionsPerCl": 2,
+        "action": "DEFER"
+      },
+      {
+        "target": "304 U.S. 458",
+        "edges": 5,
+        "expectedResolutionsPerCl": 2,
+        "action": "DEFER"
+      },
+      {
+        "target": "315 U.S. 568",
+        "edges": 5,
+        "expectedResolutionsPerCl": 2,
+        "action": "DEFER"
+      },
+      {
+        "target": "391 U.S. 123",
+        "edges": 5,
+        "expectedResolutionsPerCl": 2,
+        "action": "DEFER"
+      },
+      {
+        "target": "407 U.S. 514",
+        "edges": 5,
+        "expectedResolutionsPerCl": 2,
+        "action": "DEFER"
+      },
+      {
+        "target": "441 U.S. 418",
+        "edges": 5,
+        "expectedResolutionsPerCl": 2,
+        "action": "DEFER"
+      },
+      {
+        "target": "441 U.S. 520",
+        "edges": 5,
+        "expectedResolutionsPerCl": 2,
+        "action": "DEFER"
+      },
+      {
+        "target": "448 U.S. 136",
+        "edges": 5,
+        "expectedResolutionsPerCl": 2,
+        "action": "DEFER"
+      },
+      {
+        "target": "455 U.S. 104",
+        "edges": 5,
+        "expectedResolutionsPerCl": 2,
+        "action": "DEFER"
+      }
+    ],
+    "policy": "only targets with expected >=3.0 resolutions/CL (or edges>=8 proxy)"
+  }
+}

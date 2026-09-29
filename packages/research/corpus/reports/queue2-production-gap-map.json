@@ -1,0 +1,1311 @@
+{
+  "ok": true,
+  "classification": "QUEUE2_PRODUCTION_CORPUS_GAP_MAP",
+  "generatedAt": "2026-09-29T17:31:57.446Z",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "corpus": {
+    "authorities": 4002,
+    "cases": 2685,
+    "cl_cases": 2640,
+    "statutes": 904,
+    "regulations": 158,
+    "rules": 254
+  },
+  "chunks": {
+    "chunks": 64302,
+    "embeddings": 64302,
+    "missing_embeddings": 0
+  },
+  "orphans": 0,
+  "duplicateSourceIds": 0,
+  "citations": {
+    "extracted": 7581,
+    "resolved": 981,
+    "unresolved": 6600,
+    "targetAbsent": 6600,
+    "resolutionRatePct": 12.94
+  },
+  "familyAbsent": {
+    "us_reports": 2980,
+    "f3d": 1737,
+    "f2d": 554,
+    "f4th": 700,
+    "f_supp": 273,
+    "usc": 264,
+    "cfr": 42,
+    "federal_rules": 31,
+    "other": 19
+  },
+  "federal": {
+    "scotus": {
+      "authorities": 103,
+      "cases": 103,
+      "earliest": 1803,
+      "latest": 2026
+    },
+    "circuits": [
+      {
+        "court_id": "us-ca-7",
+        "court_name": "United States Court of Appeals for the Seventh Circuit",
+        "authorities": 17,
+        "cases": 17,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "court_id": "us-ca-dc",
+        "court_name": "United States Court of Appeals for the District of Columbia Circuit",
+        "authorities": 17,
+        "cases": 17,
+        "earliest": 2001,
+        "latest": 2026
+      },
+      {
+        "court_id": "us-ca-10",
+        "court_name": "United States Court of Appeals for the Tenth Circuit",
+        "authorities": 16,
+        "cases": 16,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "court_id": "us-ca-9",
+        "court_name": "United States Court of Appeals for the Ninth Circuit",
+        "authorities": 16,
+        "cases": 16,
+        "earliest": 2016,
+        "latest": 2026
+      },
+      {
+        "court_id": "us-ca-8",
+        "court_name": "United States Court of Appeals for the Eighth Circuit",
+        "authorities": 15,
+        "cases": 15,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "court_id": "us-ca-11",
+        "court_name": "United States Court of Appeals for the Eleventh Circuit",
+        "authorities": 15,
+        "cases": 15,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "court_id": "us-ca-fed",
+        "court_name": "United States Court of Appeals for the Federal Circuit",
+        "authorities": 15,
+        "cases": 15,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "court_id": "us-ca-6",
+        "court_name": "United States Court of Appeals for the Sixth Circuit",
+        "authorities": 13,
+        "cases": 13,
+        "earliest": 1992,
+        "latest": 2026
+      },
+      {
+        "court_id": "us-ca-4",
+        "court_name": "United States Court of Appeals for the Fourth Circuit",
+        "authorities": 12,
+        "cases": 12,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "court_id": "us-ca-3",
+        "court_name": "United States Court of Appeals for the Third Circuit",
+        "authorities": 11,
+        "cases": 11,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "court_id": "us-ca-1",
+        "court_name": "United States Court of Appeals for the First Circuit",
+        "authorities": 11,
+        "cases": 11,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "court_id": "us-ca-5",
+        "court_name": "United States Court of Appeals for the Fifth Circuit",
+        "authorities": 10,
+        "cases": 10,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "court_id": "us-ca-2",
+        "court_name": "United States Court of Appeals for the Second Circuit",
+        "authorities": 10,
+        "cases": 10,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "court_id": "us-ca-unknown",
+        "court_name": "United States Court of Appeals",
+        "authorities": 5,
+        "cases": 5,
+        "earliest": 2008,
+        "latest": 2019
+      }
+    ],
+    "district": {
+      "authorities": 0,
+      "cases": 0,
+      "earliest": null,
+      "latest": null
+    },
+    "layers": [
+      {
+        "layer": "other_federal",
+        "authorities": 142,
+        "cases": 0,
+        "earliest": null,
+        "latest": null
+      },
+      {
+        "layer": "scotus",
+        "authorities": 103,
+        "cases": 103,
+        "earliest": 1803,
+        "latest": 2026
+      },
+      {
+        "layer": "us-ca-1",
+        "authorities": 11,
+        "cases": 11,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "layer": "us-ca-10",
+        "authorities": 16,
+        "cases": 16,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "layer": "us-ca-11",
+        "authorities": 15,
+        "cases": 15,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "layer": "us-ca-2",
+        "authorities": 10,
+        "cases": 10,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "layer": "us-ca-3",
+        "authorities": 11,
+        "cases": 11,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "layer": "us-ca-4",
+        "authorities": 12,
+        "cases": 12,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "layer": "us-ca-5",
+        "authorities": 10,
+        "cases": 10,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "layer": "us-ca-6",
+        "authorities": 13,
+        "cases": 13,
+        "earliest": 1992,
+        "latest": 2026
+      },
+      {
+        "layer": "us-ca-7",
+        "authorities": 17,
+        "cases": 17,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "layer": "us-ca-8",
+        "authorities": 15,
+        "cases": 15,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "layer": "us-ca-9",
+        "authorities": 16,
+        "cases": 16,
+        "earliest": 2016,
+        "latest": 2026
+      },
+      {
+        "layer": "us-ca-dc",
+        "authorities": 17,
+        "cases": 17,
+        "earliest": 2001,
+        "latest": 2026
+      },
+      {
+        "layer": "us-ca-fed",
+        "authorities": 15,
+        "cases": 15,
+        "earliest": 2026,
+        "latest": 2026
+      },
+      {
+        "layer": "us-ca-unknown",
+        "authorities": 5,
+        "cases": 5,
+        "earliest": 2008,
+        "latest": 2019
+      }
+    ],
+    "citationDemand": {
+      "us_reports": 2980,
+      "f3d": 1737,
+      "f2d": 554,
+      "f4th": 700,
+      "f_supp": 273
+    }
+  },
+  "historicalGapsTop": [
+    {
+      "jurisdiction": "RI",
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "currentCount": 52,
+      "high": 52,
+      "intermediate": 0,
+      "pre2000": 0,
+      "pre1980": 0,
+      "historicalGap": "missing_pre-2000",
+      "impactScore": 101,
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+    },
+    {
+      "jurisdiction": "MN",
+      "earliestYear": 2024,
+      "latestYear": 2026,
+      "currentCount": 51,
+      "high": 51,
+      "intermediate": 0,
+      "pre2000": 0,
+      "pre1980": 0,
+      "historicalGap": "missing_pre-2000",
+      "impactScore": 101,
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+    },
+    {
+      "jurisdiction": "MO",
+      "earliestYear": 2022,
+      "latestYear": 2025,
+      "currentCount": 46,
+      "high": 46,
+      "intermediate": 0,
+      "pre2000": 0,
+      "pre1980": 0,
+      "historicalGap": "missing_pre-2000",
+      "impactScore": 98,
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+    },
+    {
+      "jurisdiction": "AK",
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "currentCount": 45,
+      "high": 45,
+      "intermediate": 0,
+      "pre2000": 0,
+      "pre1980": 0,
+      "historicalGap": "missing_pre-2000",
+      "impactScore": 98,
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+    },
+    {
+      "jurisdiction": "AL",
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "currentCount": 45,
+      "high": 45,
+      "intermediate": 0,
+      "pre2000": 0,
+      "pre1980": 0,
+      "historicalGap": "missing_pre-2000",
+      "impactScore": 98,
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+    },
+    {
+      "jurisdiction": "HI",
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "currentCount": 45,
+      "high": 45,
+      "intermediate": 0,
+      "pre2000": 0,
+      "pre1980": 0,
+      "historicalGap": "missing_pre-2000",
+      "impactScore": 98,
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+    },
+    {
+      "jurisdiction": "ID",
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "currentCount": 45,
+      "high": 45,
+      "intermediate": 0,
+      "pre2000": 0,
+      "pre1980": 0,
+      "historicalGap": "missing_pre-2000",
+      "impactScore": 98,
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+    },
+    {
+      "jurisdiction": "IN",
+      "earliestYear": 2024,
+      "latestYear": 2026,
+      "currentCount": 45,
+      "high": 45,
+      "intermediate": 0,
+      "pre2000": 0,
+      "pre1980": 0,
+      "historicalGap": "missing_pre-2000",
+      "impactScore": 98,
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+    },
+    {
+      "jurisdiction": "KS",
+      "earliestYear": 2025,
+      "latestYear": 2026,
+      "currentCount": 45,
+      "high": 45,
+      "intermediate": 0,
+      "pre2000": 0,
+      "pre1980": 0,
+      "historicalGap": "missing_pre-2000",
+      "impactScore": 98,
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+    },
+    {
+      "jurisdiction": "KY",
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "currentCount": 45,
+      "high": 45,
+      "intermediate": 0,
+      "pre2000": 0,
+      "pre1980": 0,
+      "historicalGap": "missing_pre-2000",
+      "impactScore": 98,
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+    },
+    {
+      "jurisdiction": "ND",
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "currentCount": 45,
+      "high": 45,
+      "intermediate": 0,
+      "pre2000": 0,
+      "pre1980": 0,
+      "historicalGap": "missing_pre-2000",
+      "impactScore": 98,
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+    },
+    {
+      "jurisdiction": "NE",
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "currentCount": 45,
+      "high": 45,
+      "intermediate": 0,
+      "pre2000": 0,
+      "pre1980": 0,
+      "historicalGap": "missing_pre-2000",
+      "impactScore": 98,
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+    },
+    {
+      "jurisdiction": "NH",
+      "earliestYear": 2025,
+      "latestYear": 2025,
+      "currentCount": 45,
+      "high": 45,
+      "intermediate": 0,
+      "pre2000": 0,
+      "pre1980": 0,
+      "historicalGap": "missing_pre-2000",
+      "impactScore": 98,
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+    },
+    {
+      "jurisdiction": "NM",
+      "earliestYear": 2024,
+      "latestYear": 2026,
+      "currentCount": 45,
+      "high": 45,
+      "intermediate": 0,
+      "pre2000": 0,
+      "pre1980": 0,
+      "historicalGap": "missing_pre-2000",
+      "impactScore": 98,
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+    },
+    {
+      "jurisdiction": "OK",
+      "earliestYear": 2025,
+      "latestYear": 2026,
+      "currentCount": 45,
+      "high": 45,
+      "intermediate": 0,
+      "pre2000": 0,
+      "pre1980": 0,
+      "historicalGap": "missing_pre-2000",
+      "impactScore": 98,
+      "recommendedPath": "B2_HISTORICAL_GAP_RECOVERY (CL depth/date-window or zero-CL archive if available)"
+    }
+  ],
+  "appellateLayerGapsTop": [
+    {
+      "jurisdiction": "MS",
+      "highCourtCases": 69,
+      "intermediateCases": 0,
+      "totalCases": 69,
+      "material": true,
+      "thin": true,
+      "impactScore": 83.8
+    },
+    {
+      "jurisdiction": "ME",
+      "highCourtCases": 65,
+      "intermediateCases": 0,
+      "totalCases": 65,
+      "material": true,
+      "thin": true,
+      "impactScore": 83
+    },
+    {
+      "jurisdiction": "MT",
+      "highCourtCases": 53,
+      "intermediateCases": 0,
+      "totalCases": 53,
+      "material": true,
+      "thin": true,
+      "impactScore": 80.6
+    },
+    {
+      "jurisdiction": "RI",
+      "highCourtCases": 52,
+      "intermediateCases": 0,
+      "totalCases": 52,
+      "material": true,
+      "thin": true,
+      "impactScore": 80.4
+    },
+    {
+      "jurisdiction": "MN",
+      "highCourtCases": 51,
+      "intermediateCases": 0,
+      "totalCases": 51,
+      "material": true,
+      "thin": true,
+      "impactScore": 80.2
+    },
+    {
+      "jurisdiction": "AR",
+      "highCourtCases": 49,
+      "intermediateCases": 0,
+      "totalCases": 49,
+      "material": true,
+      "thin": true,
+      "impactScore": 79.8
+    },
+    {
+      "jurisdiction": "TN",
+      "highCourtCases": 47,
+      "intermediateCases": 0,
+      "totalCases": 47,
+      "material": true,
+      "thin": true,
+      "impactScore": 79.4
+    },
+    {
+      "jurisdiction": "AZ",
+      "highCourtCases": 46,
+      "intermediateCases": 0,
+      "totalCases": 46,
+      "material": true,
+      "thin": true,
+      "impactScore": 79.2
+    },
+    {
+      "jurisdiction": "CO",
+      "highCourtCases": 46,
+      "intermediateCases": 0,
+      "totalCases": 46,
+      "material": true,
+      "thin": true,
+      "impactScore": 79.2
+    },
+    {
+      "jurisdiction": "CT",
+      "highCourtCases": 46,
+      "intermediateCases": 0,
+      "totalCases": 46,
+      "material": true,
+      "thin": true,
+      "impactScore": 79.2
+    },
+    {
+      "jurisdiction": "GA",
+      "highCourtCases": 46,
+      "intermediateCases": 0,
+      "totalCases": 46,
+      "material": true,
+      "thin": true,
+      "impactScore": 79.2
+    },
+    {
+      "jurisdiction": "MD",
+      "highCourtCases": 46,
+      "intermediateCases": 0,
+      "totalCases": 46,
+      "material": true,
+      "thin": true,
+      "impactScore": 79.2
+    },
+    {
+      "jurisdiction": "MO",
+      "highCourtCases": 46,
+      "intermediateCases": 0,
+      "totalCases": 46,
+      "material": true,
+      "thin": true,
+      "impactScore": 79.2
+    },
+    {
+      "jurisdiction": "NC",
+      "highCourtCases": 46,
+      "intermediateCases": 0,
+      "totalCases": 46,
+      "material": true,
+      "thin": true,
+      "impactScore": 79.2
+    },
+    {
+      "jurisdiction": "NJ",
+      "highCourtCases": 46,
+      "intermediateCases": 0,
+      "totalCases": 46,
+      "material": true,
+      "thin": true,
+      "impactScore": 79.2
+    }
+  ],
+  "b1Candidates": {
+    "usc": [
+      {
+        "title": 8,
+        "section": "1101",
+        "citation": "8 U.S.C. § 1101",
+        "edges": 6,
+        "citing": 6,
+        "cite": "8 U.S.C. § 1101"
+      },
+      {
+        "title": 8,
+        "section": "1158",
+        "citation": "8 U.S.C. § 1158",
+        "edges": 6,
+        "citing": 6,
+        "cite": "8 U.S.C. § 1158"
+      },
+      {
+        "title": 18,
+        "section": "924",
+        "citation": "18 U.S.C. § 924",
+        "edges": 4,
+        "citing": 4,
+        "cite": "18 U.S.C. § 924"
+      },
+      {
+        "title": 28,
+        "section": "1331",
+        "citation": "28 U.S.C. § 1331",
+        "edges": 4,
+        "citing": 4,
+        "cite": "28 U.S.C. § 1331."
+      },
+      {
+        "title": 28,
+        "section": "636",
+        "citation": "28 U.S.C. § 636",
+        "edges": 4,
+        "citing": 4,
+        "cite": "28 U.S.C. § 636"
+      },
+      {
+        "title": 42,
+        "section": "1983",
+        "citation": "42 U.S.C. § 1983",
+        "edges": 4,
+        "citing": 4,
+        "cite": "42 U.S.C. § 1983."
+      },
+      {
+        "title": 8,
+        "section": "1182",
+        "citation": "8 U.S.C. § 1182",
+        "edges": 4,
+        "citing": 4,
+        "cite": "8 U.S.C. § 1182"
+      },
+      {
+        "title": 18,
+        "section": "1959",
+        "citation": "18 U.S.C. § 1959",
+        "edges": 3,
+        "citing": 3,
+        "cite": "18 U.S.C. § 1959."
+      },
+      {
+        "title": 18,
+        "section": "3582",
+        "citation": "18 U.S.C. § 3582",
+        "edges": 3,
+        "citing": 3,
+        "cite": "18 U.S.C. § 3582"
+      },
+      {
+        "title": 28,
+        "section": "2255",
+        "citation": "28 U.S.C. § 2255",
+        "edges": 3,
+        "citing": 3,
+        "cite": "28 U.S.C. § 2255"
+      }
+    ],
+    "cfr": [
+      {
+        "title": 8,
+        "section": "236.1",
+        "citation": "8 C.F.R. § 236.1",
+        "edges": 2,
+        "citing": 2,
+        "cite": "8 C.F.R. § 236.1"
+      },
+      {
+        "title": 11,
+        "section": "109.20",
+        "citation": "11 C.F.R. § 109.20",
+        "edges": 1,
+        "citing": 1,
+        "cite": "11 C.F.R. § 109.20"
+      },
+      {
+        "title": 11,
+        "section": "110.1",
+        "citation": "11 C.F.R. § 110.1",
+        "edges": 1,
+        "citing": 1,
+        "cite": "11 C.F.R. § 110.1"
+      },
+      {
+        "title": 11,
+        "section": "110.6",
+        "citation": "11 C.F.R. § 110.6",
+        "edges": 1,
+        "citing": 1,
+        "cite": "11 C.F.R. § 110.6"
+      },
+      {
+        "title": 20,
+        "section": "718.201",
+        "citation": "20 C.F.R. § 718.201",
+        "edges": 1,
+        "citing": 1,
+        "cite": "20 C.F.R. § 718.201"
+      },
+      {
+        "title": 20,
+        "section": "718.202",
+        "citation": "20 C.F.R. § 718.202",
+        "edges": 1,
+        "citing": 1,
+        "cite": "20 C.F.R. § 718.202"
+      },
+      {
+        "title": 20,
+        "section": "718.204",
+        "citation": "20 C.F.R. § 718.204",
+        "edges": 1,
+        "citing": 1,
+        "cite": "20 C.F.R. § 718.204"
+      },
+      {
+        "title": 20,
+        "section": "725.202",
+        "citation": "20 C.F.R. § 725.202",
+        "edges": 1,
+        "citing": 1,
+        "cite": "20 C.F.R. § 725.202"
+      },
+      {
+        "title": 20,
+        "section": "725.493",
+        "citation": "20 C.F.R. § 725.493",
+        "edges": 1,
+        "citing": 1,
+        "cite": "20 C.F.R. § 725.493"
+      },
+      {
+        "title": 27,
+        "section": "479.62",
+        "citation": "27 C.F.R. § 479.62",
+        "edges": 1,
+        "citing": 1,
+        "cite": "27 C.F.R. § 479.62"
+      }
+    ],
+    "federal_rules": [
+      {
+        "kind": "app. p.",
+        "rule": "34",
+        "citation": "Fed. R. App. P. 34",
+        "path": "rules-appellate-procedure",
+        "reporter": "Fed. R. App. P.",
+        "edges": 12,
+        "citing": 12,
+        "cite": "Fed. R. App. P. 34"
+      },
+      {
+        "kind": "app. p.",
+        "rule": "12",
+        "citation": "Fed. R. App. P. 12",
+        "path": "rules-appellate-procedure",
+        "reporter": "Fed. R. App. P.",
+        "edges": 3,
+        "citing": 3,
+        "cite": "Fed. R. App. P. 12"
+      },
+      {
+        "kind": "app. p.",
+        "rule": "43",
+        "citation": "Fed. R. App. P. 43",
+        "path": "rules-appellate-procedure",
+        "reporter": "Fed. R. App. P.",
+        "edges": 3,
+        "citing": 3,
+        "cite": "Fed. R. App. P. 43"
+      },
+      {
+        "kind": "civ. p.",
+        "rule": "73",
+        "citation": "Fed. R. Civ. P. 73",
+        "path": "rules-civil-procedure",
+        "reporter": "Fed. R. Civ. P.",
+        "edges": 2,
+        "citing": 2,
+        "cite": "Fed. R. Civ. P. 73"
+      },
+      {
+        "kind": "evid.",
+        "rule": "201",
+        "citation": "Fed. R. Evid. 201",
+        "path": "rules-evidence",
+        "reporter": "Fed. R. Evid.",
+        "edges": 2,
+        "citing": 2,
+        "cite": "Fed. R. Evid. 201"
+      },
+      {
+        "kind": "app. p.",
+        "rule": "2",
+        "citation": "Fed. R. App. P. 2",
+        "path": "rules-appellate-procedure",
+        "reporter": "Fed. R. App. P.",
+        "edges": 1,
+        "citing": 1,
+        "cite": "Fed. R. App. P. 2"
+      },
+      {
+        "kind": "app. p.",
+        "rule": "30",
+        "citation": "Fed. R. App. P. 30",
+        "path": "rules-appellate-procedure",
+        "reporter": "Fed. R. App. P.",
+        "edges": 1,
+        "citing": 1,
+        "cite": "Fed. R. App. P. 30"
+      },
+      {
+        "kind": "app. p.",
+        "rule": "40",
+        "citation": "Fed. R. App. P. 40",
+        "path": "rules-appellate-procedure",
+        "reporter": "Fed. R. App. P.",
+        "edges": 1,
+        "citing": 1,
+        "cite": "Fed. R. App. P. 40"
+      },
+      {
+        "kind": "civ. p.",
+        "rule": "24",
+        "citation": "Fed. R. Civ. P. 24",
+        "path": "rules-civil-procedure",
+        "reporter": "Fed. R. Civ. P.",
+        "edges": 1,
+        "citing": 1,
+        "cite": "Fed. R. Civ. P. 24"
+      },
+      {
+        "kind": "civ. p.",
+        "rule": "36",
+        "citation": "Fed. R. Civ. P. 36",
+        "path": "rules-civil-procedure",
+        "reporter": "Fed. R. Civ. P.",
+        "edges": 1,
+        "citing": 1,
+        "cite": "Fed. R. Civ. P. 36"
+      }
+    ]
+  },
+  "sourceProbes": {
+    "enabled": true,
+    "usc": [
+      {
+        "citation": "8 U.S.C. § 1101",
+        "http": 200,
+        "chars": 208,
+        "primaryTextLikely": true,
+        "url": "https://uscode.house.gov/view.xhtml?req=granuleid%3AUSC-prelim-title8-section1101%26num%3D1101%26edition%3Dprelim"
+      },
+      {
+        "citation": "8 U.S.C. § 1158",
+        "http": 200,
+        "chars": 208,
+        "primaryTextLikely": true,
+        "url": "https://uscode.house.gov/view.xhtml?req=granuleid%3AUSC-prelim-title8-section1158%26num%3D1158%26edition%3Dprelim"
+      },
+      {
+        "citation": "18 U.S.C. § 924",
+        "http": 200,
+        "chars": 208,
+        "primaryTextLikely": true,
+        "url": "https://uscode.house.gov/view.xhtml?req=granuleid%3AUSC-prelim-title18-section924%26num%3D924%26edition%3Dprelim"
+      },
+      {
+        "citation": "28 U.S.C. § 1331",
+        "http": 200,
+        "chars": 208,
+        "primaryTextLikely": true,
+        "url": "https://uscode.house.gov/view.xhtml?req=granuleid%3AUSC-prelim-title28-section1331%26num%3D1331%26edition%3Dprelim"
+      },
+      {
+        "citation": "28 U.S.C. § 636",
+        "http": 200,
+        "chars": 208,
+        "primaryTextLikely": true,
+        "url": "https://uscode.house.gov/view.xhtml?req=granuleid%3AUSC-prelim-title28-section636%26num%3D636%26edition%3Dprelim"
+      }
+    ],
+    "cfr": [
+      {
+        "citation": "8 C.F.R. § 236.1",
+        "http": 200,
+        "chars": 18258,
+        "primaryTextLikely": true,
+        "asOfDate": "2026-09-25",
+        "url": "https://www.ecfr.gov/api/renderer/v1/content/enhanced/2026-09-25/title-8?section=236.1"
+      },
+      {
+        "citation": "11 C.F.R. § 109.20",
+        "http": 200,
+        "chars": 1021,
+        "primaryTextLikely": true,
+        "asOfDate": "2026-09-25",
+        "url": "https://www.ecfr.gov/api/renderer/v1/content/enhanced/2026-09-25/title-11?section=109.20"
+      },
+      {
+        "citation": "11 C.F.R. § 110.1",
+        "http": 200,
+        "chars": 24672,
+        "primaryTextLikely": true,
+        "asOfDate": "2026-09-25",
+        "url": "https://www.ecfr.gov/api/renderer/v1/content/enhanced/2026-09-25/title-11?section=110.1"
+      },
+      {
+        "citation": "11 C.F.R. § 110.6",
+        "http": 200,
+        "chars": 7562,
+        "primaryTextLikely": true,
+        "asOfDate": "2026-09-25",
+        "url": "https://www.ecfr.gov/api/renderer/v1/content/enhanced/2026-09-25/title-11?section=110.6"
+      },
+      {
+        "citation": "20 C.F.R. § 718.201",
+        "http": 200,
+        "chars": 1690,
+        "primaryTextLikely": true,
+        "asOfDate": "2026-09-25",
+        "url": "https://www.ecfr.gov/api/renderer/v1/content/enhanced/2026-09-25/title-20?section=718.201"
+      }
+    ],
+    "federal_rules": [
+      {
+        "citation": "Fed. R. App. P. 34",
+        "http": 404,
+        "chars": 14975,
+        "ruleMentioned": false,
+        "primaryTextLikely": false,
+        "blocker": "No deterministic per-rule primary-text endpoint wired; index page only",
+        "url": "https://www.uscourts.gov/rules-appellate-procedure"
+      },
+      {
+        "citation": "Fed. R. App. P. 12",
+        "http": 404,
+        "chars": 14975,
+        "ruleMentioned": false,
+        "primaryTextLikely": false,
+        "blocker": "No deterministic per-rule primary-text endpoint wired; index page only",
+        "url": "https://www.uscourts.gov/rules-appellate-procedure"
+      },
+      {
+        "citation": "Fed. R. App. P. 43",
+        "http": 404,
+        "chars": 14975,
+        "ruleMentioned": false,
+        "primaryTextLikely": false,
+        "blocker": "No deterministic per-rule primary-text endpoint wired; index page only",
+        "url": "https://www.uscourts.gov/rules-appellate-procedure"
+      },
+      {
+        "citation": "Fed. R. Civ. P. 73",
+        "http": 404,
+        "chars": 14975,
+        "ruleMentioned": false,
+        "primaryTextLikely": false,
+        "blocker": "No deterministic per-rule primary-text endpoint wired; index page only",
+        "url": "https://www.uscourts.gov/rules-civil-procedure"
+      },
+      {
+        "citation": "Fed. R. Evid. 201",
+        "http": 404,
+        "chars": 14975,
+        "ruleMentioned": false,
+        "primaryTextLikely": false,
+        "blocker": "No deterministic per-rule primary-text endpoint wired; index page only",
+        "url": "https://www.uscourts.gov/rules-evidence"
+      }
+    ]
+  },
+  "a2Opportunistic": [
+    {
+      "citation": "573 U.S. 373",
+      "edges": 9,
+      "citing": 9,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 3.6,
+      "meetsFloor": true
+    },
+    {
+      "citation": "573 U.S. 149",
+      "edges": 6,
+      "citing": 6,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2.4,
+      "meetsFloor": false
+    },
+    {
+      "citation": "232 U.S. 383",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "304 U.S. 458",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "315 U.S. 568",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "391 U.S. 123",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "407 U.S. 514",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "441 U.S. 418",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "441 U.S. 520",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "448 U.S. 136",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "455 U.S. 104",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "463 U.S. 248",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "475 U.S. 673",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "476 U.S. 683",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "480 U.S. 39",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "481 U.S. 739",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "488 U.S. 75",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "501 U.S. 1030",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "501 U.S. 429",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "513 U.S. 298",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "517 U.S. 690",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "519 U.S. 172",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "522 U.S. 136",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "527 U.S. 1",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "530 U.S. 466",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "542 U.S. 296",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "549 U.S. 1",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "551 U.S. 930",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "557 U.S. 305",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    },
+    {
+      "citation": "558 U.S. 310",
+      "edges": 5,
+      "citing": 5,
+      "family": "us_reports",
+      "expectedResolutionsPerCl": 2,
+      "meetsFloor": false
+    }
+  ],
+  "pathReadiness": {
+    "USC_DEPTH": {
+      "implementationExists": true,
+      "source": "uscode.house.gov viewer HTML",
+      "mutationGated": true,
+      "gate": "QUEUE2_LANE_B_ALLOW_MUTATION / allowMutation",
+      "deterministicIdentity": true,
+      "machineReadablePrimaryText": "partial (HTML strip; chrome risk)",
+      "dedupe": "source_provider+external_id and normalized_citation",
+      "citationLinking": true,
+      "expectedEdges": 264,
+      "safeToEnableBounded": "CONDITIONAL — probe primary text first"
+    },
+    "CFR_DEPTH": {
+      "implementationExists": true,
+      "source": "ecfr.gov renderer API",
+      "mutationGated": true,
+      "gate": "QUEUE2_LANE_B_ALLOW_MUTATION / allowMutation",
+      "deterministicIdentity": true,
+      "machineReadablePrimaryText": "yes (enhanced renderer)",
+      "dedupe": "source_provider+external_id and normalized_citation",
+      "citationLinking": true,
+      "expectedEdges": 42,
+      "safeToEnableBounded": "CONDITIONAL — probe primary text first"
+    },
+    "FEDERAL_RULES_DEPTH": {
+      "implementationExists": false,
+      "parseExists": true,
+      "ingestLoopExists": false,
+      "source": "uscourts.gov index pages (not per-rule body)",
+      "mutationGated": true,
+      "deterministicIdentity": true,
+      "machineReadablePrimaryText": false,
+      "expectedEdges": 31,
+      "safeToEnableBounded": false,
+      "blocker": "parseFedR ranks demand but staging-queue2-lane-b.cjs has no federal-rules fetch/ingest loop"
+    },
+    "NON_CL_PRIMARY_AUTHORITY_INTAKE": {
+      "implementationExists": true,
+      "sources": [
+        "loc.gov usrep",
+        "usc_house",
+        "ecfr"
+      ],
+      "mutationGated": true,
+      "usReportsLocLimitation": "often PDF-only / insufficient primary opinion text",
+      "safeToEnableBounded": false
+    }
+  }
+}
