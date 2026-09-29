@@ -3,13 +3,13 @@
  * Hard quality gates: eCFR primary text, deterministic citation, dedupe, embeddings.
  *
  * Usage: node tmp-queue2-b1-cfr-pilot.cjs
- * Env: B1_MAX=5
+ * Env: B1_MAX=10 (capped at 10 for session 2)
  */
 "use strict";
 const { createHash, randomUUID } = require("node:crypto");
 const postgres = require("postgres");
 
-const MAX = Math.min(Math.max(Number.parseInt(process.env.B1_MAX || "5", 10) || 5, 1), 12);
+const MAX = Math.min(Math.max(Number.parseInt(process.env.B1_MAX || "10", 10) || 10, 1), 10);
 const MIN_CHARS = 200;
 
 function sha256(text) {

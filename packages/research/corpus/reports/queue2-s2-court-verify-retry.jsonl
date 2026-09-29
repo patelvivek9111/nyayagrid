@@ -1,0 +1,7 @@
+{"ok":true,"id":"arizctapp","state":"AZ","role":"intermediate","mappingStatus":"VERIFIED","httpStatus":200,"fullName":"Court of Appeals of Arizona","jurisdiction":"SA","inUse":true,"opinionSample":{"status":200,"hasResult":true,"sampleId":11453757,"dateFiled":null},"courtListenerHttpCalls":2,"mutations":0}
+{"ok":false,"err":"The operation was aborted due to timeout","courtListenerHttpCalls":0}
+{"ok":false,"err":"The operation was aborted due to timeout","courtListenerHttpCalls":0}
+{"ok":false,"err":"The operation was aborted due to timeout","courtListenerHttpCalls":0}
+{"ok":true,"id":"nebrctapp","state":"NE","role":"intermediate","mappingStatus":"NO_USABLE_CL_COURT","httpStatus":404,"courtListenerHttpCalls":1}
+{"ok":true,"id":"txsd","state":"US","role":"district","mappingStatus":"VERIFIED","httpStatus":200,"fullName":"District Court, S.D. Texas","jurisdiction":"FD","inUse":true,"opinionSample":{"status":200,"hasResult":true,"sampleId":11453490,"dateFiled":null},"courtListenerHttpCalls":2,"mutations":0}
+{"ok":true,"id":"dcd","state":"US","role":"district","mappingStatus":"VERIFIED","httpStatus":200,"fullName":"District Court, District of Columbia","jurisdiction":"FD","inUse":true,"opinionSample":{"status":200,"hasResult":true,"sampleId":11453929,"dateFiled":null},"courtListenerHttpCalls":2,"mutations":0}

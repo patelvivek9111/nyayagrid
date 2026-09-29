@@ -92,6 +92,7 @@ async function main() {
         count(*) filter (where court_level = 'state_high')::int as high_court,
         count(*) filter (where court_level in ('state_appellate','circuit','appellate'))::int as intermediate,
         count(*) filter (where decision_date is not null and extract(year from decision_date)::int < 2000)::int as pre_2000,
+        count(*) filter (where decision_date is not null and extract(year from decision_date)::int < 1980)::int as pre_1980,
         min(extract(year from decision_date)::int) filter (where decision_date is not null) as earliest_year,
         max(extract(year from decision_date)::int) filter (where decision_date is not null) as latest_year
       from legal_authorities
@@ -117,6 +118,7 @@ async function main() {
         high_court: 0,
         intermediate: 0,
         pre_2000: 0,
+        pre_1980: 0,
         earliest_year: null,
         latest_year: null,
       };
@@ -124,6 +126,7 @@ async function main() {
       const high = Number(r.high_court || 0);
       const mid = Number(r.intermediate || 0);
       const pre2000 = Number(r.pre_2000 || 0);
+      const pre1980 = Number(r.pre_1980 || 0);
       const deficit = Math.max(0, STATE_TARGET - cases);
       const midGap = HAS_INTERMEDIATE.has(j) && mid === 0 ? 1 : 0;
       const histGap = pre2000 === 0 || (r.earliest_year != null && Number(r.earliest_year) >= 2000) ? 1 : 0;
@@ -133,6 +136,7 @@ async function main() {
         deficit * 3 +
         midGap * 80 +
         histGap * 40 +
+        (pre1980 === 0 && histGap ? 15 : 0) +
         Math.min(demand, 200) * 0.15 -
         over * 2;
       return {
@@ -143,6 +147,7 @@ async function main() {
         earliestYear: r.earliest_year,
         latestYear: r.latest_year,
         pre2000,
+        pre1980,
         planningTarget: STATE_TARGET,
         deficit,
         intermediateLayerGap: midGap === 1,
@@ -157,6 +162,7 @@ async function main() {
         coalesce(metadata->>'clCourt', court_id, 'unknown') as bucket,
         count(*)::int as cases,
         count(*) filter (where decision_date is not null and extract(year from decision_date)::int < 2000)::int as pre_2000,
+        count(*) filter (where decision_date is not null and extract(year from decision_date)::int < 1980)::int as pre_1980,
         min(extract(year from decision_date)::int) filter (where decision_date is not null) as earliest_year,
         max(extract(year from decision_date)::int) filter (where decision_date is not null) as latest_year
       from legal_authorities
@@ -174,6 +180,7 @@ async function main() {
         label,
         cases: r.cases,
         pre2000: r.pre_2000,
+        pre1980: r.pre_1980,
         earliestYear: r.earliest_year,
         latestYear: r.latest_year,
         historicalWeakness: Number(r.pre_2000 || 0) === 0,

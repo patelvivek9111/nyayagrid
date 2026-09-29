@@ -2200,7 +2200,7 @@ var require_src = __commonJS({
 // scripts/tmp-queue2-b1-cfr-pilot.cjs
 var { createHash, randomUUID } = require("node:crypto");
 var postgres = require_src();
-var MAX = Math.min(Math.max(Number.parseInt(process.env.B1_MAX || "5", 10) || 5, 1), 12);
+var MAX = Math.min(Math.max(Number.parseInt(process.env.B1_MAX || "10", 10) || 10, 1), 10);
 var MIN_CHARS = 200;
 function sha256(text) {
   return createHash("sha256").update(String(text), "utf8").digest("hex");

@@ -1,0 +1,86 @@
+{
+  "classification": "QUEUE2_S2_GROWTH_CONT",
+  "startedAt": "2026-09-29T20:33:10.613Z",
+  "batches": [
+    {
+      "lane": "DISTRICT",
+      "clCourt": "nysd",
+      "tag": "s2-dist-nysd",
+      "exit": 0,
+      "status": "paused",
+      "cl": 7,
+      "imported": 3
+    },
+    {
+      "lane": "DISTRICT",
+      "clCourt": "cacd",
+      "tag": "s2-dist-cacd",
+      "exit": 0,
+      "status": "paused",
+      "cl": 7,
+      "imported": 3
+    },
+    {
+      "lane": "DISTRICT",
+      "clCourt": "ilnd",
+      "tag": "s2-dist-ilnd",
+      "exit": 0,
+      "status": "paused",
+      "cl": 7,
+      "imported": 3
+    },
+    {
+      "lane": "G3",
+      "clCourt": "ca5",
+      "tag": "s2-g3-ca5-fill",
+      "exit": 0,
+      "status": "paused",
+      "cl": 6,
+      "imported": 2
+    },
+    {
+      "lane": "G3",
+      "clCourt": "ca9",
+      "tag": "s2-g3-ca9-fill",
+      "exit": 0,
+      "status": "paused",
+      "cl": 14,
+      "imported": 6
+    },
+    {
+      "lane": "G1",
+      "clCourt": "wisctapp",
+      "tag": "s2-g1-wisctapp",
+      "exit": 0,
+      "status": "quota_paused",
+      "cl": 14,
+      "imported": 17
+    },
+    {
+      "lane": "G1",
+      "clCourt": "utahctapp",
+      "tag": "s2-g1-utahctapp",
+      "exit": 0,
+      "status": "paused",
+      "cl": 13,
+      "imported": 12
+    }
+  ],
+  "byLane": {
+    "G1": {
+      "cl": 27,
+      "casesAdded": 29
+    },
+    "G3": {
+      "cl": 20,
+      "casesAdded": 8
+    },
+    "DISTRICT": {
+      "cl": 21,
+      "casesAdded": 9
+    }
+  },
+  "totalCl": 68,
+  "stopReason": "plan_complete",
+  "finishedAt": "2026-09-29T20:41:56.208Z"
+}

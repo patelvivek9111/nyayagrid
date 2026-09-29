@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 "use strict";
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __commonJS = (cb, mod) => function __require() {
@@ -2198,123 +2197,35 @@ var require_src = __commonJS({
   }
 });
 
-// scripts/tmp-queue2-balanced-10k-tracker.cjs
+// scripts/tmp-queue2-citation-denominator.cjs
 var postgres = require_src();
-var STATE_CODES = [
-  "AL",
-  "AK",
-  "AZ",
-  "AR",
-  "CA",
-  "CO",
-  "CT",
-  "DE",
-  "DC",
-  "FL",
-  "GA",
-  "HI",
-  "ID",
-  "IL",
-  "IN",
-  "IA",
-  "KS",
-  "KY",
-  "LA",
-  "ME",
-  "MD",
-  "MA",
-  "MI",
-  "MN",
-  "MS",
-  "MO",
-  "MT",
-  "NE",
-  "NV",
-  "NH",
-  "NJ",
-  "NM",
-  "NY",
-  "NC",
-  "ND",
-  "OH",
-  "OK",
-  "OR",
-  "PA",
-  "RI",
-  "SC",
-  "SD",
-  "TN",
-  "TX",
-  "UT",
-  "VT",
-  "VA",
-  "WA",
-  "WV",
-  "WI",
-  "WY"
-];
-var STATE_TARGET = 150;
-var STATE_TOTAL_TARGET = 7650;
-var FEDERAL_TARGET = 2350;
-var CASE_TARGET = 1e4;
-var HAS_INTERMEDIATE = /* @__PURE__ */ new Set([
-  "AL",
-  "AK",
-  "AZ",
-  "AR",
-  "CA",
-  "CO",
-  "CT",
-  "FL",
-  "GA",
-  "HI",
-  "ID",
-  "IL",
-  "IN",
-  "IA",
-  "KS",
-  "KY",
-  "LA",
-  "MD",
-  "MA",
-  "MI",
-  "MN",
-  "MS",
-  "MO",
-  "NE",
-  "NV",
-  "NJ",
-  "NM",
-  "NY",
-  "NC",
-  "OH",
-  "OK",
-  "OR",
-  "PA",
-  "SC",
-  "TN",
-  "TX",
-  "UT",
-  "VA",
-  "WA",
-  "WI"
-]);
-var CIRCUIT_CL = {
-  scotus: "SCOTUS",
-  ca1: "1st Circuit",
-  ca2: "2nd Circuit",
-  ca3: "3rd Circuit",
-  ca4: "4th Circuit",
-  ca5: "5th Circuit",
-  ca6: "6th Circuit",
-  ca7: "7th Circuit",
-  ca8: "8th Circuit",
-  ca9: "9th Circuit",
-  ca10: "10th Circuit",
-  ca11: "11th Circuit",
-  cadc: "D.C. Circuit",
-  cafc: "Federal Circuit"
-};
+function classifyUnresolved(norm, raw) {
+  const n = String(norm || "").trim();
+  const r = String(raw || "").trim();
+  if (!n || n.length < 3) return "MALFORMED";
+  if (/^[\d\s.,;:]+$/.test(n)) return "MALFORMED";
+  if (/\?\?\?|FIXME|TODO|lorem/i.test(n)) return "MALFORMED";
+  if (n.length > 180) return "MALFORMED";
+  if (/\b(WL|LEXIS|Westlaw|Google Scholar)\b/i.test(n)) return "OUT_OF_SCOPE";
+  if (/\b(Restatement|Am\.\s*Jur|C\.J\.S\.|ALR|Law Review|L\.\s*Rev\.)\b/i.test(n)) return "UNSUPPORTED_AUTHORITY_TYPE";
+  if (/\b(Treatise|Hornbook|Black'?s Law)\b/i.test(n)) return "UNSUPPORTED_AUTHORITY_TYPE";
+  if (/\b(U\.N\.|I\.C\.J\.|E\.C\.H\.R\.|foreign)\b/i.test(n)) return "OUT_OF_SCOPE";
+  if (/\band\b.+\bv\./i.test(n) && /\d+\s+[A-Z]/.test(n) && n.split(/\d+/).length > 6) return "AMBIGUOUS";
+  if (/^\d+\s+[A-Za-z.\s]+$/.test(n) && !/\d+$/.test(n) && !/ section /.test(n)) return "AMBIGUOUS";
+  if (/\bat\s+\d+/i.test(n) && !/\d+\s+U\.?\s*S\.?\s+\d+/i.test(n) && n.split(/\s+/).length < 4) return "AMBIGUOUS";
+  if (/\b\d+\s+U\.?\s*S\.?\s+\d+/i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\b\d+\s+F\.\s*(2d|3d|4th)\s+\d+/i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\b\d+\s+F\.\s*Supp\./i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\b\d+\s+U\.?\s*S\.?\s*C\.?\s*[\s.]*\d+/i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\b\d+\s+C\.?\s*F\.?\s*R\.?\s*[\s.]*\d+/i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\bFed\.\s*R\.\s*(Civ|Crim|App|Evid)\.\s*P\./i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\b\d+\s+[A-Z][a-z]+\.?\s*(2d|3d)?\s+\d+/i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/section\s+\d+/i.test(n) && /\b(CFR|U\.?S\.?C\.?|C\.F\.R\.)\b/i.test(n + " " + r)) return "VALID_TARGET_ABSENT";
+  if (/\bS\.\s*Ct\.\b/i.test(n)) return "SOURCE_UNAVAILABLE";
+  if (/\bL\.\s*Ed\.?\s*(2d)?\b/i.test(n)) return "SOURCE_UNAVAILABLE";
+  if (/\d/.test(n) && /[A-Za-z]/.test(n) && n.length >= 6) return "VALID_TARGET_ABSENT";
+  return "AMBIGUOUS";
+}
 async function main() {
   const url = process.env.DATABASE_URL;
   if (!url) {
@@ -2323,200 +2234,94 @@ async function main() {
   }
   const sql = postgres(url, { max: 1, ssl: "require", idle_timeout: 5, connect_timeout: 30 });
   try {
-    const [corpus] = await sql`
+    const [totals] = await sql`
       select
-        count(*)::int as authorities,
-        count(*) filter (where authority_type='case')::int as cases,
-        count(*) filter (where authority_type='case' and source_provider='courtlistener')::int as cl_cases,
-        count(*) filter (where authority_type='statute')::int as statutes,
-        count(*) filter (where authority_type='regulation')::int as regulations,
-        count(*) filter (where authority_type='rule')::int as rules,
-        count(*) filter (where authority_type='case' and authority_state='US')::int as federal_cases,
-        count(*) filter (where authority_type='case' and authority_state is not null and authority_state <> 'US')::int as state_dc_cases
-      from legal_authorities
-    `;
-    const [chunks] = await sql`
-      select count(*)::int as chunks,
-             count(*) filter (where embedding is not null)::int as embeddings,
-             count(*) filter (where embedding is null)::int as missing_embeddings
-      from legal_authority_chunks
-    `;
-    const [dupes] = await sql`
-      select count(*)::int as n from (
-        select 1 from legal_authorities where source_external_id is not null
-        group by source_provider, source_external_id having count(*) > 1
-      ) d
-    `;
-    const [orphans] = await sql`
-      select count(*)::int as n from legal_authority_chunks c
-      left join legal_authorities a on a.id = c.authority_id where a.id is null
-    `;
-    const [cite] = await sql`
-      select count(*)::int as extracted,
-             count(*) filter (where to_authority_id is not null)::int as resolved,
-             count(*) filter (where to_authority_id is null)::int as unresolved
+        count(*)::int as extracted,
+        count(*) filter (where to_authority_id is not null)::int as resolved,
+        count(*) filter (where to_authority_id is null)::int as unresolved
       from legal_authority_citations
     `;
-    const stateRows = await sql`
-      select
-        authority_state as j,
-        count(*)::int as cases,
-        count(*) filter (where court_level in ('state_high','scotus') or court_level='high')::int as high_raw,
-        count(*) filter (where court_level = 'state_high')::int as high_court,
-        count(*) filter (where court_level in ('state_appellate','circuit','appellate'))::int as intermediate,
-        count(*) filter (where decision_date is not null and extract(year from decision_date)::int < 2000)::int as pre_2000,
-        count(*) filter (where decision_date is not null and extract(year from decision_date)::int < 1980)::int as pre_1980,
-        min(extract(year from decision_date)::int) filter (where decision_date is not null) as earliest_year,
-        max(extract(year from decision_date)::int) filter (where decision_date is not null) as latest_year
-      from legal_authorities
-      where authority_type = 'case'
-        and authority_state = any(${STATE_CODES})
-      group by 1
-    `;
-    const byState = Object.fromEntries(stateRows.map((r) => [r.j, r]));
-    const citeDemand = await sql`
-      select a.authority_state as j, count(*)::int as absent_edges
+    const defects = await sql`
+      select e.id
       from legal_authority_citations e
-      join legal_authorities a on a.id = e.from_authority_id
-      where e.to_authority_id is null
-        and a.authority_state = any(${STATE_CODES})
-      group by 1
+      join legal_authorities a
+        on e.to_authority_id is null
+       and e.normalized_citation is not null
+       and length(e.normalized_citation) > 4
+       and (
+         a.normalized_citation = e.normalized_citation
+         or a.citation = e.normalized_citation
+       )
+      limit 50000
     `;
-    const demandBy = Object.fromEntries(citeDemand.map((r) => [r.j, r.absent_edges]));
-    const states = STATE_CODES.map((j) => {
-      const r = byState[j] || {
-        cases: 0,
-        high_court: 0,
-        intermediate: 0,
-        pre_2000: 0,
-        pre_1980: 0,
-        earliest_year: null,
-        latest_year: null
-      };
-      const cases = Number(r.cases || 0);
-      const high = Number(r.high_court || 0);
-      const mid = Number(r.intermediate || 0);
-      const pre2000 = Number(r.pre_2000 || 0);
-      const pre1980 = Number(r.pre_1980 || 0);
-      const deficit = Math.max(0, STATE_TARGET - cases);
-      const midGap = HAS_INTERMEDIATE.has(j) && mid === 0 ? 1 : 0;
-      const histGap = pre2000 === 0 || r.earliest_year != null && Number(r.earliest_year) >= 2e3 ? 1 : 0;
-      const demand = Number(demandBy[j] || 0);
-      const over = Math.max(0, cases - STATE_TARGET);
-      const balancedPriority = deficit * 3 + midGap * 80 + histGap * 40 + (pre1980 === 0 && histGap ? 15 : 0) + Math.min(demand, 200) * 0.15 - over * 2;
-      return {
-        jurisdiction: j,
-        cases,
-        highCourt: high,
-        intermediateAppellate: mid,
-        earliestYear: r.earliest_year,
-        latestYear: r.latest_year,
-        pre2000,
-        pre1980,
-        planningTarget: STATE_TARGET,
-        deficit,
-        intermediateLayerGap: midGap === 1,
-        historicalGap: histGap === 1,
-        citationDemand: demand,
-        balancedPriority: Number(balancedPriority.toFixed(2))
-      };
-    }).sort((a, b) => b.balancedPriority - a.balancedPriority || b.deficit - a.deficit);
-    const fedRows = await sql`
-      select
-        coalesce(metadata->>'clCourt', court_id, 'unknown') as bucket,
-        count(*)::int as cases,
-        count(*) filter (where decision_date is not null and extract(year from decision_date)::int < 2000)::int as pre_2000,
-        count(*) filter (where decision_date is not null and extract(year from decision_date)::int < 1980)::int as pre_1980,
-        min(extract(year from decision_date)::int) filter (where decision_date is not null) as earliest_year,
-        max(extract(year from decision_date)::int) filter (where decision_date is not null) as latest_year
-      from legal_authorities
-      where authority_type = 'case'
-        and authority_state = 'US'
-      group by 1
-      order by cases desc
+    const defectIds = new Set(defects.map((d) => d.id));
+    const unresolved = await sql`
+      select id, normalized_citation, raw_citation
+      from legal_authority_citations
+      where to_authority_id is null
     `;
-    const federalBuckets = fedRows.map((r) => {
-      const key = String(r.bucket || "unknown").toLowerCase();
-      const label = CIRCUIT_CL[key] || key;
-      return {
-        bucket: key,
-        label,
-        cases: r.cases,
-        pre2000: r.pre_2000,
-        pre1980: r.pre_1980,
-        earliestYear: r.earliest_year,
-        latestYear: r.latest_year,
-        historicalWeakness: Number(r.pre_2000 || 0) === 0
-      };
-    });
-    const scotus = federalBuckets.find((b) => b.bucket === "scotus" || /scotus|supreme/i.test(b.label));
-    const circuits = Object.keys(CIRCUIT_CL).filter((k) => k !== "scotus").map((k) => {
-      const hit = federalBuckets.find((b) => b.bucket === k || b.bucket.includes(k));
-      return hit || { bucket: k, label: CIRCUIT_CL[k], cases: 0, pre2000: 0, earliestYear: null, latestYear: null, historicalWeakness: true };
-    });
-    const districtish = federalBuckets.filter(
-      (b) => !CIRCUIT_CL[b.bucket] && !/scotus|ca\d|cadc|cafc/i.test(b.bucket)
-    );
-    const out = {
-      ok: true,
-      classification: "QUEUE2_BALANCED_10K_TRACKER",
-      generatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-      courtListenerHttpCalls: 0,
-      mutations: 0,
-      targets: {
-        totalCases: CASE_TARGET,
-        stateDc: STATE_TOTAL_TARGET,
-        federal: FEDERAL_TARGET,
-        perStatePlanning: STATE_TARGET
-      },
-      baseline: {
-        corpus,
-        chunks,
-        duplicates: dupes.n,
-        orphans: orphans.n,
-        citations: {
-          ...cite,
-          targetAbsent: cite.unresolved,
-          resolutionRatePct: cite.extracted ? Number((100 * cite.resolved / cite.extracted).toFixed(2)) : 0
-        }
-      },
-      progress: {
-        casesCurrent: corpus.cases,
-        casesRemaining: Math.max(0, CASE_TARGET - corpus.cases),
-        pctComplete: Number((100 * corpus.cases / CASE_TARGET).toFixed(2)),
-        stateDcCurrent: corpus.state_dc_cases,
-        stateDcRemaining: Math.max(0, STATE_TOTAL_TARGET - corpus.state_dc_cases),
-        federalCurrent: corpus.federal_cases,
-        federalRemaining: Math.max(0, FEDERAL_TARGET - corpus.federal_cases)
-      },
-      states,
-      topUnderrepresented: states.slice(0, 10),
-      topOverrepresented: [...states].sort((a, b) => b.cases - a.cases).slice(0, 10),
-      federal: {
-        total: corpus.federal_cases,
-        scotus: scotus || { cases: 0 },
-        circuits,
-        districtBuckets: districtish.slice(0, 30),
-        weakest: [...circuits, scotus].filter(Boolean).sort((a, b) => a.cases - b.cases).slice(0, 10)
-      },
-      lanes: {
-        G1: states.filter((s) => s.deficit > 0).slice(0, 15).map((s) => ({
-          jurisdiction: s.jurisdiction,
-          deficit: s.deficit,
-          intermediateLayerGap: s.intermediateLayerGap,
-          priority: s.balancedPriority
-        })),
-        G2: states.filter((s) => s.historicalGap).sort((a, b) => b.balancedPriority - a.balancedPriority).slice(0, 15).map((s) => ({
-          jurisdiction: s.jurisdiction,
-          earliestYear: s.earliestYear,
-          latestYear: s.latestYear,
-          pre2000: s.pre2000,
-          priority: s.balancedPriority
-        })),
-        G3: [...circuits, scotus].filter(Boolean).sort((a, b) => a.cases - b.cases).slice(0, 15)
-      }
+    const buckets = {
+      VALID_PRESENT_RESOLVED: Number(totals.resolved || 0),
+      VALID_TARGET_ABSENT: 0,
+      VALID_PRESENT_UNRESOLVED_DEFECT: 0,
+      AMBIGUOUS: 0,
+      MALFORMED: 0,
+      OUT_OF_SCOPE: 0,
+      UNSUPPORTED_AUTHORITY_TYPE: 0,
+      SOURCE_UNAVAILABLE: 0
     };
-    console.log(JSON.stringify(out));
+    const samples = {
+      VALID_TARGET_ABSENT: [],
+      AMBIGUOUS: [],
+      MALFORMED: [],
+      OUT_OF_SCOPE: [],
+      UNSUPPORTED_AUTHORITY_TYPE: [],
+      SOURCE_UNAVAILABLE: [],
+      VALID_PRESENT_UNRESOLVED_DEFECT: []
+    };
+    for (const e of unresolved) {
+      let bucket;
+      if (defectIds.has(e.id)) {
+        bucket = "VALID_PRESENT_UNRESOLVED_DEFECT";
+      } else {
+        bucket = classifyUnresolved(e.normalized_citation, e.raw_citation);
+      }
+      buckets[bucket] += 1;
+      if (samples[bucket] && samples[bucket].length < 8) {
+        samples[bucket].push(String(e.normalized_citation || e.raw_citation || "").slice(0, 80));
+      }
+    }
+    const validInScope = buckets.VALID_PRESENT_RESOLVED + buckets.VALID_TARGET_ABSENT + buckets.VALID_PRESENT_UNRESOLVED_DEFECT;
+    const resolved = buckets.VALID_PRESENT_RESOLVED;
+    const validRate = validInScope > 0 ? Number((resolved / validInScope * 100).toFixed(2)) : 0;
+    const rawRate = Number(totals.extracted) > 0 ? Number((Number(totals.resolved) / Number(totals.extracted) * 100).toFixed(2)) : 0;
+    console.log(
+      JSON.stringify({
+        ok: true,
+        classification: "QUEUE2_CITATION_VALID_DENOMINATOR",
+        generatedAt: (/* @__PURE__ */ new Date()).toISOString(),
+        courtListenerHttpCalls: 0,
+        mutations: 0,
+        rules: {
+          VALID_PRESENT_RESOLVED: "to_authority_id set",
+          VALID_TARGET_ABSENT: "parseable primary-family citation; no matching authority",
+          VALID_PRESENT_UNRESOLVED_DEFECT: "unresolved edge but matching authority exists by citation",
+          AMBIGUOUS: "incomplete or multi-cite mash",
+          MALFORMED: "empty/garbage/non-citation",
+          OUT_OF_SCOPE: "WL/LEXIS/secondary-commercial/foreign",
+          UNSUPPORTED_AUTHORITY_TYPE: "restatements/ALR/treatises etc.",
+          SOURCE_UNAVAILABLE: "parallel reporters without reliable primary ingest path"
+        },
+        extracted: Number(totals.extracted),
+        resolved,
+        unresolved: Number(totals.unresolved),
+        buckets,
+        validInScopeResolvable: validInScope,
+        validInScopeResolutionPct: validRate,
+        rawResolutionPct: rawRate,
+        samples
+      })
+    );
   } finally {
     await sql.end({ timeout: 5 });
   }

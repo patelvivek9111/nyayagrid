@@ -234,6 +234,12 @@ const CL_COURT_MAP: Record<string, CourtMapEntry> = {
   kanctapp: { courtId: "st-ks-app", courtLevel: "state_appellate", authorityState: "KS", courtName: "Kansas Court of Appeals", federalCircuit: null, jurisdiction: "KS" },
   kyctapp: { courtId: "st-ky-app", courtLevel: "state_appellate", authorityState: "KY", courtName: "Kentucky Court of Appeals", federalCircuit: null, jurisdiction: "KY" },
   utahctapp: { courtId: "st-ut-app", courtLevel: "state_appellate", authorityState: "UT", courtName: "Utah Court of Appeals", federalCircuit: null, jurisdiction: "UT" },
+  // Federal district courts — Session 2 paced /courts/ + opinion sample VERIFIED
+  nysd: { courtId: "us-d-nysd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Southern District of New York", federalCircuit: "2", jurisdiction: "United States" },
+  cacd: { courtId: "us-d-cacd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Central District of California", federalCircuit: "9", jurisdiction: "United States" },
+  ilnd: { courtId: "us-d-ilnd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Northern District of Illinois", federalCircuit: "7", jurisdiction: "United States" },
+  txsd: { courtId: "us-d-txsd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Southern District of Texas", federalCircuit: "5", jurisdiction: "United States" },
+  dcd: { courtId: "us-d-dcd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the District of Columbia", federalCircuit: "dc", jurisdiction: "United States" },
 };
 
 /**
@@ -534,6 +540,67 @@ const COURT_VERIFY_CACHE: Record<string, CourtVerifyCacheEntry> = {
   fladistctapp: { status: "VERIFIED", verifiedAt: "2026-09-21T18:44:00.000Z", evidence: "successful_opinion_ingest" },
   illappct: { status: "VERIFIED", verifiedAt: "2026-09-21T18:53:00.000Z", evidence: "successful_opinion_ingest" },
   massappct: { status: "VERIFIED", verifiedAt: "2026-09-21T19:00:00.000Z", evidence: "successful_opinion_ingest" },
+  // Session 2 paced verify + opinion sample
+  arizctapp: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-29T20:16:00.000Z",
+    fullName: "Court of Appeals of Arizona",
+    evidence: "s2_verify_one /courts/arizctapp/ → 200 + opinions sample",
+  },
+  connappct: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-29T20:16:00.000Z",
+    fullName: "Connecticut Appellate Court",
+    evidence: "successful_opinion_ingest>=4 session1; cl_court=connappct in DB",
+  },
+  wisctapp: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-29T20:16:00.000Z",
+    fullName: "Wisconsin Court of Appeals",
+    evidence: "successful_opinion_ingest>=12",
+  },
+  utahctapp: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-29T20:16:00.000Z",
+    fullName: "Utah Court of Appeals",
+    evidence: "successful_opinion_ingest>=6",
+  },
+  kyctapp: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-29T20:16:00.000Z",
+    fullName: "Kentucky Court of Appeals",
+    evidence: "successful_opinion_ingest>=5",
+  },
+  nysd: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-29T20:16:00.000Z",
+    fullName: "District Court, S.D. New York",
+    evidence: "s2_verify_one /courts/nysd/ → 200 + opinions",
+  },
+  cacd: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-29T20:16:00.000Z",
+    fullName: "District Court, C.D. California",
+    evidence: "s2_verify_one /courts/cacd/ → 200 + opinions",
+  },
+  ilnd: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-29T20:16:00.000Z",
+    fullName: "District Court, N.D. Illinois",
+    evidence: "s2_verify_one /courts/ilnd/ → 200 + opinions",
+  },
+  txsd: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-29T20:16:00.000Z",
+    fullName: "District Court, S.D. Texas",
+    evidence: "s2_verify_one /courts/txsd/ → 200 + opinions",
+  },
+  dcd: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-29T20:16:00.000Z",
+    fullName: "District Court, District of Columbia",
+    evidence: "s2_verify_one /courts/dcd/ → 200 + opinions",
+  },
 };
 
 /**

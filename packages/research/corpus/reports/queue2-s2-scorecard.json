@@ -1,0 +1,158 @@
+{
+  "classification": "MANUAL_QUEUE2_BALANCED_10K_SESSION_2",
+  "generatedAt": "2026-09-29T20:46:00.000Z",
+  "verdict": "PARTIAL",
+  "queue": { "q2": "OPEN", "q9": "CLOSED", "q3": "NOT_OPEN", "transition": "NONE" },
+  "safety": {
+    "localWorker": "STOPPED",
+    "remoteChildAtEnd": null,
+    "ownership": "cleared_after_ca5_hist_408_kill",
+    "locUsReportsMutation": "OFF",
+    "uscMutation": "OFF",
+    "federalRulesMutation": "OFF",
+    "408Events": 1,
+    "429Events": 0
+  },
+  "quotaStart": {
+    "minute": 30,
+    "hour": 203,
+    "day": 596,
+    "sessionBudgetChosen": 150,
+    "note": "single authoritative probe; hour floor ~30, day floor ~50"
+  },
+  "quotaEnd": {
+    "minute": null,
+    "hour": null,
+    "day": null,
+    "estimatedDayRemaining": 462,
+    "note": "no second quota probe (session rule); estimate dayRem≈596−~134 CL (verify+growth)"
+  },
+  "caseProgress": {
+    "target": 10000,
+    "casesStart": 2759,
+    "casesEnd": 2799,
+    "casesAdded": 40,
+    "pctComplete": 27.99,
+    "remaining": 7201,
+    "stateDcStart": 2428,
+    "stateDcEnd": 2451,
+    "federalStart": 331,
+    "federalEnd": 348
+  },
+  "courtMapping": {
+    "CT": { "status": "VERIFIED", "id": "connappct", "evidence": "prior_ingest>=4 + successful s2 batch +10" },
+    "AZ": { "status": "VERIFIED", "id": "arizctapp", "evidence": "paced_/courts/200 + opinions + s2 batch +6" },
+    "NM": { "status": "AMBIGUOUS", "tried": ["nmctapp"], "note": "verify timeouts; not ingested this session" },
+    "IN": { "status": "AMBIGUOUS", "tried": ["indctapp"], "note": "verify timeouts; not ingested this session" },
+    "NE": { "status": "NO_USABLE_CL_COURT", "tried": ["nebrctapp"], "httpStatus": 404 },
+    "connapp": { "status": "NO_USABLE_CL_COURT", "httpStatus": 404 },
+    "districts": {
+      "nysd": "VERIFIED",
+      "cacd": "VERIFIED",
+      "ilnd": "VERIFIED",
+      "txsd": "VERIFIED",
+      "dcd": "VERIFIED"
+    }
+  },
+  "G1": {
+    "states": ["AZ", "CT", "WI", "UT"],
+    "casesAddedApprox": 23,
+    "cl": 53,
+    "intermediateProgress": {
+      "AZ": "0→6",
+      "CT": "4→10",
+      "WI": "12→17",
+      "UT": "6→12"
+    }
+  },
+  "G2": {
+    "jurisdictions": [],
+    "cases": 0,
+    "cl": 0,
+    "failures": ["skipped_after_ca5_hist_408; historical date windows hang on Fly 408"]
+  },
+  "G3": {
+    "federalStart": 331,
+    "federalEnd": 348,
+    "additions": { "ca5": "+2 recent fill", "ca9": "+6 recent fill" },
+    "historicalAdditions": 0,
+    "cl": 20,
+    "historicalBlocker": "ca5 1960-1999 oneshot hit Fly 408 with orphaned owner; killed after 10m zero import; no further hist windows this session"
+  },
+  "districtPilot": {
+    "courtIds": ["nysd", "cacd", "ilnd"],
+    "cases": 9,
+    "cl": 21,
+    "mappingStatus": "VERIFIED",
+    "schemaNote": "court_level=district free-text; prior 0 typed district was filter/map gap not source absence"
+  },
+  "a2": {
+    "executed": false,
+    "reason": "no verified expected >=3.0 res/CL; continue G1/G3",
+    "cl": 0,
+    "resolved": 0
+  },
+  "cfr": {
+    "authoritiesAdded": 10,
+    "resolvedViaReresolve": 10,
+    "cl": 0
+  },
+  "citations": {
+    "extractedStart": 8130,
+    "extractedEnd": 8265,
+    "resolvedStart": 1021,
+    "resolvedEnd": 1035,
+    "targetAbsentStart": 7109,
+    "targetAbsentEnd": 7230,
+    "rawPctStart": 12.56,
+    "rawPctEnd": 12.52
+  },
+  "validDenominator": {
+    "validInScopeResolvable": 8265,
+    "resolved": 1035,
+    "resolutionPct": 12.52,
+    "buckets": {
+      "VALID_PRESENT_RESOLVED": 1035,
+      "VALID_TARGET_ABSENT": 7230,
+      "VALID_PRESENT_UNRESOLVED_DEFECT": 0,
+      "AMBIGUOUS": 0,
+      "MALFORMED": 0,
+      "OUT_OF_SCOPE": 0,
+      "UNSUPPORTED_AUTHORITY_TYPE": 0,
+      "SOURCE_UNAVAILABLE": 0
+    },
+    "note": "Heuristic classifier; unresolved edges in this corpus overwhelmingly look like primary U.S./F./state reporters. Refine with sampled secondary/WL audits next."
+  },
+  "corpusEnd": {
+    "authorities": 4136,
+    "cases": 2799,
+    "clCases": 2754,
+    "statutes": 904,
+    "regulations": 178,
+    "rules": 254,
+    "chunks": 66911,
+    "embeddings": 66911,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0
+  },
+  "requests": {
+    "a2": 0,
+    "g1": 53,
+    "g2": 0,
+    "g3": 20,
+    "district": 21,
+    "verifyApprox": 20,
+    "totalClApprox": 114,
+    "productiveCaseImports": 40,
+    "waste": "ca5-hist 408 orphan (~10m zero import before kill)",
+    "408": 1,
+    "429": 0
+  },
+  "validation": {
+    "queue2Validate": "PASS",
+    "queue2Preflight": "PREFLIGHT_PASS"
+  },
+  "completionCandidate": false,
+  "humanReviewRequired": false
+}

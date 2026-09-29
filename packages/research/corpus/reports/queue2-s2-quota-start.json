@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "status": 200,
+  "ms": 336,
+  "classification": "QUEUE2_SESSION2_QUOTA_PROBE",
+  "membership": {
+    "level": "CL Membership - Tier 2",
+    "is_active": true
+  },
+  "limits": {
+    "minute": {
+      "scope": "user",
+      "period": "minute",
+      "limit": 30,
+      "usage": 0,
+      "remaining": 30,
+      "reset_at": null,
+      "blocked": false
+    },
+    "hour": {
+      "scope": "user",
+      "period": "hour",
+      "limit": 300,
+      "usage": 97,
+      "remaining": 203,
+      "reset_at": "2026-09-29T20:06:11.838591+00:00",
+      "blocked": false
+    },
+    "day": {
+      "scope": "user",
+      "period": "day",
+      "limit": 1200,
+      "usage": 604,
+      "remaining": 596,
+      "reset_at": "2026-09-29T21:58:09.150264+00:00",
+      "blocked": false
+    }
+  },
+  "courtListenerHttpCalls": 1
+}

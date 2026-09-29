@@ -1,0 +1,64 @@
+{
+  "classification": "MANUAL_QUEUE2_BALANCED_10K_SESSION_2_GROWTH",
+  "startedAt": "2026-09-29T20:19:19.004Z",
+  "a2": {
+    "skipped": true,
+    "reason": "no_verified_target_expected_res_per_cl_gte_3_from_prior_refresh"
+  },
+  "batches": [
+    {
+      "lane": "G1",
+      "clCourt": "arizctapp",
+      "tag": "s2-g1-arizctapp",
+      "exit": 0,
+      "status": "paused",
+      "cl": 13,
+      "imported": 6,
+      "mappingStatus": null,
+      "checkpoint": "cl-opinion-11450678"
+    },
+    {
+      "lane": "G1",
+      "clCourt": "connappct",
+      "tag": "s2-g1-connappct",
+      "exit": 0,
+      "status": "paused",
+      "cl": 13,
+      "imported": 10,
+      "mappingStatus": null,
+      "checkpoint": "cl-opinion-11445851"
+    },
+    {
+      "lane": "G3",
+      "clCourt": "ca5",
+      "tag": "s2-g3-ca5-hist",
+      "exit": 1,
+      "status": "LANE_A_CHILD_SURVIVED_PARENT",
+      "cl": 0,
+      "imported": 0,
+      "mappingStatus": null,
+      "checkpoint": null
+    }
+  ],
+  "byLane": {
+    "G1": {
+      "cl": 26,
+      "casesAdded": 16
+    },
+    "G2": {
+      "cl": 0,
+      "casesAdded": 0
+    },
+    "G3": {
+      "cl": 0,
+      "casesAdded": 0
+    },
+    "DISTRICT": {
+      "cl": 0,
+      "casesAdded": 0
+    }
+  },
+  "totalCl": 26,
+  "stopReason": "408_or_orphan_stop",
+  "finishedAt": "2026-09-29T20:31:04.398Z"
+}

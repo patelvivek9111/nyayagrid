@@ -1,0 +1,51 @@
+{
+  "ok": true,
+  "classification": "QUEUE2_CITATION_VALID_DENOMINATOR",
+  "generatedAt": "2026-09-29T20:05:08.997Z",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "rules": {
+    "VALID_PRESENT_RESOLVED": "to_authority_id set",
+    "VALID_TARGET_ABSENT": "parseable primary-family citation; no matching authority",
+    "VALID_PRESENT_UNRESOLVED_DEFECT": "unresolved edge but matching authority exists by citation",
+    "AMBIGUOUS": "incomplete or multi-cite mash",
+    "MALFORMED": "empty/garbage/non-citation",
+    "OUT_OF_SCOPE": "WL/LEXIS/secondary-commercial/foreign",
+    "UNSUPPORTED_AUTHORITY_TYPE": "restatements/ALR/treatises etc.",
+    "SOURCE_UNAVAILABLE": "parallel reporters without reliable primary ingest path"
+  },
+  "extracted": 8130,
+  "resolved": 1021,
+  "unresolved": 7109,
+  "buckets": {
+    "VALID_PRESENT_RESOLVED": 1021,
+    "VALID_TARGET_ABSENT": 7109,
+    "VALID_PRESENT_UNRESOLVED_DEFECT": 0,
+    "AMBIGUOUS": 0,
+    "MALFORMED": 0,
+    "OUT_OF_SCOPE": 0,
+    "UNSUPPORTED_AUTHORITY_TYPE": 0,
+    "SOURCE_UNAVAILABLE": 0
+  },
+  "validInScopeResolvable": 8130,
+  "validInScopeResolutionPct": 12.56,
+  "rawResolutionPct": 12.56,
+  "samples": {
+    "VALID_TARGET_ABSENT": [
+      "419 U.S. 565",
+      "419 U.S. 565",
+      "527 U.S. 706",
+      "253 U.S. 113",
+      "395 U.S. 711",
+      "474 U.S. 214",
+      "Fed. R. Civ. P. 36",
+      "Fed. R. Civ. P. 72"
+    ],
+    "AMBIGUOUS": [],
+    "MALFORMED": [],
+    "OUT_OF_SCOPE": [],
+    "UNSUPPORTED_AUTHORITY_TYPE": [],
+    "SOURCE_UNAVAILABLE": [],
+    "VALID_PRESENT_UNRESOLVED_DEFECT": []
+  }
+}
