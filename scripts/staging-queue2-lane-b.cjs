@@ -21,7 +21,7 @@ const {
 } = require("./queue2-dual-lane-controller.cjs");
 
 const locUrl = (volume, page) =>
-  `https://www.loc.gov/item/usrep${String(volume).padStart(3, "0")}${String(page).padStart(4, "0")}/?fo=json`;
+  `https://www.loc.gov/item/usrep${volume}${String(page).padStart(3, "0")}/?fo=json`;
 
 function sha256(text) {
   return createHash("sha256").update(String(text), "utf8").digest("hex");
@@ -352,7 +352,7 @@ async function main() {
                 authorityType: "case",
                 content: text,
                 sourceProvider: "loc_us_reports",
-                sourceExternalId: `usrep${String(target.volume).padStart(3, "0")}${String(target.page).padStart(4, "0")}`,
+                sourceExternalId: `usrep${target.volume}${String(target.page).padStart(3, "0")}`,
                 citation: target.citation,
                 normalizedCitation: target.citation,
                 jurisdiction: "US",

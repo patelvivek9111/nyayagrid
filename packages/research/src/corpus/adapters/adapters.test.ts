@@ -7,6 +7,7 @@ import {
   createUscourtsRulesAdapter,
   runAdapterBatch,
 } from "./index";
+import { locUsReportsItemId, locUsReportsItemUrl } from "./us-reports";
 import { resolveCurrentnessStatus } from "../currentness";
 import { extractTreatmentSignalsFromText } from "../treatment-signals";
 import { buildCitationEdgesFromText } from "../citation-graph";
@@ -146,6 +147,15 @@ describe("courtlistener missing api key", () => {
 });
 
 describe("us_reports_loc adapter", () => {
+  it("uses deterministic loc.gov IDs (volume + page pad≥3, not VVVPPPP)", () => {
+    expect(locUsReportsItemId(367, 643)).toBe("usrep367643");
+    expect(locUsReportsItemId(300, 1)).toBe("usrep300001");
+    expect(locUsReportsItemId(555, 135)).toBe("usrep555135");
+    expect(locUsReportsItemUrl(367, 643)).toBe("https://www.loc.gov/item/usrep367643/?fo=json");
+    expect(locUsReportsItemUrl(367, 643)).not.toMatch(/courtlistener/i);
+    expect(() => locUsReportsItemId(0, 1)).toThrow(/invalid/i);
+  });
+
   it("quarantines when LOC returns no primary opinion text", async () => {
     const fetchImpl = vi.fn(async () =>
       new Response(JSON.stringify({ item: { title: "United States Reports" } }), {
@@ -159,11 +169,40 @@ describe("us_reports_loc adapter", () => {
       targets: [{ volume: 347, page: 483 }],
     });
     const discovered = await adapter.discover?.();
-    expect(discovered?.items[0]?.sourceExternalId).toBe("usrep3470483");
+    expect(discovered?.items[0]?.sourceExternalId).toBe("usrep347483");
+    expect(discovered?.items[0]?.canonicalUrl).toBe("https://www.loc.gov/item/usrep347483/?fo=json");
     const fetched = await adapter.fetch?.(discovered!.items);
     const parsed = await adapter.parse(fetched!);
     expect(parsed.records).toEqual([]);
     expect(parsed.quarantined[0]?.reason).toMatch(/primary opinion text/i);
+  });
+
+  it("rejects empty and secondary-only payloads without inventing text", async () => {
+    const fetchImpl = vi.fn(async () =>
+      new Response(
+        JSON.stringify({
+          item: {
+            title: "U.S. Reports: Herring v. United States, 555 U.S. 135 (2009).",
+            description: "Catalog abstract only — not primary opinion text.",
+            online_format: ["pdf"],
+          },
+          resources: [{ pdf: "https://tile.loc.gov/storage-services/service/ll/usrep/usrep555/usrep555135/usrep555135.pdf" }],
+        }),
+        { status: 200, headers: { "content-type": "application/json" } },
+      ),
+    );
+    const adapter = createUsReportsLocAdapter({
+      rateLimitMs: 0,
+      fetchImpl: fetchImpl as unknown as typeof fetch,
+      targets: [{ volume: 555, page: 135 }],
+    });
+    const discovered = await adapter.discover?.();
+    const fetched = await adapter.fetch?.(discovered!.items);
+    const parsed = await adapter.parse(fetched!);
+    expect(parsed.records).toEqual([]);
+    expect(parsed.quarantined).toHaveLength(1);
+    expect(String(fetchImpl.mock.calls[0]?.[0])).toMatch(/^https:\/\/www\.loc\.gov\//);
+    expect(String(fetchImpl.mock.calls[0]?.[0])).not.toMatch(/courtlistener/i);
   });
 
   it("imports only when primary text is present and does not invent a case name", async () => {
@@ -189,8 +228,50 @@ describe("us_reports_loc adapter", () => {
     const parsed = await adapter.parse(fetched!);
     expect(parsed.quarantined).toEqual([]);
     expect(parsed.records[0]?.citation).toBe("347 U.S. 483");
+    expect(parsed.records[0]?.normalizedCitation).toBe("347 U.S. 483");
     expect(parsed.records[0]?.sourceProvider).toBe("loc_us_reports");
+    expect(parsed.records[0]?.sourceExternalId).toBe("usrep347483");
     expect(parsed.records[0]?.courtLevel).toBe("scotus");
+    expect(parsed.records[0]?.sourceClass).toBe("PRIMARY_OFFICIAL");
+    expect(parsed.records[0]?.contentHash).toMatch(/^[a-f0-9]{64}$/);
+    expect(parsed.records[0]?.canonicalSourceUrl).toMatch(/^https:\/\/www\.loc\.gov\/item\/usrep347483/);
+    expect(parsed.records[0]?.sourceMetadata).toMatchObject({
+      adapter: "us_reports_loc",
+      locItemId: "usrep347483",
+    });
+  });
+
+  it("is idempotent on sourceExternalId for the same volume/page", async () => {
+    const adapter = createUsReportsLocAdapter({
+      rateLimitMs: 0,
+      fetchImpl: async () =>
+        new Response(JSON.stringify({ item: { title: "x", full_text: "Opinion text. ".repeat(20) } }), {
+          status: 200,
+          headers: { "content-type": "application/json" },
+        }),
+      targets: [
+        { volume: 411, page: 792 },
+        { volume: 411, page: 792 },
+      ],
+    });
+    const discovered = await adapter.discover?.();
+    expect(discovered?.items.map((i) => i.sourceExternalId)).toEqual(["usrep411792", "usrep411792"]);
+    const fetched = await adapter.fetch?.(discovered!.items);
+    const parsed = await adapter.parse(fetched!);
+    expect(parsed.records.map((r) => r.sourceExternalId)).toEqual(["usrep411792", "usrep411792"]);
+  });
+
+  it("quarantines malformed fetch failures without fabricating authority", async () => {
+    const adapter = createUsReportsLocAdapter({
+      rateLimitMs: 0,
+      fetchImpl: async () => new Response("nope", { status: 404, headers: { "content-type": "text/plain" } }),
+      targets: [{ volume: 999, page: 999 }],
+    });
+    const discovered = await adapter.discover?.();
+    const fetched = await adapter.fetch?.(discovered!.items);
+    const parsed = await adapter.parse(fetched!);
+    expect(parsed.records).toEqual([]);
+    expect(parsed.quarantined[0]?.reason).toMatch(/fetch failed|http_404/i);
   });
 });
 

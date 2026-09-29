@@ -1,19 +1,126 @@
 {
-  "generatedAt": "2026-09-24T16:34:00.000Z",
+  "generatedAt": "2026-09-29T01:30:00.000Z",
   "courtListenerHttpCalls": 0,
-  "source": "local citation graph TARGET_ABSENT edges",
-  "note": "estimatedDecisionIdentity is null unless a source returns a title. Do not fabricate case names.",
+  "source": "citation acquisition queue + live LOC probes (zero CL)",
+  "note": "estimatedDecisionIdentity only from LOC catalog titles when present. Do not fabricate case names. Do not ingest without primary opinion text.",
+  "idFormat": "usrep{volume}{page pad≥3} — NOT zero-padded VVV+PPPP",
   "ranked": [
-    { "citation": "466 U.S. 668", "volume": 466, "page": 668, "inbound": 40, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate", "locProbe": "404" },
-    { "citation": "373 U.S. 83", "volume": 373, "page": 83, "inbound": 19, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate", "locProbe": "404" },
-    { "citation": "200 U.S. 321", "volume": 200, "page": 321, "inbound": 15, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate", "locProbe": "404" },
-    { "citation": "443 U.S. 307", "volume": 443, "page": 307, "inbound": 12, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate" },
-    { "citation": "509 U.S. 579", "volume": 509, "page": 579, "inbound": 12, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate" },
-    { "citation": "567 U.S. 460", "volume": 567, "page": 460, "inbound": 12, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate" },
-    { "citation": "597 U.S. 1", "volume": 597, "page": 1, "inbound": 12, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate" },
-    { "citation": "386 U.S. 738", "volume": 386, "page": 738, "inbound": 11, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate" },
-    { "citation": "507 U.S. 725", "volume": 507, "page": 725, "inbound": 11, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate" },
-    { "citation": "543 U.S. 551", "volume": 543, "page": 551, "inbound": 11, "alreadyPresentUnderAlias": false, "estimatedDecisionIdentity": null, "suitablePublicNonClSource": "loc_us_reports_candidate" }
+    {
+      "citation": "367 U.S. 643",
+      "volume": 367,
+      "page": 643,
+      "inbound": 7,
+      "alreadyPresentUnderAlias": false,
+      "estimatedDecisionIdentity": "Mapp v. Ohio",
+      "suitablePublicNonClSource": "loc_us_reports_candidate",
+      "locItemId": "usrep367643",
+      "locHttp": 200,
+      "locPrimaryTextChars": 0,
+      "locFormats": ["pdf"]
+    },
+    {
+      "citation": "555 U.S. 135",
+      "volume": 555,
+      "page": 135,
+      "inbound": 7,
+      "alreadyPresentUnderAlias": false,
+      "estimatedDecisionIdentity": "Herring v. United States",
+      "suitablePublicNonClSource": "loc_us_reports_candidate",
+      "locItemId": "usrep555135",
+      "locHttp": 200,
+      "locPrimaryTextChars": 0,
+      "locFormats": ["pdf"]
+    },
+    {
+      "citation": "483 U.S. 756",
+      "volume": 483,
+      "page": 756,
+      "inbound": 7,
+      "alreadyPresentUnderAlias": false,
+      "estimatedDecisionIdentity": null,
+      "suitablePublicNonClSource": "loc_us_reports_candidate",
+      "locItemId": "usrep483756",
+      "locPrimaryTextChars": 0
+    },
+    {
+      "citation": "411 U.S. 792",
+      "volume": 411,
+      "page": 792,
+      "inbound": 7,
+      "alreadyPresentUnderAlias": false,
+      "estimatedDecisionIdentity": "McDonnell Douglas Corp. v. Green",
+      "suitablePublicNonClSource": "loc_us_reports_candidate",
+      "locItemId": "usrep411792",
+      "locHttp": 200,
+      "locPrimaryTextChars": 0,
+      "locFormats": ["pdf"]
+    },
+    {
+      "citation": "528 U.S. 119",
+      "volume": 528,
+      "page": 119,
+      "inbound": 7,
+      "alreadyPresentUnderAlias": false,
+      "estimatedDecisionIdentity": null,
+      "suitablePublicNonClSource": "loc_us_reports_candidate",
+      "locItemId": "usrep528119",
+      "locPrimaryTextChars": 0
+    },
+    {
+      "citation": "438 U.S. 154",
+      "volume": 438,
+      "page": 154,
+      "inbound": 7,
+      "alreadyPresentUnderAlias": false,
+      "estimatedDecisionIdentity": null,
+      "suitablePublicNonClSource": "loc_us_reports_candidate",
+      "locItemId": "usrep438154",
+      "locPrimaryTextChars": 0
+    },
+    {
+      "citation": "476 U.S. 79",
+      "volume": 476,
+      "page": 79,
+      "inbound": 7,
+      "alreadyPresentUnderAlias": false,
+      "estimatedDecisionIdentity": null,
+      "suitablePublicNonClSource": "loc_us_reports_candidate",
+      "locItemId": "usrep476079",
+      "locPrimaryTextChars": 0
+    },
+    {
+      "citation": "514 U.S. 419",
+      "volume": 514,
+      "page": 419,
+      "inbound": 6,
+      "alreadyPresentUnderAlias": false,
+      "estimatedDecisionIdentity": null,
+      "suitablePublicNonClSource": "loc_us_reports_candidate",
+      "locItemId": "usrep514419",
+      "locPrimaryTextChars": 0
+    },
+    {
+      "citation": "573 U.S. 149",
+      "volume": 573,
+      "page": 149,
+      "inbound": 6,
+      "alreadyPresentUnderAlias": false,
+      "estimatedDecisionIdentity": null,
+      "suitablePublicNonClSource": "loc_us_reports_candidate",
+      "locItemId": "usrep573149",
+      "locPrimaryTextChars": 0
+    },
+    {
+      "citation": "554 U.S. 237",
+      "volume": 554,
+      "page": 237,
+      "inbound": 6,
+      "alreadyPresentUnderAlias": false,
+      "estimatedDecisionIdentity": null,
+      "suitablePublicNonClSource": "loc_us_reports_candidate",
+      "locItemId": "usrep554237",
+      "locPrimaryTextChars": 0
+    }
   ],
-  "limitation": "LOC item URLs constructed as /item/usrepVVVPPPP/ returned 404 for the top three targets. Adapter remains in place for a proven primary-text source. Secondary summaries were not substituted."
+  "limitation": "LOC catalog items resolve with corrected IDs, but machine-readable primary opinion text is not available in JSON (PDF-only). Adapter quarantines empty text. Mutation held."
 }

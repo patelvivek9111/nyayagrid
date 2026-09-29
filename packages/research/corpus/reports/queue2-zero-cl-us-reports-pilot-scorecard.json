@@ -1,0 +1,155 @@
+{
+  "classification": "MANUAL_QUEUE2_ZERO_CL_US_REPORTS_PILOT",
+  "at": "2026-09-29T01:30:00.000Z",
+  "result": "HOLD",
+  "pilotClassification": "POOR",
+  "courtListenerHttpCalls": 0,
+  "mutationEnabled": false,
+  "mutationRestoredOff": true,
+  "safety": {
+    "localQueue2Worker": false,
+    "remoteClIngestionChild": false,
+    "laneAChild": null,
+    "ownershipConflict": false,
+    "queue3": "NOT_OPEN",
+    "queue2": "OPEN",
+    "queue9": "CLOSED",
+    "transition": "NONE"
+  },
+  "nonClPathAudit": {
+    "source": "loc.gov U.S. Reports JSON (source_provider=loc_us_reports)",
+    "approvedNonClUrls": true,
+    "courtListenerDomainsBlocked": true,
+    "emptySecondaryTextRejected": true,
+    "provenanceFieldsPopulatedWhenTextPresent": true,
+    "reporterCitationVerifiedFromVolumePage": true,
+    "opinionIdentityDeterministic": true,
+    "duplicateSourceIdsPreventedByExternalId": true,
+    "idFormatFix": {
+      "before": "usrepVVVPPPP (e.g. usrep3670643) → 404",
+      "after": "usrep + volume + page pad≥3 (e.g. usrep367643) → 200 catalog hit"
+    },
+    "primaryTextAvailableViaJsonApi": false,
+    "locLimitation": "EXTERNAL_LIMITATION: LOC item JSON returns catalog metadata + PDF resource only; full_text/ocr_text absent. Adapter correctly quarantines. No secondary summary substituted."
+  },
+  "pilotSet": [
+    {
+      "citation": "367 U.S. 643",
+      "title": "Mapp v. Ohio (from LOC catalog title)",
+      "unresolvedEdges": 7,
+      "sourceUrl": "https://www.loc.gov/item/usrep367643/?fo=json",
+      "identityConfidence": "high_catalog",
+      "primaryTextChars": 0,
+      "ingestEligible": false
+    },
+    {
+      "citation": "555 U.S. 135",
+      "title": "Herring v. United States (from LOC catalog title)",
+      "unresolvedEdges": 7,
+      "sourceUrl": "https://www.loc.gov/item/usrep555135/?fo=json",
+      "identityConfidence": "high_catalog",
+      "primaryTextChars": 0,
+      "ingestEligible": false
+    },
+    {
+      "citation": "483 U.S. 756",
+      "title": null,
+      "unresolvedEdges": 7,
+      "sourceUrl": "https://www.loc.gov/item/usrep483756/?fo=json",
+      "identityConfidence": "citation_only",
+      "primaryTextChars": 0,
+      "ingestEligible": false
+    },
+    {
+      "citation": "411 U.S. 792",
+      "title": "McDonnell Douglas Corp. v. Green (from LOC catalog title)",
+      "unresolvedEdges": 7,
+      "sourceUrl": "https://www.loc.gov/item/usrep411792/?fo=json",
+      "identityConfidence": "high_catalog",
+      "primaryTextChars": 0,
+      "ingestEligible": false
+    },
+    {
+      "citation": "528 U.S. 119",
+      "title": null,
+      "unresolvedEdges": 7,
+      "sourceUrl": "https://www.loc.gov/item/usrep528119/?fo=json",
+      "identityConfidence": "citation_only",
+      "primaryTextChars": 0,
+      "ingestEligible": false
+    },
+    {
+      "citation": "438 U.S. 154",
+      "title": null,
+      "unresolvedEdges": 7,
+      "sourceUrl": "https://www.loc.gov/item/usrep438154/?fo=json",
+      "identityConfidence": "citation_only",
+      "primaryTextChars": 0,
+      "ingestEligible": false
+    },
+    {
+      "citation": "476 U.S. 79",
+      "title": null,
+      "unresolvedEdges": 7,
+      "sourceUrl": "https://www.loc.gov/item/usrep476079/?fo=json",
+      "identityConfidence": "citation_only",
+      "primaryTextChars": 0,
+      "ingestEligible": false
+    },
+    {
+      "citation": "514 U.S. 419",
+      "title": null,
+      "unresolvedEdges": 6,
+      "sourceUrl": "https://www.loc.gov/item/usrep514419/?fo=json",
+      "identityConfidence": "citation_only",
+      "primaryTextChars": 0,
+      "ingestEligible": false
+    }
+  ],
+  "ingest": {
+    "targetsAttempted": 0,
+    "targetsAcquired": 0,
+    "authoritiesAdded": 0,
+    "failuresSkips": "HOLD before mutation: zero pilot targets had machine-readable primary text on approved non-CL path",
+    "reason": "LOC JSON full_text absent; PDF-only resources are not ingested without a production-safe OCR/text pipeline"
+  },
+  "citations": {
+    "before": {
+      "extracted": 7581,
+      "resolved": 789,
+      "unresolved": 6792,
+      "targetAbsent": 6792,
+      "resolutionRate": 0.1041
+    },
+    "after": {
+      "extracted": 7581,
+      "resolved": 789,
+      "unresolved": 6792,
+      "targetAbsent": 6792,
+      "resolutionRate": 0.1041
+    },
+    "improvement": {
+      "newlyResolved": 0,
+      "targetAbsentReduction": 0,
+      "resolutionRateIncrease": 0,
+      "resolutionsPerAuthority": null,
+      "resolutionsPerZeroClTarget": null
+    }
+  },
+  "integrity": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "provenanceStatus": "unchanged_no_ingest"
+  },
+  "nextRecommendation": "Stay with CL A2 for U.S. Reports TARGET_ABSENT recovery until a production-safe non-CL primary-text path exists (LOC PDF text extraction with citation identity verification), or locate another approved machine-readable primary source. Do not scale US_REPORTS_NON_CL_INTAKE yet.",
+  "validation": {
+    "queue2Validate": "PASS",
+    "queue2Preflight": "PREFLIGHT_PASS",
+    "courtListenerHttpCalls": 0
+  },
+  "git": {
+    "commitPending": true,
+    "includes": ["loc id format fix", "pre-enablement tests", "pilot HOLD scorecard", "updated us-reports manifest"]
+  }
+}

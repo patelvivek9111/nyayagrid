@@ -36,9 +36,17 @@ function sha256(text: string): string {
   return createHash("sha256").update(text, "utf8").digest("hex");
 }
 
-/** loc.gov item slug used by the U.S. Reports collection (volume 3-digit, page 4-digit). */
+/**
+ * loc.gov item slug for the U.S. Reports collection.
+ * Format is `usrep` + unpadded volume + page padded to at least 3 digits
+ * (e.g. 367 U.S. 643 → usrep367643, 300 U.S. 1 → usrep300001).
+ * Zero-padded VVV+PPPP (usrep3670643) 404s on loc.gov.
+ */
 export function locUsReportsItemId(volume: number, page: number): string {
-  return `usrep${String(volume).padStart(3, "0")}${String(page).padStart(4, "0")}`;
+  if (!Number.isInteger(volume) || volume < 1 || !Number.isInteger(page) || page < 1) {
+    throw new Error(`invalid U.S. Reports volume/page: ${volume}/${page}`);
+  }
+  return `usrep${volume}${String(page).padStart(3, "0")}`;
 }
 
 export function locUsReportsItemUrl(volume: number, page: number): string {
@@ -115,7 +123,8 @@ export function createUsReportsLocAdapter(options: UsReportsAdapterOptions = {})
       const results: AdapterFetchResult[] = [];
       for (const item of items) {
         const parsed = parseUsReportsTarget(item.titleHint || "") || (() => {
-          const m = /^usrep(\d{3})(\d{4})$/.exec(item.sourceExternalId);
+          // loc.gov IDs are usrep + volume (1–3 digits) + page (≥3 digits, no VVV+PPPP zero-pad).
+          const m = /^usrep(\d{1,3})(\d{3,4})$/.exec(item.sourceExternalId);
           return m ? { volume: Number(m[1]), page: Number(m[2]) } : null;
         })();
         if (!parsed) {
