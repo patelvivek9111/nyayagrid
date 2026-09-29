@@ -2680,6 +2680,18 @@ var COURT_VERIFY_CACHE = {
     fullName: "Kentucky Court of Appeals",
     evidence: "successful_opinion_ingest>=5"
   },
+  nmctapp: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-29T21:38:00.000Z",
+    fullName: "New Mexico Court of Appeals",
+    evidence: "s3_verify_one /courts/nmctapp/ \u2192 200 + opinions sample"
+  },
+  indctapp: {
+    status: "VERIFIED",
+    verifiedAt: "2026-09-29T21:44:00.000Z",
+    fullName: "Indiana Court of Appeals",
+    evidence: "s3 /courts/indctapp/ \u2192 200 + /search/?type=o&court=indctapp opinions (earliest 1885)"
+  },
   nysd: {
     status: "VERIFIED",
     verifiedAt: "2026-09-29T20:16:00.000Z",

@@ -1,0 +1,194 @@
+{
+  "classification": "MANUAL_QUEUE2_BALANCED_10K_SESSION_3_GROWTH",
+  "startedAt": "2026-09-29T21:45:25.161Z",
+  "batches": [
+    {
+      "lane": "G1",
+      "clCourt": "nmctapp",
+      "tag": "s3-g1-nmctapp",
+      "exit": 0,
+      "status": "paused",
+      "cl": 13,
+      "imported": 6
+    },
+    {
+      "lane": "G1",
+      "clCourt": "indctapp",
+      "tag": "s3-g1-indctapp",
+      "exit": 0,
+      "status": "paused",
+      "cl": 14,
+      "imported": 5
+    },
+    {
+      "lane": "G1",
+      "clCourt": "arizctapp",
+      "tag": "s3-g1-arizctapp",
+      "exit": 0,
+      "status": "paused",
+      "cl": 13,
+      "imported": 12
+    },
+    {
+      "lane": "G1",
+      "clCourt": "connappct",
+      "tag": "s3-g1-connappct",
+      "exit": 0,
+      "status": "paused",
+      "cl": 13,
+      "imported": 16
+    },
+    {
+      "lane": "G1",
+      "clCourt": "wisctapp",
+      "tag": "s3-g1-wisctapp",
+      "exit": 0,
+      "status": "paused",
+      "cl": 13,
+      "imported": 23
+    },
+    {
+      "lane": "G1",
+      "clCourt": "utahctapp",
+      "tag": "s3-g1-utahctapp",
+      "exit": 0,
+      "status": "paused",
+      "cl": 13,
+      "imported": 18
+    },
+    {
+      "lane": "G3",
+      "clCourt": "ca5",
+      "tag": "s3-g3-ca5",
+      "exit": 0,
+      "status": "paused",
+      "cl": 14,
+      "imported": 8
+    },
+    {
+      "lane": "G3",
+      "clCourt": "ca3",
+      "tag": "s3-g3-ca3",
+      "exit": 0,
+      "status": "paused",
+      "cl": 14,
+      "imported": 10
+    },
+    {
+      "lane": "G3",
+      "clCourt": "ca10",
+      "tag": "s3-g3-ca10",
+      "exit": 0,
+      "status": "paused",
+      "cl": 14,
+      "imported": 16
+    },
+    {
+      "lane": "G3",
+      "clCourt": "cadc",
+      "tag": "s3-g3-cadc",
+      "exit": 0,
+      "status": "paused",
+      "cl": 14,
+      "imported": 16
+    },
+    {
+      "lane": "DISTRICT",
+      "clCourt": "txsd",
+      "tag": "s3-dist-txsd",
+      "exit": 0,
+      "status": "paused",
+      "cl": 9,
+      "imported": 4
+    },
+    {
+      "lane": "DISTRICT",
+      "clCourt": "dcd",
+      "tag": "s3-dist-dcd",
+      "exit": 0,
+      "status": "paused",
+      "cl": 11,
+      "imported": 2
+    },
+    {
+      "lane": "DISTRICT",
+      "clCourt": "nysd",
+      "tag": "s3-dist-nysd",
+      "exit": 0,
+      "status": "paused",
+      "cl": 9,
+      "imported": 7
+    },
+    {
+      "lane": "DISTRICT",
+      "clCourt": "cacd",
+      "tag": "s3-dist-cacd",
+      "exit": 0,
+      "status": "paused",
+      "cl": 9,
+      "imported": 7
+    },
+    {
+      "lane": "DISTRICT",
+      "clCourt": "ilnd",
+      "tag": "s3-dist-ilnd",
+      "exit": 0,
+      "status": "paused",
+      "cl": 9,
+      "imported": 7
+    },
+    {
+      "lane": "G3",
+      "clCourt": "ca6",
+      "tag": "s3-g3-ca6",
+      "exit": 0,
+      "status": "paused",
+      "cl": 14,
+      "imported": 11
+    },
+    {
+      "lane": "G3",
+      "clCourt": "ca7",
+      "tag": "s3-g3-ca7",
+      "exit": 0,
+      "status": "paused",
+      "cl": 14,
+      "imported": 18
+    },
+    {
+      "lane": "G3",
+      "clCourt": "ca9",
+      "tag": "s3-g3-ca9",
+      "exit": 0,
+      "status": "paused",
+      "cl": 14,
+      "imported": 12
+    },
+    {
+      "lane": "G3",
+      "clCourt": "ca11",
+      "tag": "s3-g3-ca11",
+      "exit": 0,
+      "status": "completed",
+      "cl": 10,
+      "imported": 25
+    }
+  ],
+  "byLane": {
+    "G1": {
+      "cl": 79,
+      "casesAdded": 80
+    },
+    "G3": {
+      "cl": 108,
+      "casesAdded": 116
+    },
+    "DISTRICT": {
+      "cl": 47,
+      "casesAdded": 27
+    }
+  },
+  "totalCl": 234,
+  "stopReason": "plan_complete",
+  "finishedAt": "2026-09-29T22:03:50.255Z"
+}

@@ -1,0 +1,37 @@
+{
+  "ok": true,
+  "phase": "DISCOVERY",
+  "status": "discovered",
+  "path": "search",
+  "court": "ca5",
+  "gte": "1990-01-01",
+  "lte": "1990-12-31",
+  "count": 2,
+  "ids": [
+    {
+      "id": 8976441,
+      "dateFiled": "1990-01-02",
+      "caseName": "Davis v. Commercial Union Insurance",
+      "clusterId": 8984475,
+      "snippetLen": 429
+    },
+    {
+      "id": 8976442,
+      "dateFiled": "1990-01-03",
+      "caseName": "Sifers v. General Marine Catering Co.",
+      "clusterId": 8984476,
+      "snippetLen": 400
+    }
+  ],
+  "attempts": [
+    {
+      "path": "search",
+      "httpStatus": 200,
+      "ms": 1744,
+      "resultCount": 20
+    }
+  ],
+  "courtListenerHttpCalls": 1,
+  "elapsedMs": 1745,
+  "mutations": 0
+}

@@ -1770,7 +1770,7 @@ var require_large = __commonJS({
 var require_src = __commonJS({
   "node_modules/postgres/cjs/src/index.js"(exports2, module2) {
     var os = require("os");
-    var fs = require("fs");
+    var fs2 = require("fs");
     var {
       mergeUserTypes,
       inferType,
@@ -1871,7 +1871,7 @@ var require_src = __commonJS({
         function file(path, args = [], options2 = {}) {
           arguments.length === 2 && !Array.isArray(args) && (options2 = args, args = []);
           const query = new Query([], args, (query2) => {
-            fs.readFile(path, "utf8", (err, string) => {
+            fs2.readFile(path, "utf8", (err, string) => {
               if (err)
                 return query2.reject(err);
               query2.strings = [string];
@@ -2197,11 +2197,50 @@ var require_src = __commonJS({
   }
 });
 
-// scripts/tmp-queue2-b1-cfr-pilot.cjs
+// scripts/tmp-queue2-s3-hist-ingest.cjs
 var { createHash, randomUUID } = require("node:crypto");
 var postgres = require_src();
-var MAX = Math.min(Math.max(Number.parseInt(process.env.B1_MAX || "10", 10) || 10, 1), 10);
-var MIN_CHARS = 200;
+var fs = require("fs");
+var CL_BASE = "https://www.courtlistener.com/api/rest/v4";
+var SOURCE = "courtlistener";
+var EMBEDDING_MODEL = "text-embedding-3-small";
+var EMBEDDING_DIMS = 384;
+var MAX_OPINION_CHARS = 4e4;
+var MAX_CHUNK_CHARS = 1e3;
+var COURT_MAP = {
+  ca5: {
+    courtId: "us-ca-5",
+    courtLevel: "circuit",
+    authorityState: "US",
+    courtName: "United States Court of Appeals for the Fifth Circuit",
+    federalCircuit: "5",
+    jurisdiction: "United States"
+  },
+  ca3: {
+    courtId: "us-ca-3",
+    courtLevel: "circuit",
+    authorityState: "US",
+    courtName: "United States Court of Appeals for the Third Circuit",
+    federalCircuit: "3",
+    jurisdiction: "United States"
+  },
+  ca9: {
+    courtId: "us-ca-9",
+    courtLevel: "circuit",
+    authorityState: "US",
+    courtName: "United States Court of Appeals for the Ninth Circuit",
+    federalCircuit: "9",
+    jurisdiction: "United States"
+  },
+  scotus: {
+    courtId: "us-scotus",
+    courtLevel: "scotus",
+    authorityState: "US",
+    courtName: "Supreme Court of the United States",
+    federalCircuit: null,
+    jurisdiction: "United States"
+  }
+};
 function sha256(text) {
   return createHash("sha256").update(String(text), "utf8").digest("hex");
 }
@@ -2215,247 +2254,192 @@ function chunkContent(content) {
   const parts = String(content).split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
   const chunks = [];
   for (const p of parts) {
-    if (p.length <= 1e3) chunks.push(p);
+    if (p.length <= MAX_CHUNK_CHARS) chunks.push(p);
     else {
       let rest = p;
-      while (rest.length > 1e3) {
-        let cut = rest.lastIndexOf(" ", 1e3);
-        if (cut < 500) cut = 1e3;
+      while (rest.length > MAX_CHUNK_CHARS) {
+        let cut = rest.lastIndexOf(" ", MAX_CHUNK_CHARS);
+        if (cut < MAX_CHUNK_CHARS / 2) cut = MAX_CHUNK_CHARS;
         chunks.push(rest.slice(0, cut).trim());
         rest = rest.slice(cut).trim();
       }
       if (rest) chunks.push(rest);
     }
   }
-  return chunks.length ? chunks : [String(content).slice(0, 1e3)];
-}
-function parseCfr(raw) {
-  const m = /\b(\d{1,2})\s+C\.?\s?F\.?\s?R\.?\s*§*\s*(\d+(?:\.\d+)*)/i.exec(String(raw || ""));
-  return m ? { title: Number(m[1]), section: m[2], citation: `${m[1]} C.F.R. \xA7 ${m[2]}` } : null;
-}
-async function embedBatch(texts, apiKey) {
-  const res = await fetch("https://api.openai.com/v1/embeddings", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ model: "text-embedding-3-small", input: texts, dimensions: 384 })
-  });
-  if (!res.ok) throw new Error(`embed_http_${res.status}`);
-  const body = await res.json();
-  return (body.data || []).sort((a, b) => a.index - b.index).map((d) => d.embedding);
+  return chunks.length ? chunks : [String(content).slice(0, MAX_CHUNK_CHARS)];
 }
 async function embedAll(texts, apiKey) {
   const out = [];
-  for (let i = 0; i < texts.length; i += 32) out.push(...await embedBatch(texts.slice(i, i + 32), apiKey));
+  for (let i = 0; i < texts.length; i += 32) {
+    const batch = texts.slice(i, i + 32);
+    const res = await fetch("https://api.openai.com/v1/embeddings", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ model: EMBEDDING_MODEL, input: batch, dimensions: EMBEDDING_DIMS }),
+      signal: AbortSignal.timeout(6e4)
+    });
+    if (!res.ok) throw new Error(`embed_http_${res.status}`);
+    const body = await res.json();
+    out.push(...(body.data || []).sort((a, b) => a.index - b.index).map((d) => d.embedding));
+  }
   return out;
 }
-async function importOne(sql, rec, apiKey) {
-  const content = rec.content || "";
-  if (content.length < MIN_CHARS) return { status: "skipped_short", chars: content.length };
-  const hash = sha256(content);
-  const existing = await sql`
-    select id from legal_authorities
-    where source_provider = ${rec.sourceProvider} and source_external_id = ${rec.sourceExternalId}
-    limit 1
-  `;
-  if (existing.length) return { status: "skipped_duplicate", id: existing[0].id };
-  const byCite = await sql`
-    select id from legal_authorities where normalized_citation = ${rec.normalizedCitation} limit 1
-  `;
-  if (byCite.length) return { status: "skipped_alias", aliasOf: byCite[0].id };
-  const id = randomUUID();
-  await sql`
-    insert into legal_authorities (
-      id, authority_type, jurisdiction, court, court_id, authority_state, court_level,
-      title, citation, normalized_citation, source_provider, source_external_id,
-      canonical_source_url, ingestion_status, currentness_status, last_checked_at,
-      decision_date, effective_date, metadata, created_at, updated_at
-    ) values (
-      ${id}, ${"regulation"}::authority_type, ${"US"}, ${null}, ${null}, ${"US"}, ${null},
-      ${rec.title}, ${rec.citation}, ${rec.normalizedCitation},
-      ${rec.sourceProvider}, ${rec.sourceExternalId}, ${rec.canonicalSourceUrl},
-      'ready'::authority_ingestion_status, 'current_as_of_source_date'::authority_currentness_status, now(),
-      ${null}, ${rec.effectiveDate},
-      ${sql.json(rec.sourceMetadata)}, now(), now()
-    )
-  `;
-  const [version] = await sql`
-    insert into legal_authority_versions (
-      id, authority_id, version_number, content, effective_from, effective_to,
-      source_provider, source_metadata, sha256
-    ) values (
-      ${randomUUID()}, ${id}, 1, ${content}, ${rec.effectiveDate}, ${null},
-      ${rec.sourceProvider}, ${sql.json(rec.sourceMetadata)}, ${hash}
-    )
-    returning id
-  `;
-  const chunks = chunkContent(content);
-  const vectors = await embedAll(chunks, apiKey);
-  for (let i = 0; i < chunks.length; i++) {
-    await sql`
-      insert into legal_authority_chunks (
-        id, authority_id, authority_version_id, chunk_index, content,
-        segment_ref, embedding, embedding_model
-      ) values (
-        ${randomUUID()}, ${id}, ${version.id}, ${i}, ${chunks[i]},
-        ${`p${i + 1}`}, ${toPgvector(vectors[i])}::vector, ${"text-embedding-3-small:384"}
-      )
-    `;
-  }
-  return { status: "imported", id, chunks: chunks.length, embedded: vectors.length, chars: content.length };
-}
 async function main() {
-  const databaseUrl = process.env.DATABASE_URL?.trim();
-  const openaiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!databaseUrl || !openaiKey) {
-    console.log(JSON.stringify({ ok: false, reason: "missing_env", courtListenerHttpCalls: 0 }));
+  const key = process.env.COURTLISTENER_API_KEY;
+  const db = process.env.DATABASE_URL;
+  const openai = process.env.OPENAI_API_KEY;
+  const clCourt = (process.argv[2] || process.env.CL_COURT || "ca5").trim().toLowerCase();
+  const mapped = COURT_MAP[clCourt];
+  const ids = String(process.argv[3] || process.env.CL_OPINION_IDS || "").split(",").map((s) => Number(s.trim())).filter((n) => Number.isFinite(n) && n > 0);
+  const maxIngest = Math.min(Math.max(Number(process.argv[4] || process.env.CL_MAX_INGEST || 5), 1), 5);
+  const hardTimeoutMs = Math.min(Math.max(Number(process.env.CL_HARD_TIMEOUT_MS || 12e4), 3e4), 18e4);
+  const started = Date.now();
+  let calls = 0;
+  if (!key || !db || !openai) {
+    console.log(JSON.stringify({ ok: false, phase: "INGEST", reason: "missing_env", courtListenerHttpCalls: 0 }));
     process.exit(2);
   }
-  const sql = postgres(databaseUrl, { max: 1, ssl: "require", idle_timeout: 5, connect_timeout: 30 });
-  try {
-    const unresolved = await sql`
-      select coalesce(normalized_citation, raw_citation) as cite, count(*)::int as edges,
-             count(distinct from_authority_id)::int as citing
-      from legal_authority_citations
-      where to_authority_id is null
-        and coalesce(normalized_citation, raw_citation) ~* 'C\\.?\\s*F\\.?\\s*R'
-      group by 1
-      order by edges desc
-      limit 40
-    `;
-    const existing = new Set(
-      (await sql`select normalized_citation from legal_authorities where normalized_citation is not null`).map(
-        (r) => String(r.normalized_citation)
-      )
-    );
-    let ecfrDate = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
-    try {
-      const titles = await fetch("https://www.ecfr.gov/api/versioner/v1/titles.json", {
-        headers: { Accept: "application/json" },
-        signal: AbortSignal.timeout(2e4)
-      });
-      if (titles.ok) {
-        const j = await titles.json();
-        const counts = /* @__PURE__ */ new Map();
-        for (const t of j?.titles || []) {
-          const d = t?.up_to_date_as_of;
-          if (typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d)) {
-            counts.set(d, (counts.get(d) || 0) + 1);
-          }
-        }
-        let best = null;
-        let bestN = -1;
-        for (const [d, n] of counts) {
-          if (n > bestN || n === bestN && d < best) {
-            best = d;
-            bestN = n;
-          }
-        }
-        if (best) ecfrDate = best;
-        else if (j?.meta?.date && j?.meta?.import_in_progress !== true) ecfrDate = j.meta.date;
-      }
-    } catch {
-    }
-    const candidates = [];
-    for (const row of unresolved) {
-      const p = parseCfr(row.cite);
-      if (!p) continue;
-      if (!/\d+\.\d+/.test(p.section)) continue;
-      if (existing.has(p.citation)) continue;
-      candidates.push({ ...p, edges: row.edges, citing: row.citing });
-    }
-    const results = [];
-    let imported = 0;
-    for (const c of candidates) {
-      if (imported >= MAX) break;
-      const page = `https://www.ecfr.gov/api/renderer/v1/content/enhanced/${ecfrDate}/title-${c.title}?section=${encodeURIComponent(c.section)}`;
-      try {
-        const res = await fetch(page, { headers: { Accept: "text/html" }, signal: AbortSignal.timeout(3e4) });
-        const text = stripHtml(await res.text());
-        const sectionToken = c.section;
-        const identityOk = res.ok && text.length >= MIN_CHARS && text.includes(sectionToken);
-        if (!identityOk) {
-          results.push({
-            citation: c.citation,
-            status: "quarantined",
-            http: res.status,
-            chars: text.length,
-            reason: !res.ok ? `http_${res.status}` : text.length < MIN_CHARS ? "short_text" : "section_token_missing",
-            edges: c.edges
-          });
-          continue;
-        }
-        const rec = {
-          title: c.citation,
-          content: text,
-          sourceProvider: "ecfr",
-          sourceExternalId: `ecfr-t${c.title}-s${c.section}`,
-          citation: c.citation,
-          normalizedCitation: c.citation,
-          canonicalSourceUrl: `https://www.ecfr.gov/current/title-${c.title}/section-${c.section}`,
-          effectiveDate: ecfrDate,
-          sourceMetadata: {
-            adapter: "queue2-b1-cfr-pilot",
-            asOfDate: ecfrDate,
-            retrievedAt: (/* @__PURE__ */ new Date()).toISOString(),
-            expectedEdges: c.edges,
-            queue: "#2",
-            lane: "B1"
-          }
-        };
-        const result = await importOne(sql, rec, openaiKey);
-        results.push({ citation: c.citation, edges: c.edges, citing: c.citing, ...result, url: rec.canonicalSourceUrl });
-        if (result.status === "imported") {
-          imported += 1;
-          existing.add(c.citation);
-        }
-      } catch (e) {
-        results.push({ citation: c.citation, status: "error", error: String(e.message || e).slice(0, 160), edges: c.edges });
-      }
-    }
-    const [corpus] = await sql`
-      select count(*)::int as authorities,
-             count(*) filter (where authority_type='case')::int as cases,
-             count(*) filter (where authority_type='case' and source_provider='courtlistener')::int as cl_cases,
-             count(*) filter (where authority_type='regulation')::int as regulations
-      from legal_authorities
-    `;
-    const [chunks] = await sql`
-      select count(*)::int as chunks,
-             count(*) filter (where embedding is not null)::int as embeddings,
-             count(*) filter (where embedding is null)::int as missing_embeddings
-      from legal_authority_chunks
-    `;
-    const [dupes] = await sql`
-      select count(*)::int as n from (
-        select 1 from legal_authorities where source_external_id is not null
-        group by source_provider, source_external_id having count(*)>1
-      ) d
-    `;
-    const [orphans] = await sql`
-      select count(*)::int as n from legal_authority_chunks c
-      left join legal_authorities a on a.id=c.authority_id where a.id is null
-    `;
+  if (!mapped) {
+    console.log(JSON.stringify({ ok: false, phase: "INGEST", reason: `unmapped:${clCourt}`, courtListenerHttpCalls: 0 }));
+    process.exit(2);
+  }
+  if (!ids.length) {
+    console.log(JSON.stringify({ ok: false, phase: "INGEST", reason: "no_ids", courtListenerHttpCalls: 0 }));
+    process.exit(2);
+  }
+  const timer = setTimeout(() => {
     console.log(
       JSON.stringify({
-        ok: true,
-        classification: "B1_CFR_ZERO_CL_PILOT",
-        generatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-        courtListenerHttpCalls: 0,
-        max: MAX,
-        ecfrDate,
-        imported,
-        results,
-        corpus,
-        chunks,
-        duplicateSourceIds: dupes[0]?.n || 0,
-        orphanCount: orphans[0]?.n || 0
+        ok: false,
+        phase: "INGEST",
+        status: "HIST_QUERY_TIMEOUT",
+        courtListenerHttpCalls: calls,
+        elapsedMs: Date.now() - started
       })
     );
+    process.exit(1);
+  }, hardTimeoutMs);
+  const sql = postgres(db, { max: 1, ssl: "require", idle_timeout: 5, connect_timeout: 30 });
+  const results = [];
+  let imported = 0;
+  try {
+    for (const id of ids.slice(0, maxIngest)) {
+      if (Date.now() - started > hardTimeoutMs - 5e3) break;
+      await new Promise((r) => setTimeout(r, 2200));
+      const res = await fetch(`${CL_BASE}/opinions/${id}/`, {
+        headers: { Authorization: `Token ${key}`, Accept: "application/json" },
+        signal: AbortSignal.timeout(3e4)
+      });
+      calls += 1;
+      if (res.status === 429) {
+        results.push({ id, status: "rate_limited" });
+        break;
+      }
+      if (!res.ok) {
+        results.push({ id, status: `http_${res.status}` });
+        continue;
+      }
+      const op = await res.json();
+      let cluster = null;
+      const clusterId = op.cluster ? String(op.cluster).match(/\/clusters\/(\d+)/)?.[1] || op.cluster_id : op.cluster_id;
+      if (clusterId) {
+        await new Promise((r) => setTimeout(r, 2200));
+        const cRes = await fetch(`${CL_BASE}/clusters/${clusterId}/`, {
+          headers: { Authorization: `Token ${key}`, Accept: "application/json" },
+          signal: AbortSignal.timeout(3e4)
+        });
+        calls += 1;
+        if (cRes.ok) cluster = await cRes.json();
+      }
+      const html = op.html_with_citations || op.html_columbia || op.html || op.plain_text || "";
+      const content = stripHtml(html).slice(0, MAX_OPINION_CHARS);
+      if (content.length < 200) {
+        results.push({ id, status: "skipped_short" });
+        continue;
+      }
+      const sourceExternalId = `cl-opinion-${id}`;
+      const existing = await sql`
+        select id from legal_authorities
+        where source_provider=${SOURCE} and source_external_id=${sourceExternalId} limit 1
+      `;
+      if (existing.length) {
+        results.push({ id, status: "duplicate" });
+        continue;
+      }
+      const title = String(cluster?.case_name || op.case_name || `Opinion ${id}`).slice(0, 500);
+      const citation = Array.isArray(cluster?.citation) ? cluster.citation[0] : cluster?.citation || null;
+      const decisionDate = cluster?.date_filed || op.date_filed || null;
+      const authorityId = randomUUID();
+      const versionId = randomUUID();
+      const hash = sha256(content);
+      await sql`
+        insert into legal_authorities (
+          id, authority_type, jurisdiction, court, court_id, authority_state,
+          federal_circuit, court_level, title, citation, normalized_citation,
+          docket_number, decision_date, source_provider, source_external_id,
+          canonical_source_url, ingestion_status, hierarchy_path, metadata
+        ) values (
+          ${authorityId}, ${"case"}::authority_type, ${mapped.jurisdiction}, ${mapped.courtName},
+          ${mapped.courtId}, ${mapped.authorityState}, ${mapped.federalCircuit}, ${mapped.courtLevel},
+          ${title}, ${citation}, ${citation}, ${cluster?.docket_number || null}, ${decisionDate},
+          ${SOURCE}, ${sourceExternalId},
+          ${`https://www.courtlistener.com/opinion/${id}/`},
+          'processing'::authority_ingestion_status, ${sql.json([])},
+          ${sql.json({ clCourt, adapter: "s3-hist-ingest", clusterId: clusterId || null })}
+        )
+      `;
+      await sql`
+        insert into legal_authority_versions (
+          id, authority_id, version_number, content, effective_from, effective_to,
+          source_provider, source_metadata, sha256
+        ) values (
+          ${versionId}, ${authorityId}, 1, ${content}, ${decisionDate}, ${null},
+          ${SOURCE}, ${sql.json({ retrievedAt: (/* @__PURE__ */ new Date()).toISOString() })}, ${hash}
+        )
+      `;
+      const chunks = chunkContent(content);
+      const vectors = await embedAll(chunks, openai);
+      for (let i = 0; i < chunks.length; i++) {
+        await sql`
+          insert into legal_authority_chunks (
+            id, authority_id, authority_version_id, chunk_index, content,
+            segment_ref, embedding, embedding_model
+          ) values (
+            ${randomUUID()}, ${authorityId}, ${versionId}, ${i}, ${chunks[i]},
+            ${`p${i + 1}`}, ${toPgvector(vectors[i])}::vector, ${`${EMBEDDING_MODEL}:${EMBEDDING_DIMS}`}
+          )
+        `;
+      }
+      await sql`
+        update legal_authorities set ingestion_status='ready'::authority_ingestion_status, updated_at=now()
+        where id=${authorityId}
+      `;
+      imported += 1;
+      results.push({ id, status: "imported", decisionDate, title: title.slice(0, 80) });
+    }
+    clearTimeout(timer);
+    const payload = {
+      ok: true,
+      phase: "INGEST",
+      status: "done",
+      clCourt,
+      imported,
+      results,
+      courtListenerHttpCalls: calls,
+      elapsedMs: Date.now() - started,
+      mutations: imported
+    };
+    try {
+      fs.writeFileSync("/tmp/queue2-s3-hist-ingest.json", JSON.stringify(payload, null, 2));
+    } catch (_) {
+    }
+    console.log(JSON.stringify(payload));
   } finally {
+    clearTimeout(timer);
     await sql.end({ timeout: 5 });
   }
 }
 main().catch((e) => {
-  console.log(JSON.stringify({ ok: false, err: String(e.message || e).slice(0, 400), courtListenerHttpCalls: 0 }));
+  console.log(JSON.stringify({ ok: false, phase: "INGEST", err: String(e.message || e).slice(0, 300), courtListenerHttpCalls: 0 }));
   process.exit(1);
 });

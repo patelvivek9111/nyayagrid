@@ -1,0 +1,21 @@
+{
+  "ok": true,
+  "state": "IN",
+  "role": "intermediate",
+  "finalStatus": "VERIFIED",
+  "verifiedId": "indctapp",
+  "fullName": "Indiana Court of Appeals",
+  "jurisdiction": "SA",
+  "level": "state_appellate",
+  "opinionsExist": true,
+  "earliestOpinion": "1885-06-14",
+  "latestOpinionSample": "2026-09-29",
+  "evidence": {
+    "courtsEndpoint": { "httpStatus": 200, "inUse": true },
+    "searchOpinions": { "httpStatus": 200, "resultCount": 20 },
+    "opinionsListNote": "direct /opinions/?cluster__docket__court=indctapp timed out; search path works"
+  },
+  "courtListenerHttpCalls": 10,
+  "mutations": 0,
+  "classification": "MANUAL_QUEUE2_S3_IN_COURT_VERIFY"
+}

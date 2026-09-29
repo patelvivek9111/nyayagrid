@@ -65,14 +65,66 @@ function flyPs() {
   );
 }
 
-const deadline = Date.now() + 8 * 60 * 1000;
+function killRemoteBatch() {
+  // Hard-kill stuck owner/child — Session 3: never leave owner alive after 408.
+  const killJs = `
+const {execSync}=require('child_process');
+const kills=[];
+try{
+  const out=execSync('ps -o pid,args',{encoding:'utf8'});
+  for(const line of out.split('\\n')){
+    if(/cl-batch-owner|staging-cl-batch-job-bundled/.test(line)){
+      const pid=Number(String(line).trim().split(/\\s+/)[0]);
+      if(pid>1){ try{process.kill(pid,'SIGTERM'); kills.push(pid);}catch(e){kills.push('fail:'+pid);} }
+    }
+  }
+}catch(e){}
+console.log(JSON.stringify({ok:true,kills,status:'HIST_QUERY_TIMEOUT_OR_408_CLEANUP'}));
+`;
+  const b64 = Buffer.from(killJs, "utf8").toString("base64");
+  spawnSync(
+    "flyctl",
+    [
+      "machine",
+      "exec",
+      "811d3e3f522648",
+      "-a",
+      "nyayagrid-staging",
+      "--timeout",
+      "40",
+      `node -e "eval(Buffer.from('${b64}','base64').toString('utf8'))"`,
+    ],
+    { encoding: "utf8", maxBuffer: 2_000_000 },
+  );
+}
+
+// Short wait only — then kill. Do not sit for 8 minutes.
+const maxWaitMs = Number(process.env.CL_ORPHAN_WAIT_MS || 90000);
+const deadline = Date.now() + maxWaitMs;
 let still = true;
 while (Date.now() < deadline) {
   const ps = flyPs();
   const body = `${ps.stdout || ""}\n${ps.stderr || ""}`;
-  still = /staging-cl-batch-job-bundled/.test(body);
+  still = /staging-cl-batch-job-bundled|cl-batch-owner/.test(body);
   if (!still) break;
-  spawnSync(process.execPath, ["-e", "Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,15000)"]);
+  spawnSync(process.execPath, ["-e", "Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,10000)"]);
+}
+if (still) {
+  killRemoteBatch();
+  spawnSync(process.execPath, ["-e", "Atomics.wait(new Int32Array(new SharedArrayBuffer(4)),0,0,3000)"]);
+  still = /staging-cl-batch-job-bundled|cl-batch-owner/.test(`${flyPs().stdout || ""}\n${flyPs().stderr || ""}`);
+  console.log(
+    JSON.stringify({
+      ok: false,
+      reason: "HIST_QUERY_TIMEOUT",
+      phase: "FETCH_OR_INGEST",
+      killedOrphan: true,
+      stillAlive: still,
+      courtListenerHttpCalls: 0,
+    }),
+  );
+  fs.appendFileSync(outPath, `\nHIST_QUERY_TIMEOUT killed orphan stillAlive=${still}\n`);
+  process.exit(1);
 }
 const result = spawnSync(
   "flyctl",
@@ -81,4 +133,4 @@ const result = spawnSync(
 );
 process.stdout.write(`\n${result.stdout || ""}\n`);
 fs.appendFileSync(outPath, `\n${result.stdout || ""}\n${result.stderr || ""}\n`);
-process.exit(still ? 1 : 0);
+process.exit(0);

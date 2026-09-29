@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "phase": "INGEST",
+  "status": "done",
+  "clCourt": "ca5",
+  "imported": 4,
+  "results": [
+    {"id": 6863, "status": "imported", "decisionDate": "1995-01-03", "title": "First Gibraltar Bnk v. Morales"},
+    {"id": 6860, "status": "imported", "decisionDate": "1995-01-03", "title": "Exxon Corp. v. Crosby-Mississippi Resources, Ltd."},
+    {"id": 6870, "status": "imported", "decisionDate": "1995-01-04", "title": "Trinity Industries, Inc. v. Myers & Associates, Ltd."},
+    {"id": 8910507, "status": "imported", "decisionDate": "1980-01-02", "title": "International Society for Krishna Consciousness, Inc. v. Collins"}
+  ],
+  "courtListenerHttpCalls": 8,
+  "elapsedMs": 23083,
+  "mutations": 4
+}

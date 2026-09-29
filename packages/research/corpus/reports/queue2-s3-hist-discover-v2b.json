@@ -1,0 +1,44 @@
+{
+  "ok": true,
+  "phase": "DISCOVERY",
+  "status": "discovered",
+  "path": "search",
+  "court": "ca5",
+  "gte": "1995-01-01",
+  "lte": "1999-12-31",
+  "count": 3,
+  "ids": [
+    {
+      "id": 6863,
+      "dateFiled": "1995-01-03",
+      "caseName": "First Gibraltar Bnk v. Morales",
+      "clusterId": 6863,
+      "snippetLen": 500
+    },
+    {
+      "id": 6860,
+      "dateFiled": "1995-01-03",
+      "caseName": "Exxon Corp. v. Crosby-Mississippi Resources, Ltd.",
+      "clusterId": 6860,
+      "snippetLen": 500
+    },
+    {
+      "id": 6870,
+      "dateFiled": "1995-01-04",
+      "caseName": "Trinity Industries, Inc. v. Myers & Associates, Ltd.",
+      "clusterId": 6870,
+      "snippetLen": 500
+    }
+  ],
+  "attempts": [
+    {
+      "path": "search",
+      "httpStatus": 200,
+      "ms": 1428,
+      "resultCount": 20
+    }
+  ],
+  "courtListenerHttpCalls": 1,
+  "elapsedMs": 1429,
+  "mutations": 0
+}

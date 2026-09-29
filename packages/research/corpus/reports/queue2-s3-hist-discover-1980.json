@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "phase": "DISCOVERY",
+  "status": "discovered",
+  "path": "search",
+  "court": "ca5",
+  "gte": "1980-01-01",
+  "lte": "1989-12-31",
+  "count": 1,
+  "ids": [
+    {
+      "id": 8910507,
+      "dateFiled": "1980-01-02",
+      "caseName": "International Society for Krishna Consciousness, Inc. v. Collins",
+      "clusterId": 8921648,
+      "snippetLen": 420
+    }
+  ],
+  "attempts": [
+    {
+      "path": "search",
+      "httpStatus": 200,
+      "ms": 1317,
+      "resultCount": 20
+    }
+  ],
+  "courtListenerHttpCalls": 1,
+  "elapsedMs": 1318,
+  "mutations": 0
+}

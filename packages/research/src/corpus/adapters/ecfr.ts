@@ -39,8 +39,34 @@ export async function resolveEcfrAsOfDate(): Promise<string> {
       headers: { Accept: "application/json", "Accept-Encoding": "gzip, deflate" },
     });
     if (res.ok) {
-      const body = (await res.json()) as { meta?: { date?: string } };
-      if (body.meta?.date && /^\d{4}-\d{2}-\d{2}$/.test(body.meta.date)) {
+      const body = (await res.json()) as {
+        meta?: { date?: string; import_in_progress?: boolean };
+        titles?: Array<{ up_to_date_as_of?: string }>;
+      };
+      const counts = new Map<string, number>();
+      for (const t of body.titles || []) {
+        const d = t.up_to_date_as_of;
+        if (typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d)) {
+          counts.set(d, (counts.get(d) || 0) + 1);
+        }
+      }
+      let best: string | null = null;
+      let bestN = -1;
+      for (const [d, n] of counts) {
+        if (n > bestN || (n === bestN && (!best || d < best))) {
+          best = d;
+          bestN = n;
+        }
+      }
+      if (best) {
+        cachedEcfrAsOfDate = best;
+        return cachedEcfrAsOfDate;
+      }
+      if (
+        body.meta?.date &&
+        /^\d{4}-\d{2}-\d{2}$/.test(body.meta.date) &&
+        body.meta.import_in_progress !== true
+      ) {
         cachedEcfrAsOfDate = body.meta.date;
         return cachedEcfrAsOfDate;
       }

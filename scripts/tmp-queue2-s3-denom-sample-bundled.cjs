@@ -1211,7 +1211,7 @@ var require_connection = __commonJS({
         serverSignature = (await hmac(await hmac(saltedPassword, "Server Key"), auth)).toString("base64");
         const payload = "c=biws,r=" + res.r + ",p=" + xor(
           clientKey,
-          Buffer.from(await hmac(await sha2562(clientKey), auth))
+          Buffer.from(await hmac(await sha256(clientKey), auth))
         ).toString("base64");
         write(
           b().p().str(payload).end()
@@ -1446,7 +1446,7 @@ var require_connection = __commonJS({
     function hmac(key, x) {
       return crypto.createHmac("sha256", key).update(x).digest();
     }
-    function sha2562(x) {
+    function sha256(x) {
       return crypto.createHash("sha256").update(x).digest();
     }
     function xor(a, b2) {
@@ -1570,13 +1570,13 @@ var require_subscribe = __commonJS({
           }
         }
         function handle(a, b) {
-          const path = b.relation.schema + "." + b.relation.table;
+          const path2 = b.relation.schema + "." + b.relation.table;
           call("*", a, b);
-          call("*:" + path, a, b);
-          b.relation.keys.length && call("*:" + path + "=" + b.relation.keys.map((x2) => a[x2.name]), a, b);
+          call("*:" + path2, a, b);
+          b.relation.keys.length && call("*:" + path2 + "=" + b.relation.keys.map((x2) => a[x2.name]), a, b);
           call(b.command, a, b);
-          call(b.command + ":" + path, a, b);
-          b.relation.keys.length && call(b.command + ":" + path + "=" + b.relation.keys.map((x2) => a[x2.name]), a, b);
+          call(b.command + ":" + path2, a, b);
+          b.relation.keys.length && call(b.command + ":" + path2 + "=" + b.relation.keys.map((x2) => a[x2.name]), a, b);
         }
         function pong() {
           const x2 = Buffer.alloc(34);
@@ -1689,8 +1689,8 @@ var require_subscribe = __commonJS({
       const xs = x.match(/^(\*|insert|update|delete)?:?([^.]+?\.?[^=]+)?=?(.+)?/i) || [];
       if (!xs)
         throw new Error("Malformed subscribe pattern: " + x);
-      const [, command, path, key] = xs;
-      return (command || "*") + (path ? ":" + (path.indexOf(".") === -1 ? "public." + path : path) : "") + (key ? "=" + key : "");
+      const [, command, path2, key] = xs;
+      return (command || "*") + (path2 ? ":" + (path2.indexOf(".") === -1 ? "public." + path2 : path2) : "") + (key ? "=" + key : "");
     }
   }
 });
@@ -1770,7 +1770,7 @@ var require_large = __commonJS({
 var require_src = __commonJS({
   "node_modules/postgres/cjs/src/index.js"(exports2, module2) {
     var os = require("os");
-    var fs = require("fs");
+    var fs2 = require("fs");
     var {
       mergeUserTypes,
       inferType,
@@ -1868,10 +1868,10 @@ var require_src = __commonJS({
           });
           return query;
         }
-        function file(path, args = [], options2 = {}) {
+        function file(path2, args = [], options2 = {}) {
           arguments.length === 2 && !Array.isArray(args) && (options2 = args, args = []);
           const query = new Query([], args, (query2) => {
-            fs.readFile(path, "utf8", (err, string) => {
+            fs2.readFile(path2, "utf8", (err, string) => {
               if (err)
                 return query2.reject(err);
               query2.strings = [string];
@@ -2197,265 +2197,158 @@ var require_src = __commonJS({
   }
 });
 
-// scripts/tmp-queue2-b1-cfr-pilot.cjs
-var { createHash, randomUUID } = require("node:crypto");
+// scripts/tmp-queue2-s3-denom-sample.cjs
 var postgres = require_src();
-var MAX = Math.min(Math.max(Number.parseInt(process.env.B1_MAX || "10", 10) || 10, 1), 10);
-var MIN_CHARS = 200;
-function sha256(text) {
-  return createHash("sha256").update(String(text), "utf8").digest("hex");
+var fs = require("fs");
+var path = require("path");
+var SAMPLE_TARGET = 100;
+var PER_STRATUM = 12;
+var STRATA = [
+  { key: "U.S.", re: /\b\d+\s+U\.?\s*S\.?\s+\d+/i },
+  { key: "F.3d", re: /\b\d+\s+F\.\s*3d\s+\d+/i },
+  { key: "F.2d", re: /\b\d+\s+F\.\s*2d\s+\d+/i },
+  { key: "F.4th", re: /\b\d+\s+F\.\s*4th\s+\d+/i },
+  { key: "F.Supp", re: /\b\d+\s+F\.\s*Supp/i },
+  { key: "USC", re: /\b\d+\s+U\.?\s*S\.?\s*C\.?/i },
+  { key: "CFR", re: /\b\d+\s+C\.?\s*F\.?\s*R\.?/i },
+  { key: "FederalRules", re: /\bFed\.\s*R\./i },
+  { key: "unusual", re: null }
+];
+function classify(norm, raw, isDefect) {
+  if (isDefect) return "RESOLVER_DEFECT";
+  const n = String(norm || "").trim();
+  const r = String(raw || "").trim();
+  if (!n || n.length < 3) return "MALFORMED";
+  if (/^[\d\s.,;:]+$/.test(n)) return "MALFORMED";
+  if (/\?\?\?|FIXME|TODO|lorem/i.test(n)) return "MALFORMED";
+  if (n.length > 180) return "MALFORMED";
+  if (/\b(WL|LEXIS|Westlaw|Google Scholar)\b/i.test(n)) return "OUT_OF_SCOPE";
+  if (/\b(Restatement|Am\.\s*Jur|C\.J\.S\.|ALR|Law Review|L\.\s*Rev\.)\b/i.test(n)) return "UNSUPPORTED_TYPE";
+  if (/\b(Treatise|Hornbook|Black'?s Law)\b/i.test(n)) return "UNSUPPORTED_TYPE";
+  if (/\b(U\.N\.|I\.C\.J\.|E\.C\.H\.R\.)\b/i.test(n)) return "OUT_OF_SCOPE";
+  if (/\band\b.+\bv\./i.test(n) && n.split(/\d+/).length > 6) return "AMBIGUOUS";
+  if (/^\d+\s+[A-Za-z.\s]+$/.test(n) && !/\d+$/.test(n) && !/section/i.test(n)) return "AMBIGUOUS";
+  if (/\bS\.\s*Ct\.\b/i.test(n) && !/\bU\.?\s*S\.?\s+\d+/i.test(n)) return "SOURCE_UNAVAILABLE";
+  if (/\bL\.\s*Ed\.?\s*(2d)?\b/i.test(n) && !/\bU\.?\s*S\.?\s+\d+/i.test(n)) return "SOURCE_UNAVAILABLE";
+  if (/\b\d+\s+U\.?\s*S\.?\s+\d+/i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\b\d+\s+F\.\s*(2d|3d|4th)\s+\d+/i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\b\d+\s+F\.\s*Supp/i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\b\d+\s+U\.?\s*S\.?\s*C\.?/i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\b\d+\s+C\.?\s*F\.?\s*R\.?/i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\bFed\.\s*R\./i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\b\d+\s+[A-Z][a-z]+\.?\s*(2d|3d)?\s+\d+/i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\d/.test(n) && /[A-Za-z]/.test(n) && n.length >= 6) return "VALID_TARGET_ABSENT";
+  return "AMBIGUOUS";
 }
-function toPgvector(vec) {
-  return `[${vec.join(",")}]`;
-}
-function stripHtml(html) {
-  return String(html || "").replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<style[\s\S]*?<\/style>/gi, " ").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-}
-function chunkContent(content) {
-  const parts = String(content).split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
-  const chunks = [];
-  for (const p of parts) {
-    if (p.length <= 1e3) chunks.push(p);
-    else {
-      let rest = p;
-      while (rest.length > 1e3) {
-        let cut = rest.lastIndexOf(" ", 1e3);
-        if (cut < 500) cut = 1e3;
-        chunks.push(rest.slice(0, cut).trim());
-        rest = rest.slice(cut).trim();
-      }
-      if (rest) chunks.push(rest);
-    }
+function stratumOf(norm) {
+  const n = String(norm || "");
+  for (const s of STRATA) {
+    if (s.key === "unusual") continue;
+    if (s.re.test(n)) return s.key;
   }
-  return chunks.length ? chunks : [String(content).slice(0, 1e3)];
-}
-function parseCfr(raw) {
-  const m = /\b(\d{1,2})\s+C\.?\s?F\.?\s?R\.?\s*§*\s*(\d+(?:\.\d+)*)/i.exec(String(raw || ""));
-  return m ? { title: Number(m[1]), section: m[2], citation: `${m[1]} C.F.R. \xA7 ${m[2]}` } : null;
-}
-async function embedBatch(texts, apiKey) {
-  const res = await fetch("https://api.openai.com/v1/embeddings", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ model: "text-embedding-3-small", input: texts, dimensions: 384 })
-  });
-  if (!res.ok) throw new Error(`embed_http_${res.status}`);
-  const body = await res.json();
-  return (body.data || []).sort((a, b) => a.index - b.index).map((d) => d.embedding);
-}
-async function embedAll(texts, apiKey) {
-  const out = [];
-  for (let i = 0; i < texts.length; i += 32) out.push(...await embedBatch(texts.slice(i, i + 32), apiKey));
-  return out;
-}
-async function importOne(sql, rec, apiKey) {
-  const content = rec.content || "";
-  if (content.length < MIN_CHARS) return { status: "skipped_short", chars: content.length };
-  const hash = sha256(content);
-  const existing = await sql`
-    select id from legal_authorities
-    where source_provider = ${rec.sourceProvider} and source_external_id = ${rec.sourceExternalId}
-    limit 1
-  `;
-  if (existing.length) return { status: "skipped_duplicate", id: existing[0].id };
-  const byCite = await sql`
-    select id from legal_authorities where normalized_citation = ${rec.normalizedCitation} limit 1
-  `;
-  if (byCite.length) return { status: "skipped_alias", aliasOf: byCite[0].id };
-  const id = randomUUID();
-  await sql`
-    insert into legal_authorities (
-      id, authority_type, jurisdiction, court, court_id, authority_state, court_level,
-      title, citation, normalized_citation, source_provider, source_external_id,
-      canonical_source_url, ingestion_status, currentness_status, last_checked_at,
-      decision_date, effective_date, metadata, created_at, updated_at
-    ) values (
-      ${id}, ${"regulation"}::authority_type, ${"US"}, ${null}, ${null}, ${"US"}, ${null},
-      ${rec.title}, ${rec.citation}, ${rec.normalizedCitation},
-      ${rec.sourceProvider}, ${rec.sourceExternalId}, ${rec.canonicalSourceUrl},
-      'ready'::authority_ingestion_status, 'current_as_of_source_date'::authority_currentness_status, now(),
-      ${null}, ${rec.effectiveDate},
-      ${sql.json(rec.sourceMetadata)}, now(), now()
-    )
-  `;
-  const [version] = await sql`
-    insert into legal_authority_versions (
-      id, authority_id, version_number, content, effective_from, effective_to,
-      source_provider, source_metadata, sha256
-    ) values (
-      ${randomUUID()}, ${id}, 1, ${content}, ${rec.effectiveDate}, ${null},
-      ${rec.sourceProvider}, ${sql.json(rec.sourceMetadata)}, ${hash}
-    )
-    returning id
-  `;
-  const chunks = chunkContent(content);
-  const vectors = await embedAll(chunks, apiKey);
-  for (let i = 0; i < chunks.length; i++) {
-    await sql`
-      insert into legal_authority_chunks (
-        id, authority_id, authority_version_id, chunk_index, content,
-        segment_ref, embedding, embedding_model
-      ) values (
-        ${randomUUID()}, ${id}, ${version.id}, ${i}, ${chunks[i]},
-        ${`p${i + 1}`}, ${toPgvector(vectors[i])}::vector, ${"text-embedding-3-small:384"}
-      )
-    `;
-  }
-  return { status: "imported", id, chunks: chunks.length, embedded: vectors.length, chars: content.length };
+  return "unusual";
 }
 async function main() {
-  const databaseUrl = process.env.DATABASE_URL?.trim();
-  const openaiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!databaseUrl || !openaiKey) {
-    console.log(JSON.stringify({ ok: false, reason: "missing_env", courtListenerHttpCalls: 0 }));
+  const url = process.env.DATABASE_URL;
+  if (!url) {
+    console.log(JSON.stringify({ ok: false, reason: "no_db" }));
     process.exit(2);
   }
-  const sql = postgres(databaseUrl, { max: 1, ssl: "require", idle_timeout: 5, connect_timeout: 30 });
+  const sql = postgres(url, { max: 1, ssl: "require", idle_timeout: 5, connect_timeout: 30 });
   try {
+    const defects = await sql`
+      select e.id
+      from legal_authority_citations e
+      join legal_authorities a
+        on e.to_authority_id is null
+       and e.normalized_citation is not null
+       and length(e.normalized_citation) > 4
+       and (a.normalized_citation = e.normalized_citation or a.citation = e.normalized_citation)
+      limit 50000
+    `;
+    const defectIds = new Set(defects.map((d) => d.id));
     const unresolved = await sql`
-      select coalesce(normalized_citation, raw_citation) as cite, count(*)::int as edges,
-             count(distinct from_authority_id)::int as citing
+      select id, normalized_citation, raw_citation
       from legal_authority_citations
       where to_authority_id is null
-        and coalesce(normalized_citation, raw_citation) ~* 'C\\.?\\s*F\\.?\\s*R'
-      group by 1
-      order by edges desc
-      limit 40
+      order by id
     `;
-    const existing = new Set(
-      (await sql`select normalized_citation from legal_authorities where normalized_citation is not null`).map(
-        (r) => String(r.normalized_citation)
-      )
-    );
-    let ecfrDate = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
-    try {
-      const titles = await fetch("https://www.ecfr.gov/api/versioner/v1/titles.json", {
-        headers: { Accept: "application/json" },
-        signal: AbortSignal.timeout(2e4)
-      });
-      if (titles.ok) {
-        const j = await titles.json();
-        const counts = /* @__PURE__ */ new Map();
-        for (const t of j?.titles || []) {
-          const d = t?.up_to_date_as_of;
-          if (typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d)) {
-            counts.set(d, (counts.get(d) || 0) + 1);
-          }
-        }
-        let best = null;
-        let bestN = -1;
-        for (const [d, n] of counts) {
-          if (n > bestN || n === bestN && d < best) {
-            best = d;
-            bestN = n;
-          }
-        }
-        if (best) ecfrDate = best;
-        else if (j?.meta?.date && j?.meta?.import_in_progress !== true) ecfrDate = j.meta.date;
+    const byStratum = Object.fromEntries(STRATA.map((s) => [s.key, []]));
+    for (const e of unresolved) {
+      const k = stratumOf(e.normalized_citation || e.raw_citation);
+      byStratum[k].push(e);
+    }
+    const sample = [];
+    const stratumCounts = {};
+    for (const s of STRATA) {
+      const pool = byStratum[s.key] || [];
+      const take = Math.min(PER_STRATUM, pool.length);
+      const step = pool.length > take ? Math.floor(pool.length / take) : 1;
+      const picked = [];
+      for (let i = 0; i < pool.length && picked.length < take; i += step) picked.push(pool[i]);
+      stratumCounts[s.key] = { pool: pool.length, sampled: picked.length };
+      for (const e of picked) sample.push({ ...e, stratum: s.key });
+    }
+    if (sample.length < SAMPLE_TARGET) {
+      const used = new Set(sample.map((e) => e.id));
+      const rest = unresolved.filter((e) => !used.has(e.id));
+      const need = SAMPLE_TARGET - sample.length;
+      const step = rest.length > need ? Math.floor(rest.length / need) : 1;
+      for (let i = 0; i < rest.length && sample.length < SAMPLE_TARGET; i += step) {
+        sample.push({ ...rest[i], stratum: stratumOf(rest[i].normalized_citation || rest[i].raw_citation) });
       }
+    }
+    const counts = {
+      VALID_TARGET_ABSENT: 0,
+      AMBIGUOUS: 0,
+      MALFORMED: 0,
+      OUT_OF_SCOPE: 0,
+      UNSUPPORTED_TYPE: 0,
+      SOURCE_UNAVAILABLE: 0,
+      RESOLVER_DEFECT: 0
+    };
+    const rows = [];
+    for (const e of sample) {
+      const cls = classify(e.normalized_citation, e.raw_citation, defectIds.has(e.id));
+      counts[cls] += 1;
+      rows.push({
+        id: e.id,
+        stratum: e.stratum,
+        class: cls,
+        citation: String(e.normalized_citation || e.raw_citation || "").slice(0, 100)
+      });
+    }
+    const n = sample.length;
+    const proportions = Object.fromEntries(
+      Object.entries(counts).map(([k, v]) => [k, n ? Number((v / n * 100).toFixed(1)) : 0])
+    );
+    const out = {
+      ok: true,
+      classification: "MANUAL_QUEUE2_S3_CITATION_DENOMINATOR_SAMPLE_AUDIT",
+      generatedAt: (/* @__PURE__ */ new Date()).toISOString(),
+      courtListenerHttpCalls: 0,
+      mutations: 0,
+      methodology: "Stratified deterministic sample of unresolved citation edges across reporter families; heuristic classification only. Proportions are SAMPLE proportions, not extrapolated population ground truth.",
+      sampleSize: n,
+      unresolvedUniverse: unresolved.length,
+      stratumCounts,
+      counts,
+      proportionsPct: proportions,
+      validTargetAbsentShareOfSamplePct: proportions.VALID_TARGET_ABSENT,
+      note: "Do not treat sample proportions as population ground truth. If VALID_TARGET_ABSENT dominates the sample, raw denominator is directionally similar to valid denominator for primary-family cites.",
+      sampleRows: rows
+    };
+    const reportPath = process.env.DENOM_SAMPLE_OUT || (process.platform === "win32" ? path.join(__dirname, "..", "packages/research/corpus/reports/queue2-s3-citation-denominator-sample.json") : "/tmp/queue2-s3-citation-denominator-sample.json");
+    try {
+      fs.writeFileSync(reportPath, JSON.stringify(out, null, 2));
     } catch {
     }
-    const candidates = [];
-    for (const row of unresolved) {
-      const p = parseCfr(row.cite);
-      if (!p) continue;
-      if (!/\d+\.\d+/.test(p.section)) continue;
-      if (existing.has(p.citation)) continue;
-      candidates.push({ ...p, edges: row.edges, citing: row.citing });
-    }
-    const results = [];
-    let imported = 0;
-    for (const c of candidates) {
-      if (imported >= MAX) break;
-      const page = `https://www.ecfr.gov/api/renderer/v1/content/enhanced/${ecfrDate}/title-${c.title}?section=${encodeURIComponent(c.section)}`;
-      try {
-        const res = await fetch(page, { headers: { Accept: "text/html" }, signal: AbortSignal.timeout(3e4) });
-        const text = stripHtml(await res.text());
-        const sectionToken = c.section;
-        const identityOk = res.ok && text.length >= MIN_CHARS && text.includes(sectionToken);
-        if (!identityOk) {
-          results.push({
-            citation: c.citation,
-            status: "quarantined",
-            http: res.status,
-            chars: text.length,
-            reason: !res.ok ? `http_${res.status}` : text.length < MIN_CHARS ? "short_text" : "section_token_missing",
-            edges: c.edges
-          });
-          continue;
-        }
-        const rec = {
-          title: c.citation,
-          content: text,
-          sourceProvider: "ecfr",
-          sourceExternalId: `ecfr-t${c.title}-s${c.section}`,
-          citation: c.citation,
-          normalizedCitation: c.citation,
-          canonicalSourceUrl: `https://www.ecfr.gov/current/title-${c.title}/section-${c.section}`,
-          effectiveDate: ecfrDate,
-          sourceMetadata: {
-            adapter: "queue2-b1-cfr-pilot",
-            asOfDate: ecfrDate,
-            retrievedAt: (/* @__PURE__ */ new Date()).toISOString(),
-            expectedEdges: c.edges,
-            queue: "#2",
-            lane: "B1"
-          }
-        };
-        const result = await importOne(sql, rec, openaiKey);
-        results.push({ citation: c.citation, edges: c.edges, citing: c.citing, ...result, url: rec.canonicalSourceUrl });
-        if (result.status === "imported") {
-          imported += 1;
-          existing.add(c.citation);
-        }
-      } catch (e) {
-        results.push({ citation: c.citation, status: "error", error: String(e.message || e).slice(0, 160), edges: c.edges });
-      }
-    }
-    const [corpus] = await sql`
-      select count(*)::int as authorities,
-             count(*) filter (where authority_type='case')::int as cases,
-             count(*) filter (where authority_type='case' and source_provider='courtlistener')::int as cl_cases,
-             count(*) filter (where authority_type='regulation')::int as regulations
-      from legal_authorities
-    `;
-    const [chunks] = await sql`
-      select count(*)::int as chunks,
-             count(*) filter (where embedding is not null)::int as embeddings,
-             count(*) filter (where embedding is null)::int as missing_embeddings
-      from legal_authority_chunks
-    `;
-    const [dupes] = await sql`
-      select count(*)::int as n from (
-        select 1 from legal_authorities where source_external_id is not null
-        group by source_provider, source_external_id having count(*)>1
-      ) d
-    `;
-    const [orphans] = await sql`
-      select count(*)::int as n from legal_authority_chunks c
-      left join legal_authorities a on a.id=c.authority_id where a.id is null
-    `;
-    console.log(
-      JSON.stringify({
-        ok: true,
-        classification: "B1_CFR_ZERO_CL_PILOT",
-        generatedAt: (/* @__PURE__ */ new Date()).toISOString(),
-        courtListenerHttpCalls: 0,
-        max: MAX,
-        ecfrDate,
-        imported,
-        results,
-        corpus,
-        chunks,
-        duplicateSourceIds: dupes[0]?.n || 0,
-        orphanCount: orphans[0]?.n || 0
-      })
-    );
+    console.log(JSON.stringify(out));
   } finally {
     await sql.end({ timeout: 5 });
   }
 }
 main().catch((e) => {
-  console.log(JSON.stringify({ ok: false, err: String(e.message || e).slice(0, 400), courtListenerHttpCalls: 0 }));
+  console.log(JSON.stringify({ ok: false, err: String(e.message || e).slice(0, 400) }));
   process.exit(1);
 });

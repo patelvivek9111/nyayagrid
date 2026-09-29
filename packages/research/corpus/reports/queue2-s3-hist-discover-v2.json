@@ -1,0 +1,53 @@
+{
+  "ok": true,
+  "phase": "DISCOVERY",
+  "status": "discovered",
+  "path": "search",
+  "court": "ca5",
+  "gte": "1995-01-01",
+  "lte": "1999-12-31",
+  "count": 5,
+  "ids": [
+    {
+      "id": 686629,
+      "dateFiled": "1995-01-03",
+      "caseName": "Winding v. Whitley",
+      "clusterId": 686629
+    },
+    {
+      "id": 686627,
+      "dateFiled": "1995-01-03",
+      "caseName": "United States v. Roberson",
+      "clusterId": 686627
+    },
+    {
+      "id": 686621,
+      "dateFiled": "1995-01-03",
+      "caseName": "Barnes v. Symeonides",
+      "clusterId": 686621
+    },
+    {
+      "id": 686619,
+      "dateFiled": "1995-01-03",
+      "caseName": "Rowland v. Tx Dept./crminal",
+      "clusterId": 686619
+    },
+    {
+      "id": 686616,
+      "dateFiled": "1995-01-03",
+      "caseName": "Way v. Black",
+      "clusterId": 686616
+    }
+  ],
+  "attempts": [
+    {
+      "path": "search",
+      "httpStatus": 200,
+      "ms": 715,
+      "resultCount": 20
+    }
+  ],
+  "courtListenerHttpCalls": 1,
+  "elapsedMs": 716,
+  "mutations": 0
+}

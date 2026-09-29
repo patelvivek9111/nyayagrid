@@ -1,0 +1,134 @@
+{
+  "ok": true,
+  "classification": "B1_CFR_ZERO_CL_PILOT",
+  "generatedAt": "2026-09-29T22:07:06.259Z",
+  "courtListenerHttpCalls": 0,
+  "max": 10,
+  "ecfrDate": "2026-09-25",
+  "imported": 10,
+  "results": [
+    {
+      "citation": "40 C.F.R. ┬º 158.34",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "1dc561f9-3fd6-4f6b-a659-25b7238f1305",
+      "chunks": 4,
+      "embedded": 4,
+      "chars": 3284,
+      "url": "https://www.ecfr.gov/current/title-40/section-158.34"
+    },
+    {
+      "citation": "40 C.F.R. ┬º 230.10",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "069cc961-bd23-4490-9271-82c1f0147e4a",
+      "chunks": 7,
+      "embedded": 7,
+      "chars": 6435,
+      "url": "https://www.ecfr.gov/current/title-40/section-230.10"
+    },
+    {
+      "citation": "40 C.F.R. ┬º 747.115",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "bd9fe783-fdab-4593-bf4b-e67d36ef2c04",
+      "chunks": 8,
+      "embedded": 8,
+      "chars": 7422,
+      "url": "https://www.ecfr.gov/current/title-40/section-747.115"
+    },
+    {
+      "citation": "40 C.F.R. ┬º 747.195",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "0719b639-4575-4d61-b4a2-08a0f5cb942d",
+      "chunks": 7,
+      "embedded": 7,
+      "chars": 6995,
+      "url": "https://www.ecfr.gov/current/title-40/section-747.195"
+    },
+    {
+      "citation": "40 C.F.R. ┬º 747.200",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "67f09861-5e08-4a25-b4ba-326f9b15accc",
+      "chunks": 8,
+      "embedded": 8,
+      "chars": 7419,
+      "url": "https://www.ecfr.gov/current/title-40/section-747.200"
+    },
+    {
+      "citation": "40 C.F.R. ┬º 749.68",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "58c1f879-663f-4568-b40a-38b77f68ce69",
+      "chunks": 11,
+      "embedded": 11,
+      "chars": 10057,
+      "url": "https://www.ecfr.gov/current/title-40/section-749.68"
+    },
+    {
+      "citation": "40 C.F.R. ┬º 751.105",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "fcc706b4-58fa-43d2-9e7d-1f55d01b87cd",
+      "chunks": 1,
+      "embedded": 1,
+      "chars": 796,
+      "url": "https://www.ecfr.gov/current/title-40/section-751.105"
+    },
+    {
+      "citation": "40 C.F.R. ┬º 751.109",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "4360de46-6103-419d-8baa-1f3f14441774",
+      "chunks": 25,
+      "embedded": 25,
+      "chars": 24289,
+      "url": "https://www.ecfr.gov/current/title-40/section-751.109"
+    },
+    {
+      "citation": "40 C.F.R. ┬º 751.5",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "869fa8b6-8b19-4bcc-bc00-1bd4c5fcd1f2",
+      "chunks": 4,
+      "embedded": 4,
+      "chars": 3761,
+      "url": "https://www.ecfr.gov/current/title-40/section-751.5"
+    },
+    {
+      "citation": "47 C.F.R. ┬º 0.61",
+      "edges": 1,
+      "citing": 1,
+      "status": "imported",
+      "id": "8fc7067e-8428-438a-8031-ce3a089f5b67",
+      "chunks": 5,
+      "embedded": 5,
+      "chars": 4418,
+      "url": "https://www.ecfr.gov/current/title-47/section-0.61"
+    }
+  ],
+  "corpus": {
+    "authorities": 4252,
+    "cases": 2905,
+    "cl_cases": 2860,
+    "regulations": 188
+  },
+  "chunks": {
+    "chunks": 69114,
+    "embeddings": 69114,
+    "missing_embeddings": 0
+  },
+  "duplicateSourceIds": 0,
+  "orphanCount": 0
+}

@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "phase": "INGEST",
+  "status": "done",
+  "clCourt": "ca5",
+  "imported": 1,
+  "results": [
+    {
+      "id": 686629,
+      "status": "skipped_short"
+    },
+    {
+      "id": 686627,
+      "status": "skipped_short"
+    },
+    {
+      "id": 686621,
+      "status": "skipped_short"
+    },
+    {
+      "id": 686619,
+      "status": "imported",
+      "decisionDate": "1995-01-03",
+      "title": "Rowland v. Tx Dept./crminal"
+    },
+    {
+      "id": 686616,
+      "status": "skipped_short"
+    }
+  ],
+  "courtListenerHttpCalls": 10,
+  "elapsedMs": 26119,
+  "mutations": 1
+}

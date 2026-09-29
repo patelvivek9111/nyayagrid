@@ -1,0 +1,33 @@
+{
+  "id": "indctapp",
+  "courtListenerHttpCalls": 2,
+  "searchHttp": 200,
+  "searchCount": 20,
+  "samples": [
+    {
+      "dateFiled": "2026-09-29",
+      "caseName": "Paternity: Brenden Carrell v. Katherine Schurman",
+      "opId": 11453624,
+      "snippetLen": 500
+    },
+    {
+      "dateFiled": "2026-09-29",
+      "caseName": "T M v. State of Indiana",
+      "opId": 11453623,
+      "snippetLen": 500
+    },
+    {
+      "dateFiled": "2026-09-28",
+      "caseName": "Todd Edward Mcgraw v. State of Indiana",
+      "opId": 11452696,
+      "snippetLen": 500
+    }
+  ],
+  "earliest": {
+    "dateFiled": "1885-06-14",
+    "caseName": "Thornburg v. Buck"
+  },
+  "mappingStatus": "VERIFIED",
+  "fullName": "Indiana Court of Appeals",
+  "jurisdiction": "SA"
+}

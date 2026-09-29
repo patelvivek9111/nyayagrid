@@ -1,0 +1,27 @@
+{
+  "classification": "MANUAL_QUEUE2_BALANCED_10K_SESSION_3",
+  "verdict": "PASS",
+  "generatedAt": "2026-09-29T22:10:00.000Z",
+  "queue": { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", "transition": "NONE" },
+  "root408": {
+    "phase": "DISCOVERY",
+    "cause": "Opinions API with cluster__date_filed filters + long attached Fly exec hangs → Fly 408 leaves owner/child alive",
+    "fix": "Phased hist: search API discover (filed_after/before) → verified ID list → bounded ingest; oneshot kills orphan after CL_ORPHAN_WAIT_MS; HIST_QUERY_TIMEOUT on hard timeout",
+    "verified": true,
+    "pilotEvidence": "ca5 search discover 1995/1990/1980 + ingest 7 useful pre-2000 cases without 408"
+  },
+  "a2": { "decision": "SKIP", "reason": "no verified targets with expected>=3.0 res/CL" },
+  "courtMapping": {
+    "NM": { "status": "VERIFIED", "id": "nmctapp" },
+    "IN": { "status": "VERIFIED", "id": "indctapp", "note": "opinions list timed out; search path confirmed" }
+  },
+  "growth": {
+    "netCasesDb": 106,
+    "batchImportedSum": 223,
+    "note": "batch items_imported overcounts vs net DB delta; DB is authoritative",
+    "byLaneCl": { "G1": 79, "G3": 108, "DISTRICT": 47, "histPhased": 22, "verify": 12 },
+    "histCases": 7,
+    "cfrImported": 10
+  },
+  "completionCandidate": false
+}

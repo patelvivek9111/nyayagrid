@@ -1,0 +1,24 @@
+{
+  "ok": true,
+  "phase": "INGEST",
+  "status": "done",
+  "clCourt": "ca5",
+  "imported": 2,
+  "results": [
+    {
+      "id": 8976441,
+      "status": "imported",
+      "decisionDate": "1990-01-02",
+      "title": "Davis v. Commercial Union Insurance"
+    },
+    {
+      "id": 8976442,
+      "status": "imported",
+      "decisionDate": "1990-01-03",
+      "title": "Sifers v. General Marine Catering Co."
+    }
+  ],
+  "courtListenerHttpCalls": 4,
+  "elapsedMs": 11948,
+  "mutations": 2
+}

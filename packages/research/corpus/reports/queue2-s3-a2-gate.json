@@ -1,0 +1,9 @@
+{
+  "classification": "MANUAL_QUEUE2_S3_A2_GATE",
+  "decision": "SKIP",
+  "reason": "No verified CL targets with expected >=3.0 res/CL. Prior deferred U.S. Reports targets failed presence verification; remaining density historically <=2.5. Spend CL on corpus growth.",
+  "minExpectedResPerCl": 3.0,
+  "checkedAt": "2026-09-29T21:45:00.000Z",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0
+}

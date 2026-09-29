@@ -150,6 +150,7 @@ async function main() {
       ),
     );
 
+    // Prefer modal title up_to_date_as_of — meta.date can be mid-import and 404 the renderer.
     let ecfrDate = new Date().toISOString().slice(0, 10);
     try {
       const titles = await fetch("https://www.ecfr.gov/api/versioner/v1/titles.json", {
@@ -158,7 +159,23 @@ async function main() {
       });
       if (titles.ok) {
         const j = await titles.json();
-        if (j?.meta?.date) ecfrDate = j.meta.date;
+        const counts = new Map();
+        for (const t of j?.titles || []) {
+          const d = t?.up_to_date_as_of;
+          if (typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d)) {
+            counts.set(d, (counts.get(d) || 0) + 1);
+          }
+        }
+        let best = null;
+        let bestN = -1;
+        for (const [d, n] of counts) {
+          if (n > bestN || (n === bestN && d < best)) {
+            best = d;
+            bestN = n;
+          }
+        }
+        if (best) ecfrDate = best;
+        else if (j?.meta?.date && j?.meta?.import_in_progress !== true) ecfrDate = j.meta.date;
       }
     } catch {
       /* keep */
@@ -168,6 +185,8 @@ async function main() {
     for (const row of unresolved) {
       const p = parseCfr(row.cite);
       if (!p) continue;
+      // Require dotted section ids (skip part-level cites like "40 C.F.R. § 751")
+      if (!/\d+\.\d+/.test(p.section)) continue;
       if (existing.has(p.citation)) continue;
       candidates.push({ ...p, edges: row.edges, citing: row.citing });
     }

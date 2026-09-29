@@ -1,0 +1,6 @@
+{"ok":true,"id":"nmctapp","state":"NM","role":"intermediate","mappingStatus":"VERIFIED","httpStatus":200,"fullName":"New Mexico Court of Appeals","jurisdiction":"SA","inUse":true,"opinionSample":{"status":200,"hasResult":true,"sampleId":11452757,"dateFiled":null},"courtListenerHttpCalls":2,"mutations":0}
+{"ok":true,"id":"nmapp","state":"NM","role":"intermediate","mappingStatus":"NO_USABLE_CL_COURT","httpStatus":404,"courtListenerHttpCalls":1}
+{"ok":true,"id":"nmcapp","state":"NM","role":"intermediate","mappingStatus":"NO_USABLE_CL_COURT","httpStatus":404,"courtListenerHttpCalls":1}
+{"ok":false,"err":"The operation was aborted due to timeout","courtListenerHttpCalls":0}
+{"ok":true,"id":"indappct","state":"IN","role":"intermediate","mappingStatus":"NO_USABLE_CL_COURT","httpStatus":404,"courtListenerHttpCalls":1}
+{"ok":true,"id":"indapp","state":"IN","role":"intermediate","mappingStatus":"NO_USABLE_CL_COURT","httpStatus":404,"courtListenerHttpCalls":1}
