@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "courtListenerHttpCalls": 0,
+  "skipped": [
+    { "citation": "573 U.S. 373", "reason": "no_verified_search_match", "clRequests": 2, "expected": 9 }
+  ],
+  "attribution": [
+    { "citation": "367 U.S. 643", "title": "Mapp v. Ohio", "expected": 7, "actual": 7, "mismatch": false, "clRequests": 2, "authorityId": "51873a09-1fa9-471b-8ae2-68037728c481" },
+    { "citation": "411 U.S. 792", "title": "McDonnell Douglas Corp. v. Green", "expected": 7, "actual": 7, "mismatch": false, "clRequests": 2, "authorityId": "ba643bca-2024-488e-8aa9-7e34f897477a" },
+    { "citation": "438 U.S. 154", "title": "Franks v. Delaware", "expected": 7, "actual": 7, "mismatch": false, "clRequests": 2, "authorityId": "33503a81-0eb2-483b-8895-c5b38532565d" },
+    { "citation": "476 U.S. 79", "title": "Batson v. Kentucky", "expected": 7, "actual": 7, "mismatch": false, "clRequests": 2, "authorityId": "3b50c0d8-b87d-450f-8ebf-de92b3c9dbf9" }
+  ]
+}

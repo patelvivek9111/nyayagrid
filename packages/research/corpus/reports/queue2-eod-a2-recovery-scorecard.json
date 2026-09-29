@@ -1,0 +1,105 @@
+{
+  "classification": "MANUAL_QUEUE2_END_OF_DAY_A2_RECOVERY",
+  "generatedAt": "2026-09-29T01:45:00.000Z",
+  "result": "PARTIAL",
+  "safety": {
+    "localWorker": false,
+    "remoteClChild": false,
+    "laneAChild": null,
+    "ownershipConflict": false,
+    "queue3": "NOT_OPEN",
+    "locNonClMutation": "OFF",
+    "locPathTouched": false
+  },
+  "quotaStart": {
+    "minute": 30,
+    "hour": 280,
+    "day": 27,
+    "chosenRequestBudget": 16,
+    "safetyMarginTarget": 11,
+    "note": "Day remaining scaled budget down from ~30–35 guidance"
+  },
+  "A2": {
+    "targetsAttempted": 5,
+    "targetsAcquired": 4,
+    "clRequests": 10,
+    "authoritiesAdded": 4,
+    "skipped": [{ "citation": "573 U.S. 373", "reason": "no_verified_search_match", "clRequests": 2 }],
+    "efficiencyFloorTriggered": true,
+    "stopReason": "running_res_per_cl 2.80 < 3.0 after micro-batch 1"
+  },
+  "microBatches": [
+    {
+      "batch": 1,
+      "targets": ["573 U.S. 373", "367 U.S. 643", "411 U.S. 792", "438 U.S. 154", "476 U.S. 79"],
+      "acquired": 4,
+      "clRequests": 10,
+      "newlyResolved": 28,
+      "runningResPerCl": 2.8
+    }
+  ],
+  "topTargets": [
+    { "citation": "367 U.S. 643", "title": "Mapp v. Ohio", "expected": 7, "actual": 7, "cl": 2, "authorityId": "51873a09-1fa9-471b-8ae2-68037728c481" },
+    { "citation": "411 U.S. 792", "title": "McDonnell Douglas Corp. v. Green", "expected": 7, "actual": 7, "cl": 2, "authorityId": "ba643bca-2024-488e-8aa9-7e34f897477a" },
+    { "citation": "438 U.S. 154", "title": "Franks v. Delaware", "expected": 7, "actual": 7, "cl": 2, "authorityId": "33503a81-0eb2-483b-8895-c5b38532565d" },
+    { "citation": "476 U.S. 79", "title": "Batson v. Kentucky", "expected": 7, "actual": 7, "cl": 2, "authorityId": "3b50c0d8-b87d-450f-8ebf-de92b3c9dbf9" }
+  ],
+  "citationsBefore": {
+    "extracted": 7581,
+    "resolved": 789,
+    "unresolved": 6792,
+    "targetAbsent": 6792,
+    "resolutionRatePct": 10.41
+  },
+  "citationsAfter": {
+    "extracted": 7581,
+    "resolved": 817,
+    "unresolved": 6764,
+    "targetAbsent": 6764,
+    "resolutionRatePct": 10.78
+  },
+  "improvement": {
+    "newlyResolved": 28,
+    "targetAbsentReduction": 28,
+    "resolutionRateIncreasePctPoints": 0.37,
+    "resolutionsPerClRequest": 2.8,
+    "resolutionsPerAuthority": 7.0
+  },
+  "efficiency": {
+    "finalResPerCl": 2.8,
+    "efficiencyFloorTriggered": true,
+    "productiveOnlyResPerCl": 3.5,
+    "note": "If excluding 2 wasted CL on unverified 573 U.S. 373, productive path was 28/8=3.5"
+  },
+  "quotaEnd": {
+    "estimatedDayRemaining": 17,
+    "estimatedHourRemaining": 270,
+    "safetyMarginPreserved": true,
+    "productiveClUsed": 10
+  },
+  "federalGap": {
+    "us_reports": 3122,
+    "f3d": 1759,
+    "f2d": 554,
+    "f4th": 700,
+    "f_supp": 273,
+    "usc": 264,
+    "cfr": 42,
+    "federal_rules": 31,
+    "bestTomorrowFamily": "us_reports"
+  },
+  "corpus": {
+    "authorities": 3973,
+    "cases": 2656,
+    "cl_cases": 2611,
+    "chunks": 63347,
+    "embeddings": 63347,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0
+  },
+  "locNonCl": {
+    "status": "HOLD_UNTOUCHED",
+    "mutation": "OFF"
+  }
+}

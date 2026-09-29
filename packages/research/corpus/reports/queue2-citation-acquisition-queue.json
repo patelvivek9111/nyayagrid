@@ -1,126 +1,140 @@
 {
   "classification": "QUEUE2_CITATION_ACQUISITION_QUEUE",
-  "generatedAt": "2026-09-29T01:14:53.347Z",
+  "generatedAt": "2026-09-29T01:43:54.472Z",
   "courtListenerHttpCalls": 0,
-  "source": "post_federal_a2_recovery_window",
+  "source": "end_of_day_a2_post_window",
   "A1_depthCompletion": {
     "status": "COMPLETE",
     "completed": 51,
     "remaining": 0
   },
+  "citationBaseline": {
+    "extracted": 7581,
+    "resolved": 789,
+    "unresolved": 6792,
+    "targetAbsent": 6792,
+    "resolutionRatePct": 10.41,
+    "uniqueAbsentTargets": 5137,
+    "malformedUnusable": 1,
+    "targetPresentButNotMatchedGroups": 0,
+    "targetPresentButNotMatchedEdges": 0,
+    "top10ShareOfAbsentEdgesPct": 1.12,
+    "top100ShareOfAbsentEdgesPct": 7.64,
+    "totalAbsentEdges": 6791
+  },
   "A2_citationTargetRecovery": {
     "candidates": [
       {
         "rank": 1,
-        "citation": "367 U.S. 643",
-        "edgesPotentiallyUnlocked": 7,
-        "uniqueCitingAuthorities": 7,
+        "citation": "573 U.S. 373",
+        "edgesPotentiallyUnlocked": 9,
+        "uniqueCitingAuthorities": 9,
         "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+        "recommendedPath": "cl_a2"
       },
       {
         "rank": 2,
-        "citation": "555 U.S. 135",
-        "edgesPotentiallyUnlocked": 7,
-        "uniqueCitingAuthorities": 7,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 3,
         "citation": "483 U.S. 756",
         "edgesPotentiallyUnlocked": 7,
         "uniqueCitingAuthorities": 7,
         "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+        "recommendedPath": "cl_a2"
       },
       {
-        "rank": 4,
-        "citation": "411 U.S. 792",
-        "edgesPotentiallyUnlocked": 7,
-        "uniqueCitingAuthorities": 7,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 5,
+        "rank": 3,
         "citation": "528 U.S. 119",
         "edgesPotentiallyUnlocked": 7,
         "uniqueCitingAuthorities": 7,
         "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+        "recommendedPath": "cl_a2"
+      },
+      {
+        "rank": 4,
+        "citation": "555 U.S. 135",
+        "edgesPotentiallyUnlocked": 7,
+        "uniqueCitingAuthorities": 7,
+        "family": "us_reports",
+        "recommendedPath": "cl_a2"
+      },
+      {
+        "rank": 5,
+        "citation": "376 U.S. 254",
+        "edgesPotentiallyUnlocked": 6,
+        "uniqueCitingAuthorities": 6,
+        "family": "us_reports",
+        "recommendedPath": "cl_a2"
       },
       {
         "rank": 6,
-        "citation": "438 U.S. 154",
-        "edgesPotentiallyUnlocked": 7,
-        "uniqueCitingAuthorities": 7,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 7,
-        "citation": "476 U.S. 79",
-        "edgesPotentiallyUnlocked": 7,
-        "uniqueCitingAuthorities": 7,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 8,
-        "citation": "514 U.S. 419",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 9,
-        "citation": "573 U.S. 149",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 10,
-        "citation": "554 U.S. 237",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 11,
-        "citation": "489 U.S. 602",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 12,
-        "citation": "564 U.S. 229",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 13,
         "citation": "401 U.S. 37",
         "edgesPotentiallyUnlocked": 6,
         "uniqueCitingAuthorities": 6,
         "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+        "recommendedPath": "cl_a2"
       },
       {
-        "rank": 14,
-        "citation": "567 U.S. 387",
+        "rank": 7,
+        "citation": "405 U.S. 150",
         "edgesPotentiallyUnlocked": 6,
         "uniqueCitingAuthorities": 6,
         "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+        "recommendedPath": "cl_a2"
+      },
+      {
+        "rank": 8,
+        "citation": "415 U.S. 308",
+        "edgesPotentiallyUnlocked": 6,
+        "uniqueCitingAuthorities": 6,
+        "family": "us_reports",
+        "recommendedPath": "cl_a2"
+      },
+      {
+        "rank": 9,
+        "citation": "422 U.S. 806",
+        "edgesPotentiallyUnlocked": 6,
+        "uniqueCitingAuthorities": 6,
+        "family": "us_reports",
+        "recommendedPath": "cl_a2"
+      },
+      {
+        "rank": 10,
+        "citation": "455 U.S. 745",
+        "edgesPotentiallyUnlocked": 6,
+        "uniqueCitingAuthorities": 6,
+        "family": "us_reports",
+        "recommendedPath": "cl_a2"
+      },
+      {
+        "rank": 11,
+        "citation": "477 U.S. 399",
+        "edgesPotentiallyUnlocked": 6,
+        "uniqueCitingAuthorities": 6,
+        "family": "us_reports",
+        "recommendedPath": "cl_a2"
+      },
+      {
+        "rank": 12,
+        "citation": "489 U.S. 602",
+        "edgesPotentiallyUnlocked": 6,
+        "uniqueCitingAuthorities": 6,
+        "family": "us_reports",
+        "recommendedPath": "cl_a2"
+      },
+      {
+        "rank": 13,
+        "citation": "499 U.S. 279",
+        "edgesPotentiallyUnlocked": 6,
+        "uniqueCitingAuthorities": 6,
+        "family": "us_reports",
+        "recommendedPath": "cl_a2"
+      },
+      {
+        "rank": 14,
+        "citation": "514 U.S. 419",
+        "edgesPotentiallyUnlocked": 6,
+        "uniqueCitingAuthorities": 6,
+        "family": "us_reports",
+        "recommendedPath": "cl_a2"
       },
       {
         "rank": 15,
@@ -128,229 +142,208 @@
         "edgesPotentiallyUnlocked": 6,
         "uniqueCitingAuthorities": 6,
         "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+        "recommendedPath": "cl_a2"
       },
       {
         "rank": 16,
-        "citation": "422 U.S. 806",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 17,
-        "citation": "376 U.S. 254",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 18,
-        "citation": "405 U.S. 150",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 19,
-        "citation": "545 U.S. 469",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 5,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 20,
-        "citation": "415 U.S. 308",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 21,
-        "citation": "499 U.S. 279",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 22,
-        "citation": "455 U.S. 745",
-        "edgesPotentiallyUnlocked": 6,
-        "uniqueCitingAuthorities": 6,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 23,
         "citation": "547 U.S. 813",
         "edgesPotentiallyUnlocked": 6,
         "uniqueCitingAuthorities": 6,
         "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+        "recommendedPath": "cl_a2"
       },
       {
-        "rank": 24,
-        "citation": "477 U.S. 399",
+        "rank": 17,
+        "citation": "554 U.S. 237",
         "edgesPotentiallyUnlocked": 6,
         "uniqueCitingAuthorities": 6,
         "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+        "recommendedPath": "cl_a2"
       },
       {
-        "rank": 25,
-        "citation": "428 U.S. 153",
-        "edgesPotentiallyUnlocked": 5,
-        "uniqueCitingAuthorities": 5,
+        "rank": 18,
+        "citation": "564 U.S. 229",
+        "edgesPotentiallyUnlocked": 6,
+        "uniqueCitingAuthorities": 6,
         "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+        "recommendedPath": "cl_a2"
       },
       {
-        "rank": 26,
-        "citation": "455 U.S. 104",
-        "edgesPotentiallyUnlocked": 5,
-        "uniqueCitingAuthorities": 5,
+        "rank": 19,
+        "citation": "567 U.S. 387",
+        "edgesPotentiallyUnlocked": 6,
+        "uniqueCitingAuthorities": 6,
         "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+        "recommendedPath": "cl_a2"
       },
       {
-        "rank": 27,
-        "citation": "549 U.S. 1",
-        "edgesPotentiallyUnlocked": 5,
-        "uniqueCitingAuthorities": 5,
+        "rank": 20,
+        "citation": "573 U.S. 149",
+        "edgesPotentiallyUnlocked": 6,
+        "uniqueCitingAuthorities": 6,
         "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+        "recommendedPath": "cl_a2"
       },
       {
-        "rank": 28,
-        "citation": "424 U.S. 1",
-        "edgesPotentiallyUnlocked": 5,
+        "rank": 21,
+        "citation": "545 U.S. 469",
+        "edgesPotentiallyUnlocked": 6,
         "uniqueCitingAuthorities": 5,
         "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 29,
-        "citation": "568 U.S. 165",
-        "edgesPotentiallyUnlocked": 5,
-        "uniqueCitingAuthorities": 5,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 30,
-        "citation": "579 U.S. 500",
-        "edgesPotentiallyUnlocked": 5,
-        "uniqueCitingAuthorities": 5,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 31,
-        "citation": "530 U.S. 466",
-        "edgesPotentiallyUnlocked": 5,
-        "uniqueCitingAuthorities": 5,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 32,
-        "citation": "437 U.S. 385",
-        "edgesPotentiallyUnlocked": 5,
-        "uniqueCitingAuthorities": 5,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 33,
-        "citation": "441 U.S. 520",
-        "edgesPotentiallyUnlocked": 5,
-        "uniqueCitingAuthorities": 5,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 34,
-        "citation": "232 U.S. 383",
-        "edgesPotentiallyUnlocked": 5,
-        "uniqueCitingAuthorities": 5,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 35,
-        "citation": "598 U.S. 631",
-        "edgesPotentiallyUnlocked": 5,
-        "uniqueCitingAuthorities": 5,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 36,
-        "citation": "463 U.S. 248",
-        "edgesPotentiallyUnlocked": 5,
-        "uniqueCitingAuthorities": 5,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 37,
-        "citation": "481 U.S. 739",
-        "edgesPotentiallyUnlocked": 5,
-        "uniqueCitingAuthorities": 5,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 38,
-        "citation": "558 U.S. 310",
-        "edgesPotentiallyUnlocked": 5,
-        "uniqueCitingAuthorities": 5,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
-      },
-      {
-        "rank": 39,
-        "citation": "391 U.S. 123",
-        "edgesPotentiallyUnlocked": 5,
-        "uniqueCitingAuthorities": 5,
-        "family": "us_reports",
-        "recommendedPath": "future_zero_cl_intake_or_next_cl_a2"
+        "recommendedPath": "cl_a2"
       }
-    ],
-    "skippedKnownFailures": [
-      "573 U.S. 373"
     ]
   },
-  "citationBaseline": {
-    "extracted": 7581,
-    "resolved": 789,
-    "unresolved": 6792,
-    "targetAbsent": 6792,
-    "malformed": 0,
-    "presentButNotMatched_aliasExact": 0,
-    "ambiguous": 0,
-    "vrpPresentAliasMiss": 0,
-    "resolutionRatePct": 10.41
+  "reporterGaps": [
+    {
+      "reporter": "U.S.",
+      "family": "us_reports",
+      "unresolvedEdges": 3153,
+      "uniqueTargets": 1928,
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 46.43,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "F.3d",
+      "family": "federal_reporter",
+      "unresolvedEdges": 1759,
+      "uniqueTargets": 1584,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 25.9,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "F.4th",
+      "family": "federal_reporter",
+      "unresolvedEdges": 700,
+      "uniqueTargets": 619,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 10.31,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "F.2d",
+      "family": "federal_reporter",
+      "unresolvedEdges": 554,
+      "uniqueTargets": 502,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 8.16,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "U.S.C.",
+      "family": "usc",
+      "unresolvedEdges": 264,
+      "uniqueTargets": 196,
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 3.89,
+      "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
+    },
+    {
+      "reporter": "F. Supp.",
+      "family": "federal_supplement",
+      "unresolvedEdges": 113,
+      "uniqueTargets": 104,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 1.66,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "F. Supp. 3d",
+      "family": "federal_supplement",
+      "unresolvedEdges": 110,
+      "uniqueTargets": 92,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 1.62,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "F. Supp. 2d",
+      "family": "federal_supplement",
+      "unresolvedEdges": 49,
+      "uniqueTargets": 45,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 0.72,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "C.F.R.",
+      "family": "cfr",
+      "unresolvedEdges": 42,
+      "uniqueTargets": 41,
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 0.62,
+      "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
+    },
+    {
+      "reporter": "Fed. R. App. P.",
+      "family": "federal_rules",
+      "unresolvedEdges": 21,
+      "uniqueTargets": 6,
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 0.31,
+      "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
+    },
+    {
+      "reporter": "F.",
+      "family": "federal_reporter",
+      "unresolvedEdges": 16,
+      "uniqueTargets": 12,
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "shareOfTargetAbsentEdgesPct": 0.24,
+      "currentQueue2CanAcquire": "YES_VIA_CL_FUTURE_WINDOW"
+    },
+    {
+      "reporter": "Fed. R. Civ. P.",
+      "family": "federal_rules",
+      "unresolvedEdges": 7,
+      "uniqueTargets": 6,
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 0.1,
+      "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
+    },
+    {
+      "reporter": "Fed. R. Evid.",
+      "family": "federal_rules",
+      "unresolvedEdges": 3,
+      "uniqueTargets": 2,
+      "clObtainable": false,
+      "zeroClCandidate": true,
+      "shareOfTargetAbsentEdgesPct": 0.04,
+      "currentQueue2CanAcquire": "YES_VIA_EXISTING_ZERO_CL_LANE_B"
+    }
+  ],
+  "quotaBudget": {
+    "minute": 30,
+    "hour": 280,
+    "day": 27,
+    "chosenRequestBudget": 16,
+    "safetyMarginTarget": 11
   },
-  "familyAbsent": {
-    "us_reports": 3153,
-    "federal_reporter": 3029,
-    "federal_rules": 31,
-    "usc": 264,
-    "federal_supplement": 272,
-    "malformed_partial": 1,
-    "cfr": 42
-  },
-  "corpus": {
-    "authorities": 3969,
-    "cases": 2652,
-    "cl_cases": 2607
-  },
-  "efficiencyNote": "latest A2 3.85 res/CL; US Reports top edges still 7-9 vs F.3d max 5"
+  "postWindow": {
+    "acquired": [
+      "367 U.S. 643",
+      "411 U.S. 792",
+      "438 U.S. 154",
+      "476 U.S. 79"
+    ],
+    "skipped": [
+      "573 U.S. 373"
+    ],
+    "newlyResolved": 28,
+    "resolutionRatePct": 10.78
+  }
 }
