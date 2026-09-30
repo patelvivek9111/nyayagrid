@@ -1,0 +1,164 @@
+{
+  "classification": "QUEUE2_TEST_SUITE_INVENTORY",
+  "generatedAt": "2026-09-30T02:27:33.620Z",
+  "totalTestFiles": 230,
+  "bySubsystem": {
+    "storage_upload": {
+      "fileCount": 188,
+      "files": [
+        "apps/web/src/app/sign-out/route.test.ts",
+        "apps/web/src/lib/analysis-review-integration.test.ts",
+        "apps/web/src/lib/auth-return.test.ts",
+        "apps/web/src/lib/case-intelligence-ux.test.ts",
+        "apps/web/src/lib/case-jurisdiction-ux.test.ts",
+        "apps/web/src/lib/clerk-invitations.test.ts",
+        "apps/web/src/lib/clerk-session-keepalive.test.ts",
+        "apps/web/src/lib/clerk-session.test.ts",
+        "apps/web/src/lib/conversation-list-preview.test.ts",
+        "apps/web/src/lib/document-drop-ux.test.ts",
+        "apps/web/src/lib/document-list-ux.test.ts",
+        "apps/web/src/lib/document-list.test.ts",
+        "apps/web/src/lib/document-processing-summary.test.ts",
+        "apps/web/src/lib/document-upload-queue.test.ts",
+        "apps/web/src/lib/document-upload-ux.test.ts",
+        "apps/web/src/lib/execution-strategy-ux.test.ts",
+        "apps/web/src/lib/expensive-route-limits.test.ts",
+        "apps/web/src/lib/firm-workspace-ux.test.ts",
+        "apps/web/src/lib/first-case-onboarding.test.ts",
+        "apps/web/src/lib/first-run.test.ts",
+        "apps/web/src/lib/health.test.ts",
+        "apps/web/src/lib/http.test.ts",
+        "apps/web/src/lib/matter-dates.test.ts",
+        "apps/web/src/lib/memory-review-integration.test.ts",
+        "apps/web/src/lib/plain-labels.test.ts",
+        "apps/web/src/lib/portal-guest-nav.test.ts",
+        "apps/web/src/lib/rate-limit.test.ts",
+        "apps/web/src/lib/review-discovery.test.ts",
+        "apps/web/src/lib/review-queue.test.ts",
+        "apps/web/src/lib/settings-assign-auth.test.ts",
+        "apps/web/src/lib/sidebar-workspace-ux.test.ts",
+        "apps/web/src/lib/usage-feature.test.ts",
+        "apps/web/src/lib/user-facing-error.test.ts",
+        "apps/web/src/lib/validation.test.ts",
+        "apps/web/src/lib/version-history-ux.test.ts",
+        "apps/web/src/lib/workspace-surfaces-ux.test.ts",
+        "apps/web/src/lib/workspace-ux.test.ts",
+        "apps/web/src/middleware.test.ts",
+        "benchmarks/nyaya-bench/datasets/v3/catalog.test.ts",
+        "benchmarks/nyaya-bench/datasets/v3.1/catalog.test.ts"
+      ]
+    },
+    "corpus_ingestion": {
+      "fileCount": 9,
+      "files": [
+        "apps/web/src/lib/document-ingest-wiring.test.ts",
+        "e2e/document-ingest.spec.ts",
+        "packages/documents/src/ingest-job.test.ts",
+        "packages/research/src/corpus/adapters/adapters.test.ts",
+        "packages/research/src/corpus/authority-type-policy.test.ts",
+        "packages/research/src/corpus/corpus.test.ts",
+        "packages/research/src/corpus/refresh/refresh.test.ts",
+        "packages/research/src/corpus/subject-bundle.test.ts",
+        "packages/research/src/corpus/versioning.test.ts"
+      ]
+    },
+    "graph": {
+      "fileCount": 3,
+      "files": [
+        "apps/web/src/lib/graph-review-integration.test.ts",
+        "packages/ai/src/graph-memory.test.ts",
+        "packages/intelligence/src/review-queue-graph.contract.test.ts"
+      ]
+    },
+    "RBAC_matter_isolation": {
+      "fileCount": 13,
+      "files": [
+        "apps/web/src/lib/recovery-api-rbac.test.ts",
+        "packages/permissions/src/authorization.integration.test.ts",
+        "packages/permissions/src/beta-security-audit.integration.test.ts",
+        "packages/permissions/src/index.test.ts",
+        "packages/permissions/src/phase2.integration.test.ts",
+        "packages/permissions/src/phase3.integration.test.ts",
+        "packages/permissions/src/phase4.integration.test.ts",
+        "packages/permissions/src/phase5.integration.test.ts",
+        "packages/permissions/src/phase6.integration.test.ts",
+        "packages/permissions/src/phase6s.integration.test.ts",
+        "packages/permissions/src/phase7.integration.test.ts",
+        "packages/permissions/src/phase8.integration.test.ts",
+        "packages/permissions/src/phase9.integration.test.ts"
+      ]
+    },
+    "retrieval": {
+      "fileCount": 14,
+      "files": [
+        "apps/web/src/lib/research-chat.test.ts",
+        "packages/ai/src/research.test.ts",
+        "packages/ai/src/retrieval-rank.test.ts",
+        "packages/ai/src/web-research.test.ts",
+        "packages/research/src/context.test.ts",
+        "packages/research/src/guardrails.test.ts",
+        "packages/research/src/jurisdiction-layer.test.ts",
+        "packages/research/src/search-rank.test.ts",
+        "packages/research/src/sessions.visibility.test.ts",
+        "packages/research/src/synthesize.test.ts",
+        "packages/research/src/weight.test.ts",
+        "packages/search/src/ask-run-control.test.ts",
+        "packages/search/src/ask-source-scope.test.ts",
+        "packages/search/src/hybrid.test.ts"
+      ]
+    },
+    "drafting": {
+      "fileCount": 1,
+      "files": [
+        "packages/intelligence/src/phase5-draft.test.ts"
+      ]
+    },
+    "normalization": {
+      "fileCount": 1,
+      "files": [
+        "packages/intelligence/src/timeline-normalize.test.ts"
+      ]
+    },
+    "citation_parser_resolver": {
+      "fileCount": 1,
+      "files": [
+        "packages/research/src/citations.test.ts"
+      ]
+    }
+  },
+  "strongAreas": [
+    {
+      "area": "storage_upload",
+      "files": 188
+    },
+    {
+      "area": "corpus_ingestion",
+      "files": 9
+    },
+    {
+      "area": "RBAC_matter_isolation",
+      "files": 13
+    },
+    {
+      "area": "retrieval",
+      "files": 14
+    }
+  ],
+  "weakAreas": [
+    {
+      "area": "drafting",
+      "note": "1 files"
+    },
+    {
+      "area": "graph",
+      "note": "3 files"
+    },
+    {
+      "area": "normalization",
+      "note": "1 files"
+    }
+  ],
+  "newRegressionTestsTonight": [
+    "scripts/queue2-s5-resolver-defect-regression.test.cjs (expanded to 10 invariants)"
+  ]
+}

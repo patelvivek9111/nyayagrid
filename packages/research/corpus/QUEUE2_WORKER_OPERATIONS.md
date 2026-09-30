@@ -257,3 +257,42 @@ When the production checklist is satisfied, the worker sets completion candidate
 - Idempotency ledger: `queue2-idempotency-ledger.jsonl`  
 - Audit trail: `queue2-worker-audit.jsonl`  
 - Policy / safety: `scripts/queue2-autonomy-policy.cjs`, `scripts/queue2-worker-safety.cjs`
+
+
+## Overnight zero-quota morning workflow
+
+Updated: 2026-09-30T02:23:14.304Z
+
+### Safety
+- Queue #2 OPEN; Queue #9 CLOSED; Queue #3 NOT_OPEN
+- Do not start `queue2:worker` without recovered CL quota and human-aware session
+- Overnight prep sets CourtListener HTTP = 0 and paid AI = 0
+
+### Authoritative artifacts (after overnight prep)
+See `reports/queue2-artifact-authority-manifest.json`. Prefer:
+- `queue2-balanced-10k-tracker.json`
+- `queue2-morning-execution-pack.json`
+- `queue2-dual-value-case-queue.json`
+- `queue2-week1-scorecard.json`
+
+### Morning command
+```bash
+npm run queue2:morning
+```
+Prints live baseline from last overnight artifacts, ranked batches, Week 1 gap, integrity, and stop conditions. Does **not** call CourtListener or mutate corpus.
+
+### Balanced 10k strategy
+Planning split ~7650 state/DC + ~2350 federal; per-state planning target ~150. Scoring weights: `config/queue2-balanced-priority-weights.json`.
+
+### Citation denominator methodology
+Stratified local sample of unresolved edges (≥1000). Classes include VALID_TARGET_ABSENT and UNKNOWN_REQUIRES_EXTERNAL_VERIFICATION. Do not treat sample proportions as population ground truth.
+
+### Zero-CL blockers (current)
+- CFR: eCFR piloted (capability proven)
+- USC: House OLRC quality gate failed (shell content)
+- Federal Rules: ingest loop blocked / index issues
+- LOC U.S. Reports: PDF-only; mutation gated
+
+### Manual-mode / 408
+Prefer manual oneshot batches with resume cursor after Fly 408; do not leave orphan acquisition children.
+

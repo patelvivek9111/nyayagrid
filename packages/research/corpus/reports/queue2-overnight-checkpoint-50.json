@@ -1,0 +1,24 @@
+{
+  "classification": "OVERNIGHT_CHECKPOINT",
+  "pct": 50,
+  "generatedAt": "2026-09-30T02:25:00.000Z",
+  "tasksCompleted": [
+    "6_citation_family_inventory",
+    "7_dual_value_case_queue",
+    "8_citation_denominator_1000",
+    "9_resolver_present_unresolved_audit",
+    "10_normalization_foundation",
+    "11_reporter_alias_coverage",
+    "12_zero_cl_primary_authority_status",
+    "30_citation_coverage_roadmap"
+  ],
+  "tasksDeferred": [],
+  "testsStatus": "NOT_RUN_YET",
+  "integrityStatus": "PASS",
+  "presentUnresolved": 0,
+  "denomSample": 1000,
+  "gitStatus": "uncommitted_wave_b",
+  "nextTask": "wave_c_code_hardening",
+  "courtListenerHttpCalls": 0,
+  "paidAiCalls": 0
+}

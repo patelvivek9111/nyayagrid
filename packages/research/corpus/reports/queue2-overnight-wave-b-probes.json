@@ -1,0 +1,21 @@
+{
+  "classification": "OVERNIGHT_ZERO_QUOTA_WAVE_B_PROBES",
+  "generatedAt": "2026-09-30T02:18:39.695Z",
+  "courtListenerHttpCalls": 0,
+  "steps": [
+    {
+      "id": "citation_target_priority",
+      "ok": true
+    },
+    {
+      "id": "denom_1000",
+      "ok": true,
+      "sampleSize": 1000
+    },
+    {
+      "id": "present_unresolved",
+      "ok": true
+    }
+  ],
+  "ok": true
+}

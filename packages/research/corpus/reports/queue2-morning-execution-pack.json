@@ -1,0 +1,901 @@
+{
+  "generatedAt": "2026-09-30T02:22:23.819Z",
+  "classification": "QUEUE2_MORNING_EXECUTION_PACK",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "liveBaseline": {
+    "cases": 3070,
+    "authorities": 4425,
+    "stateDc": 2524,
+    "federal": 546,
+    "remainingTo10k": 6930,
+    "citations": {
+      "extracted": 9489,
+      "resolved": 1125,
+      "unresolved": 8364,
+      "targetAbsent": 8364,
+      "resolutionRatePct": 11.86,
+      "uniqueAbsentTargets": 6486,
+      "malformedUnusable": 1,
+      "targetPresentButNotMatchedGroups": 0,
+      "targetPresentButNotMatchedEdges": 0,
+      "top10ShareOfAbsentEdgesPct": 1,
+      "top100ShareOfAbsentEdgesPct": 6.11,
+      "totalAbsentEdges": 8363
+    },
+    "integrity": {
+      "classification": "QUEUE2_INTEGRITY_FULL_PASS",
+      "generatedAt": "2026-09-30T02:18:04.025Z",
+      "courtListenerHttpCalls": 0,
+      "mutations": 0,
+      "duplicateSourceIdentities": 0,
+      "duplicateAuthorityIds": 0,
+      "orphanChunks": 0,
+      "orphanEmbeddings": 0,
+      "missingEmbeddings": 0,
+      "missingAuthorityText": 0,
+      "futureDates": 0,
+      "absurdOldDates": 0,
+      "missingProvenance": {
+        "missing_source_provider": 0,
+        "missing_source_id": 0,
+        "missing_court": 0,
+        "missing_jurisdiction": 0
+      },
+      "federalStateClassMismatch": 0,
+      "duplicateCitationEdges": 4,
+      "brokenCitationTargets": 0
+    }
+  },
+  "week1": {
+    "target": 3500,
+    "current": 3070,
+    "gap": 430,
+    "daysRemaining": 5,
+    "requiredUsefulCasesPerDay": 86,
+    "deadline": "2026-10-04"
+  },
+  "quotaNeeded": {
+    "plannedCases": 303,
+    "estimatedCL": 671.7,
+    "healthyDayAssumptionCL": 400,
+    "note": "Estimates from S5 measured efficiencies; do not call CL until quota returns."
+  },
+  "priorityBatches": [
+    {
+      "rank": 1,
+      "lane": "A2_CITATION_TARGET",
+      "court": "scotus",
+      "dateWindow": "citation-target",
+      "targetCases": 1,
+      "reason": "Dual-value: unlock ~11 edges (573 U.S. 373)",
+      "currentDeficit": 40,
+      "historicalValue": "high",
+      "citationOverlap": 11,
+      "citationTarget": "573 U.S. 373",
+      "estimatedClPerCase": 2.5,
+      "fallbackBatch": "G3_SCOTUS_hist",
+      "estimatedCL": 2.3
+    },
+    {
+      "rank": 2,
+      "lane": "A2_CITATION_TARGET",
+      "court": "scotus",
+      "dateWindow": "citation-target",
+      "targetCases": 1,
+      "reason": "Dual-value: unlock ~10 edges (578 U.S. 330)",
+      "currentDeficit": 40,
+      "historicalValue": "high",
+      "citationOverlap": 10,
+      "citationTarget": "578 U.S. 330",
+      "estimatedClPerCase": 2.5,
+      "fallbackBatch": "G3_SCOTUS_hist",
+      "estimatedCL": 2.3
+    },
+    {
+      "rank": 3,
+      "lane": "A2_CITATION_TARGET",
+      "court": "scotus",
+      "dateWindow": "citation-target",
+      "targetCases": 1,
+      "reason": "Dual-value: unlock ~9 edges (477 U.S. 242)",
+      "currentDeficit": 40,
+      "historicalValue": "high",
+      "citationOverlap": 9,
+      "citationTarget": "477 U.S. 242",
+      "estimatedClPerCase": 2.5,
+      "fallbackBatch": "G3_SCOTUS_hist",
+      "estimatedCL": 2.3
+    },
+    {
+      "rank": 4,
+      "lane": "A2_CITATION_TARGET",
+      "court": "scotus",
+      "dateWindow": "citation-target",
+      "targetCases": 1,
+      "reason": "Dual-value: unlock ~8 edges (573 U.S. 149)",
+      "currentDeficit": 40,
+      "historicalValue": "high",
+      "citationOverlap": 8,
+      "citationTarget": "573 U.S. 149",
+      "estimatedClPerCase": 2.5,
+      "fallbackBatch": "G3_SCOTUS_hist",
+      "estimatedCL": 2.3
+    },
+    {
+      "rank": 5,
+      "lane": "A2_CITATION_TARGET",
+      "court": "scotus",
+      "dateWindow": "citation-target",
+      "targetCases": 1,
+      "reason": "Dual-value: unlock ~7 edges (528 U.S. 167)",
+      "currentDeficit": 40,
+      "historicalValue": "high",
+      "citationOverlap": 7,
+      "citationTarget": "528 U.S. 167",
+      "estimatedClPerCase": 2.5,
+      "fallbackBatch": "G3_SCOTUS_hist",
+      "estimatedCL": 2.3
+    },
+    {
+      "rank": 6,
+      "lane": "A2_CITATION_TARGET",
+      "court": "scotus",
+      "dateWindow": "citation-target",
+      "targetCases": 1,
+      "reason": "Dual-value: unlock ~7 edges (549 U.S. 1)",
+      "currentDeficit": 40,
+      "historicalValue": "high",
+      "citationOverlap": 7,
+      "citationTarget": "549 U.S. 1",
+      "estimatedClPerCase": 2.5,
+      "fallbackBatch": "G3_SCOTUS_hist",
+      "estimatedCL": 2.3
+    },
+    {
+      "rank": 7,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "nyappdiv",
+      "jurisdiction": "NY",
+      "dateWindow": "1985-01-01..1999-12-31",
+      "targetCases": 12,
+      "reason": "Intermediate deepen NY; deficitTo150=105; midCases=15",
+      "currentDeficit": 105,
+      "historicalValue": "high",
+      "citationOverlap": 12,
+      "estimatedClPerCase": 2.2,
+      "fallbackBatch": "calctapp",
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 8,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "calctapp",
+      "jurisdiction": "CA",
+      "dateWindow": "1985-01-01..1999-12-31",
+      "targetCases": 12,
+      "reason": "Intermediate deepen CA; deficitTo150=105; midCases=15",
+      "currentDeficit": 105,
+      "historicalValue": "high",
+      "citationOverlap": 57,
+      "estimatedClPerCase": 2.2,
+      "fallbackBatch": "calctapp",
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 9,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "fladistctapp",
+      "jurisdiction": "FL",
+      "dateWindow": "1985-01-01..1999-12-31",
+      "targetCases": 12,
+      "reason": "Intermediate deepen FL; deficitTo150=105; midCases=15",
+      "currentDeficit": 105,
+      "historicalValue": "high",
+      "citationOverlap": 74,
+      "estimatedClPerCase": 2.2,
+      "fallbackBatch": "calctapp",
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 10,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "massappct",
+      "jurisdiction": "MA",
+      "dateWindow": "1985-01-01..1999-12-31",
+      "targetCases": 12,
+      "reason": "Intermediate deepen MA; deficitTo150=105; midCases=15",
+      "currentDeficit": 105,
+      "historicalValue": "high",
+      "citationOverlap": 93,
+      "estimatedClPerCase": 2.2,
+      "fallbackBatch": "calctapp",
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 11,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "pasuperct",
+      "jurisdiction": "PA",
+      "dateWindow": "1985-01-01..1999-12-31",
+      "targetCases": 12,
+      "reason": "Intermediate deepen PA; deficitTo150=104; midCases=15",
+      "currentDeficit": 104,
+      "historicalValue": "high",
+      "citationOverlap": 13,
+      "estimatedClPerCase": 2.2,
+      "fallbackBatch": "calctapp",
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 12,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "illappct",
+      "jurisdiction": "IL",
+      "dateWindow": "1985-01-01..1999-12-31",
+      "targetCases": 12,
+      "reason": "Intermediate deepen IL; deficitTo150=97; midCases=15",
+      "currentDeficit": 97,
+      "historicalValue": "high",
+      "citationOverlap": 66,
+      "estimatedClPerCase": 2.2,
+      "fallbackBatch": "calctapp",
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 13,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "indctapp",
+      "jurisdiction": "IN",
+      "dateWindow": "1985-01-01..1999-12-31",
+      "targetCases": 12,
+      "reason": "Intermediate deepen IN; deficitTo150=94; midCases=11",
+      "currentDeficit": 94,
+      "historicalValue": "high",
+      "citationOverlap": 90,
+      "estimatedClPerCase": 2.2,
+      "fallbackBatch": "calctapp",
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 14,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "nmctapp",
+      "jurisdiction": "NM",
+      "dateWindow": "1985-01-01..1999-12-31",
+      "targetCases": 12,
+      "reason": "Intermediate deepen NM; deficitTo150=93; midCases=12",
+      "currentDeficit": 93,
+      "historicalValue": "high",
+      "citationOverlap": 111,
+      "estimatedClPerCase": 2.2,
+      "fallbackBatch": "calctapp",
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 15,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "ne-high",
+      "jurisdiction": "NE",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 10,
+      "reason": "Historical gap NE; pre2000=0; earliest=2026",
+      "currentDeficit": 20,
+      "historicalValue": "high",
+      "citationOverlap": 84,
+      "estimatedClPerCase": 2.4,
+      "fallbackBatch": "G3_FEDERAL_HISTORICAL",
+      "estimatedCL": 23
+    },
+    {
+      "rank": 16,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "nc-high",
+      "jurisdiction": "NC",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 10,
+      "reason": "Historical gap NC; pre2000=0; earliest=2002",
+      "currentDeficit": 20,
+      "historicalValue": "high",
+      "citationOverlap": 88,
+      "estimatedClPerCase": 2.4,
+      "fallbackBatch": "G3_FEDERAL_HISTORICAL",
+      "estimatedCL": 23
+    },
+    {
+      "rank": 17,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "id-high",
+      "jurisdiction": "ID",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 10,
+      "reason": "Historical gap ID; pre2000=0; earliest=2026",
+      "currentDeficit": 20,
+      "historicalValue": "high",
+      "citationOverlap": 58,
+      "estimatedClPerCase": 2.4,
+      "fallbackBatch": "G3_FEDERAL_HISTORICAL",
+      "estimatedCL": 23
+    },
+    {
+      "rank": 18,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "al-high",
+      "jurisdiction": "AL",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 10,
+      "reason": "Historical gap AL; pre2000=0; earliest=2026",
+      "currentDeficit": 20,
+      "historicalValue": "high",
+      "citationOverlap": 53,
+      "estimatedClPerCase": 2.4,
+      "fallbackBatch": "G3_FEDERAL_HISTORICAL",
+      "estimatedCL": 23
+    },
+    {
+      "rank": 19,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "ak-high",
+      "jurisdiction": "AK",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 10,
+      "reason": "Historical gap AK; pre2000=0; earliest=2026",
+      "currentDeficit": 20,
+      "historicalValue": "high",
+      "citationOverlap": 34,
+      "estimatedClPerCase": 2.4,
+      "fallbackBatch": "G3_FEDERAL_HISTORICAL",
+      "estimatedCL": 23
+    },
+    {
+      "rank": 20,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "ok-high",
+      "jurisdiction": "OK",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 10,
+      "reason": "Historical gap OK; pre2000=0; earliest=2025",
+      "currentDeficit": 20,
+      "historicalValue": "high",
+      "citationOverlap": 27,
+      "estimatedClPerCase": 2.4,
+      "fallbackBatch": "G3_FEDERAL_HISTORICAL",
+      "estimatedCL": 23
+    },
+    {
+      "rank": 21,
+      "lane": "G3_DISTRICT",
+      "court": "txnd",
+      "dateWindow": "1985-01-01..1994-12-31",
+      "targetCases": 12,
+      "reason": "District txnd; current=0; histNeed=true; recentNeed=true",
+      "currentDeficit": 20,
+      "historicalValue": "high",
+      "citationOverlap": 0,
+      "estimatedClPerCase": 2.1,
+      "fallbackBatch": "cand",
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 22,
+      "lane": "G3_DISTRICT",
+      "court": "cand",
+      "dateWindow": "1985-01-01..1994-12-31",
+      "targetCases": 12,
+      "reason": "District cand; current=0; histNeed=true; recentNeed=true",
+      "currentDeficit": 20,
+      "historicalValue": "high",
+      "citationOverlap": 0,
+      "estimatedClPerCase": 2.1,
+      "fallbackBatch": "cand",
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 23,
+      "lane": "G3_DISTRICT",
+      "court": "waed",
+      "dateWindow": "1985-01-01..1994-12-31",
+      "targetCases": 12,
+      "reason": "District waed; current=0; histNeed=true; recentNeed=true",
+      "currentDeficit": 20,
+      "historicalValue": "high",
+      "citationOverlap": 0,
+      "estimatedClPerCase": 2.1,
+      "fallbackBatch": "cand",
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 24,
+      "lane": "G3_DISTRICT",
+      "court": "dcd",
+      "dateWindow": "1985-01-01..1994-12-31",
+      "targetCases": 12,
+      "reason": "District dcd; current=6; histNeed=true; recentNeed=true",
+      "currentDeficit": 14,
+      "historicalValue": "high",
+      "citationOverlap": 0,
+      "estimatedClPerCase": 2.1,
+      "fallbackBatch": "cand",
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 25,
+      "lane": "G3_DISTRICT",
+      "court": "nysd",
+      "dateWindow": "1975-01-01..1989-12-31",
+      "targetCases": 12,
+      "reason": "District nysd; current=7; histNeed=true; recentNeed=false",
+      "currentDeficit": 13,
+      "historicalValue": "high",
+      "citationOverlap": 0,
+      "estimatedClPerCase": 2.1,
+      "fallbackBatch": "cand",
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 26,
+      "lane": "G3_DISTRICT",
+      "court": "cacd",
+      "dateWindow": "1975-01-01..1989-12-31",
+      "targetCases": 12,
+      "reason": "District cacd; current=7; histNeed=true; recentNeed=false",
+      "currentDeficit": 13,
+      "historicalValue": "high",
+      "citationOverlap": 0,
+      "estimatedClPerCase": 2.1,
+      "fallbackBatch": "cand",
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 27,
+      "lane": "G3_DISTRICT",
+      "court": "ilnd",
+      "dateWindow": "1975-01-01..1989-12-31",
+      "targetCases": 12,
+      "reason": "District ilnd; current=7; histNeed=true; recentNeed=false",
+      "currentDeficit": 13,
+      "historicalValue": "high",
+      "citationOverlap": 0,
+      "estimatedClPerCase": 2.1,
+      "fallbackBatch": "cand",
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 28,
+      "lane": "G3_DISTRICT",
+      "court": "flsd",
+      "dateWindow": "1975-01-01..1989-12-31",
+      "targetCases": 12,
+      "reason": "District flsd; current=7; histNeed=true; recentNeed=false",
+      "currentDeficit": 13,
+      "historicalValue": "high",
+      "citationOverlap": 0,
+      "estimatedClPerCase": 2.1,
+      "fallbackBatch": "cand",
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 29,
+      "lane": "G3_SCOTUS",
+      "court": "scotus",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 15,
+      "reason": "SCOTUS historical deepen + dual-value U.S. Reports citation demand",
+      "currentDeficit": 0,
+      "historicalValue": "high",
+      "citationOverlap": 303,
+      "estimatedClPerCase": 2.3,
+      "fallbackBatch": "A2_CITATION_TARGET",
+      "estimatedCL": 34.5
+    },
+    {
+      "rank": 30,
+      "lane": "G3_DISTRICT",
+      "court": "cand",
+      "dateWindow": "1985-01-01..1994-12-31",
+      "targetCases": 10,
+      "reason": "Capacity fill for healthy recovered quota day",
+      "currentDeficit": 20,
+      "historicalValue": "medium",
+      "citationOverlap": 0,
+      "estimatedClPerCase": 2.1,
+      "fallbackBatch": "ca9",
+      "estimatedCL": 21
+    },
+    {
+      "rank": 31,
+      "lane": "G3_DISTRICT",
+      "court": "dcd",
+      "dateWindow": "1985-01-01..1994-12-31",
+      "targetCases": 10,
+      "reason": "Capacity fill for healthy recovered quota day",
+      "currentDeficit": 14,
+      "historicalValue": "medium",
+      "citationOverlap": 0,
+      "estimatedClPerCase": 2.1,
+      "fallbackBatch": "ca9",
+      "estimatedCL": 21
+    },
+    {
+      "rank": 32,
+      "lane": "G3_DISTRICT",
+      "court": "cacd",
+      "dateWindow": "1975-01-01..1989-12-31",
+      "targetCases": 10,
+      "reason": "Capacity fill for healthy recovered quota day",
+      "currentDeficit": 13,
+      "historicalValue": "medium",
+      "citationOverlap": 0,
+      "estimatedClPerCase": 2.1,
+      "fallbackBatch": "ca9",
+      "estimatedCL": 21
+    }
+  ],
+  "fallbackBatches": [
+    {
+      "rank": 1,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "fladistctapp",
+      "dateWindow": "1985-01-01..1999-12-31",
+      "targetCases": 12,
+      "estimatedCL": 27.6,
+      "reason": "Fallback if primary 9 blocked"
+    },
+    {
+      "rank": 2,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "massappct",
+      "dateWindow": "1985-01-01..1999-12-31",
+      "targetCases": 12,
+      "estimatedCL": 27.6,
+      "reason": "Fallback if primary 10 blocked"
+    },
+    {
+      "rank": 3,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "pasuperct",
+      "dateWindow": "1985-01-01..1999-12-31",
+      "targetCases": 12,
+      "estimatedCL": 27.6,
+      "reason": "Fallback if primary 11 blocked"
+    },
+    {
+      "rank": 4,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "illappct",
+      "dateWindow": "1985-01-01..1999-12-31",
+      "targetCases": 12,
+      "estimatedCL": 27.6,
+      "reason": "Fallback if primary 12 blocked"
+    },
+    {
+      "rank": 5,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "indctapp",
+      "dateWindow": "1985-01-01..1999-12-31",
+      "targetCases": 12,
+      "estimatedCL": 27.6,
+      "reason": "Fallback if primary 13 blocked"
+    },
+    {
+      "rank": 6,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "nmctapp",
+      "dateWindow": "1985-01-01..1999-12-31",
+      "targetCases": 12,
+      "estimatedCL": 27.6,
+      "reason": "Fallback if primary 14 blocked"
+    },
+    {
+      "rank": 7,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "ne-high",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 10,
+      "estimatedCL": 23,
+      "reason": "Fallback if primary 15 blocked"
+    },
+    {
+      "rank": 8,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "nc-high",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 10,
+      "estimatedCL": 23,
+      "reason": "Fallback if primary 16 blocked"
+    },
+    {
+      "rank": 9,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "id-high",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 10,
+      "estimatedCL": 23,
+      "reason": "Fallback if primary 17 blocked"
+    },
+    {
+      "rank": 10,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "al-high",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 10,
+      "estimatedCL": 23,
+      "reason": "Fallback if primary 18 blocked"
+    },
+    {
+      "rank": 11,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "ak-high",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 10,
+      "estimatedCL": 23,
+      "reason": "Fallback if primary 19 blocked"
+    },
+    {
+      "rank": 12,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "ok-high",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 10,
+      "estimatedCL": 23,
+      "reason": "Fallback if primary 20 blocked"
+    }
+  ],
+  "externalVerificationNeeded": [
+    {
+      "court": "pacommwlth",
+      "jurisdiction": "PA",
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "court": "njsuperct",
+      "jurisdiction": "NJ",
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "court": "vacapp",
+      "jurisdiction": "VA",
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    }
+  ],
+  "zeroCLWork": [
+    "CFR eCFR deepen only if local/safe path confirmed",
+    "USC blocked — design only",
+    "Federal Rules blocked — design only",
+    "LOC US Reports blocked — design only",
+    "Citation reresolve after A2 imports"
+  ],
+  "stopConditions": [
+    "CL 429 / rate limit",
+    "quota exhausted",
+    "integrity regression (dupes/orphans)",
+    "Fly 408 storm",
+    "present-unresolved defects appear"
+  ],
+  "executionOrder": [
+    {
+      "rank": 1,
+      "lane": "A2_CITATION_TARGET",
+      "court": "scotus",
+      "targetCases": 1,
+      "estimatedCL": 2.3
+    },
+    {
+      "rank": 2,
+      "lane": "A2_CITATION_TARGET",
+      "court": "scotus",
+      "targetCases": 1,
+      "estimatedCL": 2.3
+    },
+    {
+      "rank": 3,
+      "lane": "A2_CITATION_TARGET",
+      "court": "scotus",
+      "targetCases": 1,
+      "estimatedCL": 2.3
+    },
+    {
+      "rank": 4,
+      "lane": "A2_CITATION_TARGET",
+      "court": "scotus",
+      "targetCases": 1,
+      "estimatedCL": 2.3
+    },
+    {
+      "rank": 5,
+      "lane": "A2_CITATION_TARGET",
+      "court": "scotus",
+      "targetCases": 1,
+      "estimatedCL": 2.3
+    },
+    {
+      "rank": 6,
+      "lane": "A2_CITATION_TARGET",
+      "court": "scotus",
+      "targetCases": 1,
+      "estimatedCL": 2.3
+    },
+    {
+      "rank": 7,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "nyappdiv",
+      "targetCases": 12,
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 8,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "calctapp",
+      "targetCases": 12,
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 9,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "fladistctapp",
+      "targetCases": 12,
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 10,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "massappct",
+      "targetCases": 12,
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 11,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "pasuperct",
+      "targetCases": 12,
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 12,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "illappct",
+      "targetCases": 12,
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 13,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "indctapp",
+      "targetCases": 12,
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 14,
+      "lane": "G1_STATE_INTERMEDIATE",
+      "court": "nmctapp",
+      "targetCases": 12,
+      "estimatedCL": 27.6
+    },
+    {
+      "rank": 15,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "ne-high",
+      "targetCases": 10,
+      "estimatedCL": 23
+    },
+    {
+      "rank": 16,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "nc-high",
+      "targetCases": 10,
+      "estimatedCL": 23
+    },
+    {
+      "rank": 17,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "id-high",
+      "targetCases": 10,
+      "estimatedCL": 23
+    },
+    {
+      "rank": 18,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "al-high",
+      "targetCases": 10,
+      "estimatedCL": 23
+    },
+    {
+      "rank": 19,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "ak-high",
+      "targetCases": 10,
+      "estimatedCL": 23
+    },
+    {
+      "rank": 20,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "ok-high",
+      "targetCases": 10,
+      "estimatedCL": 23
+    },
+    {
+      "rank": 21,
+      "lane": "G3_DISTRICT",
+      "court": "txnd",
+      "targetCases": 12,
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 22,
+      "lane": "G3_DISTRICT",
+      "court": "cand",
+      "targetCases": 12,
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 23,
+      "lane": "G3_DISTRICT",
+      "court": "waed",
+      "targetCases": 12,
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 24,
+      "lane": "G3_DISTRICT",
+      "court": "dcd",
+      "targetCases": 12,
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 25,
+      "lane": "G3_DISTRICT",
+      "court": "nysd",
+      "targetCases": 12,
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 26,
+      "lane": "G3_DISTRICT",
+      "court": "cacd",
+      "targetCases": 12,
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 27,
+      "lane": "G3_DISTRICT",
+      "court": "ilnd",
+      "targetCases": 12,
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 28,
+      "lane": "G3_DISTRICT",
+      "court": "flsd",
+      "targetCases": 12,
+      "estimatedCL": 25.2
+    },
+    {
+      "rank": 29,
+      "lane": "G3_SCOTUS",
+      "court": "scotus",
+      "targetCases": 15,
+      "estimatedCL": 34.5
+    },
+    {
+      "rank": 30,
+      "lane": "G3_DISTRICT",
+      "court": "cand",
+      "targetCases": 10,
+      "estimatedCL": 21
+    },
+    {
+      "rank": 31,
+      "lane": "G3_DISTRICT",
+      "court": "dcd",
+      "targetCases": 10,
+      "estimatedCL": 21
+    },
+    {
+      "rank": 32,
+      "lane": "G3_DISTRICT",
+      "court": "cacd",
+      "targetCases": 10,
+      "estimatedCL": 21
+    }
+  ]
+}

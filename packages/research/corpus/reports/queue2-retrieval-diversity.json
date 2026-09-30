@@ -1,0 +1,72 @@
+{
+  "classification": "QUEUE2_RETRIEVAL_DIVERSITY",
+  "generatedAt": "2026-09-30T02:18:04.025Z",
+  "courtListenerHttpCalls": 0,
+  "byAuthorityType": [
+    {
+      "authority_type": "case",
+      "n": 3070
+    },
+    {
+      "authority_type": "statute",
+      "n": 904
+    },
+    {
+      "authority_type": "rule",
+      "n": 254
+    },
+    {
+      "authority_type": "regulation",
+      "n": 196
+    },
+    {
+      "authority_type": "constitution",
+      "n": 1
+    }
+  ],
+  "byCourtLevel": [
+    {
+      "court_level": "state_high",
+      "n": 2293
+    },
+    {
+      "court_level": "circuit",
+      "n": 370
+    },
+    {
+      "court_level": "state_appellate",
+      "n": 229
+    },
+    {
+      "court_level": "scotus",
+      "n": 103
+    },
+    {
+      "court_level": "district",
+      "n": 70
+    },
+    {
+      "court_level": "federal_appellate",
+      "n": 3
+    },
+    {
+      "court_level": "state_intermediate",
+      "n": 2
+    }
+  ],
+  "federalStateSplit": {
+    "federal": 546,
+    "stateDc": 2524,
+    "federalPct": 17.79,
+    "statePct": 82.21
+  },
+  "chunkShape": {
+    "empty": 0,
+    "giant": 0,
+    "tiny": 788,
+    "missingEmbeddings": 0
+  },
+  "imbalances": [
+    "SPARSE_INTERMEDIATE"
+  ]
+}

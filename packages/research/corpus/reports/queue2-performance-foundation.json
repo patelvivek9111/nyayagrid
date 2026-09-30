@@ -1,0 +1,31 @@
+{
+  "classification": "QUEUE12_FOUNDATION_ONLY",
+  "queue12Status": "NOT_OPEN",
+  "generatedAt": "2026-09-30T02:23:14.304Z",
+  "findings": [
+    {
+      "pattern": "citation_resolver_population_scans",
+      "severity": "medium",
+      "note": "Full-table unresolved scans overnight — report index needs only"
+    },
+    {
+      "pattern": "unbounded_list_queries",
+      "severity": "medium",
+      "note": "Some tmp probes select all unresolved edges; production paths should paginate"
+    },
+    {
+      "pattern": "N+1",
+      "severity": "low",
+      "note": "Batch joins used in cite-integrity unique-match path"
+    },
+    {
+      "pattern": "missing_indexes",
+      "severity": "report_only",
+      "suggested": [
+        "legal_authority_citations(to_authority_id) already indexed",
+        "consider normalized_citation + to_authority_id composite for reresolve"
+      ]
+    }
+  ],
+  "note": "No speculative schema migrations unattended."
+}

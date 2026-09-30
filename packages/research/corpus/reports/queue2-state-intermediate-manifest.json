@@ -1,0 +1,623 @@
+{
+  "classification": "QUEUE2_STATE_INTERMEDIATE_MANIFEST",
+  "generatedAt": "2026-09-30T02:18:04.025Z",
+  "courtListenerHttpCalls": 0,
+  "verified": [
+    {
+      "jurisdiction": "NY",
+      "clCourtId": "nyappdiv",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 15,
+      "totalJurisdictionCases": 45,
+      "deficitTo150": 105,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 265
+    },
+    {
+      "jurisdiction": "CA",
+      "clCourtId": "calctapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 15,
+      "totalJurisdictionCases": 45,
+      "deficitTo150": 105,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 265
+    },
+    {
+      "jurisdiction": "FL",
+      "clCourtId": "fladistctapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 15,
+      "totalJurisdictionCases": 45,
+      "deficitTo150": 105,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 265
+    },
+    {
+      "jurisdiction": "MA",
+      "clCourtId": "massappct",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 15,
+      "totalJurisdictionCases": 45,
+      "deficitTo150": 105,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 265
+    },
+    {
+      "jurisdiction": "PA",
+      "clCourtId": "pasuperct",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 15,
+      "totalJurisdictionCases": 46,
+      "deficitTo150": 104,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 263
+    },
+    {
+      "jurisdiction": "IL",
+      "clCourtId": "illappct",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 15,
+      "totalJurisdictionCases": 53,
+      "deficitTo150": 97,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 249
+    },
+    {
+      "jurisdiction": "IN",
+      "clCourtId": "indctapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 11,
+      "totalJurisdictionCases": 56,
+      "deficitTo150": 94,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 247
+    },
+    {
+      "jurisdiction": "NM",
+      "clCourtId": "nmctapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 12,
+      "totalJurisdictionCases": 57,
+      "deficitTo150": 93,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 244
+    },
+    {
+      "jurisdiction": "UT",
+      "clCourtId": "utahctapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 18,
+      "totalJurisdictionCases": 63,
+      "deficitTo150": 87,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 226
+    },
+    {
+      "jurisdiction": "WI",
+      "clCourtId": "wisctapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 23,
+      "totalJurisdictionCases": 69,
+      "deficitTo150": 81,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 209
+    },
+    {
+      "jurisdiction": "TX",
+      "clCourtId": "texapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 15,
+      "totalJurisdictionCases": 57,
+      "deficitTo150": 93,
+      "historicalCoverage": 11,
+      "earliestYear": 1938,
+      "latestYear": 2005,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "2005-01-01..2015-12-31",
+      "priority": 201
+    },
+    {
+      "jurisdiction": "AZ",
+      "clCourtId": "arizctapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 25,
+      "totalJurisdictionCases": 71,
+      "deficitTo150": 79,
+      "historicalCoverage": 9,
+      "earliestYear": 1990,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "2005-01-01..2015-12-31",
+      "priority": 163
+    },
+    {
+      "jurisdiction": "CT",
+      "clCourtId": "connappct",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 29,
+      "totalJurisdictionCases": 75,
+      "deficitTo150": 75,
+      "historicalCoverage": 13,
+      "earliestYear": 1990,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "2005-01-01..2015-12-31",
+      "priority": 151
+    }
+  ],
+  "needsVerification": [
+    {
+      "jurisdiction": "PA",
+      "clCourtId": "pacommwlth",
+      "mappingStatus": "NEEDS_VERIFICATION_TOMORROW",
+      "intermediateCases": 0,
+      "totalJurisdictionCases": 46,
+      "deficitTo150": 104,
+      "historicalCoverage": 0,
+      "earliestYear": null,
+      "latestYear": null,
+      "proposedNextBatchSize": 0,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 0
+    },
+    {
+      "jurisdiction": "NJ",
+      "clCourtId": "njsuperct",
+      "mappingStatus": "NEEDS_VERIFICATION_TOMORROW",
+      "intermediateCases": 0,
+      "totalJurisdictionCases": 46,
+      "deficitTo150": 104,
+      "historicalCoverage": 0,
+      "earliestYear": null,
+      "latestYear": null,
+      "proposedNextBatchSize": 0,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 0
+    },
+    {
+      "jurisdiction": "VA",
+      "clCourtId": "vacapp",
+      "mappingStatus": "NEEDS_VERIFICATION_TOMORROW",
+      "intermediateCases": 0,
+      "totalJurisdictionCases": 46,
+      "deficitTo150": 104,
+      "historicalCoverage": 0,
+      "earliestYear": null,
+      "latestYear": null,
+      "proposedNextBatchSize": 0,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 0
+    }
+  ],
+  "thinOrZero": [
+    {
+      "jurisdiction": "NE",
+      "intermediate": 0,
+      "total": 45,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "NC",
+      "intermediate": 0,
+      "total": 46,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "ID",
+      "intermediate": 0,
+      "total": 45,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "AL",
+      "intermediate": 0,
+      "total": 45,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "AK",
+      "intermediate": 0,
+      "total": 45,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "OK",
+      "intermediate": 0,
+      "total": 45,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "OR",
+      "intermediate": 0,
+      "total": 45,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "MO",
+      "intermediate": 0,
+      "total": 46,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "SC",
+      "intermediate": 0,
+      "total": 45,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "HI",
+      "intermediate": 0,
+      "total": 45,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "MN",
+      "intermediate": 0,
+      "total": 51,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "IA",
+      "intermediate": 0,
+      "total": 45,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "NJ",
+      "intermediate": 0,
+      "total": 46,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "WA",
+      "intermediate": 0,
+      "total": 46,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "MI",
+      "intermediate": 0,
+      "total": 45,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "VA",
+      "intermediate": 0,
+      "total": 46,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "OH",
+      "intermediate": 0,
+      "total": 46,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "MD",
+      "intermediate": 0,
+      "total": 46,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "KS",
+      "intermediate": 0,
+      "total": 47,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "GA",
+      "intermediate": 0,
+      "total": 46,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "CO",
+      "intermediate": 0,
+      "total": 46,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "LA",
+      "intermediate": 0,
+      "total": 45,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "NV",
+      "intermediate": 0,
+      "total": 45,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "AR",
+      "intermediate": 0,
+      "total": 49,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "TN",
+      "intermediate": 0,
+      "total": 47,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "KY",
+      "intermediate": 5,
+      "total": 50,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    },
+    {
+      "jurisdiction": "MS",
+      "intermediate": 0,
+      "total": 69,
+      "status": "NEEDS_VERIFICATION_TOMORROW"
+    }
+  ],
+  "all": [
+    {
+      "jurisdiction": "NY",
+      "clCourtId": "nyappdiv",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 15,
+      "totalJurisdictionCases": 45,
+      "deficitTo150": 105,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 265
+    },
+    {
+      "jurisdiction": "CA",
+      "clCourtId": "calctapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 15,
+      "totalJurisdictionCases": 45,
+      "deficitTo150": 105,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 265
+    },
+    {
+      "jurisdiction": "FL",
+      "clCourtId": "fladistctapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 15,
+      "totalJurisdictionCases": 45,
+      "deficitTo150": 105,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 265
+    },
+    {
+      "jurisdiction": "MA",
+      "clCourtId": "massappct",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 15,
+      "totalJurisdictionCases": 45,
+      "deficitTo150": 105,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 265
+    },
+    {
+      "jurisdiction": "PA",
+      "clCourtId": "pasuperct",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 15,
+      "totalJurisdictionCases": 46,
+      "deficitTo150": 104,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 263
+    },
+    {
+      "jurisdiction": "IL",
+      "clCourtId": "illappct",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 15,
+      "totalJurisdictionCases": 53,
+      "deficitTo150": 97,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 249
+    },
+    {
+      "jurisdiction": "IN",
+      "clCourtId": "indctapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 11,
+      "totalJurisdictionCases": 56,
+      "deficitTo150": 94,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 247
+    },
+    {
+      "jurisdiction": "NM",
+      "clCourtId": "nmctapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 12,
+      "totalJurisdictionCases": 57,
+      "deficitTo150": 93,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 244
+    },
+    {
+      "jurisdiction": "UT",
+      "clCourtId": "utahctapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 18,
+      "totalJurisdictionCases": 63,
+      "deficitTo150": 87,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 226
+    },
+    {
+      "jurisdiction": "WI",
+      "clCourtId": "wisctapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 23,
+      "totalJurisdictionCases": 69,
+      "deficitTo150": 81,
+      "historicalCoverage": 0,
+      "earliestYear": 2026,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 209
+    },
+    {
+      "jurisdiction": "TX",
+      "clCourtId": "texapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 15,
+      "totalJurisdictionCases": 57,
+      "deficitTo150": 93,
+      "historicalCoverage": 11,
+      "earliestYear": 1938,
+      "latestYear": 2005,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "2005-01-01..2015-12-31",
+      "priority": 201
+    },
+    {
+      "jurisdiction": "AZ",
+      "clCourtId": "arizctapp",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 25,
+      "totalJurisdictionCases": 71,
+      "deficitTo150": 79,
+      "historicalCoverage": 9,
+      "earliestYear": 1990,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "2005-01-01..2015-12-31",
+      "priority": 163
+    },
+    {
+      "jurisdiction": "CT",
+      "clCourtId": "connappct",
+      "mappingStatus": "VERIFIED",
+      "intermediateCases": 29,
+      "totalJurisdictionCases": 75,
+      "deficitTo150": 75,
+      "historicalCoverage": 13,
+      "earliestYear": 1990,
+      "latestYear": 2026,
+      "proposedNextBatchSize": 12,
+      "proposedDateWindow": "2005-01-01..2015-12-31",
+      "priority": 151
+    },
+    {
+      "jurisdiction": "PA",
+      "clCourtId": "pacommwlth",
+      "mappingStatus": "NEEDS_VERIFICATION_TOMORROW",
+      "intermediateCases": 0,
+      "totalJurisdictionCases": 46,
+      "deficitTo150": 104,
+      "historicalCoverage": 0,
+      "earliestYear": null,
+      "latestYear": null,
+      "proposedNextBatchSize": 0,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 0
+    },
+    {
+      "jurisdiction": "NJ",
+      "clCourtId": "njsuperct",
+      "mappingStatus": "NEEDS_VERIFICATION_TOMORROW",
+      "intermediateCases": 0,
+      "totalJurisdictionCases": 46,
+      "deficitTo150": 104,
+      "historicalCoverage": 0,
+      "earliestYear": null,
+      "latestYear": null,
+      "proposedNextBatchSize": 0,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 0
+    },
+    {
+      "jurisdiction": "VA",
+      "clCourtId": "vacapp",
+      "mappingStatus": "NEEDS_VERIFICATION_TOMORROW",
+      "intermediateCases": 0,
+      "totalJurisdictionCases": 46,
+      "deficitTo150": 104,
+      "historicalCoverage": 0,
+      "earliestYear": null,
+      "latestYear": null,
+      "proposedNextBatchSize": 0,
+      "proposedDateWindow": "1985-01-01..1999-12-31",
+      "priority": 0
+    }
+  ]
+}

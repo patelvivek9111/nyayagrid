@@ -1,0 +1,26 @@
+{
+  "classification": "QUEUE2_ZERO_CL_PRIMARY_AUTHORITY_STATUS",
+  "generatedAt": "2026-09-30T02:20:11.416Z",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "CFR": {
+    "provenCapability": "eCFR pilot ingested; regulations count live",
+    "currentRegulations": 196,
+    "remainingUnresolvedCfrTargets": 3,
+    "topDemandSections": [],
+    "locallyCachedSafeIngestWithoutExternalCalls": false,
+    "note": "No additional CFR ingest tonight without confirming local cache; prior pilot used network eCFR."
+  },
+  "USC": {
+    "exactCurrentBlocker": "House OLRC quality gate failed (~208-char shell content)",
+    "unresolvedEdges": 264
+  },
+  "FederalRules": {
+    "exactCurrentBlocker": "No ingest loop / index 404; BLOCKED",
+    "unresolvedEdges": 31
+  },
+  "LocUsReports": {
+    "exactCurrentBlocker": "LOC PDF-only; NonClIntake mutation gated; BLOCKED for overnight",
+    "unresolvedEdges": 3418
+  }
+}

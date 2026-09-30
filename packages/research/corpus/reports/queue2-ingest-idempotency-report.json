@@ -1,0 +1,44 @@
+{
+  "classification": "QUEUE2_INGEST_IDEMPOTENCY_REPORT",
+  "generatedAt": "2026-09-30T02:21:12.981Z",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "method": "Local fixture/unit evidence only; no live double-ingest overnight.",
+  "checks": {
+    "authority": {
+      "status": "PASS_UNIT",
+      "evidence": "packages/research/src/corpus/adapters/adapters.test.ts + ingest.ts unique (sourceProvider, sourceExternalId)",
+      "duplicateAuthorityOnRepeat": false
+    },
+    "chunks": {
+      "status": "PASS_UNIT",
+      "evidence": "unique (authority_version_id, chunk_index); refresh.test.ts resume no duplicate versions",
+      "duplicateChunksOnRepeat": false
+    },
+    "embeddings": {
+      "status": "PASS_UNIT",
+      "evidence": "embeddings bound to chunk rows; missing_embeddings overnight integrity = 0",
+      "duplicateEmbeddingsOnRepeat": false
+    },
+    "citations": {
+      "status": "PASS_UNIT",
+      "evidence": "resolver invariant #8 dedupe; buildCitationEdgesFromText tests",
+      "duplicateCitationEdgesOnRepeat": "guarded_by_application_logic"
+    },
+    "aliases": {
+      "status": "PARTIAL",
+      "evidence": "no conflicting alias force-resolve (invariant #5)",
+      "conflictingAliasesOnRepeat": false
+    },
+    "provenance": {
+      "status": "PASS_UNIT",
+      "evidence": "source_provider + source_external_id required for CL path",
+      "conflictingProvenanceOnRepeat": false
+    }
+  },
+  "issues": [],
+  "sameSourceId": "idempotent",
+  "sameCanonicalCitation": "may_share_citation_string_but_unique_source_id",
+  "sameReporterVolumePage": "resolve_unique_exact_only",
+  "sameDocumentImportedTwice": "should_skip_via_source_uidx"
+}

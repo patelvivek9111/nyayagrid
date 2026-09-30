@@ -1,0 +1,33 @@
+{
+  "classification": "QUEUE11_FOUNDATION_ONLY",
+  "queue11Status": "NOT_OPEN",
+  "generatedAt": "2026-09-30T02:23:14.304Z",
+  "method": "Static local review notes only — no penetration testing",
+  "findings": [
+    {
+      "area": "tenant_matter_scoping",
+      "status": "OBSERVED",
+      "note": "legal_authorities corpus is intentionally global/public; matter data isolated via permissions packages"
+    },
+    {
+      "area": "admin_routes",
+      "status": "PARTIAL",
+      "note": "Existing RBAC/permissions tests present; no overnight expansion"
+    },
+    {
+      "area": "upload_validation",
+      "status": "OBSERVED",
+      "note": "sanitizeUntrustedLegalText strips scripts/injection phrases in adapters tests"
+    },
+    {
+      "area": "secret_leakage_in_logs",
+      "status": "PARTIAL",
+      "note": "Queue2 scripts generally avoid logging document bodies; continue audit in Queue #11"
+    },
+    {
+      "area": "signed_url_handling",
+      "status": "NOT_DEEP_REVIEWED_OVERNIGHT",
+      "note": "Deferred — REQUIRES_HUMAN_REVIEW for production storage paths"
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "classification": "QUEUE2_REPORTER_ALIAS_COVERAGE",
+  "generatedAt": "2026-09-30T02:20:11.416Z",
+  "courtListenerHttpCalls": 0,
+  "families": [
+    {
+      "family": "U.S.",
+      "extractedCitationsApprox": 3418,
+      "normalizedSuccessfully": 2093,
+      "failedNormalization": 0,
+      "authoritiesPresent": "see_corpus_by_family",
+      "targetAbsent": 3418,
+      "aliasesAvailable": 1,
+      "aliasCollisionCount": 0,
+      "reporters": [
+        "U.S."
+      ]
+    },
+    {
+      "family": "F.3d",
+      "extractedCitationsApprox": 2567,
+      "normalizedSuccessfully": 2324,
+      "failedNormalization": 0,
+      "authoritiesPresent": "see_corpus_by_family",
+      "targetAbsent": 2567,
+      "aliasesAvailable": 1,
+      "aliasCollisionCount": 0,
+      "reporters": [
+        "F.3d"
+      ]
+    },
+    {
+      "family": "F.4th",
+      "extractedCitationsApprox": 1003,
+      "normalizedSuccessfully": 877,
+      "failedNormalization": 0,
+      "authoritiesPresent": "see_corpus_by_family",
+      "targetAbsent": 1003,
+      "aliasesAvailable": 1,
+      "aliasCollisionCount": 0,
+      "reporters": [
+        "F.4th"
+      ]
+    },
+    {
+      "family": "F.2d",
+      "extractedCitationsApprox": 674,
+      "normalizedSuccessfully": 614,
+      "failedNormalization": 0,
+      "authoritiesPresent": "see_corpus_by_family",
+      "targetAbsent": 674,
+      "aliasesAvailable": 1,
+      "aliasCollisionCount": 0,
+      "reporters": [
+        "F.2d"
+      ]
+    },
+    {
+      "family": "F.Supp",
+      "extractedCitationsApprox": 387,
+      "normalizedSuccessfully": 353,
+      "failedNormalization": 0,
+      "authoritiesPresent": "see_corpus_by_family",
+      "targetAbsent": 387,
+      "aliasesAvailable": 3,
+      "aliasCollisionCount": 0,
+      "reporters": [
+        "F. Supp. 3d",
+        "F. Supp.",
+        "F. Supp. 2d"
+      ]
+    },
+    {
+      "family": "USC",
+      "extractedCitationsApprox": 264,
+      "normalizedSuccessfully": 196,
+      "failedNormalization": 0,
+      "authoritiesPresent": "see_corpus_by_family",
+      "targetAbsent": 264,
+      "aliasesAvailable": 1,
+      "aliasCollisionCount": 0,
+      "reporters": [
+        "U.S.C."
+      ]
+    },
+    {
+      "family": "Federal_Rules",
+      "extractedCitationsApprox": 31,
+      "normalizedSuccessfully": 14,
+      "failedNormalization": 0,
+      "authoritiesPresent": "see_corpus_by_family",
+      "targetAbsent": 31,
+      "aliasesAvailable": 3,
+      "aliasCollisionCount": 0,
+      "reporters": [
+        "Fed. R. App. P.",
+        "Fed. R. Civ. P.",
+        "Fed. R. Evid."
+      ]
+    },
+    {
+      "family": "other_federal_reporters",
+      "extractedCitationsApprox": 16,
+      "normalizedSuccessfully": 12,
+      "failedNormalization": 0,
+      "authoritiesPresent": "see_corpus_by_family",
+      "targetAbsent": 16,
+      "aliasesAvailable": 1,
+      "aliasCollisionCount": 0,
+      "reporters": [
+        "F."
+      ]
+    },
+    {
+      "family": "CFR",
+      "extractedCitationsApprox": 3,
+      "normalizedSuccessfully": 3,
+      "failedNormalization": 0,
+      "authoritiesPresent": "see_corpus_by_family",
+      "targetAbsent": 3,
+      "aliasesAvailable": 1,
+      "aliasCollisionCount": 0,
+      "reporters": [
+        "C.F.R."
+      ]
+    }
+  ],
+  "topWeaknesses": [
+    {
+      "family": "U.S.",
+      "unresolvedEdges": 3418,
+      "pct": 40.87,
+      "note": "LOC US Reports blocked; CL scotus available tomorrow"
+    },
+    {
+      "family": "F.3d",
+      "unresolvedEdges": 2567,
+      "pct": 30.69,
+      "note": "CL acquisition candidate"
+    },
+    {
+      "family": "F.4th",
+      "unresolvedEdges": 1003,
+      "pct": 11.99,
+      "note": "CL acquisition candidate"
+    },
+    {
+      "family": "F.2d",
+      "unresolvedEdges": 674,
+      "pct": 8.06,
+      "note": "CL acquisition candidate"
+    },
+    {
+      "family": "F.Supp",
+      "unresolvedEdges": 387,
+      "pct": 4.63,
+      "note": "CL acquisition candidate"
+    },
+    {
+      "family": "USC",
+      "unresolvedEdges": 264,
+      "pct": 3.16,
+      "note": "zero-CL path blocked/gated"
+    },
+    {
+      "family": "Federal_Rules",
+      "unresolvedEdges": 31,
+      "pct": 0.37,
+      "note": "zero-CL path blocked/gated"
+    },
+    {
+      "family": "other_federal_reporters",
+      "unresolvedEdges": 16,
+      "pct": 0.19,
+      "note": "CL acquisition candidate"
+    }
+  ],
+  "note": "Alias collision count left 0 overnight without full alias-table scan; foundation audit marks for Queue #3."
+}

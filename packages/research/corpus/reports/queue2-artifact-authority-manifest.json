@@ -1,0 +1,127 @@
+{
+  "classification": "QUEUE2_ARTIFACT_AUTHORITY_MANIFEST",
+  "generatedAt": "2026-09-30T02:23:14.304Z",
+  "note": "Do not delete superseded/stale files automatically. Prefer CURRENT names tomorrow.",
+  "CURRENT": [
+    {
+      "file": "queue2-balanced-10k-tracker.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "queue2-federal-depth-map.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "queue2-district-manifest.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "queue2-state-intermediate-manifest.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "queue2-year-distribution.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "queue2-retrieval-diversity.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "queue2-integrity-full-pass.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "queue2-citation-family-inventory.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "queue2-dual-value-case-queue.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "queue2-citation-denominator-sample-1000.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "queue2-morning-execution-pack.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "queue2-week1-scorecard.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "queue2-week1-remaining-checklist.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "queue2-10k-path-simulation.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "citation-coverage-roadmap.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "court-map-audit.json",
+      "status": "CURRENT"
+    },
+    {
+      "file": "queue2-artifact-authority-manifest.json",
+      "status": "CURRENT"
+    }
+  ],
+  "SUPERSEDED": [
+    {
+      "file": "queue2-offline-prep-raw.json",
+      "status": "SUPERSEDED"
+    },
+    {
+      "file": "queue2-s2-tracker.json",
+      "status": "SUPERSEDED"
+    },
+    {
+      "file": "queue2-s3-tracker.json",
+      "status": "SUPERSEDED"
+    },
+    {
+      "file": "queue2-s4-tracker-start.json",
+      "status": "SUPERSEDED"
+    },
+    {
+      "file": "queue2-s4-tracker-end.json",
+      "status": "SUPERSEDED"
+    },
+    {
+      "file": "queue2-balanced-10k-finish.json",
+      "status": "SUPERSEDED"
+    },
+    {
+      "file": "queue2-citation-target-priority-scorecard.json",
+      "status": "SUPERSEDED"
+    }
+  ],
+  "STALE": [
+    {
+      "file": "queue2-watchdog-status.json",
+      "status": "STALE"
+    },
+    {
+      "file": "queue2-watchdog-known-good.json",
+      "status": "STALE"
+    },
+    {
+      "file": "queue2-zero-cl-cite-pass-2026-09-28-evening.json",
+      "status": "STALE"
+    }
+  ],
+  "UNKNOWN": [
+    {
+      "file": "queue2-production-gap-map.json",
+      "status": "UNKNOWN",
+      "note": "Same-day afternoon; use overnight family inventory + zero-CL status instead"
+    }
+  ],
+  "integrityNote": "Integrity reported duplicateCitationEdges=4 — report only, no silent delete"
+}

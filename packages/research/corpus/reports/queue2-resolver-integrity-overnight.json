@@ -1,0 +1,12 @@
+{
+  "classification": "QUEUE2_RESOLVER_INTEGRITY_AUDIT",
+  "generatedAt": "2026-09-30T02:20:11.416Z",
+  "courtListenerHttpCalls": 0,
+  "presentUnresolvedTotal": 0,
+  "uniqueExactUnresolved": 0,
+  "ambiguousExactUnresolved": 0,
+  "bugsFound": 0,
+  "bugsFixed": 0,
+  "tests": "wave_c_will_expand_invariants",
+  "note": "Population present-unresolved remains 0. No APPLY. No fuzzy matches."
+}

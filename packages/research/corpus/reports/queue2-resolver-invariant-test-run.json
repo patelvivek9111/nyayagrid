@@ -1,0 +1,7 @@
+{
+  "classification": "QUEUE2_RESOLVER_INVARIANT_TEST_RUN",
+  "generatedAt": "2026-09-30T02:21:12.981Z",
+  "status": "PASS",
+  "exit": 0,
+  "outputTail": " target appears\nok 7 - 7 stale unresolved edge resolves after target appears\n  ---\n  duration_ms: 0.6537\n  ...\n# Subtest: 8 rerunning resolver cannot duplicate edges\nok 8 - 8 rerunning resolver cannot duplicate edges\n  ---\n  duration_ms: 0.1432\n  ...\n# Subtest: 9 resolved edge target must exist\nok 9 - 9 resolved edge target must exist\n  ---\n  duration_ms: 0.2743\n  ...\n# Subtest: 10 citation normalization must be stable across repeated runs\nok 10 - 10 citation normalization must be stable across repeated runs\n  ---\n  duration_ms: 0.8068\n  ...\n# Subtest: CFR exact-match present edges resolve uniquely\nok 11 - CFR exact-match present edges resolve uniquely\n  ---\n  duration_ms: 0.1358\n  ...\n1..11\n# tests 11\n# suites 0\n# pass 11\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 71.6918\n\n"
+}

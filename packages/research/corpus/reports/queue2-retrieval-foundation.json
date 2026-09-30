@@ -1,0 +1,20 @@
+{
+  "classification": "QUEUE6_FOUNDATION_ONLY",
+  "queue6Status": "NOT_OPEN",
+  "generatedAt": "2026-09-30T02:23:14.304Z",
+  "risks": [
+    "SPARSE_INTERMEDIATE"
+  ],
+  "chunkShape": {
+    "empty": 0,
+    "giant": 0,
+    "tiny": 788,
+    "missingEmbeddings": 0
+  },
+  "notes": [
+    "Jurisdiction imbalance: state-heavy vs federal planning split",
+    "Sparse districts and intermediate courts",
+    "Recent-year bias in several federal circuits",
+    "No paid LLM retrieval tests overnight"
+  ]
+}

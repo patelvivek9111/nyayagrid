@@ -1,0 +1,12 @@
+{
+  "classification": "OVERNIGHT_CHECKPOINT",
+  "pct": 100,
+  "generatedAt": "2026-09-30T02:27:33.234Z",
+  "verdict": "PASS",
+  "week1Status": "YELLOW",
+  "morningPackBatches": 32,
+  "plannedCases": 303,
+  "courtListenerHttpCalls": 0,
+  "paidAiCalls": 0,
+  "queue3": "NOT_OPEN"
+}

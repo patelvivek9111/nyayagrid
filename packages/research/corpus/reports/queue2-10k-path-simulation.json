@@ -1,0 +1,48 @@
+{
+  "classification": "QUEUE2_10K_PATH_SIMULATION",
+  "generatedAt": "2026-09-30T02:22:23.819Z",
+  "casesRemaining": 6930,
+  "measuredClPerCase": {
+    "G1": 2.2,
+    "G2": 2.4,
+    "G3H": 2.4,
+    "G3_DISTRICT": 2.1,
+    "G3_SCOTUS": 2.3,
+    "A2": 2.5
+  },
+  "scenarios": {
+    "A_planning_split_7650_2350": {
+      "stateCasesNeeded": 5126,
+      "federalCasesNeeded": 1804,
+      "approximateCL": 15939,
+      "healthyQuotaDaysAt400": 39.8,
+      "majorCoverageRisks": [
+        "intermediate thin states",
+        "historical holes",
+        "district sparsity"
+      ]
+    },
+    "B_federal_heavier_citation": {
+      "stateCasesNeeded": 3812,
+      "federalCasesNeeded": 3119,
+      "approximateCL": 16286,
+      "healthyQuotaDaysAt400": 40.7,
+      "majorCoverageRisks": [
+        "state underrepresentation",
+        "regional reporter demand"
+      ],
+      "justification": "Citation demand dominated by U.S./F.3d/F.4th"
+    },
+    "C_coverage_first_balance": {
+      "stateCasesNeeded": 4851,
+      "federalCasesNeeded": 2079,
+      "approximateCL": 15593,
+      "healthyQuotaDaysAt400": 39,
+      "majorCoverageRisks": [
+        "slower citation resolution",
+        "SCOTUS dual-value delayed"
+      ]
+    }
+  },
+  "note": "Planning only. Do not change acquisition targets automatically."
+}

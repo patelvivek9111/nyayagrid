@@ -1,0 +1,34 @@
+{
+  "classification": "QUEUE2_DATA_QUALITY_CONTRACTS",
+  "generatedAt": "2026-09-30T02:21:12.981Z",
+  "invariants": {
+    "CASE": [
+      "canonical identity (id)",
+      "source_provider",
+      "source_external_id (when CL)",
+      "court_id or court",
+      "authority_state / jurisdiction",
+      "decision_date (nullable labeled)",
+      "primary text via versions/chunks",
+      "provenance via source fields"
+    ],
+    "REGULATION": [
+      "citation identity",
+      "authoritative source",
+      "section",
+      "primary text",
+      "provenance",
+      "currentness metadata"
+    ],
+    "CITATION_EDGE": [
+      "citing authority (from_authority_id)",
+      "raw_citation",
+      "normalized_citation (preferred)",
+      "status implied by to_authority_id nullability",
+      "target when resolved must exist"
+    ]
+  },
+  "overnightIntegrityRef": "queue2-integrity-full-pass.json",
+  "invariantFailures": [],
+  "note": "Encoded as documentation + integrity probe checks; no silent deletes."
+}

@@ -8,8 +8,8 @@ const postgres = require("postgres");
 const fs = require("fs");
 const path = require("path");
 
-const SAMPLE_TARGET = 400;
-const PER_STRATUM = 45;
+const SAMPLE_TARGET = Number(process.env.DENOM_SAMPLE_TARGET || 1000);
+const PER_STRATUM = Number(process.env.DENOM_PER_STRATUM || 120);
 
 const STRATA = [
   { key: "U.S.", re: /\b\d+\s+U\.?\s*S\.?\s+\d+/i },
@@ -24,9 +24,8 @@ const STRATA = [
 ];
 
 function classify(norm, raw, isDefect) {
-  if (isDefect) return "RESOLVER_DEFECT";
+  if (isDefect) return "VALID_PRESENT_UNRESOLVED_DEFECT";
   const n = String(norm || "").trim();
-  const r = String(raw || "").trim();
   if (!n || n.length < 3) return "MALFORMED";
   if (/^[\d\s.,;:]+$/.test(n)) return "MALFORMED";
   if (/\?\?\?|FIXME|TODO|lorem/i.test(n)) return "MALFORMED";
@@ -39,6 +38,7 @@ function classify(norm, raw, isDefect) {
   if (/^\d+\s+[A-Za-z.\s]+$/.test(n) && !/\d+$/.test(n) && !/section/i.test(n)) return "AMBIGUOUS";
   if (/\bS\.\s*Ct\.\b/i.test(n) && !/\bU\.?\s*S\.?\s+\d+/i.test(n)) return "SOURCE_UNAVAILABLE";
   if (/\bL\.\s*Ed\.?\s*(2d)?\b/i.test(n) && !/\bU\.?\s*S\.?\s+\d+/i.test(n)) return "SOURCE_UNAVAILABLE";
+  // Well-formed primary families with local-absent evidence only.
   if (/\b\d+\s+U\.?\s*S\.?\s+\d+/i.test(n)) return "VALID_TARGET_ABSENT";
   if (/\b\d+\s+F\.\s*(2d|3d|4th)\s+\d+/i.test(n)) return "VALID_TARGET_ABSENT";
   if (/\b\d+\s+F\.\s*Supp/i.test(n)) return "VALID_TARGET_ABSENT";
@@ -46,7 +46,10 @@ function classify(norm, raw, isDefect) {
   if (/\b\d+\s+C\.?\s*F\.?\s*R\.?/i.test(n)) return "VALID_TARGET_ABSENT";
   if (/\bFed\.\s*R\./i.test(n)) return "VALID_TARGET_ABSENT";
   if (/\b\d+\s+[A-Z][a-z]+\.?\s*(2d|3d)?\s+\d+/i.test(n)) return "VALID_TARGET_ABSENT";
-  if (/\d/.test(n) && /[A-Za-z]/.test(n) && n.length >= 6) return "VALID_TARGET_ABSENT";
+  // Do not guess — insufficient local parser evidence.
+  if (/\d/.test(n) && /[A-Za-z]/.test(n) && n.length >= 6) {
+    return "UNKNOWN_REQUIRES_EXTERNAL_VERIFICATION";
+  }
   return "AMBIGUOUS";
 }
 
@@ -118,12 +121,14 @@ async function main() {
 
     const counts = {
       VALID_TARGET_ABSENT: 0,
+      VALID_PRESENT_RESOLVED: 0,
+      VALID_PRESENT_UNRESOLVED_DEFECT: 0,
       AMBIGUOUS: 0,
       MALFORMED: 0,
       OUT_OF_SCOPE: 0,
       UNSUPPORTED_TYPE: 0,
       SOURCE_UNAVAILABLE: 0,
-      RESOLVER_DEFECT: 0,
+      UNKNOWN_REQUIRES_EXTERNAL_VERIFICATION: 0,
     };
     const rows = [];
     for (const e of sample) {

@@ -1,0 +1,3188 @@
+{
+  "classification": "DUAL_VALUE_CASE_QUEUE",
+  "generatedAt": "2026-09-30T02:20:11.416Z",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "weightsFile": "packages/research/corpus/config/queue2-balanced-priority-weights.json",
+  "candidateCount": 97,
+  "top20": [
+    {
+      "rank": 1,
+      "normalizedCitation": "573 U.S. 373",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 573,
+      "page": 373,
+      "unresolvedCitationEdges": 11,
+      "uniqueCiters": 11,
+      "hierarchyWeight": 100,
+      "citationScore": 33.7,
+      "coverageScore": 40,
+      "dualValueScore": 73.7,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "CT",
+        "ID",
+        "IN",
+        "MI",
+        "US",
+        "WI"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 2,
+      "normalizedCitation": "578 U.S. 330",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 578,
+      "page": 330,
+      "unresolvedCitationEdges": 10,
+      "uniqueCiters": 10,
+      "hierarchyWeight": 100,
+      "citationScore": 32,
+      "coverageScore": 40,
+      "dualValueScore": 72,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "IL",
+        "NV",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 3,
+      "normalizedCitation": "477 U.S. 242",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 477,
+      "page": 242,
+      "unresolvedCitationEdges": 9,
+      "uniqueCiters": 9,
+      "hierarchyWeight": 100,
+      "citationScore": 30.3,
+      "coverageScore": 40,
+      "dualValueScore": 70.3,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "FL",
+        "SD",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 4,
+      "normalizedCitation": "573 U.S. 149",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 573,
+      "page": 149,
+      "unresolvedCitationEdges": 8,
+      "uniqueCiters": 8,
+      "hierarchyWeight": 100,
+      "citationScore": 28.6,
+      "coverageScore": 40,
+      "dualValueScore": 68.6,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "NV",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 5,
+      "normalizedCitation": "528 U.S. 167",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 528,
+      "page": 167,
+      "unresolvedCitationEdges": 7,
+      "uniqueCiters": 7,
+      "hierarchyWeight": 100,
+      "citationScore": 26.9,
+      "coverageScore": 40,
+      "dualValueScore": 66.9,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "KY",
+        "US",
+        "VA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 6,
+      "normalizedCitation": "549 U.S. 1",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 549,
+      "page": 1,
+      "unresolvedCitationEdges": 7,
+      "uniqueCiters": 7,
+      "hierarchyWeight": 100,
+      "citationScore": 26.9,
+      "coverageScore": 40,
+      "dualValueScore": 66.9,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AZ",
+        "MN",
+        "US",
+        "UT"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 7,
+      "normalizedCitation": "568 U.S. 165",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 568,
+      "page": 165,
+      "unresolvedCitationEdges": 7,
+      "uniqueCiters": 7,
+      "hierarchyWeight": 100,
+      "citationScore": 26.9,
+      "coverageScore": 40,
+      "dualValueScore": 66.9,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "DC",
+        "MN",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 8,
+      "normalizedCitation": "598 U.S. 411",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 598,
+      "page": 411,
+      "unresolvedCitationEdges": 7,
+      "uniqueCiters": 7,
+      "hierarchyWeight": 100,
+      "citationScore": 26.9,
+      "coverageScore": 40,
+      "dualValueScore": 66.9,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 9,
+      "normalizedCitation": "232 U.S. 383",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 232,
+      "page": 383,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "MI",
+        "MN",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 10,
+      "normalizedCitation": "407 U.S. 514",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 407,
+      "page": 514,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "GA",
+        "MS",
+        "NM",
+        "NY",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 11,
+      "normalizedCitation": "475 U.S. 673",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 475,
+      "page": 673,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AR",
+        "DC",
+        "IN",
+        "MT",
+        "US",
+        "WI"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 12,
+      "normalizedCitation": "488 U.S. 75",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 488,
+      "page": 75,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "DE",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 13,
+      "normalizedCitation": "530 U.S. 466",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 530,
+      "page": 466,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "KS",
+        "MI",
+        "NJ",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 14,
+      "normalizedCitation": "544 U.S. 280",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 544,
+      "page": 280,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 15,
+      "normalizedCitation": "568 U.S. 398",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 568,
+      "page": 398,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US",
+        "VA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 16,
+      "normalizedCitation": "577 U.S. 39",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 577,
+      "page": 39,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US",
+        "WI"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 17,
+      "normalizedCitation": "579 U.S. 500",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 579,
+      "page": 500,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "NJ",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 18,
+      "normalizedCitation": "596 U.S. 411",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 596,
+      "page": 411,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AL",
+        "CA",
+        "IA",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 19,
+      "normalizedCitation": "597 U.S. 215",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 597,
+      "page": 215,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AZ",
+        "KS",
+        "LA",
+        "NM",
+        "NV",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 20,
+      "normalizedCitation": "304 U.S. 458",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 304,
+      "page": 458,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "IA",
+        "ME",
+        "MN",
+        "SC"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    }
+  ],
+  "queue": [
+    {
+      "rank": 1,
+      "normalizedCitation": "573 U.S. 373",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 573,
+      "page": 373,
+      "unresolvedCitationEdges": 11,
+      "uniqueCiters": 11,
+      "hierarchyWeight": 100,
+      "citationScore": 33.7,
+      "coverageScore": 40,
+      "dualValueScore": 73.7,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "CT",
+        "ID",
+        "IN",
+        "MI",
+        "US",
+        "WI"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 2,
+      "normalizedCitation": "578 U.S. 330",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 578,
+      "page": 330,
+      "unresolvedCitationEdges": 10,
+      "uniqueCiters": 10,
+      "hierarchyWeight": 100,
+      "citationScore": 32,
+      "coverageScore": 40,
+      "dualValueScore": 72,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "IL",
+        "NV",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 3,
+      "normalizedCitation": "477 U.S. 242",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 477,
+      "page": 242,
+      "unresolvedCitationEdges": 9,
+      "uniqueCiters": 9,
+      "hierarchyWeight": 100,
+      "citationScore": 30.3,
+      "coverageScore": 40,
+      "dualValueScore": 70.3,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "FL",
+        "SD",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 4,
+      "normalizedCitation": "573 U.S. 149",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 573,
+      "page": 149,
+      "unresolvedCitationEdges": 8,
+      "uniqueCiters": 8,
+      "hierarchyWeight": 100,
+      "citationScore": 28.6,
+      "coverageScore": 40,
+      "dualValueScore": 68.6,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "NV",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 5,
+      "normalizedCitation": "528 U.S. 167",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 528,
+      "page": 167,
+      "unresolvedCitationEdges": 7,
+      "uniqueCiters": 7,
+      "hierarchyWeight": 100,
+      "citationScore": 26.9,
+      "coverageScore": 40,
+      "dualValueScore": 66.9,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "KY",
+        "US",
+        "VA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 6,
+      "normalizedCitation": "549 U.S. 1",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 549,
+      "page": 1,
+      "unresolvedCitationEdges": 7,
+      "uniqueCiters": 7,
+      "hierarchyWeight": 100,
+      "citationScore": 26.9,
+      "coverageScore": 40,
+      "dualValueScore": 66.9,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AZ",
+        "MN",
+        "US",
+        "UT"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 7,
+      "normalizedCitation": "568 U.S. 165",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 568,
+      "page": 165,
+      "unresolvedCitationEdges": 7,
+      "uniqueCiters": 7,
+      "hierarchyWeight": 100,
+      "citationScore": 26.9,
+      "coverageScore": 40,
+      "dualValueScore": 66.9,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "DC",
+        "MN",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 8,
+      "normalizedCitation": "598 U.S. 411",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 598,
+      "page": 411,
+      "unresolvedCitationEdges": 7,
+      "uniqueCiters": 7,
+      "hierarchyWeight": 100,
+      "citationScore": 26.9,
+      "coverageScore": 40,
+      "dualValueScore": 66.9,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 9,
+      "normalizedCitation": "232 U.S. 383",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 232,
+      "page": 383,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "MI",
+        "MN",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 10,
+      "normalizedCitation": "407 U.S. 514",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 407,
+      "page": 514,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "GA",
+        "MS",
+        "NM",
+        "NY",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 11,
+      "normalizedCitation": "475 U.S. 673",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 475,
+      "page": 673,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AR",
+        "DC",
+        "IN",
+        "MT",
+        "US",
+        "WI"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 12,
+      "normalizedCitation": "488 U.S. 75",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 488,
+      "page": 75,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "DE",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 13,
+      "normalizedCitation": "530 U.S. 466",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 530,
+      "page": 466,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "KS",
+        "MI",
+        "NJ",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 14,
+      "normalizedCitation": "544 U.S. 280",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 544,
+      "page": 280,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 15,
+      "normalizedCitation": "568 U.S. 398",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 568,
+      "page": 398,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US",
+        "VA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 16,
+      "normalizedCitation": "577 U.S. 39",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 577,
+      "page": 39,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US",
+        "WI"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 17,
+      "normalizedCitation": "579 U.S. 500",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 579,
+      "page": 500,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "NJ",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 18,
+      "normalizedCitation": "596 U.S. 411",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 596,
+      "page": 411,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AL",
+        "CA",
+        "IA",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 19,
+      "normalizedCitation": "597 U.S. 215",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 597,
+      "page": 215,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 100,
+      "citationScore": 25.2,
+      "coverageScore": 40,
+      "dualValueScore": 65.2,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AZ",
+        "KS",
+        "LA",
+        "NM",
+        "NV",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 20,
+      "normalizedCitation": "304 U.S. 458",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 304,
+      "page": 458,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "IA",
+        "ME",
+        "MN",
+        "SC"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 21,
+      "normalizedCitation": "315 U.S. 568",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 315,
+      "page": 568,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "VA",
+        "VT",
+        "WI",
+        "WY"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 22,
+      "normalizedCitation": "391 U.S. 123",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 391,
+      "page": 123,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "NM",
+        "US",
+        "VA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 23,
+      "normalizedCitation": "415 U.S. 452",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 415,
+      "page": 452,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 24,
+      "normalizedCitation": "426 U.S. 610",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 426,
+      "page": 610,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AZ",
+        "RI",
+        "US",
+        "VT"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 25,
+      "normalizedCitation": "429 U.S. 97",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 429,
+      "page": 97,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "MS",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 26,
+      "normalizedCitation": "441 U.S. 418",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 441,
+      "page": 418,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "CA",
+        "IA",
+        "IN",
+        "WA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 27,
+      "normalizedCitation": "441 U.S. 520",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 441,
+      "page": 520,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AZ",
+        "IA",
+        "NJ",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 28,
+      "normalizedCitation": "448 U.S. 136",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 448,
+      "page": 136,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AK",
+        "NV"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 29,
+      "normalizedCitation": "455 U.S. 104",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 455,
+      "page": 104,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AZ",
+        "IN",
+        "MS"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 30,
+      "normalizedCitation": "463 U.S. 248",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 463,
+      "page": 248,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AL",
+        "AZ",
+        "FL",
+        "LA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 31,
+      "normalizedCitation": "470 U.S. 564",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 470,
+      "page": 564,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AR",
+        "ME",
+        "US",
+        "VA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 32,
+      "normalizedCitation": "476 U.S. 683",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 476,
+      "page": 683,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "GA",
+        "IN",
+        "NJ",
+        "SC"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 33,
+      "normalizedCitation": "480 U.S. 39",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 480,
+      "page": 39,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "DC",
+        "IL",
+        "NC",
+        "NH"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 34,
+      "normalizedCitation": "481 U.S. 739",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 481,
+      "page": 739,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "KS",
+        "ME",
+        "NJ",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 35,
+      "normalizedCitation": "501 U.S. 1030",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 501,
+      "page": 1030,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "FL",
+        "IN",
+        "VA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 36,
+      "normalizedCitation": "501 U.S. 429",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 501,
+      "page": 429,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AL",
+        "DC",
+        "KS",
+        "US",
+        "VA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 37,
+      "normalizedCitation": "510 U.S. 540",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 510,
+      "page": 540,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "IL",
+        "NM",
+        "US",
+        "WI"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 38,
+      "normalizedCitation": "513 U.S. 298",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 513,
+      "page": 298,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "CA",
+        "ID",
+        "MT",
+        "US",
+        "VA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 39,
+      "normalizedCitation": "517 U.S. 690",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 517,
+      "page": 690,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "DC",
+        "IN",
+        "KY",
+        "MO",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 40,
+      "normalizedCitation": "519 U.S. 172",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 519,
+      "page": 172,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "GA",
+        "ME",
+        "US",
+        "UT"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 41,
+      "normalizedCitation": "520 U.S. 154",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 520,
+      "page": 154,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 42,
+      "normalizedCitation": "522 U.S. 136",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 522,
+      "page": 136,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "OR",
+        "SD",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 43,
+      "normalizedCitation": "527 U.S. 1",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 527,
+      "page": 1,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "IA",
+        "LA",
+        "ME",
+        "UT"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 44,
+      "normalizedCitation": "529 U.S. 473",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 529,
+      "page": 473,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 45,
+      "normalizedCitation": "542 U.S. 296",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 542,
+      "page": 296,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "KS",
+        "LA",
+        "NJ",
+        "WA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 46,
+      "normalizedCitation": "547 U.S. 586",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 547,
+      "page": 586,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AZ",
+        "ID",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 47,
+      "normalizedCitation": "549 U.S. 384",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 549,
+      "page": 384,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "NJ",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 48,
+      "normalizedCitation": "549 U.S. 422",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 549,
+      "page": 422,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 49,
+      "normalizedCitation": "551 U.S. 930",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 551,
+      "page": 930,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "KY",
+        "MO",
+        "UT"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 50,
+      "normalizedCitation": "557 U.S. 305",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 557,
+      "page": 305,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "MN",
+        "MS",
+        "RI",
+        "VA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 51,
+      "normalizedCitation": "558 U.S. 310",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 558,
+      "page": 310,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "FL",
+        "US",
+        "VA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 52,
+      "normalizedCitation": "565 U.S. 400",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 565,
+      "page": 400,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AZ",
+        "IN",
+        "NC",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 53,
+      "normalizedCitation": "567 U.S. 298",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 567,
+      "page": 298,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "DC",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 54,
+      "normalizedCitation": "572 U.S. 393",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 572,
+      "page": 393,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "DC",
+        "IN",
+        "OH",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 55,
+      "normalizedCitation": "582 U.S. 98",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 582,
+      "page": 98,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "CA",
+        "MI",
+        "NJ",
+        "VA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 56,
+      "normalizedCitation": "583 U.S. 48",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 583,
+      "page": 48,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "DC",
+        "KS",
+        "MI",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 57,
+      "normalizedCitation": "598 U.S. 631",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 598,
+      "page": 631,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "MI",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 58,
+      "normalizedCitation": "602 U.S. 779",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 602,
+      "page": 779,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "IL",
+        "ME",
+        "RI",
+        "VA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 59,
+      "normalizedCitation": "602 U.S. 821",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 602,
+      "page": 821,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 100,
+      "citationScore": 23.5,
+      "coverageScore": 40,
+      "dualValueScore": 63.5,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "DE",
+        "KS",
+        "MS",
+        "NJ",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 60,
+      "normalizedCitation": "263 U.S. 413",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 263,
+      "page": 413,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 61,
+      "normalizedCitation": "267 U.S. 132",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 267,
+      "page": 132,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "ID",
+        "KY",
+        "MI",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 62,
+      "normalizedCitation": "315 U.S. 257",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 315,
+      "page": 257,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "DC",
+        "PA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 63,
+      "normalizedCitation": "341 U.S. 367",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 341,
+      "page": 367,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AK",
+        "IA",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 64,
+      "normalizedCitation": "353 U.S. 53",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 353,
+      "page": 53,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "DC",
+        "DE",
+        "OK"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 65,
+      "normalizedCitation": "371 U.S. 471",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 371,
+      "page": 471,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AZ",
+        "MI",
+        "MN"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 66,
+      "normalizedCitation": "380 U.S. 400",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 380,
+      "page": 400,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "IL",
+        "MN"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 67,
+      "normalizedCitation": "388 U.S. 14",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 388,
+      "page": 14,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AZ",
+        "IN",
+        "ME",
+        "WI"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 68,
+      "normalizedCitation": "388 U.S. 395",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 388,
+      "page": 395,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AL",
+        "IA",
+        "NM",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 69,
+      "normalizedCitation": "392 U.S. 40",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 392,
+      "page": 40,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "DC",
+        "IL",
+        "IN"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 70,
+      "normalizedCitation": "405 U.S. 645",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 405,
+      "page": 645,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "LA",
+        "MO",
+        "NV",
+        "TX"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 71,
+      "normalizedCitation": "413 U.S. 433",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 413,
+      "page": 433,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "IA",
+        "IL",
+        "WA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 72,
+      "normalizedCitation": "422 U.S. 590",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 422,
+      "page": 590,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "ID",
+        "MA",
+        "MN"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 73,
+      "normalizedCitation": "424 U.S. 800",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 424,
+      "page": 800,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 74,
+      "normalizedCitation": "429 U.S. 545",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 429,
+      "page": 545,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "IN",
+        "KY",
+        "NH"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 75,
+      "normalizedCitation": "441 U.S. 380",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 441,
+      "page": 380,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AL",
+        "AZ",
+        "FL",
+        "LA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 76,
+      "normalizedCitation": "442 U.S. 1",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 442,
+      "page": 1,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "IA",
+        "NJ"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 77,
+      "normalizedCitation": "442 U.S. 289",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 442,
+      "page": 289,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "NE",
+        "NV",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 78,
+      "normalizedCitation": "442 U.S. 735",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 442,
+      "page": 735,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AZ",
+        "KS",
+        "US",
+        "WI"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 79,
+      "normalizedCitation": "447 U.S. 231",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 447,
+      "page": 231,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AZ",
+        "DC",
+        "VT"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 80,
+      "normalizedCitation": "449 U.S. 411",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 449,
+      "page": 411,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "DC",
+        "ID",
+        "OH"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 81,
+      "normalizedCitation": "455 U.S. 422",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 455,
+      "page": 422,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AK"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 82,
+      "normalizedCitation": "456 U.S. 152",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 456,
+      "page": 152,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "CO",
+        "DC",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 83,
+      "normalizedCitation": "457 U.S. 800",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 457,
+      "page": 800,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "IA",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 84,
+      "normalizedCitation": "460 U.S. 462",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 460,
+      "page": 462,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 85,
+      "normalizedCitation": "463 U.S. 29",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 463,
+      "page": 29,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AZ",
+        "FL",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 86,
+      "normalizedCitation": "466 U.S. 109",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 466,
+      "page": 109,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "KS",
+        "US",
+        "WI"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 87,
+      "normalizedCitation": "467 U.S. 229",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 467,
+      "page": 229,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "LA",
+        "NJ",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 88,
+      "normalizedCitation": "467 U.S. 431",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 467,
+      "page": 431,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AZ",
+        "MN",
+        "NC"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 89,
+      "normalizedCitation": "471 U.S. 707",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 471,
+      "page": 707,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "KS",
+        "MA",
+        "NJ"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 90,
+      "normalizedCitation": "472 U.S. 115",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 472,
+      "page": 115,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "AK"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 91,
+      "normalizedCitation": "474 U.S. 52",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 474,
+      "page": 52,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "KY",
+        "MN",
+        "MS",
+        "WV"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 92,
+      "normalizedCitation": "476 U.S. 207",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 476,
+      "page": 207,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "IL",
+        "NC",
+        "PA",
+        "VA"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 93,
+      "normalizedCitation": "481 U.S. 200",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 481,
+      "page": 200,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 94,
+      "normalizedCitation": "481 U.S. 551",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 481,
+      "page": 551,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "IA",
+        "ID",
+        "IL"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 95,
+      "normalizedCitation": "488 U.S. 51",
+      "family": "us_reports",
+      "reporter": "U.S.",
+      "volume": 488,
+      "page": 51,
+      "unresolvedCitationEdges": 4,
+      "uniqueCiters": 4,
+      "hierarchyWeight": 100,
+      "citationScore": 21.8,
+      "coverageScore": 40,
+      "dualValueScore": 61.8,
+      "coverageReasons": [
+        "federal_scotus_coverage"
+      ],
+      "citingJurisdictions": [
+        "DC",
+        "FL",
+        "KY",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": true,
+      "recommendedAcquisitionPath": "CourtListener scotus + existing US Reports / LOC non-CL intake if enabled",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 96,
+      "normalizedCitation": "885 F.3d 436",
+      "family": "federal_reporter",
+      "reporter": "F.3d",
+      "volume": 885,
+      "page": 436,
+      "unresolvedCitationEdges": 6,
+      "uniqueCiters": 6,
+      "hierarchyWeight": 80,
+      "citationScore": 22.2,
+      "coverageScore": 20,
+      "dualValueScore": 42.2,
+      "coverageReasons": [
+        "federal_circuit_coverage"
+      ],
+      "citingJurisdictions": [
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "recommendedAcquisitionPath": "CourtListener circuit opinions (ca1–ca11/cadc/cafc)",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    },
+    {
+      "rank": 97,
+      "normalizedCitation": "124 F.4th 218",
+      "family": "federal_reporter",
+      "reporter": "F.4th",
+      "volume": 124,
+      "page": 218,
+      "unresolvedCitationEdges": 5,
+      "uniqueCiters": 5,
+      "hierarchyWeight": 80,
+      "citationScore": 20.5,
+      "coverageScore": 20,
+      "dualValueScore": 40.5,
+      "coverageReasons": [
+        "federal_circuit_coverage"
+      ],
+      "citingJurisdictions": [
+        "TX",
+        "US"
+      ],
+      "clObtainable": true,
+      "zeroClCandidate": false,
+      "recommendedAcquisitionPath": "CourtListener circuit opinions (ca1–ca11/cadc/cafc)",
+      "sourceConfidence": "HIGH",
+      "doNotFetchTonight": true
+    }
+  ],
+  "note": "Do NOT fetch tonight. Highest-value CL queue for tomorrow."
+}

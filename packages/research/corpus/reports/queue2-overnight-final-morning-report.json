@@ -1,0 +1,975 @@
+{
+  "classification": "OVERNIGHT_ZERO_QUOTA_WEEK1_PREPARATION",
+  "extendedClassification": "OVERNIGHT_ZERO_QUOTA_WEEK1_EXTENDED",
+  "verdict": "PASS",
+  "generatedAt": "2026-09-30T02:27:33.234Z",
+  "OVERNIGHT_EXTERNAL_USAGE": {
+    "CourtListenerHTTP": 0,
+    "PaidAICalls": 0,
+    "FlyAcquisitionJobs": 0,
+    "note": "Short read-only Fly machine-exec DB probes used; no acquisition jobs"
+  },
+  "WEEK_1": {
+    "currentCases": 3070,
+    "target": 3500,
+    "gap": 430,
+    "requiredPace": 86,
+    "daysRemaining": 5,
+    "status": "YELLOW",
+    "reason": "On recoverable pace: need ~86/day for 5 days; integrity clean; morning pack ready"
+  },
+  "10K_TRACKER": {
+    "stateDc": 2524,
+    "federal": 546,
+    "remaining": 6930,
+    "largestDeficits": [
+      {
+        "jurisdiction": "NE",
+        "cases": 45,
+        "deficit": 105,
+        "balancedPriority": 523.6
+      },
+      {
+        "jurisdiction": "NC",
+        "cases": 46,
+        "deficit": 104,
+        "balancedPriority": 521.2
+      },
+      {
+        "jurisdiction": "ID",
+        "cases": 45,
+        "deficit": 105,
+        "balancedPriority": 519.7
+      },
+      {
+        "jurisdiction": "AL",
+        "cases": 45,
+        "deficit": 105,
+        "balancedPriority": 518.95
+      },
+      {
+        "jurisdiction": "AK",
+        "cases": 45,
+        "deficit": 105,
+        "balancedPriority": 516.1
+      },
+      {
+        "jurisdiction": "OK",
+        "cases": 45,
+        "deficit": 105,
+        "balancedPriority": 515.05
+      },
+      {
+        "jurisdiction": "OR",
+        "cases": 45,
+        "deficit": 105,
+        "balancedPriority": 515.05
+      },
+      {
+        "jurisdiction": "MO",
+        "cases": 46,
+        "deficit": 104,
+        "balancedPriority": 514.9
+      }
+    ]
+  },
+  "FEDERAL": {
+    "SCOTUS": {
+      "bucket": "scotus",
+      "label": "SCOTUS",
+      "cases": 92,
+      "earliestYear": 1906,
+      "latestYear": 2026,
+      "pre2000": 47,
+      "pre1980": 31,
+      "recent": 23,
+      "citationDemandOverlap": 303,
+      "deficit": 0,
+      "historicalWeakness": false,
+      "yearBuckets": {
+        "pre1950": 2,
+        "y1950_1969": 11,
+        "y1970_1979": 18,
+        "y1980_1989": 9,
+        "y1990_1999": 7,
+        "y2000_2009": 14,
+        "y2010_2019": 10,
+        "y2020_present": 21
+      },
+      "flags": [
+        "STRONG"
+      ]
+    },
+    "weakestCircuits": [],
+    "recentHeavyCircuits": [
+      {
+        "bucket": "ca1",
+        "label": "1st Circuit",
+        "cases": 11,
+        "earliestYear": 2026,
+        "latestYear": 2026,
+        "pre2000": 0,
+        "pre1980": 0,
+        "recent": 11,
+        "citationDemandOverlap": 241,
+        "deficit": 14,
+        "historicalWeakness": true,
+        "yearBuckets": {
+          "pre1950": 0,
+          "y1950_1969": 0,
+          "y1970_1979": 0,
+          "y1980_1989": 0,
+          "y1990_1999": 0,
+          "y2000_2009": 0,
+          "y2010_2019": 0,
+          "y2020_present": 11
+        },
+        "flags": [
+          "HISTORICALLY_THIN",
+          "RECENT_HEAVY"
+        ]
+      },
+      {
+        "bucket": "ca3",
+        "label": "3rd Circuit",
+        "cases": 27,
+        "earliestYear": 1990,
+        "latestYear": 2026,
+        "pre2000": 6,
+        "pre1980": 0,
+        "recent": 21,
+        "citationDemandOverlap": 328,
+        "deficit": 0,
+        "historicalWeakness": false,
+        "yearBuckets": {
+          "pre1950": 0,
+          "y1950_1969": 0,
+          "y1970_1979": 0,
+          "y1980_1989": 0,
+          "y1990_1999": 6,
+          "y2000_2009": 0,
+          "y2010_2019": 0,
+          "y2020_present": 21
+        },
+        "flags": [
+          "RECENT_HEAVY"
+        ]
+      },
+      {
+        "bucket": "ca5",
+        "label": "5th Circuit",
+        "cases": 25,
+        "earliestYear": 1980,
+        "latestYear": 2026,
+        "pre2000": 7,
+        "pre1980": 0,
+        "recent": 18,
+        "citationDemandOverlap": 263,
+        "deficit": 0,
+        "historicalWeakness": false,
+        "yearBuckets": {
+          "pre1950": 0,
+          "y1950_1969": 0,
+          "y1970_1979": 0,
+          "y1980_1989": 1,
+          "y1990_1999": 6,
+          "y2000_2009": 0,
+          "y2010_2019": 0,
+          "y2020_present": 18
+        },
+        "flags": [
+          "RECENT_HEAVY"
+        ]
+      },
+      {
+        "bucket": "ca8",
+        "label": "8th Circuit",
+        "cases": 25,
+        "earliestYear": 1990,
+        "latestYear": 2026,
+        "pre2000": 4,
+        "pre1980": 0,
+        "recent": 21,
+        "citationDemandOverlap": 185,
+        "deficit": 0,
+        "historicalWeakness": false,
+        "yearBuckets": {
+          "pre1950": 0,
+          "y1950_1969": 0,
+          "y1970_1979": 0,
+          "y1980_1989": 0,
+          "y1990_1999": 4,
+          "y2000_2009": 0,
+          "y2010_2019": 0,
+          "y2020_present": 21
+        },
+        "flags": [
+          "RECENT_HEAVY"
+        ]
+      },
+      {
+        "bucket": "ca9",
+        "label": "9th Circuit",
+        "cases": 35,
+        "earliestYear": 1990,
+        "latestYear": 2026,
+        "pre2000": 7,
+        "pre1980": 0,
+        "recent": 27,
+        "citationDemandOverlap": 199,
+        "deficit": 0,
+        "historicalWeakness": false,
+        "yearBuckets": {
+          "pre1950": 0,
+          "y1950_1969": 0,
+          "y1970_1979": 0,
+          "y1980_1989": 0,
+          "y1990_1999": 7,
+          "y2000_2009": 0,
+          "y2010_2019": 0,
+          "y2020_present": 27
+        },
+        "flags": [
+          "RECENT_HEAVY"
+        ]
+      },
+      {
+        "bucket": "ca11",
+        "label": "11th Circuit",
+        "cases": 25,
+        "earliestYear": 2026,
+        "latestYear": 2026,
+        "pre2000": 0,
+        "pre1980": 0,
+        "recent": 25,
+        "citationDemandOverlap": 255,
+        "deficit": 0,
+        "historicalWeakness": true,
+        "yearBuckets": {
+          "pre1950": 0,
+          "y1950_1969": 0,
+          "y1970_1979": 0,
+          "y1980_1989": 0,
+          "y1990_1999": 0,
+          "y2000_2009": 0,
+          "y2010_2019": 0,
+          "y2020_present": 25
+        },
+        "flags": [
+          "HISTORICALLY_THIN",
+          "RECENT_HEAVY"
+        ]
+      },
+      {
+        "bucket": "cadc",
+        "label": "D.C. Circuit",
+        "cases": 23,
+        "earliestYear": 1995,
+        "latestYear": 2026,
+        "pre2000": 1,
+        "pre1980": 0,
+        "recent": 22,
+        "citationDemandOverlap": 340,
+        "deficit": 2,
+        "historicalWeakness": false,
+        "yearBuckets": {
+          "pre1950": 0,
+          "y1950_1969": 0,
+          "y1970_1979": 0,
+          "y1980_1989": 0,
+          "y1990_1999": 1,
+          "y2000_2009": 0,
+          "y2010_2019": 0,
+          "y2020_present": 22
+        },
+        "flags": [
+          "RECENT_HEAVY"
+        ]
+      },
+      {
+        "bucket": "cafc",
+        "label": "Federal Circuit",
+        "cases": 30,
+        "earliestYear": 1990,
+        "latestYear": 2026,
+        "pre2000": 9,
+        "pre1980": 0,
+        "recent": 21,
+        "citationDemandOverlap": 68,
+        "deficit": 0,
+        "historicalWeakness": false,
+        "yearBuckets": {
+          "pre1950": 0,
+          "y1950_1969": 0,
+          "y1970_1979": 0,
+          "y1980_1989": 0,
+          "y1990_1999": 9,
+          "y2000_2009": 0,
+          "y2010_2019": 0,
+          "y2020_present": 21
+        },
+        "flags": [
+          "RECENT_HEAVY"
+        ]
+      }
+    ],
+    "districtCoverage": {
+      "mapped": 12,
+      "withCases": 9
+    }
+  },
+  "STATE": {
+    "lowestCovered": [
+      "NE",
+      "NC",
+      "ID",
+      "AL",
+      "AK",
+      "OK",
+      "OR",
+      "MO"
+    ],
+    "intermediateGaps": [
+      {
+        "jurisdiction": "NE",
+        "intermediate": 0,
+        "total": 45,
+        "status": "NEEDS_VERIFICATION_TOMORROW"
+      },
+      {
+        "jurisdiction": "NC",
+        "intermediate": 0,
+        "total": 46,
+        "status": "NEEDS_VERIFICATION_TOMORROW"
+      },
+      {
+        "jurisdiction": "ID",
+        "intermediate": 0,
+        "total": 45,
+        "status": "NEEDS_VERIFICATION_TOMORROW"
+      },
+      {
+        "jurisdiction": "AL",
+        "intermediate": 0,
+        "total": 45,
+        "status": "NEEDS_VERIFICATION_TOMORROW"
+      },
+      {
+        "jurisdiction": "AK",
+        "intermediate": 0,
+        "total": 45,
+        "status": "NEEDS_VERIFICATION_TOMORROW"
+      },
+      {
+        "jurisdiction": "OK",
+        "intermediate": 0,
+        "total": 45,
+        "status": "NEEDS_VERIFICATION_TOMORROW"
+      },
+      {
+        "jurisdiction": "OR",
+        "intermediate": 0,
+        "total": 45,
+        "status": "NEEDS_VERIFICATION_TOMORROW"
+      },
+      {
+        "jurisdiction": "MO",
+        "intermediate": 0,
+        "total": 46,
+        "status": "NEEDS_VERIFICATION_TOMORROW"
+      },
+      {
+        "jurisdiction": "SC",
+        "intermediate": 0,
+        "total": 45,
+        "status": "NEEDS_VERIFICATION_TOMORROW"
+      },
+      {
+        "jurisdiction": "HI",
+        "intermediate": 0,
+        "total": 45,
+        "status": "NEEDS_VERIFICATION_TOMORROW"
+      },
+      {
+        "jurisdiction": "MN",
+        "intermediate": 0,
+        "total": 51,
+        "status": "NEEDS_VERIFICATION_TOMORROW"
+      },
+      {
+        "jurisdiction": "IA",
+        "intermediate": 0,
+        "total": 45,
+        "status": "NEEDS_VERIFICATION_TOMORROW"
+      },
+      {
+        "jurisdiction": "NJ",
+        "intermediate": 0,
+        "total": 46,
+        "status": "NEEDS_VERIFICATION_TOMORROW"
+      },
+      {
+        "jurisdiction": "WA",
+        "intermediate": 0,
+        "total": 46,
+        "status": "NEEDS_VERIFICATION_TOMORROW"
+      },
+      {
+        "jurisdiction": "MI",
+        "intermediate": 0,
+        "total": 45,
+        "status": "NEEDS_VERIFICATION_TOMORROW"
+      }
+    ],
+    "historicalGaps": [
+      {
+        "jurisdiction": "NE",
+        "earliestYear": 2026,
+        "latestYear": 2026,
+        "pre2000": 0,
+        "priority": 523.6
+      },
+      {
+        "jurisdiction": "NC",
+        "earliestYear": 2002,
+        "latestYear": 2026,
+        "pre2000": 0,
+        "priority": 521.2
+      },
+      {
+        "jurisdiction": "ID",
+        "earliestYear": 2026,
+        "latestYear": 2026,
+        "pre2000": 0,
+        "priority": 519.7
+      },
+      {
+        "jurisdiction": "AL",
+        "earliestYear": 2026,
+        "latestYear": 2026,
+        "pre2000": 0,
+        "priority": 518.95
+      },
+      {
+        "jurisdiction": "AK",
+        "earliestYear": 2026,
+        "latestYear": 2026,
+        "pre2000": 0,
+        "priority": 516.1
+      },
+      {
+        "jurisdiction": "OK",
+        "earliestYear": 2025,
+        "latestYear": 2026,
+        "pre2000": 0,
+        "priority": 515.05
+      },
+      {
+        "jurisdiction": "OR",
+        "earliestYear": 2025,
+        "latestYear": 2026,
+        "pre2000": 0,
+        "priority": 515.05
+      },
+      {
+        "jurisdiction": "MO",
+        "earliestYear": 2022,
+        "latestYear": 2025,
+        "pre2000": 0,
+        "priority": 514.9
+      },
+      {
+        "jurisdiction": "SC",
+        "earliestYear": 2025,
+        "latestYear": 2026,
+        "pre2000": 0,
+        "priority": 514.3
+      },
+      {
+        "jurisdiction": "HI",
+        "earliestYear": 2026,
+        "latestYear": 2026,
+        "pre2000": 0,
+        "priority": 513.25
+      }
+    ]
+  },
+  "CITATION_FAMILY_INVENTORY": {
+    "U.S.": 3418,
+    "F.4th": 1003,
+    "F.3d": 2567,
+    "F.2d": 674,
+    "F.Supp": 387,
+    "state_reporters": null,
+    "USC": 264,
+    "CFR": 3,
+    "Federal_Rules": 31,
+    "other": 16
+  },
+  "DUAL_VALUE_TARGETS": {
+    "count": 97,
+    "top20": [
+      {
+        "citation": "573 U.S. 373",
+        "dualValueScore": 73.7,
+        "edges": 11,
+        "citers": 11
+      },
+      {
+        "citation": "578 U.S. 330",
+        "dualValueScore": 72,
+        "edges": 10,
+        "citers": 10
+      },
+      {
+        "citation": "477 U.S. 242",
+        "dualValueScore": 70.3,
+        "edges": 9,
+        "citers": 9
+      },
+      {
+        "citation": "573 U.S. 149",
+        "dualValueScore": 68.6,
+        "edges": 8,
+        "citers": 8
+      },
+      {
+        "citation": "528 U.S. 167",
+        "dualValueScore": 66.9,
+        "edges": 7,
+        "citers": 7
+      },
+      {
+        "citation": "549 U.S. 1",
+        "dualValueScore": 66.9,
+        "edges": 7,
+        "citers": 7
+      },
+      {
+        "citation": "568 U.S. 165",
+        "dualValueScore": 66.9,
+        "edges": 7,
+        "citers": 7
+      },
+      {
+        "citation": "598 U.S. 411",
+        "dualValueScore": 66.9,
+        "edges": 7,
+        "citers": 7
+      },
+      {
+        "citation": "232 U.S. 383",
+        "dualValueScore": 65.2,
+        "edges": 6,
+        "citers": 6
+      },
+      {
+        "citation": "407 U.S. 514",
+        "dualValueScore": 65.2,
+        "edges": 6,
+        "citers": 6
+      },
+      {
+        "citation": "475 U.S. 673",
+        "dualValueScore": 65.2,
+        "edges": 6,
+        "citers": 6
+      },
+      {
+        "citation": "488 U.S. 75",
+        "dualValueScore": 65.2,
+        "edges": 6,
+        "citers": 6
+      },
+      {
+        "citation": "530 U.S. 466",
+        "dualValueScore": 65.2,
+        "edges": 6,
+        "citers": 6
+      },
+      {
+        "citation": "544 U.S. 280",
+        "dualValueScore": 65.2,
+        "edges": 6,
+        "citers": 6
+      },
+      {
+        "citation": "568 U.S. 398",
+        "dualValueScore": 65.2,
+        "edges": 6,
+        "citers": 6
+      },
+      {
+        "citation": "577 U.S. 39",
+        "dualValueScore": 65.2,
+        "edges": 6,
+        "citers": 6
+      },
+      {
+        "citation": "579 U.S. 500",
+        "dualValueScore": 65.2,
+        "edges": 6,
+        "citers": 6
+      },
+      {
+        "citation": "596 U.S. 411",
+        "dualValueScore": 65.2,
+        "edges": 6,
+        "citers": 6
+      },
+      {
+        "citation": "597 U.S. 215",
+        "dualValueScore": 65.2,
+        "edges": 6,
+        "citers": 6
+      },
+      {
+        "citation": "304 U.S. 458",
+        "dualValueScore": 63.5,
+        "edges": 5,
+        "citers": 5
+      }
+    ]
+  },
+  "DENOMINATOR_AUDIT": {
+    "sample": 1000,
+    "validAbsent": 984,
+    "presentDefect": 0,
+    "ambiguous": 0,
+    "malformed": 0,
+    "OOS": 0,
+    "unsupported": 0,
+    "sourceUnavailable": 0,
+    "unknownExternal": 16
+  },
+  "RESOLVER": {
+    "presentUnresolved": 0,
+    "bugsFound": 0,
+    "bugsFixed": 0,
+    "tests": "PASS"
+  },
+  "NORMALIZATION_FOUNDATION": {
+    "issuesFound": "see queue2-normalization-foundation.json",
+    "safeFixes": [
+      "adapters.test.ts mock.calls typing for research typecheck"
+    ],
+    "tests": "citations.test.ts PASS; resolver invariants PASS",
+    "queue3Status": "NOT_OPEN"
+  },
+  "INTEGRITY": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "provenanceDefects": {
+      "missing_source_provider": 0,
+      "missing_source_id": 0,
+      "missing_court": 0,
+      "missing_jurisdiction": 0
+    },
+    "courtDateDefects": {
+      "futureDates": 0,
+      "absurdOldDates": 0
+    },
+    "citationDefects": {
+      "duplicateCitationEdges": 4,
+      "brokenCitationTargets": 0,
+      "note": "duplicateCitationEdges reported only — no silent delete"
+    }
+  },
+  "MORNING_EXECUTION_PACK": {
+    "created": true,
+    "numberOfRankedBatches": 32,
+    "estimatedCaseCapacity": 303,
+    "estimatedCLRequirement": 671.7
+  },
+  "WEEK_1_CHECKLIST": {
+    "DONE": [
+      "10k_tracker_operational",
+      "per_state_balance_map",
+      "per_federal_court_map",
+      "historical_gap_map",
+      "intermediate_layer_map",
+      "district_mapping_coverage_map",
+      "valid_citation_denominator_methodology",
+      "citation_family_inventory",
+      "zero_known_integrity_defects"
+    ],
+    "PARTIAL": [
+      "progress_toward_3500",
+      "normalization_foundation_started"
+    ],
+    "NOT_DONE": [],
+    "BLOCKED_EXTERNAL": [
+      "useful_case_acquisition_to_3500",
+      "usc_zero_cl",
+      "federal_rules_zero_cl",
+      "loc_us_reports_zero_cl"
+    ]
+  },
+  "VALIDATION": {
+    "queue2:validate": "PASS",
+    "queue2:preflight": "PASS",
+    "tests": {
+      "resolverInvariants": "PASS",
+      "citations": "PASS",
+      "adapters": "PASS",
+      "checkpointResume": "PASS"
+    }
+  },
+  "LOCAL_BUILD": {
+    "typecheck": {
+      "monorepo": "FAIL",
+      "rootCause": "pre-existing benchmarks/nyaya-bench dirt (aggregate.ts, staging-ui-e2e.ts, etc.) — preserved, not fixed overnight",
+      "researchPackage": "PASS"
+    },
+    "lint": {
+      "researchPackage": "PASS (tsc --noEmit)"
+    },
+    "build": "NOT_RUN_FULL — deferred; monorepo typecheck blocked by benchmark dirt",
+    "unitTests": "PASS_TARGETED",
+    "integrationTests": "PASS_QUEUE2_VALIDATE"
+  },
+  "TEST_COVERAGE_MAP": {
+    "strongAreas": [
+      {
+        "area": "storage_upload",
+        "files": 188
+      },
+      {
+        "area": "corpus_ingestion",
+        "files": 9
+      },
+      {
+        "area": "RBAC_matter_isolation",
+        "files": 13
+      },
+      {
+        "area": "retrieval",
+        "files": 14
+      }
+    ],
+    "weakAreas": [
+      {
+        "area": "drafting",
+        "note": "1 files"
+      },
+      {
+        "area": "graph",
+        "note": "3 files"
+      },
+      {
+        "area": "normalization",
+        "note": "1 files"
+      }
+    ],
+    "newRegressionTests": [
+      "scripts/queue2-s5-resolver-defect-regression.test.cjs (expanded to 10 invariants)"
+    ],
+    "totalTestFiles": 230
+  },
+  "IDEMPOTENCY": {
+    "authority": {
+      "status": "PASS_UNIT",
+      "evidence": "packages/research/src/corpus/adapters/adapters.test.ts + ingest.ts unique (sourceProvider, sourceExternalId)",
+      "duplicateAuthorityOnRepeat": false
+    },
+    "chunks": {
+      "status": "PASS_UNIT",
+      "evidence": "unique (authority_version_id, chunk_index); refresh.test.ts resume no duplicate versions",
+      "duplicateChunksOnRepeat": false
+    },
+    "embeddings": {
+      "status": "PASS_UNIT",
+      "evidence": "embeddings bound to chunk rows; missing_embeddings overnight integrity = 0",
+      "duplicateEmbeddingsOnRepeat": false
+    },
+    "citations": {
+      "status": "PASS_UNIT",
+      "evidence": "resolver invariant #8 dedupe; buildCitationEdgesFromText tests",
+      "duplicateCitationEdgesOnRepeat": "guarded_by_application_logic"
+    },
+    "aliases": {
+      "status": "PARTIAL",
+      "evidence": "no conflicting alias force-resolve (invariant #5)",
+      "conflictingAliasesOnRepeat": false
+    },
+    "provenance": {
+      "status": "PASS_UNIT",
+      "evidence": "source_provider + source_external_id required for CL path",
+      "conflictingProvenanceOnRepeat": false
+    }
+  },
+  "CHECKPOINT_RESUME": {
+    "verdict": "PASS",
+    "issues": []
+  },
+  "COURT_MAP": {
+    "valid": 65,
+    "conflicting": 0,
+    "unknown": 15
+  },
+  "10K_SIMULATION": {
+    "A_planning_split_7650_2350": {
+      "stateCasesNeeded": 5126,
+      "federalCasesNeeded": 1804,
+      "approximateCL": 15939,
+      "healthyQuotaDaysAt400": 39.8,
+      "majorCoverageRisks": [
+        "intermediate thin states",
+        "historical holes",
+        "district sparsity"
+      ]
+    },
+    "B_federal_heavier_citation": {
+      "stateCasesNeeded": 3812,
+      "federalCasesNeeded": 3119,
+      "approximateCL": 16286,
+      "healthyQuotaDaysAt400": 40.7,
+      "majorCoverageRisks": [
+        "state underrepresentation",
+        "regional reporter demand"
+      ],
+      "justification": "Citation demand dominated by U.S./F.3d/F.4th"
+    },
+    "C_coverage_first_balance": {
+      "stateCasesNeeded": 4851,
+      "federalCasesNeeded": 2079,
+      "approximateCL": 15593,
+      "healthyQuotaDaysAt400": 39,
+      "majorCoverageRisks": [
+        "slower citation resolution",
+        "SCOTUS dual-value delayed"
+      ]
+    }
+  },
+  "CITATION_ROADMAP": {
+    "Tier1": 7,
+    "Tier2": 0,
+    "Tier3": 2,
+    "Tier4": 0
+  },
+  "ZERO_CL_DESIGNS": {
+    "USC": "designed — quality gate blocked",
+    "FederalRules": "designed — ingest blocked",
+    "UsReports": "designed — LOC PDF-only blocked"
+  },
+  "FOUNDATION_WORK": {
+    "Queue3": "FOUNDATION_ONLY NOT_OPEN",
+    "Queue4": "FOUNDATION_ONLY NOT_OPEN",
+    "Queue6": "FOUNDATION_ONLY NOT_OPEN",
+    "Queue11": "FOUNDATION_ONLY NOT_OPEN",
+    "Queue12": "FOUNDATION_ONLY NOT_OPEN"
+  },
+  "OBSERVABILITY": {
+    "missingCriticalSignals": [
+      "resolver_present_unresolved_gauge_in_worker",
+      "citation_edge_duplicate_alert"
+    ]
+  },
+  "RETRY_AUDIT": [
+    {
+      "area": "cl_batch",
+      "issue": "429 must stop lane (observed S5)",
+      "status": "OK_POLICY"
+    },
+    {
+      "area": "worker_lock",
+      "issue": "stale owner reclaim bounded",
+      "status": "OK_TESTED"
+    },
+    {
+      "area": "fly_408",
+      "issue": "session recorded fly408; resume cursor required",
+      "status": "PARTIAL"
+    },
+    {
+      "area": "embeddings",
+      "issue": "retry without duplicating chunk rows",
+      "status": "OK_UNIT"
+    },
+    {
+      "area": "infinite_retry_risk",
+      "issue": "worker safety budgets / kill switch present",
+      "status": "OK_CONFIG"
+    }
+  ],
+  "DATA_QUALITY": {
+    "invariantFailures": [],
+    "reportedCitationDupEdges": 4
+  },
+  "STALE_ARTIFACTS": {
+    "currentAuthoritative": [
+      "queue2-balanced-10k-tracker.json",
+      "queue2-federal-depth-map.json",
+      "queue2-district-manifest.json",
+      "queue2-state-intermediate-manifest.json",
+      "queue2-year-distribution.json",
+      "queue2-retrieval-diversity.json",
+      "queue2-integrity-full-pass.json",
+      "queue2-citation-family-inventory.json",
+      "queue2-dual-value-case-queue.json",
+      "queue2-citation-denominator-sample-1000.json",
+      "queue2-morning-execution-pack.json",
+      "queue2-week1-scorecard.json",
+      "queue2-week1-remaining-checklist.json",
+      "queue2-10k-path-simulation.json",
+      "citation-coverage-roadmap.json",
+      "court-map-audit.json",
+      "queue2-artifact-authority-manifest.json"
+    ],
+    "superseded": [
+      "queue2-offline-prep-raw.json",
+      "queue2-s2-tracker.json",
+      "queue2-s3-tracker.json",
+      "queue2-s4-tracker-start.json",
+      "queue2-s4-tracker-end.json",
+      "queue2-balanced-10k-finish.json",
+      "queue2-citation-target-priority-scorecard.json"
+    ]
+  },
+  "MORNING_COMMAND": {
+    "created": true,
+    "command": "npm run queue2:morning"
+  },
+  "OVERNIGHT_COMPLETION": {
+    "safeDeterministicWorkRemaining": "yes",
+    "remainingInternalTasks": [
+      {
+        "task": "Investigate/report-only repair path for duplicateCitationEdges=4",
+        "reason": "INTERNAL_WORK_REMAINS — no silent delete overnight"
+      },
+      {
+        "task": "Promote verified district court IDs into cl-court-map-registry",
+        "reason": "INTERNAL_WORK_REMAINS — listed as session-verified but not in REGISTRY"
+      },
+      {
+        "task": "Full monorepo typecheck/build",
+        "reason": "REQUIRES_HUMAN_REVIEW — blocked by preserved benchmark dirt"
+      }
+    ],
+    "remainingExternal": [
+      {
+        "task": "Acquire ~430 useful cases toward Week1 3500",
+        "reason": "REQUIRES_CL"
+      },
+      {
+        "task": "Verify pacommwlth/njsuperct/vacapp mappings",
+        "reason": "REQUIRES_EXTERNAL_SOURCE"
+      },
+      {
+        "task": "Unblock USC / Federal Rules / LOC US Reports",
+        "reason": "REQUIRES_EXTERNAL_SOURCE"
+      }
+    ]
+  },
+  "QUEUE": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
+  },
+  "GIT": {
+    "commit": "pending_selective_commit",
+    "pushed": "pending_if_clean"
+  }
+}

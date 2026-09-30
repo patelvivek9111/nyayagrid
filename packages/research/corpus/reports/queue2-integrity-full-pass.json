@@ -1,0 +1,23 @@
+{
+  "classification": "QUEUE2_INTEGRITY_FULL_PASS",
+  "generatedAt": "2026-09-30T02:18:04.025Z",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "duplicateSourceIdentities": 0,
+  "duplicateAuthorityIds": 0,
+  "orphanChunks": 0,
+  "orphanEmbeddings": 0,
+  "missingEmbeddings": 0,
+  "missingAuthorityText": 0,
+  "futureDates": 0,
+  "absurdOldDates": 0,
+  "missingProvenance": {
+    "missing_source_provider": 0,
+    "missing_source_id": 0,
+    "missing_court": 0,
+    "missing_jurisdiction": 0
+  },
+  "federalStateClassMismatch": 0,
+  "duplicateCitationEdges": 4,
+  "brokenCitationTargets": 0
+}

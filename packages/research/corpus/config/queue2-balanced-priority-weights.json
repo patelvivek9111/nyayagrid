@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "classification": "QUEUE2_BALANCED_PRIORITY_WEIGHTS",
+  "generatedAt": "2026-09-30T02:20:11.416Z",
+  "description": "Explicit multi-goal acquisition scoring. Higher is better. Penalties are negative contributions.",
+  "rewards": {
+    "stateDeficitPerCase": 3,
+    "federalDeficitPerCase": 2.5,
+    "intermediateLayerGapFlat": 80,
+    "intermediateDeficitPerCase": 1.5,
+    "districtLayerDeficitPerCase": 2,
+    "historicalGapFlat": 40,
+    "historicalDeficitPerCase": 0.8,
+    "pre1980EmptyBonus": 15,
+    "citationEdgesPerEdge": 0.5,
+    "uniqueCitersPerCiter": 1.2,
+    "hierarchyWeightScale": 0.15,
+    "retrievalDiversityBonus": 10,
+    "eraDiversityBonus": 12,
+    "courtImportanceScotus": 40,
+    "courtImportanceCircuit": 20,
+    "courtImportanceIntermediate": 25,
+    "courtImportanceDistrict": 15
+  },
+  "penalties": {
+    "overrepresentedJurisdictionPerCase": -2,
+    "overrepresentedEraShareAbove70Pct": -25,
+    "recentOnlyConcentration": -20,
+    "lowSourceConfidence": -30,
+    "duplicateHeavySourcePath": -15
+  },
+  "notes": [
+    "Do not invent hidden weights. Adjust this file explicitly.",
+    "Dual-value score = coverageScore + citationScore using these weights."
+  ]
+}

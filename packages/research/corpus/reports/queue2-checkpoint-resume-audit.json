@@ -1,0 +1,60 @@
+{
+  "classification": "QUEUE2_CHECKPOINT_RESUME_AUDIT",
+  "generatedAt": "2026-09-30T02:21:12.981Z",
+  "courtListenerHttpCalls": 0,
+  "verdict": "PASS",
+  "scenarios": {
+    "successfulBatch": "covered_by_worker_lock_and_observability",
+    "partialBatch": "covered_by_durable_state_convergence",
+    "timeout": "covered_by_interruptible_shutdown",
+    "retry": "covered_by_existing_job_reconcile",
+    "processDeath": "covered_by_worker_lock_stale_owner",
+    "staleOwner": "covered_by_worker_lock",
+    "resumedJob": "covered_by_cl_batch_resume_cursor"
+  },
+  "guarantees": {
+    "cannotSilentlySkipValidTargets": "best_effort_via_resume_cursor",
+    "cannotDuplicateImports": "source_uidx + completedExternalIds ledger",
+    "cannotCorruptCounters": "durable_state_convergence tests",
+    "cannotLeavePermanentOwnershipLocks": "stale lock reclaim"
+  },
+  "results": [
+    {
+      "test": "scripts/queue2-worker-lock.test.cjs",
+      "status": "PASS",
+      "exit": 0,
+      "tail": "TAP version 13\n# {\"ok\":true,\"tests\":19,\"suite\":\"queue2-worker-lock\"}\n# Subtest: scripts\\\\queue2-worker-lock.test.cjs\nok 1 - scripts\\\\queue2-worker-lock.test.cjs\n  ---\n  duration_ms: 176.3002\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 187.3902\n\n"
+    },
+    {
+      "test": "scripts/queue2-interruptible-shutdown.test.cjs",
+      "status": "PASS",
+      "exit": 0,
+      "tail": "/npm shutdown path documented and blocking sleep forbidden\n# ok 10 Queue \\#3 NOT_OPEN and AI=0\n# queue2-interruptible-shutdown.test.cjs: 10 passed\n# Subtest: scripts\\\\queue2-interruptible-shutdown.test.cjs\nok 1 - scripts\\\\queue2-interruptible-shutdown.test.cjs\n  ---\n  duration_ms: 115.0371\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 121.7305\n\n"
+    },
+    {
+      "test": "scripts/queue2-existing-job-reconcile.test.cjs",
+      "status": "PASS",
+      "exit": 0,
+      "tail": "TAP version 13\n# queue2-existing-job-reconcile.test.cjs: 20 passed\n# Subtest: scripts\\\\queue2-existing-job-reconcile.test.cjs\nok 1 - scripts\\\\queue2-existing-job-reconcile.test.cjs\n  ---\n  duration_ms: 63.8652\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 70.2771\n\n"
+    },
+    {
+      "test": "scripts/queue2-durable-state-convergence.test.cjs",
+      "status": "PASS",
+      "exit": 0,
+      "tail": "\":true,\"tests\":8,\"suite\":\"queue2-durable-state-convergence\",\"workerStarted\":false,\"courtListenerHttpCalls\":0,\"corpusMutations\":0,\"aiCalls\":0}\n# Subtest: scripts\\\\queue2-durable-state-convergence.test.cjs\nok 1 - scripts\\\\queue2-durable-state-convergence.test.cjs\n  ---\n  duration_ms: 96.7386\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 103.0107\n\n"
+    },
+    {
+      "test": "scripts/cl-batch-resume-cursor.test.cjs",
+      "status": "PASS",
+      "exit": 0,
+      "tail": "eeps the provider next link\nok 2 - fully consumed page keeps the provider next link\n  ---\n  duration_ms: 0.1344\n  ...\n# Subtest: partial page must not jump to provider next (worker regression)\nok 3 - partial page must not jump to provider next (worker regression)\n  ---\n  duration_ms: 1.3989\n  ...\n1..3\n# tests 3\n# suites 0\n# pass 3\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 70.6601\n\n"
+    },
+    {
+      "test": "scripts/queue2-worker-observability.test.cjs",
+      "status": "PASS",
+      "exit": 0,
+      "tail": "TAP version 13\n# {\"ok\":true,\"tests\":26,\"aiCalls\":0,\"corpusMutations\":0,\"workerStarted\":false}\n# Subtest: scripts\\\\queue2-worker-observability.test.cjs\nok 1 - scripts\\\\queue2-worker-observability.test.cjs\n  ---\n  duration_ms: 142.8333\n  ...\n1..1\n# tests 1\n# suites 0\n# pass 1\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 149.0301\n\n"
+    }
+  ],
+  "issues": []
+}

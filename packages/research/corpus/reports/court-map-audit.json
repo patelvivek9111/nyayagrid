@@ -1,0 +1,121 @@
+{
+  "classification": "COURT_MAP_AUDIT",
+  "generatedAt": "2026-09-30T02:21:12.981Z",
+  "courtListenerHttpCalls": 0,
+  "valid": 65,
+  "conflicting": 0,
+  "unknown": 15,
+  "entries": 69,
+  "conflicts": [],
+  "unknownMappings": [
+    {
+      "id": "pacommwlth",
+      "verificationStatus": "MAPPING_INVALID",
+      "note": "NEEDS_EXTERNAL_VERIFICATION"
+    },
+    {
+      "id": "njsuperct",
+      "verificationStatus": "MAPPING_INVALID",
+      "note": "NEEDS_EXTERNAL_VERIFICATION"
+    },
+    {
+      "id": "vacapp",
+      "verificationStatus": "MAPPING_INVALID",
+      "note": "NEEDS_EXTERNAL_VERIFICATION"
+    },
+    {
+      "id": "nysd",
+      "verificationStatus": "VERIFIED_SESSION_NOT_IN_REGISTRY",
+      "note": "NEEDS_EXTERNAL_VERIFICATION_or_registry_promote",
+      "evidence": "queue2-s4-district-verify.json / s5 district growth"
+    },
+    {
+      "id": "cacd",
+      "verificationStatus": "VERIFIED_SESSION_NOT_IN_REGISTRY",
+      "note": "NEEDS_EXTERNAL_VERIFICATION_or_registry_promote",
+      "evidence": "queue2-s4-district-verify.json / s5 district growth"
+    },
+    {
+      "id": "ilnd",
+      "verificationStatus": "VERIFIED_SESSION_NOT_IN_REGISTRY",
+      "note": "NEEDS_EXTERNAL_VERIFICATION_or_registry_promote",
+      "evidence": "queue2-s4-district-verify.json / s5 district growth"
+    },
+    {
+      "id": "txsd",
+      "verificationStatus": "VERIFIED_SESSION_NOT_IN_REGISTRY",
+      "note": "NEEDS_EXTERNAL_VERIFICATION_or_registry_promote",
+      "evidence": "queue2-s4-district-verify.json / s5 district growth"
+    },
+    {
+      "id": "dcd",
+      "verificationStatus": "VERIFIED_SESSION_NOT_IN_REGISTRY",
+      "note": "NEEDS_EXTERNAL_VERIFICATION_or_registry_promote",
+      "evidence": "queue2-s4-district-verify.json / s5 district growth"
+    },
+    {
+      "id": "njd",
+      "verificationStatus": "VERIFIED_SESSION_NOT_IN_REGISTRY",
+      "note": "NEEDS_EXTERNAL_VERIFICATION_or_registry_promote",
+      "evidence": "queue2-s4-district-verify.json / s5 district growth"
+    },
+    {
+      "id": "paed",
+      "verificationStatus": "VERIFIED_SESSION_NOT_IN_REGISTRY",
+      "note": "NEEDS_EXTERNAL_VERIFICATION_or_registry_promote",
+      "evidence": "queue2-s4-district-verify.json / s5 district growth"
+    },
+    {
+      "id": "mad",
+      "verificationStatus": "VERIFIED_SESSION_NOT_IN_REGISTRY",
+      "note": "NEEDS_EXTERNAL_VERIFICATION_or_registry_promote",
+      "evidence": "queue2-s4-district-verify.json / s5 district growth"
+    },
+    {
+      "id": "flsd",
+      "verificationStatus": "VERIFIED_SESSION_NOT_IN_REGISTRY",
+      "note": "NEEDS_EXTERNAL_VERIFICATION_or_registry_promote",
+      "evidence": "queue2-s4-district-verify.json / s5 district growth"
+    },
+    {
+      "id": "txnd",
+      "verificationStatus": "VERIFIED_SESSION_NOT_IN_REGISTRY",
+      "note": "NEEDS_EXTERNAL_VERIFICATION_or_registry_promote",
+      "evidence": "queue2-s4-district-verify.json / s5 district growth"
+    },
+    {
+      "id": "cand",
+      "verificationStatus": "VERIFIED_SESSION_NOT_IN_REGISTRY",
+      "note": "NEEDS_EXTERNAL_VERIFICATION_or_registry_promote",
+      "evidence": "queue2-s4-district-verify.json / s5 district growth"
+    },
+    {
+      "id": "waed",
+      "verificationStatus": "VERIFIED_SESSION_NOT_IN_REGISTRY",
+      "note": "NEEDS_EXTERNAL_VERIFICATION_or_registry_promote",
+      "evidence": "queue2-s4-district-verify.json / s5 district growth"
+    }
+  ],
+  "verifiedIntermediatesPromotedOvernight": [
+    "arizctapp",
+    "connappct",
+    "nmctapp",
+    "indctapp",
+    "wisctapp",
+    "utahctapp"
+  ],
+  "districtsNotInRegistry": [
+    "nysd",
+    "cacd",
+    "ilnd",
+    "txsd",
+    "dcd",
+    "njd",
+    "paed",
+    "mad",
+    "flsd",
+    "txnd",
+    "cand",
+    "waed"
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "classification": "QUEUE4_FOUNDATION_ONLY",
+  "queue4Status": "NOT_OPEN",
+  "generatedAt": "2026-09-30T02:23:14.304Z",
+  "cases": {
+    "decision_date_coverage": "see tracker year buckets; overnight integrity futureDates=0",
+    "source_retrieved_at": "partial via version/source metadata — not fully audited population-wide",
+    "currentness_status_distribution": "EXPECTED mostly unknown/current_as_of_source_date for CL imports"
+  },
+  "statutes": {
+    "version_effective_metadata": "PARTIAL — USC blocked quality",
+    "missing": "REQUIRES_SOURCE"
+  },
+  "regulations": {
+    "current_as_of_metadata": "PARTIAL — CFR eCFR pilot present",
+    "missing": "REPAIRABLE_LOCAL for pilot rows; REQUIRES_SOURCE for scale"
+  },
+  "rules": {
+    "metadata_completeness": "DEFECT/BLOCKED — no ingest pipeline"
+  }
+}

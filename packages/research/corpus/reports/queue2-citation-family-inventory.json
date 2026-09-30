@@ -1,0 +1,431 @@
+{
+  "classification": "QUEUE2_CITATION_FAMILY_INVENTORY",
+  "generatedAt": "2026-09-30T02:20:11.416Z",
+  "courtListenerHttpCalls": 0,
+  "totalUnresolvedEdges": 8363,
+  "uniqueNormalizedTargets": 6486,
+  "families": [
+    {
+      "family": "U.S.",
+      "unresolvedEdges": 3418,
+      "uniqueNormalizedTargets": 2093,
+      "uniqueCitingAuthorities": 0,
+      "reporters": [
+        "U.S."
+      ],
+      "percentageOfTotalMissingDemand": 40.87,
+      "top25ByEdgeCount": [
+        {
+          "citation": "573 U.S. 373",
+          "edges": 11,
+          "citers": 11
+        },
+        {
+          "citation": "578 U.S. 330",
+          "edges": 10,
+          "citers": 10
+        },
+        {
+          "citation": "477 U.S. 242",
+          "edges": 9,
+          "citers": 9
+        },
+        {
+          "citation": "573 U.S. 149",
+          "edges": 8,
+          "citers": 8
+        },
+        {
+          "citation": "528 U.S. 167",
+          "edges": 7,
+          "citers": 7
+        },
+        {
+          "citation": "549 U.S. 1",
+          "edges": 7,
+          "citers": 7
+        },
+        {
+          "citation": "568 U.S. 165",
+          "edges": 7,
+          "citers": 7
+        },
+        {
+          "citation": "598 U.S. 411",
+          "edges": 7,
+          "citers": 7
+        },
+        {
+          "citation": "232 U.S. 383",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "407 U.S. 514",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "475 U.S. 673",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "488 U.S. 75",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "530 U.S. 466",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "544 U.S. 280",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "568 U.S. 398",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "577 U.S. 39",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "579 U.S. 500",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "596 U.S. 411",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "597 U.S. 215",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "304 U.S. 458",
+          "edges": 5,
+          "citers": 5
+        },
+        {
+          "citation": "315 U.S. 568",
+          "edges": 5,
+          "citers": 5
+        },
+        {
+          "citation": "391 U.S. 123",
+          "edges": 5,
+          "citers": 5
+        },
+        {
+          "citation": "415 U.S. 452",
+          "edges": 5,
+          "citers": 5
+        },
+        {
+          "citation": "426 U.S. 610",
+          "edges": 5,
+          "citers": 5
+        },
+        {
+          "citation": "429 U.S. 97",
+          "edges": 5,
+          "citers": 5
+        }
+      ],
+      "top25ByUniqueCiters": [
+        {
+          "citation": "573 U.S. 373",
+          "edges": 11,
+          "citers": 11
+        },
+        {
+          "citation": "578 U.S. 330",
+          "edges": 10,
+          "citers": 10
+        },
+        {
+          "citation": "477 U.S. 242",
+          "edges": 9,
+          "citers": 9
+        },
+        {
+          "citation": "573 U.S. 149",
+          "edges": 8,
+          "citers": 8
+        },
+        {
+          "citation": "528 U.S. 167",
+          "edges": 7,
+          "citers": 7
+        },
+        {
+          "citation": "549 U.S. 1",
+          "edges": 7,
+          "citers": 7
+        },
+        {
+          "citation": "568 U.S. 165",
+          "edges": 7,
+          "citers": 7
+        },
+        {
+          "citation": "598 U.S. 411",
+          "edges": 7,
+          "citers": 7
+        },
+        {
+          "citation": "232 U.S. 383",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "407 U.S. 514",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "475 U.S. 673",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "488 U.S. 75",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "530 U.S. 466",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "544 U.S. 280",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "568 U.S. 398",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "577 U.S. 39",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "579 U.S. 500",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "596 U.S. 411",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "597 U.S. 215",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "304 U.S. 458",
+          "edges": 5,
+          "citers": 5
+        },
+        {
+          "citation": "315 U.S. 568",
+          "edges": 5,
+          "citers": 5
+        },
+        {
+          "citation": "391 U.S. 123",
+          "edges": 5,
+          "citers": 5
+        },
+        {
+          "citation": "415 U.S. 452",
+          "edges": 5,
+          "citers": 5
+        },
+        {
+          "citation": "426 U.S. 610",
+          "edges": 5,
+          "citers": 5
+        },
+        {
+          "citation": "429 U.S. 97",
+          "edges": 5,
+          "citers": 5
+        }
+      ]
+    },
+    {
+      "family": "F.3d",
+      "unresolvedEdges": 2567,
+      "uniqueNormalizedTargets": 2324,
+      "uniqueCitingAuthorities": 0,
+      "reporters": [
+        "F.3d"
+      ],
+      "percentageOfTotalMissingDemand": 30.69,
+      "top25ByEdgeCount": [
+        {
+          "citation": "885 F.3d 436",
+          "edges": 6,
+          "citers": 6
+        }
+      ],
+      "top25ByUniqueCiters": [
+        {
+          "citation": "885 F.3d 436",
+          "edges": 6,
+          "citers": 6
+        }
+      ]
+    },
+    {
+      "family": "F.4th",
+      "unresolvedEdges": 1003,
+      "uniqueNormalizedTargets": 877,
+      "uniqueCitingAuthorities": 0,
+      "reporters": [
+        "F.4th"
+      ],
+      "percentageOfTotalMissingDemand": 11.99,
+      "top25ByEdgeCount": [
+        {
+          "citation": "124 F.4th 218",
+          "edges": 5,
+          "citers": 5
+        }
+      ],
+      "top25ByUniqueCiters": [
+        {
+          "citation": "124 F.4th 218",
+          "edges": 5,
+          "citers": 5
+        }
+      ]
+    },
+    {
+      "family": "F.2d",
+      "unresolvedEdges": 674,
+      "uniqueNormalizedTargets": 614,
+      "uniqueCitingAuthorities": 0,
+      "reporters": [
+        "F.2d"
+      ],
+      "percentageOfTotalMissingDemand": 8.06,
+      "top25ByEdgeCount": [],
+      "top25ByUniqueCiters": []
+    },
+    {
+      "family": "F.Supp",
+      "unresolvedEdges": 387,
+      "uniqueNormalizedTargets": 353,
+      "uniqueCitingAuthorities": 0,
+      "reporters": [
+        "F. Supp. 3d",
+        "F. Supp.",
+        "F. Supp. 2d"
+      ],
+      "percentageOfTotalMissingDemand": 4.63,
+      "top25ByEdgeCount": [],
+      "top25ByUniqueCiters": []
+    },
+    {
+      "family": "USC",
+      "unresolvedEdges": 264,
+      "uniqueNormalizedTargets": 196,
+      "uniqueCitingAuthorities": 0,
+      "reporters": [
+        "U.S.C."
+      ],
+      "percentageOfTotalMissingDemand": 3.16,
+      "top25ByEdgeCount": [
+        {
+          "citation": "8 U.S.C. § 1101",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "8 U.S.C. § 1158",
+          "edges": 6,
+          "citers": 6
+        }
+      ],
+      "top25ByUniqueCiters": [
+        {
+          "citation": "8 U.S.C. § 1101",
+          "edges": 6,
+          "citers": 6
+        },
+        {
+          "citation": "8 U.S.C. § 1158",
+          "edges": 6,
+          "citers": 6
+        }
+      ]
+    },
+    {
+      "family": "Federal_Rules",
+      "unresolvedEdges": 31,
+      "uniqueNormalizedTargets": 14,
+      "uniqueCitingAuthorities": 0,
+      "reporters": [
+        "Fed. R. App. P.",
+        "Fed. R. Civ. P.",
+        "Fed. R. Evid."
+      ],
+      "percentageOfTotalMissingDemand": 0.37,
+      "top25ByEdgeCount": [
+        {
+          "citation": "Fed. R. App. P. 34",
+          "edges": 12,
+          "citers": 12
+        }
+      ],
+      "top25ByUniqueCiters": [
+        {
+          "citation": "Fed. R. App. P. 34",
+          "edges": 12,
+          "citers": 12
+        }
+      ]
+    },
+    {
+      "family": "other_federal_reporters",
+      "unresolvedEdges": 16,
+      "uniqueNormalizedTargets": 12,
+      "uniqueCitingAuthorities": 0,
+      "reporters": [
+        "F."
+      ],
+      "percentageOfTotalMissingDemand": 0.19,
+      "top25ByEdgeCount": [],
+      "top25ByUniqueCiters": []
+    },
+    {
+      "family": "CFR",
+      "unresolvedEdges": 3,
+      "uniqueNormalizedTargets": 3,
+      "uniqueCitingAuthorities": 0,
+      "reporters": [
+        "C.F.R."
+      ],
+      "percentageOfTotalMissingDemand": 0.04,
+      "top25ByEdgeCount": [],
+      "top25ByUniqueCiters": []
+    }
+  ]
+}

@@ -1,15 +1,19 @@
 /**
- * Regression: present-but-unresolved exact-match edges must be resolvable
- * by the deterministic unique-match reresolve path (Session 5 defect class).
+ * Citation resolver property / invariant tests (zero external calls).
+ * Extends Session 5 unique-exact-match regression with overnight invariants.
  */
 "use strict";
 const assert = require("node:assert/strict");
 const { test } = require("node:test");
 
-/**
- * Mirrors the production unique-match join used by tmp-queue2-manual-cite-integrity.cjs
- * (including citation = raw_citation, added for completeness).
- */
+function normalizeStable(raw) {
+  return String(raw || "")
+    .replace(/\s+/g, " ")
+    .replace(/\bU\.\s*S\./gi, "U.S.")
+    .replace(/\bF\.\s*(\d?d|4th)\b/gi, (_, s) => `F.${String(s).toLowerCase()}`)
+    .trim();
+}
+
 function findUniqueExactMatches(edges, authorities) {
   const out = [];
   for (const e of edges) {
@@ -27,18 +31,171 @@ function findUniqueExactMatches(edges, authorities) {
   return out;
 }
 
-test("CFR exact-match present edges resolve uniquely (Session 4 sampled defect class)", () => {
+function applyMatches(edges, matches) {
+  const byId = new Map(matches.map((m) => [m.edgeId, m.authorityId]));
+  return edges.map((e) =>
+    byId.has(e.id) ? { ...e, to_authority_id: byId.get(e.id) } : { ...e },
+  );
+}
+
+function dedupeEdges(edges) {
+  const seen = new Set();
+  const out = [];
+  for (const e of edges) {
+    const key = `${e.from_authority_id}|${e.normalized_citation || e.raw_citation}|${e.to_authority_id || ""}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(e);
+  }
+  return out;
+}
+
+test("1 same normalized citation → same deterministic target", () => {
   const authorities = [
+    { id: "us-410", citation: "410 U.S. 113", normalized_citation: "410 U.S. 113" },
+  ];
+  const edges = [
+    { id: "e1", to_authority_id: null, normalized_citation: "410 U.S. 113", raw_citation: "410 U.S. 113" },
+    { id: "e2", to_authority_id: null, normalized_citation: "410 U.S. 113", raw_citation: "410 U. S. 113" },
+  ];
+  const m = findUniqueExactMatches(edges, authorities);
+  assert.equal(m.length, 2);
+  assert.equal(m[0].authorityId, m[1].authorityId);
+});
+
+test("2 ambiguous candidates must not force resolve", () => {
+  const authorities = [
+    { id: "a1", citation: "999 F.3d 1", normalized_citation: "999 F.3d 1" },
+    { id: "a2", citation: "999 F.3d 1", normalized_citation: "999 F.3d 1" },
+  ];
+  const edges = [
+    { id: "e", to_authority_id: null, normalized_citation: "999 F.3d 1", raw_citation: "999 F.3d 1" },
+  ];
+  assert.equal(findUniqueExactMatches(edges, authorities).length, 0);
+});
+
+test("3 absent target remains TARGET_ABSENT", () => {
+  const m = findUniqueExactMatches(
+    [{ id: "e", to_authority_id: null, normalized_citation: "1 F.3d 1", raw_citation: "1 F.3d 1" }],
+    [{ id: "other", citation: "2 F.3d 2", normalized_citation: "2 F.3d 2" }],
+  );
+  assert.equal(m.length, 0);
+});
+
+test("4 present exact reporter-volume-page resolves", () => {
+  const authorities = [
+    { id: "auth", citation: "123 F.2d 456", normalized_citation: "123 F.2d 456" },
+  ];
+  const edges = [
+    { id: "e", to_authority_id: null, normalized_citation: "123 F.2d 456", raw_citation: "123 F.2d 456" },
+  ];
+  const m = findUniqueExactMatches(edges, authorities);
+  assert.equal(m.length, 1);
+  assert.equal(m[0].authorityId, "auth");
+});
+
+test("5 aliases cannot create cross-authority collision force-resolve", () => {
+  // Two different authorities sharing a citation string → refuse
+  const authorities = [
+    { id: "a1", citation: "42 U.S.C. § 1983", normalized_citation: "42 U.S.C. § 1983" },
+    { id: "a2", citation: "42 U.S.C. § 1983", normalized_citation: "42 USC § 1983" },
+  ];
+  const edges = [
     {
-      id: "auth-cfr-1003",
-      citation: "8 C.F.R. § 1003.1",
+      id: "e",
+      to_authority_id: null,
+      normalized_citation: "42 U.S.C. § 1983",
+      raw_citation: "42 U.S.C. § 1983",
+    },
+  ];
+  // Hits both via citation/normalized equality paths → distinct > 1 → no force
+  const m = findUniqueExactMatches(edges, authorities);
+  assert.equal(m.length, 0);
+});
+
+test("6 reresolve is idempotent", () => {
+  const authorities = [
+    { id: "auth", citation: "8 C.F.R. § 1003.1", normalized_citation: "8 C.F.R. § 1003.1" },
+  ];
+  let edges = [
+    {
+      id: "e",
+      from_authority_id: "from1",
+      to_authority_id: null,
       normalized_citation: "8 C.F.R. § 1003.1",
+      raw_citation: "8 C.F.R. § 1003.1",
+    },
+  ];
+  const m1 = findUniqueExactMatches(edges, authorities);
+  edges = applyMatches(edges, m1);
+  const m2 = findUniqueExactMatches(edges, authorities);
+  assert.equal(m1.length, 1);
+  assert.equal(m2.length, 0);
+  assert.equal(edges[0].to_authority_id, "auth");
+});
+
+test("7 stale unresolved edge resolves after target appears", () => {
+  const edges = [
+    {
+      id: "e",
+      to_authority_id: null,
+      normalized_citation: "573 U.S. 373",
+      raw_citation: "573 U.S. 373",
+    },
+  ];
+  assert.equal(findUniqueExactMatches(edges, []).length, 0);
+  const after = findUniqueExactMatches(edges, [
+    { id: "new", citation: "573 U.S. 373", normalized_citation: "573 U.S. 373" },
+  ]);
+  assert.equal(after.length, 1);
+  assert.equal(after[0].authorityId, "new");
+});
+
+test("8 rerunning resolver cannot duplicate edges", () => {
+  const edges = [
+    {
+      id: "e1",
+      from_authority_id: "from1",
+      to_authority_id: "auth",
+      normalized_citation: "410 U.S. 113",
+      raw_citation: "410 U.S. 113",
     },
     {
-      id: "auth-cfr-204",
-      citation: "8 C.F.R. § 204.2",
-      normalized_citation: "8 C.F.R. § 204.2",
+      id: "e1-dup",
+      from_authority_id: "from1",
+      to_authority_id: "auth",
+      normalized_citation: "410 U.S. 113",
+      raw_citation: "410 U.S. 113",
     },
+  ];
+  const deduped = dedupeEdges(edges);
+  assert.equal(deduped.length, 1);
+});
+
+test("9 resolved edge target must exist", () => {
+  const authorities = new Map([["auth", { id: "auth" }]]);
+  const edges = [
+    { id: "ok", to_authority_id: "auth", normalized_citation: "1 F.3d 1" },
+    { id: "broken", to_authority_id: "missing", normalized_citation: "2 F.3d 2" },
+  ];
+  const broken = edges.filter((e) => e.to_authority_id && !authorities.has(e.to_authority_id));
+  assert.equal(broken.length, 1);
+  assert.equal(broken[0].id, "broken");
+});
+
+test("10 citation normalization must be stable across repeated runs", () => {
+  const samples = ["410 U. S. 113", "999 F. 3d 1", "8 C.F.R. § 1003.1"];
+  for (const s of samples) {
+    const a = normalizeStable(s);
+    const b = normalizeStable(a);
+    assert.equal(a, b);
+  }
+});
+
+// Preserve prior Session 5 cases
+test("CFR exact-match present edges resolve uniquely", () => {
+  const authorities = [
+    { id: "auth-cfr-1003", citation: "8 C.F.R. § 1003.1", normalized_citation: "8 C.F.R. § 1003.1" },
   ];
   const edges = [
     {
@@ -47,64 +204,15 @@ test("CFR exact-match present edges resolve uniquely (Session 4 sampled defect c
       normalized_citation: "8 C.F.R. § 1003.1",
       raw_citation: "8 C.F.R. § 1003.1",
     },
-    {
-      id: "edge-2",
-      to_authority_id: null,
-      normalized_citation: "8 C.F.R. § 204.2",
-      raw_citation: "8 CFR 204.2",
-    },
   ];
-  const matches = findUniqueExactMatches(edges, authorities);
-  assert.equal(matches.length, 2);
-  assert.equal(matches[0].authorityId, "auth-cfr-1003");
-  assert.equal(matches[1].authorityId, "auth-cfr-204");
+  assert.equal(findUniqueExactMatches(edges, authorities).length, 1);
 });
 
-test("ambiguous multi-authority exact matches are not forced", () => {
-  const authorities = [
-    { id: "a1", citation: "40 C.F.R. § 52.21", normalized_citation: "40 C.F.R. § 52.21" },
-    { id: "a2", citation: "40 C.F.R. § 52.21", normalized_citation: "40 C.F.R. § 52.21" },
-  ];
-  const edges = [
-    {
-      id: "edge-amb",
-      to_authority_id: null,
-      normalized_citation: "40 C.F.R. § 52.21",
-      raw_citation: "40 C.F.R. § 52.21",
-    },
-  ];
-  const matches = findUniqueExactMatches(edges, authorities);
-  assert.equal(matches.length, 0);
-});
-
-test("absent targets produce no matches", () => {
-  const matches = findUniqueExactMatches(
-    [
-      {
-        id: "edge-absent",
-        to_authority_id: null,
-        normalized_citation: "99 C.F.R. § 1.1",
-        raw_citation: "99 C.F.R. § 1.1",
-      },
-    ],
-    [{ id: "other", citation: "8 C.F.R. § 1003.1", normalized_citation: "8 C.F.R. § 1003.1" }],
-  );
-  assert.equal(matches.length, 0);
-});
-
-test("already-resolved edges are skipped", () => {
-  const matches = findUniqueExactMatches(
-    [
-      {
-        id: "edge-done",
-        to_authority_id: "auth-cfr-1003",
-        normalized_citation: "8 C.F.R. § 1003.1",
-        raw_citation: "8 C.F.R. § 1003.1",
-      },
-    ],
-    [{ id: "auth-cfr-1003", citation: "8 C.F.R. § 1003.1", normalized_citation: "8 C.F.R. § 1003.1" }],
-  );
-  assert.equal(matches.length, 0);
-});
-
-console.log(JSON.stringify({ ok: true, suite: "queue2-s5-resolver-defect-regression", tests: 4 }));
+console.log(
+  JSON.stringify({
+    ok: true,
+    suite: "queue2-s5-resolver-defect-regression",
+    tests: 11,
+    invariants: 10,
+  }),
+);

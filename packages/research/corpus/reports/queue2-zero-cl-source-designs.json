@@ -1,0 +1,95 @@
+{
+  "classification": "QUEUE2_ZERO_CL_SOURCE_DESIGNS",
+  "generatedAt": "2026-09-30T02:23:14.304Z",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "note": "Design only. Do not implement unverified scraping. Do not claim sources work unless already proven.",
+  "USC": {
+    "authoritativeSourceRequirement": "House OLRC / GPO USC XML or HTML with full section text (not stub shells)",
+    "expectedDocumentFormat": "XML or structured HTML with title/section hierarchy",
+    "identityStrategy": "title + section (+ subsection) → normalized `N U.S.C. § X`",
+    "parserRequirements": "Reject shells < ~1KB meaningful text; verify section heading match",
+    "citationVerification": "Round-trip parseCitation → normalized form must equal identity",
+    "provenanceFields": [
+      "source_provider",
+      "source_external_id",
+      "canonical_source_url",
+      "retrieved_at"
+    ],
+    "currentnessFields": [
+      "effective_date",
+      "currentness_status",
+      "last_checked_at"
+    ],
+    "dedupeStrategy": "unique (source_provider, source_external_id); citation uniqueness advisory",
+    "failureQuarantine": "quality_gate_failed rows must not enter ready corpus",
+    "testFixturesNeeded": [
+      "full_section_sample",
+      "shell_rejection_sample",
+      "amendment_version"
+    ],
+    "productionSafetyGates": [
+      "min_content_length",
+      "section_id_match",
+      "no_CL",
+      "human review of first batch"
+    ],
+    "currentBlocker": "House OLRC ~208-char shell; quality gate failed"
+  },
+  "FederalRules": {
+    "authoritativeSourceRequirement": "Official uscourts.gov or GPO federal rules text with rule numbers",
+    "expectedDocumentFormat": "HTML/XML rule index + per-rule body",
+    "identityStrategy": "`Fed. R. Civ. P. N` / Evid / App / Crim",
+    "parserRequirements": "Rule number extraction; strip navigation chrome",
+    "citationVerification": "parseCitation type=rule high confidence",
+    "provenanceFields": [
+      "source_provider",
+      "source_external_id",
+      "canonical_source_url"
+    ],
+    "currentnessFields": [
+      "effective_date",
+      "currentness_status"
+    ],
+    "dedupeStrategy": "source_external_id = rule family + number",
+    "failureQuarantine": "404 index / empty body quarantined",
+    "testFixturesNeeded": [
+      "civ_p_56",
+      "evid_401",
+      "app_p_34"
+    ],
+    "productionSafetyGates": [
+      "index_reachable",
+      "body_min_length",
+      "no_unverified_scrape"
+    ],
+    "currentBlocker": "No ingest loop; prior index 404"
+  },
+  "UsReports": {
+    "authoritativeSourceRequirement": "LOC U.S. Reports with machine-readable opinion text (not PDF-only) OR proven HTML alternate",
+    "expectedDocumentFormat": "Preferred: structured text/HTML; PDF only with validated text extraction later",
+    "identityStrategy": "volume U.S. page → `N U.S. P`",
+    "parserRequirements": "Volume/page identity; majority opinion separation",
+    "citationVerification": "Match reporter-volume-page; no fuzzy",
+    "provenanceFields": [
+      "source_provider=loc",
+      "source_external_id",
+      "canonical_source_url"
+    ],
+    "currentnessFields": [
+      "decision_date",
+      "currentness_status=historical for older volumes"
+    ],
+    "dedupeStrategy": "source_external_id + citation unique",
+    "failureQuarantine": "PDF-only without extraction → quarantine",
+    "testFixturesNeeded": [
+      "landmark_volume_page",
+      "pdf_only_reject"
+    ],
+    "productionSafetyGates": [
+      "mutation gated",
+      "PDF-only blocked until extractor proven"
+    ],
+    "currentBlocker": "LOC PDF-only; NonClIntake mutation gated"
+  }
+}

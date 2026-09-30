@@ -1,0 +1,72 @@
+{
+  "classification": "WEEK1_REMAINING_WORK_CHECKLIST",
+  "generatedAt": "2026-09-30T02:22:23.819Z",
+  "items": [
+    {
+      "id": "progress_toward_3500",
+      "status": "PARTIAL",
+      "detail": "3070/3500"
+    },
+    {
+      "id": "10k_tracker_operational",
+      "status": "DONE",
+      "detail": "queue2-balanced-10k-tracker.json refreshed"
+    },
+    {
+      "id": "per_state_balance_map",
+      "status": "DONE"
+    },
+    {
+      "id": "per_federal_court_map",
+      "status": "DONE"
+    },
+    {
+      "id": "historical_gap_map",
+      "status": "DONE"
+    },
+    {
+      "id": "intermediate_layer_map",
+      "status": "DONE"
+    },
+    {
+      "id": "district_mapping_coverage_map",
+      "status": "DONE"
+    },
+    {
+      "id": "valid_citation_denominator_methodology",
+      "status": "DONE",
+      "detail": "sample 1000 stratified"
+    },
+    {
+      "id": "citation_family_inventory",
+      "status": "DONE"
+    },
+    {
+      "id": "normalization_foundation_started",
+      "status": "PARTIAL",
+      "detail": "QUEUE3_FOUNDATION_ONLY"
+    },
+    {
+      "id": "zero_known_integrity_defects",
+      "status": "DONE"
+    },
+    {
+      "id": "useful_case_acquisition_to_3500",
+      "status": "BLOCKED_EXTERNAL",
+      "detail": "REQUIRES_CL"
+    },
+    {
+      "id": "usc_zero_cl",
+      "status": "BLOCKED_EXTERNAL",
+      "detail": "quality gate"
+    },
+    {
+      "id": "federal_rules_zero_cl",
+      "status": "BLOCKED_EXTERNAL"
+    },
+    {
+      "id": "loc_us_reports_zero_cl",
+      "status": "BLOCKED_EXTERNAL"
+    }
+  ]
+}

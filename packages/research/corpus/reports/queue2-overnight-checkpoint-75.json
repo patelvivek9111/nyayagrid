@@ -1,0 +1,19 @@
+{
+  "classification": "OVERNIGHT_CHECKPOINT",
+  "pct": 75,
+  "generatedAt": "2026-09-30T02:22:23.819Z",
+  "tasksCompleted": [
+    "5_tomorrow_acquisition_plan",
+    "16_week1_scorecard",
+    "17_week1_checklist",
+    "18_morning_execution_pack",
+    "28_balanced_priority_weights",
+    "29_10k_path_simulation",
+    "41_morning_command"
+  ],
+  "plannedCases": 303,
+  "estimatedCL": 671.7,
+  "week1Status": "YELLOW",
+  "nextTask": "wave_e_foundations",
+  "courtListenerHttpCalls": 0
+}

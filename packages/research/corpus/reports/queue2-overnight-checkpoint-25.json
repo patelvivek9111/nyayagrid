@@ -1,0 +1,37 @@
+{
+  "classification": "OVERNIGHT_CHECKPOINT",
+  "pct": 25,
+  "generatedAt": "2026-09-30T02:20:00.000Z",
+  "tasksCompleted": [
+    "1_10k_tracker_refresh",
+    "2_federal_depth_map",
+    "3_district_manifest",
+    "4_state_intermediate_manifest",
+    "13_year_distribution",
+    "14_retrieval_diversity",
+    "15_integrity_full_pass"
+  ],
+  "tasksDeferred": [],
+  "liveBaseline": {
+    "cases": 3070,
+    "federal": 546,
+    "stateDc": 2524,
+    "integrityDupes": 0
+  },
+  "artifacts": [
+    "queue2-overnight-wave-a.json",
+    "queue2-balanced-10k-tracker.json",
+    "queue2-federal-depth-map.json",
+    "queue2-district-manifest.json",
+    "queue2-state-intermediate-manifest.json",
+    "queue2-year-distribution.json",
+    "queue2-retrieval-diversity.json",
+    "queue2-integrity-full-pass.json"
+  ],
+  "testsStatus": "NOT_RUN_YET",
+  "integrityStatus": "PASS_ZERO_DUPES",
+  "gitStatus": "uncommitted_wave_a",
+  "nextTask": "wave_b_citation_intelligence",
+  "courtListenerHttpCalls": 0,
+  "paidAiCalls": 0
+}

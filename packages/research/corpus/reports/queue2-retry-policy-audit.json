@@ -1,0 +1,32 @@
+{
+  "classification": "QUEUE2_RETRY_POLICY_AUDIT",
+  "generatedAt": "2026-09-30T02:23:14.304Z",
+  "findings": [
+    {
+      "area": "cl_batch",
+      "issue": "429 must stop lane (observed S5)",
+      "status": "OK_POLICY"
+    },
+    {
+      "area": "worker_lock",
+      "issue": "stale owner reclaim bounded",
+      "status": "OK_TESTED"
+    },
+    {
+      "area": "fly_408",
+      "issue": "session recorded fly408; resume cursor required",
+      "status": "PARTIAL"
+    },
+    {
+      "area": "embeddings",
+      "issue": "retry without duplicating chunk rows",
+      "status": "OK_UNIT"
+    },
+    {
+      "area": "infinite_retry_risk",
+      "issue": "worker safety budgets / kill switch present",
+      "status": "OK_CONFIG"
+    }
+  ],
+  "fixesTonight": []
+}

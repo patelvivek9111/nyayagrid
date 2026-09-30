@@ -201,8 +201,9 @@ describe("us_reports_loc adapter", () => {
     const parsed = await adapter.parse(fetched!);
     expect(parsed.records).toEqual([]);
     expect(parsed.quarantined).toHaveLength(1);
-    expect(String(fetchImpl.mock.calls[0]?.[0])).toMatch(/^https:\/\/www\.loc\.gov\//);
-    expect(String(fetchImpl.mock.calls[0]?.[0])).not.toMatch(/courtlistener/i);
+    const firstUrl = String((fetchImpl.mock.calls as unknown as Array<[unknown]> | undefined)?.[0]?.[0] ?? "");
+    expect(firstUrl).toMatch(/^https:\/\/www\.loc\.gov\//);
+    expect(firstUrl).not.toMatch(/courtlistener/i);
   });
 
   it("imports only when primary text is present and does not invent a case name", async () => {

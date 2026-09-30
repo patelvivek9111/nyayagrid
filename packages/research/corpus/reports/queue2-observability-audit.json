@@ -1,0 +1,21 @@
+{
+  "classification": "QUEUE2_OBSERVABILITY_AUDIT",
+  "generatedAt": "2026-09-30T02:23:14.304Z",
+  "signals": {
+    "ingest_failure": "OBSERVED",
+    "resolver_failure": "PARTIAL",
+    "embedding_failure": "PARTIAL",
+    "orphan_creation": "OBSERVED",
+    "duplicate_creation": "OBSERVED",
+    "source_timeout": "OBSERVED",
+    "rate_limit": "OBSERVED",
+    "stale_owner": "OBSERVED",
+    "queue_failure": "OBSERVED",
+    "unauthorized_access": "PARTIAL",
+    "storage_failure": "PARTIAL"
+  },
+  "missingCriticalSignals": [
+    "resolver_present_unresolved_gauge_in_worker",
+    "citation_edge_duplicate_alert"
+  ]
+}

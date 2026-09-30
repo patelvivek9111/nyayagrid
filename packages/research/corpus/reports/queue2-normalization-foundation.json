@@ -1,0 +1,96 @@
+{
+  "classification": "QUEUE3_FOUNDATION_ONLY",
+  "queue3Status": "NOT_OPEN",
+  "generatedAt": "2026-09-30T02:20:11.416Z",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "areas": [
+    {
+      "area": "reporter_normalization",
+      "status": "PARTIAL",
+      "issues": [
+        "series spacing variants F.3d vs F. 3d"
+      ]
+    },
+    {
+      "area": "citation_normalization",
+      "status": "PARTIAL",
+      "issues": [
+        "U. S. vs U.S. spacing already lean-normalized"
+      ]
+    },
+    {
+      "area": "case_canonical_identity",
+      "status": "OK",
+      "issues": []
+    },
+    {
+      "area": "source_provider_source_id_identity",
+      "status": "OK",
+      "issues": [
+        "unique index present; overnight dupes=0"
+      ]
+    },
+    {
+      "area": "court_normalization",
+      "status": "PARTIAL",
+      "issues": [
+        "district IDs not all in registry until overnight promote"
+      ]
+    },
+    {
+      "area": "jurisdiction_normalization",
+      "status": "OK",
+      "issues": []
+    },
+    {
+      "area": "authority_type_normalization",
+      "status": "OK",
+      "issues": []
+    },
+    {
+      "area": "volume_page_normalization",
+      "status": "PARTIAL",
+      "issues": [
+        "pinpoint not always separated"
+      ]
+    },
+    {
+      "area": "statute_identity",
+      "status": "PARTIAL",
+      "issues": [
+        "USC House shell quality gate failed"
+      ]
+    },
+    {
+      "area": "regulation_identity",
+      "status": "OK",
+      "issues": [
+        "CFR eCFR piloted"
+      ]
+    },
+    {
+      "area": "rule_identity",
+      "status": "BLOCKED",
+      "issues": [
+        "Federal Rules ingest loop missing"
+      ]
+    },
+    {
+      "area": "alias_uniqueness",
+      "status": "FOUNDATION",
+      "issues": [
+        "no broad alias collision scan overnight"
+      ]
+    }
+  ],
+  "findings": {
+    "duplicateCanonicalIdentities": 0,
+    "conflictingAliases": "NOT_SCANNED_POPULATION",
+    "malformedAliases": "NOT_SCANNED_POPULATION",
+    "reporterAliasesMappingMultipleWays": "NOT_SCANNED_POPULATION",
+    "missingNormalizedFields": "no_present_unresolved"
+  },
+  "safeFixesTonight": [],
+  "note": "No broad schema changes. Queue #3 remains NOT_OPEN."
+}
