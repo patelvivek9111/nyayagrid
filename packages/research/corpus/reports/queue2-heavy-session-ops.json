@@ -1,0 +1,403 @@
+{
+  "classification": "MANUAL_QUEUE2_HEAVY_RECOVERED_QUOTA_SESSION_OPS",
+  "startedAt": "2026-09-30T22:13:56.775Z",
+  "budget": 600,
+  "caseTarget": 350,
+  "totalCl": 245,
+  "totalImported": 78,
+  "byLane": {
+    "SCOTUS": {
+      "imported": 0,
+      "cl": 3,
+      "batches": 3
+    },
+    "G3H": {
+      "imported": 78,
+      "cl": 242,
+      "batches": 25
+    }
+  },
+  "perCourt": {
+    "scotus": {
+      "imported": 0,
+      "cl": 3
+    },
+    "ca11": {
+      "imported": 14,
+      "cl": 30
+    },
+    "ca6": {
+      "imported": 8,
+      "cl": 34
+    },
+    "ca7": {
+      "imported": 8,
+      "cl": 30
+    },
+    "ca9": {
+      "imported": 0,
+      "cl": 8
+    },
+    "cadc": {
+      "imported": 6,
+      "cl": 14
+    },
+    "ca8": {
+      "imported": 8,
+      "cl": 18
+    },
+    "cafc": {
+      "imported": 0,
+      "cl": 0
+    },
+    "ca5": {
+      "imported": 4,
+      "cl": 16
+    },
+    "ca3": {
+      "imported": 5,
+      "cl": 16
+    },
+    "ca4": {
+      "imported": 8,
+      "cl": 34
+    },
+    "ca2": {
+      "imported": 6,
+      "cl": 17
+    },
+    "ca1": {
+      "imported": 8,
+      "cl": 18
+    },
+    "ca10": {
+      "imported": 3,
+      "cl": 7
+    }
+  },
+  "batches": [
+    {
+      "lane": "SCOTUS",
+      "court": "scotus",
+      "gte": "2005-01-01",
+      "lte": "2015-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "empty"
+    },
+    {
+      "lane": "SCOTUS",
+      "court": "scotus",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "empty"
+    },
+    {
+      "lane": "SCOTUS",
+      "court": "scotus",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "empty"
+    },
+    {
+      "lane": "G3H",
+      "court": "ca11",
+      "gte": "2000-01-01",
+      "lte": "2015-12-31",
+      "imported": 8,
+      "cl": 17,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca6",
+      "gte": "2000-01-01",
+      "lte": "2015-12-31",
+      "imported": 8,
+      "cl": 17,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca7",
+      "gte": "2000-01-01",
+      "lte": "2015-12-31",
+      "imported": 8,
+      "cl": 17,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca9",
+      "gte": "2000-01-01",
+      "lte": "2015-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "unknown",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "cadc",
+      "gte": "2000-01-01",
+      "lte": "2015-12-31",
+      "imported": 6,
+      "cl": 14,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca8",
+      "gte": "2000-01-01",
+      "lte": "2015-12-31",
+      "imported": 8,
+      "cl": 17,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "cafc",
+      "gte": "2000-01-01",
+      "lte": "2015-12-31",
+      "imported": 0,
+      "cl": 0,
+      "status": "empty"
+    },
+    {
+      "lane": "G3H",
+      "court": "ca5",
+      "gte": "2000-01-01",
+      "lte": "2015-12-31",
+      "imported": 4,
+      "cl": 9,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca3",
+      "gte": "2000-01-01",
+      "lte": "2015-12-31",
+      "imported": 5,
+      "cl": 11,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca4",
+      "gte": "2000-01-01",
+      "lte": "2015-12-31",
+      "imported": 8,
+      "cl": 17,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca2",
+      "gte": "2000-01-01",
+      "lte": "2015-12-31",
+      "imported": 6,
+      "cl": 13,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca1",
+      "gte": "2000-01-01",
+      "lte": "2015-12-31",
+      "imported": 8,
+      "cl": 17,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca10",
+      "gte": "2000-01-01",
+      "lte": "2015-12-31",
+      "imported": 3,
+      "cl": 7,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca11",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 6,
+      "cl": 13,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca6",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 17,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca7",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 13,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca9",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 7,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "cadc",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 0,
+      "status": "empty"
+    },
+    {
+      "lane": "G3H",
+      "court": "ca8",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "unknown",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "cafc",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 0,
+      "status": "empty"
+    },
+    {
+      "lane": "G3H",
+      "court": "ca5",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 7,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca3",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 5,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca4",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 17,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca2",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 4,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca1",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "429",
+      "rateLimited": true
+    }
+  ],
+  "stopReason": "429",
+  "reliability": {
+    "408": 0,
+    "429": 1,
+    "timeouts": 0
+  },
+  "finishedAt": "2026-09-30T22:37:19.435Z"
+}

@@ -1,0 +1,167 @@
+{
+  "ok": true,
+  "classification": "A2_VERIFIED_MICRO_BATCH",
+  "maxCalls": 24,
+  "acquireLimit": 6,
+  "courtListenerHttpCalls": 12,
+  "rateLimited": false,
+  "lastRetryAfter": null,
+  "considered": 6,
+  "preverified": 6,
+  "acquired": 6,
+  "deferred": [],
+  "preverify": [
+    {
+      "citation": "232 U.S. 383",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 98094,
+      "clRequests": 1
+    },
+    {
+      "citation": "407 U.S. 514",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 108590,
+      "clRequests": 1
+    },
+    {
+      "citation": "475 U.S. 673",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 111625,
+      "clRequests": 1
+    },
+    {
+      "citation": "488 U.S. 75",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 112157,
+      "clRequests": 1
+    },
+    {
+      "citation": "530 U.S. 466",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 118381,
+      "clRequests": 1
+    },
+    {
+      "citation": "544 U.S. 280",
+      "status": "verified",
+      "method": "citation-lookup",
+      "clusterId": 142885,
+      "clRequests": 1
+    }
+  ],
+  "results": [
+    {
+      "citation": "232 U.S. 383",
+      "status": "imported",
+      "authorityId": "1b7a110e-b517-4e14-ac25-4b3721e1f391",
+      "sourceExternalId": "cl-opinion-98094",
+      "clusterId": "98094",
+      "opinionId": "98094",
+      "embeddedChunks": 26,
+      "title": "Weeks v. United States",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/98094/",
+      "reporter": "U.S."
+    },
+    {
+      "citation": "407 U.S. 514",
+      "status": "imported",
+      "authorityId": "72f7f41d-2635-460d-ab81-a6e182c850eb",
+      "sourceExternalId": "cl-opinion-108590",
+      "clusterId": "108590",
+      "opinionId": "108590",
+      "embeddedChunks": 41,
+      "title": "Barker v. Wingo",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/108590/",
+      "reporter": "U.S."
+    },
+    {
+      "citation": "475 U.S. 673",
+      "status": "imported",
+      "authorityId": "1ad249dc-9801-4f5b-9bdd-55e6e83c7e0a",
+      "sourceExternalId": "cl-opinion-9430413",
+      "clusterId": "111625",
+      "opinionId": "9430413",
+      "embeddedChunks": 4,
+      "title": "Delaware v. Van Arsdall",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/111625/",
+      "reporter": "U.S."
+    },
+    {
+      "citation": "488 U.S. 75",
+      "status": "imported",
+      "authorityId": "cc0acded-de12-411b-93be-a5a830adbb07",
+      "sourceExternalId": "cl-opinion-9431486",
+      "clusterId": "112157",
+      "opinionId": "9431486",
+      "embeddedChunks": 26,
+      "title": "Penson v. Ohio",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/112157/",
+      "reporter": "U.S."
+    },
+    {
+      "citation": "530 U.S. 466",
+      "status": "imported",
+      "authorityId": "2033a43e-ad9e-4fc8-855a-ad3df5995b05",
+      "sourceExternalId": "cl-opinion-9433986",
+      "clusterId": "118381",
+      "opinionId": "9433986",
+      "embeddedChunks": 41,
+      "title": "Apprendi v. New Jersey",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/118381/",
+      "reporter": "U.S."
+    },
+    {
+      "citation": "544 U.S. 280",
+      "status": "imported",
+      "authorityId": "2dd4bfce-bc54-466d-9303-2d01f5888931",
+      "sourceExternalId": "cl-opinion-142885",
+      "clusterId": "142885",
+      "opinionId": "142885",
+      "embeddedChunks": 25,
+      "title": "Exxon Mobil Corp. v. Saudi Basic Industries Corp.",
+      "method": "citation-lookup",
+      "clRequests": 2,
+      "preverifyCl": 1,
+      "acquireCl": 1,
+      "canonicalSourceUrl": "https://www.courtlistener.com/opinion/142885/",
+      "reporter": "U.S."
+    }
+  ],
+  "corpus": {
+    "authorities": 4439,
+    "cases": 3084,
+    "cl_cases": 3039
+  },
+  "chunks": {
+    "chunks": 72398,
+    "embeddings": 72398,
+    "missing_embeddings": 0
+  },
+  "duplicateSourceIds": 0,
+  "orphans": 0
+}
