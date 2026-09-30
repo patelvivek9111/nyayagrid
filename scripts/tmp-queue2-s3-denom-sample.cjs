@@ -8,8 +8,8 @@ const postgres = require("postgres");
 const fs = require("fs");
 const path = require("path");
 
-const SAMPLE_TARGET = 250;
-const PER_STRATUM = 28;
+const SAMPLE_TARGET = 400;
+const PER_STRATUM = 45;
 
 const STRATA = [
   { key: "U.S.", re: /\b\d+\s+U\.?\s*S\.?\s+\d+/i },

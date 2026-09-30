@@ -1,0 +1,17 @@
+{
+  "classification": "MANUAL_QUEUE2_S5_RESOLVER_DEFECT_CONCLUSION",
+  "generatedAt": "2026-09-30T01:00:00.000Z",
+  "sampleDefects": 8,
+  "trueOpenBugs": 0,
+  "rootCauses": {
+    "STALE_EDGE": 8,
+    "note": "All 8 sampled CFR edges were VALID_PRESENT_UNRESOLVED at Session 4 denom sample time because the sample ran after eCFR ingest and before CITATION_RERESOLVE. Post-reresolve they are ALREADY_RESOLVED. Live scan now: presentUnresolvedTotal=0."
+  },
+  "fixed": 0,
+  "remainingPresentUnresolved": 0,
+  "newlyResolvedFromFixes": 0,
+  "hardening": "cite-integrity now also matches a.citation = e.raw_citation",
+  "regressionTests": "scripts/queue2-s5-resolver-defect-regression.test.cjs (4 passed)",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0
+}

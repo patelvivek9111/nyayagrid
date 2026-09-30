@@ -1211,7 +1211,7 @@ var require_connection = __commonJS({
         serverSignature = (await hmac(await hmac(saltedPassword, "Server Key"), auth)).toString("base64");
         const payload = "c=biws,r=" + res.r + ",p=" + xor(
           clientKey,
-          Buffer.from(await hmac(await sha2562(clientKey), auth))
+          Buffer.from(await hmac(await sha256(clientKey), auth))
         ).toString("base64");
         write(
           b().p().str(payload).end()
@@ -1446,7 +1446,7 @@ var require_connection = __commonJS({
     function hmac(key, x) {
       return crypto.createHmac("sha256", key).update(x).digest();
     }
-    function sha2562(x) {
+    function sha256(x) {
       return crypto.createHash("sha256").update(x).digest();
     }
     function xor(a, b2) {
@@ -1770,7 +1770,7 @@ var require_large = __commonJS({
 var require_src = __commonJS({
   "node_modules/postgres/cjs/src/index.js"(exports2, module2) {
     var os = require("os");
-    var fs2 = require("fs");
+    var fs = require("fs");
     var {
       mergeUserTypes,
       inferType,
@@ -1871,7 +1871,7 @@ var require_src = __commonJS({
         function file(path, args = [], options2 = {}) {
           arguments.length === 2 && !Array.isArray(args) && (options2 = args, args = []);
           const query = new Query([], args, (query2) => {
-            fs2.readFile(path, "utf8", (err, string) => {
+            fs.readFile(path, "utf8", (err, string) => {
               if (err)
                 return query2.reject(err);
               query2.strings = [string];
@@ -2197,255 +2197,112 @@ var require_src = __commonJS({
   }
 });
 
-// scripts/tmp-queue2-s3-hist-ingest.cjs
-var { createHash, randomUUID } = require("node:crypto");
+// scripts/tmp-queue2-manual-cite-integrity.cjs
 var postgres = require_src();
-var fs = require("fs");
-var CL_BASE = "https://www.courtlistener.com/api/rest/v4";
-var SOURCE = "courtlistener";
-var EMBEDDING_MODEL = "text-embedding-3-small";
-var EMBEDDING_DIMS = 384;
-var MAX_OPINION_CHARS = 4e4;
-var MAX_CHUNK_CHARS = 1e3;
-var COURT_MAP = {
-  scotus: { courtId: "us-scotus", courtLevel: "scotus", authorityState: "US", courtName: "Supreme Court of the United States", federalCircuit: null, jurisdiction: "United States" },
-  ca1: { courtId: "us-ca-1", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the First Circuit", federalCircuit: "1", jurisdiction: "United States" },
-  ca2: { courtId: "us-ca-2", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Second Circuit", federalCircuit: "2", jurisdiction: "United States" },
-  ca3: { courtId: "us-ca-3", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Third Circuit", federalCircuit: "3", jurisdiction: "United States" },
-  ca4: { courtId: "us-ca-4", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Fourth Circuit", federalCircuit: "4", jurisdiction: "United States" },
-  ca5: { courtId: "us-ca-5", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Fifth Circuit", federalCircuit: "5", jurisdiction: "United States" },
-  ca6: { courtId: "us-ca-6", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Sixth Circuit", federalCircuit: "6", jurisdiction: "United States" },
-  ca7: { courtId: "us-ca-7", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Seventh Circuit", federalCircuit: "7", jurisdiction: "United States" },
-  ca8: { courtId: "us-ca-8", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Eighth Circuit", federalCircuit: "8", jurisdiction: "United States" },
-  ca9: { courtId: "us-ca-9", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Ninth Circuit", federalCircuit: "9", jurisdiction: "United States" },
-  ca10: { courtId: "us-ca-10", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Tenth Circuit", federalCircuit: "10", jurisdiction: "United States" },
-  ca11: { courtId: "us-ca-11", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Eleventh Circuit", federalCircuit: "11", jurisdiction: "United States" },
-  cadc: { courtId: "us-ca-dc", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the District of Columbia Circuit", federalCircuit: "dc", jurisdiction: "United States" },
-  cafc: { courtId: "us-ca-fed", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Federal Circuit", federalCircuit: "fed", jurisdiction: "United States" },
-  arizctapp: { courtId: "st-az-app", courtLevel: "state_appellate", authorityState: "AZ", courtName: "Arizona Court of Appeals", federalCircuit: null, jurisdiction: "AZ" },
-  connappct: { courtId: "st-ct-app", courtLevel: "state_appellate", authorityState: "CT", courtName: "Connecticut Appellate Court", federalCircuit: null, jurisdiction: "CT" },
-  wisctapp: { courtId: "st-wi-app", courtLevel: "state_appellate", authorityState: "WI", courtName: "Wisconsin Court of Appeals", federalCircuit: null, jurisdiction: "WI" },
-  utahctapp: { courtId: "st-ut-app", courtLevel: "state_appellate", authorityState: "UT", courtName: "Utah Court of Appeals", federalCircuit: null, jurisdiction: "UT" },
-  nmctapp: { courtId: "st-nm-app", courtLevel: "state_appellate", authorityState: "NM", courtName: "New Mexico Court of Appeals", federalCircuit: null, jurisdiction: "NM" },
-  indctapp: { courtId: "st-in-app", courtLevel: "state_appellate", authorityState: "IN", courtName: "Indiana Court of Appeals", federalCircuit: null, jurisdiction: "IN" },
-  ariz: { courtId: "st-az-high", courtLevel: "state_high", authorityState: "AZ", courtName: "Arizona Supreme Court", federalCircuit: null, jurisdiction: "AZ" },
-  conn: { courtId: "st-ct-high", courtLevel: "state_high", authorityState: "CT", courtName: "Supreme Court of Connecticut", federalCircuit: null, jurisdiction: "CT" },
-  wis: { courtId: "st-wi-high", courtLevel: "state_high", authorityState: "WI", courtName: "Wisconsin Supreme Court", federalCircuit: null, jurisdiction: "WI" },
-  utah: { courtId: "st-ut-high", courtLevel: "state_high", authorityState: "UT", courtName: "Utah Supreme Court", federalCircuit: null, jurisdiction: "UT" },
-  nm: { courtId: "st-nm-high", courtLevel: "state_high", authorityState: "NM", courtName: "New Mexico Supreme Court", federalCircuit: null, jurisdiction: "NM" },
-  ind: { courtId: "st-in-high", courtLevel: "state_high", authorityState: "IN", courtName: "Indiana Supreme Court", federalCircuit: null, jurisdiction: "IN" },
-  nysd: { courtId: "us-d-nysd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Southern District of New York", federalCircuit: "2", jurisdiction: "United States" },
-  cacd: { courtId: "us-d-cacd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Central District of California", federalCircuit: "9", jurisdiction: "United States" },
-  ilnd: { courtId: "us-d-ilnd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Northern District of Illinois", federalCircuit: "7", jurisdiction: "United States" },
-  txsd: { courtId: "us-d-txsd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Southern District of Texas", federalCircuit: "5", jurisdiction: "United States" },
-  dcd: { courtId: "us-d-dcd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the District of Columbia", federalCircuit: "dc", jurisdiction: "United States" },
-  njd: { courtId: "us-d-njd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the District of New Jersey", federalCircuit: "3", jurisdiction: "United States" },
-  paed: { courtId: "us-d-paed", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Eastern District of Pennsylvania", federalCircuit: "3", jurisdiction: "United States" },
-  mad: { courtId: "us-d-mad", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the District of Massachusetts", federalCircuit: "1", jurisdiction: "United States" },
-  flsd: { courtId: "us-d-flsd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Southern District of Florida", federalCircuit: "11", jurisdiction: "United States" },
-  txnd: { courtId: "us-d-txnd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Northern District of Texas", federalCircuit: "5", jurisdiction: "United States" },
-  cand: { courtId: "us-d-cand", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Northern District of California", federalCircuit: "9", jurisdiction: "United States" },
-  waed: { courtId: "us-d-waed", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Eastern District of Washington", federalCircuit: "9", jurisdiction: "United States" }
-};
-function sha256(text) {
-  return createHash("sha256").update(String(text), "utf8").digest("hex");
-}
-function toPgvector(vec) {
-  return `[${vec.join(",")}]`;
-}
-function stripHtml(html) {
-  return String(html || "").replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<style[\s\S]*?<\/style>/gi, " ").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-}
-function chunkContent(content) {
-  const parts = String(content).split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
-  const chunks = [];
-  for (const p of parts) {
-    if (p.length <= MAX_CHUNK_CHARS) chunks.push(p);
-    else {
-      let rest = p;
-      while (rest.length > MAX_CHUNK_CHARS) {
-        let cut = rest.lastIndexOf(" ", MAX_CHUNK_CHARS);
-        if (cut < MAX_CHUNK_CHARS / 2) cut = MAX_CHUNK_CHARS;
-        chunks.push(rest.slice(0, cut).trim());
-        rest = rest.slice(cut).trim();
-      }
-      if (rest) chunks.push(rest);
-    }
-  }
-  return chunks.length ? chunks : [String(content).slice(0, MAX_CHUNK_CHARS)];
-}
-async function embedAll(texts, apiKey) {
-  const out = [];
-  for (let i = 0; i < texts.length; i += 32) {
-    const batch = texts.slice(i, i + 32);
-    const res = await fetch("https://api.openai.com/v1/embeddings", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ model: EMBEDDING_MODEL, input: batch, dimensions: EMBEDDING_DIMS }),
-      signal: AbortSignal.timeout(6e4)
-    });
-    if (!res.ok) throw new Error(`embed_http_${res.status}`);
-    const body = await res.json();
-    out.push(...(body.data || []).sort((a, b) => a.index - b.index).map((d) => d.embedding));
-  }
-  return out;
+async function citationCounts(sql) {
+  const [row] = await sql`
+    select
+      count(*)::int as extracted,
+      count(*) filter (where to_authority_id is not null)::int as resolved,
+      count(*) filter (where to_authority_id is null)::int as target_absent,
+      count(*) filter (where to_authority_id is null and (normalized_citation is null or btrim(normalized_citation)=''))::int as parser_gap
+    from legal_authority_citations
+  `;
+  return row;
 }
 async function main() {
-  const key = process.env.COURTLISTENER_API_KEY;
-  const db = process.env.DATABASE_URL;
-  const openai = process.env.OPENAI_API_KEY;
-  const clCourt = (process.argv[2] || process.env.CL_COURT || "ca5").trim().toLowerCase();
-  const mapped = COURT_MAP[clCourt];
-  const ids = String(process.argv[3] || process.env.CL_OPINION_IDS || "").split(",").map((s) => Number(s.trim())).filter((n) => Number.isFinite(n) && n > 0);
-  const maxIngest = Math.min(Math.max(Number(process.argv[4] || process.env.CL_MAX_INGEST || 8), 1), 10);
-  const hardTimeoutMs = Math.min(Math.max(Number(process.env.CL_HARD_TIMEOUT_MS || 12e4), 3e4), 18e4);
-  const started = Date.now();
-  let calls = 0;
-  if (!key || !db || !openai) {
-    console.log(JSON.stringify({ ok: false, phase: "INGEST", reason: "missing_env", courtListenerHttpCalls: 0 }));
+  const url = process.env.DATABASE_URL;
+  if (!url) {
+    console.log(JSON.stringify({ ok: false, reason: "DATABASE_URL missing", courtListenerHttpCalls: 0 }));
     process.exit(2);
   }
-  if (!mapped) {
-    console.log(JSON.stringify({ ok: false, phase: "INGEST", reason: `unmapped:${clCourt}`, courtListenerHttpCalls: 0 }));
-    process.exit(2);
-  }
-  if (!ids.length) {
-    console.log(JSON.stringify({ ok: false, phase: "INGEST", reason: "no_ids", courtListenerHttpCalls: 0 }));
-    process.exit(2);
-  }
-  const timer = setTimeout(() => {
-    console.log(
-      JSON.stringify({
-        ok: false,
-        phase: "INGEST",
-        status: "HIST_QUERY_TIMEOUT",
-        courtListenerHttpCalls: calls,
-        elapsedMs: Date.now() - started
-      })
-    );
-    process.exit(1);
-  }, hardTimeoutMs);
-  const sql = postgres(db, { max: 1, ssl: "require", idle_timeout: 5, connect_timeout: 30 });
-  const results = [];
-  let imported = 0;
+  const sql = postgres(url, { max: 1, ssl: "require", idle_timeout: 5, connect_timeout: 30 });
   try {
-    for (const id of ids.slice(0, maxIngest)) {
-      if (Date.now() - started > hardTimeoutMs - 5e3) break;
-      await new Promise((r) => setTimeout(r, 2200));
-      const res = await fetch(`${CL_BASE}/opinions/${id}/`, {
-        headers: { Authorization: `Token ${key}`, Accept: "application/json" },
-        signal: AbortSignal.timeout(3e4)
-      });
-      calls += 1;
-      if (res.status === 429) {
-        results.push({ id, status: "rate_limited" });
-        break;
-      }
-      if (!res.ok) {
-        results.push({ id, status: `http_${res.status}` });
-        continue;
-      }
-      const op = await res.json();
-      let cluster = null;
-      const clusterId = op.cluster ? String(op.cluster).match(/\/clusters\/(\d+)/)?.[1] || op.cluster_id : op.cluster_id;
-      if (clusterId) {
-        await new Promise((r) => setTimeout(r, 2200));
-        const cRes = await fetch(`${CL_BASE}/clusters/${clusterId}/`, {
-          headers: { Authorization: `Token ${key}`, Accept: "application/json" },
-          signal: AbortSignal.timeout(3e4)
-        });
-        calls += 1;
-        if (cRes.ok) cluster = await cRes.json();
-      }
-      const html = op.html_with_citations || op.html_columbia || op.html || op.plain_text || "";
-      const content = stripHtml(html).slice(0, MAX_OPINION_CHARS);
-      if (content.length < 200) {
-        results.push({ id, status: "skipped_short" });
-        continue;
-      }
-      const sourceExternalId = `cl-opinion-${id}`;
-      const existing = await sql`
-        select id from legal_authorities
-        where source_provider=${SOURCE} and source_external_id=${sourceExternalId} limit 1
-      `;
-      if (existing.length) {
-        results.push({ id, status: "duplicate" });
-        continue;
-      }
-      const title = String(cluster?.case_name || op.case_name || `Opinion ${id}`).slice(0, 500);
-      const citation = Array.isArray(cluster?.citation) ? cluster.citation[0] : cluster?.citation || null;
-      const decisionDate = cluster?.date_filed || op.date_filed || null;
-      const authorityId = randomUUID();
-      const versionId = randomUUID();
-      const hash = sha256(content);
-      await sql`
-        insert into legal_authorities (
-          id, authority_type, jurisdiction, court, court_id, authority_state,
-          federal_circuit, court_level, title, citation, normalized_citation,
-          docket_number, decision_date, source_provider, source_external_id,
-          canonical_source_url, ingestion_status, hierarchy_path, metadata
-        ) values (
-          ${authorityId}, ${"case"}::authority_type, ${mapped.jurisdiction}, ${mapped.courtName},
-          ${mapped.courtId}, ${mapped.authorityState}, ${mapped.federalCircuit}, ${mapped.courtLevel},
-          ${title}, ${citation}, ${citation}, ${cluster?.docket_number || null}, ${decisionDate},
-          ${SOURCE}, ${sourceExternalId},
-          ${`https://www.courtlistener.com/opinion/${id}/`},
-          'processing'::authority_ingestion_status, ${sql.json([])},
-          ${sql.json({ clCourt, adapter: "s3-hist-ingest", clusterId: clusterId || null })}
-        )
-      `;
-      await sql`
-        insert into legal_authority_versions (
-          id, authority_id, version_number, content, effective_from, effective_to,
-          source_provider, source_metadata, sha256
-        ) values (
-          ${versionId}, ${authorityId}, 1, ${content}, ${decisionDate}, ${null},
-          ${SOURCE}, ${sql.json({ retrievedAt: (/* @__PURE__ */ new Date()).toISOString() })}, ${hash}
-        )
-      `;
-      const chunks = chunkContent(content);
-      const vectors = await embedAll(chunks, openai);
-      for (let i = 0; i < chunks.length; i++) {
-        await sql`
-          insert into legal_authority_chunks (
-            id, authority_id, authority_version_id, chunk_index, content,
-            segment_ref, embedding, embedding_model
-          ) values (
-            ${randomUUID()}, ${authorityId}, ${versionId}, ${i}, ${chunks[i]},
-            ${`p${i + 1}`}, ${toPgvector(vectors[i])}::vector, ${`${EMBEDDING_MODEL}:${EMBEDDING_DIMS}`}
-          )
-        `;
-      }
-      await sql`
-        update legal_authorities set ingestion_status='ready'::authority_ingestion_status, updated_at=now()
-        where id=${authorityId}
-      `;
-      imported += 1;
-      results.push({ id, status: "imported", decisionDate, title: title.slice(0, 80) });
-    }
-    clearTimeout(timer);
-    const payload = {
+    const before = await citationCounts(sql);
+    const resolvedRows = await sql`
+      with candidates as (
+        select e.id as edge_id, a.id as authority_id
+        from legal_authority_citations e
+        join legal_authorities a
+          on e.to_authority_id is null
+         and e.normalized_citation is not null
+         and length(e.normalized_citation) > 4
+         and (
+           a.normalized_citation = e.normalized_citation
+           or a.citation = e.normalized_citation
+           or a.citation = e.raw_citation
+         )
+      ),
+      unique_matches as (
+        select edge_id, min(authority_id::text)::uuid as authority_id
+        from candidates
+        group by edge_id
+        having count(distinct authority_id) = 1
+      )
+      update legal_authority_citations e
+      set to_authority_id = u.authority_id
+      from unique_matches u
+      where e.id = u.edge_id
+      returning e.id
+    `;
+    const after = await citationCounts(sql);
+    const [chunks] = await sql`
+      select
+        count(*)::int as chunks,
+        count(*) filter (where embedding is not null)::int as embeddings,
+        count(*) filter (where embedding is null)::int as missing_embeddings
+      from legal_authority_chunks
+    `;
+    const [orphans] = await sql`
+      select count(*)::int as n from legal_authority_chunks c
+      left join legal_authorities a on a.id = c.authority_id where a.id is null
+    `;
+    const [dups] = await sql`
+      select count(*)::int as n from (
+        select source_provider, source_external_id from legal_authorities
+        where source_external_id is not null
+        group by 1, 2 having count(*) > 1
+      ) d
+    `;
+    const [corpus] = await sql`
+      select count(*)::int as authorities,
+             count(*) filter (where authority_type='case')::int as cases,
+             count(*) filter (where authority_type='case' and source_provider='courtlistener')::int as cl_cases,
+             count(*) filter (where authority_type='statute')::int as statutes,
+             count(*) filter (where authority_type='regulation')::int as regulations,
+             count(*) filter (where authority_type='rule')::int as rules
+      from legal_authorities
+    `;
+    const jur = await sql`
+      select authority_state as j, count(*) filter (where authority_type='case')::int as cases
+      from legal_authorities
+      where authority_state in ('AR','WI')
+      group by 1
+    `;
+    console.log(JSON.stringify({
       ok: true,
-      phase: "INGEST",
-      status: "done",
-      clCourt,
-      imported,
-      results,
-      courtListenerHttpCalls: calls,
-      elapsedMs: Date.now() - started,
-      mutations: imported
-    };
-    try {
-      fs.writeFileSync("/tmp/queue2-s3-hist-ingest.json", JSON.stringify(payload, null, 2));
-    } catch (_) {
-    }
-    console.log(JSON.stringify(payload));
+      courtListenerHttpCalls: 0,
+      aiCalls: 0,
+      featureAgents: process.env.FEATURE_AGENTS || "0",
+      resolvedBefore: before.resolved,
+      extracted: after.extracted,
+      resolvedAfter: after.resolved,
+      newResolved: resolvedRows.length,
+      targetAbsent: after.target_absent,
+      parserGap: after.parser_gap,
+      targetAbsentBefore: before.target_absent,
+      parserGapBefore: before.parser_gap,
+      chunks,
+      orphans: orphans.n,
+      duplicateSourceIds: dups.n,
+      corpus,
+      jurisdictions: jur
+    }));
   } finally {
-    clearTimeout(timer);
     await sql.end({ timeout: 5 });
   }
 }
 main().catch((e) => {
-  console.log(JSON.stringify({ ok: false, phase: "INGEST", err: String(e.message || e).slice(0, 300), courtListenerHttpCalls: 0 }));
+  console.log(JSON.stringify({ ok: false, err: String(e.message || e).slice(0, 400), courtListenerHttpCalls: 0 }));
   process.exit(1);
 });

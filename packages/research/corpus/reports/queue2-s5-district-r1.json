@@ -1,0 +1,21 @@
+{
+  "classification": "MANUAL_QUEUE2_BALANCED_10K_SESSION_5_DISTRICT_R1",
+  "note": "First district pass before 429; r2 overwritten growth json",
+  "totalCl": 43,
+  "totalImported": 20,
+  "stopReason": "429",
+  "byCourt": {
+    "njd": { "recent": 0, "hist": 4, "cl": 9 },
+    "paed": { "recent": 0, "hist": 5, "cl": 11 },
+    "mad": { "recent": 0, "hist": 3, "cl": 7 },
+    "flsd": { "recent": 0, "hist": 2, "cl": 5 },
+    "dcd": { "recent": 2, "hist": 4, "cl": 11 }
+  },
+  "histWindows": [
+    { "court": "njd", "gte": "1995-01-01", "lte": "1999-12-31", "imported": 4 },
+    { "court": "paed", "gte": "1990-01-01", "lte": "1994-12-31", "imported": 5 },
+    { "court": "mad", "gte": "1980-01-01", "lte": "1989-12-31", "imported": 3 },
+    { "court": "flsd", "gte": "1995-01-01", "lte": "1999-12-31", "imported": 2 },
+    { "court": "dcd", "gte": "1990-01-01", "lte": "1994-12-31", "imported": 4 }
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "classification": "MANUAL_QUEUE2_S5_G3H",
+  "startedAt": "2026-09-30T01:15:28.980Z",
+  "budget": 80,
+  "windows": [
+    {
+      "court": "ca6",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 8,
+      "cl": 17,
+      "status": "done"
+    },
+    {
+      "court": "ca6",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "unknown"
+    },
+    {
+      "court": "ca7",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 6,
+      "cl": 13,
+      "status": "done"
+    },
+    {
+      "court": "ca7",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 4,
+      "cl": 9,
+      "status": "done"
+    },
+    {
+      "court": "ca9",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 3,
+      "cl": 7,
+      "status": "done"
+    },
+    {
+      "court": "ca9",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 5,
+      "cl": 13,
+      "status": "done"
+    }
+  ],
+  "perCourt": {
+    "ca6": {
+      "imported": 8,
+      "cl": 18
+    },
+    "ca7": {
+      "imported": 10,
+      "cl": 22
+    },
+    "ca9": {
+      "imported": 8,
+      "cl": 20
+    }
+  },
+  "totalCl": 62,
+  "totalImported": 26,
+  "stopReason": "429",
+  "finishedAt": "2026-09-30T01:21:40.600Z"
+}

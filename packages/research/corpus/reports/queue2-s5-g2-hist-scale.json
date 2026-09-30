@@ -1,0 +1,41 @@
+{
+  "classification": "MANUAL_QUEUE2_BALANCED_10K_SESSION_4_HIST_SCALE",
+  "startedAt": "2026-09-30T01:25:19.888Z",
+  "budget": 45,
+  "planMode": "g2",
+  "windows": [
+    {
+      "lane": "G2",
+      "court": "arizctapp",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "maxIds": 10,
+      "maxIngest": 8,
+      "phase": "DISCOVERY",
+      "status": "rate_limited",
+      "cl": 1
+    }
+  ],
+  "byLane": {
+    "G3H": {
+      "cl": 0,
+      "imported": 0,
+      "windows": 0
+    },
+    "G2": {
+      "cl": 1,
+      "imported": 0,
+      "windows": 0
+    }
+  },
+  "totalCl": 1,
+  "totalImported": 0,
+  "perCourt": {},
+  "stopReason": "429",
+  "reliability": {
+    "timeouts": 0,
+    "rateLimited": 1,
+    "orphans": 0
+  },
+  "finishedAt": "2026-09-30T01:25:22.448Z"
+}

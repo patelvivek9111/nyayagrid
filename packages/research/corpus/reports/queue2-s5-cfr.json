@@ -1,0 +1,23 @@
+{
+  "ok": true,
+  "classification": "B1_CFR_ZERO_CL_PILOT",
+  "generatedAt": "2026-09-30T01:25:46.840Z",
+  "courtListenerHttpCalls": 0,
+  "max": 10,
+  "ecfrDate": "2026-09-25",
+  "imported": 0,
+  "results": [],
+  "corpus": {
+    "authorities": 4425,
+    "cases": 3070,
+    "cl_cases": 3025,
+    "regulations": 196
+  },
+  "chunks": {
+    "chunks": 72002,
+    "embeddings": 72002,
+    "missing_embeddings": 0
+  },
+  "duplicateSourceIds": 0,
+  "orphanCount": 0
+}

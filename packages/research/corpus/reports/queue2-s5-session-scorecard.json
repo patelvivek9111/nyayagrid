@@ -1,0 +1,27 @@
+{
+  "classification": "MANUAL_QUEUE2_BALANCED_10K_SESSION_5",
+  "verdict": "PARTIAL",
+  "reason": "Resolver defects audited as STALE_EDGE (0 open bugs; post-reresolve sample clean). Case growth +71 below +125 minimum due to repeated CL 429 after low hour remaining at session start.",
+  "generatedAt": "2026-09-30T01:27:00.000Z",
+  "resolver": {
+    "sampleDefects": 8,
+    "trueOpenBugs": 0,
+    "rootCause": "STALE_EDGE (denom sampled after CFR ingest, before reresolve)",
+    "remainingPresentUnresolved": 0,
+    "hardening": "cite-integrity matches a.citation=e.raw_citation",
+    "regressionTests": 4
+  },
+  "quotaStart": { "minute": 30, "hour": 42, "day": 144 },
+  "actualClApprox": 170,
+  "cases": { "start": 2999, "end": 3070, "added": 71 },
+  "lanes": {
+    "districtR1Hist": { "imported": 20, "cl": 43 },
+    "districtR3Recent": { "imported": 29, "cl": 57 },
+    "g3h": { "imported": 26, "cl": 62 },
+    "g2": { "imported": 0, "cl": 1, "stop": "429" },
+    "cfr": 0
+  },
+  "reliability": { "429": 3, "fly408": 1, "orphans": 0, "histPath": "stable when not rate-limited" },
+  "queue": { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", "transition": "NONE" },
+  "completionCandidate": false
+}

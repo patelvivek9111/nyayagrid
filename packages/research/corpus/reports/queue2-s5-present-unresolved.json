@@ -1,0 +1,12 @@
+{
+  "ok": true,
+  "classification": "MANUAL_QUEUE2_S5_PRESENT_UNRESOLVED_SCAN",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "apply": false,
+  "presentUnresolvedTotal": 0,
+  "uniqueExactUnresolved": 0,
+  "ambiguousExactUnresolved": 0,
+  "newlyResolved": 0,
+  "samples": []
+}

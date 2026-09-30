@@ -1,0 +1,46 @@
+{
+  "classification": "MANUAL_QUEUE2_S5_DISTRICT_R3",
+  "startedAt": "2026-09-30T01:10:51.910Z",
+  "budget": 60,
+  "batches": [
+    {
+      "court": "txsd",
+      "cl": 11,
+      "imported": 9,
+      "status": "paused",
+      "exit": 0
+    },
+    {
+      "court": "njd",
+      "cl": 11,
+      "imported": 5,
+      "status": "paused",
+      "exit": 0
+    },
+    {
+      "court": "paed",
+      "cl": 11,
+      "imported": 5,
+      "status": "paused",
+      "exit": 0
+    },
+    {
+      "court": "mad",
+      "cl": 11,
+      "imported": 5,
+      "status": "paused",
+      "exit": 0
+    },
+    {
+      "court": "flsd",
+      "cl": 13,
+      "imported": 5,
+      "status": "paused",
+      "exit": 0
+    }
+  ],
+  "totalCl": 57,
+  "totalImported": 29,
+  "stopReason": "budget_exhausted",
+  "finishedAt": "2026-09-30T01:14:56.937Z"
+}

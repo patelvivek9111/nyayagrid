@@ -1,0 +1,284 @@
+{
+  "ok": true,
+  "classification": "MANUAL_QUEUE2_S5_RESOLVER_DEFECT_AUDIT",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "sampleSize": 8,
+  "byRootCause": {
+    "DB_QUERY": 8
+  },
+  "defects": [
+    {
+      "id": "d2efbf8f-6dfe-4751-8c44-43a483e5e65d",
+      "raw": "8 C.F.R. ,%� 1003.1",
+      "normalized": "8 C.F.R. ,%� 1003.1",
+      "rawHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 31 30 30 33 2e 31",
+      "normHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 31 30 30 33 2e 31",
+      "citingAuthorityId": "fd12d64f-3658-44c6-9b52-983007ab1956",
+      "citingTitle": "Rosas-Nesta v. Blanche",
+      "citingCitation": null,
+      "toAuthorityId": "4a25073a-08d2-45a3-9462-b20546f4d29b",
+      "targetPresentExact": true,
+      "exactCandidateCount": 1,
+      "exactCandidates": [
+        {
+          "id": "4a25073a-08d2-45a3-9462-b20546f4d29b",
+          "citation": "8 C.F.R. ,%� 1003.1",
+          "normalized": "8 C.F.R. ,%� 1003.1",
+          "citationHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 31 30 30 33 2e 31",
+          "normHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 31 30 30 33 2e 31",
+          "type": "regulation",
+          "source": "ecfr"
+        }
+      ],
+      "softCandidateCount": 1,
+      "softCandidates": [
+        {
+          "id": "4a25073a-08d2-45a3-9462-b20546f4d29b",
+          "citation": "8 C.F.R. ,%� 1003.1",
+          "normalized": "8 C.F.R. ,%� 1003.1"
+        }
+      ],
+      "rootCause": "DB_QUERY",
+      "failurePhase": "ALREADY_RESOLVED"
+    },
+    {
+      "id": "3aa88de3-da7d-4209-ac4d-16c6c288b911",
+      "raw": "8 C.F.R. ,%� 204.2",
+      "normalized": "8 C.F.R. ,%� 204.2",
+      "rawHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 32 30 34 2e 32",
+      "normHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 32 30 34 2e 32",
+      "citingAuthorityId": "f9b730d8-cc21-43a3-b84a-603d9e4b530a",
+      "citingTitle": "Okene v. Blanche",
+      "citingCitation": null,
+      "toAuthorityId": "ad72eaeb-d7db-4d12-b467-f6ad14841801",
+      "targetPresentExact": true,
+      "exactCandidateCount": 1,
+      "exactCandidates": [
+        {
+          "id": "ad72eaeb-d7db-4d12-b467-f6ad14841801",
+          "citation": "8 C.F.R. ,%� 204.2",
+          "normalized": "8 C.F.R. ,%� 204.2",
+          "citationHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 32 30 34 2e 32",
+          "normHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 32 30 34 2e 32",
+          "type": "regulation",
+          "source": "ecfr"
+        }
+      ],
+      "softCandidateCount": 1,
+      "softCandidates": [
+        {
+          "id": "ad72eaeb-d7db-4d12-b467-f6ad14841801",
+          "citation": "8 C.F.R. ,%� 204.2",
+          "normalized": "8 C.F.R. ,%� 204.2"
+        }
+      ],
+      "rootCause": "DB_QUERY",
+      "failurePhase": "ALREADY_RESOLVED"
+    },
+    {
+      "id": "520e11e3-7dfb-4d18-8fa2-4349a4dd4cfd",
+      "raw": "50 C.F.R. ,%� 424.11",
+      "normalized": "50 C.F.R. ,%� 424.11",
+      "rawHex": "35 30 20 43 2e 46 2e 52 2e 20 c2 a7 20 34 32 34 2e 31 31",
+      "normHex": "35 30 20 43 2e 46 2e 52 2e 20 c2 a7 20 34 32 34 2e 31 31",
+      "citingAuthorityId": "cdbf9f73-049b-486c-8573-86f764867555",
+      "citingTitle": "Texas v. US Dept of the Interior",
+      "citingCitation": null,
+      "toAuthorityId": "8f320fdb-63a8-48a2-bbba-e7c4a5c53260",
+      "targetPresentExact": true,
+      "exactCandidateCount": 1,
+      "exactCandidates": [
+        {
+          "id": "8f320fdb-63a8-48a2-bbba-e7c4a5c53260",
+          "citation": "50 C.F.R. ,%� 424.11",
+          "normalized": "50 C.F.R. ,%� 424.11",
+          "citationHex": "35 30 20 43 2e 46 2e 52 2e 20 c2 a7 20 34 32 34 2e 31 31",
+          "normHex": "35 30 20 43 2e 46 2e 52 2e 20 c2 a7 20 34 32 34 2e 31 31",
+          "type": "regulation",
+          "source": "ecfr"
+        }
+      ],
+      "softCandidateCount": 1,
+      "softCandidates": [
+        {
+          "id": "8f320fdb-63a8-48a2-bbba-e7c4a5c53260",
+          "citation": "50 C.F.R. ,%� 424.11",
+          "normalized": "50 C.F.R. ,%� 424.11"
+        }
+      ],
+      "rootCause": "DB_QUERY",
+      "failurePhase": "ALREADY_RESOLVED"
+    },
+    {
+      "id": "2229b551-0250-482e-aa60-a7f7a8c158ce",
+      "raw": "47 C.F.R. ,%� 1.102",
+      "normalized": "47 C.F.R. ,%� 1.102",
+      "rawHex": "34 37 20 43 2e 46 2e 52 2e 20 c2 a7 20 31 2e 31 30 32",
+      "normHex": "34 37 20 43 2e 46 2e 52 2e 20 c2 a7 20 31 2e 31 30 32",
+      "citingAuthorityId": "510cd6af-3388-4aa6-a09d-0a6ed64f46b7",
+      "citingTitle": "Sherrod Brown v. FCC",
+      "citingCitation": null,
+      "toAuthorityId": "506d46fd-8e1e-41f4-be55-08789103ac6d",
+      "targetPresentExact": true,
+      "exactCandidateCount": 1,
+      "exactCandidates": [
+        {
+          "id": "506d46fd-8e1e-41f4-be55-08789103ac6d",
+          "citation": "47 C.F.R. ,%� 1.102",
+          "normalized": "47 C.F.R. ,%� 1.102",
+          "citationHex": "34 37 20 43 2e 46 2e 52 2e 20 c2 a7 20 31 2e 31 30 32",
+          "normHex": "34 37 20 43 2e 46 2e 52 2e 20 c2 a7 20 31 2e 31 30 32",
+          "type": "regulation",
+          "source": "ecfr"
+        }
+      ],
+      "softCandidateCount": 1,
+      "softCandidates": [
+        {
+          "id": "506d46fd-8e1e-41f4-be55-08789103ac6d",
+          "citation": "47 C.F.R. ,%� 1.102",
+          "normalized": "47 C.F.R. ,%� 1.102"
+        }
+      ],
+      "rootCause": "DB_QUERY",
+      "failurePhase": "ALREADY_RESOLVED"
+    },
+    {
+      "id": "5f2c277a-fd79-473e-ad84-5f3b15a3d122",
+      "raw": "47 C.F.R. ,%�,%� 1.103",
+      "normalized": "47 C.F.R. ,%� 1.103",
+      "rawHex": "34 37 20 43 2e 46 2e 52 2e 20 c2 a7 c2 a7 20 31 2e 31 30 33",
+      "normHex": "34 37 20 43 2e 46 2e 52 2e 20 c2 a7 20 31 2e 31 30 33",
+      "citingAuthorityId": "510cd6af-3388-4aa6-a09d-0a6ed64f46b7",
+      "citingTitle": "Sherrod Brown v. FCC",
+      "citingCitation": null,
+      "toAuthorityId": "d9a4d98d-b19d-4338-9655-fe446acd8155",
+      "targetPresentExact": true,
+      "exactCandidateCount": 1,
+      "exactCandidates": [
+        {
+          "id": "d9a4d98d-b19d-4338-9655-fe446acd8155",
+          "citation": "47 C.F.R. ,%� 1.103",
+          "normalized": "47 C.F.R. ,%� 1.103",
+          "citationHex": "34 37 20 43 2e 46 2e 52 2e 20 c2 a7 20 31 2e 31 30 33",
+          "normHex": "34 37 20 43 2e 46 2e 52 2e 20 c2 a7 20 31 2e 31 30 33",
+          "type": "regulation",
+          "source": "ecfr"
+        }
+      ],
+      "softCandidateCount": 1,
+      "softCandidates": [
+        {
+          "id": "d9a4d98d-b19d-4338-9655-fe446acd8155",
+          "citation": "47 C.F.R. ,%� 1.103",
+          "normalized": "47 C.F.R. ,%� 1.103"
+        }
+      ],
+      "rootCause": "DB_QUERY",
+      "failurePhase": "ALREADY_RESOLVED"
+    },
+    {
+      "id": "c3fffa38-ad82-4935-9725-828227c36baf",
+      "raw": "47 C.F.R. ,%� 73.1942",
+      "normalized": "47 C.F.R. ,%� 73.1942",
+      "rawHex": "34 37 20 43 2e 46 2e 52 2e 20 c2 a7 20 37 33 2e 31 39 34 32",
+      "normHex": "34 37 20 43 2e 46 2e 52 2e 20 c2 a7 20 37 33 2e 31 39 34 32",
+      "citingAuthorityId": "510cd6af-3388-4aa6-a09d-0a6ed64f46b7",
+      "citingTitle": "Sherrod Brown v. FCC",
+      "citingCitation": null,
+      "toAuthorityId": "069d625e-6722-473e-8372-c4083842b53a",
+      "targetPresentExact": true,
+      "exactCandidateCount": 1,
+      "exactCandidates": [
+        {
+          "id": "069d625e-6722-473e-8372-c4083842b53a",
+          "citation": "47 C.F.R. ,%� 73.1942",
+          "normalized": "47 C.F.R. ,%� 73.1942",
+          "citationHex": "34 37 20 43 2e 46 2e 52 2e 20 c2 a7 20 37 33 2e 31 39 34 32",
+          "normHex": "34 37 20 43 2e 46 2e 52 2e 20 c2 a7 20 37 33 2e 31 39 34 32",
+          "type": "regulation",
+          "source": "ecfr"
+        }
+      ],
+      "softCandidateCount": 1,
+      "softCandidates": [
+        {
+          "id": "069d625e-6722-473e-8372-c4083842b53a",
+          "citation": "47 C.F.R. ,%� 73.1942",
+          "normalized": "47 C.F.R. ,%� 73.1942"
+        }
+      ],
+      "rootCause": "DB_QUERY",
+      "failurePhase": "ALREADY_RESOLVED"
+    },
+    {
+      "id": "367d83b8-03cc-404e-86e1-d7a0cd28e608",
+      "raw": "8 C.F.R. ,%� 1208.13",
+      "normalized": "8 C.F.R. ,%� 1208.13",
+      "rawHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 31 32 30 38 2e 31 33",
+      "normHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 31 32 30 38 2e 31 33",
+      "citingAuthorityId": "970ecde1-6a0a-4ac8-843b-62aa12b7894a",
+      "citingTitle": "Dorsainvil v. Blanche",
+      "citingCitation": null,
+      "toAuthorityId": "728fb855-2533-4ecb-a3aa-ef94982ca918",
+      "targetPresentExact": true,
+      "exactCandidateCount": 1,
+      "exactCandidates": [
+        {
+          "id": "728fb855-2533-4ecb-a3aa-ef94982ca918",
+          "citation": "8 C.F.R. ,%� 1208.13",
+          "normalized": "8 C.F.R. ,%� 1208.13",
+          "citationHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 31 32 30 38 2e 31 33",
+          "normHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 31 32 30 38 2e 31 33",
+          "type": "regulation",
+          "source": "ecfr"
+        }
+      ],
+      "softCandidateCount": 1,
+      "softCandidates": [
+        {
+          "id": "728fb855-2533-4ecb-a3aa-ef94982ca918",
+          "citation": "8 C.F.R. ,%� 1208.13",
+          "normalized": "8 C.F.R. ,%� 1208.13"
+        }
+      ],
+      "rootCause": "DB_QUERY",
+      "failurePhase": "ALREADY_RESOLVED"
+    },
+    {
+      "id": "6806ee8e-b8e9-4de9-a74d-4622d820b6bc",
+      "raw": "8 C.F.R. ,%� 208.20",
+      "normalized": "8 C.F.R. ,%� 208.20",
+      "rawHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 32 30 38 2e 32 30",
+      "normHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 32 30 38 2e 32 30",
+      "citingAuthorityId": "555c2443-2ca9-4a39-be41-0f9d4381cc83",
+      "citingTitle": "Nemis v. Blanche",
+      "citingCitation": null,
+      "toAuthorityId": "81e3d189-fd9f-4656-a431-1f9e81f2f525",
+      "targetPresentExact": true,
+      "exactCandidateCount": 1,
+      "exactCandidates": [
+        {
+          "id": "81e3d189-fd9f-4656-a431-1f9e81f2f525",
+          "citation": "8 C.F.R. ,%� 208.20",
+          "normalized": "8 C.F.R. ,%� 208.20",
+          "citationHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 32 30 38 2e 32 30",
+          "normHex": "38 20 43 2e 46 2e 52 2e 20 c2 a7 20 32 30 38 2e 32 30",
+          "type": "regulation",
+          "source": "ecfr"
+        }
+      ],
+      "softCandidateCount": 1,
+      "softCandidates": [
+        {
+          "id": "81e3d189-fd9f-4656-a431-1f9e81f2f525",
+          "citation": "8 C.F.R. ,%� 208.20",
+          "normalized": "8 C.F.R. ,%� 208.20"
+        }
+      ],
+      "rootCause": "DB_QUERY",
+      "failurePhase": "ALREADY_RESOLVED"
+    }
+  ]
+}

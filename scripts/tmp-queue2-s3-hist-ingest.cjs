@@ -52,6 +52,13 @@ const COURT_MAP = {
   ilnd: { courtId: "us-d-ilnd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Northern District of Illinois", federalCircuit: "7", jurisdiction: "United States" },
   txsd: { courtId: "us-d-txsd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Southern District of Texas", federalCircuit: "5", jurisdiction: "United States" },
   dcd: { courtId: "us-d-dcd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the District of Columbia", federalCircuit: "dc", jurisdiction: "United States" },
+  njd: { courtId: "us-d-njd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the District of New Jersey", federalCircuit: "3", jurisdiction: "United States" },
+  paed: { courtId: "us-d-paed", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Eastern District of Pennsylvania", federalCircuit: "3", jurisdiction: "United States" },
+  mad: { courtId: "us-d-mad", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the District of Massachusetts", federalCircuit: "1", jurisdiction: "United States" },
+  flsd: { courtId: "us-d-flsd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Southern District of Florida", federalCircuit: "11", jurisdiction: "United States" },
+  txnd: { courtId: "us-d-txnd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Northern District of Texas", federalCircuit: "5", jurisdiction: "United States" },
+  cand: { courtId: "us-d-cand", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Northern District of California", federalCircuit: "9", jurisdiction: "United States" },
+  waed: { courtId: "us-d-waed", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Eastern District of Washington", federalCircuit: "9", jurisdiction: "United States" },
 };
 
 function sha256(text) {
