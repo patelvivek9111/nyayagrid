@@ -969,7 +969,7 @@
     "transition": "NONE"
   },
   "GIT": {
-    "commit": "pending_selective_commit",
-    "pushed": "pending_if_clean"
+    "commit": "2e556b3 Prepare overnight zero-quota Week 1 maps, dual-value queue, and morning pack.",
+    "pushed": true
   }
 }
