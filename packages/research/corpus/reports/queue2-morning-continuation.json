@@ -1,0 +1,59 @@
+{
+  "classification": "MANUAL_QUEUE2_MORNING_CONTINUATION",
+  "startedAt": "2026-09-30T16:19:53.852Z",
+  "budget": 22,
+  "totalCl": 21,
+  "totalImported": 3,
+  "batches": [
+    {
+      "lane": "G3H",
+      "court": "ca11",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "empty"
+    },
+    {
+      "lane": "G3H",
+      "court": "ca6",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 3,
+      "cl": 11,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G3H",
+      "court": "ca7",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 0,
+      "cl": 9,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    }
+  ],
+  "stopReason": "budget_exhausted",
+  "finishedAt": "2026-09-30T16:21:12.322Z",
+  "citationReresolve": {
+    "newResolved": 0,
+    "resolvedAfter": 1164,
+    "resolvedBefore": 1164,
+    "targetAbsent": 8321,
+    "extracted": 9485,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "corpus": {
+      "authorities": 4433,
+      "cases": 3078,
+      "cl_cases": 3033,
+      "statutes": 904,
+      "regulations": 196,
+      "rules": 254
+    }
+  }
+}

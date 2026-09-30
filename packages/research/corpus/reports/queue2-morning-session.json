@@ -1,0 +1,86 @@
+{
+  "classification": "MANUAL_QUEUE2_MORNING_EXECUTION_PACK",
+  "startedAt": "2026-09-30T16:18:24.270Z",
+  "budget": 15,
+  "caseTarget": 10,
+  "preserveDay": 25,
+  "totalCl": 15,
+  "totalImported": 0,
+  "batches": [
+    {
+      "lane": "DUAL_VALUE_A2",
+      "cites": [
+        "573 U.S. 373",
+        "578 U.S. 330",
+        "477 U.S. 242",
+        "573 U.S. 149",
+        "528 U.S. 167",
+        "549 U.S. 1",
+        "568 U.S. 165",
+        "598 U.S. 411"
+      ],
+      "imported": 0,
+      "cl": 15,
+      "status": "ran"
+    }
+  ],
+  "skipped": [],
+  "dualValue": {
+    "candidates": 8,
+    "imported": 0,
+    "cl": 15,
+    "resolvedDelta": 0
+  },
+  "lanes": {
+    "dualValue": {
+      "imported": 0,
+      "cl": 15
+    },
+    "G3H": {
+      "imported": 0,
+      "cl": 0
+    },
+    "G2": {
+      "imported": 0,
+      "cl": 0
+    },
+    "G1": {
+      "imported": 0,
+      "cl": 0
+    },
+    "G3_DISTRICT": {
+      "imported": 0,
+      "cl": 0
+    },
+    "G3_SCOTUS": {
+      "imported": 0,
+      "cl": 0
+    },
+    "A2": {
+      "imported": 0,
+      "cl": 15,
+      "resolved": 0
+    }
+  },
+  "stopReason": "budget_exhausted",
+  "rateLimited": false,
+  "timedOut408": false,
+  "citationReresolve": {
+    "newResolved": 40,
+    "resolvedAfter": 1164,
+    "resolvedBefore": 1124,
+    "targetAbsent": 8321,
+    "extracted": 9485,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "corpus": {
+      "authorities": 4430,
+      "cases": 3075,
+      "cl_cases": 3030,
+      "statutes": 904,
+      "regulations": 196,
+      "rules": 254
+    }
+  },
+  "finishedAt": "2026-09-30T16:19:26.646Z"
+}

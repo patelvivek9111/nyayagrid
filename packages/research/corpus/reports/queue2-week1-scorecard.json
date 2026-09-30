@@ -1,66 +1,20 @@
 {
   "classification": "WEEK1_SCORECARD",
-  "generatedAt": "2026-09-30T02:22:23.819Z",
+  "generatedAt": "2026-09-30T16:22:58.840Z",
   "target": 3500,
-  "current": 3070,
-  "remaining": 430,
+  "current": 3078,
+  "remaining": 422,
   "daysRemaining": 5,
-  "requiredUsefulCasesPerDay": 86,
+  "requiredUsefulCasesPerDay": 84.4,
   "stateDcProgress": {
     "current": 2524,
     "planningTarget": 7650
   },
   "federalProgress": {
-    "current": 546,
+    "current": 554,
     "planningTarget": 2350
   },
-  "historicalProgress": {
-    "statesWithHistoricalGap": 24
-  },
-  "intermediateProgress": {
-    "statesWithZeroIntermediateLayer": 26
-  },
-  "districtProgress": {
-    "mappedWithCases": 9,
-    "mappedTotal": 12
-  },
-  "citationStatus": {
-    "extracted": 9489,
-    "resolved": 1125,
-    "unresolved": 8364,
-    "targetAbsent": 8364,
-    "resolutionRatePct": 11.86,
-    "uniqueAbsentTargets": 6486,
-    "malformedUnusable": 1,
-    "targetPresentButNotMatchedGroups": 0,
-    "targetPresentButNotMatchedEdges": 0,
-    "top10ShareOfAbsentEdgesPct": 1,
-    "top100ShareOfAbsentEdgesPct": 6.11,
-    "totalAbsentEdges": 8363
-  },
-  "integrityStatus": {
-    "classification": "QUEUE2_INTEGRITY_FULL_PASS",
-    "generatedAt": "2026-09-30T02:18:04.025Z",
-    "courtListenerHttpCalls": 0,
-    "mutations": 0,
-    "duplicateSourceIdentities": 0,
-    "duplicateAuthorityIds": 0,
-    "orphanChunks": 0,
-    "orphanEmbeddings": 0,
-    "missingEmbeddings": 0,
-    "missingAuthorityText": 0,
-    "futureDates": 0,
-    "absurdOldDates": 0,
-    "missingProvenance": {
-      "missing_source_provider": 0,
-      "missing_source_id": 0,
-      "missing_court": 0,
-      "missing_jurisdiction": 0
-    },
-    "federalStateClassMismatch": 0,
-    "duplicateCitationEdges": 4,
-    "brokenCitationTargets": 0
-  },
+  "sessionAdded": 8,
   "status": "YELLOW",
-  "reason": "On recoverable pace: need ~86/day for 5 days; integrity clean; morning pack ready"
+  "reason": "Day quota constrained morning: +8 cases (need ~84.4/day). Integrity clean. Full pack deferred."
 }

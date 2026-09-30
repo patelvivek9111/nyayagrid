@@ -1,0 +1,194 @@
+{
+  "classification": "MANUAL_QUEUE2_MORNING_EXECUTION_PACK",
+  "verdict": "PARTIAL",
+  "generatedAt": "2026-09-30T16:22:58.840Z",
+  "reason": "Day remaining only 10 then ~40 after reset_at — below healthy headroom for +125/+175 pack. Ran bounded dual-value A2 + limited G3H. Duplicate citation edges fixed. Monorepo typecheck remains benchmark/auth dirt.",
+  "LOCAL_TRIAGE": {
+    "duplicateCitationEdges": {
+      "countBefore": 4,
+      "trueDuplicates": 4,
+      "trueDuplicateRawVariant": 4,
+      "legitimateRepeats": 0,
+      "fixed": true,
+      "deleted": 4,
+      "countAfter": 0,
+      "note": "Raw whitespace variants of same normalized citation from same citing authority"
+    },
+    "monorepoTypecheck": {
+      "error": "auth/invites.test.ts mock transaction typing; benchmarks/nyaya-bench aggregate/staging-ui-e2e/v3-grade",
+      "classification": "BENCHMARK_DIRT + UNRELATED_EXISTING",
+      "fixed": false,
+      "researchTypecheck": "PASS"
+    }
+  },
+  "SAFETY": {
+    "408": false,
+    "429": false,
+    "worker": "STOPPED",
+    "remoteChild": null,
+    "ownership": "clean",
+    "locUscFedRulesMutation": "OFF",
+    "queue3": "NOT_OPEN"
+  },
+  "QUOTA": {
+    "startBeforeReset": {
+      "minute": {
+        "limit": 30,
+        "usage": 0,
+        "remaining": 30,
+        "blocked": false
+      },
+      "hour": {
+        "limit": 300,
+        "usage": 0,
+        "remaining": 300,
+        "blocked": false
+      },
+      "day": {
+        "limit": 1200,
+        "usage": 1190,
+        "remaining": 10,
+        "reset_at": "2026-09-30T16:15:18.178263+00:00",
+        "blocked": false
+      }
+    },
+    "afterReset": {
+      "minute": 30,
+      "hour": 300,
+      "day": 40
+    },
+    "budgetUsedApprox": 38,
+    "estimatedRemainingDay": 4,
+    "note": "Only two probes (pre-reset hold + post-reset). Preserve floor day>=40 blocked full pack."
+  },
+  "EXECUTION_PACK": {
+    "batchesAvailable": 32,
+    "batchesExecuted": 4,
+    "batchesSkipped": "most — day quota floor",
+    "reason": "day remaining insufficient for 303-case / ~672 CL pack"
+  },
+  "CASES": {
+    "start": 3070,
+    "end": 3078,
+    "added": 8,
+    "remainingTo10k": 6922,
+    "pct10k": 30.78
+  },
+  "WEEK_1": {
+    "target": 3500,
+    "current": 3078,
+    "gap": 422,
+    "requiredDailyPace": 84.4,
+    "status": "YELLOW"
+  },
+  "DUAL_VALUE": {
+    "candidatesExecuted": 8,
+    "casesAdded": "A2 reported 0 imported but corpus +5 before continuation; attribution partial",
+    "cl": 15,
+    "note": "A2 spent 15 CL on 8 U.S. Reports targets; import field under-counted — live cases rose 3070→3075 then →3078"
+  },
+  "STATE_DC": {
+    "startEnd": "2524→2524",
+    "historicalAdds": 0,
+    "intermediateAdds": 0,
+    "note": "No state growth this window (budget spent on A2/G3H)"
+  },
+  "FEDERAL": {
+    "startEnd": "546→554",
+    "historicalAdds": 3,
+    "circuits": [
+      {
+        "lane": "G3H",
+        "court": "ca11",
+        "gte": "1990-01-01",
+        "lte": "1994-12-31",
+        "imported": 0,
+        "cl": 1,
+        "status": "empty"
+      },
+      {
+        "lane": "G3H",
+        "court": "ca6",
+        "gte": "1990-01-01",
+        "lte": "1994-12-31",
+        "imported": 3,
+        "cl": 11,
+        "status": "done",
+        "rateLimited": false,
+        "skipped": 0
+      },
+      {
+        "lane": "G3H",
+        "court": "ca7",
+        "gte": "1990-01-01",
+        "lte": "1994-12-31",
+        "imported": 0,
+        "cl": 9,
+        "status": "done",
+        "rateLimited": false,
+        "skipped": 0
+      }
+    ],
+    "districtAdds": 0,
+    "SCOTUS": "A2 attempt"
+  },
+  "A2": {
+    "targets": [
+      "573 U.S. 373",
+      "578 U.S. 330",
+      "477 U.S. 242",
+      "573 U.S. 149",
+      "528 U.S. 167",
+      "549 U.S. 1",
+      "568 U.S. 165",
+      "598 U.S. 411"
+    ],
+    "CL": 15,
+    "resolvedViaReresolve": 40,
+    "resPerCL": null,
+    "note": "Skip further A2 until res/CL measurable >=3.0 on next healthier quota day"
+  },
+  "CITATIONS": {
+    "extracted": "9489→9485",
+    "resolved": "1125→1164",
+    "TARGET_ABSENT": "8364→8321",
+    "rawRate": "11.86%→12.27%",
+    "note": "extracted -4 from duplicate edge cleanup; resolved +39"
+  },
+  "VALID_DENOMINATOR": {
+    "valid": "984/1000 overnight sample still authoritative",
+    "unknownExternal": 16,
+    "presentUnresolved": 0
+  },
+  "REQUEST_EFFICIENCY": {
+    "overall": 4.75,
+    "note": "High CL/case this window due to empty hist windows + A2 search cost; do not extrapolate"
+  },
+  "CORPUS": {
+    "authorities": 4433,
+    "cases": 3078,
+    "cl_cases": 3033,
+    "statutes": 904,
+    "regulations": 196,
+    "rules": 254,
+    "chunks": 72235,
+    "embeddings": 72235,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "duplicateCitationEdges": 0
+  },
+  "VALIDATION": {
+    "queue2:validate": "PASS",
+    "queue2:preflight": "PASS",
+    "researchTypecheck": "PASS",
+    "monorepoTypecheck": "FAIL (BENCHMARK_DIRT + UNRELATED_EXISTING)"
+  },
+  "QUEUE": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "NOT_OPEN",
+    "transition": "NONE"
+  },
+  "completionCandidate": false
+}

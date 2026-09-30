@@ -1,7 +1,7 @@
 {
   "ok": true,
   "classification": "QUEUE2_BALANCED_10K_TRACKER",
-  "generatedAt": "2026-09-30T02:18:04.024Z",
+  "generatedAt": "2026-09-30T16:21:50.469Z",
   "courtListenerHttpCalls": 0,
   "mutations": 0,
   "targets": {
@@ -12,38 +12,38 @@
   },
   "baseline": {
     "corpus": {
-      "authorities": 4425,
-      "cases": 3070,
-      "cl_cases": 3025,
+      "authorities": 4433,
+      "cases": 3078,
+      "cl_cases": 3033,
       "statutes": 904,
       "regulations": 196,
       "rules": 254,
-      "federal_cases": 546,
+      "federal_cases": 554,
       "state_dc_cases": 2524
     },
     "chunks": {
-      "chunks": 72002,
-      "embeddings": 72002,
+      "chunks": 72235,
+      "embeddings": 72235,
       "missing_embeddings": 0
     },
     "duplicates": 0,
     "orphans": 0,
     "citations": {
-      "extracted": 9489,
-      "resolved": 1125,
-      "unresolved": 8364,
-      "targetAbsent": 8364,
-      "resolutionRatePct": 11.86
+      "extracted": 9485,
+      "resolved": 1164,
+      "unresolved": 8321,
+      "targetAbsent": 8321,
+      "resolutionRatePct": 12.27
     }
   },
   "progress": {
-    "casesCurrent": 3070,
-    "casesRemaining": 6930,
-    "pctComplete": 30.7,
+    "casesCurrent": 3078,
+    "casesRemaining": 6922,
+    "pctComplete": 30.78,
     "stateDcCurrent": 2524,
     "stateDcRemaining": 5126,
-    "federalCurrent": 546,
-    "federalRemaining": 1804
+    "federalCurrent": 554,
+    "federalRemaining": 1796
   },
   "states": [
     {
@@ -202,7 +202,7 @@
       }
     },
     {
-      "jurisdiction": "OK",
+      "jurisdiction": "OR",
       "cases": 45,
       "highCourt": 45,
       "intermediateAppellate": 0,
@@ -233,7 +233,7 @@
       }
     },
     {
-      "jurisdiction": "OR",
+      "jurisdiction": "OK",
       "cases": 45,
       "highCourt": 45,
       "intermediateAppellate": 0,
@@ -249,9 +249,9 @@
       "historicalDeficit": 20,
       "intermediateLayerGap": true,
       "historicalGap": true,
-      "citationDemand": 27,
-      "citationDemandOverlap": 27,
-      "balancedPriority": 515.05,
+      "citationDemand": 26,
+      "citationDemandOverlap": 26,
+      "balancedPriority": 514.9,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -373,9 +373,9 @@
       "historicalDeficit": 20,
       "intermediateLayerGap": true,
       "historicalGap": true,
-      "citationDemand": 94,
-      "citationDemandOverlap": 94,
-      "balancedPriority": 507.1,
+      "citationDemand": 92,
+      "citationDemandOverlap": 92,
+      "balancedPriority": 506.8,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -528,9 +528,9 @@
       "historicalDeficit": 19,
       "intermediateLayerGap": true,
       "historicalGap": false,
-      "citationDemand": 93,
-      "citationDemandOverlap": 93,
-      "balancedPriority": 466.15,
+      "citationDemand": 92,
+      "citationDemandOverlap": 92,
+      "balancedPriority": 466,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -714,9 +714,9 @@
       "historicalDeficit": 0,
       "intermediateLayerGap": true,
       "historicalGap": false,
-      "citationDemand": 78,
-      "citationDemandOverlap": 78,
-      "balancedPriority": 451.7,
+      "citationDemand": 77,
+      "citationDemandOverlap": 77,
+      "balancedPriority": 451.55,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 1,
@@ -745,9 +745,9 @@
       "historicalDeficit": 0,
       "intermediateLayerGap": true,
       "historicalGap": false,
-      "citationDemand": 56,
-      "citationDemandOverlap": 56,
-      "balancedPriority": 448.4,
+      "citationDemand": 54,
+      "citationDemandOverlap": 54,
+      "balancedPriority": 448.1,
       "yearBuckets": {
         "pre1950": 21,
         "y1950_1969": 2,
@@ -869,9 +869,9 @@
       "historicalDeficit": 20,
       "intermediateLayerGap": false,
       "historicalGap": true,
-      "citationDemand": 79,
-      "citationDemandOverlap": 79,
-      "balancedPriority": 420.35,
+      "citationDemand": 78,
+      "citationDemandOverlap": 78,
+      "balancedPriority": 420.2,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -900,9 +900,9 @@
       "historicalDeficit": 20,
       "intermediateLayerGap": false,
       "historicalGap": true,
-      "citationDemand": 74,
-      "citationDemandOverlap": 74,
-      "balancedPriority": 419.6,
+      "citationDemand": 73,
+      "citationDemandOverlap": 73,
+      "balancedPriority": 419.45,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -931,9 +931,9 @@
       "historicalDeficit": 20,
       "intermediateLayerGap": false,
       "historicalGap": true,
-      "citationDemand": 88,
-      "citationDemandOverlap": 88,
-      "balancedPriority": 399.2,
+      "citationDemand": 87,
+      "citationDemandOverlap": 87,
+      "balancedPriority": 399.05,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -1210,9 +1210,9 @@
       "historicalDeficit": 20,
       "intermediateLayerGap": false,
       "historicalGap": true,
-      "citationDemand": 86,
-      "citationDemandOverlap": 86,
-      "balancedPriority": 362.9,
+      "citationDemand": 84,
+      "citationDemandOverlap": 84,
+      "balancedPriority": 362.6,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -1272,9 +1272,9 @@
       "historicalDeficit": 16,
       "intermediateLayerGap": false,
       "historicalGap": false,
-      "citationDemand": 194,
-      "citationDemandOverlap": 194,
-      "balancedPriority": 356.9,
+      "citationDemand": 193,
+      "citationDemandOverlap": 193,
+      "balancedPriority": 356.75,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -1427,9 +1427,9 @@
       "historicalDeficit": 19,
       "intermediateLayerGap": false,
       "historicalGap": false,
-      "citationDemand": 66,
-      "citationDemandOverlap": 66,
-      "balancedPriority": 338.6,
+      "citationDemand": 65,
+      "citationDemandOverlap": 65,
+      "balancedPriority": 338.45,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -1551,9 +1551,9 @@
       "historicalDeficit": 16,
       "intermediateLayerGap": false,
       "historicalGap": false,
-      "citationDemand": 143,
-      "citationDemandOverlap": 143,
-      "balancedPriority": 289.25,
+      "citationDemand": 142,
+      "citationDemandOverlap": 142,
+      "balancedPriority": 289.1,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -1582,9 +1582,9 @@
       "historicalDeficit": 11,
       "intermediateLayerGap": false,
       "historicalGap": false,
-      "citationDemand": 125,
-      "citationDemandOverlap": 125,
-      "balancedPriority": 272.05,
+      "citationDemand": 124,
+      "citationDemandOverlap": 124,
+      "balancedPriority": 271.9,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -1785,7 +1785,7 @@
       }
     },
     {
-      "jurisdiction": "OK",
+      "jurisdiction": "OR",
       "cases": 45,
       "highCourt": 45,
       "intermediateAppellate": 0,
@@ -1816,7 +1816,7 @@
       }
     },
     {
-      "jurisdiction": "OR",
+      "jurisdiction": "OK",
       "cases": 45,
       "highCourt": 45,
       "intermediateAppellate": 0,
@@ -1832,9 +1832,9 @@
       "historicalDeficit": 20,
       "intermediateLayerGap": true,
       "historicalGap": true,
-      "citationDemand": 27,
-      "citationDemandOverlap": 27,
-      "balancedPriority": 515.05,
+      "citationDemand": 26,
+      "citationDemandOverlap": 26,
+      "balancedPriority": 514.9,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -1989,9 +1989,9 @@
       "historicalDeficit": 11,
       "intermediateLayerGap": false,
       "historicalGap": false,
-      "citationDemand": 125,
-      "citationDemandOverlap": 125,
-      "balancedPriority": 272.05,
+      "citationDemand": 124,
+      "citationDemandOverlap": 124,
+      "balancedPriority": 271.9,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -2082,9 +2082,9 @@
       "historicalDeficit": 16,
       "intermediateLayerGap": false,
       "historicalGap": false,
-      "citationDemand": 143,
-      "citationDemandOverlap": 143,
-      "balancedPriority": 289.25,
+      "citationDemand": 142,
+      "citationDemandOverlap": 142,
+      "balancedPriority": 289.1,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -2113,9 +2113,9 @@
       "historicalDeficit": 20,
       "intermediateLayerGap": false,
       "historicalGap": true,
-      "citationDemand": 86,
-      "citationDemandOverlap": 86,
-      "balancedPriority": 362.9,
+      "citationDemand": 84,
+      "citationDemandOverlap": 84,
+      "balancedPriority": 362.6,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -2237,9 +2237,9 @@
       "historicalDeficit": 19,
       "intermediateLayerGap": false,
       "historicalGap": false,
-      "citationDemand": 66,
-      "citationDemandOverlap": 66,
-      "balancedPriority": 338.6,
+      "citationDemand": 65,
+      "citationDemandOverlap": 65,
+      "balancedPriority": 338.45,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
@@ -2253,27 +2253,27 @@
     }
   ],
   "federal": {
-    "total": 546,
+    "total": 554,
     "scotus": {
       "bucket": "scotus",
       "label": "SCOTUS",
-      "cases": 92,
+      "cases": 97,
       "earliestYear": 1906,
       "latestYear": 2026,
-      "pre2000": 47,
+      "pre2000": 48,
       "pre1980": 31,
-      "recent": 23,
-      "citationDemandOverlap": 303,
+      "recent": 24,
+      "citationDemandOverlap": 298,
       "deficit": 0,
       "historicalWeakness": false,
       "yearBuckets": {
         "pre1950": 2,
         "y1950_1969": 11,
         "y1970_1979": 18,
-        "y1980_1989": 9,
+        "y1980_1989": 10,
         "y1990_1999": 7,
-        "y2000_2009": 14,
-        "y2010_2019": 10,
+        "y2000_2009": 16,
+        "y2010_2019": 12,
         "y2020_present": 21
       },
       "flags": [
@@ -2317,7 +2317,7 @@
         "pre2000": 10,
         "pre1980": 0,
         "recent": 22,
-        "citationDemandOverlap": 366,
+        "citationDemandOverlap": 364,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -2343,7 +2343,7 @@
         "pre2000": 6,
         "pre1980": 0,
         "recent": 21,
-        "citationDemandOverlap": 328,
+        "citationDemandOverlap": 327,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -2415,13 +2415,13 @@
       {
         "bucket": "ca6",
         "label": "6th Circuit",
-        "cases": 33,
+        "cases": 36,
         "earliestYear": 1990,
         "latestYear": 2026,
-        "pre2000": 10,
+        "pre2000": 13,
         "pre1980": 0,
         "recent": 23,
-        "citationDemandOverlap": 473,
+        "citationDemandOverlap": 472,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -2429,7 +2429,7 @@
           "y1950_1969": 0,
           "y1970_1979": 0,
           "y1980_1989": 0,
-          "y1990_1999": 10,
+          "y1990_1999": 13,
           "y2000_2009": 0,
           "y2010_2019": 0,
           "y2020_present": 23
@@ -2447,7 +2447,7 @@
         "pre2000": 10,
         "pre1980": 0,
         "recent": 23,
-        "citationDemandOverlap": 399,
+        "citationDemandOverlap": 398,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -2473,7 +2473,7 @@
         "pre2000": 4,
         "pre1980": 0,
         "recent": 21,
-        "citationDemandOverlap": 185,
+        "citationDemandOverlap": 180,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -2499,7 +2499,7 @@
         "pre2000": 7,
         "pre1980": 0,
         "recent": 27,
-        "citationDemandOverlap": 199,
+        "citationDemandOverlap": 198,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -2551,7 +2551,7 @@
         "pre2000": 0,
         "pre1980": 0,
         "recent": 25,
-        "citationDemandOverlap": 255,
+        "citationDemandOverlap": 254,
         "deficit": 0,
         "historicalWeakness": true,
         "yearBuckets": {
@@ -2578,7 +2578,7 @@
         "pre2000": 1,
         "pre1980": 0,
         "recent": 22,
-        "citationDemandOverlap": 340,
+        "citationDemandOverlap": 338,
         "deficit": 2,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -3041,7 +3041,7 @@
         "pre2000": 1,
         "pre1980": 0,
         "recent": 22,
-        "citationDemandOverlap": 340,
+        "citationDemandOverlap": 338,
         "deficit": 2,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -3093,7 +3093,7 @@
         "pre2000": 4,
         "pre1980": 0,
         "recent": 21,
-        "citationDemandOverlap": 185,
+        "citationDemandOverlap": 180,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -3119,7 +3119,7 @@
         "pre2000": 0,
         "pre1980": 0,
         "recent": 25,
-        "citationDemandOverlap": 255,
+        "citationDemandOverlap": 254,
         "deficit": 0,
         "historicalWeakness": true,
         "yearBuckets": {
@@ -3146,7 +3146,7 @@
         "pre2000": 6,
         "pre1980": 0,
         "recent": 21,
-        "citationDemandOverlap": 328,
+        "citationDemandOverlap": 327,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -3224,7 +3224,7 @@
         "pre2000": 10,
         "pre1980": 0,
         "recent": 22,
-        "citationDemandOverlap": 366,
+        "citationDemandOverlap": 364,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -3242,15 +3242,15 @@
         ]
       },
       {
-        "bucket": "ca6",
-        "label": "6th Circuit",
+        "bucket": "ca7",
+        "label": "7th Circuit",
         "cases": 33,
         "earliestYear": 1990,
         "latestYear": 2026,
         "pre2000": 10,
         "pre1980": 0,
         "recent": 23,
-        "citationDemandOverlap": 473,
+        "citationDemandOverlap": 398,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -3302,16 +3302,16 @@
         "priority": 516.1
       },
       {
-        "jurisdiction": "OK",
+        "jurisdiction": "OR",
         "deficit": 105,
         "intermediateLayerGap": true,
         "priority": 515.05
       },
       {
-        "jurisdiction": "OR",
+        "jurisdiction": "OK",
         "deficit": 105,
         "intermediateLayerGap": true,
-        "priority": 515.05
+        "priority": 514.9
       },
       {
         "jurisdiction": "MO",
@@ -3335,7 +3335,7 @@
         "jurisdiction": "MN",
         "deficit": 99,
         "intermediateLayerGap": true,
-        "priority": 507.1
+        "priority": 506.8
       },
       {
         "jurisdiction": "IA",
@@ -3399,18 +3399,18 @@
         "priority": 516.1
       },
       {
-        "jurisdiction": "OK",
+        "jurisdiction": "OR",
         "earliestYear": 2025,
         "latestYear": 2026,
         "pre2000": 0,
         "priority": 515.05
       },
       {
-        "jurisdiction": "OR",
+        "jurisdiction": "OK",
         "earliestYear": 2025,
         "latestYear": 2026,
         "pre2000": 0,
-        "priority": 515.05
+        "priority": 514.9
       },
       {
         "jurisdiction": "MO",
@@ -3438,7 +3438,7 @@
         "earliestYear": 2024,
         "latestYear": 2026,
         "pre2000": 0,
-        "priority": 507.1
+        "priority": 506.8
       },
       {
         "jurisdiction": "MA",
@@ -3452,21 +3452,21 @@
         "earliestYear": 2026,
         "latestYear": 2026,
         "pre2000": 0,
-        "priority": 420.35
+        "priority": 420.2
       },
       {
         "jurisdiction": "FL",
         "earliestYear": 2004,
         "latestYear": 2026,
         "pre2000": 0,
-        "priority": 419.6
+        "priority": 419.45
       },
       {
         "jurisdiction": "SD",
         "earliestYear": 2025,
         "latestYear": 2026,
         "pre2000": 0,
-        "priority": 399.2
+        "priority": 399.05
       }
     ],
     "G3": [
@@ -3506,7 +3506,7 @@
         "pre2000": 1,
         "pre1980": 0,
         "recent": 22,
-        "citationDemandOverlap": 340,
+        "citationDemandOverlap": 338,
         "deficit": 2,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -3558,7 +3558,7 @@
         "pre2000": 4,
         "pre1980": 0,
         "recent": 21,
-        "citationDemandOverlap": 185,
+        "citationDemandOverlap": 180,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -3584,7 +3584,7 @@
         "pre2000": 0,
         "pre1980": 0,
         "recent": 25,
-        "citationDemandOverlap": 255,
+        "citationDemandOverlap": 254,
         "deficit": 0,
         "historicalWeakness": true,
         "yearBuckets": {
@@ -3611,7 +3611,7 @@
         "pre2000": 6,
         "pre1980": 0,
         "recent": 21,
-        "citationDemandOverlap": 328,
+        "citationDemandOverlap": 327,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -3689,7 +3689,7 @@
         "pre2000": 10,
         "pre1980": 0,
         "recent": 22,
-        "citationDemandOverlap": 366,
+        "citationDemandOverlap": 364,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -3707,32 +3707,6 @@
         ]
       },
       {
-        "bucket": "ca6",
-        "label": "6th Circuit",
-        "cases": 33,
-        "earliestYear": 1990,
-        "latestYear": 2026,
-        "pre2000": 10,
-        "pre1980": 0,
-        "recent": 23,
-        "citationDemandOverlap": 473,
-        "deficit": 0,
-        "historicalWeakness": false,
-        "yearBuckets": {
-          "pre1950": 0,
-          "y1950_1969": 0,
-          "y1970_1979": 0,
-          "y1980_1989": 0,
-          "y1990_1999": 10,
-          "y2000_2009": 0,
-          "y2010_2019": 0,
-          "y2020_present": 23
-        },
-        "flags": [
-          "STRONG"
-        ]
-      },
-      {
         "bucket": "ca7",
         "label": "7th Circuit",
         "cases": 33,
@@ -3741,7 +3715,7 @@
         "pre2000": 10,
         "pre1980": 0,
         "recent": 23,
-        "citationDemandOverlap": 399,
+        "citationDemandOverlap": 398,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -3767,7 +3741,7 @@
         "pre2000": 7,
         "pre1980": 0,
         "recent": 27,
-        "citationDemandOverlap": 199,
+        "citationDemandOverlap": 198,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
@@ -3811,25 +3785,51 @@
         ]
       },
       {
+        "bucket": "ca6",
+        "label": "6th Circuit",
+        "cases": 36,
+        "earliestYear": 1990,
+        "latestYear": 2026,
+        "pre2000": 13,
+        "pre1980": 0,
+        "recent": 23,
+        "citationDemandOverlap": 472,
+        "deficit": 0,
+        "historicalWeakness": false,
+        "yearBuckets": {
+          "pre1950": 0,
+          "y1950_1969": 0,
+          "y1970_1979": 0,
+          "y1980_1989": 0,
+          "y1990_1999": 13,
+          "y2000_2009": 0,
+          "y2010_2019": 0,
+          "y2020_present": 23
+        },
+        "flags": [
+          "STRONG"
+        ]
+      },
+      {
         "bucket": "scotus",
         "label": "SCOTUS",
-        "cases": 92,
+        "cases": 97,
         "earliestYear": 1906,
         "latestYear": 2026,
-        "pre2000": 47,
+        "pre2000": 48,
         "pre1980": 31,
-        "recent": 23,
-        "citationDemandOverlap": 303,
+        "recent": 24,
+        "citationDemandOverlap": 298,
         "deficit": 0,
         "historicalWeakness": false,
         "yearBuckets": {
           "pre1950": 2,
           "y1950_1969": 11,
           "y1970_1979": 18,
-          "y1980_1989": 9,
+          "y1980_1989": 10,
           "y1990_1999": 7,
-          "y2000_2009": 14,
-          "y2010_2019": 10,
+          "y2000_2009": 16,
+          "y2010_2019": 12,
           "y2020_present": 21
         },
         "flags": [

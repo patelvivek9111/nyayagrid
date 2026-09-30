@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "classification": "QUEUE2_DUPLICATE_CITATION_EDGE_TRIAGE",
+  "courtListenerHttpCalls": 0,
+  "apply": true,
+  "groupCount": 4,
+  "trueDuplicates": 4,
+  "trueDuplicateExact": 0,
+  "trueDuplicateRawVariant": 4,
+  "legitimateRepeats": 0,
+  "needsReview": 0,
+  "edgesEligibleForSafeDelete": 4,
+  "deleted": 4,
+  "duplicateGroupCountAfter": 0,
+  "note": "All 4 groups were raw-whitespace variants of the same normalized citation from the same citing authority (e.g. 'F. 3d' vs 'F.3d'). Kept oldest edge; deleted 4 extras. Metric after = 0."
+}
