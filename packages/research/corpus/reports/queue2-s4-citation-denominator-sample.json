@@ -1,0 +1,1570 @@
+{
+  "ok": true,
+  "classification": "MANUAL_QUEUE2_S3_CITATION_DENOMINATOR_SAMPLE_AUDIT",
+  "generatedAt": "2026-09-30T00:32:33.419Z",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "methodology": "Stratified deterministic sample of unresolved citation edges across reporter families; heuristic classification only. Proportions are SAMPLE proportions, not extrapolated population ground truth.",
+  "sampleSize": 250,
+  "unresolvedUniverse": 8002,
+  "stratumCounts": {
+    "U.S.": {
+      "pool": 3338,
+      "sampled": 28
+    },
+    "F.3d": {
+      "pool": 2386,
+      "sampled": 28
+    },
+    "F.2d": {
+      "pool": 644,
+      "sampled": 28
+    },
+    "F.4th": {
+      "pool": 967,
+      "sampled": 28
+    },
+    "F.Supp": {
+      "pool": 345,
+      "sampled": 28
+    },
+    "USC": {
+      "pool": 264,
+      "sampled": 28
+    },
+    "CFR": {
+      "pool": 11,
+      "sampled": 11
+    },
+    "FederalRules": {
+      "pool": 31,
+      "sampled": 28
+    },
+    "unusual": {
+      "pool": 16,
+      "sampled": 16
+    }
+  },
+  "counts": {
+    "VALID_TARGET_ABSENT": 242,
+    "AMBIGUOUS": 0,
+    "MALFORMED": 0,
+    "OUT_OF_SCOPE": 0,
+    "UNSUPPORTED_TYPE": 0,
+    "SOURCE_UNAVAILABLE": 0,
+    "RESOLVER_DEFECT": 8
+  },
+  "proportionsPct": {
+    "VALID_TARGET_ABSENT": 96.8,
+    "AMBIGUOUS": 0,
+    "MALFORMED": 0,
+    "OUT_OF_SCOPE": 0,
+    "UNSUPPORTED_TYPE": 0,
+    "SOURCE_UNAVAILABLE": 0,
+    "RESOLVER_DEFECT": 3.2
+  },
+  "validTargetAbsentShareOfSamplePct": 96.8,
+  "note": "Do not treat sample proportions as population ground truth. If VALID_TARGET_ABSENT dominates the sample, raw denominator is directionally similar to valid denominator for primary-family cites.",
+  "sampleRows": [
+    {
+      "id": "0001b7aa-6f42-44d6-91f5-76eb636e6e69",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "606 U.S. 959"
+    },
+    {
+      "id": "0893e2af-80c3-43d9-be88-575b1a661619",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "578 U.S. 632"
+    },
+    {
+      "id": "11f6deb8-582b-4dd4-8927-a64dc9f2d5a5",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "526 U.S. 629"
+    },
+    {
+      "id": "19ce42f0-1649-43c4-8def-6daafb8bf38e",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "514 U.S. 334"
+    },
+    {
+      "id": "23ebbb0b-155a-43ff-9299-92d8b284fe32",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "600 U.S. 551"
+    },
+    {
+      "id": "2ced0499-152b-4521-8da5-daa8fa79eab1",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "554 U.S. 191"
+    },
+    {
+      "id": "3663faeb-ffda-4391-9522-a3311a94b5b0",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "548 U.S. 81"
+    },
+    {
+      "id": "3f8a4833-328d-4b39-b052-e551744a7059",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "545 U.S. 308"
+    },
+    {
+      "id": "4813250c-90c0-4070-aa67-23c2ff0b51b9",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "512 U.S. 186"
+    },
+    {
+      "id": "51bb0257-6973-4023-870e-deb97632fcc6",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "596 U.S. 482"
+    },
+    {
+      "id": "5cc0e39b-3719-448e-8286-1841f19d5b46",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "598 U.S. 631"
+    },
+    {
+      "id": "667d9db8-d7a0-4642-8bc8-adf8fa7ada7a",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "383 U.S. 715"
+    },
+    {
+      "id": "6ef2f4f5-3756-4c75-93f7-80efac1fca77",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "566 U.S. 1"
+    },
+    {
+      "id": "77c1ab46-3b08-4d4a-a088-53d87112deb2",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "512 U.S. 504"
+    },
+    {
+      "id": "82425f82-079a-400d-b347-006d2fd8231b",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "466 U.S. 210"
+    },
+    {
+      "id": "8c990fea-538c-4db1-b07b-64c5e8db1a4f",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "466 U.S. 408"
+    },
+    {
+      "id": "9499cd49-3642-4bd9-9c20-5046eddcc531",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "463 U.S. 248"
+    },
+    {
+      "id": "9d779358-6ea9-47d1-93d2-a34df37ea99d",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "426 U.S. 610"
+    },
+    {
+      "id": "a6599c0d-e134-4718-a5e5-70c9e788419b",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "552 U.S. 442"
+    },
+    {
+      "id": "afc40e2a-7350-4913-b404-1e63764f7a81",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "430 U.S. 651"
+    },
+    {
+      "id": "b9a916b3-9732-480e-a114-beeebd677af0",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "541 U.S. 149"
+    },
+    {
+      "id": "c33411b1-5d47-4522-956e-53bb2fd4ee53",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "335 U.S. 451"
+    },
+    {
+      "id": "cc0c4a6c-7030-45ab-b3e0-d86beaa7f338",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "476 U.S. 207"
+    },
+    {
+      "id": "d3a90753-bff2-4ccc-9c3a-906006bae747",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "520 U.S. 461"
+    },
+    {
+      "id": "dc53b6c8-f17b-4f65-ad48-f75f92198da7",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "159 U.S. 113"
+    },
+    {
+      "id": "e2cc9d32-46b0-4342-afd6-22c5df142f44",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "529 U.S. 266"
+    },
+    {
+      "id": "eb900f5e-275b-491a-bbf7-5bc6b17989bf",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "583 U.S. 281"
+    },
+    {
+      "id": "f63653d4-f087-422b-b555-b90ad69e44d8",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "531 U.S. 198"
+    },
+    {
+      "id": "002f9637-76eb-46e8-8f03-8ace010b0447",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "187 F.3d 317"
+    },
+    {
+      "id": "07cedabc-61b6-4c60-9d87-d91e0e252ea7",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "649 F.3d 258"
+    },
+    {
+      "id": "105d6801-2a17-43ff-9488-3fe5da986d12",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "758 F.3d 243"
+    },
+    {
+      "id": "19cd790a-7868-45cd-b4ec-0d5201e3489b",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "912 F.3D 1330"
+    },
+    {
+      "id": "230cbc04-476b-487e-9296-b612d8c8ce61",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "188 F.3d 365"
+    },
+    {
+      "id": "2e953dc7-964c-43bb-ba82-dc224ab4a48a",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "162 F.3D 878"
+    },
+    {
+      "id": "39543e76-61ef-4388-8c86-31414d0ebce1",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "748 F.3d 1310"
+    },
+    {
+      "id": "42ef542e-19ae-4100-bbb4-6720ee95d005",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "449 F.3d 824"
+    },
+    {
+      "id": "4b492951-d551-458a-b329-5e99c4b89be1",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "464 F.3d 699"
+    },
+    {
+      "id": "549fc9f9-cf75-4bfe-8bb5-e9ef428dba34",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "398 F.3d 1179"
+    },
+    {
+      "id": "5dcfb9b3-6eb9-4489-860a-ba8927bea989",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "389 F.3d 1359"
+    },
+    {
+      "id": "6748bdaa-d38e-47d5-b5d6-7bafc6c89ab4",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "910 F.3d 665"
+    },
+    {
+      "id": "71566d80-5501-412c-9093-7f2ed4faedcc",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "40 F.3d 63"
+    },
+    {
+      "id": "79f4b468-a489-43d8-b363-d26c9c7b7bc2",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "990 F.3d 410"
+    },
+    {
+      "id": "836462bb-724d-4243-aa5d-4706a375d8a0",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "948 F.3D 281"
+    },
+    {
+      "id": "8db43581-9562-420b-8e50-89499e79b5ed",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "93 F.3d 1337"
+    },
+    {
+      "id": "968909ec-362a-46c4-a5cd-954113cefece",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "835 F.3D 530"
+    },
+    {
+      "id": "9f1a7451-fb17-4241-941f-01502e7b9c49",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "32 F.3d 1346"
+    },
+    {
+      "id": "a9e14716-9591-4bb8-b626-039a5549f584",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "60 F.3D 199"
+    },
+    {
+      "id": "b310596a-a7c2-4ee9-af56-3a2113b6e297",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "773 F.3d 932"
+    },
+    {
+      "id": "bb94ada3-d576-41ff-8b9d-243e3131e43e",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "436 F.3D 238"
+    },
+    {
+      "id": "c38ff707-3f3f-4afc-aa6a-232241738b95",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "970 F.3D 720"
+    },
+    {
+      "id": "cb31d8b4-b2bb-42a9-b1a6-27d9125d285f",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "134 F.3d 1"
+    },
+    {
+      "id": "d21a0eb1-ef6f-42cd-958c-7311a3b9f3db",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "735 F.3d 1"
+    },
+    {
+      "id": "d92afa61-2442-4aab-93e8-8e1c1dfd4902",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "934 F.3d 627"
+    },
+    {
+      "id": "e2e7dfeb-4372-42ba-a6bc-66de38924705",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "788 F.3d 25"
+    },
+    {
+      "id": "ee3e89b6-a82b-438d-908b-2defb591f600",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "679 F.3d 1240"
+    },
+    {
+      "id": "f618cba0-6a1f-4349-8cc6-11fbb8afc3c1",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "286 F.3d 1022"
+    },
+    {
+      "id": "001394f5-2c88-4cc4-ab83-a1524d2b42db",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "779 F.2d 430"
+    },
+    {
+      "id": "0790d545-7179-42d2-ac8a-02f1450f924b",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "993 F.2d 984"
+    },
+    {
+      "id": "0f95e19e-dc31-4b8d-9f87-11204a1c01aa",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "750 F.2D 1077"
+    },
+    {
+      "id": "1b244992-3507-401d-8b53-5e3736ab4815",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "996 F.2d 41"
+    },
+    {
+      "id": "23d00a7e-cebe-4508-af22-b563697e229b",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "972 F.2d 566"
+    },
+    {
+      "id": "2c3cb92d-cc14-4f40-8c84-19127c337443",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "738 F.2d 1"
+    },
+    {
+      "id": "39272364-f31f-4da3-af4f-82f8207e4ad2",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "864 F.2d 106"
+    },
+    {
+      "id": "3fc65147-bfcf-4f59-b0c6-944561aaedc8",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "757 F.2d 476"
+    },
+    {
+      "id": "46602b47-930e-4738-b36a-75cded2304ba",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "660 F.2D 892"
+    },
+    {
+      "id": "4ec96dec-3083-463c-a948-390c90c42cce",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "841 F.2D 235"
+    },
+    {
+      "id": "596f7bc5-8016-4b55-bcaf-25fb6434f8d9",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "759 F.2d 777"
+    },
+    {
+      "id": "6149c9a3-0be0-4229-a1a9-579ca6953ae9",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "294 F.2d 150"
+    },
+    {
+      "id": "68bcfb52-1ba1-4171-a985-a92b70b33d70",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "961 F.2d 980"
+    },
+    {
+      "id": "74e0c7f3-0043-491a-a6e6-3d4d3e958cc8",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "980 F.2D 564"
+    },
+    {
+      "id": "7d964b0c-c876-4913-ab3c-f69dd3fbecae",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "740 F.2d 339"
+    },
+    {
+      "id": "878b7a38-8671-47c1-a275-deae3903ce33",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "970 F.2d 355"
+    },
+    {
+      "id": "9371ed19-9ab5-48bf-9d6a-f5d8013d30c0",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "616 F.2d 1284"
+    },
+    {
+      "id": "9a4247e6-5c76-483a-a398-58f6834bb766",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "816 F.2d 1018"
+    },
+    {
+      "id": "a3111e0e-19ee-44b2-ac7a-aec942ad11c2",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "920 F.2d 1560"
+    },
+    {
+      "id": "a95c752d-818e-4cad-b556-cd2d0b2c5822",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "881 F.2d 1408"
+    },
+    {
+      "id": "b536f30a-54fa-44c4-8fed-942755cecea8",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "989 F.2d 331"
+    },
+    {
+      "id": "be44eb7b-18fb-4549-a97e-7f14af2543b4",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "464 F.2d 347"
+    },
+    {
+      "id": "c6426135-193b-4988-9b93-2d2f0aafb107",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "491 F.2d 125"
+    },
+    {
+      "id": "ced8082f-e665-4731-90dd-24f230ae2a2c",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "757 F.2D 496"
+    },
+    {
+      "id": "db0915a2-cd9b-41e5-a7a4-48ee00632c36",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "859 F.2d 1021"
+    },
+    {
+      "id": "e3a4c51a-18e6-467e-bf61-b081dcdf7e64",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "682 F.2d 304"
+    },
+    {
+      "id": "ebb3f41d-9976-443c-aba2-2b85b6c3173c",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "717 F.2d 417"
+    },
+    {
+      "id": "f68a17a8-e795-4ceb-8e20-437ec8a1b7c7",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "961 F.2d 505"
+    },
+    {
+      "id": "004a19a1-6193-409c-86fd-4a7077e6f2c6",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "7 F.4th 1177"
+    },
+    {
+      "id": "08c81b6a-7faa-45bc-966f-8119102270dc",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "29 F.4TH 824"
+    },
+    {
+      "id": "110fceb9-d292-4021-8683-28945398fb62",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "183 F.4TH 606"
+    },
+    {
+      "id": "19710502-89d2-457f-886e-40c36d6f59bb",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "58 F.4th 845"
+    },
+    {
+      "id": "22c1a57f-a996-47bf-ab83-e4ba0016f683",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "167 F.4th 1113"
+    },
+    {
+      "id": "2da4f05a-b920-4cda-982c-b735d4e990e4",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "99 F.4TH 604"
+    },
+    {
+      "id": "36f62a94-bce9-4b5d-8abf-128a5f7467e8",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "137 F.4th 996"
+    },
+    {
+      "id": "3fe5b2da-2d68-40f2-936c-d79e615b92c3",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "33 F.4th 359"
+    },
+    {
+      "id": "4906ab17-ee47-4c03-b6bf-f57e3f3f410d",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "93 F.4th 619"
+    },
+    {
+      "id": "52bfd09b-753b-4eb7-bffd-47e407df0a8c",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "79 F.4th 1153"
+    },
+    {
+      "id": "5cf21c09-23f0-4c85-83b0-e95cab5b8bd6",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "149 F.4th 1169"
+    },
+    {
+      "id": "673ac7eb-90cc-4589-8a21-7facf2ace2e3",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "8 F.4TH 234"
+    },
+    {
+      "id": "70f8f39e-b38b-4ad6-9f70-f36a496acc58",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "171 F.4TH 1239"
+    },
+    {
+      "id": "79b6214d-010f-46bf-b8c2-556843d4b2cd",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "70 F.4th 602"
+    },
+    {
+      "id": "7fd5bc69-d9ff-497d-a1fe-93ae0bab83fd",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "111 F.4th 438"
+    },
+    {
+      "id": "899c39c1-ec7f-49a4-b5b3-9c2821ba6c2f",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "63 F.4th 1055"
+    },
+    {
+      "id": "933f3f19-e8b0-45e4-8843-fba9eb68d331",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "33 F.4TH 698"
+    },
+    {
+      "id": "9e9941bc-5dc7-46a8-ba79-5b8d0bb9107c",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "120 F.4TH 323"
+    },
+    {
+      "id": "a68caef9-5c40-4a63-9987-d65fab7f3e3a",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "137 F.4th 944"
+    },
+    {
+      "id": "ad03943f-3a9d-43b4-ab3b-f449d2c5a117",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "55 F.4th 436"
+    },
+    {
+      "id": "b77a47f6-8a72-48f0-ab6e-245c7bcb5d3c",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "19 F.4th 58"
+    },
+    {
+      "id": "bf1bd498-7980-4cfd-aa53-23ddd4b59768",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "40 F.4th 1320"
+    },
+    {
+      "id": "c6902efc-9059-4a8c-9c01-bb1a9885b69d",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "88 F.4th 1080"
+    },
+    {
+      "id": "cf444455-0c33-43da-8a6f-51411f6f61ef",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "13 F.4th 531"
+    },
+    {
+      "id": "d8adaa87-cd70-4699-87d3-017c3a489bdc",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "169 F.4th 727"
+    },
+    {
+      "id": "e28ca793-8537-4197-92d8-87a0590867a4",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "8 F.4th 531"
+    },
+    {
+      "id": "ea5c3314-f8d8-4263-9268-31443f56966b",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "67 F.4TH 372"
+    },
+    {
+      "id": "f2f4b9eb-c585-44a9-9c08-0a9fb0b72f9a",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "33 F.4TH 932"
+    },
+    {
+      "id": "0346146e-90be-40bc-896e-a9873a2b5ab1",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "620 F. Supp. 1372"
+    },
+    {
+      "id": "0f5f6857-b8cc-4d4f-82b3-2d22a8e817a3",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "293 F. Supp. 792"
+    },
+    {
+      "id": "148a9dfa-cf24-403d-a139-5c9ae352c632",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "590 F. Supp. 3d 901"
+    },
+    {
+      "id": "1c8cfed9-32f4-4581-8891-f0ba483cdaf3",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "266 F. Supp. 3d 162"
+    },
+    {
+      "id": "2344e041-5ab2-4774-8c19-0b590b035c82",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "577 F. Supp. 356"
+    },
+    {
+      "id": "2cc4caf8-3918-4930-854a-0eb9b5895718",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "617 F. Supp. 2d 887"
+    },
+    {
+      "id": "32cdfc9e-aa76-4a7c-ac08-c3fb2e6ea698",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "999 F.SUPP.2D 991"
+    },
+    {
+      "id": "39f3e555-4a48-40ce-b791-5db87e5bb38b",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "721 F. SUPP. 2D 804"
+    },
+    {
+      "id": "430e569b-cc73-4cbc-b843-647903f2cb82",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "795 F. Supp. 3d 475"
+    },
+    {
+      "id": "4b9fddc7-e5f8-428b-9df1-305f7a1026dd",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "525 F. Supp. 3d 295"
+    },
+    {
+      "id": "56f3bc56-ca12-4596-83ac-d2d9a15d5c51",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "678 F. Supp. 3d 443"
+    },
+    {
+      "id": "5c5cdf62-f626-4242-bc19-916826231443",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "234 F. Supp. 2d 1182"
+    },
+    {
+      "id": "65535e1f-0700-481d-b156-7ad11a50df79",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "35 F. SUPP. 3D 533"
+    },
+    {
+      "id": "711a3d99-0ce9-40cc-8df8-0875b4bca69e",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "949 F. SUPP. 2"
+    },
+    {
+      "id": "84b7cdc2-35f4-4015-aed9-6195a8e5fc7a",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "305 F. SUPP. 3D 1176"
+    },
+    {
+      "id": "8d6eae18-c9fb-42d9-a2f0-fea8554d588c",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "791 F. Supp. 3"
+    },
+    {
+      "id": "981c83a0-c6bf-476a-a373-66313b62b60d",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "185 F. SUPP. 2D 9"
+    },
+    {
+      "id": "9fe86669-4de0-4b12-a467-45531bfc7185",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "763 F. Supp. 3d 36"
+    },
+    {
+      "id": "a70851b7-03f0-45b5-9cb2-d3a1d62da94a",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "485 F. Supp. 3d 1168"
+    },
+    {
+      "id": "b2c25346-e14a-43ff-90e9-8ee0e1e275fd",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "630 F. Supp. 1145"
+    },
+    {
+      "id": "bd87dbf6-6f14-4756-b028-252fef2e1e80",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "790 F. Supp. 1043"
+    },
+    {
+      "id": "c6e05693-2464-48ac-81e4-59b32c722532",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "273 F. SUPP. 3D 326"
+    },
+    {
+      "id": "cbf72102-e740-42a3-983a-cdf270e23544",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "309 F. Supp. 362"
+    },
+    {
+      "id": "d3dd3413-bb7f-4716-a9ce-5c2d2662017f",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "521 F. SUPP. 1072"
+    },
+    {
+      "id": "d775a57a-6549-459b-a06c-b3c69bc98986",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "793 F. SUPP. 3D 667"
+    },
+    {
+      "id": "de9599a3-6515-423d-bb79-7e0cdf9b7385",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "737 F. Supp. 3d 214"
+    },
+    {
+      "id": "e50dc071-9330-4ff9-976a-d8a929845e1c",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "712 F. Supp. 2"
+    },
+    {
+      "id": "efd3bed8-ac23-4336-9ca8-8b5699b795ce",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "112 F. Supp. 3d 817"
+    },
+    {
+      "id": "00281bce-6647-425f-8e64-7476409e1497",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "29 U.S.C. ┬º 158"
+    },
+    {
+      "id": "0d3baf11-ef77-4a9e-911d-b43e64af07fa",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "47 U.S.C. ┬º 315"
+    },
+    {
+      "id": "15c7d0d6-c5cb-4326-b69f-73b5d9b8368e",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "18 U.S.C. ┬º 924"
+    },
+    {
+      "id": "23ada3c8-4075-49ac-86e4-4fda73ec6dee",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "8 U.S.C. ┬º 1226"
+    },
+    {
+      "id": "2b75fa99-6259-4b1c-83ec-d7c4ce29013c",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "29 U.S.C. ┬º 1391"
+    },
+    {
+      "id": "32c676e0-07e0-4272-b858-6e26810889d5",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "8 U.S.C. ┬º 1229c"
+    },
+    {
+      "id": "3d0a7818-6cac-45d9-b17b-5dd14cf58198",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "29 U.S.C. ┬º 1388"
+    },
+    {
+      "id": "47d828bb-cb34-4102-88c6-24ea7047380e",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "18 U.S.C. ┬º 1347"
+    },
+    {
+      "id": "4e5d3daa-ded3-44a4-b5b2-d8c075fd4c43",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "28 U.S.C. ┬º 1604"
+    },
+    {
+      "id": "5ade13f8-d7dd-4df0-8857-95c2d842063b",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "42 U.S.C. ┬º 1983."
+    },
+    {
+      "id": "6073fd43-90c9-44f3-a32d-e3c1a2515763",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "28 U.S.C. ┬º 944"
+    },
+    {
+      "id": "67b3560c-1099-4896-8c8c-0c84ca9bc482",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "21 U.S.C. ┬º 2312"
+    },
+    {
+      "id": "7128b812-8b26-41c8-89bc-cfa8574bd4e4",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "29 U.S.C. ┬º 1001"
+    },
+    {
+      "id": "767b3626-b5be-4056-b7b2-ad0227ef9f67",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "29 U.S.C. ┬º 1381"
+    },
+    {
+      "id": "82d81f13-50e6-45b0-bcd0-53b62c6b23ca",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "28 U.S.C. ┬º 1359"
+    },
+    {
+      "id": "8ae8e67f-48b6-4956-b196-7ba5174582f4",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "18 U.S.C. ┬º 921"
+    },
+    {
+      "id": "92b9dad2-4bac-4dd7-95b3-bb5fcd2d9077",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "42 U.S.C. ┬º 2000e"
+    },
+    {
+      "id": "9a62e1e4-dbb1-4500-9217-5b65cfbeb68f",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "18 U.S.C. ┬º 3582"
+    },
+    {
+      "id": "9fe59760-6c8b-40a1-92e7-4b6150ba0d0e",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "29 U.S.C. ┬º 158"
+    },
+    {
+      "id": "a6b941b3-de12-47a3-9073-85bcb92af91e",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "28 U.S.C. ┬º 2106"
+    },
+    {
+      "id": "b07cbc6d-0449-42c3-8296-0599710556d2",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "28 U.S.C. ┬º 453"
+    },
+    {
+      "id": "bbaa061a-3491-4169-b4ef-c8cf56464f47",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "49 U.S.C. ┬º 41101"
+    },
+    {
+      "id": "c620e2cf-f905-400c-a507-31654b0669a6",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "22 U.S.C. ┬º 6032"
+    },
+    {
+      "id": "cf18d6a6-c76e-4df1-95a3-6ab8453d8924",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "7 U.S.C. ┬º 136n"
+    },
+    {
+      "id": "d65897a9-b799-442e-93f1-bc83bbade291",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "26 U.S.C. ┬º 5861"
+    },
+    {
+      "id": "dbae32ca-3a1b-4828-86c9-f178c3a25b5b",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "18 U.S.C. ┬º 371"
+    },
+    {
+      "id": "e58497e5-9ad2-4ef6-9a1c-67da98ae413a",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "28 U.S.C. ┬º 1331."
+    },
+    {
+      "id": "ed7caf33-1fd3-48b2-a84f-edab4b12319c",
+      "stratum": "USC",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "12 U.S.C. ┬º 242"
+    },
+    {
+      "id": "2229b551-0250-482e-aa60-a7f7a8c158ce",
+      "stratum": "CFR",
+      "class": "RESOLVER_DEFECT",
+      "citation": "47 C.F.R. ┬º 1.102"
+    },
+    {
+      "id": "367d83b8-03cc-404e-86e1-d7a0cd28e608",
+      "stratum": "CFR",
+      "class": "RESOLVER_DEFECT",
+      "citation": "8 C.F.R. ┬º 1208.13"
+    },
+    {
+      "id": "3aa88de3-da7d-4209-ac4d-16c6c288b911",
+      "stratum": "CFR",
+      "class": "RESOLVER_DEFECT",
+      "citation": "8 C.F.R. ┬º 204.2"
+    },
+    {
+      "id": "520e11e3-7dfb-4d18-8fa2-4349a4dd4cfd",
+      "stratum": "CFR",
+      "class": "RESOLVER_DEFECT",
+      "citation": "50 C.F.R. ┬º 424.11"
+    },
+    {
+      "id": "5f2c277a-fd79-473e-ad84-5f3b15a3d122",
+      "stratum": "CFR",
+      "class": "RESOLVER_DEFECT",
+      "citation": "47 C.F.R. ┬º 1.103"
+    },
+    {
+      "id": "6806ee8e-b8e9-4de9-a74d-4622d820b6bc",
+      "stratum": "CFR",
+      "class": "RESOLVER_DEFECT",
+      "citation": "8 C.F.R. ┬º 208.20"
+    },
+    {
+      "id": "6c5eed59-739a-41a1-b47e-3dc7bc8887e3",
+      "stratum": "CFR",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "40 C.F.R. ┬º 763"
+    },
+    {
+      "id": "ab6a655d-c238-40a9-be23-32a2c4acae12",
+      "stratum": "CFR",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "40 C.F.R. ┬º 702"
+    },
+    {
+      "id": "c01d54b3-14e2-4e2c-a1f3-f46fed4755e3",
+      "stratum": "CFR",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "40 C.F.R. ┬º 751"
+    },
+    {
+      "id": "c3fffa38-ad82-4935-9725-828227c36baf",
+      "stratum": "CFR",
+      "class": "RESOLVER_DEFECT",
+      "citation": "47 C.F.R. ┬º 73.1942"
+    },
+    {
+      "id": "d2efbf8f-6dfe-4751-8c44-43a483e5e65d",
+      "stratum": "CFR",
+      "class": "RESOLVER_DEFECT",
+      "citation": "8 C.F.R. ┬º 1003.1"
+    },
+    {
+      "id": "03fa54ac-fc62-47c3-a5e9-d7128b9f0b4a",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. Civ. P. 73"
+    },
+    {
+      "id": "05fe973d-5052-4f08-8aa3-77a1dff5eb7c",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 34"
+    },
+    {
+      "id": "07a50081-6193-4ba4-b5c5-1f8d423960e1",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 2"
+    },
+    {
+      "id": "0ba3dbd3-7943-4334-9027-ab37b02cfff6",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 30"
+    },
+    {
+      "id": "10f42dd4-91e7-4a62-9a0b-51937a2a3221",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. Evid. 201"
+    },
+    {
+      "id": "1a4497af-31b6-4cdc-a204-60de560b53ae",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 43"
+    },
+    {
+      "id": "1c942163-a804-40b8-a1b8-ae52b328c7ce",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 34"
+    },
+    {
+      "id": "27475ff8-8cb1-4c1a-b5f1-a3c6441bce07",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 12"
+    },
+    {
+      "id": "2dae166a-41d0-4eb6-b70d-be55a37611b4",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 34"
+    },
+    {
+      "id": "31a8c62a-4645-4665-a366-e213316f80e3",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 34"
+    },
+    {
+      "id": "31cd925f-cdbb-47ae-b863-7b4ef58e3e96",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 34"
+    },
+    {
+      "id": "35ba5701-415a-4bc9-b698-11a8a3581429",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. Evid. 412"
+    },
+    {
+      "id": "57778b84-cc5c-4f56-ab0f-7e316d2e46d3",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. Evid. 201"
+    },
+    {
+      "id": "59b4e6f0-2b69-4d45-af20-7f18a8d751b0",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 34"
+    },
+    {
+      "id": "5eda706c-908f-4e7c-a4f7-dbcf77eef487",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 12"
+    },
+    {
+      "id": "6c7facfd-ec45-44e2-bf90-a2febb2ad58a",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. Civ. P. 51"
+    },
+    {
+      "id": "6eaf7053-7c12-4331-ac49-5e46ffbdf0cb",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. Civ. P. 72"
+    },
+    {
+      "id": "6ff44133-4b1b-40be-9924-0458dca7e954",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 43"
+    },
+    {
+      "id": "703427a3-9c35-49f7-b80c-f39560979c4d",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 43"
+    },
+    {
+      "id": "7b7595ed-faed-442d-8278-51f9c7e1c8b4",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 34"
+    },
+    {
+      "id": "82c2dd96-07a3-49a4-ab6b-fd76ceb682dc",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 34"
+    },
+    {
+      "id": "9b9c9cef-eb58-44fd-bbab-61ac919c5dfb",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 34"
+    },
+    {
+      "id": "9c4d5036-f1f0-4ed4-9592-0fbc156d7d26",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 12"
+    },
+    {
+      "id": "9f2f9064-041a-480d-8fe3-19c2c89f6873",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 34"
+    },
+    {
+      "id": "a19742cc-3326-43a9-8d81-e5da9d72b7dc",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. Civ. P. 73"
+    },
+    {
+      "id": "a276814b-5a0f-4e44-9c44-81bd4a4a348c",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. Civ. P. 24"
+    },
+    {
+      "id": "b08dbf43-2eb5-4078-aa8a-6cb8c8d8f4bf",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 40"
+    },
+    {
+      "id": "d4b2bd9d-29fe-4604-937d-34c5a1e77d4a",
+      "stratum": "FederalRules",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "Fed. R. App. P. 34"
+    },
+    {
+      "id": "0c6920fd-1b22-4760-8d99-78e893897bd1",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "111 F. 4"
+    },
+    {
+      "id": "23228060-4463-443b-90d3-c3e909676a8f",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "560 F. 3"
+    },
+    {
+      "id": "3720321e-85f8-4fea-80d0-1a77234cafad",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "21 F. 905"
+    },
+    {
+      "id": "4a115fdb-3c4d-42f1-8bd5-004104f7a19d",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "35 F. 354"
+    },
+    {
+      "id": "61d46b5d-f28b-4d50-ac5b-323f10222e2b",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "846 F. 3"
+    },
+    {
+      "id": "6e0ac884-c87e-435d-a700-232ed8a267c3",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "21 F. 905"
+    },
+    {
+      "id": "6ea6dea4-30a7-4a2f-8542-c685bb472b9a",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "293 F. 1013"
+    },
+    {
+      "id": "87d248f7-3e52-48a5-bb44-bd6390bea4b7",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "241 F. 3"
+    },
+    {
+      "id": "939f1ad2-42ab-481e-8250-6471e916c3b9",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "73 F. 4"
+    },
+    {
+      "id": "b0ea4ded-a102-4cf4-8f30-9a380cbf7ab1",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "181 F. 911"
+    },
+    {
+      "id": "b478675d-a6a1-4b33-bda1-3322e794b5de",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "291 F. 686"
+    },
+    {
+      "id": "b9fca013-a77d-45fb-b1a0-d5cbe264b8ee",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "35 F. 354"
+    },
+    {
+      "id": "bb856b84-d1bd-478a-9e8e-ec93a66a873b",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "293 F. 1013"
+    },
+    {
+      "id": "d5c76cab-e4b5-48ce-b03e-446e3745e7a2",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "111 F. 4"
+    },
+    {
+      "id": "e6923e26-e4a3-4ce5-90f6-074f70fbdbc7",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "535 F. 3"
+    },
+    {
+      "id": "f66ed534-9cde-4ed4-abc6-3328c0fef445",
+      "stratum": "unusual",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "138 F. 4"
+    },
+    {
+      "id": "000f858c-370d-4870-847f-34f456f289bf",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "304 U.S. 458"
+    },
+    {
+      "id": "0903e074-2169-4bbc-96cd-3f69ddb3af34",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "991 F.2d 285"
+    },
+    {
+      "id": "12738cd2-e5e3-47ae-ba9c-814a961c833e",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "539 F. Supp. 3d 562"
+    },
+    {
+      "id": "1b24dce7-5fdf-43e0-b559-8618b406c521",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "525 U.S. 182"
+    },
+    {
+      "id": "258e61ff-7516-4634-a617-942e30b9903d",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "435 U.S. 333"
+    },
+    {
+      "id": "3006d3f0-f9ad-49fd-84c7-7b678d13d2d1",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "406 U.S. 205"
+    },
+    {
+      "id": "3a14ff19-e789-4e7a-afce-2b5b372398d7",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "387 U.S. 294"
+    },
+    {
+      "id": "435c3323-4135-4456-8bc6-19c7bd40c90a",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "980 F.2d 564"
+    },
+    {
+      "id": "4c0a7f33-1acd-4d87-86a4-2ba407612aaa",
+      "stratum": "F.2d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "937 F.2d 434"
+    },
+    {
+      "id": "56b73328-4bff-477e-8beb-12d85e05a399",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "537 U.S. 51"
+    },
+    {
+      "id": "60a6957b-deb8-432f-a584-2b9aef4c890d",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "564 U.S. 338"
+    },
+    {
+      "id": "6a3c2c10-1c2b-4fb9-9931-1afd5fdc1cd0",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "466 U.S. 170"
+    },
+    {
+      "id": "744bc55a-a0ff-4438-8140-8b59e6aecfdf",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "551 U.S. 249"
+    },
+    {
+      "id": "7d909d78-c94f-4943-b0b1-0dc0411a19f7",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "834 F.3d 760"
+    },
+    {
+      "id": "881c530a-abec-4f33-a1a4-83e01e06ea36",
+      "stratum": "F.Supp",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "794 F. SUPP. 3D 477"
+    },
+    {
+      "id": "91ea2ed7-fcf6-4e04-b6da-ee65b99fd5b9",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "455 U.S. 72"
+    },
+    {
+      "id": "9b0bc275-e6c8-4f86-bcf0-ac3804edb554",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "421 U.S. 684"
+    },
+    {
+      "id": "a49d56b6-caf4-493a-b740-8ec4959622a9",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "44 F.4th 1298"
+    },
+    {
+      "id": "ae1f2f5f-241c-434f-99fe-bd2310a47c07",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "305 F.3D 566"
+    },
+    {
+      "id": "b823b0d4-c787-4f2f-8d0c-2901323a0ece",
+      "stratum": "F.3d",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "834 F.3d 263"
+    },
+    {
+      "id": "c15c751a-72ca-4772-851f-8c553095513d",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "444 U.S. 996"
+    },
+    {
+      "id": "c99c655c-b21f-4d2c-b5cf-41793d2a44c9",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "462 U.S. 862"
+    },
+    {
+      "id": "d2410707-3039-4ee8-b550-ed0cbc3607d3",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "467 U.S. 431"
+    },
+    {
+      "id": "da6c6498-640d-467e-847a-808568acfb21",
+      "stratum": "F.4th",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "175 F.4th 61"
+    },
+    {
+      "id": "e2e8e0a3-f438-4f26-8842-1c69dddeecbf",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "410 U.S. 656"
+    },
+    {
+      "id": "ecb8c9b0-a34f-4ec0-8bf2-b6a5fe27a736",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "324 U.S. 793"
+    },
+    {
+      "id": "f628b881-ca8d-4fb4-a7dc-756b28178082",
+      "stratum": "U.S.",
+      "class": "VALID_TARGET_ABSENT",
+      "citation": "486 U.S. 675"
+    }
+  ]
+}

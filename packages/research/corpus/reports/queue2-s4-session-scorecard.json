@@ -1,0 +1,30 @@
+{
+  "classification": "MANUAL_QUEUE2_BALANCED_10K_SESSION_4",
+  "verdict": "PARTIAL",
+  "reason": "Day CL remaining 257 limited volume to +94 cases (below +150 minimum). Historical phased path scaled successfully with healthy efficiency and no pathway 408 regression. District maps verified for next session.",
+  "generatedAt": "2026-09-30T00:33:30.000Z",
+  "quotaStart": { "minute": 30, "hour": 300, "day": 257 },
+  "budgetChosen": 195,
+  "actualClApprox": 229,
+  "cases": { "start": 2905, "end": 2999, "added": 94 },
+  "lanes": {
+    "G3H": { "imported": 56, "cl": 125, "clPerCase": 2.23 },
+    "G2": { "imported": 22, "cl": 48, "clPerCase": 2.18 },
+    "G1": { "batchImported": 39, "netApprox": 16, "cl": 35 },
+    "districtCases": 0,
+    "districtVerifyCl": 20,
+    "cfr": 8
+  },
+  "a2": "SKIP",
+  "newDistrictVerified": ["njd", "paed", "mad", "flsd", "txnd", "cand", "waed"],
+  "edny": "UNAVAILABLE (404; try alternate slug later)",
+  "reliability": {
+    "histPath": "stable",
+    "timeouts": 2,
+    "orphans": 0,
+    "pathway408": 0,
+    "flyExec408Concurrent": 1
+  },
+  "queue": { "#2": "OPEN", "#9": "CLOSED", "#3": "NOT_OPEN", "transition": "NONE" },
+  "completionCandidate": false
+}

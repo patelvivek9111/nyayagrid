@@ -1,0 +1,136 @@
+{
+  "ok": true,
+  "classification": "MANUAL_QUEUE2_S4_DISTRICT_VERIFY",
+  "candidates": [
+    {
+      "id": "edny",
+      "label": "E.D.N.Y.",
+      "circuit": "2",
+      "mappingStatus": "UNAVAILABLE",
+      "httpStatus": 404
+    },
+    {
+      "id": "njd",
+      "label": "D.N.J.",
+      "circuit": "3",
+      "mappingStatus": "VERIFIED",
+      "httpStatus": 200,
+      "fullName": "District Court, D. New Jersey",
+      "jurisdiction": "FD",
+      "inUse": true,
+      "opinionSample": {
+        "status": 200,
+        "count": 20,
+        "earliest": "1842-07-01",
+        "latest": "2019-05-29"
+      }
+    },
+    {
+      "id": "paed",
+      "label": "E.D. Pa.",
+      "circuit": "3",
+      "mappingStatus": "VERIFIED",
+      "httpStatus": 200,
+      "fullName": "District Court, E.D. Pennsylvania",
+      "jurisdiction": "FD",
+      "inUse": true,
+      "opinionSample": {
+        "status": 200,
+        "count": 20,
+        "earliest": "1813-01-10",
+        "latest": "2019-08-30"
+      }
+    },
+    {
+      "id": "mad",
+      "label": "D. Mass.",
+      "circuit": "1",
+      "mappingStatus": "VERIFIED",
+      "httpStatus": 200,
+      "fullName": "District Court, D. Massachusetts",
+      "jurisdiction": "FD",
+      "inUse": true,
+      "opinionSample": {
+        "status": 200,
+        "count": 20,
+        "earliest": "1796-07-01",
+        "latest": "2017-12-08"
+      }
+    },
+    {
+      "id": "flsd",
+      "label": "S.D. Fla.",
+      "circuit": "11",
+      "mappingStatus": "VERIFIED",
+      "httpStatus": 200,
+      "fullName": "District Court, S.D. Florida",
+      "jurisdiction": "FD",
+      "inUse": true,
+      "opinionSample": {
+        "status": 200,
+        "count": 20,
+        "earliest": "1805-12-18",
+        "latest": "2019-08-21"
+      }
+    },
+    {
+      "id": "txnd",
+      "label": "N.D. Tex.",
+      "circuit": "5",
+      "mappingStatus": "VERIFIED",
+      "httpStatus": 200,
+      "fullName": "District Court, N.D. Texas",
+      "jurisdiction": "FD",
+      "inUse": true,
+      "opinionSample": {
+        "status": 200,
+        "count": 20,
+        "earliest": "1882-12-15",
+        "latest": "2019-06-18"
+      }
+    },
+    {
+      "id": "cand",
+      "label": "N.D. Cal.",
+      "circuit": "9",
+      "mappingStatus": "VERIFIED",
+      "httpStatus": 200,
+      "fullName": "District Court, N.D. California",
+      "jurisdiction": "FD",
+      "inUse": true,
+      "opinionSample": {
+        "status": 200,
+        "count": 20,
+        "earliest": "1851-07-09",
+        "latest": "2019-09-09"
+      }
+    },
+    {
+      "id": "waed",
+      "label": "E.D. Wash.",
+      "circuit": "9",
+      "mappingStatus": "VERIFIED",
+      "httpStatus": 200,
+      "fullName": "District Court, E.D. Washington",
+      "jurisdiction": "FD",
+      "inUse": true,
+      "opinionSample": {
+        "status": 200,
+        "count": 20,
+        "earliest": "1905-08-24",
+        "latest": "2019-07-15"
+      }
+    }
+  ],
+  "verifiedIds": [
+    "njd",
+    "paed",
+    "mad",
+    "flsd",
+    "txnd",
+    "cand",
+    "waed"
+  ],
+  "courtListenerHttpCalls": 22,
+  "mutations": 0
+}

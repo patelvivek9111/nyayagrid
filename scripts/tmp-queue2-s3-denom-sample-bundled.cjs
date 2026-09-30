@@ -2201,8 +2201,8 @@ var require_src = __commonJS({
 var postgres = require_src();
 var fs = require("fs");
 var path = require("path");
-var SAMPLE_TARGET = 100;
-var PER_STRATUM = 12;
+var SAMPLE_TARGET = 250;
+var PER_STRATUM = 28;
 var STRATA = [
   { key: "U.S.", re: /\b\d+\s+U\.?\s*S\.?\s+\d+/i },
   { key: "F.3d", re: /\b\d+\s+F\.\s*3d\s+\d+/i },

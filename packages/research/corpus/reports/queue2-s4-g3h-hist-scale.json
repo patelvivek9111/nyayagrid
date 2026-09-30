@@ -1,0 +1,517 @@
+{
+  "classification": "MANUAL_QUEUE2_BALANCED_10K_SESSION_4_HIST_SCALE",
+  "startedAt": "2026-09-30T00:10:49.561Z",
+  "budget": 130,
+  "planMode": "g3h",
+  "windows": [
+    {
+      "lane": "G3H",
+      "court": "ca4",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "discovered": 10,
+      "imported": 8,
+      "cl": 17,
+      "status": "done",
+      "results": [
+        {
+          "id": 686949,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 686944,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 686943,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 686929,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 686859,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 710478,
+          "status": "imported",
+          "d": "1995-01-04"
+        },
+        {
+          "id": 686962,
+          "status": "imported",
+          "d": "1995-01-04"
+        },
+        {
+          "id": 686945,
+          "status": "imported",
+          "d": "1995-01-04"
+        }
+      ]
+    },
+    {
+      "lane": "G3H",
+      "court": "ca4",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "discovered": 5,
+      "imported": 5,
+      "cl": 11,
+      "status": "done",
+      "results": [
+        {
+          "id": 8976496,
+          "status": "imported",
+          "d": "1990-01-02"
+        },
+        {
+          "id": 532544,
+          "status": "imported",
+          "d": "1990-01-05"
+        },
+        {
+          "id": 8976524,
+          "status": "imported",
+          "d": "1990-01-11"
+        },
+        {
+          "id": 8976602,
+          "status": "imported",
+          "d": "1990-01-16"
+        },
+        {
+          "id": 8976578,
+          "status": "imported",
+          "d": "1990-01-16"
+        }
+      ]
+    },
+    {
+      "lane": "G3H",
+      "court": "ca3",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "discovered": 2,
+      "imported": 2,
+      "cl": 5,
+      "status": "done",
+      "results": [
+        {
+          "id": 688638,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 686454,
+          "status": "imported",
+          "d": "1995-01-05"
+        }
+      ]
+    },
+    {
+      "lane": "G3H",
+      "court": "ca3",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "discovered": 4,
+      "imported": 4,
+      "cl": 9,
+      "status": "done",
+      "results": [
+        {
+          "id": 8976476,
+          "status": "imported",
+          "d": "1990-01-04"
+        },
+        {
+          "id": 8976550,
+          "status": "imported",
+          "d": "1990-01-08"
+        },
+        {
+          "id": 8976515,
+          "status": "imported",
+          "d": "1990-01-08"
+        },
+        {
+          "id": 8976494,
+          "status": "imported",
+          "d": "1990-01-08"
+        }
+      ]
+    },
+    {
+      "lane": "G3H",
+      "court": "ca8",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "discovered": 3,
+      "imported": 3,
+      "cl": 7,
+      "status": "done",
+      "results": [
+        {
+          "id": 6933355,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 687021,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 687024,
+          "status": "imported",
+          "d": "1995-01-04"
+        }
+      ]
+    },
+    {
+      "lane": "G3H",
+      "court": "ca8",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "discovered": 1,
+      "imported": 1,
+      "cl": 3,
+      "status": "done",
+      "results": [
+        {
+          "id": 8976502,
+          "status": "imported",
+          "d": "1990-01-04"
+        }
+      ]
+    },
+    {
+      "lane": "G3H",
+      "court": "cafc",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "maxIds": 10,
+      "maxIngest": 8,
+      "phase": "DISCOVERY",
+      "status": "HIST_QUERY_TIMEOUT",
+      "cl": 0
+    },
+    {
+      "lane": "G3H",
+      "court": "cafc",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "discovered": 10,
+      "imported": 8,
+      "cl": 16,
+      "status": "done",
+      "results": [
+        {
+          "id": 687246,
+          "status": "imported",
+          "d": "1995-01-05"
+        },
+        {
+          "id": 687240,
+          "status": "imported",
+          "d": "1995-01-06"
+        },
+        {
+          "id": 687239,
+          "status": "imported",
+          "d": "1995-01-06"
+        },
+        {
+          "id": 687237,
+          "status": "imported",
+          "d": "1995-01-06"
+        },
+        {
+          "id": 687245,
+          "status": "imported",
+          "d": "1995-01-09"
+        },
+        {
+          "id": 687244,
+          "status": "imported",
+          "d": "1995-01-09"
+        },
+        {
+          "id": 687243,
+          "status": "imported",
+          "d": "1995-01-09"
+        },
+        {
+          "id": 687241,
+          "status": "imported",
+          "d": "1995-01-09"
+        }
+      ]
+    },
+    {
+      "lane": "G3H",
+      "court": "cafc",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "maxIds": 10,
+      "maxIngest": 8,
+      "phase": "DISCOVERY",
+      "status": "HIST_QUERY_TIMEOUT",
+      "cl": 0
+    },
+    {
+      "lane": "G3H",
+      "court": "cafc",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "discovered": 1,
+      "imported": 1,
+      "cl": 2,
+      "status": "done",
+      "results": [
+        {
+          "id": 9479661,
+          "status": "imported",
+          "d": "1990-01-04"
+        }
+      ]
+    },
+    {
+      "lane": "G3H",
+      "court": "ca2",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "discovered": 6,
+      "imported": 6,
+      "cl": 13,
+      "status": "done",
+      "results": [
+        {
+          "id": 6933421,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 6933316,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 6933315,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 6933314,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 9487653,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 6933317,
+          "status": "imported",
+          "d": "1995-01-04"
+        }
+      ]
+    },
+    {
+      "lane": "G3H",
+      "court": "ca2",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "discovered": 4,
+      "imported": 4,
+      "cl": 9,
+      "status": "done",
+      "results": [
+        {
+          "id": 8976638,
+          "status": "imported",
+          "d": "1990-01-04"
+        },
+        {
+          "id": 8976510,
+          "status": "imported",
+          "d": "1990-01-04"
+        },
+        {
+          "id": 8976573,
+          "status": "imported",
+          "d": "1990-01-05"
+        },
+        {
+          "id": 8976511,
+          "status": "imported",
+          "d": "1990-01-08"
+        }
+      ]
+    },
+    {
+      "lane": "G3H",
+      "court": "ca10",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "discovered": 10,
+      "imported": 8,
+      "cl": 17,
+      "status": "done",
+      "results": [
+        {
+          "id": 688667,
+          "status": "imported",
+          "d": "1995-01-04"
+        },
+        {
+          "id": 688666,
+          "status": "imported",
+          "d": "1995-01-04"
+        },
+        {
+          "id": 688648,
+          "status": "imported",
+          "d": "1995-01-04"
+        },
+        {
+          "id": 688646,
+          "status": "imported",
+          "d": "1995-01-04"
+        },
+        {
+          "id": 688644,
+          "status": "imported",
+          "d": "1995-01-04"
+        },
+        {
+          "id": 688640,
+          "status": "imported",
+          "d": "1995-01-04"
+        },
+        {
+          "id": 688633,
+          "status": "imported",
+          "d": "1995-01-04"
+        },
+        {
+          "id": 688632,
+          "status": "imported",
+          "d": "1995-01-04"
+        }
+      ]
+    },
+    {
+      "lane": "G3H",
+      "court": "ca10",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "discovered": 5,
+      "imported": 5,
+      "cl": 11,
+      "status": "done",
+      "results": [
+        {
+          "id": 8976505,
+          "status": "imported",
+          "d": "1990-01-03"
+        },
+        {
+          "id": 8976549,
+          "status": "imported",
+          "d": "1990-01-08"
+        },
+        {
+          "id": 8976551,
+          "status": "imported",
+          "d": "1990-01-10"
+        },
+        {
+          "id": 8976507,
+          "status": "imported",
+          "d": "1990-01-10"
+        },
+        {
+          "id": 534645,
+          "status": "imported",
+          "d": "1990-01-10"
+        }
+      ]
+    },
+    {
+      "lane": "G3H",
+      "court": "cadc",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "discovered": 1,
+      "imported": 1,
+      "cl": 3,
+      "status": "done",
+      "results": [
+        {
+          "id": 6933251,
+          "status": "imported",
+          "d": "1995-01-10"
+        }
+      ]
+    }
+  ],
+  "byLane": {
+    "G3H": {
+      "cl": 125,
+      "imported": 56,
+      "windows": 13
+    },
+    "G2": {
+      "cl": 0,
+      "imported": 0,
+      "windows": 0
+    }
+  },
+  "totalCl": 125,
+  "totalImported": 56,
+  "perCourt": {
+    "ca4": {
+      "imported": 13,
+      "cl": 28
+    },
+    "ca3": {
+      "imported": 6,
+      "cl": 14
+    },
+    "ca8": {
+      "imported": 4,
+      "cl": 10
+    },
+    "cafc": {
+      "imported": 9,
+      "cl": 18
+    },
+    "ca2": {
+      "imported": 10,
+      "cl": 22
+    },
+    "ca10": {
+      "imported": 13,
+      "cl": 28
+    },
+    "cadc": {
+      "imported": 1,
+      "cl": 3
+    }
+  },
+  "stopReason": "budget_exhausted",
+  "reliability": {
+    "timeouts": 2,
+    "rateLimited": 0,
+    "orphans": 0
+  },
+  "finishedAt": "2026-09-30T00:20:16.869Z"
+}

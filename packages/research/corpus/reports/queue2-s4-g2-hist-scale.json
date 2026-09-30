@@ -1,0 +1,197 @@
+{
+  "classification": "MANUAL_QUEUE2_BALANCED_10K_SESSION_4_HIST_SCALE",
+  "startedAt": "2026-09-30T00:20:45.656Z",
+  "budget": 40,
+  "planMode": "g2",
+  "windows": [
+    {
+      "lane": "G2",
+      "court": "arizctapp",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "discovered": 4,
+      "imported": 4,
+      "cl": 9,
+      "status": "done",
+      "results": [
+        {
+          "id": 6478958,
+          "status": "imported",
+          "d": "1995-01-20"
+        },
+        {
+          "id": 6478977,
+          "status": "imported",
+          "d": "1995-01-24"
+        },
+        {
+          "id": 9618006,
+          "status": "imported",
+          "d": "1995-01-25"
+        },
+        {
+          "id": 6478933,
+          "status": "imported",
+          "d": "1995-01-26"
+        }
+      ]
+    },
+    {
+      "lane": "G2",
+      "court": "arizctapp",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "discovered": 5,
+      "imported": 5,
+      "cl": 11,
+      "status": "done",
+      "results": [
+        {
+          "id": 1439066,
+          "status": "imported",
+          "d": "1990-01-03"
+        },
+        {
+          "id": 1439459,
+          "status": "imported",
+          "d": "1990-01-09"
+        },
+        {
+          "id": 6478268,
+          "status": "imported",
+          "d": "1990-01-16"
+        },
+        {
+          "id": 1138322,
+          "status": "imported",
+          "d": "1990-01-30"
+        },
+        {
+          "id": 1292682,
+          "status": "imported",
+          "d": "1990-02-06"
+        }
+      ]
+    },
+    {
+      "lane": "G2",
+      "court": "connappct",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "discovered": 5,
+      "imported": 5,
+      "cl": 11,
+      "status": "done",
+      "results": [
+        {
+          "id": 7855999,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 7855892,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 7855888,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 7855887,
+          "status": "imported",
+          "d": "1995-01-03"
+        },
+        {
+          "id": 7855896,
+          "status": "imported",
+          "d": "1995-01-10"
+        }
+      ]
+    },
+    {
+      "lane": "G2",
+      "court": "connappct",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "discovered": 8,
+      "imported": 8,
+      "cl": 17,
+      "status": "done",
+      "results": [
+        {
+          "id": 7853568,
+          "status": "imported",
+          "d": "1990-01-02"
+        },
+        {
+          "id": 7853567,
+          "status": "imported",
+          "d": "1990-01-02"
+        },
+        {
+          "id": 7853574,
+          "status": "imported",
+          "d": "1990-01-09"
+        },
+        {
+          "id": 7853573,
+          "status": "imported",
+          "d": "1990-01-09"
+        },
+        {
+          "id": 7853571,
+          "status": "imported",
+          "d": "1990-01-09"
+        },
+        {
+          "id": 7853638,
+          "status": "imported",
+          "d": "1990-01-10"
+        },
+        {
+          "id": 7853579,
+          "status": "imported",
+          "d": "1990-01-16"
+        },
+        {
+          "id": 7853578,
+          "status": "imported",
+          "d": "1990-01-16"
+        }
+      ]
+    }
+  ],
+  "byLane": {
+    "G3H": {
+      "cl": 0,
+      "imported": 0,
+      "windows": 0
+    },
+    "G2": {
+      "cl": 48,
+      "imported": 22,
+      "windows": 4
+    }
+  },
+  "totalCl": 48,
+  "totalImported": 22,
+  "perCourt": {
+    "arizctapp": {
+      "imported": 9,
+      "cl": 20
+    },
+    "connappct": {
+      "imported": 13,
+      "cl": 28
+    }
+  },
+  "stopReason": "budget_exhausted",
+  "reliability": {
+    "timeouts": 0,
+    "rateLimited": 0,
+    "orphans": 0
+  },
+  "finishedAt": "2026-09-30T00:23:44.695Z"
+}

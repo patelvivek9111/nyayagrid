@@ -1,0 +1,9 @@
+{
+  "classification": "MANUAL_QUEUE2_S4_A2_GATE",
+  "decision": "SKIP",
+  "reason": "No verified CL targets with expected >=3.0 res/CL after Session 3 deferred U.S. Reports exhaustion; redirect CL to G3H/G2/G1/district.",
+  "minExpectedResPerCl": 3.0,
+  "checkedAt": "2026-09-30T00:10:30.000Z",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0
+}

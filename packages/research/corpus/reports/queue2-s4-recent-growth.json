@@ -1,0 +1,47 @@
+{
+  "classification": "MANUAL_QUEUE2_BALANCED_10K_SESSION_4_RECENT",
+  "startedAt": "2026-09-30T00:24:11.550Z",
+  "budget": 35,
+  "batches": [
+    {
+      "lane": "G1",
+      "clCourt": "nmctapp",
+      "tag": "s4-g1-nmctapp",
+      "exit": 0,
+      "status": "paused",
+      "cl": 13,
+      "imported": 12
+    },
+    {
+      "lane": "G1",
+      "clCourt": "indctapp",
+      "tag": "s4-g1-indctapp",
+      "exit": 0,
+      "status": "paused",
+      "cl": 13,
+      "imported": 11
+    },
+    {
+      "lane": "G1",
+      "clCourt": "arizctapp",
+      "tag": "s4-g1-arizctapp",
+      "exit": 0,
+      "status": "quota_paused",
+      "cl": 9,
+      "imported": 16
+    }
+  ],
+  "byLane": {
+    "G1": {
+      "cl": 35,
+      "casesAdded": 39
+    },
+    "DISTRICT": {
+      "cl": 0,
+      "casesAdded": 0
+    }
+  },
+  "totalCl": 35,
+  "stopReason": "budget_exhausted",
+  "finishedAt": "2026-09-30T00:29:58.516Z"
+}

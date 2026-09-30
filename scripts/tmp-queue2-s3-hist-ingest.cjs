@@ -21,38 +21,37 @@ const MAX_OPINION_CHARS = 40_000;
 const MAX_CHUNK_CHARS = 1000;
 
 const COURT_MAP = {
-  ca5: {
-    courtId: "us-ca-5",
-    courtLevel: "circuit",
-    authorityState: "US",
-    courtName: "United States Court of Appeals for the Fifth Circuit",
-    federalCircuit: "5",
-    jurisdiction: "United States",
-  },
-  ca3: {
-    courtId: "us-ca-3",
-    courtLevel: "circuit",
-    authorityState: "US",
-    courtName: "United States Court of Appeals for the Third Circuit",
-    federalCircuit: "3",
-    jurisdiction: "United States",
-  },
-  ca9: {
-    courtId: "us-ca-9",
-    courtLevel: "circuit",
-    authorityState: "US",
-    courtName: "United States Court of Appeals for the Ninth Circuit",
-    federalCircuit: "9",
-    jurisdiction: "United States",
-  },
-  scotus: {
-    courtId: "us-scotus",
-    courtLevel: "scotus",
-    authorityState: "US",
-    courtName: "Supreme Court of the United States",
-    federalCircuit: null,
-    jurisdiction: "United States",
-  },
+  scotus: { courtId: "us-scotus", courtLevel: "scotus", authorityState: "US", courtName: "Supreme Court of the United States", federalCircuit: null, jurisdiction: "United States" },
+  ca1: { courtId: "us-ca-1", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the First Circuit", federalCircuit: "1", jurisdiction: "United States" },
+  ca2: { courtId: "us-ca-2", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Second Circuit", federalCircuit: "2", jurisdiction: "United States" },
+  ca3: { courtId: "us-ca-3", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Third Circuit", federalCircuit: "3", jurisdiction: "United States" },
+  ca4: { courtId: "us-ca-4", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Fourth Circuit", federalCircuit: "4", jurisdiction: "United States" },
+  ca5: { courtId: "us-ca-5", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Fifth Circuit", federalCircuit: "5", jurisdiction: "United States" },
+  ca6: { courtId: "us-ca-6", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Sixth Circuit", federalCircuit: "6", jurisdiction: "United States" },
+  ca7: { courtId: "us-ca-7", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Seventh Circuit", federalCircuit: "7", jurisdiction: "United States" },
+  ca8: { courtId: "us-ca-8", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Eighth Circuit", federalCircuit: "8", jurisdiction: "United States" },
+  ca9: { courtId: "us-ca-9", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Ninth Circuit", federalCircuit: "9", jurisdiction: "United States" },
+  ca10: { courtId: "us-ca-10", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Tenth Circuit", federalCircuit: "10", jurisdiction: "United States" },
+  ca11: { courtId: "us-ca-11", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Eleventh Circuit", federalCircuit: "11", jurisdiction: "United States" },
+  cadc: { courtId: "us-ca-dc", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the District of Columbia Circuit", federalCircuit: "dc", jurisdiction: "United States" },
+  cafc: { courtId: "us-ca-fed", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Federal Circuit", federalCircuit: "fed", jurisdiction: "United States" },
+  arizctapp: { courtId: "st-az-app", courtLevel: "state_appellate", authorityState: "AZ", courtName: "Arizona Court of Appeals", federalCircuit: null, jurisdiction: "AZ" },
+  connappct: { courtId: "st-ct-app", courtLevel: "state_appellate", authorityState: "CT", courtName: "Connecticut Appellate Court", federalCircuit: null, jurisdiction: "CT" },
+  wisctapp: { courtId: "st-wi-app", courtLevel: "state_appellate", authorityState: "WI", courtName: "Wisconsin Court of Appeals", federalCircuit: null, jurisdiction: "WI" },
+  utahctapp: { courtId: "st-ut-app", courtLevel: "state_appellate", authorityState: "UT", courtName: "Utah Court of Appeals", federalCircuit: null, jurisdiction: "UT" },
+  nmctapp: { courtId: "st-nm-app", courtLevel: "state_appellate", authorityState: "NM", courtName: "New Mexico Court of Appeals", federalCircuit: null, jurisdiction: "NM" },
+  indctapp: { courtId: "st-in-app", courtLevel: "state_appellate", authorityState: "IN", courtName: "Indiana Court of Appeals", federalCircuit: null, jurisdiction: "IN" },
+  ariz: { courtId: "st-az-high", courtLevel: "state_high", authorityState: "AZ", courtName: "Arizona Supreme Court", federalCircuit: null, jurisdiction: "AZ" },
+  conn: { courtId: "st-ct-high", courtLevel: "state_high", authorityState: "CT", courtName: "Supreme Court of Connecticut", federalCircuit: null, jurisdiction: "CT" },
+  wis: { courtId: "st-wi-high", courtLevel: "state_high", authorityState: "WI", courtName: "Wisconsin Supreme Court", federalCircuit: null, jurisdiction: "WI" },
+  utah: { courtId: "st-ut-high", courtLevel: "state_high", authorityState: "UT", courtName: "Utah Supreme Court", federalCircuit: null, jurisdiction: "UT" },
+  nm: { courtId: "st-nm-high", courtLevel: "state_high", authorityState: "NM", courtName: "New Mexico Supreme Court", federalCircuit: null, jurisdiction: "NM" },
+  ind: { courtId: "st-in-high", courtLevel: "state_high", authorityState: "IN", courtName: "Indiana Supreme Court", federalCircuit: null, jurisdiction: "IN" },
+  nysd: { courtId: "us-d-nysd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Southern District of New York", federalCircuit: "2", jurisdiction: "United States" },
+  cacd: { courtId: "us-d-cacd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Central District of California", federalCircuit: "9", jurisdiction: "United States" },
+  ilnd: { courtId: "us-d-ilnd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Northern District of Illinois", federalCircuit: "7", jurisdiction: "United States" },
+  txsd: { courtId: "us-d-txsd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Southern District of Texas", federalCircuit: "5", jurisdiction: "United States" },
+  dcd: { courtId: "us-d-dcd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the District of Columbia", federalCircuit: "dc", jurisdiction: "United States" },
 };
 
 function sha256(text) {
@@ -117,7 +116,7 @@ async function main() {
     .split(",")
     .map((s) => Number(s.trim()))
     .filter((n) => Number.isFinite(n) && n > 0);
-  const maxIngest = Math.min(Math.max(Number(process.argv[4] || process.env.CL_MAX_INGEST || 5), 1), 5);
+  const maxIngest = Math.min(Math.max(Number(process.argv[4] || process.env.CL_MAX_INGEST || 8), 1), 10);
   const hardTimeoutMs = Math.min(Math.max(Number(process.env.CL_HARD_TIMEOUT_MS || 120000), 30000), 180000);
   const started = Date.now();
   let calls = 0;
