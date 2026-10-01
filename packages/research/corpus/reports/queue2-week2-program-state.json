@@ -1,0 +1,17 @@
+{
+  "classification": "QUEUE2_WEEK2_PROGRAM_STATE",
+  "generatedAt": "2026-10-01T22:33:55.155Z",
+  "week1Status": "PASS",
+  "week1Cases": 3568,
+  "week1CrossedAt": "2026-10-01T22:15:19.163Z",
+  "queues": {
+    "#2": "OPEN",
+    "#9": "CLOSED",
+    "#3": "OPEN",
+    "#4": "OPEN",
+    "#5": "NOT_OPEN"
+  },
+  "note": "Human-authorized Week 2 program open after Week 1 PASS. Dual-lane worker controllers remain queue3/4 NOT_OPEN (manual acquisition only).",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0
+}

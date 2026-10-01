@@ -5,7 +5,7 @@
   "queue3": "NOT_OPEN",
   "featureAgents": "0",
   "currentLane": "STOPPED",
-  "updatedAt": "2026-09-29T00:29:33.878Z",
+  "updatedAt": "2026-10-01T22:33:55.154Z",
   "laneA": {
     "court": "pa",
     "jurisdiction": "PA",
@@ -2883,5 +2883,12 @@
   },
   "lock": null,
   "generatedAt": "2026-09-28T18:32:13.150Z",
-  "transition": "NONE"
+  "transition": "NONE",
+  "queue4": "NOT_OPEN",
+  "queue5": "NOT_OPEN",
+  "week1Status": "PASS",
+  "week1PassedAt": "2026-10-01T22:32:38.790Z",
+  "week1Cases": 3568,
+  "week2ActivatedAt": "2026-10-01T22:32:38.791Z",
+  "week2ProgramAuthorized": true
 }

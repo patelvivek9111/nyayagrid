@@ -1,0 +1,523 @@
+{
+  "classification": "MANUAL_WEEK1_CLOSEOUT_WEEK2_STRONG_LAUNCH_OPS",
+  "startedAt": "2026-10-01T22:13:20.656Z",
+  "budget": 320,
+  "caseTarget": 150,
+  "casesStart": 3490,
+  "totalCl": 247,
+  "totalImported": 78,
+  "byLane": {
+    "G2": {
+      "imported": 61,
+      "cl": 139,
+      "batches": 17
+    },
+    "DISTRICT": {
+      "imported": 12,
+      "cl": 44,
+      "batches": 8
+    },
+    "G3H": {
+      "imported": 5,
+      "cl": 64,
+      "batches": 8
+    }
+  },
+  "perCourt": {
+    "sd": {
+      "imported": 9,
+      "cl": 20
+    },
+    "nm": {
+      "imported": 2,
+      "cl": 6
+    },
+    "wyo": {
+      "imported": 11,
+      "cl": 24
+    },
+    "nh": {
+      "imported": 7,
+      "cl": 16
+    },
+    "nd": {
+      "imported": 11,
+      "cl": 24
+    },
+    "ri": {
+      "imported": 4,
+      "cl": 10
+    },
+    "waed": {
+      "imported": 0,
+      "cl": 9
+    },
+    "txsd": {
+      "imported": 0,
+      "cl": 3
+    },
+    "cand": {
+      "imported": 5,
+      "cl": 11
+    },
+    "dcd": {
+      "imported": 6,
+      "cl": 14
+    },
+    "txnd": {
+      "imported": 1,
+      "cl": 6
+    },
+    "mad": {
+      "imported": 0,
+      "cl": 1
+    },
+    "ca1": {
+      "imported": 1,
+      "cl": 3
+    },
+    "ca2": {
+      "imported": 0,
+      "cl": 9
+    },
+    "ca4": {
+      "imported": 0,
+      "cl": 11
+    },
+    "ca10": {
+      "imported": 0,
+      "cl": 11
+    },
+    "mont": {
+      "imported": 5,
+      "cl": 11
+    },
+    "miss": {
+      "imported": 6,
+      "cl": 13
+    },
+    "kan": {
+      "imported": 0,
+      "cl": 1
+    },
+    "me": {
+      "imported": 4,
+      "cl": 9
+    },
+    "vt": {
+      "imported": 2,
+      "cl": 5
+    },
+    "cadc": {
+      "imported": 4,
+      "cl": 12
+    },
+    "cafc": {
+      "imported": 0,
+      "cl": 18
+    }
+  },
+  "batches": [
+    {
+      "lane": "G2",
+      "court": "sd",
+      "gte": "1980-01-01",
+      "lte": "1999-12-31",
+      "imported": 6,
+      "cl": 13,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "nm",
+      "gte": "1980-01-01",
+      "lte": "1999-12-31",
+      "imported": 1,
+      "cl": 3,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "wyo",
+      "gte": "1980-01-01",
+      "lte": "1999-12-31",
+      "imported": 5,
+      "cl": 11,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "nh",
+      "gte": "1980-01-01",
+      "lte": "1999-12-31",
+      "imported": 6,
+      "cl": 13,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "nd",
+      "gte": "1980-01-01",
+      "lte": "1999-12-31",
+      "imported": 5,
+      "cl": 11,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "ri",
+      "gte": "1980-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "empty"
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "waed",
+      "gte": "1985-01-01",
+      "lte": "1994-12-31",
+      "imported": 0,
+      "cl": 9,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "txsd",
+      "gte": "1975-01-01",
+      "lte": "1989-12-31",
+      "imported": 0,
+      "cl": 3,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "cand",
+      "gte": "2010-01-01",
+      "lte": "2019-12-31",
+      "imported": 5,
+      "cl": 11,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "dcd",
+      "gte": "2010-01-01",
+      "lte": "2019-12-31",
+      "imported": 5,
+      "cl": 11,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "txnd",
+      "gte": "2010-01-01",
+      "lte": "2019-12-31",
+      "imported": 1,
+      "cl": 3,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "mad",
+      "gte": "1995-01-01",
+      "lte": "2004-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "empty"
+    },
+    {
+      "lane": "G3H",
+      "court": "ca1",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 1,
+      "cl": 3,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca2",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 9,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca4",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 11,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "ca10",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 11,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "sd",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 3,
+      "cl": 7,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "nm",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 1,
+      "cl": 3,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "wyo",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 6,
+      "cl": 13,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "nd",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 6,
+      "cl": 13,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "mont",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 5,
+      "cl": 11,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "miss",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 6,
+      "cl": 13,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "kan",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "unknown",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "me",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 4,
+      "cl": 9,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "ri",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 4,
+      "cl": 9,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "vt",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 2,
+      "cl": 5,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G2",
+      "court": "nh",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 1,
+      "cl": 3,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "cadc",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 3,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "cafc",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 17,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "cadc",
+      "gte": "1985-01-01",
+      "lte": "1989-12-31",
+      "imported": 4,
+      "cl": 9,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "G3H",
+      "court": "cafc",
+      "gte": "1985-01-01",
+      "lte": "1989-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "empty"
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "dcd",
+      "gte": "2000-01-01",
+      "lte": "2010-12-31",
+      "imported": 1,
+      "cl": 3,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "txnd",
+      "gte": "2000-01-01",
+      "lte": "2010-12-31",
+      "imported": 0,
+      "cl": 3,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "reason": null
+    }
+  ],
+  "crossed3500": {
+    "atImported": 12,
+    "estimatedCases": 3502,
+    "clSoFar": 27,
+    "lane": "G2",
+    "court": "wyo",
+    "timestamp": "2026-10-01T22:15:19.163Z"
+  },
+  "stopReason": "plan_complete",
+  "reliability": {
+    "408": 0,
+    "429": 0
+  },
+  "finishedAt": "2026-10-01T22:31:44.942Z"
+}
