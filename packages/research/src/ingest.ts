@@ -13,7 +13,7 @@ import type { ExtractedSegment } from "@nyayagrid/documents";
 import type { EmbeddingProvider } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
 import { structuredAuthorityFields } from "@nyayagrid/jurisdiction";
-import { extractCitationsFromText, parseCitation, resolveCitationAgainstCorpus } from "./citations";
+import { extractCitationsFromText, deriveNormalizedCitation, parseCitation, resolveCitationAgainstCorpus } from "./citations";
 import { initializeAuthorityCurrentness } from "./corpus/currentness";
 
 export const AUTHORITY_TYPES = [
@@ -277,8 +277,10 @@ export async function importAuthority(
   const { db, embeddings } = params;
   const input = importAuthorityInputSchema.parse(params.input);
   const sha256 = createHash("sha256").update(input.content).digest("hex");
-  const normalizedCitation =
-    input.normalizedCitation ?? (input.citation ? parseCitation(input.citation).normalized : null);
+  const normalizedCitation = deriveNormalizedCitation({
+    normalizedCitation: input.normalizedCitation,
+    citation: input.citation,
+  });
 
   const [existing] = await db
     .select()

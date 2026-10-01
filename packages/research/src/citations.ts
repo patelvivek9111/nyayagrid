@@ -723,6 +723,45 @@ export function parseCitation(
   return { ...only.citation, raw: trimmed };
 }
 
+/**
+ * Deterministic normalized citation for ingest / backfill.
+ * Never fabricates from case name, court, or URL alone.
+ */
+export function deriveNormalizedCitation(input: {
+  normalizedCitation?: string | null;
+  citation?: string | null;
+  volume?: number | null;
+  page?: number | null;
+  reporter?: string | null;
+}): string | null {
+  const explicit = input.normalizedCitation?.trim();
+  if (explicit) {
+    const parsed = parseCitation(explicit);
+    return parsed.normalized ?? explicit;
+  }
+
+  const raw = input.citation?.trim();
+  if (raw) {
+    return parseCitation(raw).normalized;
+  }
+
+  if (
+    input.volume != null &&
+    input.page != null &&
+    input.reporter &&
+    Number.isFinite(input.volume) &&
+    Number.isFinite(input.page)
+  ) {
+    const constructed = `${input.volume} ${collapseWhitespace(input.reporter)} ${input.page}`;
+    const parsed = parseCitation(constructed);
+    if (!parsed.normalized) return null;
+    if (parsed.volume !== input.volume || parsed.page !== input.page) return null;
+    return parsed.normalized;
+  }
+
+  return null;
+}
+
 /** Extract every citation found in a body of authority text, preserving raw spans. */
 export function extractCitationsFromText(
   text: string,

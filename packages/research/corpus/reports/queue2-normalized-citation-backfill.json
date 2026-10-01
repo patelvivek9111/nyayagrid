@@ -1,0 +1,71 @@
+{
+  "classification": "ZERO_CL_NORMALIZED_CITATION_BACKFILL",
+  "generatedAt": "2026-10-01T18:20:00.000Z",
+  "courtListenerHttpCalls": 0,
+  "aiCalls": 0,
+  "mutations": 0,
+  "starting": {
+    "cases": 3490,
+    "missing_norm": 3350,
+    "has_norm": 140
+  },
+  "ending": {
+    "cases": 3490,
+    "missing_norm": 3350,
+    "has_norm": 140,
+    "coveragePct": 4.01
+  },
+  "backfilled": 0,
+  "auditBuckets": {
+    "A_RAW_CITATION_NORMALIZABLE": 0,
+    "B_STRUCTURED_REPORTER_VOLUME_PAGE": 0,
+    "D_AMBIGUOUS_PARALLEL": 0,
+    "E_SOURCE_METADATA_CITATION": 0,
+    "F_NO_CITATION_DATA": 3350
+  },
+  "remainingMissingByReason": {
+    "NO_CITATION_DATA": 2592,
+    "NO_CITATION_DATA_note": "metadata.citationStatus=unreported (docket-backed; no reporter cite expected)",
+    "INSUFFICIENT_REPORTER_FIELDS": 0,
+    "AMBIGUOUS_PARALLEL_CITATIONS": 0,
+    "NON_STANDARD_CITATION": 0,
+    "SOURCE_METADATA_GAP": 758,
+    "SOURCE_METADATA_GAP_breakdown": {
+      "citation_unknown": 98,
+      "citationStatus_absent": 660
+    },
+    "PARSER_UNSUPPORTED": 0,
+    "OTHER": 0
+  },
+  "evidence": {
+    "citation_column_null_among_missing": 3350,
+    "version_source_metadata_with_citation_key": 0,
+    "title_embedded_reporter_cites": 0,
+    "missing_norm_with_docket": 2717,
+    "missing_both_citation_and_docket": 633
+  },
+  "futureIngestionProtection": [
+    "deriveNormalizedCitation added and wired into importAuthority",
+    "courtlistener adapter sets normalizedCitation + stores citation list/status in metadata",
+    "staging-cl-batch-job no longer uppercases citations into normalized_citation; uses reporter parse or null"
+  ],
+  "currentnessUnknown": {
+    "starting": 144,
+    "ending": 144,
+    "deterministicallyResolved": 0,
+    "stillUnknownValid": {
+      "case_no_decision_date": 6,
+      "statute_no_effective": 115,
+      "regulation_no_effective": 15,
+      "rule_no_effective": 7,
+      "constitution": 1
+    }
+  },
+  "canonicalIdentity": {
+    "duplicates": 0,
+    "dupNormalizedCaseCitations": 0,
+    "falseMergesPrevented": "title/court-only never used",
+    "status": "CLEAN"
+  },
+  "note": "Zero safe backfills available without CourtListener or fabricating cites. Completeness is evidence-limited, not an implementation defect for unreported opinions."
+}

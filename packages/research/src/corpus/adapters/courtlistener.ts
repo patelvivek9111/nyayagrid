@@ -12,6 +12,7 @@ import {
   type LegalSourceAdapter,
   sanitizeUntrustedLegalText,
 } from "./types";
+import { deriveNormalizedCitation } from "../../citations";
 
 const DEFAULT_BASE = "https://www.courtlistener.com/api/rest/v4";
 
@@ -260,6 +261,11 @@ export function createCourtListenerAdapter(
           String(raw.case_name ?? raw.caseName ?? "Untitled CourtListener opinion"),
         );
         const citation = pickCitation(raw);
+        const citationList = Array.isArray(raw.citation)
+          ? raw.citation.map((c) => String(c).trim()).filter(Boolean)
+          : citation
+            ? [citation]
+            : [];
         const docket = raw.docket_number ? String(raw.docket_number) : null;
         if (!citation && !docket) {
           quarantined.push({
@@ -275,6 +281,15 @@ export function createCourtListenerAdapter(
           absoluteUrl("https://www.courtlistener.com", raw.absolute_url) ??
           row.canonicalUrl;
 
+        const normalizedCitation = deriveNormalizedCitation({ citation });
+        const citationStatus = citation
+          ? normalizedCitation
+            ? "reported"
+            : "citation_unknown"
+          : docket
+            ? "unreported"
+            : "citation_unknown";
+
         records.push({
           title: title.length >= 3 ? title : "CourtListener opinion",
           authorityType: "case",
@@ -282,6 +297,7 @@ export function createCourtListenerAdapter(
           sourceProvider: "courtlistener",
           sourceExternalId: row.sourceExternalId,
           citation,
+          normalizedCitation,
           docketNumber: docket,
           decisionDate: raw.date_filed ?? null,
           court: raw.court ? String(raw.court) : null,
@@ -295,9 +311,15 @@ export function createCourtListenerAdapter(
           contentHash: sha256(content),
           retrievedAt: row.retrievedAt,
           sourceClass: "PRIMARY_PUBLIC_REPOSITORY",
+          metadata: {
+            citationStatus,
+            ...(citationList.length ? { citations: citationList } : {}),
+          },
           sourceMetadata: {
             adapter: "courtlistener",
             retrievedAt: row.retrievedAt,
+            citationStatus,
+            ...(citationList.length ? { citations: citationList } : {}),
           },
         });
       }

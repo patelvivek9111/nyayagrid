@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { extractCitationsFromText, parseCitation } from "./citations";
+import { deriveNormalizedCitation, extractCitationsFromText, parseCitation } from "./citations";
 import { syntheticCaseAuthority, syntheticStatuteAuthority } from "./fixtures";
 
 describe("parseCitation", () => {
@@ -208,6 +208,33 @@ describe("parseCitation", () => {
     expect(ala.normalized).not.toBe(alaska.normalized);
     expect(ala.reporter).toBe("Ala. R. Civ. P.");
     expect(alaska.reporter).toBe("Alaska R. Civ. P.");
+  });
+});
+
+describe("deriveNormalizedCitation", () => {
+  it("normalizes explicit raw citation and known aliases", () => {
+    expect(deriveNormalizedCitation({ citation: "503 F. 3d 284" })).toBe("503 F.3d 284");
+    expect(deriveNormalizedCitation({ citation: "558 U. S. 183" })).toBe("558 U.S. 183");
+    expect(deriveNormalizedCitation({ citation: "104 A. 3d 626" })).toBe("104 A.3d 626");
+    expect(deriveNormalizedCitation({ normalizedCitation: "410 U.S. 113" })).toBe("410 U.S. 113");
+  });
+
+  it("constructs from structured reporter/volume/page with round-trip", () => {
+    expect(
+      deriveNormalizedCitation({ volume: 503, page: 284, reporter: "F.3d" }),
+    ).toBe("503 F.3d 284");
+    expect(
+      deriveNormalizedCitation({ volume: 999, page: 1, reporter: "NotAReporter" }),
+    ).toBeNull();
+  });
+
+  it("returns null for ambiguous or missing citation data", () => {
+    expect(deriveNormalizedCitation({})).toBeNull();
+    expect(deriveNormalizedCitation({ citation: null })).toBeNull();
+    expect(deriveNormalizedCitation({ citation: "Smith v. Jones" })).toBeNull();
+    expect(
+      deriveNormalizedCitation({ citation: "compare 410 U.S. 113 with 999 F.3d 1" }),
+    ).toBeNull();
   });
 });
 

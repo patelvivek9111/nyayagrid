@@ -837,8 +837,29 @@ function citationStatus(citation: string | null, docket: string | null): Citatio
   return "citation_unknown";
 }
 
+/** Deterministic reporter normalization — never invents from title/court. */
+function normalizeReporterCitation(raw: string): string | null {
+  const text = raw.replace(/\s+/g, " ").trim();
+  if (!text) return null;
+  const us = text.match(/\b(\d{1,3})\s+U\.\s*S\.\s+(\d{1,4})\b/i);
+  if (us) return `${us[1]} U.S. ${us[2]}`;
+  const fsupp = text.match(/\b(\d{1,4})\s+F\.?\s*Supp\.?\s*(2d|3d|4th)?\s+(\d{1,4})\b/i);
+  if (fsupp) {
+    const series = fsupp[2] ? fsupp[2].toLowerCase() : "";
+    return `${fsupp[1]} F. Supp.${series ? ` ${series}` : ""} ${fsupp[3]}`.replace(/\s+/g, " ").trim();
+  }
+  const f = text.match(/\b(\d{1,4})\s+F\.?\s*(2d|3d|4th)\s+(\d{1,4})\b/i);
+  if (f) return `${f[1]} F.${f[2].toLowerCase()} ${f[3]}`;
+  const sct = text.match(/\b(\d{1,3})\s+S\.?\s*Ct\.?\s+(\d{1,4})\b/i);
+  if (sct) return `${sct[1]} S. Ct. ${sct[2]}`;
+  const a = text.match(/\b(\d{1,4})\s+A\.(?:\s?(2d|3d))\s+(\d{1,4})\b/i);
+  if (a) return `${a[1]} A.${a[2].toLowerCase()} ${a[3]}`;
+  // Unrecognized reporter form: leave null (do not uppercase-fabricate a canonical cite).
+  return null;
+}
+
 function normalizeCitation(raw: string): string {
-  return raw.replace(/\s+/g, " ").trim().toUpperCase();
+  return normalizeReporterCitation(raw) ?? raw.replace(/\s+/g, " ").trim();
 }
 
 function parseRetryAfterSec(res: Response): number | null {
@@ -1376,7 +1397,7 @@ async function persistOne(
 
   const authorityId = randomUUID();
   const versionId = randomUUID();
-  const norm = opinion.citation ? normalizeCitation(opinion.citation) : null;
+  const norm = opinion.citation ? normalizeReporterCitation(opinion.citation) : null;
   if (opts.hasCurrentness && opts.hasLastChecked) {
     await sql`
       insert into legal_authorities (
