@@ -1,0 +1,193 @@
+{
+  "classification": "MANUAL_QUEUE2_WEEK1_CLOSEOUT_CONT_OPS",
+  "startedAt": "2026-10-01T02:21:01.552Z",
+  "budget": 120,
+  "caseTarget": 50,
+  "totalCl": 105,
+  "totalImported": 25,
+  "byLane": {
+    "G2": {
+      "imported": 8,
+      "cl": 39,
+      "batches": 3
+    },
+    "G3H": {
+      "imported": 4,
+      "cl": 36,
+      "batches": 4
+    },
+    "DISTRICT_HIST": {
+      "imported": 13,
+      "cl": 30,
+      "batches": 4
+    }
+  },
+  "perCourt": {
+    "ala": {
+      "imported": 0,
+      "cl": 17
+    },
+    "alaska": {
+      "imported": 0,
+      "cl": 5
+    },
+    "okla": {
+      "imported": 8,
+      "cl": 17
+    },
+    "cadc": {
+      "imported": 2,
+      "cl": 18
+    },
+    "cafc": {
+      "imported": 2,
+      "cl": 18
+    },
+    "nysd": {
+      "imported": 4,
+      "cl": 9
+    },
+    "cacd": {
+      "imported": 3,
+      "cl": 7
+    },
+    "ilnd": {
+      "imported": 3,
+      "cl": 7
+    },
+    "flsd": {
+      "imported": 3,
+      "cl": 7
+    }
+  },
+  "batches": [
+    {
+      "lane": "G2",
+      "court": "ala",
+      "gte": "1980-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 17,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "alaska",
+      "gte": "1980-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 5,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "okla",
+      "gte": "1970-01-01",
+      "lte": "1989-12-31",
+      "imported": 8,
+      "cl": 17,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G3H",
+      "court": "cadc",
+      "gte": "2000-01-01",
+      "lte": "2010-12-31",
+      "imported": 0,
+      "cl": 13,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G3H",
+      "court": "cafc",
+      "gte": "2000-01-01",
+      "lte": "2010-12-31",
+      "imported": 0,
+      "cl": 13,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G3H",
+      "court": "cadc",
+      "gte": "2011-01-01",
+      "lte": "2018-12-31",
+      "imported": 2,
+      "cl": 5,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G3H",
+      "court": "cafc",
+      "gte": "2011-01-01",
+      "lte": "2018-12-31",
+      "imported": 2,
+      "cl": 5,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "DISTRICT_HIST",
+      "court": "nysd",
+      "gte": "2000-01-01",
+      "lte": "2010-12-31",
+      "imported": 4,
+      "cl": 9,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "DISTRICT_HIST",
+      "court": "cacd",
+      "gte": "2000-01-01",
+      "lte": "2010-12-31",
+      "imported": 3,
+      "cl": 7,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "DISTRICT_HIST",
+      "court": "ilnd",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 3,
+      "cl": 7,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "DISTRICT_HIST",
+      "court": "flsd",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 3,
+      "cl": 7,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    }
+  ],
+  "stopReason": "plan_complete",
+  "reliability": {
+    "408": 0,
+    "429": 0
+  },
+  "note": "Maps must already be in hist-ingest bundle",
+  "finishedAt": "2026-10-01T02:27:35.377Z"
+}
