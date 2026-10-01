@@ -1,6 +1,6 @@
 {
   "classification": "QUEUE2_NEXT_CL_RECOVERY_MANIFEST",
-  "generatedAt": "2026-10-01T17:37:23.229Z",
+  "generatedAt": "2026-10-01T17:58:30.322Z",
   "courtListenerHttpCalls": 0,
   "mutations": 0,
   "liveBaseline": {
@@ -10,14 +10,14 @@
     "week1GapTo3500": 10,
     "remainingTo10k": 6510
   },
-  "plannedUsefulCases": 110,
-  "plannedTargetBand": "84-110",
+  "plannedUsefulCases": 116,
+  "plannedTargetBand": "100-120",
   "mix": {
-    "G2_STATE_HISTORICAL": 40,
-    "G3_DISTRICT": 35,
-    "G3_FEDERAL_HISTORICAL": 6,
-    "G1_STATE_INTERMEDIATE": 24,
-    "A2_DUAL_VALUE": 5
+    "G2_STATE_HISTORICAL": 48,
+    "G3_DISTRICT": 30,
+    "G3_FEDERAL_HISTORICAL": 20,
+    "G1_STATE_INTERMEDIATE": 12,
+    "A2_DUAL_VALUE": 6
   },
   "avoidPatterns": [
     "blind_ca5_historical_windows",
@@ -37,6 +37,22 @@
     {
       "rank": 1,
       "lane": "G2_STATE_HISTORICAL",
+      "court": "sd",
+      "jurisdiction": "SD",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 8,
+      "why": "historical_gap_or_priority",
+      "avoid": [
+        "blind_ca5_hist",
+        "blind_ca3_hist",
+        "blind_ca8_hist",
+        "pasuperct_prior_pattern"
+      ],
+      "estimatedCL": 19
+    },
+    {
+      "rank": 2,
+      "lane": "G2_STATE_HISTORICAL",
       "court": "nm",
       "jurisdiction": "NM",
       "dateWindow": "1980-01-01..1999-12-31",
@@ -51,7 +67,23 @@
       "estimatedCL": 19
     },
     {
-      "rank": 2,
+      "rank": 3,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "wyo",
+      "jurisdiction": "WY",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 8,
+      "why": "historical_gap_or_priority",
+      "avoid": [
+        "blind_ca5_hist",
+        "blind_ca3_hist",
+        "blind_ca8_hist",
+        "pasuperct_prior_pattern"
+      ],
+      "estimatedCL": 19
+    },
+    {
+      "rank": 4,
       "lane": "G2_STATE_HISTORICAL",
       "court": "nh",
       "jurisdiction": "NH",
@@ -67,7 +99,23 @@
       "estimatedCL": 19
     },
     {
-      "rank": 3,
+      "rank": 5,
+      "lane": "G2_STATE_HISTORICAL",
+      "court": "nd",
+      "jurisdiction": "ND",
+      "dateWindow": "1980-01-01..1999-12-31",
+      "targetCases": 8,
+      "why": "historical_gap_or_priority",
+      "avoid": [
+        "blind_ca5_hist",
+        "blind_ca3_hist",
+        "blind_ca8_hist",
+        "pasuperct_prior_pattern"
+      ],
+      "estimatedCL": 19
+    },
+    {
+      "rank": 6,
       "lane": "G2_STATE_HISTORICAL",
       "court": "ri",
       "jurisdiction": "RI",
@@ -83,39 +131,7 @@
       "estimatedCL": 19
     },
     {
-      "rank": 4,
-      "lane": "G2_STATE_HISTORICAL",
-      "court": "utah",
-      "jurisdiction": "UT",
-      "dateWindow": "1980-01-01..1999-12-31",
-      "targetCases": 8,
-      "why": "historical_gap_or_priority",
-      "avoid": [
-        "blind_ca5_hist",
-        "blind_ca3_hist",
-        "blind_ca8_hist",
-        "pasuperct_prior_pattern"
-      ],
-      "estimatedCL": 19
-    },
-    {
-      "rank": 5,
-      "lane": "G2_STATE_HISTORICAL",
-      "court": "wis",
-      "jurisdiction": "WI",
-      "dateWindow": "1980-01-01..1999-12-31",
-      "targetCases": 8,
-      "why": "historical_gap_or_priority",
-      "avoid": [
-        "blind_ca5_hist",
-        "blind_ca3_hist",
-        "blind_ca8_hist",
-        "pasuperct_prior_pattern"
-      ],
-      "estimatedCL": 19
-    },
-    {
-      "rank": 6,
+      "rank": 7,
       "lane": "G3_DISTRICT",
       "court": "waed",
       "dateWindow": "1985-01-01..1994-12-31",
@@ -124,7 +140,7 @@
       "estimatedCL": 11
     },
     {
-      "rank": 7,
+      "rank": 8,
       "lane": "G3_DISTRICT",
       "court": "txsd",
       "dateWindow": "1975-01-01..1989-12-31",
@@ -133,7 +149,7 @@
       "estimatedCL": 11
     },
     {
-      "rank": 8,
+      "rank": 9,
       "lane": "G3_DISTRICT",
       "court": "cand",
       "dateWindow": "2010-01-01..2019-12-31",
@@ -142,7 +158,7 @@
       "estimatedCL": 11
     },
     {
-      "rank": 9,
+      "rank": 10,
       "lane": "G3_DISTRICT",
       "court": "dcd",
       "dateWindow": "2010-01-01..2019-12-31",
@@ -151,7 +167,7 @@
       "estimatedCL": 11
     },
     {
-      "rank": 10,
+      "rank": 11,
       "lane": "G3_DISTRICT",
       "court": "txnd",
       "dateWindow": "2010-01-01..2019-12-31",
@@ -160,18 +176,9 @@
       "estimatedCL": 11
     },
     {
-      "rank": 11,
-      "lane": "G3_DISTRICT",
-      "court": "mad",
-      "dateWindow": "1995-01-01..2004-12-31",
-      "targetCases": 5,
-      "why": "verified_district_balance",
-      "estimatedCL": 11
-    },
-    {
       "rank": 12,
       "lane": "G3_DISTRICT",
-      "court": "njd",
+      "court": "mad",
       "dateWindow": "1995-01-01..2004-12-31",
       "targetCases": 5,
       "why": "verified_district_balance",
@@ -182,8 +189,8 @@
       "lane": "G3_FEDERAL_HISTORICAL",
       "court": "ca1",
       "dateWindow": "1990-01-01..1999-12-31",
-      "targetCases": 6,
-      "why": "historically_thin_or_productive_circuit",
+      "targetCases": 5,
+      "why": "productive_or_thin_circuit",
       "flags": [
         "HISTORICALLY_THIN"
       ],
@@ -191,6 +198,42 @@
     },
     {
       "rank": 14,
+      "lane": "G3_FEDERAL_HISTORICAL",
+      "court": "ca2",
+      "dateWindow": "1990-01-01..1999-12-31",
+      "targetCases": 5,
+      "why": "productive_or_thin_circuit",
+      "flags": [
+        "STRONG"
+      ],
+      "estimatedCL": 14
+    },
+    {
+      "rank": 15,
+      "lane": "G3_FEDERAL_HISTORICAL",
+      "court": "ca4",
+      "dateWindow": "1990-01-01..1999-12-31",
+      "targetCases": 5,
+      "why": "productive_or_thin_circuit",
+      "flags": [
+        "STRONG"
+      ],
+      "estimatedCL": 14
+    },
+    {
+      "rank": 16,
+      "lane": "G3_FEDERAL_HISTORICAL",
+      "court": "ca10",
+      "dateWindow": "1990-01-01..1999-12-31",
+      "targetCases": 5,
+      "why": "productive_or_thin_circuit",
+      "flags": [
+        "STRONG"
+      ],
+      "estimatedCL": 14
+    },
+    {
+      "rank": 17,
       "lane": "G1_STATE_INTERMEDIATE",
       "court": "illappct",
       "jurisdiction": "IL",
@@ -200,7 +243,7 @@
       "estimatedCL": 13
     },
     {
-      "rank": 15,
+      "rank": 18,
       "lane": "G1_STATE_INTERMEDIATE",
       "court": "nmctapp",
       "jurisdiction": "NM",
@@ -210,47 +253,61 @@
       "estimatedCL": 13
     },
     {
-      "rank": 16,
-      "lane": "G1_STATE_INTERMEDIATE",
-      "court": "utahctapp",
-      "jurisdiction": "UT",
-      "dateWindow": "1985-01-01..1999-12-31",
-      "targetCases": 6,
-      "why": "thin_verified_intermediate",
-      "estimatedCL": 13
-    },
-    {
-      "rank": 17,
-      "lane": "G1_STATE_INTERMEDIATE",
-      "court": "calctapp",
-      "jurisdiction": "CA",
-      "dateWindow": "2005-01-01..2015-12-31",
-      "targetCases": 6,
-      "why": "thin_verified_intermediate",
-      "estimatedCL": 13
-    },
-    {
-      "rank": 18,
+      "rank": 19,
       "lane": "A2_DUAL_VALUE",
       "court": "scotus",
       "dateWindow": "citation-target",
-      "targetCases": 5,
+      "targetCases": 6,
       "citationTargets": [
         "573 U.S. 373",
         "578 U.S. 330",
         "477 U.S. 242",
         "573 U.S. 149",
-        "528 U.S. 167"
+        "528 U.S. 167",
+        "549 U.S. 1"
       ],
       "why": "dual_value_citation_and_scotus_coverage",
-      "estimatedCL": 12,
+      "estimatedCL": 15,
       "gate": "run_only_if_prior_window_res_per_cl_ge_3.0"
     }
   ],
+  "removedRelativeToPrior": {
+    "dedupedWindows": true,
+    "avoidedWeakCircuits": [
+      "ca5",
+      "ca3",
+      "ca8"
+    ],
+    "skippedPasuperct": true
+  },
   "stopConditions": [
     "429",
     "day_remaining_lt_40",
     "integrity_regression",
     "408_storm"
-  ]
+  ],
+  "improvement": {
+    "before": {
+      "plannedUsefulCases": 110,
+      "mix": {
+        "G2_STATE_HISTORICAL": 40,
+        "G3_DISTRICT": 35,
+        "G3_FEDERAL_HISTORICAL": 6,
+        "G1_STATE_INTERMEDIATE": 24,
+        "A2_DUAL_VALUE": 5
+      },
+      "batchCount": 18
+    },
+    "after": {
+      "plannedUsefulCases": 116,
+      "mix": {
+        "G2_STATE_HISTORICAL": 48,
+        "G3_DISTRICT": 30,
+        "G3_FEDERAL_HISTORICAL": 20,
+        "G1_STATE_INTERMEDIATE": 12,
+        "A2_DUAL_VALUE": 6
+      },
+      "batchCount": 19
+    }
+  }
 }

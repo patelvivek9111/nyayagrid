@@ -1,101 +1,109 @@
 {
   "classification": "QUEUE3_FOUNDATION_ONLY",
   "queue3Status": "NOT_OPEN",
-  "generatedAt": "2026-10-01T17:37:23.326Z",
+  "queue4Status": "NOT_OPEN",
+  "generatedAt": "2026-10-01T18:05:00.000Z",
   "courtListenerHttpCalls": 0,
   "mutations": 0,
   "areas": [
     {
+      "area": "canonical_authority_identity",
+      "status": "PARTIAL",
+      "issues": [
+        "provider+externalId unique OK",
+        "3350/3490 cases missing normalized_citation (citation often null on CL rows)"
+      ]
+    },
+    {
       "area": "reporter_normalization",
       "status": "PARTIAL",
       "issues": [
-        "series spacing variants F.3d vs F. 3d"
+        "F.3d / U.S. / A.3d spacing aliases covered in parser+lookup+dedup keys"
       ]
     },
     {
-      "area": "citation_normalization",
+      "area": "citation_aliases",
       "status": "PARTIAL",
       "issues": [
-        "U. S. vs U.S. spacing already lean-normalized"
-      ]
-    },
-    {
-      "area": "case_canonical_identity",
-      "status": "OK",
-      "issues": []
-    },
-    {
-      "area": "source_provider_source_id_identity",
-      "status": "OK",
-      "issues": [
-        "unique index present; overnight dupes=0"
+        "Atlantic A.3d spacing aliases added"
       ]
     },
     {
       "area": "court_normalization",
       "status": "PARTIAL",
       "issues": [
-        "district IDs not all in registry until overnight promote"
+        "all live cases have court_id; registry coverage still partial for unverified courts"
       ]
     },
     {
       "area": "jurisdiction_normalization",
-      "status": "OK",
+      "status": "COMPLETE",
       "issues": []
     },
     {
-      "area": "authority_type_normalization",
-      "status": "OK",
-      "issues": []
-    },
-    {
-      "area": "volume_page_normalization",
+      "area": "canonical_case_identity",
       "status": "PARTIAL",
       "issues": [
-        "pinpoint not always separated"
+        "dedup citation key convergence improved; title-similarity never merges"
+      ]
+    },
+    {
+      "area": "duplicate_prevention",
+      "status": "COMPLETE",
+      "issues": [
+        "live duplicate provider/sourceId=0; duplicate normalized case citations=0"
+      ]
+    },
+    {
+      "area": "source_provider_source_id",
+      "status": "COMPLETE",
+      "issues": [
+        "missing_provider=0; missing_external_id=0"
       ]
     },
     {
       "area": "statute_identity",
       "status": "PARTIAL",
-      "issues": [
-        "USC House shell quality gate failed"
-      ]
+      "issues": []
     },
     {
       "area": "regulation_identity",
-      "status": "OK",
-      "issues": [
-        "CFR eCFR piloted"
-      ]
+      "status": "PARTIAL",
+      "issues": []
     },
     {
       "area": "rule_identity",
-      "status": "BLOCKED",
-      "issues": [
-        "Federal Rules ingest loop missing"
-      ]
+      "status": "PARTIAL",
+      "issues": []
     },
     {
-      "area": "alias_uniqueness",
-      "status": "FOUNDATION",
+      "area": "currentness_initialization",
+      "status": "PARTIAL",
       "issues": [
-        "no broad alias collision scan overnight"
+        "ingest uses initializeAuthorityCurrentness; cases with decisionDate → historical"
       ]
     }
   ],
   "findings": {
     "duplicateCanonicalIdentities": 0,
-    "conflictingAliases": "NOT_SCANNED_POPULATION",
-    "malformedAliases": "NOT_SCANNED_POPULATION",
-    "reporterAliasesMappingMultipleWays": "NOT_SCANNED_POPULATION",
-    "missingNormalizedFields": "no_present_unresolved"
+    "liveCasesAudited": 3490,
+    "liveAuthoritiesAudited": 4845,
+    "normalizationFailuresFixedThisRun": [
+      "A.3d citationLookupAliases",
+      "dedup normalizeCanonicalCitationKey",
+      "case silent-current demotion"
+    ],
+    "remainingAmbiguous": [
+      "cases without normalized_citation pending citation backfill from CL metadata",
+      "6 cases with unknown currentness (no decision_date)"
+    ]
   },
-  "safeFixesTonight": [],
-  "note": "No broad schema changes. Queue #3 remains NOT_OPEN.",
+  "note": "Early Week 2 hardening only. Queue #3/#4 remain NOT_OPEN. Revalidate after Queue #2 acquisition.",
   "liveCrossCheck": {
-    "presentUnresolved": 0,
-    "duplicateCitationEdges": 0,
-    "cases": 3490
+    "cases": 3490,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "duplicateCitationEdges": 0
   }
 }

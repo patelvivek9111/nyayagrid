@@ -39,6 +39,22 @@ function normalizeKeyPart(value: string): string {
   return value.trim().toLowerCase().replace(/\s+/g, " ");
 }
 
+/**
+ * Canonical citation identity key: collapse reporter spacing/punctuation variants
+ * so "503 F. 3d 284" and "503 F.3d 284" (and U. S. / U.S.) converge.
+ * Does not fuzzy-match titles or guess across different reporters.
+ */
+export function normalizeCanonicalCitationKey(value: string): string {
+  return normalizeKeyPart(value)
+    .replace(/\bu\.\s*s\./g, "u.s.")
+    .replace(/\bf\.\s*supp\.?\s*/g, "f. supp. ")
+    .replace(/\bf\.\s*(2d|3d|4th)\b/g, "f.$1")
+    .replace(/\ba\.\s*(2d|3d)\b/g, "a.$1")
+    .replace(/\bs\.\s*ct\./g, "s. ct.")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 /** Build ordered duplicate-key candidates from authority identity fields. */
 export function findDuplicateKeyCandidates(fields: AuthorityDedupFields): DuplicateKeyCandidate[] {
   const out: DuplicateKeyCandidate[] = [];
@@ -54,7 +70,7 @@ export function findDuplicateKeyCandidates(fields: AuthorityDedupFields): Duplic
 
   const citation = (fields.normalizedCitation ?? fields.citation)?.trim();
   if (citation) {
-    out.push({ kind: "canonicalCitation", value: normalizeKeyPart(citation) });
+    out.push({ kind: "canonicalCitation", value: normalizeCanonicalCitationKey(citation) });
   }
 
   const court = fields.court?.trim();

@@ -1,0 +1,174 @@
+{
+  "ok": true,
+  "classification": "EARLY_WEEK2_NORMALIZATION_CURRENTNESS_AUDIT",
+  "generatedAt": "2026-10-01T17:57:30.157Z",
+  "courtListenerHttpCalls": 0,
+  "aiCalls": 0,
+  "mutations": 3279,
+  "apply": true,
+  "corpus": {
+    "cases": 3490,
+    "authorities": 4845,
+    "statutes": 904,
+    "regulations": 196,
+    "rules": 254,
+    "missing_provider": 0,
+    "missing_external_id": 0,
+    "cases_missing_norm_cite": 3350,
+    "cases_with_court_id": 3490,
+    "cases_with_jurisdiction": 3490,
+    "cases_with_court": 3490
+  },
+  "currentnessByType": [
+    {
+      "authority_type": "case",
+      "currentness_status": "unknown",
+      "n": 6
+    },
+    {
+      "authority_type": "case",
+      "currentness_status": "historical",
+      "n": 3484
+    },
+    {
+      "authority_type": "statute",
+      "currentness_status": "unknown",
+      "n": 115
+    },
+    {
+      "authority_type": "statute",
+      "currentness_status": "current_as_of_source_date",
+      "n": 789
+    },
+    {
+      "authority_type": "regulation",
+      "currentness_status": "unknown",
+      "n": 15
+    },
+    {
+      "authority_type": "regulation",
+      "currentness_status": "current_as_of_source_date",
+      "n": 181
+    },
+    {
+      "authority_type": "constitution",
+      "currentness_status": "unknown",
+      "n": 1
+    },
+    {
+      "authority_type": "rule",
+      "currentness_status": "unknown",
+      "n": 7
+    },
+    {
+      "authority_type": "rule",
+      "currentness_status": "current_as_of_source_date",
+      "n": 247
+    }
+  ],
+  "currentnessTotals": [
+    {
+      "currentness_status": "unknown",
+      "n": 144
+    },
+    {
+      "currentness_status": "current_as_of_source_date",
+      "n": 1217
+    },
+    {
+      "currentness_status": "historical",
+      "n": 3484
+    }
+  ],
+  "silentCurrentSuspects": [],
+  "duplicateProviderSourceIdPairs": 0,
+  "duplicateNormalizedCaseCitations": 0,
+  "integrity": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "duplicateCitationEdges": 0
+  },
+  "spacingVariantUnresolvedSamples": [
+    {
+      "normalized_citation": "455 F. 3D 225",
+      "n": 1
+    },
+    {
+      "normalized_citation": "802 F. 3D 239",
+      "n": 1
+    }
+  ],
+  "caseHistoricalBackfill": {
+    "applied": true,
+    "wouldUpdate": 3279,
+    "updated": 3279
+  },
+  "caseCurrentAsOfDemotion": {
+    "ok": true,
+    "demoted": 125,
+    "after": [
+      {
+        "currentness_status": "unknown",
+        "n": 144
+      },
+      {
+        "currentness_status": "current_as_of_source_date",
+        "n": 1217
+      },
+      {
+        "currentness_status": "historical",
+        "n": 3484
+      }
+    ],
+    "byType": [
+      {
+        "authority_type": "case",
+        "currentness_status": "unknown",
+        "n": 6
+      },
+      {
+        "authority_type": "case",
+        "currentness_status": "historical",
+        "n": 3484
+      },
+      {
+        "authority_type": "statute",
+        "currentness_status": "unknown",
+        "n": 115
+      },
+      {
+        "authority_type": "statute",
+        "currentness_status": "current_as_of_source_date",
+        "n": 789
+      },
+      {
+        "authority_type": "regulation",
+        "currentness_status": "unknown",
+        "n": 15
+      },
+      {
+        "authority_type": "regulation",
+        "currentness_status": "current_as_of_source_date",
+        "n": 181
+      },
+      {
+        "authority_type": "constitution",
+        "currentness_status": "unknown",
+        "n": 1
+      },
+      {
+        "authority_type": "rule",
+        "currentness_status": "unknown",
+        "n": 7
+      },
+      {
+        "authority_type": "rule",
+        "currentness_status": "current_as_of_source_date",
+        "n": 247
+      }
+    ],
+    "courtListenerHttpCalls": 0,
+    "aiCalls": 0
+  }
+}

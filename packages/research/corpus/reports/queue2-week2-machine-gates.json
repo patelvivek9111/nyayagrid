@@ -1,0 +1,61 @@
+{
+  "classification": "QUEUE2_WEEK2_MACHINE_GATES",
+  "generatedAt": "2026-10-01T17:58:30.371Z",
+  "queue2": "OPEN",
+  "queue3": "NOT_OPEN",
+  "queue4": "NOT_OPEN",
+  "queue5": "NOT_STARTED",
+  "courtListenerHttpCalls": 0,
+  "note": "Early Week 2 readiness only. Revalidate after additional Queue #2 acquisition. Do not mark complete prematurely.",
+  "gates": {
+    "caseCountApprox4700": {
+      "status": "NOT_MET",
+      "current": 3490,
+      "target": 4700,
+      "gap": 1210
+    },
+    "normalizationRegressionSuite": {
+      "status": "PASSING_LOCALLY",
+      "note": "Must re-run against larger corpus in Week 2"
+    },
+    "canonicalIdentitiesStable": {
+      "status": "PARTIAL",
+      "note": "Provider/sourceId unique; citation key convergence improved; many cases still missing normalized_citation"
+    },
+    "duplicateAuthoritiesPrevented": {
+      "status": "PASSING_LOCALLY",
+      "liveDuplicateProviderSourceId": 0,
+      "liveDuplicateNormalizedCaseCitations": 0
+    },
+    "versionCurrentnessSchemaOperational": {
+      "status": "OPERATIONAL",
+      "enum": [
+        "unknown",
+        "current_as_of_source_date",
+        "current_verified_from_source",
+        "historical",
+        "superseded"
+      ],
+      "default": "unknown"
+    },
+    "explicitUnknownCurrentnessSupported": {
+      "status": "PASS"
+    },
+    "noSilentCurrentAssumptions": {
+      "status": "PASSING_LOCALLY",
+      "note": "initializeAuthorityCurrentness + case demotion; revalidate post-acquisition"
+    },
+    "queue2BalancedAcquisitionOperational": {
+      "status": "READY_WAITING_CL",
+      "manifest": "queue2-next-cl-recovery-manifest.json"
+    }
+  },
+  "manifestPlanned": 116,
+  "manifestMix": {
+    "G2_STATE_HISTORICAL": 48,
+    "G3_DISTRICT": 30,
+    "G3_FEDERAL_HISTORICAL": 20,
+    "G1_STATE_INTERMEDIATE": 12,
+    "A2_DUAL_VALUE": 6
+  }
+}

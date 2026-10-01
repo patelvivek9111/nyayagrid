@@ -8,7 +8,11 @@ import {
   runAdapterBatch,
 } from "./index";
 import { locUsReportsItemId, locUsReportsItemUrl } from "./us-reports";
-import { resolveCurrentnessStatus } from "../currentness";
+import {
+  initializeAuthorityCurrentness,
+  isSilentCurrentClaim,
+  resolveCurrentnessStatus,
+} from "../currentness";
 import { extractTreatmentSignalsFromText } from "../treatment-signals";
 import { buildCitationEdgesFromText } from "../citation-graph";
 import { findDuplicateKeyCandidates, mergeDuplicateKeys } from "../dedup";
@@ -44,6 +48,7 @@ describe("emptyCheckpoint", () => {
 describe("currentness", () => {
   it("resolves conservative currentness statuses", () => {
     expect(resolveCurrentnessStatus({ superseded: true })).toBe("superseded");
+    expect(resolveCurrentnessStatus({ repealed: true })).toBe("superseded");
     expect(resolveCurrentnessStatus({ historicalOnly: true })).toBe("historical");
     expect(
       resolveCurrentnessStatus({
@@ -55,6 +60,62 @@ describe("currentness", () => {
       "current_as_of_source_date",
     );
     expect(resolveCurrentnessStatus({})).toBe("unknown");
+    // sourceAssertsCurrent alone is never CURRENT
+    expect(resolveCurrentnessStatus({ sourceAssertsCurrent: true })).toBe("unknown");
+  });
+
+  it("never silently defaults missing evidence to CURRENT", () => {
+    expect(
+      initializeAuthorityCurrentness({
+        authorityType: "statute",
+      }),
+    ).toBe("unknown");
+    expect(
+      initializeAuthorityCurrentness({
+        authorityType: "statute",
+        lastCheckedAt: null,
+      }),
+    ).toBe("unknown");
+    expect(
+      initializeAuthorityCurrentness({
+        authorityType: "statute",
+        explicitStatus: "current_verified_from_source",
+      }),
+    ).toBe("unknown");
+    expect(
+      initializeAuthorityCurrentness({
+        authorityType: "case",
+        decisionDate: "1995-06-01",
+      }),
+    ).toBe("historical");
+    expect(
+      initializeAuthorityCurrentness({
+        authorityType: "case",
+        decisionDate: "1995-06-01",
+        explicitStatus: "current_as_of_source_date",
+        lastCheckedAt: "2026-09-01T00:00:00.000Z",
+      }),
+    ).toBe("historical");
+    expect(
+      initializeAuthorityCurrentness({
+        authorityType: "statute",
+        effectiveDate: "2020-01-01",
+        explicitStatus: "current_as_of_source_date",
+      }),
+    ).toBe("current_as_of_source_date");
+    expect(
+      isSilentCurrentClaim({
+        status: "current_verified_from_source",
+        lastCheckedAt: null,
+        effectiveDate: null,
+      }),
+    ).toBe(true);
+    expect(
+      isSilentCurrentClaim({
+        status: "unknown",
+        lastCheckedAt: null,
+      }),
+    ).toBe(false);
   });
 });
 
@@ -95,6 +156,32 @@ describe("dedup", () => {
     expect(candidates.map((c) => c.kind)).toContain("canonicalCitation");
     const best = mergeDuplicateKeys(candidates);
     expect(best?.kind).toBe("providerExternalId");
+  });
+
+  it("does not invent a merge key from title-like similarity alone", () => {
+    const a = findDuplicateKeyCandidates({
+      citation: null,
+      normalizedCitation: null,
+      sourceProvider: null,
+      sourceExternalId: null,
+    });
+    expect(a).toEqual([]);
+    expect(mergeDuplicateKeys(a)).toBeNull();
+  });
+
+  it("treats punctuation/spacing citation variants as the same canonical key", () => {
+    const spaced = findDuplicateKeyCandidates({
+      normalizedCitation: "503 F. 3d 284",
+    });
+    const compact = findDuplicateKeyCandidates({
+      normalizedCitation: "503 F.3d 284",
+    });
+    expect(spaced[0]?.value).toBe(compact[0]?.value);
+    expect(spaced[0]?.value).toBe("503 f.3d 284");
+
+    const usSpaced = findDuplicateKeyCandidates({ normalizedCitation: "558 U. S. 183" });
+    const usCompact = findDuplicateKeyCandidates({ normalizedCitation: "558 U.S. 183" });
+    expect(usSpaced[0]?.value).toBe(usCompact[0]?.value);
   });
 });
 

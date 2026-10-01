@@ -763,9 +763,24 @@ export function citationLookupAliases(normalizedOrRaw: string): string[] {
     const series = (fReporter[3] ?? "").toLowerCase();
     if (fReporter[2]) {
       aliases.add(`${vol} F. Supp.${series ? ` ${series}` : ""} ${page}`.replace(/\s+/g, " ").trim());
+      aliases.add(`${vol} F.Supp.${series ? ` ${series}` : ""} ${page}`.replace(/\s+/g, " ").trim());
     } else if (series) {
       aliases.add(`${vol} F.${series} ${page}`);
       aliases.add(`${vol} F. ${series} ${page}`);
+    }
+  }
+
+  // Atlantic reporter spacing: "104 A. 3d 626" ↔ "104 A.3d 626"
+  const aReporter = base.match(/^(\d{1,4})\s+A\.?\s*(2d|3d)?\s+(\d{1,4})$/i);
+  if (aReporter) {
+    const vol = aReporter[1];
+    const page = aReporter[3];
+    const series = (aReporter[2] ?? "").toLowerCase();
+    if (series) {
+      aliases.add(`${vol} A.${series} ${page}`);
+      aliases.add(`${vol} A. ${series} ${page}`);
+    } else {
+      aliases.add(`${vol} A. ${page}`);
     }
   }
 

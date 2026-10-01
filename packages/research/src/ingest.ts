@@ -14,6 +14,7 @@ import type { EmbeddingProvider } from "@nyayagrid/ai";
 import { writeAuditEvent } from "@nyayagrid/permissions";
 import { structuredAuthorityFields } from "@nyayagrid/jurisdiction";
 import { extractCitationsFromText, parseCitation, resolveCitationAgainstCorpus } from "./citations";
+import { initializeAuthorityCurrentness } from "./corpus/currentness";
 
 export const AUTHORITY_TYPES = [
   "case",
@@ -397,7 +398,13 @@ export async function importAuthority(
     sourceExternalId: input.sourceExternalId,
     canonicalSourceUrl: input.canonicalSourceUrl ?? null,
     treatmentStatus: input.treatmentStatus ?? ("unknown" as const),
-    currentnessStatus: input.currentnessStatus ?? ("unknown" as const),
+    currentnessStatus: initializeAuthorityCurrentness({
+      authorityType: input.authorityType,
+      explicitStatus: input.currentnessStatus ?? null,
+      decisionDate: input.decisionDate ?? null,
+      effectiveDate: input.effectiveDate ?? null,
+      lastCheckedAt: input.lastCheckedAt ?? null,
+    }),
     lastCheckedAt: input.lastCheckedAt ? new Date(input.lastCheckedAt) : null,
     hierarchyPath: input.hierarchyPath ?? [],
     metadata: input.metadata ?? {},
