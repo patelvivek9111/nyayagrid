@@ -39,19 +39,18 @@ function classifyUnresolved(norm, raw) {
   // Known primary families → VALID_TARGET_ABSENT (identity clear, corpus missing)
   if (/\b\d+\s+U\.?\s*S\.?\s+\d+/i.test(n)) return "VALID_TARGET_ABSENT";
   if (/\b\d+\s+F\.\s*(2d|3d|4th)\s+\d+/i.test(n)) return "VALID_TARGET_ABSENT";
-  if (/\b\d+\s+F\.\s*Supp\./i.test(n)) return "VALID_TARGET_ABSENT";
-  if (/\b\d+\s+U\.?\s*S\.?\s*C\.?\s*[\s.]*\d+/i.test(n)) return "VALID_TARGET_ABSENT";
-  if (/\b\d+\s+C\.?\s*F\.?\s*R\.?\s*[\s.]*\d+/i.test(n)) return "VALID_TARGET_ABSENT";
-  if (/\bFed\.\s*R\.\s*(Civ|Crim|App|Evid)\.\s*P\./i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\b\d+\s+F\.\s*Supp/i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\b\d+\s+U\.?\s*S\.?\s*C\.?/i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\b\d+\s+C\.?\s*F\.?\s*R\.?/i.test(n)) return "VALID_TARGET_ABSENT";
+  if (/\bFed\.\s*R\./i.test(n)) return "VALID_TARGET_ABSENT";
   if (/\b\d+\s+[A-Z][a-z]+\.?\s*(2d|3d)?\s+\d+/i.test(n)) return "VALID_TARGET_ABSENT"; // state reporters
-  if (/section\s+\d+/i.test(n) && /\b(CFR|U\.?S\.?C\.?|C\.F\.R\.)\b/i.test(n + " " + r)) return "VALID_TARGET_ABSENT";
 
-  // Source unavailable markers (LOC PDF-only etc. — still valid identity if parseable)
-  if (/\bS\.\s*Ct\.\b/i.test(n)) return "SOURCE_UNAVAILABLE"; // often parallel; treat carefully
-  if (/\bL\.\s*Ed\.?\s*(2d)?\b/i.test(n)) return "SOURCE_UNAVAILABLE";
+  // Source unavailable markers (parallel reporters without U.S.)
+  if (/\bS\.\s*Ct\.\b/i.test(n) && !/\bU\.?\s*S\.?\s+\d+/i.test(n)) return "SOURCE_UNAVAILABLE";
+  if (/\bL\.\s*Ed\.?\s*(2d)?\b/i.test(n) && !/\bU\.?\s*S\.?\s+\d+/i.test(n)) return "SOURCE_UNAVAILABLE";
 
-  // Default: if looks like a citation with digits, treat as valid absent; else ambiguous
-  if (/\d/.test(n) && /[A-Za-z]/.test(n) && n.length >= 6) return "VALID_TARGET_ABSENT";
+  // Insufficient local parser evidence — do not guess
+  if (/\d/.test(n) && /[A-Za-z]/.test(n) && n.length >= 6) return "UNKNOWN_EXTERNAL";
   return "AMBIGUOUS";
 }
 
@@ -102,6 +101,7 @@ async function main() {
       OUT_OF_SCOPE: 0,
       UNSUPPORTED_AUTHORITY_TYPE: 0,
       SOURCE_UNAVAILABLE: 0,
+      UNKNOWN_EXTERNAL: 0,
     };
 
     const samples = {
@@ -112,6 +112,7 @@ async function main() {
       UNSUPPORTED_AUTHORITY_TYPE: [],
       SOURCE_UNAVAILABLE: [],
       VALID_PRESENT_UNRESOLVED_DEFECT: [],
+      UNKNOWN_EXTERNAL: [],
     };
 
     for (const e of unresolved) {
@@ -155,6 +156,7 @@ async function main() {
           OUT_OF_SCOPE: "WL/LEXIS/secondary-commercial/foreign",
           UNSUPPORTED_AUTHORITY_TYPE: "restatements/ALR/treatises etc.",
           SOURCE_UNAVAILABLE: "parallel reporters without reliable primary ingest path",
+          UNKNOWN_EXTERNAL: "insufficient local parser evidence; do not guess",
         },
         extracted: Number(totals.extracted),
         resolved,

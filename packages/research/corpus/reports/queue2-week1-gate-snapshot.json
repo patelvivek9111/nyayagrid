@@ -1,0 +1,50 @@
+{
+  "classification": "QUEUE2_WEEK1_GATE_SNAPSHOT",
+  "generatedAt": "2026-10-01T17:37:23.229Z",
+  "courtListenerHttpCalls": 0,
+  "items": {
+    "usefulCases3500": {
+      "status": "PARTIAL",
+      "current": 3490,
+      "target": 3500,
+      "gap": 10
+    },
+    "duplicates": {
+      "status": "PASS",
+      "value": 0
+    },
+    "orphans": {
+      "status": "PASS",
+      "value": 0
+    },
+    "missingEmbeddings": {
+      "status": "PASS",
+      "value": 0
+    },
+    "duplicateCitationEdges": {
+      "status": "PASS",
+      "value": 0
+    },
+    "tracker10k": {
+      "status": "PASS",
+      "artifact": "queue2-balanced-10k-tracker.json"
+    },
+    "federalPerCourt": {
+      "status": "PASS",
+      "artifact": "queue2-federal-depth-map.json"
+    },
+    "validInScopeDenominator": {
+      "status": "PASS",
+      "artifact": "queue2-valid-in-scope-denominator.json"
+    },
+    "normalizationFoundation": {
+      "status": "PARTIAL",
+      "note": "QUEUE3_FOUNDATION_ONLY; Queue #3 NOT_OPEN"
+    },
+    "queue2Clean": {
+      "status": "PASS",
+      "runtimeState": "STOPPED",
+      "laneAChild": null
+    }
+  }
+}

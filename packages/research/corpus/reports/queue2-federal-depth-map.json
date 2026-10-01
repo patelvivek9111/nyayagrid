@@ -1,28 +1,28 @@
 {
   "classification": "QUEUE2_FEDERAL_DEPTH_MAP",
-  "generatedAt": "2026-09-30T02:18:04.025Z",
+  "generatedAt": "2026-10-01T17:34:00.211Z",
   "courtListenerHttpCalls": 0,
   "scotus": {
     "bucket": "scotus",
     "label": "SCOTUS",
-    "cases": 92,
+    "cases": 108,
     "earliestYear": 1906,
     "latestYear": 2026,
-    "pre2000": 47,
-    "pre1980": 31,
-    "recent": 23,
-    "citationDemandOverlap": 303,
+    "pre2000": 52,
+    "pre1980": 33,
+    "recent": 28,
+    "citationDemandOverlap": 297,
     "deficit": 0,
     "historicalWeakness": false,
     "yearBuckets": {
-      "pre1950": 2,
+      "pre1950": 3,
       "y1950_1969": 11,
-      "y1970_1979": 18,
-      "y1980_1989": 9,
+      "y1970_1979": 19,
+      "y1980_1989": 12,
       "y1990_1999": 7,
-      "y2000_2009": 14,
-      "y2010_2019": 10,
-      "y2020_present": 21
+      "y2000_2009": 18,
+      "y2010_2019": 15,
+      "y2020_present": 23
     },
     "flags": [
       "STRONG"
@@ -32,14 +32,14 @@
     {
       "bucket": "ca1",
       "label": "1st Circuit",
-      "cases": 11,
-      "earliestYear": 2026,
+      "cases": 19,
+      "earliestYear": 2000,
       "latestYear": 2026,
       "pre2000": 0,
       "pre1980": 0,
       "recent": 11,
-      "citationDemandOverlap": 241,
-      "deficit": 14,
+      "citationDemandOverlap": 239,
+      "deficit": 6,
       "historicalWeakness": true,
       "yearBuckets": {
         "pre1950": 0,
@@ -47,25 +47,24 @@
         "y1970_1979": 0,
         "y1980_1989": 0,
         "y1990_1999": 0,
-        "y2000_2009": 0,
+        "y2000_2009": 8,
         "y2010_2019": 0,
         "y2020_present": 11
       },
       "flags": [
-        "HISTORICALLY_THIN",
-        "RECENT_HEAVY"
+        "HISTORICALLY_THIN"
       ]
     },
     {
       "bucket": "ca2",
       "label": "2nd Circuit",
-      "cases": 32,
+      "cases": 38,
       "earliestYear": 1990,
       "latestYear": 2026,
       "pre2000": 10,
       "pre1980": 0,
       "recent": 22,
-      "citationDemandOverlap": 366,
+      "citationDemandOverlap": 363,
       "deficit": 0,
       "historicalWeakness": false,
       "yearBuckets": {
@@ -74,7 +73,7 @@
         "y1970_1979": 0,
         "y1980_1989": 0,
         "y1990_1999": 10,
-        "y2000_2009": 0,
+        "y2000_2009": 6,
         "y2010_2019": 0,
         "y2020_present": 22
       },
@@ -85,13 +84,13 @@
     {
       "bucket": "ca3",
       "label": "3rd Circuit",
-      "cases": 27,
+      "cases": 32,
       "earliestYear": 1990,
       "latestYear": 2026,
       "pre2000": 6,
       "pre1980": 0,
       "recent": 21,
-      "citationDemandOverlap": 328,
+      "citationDemandOverlap": 324,
       "deficit": 0,
       "historicalWeakness": false,
       "yearBuckets": {
@@ -100,18 +99,18 @@
         "y1970_1979": 0,
         "y1980_1989": 0,
         "y1990_1999": 6,
-        "y2000_2009": 0,
+        "y2000_2009": 5,
         "y2010_2019": 0,
         "y2020_present": 21
       },
       "flags": [
-        "RECENT_HEAVY"
+        "STRONG"
       ]
     },
     {
       "bucket": "ca4",
       "label": "4th Circuit",
-      "cases": 31,
+      "cases": 39,
       "earliestYear": 1990,
       "latestYear": 2026,
       "pre2000": 13,
@@ -126,7 +125,7 @@
         "y1970_1979": 0,
         "y1980_1989": 0,
         "y1990_1999": 13,
-        "y2000_2009": 0,
+        "y2000_2009": 8,
         "y2010_2019": 0,
         "y2020_present": 18
       },
@@ -137,7 +136,7 @@
     {
       "bucket": "ca5",
       "label": "5th Circuit",
-      "cases": 25,
+      "cases": 29,
       "earliestYear": 1980,
       "latestYear": 2026,
       "pre2000": 7,
@@ -152,24 +151,24 @@
         "y1970_1979": 0,
         "y1980_1989": 1,
         "y1990_1999": 6,
-        "y2000_2009": 0,
+        "y2000_2009": 4,
         "y2010_2019": 0,
         "y2020_present": 18
       },
       "flags": [
-        "RECENT_HEAVY"
+        "STRONG"
       ]
     },
     {
       "bucket": "ca6",
       "label": "6th Circuit",
-      "cases": 33,
+      "cases": 44,
       "earliestYear": 1990,
       "latestYear": 2026,
-      "pre2000": 10,
+      "pre2000": 13,
       "pre1980": 0,
       "recent": 23,
-      "citationDemandOverlap": 473,
+      "citationDemandOverlap": 467,
       "deficit": 0,
       "historicalWeakness": false,
       "yearBuckets": {
@@ -177,8 +176,8 @@
         "y1950_1969": 0,
         "y1970_1979": 0,
         "y1980_1989": 0,
-        "y1990_1999": 10,
-        "y2000_2009": 0,
+        "y1990_1999": 13,
+        "y2000_2009": 8,
         "y2010_2019": 0,
         "y2020_present": 23
       },
@@ -189,13 +188,13 @@
     {
       "bucket": "ca7",
       "label": "7th Circuit",
-      "cases": 33,
+      "cases": 41,
       "earliestYear": 1990,
       "latestYear": 2026,
       "pre2000": 10,
       "pre1980": 0,
       "recent": 23,
-      "citationDemandOverlap": 399,
+      "citationDemandOverlap": 392,
       "deficit": 0,
       "historicalWeakness": false,
       "yearBuckets": {
@@ -204,7 +203,7 @@
         "y1970_1979": 0,
         "y1980_1989": 0,
         "y1990_1999": 10,
-        "y2000_2009": 0,
+        "y2000_2009": 8,
         "y2010_2019": 0,
         "y2020_present": 23
       },
@@ -215,13 +214,13 @@
     {
       "bucket": "ca8",
       "label": "8th Circuit",
-      "cases": 25,
+      "cases": 33,
       "earliestYear": 1990,
       "latestYear": 2026,
       "pre2000": 4,
       "pre1980": 0,
       "recent": 21,
-      "citationDemandOverlap": 185,
+      "citationDemandOverlap": 170,
       "deficit": 0,
       "historicalWeakness": false,
       "yearBuckets": {
@@ -230,24 +229,24 @@
         "y1970_1979": 0,
         "y1980_1989": 0,
         "y1990_1999": 4,
-        "y2000_2009": 0,
+        "y2000_2009": 8,
         "y2010_2019": 0,
         "y2020_present": 21
       },
       "flags": [
-        "RECENT_HEAVY"
+        "STRONG"
       ]
     },
     {
       "bucket": "ca9",
       "label": "9th Circuit",
-      "cases": 35,
+      "cases": 42,
       "earliestYear": 1990,
       "latestYear": 2026,
       "pre2000": 7,
       "pre1980": 0,
       "recent": 27,
-      "citationDemandOverlap": 199,
+      "citationDemandOverlap": 198,
       "deficit": 0,
       "historicalWeakness": false,
       "yearBuckets": {
@@ -256,18 +255,18 @@
         "y1970_1979": 0,
         "y1980_1989": 0,
         "y1990_1999": 7,
-        "y2000_2009": 0,
+        "y2000_2009": 7,
         "y2010_2019": 0,
         "y2020_present": 27
       },
       "flags": [
-        "RECENT_HEAVY"
+        "STRONG"
       ]
     },
     {
       "bucket": "ca10",
       "label": "10th Circuit",
-      "cases": 35,
+      "cases": 38,
       "earliestYear": 1990,
       "latestYear": 2026,
       "pre2000": 13,
@@ -282,7 +281,7 @@
         "y1970_1979": 0,
         "y1980_1989": 0,
         "y1990_1999": 13,
-        "y2000_2009": 0,
+        "y2000_2009": 3,
         "y2010_2019": 0,
         "y2020_present": 22
       },
@@ -293,60 +292,59 @@
     {
       "bucket": "ca11",
       "label": "11th Circuit",
-      "cases": 25,
-      "earliestYear": 2026,
-      "latestYear": 2026,
-      "pre2000": 0,
-      "pre1980": 0,
-      "recent": 25,
-      "citationDemandOverlap": 255,
-      "deficit": 0,
-      "historicalWeakness": true,
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 0,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 25
-      },
-      "flags": [
-        "HISTORICALLY_THIN",
-        "RECENT_HEAVY"
-      ]
-    },
-    {
-      "bucket": "cadc",
-      "label": "D.C. Circuit",
-      "cases": 23,
+      "cases": 39,
       "earliestYear": 1995,
       "latestYear": 2026,
-      "pre2000": 1,
+      "pre2000": 6,
       "pre1980": 0,
-      "recent": 22,
-      "citationDemandOverlap": 340,
-      "deficit": 2,
+      "recent": 25,
+      "citationDemandOverlap": 253,
+      "deficit": 0,
       "historicalWeakness": false,
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
         "y1970_1979": 0,
         "y1980_1989": 0,
-        "y1990_1999": 1,
-        "y2000_2009": 0,
+        "y1990_1999": 6,
+        "y2000_2009": 8,
         "y2010_2019": 0,
+        "y2020_present": 25
+      },
+      "flags": [
+        "STRONG"
+      ]
+    },
+    {
+      "bucket": "cadc",
+      "label": "D.C. Circuit",
+      "cases": 38,
+      "earliestYear": 1980,
+      "latestYear": 2026,
+      "pre2000": 8,
+      "pre1980": 0,
+      "recent": 22,
+      "citationDemandOverlap": 333,
+      "deficit": 0,
+      "historicalWeakness": false,
+      "yearBuckets": {
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 0,
+        "y1980_1989": 3,
+        "y1990_1999": 5,
+        "y2000_2009": 6,
+        "y2010_2019": 2,
         "y2020_present": 22
       },
       "flags": [
-        "RECENT_HEAVY"
+        "STRONG"
       ]
     },
     {
       "bucket": "cafc",
       "label": "Federal Circuit",
-      "cases": 30,
+      "cases": 38,
       "earliestYear": 1990,
       "latestYear": 2026,
       "pre2000": 9,
@@ -361,224 +359,25 @@
         "y1970_1979": 0,
         "y1980_1989": 0,
         "y1990_1999": 9,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
+        "y2000_2009": 6,
+        "y2010_2019": 2,
         "y2020_present": 21
       },
       "flags": [
-        "RECENT_HEAVY"
+        "STRONG"
       ]
     }
   ],
   "districts": [
     {
-      "court": "txnd",
-      "cases": 0,
-      "earliestYear": null,
-      "latestYear": null,
-      "pre2000": 0,
-      "pre1980": 0,
-      "recent": 0,
-      "citationDemandOverlap": 0,
-      "deficit": 20,
-      "flags": [
-        "LOW_VOLUME"
-      ],
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 0,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 0
-      }
-    },
-    {
-      "court": "cand",
-      "cases": 0,
-      "earliestYear": null,
-      "latestYear": null,
-      "pre2000": 0,
-      "pre1980": 0,
-      "recent": 0,
-      "citationDemandOverlap": 0,
-      "deficit": 20,
-      "flags": [
-        "LOW_VOLUME"
-      ],
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 0,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 0
-      }
-    },
-    {
       "court": "waed",
-      "cases": 0,
-      "earliestYear": null,
-      "latestYear": null,
-      "pre2000": 0,
-      "pre1980": 0,
-      "recent": 0,
-      "citationDemandOverlap": 0,
-      "deficit": 20,
-      "flags": [
-        "LOW_VOLUME"
-      ],
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 0,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 0
-      }
-    },
-    {
-      "court": "dcd",
-      "cases": 6,
-      "earliestYear": 1990,
-      "latestYear": 2026,
+      "cases": 8,
+      "earliestYear": 1985,
+      "latestYear": 2000,
       "pre2000": 4,
       "pre1980": 0,
-      "recent": 2,
-      "citationDemandOverlap": 39,
-      "deficit": 14,
-      "flags": [
-        "LOW_VOLUME"
-      ],
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 4,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 2
-      }
-    },
-    {
-      "court": "nysd",
-      "cases": 7,
-      "earliestYear": 2026,
-      "latestYear": 2026,
-      "pre2000": 0,
-      "pre1980": 0,
-      "recent": 7,
-      "citationDemandOverlap": 64,
-      "deficit": 13,
-      "flags": [
-        "LOW_VOLUME",
-        "HISTORICALLY_THIN",
-        "RECENT_HEAVY"
-      ],
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 0,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 7
-      }
-    },
-    {
-      "court": "cacd",
-      "cases": 7,
-      "earliestYear": 2026,
-      "latestYear": 2026,
-      "pre2000": 0,
-      "pre1980": 0,
-      "recent": 7,
-      "citationDemandOverlap": 30,
-      "deficit": 13,
-      "flags": [
-        "LOW_VOLUME",
-        "HISTORICALLY_THIN",
-        "RECENT_HEAVY"
-      ],
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 0,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 7
-      }
-    },
-    {
-      "court": "ilnd",
-      "cases": 7,
-      "earliestYear": 2026,
-      "latestYear": 2026,
-      "pre2000": 0,
-      "pre1980": 0,
-      "recent": 7,
-      "citationDemandOverlap": 110,
-      "deficit": 13,
-      "flags": [
-        "LOW_VOLUME",
-        "HISTORICALLY_THIN",
-        "RECENT_HEAVY"
-      ],
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 0,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 7
-      }
-    },
-    {
-      "court": "flsd",
-      "cases": 7,
-      "earliestYear": 1995,
-      "latestYear": 2026,
-      "pre2000": 2,
-      "pre1980": 0,
-      "recent": 5,
-      "citationDemandOverlap": 36,
-      "deficit": 13,
-      "flags": [
-        "LOW_VOLUME",
-        "RECENT_HEAVY"
-      ],
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 2,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 5
-      }
-    },
-    {
-      "court": "mad",
-      "cases": 8,
-      "earliestYear": 1980,
-      "latestYear": 2026,
-      "pre2000": 3,
-      "pre1980": 0,
-      "recent": 5,
-      "citationDemandOverlap": 105,
+      "recent": 0,
+      "citationDemandOverlap": 0,
       "deficit": 12,
       "flags": [
         "LOW_VOLUME"
@@ -587,32 +386,55 @@
         "pre1950": 0,
         "y1950_1969": 0,
         "y1970_1979": 0,
-        "y1980_1989": 3,
+        "y1980_1989": 4,
         "y1990_1999": 0,
-        "y2000_2009": 0,
+        "y2000_2009": 2,
         "y2010_2019": 0,
-        "y2020_present": 5
+        "y2020_present": 0
       }
     },
     {
-      "court": "txsd",
-      "cases": 9,
-      "earliestYear": 2026,
+      "court": "cacd",
+      "cases": 12,
+      "earliestYear": 1975,
       "latestYear": 2026,
-      "pre2000": 0,
-      "pre1980": 0,
-      "recent": 9,
-      "citationDemandOverlap": 100,
-      "deficit": 11,
+      "pre2000": 2,
+      "pre1980": 2,
+      "recent": 7,
+      "citationDemandOverlap": 30,
+      "deficit": 8,
       "flags": [
-        "HISTORICALLY_THIN",
-        "RECENT_HEAVY"
+        "STRONG"
       ],
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
-        "y1970_1979": 0,
+        "y1970_1979": 2,
         "y1980_1989": 0,
+        "y1990_1999": 0,
+        "y2000_2009": 3,
+        "y2010_2019": 0,
+        "y2020_present": 7
+      }
+    },
+    {
+      "court": "txsd",
+      "cases": 13,
+      "earliestYear": 1975,
+      "latestYear": 2026,
+      "pre2000": 4,
+      "pre1980": 1,
+      "recent": 9,
+      "citationDemandOverlap": 98,
+      "deficit": 7,
+      "flags": [
+        "STRONG"
+      ],
+      "yearBuckets": {
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 1,
+        "y1980_1989": 3,
         "y1990_1999": 0,
         "y2000_2009": 0,
         "y2010_2019": 0,
@@ -620,14 +442,14 @@
       }
     },
     {
-      "court": "njd",
+      "court": "cand",
       "cases": 9,
-      "earliestYear": 1995,
-      "latestYear": 2026,
-      "pre2000": 4,
-      "pre1980": 0,
-      "recent": 5,
-      "citationDemandOverlap": 117,
+      "earliestYear": 1975,
+      "latestYear": 2000,
+      "pre2000": 7,
+      "pre1980": 2,
+      "recent": 0,
+      "citationDemandOverlap": 0,
       "deficit": 11,
       "flags": [
         "LOW_VOLUME"
@@ -635,23 +457,23 @@
       "yearBuckets": {
         "pre1950": 0,
         "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 4,
-        "y2000_2009": 0,
+        "y1970_1979": 2,
+        "y1980_1989": 5,
+        "y1990_1999": 0,
+        "y2000_2009": 2,
         "y2010_2019": 0,
-        "y2020_present": 5
+        "y2020_present": 0
       }
     },
     {
-      "court": "paed",
+      "court": "dcd",
       "cases": 10,
-      "earliestYear": 1990,
+      "earliestYear": 1985,
       "latestYear": 2026,
-      "pre2000": 5,
+      "pre2000": 8,
       "pre1980": 0,
-      "recent": 5,
-      "citationDemandOverlap": 73,
+      "recent": 2,
+      "citationDemandOverlap": 38,
       "deficit": 10,
       "flags": [
         "LOW_VOLUME"
@@ -660,7 +482,175 @@
         "pre1950": 0,
         "y1950_1969": 0,
         "y1970_1979": 0,
+        "y1980_1989": 4,
+        "y1990_1999": 4,
+        "y2000_2009": 0,
+        "y2010_2019": 0,
+        "y2020_present": 2
+      }
+    },
+    {
+      "court": "txnd",
+      "cases": 10,
+      "earliestYear": 1975,
+      "latestYear": 2000,
+      "pre2000": 9,
+      "pre1980": 2,
+      "recent": 0,
+      "citationDemandOverlap": 0,
+      "deficit": 10,
+      "flags": [
+        "LOW_VOLUME"
+      ],
+      "yearBuckets": {
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 2,
+        "y1980_1989": 5,
+        "y1990_1999": 2,
+        "y2000_2009": 1,
+        "y2010_2019": 0,
+        "y2020_present": 0
+      }
+    },
+    {
+      "court": "mad",
+      "cases": 13,
+      "earliestYear": 1975,
+      "latestYear": 2026,
+      "pre2000": 8,
+      "pre1980": 1,
+      "recent": 5,
+      "citationDemandOverlap": 104,
+      "deficit": 7,
+      "flags": [
+        "STRONG"
+      ],
+      "yearBuckets": {
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 1,
+        "y1980_1989": 7,
+        "y1990_1999": 0,
+        "y2000_2009": 0,
+        "y2010_2019": 0,
+        "y2020_present": 5
+      }
+    },
+    {
+      "court": "njd",
+      "cases": 15,
+      "earliestYear": 1975,
+      "latestYear": 2026,
+      "pre2000": 10,
+      "pre1980": 2,
+      "recent": 5,
+      "citationDemandOverlap": 115,
+      "deficit": 5,
+      "flags": [
+        "STRONG"
+      ],
+      "yearBuckets": {
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 2,
+        "y1980_1989": 4,
+        "y1990_1999": 4,
+        "y2000_2009": 0,
+        "y2010_2019": 0,
+        "y2020_present": 5
+      }
+    },
+    {
+      "court": "paed",
+      "cases": 16,
+      "earliestYear": 1975,
+      "latestYear": 2026,
+      "pre2000": 11,
+      "pre1980": 3,
+      "recent": 5,
+      "citationDemandOverlap": 73,
+      "deficit": 4,
+      "flags": [
+        "STRONG"
+      ],
+      "yearBuckets": {
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 3,
+        "y1980_1989": 3,
+        "y1990_1999": 5,
+        "y2000_2009": 0,
+        "y2010_2019": 0,
+        "y2020_present": 5
+      }
+    },
+    {
+      "court": "ilnd",
+      "cases": 18,
+      "earliestYear": 1975,
+      "latestYear": 2026,
+      "pre2000": 11,
+      "pre1980": 3,
+      "recent": 7,
+      "citationDemandOverlap": 107,
+      "deficit": 2,
+      "flags": [
+        "STRONG"
+      ],
+      "yearBuckets": {
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 3,
+        "y1980_1989": 5,
+        "y1990_1999": 3,
+        "y2000_2009": 0,
+        "y2010_2019": 0,
+        "y2020_present": 7
+      }
+    },
+    {
+      "court": "nysd",
+      "cases": 20,
+      "earliestYear": 1975,
+      "latestYear": 2026,
+      "pre2000": 9,
+      "pre1980": 4,
+      "recent": 7,
+      "citationDemandOverlap": 64,
+      "deficit": 0,
+      "flags": [
+        "STRONG"
+      ],
+      "yearBuckets": {
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 4,
         "y1980_1989": 0,
+        "y1990_1999": 5,
+        "y2000_2009": 4,
+        "y2010_2019": 0,
+        "y2020_present": 7
+      }
+    },
+    {
+      "court": "flsd",
+      "cases": 20,
+      "earliestYear": 1975,
+      "latestYear": 2026,
+      "pre2000": 15,
+      "pre1980": 5,
+      "recent": 5,
+      "citationDemandOverlap": 36,
+      "deficit": 0,
+      "flags": [
+        "STRONG"
+      ],
+      "yearBuckets": {
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 5,
+        "y1980_1989": 5,
         "y1990_1999": 5,
         "y2000_2009": 0,
         "y2010_2019": 0,
@@ -668,230 +658,19 @@
       }
     }
   ],
-  "recentHeavy": [
-    {
-      "bucket": "ca1",
-      "label": "1st Circuit",
-      "cases": 11,
-      "earliestYear": 2026,
-      "latestYear": 2026,
-      "pre2000": 0,
-      "pre1980": 0,
-      "recent": 11,
-      "citationDemandOverlap": 241,
-      "deficit": 14,
-      "historicalWeakness": true,
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 0,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 11
-      },
-      "flags": [
-        "HISTORICALLY_THIN",
-        "RECENT_HEAVY"
-      ]
-    },
-    {
-      "bucket": "ca3",
-      "label": "3rd Circuit",
-      "cases": 27,
-      "earliestYear": 1990,
-      "latestYear": 2026,
-      "pre2000": 6,
-      "pre1980": 0,
-      "recent": 21,
-      "citationDemandOverlap": 328,
-      "deficit": 0,
-      "historicalWeakness": false,
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 6,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 21
-      },
-      "flags": [
-        "RECENT_HEAVY"
-      ]
-    },
-    {
-      "bucket": "ca5",
-      "label": "5th Circuit",
-      "cases": 25,
-      "earliestYear": 1980,
-      "latestYear": 2026,
-      "pre2000": 7,
-      "pre1980": 0,
-      "recent": 18,
-      "citationDemandOverlap": 263,
-      "deficit": 0,
-      "historicalWeakness": false,
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 1,
-        "y1990_1999": 6,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 18
-      },
-      "flags": [
-        "RECENT_HEAVY"
-      ]
-    },
-    {
-      "bucket": "ca8",
-      "label": "8th Circuit",
-      "cases": 25,
-      "earliestYear": 1990,
-      "latestYear": 2026,
-      "pre2000": 4,
-      "pre1980": 0,
-      "recent": 21,
-      "citationDemandOverlap": 185,
-      "deficit": 0,
-      "historicalWeakness": false,
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 4,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 21
-      },
-      "flags": [
-        "RECENT_HEAVY"
-      ]
-    },
-    {
-      "bucket": "ca9",
-      "label": "9th Circuit",
-      "cases": 35,
-      "earliestYear": 1990,
-      "latestYear": 2026,
-      "pre2000": 7,
-      "pre1980": 0,
-      "recent": 27,
-      "citationDemandOverlap": 199,
-      "deficit": 0,
-      "historicalWeakness": false,
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 7,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 27
-      },
-      "flags": [
-        "RECENT_HEAVY"
-      ]
-    },
-    {
-      "bucket": "ca11",
-      "label": "11th Circuit",
-      "cases": 25,
-      "earliestYear": 2026,
-      "latestYear": 2026,
-      "pre2000": 0,
-      "pre1980": 0,
-      "recent": 25,
-      "citationDemandOverlap": 255,
-      "deficit": 0,
-      "historicalWeakness": true,
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 0,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 25
-      },
-      "flags": [
-        "HISTORICALLY_THIN",
-        "RECENT_HEAVY"
-      ]
-    },
-    {
-      "bucket": "cadc",
-      "label": "D.C. Circuit",
-      "cases": 23,
-      "earliestYear": 1995,
-      "latestYear": 2026,
-      "pre2000": 1,
-      "pre1980": 0,
-      "recent": 22,
-      "citationDemandOverlap": 340,
-      "deficit": 2,
-      "historicalWeakness": false,
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 1,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 22
-      },
-      "flags": [
-        "RECENT_HEAVY"
-      ]
-    },
-    {
-      "bucket": "cafc",
-      "label": "Federal Circuit",
-      "cases": 30,
-      "earliestYear": 1990,
-      "latestYear": 2026,
-      "pre2000": 9,
-      "pre1980": 0,
-      "recent": 21,
-      "citationDemandOverlap": 68,
-      "deficit": 0,
-      "historicalWeakness": false,
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 9,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 21
-      },
-      "flags": [
-        "RECENT_HEAVY"
-      ]
-    }
-  ],
+  "recentHeavy": [],
   "historicallyThin": [
     {
       "bucket": "ca1",
       "label": "1st Circuit",
-      "cases": 11,
-      "earliestYear": 2026,
+      "cases": 19,
+      "earliestYear": 2000,
       "latestYear": 2026,
       "pre2000": 0,
       "pre1980": 0,
       "recent": 11,
-      "citationDemandOverlap": 241,
-      "deficit": 14,
+      "citationDemandOverlap": 239,
+      "deficit": 6,
       "historicalWeakness": true,
       "yearBuckets": {
         "pre1950": 0,
@@ -899,40 +678,12 @@
         "y1970_1979": 0,
         "y1980_1989": 0,
         "y1990_1999": 0,
-        "y2000_2009": 0,
+        "y2000_2009": 8,
         "y2010_2019": 0,
         "y2020_present": 11
       },
       "flags": [
-        "HISTORICALLY_THIN",
-        "RECENT_HEAVY"
-      ]
-    },
-    {
-      "bucket": "ca11",
-      "label": "11th Circuit",
-      "cases": 25,
-      "earliestYear": 2026,
-      "latestYear": 2026,
-      "pre2000": 0,
-      "pre1980": 0,
-      "recent": 25,
-      "citationDemandOverlap": 255,
-      "deficit": 0,
-      "historicalWeakness": true,
-      "yearBuckets": {
-        "pre1950": 0,
-        "y1950_1969": 0,
-        "y1970_1979": 0,
-        "y1980_1989": 0,
-        "y1990_1999": 0,
-        "y2000_2009": 0,
-        "y2010_2019": 0,
-        "y2020_present": 25
-      },
-      "flags": [
-        "HISTORICALLY_THIN",
-        "RECENT_HEAVY"
+        "HISTORICALLY_THIN"
       ]
     }
   ],
@@ -941,13 +692,13 @@
     {
       "bucket": "ca2",
       "label": "2nd Circuit",
-      "cases": 32,
+      "cases": 38,
       "earliestYear": 1990,
       "latestYear": 2026,
       "pre2000": 10,
       "pre1980": 0,
       "recent": 22,
-      "citationDemandOverlap": 366,
+      "citationDemandOverlap": 363,
       "deficit": 0,
       "historicalWeakness": false,
       "yearBuckets": {
@@ -956,7 +707,7 @@
         "y1970_1979": 0,
         "y1980_1989": 0,
         "y1990_1999": 10,
-        "y2000_2009": 0,
+        "y2000_2009": 6,
         "y2010_2019": 0,
         "y2020_present": 22
       },
@@ -965,9 +716,35 @@
       ]
     },
     {
+      "bucket": "ca3",
+      "label": "3rd Circuit",
+      "cases": 32,
+      "earliestYear": 1990,
+      "latestYear": 2026,
+      "pre2000": 6,
+      "pre1980": 0,
+      "recent": 21,
+      "citationDemandOverlap": 324,
+      "deficit": 0,
+      "historicalWeakness": false,
+      "yearBuckets": {
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 0,
+        "y1980_1989": 0,
+        "y1990_1999": 6,
+        "y2000_2009": 5,
+        "y2010_2019": 0,
+        "y2020_present": 21
+      },
+      "flags": [
+        "STRONG"
+      ]
+    },
+    {
       "bucket": "ca4",
       "label": "4th Circuit",
-      "cases": 31,
+      "cases": 39,
       "earliestYear": 1990,
       "latestYear": 2026,
       "pre2000": 13,
@@ -982,7 +759,33 @@
         "y1970_1979": 0,
         "y1980_1989": 0,
         "y1990_1999": 13,
-        "y2000_2009": 0,
+        "y2000_2009": 8,
+        "y2010_2019": 0,
+        "y2020_present": 18
+      },
+      "flags": [
+        "STRONG"
+      ]
+    },
+    {
+      "bucket": "ca5",
+      "label": "5th Circuit",
+      "cases": 29,
+      "earliestYear": 1980,
+      "latestYear": 2026,
+      "pre2000": 7,
+      "pre1980": 0,
+      "recent": 18,
+      "citationDemandOverlap": 263,
+      "deficit": 0,
+      "historicalWeakness": false,
+      "yearBuckets": {
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 0,
+        "y1980_1989": 1,
+        "y1990_1999": 6,
+        "y2000_2009": 4,
         "y2010_2019": 0,
         "y2020_present": 18
       },
@@ -993,13 +796,13 @@
     {
       "bucket": "ca6",
       "label": "6th Circuit",
-      "cases": 33,
+      "cases": 44,
       "earliestYear": 1990,
       "latestYear": 2026,
-      "pre2000": 10,
+      "pre2000": 13,
       "pre1980": 0,
       "recent": 23,
-      "citationDemandOverlap": 473,
+      "citationDemandOverlap": 467,
       "deficit": 0,
       "historicalWeakness": false,
       "yearBuckets": {
@@ -1007,8 +810,8 @@
         "y1950_1969": 0,
         "y1970_1979": 0,
         "y1980_1989": 0,
-        "y1990_1999": 10,
-        "y2000_2009": 0,
+        "y1990_1999": 13,
+        "y2000_2009": 8,
         "y2010_2019": 0,
         "y2020_present": 23
       },
@@ -1019,13 +822,13 @@
     {
       "bucket": "ca7",
       "label": "7th Circuit",
-      "cases": 33,
+      "cases": 41,
       "earliestYear": 1990,
       "latestYear": 2026,
       "pre2000": 10,
       "pre1980": 0,
       "recent": 23,
-      "citationDemandOverlap": 399,
+      "citationDemandOverlap": 392,
       "deficit": 0,
       "historicalWeakness": false,
       "yearBuckets": {
@@ -1034,7 +837,7 @@
         "y1970_1979": 0,
         "y1980_1989": 0,
         "y1990_1999": 10,
-        "y2000_2009": 0,
+        "y2000_2009": 8,
         "y2010_2019": 0,
         "y2020_present": 23
       },
@@ -1043,9 +846,61 @@
       ]
     },
     {
+      "bucket": "ca8",
+      "label": "8th Circuit",
+      "cases": 33,
+      "earliestYear": 1990,
+      "latestYear": 2026,
+      "pre2000": 4,
+      "pre1980": 0,
+      "recent": 21,
+      "citationDemandOverlap": 170,
+      "deficit": 0,
+      "historicalWeakness": false,
+      "yearBuckets": {
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 0,
+        "y1980_1989": 0,
+        "y1990_1999": 4,
+        "y2000_2009": 8,
+        "y2010_2019": 0,
+        "y2020_present": 21
+      },
+      "flags": [
+        "STRONG"
+      ]
+    },
+    {
+      "bucket": "ca9",
+      "label": "9th Circuit",
+      "cases": 42,
+      "earliestYear": 1990,
+      "latestYear": 2026,
+      "pre2000": 7,
+      "pre1980": 0,
+      "recent": 27,
+      "citationDemandOverlap": 198,
+      "deficit": 0,
+      "historicalWeakness": false,
+      "yearBuckets": {
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 0,
+        "y1980_1989": 0,
+        "y1990_1999": 7,
+        "y2000_2009": 7,
+        "y2010_2019": 0,
+        "y2020_present": 27
+      },
+      "flags": [
+        "STRONG"
+      ]
+    },
+    {
       "bucket": "ca10",
       "label": "10th Circuit",
-      "cases": 35,
+      "cases": 38,
       "earliestYear": 1990,
       "latestYear": 2026,
       "pre2000": 13,
@@ -1060,7 +915,7 @@
         "y1970_1979": 0,
         "y1980_1989": 0,
         "y1990_1999": 13,
-        "y2000_2009": 0,
+        "y2000_2009": 3,
         "y2010_2019": 0,
         "y2020_present": 22
       },
@@ -1069,26 +924,104 @@
       ]
     },
     {
-      "bucket": "scotus",
-      "label": "SCOTUS",
-      "cases": 92,
-      "earliestYear": 1906,
+      "bucket": "ca11",
+      "label": "11th Circuit",
+      "cases": 39,
+      "earliestYear": 1995,
       "latestYear": 2026,
-      "pre2000": 47,
-      "pre1980": 31,
-      "recent": 23,
-      "citationDemandOverlap": 303,
+      "pre2000": 6,
+      "pre1980": 0,
+      "recent": 25,
+      "citationDemandOverlap": 253,
       "deficit": 0,
       "historicalWeakness": false,
       "yearBuckets": {
-        "pre1950": 2,
-        "y1950_1969": 11,
-        "y1970_1979": 18,
-        "y1980_1989": 9,
-        "y1990_1999": 7,
-        "y2000_2009": 14,
-        "y2010_2019": 10,
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 0,
+        "y1980_1989": 0,
+        "y1990_1999": 6,
+        "y2000_2009": 8,
+        "y2010_2019": 0,
+        "y2020_present": 25
+      },
+      "flags": [
+        "STRONG"
+      ]
+    },
+    {
+      "bucket": "cadc",
+      "label": "D.C. Circuit",
+      "cases": 38,
+      "earliestYear": 1980,
+      "latestYear": 2026,
+      "pre2000": 8,
+      "pre1980": 0,
+      "recent": 22,
+      "citationDemandOverlap": 333,
+      "deficit": 0,
+      "historicalWeakness": false,
+      "yearBuckets": {
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 0,
+        "y1980_1989": 3,
+        "y1990_1999": 5,
+        "y2000_2009": 6,
+        "y2010_2019": 2,
+        "y2020_present": 22
+      },
+      "flags": [
+        "STRONG"
+      ]
+    },
+    {
+      "bucket": "cafc",
+      "label": "Federal Circuit",
+      "cases": 38,
+      "earliestYear": 1990,
+      "latestYear": 2026,
+      "pre2000": 9,
+      "pre1980": 0,
+      "recent": 21,
+      "citationDemandOverlap": 68,
+      "deficit": 0,
+      "historicalWeakness": false,
+      "yearBuckets": {
+        "pre1950": 0,
+        "y1950_1969": 0,
+        "y1970_1979": 0,
+        "y1980_1989": 0,
+        "y1990_1999": 9,
+        "y2000_2009": 6,
+        "y2010_2019": 2,
         "y2020_present": 21
+      },
+      "flags": [
+        "STRONG"
+      ]
+    },
+    {
+      "bucket": "scotus",
+      "label": "SCOTUS",
+      "cases": 108,
+      "earliestYear": 1906,
+      "latestYear": 2026,
+      "pre2000": 52,
+      "pre1980": 33,
+      "recent": 28,
+      "citationDemandOverlap": 297,
+      "deficit": 0,
+      "historicalWeakness": false,
+      "yearBuckets": {
+        "pre1950": 3,
+        "y1950_1969": 11,
+        "y1970_1979": 19,
+        "y1980_1989": 12,
+        "y1990_1999": 7,
+        "y2000_2009": 18,
+        "y2010_2019": 15,
+        "y2020_present": 23
       },
       "flags": [
         "STRONG"
