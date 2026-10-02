@@ -9,18 +9,18 @@ resolved 1815 → 1880 (+65 incl. smoke+pilot)
 resolution 4.96% → 5.09%
 
 ## PILOT (acquisition CL)
-CL 16 | attempted 8 | acquired 7 | found 7
+CL 16 | attempted 8 | acquired 7 | found 8 (incl. rate-limited after verify)
 old unresolved resolved +54 (pilot window 1826→1880)
 useful authorities +7 (pilot) / +8 session incl. smoke
-CL/target ≈ 2.0 (lookup+fetch)
+CL/successful target ≈ 2.29 (16/7) | ≈2.0 excluding failed attempt
 old-edges/CL ≈ 3.375
-old-edges/target ≈ 7.7
+old-edges/target ≈ 7.71
 
-## FAMILY (LOW_SAMPLE)
-US: 2 acq (304 smoke + 422, 403) — edges/CL signal shared
-federal: 2 acq (8 F.4th, 704 F.3d) — 45 F.3d already present
-regional: 3 acq (88 P.3d, 759 S.E.2d, 416 P.3d)
-F.Supp: 0 in top-500 manifest — not piloted
+## FAMILY (LOW_SAMPLE; edges equal-shared from aggregate reresolve)
+US: 2 acq / 4 CL — edges/CL ≈ 3.86
+federal_reporter: 2 acq / 4 CL — edges/CL ≈ 3.86
+regional_reporter: 3 acq / 6 CL — edges/CL ≈ 3.86
+F.Supp: 0 — not piloted
 
 ## 429
 minute limit 15 binding; STOP persisted; no post-429 CL

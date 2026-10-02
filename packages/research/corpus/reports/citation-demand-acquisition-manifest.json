@@ -517,7 +517,19 @@
       "actualCLRequests": 2,
       "found": true,
       "acquired": true,
-      "failureReason": null
+      "failureReason": null,
+      "actualOldEdgesResolved": null,
+      "actualEdgesPerCL": null,
+      "outcome": "ACQUIRED_RESOLVED",
+      "demandFamily": "us_reports",
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-02T22:07:11.414Z",
+          "cl": 2,
+          "note": "pilot batch persist fix"
+        }
+      ]
     },
     {
       "rank": 19,
@@ -534,14 +546,31 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=9",
       "citationDemandScore": 9,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "actualCLRequests": 2,
+      "found": true,
+      "acquired": true,
+      "actualOldEdgesResolved": null,
+      "actualEdgesPerCL": null,
+      "lastAttemptedAt": "2026-10-02T22:07:11.414Z",
+      "failureReason": null,
+      "outcome": "ACQUIRED_RESOLVED",
+      "demandFamily": "us_reports",
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-02T22:07:11.414Z",
+          "cl": 2,
+          "note": "pilot batch persist fix"
+        }
+      ]
     },
     {
       "rank": 20,
@@ -3078,7 +3107,19 @@
       "actualCLRequests": 2,
       "found": true,
       "acquired": true,
-      "failureReason": null
+      "failureReason": null,
+      "actualOldEdgesResolved": null,
+      "actualEdgesPerCL": null,
+      "outcome": "ACQUIRED_RESOLVED",
+      "demandFamily": "regional_reporter",
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-02T22:07:11.414Z",
+          "cl": 2,
+          "note": "pilot batch persist fix"
+        }
+      ]
     },
     {
       "rank": 123,
@@ -3107,7 +3148,19 @@
       "actualCLRequests": 2,
       "found": true,
       "acquired": true,
-      "failureReason": null
+      "failureReason": null,
+      "actualOldEdgesResolved": null,
+      "actualEdgesPerCL": null,
+      "outcome": "ACQUIRED_RESOLVED",
+      "demandFamily": "regional_reporter",
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-02T22:07:11.414Z",
+          "cl": 2,
+          "note": "pilot batch persist fix"
+        }
+      ]
     },
     {
       "rank": 124,
@@ -5054,14 +5107,31 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 1,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "actualCLRequests": 2,
+      "found": true,
+      "acquired": true,
+      "actualOldEdgesResolved": null,
+      "actualEdgesPerCL": null,
+      "lastAttemptedAt": "2026-10-02T22:07:11.414Z",
+      "failureReason": null,
+      "outcome": "ACQUIRED_RESOLVED",
+      "demandFamily": "regional_reporter",
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-02T22:07:11.414Z",
+          "cl": 2,
+          "note": "pilot batch persist fix"
+        }
+      ]
     },
     {
       "rank": 205,
@@ -5085,7 +5155,18 @@
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-02T22:07:11.414Z",
+      "actualCLRequests": 2,
+      "failureReason": "rate_limited_429",
+      "statusHistory": [
+        {
+          "status": "SOURCE_ERROR",
+          "at": "2026-10-02T22:07:11.414Z",
+          "cl": 2,
+          "reason": "429_minute"
+        }
+      ]
     },
     {
       "rank": 206,
@@ -7016,7 +7097,19 @@
       "actualCLRequests": 2,
       "found": true,
       "acquired": true,
-      "failureReason": null
+      "failureReason": null,
+      "actualOldEdgesResolved": null,
+      "actualEdgesPerCL": null,
+      "outcome": "ACQUIRED_RESOLVED",
+      "demandFamily": "federal_reporter",
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-02T22:07:11.414Z",
+          "cl": 2,
+          "note": "pilot batch persist fix"
+        }
+      ]
     },
     {
       "rank": 285,
@@ -9193,14 +9286,31 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=4",
       "citationDemandScore": 4,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "actualCLRequests": 2,
+      "found": true,
+      "acquired": true,
+      "actualOldEdgesResolved": null,
+      "actualEdgesPerCL": null,
+      "lastAttemptedAt": "2026-10-02T22:07:11.414Z",
+      "failureReason": null,
+      "outcome": "ACQUIRED_RESOLVED",
+      "demandFamily": "federal_reporter",
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-02T22:07:11.414Z",
+          "cl": 2,
+          "note": "pilot batch persist fix"
+        }
+      ]
     },
     {
       "rank": 376,
@@ -12204,72 +12314,291 @@
     }
   ],
   "pilotStats": {
-    "generatedAt": "2026-10-02T22:04:13.057Z",
+    "generatedAt": "2026-10-02T22:07:11.414Z",
     "version": "cite-demand-pilot-v1",
     "totalCl": 16,
-    "acquired": 4,
+    "targetsAttempted": 8,
+    "targetsFound": 8,
+    "acquired": 7,
     "oldEdgesResolved": 54,
     "metrics": {
-      "overallClPerTarget": 4,
+      "overallClPerSuccessfulTarget": 2.286,
+      "overallClPerSuccessfulTargetExcludingFailedAttempt": 2,
       "overallOldEdgesPerCl": 3.375,
-      "overallOldEdgesPerTarget": 13.5,
-      "successfulTargetsPerCl": 0.25
+      "overallOldEdgesPerTarget": 7.714,
+      "successfulTargetsPerCl": 0.438
     },
     "familyTable": {
       "us_reports": {
-        "attempts": 1,
-        "acquired": 1,
-        "found": 1,
-        "cl": 2,
-        "oldEdgesResolved": 13.5,
-        "clPerTarget": 2,
-        "edgesPerTarget": 13.5,
-        "edgesPerCl": 6.75,
-        "sampleConfidence": "INSUFFICIENT"
-      },
-      "federal_reporter": {
-        "attempts": 1,
-        "acquired": 1,
-        "found": 1,
-        "cl": 2,
-        "oldEdgesResolved": 13.5,
-        "clPerTarget": 2,
-        "edgesPerTarget": 13.5,
-        "edgesPerCl": 6.75,
-        "sampleConfidence": "INSUFFICIENT"
-      },
-      "regional_reporter": {
         "attempts": 2,
         "acquired": 2,
         "found": 2,
         "cl": 4,
-        "oldEdgesResolved": 27,
+        "oldEdgesResolved": 15.43,
         "clPerTarget": 2,
-        "edgesPerTarget": 13.5,
-        "edgesPerCl": 6.75,
+        "edgesPerTarget": 7.71,
+        "edgesPerCl": 3.857,
         "sampleConfidence": "LOW_SAMPLE"
+      },
+      "federal_reporter": {
+        "attempts": 2,
+        "acquired": 2,
+        "found": 2,
+        "cl": 4,
+        "oldEdgesResolved": 15.43,
+        "clPerTarget": 2,
+        "edgesPerTarget": 7.71,
+        "edgesPerCl": 3.857,
+        "sampleConfidence": "LOW_SAMPLE"
+      },
+      "regional_reporter": {
+        "attempts": 3,
+        "acquired": 3,
+        "found": 3,
+        "cl": 6,
+        "oldEdgesResolved": 23.14,
+        "clPerTarget": 2,
+        "edgesPerTarget": 7.71,
+        "edgesPerCl": 3.857,
+        "sampleConfidence": "LOW_SAMPLE"
+      },
+      "federal_supplement": {
+        "attempts": 0,
+        "acquired": 0,
+        "found": 0,
+        "cl": 0,
+        "oldEdgesResolved": 0,
+        "sampleConfidence": "NONE"
       }
     },
     "productivityBands": {
       "HIGH": {
-        "range": [
-          6.75
-        ],
-        "families": [
-          "regional_reporter"
-        ]
+        "range": [],
+        "families": [],
+        "note": "insufficient distinct family productivity separation"
       },
       "MEDIUM": {
-        "range": [],
-        "families": []
+        "range": [
+          3.375
+        ],
+        "families": [
+          "us_reports",
+          "federal_reporter",
+          "regional_reporter"
+        ],
+        "note": "shared aggregate ~3.375 edges/CL; LOW_SAMPLE"
       },
       "LOW": {
         "range": [],
         "families": []
       },
-      "method": "ranked_small_sample",
-      "note": "LOW_SAMPLE — do not overfit"
-    }
+      "method": "aggregate_equal_share_until_per_target_reresolve",
+      "note": "Do not overfit; all three piloted families produced resolves; F.Supp not sampled"
+    },
+    "stopReason": "429_minute",
+    "sampleConfidence": "LOW_SAMPLE",
+    "provisionalRerankTop20": [
+      {
+        "rank": 1,
+        "citation": "573 U.S. 373",
+        "family": "us_reports",
+        "edgeDemand": 11,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 2,
+        "identityConfidence": 1,
+        "finalScore": 61.75
+      },
+      {
+        "rank": 2,
+        "citation": "844 F.2d 461",
+        "family": "federal_reporter",
+        "edgeDemand": 4,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 1,
+        "identityConfidence": 1,
+        "finalScore": 30.75
+      },
+      {
+        "rank": 3,
+        "citation": "251 P.3d 829",
+        "family": "regional_reporter",
+        "edgeDemand": 5,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 1,
+        "identityConfidence": 1,
+        "finalScore": 34.75
+      },
+      {
+        "rank": 4,
+        "citation": "523 U.S. 83",
+        "family": "us_reports",
+        "edgeDemand": 9,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 2,
+        "identityConfidence": 1,
+        "finalScore": 53.75
+      },
+      {
+        "rank": 5,
+        "citation": "850 F.2d 1180",
+        "family": "federal_reporter",
+        "edgeDemand": 4,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 1,
+        "identityConfidence": 1,
+        "finalScore": 30.75
+      },
+      {
+        "rank": 6,
+        "citation": "563 P.3d 610",
+        "family": "regional_reporter",
+        "edgeDemand": 5,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 1,
+        "identityConfidence": 1,
+        "finalScore": 34.75
+      },
+      {
+        "rank": 7,
+        "citation": "380 U.S. 400",
+        "family": "us_reports",
+        "edgeDemand": 9,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 2,
+        "identityConfidence": 1,
+        "finalScore": 53.75
+      },
+      {
+        "rank": 8,
+        "citation": "140 F.4th 68",
+        "family": "federal_reporter",
+        "edgeDemand": 3,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 1,
+        "identityConfidence": 1,
+        "finalScore": 26.75
+      },
+      {
+        "rank": 9,
+        "citation": "525 P.3d 709",
+        "family": "regional_reporter",
+        "edgeDemand": 5,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 1,
+        "identityConfidence": 1,
+        "finalScore": 34.75
+      },
+      {
+        "rank": 10,
+        "citation": "436 U.S. 658",
+        "family": "us_reports",
+        "edgeDemand": 9,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 2,
+        "identityConfidence": 1,
+        "finalScore": 53.75
+      },
+      {
+        "rank": 11,
+        "citation": "112 F.4th 45",
+        "family": "federal_reporter",
+        "edgeDemand": 3,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 1,
+        "identityConfidence": 1,
+        "finalScore": 26.75
+      },
+      {
+        "rank": 12,
+        "citation": "234 P.3d 1245",
+        "family": "regional_reporter",
+        "edgeDemand": 5,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 1,
+        "identityConfidence": 1,
+        "finalScore": 34.75
+      },
+      {
+        "rank": 13,
+        "citation": "364 U.S. 206",
+        "family": "us_reports",
+        "edgeDemand": 9,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 2,
+        "identityConfidence": 1,
+        "finalScore": 53.75
+      },
+      {
+        "rank": 14,
+        "citation": "180 F.4th 512",
+        "family": "federal_reporter",
+        "edgeDemand": 3,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 1,
+        "identityConfidence": 1,
+        "finalScore": 26.75
+      },
+      {
+        "rank": 15,
+        "citation": "573 S.E.2d 354",
+        "family": "regional_reporter",
+        "edgeDemand": 5,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 1,
+        "identityConfidence": 1,
+        "finalScore": 34.75
+      },
+      {
+        "rank": 16,
+        "citation": "408 U.S. 564",
+        "family": "us_reports",
+        "edgeDemand": 9,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 2,
+        "identityConfidence": 1,
+        "finalScore": 53.75
+      },
+      {
+        "rank": 17,
+        "citation": "166 F.4th 494",
+        "family": "federal_reporter",
+        "edgeDemand": 3,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 1,
+        "identityConfidence": 1,
+        "finalScore": 26.75
+      },
+      {
+        "rank": 18,
+        "citation": "859 S.E.2d 732",
+        "family": "regional_reporter",
+        "edgeDemand": 5,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 1,
+        "identityConfidence": 1,
+        "finalScore": 34.75
+      },
+      {
+        "rank": 19,
+        "citation": "455 U.S. 104",
+        "family": "us_reports",
+        "edgeDemand": 8,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 2,
+        "identityConfidence": 1,
+        "finalScore": 49.75
+      },
+      {
+        "rank": 20,
+        "citation": "175 F.4th 61",
+        "family": "federal_reporter",
+        "edgeDemand": 3,
+        "measuredFamilyPathProductivity": 3.375,
+        "corpusCoverageValue": 1,
+        "identityConfidence": 1,
+        "finalScore": 26.75
+      }
+    ]
   },
   "familyPilotStatsVersion": "cite-demand-pilot-v1"
 }
