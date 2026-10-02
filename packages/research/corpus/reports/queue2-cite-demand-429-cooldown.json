@@ -1,0 +1,8 @@
+{
+  "classification": "CITE_DEMAND_429_STOP",
+  "at": "2026-10-02T22:04:40.553Z",
+  "totalCl": 16,
+  "stopReason": "429",
+  "note": "minute_limit_15_binding; no post-429 CL",
+  "retryAfter": null
+}

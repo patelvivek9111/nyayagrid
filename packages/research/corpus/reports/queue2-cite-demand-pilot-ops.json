@@ -1,0 +1,694 @@
+{
+  "classification": "CITATION_DEMAND_TARGETED_CL_PILOT",
+  "startedAt": "2026-10-02T22:03:09.319Z",
+  "budget": 100,
+  "startResolved": 1826,
+  "startCases": 3868,
+  "totalCl": 16,
+  "acquisitionCl": 0,
+  "targetsAttempted": 4,
+  "targetsFound": 4,
+  "targetsAcquired": 4,
+  "byFamily": {
+    "us_reports": {
+      "attempts": 1,
+      "acquired": 1,
+      "found": 1,
+      "cl": 2,
+      "edgeDemandSum": 9,
+      "oldEdgesResolved": 13.5
+    },
+    "federal_reporter": {
+      "attempts": 1,
+      "acquired": 1,
+      "found": 1,
+      "cl": 2,
+      "edgeDemandSum": 4,
+      "oldEdgesResolved": 13.5
+    },
+    "regional_reporter": {
+      "attempts": 2,
+      "acquired": 2,
+      "found": 2,
+      "cl": 4,
+      "edgeDemandSum": 12,
+      "oldEdgesResolved": 27
+    }
+  },
+  "targetOutcomes": {
+    "ACQUIRED_PENDING_RERESOLVE": 0,
+    "ACQUIRED_RESOLVED": 4
+  },
+  "batches": [
+    {
+      "cites": [
+        "422 U.S. 490",
+        "8 F.4th 531",
+        "88 P.3d 527",
+        "759 S.E.2d 769"
+      ],
+      "cl": 8,
+      "json": {
+        "acquired": 4,
+        "rateLimited": false,
+        "deferred": [],
+        "results": [
+          {
+            "citation": "422 U.S. 490",
+            "status": "imported",
+            "authorityId": "92457ace-4191-4ac8-8600-0647028ac008",
+            "sourceExternalId": "cl-opinion-109301",
+            "clusterId": "109301",
+            "opinionId": "109301",
+            "embeddedChunks": 41,
+            "title": "Warth v. Seldin",
+            "circuit": null,
+            "court": "Supreme Court of the United States",
+            "method": "citation-lookup",
+            "clRequests": 2,
+            "preverifyCl": 1,
+            "acquireCl": 1,
+            "canonicalSourceUrl": "https://www.courtlistener.com/opinion/109301/",
+            "reporter": "U.S.",
+            "demandFamily": "us_reports"
+          },
+          {
+            "citation": "8 F.4th 531",
+            "status": "imported",
+            "authorityId": "4206b7e2-50c2-46f6-973e-1b64c13949e4",
+            "sourceExternalId": "cl-opinion-4710022",
+            "clusterId": "4906243",
+            "opinionId": "4710022",
+            "embeddedChunks": 41,
+            "title": "Life Spine, Inc. v. Aegis Spine, Inc.",
+            "circuit": null,
+            "court": "Unknown Court",
+            "method": "citation-lookup",
+            "clRequests": 2,
+            "preverifyCl": 1,
+            "acquireCl": 1,
+            "canonicalSourceUrl": "https://www.courtlistener.com/opinion/4906243/",
+            "reporter": "F.4th",
+            "demandFamily": "federal_reporter"
+          },
+          {
+            "citation": "88 P.3d 527",
+            "status": "imported",
+            "authorityId": "ac2e5813-db5f-41ac-a3e7-960116b981b2",
+            "sourceExternalId": "cl-opinion-2572732",
+            "clusterId": "2572732",
+            "opinionId": "2572732",
+            "embeddedChunks": 21,
+            "title": "Brynna B. v. State, Department of Health & Social Services",
+            "circuit": null,
+            "court": "Unknown Court",
+            "method": "citation-lookup",
+            "clRequests": 2,
+            "preverifyCl": 1,
+            "acquireCl": 1,
+            "canonicalSourceUrl": "https://www.courtlistener.com/opinion/2572732/",
+            "reporter": "P.3d",
+            "demandFamily": "regional_reporter"
+          },
+          {
+            "citation": "759 S.E.2d 769",
+            "status": "imported",
+            "authorityId": "942dbdda-b37a-4dfb-b338-ae2837869d6f",
+            "sourceExternalId": "cl-opinion-2673210",
+            "clusterId": "2673210",
+            "opinionId": "2673210",
+            "embeddedChunks": 38,
+            "title": "In Re F.S. and Z.S.",
+            "circuit": null,
+            "court": "Unknown Court",
+            "method": "citation-lookup",
+            "clRequests": 2,
+            "preverifyCl": 1,
+            "acquireCl": 1,
+            "canonicalSourceUrl": "https://www.courtlistener.com/opinion/2673210/",
+            "reporter": "S.E.2d",
+            "demandFamily": "regional_reporter"
+          }
+        ],
+        "preverify": [
+          {
+            "citation": "422 U.S. 490",
+            "status": "verified",
+            "method": "citation-lookup",
+            "clusterId": 109301,
+            "clRequests": 1
+          },
+          {
+            "citation": "8 F.4th 531",
+            "status": "verified",
+            "method": "citation-lookup",
+            "clusterId": 4906243,
+            "clRequests": 1
+          },
+          {
+            "citation": "88 P.3d 527",
+            "status": "verified",
+            "method": "citation-lookup",
+            "clusterId": 2572732,
+            "clRequests": 1
+          },
+          {
+            "citation": "759 S.E.2d 769",
+            "status": "verified",
+            "method": "citation-lookup",
+            "clusterId": 2673210,
+            "clRequests": 1
+          }
+        ]
+      }
+    },
+    {
+      "cites": [
+        "403 U.S. 443",
+        "704 F.3d 239",
+        "416 P.3d 443",
+        "251 P.3d 829"
+      ],
+      "cl": 8,
+      "json": {
+        "acquired": 3,
+        "rateLimited": true,
+        "deferred": [
+          {
+            "citation": "251 P.3d 829",
+            "reason": "rate_limited",
+            "clRequests": 2,
+            "retry": "defer"
+          }
+        ],
+        "results": [
+          {
+            "citation": "403 U.S. 443",
+            "status": "imported",
+            "authorityId": "e4909536-a3cf-4e06-af36-8ae6f616d3bc",
+            "sourceExternalId": "cl-opinion-108377",
+            "clusterId": "108377",
+            "opinionId": "108377",
+            "embeddedChunks": 41,
+            "title": "Coolidge v. New Hampshire",
+            "circuit": null,
+            "court": "Supreme Court of the United States",
+            "method": "citation-lookup",
+            "clRequests": 2,
+            "preverifyCl": 1,
+            "acquireCl": 1,
+            "canonicalSourceUrl": "https://www.courtlistener.com/opinion/108377/",
+            "reporter": "U.S.",
+            "demandFamily": "us_reports"
+          },
+          {
+            "citation": "704 F.3d 239",
+            "status": "imported",
+            "authorityId": "34fcb8d3-8b54-4ec1-8f4f-a528edafeabb",
+            "sourceExternalId": "cl-opinion-814892",
+            "clusterId": "814892",
+            "opinionId": "814892",
+            "embeddedChunks": 33,
+            "title": "Kelley Mala v. Crown Bay Marina",
+            "circuit": null,
+            "court": "Unknown Court",
+            "method": "citation-lookup",
+            "clRequests": 2,
+            "preverifyCl": 1,
+            "acquireCl": 1,
+            "canonicalSourceUrl": "https://www.courtlistener.com/opinion/814892/",
+            "reporter": "F.3d",
+            "demandFamily": "federal_reporter"
+          },
+          {
+            "citation": "416 P.3d 443",
+            "status": "imported",
+            "authorityId": "e9136c0b-3787-4038-8e63-e483f58eabdf",
+            "sourceExternalId": "cl-opinion-4220256",
+            "clusterId": "4443003",
+            "opinionId": "4220256",
+            "embeddedChunks": 41,
+            "title": "State v. Johnson",
+            "circuit": null,
+            "court": "Unknown Court",
+            "method": "citation-lookup",
+            "clRequests": 2,
+            "preverifyCl": 1,
+            "acquireCl": 1,
+            "canonicalSourceUrl": "https://www.courtlistener.com/opinion/4443003/",
+            "reporter": "P.3d",
+            "demandFamily": "regional_reporter"
+          },
+          {
+            "citation": "251 P.3d 829",
+            "status": "skipped",
+            "reason": "rate_limited",
+            "clRequests": 2,
+            "retry": "defer"
+          }
+        ],
+        "preverify": [
+          {
+            "citation": "403 U.S. 443",
+            "status": "verified",
+            "method": "citation-lookup",
+            "clusterId": 108377,
+            "clRequests": 1
+          },
+          {
+            "citation": "704 F.3d 239",
+            "status": "verified",
+            "method": "citation-lookup",
+            "clusterId": 814892,
+            "clRequests": 1
+          },
+          {
+            "citation": "416 P.3d 443",
+            "status": "verified",
+            "method": "citation-lookup",
+            "clusterId": 4443003,
+            "clRequests": 1
+          },
+          {
+            "citation": "251 P.3d 829",
+            "status": "verified",
+            "method": "citation-lookup",
+            "clusterId": 2461106,
+            "clRequests": 1
+          }
+        ]
+      }
+    }
+  ],
+  "targetRows": [
+    {
+      "citation": "422 U.S. 490",
+      "family": "us_reports",
+      "edgeDemand": 9,
+      "clRequests": 2,
+      "status": "imported",
+      "reason": null,
+      "outcome": "ACQUIRED_RESOLVED",
+      "authorityId": "92457ace-4191-4ac8-8600-0647028ac008",
+      "method": "citation-lookup",
+      "historicalAcquisitionPrior": "UNKNOWN",
+      "oldEdgesResolved": 13.5
+    },
+    {
+      "citation": "8 F.4th 531",
+      "family": "federal_reporter",
+      "edgeDemand": 4,
+      "clRequests": 2,
+      "status": "imported",
+      "reason": null,
+      "outcome": "ACQUIRED_RESOLVED",
+      "authorityId": "4206b7e2-50c2-46f6-973e-1b64c13949e4",
+      "method": "citation-lookup",
+      "historicalAcquisitionPrior": "UNKNOWN",
+      "oldEdgesResolved": 13.5
+    },
+    {
+      "citation": "88 P.3d 527",
+      "family": "regional_reporter",
+      "edgeDemand": 6,
+      "clRequests": 2,
+      "status": "imported",
+      "reason": null,
+      "outcome": "ACQUIRED_RESOLVED",
+      "authorityId": "ac2e5813-db5f-41ac-a3e7-960116b981b2",
+      "method": "citation-lookup",
+      "historicalAcquisitionPrior": "UNKNOWN",
+      "oldEdgesResolved": 13.5
+    },
+    {
+      "citation": "759 S.E.2d 769",
+      "family": "regional_reporter",
+      "edgeDemand": 6,
+      "clRequests": 2,
+      "status": "imported",
+      "reason": null,
+      "outcome": "ACQUIRED_RESOLVED",
+      "authorityId": "942dbdda-b37a-4dfb-b338-ae2837869d6f",
+      "method": "citation-lookup",
+      "historicalAcquisitionPrior": "UNKNOWN",
+      "oldEdgesResolved": 13.5
+    }
+  ],
+  "weakPriorNotes": [],
+  "stopReason": "429",
+  "reliability": {
+    "408": 0,
+    "429": 1
+  },
+  "badSourceSignalKnown": [
+    "ca2_hist_1990s",
+    "ca4_hist_1990s",
+    "ca10_hist_1990s",
+    "cafc_empty",
+    "waed_1985_1994"
+  ],
+  "endResolved": 1880,
+  "endCases": 3875,
+  "oldUnresolvedEdgesResolved": 54,
+  "usefulAuthoritiesAdded": 7,
+  "metrics": {
+    "overallClPerTarget": 4,
+    "overallOldEdgesPerCl": 3.375,
+    "overallOldEdgesPerTarget": 13.5,
+    "successfulTargetsPerCl": 0.25
+  },
+  "familyTable": {
+    "us_reports": {
+      "attempts": 1,
+      "acquired": 1,
+      "found": 1,
+      "cl": 2,
+      "oldEdgesResolved": 13.5,
+      "clPerTarget": 2,
+      "edgesPerTarget": 13.5,
+      "edgesPerCl": 6.75,
+      "sampleConfidence": "INSUFFICIENT"
+    },
+    "federal_reporter": {
+      "attempts": 1,
+      "acquired": 1,
+      "found": 1,
+      "cl": 2,
+      "oldEdgesResolved": 13.5,
+      "clPerTarget": 2,
+      "edgesPerTarget": 13.5,
+      "edgesPerCl": 6.75,
+      "sampleConfidence": "INSUFFICIENT"
+    },
+    "regional_reporter": {
+      "attempts": 2,
+      "acquired": 2,
+      "found": 2,
+      "cl": 4,
+      "oldEdgesResolved": 27,
+      "clPerTarget": 2,
+      "edgesPerTarget": 13.5,
+      "edgesPerCl": 6.75,
+      "sampleConfidence": "LOW_SAMPLE"
+    }
+  },
+  "productivityBands": {
+    "HIGH": {
+      "range": [
+        6.75
+      ],
+      "families": [
+        "regional_reporter"
+      ]
+    },
+    "MEDIUM": {
+      "range": [],
+      "families": []
+    },
+    "LOW": {
+      "range": [],
+      "families": []
+    },
+    "method": "ranked_small_sample",
+    "note": "LOW_SAMPLE — do not overfit"
+  },
+  "provisionalRerankTop20": [
+    {
+      "rank": 1,
+      "citation": "403 U.S. 443",
+      "family": "us_reports",
+      "edgeDemand": 9,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 67.25
+    },
+    {
+      "rank": 2,
+      "citation": "523 U.S. 83",
+      "family": "us_reports",
+      "edgeDemand": 9,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 67.25
+    },
+    {
+      "rank": 3,
+      "citation": "380 U.S. 400",
+      "family": "us_reports",
+      "edgeDemand": 9,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 67.25
+    },
+    {
+      "rank": 4,
+      "citation": "436 U.S. 658",
+      "family": "us_reports",
+      "edgeDemand": 9,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 67.25
+    },
+    {
+      "rank": 5,
+      "citation": "364 U.S. 206",
+      "family": "us_reports",
+      "edgeDemand": 9,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 67.25
+    },
+    {
+      "rank": 6,
+      "citation": "408 U.S. 564",
+      "family": "us_reports",
+      "edgeDemand": 9,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 67.25
+    },
+    {
+      "rank": 7,
+      "citation": "455 U.S. 104",
+      "family": "us_reports",
+      "edgeDemand": 8,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 60
+    },
+    {
+      "rank": 8,
+      "citation": "427 U.S. 97",
+      "family": "us_reports",
+      "edgeDemand": 8,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 60
+    },
+    {
+      "rank": 9,
+      "citation": "533 U.S. 27",
+      "family": "us_reports",
+      "edgeDemand": 8,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 60
+    },
+    {
+      "rank": 10,
+      "citation": "463 U.S. 29",
+      "family": "us_reports",
+      "edgeDemand": 8,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 60
+    },
+    {
+      "rank": 11,
+      "citation": "457 U.S. 800",
+      "family": "us_reports",
+      "edgeDemand": 8,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 60
+    },
+    {
+      "rank": 12,
+      "citation": "391 U.S. 123",
+      "family": "us_reports",
+      "edgeDemand": 8,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 60
+    },
+    {
+      "rank": 13,
+      "citation": "481 U.S. 200",
+      "family": "us_reports",
+      "edgeDemand": 8,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 60
+    },
+    {
+      "rank": 14,
+      "citation": "517 U.S. 690",
+      "family": "us_reports",
+      "edgeDemand": 8,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 60
+    },
+    {
+      "rank": 15,
+      "citation": "391 U.S. 145",
+      "family": "us_reports",
+      "edgeDemand": 8,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 60
+    },
+    {
+      "rank": 16,
+      "citation": "405 U.S. 645",
+      "family": "us_reports",
+      "edgeDemand": 8,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 60
+    },
+    {
+      "rank": 17,
+      "citation": "397 U.S. 358",
+      "family": "us_reports",
+      "edgeDemand": 8,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 60
+    },
+    {
+      "rank": 18,
+      "citation": "460 U.S. 1",
+      "family": "us_reports",
+      "edgeDemand": 8,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 60
+    },
+    {
+      "rank": 19,
+      "citation": "454 U.S. 464",
+      "family": "us_reports",
+      "edgeDemand": 8,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 60
+    },
+    {
+      "rank": 20,
+      "citation": "355 U.S. 41",
+      "family": "us_reports",
+      "edgeDemand": 8,
+      "measuredFamilyEdgesPerCl": 6.75,
+      "corpusCoverageValue": 2,
+      "identityConfidence": 1,
+      "finalScore": 60
+    }
+  ],
+  "finishedAt": "2026-10-02T22:04:13.059Z",
+  "corrected": {
+    "acquisitionCl": 16,
+    "targetsAcquired": 7,
+    "targetsFound": 7,
+    "fromBatches": [
+      {
+        "citation": "422 U.S. 490",
+        "family": "us_reports",
+        "reporter": "U.S.",
+        "cl": 2,
+        "status": "imported",
+        "title": "Warth v. Seldin",
+        "court": "Supreme Court of the United States"
+      },
+      {
+        "citation": "8 F.4th 531",
+        "family": "federal_reporter",
+        "reporter": "F.4th",
+        "cl": 2,
+        "status": "imported",
+        "title": "Life Spine, Inc. v. Aegis Spine, Inc.",
+        "court": "Unknown Court"
+      },
+      {
+        "citation": "88 P.3d 527",
+        "family": "regional_reporter",
+        "reporter": "P.3d",
+        "cl": 2,
+        "status": "imported",
+        "title": "Brynna B. v. State, Department of Health & Social Services",
+        "court": "Unknown Court"
+      },
+      {
+        "citation": "759 S.E.2d 769",
+        "family": "regional_reporter",
+        "reporter": "S.E.2d",
+        "cl": 2,
+        "status": "imported",
+        "title": "In Re F.S. and Z.S.",
+        "court": "Unknown Court"
+      },
+      {
+        "citation": "403 U.S. 443",
+        "family": "us_reports",
+        "reporter": "U.S.",
+        "cl": 2,
+        "status": "imported",
+        "title": "Coolidge v. New Hampshire",
+        "court": "Supreme Court of the United States"
+      },
+      {
+        "citation": "704 F.3d 239",
+        "family": "federal_reporter",
+        "reporter": "F.3d",
+        "cl": 2,
+        "status": "imported",
+        "title": "Kelley Mala v. Crown Bay Marina",
+        "court": "Unknown Court"
+      },
+      {
+        "citation": "416 P.3d 443",
+        "family": "regional_reporter",
+        "reporter": "P.3d",
+        "cl": 2,
+        "status": "imported",
+        "title": "State v. Johnson",
+        "court": "Unknown Court"
+      },
+      {
+        "citation": "251 P.3d 829",
+        "cl": 2,
+        "status": "skipped"
+      }
+    ]
+  },
+  "note": "Minute throttle 15/min caused 429 after 16 CL. First calibrated target-mode sample: ~3.375 old-edges/CL, ~2 CL/successful-target via citation-lookup."
+}
