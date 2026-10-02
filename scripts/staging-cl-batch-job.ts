@@ -1252,6 +1252,22 @@ async function insertCitationEdges(
     `;
     inserted += 1;
   }
+  const textHash = createHash("sha256").update(String(content || ""), "utf8").digest("hex");
+  const status = cites.length > 0 ? "PROCESSED_NONZERO" : "PROCESSED_ZERO";
+  await sql`
+    update legal_authorities
+    set metadata = coalesce(metadata, '{}'::jsonb) || ${sql.json({
+      citationExtraction: {
+        status,
+        version: "case-cite-extract-v1",
+        extractedAt: new Date().toISOString(),
+        textHashAtExtraction: textHash,
+        occurrenceCount: cites.length,
+      },
+    })}::jsonb,
+    updated_at = now()
+    where id = ${fromAuthorityId}
+  `;
   return inserted;
 }
 

@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 "use strict";
 var __getOwnPropNames = Object.getOwnPropertyNames;
 var __commonJS = (cb, mod) => function __require() {
@@ -1770,7 +1771,7 @@ var require_large = __commonJS({
 var require_src = __commonJS({
   "node_modules/postgres/cjs/src/index.js"(exports2, module2) {
     var os = require("os");
-    var fs2 = require("fs");
+    var fs = require("fs");
     var {
       mergeUserTypes,
       inferType,
@@ -1871,7 +1872,7 @@ var require_src = __commonJS({
         function file(path, args = [], options2 = {}) {
           arguments.length === 2 && !Array.isArray(args) && (options2 = args, args = []);
           const query = new Query([], args, (query2) => {
-            fs2.readFile(path, "utf8", (err, string) => {
+            fs.readFile(path, "utf8", (err, string) => {
               if (err)
                 return query2.reject(err);
               query2.strings = [string];
@@ -2334,106 +2335,26 @@ var require_case_citation_extraction = __commonJS({
   }
 });
 
-// scripts/tmp-queue2-s3-hist-ingest.cjs
+// scripts/tmp-queue2-a2-verified-batch.cjs
 var { createHash, randomUUID } = require("node:crypto");
 var postgres = require_src();
-var fs = require("fs");
-var {
-  ensureCaseCitationExtraction
-} = require_case_citation_extraction();
+var { ensureCaseCitationExtraction } = require_case_citation_extraction();
 var CL_BASE = "https://www.courtlistener.com/api/rest/v4";
 var SOURCE = "courtlistener";
 var EMBEDDING_MODEL = "text-embedding-3-small";
 var EMBEDDING_DIMS = 384;
 var MAX_OPINION_CHARS = 4e4;
 var MAX_CHUNK_CHARS = 1e3;
-var COURT_MAP = {
-  scotus: { courtId: "us-scotus", courtLevel: "scotus", authorityState: "US", courtName: "Supreme Court of the United States", federalCircuit: null, jurisdiction: "United States" },
-  ca1: { courtId: "us-ca-1", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the First Circuit", federalCircuit: "1", jurisdiction: "United States" },
-  ca2: { courtId: "us-ca-2", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Second Circuit", federalCircuit: "2", jurisdiction: "United States" },
-  ca3: { courtId: "us-ca-3", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Third Circuit", federalCircuit: "3", jurisdiction: "United States" },
-  ca4: { courtId: "us-ca-4", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Fourth Circuit", federalCircuit: "4", jurisdiction: "United States" },
-  ca5: { courtId: "us-ca-5", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Fifth Circuit", federalCircuit: "5", jurisdiction: "United States" },
-  ca6: { courtId: "us-ca-6", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Sixth Circuit", federalCircuit: "6", jurisdiction: "United States" },
-  ca7: { courtId: "us-ca-7", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Seventh Circuit", federalCircuit: "7", jurisdiction: "United States" },
-  ca8: { courtId: "us-ca-8", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Eighth Circuit", federalCircuit: "8", jurisdiction: "United States" },
-  ca9: { courtId: "us-ca-9", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Ninth Circuit", federalCircuit: "9", jurisdiction: "United States" },
-  ca10: { courtId: "us-ca-10", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Tenth Circuit", federalCircuit: "10", jurisdiction: "United States" },
-  ca11: { courtId: "us-ca-11", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Eleventh Circuit", federalCircuit: "11", jurisdiction: "United States" },
-  cadc: { courtId: "us-ca-dc", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the District of Columbia Circuit", federalCircuit: "dc", jurisdiction: "United States" },
-  cafc: { courtId: "us-ca-fed", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Federal Circuit", federalCircuit: "fed", jurisdiction: "United States" },
-  arizctapp: { courtId: "st-az-app", courtLevel: "state_appellate", authorityState: "AZ", courtName: "Arizona Court of Appeals", federalCircuit: null, jurisdiction: "AZ" },
-  connappct: { courtId: "st-ct-app", courtLevel: "state_appellate", authorityState: "CT", courtName: "Connecticut Appellate Court", federalCircuit: null, jurisdiction: "CT" },
-  wisctapp: { courtId: "st-wi-app", courtLevel: "state_appellate", authorityState: "WI", courtName: "Wisconsin Court of Appeals", federalCircuit: null, jurisdiction: "WI" },
-  utahctapp: { courtId: "st-ut-app", courtLevel: "state_appellate", authorityState: "UT", courtName: "Utah Court of Appeals", federalCircuit: null, jurisdiction: "UT" },
-  nmctapp: { courtId: "st-nm-app", courtLevel: "state_appellate", authorityState: "NM", courtName: "New Mexico Court of Appeals", federalCircuit: null, jurisdiction: "NM" },
-  indctapp: { courtId: "st-in-app", courtLevel: "state_appellate", authorityState: "IN", courtName: "Indiana Court of Appeals", federalCircuit: null, jurisdiction: "IN" },
-  nyappdiv: { courtId: "st-ny-app", courtLevel: "state_appellate", authorityState: "NY", courtName: "New York Supreme Court, Appellate Division", federalCircuit: null, jurisdiction: "NY" },
-  calctapp: { courtId: "st-ca-app", courtLevel: "state_appellate", authorityState: "CA", courtName: "California Court of Appeal", federalCircuit: null, jurisdiction: "CA" },
-  fladistctapp: { courtId: "st-fl-app", courtLevel: "state_appellate", authorityState: "FL", courtName: "Florida District Courts of Appeal", federalCircuit: null, jurisdiction: "FL" },
-  massappct: { courtId: "st-ma-app", courtLevel: "state_appellate", authorityState: "MA", courtName: "Massachusetts Appeals Court", federalCircuit: null, jurisdiction: "MA" },
-  pasuperct: { courtId: "st-pa-super", courtLevel: "state_appellate", authorityState: "PA", courtName: "Superior Court of Pennsylvania", federalCircuit: null, jurisdiction: "PA" },
-  illappct: { courtId: "st-il-app", courtLevel: "state_appellate", authorityState: "IL", courtName: "Appellate Court of Illinois", federalCircuit: null, jurisdiction: "IL" },
-  ariz: { courtId: "st-az-high", courtLevel: "state_high", authorityState: "AZ", courtName: "Arizona Supreme Court", federalCircuit: null, jurisdiction: "AZ" },
-  conn: { courtId: "st-ct-high", courtLevel: "state_high", authorityState: "CT", courtName: "Supreme Court of Connecticut", federalCircuit: null, jurisdiction: "CT" },
-  wis: { courtId: "st-wi-high", courtLevel: "state_high", authorityState: "WI", courtName: "Wisconsin Supreme Court", federalCircuit: null, jurisdiction: "WI" },
-  utah: { courtId: "st-ut-high", courtLevel: "state_high", authorityState: "UT", courtName: "Utah Supreme Court", federalCircuit: null, jurisdiction: "UT" },
-  nm: { courtId: "st-nm-high", courtLevel: "state_high", authorityState: "NM", courtName: "New Mexico Supreme Court", federalCircuit: null, jurisdiction: "NM" },
-  ind: { courtId: "st-in-high", courtLevel: "state_high", authorityState: "IN", courtName: "Indiana Supreme Court", federalCircuit: null, jurisdiction: "IN" },
-  neb: { courtId: "st-ne-high", courtLevel: "state_high", authorityState: "NE", courtName: "Nebraska Supreme Court", federalCircuit: null, jurisdiction: "NE" },
-  nc: { courtId: "st-nc-high", courtLevel: "state_high", authorityState: "NC", courtName: "Supreme Court of North Carolina", federalCircuit: null, jurisdiction: "NC" },
-  idaho: { courtId: "st-id-high", courtLevel: "state_high", authorityState: "ID", courtName: "Idaho Supreme Court", federalCircuit: null, jurisdiction: "ID" },
-  ala: { courtId: "st-al-high", courtLevel: "state_high", authorityState: "AL", courtName: "Supreme Court of Alabama", federalCircuit: null, jurisdiction: "AL" },
-  alaska: { courtId: "st-ak-high", courtLevel: "state_high", authorityState: "AK", courtName: "Alaska Supreme Court", federalCircuit: null, jurisdiction: "AK" },
-  okla: { courtId: "st-ok-high", courtLevel: "state_high", authorityState: "OK", courtName: "Supreme Court of Oklahoma", federalCircuit: null, jurisdiction: "OK" },
-  or: { courtId: "st-or-high", courtLevel: "state_high", authorityState: "OR", courtName: "Oregon Supreme Court", federalCircuit: null, jurisdiction: "OR" },
-  mo: { courtId: "st-mo-high", courtLevel: "state_high", authorityState: "MO", courtName: "Supreme Court of Missouri", federalCircuit: null, jurisdiction: "MO" },
-  sc: { courtId: "st-sc-high", courtLevel: "state_high", authorityState: "SC", courtName: "Supreme Court of South Carolina", federalCircuit: null, jurisdiction: "SC" },
-  haw: { courtId: "st-hi-high", courtLevel: "state_high", authorityState: "HI", courtName: "Hawaii Supreme Court", federalCircuit: null, jurisdiction: "HI" },
-  iowa: { courtId: "st-ia-high", courtLevel: "state_high", authorityState: "IA", courtName: "Supreme Court of Iowa", federalCircuit: null, jurisdiction: "IA" },
-  minn: { courtId: "st-mn-high", courtLevel: "state_high", authorityState: "MN", courtName: "Supreme Court of Minnesota", federalCircuit: null, jurisdiction: "MN" },
-  nj: { courtId: "st-nj-high", courtLevel: "state_high", authorityState: "NJ", courtName: "Supreme Court of New Jersey", federalCircuit: null, jurisdiction: "NJ" },
-  wash: { courtId: "st-wa-high", courtLevel: "state_high", authorityState: "WA", courtName: "Washington Supreme Court", federalCircuit: null, jurisdiction: "WA" },
-  mich: { courtId: "st-mi-high", courtLevel: "state_high", authorityState: "MI", courtName: "Michigan Supreme Court", federalCircuit: null, jurisdiction: "MI" },
-  va: { courtId: "st-va-high", courtLevel: "state_high", authorityState: "VA", courtName: "Supreme Court of Virginia", federalCircuit: null, jurisdiction: "VA" },
-  ohio: { courtId: "st-oh-high", courtLevel: "state_high", authorityState: "OH", courtName: "Ohio Supreme Court", federalCircuit: null, jurisdiction: "OH" },
-  la: { courtId: "st-la-high", courtLevel: "state_high", authorityState: "LA", courtName: "Supreme Court of Louisiana", federalCircuit: null, jurisdiction: "LA" },
-  nev: { courtId: "st-nv-high", courtLevel: "state_high", authorityState: "NV", courtName: "Supreme Court of Nevada", federalCircuit: null, jurisdiction: "NV" },
-  ky: { courtId: "st-ky-high", courtLevel: "state_high", authorityState: "KY", courtName: "Kentucky Supreme Court", federalCircuit: null, jurisdiction: "KY" },
-  md: { courtId: "st-md-high", courtLevel: "state_high", authorityState: "MD", courtName: "Supreme Court of Maryland", federalCircuit: null, jurisdiction: "MD" },
-  ga: { courtId: "st-ga-high", courtLevel: "state_high", authorityState: "GA", courtName: "Supreme Court of Georgia", federalCircuit: null, jurisdiction: "GA" },
-  kyctapp: { courtId: "st-ky-app", courtLevel: "state_appellate", authorityState: "KY", courtName: "Kentucky Court of Appeals", federalCircuit: null, jurisdiction: "KY" },
-  texapp: { courtId: "st-tx-app", courtLevel: "state_appellate", authorityState: "TX", courtName: "Texas Courts of Appeals", federalCircuit: null, jurisdiction: "TX" },
-  ark: { courtId: "st-ar-high", courtLevel: "state_high", authorityState: "AR", courtName: "Supreme Court of Arkansas", federalCircuit: null, jurisdiction: "AR" },
-  colo: { courtId: "st-co-high", courtLevel: "state_high", authorityState: "CO", courtName: "Colorado Supreme Court", federalCircuit: null, jurisdiction: "CO" },
-  tenn: { courtId: "st-tn-high", courtLevel: "state_high", authorityState: "TN", courtName: "Supreme Court of Tennessee", federalCircuit: null, jurisdiction: "TN" },
-  kan: { courtId: "st-ks-high", courtLevel: "state_high", authorityState: "KS", courtName: "Supreme Court of Kansas", federalCircuit: null, jurisdiction: "KS" },
-  me: { courtId: "st-me-high", courtLevel: "state_high", authorityState: "ME", courtName: "Supreme Judicial Court of Maine", federalCircuit: null, jurisdiction: "ME" },
-  ri: { courtId: "st-ri-high", courtLevel: "state_high", authorityState: "RI", courtName: "Supreme Court of Rhode Island", federalCircuit: null, jurisdiction: "RI" },
-  vt: { courtId: "st-vt-high", courtLevel: "state_high", authorityState: "VT", courtName: "Supreme Court of Vermont", federalCircuit: null, jurisdiction: "VT" },
-  nh: { courtId: "st-nh-high", courtLevel: "state_high", authorityState: "NH", courtName: "Supreme Court of New Hampshire", federalCircuit: null, jurisdiction: "NH" },
-  sd: { courtId: "st-sd-high", courtLevel: "state_high", authorityState: "SD", courtName: "South Dakota Supreme Court", federalCircuit: null, jurisdiction: "SD" },
-  nd: { courtId: "st-nd-high", courtLevel: "state_high", authorityState: "ND", courtName: "North Dakota Supreme Court", federalCircuit: null, jurisdiction: "ND" },
-  wyo: { courtId: "st-wy-high", courtLevel: "state_high", authorityState: "WY", courtName: "Wyoming Supreme Court", federalCircuit: null, jurisdiction: "WY" },
-  mont: { courtId: "st-mt-high", courtLevel: "state_high", authorityState: "MT", courtName: "Montana Supreme Court", federalCircuit: null, jurisdiction: "MT" },
-  miss: { courtId: "st-ms-high", courtLevel: "state_high", authorityState: "MS", courtName: "Supreme Court of Mississippi", federalCircuit: null, jurisdiction: "MS" },
-  wva: { courtId: "st-wv-high", courtLevel: "state_high", authorityState: "WV", courtName: "West Virginia Supreme Court", federalCircuit: null, jurisdiction: "WV" },
-  del: { courtId: "st-de-high", courtLevel: "state_high", authorityState: "DE", courtName: "Supreme Court of Delaware", federalCircuit: null, jurisdiction: "DE" },
-  dc: { courtId: "st-dc-high", courtLevel: "state_high", authorityState: "DC", courtName: "District of Columbia Court of Appeals", federalCircuit: null, jurisdiction: "DC" },
-  mass: { courtId: "st-ma-high", courtLevel: "state_high", authorityState: "MA", courtName: "Supreme Judicial Court of Massachusetts", federalCircuit: null, jurisdiction: "MA" },
-  nysd: { courtId: "us-d-nysd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Southern District of New York", federalCircuit: "2", jurisdiction: "United States" },
-  cacd: { courtId: "us-d-cacd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Central District of California", federalCircuit: "9", jurisdiction: "United States" },
-  ilnd: { courtId: "us-d-ilnd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Northern District of Illinois", federalCircuit: "7", jurisdiction: "United States" },
-  txsd: { courtId: "us-d-txsd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Southern District of Texas", federalCircuit: "5", jurisdiction: "United States" },
-  dcd: { courtId: "us-d-dcd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the District of Columbia", federalCircuit: "dc", jurisdiction: "United States" },
-  njd: { courtId: "us-d-njd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the District of New Jersey", federalCircuit: "3", jurisdiction: "United States" },
-  paed: { courtId: "us-d-paed", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Eastern District of Pennsylvania", federalCircuit: "3", jurisdiction: "United States" },
-  mad: { courtId: "us-d-mad", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the District of Massachusetts", federalCircuit: "1", jurisdiction: "United States" },
-  flsd: { courtId: "us-d-flsd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Southern District of Florida", federalCircuit: "11", jurisdiction: "United States" },
-  txnd: { courtId: "us-d-txnd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Northern District of Texas", federalCircuit: "5", jurisdiction: "United States" },
-  cand: { courtId: "us-d-cand", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Northern District of California", federalCircuit: "9", jurisdiction: "United States" },
-  waed: { courtId: "us-d-waed", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Eastern District of Washington", federalCircuit: "9", jurisdiction: "United States" }
+var SCOTUS_MAP = {
+  courtId: "us-scotus",
+  courtLevel: "scotus",
+  authorityState: "US",
+  courtName: "Supreme Court of the United States",
+  federalCircuit: null,
+  jurisdiction: "United States",
+  clCourt: "scotus"
 };
+var DEFAULT_DENY = /* @__PURE__ */ new Set(["573 U.S. 373"]);
 function sha256(text) {
   return createHash("sha256").update(String(text), "utf8").digest("hex");
 }
@@ -2442,6 +2363,47 @@ function toPgvector(vec) {
 }
 function stripHtml(html) {
   return String(html || "").replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<style[\s\S]*?<\/style>/gi, " ").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+}
+function leanNormalizeUs(cite) {
+  const m = String(cite || "").replace(/\s+/g, " ").trim().match(/^(\d{1,3})\s+U\.?\s*S\.?\s+(\d{1,4})$/i);
+  return m ? `${m[1]} U.S. ${m[2]}` : null;
+}
+function parseUsReports(cite) {
+  const norm = leanNormalizeUs(cite);
+  if (!norm) return null;
+  const m = norm.match(/^(\d{1,3}) U\.S\. (\d{1,4})$/);
+  return m ? { volume: Number(m[1]), page: Number(m[2]), citation: norm, reporter: "U.S.", family: "us_reports" } : null;
+}
+function citationMatchesTarget(candidate, target) {
+  const parsed = parseUsReports(candidate);
+  if (!parsed) return false;
+  return parsed.volume === target.volume && parsed.page === target.page;
+}
+function collectClusterCites(cluster) {
+  const cites = [];
+  if (Array.isArray(cluster?.citation)) cites.push(...cluster.citation.map(String));
+  else if (typeof cluster?.citation === "string" && cluster.citation.trim()) cites.push(cluster.citation);
+  if (Array.isArray(cluster?.citations)) {
+    for (const c of cluster.citations) {
+      if (typeof c === "string" && c.trim()) cites.push(c);
+      else if (c && typeof c === "object") {
+        if (c.cite) cites.push(String(c.cite));
+        const vol = c.volume != null ? Number(c.volume) : null;
+        const page = c.page != null ? Number(c.page) : null;
+        const reporter = String(c.reporter || c.reporter_name || "");
+        if (vol && page && /U\.?\s*S\.?/i.test(reporter)) cites.push(`${vol} U.S. ${page}`);
+      }
+    }
+  }
+  return cites;
+}
+function pickText(hit) {
+  const plain = hit?.plain_text || hit?.plainText;
+  if (plain && String(plain).trim().length >= 80) {
+    return String(plain).replace(/\s+/g, " ").trim().slice(0, MAX_OPINION_CHARS);
+  }
+  const html = hit?.html_with_citations || hit?.html || hit?.html_lawbox || hit?.html_columbia || hit?.snippet || "";
+  return stripHtml(html).slice(0, MAX_OPINION_CHARS);
 }
 function chunkContent(content) {
   const parts = String(content).split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
@@ -2461,190 +2423,440 @@ function chunkContent(content) {
   }
   return chunks.length ? chunks : [String(content).slice(0, MAX_CHUNK_CHARS)];
 }
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
+}
+async function embedBatch(texts, apiKey) {
+  const res = await fetch("https://api.openai.com/v1/embeddings", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ model: EMBEDDING_MODEL, input: texts, dimensions: EMBEDDING_DIMS })
+  });
+  if (!res.ok) throw new Error(`embed_http_${res.status}`);
+  const body = await res.json();
+  return (body.data || []).sort((a, b) => a.index - b.index).map((d) => d.embedding);
+}
 async function embedAll(texts, apiKey) {
   const out = [];
   for (let i = 0; i < texts.length; i += 32) {
-    const batch = texts.slice(i, i + 32);
-    const res = await fetch("https://api.openai.com/v1/embeddings", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ model: EMBEDDING_MODEL, input: batch, dimensions: EMBEDDING_DIMS }),
-      signal: AbortSignal.timeout(6e4)
-    });
-    if (!res.ok) throw new Error(`embed_http_${res.status}`);
-    const body = await res.json();
-    out.push(...(body.data || []).sort((a, b) => a.index - b.index).map((d) => d.embedding));
+    out.push(...await embedBatch(texts.slice(i, i + 32), apiKey));
   }
   return out;
 }
-async function main() {
-  const key = process.env.COURTLISTENER_API_KEY;
-  const db = process.env.DATABASE_URL;
-  const openai = process.env.OPENAI_API_KEY;
-  const clCourt = (process.argv[2] || process.env.CL_COURT || "ca5").trim().toLowerCase();
-  const mapped = COURT_MAP[clCourt];
-  const ids = String(process.argv[3] || process.env.CL_OPINION_IDS || "").split(",").map((s) => Number(s.trim())).filter((n) => Number.isFinite(n) && n > 0);
-  const maxIngest = Math.min(Math.max(Number(process.argv[4] || process.env.CL_MAX_INGEST || 8), 1), 10);
-  const hardTimeoutMs = Math.min(Math.max(Number(process.env.CL_HARD_TIMEOUT_MS || 12e4), 3e4), 18e4);
-  const started = Date.now();
-  let calls = 0;
-  if (!key || !db || !openai) {
-    console.log(JSON.stringify({ ok: false, phase: "INGEST", reason: "missing_env", courtListenerHttpCalls: 0 }));
-    process.exit(2);
+async function clFetch(url, apiKey, counters, init = {}) {
+  if (counters.apiCalls >= counters.maxCalls) {
+    return { status: 0, ok: false, rateLimited: false, budgetExhausted: true, json: async () => ({}) };
   }
-  if (!mapped) {
-    console.log(JSON.stringify({ ok: false, phase: "INGEST", reason: `unmapped:${clCourt}`, courtListenerHttpCalls: 0 }));
-    process.exit(2);
+  const rateMs = Math.max(Number(process.env.CL_RATE_MS || 2200), 400);
+  const wait = rateMs - (Date.now() - (counters.lastAt || 0));
+  if (wait > 0) await sleep(wait);
+  counters.apiCalls += 1;
+  counters.lastAt = Date.now();
+  const res = await fetch(url, {
+    ...init,
+    headers: {
+      Authorization: `Token ${apiKey}`,
+      Accept: "application/json",
+      ...init.headers || {}
+    },
+    signal: AbortSignal.timeout(45e3)
+  });
+  if (res.status === 429) {
+    counters.rateLimited = true;
+    counters.lastRetryAfter = res.headers.get("retry-after");
   }
-  if (!ids.length) {
-    console.log(JSON.stringify({ ok: false, phase: "INGEST", reason: "no_ids", courtListenerHttpCalls: 0 }));
-    process.exit(2);
+  return res;
+}
+async function authorityPresent(sql, citation) {
+  return sql`
+    select id, citation, normalized_citation, source_external_id
+    from legal_authorities
+    where normalized_citation = ${citation}
+       or citation = ${citation}
+    limit 5
+  `;
+}
+async function resolveClusterViaLookup(apiKey, target, counters) {
+  const res = await clFetch(`${CL_BASE}/citation-lookup/`, apiKey, counters, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: target.citation })
+  });
+  if (res.budgetExhausted) return { ok: false, reason: "budget_exhausted" };
+  if (res.status === 429) return { ok: false, reason: "rate_limited", retryAfter: counters.lastRetryAfter };
+  if (!res.ok) return { ok: false, reason: `lookup_http_${res.status}` };
+  const body = await res.json();
+  const rows = Array.isArray(body) ? body : Array.isArray(body?.results) ? body.results : [];
+  for (const row of rows) {
+    const clusters = Array.isArray(row.clusters) ? row.clusters : row.cluster ? [row.cluster] : [];
+    for (const cluster of clusters) {
+      const cites = collectClusterCites(cluster);
+      const matched = cites.some((c) => citationMatchesTarget(c, target));
+      const statusOk = row.status == null || Number(row.status) === 200;
+      if (matched && statusOk) {
+        return {
+          ok: true,
+          method: "citation-lookup",
+          clusterId: cluster.id || cluster.cluster_id || null,
+          cluster,
+          cites
+        };
+      }
+    }
+    const normCites = Array.isArray(row.normalized_citations) ? row.normalized_citations : [];
+    if (normCites.some((c) => citationMatchesTarget(String(c), target)) && clusters[0]) {
+      return {
+        ok: true,
+        method: "citation-lookup",
+        clusterId: clusters[0].id || clusters[0].cluster_id || null,
+        cluster: clusters[0],
+        cites: normCites.map(String)
+      };
+    }
   }
-  const timer = setTimeout(() => {
-    console.log(
-      JSON.stringify({
-        ok: false,
-        phase: "INGEST",
-        status: "HIST_QUERY_TIMEOUT",
-        courtListenerHttpCalls: calls,
-        elapsedMs: Date.now() - started
-      })
-    );
-    process.exit(1);
-  }, hardTimeoutMs);
-  const sql = postgres(db, { max: 1, ssl: "require", idle_timeout: 5, connect_timeout: 30 });
-  const results = [];
-  let imported = 0;
-  try {
-    for (const id of ids.slice(0, maxIngest)) {
-      if (Date.now() - started > hardTimeoutMs - 5e3) break;
-      await new Promise((r) => setTimeout(r, 2200));
-      const res = await fetch(`${CL_BASE}/opinions/${id}/`, {
-        headers: { Authorization: `Token ${key}`, Accept: "application/json" },
-        signal: AbortSignal.timeout(3e4)
-      });
-      calls += 1;
-      if (res.status === 429) {
-        results.push({ id, status: "rate_limited" });
+  return { ok: false, reason: "no_verified_cluster_match" };
+}
+async function fetchOpinionAndCluster(apiKey, seed, target, counters) {
+  let cluster = seed.cluster || null;
+  let clusterId = seed.clusterId || cluster?.id || null;
+  if (!cluster && clusterId) {
+    const cRes = await clFetch(`${CL_BASE}/clusters/${clusterId}/`, apiKey, counters);
+    if (cRes.budgetExhausted) return { ok: false, reason: "budget_exhausted" };
+    if (cRes.status === 429) return { ok: false, reason: "rate_limited" };
+    if (!cRes.ok) return { ok: false, reason: `cluster_http_${cRes.status}` };
+    cluster = await cRes.json();
+  }
+  if (cluster) {
+    const cites = collectClusterCites(cluster);
+    if (!cites.some((c) => citationMatchesTarget(c, target))) {
+      return { ok: false, reason: "cluster_citation_mismatch", cites };
+    }
+  }
+  let opinionId = seed.opinionId || null;
+  if (!opinionId && cluster) {
+    const opinions = Array.isArray(cluster.sub_opinions) ? cluster.sub_opinions : Array.isArray(cluster.opinions) ? cluster.opinions : [];
+    for (const op of opinions) {
+      if (typeof op === "number" || typeof op === "string" && /^\d+$/.test(op)) {
+        opinionId = String(op);
         break;
       }
-      if (!res.ok) {
-        results.push({ id, status: `http_${res.status}` });
+      if (op && typeof op === "object" && op.id != null) {
+        opinionId = String(op.id);
+        break;
+      }
+      if (typeof op === "string" && op.includes("/opinions/")) {
+        const m = op.match(/\/opinions\/(\d+)/);
+        if (m) {
+          opinionId = m[1];
+          break;
+        }
+      }
+    }
+  }
+  if (!opinionId) return { ok: false, reason: "no_opinion_id" };
+  const oRes = await clFetch(`${CL_BASE}/opinions/${opinionId}/`, apiKey, counters);
+  if (oRes.budgetExhausted) return { ok: false, reason: "budget_exhausted" };
+  if (oRes.status === 429) return { ok: false, reason: "rate_limited" };
+  if (!oRes.ok) return { ok: false, reason: `opinion_http_${oRes.status}` };
+  const hit = await oRes.json();
+  const text = pickText(hit);
+  if (text.length < 80) return { ok: false, reason: "empty_opinion_text" };
+  const title = cluster && (cluster.case_name || cluster.case_name_full) || hit.case_name || hit.caseName || target.citation;
+  const decisionDate = cluster?.date_filed || hit.date_filed || null;
+  const docket = cluster?.docket_number || hit.docket_number || null;
+  const canonicalSourceUrl = `https://www.courtlistener.com/opinion/${clusterId || opinionId}/`;
+  return {
+    ok: true,
+    opinion: {
+      title: String(title).slice(0, 500),
+      citation: target.citation,
+      normalizedCitation: target.citation,
+      targetCitation: target.citation,
+      docketNumber: docket,
+      decisionDate,
+      content: text,
+      contentHash: sha256(text),
+      canonicalSourceUrl,
+      retrievedAt: (/* @__PURE__ */ new Date()).toISOString(),
+      opinionId,
+      clusterId: clusterId != null ? String(clusterId) : null,
+      sourceExternalId: `cl-opinion-${opinionId}`
+    }
+  };
+}
+async function persistOpinion(sql, opinion, apiKey) {
+  const existing = await sql`
+    select id from legal_authorities
+    where source_provider = ${SOURCE} and source_external_id = ${opinion.sourceExternalId}
+    limit 1
+  `;
+  const metadata = {
+    sourceClass: "PRIMARY_PUBLIC_REPOSITORY",
+    adapter: "courtlistener-a2-verified-batch",
+    clCourt: "scotus",
+    retrievedAt: opinion.retrievedAt,
+    citationStatus: "reported",
+    a2TargetCitation: opinion.targetCitation,
+    verifiedReporterMatch: true
+  };
+  if (existing.length > 0) {
+    const authorityId2 = existing[0].id;
+    const latest = await sql`
+      select id, version_number, sha256 from legal_authority_versions
+      where authority_id = ${authorityId2} order by version_number desc limit 1
+    `;
+    if (latest.length > 0 && latest[0].sha256 === opinion.contentHash) {
+      await sql`update legal_authorities set last_checked_at = now(), updated_at = now() where id = ${authorityId2}`;
+      return { status: "skipped", authorityId: authorityId2, embeddedChunks: 0 };
+    }
+  }
+  const authorityId = existing.length > 0 ? existing[0].id : randomUUID();
+  const versionId = randomUUID();
+  const mapped = SCOTUS_MAP;
+  const norm = opinion.normalizedCitation;
+  if (existing.length === 0) {
+    await sql`
+      insert into legal_authorities (
+        id, authority_type, jurisdiction, court, court_id, authority_state,
+        federal_circuit, court_level, title, citation, normalized_citation,
+        docket_number, decision_date, source_provider, source_external_id,
+        canonical_source_url, metadata, ingestion_status, created_at, updated_at, last_checked_at
+      ) values (
+        ${authorityId}, 'case', ${mapped.jurisdiction}, ${mapped.courtName}, ${mapped.courtId},
+        ${mapped.authorityState}, ${mapped.federalCircuit}, ${mapped.courtLevel},
+        ${opinion.title}, ${opinion.citation}, ${norm},
+        ${opinion.docketNumber}, ${opinion.decisionDate}, ${SOURCE}, ${opinion.sourceExternalId},
+        ${opinion.canonicalSourceUrl}, ${sql.json(metadata)}, 'processing'::authority_ingestion_status,
+        now(), now(), now()
+      )
+    `;
+  } else {
+    await sql`
+      update legal_authority_versions set valid_to = now()
+      where authority_id = ${authorityId} and valid_to is null
+    `;
+    await sql`
+      update legal_authorities set
+        title = ${opinion.title},
+        citation = ${opinion.citation},
+        normalized_citation = ${norm},
+        docket_number = ${opinion.docketNumber},
+        decision_date = ${opinion.decisionDate},
+        canonical_source_url = ${opinion.canonicalSourceUrl},
+        metadata = ${sql.json(metadata)},
+        last_checked_at = now(),
+        updated_at = now()
+      where id = ${authorityId}
+    `;
+  }
+  const nextVersion = existing.length === 0 ? 1 : Number(
+    (await sql`
+              select coalesce(max(version_number), 0)::int as v
+              from legal_authority_versions where authority_id = ${authorityId}
+            `)[0].v
+  ) + 1;
+  await sql`
+    insert into legal_authority_versions (
+      id, authority_id, version_number, content, effective_from, effective_to,
+      source_provider, source_metadata, sha256
+    ) values (
+      ${versionId}, ${authorityId}, ${nextVersion}, ${opinion.content},
+      ${opinion.decisionDate}, ${null}, ${SOURCE},
+      ${sql.json({ adapter: "courtlistener-a2-verified-batch", retrievedAt: opinion.retrievedAt, target: opinion.targetCitation })},
+      ${opinion.contentHash}
+    )
+  `;
+  const chunks = chunkContent(opinion.content);
+  const vectors = await embedAll(chunks, apiKey);
+  for (let i = 0; i < chunks.length; i++) {
+    await sql`
+      insert into legal_authority_chunks (
+        id, authority_id, authority_version_id, chunk_index, content,
+        segment_ref, char_start, char_end, embedding, embedding_model
+      ) values (
+        ${randomUUID()}, ${authorityId}, ${versionId}, ${i}, ${chunks[i]},
+        ${`p${i + 1}`}, ${null}, ${null}, ${toPgvector(vectors[i])}::vector,
+        ${`${EMBEDDING_MODEL}:${EMBEDDING_DIMS}`}
+      )
+    `;
+  }
+  const citeResult = await ensureCaseCitationExtraction(sql, {
+    authorityId,
+    content: opinion.content,
+    existingMetadata: metadata
+  });
+  await sql`
+    update legal_authorities
+    set ingestion_status = 'ready'::authority_ingestion_status, updated_at = now()
+    where id = ${authorityId}
+  `;
+  return {
+    status: existing.length ? "new_version" : "imported",
+    authorityId,
+    embeddedChunks: chunks.length,
+    citationEdges: citeResult.inserted
+  };
+}
+async function main() {
+  const clKey = process.env.COURTLISTENER_API_KEY?.trim();
+  const databaseUrl = process.env.DATABASE_URL?.trim();
+  const openaiKey = process.env.OPENAI_API_KEY?.trim();
+  const maxCalls = Math.min(
+    Math.max(Number.parseInt(process.argv[3] || process.env.A2_MAX_PRODUCTIVE_CALLS || "25", 10) || 25, 1),
+    40
+  );
+  const acquireLimit = Math.min(
+    Math.max(Number.parseInt(process.argv[4] || process.env.A2_ACQUIRE_LIMIT || "5", 10) || 5, 1),
+    10
+  );
+  const denyExtra = String(process.env.A2_DENY || "").split("|").map((s) => leanNormalizeUs(s.trim())).filter(Boolean);
+  const deny = /* @__PURE__ */ new Set([...DEFAULT_DENY, ...denyExtra]);
+  const rawList = process.argv[2] || process.env.A2_CITATIONS || "";
+  const citations = String(rawList).split("|").map((s) => leanNormalizeUs(s.trim())).filter(Boolean);
+  if (!clKey || !databaseUrl || !openaiKey) {
+    console.log(JSON.stringify({ ok: false, reason: "missing_env", hasCl: Boolean(clKey), hasDb: Boolean(databaseUrl), hasOpenAI: Boolean(openaiKey) }));
+    process.exit(2);
+  }
+  const sql = postgres(databaseUrl, { max: 1, ssl: "require", idle_timeout: 5, connect_timeout: 30 });
+  const counters = { apiCalls: 0, maxCalls, rateLimited: false, lastAt: 0, lastRetryAfter: null };
+  const preverify = [];
+  const results = [];
+  const deferred = [];
+  const verified = [];
+  try {
+    for (const citation of citations) {
+      if (verified.length >= acquireLimit) break;
+      if (counters.apiCalls >= maxCalls || counters.rateLimited) break;
+      if (deny.has(citation)) {
+        deferred.push({ citation, reason: "deny_list", clRequests: 0, retry: "defer" });
         continue;
       }
-      const op = await res.json();
-      let cluster = null;
-      const clusterId = op.cluster ? String(op.cluster).match(/\/clusters\/(\d+)/)?.[1] || op.cluster_id : op.cluster_id;
-      if (clusterId) {
-        await new Promise((r) => setTimeout(r, 2200));
-        const cRes = await fetch(`${CL_BASE}/clusters/${clusterId}/`, {
-          headers: { Authorization: `Token ${key}`, Accept: "application/json" },
-          signal: AbortSignal.timeout(3e4)
+      const target = parseUsReports(citation);
+      if (!target) {
+        deferred.push({ citation, reason: "unsupported_non_us_reports", clRequests: 0, retry: "defer" });
+        continue;
+      }
+      const present = await authorityPresent(sql, target.citation);
+      if (present.length > 0) {
+        preverify.push({ citation: target.citation, status: "already_present", authorityId: present[0].id, clRequests: 0 });
+        continue;
+      }
+      const before = counters.apiCalls;
+      const resolved = await resolveClusterViaLookup(clKey, target, counters);
+      const spent = counters.apiCalls - before;
+      if (!resolved.ok) {
+        const row = {
+          citation: target.citation,
+          reason: resolved.reason,
+          clRequests: spent,
+          retry: resolved.reason === "rate_limited" || resolved.reason === "budget_exhausted" ? "stop" : "defer"
+        };
+        deferred.push(row);
+        preverify.push({ ...row, status: "preverify_fail" });
+        if (row.retry === "stop") break;
+        continue;
+      }
+      verified.push({ target, seed: resolved, preverifyCl: spent });
+      preverify.push({
+        citation: target.citation,
+        status: "verified",
+        method: resolved.method,
+        clusterId: resolved.clusterId,
+        clRequests: spent
+      });
+    }
+    for (const item of verified) {
+      if (counters.apiCalls >= maxCalls || counters.rateLimited) {
+        results.push({ citation: item.target.citation, status: "skipped", reason: counters.rateLimited ? "rate_limited" : "budget_exhausted", clRequests: 0 });
+        break;
+      }
+      const before = counters.apiCalls;
+      const fetched = await fetchOpinionAndCluster(clKey, item.seed, item.target, counters);
+      if (!fetched.ok) {
+        const spent2 = counters.apiCalls - before;
+        results.push({
+          citation: item.target.citation,
+          status: "skipped",
+          reason: fetched.reason,
+          clRequests: item.preverifyCl + spent2,
+          retry: fetched.reason === "rate_limited" || fetched.reason === "budget_exhausted" ? "stop" : "defer"
         });
-        calls += 1;
-        if (cRes.ok) cluster = await cRes.json();
-      }
-      const html = op.html_with_citations || op.html_columbia || op.html || op.plain_text || "";
-      const content = stripHtml(html).slice(0, MAX_OPINION_CHARS);
-      if (content.length < 200) {
-        results.push({ id, status: "skipped_short" });
+        deferred.push({
+          citation: item.target.citation,
+          reason: fetched.reason,
+          clRequests: item.preverifyCl + spent2,
+          retry: "defer"
+        });
+        if (fetched.reason === "rate_limited" || fetched.reason === "budget_exhausted") break;
         continue;
       }
-      const sourceExternalId = `cl-opinion-${id}`;
-      const existing = await sql`
-        select id from legal_authorities
-        where source_provider=${SOURCE} and source_external_id=${sourceExternalId} limit 1
-      `;
-      if (existing.length) {
-        results.push({ id, status: "duplicate" });
-        continue;
-      }
-      const title = String(cluster?.case_name || op.case_name || `Opinion ${id}`).slice(0, 500);
-      const citation = Array.isArray(cluster?.citation) ? cluster.citation[0] : cluster?.citation || null;
-      const decisionDate = cluster?.date_filed || op.date_filed || null;
-      const authorityId = randomUUID();
-      const versionId = randomUUID();
-      const hash = sha256(content);
-      await sql`
-        insert into legal_authorities (
-          id, authority_type, jurisdiction, court, court_id, authority_state,
-          federal_circuit, court_level, title, citation, normalized_citation,
-          docket_number, decision_date, source_provider, source_external_id,
-          canonical_source_url, ingestion_status, hierarchy_path, metadata
-        ) values (
-          ${authorityId}, ${"case"}::authority_type, ${mapped.jurisdiction}, ${mapped.courtName},
-          ${mapped.courtId}, ${mapped.authorityState}, ${mapped.federalCircuit}, ${mapped.courtLevel},
-          ${title}, ${citation}, ${citation}, ${cluster?.docket_number || null}, ${decisionDate},
-          ${SOURCE}, ${sourceExternalId},
-          ${`https://www.courtlistener.com/opinion/${id}/`},
-          'processing'::authority_ingestion_status, ${sql.json([])},
-          ${sql.json({ clCourt, adapter: "s3-hist-ingest", clusterId: clusterId || null })}
-        )
-      `;
-      await sql`
-        insert into legal_authority_versions (
-          id, authority_id, version_number, content, effective_from, effective_to,
-          source_provider, source_metadata, sha256
-        ) values (
-          ${versionId}, ${authorityId}, 1, ${content}, ${decisionDate}, ${null},
-          ${SOURCE}, ${sql.json({ retrievedAt: (/* @__PURE__ */ new Date()).toISOString() })}, ${hash}
-        )
-      `;
-      const citeResult = await ensureCaseCitationExtraction(sql, {
-        authorityId,
-        content,
-        existingMetadata: { clCourt, adapter: "s3-hist-ingest", clusterId: clusterId || null }
-      });
-      const citationEdges = citeResult.inserted;
-      const chunks = chunkContent(content);
-      const vectors = await embedAll(chunks, openai);
-      for (let i = 0; i < chunks.length; i++) {
-        await sql`
-          insert into legal_authority_chunks (
-            id, authority_id, authority_version_id, chunk_index, content,
-            segment_ref, embedding, embedding_model
-          ) values (
-            ${randomUUID()}, ${authorityId}, ${versionId}, ${i}, ${chunks[i]},
-            ${`p${i + 1}`}, ${toPgvector(vectors[i])}::vector, ${`${EMBEDDING_MODEL}:${EMBEDDING_DIMS}`}
-          )
-        `;
-      }
-      await sql`
-        update legal_authorities set ingestion_status='ready'::authority_ingestion_status, updated_at=now()
-        where id=${authorityId}
-      `;
-      imported += 1;
+      const persisted = await persistOpinion(sql, fetched.opinion, openaiKey);
+      const spent = counters.apiCalls - before;
       results.push({
-        id,
-        status: "imported",
-        decisionDate,
-        title: title.slice(0, 80),
-        citationEdges
+        citation: item.target.citation,
+        status: persisted.status,
+        authorityId: persisted.authorityId,
+        sourceExternalId: fetched.opinion.sourceExternalId,
+        clusterId: fetched.opinion.clusterId,
+        opinionId: fetched.opinion.opinionId,
+        embeddedChunks: persisted.embeddedChunks,
+        title: fetched.opinion.title,
+        method: item.seed.method,
+        clRequests: item.preverifyCl + spent,
+        preverifyCl: item.preverifyCl,
+        acquireCl: spent,
+        canonicalSourceUrl: fetched.opinion.canonicalSourceUrl,
+        reporter: "U.S."
       });
     }
-    clearTimeout(timer);
-    const payload = {
-      ok: true,
-      phase: "INGEST",
-      status: "done",
-      clCourt,
-      imported,
-      results,
-      courtListenerHttpCalls: calls,
-      elapsedMs: Date.now() - started,
-      mutations: imported
-    };
-    try {
-      fs.writeFileSync("/tmp/queue2-s3-hist-ingest.json", JSON.stringify(payload, null, 2));
-    } catch (_) {
-    }
-    console.log(JSON.stringify(payload));
+    const [corpus] = await sql`
+      select count(*)::int as authorities,
+             count(*) filter (where authority_type='case')::int as cases,
+             count(*) filter (where authority_type='case' and source_provider='courtlistener')::int as cl_cases
+      from legal_authorities
+    `;
+    const [chunks] = await sql`
+      select count(*)::int as chunks,
+             count(*) filter (where embedding is not null)::int as embeddings,
+             count(*) filter (where embedding is null)::int as missing_embeddings
+      from legal_authority_chunks
+    `;
+    const dupes = await sql`
+      select count(*)::int as n from (
+        select 1 from legal_authorities where source_external_id is not null
+        group by source_provider, source_external_id having count(*) > 1
+      ) d
+    `;
+    const orphans = await sql`
+      select count(*)::int as n from legal_authority_chunks c
+      left join legal_authorities a on a.id = c.authority_id where a.id is null
+    `;
+    console.log(
+      JSON.stringify({
+        ok: true,
+        classification: "A2_VERIFIED_MICRO_BATCH",
+        maxCalls,
+        acquireLimit,
+        courtListenerHttpCalls: counters.apiCalls,
+        rateLimited: counters.rateLimited,
+        lastRetryAfter: counters.lastRetryAfter,
+        considered: citations.length,
+        preverified: verified.length,
+        acquired: results.filter((r) => r.status === "imported" || r.status === "new_version").length,
+        deferred,
+        preverify,
+        results,
+        corpus,
+        chunks,
+        duplicateSourceIds: dupes[0]?.n || 0,
+        orphans: orphans[0]?.n || 0
+      })
+    );
   } finally {
-    clearTimeout(timer);
     await sql.end({ timeout: 5 });
   }
 }
 main().catch((e) => {
-  console.log(JSON.stringify({ ok: false, phase: "INGEST", err: String(e.message || e).slice(0, 300), courtListenerHttpCalls: 0 }));
+  console.log(JSON.stringify({ ok: false, err: String(e.message || e).slice(0, 500), courtListenerHttpCalls: 0 }));
   process.exit(1);
 });

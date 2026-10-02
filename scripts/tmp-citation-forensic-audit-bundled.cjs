@@ -628,7 +628,7 @@ var require_connection = __commonJS({
   "node_modules/postgres/cjs/src/connection.js"(exports2, module2) {
     var net = require("net");
     var tls = require("tls");
-    var crypto = require("crypto");
+    var crypto2 = require("crypto");
     var Stream = require("stream");
     var { performance } = require("perf_hooks");
     var { stringify, handleValue, arrayParser, arraySerializer } = require_types();
@@ -1192,14 +1192,14 @@ var require_connection = __commonJS({
         );
       }
       async function SASL() {
-        nonce = (await crypto.randomBytes(18)).toString("base64");
+        nonce = (await crypto2.randomBytes(18)).toString("base64");
         b().p().str("SCRAM-SHA-256" + b.N);
         const i = b.i;
         write(b.inc(4).str("n,,n=*,r=" + nonce).i32(b.i - i - 4, i).end());
       }
       async function SASLContinue(x) {
         const res = x.toString("utf8", 9).split(",").reduce((acc, x2) => (acc[x2[0]] = x2.slice(2), acc), {});
-        const saltedPassword = await crypto.pbkdf2Sync(
+        const saltedPassword = await crypto2.pbkdf2Sync(
           await Pass(),
           Buffer.from(res.s, "base64"),
           parseInt(res.i),
@@ -1211,7 +1211,7 @@ var require_connection = __commonJS({
         serverSignature = (await hmac(await hmac(saltedPassword, "Server Key"), auth)).toString("base64");
         const payload = "c=biws,r=" + res.r + ",p=" + xor(
           clientKey,
-          Buffer.from(await hmac(await sha2562(clientKey), auth))
+          Buffer.from(await hmac(await sha256(clientKey), auth))
         ).toString("base64");
         write(
           b().p().str(payload).end()
@@ -1441,13 +1441,13 @@ var require_connection = __commonJS({
       return error;
     }
     function md5(x) {
-      return crypto.createHash("md5").update(x).digest("hex");
+      return crypto2.createHash("md5").update(x).digest("hex");
     }
     function hmac(key, x) {
-      return crypto.createHmac("sha256", key).update(x).digest();
+      return crypto2.createHmac("sha256", key).update(x).digest();
     }
-    function sha2562(x) {
-      return crypto.createHash("sha256").update(x).digest();
+    function sha256(x) {
+      return crypto2.createHash("sha256").update(x).digest();
     }
     function xor(a, b2) {
       const length = Math.max(a.length, b2.length);
@@ -1570,13 +1570,13 @@ var require_subscribe = __commonJS({
           }
         }
         function handle(a, b) {
-          const path = b.relation.schema + "." + b.relation.table;
+          const path2 = b.relation.schema + "." + b.relation.table;
           call("*", a, b);
-          call("*:" + path, a, b);
-          b.relation.keys.length && call("*:" + path + "=" + b.relation.keys.map((x2) => a[x2.name]), a, b);
+          call("*:" + path2, a, b);
+          b.relation.keys.length && call("*:" + path2 + "=" + b.relation.keys.map((x2) => a[x2.name]), a, b);
           call(b.command, a, b);
-          call(b.command + ":" + path, a, b);
-          b.relation.keys.length && call(b.command + ":" + path + "=" + b.relation.keys.map((x2) => a[x2.name]), a, b);
+          call(b.command + ":" + path2, a, b);
+          b.relation.keys.length && call(b.command + ":" + path2 + "=" + b.relation.keys.map((x2) => a[x2.name]), a, b);
         }
         function pong() {
           const x2 = Buffer.alloc(34);
@@ -1689,8 +1689,8 @@ var require_subscribe = __commonJS({
       const xs = x.match(/^(\*|insert|update|delete)?:?([^.]+?\.?[^=]+)?=?(.+)?/i) || [];
       if (!xs)
         throw new Error("Malformed subscribe pattern: " + x);
-      const [, command, path, key] = xs;
-      return (command || "*") + (path ? ":" + (path.indexOf(".") === -1 ? "public." + path : path) : "") + (key ? "=" + key : "");
+      const [, command, path2, key] = xs;
+      return (command || "*") + (path2 ? ":" + (path2.indexOf(".") === -1 ? "public." + path2 : path2) : "") + (key ? "=" + key : "");
     }
   }
 });
@@ -1868,10 +1868,10 @@ var require_src = __commonJS({
           });
           return query;
         }
-        function file(path, args = [], options2 = {}) {
+        function file(path2, args = [], options2 = {}) {
           arguments.length === 2 && !Array.isArray(args) && (options2 = args, args = []);
           const query = new Query([], args, (query2) => {
-            fs2.readFile(path, "utf8", (err, string) => {
+            fs2.readFile(path2, "utf8", (err, string) => {
               if (err)
                 return query2.reject(err);
               query2.strings = [string];
@@ -2197,454 +2197,1283 @@ var require_src = __commonJS({
   }
 });
 
-// scripts/lib/case-citation-extraction.cjs
-var require_case_citation_extraction = __commonJS({
-  "scripts/lib/case-citation-extraction.cjs"(exports2, module2) {
+// scripts/wave2f-citation-audit.cjs
+var require_wave2f_citation_audit = __commonJS({
+  "scripts/wave2f-citation-audit.cjs"(exports2, module2) {
     "use strict";
-    var { createHash: createHash2, randomUUID: randomUUID2 } = require("node:crypto");
-    var CITATION_EXTRACTION_VERSION = "case-cite-extract-v1";
-    var EXTRACT_RES = [
-      /\b\d{1,3}\s+U\.?\s*S\.?\s+\d{1,4}\b/gi,
-      /\b\d{1,3}\s+S\.?\s*Ct\.?\s+\d{1,4}\b/gi,
-      /\b\d{1,3}\s+L\.?\s*Ed\.?\s*(?:2d\s+)?\d{1,4}\b/gi,
-      /\b\d{1,4}\s+F\.?\s*(?:2d|3d|4th)\s+\d{1,4}\b/gi,
-      /\b\d{1,4}\s+F\.?\s*Supp\.?\s*(?:2d|3d)?\s+\d{1,4}\b/gi,
-      /\b\d{1,2}\s+U\.?\s*S\.?\s*C\.?\s*§\s*[\dA-Za-z.()-]+\b/gi,
-      /\b\d{1,2}\s+C\.?\s*F\.?\s*R\.?\s*§\s*[\d.()-]+\b/gi,
-      /\bFed\.?\s*R\.?\s*(?:Civ\.?\s*P\.?|Evid\.?|App\.?\s*P\.?|Crim\.?\s*P\.?)\s+\d+[A-Za-z]?\b/gi,
-      /\b\d{1,4}\s+[A-Z][a-z]{0,10}\.?\s*(?:2d|3d)?\s+\d{1,4}\b/g
+    var FAMILY_BUCKETS = [
+      "us_reports",
+      "federal_reporter",
+      "federal_supplement",
+      "regional_reporter",
+      "usc",
+      "cfr",
+      "federal_rules",
+      "state_statute",
+      "state_regulation",
+      "state_court_rules",
+      "slip_unreported",
+      "docket_like",
+      "malformed_partial",
+      "unknown"
     ];
-    var HEURISTIC_CITE_LIKE = /\b\d{1,4}\s+(?:U\.?\s*S\.?|F\.|F\.?\s*(?:2d|3d|4th)|F\.?\s*Supp|S\.?\s*Ct\.?|L\.?\s*Ed|C\.?\s*F\.?\s*R|U\.?\s*S\.?\s*C|Fed\.?\s*R\.|[A-Z][a-z]{1,10}\.?)\b/;
-    function sha256Text(text) {
-      return createHash2("sha256").update(String(text || ""), "utf8").digest("hex");
+    var WHY_CODES = [
+      "A_target_absent",
+      "B_normalization_mismatch",
+      "C_parser_gap",
+      "D_ambiguous",
+      "E_malformed",
+      "F_unsupported_family"
+    ];
+    var PARSER_SUPPORTED_FAMILIES = /* @__PURE__ */ new Set([
+      "us_reports",
+      "federal_reporter",
+      "federal_supplement",
+      "regional_reporter",
+      "usc",
+      "cfr",
+      "federal_rules",
+      "state_statute",
+      "state_regulation",
+      "state_court_rules"
+    ]);
+    function collapseWhitespace(value) {
+      return value.replace(/\s+/g, " ").trim();
     }
-    function normalizeCitation(raw) {
-      return String(raw || "").replace(/\s+/g, " ").replace(/\bU\.\s+S\./gi, "U.S.").replace(/\bF\.\s+(2d|3d|4th)\b/gi, (_, x) => `F.${String(x).toLowerCase()}`).replace(/\bF\.\s*Supp\.\s*(2d|3d)?/gi, (_, x) => x ? `F. Supp. ${String(x).toLowerCase()}` : "F. Supp.").trim();
+    function normalizeCitationWhitespace(raw) {
+      return collapseWhitespace(raw).replace(/\s*§\s*/g, " \xA7 ").replace(/\s+,/g, ",");
     }
-    function extractCaseCitationsFromText(content) {
-      const seen = /* @__PURE__ */ new Set();
-      const out = [];
-      const text = String(content || "");
-      for (const re of EXTRACT_RES) {
-        re.lastIndex = 0;
-        let m;
-        while ((m = re.exec(text)) !== null) {
-          const raw = m[0].trim();
-          const normalized = normalizeCitation(raw);
-          if (!normalized || normalized.length < 5) continue;
-          if (seen.has(normalized)) continue;
-          seen.add(normalized);
-          out.push({ raw, normalized });
+    function citationLookupAliases2(normalizedOrRaw) {
+      const base = normalizeCitationWhitespace(normalizedOrRaw);
+      if (!base) return [];
+      const aliases = /* @__PURE__ */ new Set([base, base.replace(/\b(2D|3D|4TH)\b/g, (m) => m.toLowerCase())]);
+      const cfr = base.match(/^(\d{1,2})\s+C\.?\s?F\.?\s?R\.?\s*§\s*(.+)$/i);
+      if (cfr) {
+        aliases.add(`${cfr[1]} C.F.R. \xA7 ${cfr[2]}`);
+        aliases.add(`${cfr[1]} CFR \xA7 ${cfr[2]}`);
+      }
+      const usc = base.match(/^(\d{1,2})\s+U\.?\s?S\.?\s?C\.?\s*§\s*(.+)$/i);
+      if (usc) {
+        aliases.add(`${usc[1]} U.S.C. \xA7 ${usc[2]}`);
+        aliases.add(`${usc[1]} USC \xA7 ${usc[2]}`);
+      }
+      const fr = base.match(/^Fed\.?\s*R\.?\s*(Civ\.?\s*P\.?|Evid\.?|App\.?\s*P\.?|Crim\.?\s*P\.?)\s+(\d+[A-Za-z]?)$/i);
+      if (fr) {
+        const kind = fr[1].replace(/\s+/g, " ").trim().toLowerCase();
+        let reporter = "Fed. R. Civ. P.";
+        if (/^evid/i.test(kind)) reporter = "Fed. R. Evid.";
+        else if (/^app/i.test(kind)) reporter = "Fed. R. App. P.";
+        else if (/^crim/i.test(kind)) reporter = "Fed. R. Crim. P.";
+        aliases.add(`${reporter} ${fr[2]}`);
+      }
+      const usRep = base.match(/^(\d{1,3})\s+U\.?\s*S\.?\s+(\d{1,4})$/i);
+      if (usRep) {
+        aliases.add(`${usRep[1]} U.S. ${usRep[2]}`);
+        aliases.add(`${usRep[1]} U. S. ${usRep[2]}`);
+      }
+      const fReporter = base.match(/^(\d{1,4})\s+F\.?\s*(Supp\.?)?\s*(2d|3d|4th)?\s+(\d{1,4})$/i);
+      if (fReporter) {
+        const vol = fReporter[1];
+        const page = fReporter[4];
+        const series = (fReporter[3] ?? "").toLowerCase();
+        if (fReporter[2]) {
+          aliases.add(`${vol} F. Supp.${series ? ` ${series}` : ""} ${page}`.replace(/\s+/g, " ").trim());
+        } else if (series) {
+          aliases.add(`${vol} F.${series} ${page}`);
+          aliases.add(`${vol} F. ${series} ${page}`);
         }
       }
+      const sct = base.match(/^(\d{1,3})\s+S\.?\s*Ct\.?\s+(\d{1,4})$/i);
+      if (sct) {
+        aliases.add(`${sct[1]} S. Ct. ${sct[2]}`);
+        aliases.add(`${sct[1]} S.Ct. ${sct[2]}`);
+      }
+      return [...aliases].filter(Boolean);
+    }
+    function leanNormalizeCitation2(citation) {
+      if (!citation) return null;
+      let c = normalizeCitationWhitespace(citation);
+      const cfr = c.match(/^(\d{1,2})\s+C\.?\s?F\.?\s?R\.?\s*§\s*(.+)$/i);
+      if (cfr) return `${cfr[1]} C.F.R. \xA7 ${cfr[2]}`;
+      const usc = c.match(/^(\d{1,2})\s+U\.?\s?S\.?\s?C\.?\s*§\s*(.+)$/i);
+      if (usc) return `${usc[1]} U.S.C. \xA7 ${usc[2]}`;
+      const fr = c.match(/^Fed\.?\s*R\.?\s*(Civ\.?\s*P\.?|Evid\.?|App\.?\s*P\.?|Crim\.?\s*P\.?)\s+(\d+[A-Za-z]?)$/i);
+      if (fr) {
+        const kind = fr[1].replace(/\s+/g, " ").trim().toLowerCase();
+        let reporter = "Fed. R. Civ. P.";
+        if (/^evid/i.test(kind)) reporter = "Fed. R. Evid.";
+        else if (/^app/i.test(kind)) reporter = "Fed. R. App. P.";
+        else if (/^crim/i.test(kind)) reporter = "Fed. R. Crim. P.";
+        return `${reporter} ${fr[2]}`;
+      }
+      const paCode = c.match(/^(\d{1,3})\s+Pa\.?\s*Code\s*§+\s*([\d.]+)$/i);
+      if (paCode) return `${paCode[1]} Pa. Code \xA7 ${paCode[2]}`;
+      const flaAdmin = c.match(/^Fla\.?\s*Admin\.?\s*Code\s*R\.?\s*([\dA-Za-z.-]+)$/i);
+      if (flaAdmin) return `Fla. Admin. Code R. ${flaAdmin[1]}`;
+      const paRcp = c.match(/^Pa\.?\s*R\.?\s*C\.?\s*P\.?\s*([\d.]+)$/i);
+      if (paRcp) return `Pa.R.C.P. ${paRcp[1]}`;
+      const flaRcp = c.match(/^Fla\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\d.]+)$/i);
+      if (flaRcp) return `Fla. R. Civ. P. ${flaRcp[1]}`;
+      const calRules = c.match(/^Cal\.?\s*Rules?\s+of\s+Court(?:\s*,?\s*rule)?\s*([\d.]+)$/i);
+      if (calRules) return `Cal. Rules of Court, rule ${calRules[1]}`;
+      const texRcp = c.match(/^Tex\.?\s*R\.?\s*Civ\.?\s*P\.?\s*([\dA-Za-z.]+)$/i);
+      if (texRcp) return `Tex. R. Civ. P. ${texRcp[1]}`;
+      const usReports = c.match(/^(\d{1,3})\s+U\.?\s*S\.?\s+(\d{1,4})$/i);
+      if (usReports) return `${usReports[1]} U.S. ${usReports[2]}`;
+      const swRep = c.match(/^(\d{1,4})\s+S\.?\s*W\.?\s*(2d|3d)\s+(\d{1,4})$/i);
+      if (swRep) return `${swRep[1]} S.W.${swRep[2]} ${swRep[3]}`;
+      const soRep = c.match(/^(\d{1,4})\s+So\.?\s*(2d|3d)?\s+(\d{1,4})$/i);
+      if (soRep) return `${soRep[1]} So.${soRep[2] ? ` ${soRep[2]}` : ""} ${soRep[3]}`.replace(/\s+/g, " ");
+      const fSupp = c.match(/^(\d{1,4})\s+F\.?\s*Supp\.?(?:\s?(2d|3d|4th))?\s+(\d{1,4})$/i);
+      if (fSupp) {
+        const series = fSupp[2] ? ` ${fSupp[2].toLowerCase()}` : "";
+        return `${fSupp[1]} F. Supp.${series} ${fSupp[3]}`;
+      }
+      const fRep = c.match(/^(\d{1,4})\s+F\.?\s*(2d|3d|4th)?\s+(\d{1,4})$/i);
+      if (fRep) {
+        const series = (fRep[2] || "").toLowerCase();
+        return series ? `${fRep[1]} F.${series} ${fRep[3]}` : `${fRep[1]} F. ${fRep[3]}`;
+      }
+      const atl = c.match(/^(\d{1,4})\s+A\.(?:\s?(2d|3d))?\s+(\d{1,4})$/i);
+      if (atl) return `${atl[1]} A.${atl[2] ? atl[2] : ""} ${atl[3]}`.replace(/\s+/g, " ");
+      const paCs = c.match(/^(\d{1,3})\s+Pa\.?\s*C\.?\s*S\.?(?:\s*Ann\.?)?\s*§+\s*(\d[\w.\-]*)$/i);
+      if (paCs) return `${paCs[1]} Pa.C.S. \xA7 ${paCs[2]}`;
+      return c;
+    }
+    function isGarbageCitation2(text) {
+      if (!text || !text.trim()) return true;
+      const t = text.trim();
+      if (t.length < 3) return true;
+      if (/^[\W_]+$/.test(t)) return true;
+      if (/^(see|cf\.|e\.g\.|id\.|supra|infra|ibid\.?)$/i.test(t)) return true;
+      return false;
+    }
+    function classifyCitationFamily2(raw, normalized) {
+      const text = normalizeCitationWhitespace(normalized || raw || "");
+      if (!text) return "unknown";
+      if (isGarbageCitation2(text)) return "malformed_partial";
+      if (/\b\d{1,3}\s+U\.?\s*S\.?\s+\d{1,4}\b/i.test(text)) return "us_reports";
+      if (/\b\d{1,4}\s+F\.?\s*Supp\.?(?:\s?(?:2d|3d|4th))?\s+\d{1,4}\b/i.test(text)) return "federal_supplement";
+      if (/\b\d{1,4}\s+F\.(?:\s?(?:2d|3d|4th))?\s+\d{1,4}\b/i.test(text)) return "federal_reporter";
+      if (/\b\d{1,4}\s+(?:A\.|N\.?E\.|S\.?E\.|S\.?W\.|N\.?W\.|P\.|P\.?\s?2d|P\.?\s?3d|So\.|So\.?\s?2d|So\.?\s?3d|Cal\.?\s?Rptr\.?|N\.?Y\.?S\.?)(?:\s?(?:2d|3d))?\s+\d{1,4}\b/i.test(text)) {
+        return "regional_reporter";
+      }
+      if (/\b\d{1,4}\s+S\.?\s*W\.?\s*(?:2d|3d)\s+\d{1,4}\b/i.test(text)) return "regional_reporter";
+      if (/\b\d{1,4}\s+So\.?\s*(?:2d|3d)\s+\d{1,4}\b/i.test(text)) return "regional_reporter";
+      if (/\b\d{1,2}\s+U\.?\s?S\.?\s?C\.?\s*§/i.test(text)) return "usc";
+      if (/\b\d{1,2}\s+C\.?\s?F\.?\s?R\.?\s*§/i.test(text)) return "cfr";
+      if (/\bFed\.?\s*R\.?\s*(?:Civ\.?\s*P\.?|Evid\.?|App\.?\s*P\.?|Crim\.?\s*P\.?)\s+\d/i.test(text)) return "federal_rules";
+      if (/\b(?:Pa\.?\s*R\.?\s*C\.?\s*P\.?|Fla\.?\s*R\.?\s*Civ\.?\s*P\.?|Va\.?\s*Sup\.?\s*Ct\.?\s*R\.?|Cal\.?\s*Rules?\s+of\s+Court|Tex\.?\s*R\.?\s*Civ\.?\s*P\.?|Mass\.?\s*R\.?\s*Civ\.?\s*P\.?|N\.?\s*J\.?\s*Ct\.?\s*R\.?|Ill\.?\s*S\.?\s*Ct\.?\s*R\.?|Del\.?\s*Super\.?\s*Ct\.?\s*Civ\.?\s*R\.?)\b/i.test(
+        text
+      )) {
+        return "state_court_rules";
+      }
+      if (/\b(?:Pa\.?\s*Code|Fla\.?\s*Admin\.?\s*Code|\d+\s*VAC|\d+\s+DE\s+Admin\.?\s*Code|Ill\.?\s*Admin\.?\s*Code)\b/i.test(
+        text
+      )) {
+        return "state_regulation";
+      }
+      if (/\b\d{1,3}\s+(?:Pa\.?\s*C\.?\s*S\.?|N\.?J\.?\s*S\.?A\.?|N\.?Y\.?\s*(?:C\.?L\.?S\.?|Consol\.)|Cal\.?\s*(?:Civ\.?\s*)?Code|Tex\.?\s*(?:Bus\.?\s*&?\s*Com\.?\s*)?Code|Fla\.?\s*Stat\.?|Ill\.?\s*Comp\.?\s*Stat\.?|Mass\.?\s*Gen\.?\s*Laws|Va\.?\s*Code\s*Ann\.?|Del\.?\s*Code\s*Ann\.?)\s*§/i.test(
+        text
+      ) || /\b(?:[A-Z][A-Za-z'’.\- ]{2,40}?Code)\s*§/i.test(text)) {
+        return "state_statute";
+      }
+      if (/\b(?:slip\s+op\.?|unreported|WL\s+\d+|Westlaw\s+\d+)\b/i.test(text)) return "slip_unreported";
+      if (/\b(?:No\.|Dkt\.|Case\s+No\.|C\.A\.?\s+No\.|S\.?C\.?t\.?\s+No\.)\s*[\dA-Z-]+/i.test(text)) return "docket_like";
+      if (/^\d{4,5}\s+F\.\s*Supp/i.test(text)) return "malformed_partial";
+      if (/^\d{1,4}\s+[A-Z.]{1,6}\.?\s*$/i.test(text)) return "malformed_partial";
+      if (/\b\d{1,4}\s+[A-Z.]{1,8}\.?\s+\d/i.test(text) && !/\bU\.?\s?S\.?\b/i.test(text)) return "unknown";
+      return "unknown";
+    }
+    function collectLookupKeys(raw, normalized) {
+      const keys = /* @__PURE__ */ new Set();
+      for (const value of [normalized, raw, leanNormalizeCitation2(raw), leanNormalizeCitation2(normalized)].filter(Boolean)) {
+        for (const alias of citationLookupAliases2(value)) keys.add(alias);
+      }
+      return [...keys];
+    }
+    function buildAuthorityIndex(authorities) {
+      const index = /* @__PURE__ */ new Map();
+      for (const auth of authorities) {
+        const id = auth.id;
+        const values = [auth.normalized_citation, auth.normalizedCitation, auth.citation].filter(Boolean);
+        for (const v of values) {
+          for (const key of citationLookupAliases2(v)) {
+            if (!index.has(key)) index.set(key, []);
+            const arr = index.get(key);
+            if (!arr.includes(id)) arr.push(id);
+          }
+        }
+      }
+      return index;
+    }
+    function resolveAuthorityMatches(index, raw, normalized) {
+      const matchedIds = /* @__PURE__ */ new Set();
+      for (const key of collectLookupKeys(raw, normalized)) {
+        const hits = index.get(key) || [];
+        for (const id of hits) matchedIds.add(id);
+      }
+      return [...matchedIds];
+    }
+    function resolveAuthorityMatchesWithRawOnly(index, raw) {
+      const matchedIds = /* @__PURE__ */ new Set();
+      for (const key of collectLookupKeys(raw, null)) {
+        const hits = index.get(key) || [];
+        for (const id of hits) matchedIds.add(id);
+      }
+      return [...matchedIds];
+    }
+    function determineWhyUnresolved(edge, index, family) {
+      const raw = normalizeCitationWhitespace(edge.raw_citation || edge.rawCitation || "");
+      const normalized = normalizeCitationWhitespace(edge.normalized_citation || edge.normalizedCitation || "");
+      if (isGarbageCitation2(raw) && isGarbageCitation2(normalized)) return "E_malformed";
+      if (family === "malformed_partial") return "E_malformed";
+      if (!PARSER_SUPPORTED_FAMILIES.has(family)) return "F_unsupported_family";
+      const directMatches = resolveAuthorityMatches(index, raw, normalized);
+      if (directMatches.length > 1) return "D_ambiguous";
+      if (directMatches.length === 1) return null;
+      const normalizedOnly = leanNormalizeCitation2(raw) || leanNormalizeCitation2(normalized);
+      const normMatches = resolveAuthorityMatches(index, raw, normalizedOnly);
+      if (normMatches.length > 1) return "D_ambiguous";
+      if (normMatches.length === 1) return "B_normalization_mismatch";
+      const rawOnlyMatches = resolveAuthorityMatchesWithRawOnly(index, raw);
+      if (rawOnlyMatches.length > 1) return "D_ambiguous";
+      if (rawOnlyMatches.length === 1) return "B_normalization_mismatch";
+      if (PARSER_SUPPORTED_FAMILIES.has(family)) return "A_target_absent";
+      return "C_parser_gap";
+    }
+    function classifyEdge(edge, index, { resolvedOnly = false } = {}) {
+      const raw = edge.raw_citation || edge.rawCitation || "";
+      const normalized = edge.normalized_citation || edge.normalizedCitation || null;
+      const family = classifyCitationFamily2(raw, normalized);
+      const resolved = Boolean(edge.to_authority_id || edge.toAuthorityId);
+      let why = null;
+      if (!resolved && !resolvedOnly) {
+        why = determineWhyUnresolved(edge, index, family);
+      }
+      return { family, why, resolved };
+    }
+    function emptyBucketCounts(keys) {
+      const out = {};
+      for (const k of keys) out[k] = 0;
       return out;
     }
-    function looksCitationLike(content) {
-      return HEURISTIC_CITE_LIKE.test(String(content || ""));
-    }
-    function buildExtractionMeta(params) {
-      const { status, textHash, occurrenceCount, error } = params;
-      return {
-        citationExtraction: {
-          status,
-          version: CITATION_EXTRACTION_VERSION,
-          extractedAt: (/* @__PURE__ */ new Date()).toISOString(),
-          textHashAtExtraction: textHash,
-          occurrenceCount: occurrenceCount ?? 0,
-          ...error ? { error: String(error).slice(0, 300) } : {}
+    function auditCitationEdges(edges, authorities, options = {}) {
+      const index = buildAuthorityIndex(authorities);
+      const families = emptyBucketCounts(FAMILY_BUCKETS);
+      const why = emptyBucketCounts(WHY_CODES);
+      const samples = {};
+      for (const f of FAMILY_BUCKETS) samples[f] = [];
+      const whySamples = {};
+      for (const w of WHY_CODES) whySamples[w] = [];
+      let total = 0;
+      let resolved = 0;
+      let unresolved = 0;
+      for (const edge of edges) {
+        total += 1;
+        const isResolved = Boolean(edge.to_authority_id || edge.toAuthorityId);
+        if (isResolved) resolved += 1;
+        else unresolved += 1;
+        const result = classifyEdge(edge, index, options);
+        families[result.family] = (families[result.family] || 0) + 1;
+        if (result.why) {
+          why[result.why] = (why[result.why] || 0) + 1;
+          if (whySamples[result.why].length < 5) {
+            whySamples[result.why].push({
+              raw: edge.raw_citation || edge.rawCitation,
+              normalized: edge.normalized_citation || edge.normalizedCitation,
+              family: result.family
+            });
+          }
         }
+        if (samples[result.family].length < 5) {
+          samples[result.family].push({
+            raw: edge.raw_citation || edge.rawCitation,
+            normalized: edge.normalized_citation || edge.normalizedCitation,
+            why: result.why,
+            resolved: isResolved
+          });
+        }
+      }
+      return {
+        totals: { total, resolved, unresolved },
+        families,
+        whyUnresolved: why,
+        samples,
+        whySamples
       };
     }
-    async function ensureCaseCitationExtraction2(sql, params) {
-      const { authorityId, content, existingMetadata } = params;
-      const textHash = sha256Text(content);
-      try {
-        const cites = extractCaseCitationsFromText(content);
-        let inserted = 0;
-        for (const cit of cites) {
-          const dup = await sql`
-        select 1 as ok from legal_authority_citations
-        where from_authority_id = ${authorityId}
-          and normalized_citation = ${cit.normalized}
-        limit 1
-      `;
-          if (dup.length > 0) continue;
-          const matches = await sql`
-        select id from legal_authorities
-        where normalized_citation = ${cit.normalized}
-           or citation = ${cit.normalized}
-           or citation = ${cit.raw}
-        limit 2
-      `;
-          const toId = matches.length === 1 ? matches[0].id : null;
-          await sql`
-        insert into legal_authority_citations (
-          id, from_authority_id, to_authority_id, raw_citation, normalized_citation
-        ) values (
-          ${randomUUID2()}, ${authorityId}, ${toId}, ${cit.raw}, ${cit.normalized}
-        )
-      `;
-          inserted += 1;
-        }
-        const status = cites.length > 0 ? "PROCESSED_NONZERO" : "PROCESSED_ZERO";
-        const metaPatch = buildExtractionMeta({
-          status,
-          textHash,
-          occurrenceCount: cites.length
-        });
-        const base = existingMetadata && typeof existingMetadata === "object" && !Array.isArray(existingMetadata) ? existingMetadata : {};
-        const merged = { ...base, ...metaPatch };
-        await sql`
-      update legal_authorities
-      set metadata = ${sql.json(merged)}, updated_at = now()
-      where id = ${authorityId}
-    `;
-        return { inserted, status, textHash, occurrenceCount: cites.length };
-      } catch (err) {
-        const base = existingMetadata && typeof existingMetadata === "object" && !Array.isArray(existingMetadata) ? existingMetadata : {};
-        const merged = {
-          ...base,
-          ...buildExtractionMeta({
-            status: "FAILED",
-            textHash,
-            occurrenceCount: 0,
-            error: err && err.message ? err.message : String(err)
-          })
-        };
-        try {
-          await sql`
-        update legal_authorities
-        set metadata = ${sql.json(merged)}, updated_at = now()
-        where id = ${authorityId}
-      `;
-        } catch {
-        }
-        throw err;
+    function parseJsonDump(data) {
+      if (Array.isArray(data)) {
+        return { edges: data, authorities: [] };
       }
+      const edges = data.edges || data.citations || data.legal_authority_citations || [];
+      const authorities = data.authorities || data.legal_authorities || [];
+      return { edges, authorities };
+    }
+    function classifyOneCitation(text) {
+      const raw = String(text || "");
+      const normalized = leanNormalizeCitation2(raw);
+      const family = classifyCitationFamily2(raw, normalized);
+      return {
+        raw,
+        normalized,
+        family,
+        aliases: citationLookupAliases2(normalized || raw),
+        parserSupported: PARSER_SUPPORTED_FAMILIES.has(family)
+      };
+    }
+    async function main2() {
+      const args = process.argv.slice(2);
+      if (args[0] === "--help" || args[0] === "-h") {
+        console.log(
+          JSON.stringify(
+            {
+              usage: [
+                "node scripts/wave2f-citation-audit.cjs <dump.json>",
+                'node scripts/wave2f-citation-audit.cjs --classify "410 U.S. 113"',
+                "node scripts/wave2f-citation-audit.cjs --families"
+              ],
+              families: FAMILY_BUCKETS,
+              whyCodes: WHY_CODES
+            },
+            null,
+            2
+          )
+        );
+        return;
+      }
+      if (args[0] === "--families") {
+        console.log(JSON.stringify({ families: FAMILY_BUCKETS, whyCodes: WHY_CODES, parserSupported: [...PARSER_SUPPORTED_FAMILIES] }, null, 2));
+        return;
+      }
+      if (args[0] === "--classify") {
+        const text = args.slice(1).join(" ");
+        console.log(JSON.stringify(classifyOneCitation(text), null, 2));
+        return;
+      }
+      if (args[0]) {
+        const fs2 = require("node:fs");
+        const path2 = require("node:path");
+        const file = path2.resolve(args[0]);
+        const raw = fs2.readFileSync(file, "utf8");
+        const data = JSON.parse(raw);
+        const { edges, authorities } = parseJsonDump(data);
+        const report = auditCitationEdges(edges, authorities, { source: file });
+        console.log(JSON.stringify({ ok: true, wave: "2F", mode: "local_json", source: file, ...report }, null, 2));
+        return;
+      }
+      console.log(
+        JSON.stringify(
+          {
+            ok: true,
+            wave: "2F",
+            mode: "helpers",
+            exports: [
+              "classifyCitationFamily",
+              "determineWhyUnresolved",
+              "auditCitationEdges",
+              "leanNormalizeCitation",
+              "citationLookupAliases",
+              "classifyOneCitation"
+            ],
+            families: FAMILY_BUCKETS,
+            whyCodes: WHY_CODES
+          },
+          null,
+          2
+        )
+      );
     }
     module2.exports = {
-      CITATION_EXTRACTION_VERSION,
-      sha256Text,
-      normalizeCitation,
-      extractCaseCitationsFromText,
-      looksCitationLike,
-      buildExtractionMeta,
-      ensureCaseCitationExtraction: ensureCaseCitationExtraction2
+      FAMILY_BUCKETS,
+      WHY_CODES,
+      PARSER_SUPPORTED_FAMILIES,
+      collapseWhitespace,
+      normalizeCitationWhitespace,
+      citationLookupAliases: citationLookupAliases2,
+      leanNormalizeCitation: leanNormalizeCitation2,
+      isGarbageCitation: isGarbageCitation2,
+      classifyCitationFamily: classifyCitationFamily2,
+      buildAuthorityIndex,
+      determineWhyUnresolved,
+      classifyEdge,
+      auditCitationEdges,
+      classifyOneCitation,
+      collectLookupKeys
     };
+    if (require.main === module2) {
+      main2().catch((e) => {
+        console.log(JSON.stringify({ ok: false, err: String(e?.message || e) }));
+        process.exit(1);
+      });
+    }
   }
 });
 
-// scripts/tmp-queue2-s3-hist-ingest.cjs
-var { createHash, randomUUID } = require("node:crypto");
-var postgres = require_src();
+// scripts/tmp-citation-forensic-audit.cjs
 var fs = require("fs");
+var path = require("path");
+var crypto = require("crypto");
+var postgres = require_src();
 var {
-  ensureCaseCitationExtraction
-} = require_case_citation_extraction();
-var CL_BASE = "https://www.courtlistener.com/api/rest/v4";
-var SOURCE = "courtlistener";
-var EMBEDDING_MODEL = "text-embedding-3-small";
-var EMBEDDING_DIMS = 384;
-var MAX_OPINION_CHARS = 4e4;
-var MAX_CHUNK_CHARS = 1e3;
-var COURT_MAP = {
-  scotus: { courtId: "us-scotus", courtLevel: "scotus", authorityState: "US", courtName: "Supreme Court of the United States", federalCircuit: null, jurisdiction: "United States" },
-  ca1: { courtId: "us-ca-1", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the First Circuit", federalCircuit: "1", jurisdiction: "United States" },
-  ca2: { courtId: "us-ca-2", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Second Circuit", federalCircuit: "2", jurisdiction: "United States" },
-  ca3: { courtId: "us-ca-3", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Third Circuit", federalCircuit: "3", jurisdiction: "United States" },
-  ca4: { courtId: "us-ca-4", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Fourth Circuit", federalCircuit: "4", jurisdiction: "United States" },
-  ca5: { courtId: "us-ca-5", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Fifth Circuit", federalCircuit: "5", jurisdiction: "United States" },
-  ca6: { courtId: "us-ca-6", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Sixth Circuit", federalCircuit: "6", jurisdiction: "United States" },
-  ca7: { courtId: "us-ca-7", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Seventh Circuit", federalCircuit: "7", jurisdiction: "United States" },
-  ca8: { courtId: "us-ca-8", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Eighth Circuit", federalCircuit: "8", jurisdiction: "United States" },
-  ca9: { courtId: "us-ca-9", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Ninth Circuit", federalCircuit: "9", jurisdiction: "United States" },
-  ca10: { courtId: "us-ca-10", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Tenth Circuit", federalCircuit: "10", jurisdiction: "United States" },
-  ca11: { courtId: "us-ca-11", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Eleventh Circuit", federalCircuit: "11", jurisdiction: "United States" },
-  cadc: { courtId: "us-ca-dc", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the District of Columbia Circuit", federalCircuit: "dc", jurisdiction: "United States" },
-  cafc: { courtId: "us-ca-fed", courtLevel: "circuit", authorityState: "US", courtName: "United States Court of Appeals for the Federal Circuit", federalCircuit: "fed", jurisdiction: "United States" },
-  arizctapp: { courtId: "st-az-app", courtLevel: "state_appellate", authorityState: "AZ", courtName: "Arizona Court of Appeals", federalCircuit: null, jurisdiction: "AZ" },
-  connappct: { courtId: "st-ct-app", courtLevel: "state_appellate", authorityState: "CT", courtName: "Connecticut Appellate Court", federalCircuit: null, jurisdiction: "CT" },
-  wisctapp: { courtId: "st-wi-app", courtLevel: "state_appellate", authorityState: "WI", courtName: "Wisconsin Court of Appeals", federalCircuit: null, jurisdiction: "WI" },
-  utahctapp: { courtId: "st-ut-app", courtLevel: "state_appellate", authorityState: "UT", courtName: "Utah Court of Appeals", federalCircuit: null, jurisdiction: "UT" },
-  nmctapp: { courtId: "st-nm-app", courtLevel: "state_appellate", authorityState: "NM", courtName: "New Mexico Court of Appeals", federalCircuit: null, jurisdiction: "NM" },
-  indctapp: { courtId: "st-in-app", courtLevel: "state_appellate", authorityState: "IN", courtName: "Indiana Court of Appeals", federalCircuit: null, jurisdiction: "IN" },
-  nyappdiv: { courtId: "st-ny-app", courtLevel: "state_appellate", authorityState: "NY", courtName: "New York Supreme Court, Appellate Division", federalCircuit: null, jurisdiction: "NY" },
-  calctapp: { courtId: "st-ca-app", courtLevel: "state_appellate", authorityState: "CA", courtName: "California Court of Appeal", federalCircuit: null, jurisdiction: "CA" },
-  fladistctapp: { courtId: "st-fl-app", courtLevel: "state_appellate", authorityState: "FL", courtName: "Florida District Courts of Appeal", federalCircuit: null, jurisdiction: "FL" },
-  massappct: { courtId: "st-ma-app", courtLevel: "state_appellate", authorityState: "MA", courtName: "Massachusetts Appeals Court", federalCircuit: null, jurisdiction: "MA" },
-  pasuperct: { courtId: "st-pa-super", courtLevel: "state_appellate", authorityState: "PA", courtName: "Superior Court of Pennsylvania", federalCircuit: null, jurisdiction: "PA" },
-  illappct: { courtId: "st-il-app", courtLevel: "state_appellate", authorityState: "IL", courtName: "Appellate Court of Illinois", federalCircuit: null, jurisdiction: "IL" },
-  ariz: { courtId: "st-az-high", courtLevel: "state_high", authorityState: "AZ", courtName: "Arizona Supreme Court", federalCircuit: null, jurisdiction: "AZ" },
-  conn: { courtId: "st-ct-high", courtLevel: "state_high", authorityState: "CT", courtName: "Supreme Court of Connecticut", federalCircuit: null, jurisdiction: "CT" },
-  wis: { courtId: "st-wi-high", courtLevel: "state_high", authorityState: "WI", courtName: "Wisconsin Supreme Court", federalCircuit: null, jurisdiction: "WI" },
-  utah: { courtId: "st-ut-high", courtLevel: "state_high", authorityState: "UT", courtName: "Utah Supreme Court", federalCircuit: null, jurisdiction: "UT" },
-  nm: { courtId: "st-nm-high", courtLevel: "state_high", authorityState: "NM", courtName: "New Mexico Supreme Court", federalCircuit: null, jurisdiction: "NM" },
-  ind: { courtId: "st-in-high", courtLevel: "state_high", authorityState: "IN", courtName: "Indiana Supreme Court", federalCircuit: null, jurisdiction: "IN" },
-  neb: { courtId: "st-ne-high", courtLevel: "state_high", authorityState: "NE", courtName: "Nebraska Supreme Court", federalCircuit: null, jurisdiction: "NE" },
-  nc: { courtId: "st-nc-high", courtLevel: "state_high", authorityState: "NC", courtName: "Supreme Court of North Carolina", federalCircuit: null, jurisdiction: "NC" },
-  idaho: { courtId: "st-id-high", courtLevel: "state_high", authorityState: "ID", courtName: "Idaho Supreme Court", federalCircuit: null, jurisdiction: "ID" },
-  ala: { courtId: "st-al-high", courtLevel: "state_high", authorityState: "AL", courtName: "Supreme Court of Alabama", federalCircuit: null, jurisdiction: "AL" },
-  alaska: { courtId: "st-ak-high", courtLevel: "state_high", authorityState: "AK", courtName: "Alaska Supreme Court", federalCircuit: null, jurisdiction: "AK" },
-  okla: { courtId: "st-ok-high", courtLevel: "state_high", authorityState: "OK", courtName: "Supreme Court of Oklahoma", federalCircuit: null, jurisdiction: "OK" },
-  or: { courtId: "st-or-high", courtLevel: "state_high", authorityState: "OR", courtName: "Oregon Supreme Court", federalCircuit: null, jurisdiction: "OR" },
-  mo: { courtId: "st-mo-high", courtLevel: "state_high", authorityState: "MO", courtName: "Supreme Court of Missouri", federalCircuit: null, jurisdiction: "MO" },
-  sc: { courtId: "st-sc-high", courtLevel: "state_high", authorityState: "SC", courtName: "Supreme Court of South Carolina", federalCircuit: null, jurisdiction: "SC" },
-  haw: { courtId: "st-hi-high", courtLevel: "state_high", authorityState: "HI", courtName: "Hawaii Supreme Court", federalCircuit: null, jurisdiction: "HI" },
-  iowa: { courtId: "st-ia-high", courtLevel: "state_high", authorityState: "IA", courtName: "Supreme Court of Iowa", federalCircuit: null, jurisdiction: "IA" },
-  minn: { courtId: "st-mn-high", courtLevel: "state_high", authorityState: "MN", courtName: "Supreme Court of Minnesota", federalCircuit: null, jurisdiction: "MN" },
-  nj: { courtId: "st-nj-high", courtLevel: "state_high", authorityState: "NJ", courtName: "Supreme Court of New Jersey", federalCircuit: null, jurisdiction: "NJ" },
-  wash: { courtId: "st-wa-high", courtLevel: "state_high", authorityState: "WA", courtName: "Washington Supreme Court", federalCircuit: null, jurisdiction: "WA" },
-  mich: { courtId: "st-mi-high", courtLevel: "state_high", authorityState: "MI", courtName: "Michigan Supreme Court", federalCircuit: null, jurisdiction: "MI" },
-  va: { courtId: "st-va-high", courtLevel: "state_high", authorityState: "VA", courtName: "Supreme Court of Virginia", federalCircuit: null, jurisdiction: "VA" },
-  ohio: { courtId: "st-oh-high", courtLevel: "state_high", authorityState: "OH", courtName: "Ohio Supreme Court", federalCircuit: null, jurisdiction: "OH" },
-  la: { courtId: "st-la-high", courtLevel: "state_high", authorityState: "LA", courtName: "Supreme Court of Louisiana", federalCircuit: null, jurisdiction: "LA" },
-  nev: { courtId: "st-nv-high", courtLevel: "state_high", authorityState: "NV", courtName: "Supreme Court of Nevada", federalCircuit: null, jurisdiction: "NV" },
-  ky: { courtId: "st-ky-high", courtLevel: "state_high", authorityState: "KY", courtName: "Kentucky Supreme Court", federalCircuit: null, jurisdiction: "KY" },
-  md: { courtId: "st-md-high", courtLevel: "state_high", authorityState: "MD", courtName: "Supreme Court of Maryland", federalCircuit: null, jurisdiction: "MD" },
-  ga: { courtId: "st-ga-high", courtLevel: "state_high", authorityState: "GA", courtName: "Supreme Court of Georgia", federalCircuit: null, jurisdiction: "GA" },
-  kyctapp: { courtId: "st-ky-app", courtLevel: "state_appellate", authorityState: "KY", courtName: "Kentucky Court of Appeals", federalCircuit: null, jurisdiction: "KY" },
-  texapp: { courtId: "st-tx-app", courtLevel: "state_appellate", authorityState: "TX", courtName: "Texas Courts of Appeals", federalCircuit: null, jurisdiction: "TX" },
-  ark: { courtId: "st-ar-high", courtLevel: "state_high", authorityState: "AR", courtName: "Supreme Court of Arkansas", federalCircuit: null, jurisdiction: "AR" },
-  colo: { courtId: "st-co-high", courtLevel: "state_high", authorityState: "CO", courtName: "Colorado Supreme Court", federalCircuit: null, jurisdiction: "CO" },
-  tenn: { courtId: "st-tn-high", courtLevel: "state_high", authorityState: "TN", courtName: "Supreme Court of Tennessee", federalCircuit: null, jurisdiction: "TN" },
-  kan: { courtId: "st-ks-high", courtLevel: "state_high", authorityState: "KS", courtName: "Supreme Court of Kansas", federalCircuit: null, jurisdiction: "KS" },
-  me: { courtId: "st-me-high", courtLevel: "state_high", authorityState: "ME", courtName: "Supreme Judicial Court of Maine", federalCircuit: null, jurisdiction: "ME" },
-  ri: { courtId: "st-ri-high", courtLevel: "state_high", authorityState: "RI", courtName: "Supreme Court of Rhode Island", federalCircuit: null, jurisdiction: "RI" },
-  vt: { courtId: "st-vt-high", courtLevel: "state_high", authorityState: "VT", courtName: "Supreme Court of Vermont", federalCircuit: null, jurisdiction: "VT" },
-  nh: { courtId: "st-nh-high", courtLevel: "state_high", authorityState: "NH", courtName: "Supreme Court of New Hampshire", federalCircuit: null, jurisdiction: "NH" },
-  sd: { courtId: "st-sd-high", courtLevel: "state_high", authorityState: "SD", courtName: "South Dakota Supreme Court", federalCircuit: null, jurisdiction: "SD" },
-  nd: { courtId: "st-nd-high", courtLevel: "state_high", authorityState: "ND", courtName: "North Dakota Supreme Court", federalCircuit: null, jurisdiction: "ND" },
-  wyo: { courtId: "st-wy-high", courtLevel: "state_high", authorityState: "WY", courtName: "Wyoming Supreme Court", federalCircuit: null, jurisdiction: "WY" },
-  mont: { courtId: "st-mt-high", courtLevel: "state_high", authorityState: "MT", courtName: "Montana Supreme Court", federalCircuit: null, jurisdiction: "MT" },
-  miss: { courtId: "st-ms-high", courtLevel: "state_high", authorityState: "MS", courtName: "Supreme Court of Mississippi", federalCircuit: null, jurisdiction: "MS" },
-  wva: { courtId: "st-wv-high", courtLevel: "state_high", authorityState: "WV", courtName: "West Virginia Supreme Court", federalCircuit: null, jurisdiction: "WV" },
-  del: { courtId: "st-de-high", courtLevel: "state_high", authorityState: "DE", courtName: "Supreme Court of Delaware", federalCircuit: null, jurisdiction: "DE" },
-  dc: { courtId: "st-dc-high", courtLevel: "state_high", authorityState: "DC", courtName: "District of Columbia Court of Appeals", federalCircuit: null, jurisdiction: "DC" },
-  mass: { courtId: "st-ma-high", courtLevel: "state_high", authorityState: "MA", courtName: "Supreme Judicial Court of Massachusetts", federalCircuit: null, jurisdiction: "MA" },
-  nysd: { courtId: "us-d-nysd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Southern District of New York", federalCircuit: "2", jurisdiction: "United States" },
-  cacd: { courtId: "us-d-cacd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Central District of California", federalCircuit: "9", jurisdiction: "United States" },
-  ilnd: { courtId: "us-d-ilnd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Northern District of Illinois", federalCircuit: "7", jurisdiction: "United States" },
-  txsd: { courtId: "us-d-txsd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Southern District of Texas", federalCircuit: "5", jurisdiction: "United States" },
-  dcd: { courtId: "us-d-dcd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the District of Columbia", federalCircuit: "dc", jurisdiction: "United States" },
-  njd: { courtId: "us-d-njd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the District of New Jersey", federalCircuit: "3", jurisdiction: "United States" },
-  paed: { courtId: "us-d-paed", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Eastern District of Pennsylvania", federalCircuit: "3", jurisdiction: "United States" },
-  mad: { courtId: "us-d-mad", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the District of Massachusetts", federalCircuit: "1", jurisdiction: "United States" },
-  flsd: { courtId: "us-d-flsd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Southern District of Florida", federalCircuit: "11", jurisdiction: "United States" },
-  txnd: { courtId: "us-d-txnd", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Northern District of Texas", federalCircuit: "5", jurisdiction: "United States" },
-  cand: { courtId: "us-d-cand", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Northern District of California", federalCircuit: "9", jurisdiction: "United States" },
-  waed: { courtId: "us-d-waed", courtLevel: "district", authorityState: "US", courtName: "United States District Court for the Eastern District of Washington", federalCircuit: "9", jurisdiction: "United States" }
-};
-function sha256(text) {
-  return createHash("sha256").update(String(text), "utf8").digest("hex");
+  leanNormalizeCitation,
+  citationLookupAliases,
+  classifyCitationFamily,
+  isGarbageCitation
+} = require_wave2f_citation_audit();
+var OUT = process.env.FORENSIC_OUT || (fs.existsSync(path.join(__dirname, "../packages/research/corpus/reports")) ? path.join(__dirname, "../packages/research/corpus/reports/citation-forensic-audit-last.json") : "/tmp/citation-forensic-audit-last.json");
+var ARGV = new Set(process.argv.slice(2));
+var RUN_BACKFILL = process.env.RUN_BACKFILL === "1" || ARGV.has("--backfill");
+var RUN_RERESOLVE = process.env.RUN_RERESOLVE === "1" || ARGV.has("--reresolve");
+var SAMPLE_N = Number(process.env.SAMPLE_N || 120);
+var BACKFILL_LIMIT = Number(process.env.BACKFILL_LIMIT || 5e3);
+var BACKFILL_BATCH = Number(process.env.BACKFILL_BATCH || 25);
+var HIST_ONLY = process.env.HIST_ONLY === "1" || ARGV.has("--hist-only");
+var EXTRACT_RES = [
+  /\b\d{1,3}\s+U\.?\s*S\.?\s+\d{1,4}\b/gi,
+  /\b\d{1,3}\s+S\.?\s*Ct\.?\s+\d{1,4}\b/gi,
+  /\b\d{1,3}\s+L\.?\s*Ed\.?\s*(?:2d\s+)?\d{1,4}\b/gi,
+  /\b\d{1,4}\s+F\.?\s*(?:2d|3d|4th)\s+\d{1,4}\b/gi,
+  /\b\d{1,4}\s+F\.?\s*Supp\.?\s*(?:2d|3d)?\s+\d{1,4}\b/gi,
+  /\b\d{1,2}\s+U\.?\s*S\.?\s*C\.?\s*§\s*[\dA-Za-z.()-]+\b/gi,
+  /\b\d{1,2}\s+C\.?\s*F\.?\s*R\.?\s*§\s*[\d.()-]+\b/gi,
+  /\bFed\.?\s*R\.?\s*(?:Civ\.?\s*P\.?|Evid\.?|App\.?\s*P\.?|Crim\.?\s*P\.?)\s+\d+[A-Za-z]?\b/gi,
+  /\b\d{1,4}\s+[A-Z][a-z]{0,10}\.?\s*(?:2d|3d)?\s+\d{1,4}\b/g
+];
+function normalizeCitation(raw) {
+  return leanNormalizeCitation(raw) || String(raw || "").replace(/\s+/g, " ").trim();
 }
-function toPgvector(vec) {
-  return `[${vec.join(",")}]`;
-}
-function stripHtml(html) {
-  return String(html || "").replace(/<script[\s\S]*?<\/script>/gi, " ").replace(/<style[\s\S]*?<\/style>/gi, " ").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-}
-function chunkContent(content) {
-  const parts = String(content).split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
-  const chunks = [];
-  for (const p of parts) {
-    if (p.length <= MAX_CHUNK_CHARS) chunks.push(p);
-    else {
-      let rest = p;
-      while (rest.length > MAX_CHUNK_CHARS) {
-        let cut = rest.lastIndexOf(" ", MAX_CHUNK_CHARS);
-        if (cut < MAX_CHUNK_CHARS / 2) cut = MAX_CHUNK_CHARS;
-        chunks.push(rest.slice(0, cut).trim());
-        rest = rest.slice(cut).trim();
-      }
-      if (rest) chunks.push(rest);
-    }
-  }
-  return chunks.length ? chunks : [String(content).slice(0, MAX_CHUNK_CHARS)];
-}
-async function embedAll(texts, apiKey) {
+function extractCitationsLocal(content) {
+  const seen = /* @__PURE__ */ new Set();
   const out = [];
-  for (let i = 0; i < texts.length; i += 32) {
-    const batch = texts.slice(i, i + 32);
-    const res = await fetch("https://api.openai.com/v1/embeddings", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ model: EMBEDDING_MODEL, input: batch, dimensions: EMBEDDING_DIMS }),
-      signal: AbortSignal.timeout(6e4)
-    });
-    if (!res.ok) throw new Error(`embed_http_${res.status}`);
-    const body = await res.json();
-    out.push(...(body.data || []).sort((a, b) => a.index - b.index).map((d) => d.embedding));
+  const text = String(content || "");
+  for (const re of EXTRACT_RES) {
+    re.lastIndex = 0;
+    let m;
+    while ((m = re.exec(text)) !== null) {
+      const raw = m[0].trim();
+      const normalized = normalizeCitation(raw);
+      if (!normalized || normalized.length < 5) continue;
+      if (isGarbageCitation(normalized)) continue;
+      if (seen.has(normalized)) continue;
+      seen.add(normalized);
+      out.push({ raw, normalized });
+    }
   }
   return out;
 }
-async function main() {
-  const key = process.env.COURTLISTENER_API_KEY;
-  const db = process.env.DATABASE_URL;
-  const openai = process.env.OPENAI_API_KEY;
-  const clCourt = (process.argv[2] || process.env.CL_COURT || "ca5").trim().toLowerCase();
-  const mapped = COURT_MAP[clCourt];
-  const ids = String(process.argv[3] || process.env.CL_OPINION_IDS || "").split(",").map((s) => Number(s.trim())).filter((n) => Number.isFinite(n) && n > 0);
-  const maxIngest = Math.min(Math.max(Number(process.argv[4] || process.env.CL_MAX_INGEST || 8), 1), 10);
-  const hardTimeoutMs = Math.min(Math.max(Number(process.env.CL_HARD_TIMEOUT_MS || 12e4), 3e4), 18e4);
-  const started = Date.now();
-  let calls = 0;
-  if (!key || !db || !openai) {
-    console.log(JSON.stringify({ ok: false, phase: "INGEST", reason: "missing_env", courtListenerHttpCalls: 0 }));
-    process.exit(2);
-  }
-  if (!mapped) {
-    console.log(JSON.stringify({ ok: false, phase: "INGEST", reason: `unmapped:${clCourt}`, courtListenerHttpCalls: 0 }));
-    process.exit(2);
-  }
-  if (!ids.length) {
-    console.log(JSON.stringify({ ok: false, phase: "INGEST", reason: "no_ids", courtListenerHttpCalls: 0 }));
-    process.exit(2);
-  }
-  const timer = setTimeout(() => {
-    console.log(
-      JSON.stringify({
-        ok: false,
-        phase: "INGEST",
-        status: "HIST_QUERY_TIMEOUT",
-        courtListenerHttpCalls: calls,
-        elapsedMs: Date.now() - started
-      })
-    );
-    process.exit(1);
-  }, hardTimeoutMs);
-  const sql = postgres(db, { max: 1, ssl: "require", idle_timeout: 5, connect_timeout: 30 });
-  const results = [];
-  let imported = 0;
-  try {
-    for (const id of ids.slice(0, maxIngest)) {
-      if (Date.now() - started > hardTimeoutMs - 5e3) break;
-      await new Promise((r) => setTimeout(r, 2200));
-      const res = await fetch(`${CL_BASE}/opinions/${id}/`, {
-        headers: { Authorization: `Token ${key}`, Accept: "application/json" },
-        signal: AbortSignal.timeout(3e4)
-      });
-      calls += 1;
-      if (res.status === 429) {
-        results.push({ id, status: "rate_limited" });
-        break;
-      }
-      if (!res.ok) {
-        results.push({ id, status: `http_${res.status}` });
-        continue;
-      }
-      const op = await res.json();
-      let cluster = null;
-      const clusterId = op.cluster ? String(op.cluster).match(/\/clusters\/(\d+)/)?.[1] || op.cluster_id : op.cluster_id;
-      if (clusterId) {
-        await new Promise((r) => setTimeout(r, 2200));
-        const cRes = await fetch(`${CL_BASE}/clusters/${clusterId}/`, {
-          headers: { Authorization: `Token ${key}`, Accept: "application/json" },
-          signal: AbortSignal.timeout(3e4)
-        });
-        calls += 1;
-        if (cRes.ok) cluster = await cRes.json();
-      }
-      const html = op.html_with_citations || op.html_columbia || op.html || op.plain_text || "";
-      const content = stripHtml(html).slice(0, MAX_OPINION_CHARS);
-      if (content.length < 200) {
-        results.push({ id, status: "skipped_short" });
-        continue;
-      }
-      const sourceExternalId = `cl-opinion-${id}`;
-      const existing = await sql`
-        select id from legal_authorities
-        where source_provider=${SOURCE} and source_external_id=${sourceExternalId} limit 1
-      `;
-      if (existing.length) {
-        results.push({ id, status: "duplicate" });
-        continue;
-      }
-      const title = String(cluster?.case_name || op.case_name || `Opinion ${id}`).slice(0, 500);
-      const citation = Array.isArray(cluster?.citation) ? cluster.citation[0] : cluster?.citation || null;
-      const decisionDate = cluster?.date_filed || op.date_filed || null;
-      const authorityId = randomUUID();
-      const versionId = randomUUID();
-      const hash = sha256(content);
-      await sql`
-        insert into legal_authorities (
-          id, authority_type, jurisdiction, court, court_id, authority_state,
-          federal_circuit, court_level, title, citation, normalized_citation,
-          docket_number, decision_date, source_provider, source_external_id,
-          canonical_source_url, ingestion_status, hierarchy_path, metadata
-        ) values (
-          ${authorityId}, ${"case"}::authority_type, ${mapped.jurisdiction}, ${mapped.courtName},
-          ${mapped.courtId}, ${mapped.authorityState}, ${mapped.federalCircuit}, ${mapped.courtLevel},
-          ${title}, ${citation}, ${citation}, ${cluster?.docket_number || null}, ${decisionDate},
-          ${SOURCE}, ${sourceExternalId},
-          ${`https://www.courtlistener.com/opinion/${id}/`},
-          'processing'::authority_ingestion_status, ${sql.json([])},
-          ${sql.json({ clCourt, adapter: "s3-hist-ingest", clusterId: clusterId || null })}
-        )
-      `;
-      await sql`
-        insert into legal_authority_versions (
-          id, authority_id, version_number, content, effective_from, effective_to,
-          source_provider, source_metadata, sha256
-        ) values (
-          ${versionId}, ${authorityId}, 1, ${content}, ${decisionDate}, ${null},
-          ${SOURCE}, ${sql.json({ retrievedAt: (/* @__PURE__ */ new Date()).toISOString() })}, ${hash}
-        )
-      `;
-      const citeResult = await ensureCaseCitationExtraction(sql, {
-        authorityId,
-        content,
-        existingMetadata: { clCourt, adapter: "s3-hist-ingest", clusterId: clusterId || null }
-      });
-      const citationEdges = citeResult.inserted;
-      const chunks = chunkContent(content);
-      const vectors = await embedAll(chunks, openai);
-      for (let i = 0; i < chunks.length; i++) {
-        await sql`
-          insert into legal_authority_chunks (
-            id, authority_id, authority_version_id, chunk_index, content,
-            segment_ref, embedding, embedding_model
-          ) values (
-            ${randomUUID()}, ${authorityId}, ${versionId}, ${i}, ${chunks[i]},
-            ${`p${i + 1}`}, ${toPgvector(vectors[i])}::vector, ${`${EMBEDDING_MODEL}:${EMBEDDING_DIMS}`}
-          )
-        `;
-      }
-      await sql`
-        update legal_authorities set ingestion_status='ready'::authority_ingestion_status, updated_at=now()
-        where id=${authorityId}
-      `;
-      imported += 1;
-      results.push({
-        id,
-        status: "imported",
-        decisionDate,
-        title: title.slice(0, 80),
-        citationEdges
-      });
-    }
-    clearTimeout(timer);
-    const payload = {
-      ok: true,
-      phase: "INGEST",
-      status: "done",
-      clCourt,
-      imported,
-      results,
-      courtListenerHttpCalls: calls,
-      elapsedMs: Date.now() - started,
-      mutations: imported
+function familyOf(raw, norm) {
+  return classifyCitationFamily(raw || "", norm || "") || "unknown";
+}
+function parseVolReporterPage(cite) {
+  const t = String(cite || "").replace(/\s+/g, " ").trim();
+  let m = t.match(/^(\d{1,3})\s+U\.?\s*S\.?\s+(\d{1,4})$/i);
+  if (m) return { family: "us_reports", volume: Number(m[1]), page: Number(m[2]), reporter: "U.S." };
+  m = t.match(/^(\d{1,4})\s+F\.?\s*(2d|3d|4th)\s+(\d{1,4})$/i);
+  if (m) return { family: "federal_reporter", volume: Number(m[1]), page: Number(m[3]), reporter: `F.${m[2].toLowerCase()}` };
+  m = t.match(/^(\d{1,4})\s+F\.?\s*Supp\.?\s*(2d|3d)?\s+(\d{1,4})$/i);
+  if (m)
+    return {
+      family: "federal_supplement",
+      volume: Number(m[1]),
+      page: Number(m[3]),
+      reporter: m[2] ? `F. Supp. ${m[2].toLowerCase()}` : "F. Supp."
     };
-    try {
-      fs.writeFileSync("/tmp/queue2-s3-hist-ingest.json", JSON.stringify(payload, null, 2));
-    } catch (_) {
+  return null;
+}
+function keyOf(p) {
+  return `${p.family}|${p.volume}|${p.reporter}|${p.page}`;
+}
+function pct(n, d) {
+  if (!d) return 0;
+  return Number((100 * n / d).toFixed(2));
+}
+async function main() {
+  const url = process.env.DATABASE_URL;
+  if (!url) {
+    console.log(JSON.stringify({ ok: false, reason: "DATABASE_URL missing", courtListenerHttpCalls: 0 }));
+    process.exit(2);
+  }
+  const sql = postgres(url, { max: 1, idle_timeout: 20, connect_timeout: 30 });
+  const report = {
+    ok: true,
+    generatedAt: (/* @__PURE__ */ new Date()).toISOString(),
+    courtListenerHttpCalls: 0,
+    openaiCalls: 0,
+    claudeCalls: 0,
+    geminiCalls: 0,
+    grokCalls: 0,
+    otherLlmCalls: 0,
+    externalEmbeddings: 0,
+    subagents: 0,
+    mutations: 0,
+    phases: {}
+  };
+  try {
+    let stratifiedSample = function(rows, n) {
+      const buckets2 = {
+        state_high: [],
+        state_appellate: [],
+        circuit: [],
+        district: [],
+        other: []
+      };
+      for (const r of rows) {
+        const k = buckets2[r.court_level] ? r.court_level : "other";
+        buckets2[k].push(r);
+      }
+      const out = [];
+      const keys = Object.keys(buckets2);
+      const per = Math.max(1, Math.floor(n / keys.length));
+      for (const k of keys) {
+        const arr = buckets2[k];
+        for (let i = 0; i < Math.min(per, arr.length); i++) {
+          const idx = Math.floor(i * arr.length / Math.min(per, arr.length));
+          out.push(arr[Math.min(idx, arr.length - 1)]);
+        }
+      }
+      return out.slice(0, n);
+    }, bumpFamily = function(family, field, citeKey) {
+      if (!familyStats.has(family)) {
+        familyStats.set(family, { unresolved: 0, unique: /* @__PURE__ */ new Set(), resolved: 0, extracted: 0 });
+      }
+      const s = familyStats.get(family);
+      s[field] += 1;
+      if (citeKey) s.unique.add(citeKey);
+    }, cumEdges = function(n) {
+      return topAbsent.slice(0, n).reduce((s, x) => s + x.edges, 0);
+    }, familyAudit = function(familyName) {
+      const row = familyTable.find((f) => f.family === familyName) || {
+        extracted: 0,
+        resolved: 0,
+        unresolved: 0,
+        resolutionPct: 0
+      };
+      const absent = topAbsent.filter((t) => t.family === familyName);
+      const presentMiss = presentMissExamples.filter((e) => e.family === familyName).length;
+      return {
+        ...row,
+        uniqueMissing: absent.length,
+        top50Demand: absent.slice(0, 50).reduce((s, x) => s + x.edges, 0),
+        presentButUnresolvedExamples: presentMiss,
+        maxTheoreticalLiftIfAllAbsentAcquired: absent.reduce((s, x) => s + x.edges, 0)
+      };
+    }, milestone = function(targetPct) {
+      const needTotalResolved = Math.ceil(targetPct / 100 * startExtracted);
+      const additional = Math.max(0, needTotalResolved - startResolved);
+      return { targetPct, additionalEdgesRequired: additional, needTotalResolved };
+    };
+    const [corpus] = await sql`
+      select
+        count(*)::int as authorities,
+        count(*) filter (where authority_type = 'case')::int as cases,
+        count(*) filter (where authority_type = 'statute')::int as statutes,
+        count(*) filter (where authority_type = 'regulation')::int as regulations,
+        count(*) filter (where authority_type = 'rule')::int as rules
+      from legal_authorities
+    `;
+    const [cites] = await sql`
+      select
+        count(*)::int as extracted,
+        count(*) filter (where to_authority_id is not null)::int as resolved,
+        count(*) filter (where to_authority_id is null)::int as unresolved
+      from legal_authority_citations
+    `;
+    const [integrity] = await sql`
+      select
+        (select count(*)::int from (
+          select from_authority_id, normalized_citation
+          from legal_authority_citations
+          group by 1,2 having count(*) > 1
+        ) d) as duplicate_citation_edges,
+        (select count(*)::int from legal_authority_citations c
+          left join legal_authorities a on a.id = c.from_authority_id
+          where a.id is null) as orphan_citation_edges_from,
+        (select count(*)::int from legal_authority_citations c
+          left join legal_authorities a on a.id = c.to_authority_id
+          where c.to_authority_id is not null and a.id is null) as orphan_citation_edges_to,
+        (select count(*)::int from (
+          select source_provider, source_external_id from legal_authorities
+          where source_external_id is not null
+          group by 1,2 having count(*) > 1
+        ) d) as duplicate_authorities,
+        (select count(*)::int from legal_authority_chunks c
+          left join legal_authorities a on a.id = c.authority_id where a.id is null) as orphan_chunks,
+        (select count(*)::int from legal_authority_chunks where embedding is null) as missing_embeddings
+    `;
+    report.phases.baseline = {
+      corpus,
+      citations: {
+        ...cites,
+        resolutionPct: pct(cites.resolved, cites.extracted)
+      },
+      integrity
+    };
+    const caseRows = await sql`
+      select
+        a.id,
+        a.court_level,
+        a.authority_state,
+        a.source_provider,
+        a.created_at,
+        a.metadata,
+        coalesce(length(v.content), 0)::int as content_len,
+        (v.content is not null and length(v.content) >= 200) as has_text,
+        coalesce(cite.edge_count, 0)::int as edge_count,
+        coalesce(ch.chunk_count, 0)::int as chunk_count,
+        coalesce(ch.embed_count, 0)::int as embed_count
+      from legal_authorities a
+      left join lateral (
+        select content from legal_authority_versions
+        where authority_id = a.id
+        order by version_number desc
+        limit 1
+      ) v on true
+      left join lateral (
+        select count(*)::int as edge_count
+        from legal_authority_citations
+        where from_authority_id = a.id
+      ) cite on true
+      left join lateral (
+        select count(*)::int as chunk_count,
+               count(*) filter (where embedding is not null)::int as embed_count
+        from legal_authority_chunks
+        where authority_id = a.id
+      ) ch on true
+      where a.authority_type = 'case'
+    `;
+    const casesTotal = caseRows.length;
+    const withText = caseRows.filter((r) => r.has_text);
+    const withoutText = caseRows.filter((r) => !r.has_text);
+    const withEdges = caseRows.filter((r) => r.edge_count > 0);
+    const zeroEdges = caseRows.filter((r) => r.edge_count === 0);
+    const zeroEdgesWithText = caseRows.filter((r) => r.edge_count === 0 && r.has_text);
+    const histAdapter = caseRows.filter((r) => {
+      const m = r.metadata && typeof r.metadata === "object" ? r.metadata : {};
+      return m.adapter === "s3-hist-ingest";
+    });
+    const histZero = histAdapter.filter((r) => r.edge_count === 0);
+    const histWithEdges = histAdapter.filter((r) => r.edge_count > 0);
+    const extraction = {
+      eligible: withText.length,
+      processedProxy_hasEdges: withEdges.length,
+      notProcessedProxy_zeroEdgesWithText: zeroEdgesWithText.length,
+      coveragePct_proxy: pct(withEdges.length, withText.length),
+      noText: withoutText.length,
+      histIngestCases: histAdapter.length,
+      histIngestWithEdges: histWithEdges.length,
+      histIngestZeroEdges: histZero.length,
+      histIngestZeroEdgesPct: pct(histZero.length, histAdapter.length || 1),
+      textBytesEligible: withText.reduce((s, r) => s + Number(r.content_len || 0), 0),
+      textBytesWithEdges: withEdges.reduce((s, r) => s + Number(r.content_len || 0), 0),
+      textBytesZeroEdges: zeroEdgesWithText.reduce((s, r) => s + Number(r.content_len || 0), 0)
+    };
+    const byCreated = [...caseRows].sort(
+      (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+    );
+    const milestones = [2905, 3070, 3416, 3490, 3568, 3652, 3754, 3867];
+    const cohortAudit = [];
+    for (let i = 0; i < milestones.length - 1; i++) {
+      const from = milestones[i];
+      const to = milestones[i + 1];
+      const slice = byCreated.slice(from, Math.min(to, byCreated.length));
+      const z = slice.filter((r) => r.edge_count === 0 && r.has_text).length;
+      const e = slice.filter((r) => r.edge_count > 0).length;
+      const hist = slice.filter((r) => {
+        const m = r.metadata && typeof r.metadata === "object" ? r.metadata : {};
+        return m.adapter === "s3-hist-ingest";
+      }).length;
+      cohortAudit.push({
+        fromCount: from,
+        toCount: to,
+        added: slice.length,
+        withEdges: e,
+        zeroEdgesWithText: z,
+        histAdapter: hist,
+        extractionCoveragePct: pct(e, slice.filter((r) => r.has_text).length || 1)
+      });
     }
-    console.log(JSON.stringify(payload));
+    const recent = byCreated.slice(Math.max(0, byCreated.length - 1e3));
+    const recentAudit = {
+      n: recent.length,
+      withText: recent.filter((r) => r.has_text).length,
+      withEdges: recent.filter((r) => r.edge_count > 0).length,
+      zeroEdgesWithText: recent.filter((r) => r.edge_count === 0 && r.has_text).length,
+      histAdapter: recent.filter((r) => {
+        const m = r.metadata && typeof r.metadata === "object" ? r.metadata : {};
+        return m.adapter === "s3-hist-ingest";
+      }).length,
+      byCourtLevel: {}
+    };
+    for (const r of recent) {
+      const lvl = r.court_level || "unknown";
+      if (!recentAudit.byCourtLevel[lvl]) recentAudit.byCourtLevel[lvl] = { n: 0, withEdges: 0, zero: 0 };
+      recentAudit.byCourtLevel[lvl].n += 1;
+      if (r.edge_count > 0) recentAudit.byCourtLevel[lvl].withEdges += 1;
+      else if (r.has_text) recentAudit.byCourtLevel[lvl].zero += 1;
+    }
+    report.phases.extractionInventory = {
+      casesTotal,
+      withText: withText.length,
+      withoutText: withoutText.length,
+      withEdges: withEdges.length,
+      zeroEdges: zeroEdges.length,
+      zeroEdgesWithText: zeroEdgesWithText.length,
+      extraction,
+      cohortAudit,
+      recentAudit,
+      codePathDefect: {
+        file: "scripts/tmp-queue2-s3-hist-ingest.cjs (+ bundled)",
+        storesFullText: true,
+        createsChunks: true,
+        createsEmbeddings: true,
+        runsCitationExtraction: false,
+        runsResolver: false,
+        evidence: "No insert into legal_authority_citations in hist ingest path",
+        affectedCases: histAdapter.length,
+        affectedZeroEdgeCases: histZero.length
+      }
+    };
+    const sampleTargets = stratifiedSample(zeroEdgesWithText, SAMPLE_N);
+    const sampleIds = sampleTargets.map((r) => r.id);
+    let sampleParserPositive = 0;
+    let sampleParserZero = 0;
+    let sampleCiteOcc = 0;
+    const sampleExamples = [];
+    if (sampleIds.length) {
+      const texts = await sql`
+        select a.id, v.content
+        from legal_authorities a
+        join lateral (
+          select content from legal_authority_versions
+          where authority_id = a.id
+          order by version_number desc limit 1
+        ) v on true
+        where a.id = any(${sampleIds}::uuid[])
+      `;
+      for (const t of texts) {
+        const found = extractCitationsLocal(t.content);
+        if (found.length > 0) {
+          sampleParserPositive += 1;
+          sampleCiteOcc += found.length;
+          if (sampleExamples.length < 15) {
+            sampleExamples.push({
+              id: t.id,
+              found: found.length,
+              samples: found.slice(0, 5).map((c) => c.normalized)
+            });
+          }
+        } else sampleParserZero += 1;
+      }
+    }
+    const estimatedExtractionMissRate = pct(sampleParserPositive, sampleTargets.length || 1);
+    const estimatedMissedCases = zeroEdgesWithText.length > 0 ? Math.round(sampleParserPositive / Math.max(1, sampleTargets.length) * zeroEdgesWithText.length) : 0;
+    report.phases.zeroEdgeSample = {
+      sampleSize: sampleTargets.length,
+      parserPositive: sampleParserPositive,
+      parserZero: sampleParserZero,
+      parserFoundOccurrences: sampleCiteOcc,
+      estimatedExtractionMissRatePct: estimatedExtractionMissRate,
+      estimatedMissedEligibleCases: estimatedMissedCases,
+      examples: sampleExamples
+    };
+    const authorities = await sql`
+      select id, citation, normalized_citation, metadata, source_external_id, source_provider,
+             authority_type, court, decision_date
+      from legal_authorities
+    `;
+    const unresolved = await sql`
+      select id, from_authority_id, raw_citation, normalized_citation
+      from legal_authority_citations
+      where to_authority_id is null
+    `;
+    const aliasIndex = /* @__PURE__ */ new Map();
+    const vrpIndex = /* @__PURE__ */ new Map();
+    for (const a of authorities) {
+      const keys = /* @__PURE__ */ new Set();
+      for (const v of [a.normalized_citation, a.citation].filter(Boolean)) {
+        const lean = leanNormalizeCitation(v) || v;
+        for (const k of citationLookupAliases(lean)) keys.add(k);
+        for (const k of citationLookupAliases(v)) keys.add(k);
+        const p = parseVolReporterPage(leanNormalizeCitation(v) || v);
+        if (p) {
+          const vk = keyOf(p);
+          if (!vrpIndex.has(vk)) vrpIndex.set(vk, /* @__PURE__ */ new Set());
+          vrpIndex.get(vk).add(a.id);
+        }
+      }
+      const meta = a.metadata && typeof a.metadata === "object" ? a.metadata : {};
+      for (const alias of [...meta.citationAliases || [], ...meta.parallelCitations || []]) {
+        if (typeof alias !== "string" || !alias.trim()) continue;
+        const lean = leanNormalizeCitation(alias) || alias.trim();
+        for (const k of citationLookupAliases(lean)) keys.add(k);
+      }
+      for (const k of keys) {
+        if (!aliasIndex.has(k)) aliasIndex.set(k, /* @__PURE__ */ new Set());
+        aliasIndex.get(k).add(a.id);
+      }
+    }
+    const buckets = {
+      A_TARGET_PRESENT_EXACT_MATCH_MISSED: 0,
+      B_TARGET_PRESENT_ALIAS_MATCH_MISSED: 0,
+      C_TARGET_PRESENT_REPORTER_MATCH_MISSED: 0,
+      D_TARGET_PRESENT_IDENTITY_COLLISION: 0,
+      E_TARGET_PRESENT_AMBIGUOUS: 0,
+      F_TARGET_TRULY_ABSENT_CASE: 0,
+      G_TARGET_TRULY_ABSENT_STATUTE: 0,
+      H_TARGET_TRULY_ABSENT_REGULATION: 0,
+      I_TARGET_TRULY_ABSENT_RULE: 0,
+      J_UNSUPPORTED_CITATION_TYPE: 0,
+      K_MALFORMED: 0,
+      L_INSUFFICIENT_METADATA: 0,
+      M_SOURCE_TEXT_PARSE_DEFECT: 0,
+      N_OTHER: 0
+    };
+    const uniqueByBucket = Object.fromEntries(Object.keys(buckets).map((k) => [k, /* @__PURE__ */ new Set()]));
+    const familyStats = /* @__PURE__ */ new Map();
+    const absentDemand = /* @__PURE__ */ new Map();
+    const presentMissExamples = [];
+    const defectClass = {
+      NORMALIZATION: 0,
+      REPORTER_ALIAS: 0,
+      REPORTER_VARIANT: 0,
+      SPACING: 0,
+      PUNCTUATION: 0,
+      PARALLEL_CITATION: 0,
+      NEUTRAL_CITATION: 0,
+      VOLUME_PAGE: 0,
+      CASE_ALIAS: 0,
+      DB_LOOKUP: 0,
+      STALE_EDGE: 0,
+      CANONICAL_ID: 0,
+      DUPLICATE_AUTHORITY: 0,
+      OTHER: 0
+    };
+    for (const e of unresolved) {
+      const raw = e.raw_citation || "";
+      const norm = e.normalized_citation || "";
+      const lean = leanNormalizeCitation(norm) || leanNormalizeCitation(raw) || norm || raw;
+      const family = familyOf(raw, lean);
+      const citeKey = lean || norm || raw;
+      bumpFamily(family, "unresolved", citeKey);
+      if (isGarbageCitation(raw) && isGarbageCitation(norm)) {
+        buckets.K_MALFORMED += 1;
+        uniqueByBucket.K_MALFORMED.add(citeKey);
+        continue;
+      }
+      if (!lean || lean.length < 3) {
+        buckets.K_MALFORMED += 1;
+        uniqueByBucket.K_MALFORMED.add(citeKey);
+        continue;
+      }
+      if (/\b(WL|LEXIS|Restatement|Am\.\s*Jur|C\.J\.S\.|ALR|L\.\s*Rev)\b/i.test(lean)) {
+        buckets.J_UNSUPPORTED_CITATION_TYPE += 1;
+        uniqueByBucket.J_UNSUPPORTED_CITATION_TYPE.add(citeKey);
+        continue;
+      }
+      const keys = /* @__PURE__ */ new Set();
+      for (const v of [lean, raw, norm].filter(Boolean)) {
+        for (const k of citationLookupAliases(v)) keys.add(k);
+        const l = leanNormalizeCitation(v);
+        if (l) for (const k of citationLookupAliases(l)) keys.add(k);
+      }
+      const ids = /* @__PURE__ */ new Set();
+      for (const k of keys) {
+        const hit = aliasIndex.get(k);
+        if (hit) for (const id of hit) ids.add(id);
+      }
+      let exactPresent = false;
+      for (const a of authorities) {
+        if (a.normalized_citation === lean || a.citation === lean || a.normalized_citation === norm) {
+          exactPresent = true;
+          break;
+        }
+      }
+      if (ids.size === 1) {
+        if (exactPresent) {
+          buckets.A_TARGET_PRESENT_EXACT_MATCH_MISSED += 1;
+          uniqueByBucket.A_TARGET_PRESENT_EXACT_MATCH_MISSED.add(citeKey);
+          defectClass.DB_LOOKUP += 1;
+        } else {
+          buckets.B_TARGET_PRESENT_ALIAS_MATCH_MISSED += 1;
+          uniqueByBucket.B_TARGET_PRESENT_ALIAS_MATCH_MISSED.add(citeKey);
+          defectClass.CASE_ALIAS += 1;
+        }
+        if (presentMissExamples.length < 25) {
+          presentMissExamples.push({ raw, lean, family, matchId: [...ids][0], exactPresent });
+        }
+        continue;
+      }
+      if (ids.size > 1) {
+        buckets.E_TARGET_PRESENT_AMBIGUOUS += 1;
+        uniqueByBucket.E_TARGET_PRESENT_AMBIGUOUS.add(citeKey);
+        defectClass.DUPLICATE_AUTHORITY += 1;
+        continue;
+      }
+      const p = parseVolReporterPage(lean);
+      if (p) {
+        const vk = keyOf(p);
+        const vhit = vrpIndex.get(vk);
+        if (vhit && vhit.size === 1) {
+          buckets.C_TARGET_PRESENT_REPORTER_MATCH_MISSED += 1;
+          uniqueByBucket.C_TARGET_PRESENT_REPORTER_MATCH_MISSED.add(citeKey);
+          defectClass.VOLUME_PAGE += 1;
+          if (presentMissExamples.length < 25) {
+            presentMissExamples.push({ raw, lean, family, matchId: [...vhit][0], via: "vrp" });
+          }
+          continue;
+        }
+        if (vhit && vhit.size > 1) {
+          buckets.D_TARGET_PRESENT_IDENTITY_COLLISION += 1;
+          uniqueByBucket.D_TARGET_PRESENT_IDENTITY_COLLISION.add(citeKey);
+          continue;
+        }
+      }
+      let bucket = "F_TARGET_TRULY_ABSENT_CASE";
+      if (family === "usc" || family === "state_statute") bucket = "G_TARGET_TRULY_ABSENT_STATUTE";
+      else if (family === "cfr" || family === "state_regulation") bucket = "H_TARGET_TRULY_ABSENT_REGULATION";
+      else if (family === "federal_rules" || family === "state_court_rules") bucket = "I_TARGET_TRULY_ABSENT_RULE";
+      else if (family === "malformed_partial" || family === "slip_unreported" || family === "docket_like") {
+        if (family === "malformed_partial") bucket = "K_MALFORMED";
+        else bucket = "J_UNSUPPORTED_CITATION_TYPE";
+      } else if (family === "unknown") {
+        bucket = "L_INSUFFICIENT_METADATA";
+      }
+      buckets[bucket] += 1;
+      uniqueByBucket[bucket].add(citeKey);
+      if (bucket.startsWith("F_") || bucket.startsWith("G_") || bucket.startsWith("H_") || bucket.startsWith("I_")) {
+        if (!absentDemand.has(citeKey)) {
+          absentDemand.set(citeKey, { family, edges: 0, lean: citeKey });
+        }
+        absentDemand.get(citeKey).edges += 1;
+      }
+    }
+    const allEdges = await sql`
+      select raw_citation, normalized_citation, to_authority_id
+      from legal_authority_citations
+    `;
+    for (const e of allEdges) {
+      const lean = leanNormalizeCitation(e.normalized_citation) || leanNormalizeCitation(e.raw_citation) || e.normalized_citation || e.raw_citation || "";
+      const family = familyOf(e.raw_citation || "", lean);
+      if (!familyStats.has(family)) {
+        familyStats.set(family, { unresolved: 0, unique: /* @__PURE__ */ new Set(), resolved: 0, extracted: 0 });
+      }
+      const s = familyStats.get(family);
+      s.extracted += 1;
+      if (e.to_authority_id) s.resolved += 1;
+    }
+    const familyTable = [...familyStats.entries()].map(([family, s]) => ({
+      family,
+      extracted: s.extracted,
+      resolved: s.resolved,
+      unresolved: s.extracted - s.resolved,
+      resolutionPct: pct(s.resolved, s.extracted),
+      uniqueUnresolvedApprox: s.unique.size
+    })).sort((a, b) => b.unresolved - a.unresolved);
+    const uniqueBucketCounts = Object.fromEntries(
+      Object.entries(uniqueByBucket).map(([k, set]) => [k, set.size])
+    );
+    const presentTargetMissed = buckets.A_TARGET_PRESENT_EXACT_MATCH_MISSED + buckets.B_TARGET_PRESENT_ALIAS_MATCH_MISSED + buckets.C_TARGET_PRESENT_REPORTER_MATCH_MISSED;
+    const topAbsent = [...absentDemand.values()].sort((a, b) => b.edges - a.edges);
+    report.phases.resolutionForensics = {
+      unresolvedEdges: unresolved.length,
+      buckets,
+      uniqueBucketCounts,
+      presentTargetMissedEdges: presentTargetMissed,
+      presentMissExamples,
+      defectClass,
+      familyTable,
+      concentration: {
+        top10: cumEdges(10),
+        top25: cumEdges(25),
+        top50: cumEdges(50),
+        top100: cumEdges(100),
+        top250: cumEdges(250),
+        top500: cumEdges(500),
+        uniqueAbsentTargets: topAbsent.length,
+        totalAbsentEdgesTracked: topAbsent.reduce((s, x) => s + x.edges, 0)
+      },
+      top100Missing: topAbsent.slice(0, 100),
+      usReports: familyAudit("us_reports"),
+      usc: familyAudit("usc"),
+      cfr: familyAudit("cfr"),
+      federalRules: familyAudit("federal_rules"),
+      federalReporter: familyAudit("federal_reporter"),
+      federalSupplement: familyAudit("federal_supplement")
+    };
+    const root = {
+      extractionMissing_estimatedNewEdgesIfBackfill: (
+        // conservative: sample mean cites * zero-edge-with-text * miss rate — use sample avg
+        sampleTargets.length ? Math.round(
+          sampleCiteOcc / sampleTargets.length * zeroEdgesWithText.length * (sampleParserPositive / sampleTargets.length)
+        ) : 0
+      ),
+      presentTargetResolverDefects: presentTargetMissed,
+      trueMissingCase: buckets.F_TARGET_TRULY_ABSENT_CASE,
+      trueMissingStatute: buckets.G_TARGET_TRULY_ABSENT_STATUTE,
+      trueMissingRegulation: buckets.H_TARGET_TRULY_ABSENT_REGULATION,
+      trueMissingRule: buckets.I_TARGET_TRULY_ABSENT_RULE,
+      unsupported: buckets.J_UNSUPPORTED_CITATION_TYPE,
+      malformedAmbiguous: buckets.K_MALFORMED + buckets.E_TARGET_PRESENT_AMBIGUOUS + buckets.L_INSUFFICIENT_METADATA,
+      other: buckets.D_TARGET_PRESENT_IDENTITY_COLLISION + buckets.M_SOURCE_TEXT_PARSE_DEFECT + buckets.N_OTHER
+    };
+    const u = Math.max(1, unresolved.length);
+    report.phases.rootCauseOfCurrentResolution = {
+      note: "Percentages below are share of CURRENT unresolved edges (not of extracted). Extraction missing is SEPARATE \u2014 those cases have ZERO edges today so they do not appear in the 8255 TARGET_ABSENT pool.",
+      currentUnresolvedBreakdownPct: {
+        presentTargetResolverDefects: pct(root.presentTargetResolverDefects, u),
+        trueMissingCase: pct(root.trueMissingCase, u),
+        trueMissingStatute: pct(root.trueMissingStatute, u),
+        trueMissingRegulation: pct(root.trueMissingRegulation, u),
+        trueMissingRule: pct(root.trueMissingRule, u),
+        unsupported: pct(root.unsupported, u),
+        malformedAmbiguous: pct(root.malformedAmbiguous, u),
+        other: pct(root.other, u)
+      },
+      edgeCounts: root,
+      extractionGapSeparate: {
+        casesWithTextZeroEdges: zeroEdgesWithText.length,
+        sampleParserPositiveRatePct: estimatedExtractionMissRate,
+        estimatedMissedCases,
+        estimatedNewOccurrencesIfBackfilled: root.extractionMissing_estimatedNewEdgesIfBackfill
+      }
+    };
+    const startResolved = cites.resolved;
+    const startExtracted = cites.extracted;
+    report.phases.milestonesOnCurrentDenominator = {
+      "15": milestone(15),
+      "20": milestone(20),
+      "25": milestone(25),
+      "30": milestone(30),
+      "40": milestone(40),
+      "50": milestone(50),
+      curveIfResolveTopAbsent: {
+        top25: {
+          add: cumEdges(25),
+          pct: pct(startResolved + cumEdges(25), startExtracted)
+        },
+        top50: { add: cumEdges(50), pct: pct(startResolved + cumEdges(50), startExtracted) },
+        top100: { add: cumEdges(100), pct: pct(startResolved + cumEdges(100), startExtracted) },
+        top250: { add: cumEdges(250), pct: pct(startResolved + cumEdges(250), startExtracted) },
+        top500: { add: cumEdges(500), pct: pct(startResolved + cumEdges(500), startExtracted) }
+      }
+    };
+    report.phases.backfill = { ran: false };
+    if (RUN_BACKFILL) {
+      const toProcess = zeroEdgesWithText.filter((r) => {
+        const m = r.metadata && typeof r.metadata === "object" ? r.metadata : {};
+        return m.adapter === "s3-hist-ingest" || r.edge_count === 0;
+      }).slice(0, BACKFILL_LIMIT);
+      let processed = 0;
+      let newOcc = 0;
+      let newUnique = 0;
+      let failures = 0;
+      const uniqueNew = /* @__PURE__ */ new Set();
+      for (let i = 0; i < toProcess.length; i += BACKFILL_BATCH) {
+        const batch = toProcess.slice(i, i + BACKFILL_BATCH);
+        const ids = batch.map((b) => b.id);
+        const texts = await sql`
+          select a.id, v.content
+          from legal_authorities a
+          join lateral (
+            select content from legal_authority_versions
+            where authority_id = a.id order by version_number desc limit 1
+          ) v on true
+          where a.id = any(${ids}::uuid[])
+        `;
+        for (const t of texts) {
+          try {
+            const citesFound = extractCitationsLocal(t.content);
+            for (const cit of citesFound) {
+              const dup = await sql`
+                select 1 as ok from legal_authority_citations
+                where from_authority_id = ${t.id}
+                  and normalized_citation = ${cit.normalized}
+                limit 1
+              `;
+              if (dup.length) continue;
+              let toId = null;
+              const keys = /* @__PURE__ */ new Set();
+              for (const k of citationLookupAliases(cit.normalized)) keys.add(k);
+              for (const k of keys) {
+                const hit = aliasIndex.get(k);
+                if (hit && hit.size === 1) {
+                  toId = [...hit][0];
+                  break;
+                }
+              }
+              if (!toId) {
+                const matches = await sql`
+                  select id from legal_authorities
+                  where normalized_citation = ${cit.normalized}
+                     or citation = ${cit.normalized}
+                     or citation = ${cit.raw}
+                  limit 2
+                `;
+                if (matches.length === 1) toId = matches[0].id;
+              }
+              await sql`
+                insert into legal_authority_citations (
+                  id, from_authority_id, to_authority_id, raw_citation, normalized_citation
+                ) values (
+                  ${crypto.randomUUID()}, ${t.id}, ${toId}, ${cit.raw}, ${cit.normalized}
+                )
+              `;
+              report.mutations += 1;
+              newOcc += 1;
+              if (!uniqueNew.has(cit.normalized)) {
+                uniqueNew.add(cit.normalized);
+                newUnique += 1;
+              }
+            }
+            processed += 1;
+          } catch (err) {
+            failures += 1;
+          }
+        }
+        const [dupCheck] = await sql`
+          select count(*)::int as n from (
+            select from_authority_id, normalized_citation
+            from legal_authority_citations
+            group by 1,2 having count(*) > 1
+          ) d
+        `;
+        if (dupCheck.n > 0) {
+          report.phases.backfill = {
+            ran: true,
+            aborted: true,
+            reason: "duplicateCitationEdges>0",
+            processed,
+            newOcc
+          };
+          break;
+        }
+      }
+      report.phases.backfill = {
+        ran: true,
+        casesProcessed: processed,
+        newCitationOccurrences: newOcc,
+        newUniqueCitationStrings: newUnique,
+        failures,
+        limit: BACKFILL_LIMIT
+      };
+    }
+    report.phases.reresolve = { ran: false };
+    if (RUN_RERESOLVE) {
+      const unresolved2 = await sql`
+        select id, raw_citation, normalized_citation
+        from legal_authority_citations
+        where to_authority_id is null
+      `;
+      const authorities2 = await sql`
+        select id, citation, normalized_citation, metadata from legal_authorities
+      `;
+      const alias2 = /* @__PURE__ */ new Map();
+      for (const a of authorities2) {
+        const keys = /* @__PURE__ */ new Set();
+        for (const v of [a.normalized_citation, a.citation].filter(Boolean)) {
+          const lean = leanNormalizeCitation(v) || v;
+          for (const k of citationLookupAliases(lean)) keys.add(k);
+        }
+        const meta = a.metadata && typeof a.metadata === "object" ? a.metadata : {};
+        for (const alias of [...meta.citationAliases || [], ...meta.parallelCitations || []]) {
+          if (typeof alias !== "string") continue;
+          for (const k of citationLookupAliases(leanNormalizeCitation(alias) || alias)) keys.add(k);
+        }
+        for (const k of keys) {
+          if (!alias2.has(k)) alias2.set(k, /* @__PURE__ */ new Set());
+          alias2.get(k).add(a.id);
+        }
+      }
+      let fixed = 0;
+      for (const e of unresolved2) {
+        const lean = leanNormalizeCitation(e.normalized_citation) || leanNormalizeCitation(e.raw_citation) || e.normalized_citation || "";
+        const keys = /* @__PURE__ */ new Set();
+        for (const v of [lean, e.raw_citation, e.normalized_citation].filter(Boolean)) {
+          for (const k of citationLookupAliases(v)) keys.add(k);
+        }
+        const ids = /* @__PURE__ */ new Set();
+        for (const k of keys) {
+          const hit = alias2.get(k);
+          if (hit) for (const id of hit) ids.add(id);
+        }
+        if (ids.size !== 1) continue;
+        const toId = [...ids][0];
+        await sql`
+          update legal_authority_citations
+          set to_authority_id = ${toId}
+          where id = ${e.id} and to_authority_id is null
+        `;
+        fixed += 1;
+        report.mutations += 1;
+      }
+      const [after] = await sql`
+        select count(*)::int as extracted,
+               count(*) filter (where to_authority_id is not null)::int as resolved,
+               count(*) filter (where to_authority_id is null)::int as unresolved
+        from legal_authority_citations
+      `;
+      report.phases.reresolve = {
+        ran: true,
+        fixed,
+        before: cites,
+        after,
+        deltaResolved: after.resolved - cites.resolved,
+        resolutionPctAfter: pct(after.resolved, after.extracted)
+      };
+    }
+    const [finalCites] = await sql`
+      select count(*)::int as extracted,
+             count(*) filter (where to_authority_id is not null)::int as resolved,
+             count(*) filter (where to_authority_id is null)::int as unresolved
+      from legal_authority_citations
+    `;
+    const [finalIntegrity] = await sql`
+      select
+        (select count(*)::int from (
+          select from_authority_id, normalized_citation
+          from legal_authority_citations group by 1,2 having count(*) > 1
+        ) d) as duplicate_citation_edges,
+        (select count(*)::int from legal_authority_chunks where embedding is null) as missing_embeddings
+    `;
+    report.phases.final = {
+      citations: { ...finalCites, resolutionPct: pct(finalCites.resolved, finalCites.extracted) },
+      integrity: finalIntegrity
+    };
+    report.phases.decisions = {
+      citationExtractionOnAllIngestPaths: false,
+      recentHistoricalMissingExtraction: true,
+      affectedHistCases: histAdapter.length,
+      resolverFailingPresentTargets: presentTargetMissed > 0,
+      presentTargetMissedCount: presentTargetMissed,
+      targetAbsentMateriallyAccurate: presentTargetMissed < unresolved.length * 0.05,
+      largestZeroClImprovement: "Local citation extraction backfill on hist-ingest cases (zero edges with text)",
+      largestFutureAcquisitionPerCl: "Acquire top absent case targets by edge-demand concentration (top 100/250)",
+      nextBeforeMoreCl: "Run RUN_BACKFILL=1 local extraction on all zero-edge eligible cases, then RUN_RERESOLVE=1 for present-target links"
+    };
+    fs.writeFileSync(OUT, JSON.stringify(report, null, 2));
+    console.log(JSON.stringify({
+      ok: true,
+      out: OUT,
+      baseline: report.phases.baseline,
+      extraction: report.phases.extractionInventory.extraction,
+      recent: report.phases.extractionInventory.recentAudit,
+      sample: report.phases.zeroEdgeSample,
+      presentTargetMissed,
+      bucketsSummary: buckets,
+      topConcentration: report.phases.resolutionForensics.concentration,
+      familyTop5: familyTable.slice(0, 5),
+      backfill: report.phases.backfill,
+      reresolve: report.phases.reresolve,
+      final: report.phases.final,
+      courtListenerHttpCalls: 0
+    }, null, 2));
   } finally {
-    clearTimeout(timer);
     await sql.end({ timeout: 5 });
   }
 }
-main().catch((e) => {
-  console.log(JSON.stringify({ ok: false, phase: "INGEST", err: String(e.message || e).slice(0, 300), courtListenerHttpCalls: 0 }));
+main().catch((err) => {
+  console.error(JSON.stringify({ ok: false, error: String(err && err.message ? err.message : err) }));
   process.exit(1);
 });

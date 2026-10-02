@@ -10,6 +10,7 @@
 
 const { createHash, randomUUID } = require("node:crypto");
 const postgres = require("postgres");
+const { ensureCaseCitationExtraction } = require("./lib/case-citation-extraction.cjs");
 
 const CL_BASE = "https://www.courtlistener.com/api/rest/v4";
 const SOURCE = "courtlistener";
@@ -427,12 +428,22 @@ async function persistOpinion(sql, opinion, apiKey) {
       )
     `;
   }
+  const citeResult = await ensureCaseCitationExtraction(sql, {
+    authorityId,
+    content: opinion.content,
+    existingMetadata: typeof metadata !== "undefined" ? metadata : { adapter: "courtlistener-a2-f3d-verified" },
+  });
   await sql`
     update legal_authorities
     set ingestion_status = 'ready'::authority_ingestion_status, updated_at = now()
     where id = ${authorityId}
   `;
-  return { status: existing.length ? "new_version" : "imported", authorityId, embeddedChunks: chunks.length };
+  return {
+    status: existing.length ? "new_version" : "imported",
+    authorityId,
+    embeddedChunks: chunks.length,
+    citationEdges: citeResult.inserted,
+  };
 }
 
 async function main() {

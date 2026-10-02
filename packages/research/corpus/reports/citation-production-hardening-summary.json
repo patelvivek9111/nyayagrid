@@ -1,0 +1,503 @@
+{
+  "ok": true,
+  "classification": "ZERO_CL_CITATION_PRODUCTION_HARDENING_AND_DEMAND_MANIFEST",
+  "courtListenerHttpCalls": 0,
+  "scorecard": {
+    "timestamp": "2026-10-02T09:19:59.623Z",
+    "courtListenerHttpCalls": 0,
+    "parserVersion": "case-cite-extract-v1",
+    "corpus": {
+      "cases": 3867,
+      "eligibleTextCases": 3853
+    },
+    "extraction": {
+      "processedNonzero": 3476,
+      "processedZero": 377,
+      "notProcessed": 0,
+      "failed": 0,
+      "coveragePercent": 100,
+      "parserVersion": "case-cite-extract-v1"
+    },
+    "citations": {
+      "occurrences": 36605,
+      "uniqueStrings": null,
+      "resolvedOccurrences": 1815,
+      "resolvedUnique": null,
+      "unresolvedOccurrences": 34790,
+      "rawResolutionPercent": 4.96
+    },
+    "unresolved": {
+      "targetAbsentCase": 23099,
+      "targetAbsentStatute": 834,
+      "targetAbsentRegulation": 91,
+      "targetAbsentRule": 154,
+      "presentAmbiguous": 0,
+      "unsupported": 0,
+      "malformed": 0,
+      "other": 10612
+    },
+    "quality": {
+      "presentTargetMisses": 0,
+      "presentTargetFixedThisRun": 0,
+      "duplicateCitationEdges": 0,
+      "orphanEdges": 0
+    },
+    "demand": {
+      "top10": 111,
+      "top25": 249,
+      "top50": 441,
+      "top100": 758,
+      "top250": 1499,
+      "top500": 2410,
+      "top1000": 3785
+    },
+    "families": [
+      {
+        "family": "unknown",
+        "occurrences": 10627,
+        "resolved": 18,
+        "unresolved": 10609,
+        "resolutionPct": 0.17,
+        "uniqueMissing": 0
+      },
+      {
+        "family": "regional_reporter",
+        "occurrences": 8810,
+        "resolved": 11,
+        "unresolved": 8799,
+        "resolutionPct": 0.12,
+        "uniqueMissing": 7741
+      },
+      {
+        "family": "federal_reporter",
+        "occurrences": 7437,
+        "resolved": 27,
+        "unresolved": 7410,
+        "resolutionPct": 0.36,
+        "uniqueMissing": 6686
+      },
+      {
+        "family": "us_reports",
+        "occurrences": 7713,
+        "resolved": 1357,
+        "unresolved": 6356,
+        "resolutionPct": 17.59,
+        "uniqueMissing": 3686
+      },
+      {
+        "family": "usc",
+        "occurrences": 1056,
+        "resolved": 222,
+        "unresolved": 834,
+        "resolutionPct": 21.02,
+        "uniqueMissing": 0
+      },
+      {
+        "family": "federal_supplement",
+        "occurrences": 481,
+        "resolved": 0,
+        "unresolved": 481,
+        "resolutionPct": 0,
+        "uniqueMissing": 444
+      },
+      {
+        "family": "federal_rules",
+        "occurrences": 288,
+        "resolved": 134,
+        "unresolved": 154,
+        "resolutionPct": 46.53,
+        "uniqueMissing": 0
+      },
+      {
+        "family": "cfr",
+        "occurrences": 137,
+        "resolved": 46,
+        "unresolved": 91,
+        "resolutionPct": 33.58,
+        "uniqueMissing": 0
+      },
+      {
+        "family": "docket_like",
+        "occurrences": 53,
+        "resolved": 0,
+        "unresolved": 53,
+        "resolutionPct": 0,
+        "uniqueMissing": 43
+      },
+      {
+        "family": "malformed_partial",
+        "occurrences": 3,
+        "resolved": 0,
+        "unresolved": 3,
+        "resolutionPct": 0,
+        "uniqueMissing": 0
+      }
+    ],
+    "zeroEdgeClassification": {
+      "remainingAtStart": 377,
+      "classes": {
+        "PROCESSED_ZERO_VALID": 136,
+        "NOT_PROCESSED": 0,
+        "EXTRACTION_FAILED": 0,
+        "TEXT_CHANGED_AFTER_EXTRACTION": 0,
+        "PARSER_POSITIVE_BUT_EDGE_WRITE_MISSING": 0,
+        "UNSUPPORTED_CITATION_SHAPE": 238,
+        "TEXT_TOO_LOW_QUALITY": 3,
+        "OTHER": 0
+      },
+      "backfilledCases": 0,
+      "backfilledEdges": 0,
+      "unsupportedSamples": [
+        {
+          "id": "fb17116f-34f9-483b-990e-901d4d4d7a9d",
+          "samples": [
+            "00 from",
+            "00 was",
+            "00 to",
+            "884 His",
+            "00 was",
+            "00 for",
+            "00 necessary",
+            "10 days"
+          ]
+        },
+        {
+          "id": "899c63ae-93b1-4705-9438-fdf620851696",
+          "samples": [
+            "200 damages",
+            "395 Appellants",
+            "7 Am",
+            "200 damages"
+          ]
+        },
+        {
+          "id": "effbf592-abfa-490d-800f-7294de2a687b",
+          "samples": [
+            "68 theme",
+            "1 Counsel",
+            "2 During",
+            "69 threw",
+            "3 Given",
+            "4 Further",
+            "14 of",
+            "18 in"
+          ]
+        },
+        {
+          "id": "5c9bd1b5-f1bc-431b-964f-24ad4edceaa0",
+          "samples": [
+            "3274 Lower",
+            "2026 PER",
+            "51 Fla",
+            "2026 WL"
+          ]
+        },
+        {
+          "id": "9450df14-f42d-435f-982b-e5784e484a8d",
+          "samples": [
+            "352 Ill"
+          ]
+        },
+        {
+          "id": "6372ff55-9072-4594-aa9b-797b62b07b16",
+          "samples": [
+            "20 JANEL",
+            "2024 ORDER",
+            "2025 Order",
+            "2025 Order",
+            "410 of",
+            "1 Pursuant",
+            "1601 et",
+            "08 Chief"
+          ]
+        },
+        {
+          "id": "3f291360-61f1-4455-bb59-7998f0f43415",
+          "samples": [
+            "1 Pursuant",
+            "17 O.S.Supp.",
+            "545 General",
+            "6 and 12",
+            "2 as",
+            "17 O.S.Supp.",
+            "251 provides",
+            "252 and 259"
+          ]
+        },
+        {
+          "id": "abea74b7-ee71-4a16-9c97-b0bc8e0587e1",
+          "samples": [
+            "2026 IN",
+            "25 September",
+            "2026 MOISETTE",
+            "2026 Pursuant",
+            "1601 et",
+            "000 registered",
+            "250 eligible",
+            "6 of"
+          ]
+        },
+        {
+          "id": "f1fd4705-ff19-4ec6-b03f-1845cd6a4d33",
+          "samples": [
+            "2026 Defendant",
+            "2026 Decided",
+            "2026 ORDER",
+            "8 deadline"
+          ]
+        },
+        {
+          "id": "fe884b62-a8c0-49bb-8234-ca80e898dc4d",
+          "samples": [
+            "046 Submitted",
+            "2025 RELIEF",
+            "2024 and",
+            "23 acres",
+            "94 acres"
+          ]
+        },
+        {
+          "id": "1b9e75d7-5181-4fc2-9676-2592549dcf67",
+          "samples": [
+            "1 Jeremiah",
+            "2 Court"
+          ]
+        },
+        {
+          "id": "6c8f986c-166a-4da0-afdd-3fd144cc3d6e",
+          "samples": [
+            "2026 BEFORE",
+            "022 Case",
+            "0214 In",
+            "715 et",
+            "2 p.m. 4",
+            "45 p.m",
+            "30 p.m",
+            "51 p.m"
+          ]
+        },
+        {
+          "id": "8629fa1f-e892-4a79-a130-a216fdab589d",
+          "samples": [
+            "13 of",
+            "250 Benefit",
+            "2026 Suttell"
+          ]
+        },
+        {
+          "id": "90ac756e-71dc-407a-a46c-6fa0cfb9d7c0",
+          "samples": [
+            "9 Ohio"
+          ]
+        },
+        {
+          "id": "917958ce-5b84-4748-b141-cf554be7dae3",
+          "samples": [
+            "25 IN",
+            "17 Cal.",
+            "683 is",
+            "27 Cal.",
+            "2 IN",
+            "2025 Justice",
+            "25 years",
+            "2018 Reg"
+          ]
+        },
+        {
+          "id": "542316c5-6b99-4de0-a4c8-b05a921c4c8f",
+          "samples": [
+            "602 IV",
+            "55 In",
+            "603 able",
+            "1763 echoed",
+            "357 U"
+          ]
+        },
+        {
+          "id": "db4e6102-62af-4a6f-9db4-c7ec0a085aa8",
+          "samples": [
+            "2026 MATTHEW",
+            "3 was",
+            "20 in",
+            "2 No"
+          ]
+        },
+        {
+          "id": "bd1b176b-a71f-4b72-afe1-b6ddb77d94ee",
+          "samples": [
+            "29 AM",
+            "20 OGAC",
+            "1 BONDING",
+            "1 BONDING",
+            "1 BONDING",
+            "1 BONDING",
+            "2 Pursuant",
+            "1 Bonding"
+          ]
+        },
+        {
+          "id": "e80189a3-9498-4535-a30a-dc3703efdd10",
+          "samples": [
+            "2026 NY",
+            "2026 Appellate",
+            "2012 but"
+          ]
+        },
+        {
+          "id": "26055894-4766-4201-b334-df3bff254db7",
+          "samples": [
+            "65 South",
+            "1995 THE",
+            "2025 CA 0042",
+            "2008 convictions",
+            "2008 on",
+            "37 years",
+            "6 months",
+            "8 years"
+          ]
+        }
+      ]
+    },
+    "milestones": {
+      "5": {
+        "targetPct": 5,
+        "additionalEdgesRequired": 16,
+        "topDemandTargetsRequired": 2,
+        "achievableWithTopDemandEdges": 28
+      },
+      "10": {
+        "targetPct": 10,
+        "additionalEdgesRequired": 1846,
+        "topDemandTargetsRequired": 337,
+        "achievableWithTopDemandEdges": 1847
+      },
+      "15": {
+        "targetPct": 15,
+        "additionalEdgesRequired": 3676,
+        "topDemandTargetsRequired": 946,
+        "achievableWithTopDemandEdges": 3677
+      },
+      "20": {
+        "targetPct": 20,
+        "additionalEdgesRequired": 5506,
+        "topDemandTargetsRequired": 1861,
+        "achievableWithTopDemandEdges": 5507
+      },
+      "25": {
+        "targetPct": 25,
+        "additionalEdgesRequired": 7337,
+        "topDemandTargetsRequired": 2838,
+        "achievableWithTopDemandEdges": 7337
+      },
+      "30": {
+        "targetPct": 30,
+        "additionalEdgesRequired": 9167,
+        "topDemandTargetsRequired": 4668,
+        "achievableWithTopDemandEdges": 9167
+      },
+      "40": {
+        "targetPct": 40,
+        "additionalEdgesRequired": 12827,
+        "topDemandTargetsRequired": 8328,
+        "achievableWithTopDemandEdges": 12827
+      },
+      "50": {
+        "targetPct": 50,
+        "additionalEdgesRequired": 16488,
+        "topDemandTargetsRequired": 11989,
+        "achievableWithTopDemandEdges": 16488
+      }
+    },
+    "usReports": {
+      "occurrences": 7713,
+      "resolved": 1357,
+      "unresolved": 6356,
+      "uniqueMissing": 3686,
+      "top100Demand": 721
+    },
+    "federalReporter": {
+      "uniqueMissing": 6686,
+      "top100Demand": 329
+    },
+    "federalSupplement": {
+      "uniqueMissing": 444,
+      "edgeDemand": 481
+    },
+    "usc": {
+      "uniqueMissing": 609,
+      "edgeDemand": 834,
+      "sourceStatus": "MUTATION_OFF"
+    },
+    "cfr": {
+      "uniqueMissing": 86,
+      "edgeDemand": 91,
+      "sourceStatus": "eCFR_available_gated"
+    },
+    "federalRules": {
+      "uniqueMissing": 62,
+      "edgeDemand": 154,
+      "sourceStatus": "MUTATION_OFF"
+    },
+    "tiers": {
+      "A": {
+        "count": 183,
+        "edgeDemand": 1141
+      },
+      "B": {
+        "count": 232,
+        "edgeDemand": 857
+      },
+      "C": {
+        "count": 1,
+        "edgeDemand": 4
+      },
+      "D": {
+        "count": 84,
+        "edgeDemand": 408
+      }
+    },
+    "start": {
+      "cases": 3867,
+      "extracted": 36605,
+      "resolved": 1815,
+      "unresolved": 34790
+    },
+    "after": {
+      "cases": 3867,
+      "extracted": 36605,
+      "resolved": 1815,
+      "unresolved": 34790
+    },
+    "elapsedMs": 4430,
+    "mutations": {
+      "edges": 0,
+      "meta": 377
+    }
+  },
+  "integrity": {},
+  "topRanked": {
+    "rank": 1,
+    "canonicalTargetKey": "206 P3d 1042",
+    "citation": "206 P3d 1042",
+    "citationFamily": "regional_reporter",
+    "edgeDemand": 14,
+    "cumulativeEdgeDemand": 14,
+    "jurisdiction": null,
+    "court": null,
+    "decisionYear": null,
+    "authorityType": "case",
+    "sourceStrategy": "courtlistener",
+    "courtListenerEligible": true,
+    "zeroCLSourceAvailable": false,
+    "localTargetPresent": false,
+    "status": "READY_CL",
+    "priorityReason": "edgeDemand=14",
+    "citationDemandScore": 14,
+    "coverageValue": 1,
+    "balanceValue": 0,
+    "efficiencyBonus": null,
+    "expectedEdgesPerCl": null,
+    "expectedEdgesPerClConfidence": "UNKNOWN"
+  },
+  "targetCount": 500
+}

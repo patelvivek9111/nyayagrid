@@ -12,6 +12,9 @@
 const { createHash, randomUUID } = require("node:crypto");
 const postgres = require("postgres");
 const fs = require("fs");
+const {
+  ensureCaseCitationExtraction,
+} = require("./lib/case-citation-extraction.cjs");
 
 const CL_BASE = "https://www.courtlistener.com/api/rest/v4";
 const SOURCE = "courtlistener";
@@ -122,6 +125,7 @@ function stripHtml(html) {
     .replace(/\s+/g, " ")
     .trim();
 }
+
 function chunkContent(content) {
   const parts = String(content)
     .split(/\n{2,}/)
@@ -283,6 +287,13 @@ async function main() {
           ${SOURCE}, ${sql.json({ retrievedAt: new Date().toISOString() })}, ${hash}
         )
       `;
+      // Shared deterministic citation extraction (ZERO CourtListener).
+      const citeResult = await ensureCaseCitationExtraction(sql, {
+        authorityId,
+        content,
+        existingMetadata: { clCourt, adapter: "s3-hist-ingest", clusterId: clusterId || null },
+      });
+      const citationEdges = citeResult.inserted;
       const chunks = chunkContent(content);
       const vectors = await embedAll(chunks, openai);
       for (let i = 0; i < chunks.length; i++) {
@@ -301,7 +312,13 @@ async function main() {
         where id=${authorityId}
       `;
       imported += 1;
-      results.push({ id, status: "imported", decisionDate, title: title.slice(0, 80) });
+      results.push({
+        id,
+        status: "imported",
+        decisionDate,
+        title: title.slice(0, 80),
+        citationEdges,
+      });
     }
     clearTimeout(timer);
     const payload = {

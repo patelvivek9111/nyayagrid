@@ -536,7 +536,10 @@ async function storeOutboundCitations(
   await db
     .delete(legalAuthorityCitations)
     .where(eq(legalAuthorityCitations.fromAuthorityId, authority.id));
-  if (parsed.length === 0) return 0;
+  if (parsed.length === 0) {
+    await markCitationExtraction(db, authority, content, 0);
+    return 0;
+  }
 
   const rows: Array<typeof legalAuthorityCitations.$inferInsert> = [];
   for (const citation of parsed) {
@@ -553,7 +556,41 @@ async function storeOutboundCitations(
       pinpoint: citation.pinpoint ?? null,
     });
   }
-  if (rows.length === 0) return 0;
+  if (rows.length === 0) {
+    await markCitationExtraction(db, authority, content, 0);
+    return 0;
+  }
   await db.insert(legalAuthorityCitations).values(rows);
+  await markCitationExtraction(db, authority, content, rows.length);
   return rows.length;
+}
+
+async function markCitationExtraction(
+  db: Database,
+  authority: typeof legalAuthorities.$inferSelect,
+  content: string,
+  occurrenceCount: number,
+): Promise<void> {
+  const textHash = createHash("sha256").update(String(content || ""), "utf8").digest("hex");
+  const status = occurrenceCount > 0 ? "PROCESSED_NONZERO" : "PROCESSED_ZERO";
+  const prior =
+    authority.metadata && typeof authority.metadata === "object" && !Array.isArray(authority.metadata)
+      ? (authority.metadata as Record<string, unknown>)
+      : {};
+  await db
+    .update(legalAuthorities)
+    .set({
+      metadata: {
+        ...prior,
+        citationExtraction: {
+          status,
+          version: "case-cite-extract-v1",
+          extractedAt: new Date().toISOString(),
+          textHashAtExtraction: textHash,
+          occurrenceCount,
+        },
+      },
+      updatedAt: new Date(),
+    })
+    .where(eq(legalAuthorities.id, authority.id));
 }

@@ -1,0 +1,161 @@
+{
+  "classification": "ZERO_CL_CITATION_FORENSIC_AUDIT_AND_RECOVERY",
+  "generatedAt": "2026-10-02T08:53:41.006Z",
+  "status": "PARTIAL",
+  "courtListenerHttpCalls": 0,
+  "openaiCalls": 0,
+  "claudeCalls": 0,
+  "geminiCalls": 0,
+  "grokCalls": 0,
+  "otherLlm": 0,
+  "externalEmbeddings": 0,
+  "subagents": 0,
+  "phase0": {
+    "worker": "STOPPED",
+    "laneAChild": null,
+    "queues": {
+      "q2": "OPEN(#2)",
+      "q3": "NOT_OPEN",
+      "q4": "NOT_OPEN",
+      "q5": "NOT_OPEN",
+      "q9": "CLOSED"
+    },
+    "note": "Live state differs from brief for #3/#4 (brief said OPEN; durable state NOT_OPEN)"
+  },
+  "start": {
+    "cases": 3867,
+    "extracted": 9485,
+    "resolved": 1230,
+    "targetAbsent": 8255,
+    "resolutionPct": 12.97
+  },
+  "extractionPreBackfill": {
+    "eligible": 3853,
+    "withEdges": 1373,
+    "zeroEdgesWithText": 2480,
+    "coveragePct": 35.63,
+    "histIngest": 912,
+    "histZeroEdges": 912,
+    "histZeroPct": 100,
+    "recent1000": {
+      "withEdges": 65,
+      "zeroEdgesWithText": 935,
+      "histAdapter": 905
+    },
+    "sample": {
+      "n": 120,
+      "parserPositive": 104,
+      "missRatePct": 86.67,
+      "estimatedMissedCases": 2149
+    },
+    "codePath": "scripts/tmp-queue2-s3-hist-ingest.cjs — stored text/chunks/embeddings, NO citation edges"
+  },
+  "resolutionForensicsPreBackfill": {
+    "presentTargetMissed": 0,
+    "buckets": {
+      "F_case": 7956,
+      "G_statute": 264,
+      "H_reg": 3,
+      "I_rule": 31,
+      "K_malformed": 1
+    },
+    "familyTop": [
+      {
+        "family": "federal_reporter",
+        "extracted": 4282,
+        "resolved": 23,
+        "unresolved": 4259,
+        "pct": 0.54
+      },
+      {
+        "family": "us_reports",
+        "extracted": 4366,
+        "resolved": 1054,
+        "unresolved": 3312,
+        "pct": 24.14
+      },
+      {
+        "family": "federal_supplement",
+        "extracted": 385,
+        "resolved": 0,
+        "unresolved": 385,
+        "pct": 0
+      },
+      {
+        "family": "usc",
+        "extracted": 349,
+        "resolved": 85,
+        "unresolved": 264,
+        "pct": 24.36
+      },
+      {
+        "family": "federal_rules",
+        "extracted": 55,
+        "resolved": 24,
+        "unresolved": 31,
+        "pct": 43.64
+      }
+    ],
+    "concentration": {
+      "top10": 71,
+      "top25": 146,
+      "top50": 269,
+      "top100": 469,
+      "top250": 964,
+      "top500": 1613,
+      "uniqueAbsent": 6470
+    }
+  },
+  "backfill": {
+    "pass1_hist": {
+      "processed": 912,
+      "newOcc": 10928,
+      "deltaResolved": 258
+    },
+    "pass2_remaining": {
+      "processed": 1600,
+      "newOcc": 13602,
+      "deltaResolved": 183
+    },
+    "pass3_remainder": {
+      "processed": 789,
+      "newOcc": 390,
+      "deltaResolved": 36
+    },
+    "totalNewOcc": 24920,
+    "totalDeltaResolved": 477,
+    "duplicateCitationEdges": 0,
+    "failures": 0
+  },
+  "after": {
+    "cases": 3867,
+    "extracted": 34405,
+    "resolved": 1707,
+    "unresolved": 32698,
+    "resolutionPct": 4.96,
+    "withEdges": 3169,
+    "zeroEdgesWithText": 684,
+    "histWithEdges": 732,
+    "histZero": 180,
+    "note": "Resolution % fell because extraction uncovered ~24.9k previously invisible edges; absolute resolved +477"
+  },
+  "fixes": {
+    "histIngestNowExtractsCitations": true,
+    "file": "scripts/tmp-queue2-s3-hist-ingest.cjs (+bundled)",
+    "resolverDefectFixes": 0,
+    "reason": "present-target missed = 0; TARGET_ABSENT labels accurate"
+  },
+  "integrity": {
+    "duplicateCitationEdges": 0,
+    "missingEmbeddings": 0,
+    "duplicateAuthorities": 0
+  },
+  "validation": {
+    "queue2Validate": "PASS",
+    "queue2Preflight": "PASS"
+  },
+  "git": {
+    "committed": false,
+    "pushed": false
+  }
+}

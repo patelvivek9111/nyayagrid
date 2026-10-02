@@ -19,6 +19,7 @@ const {
   completeLaneBTask,
   recordLaneTime,
 } = require("./queue2-dual-lane-controller.cjs");
+const { ensureCaseCitationExtraction } = require("./lib/case-citation-extraction.cjs");
 
 const locUrl = (volume, page) =>
   `https://www.loc.gov/item/usrep${volume}${String(page).padStart(3, "0")}/?fo=json`;
@@ -204,7 +205,22 @@ async function importAuthority(sql, rec, apiKey) {
       `;
     }
   }
-  return { status: "imported", id, chunks: chunks.length, embedded: embeddings.length };
+  let citationEdges = 0;
+  if (String(rec.authorityType || "") === "case" && String(content || "").length >= 200) {
+    const citeResult = await ensureCaseCitationExtraction(sql, {
+      authorityId: id,
+      content,
+      existingMetadata: { ...(rec.sourceMetadata || {}), queue: "#2", lane: "B" },
+    });
+    citationEdges = citeResult.inserted;
+  }
+  return {
+    status: "imported",
+    id,
+    chunks: chunks.length,
+    embedded: embeddings.length,
+    citationEdges,
+  };
   } catch (e) {
     return { status: "error", error: String(e.message || e).slice(0, 180) };
   }
