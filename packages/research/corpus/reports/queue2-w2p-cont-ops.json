@@ -1,0 +1,641 @@
+{
+  "classification": "MANUAL_WEEK2_PRODUCTIVE_STATE_EXPANSION_CONT",
+  "startedAt": "2026-10-02T03:01:54.228Z",
+  "budget": 220,
+  "caseTarget": 130,
+  "totalCl": 219,
+  "totalImported": 89,
+  "byLane": {
+    "G2": {
+      "imported": 89,
+      "cl": 219,
+      "batches": 23,
+      "searchCl": 23,
+      "fetchCl": 196,
+      "skipped": 0
+    }
+  },
+  "perCourt": {
+    "ind": {
+      "imported": 6,
+      "cl": 13,
+      "skipped": 0
+    },
+    "vt": {
+      "imported": 5,
+      "cl": 11,
+      "skipped": 0
+    },
+    "mass": {
+      "imported": 6,
+      "cl": 13,
+      "skipped": 0
+    },
+    "del": {
+      "imported": 4,
+      "cl": 9,
+      "skipped": 0
+    },
+    "dc": {
+      "imported": 6,
+      "cl": 13,
+      "skipped": 0
+    },
+    "kan": {
+      "imported": 4,
+      "cl": 9,
+      "skipped": 0
+    },
+    "wva": {
+      "imported": 4,
+      "cl": 9,
+      "skipped": 0
+    },
+    "ala": {
+      "imported": 6,
+      "cl": 30,
+      "skipped": 0
+    },
+    "ariz": {
+      "imported": 7,
+      "cl": 17,
+      "skipped": 0
+    },
+    "utah": {
+      "imported": 15,
+      "cl": 33,
+      "skipped": 0
+    },
+    "nm": {
+      "imported": 2,
+      "cl": 9,
+      "skipped": 0
+    },
+    "wis": {
+      "imported": 11,
+      "cl": 25,
+      "skipped": 0
+    },
+    "me": {
+      "imported": 13,
+      "cl": 28,
+      "skipped": 0
+    }
+  },
+  "perWindow": {
+    "ind|2000-01-01|2009-12-31": {
+      "imported": 6,
+      "cl": 13
+    },
+    "vt|2000-01-01|2009-12-31": {
+      "imported": 5,
+      "cl": 11
+    },
+    "mass|2000-01-01|2009-12-31": {
+      "imported": 6,
+      "cl": 13
+    },
+    "del|2000-01-01|2009-12-31": {
+      "imported": 4,
+      "cl": 9
+    },
+    "dc|2000-01-01|2009-12-31": {
+      "imported": 6,
+      "cl": 13
+    },
+    "kan|2000-01-01|2009-12-31": {
+      "imported": 4,
+      "cl": 9
+    },
+    "wva|2000-01-01|2009-12-31": {
+      "imported": 4,
+      "cl": 9
+    },
+    "ala|1995-01-01|1999-12-31": {
+      "imported": 6,
+      "cl": 13
+    },
+    "ala|1990-01-01|1994-12-31": {
+      "imported": 0,
+      "cl": 17
+    },
+    "ariz|1995-01-01|1999-12-31": {
+      "imported": 3,
+      "cl": 7
+    },
+    "ariz|1990-01-01|1994-12-31": {
+      "imported": 3,
+      "cl": 7
+    },
+    "ariz|1980-01-01|1989-12-31": {
+      "imported": 1,
+      "cl": 3
+    },
+    "utah|1995-01-01|1999-12-31": {
+      "imported": 4,
+      "cl": 9
+    },
+    "utah|1990-01-01|1994-12-31": {
+      "imported": 6,
+      "cl": 13
+    },
+    "utah|1980-01-01|1989-12-31": {
+      "imported": 5,
+      "cl": 11
+    },
+    "nm|1995-01-01|1999-12-31": {
+      "imported": 1,
+      "cl": 3
+    },
+    "nm|1990-01-01|1994-12-31": {
+      "imported": 1,
+      "cl": 3
+    },
+    "nm|1980-01-01|1989-12-31": {
+      "imported": 0,
+      "cl": 3
+    },
+    "wis|1995-01-01|1999-12-31": {
+      "imported": 6,
+      "cl": 13
+    },
+    "wis|1990-01-01|1994-12-31": {
+      "imported": 3,
+      "cl": 7
+    },
+    "wis|1980-01-01|1989-12-31": {
+      "imported": 2,
+      "cl": 5
+    },
+    "me|1990-01-01|1994-12-31": {
+      "imported": 6,
+      "cl": 13
+    },
+    "me|1980-01-01|1989-12-31": {
+      "imported": 7,
+      "cl": 15
+    }
+  },
+  "batches": [
+    {
+      "lane": "G2",
+      "court": "ind",
+      "gte": "2000-01-01",
+      "lte": "2009-12-31",
+      "imported": 6,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "vt",
+      "gte": "2000-01-01",
+      "lte": "2009-12-31",
+      "imported": 5,
+      "cl": 11,
+      "searchCl": 1,
+      "fetchCl": 10,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "mass",
+      "gte": "2000-01-01",
+      "lte": "2009-12-31",
+      "imported": 6,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "del",
+      "gte": "2000-01-01",
+      "lte": "2009-12-31",
+      "imported": 4,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "dc",
+      "gte": "2000-01-01",
+      "lte": "2009-12-31",
+      "imported": 6,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "kan",
+      "gte": "2000-01-01",
+      "lte": "2009-12-31",
+      "imported": 4,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "wva",
+      "gte": "2000-01-01",
+      "lte": "2009-12-31",
+      "imported": 4,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "ala",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 6,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "ala",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 0,
+      "cl": 17,
+      "searchCl": 1,
+      "fetchCl": 16,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "ariz",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 3,
+      "cl": 7,
+      "searchCl": 1,
+      "fetchCl": 6,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "ariz",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 3,
+      "cl": 7,
+      "searchCl": 1,
+      "fetchCl": 6,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "ariz",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "utah",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 4,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "utah",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 6,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "utah",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 5,
+      "cl": 11,
+      "searchCl": 1,
+      "fetchCl": 10,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "nm",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "nm",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "nm",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 0,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "wis",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 6,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "wis",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 3,
+      "cl": 7,
+      "searchCl": 1,
+      "fetchCl": 6,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "wis",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 2,
+      "cl": 5,
+      "searchCl": 1,
+      "fetchCl": 4,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "me",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 6,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "me",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 7,
+      "cl": 15,
+      "searchCl": 1,
+      "fetchCl": 14,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    }
+  ],
+  "circuitBreaks": [],
+  "quarantined": [
+    {
+      "court": "ala",
+      "window": "ala|1990-01-01|1994-12-31",
+      "reason": "zero_yield"
+    }
+  ],
+  "saturation": {
+    "PARTIAL": [
+      "ind|2000-01-01|2009-12-31",
+      "vt|2000-01-01|2009-12-31",
+      "mass|2000-01-01|2009-12-31",
+      "del|2000-01-01|2009-12-31",
+      "dc|2000-01-01|2009-12-31",
+      "kan|2000-01-01|2009-12-31",
+      "wva|2000-01-01|2009-12-31",
+      "ala|1995-01-01|1999-12-31",
+      "ariz|1995-01-01|1999-12-31",
+      "ariz|1990-01-01|1994-12-31",
+      "ariz|1980-01-01|1989-12-31",
+      "utah|1995-01-01|1999-12-31",
+      "utah|1990-01-01|1994-12-31",
+      "utah|1980-01-01|1989-12-31",
+      "nm|1995-01-01|1999-12-31",
+      "nm|1990-01-01|1994-12-31",
+      "wis|1995-01-01|1999-12-31",
+      "wis|1990-01-01|1994-12-31",
+      "wis|1980-01-01|1989-12-31",
+      "me|1990-01-01|1994-12-31",
+      "me|1980-01-01|1989-12-31"
+    ],
+    "DENSE": [],
+    "QUARANTINED": [
+      "ala|1990-01-01|1994-12-31"
+    ]
+  },
+  "rolling": [
+    {
+      "cl": 13,
+      "imp": 6
+    },
+    {
+      "cl": 11,
+      "imp": 5
+    },
+    {
+      "cl": 13,
+      "imp": 6
+    },
+    {
+      "cl": 9,
+      "imp": 4
+    },
+    {
+      "cl": 13,
+      "imp": 6
+    },
+    {
+      "cl": 9,
+      "imp": 4
+    },
+    {
+      "cl": 9,
+      "imp": 4
+    },
+    {
+      "cl": 13,
+      "imp": 6
+    },
+    {
+      "cl": 17,
+      "imp": 0
+    },
+    {
+      "cl": 7,
+      "imp": 3
+    },
+    {
+      "cl": 7,
+      "imp": 3
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 9,
+      "imp": 4
+    },
+    {
+      "cl": 13,
+      "imp": 6
+    },
+    {
+      "cl": 11,
+      "imp": 5
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 3,
+      "imp": 0
+    },
+    {
+      "cl": 13,
+      "imp": 6
+    },
+    {
+      "cl": 7,
+      "imp": 3
+    },
+    {
+      "cl": 5,
+      "imp": 2
+    },
+    {
+      "cl": 13,
+      "imp": 6
+    },
+    {
+      "cl": 15,
+      "imp": 7
+    }
+  ],
+  "stopReason": "budget_exhausted",
+  "reliability": {
+    "408": 0,
+    "429": 0
+  },
+  "waste": {
+    "empty": 0,
+    "rehit": 0
+  },
+  "efficiency": {
+    "overall": 2.461,
+    "rolling20": {
+      "cl": 182,
+      "imp": 72,
+      "clPer": 2.528
+    },
+    "rolling50": {
+      "cl": 219,
+      "imp": 89,
+      "clPer": 2.461
+    },
+    "rolling100": {
+      "cl": 219,
+      "imp": 89,
+      "clPer": 2.461
+    },
+    "priorG2": 2.51,
+    "productiveCl": 219
+  },
+  "finishedAt": "2026-10-02T03:15:58.841Z"
+}

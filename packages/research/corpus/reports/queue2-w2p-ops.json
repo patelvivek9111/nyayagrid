@@ -1,0 +1,357 @@
+{
+  "classification": "MANUAL_WEEK2_PRODUCTIVE_STATE_EXPANSION_OPS",
+  "startedAt": "2026-10-02T02:57:13.072Z",
+  "budget": 250,
+  "caseTarget": 175,
+  "casesStart": 3754,
+  "totalCl": 50,
+  "totalImported": 18,
+  "byLane": {
+    "G2": {
+      "imported": 18,
+      "cl": 50,
+      "batches": 10,
+      "searchCl": 10,
+      "fetchCl": 40,
+      "skipped": 0
+    }
+  },
+  "perCourt": {
+    "ind": {
+      "imported": 5,
+      "cl": 11,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "conn": {
+      "imported": 0,
+      "cl": 1,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    },
+    "vt": {
+      "imported": 7,
+      "cl": 16,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "mass": {
+      "imported": 4,
+      "cl": 9,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "mich": {
+      "imported": 0,
+      "cl": 3,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    },
+    "nj": {
+      "imported": 0,
+      "cl": 1,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    },
+    "nc": {
+      "imported": 2,
+      "cl": 6,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    },
+    "wash": {
+      "imported": 0,
+      "cl": 3,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    }
+  },
+  "perWindow": {
+    "ind|1980-01-01|1989-12-31": {
+      "imported": 5,
+      "cl": 11,
+      "status": "PARTIAL"
+    },
+    "conn|1980-01-01|1989-12-31": {
+      "imported": 0,
+      "cl": 1,
+      "status": "QUARANTINED"
+    },
+    "vt|1990-01-01|1994-12-31": {
+      "imported": 6,
+      "cl": 13,
+      "status": "PARTIAL"
+    },
+    "vt|1980-01-01|1989-12-31": {
+      "imported": 1,
+      "cl": 3,
+      "status": "PARTIAL"
+    },
+    "mass|1980-01-01|1989-12-31": {
+      "imported": 4,
+      "cl": 9,
+      "status": "PARTIAL"
+    },
+    "mich|1980-01-01|1989-12-31": {
+      "imported": 0,
+      "cl": 3,
+      "status": "PARTIAL"
+    },
+    "nj|1980-01-01|1989-12-31": {
+      "imported": 0,
+      "cl": 1,
+      "status": "QUARANTINED"
+    },
+    "nc|1990-01-01|1994-12-31": {
+      "imported": 2,
+      "cl": 5,
+      "status": "PARTIAL"
+    },
+    "nc|1980-01-01|1989-12-31": {
+      "imported": 0,
+      "cl": 1,
+      "status": "QUARANTINED"
+    },
+    "wash|1990-01-01|1994-12-31": {
+      "imported": 0,
+      "cl": 3,
+      "status": "PARTIAL"
+    }
+  },
+  "batches": [
+    {
+      "lane": "G2",
+      "court": "ind",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 5,
+      "cl": 11,
+      "searchCl": 1,
+      "fetchCl": 10,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "conn",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "empty",
+      "searchCl": 1,
+      "fetchCl": 0,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "vt",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 6,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "vt",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "mass",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 4,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "mich",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 0,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "nj",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "empty",
+      "searchCl": 1,
+      "fetchCl": 0,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "nc",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 2,
+      "cl": 5,
+      "searchCl": 1,
+      "fetchCl": 4,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "nc",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "empty",
+      "searchCl": 1,
+      "fetchCl": 0,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "wash",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 0,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    }
+  ],
+  "circuitBreaks": [],
+  "quarantined": [
+    {
+      "court": "conn",
+      "window": "conn|1980-01-01|1989-12-31",
+      "reason": "empty_search"
+    },
+    {
+      "court": "nj",
+      "window": "nj|1980-01-01|1989-12-31",
+      "reason": "empty_search"
+    },
+    {
+      "court": "nc",
+      "window": "nc|1980-01-01|1989-12-31",
+      "reason": "empty_search"
+    }
+  ],
+  "saturation": {
+    "FRESH": [],
+    "PARTIAL": [
+      "ind|1980-01-01|1989-12-31",
+      "vt|1990-01-01|1994-12-31",
+      "vt|1980-01-01|1989-12-31",
+      "mass|1980-01-01|1989-12-31",
+      "nc|1990-01-01|1994-12-31"
+    ],
+    "DENSE": [],
+    "SATURATED": [],
+    "QUARANTINED": [
+      "conn|1980-01-01|1989-12-31",
+      "nj|1980-01-01|1989-12-31",
+      "nc|1980-01-01|1989-12-31"
+    ]
+  },
+  "rolling": [
+    {
+      "cl": 11,
+      "imp": 5
+    },
+    {
+      "cl": 1,
+      "imp": 0
+    },
+    {
+      "cl": 13,
+      "imp": 6
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 9,
+      "imp": 4
+    },
+    {
+      "cl": 3,
+      "imp": 0
+    },
+    {
+      "cl": 1,
+      "imp": 0
+    },
+    {
+      "cl": 5,
+      "imp": 2
+    },
+    {
+      "cl": 1,
+      "imp": 0
+    },
+    {
+      "cl": 3,
+      "imp": 0
+    }
+  ],
+  "stopReason": "session_efficiency_breaker",
+  "reliability": {
+    "408": 0,
+    "429": 0
+  },
+  "waste": {
+    "empty": 3,
+    "rehit": 0
+  },
+  "efficiency": {
+    "overall": 2.778,
+    "rolling20": {
+      "cl": 50,
+      "imp": 18,
+      "clPer": 2.778
+    },
+    "rolling50": {
+      "cl": 50,
+      "imp": 18,
+      "clPer": 2.778
+    },
+    "rolling100": {
+      "cl": 50,
+      "imp": 18,
+      "clPer": 2.778
+    },
+    "priorG2": 2.51,
+    "productiveCl": 47
+  },
+  "finishedAt": "2026-10-02T03:00:40.106Z"
+}

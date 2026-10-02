@@ -1,0 +1,79 @@
+{
+  "classification": "MANUAL_WEEK2_PRODUCTIVE_STATE_EXPANSION_CONT2",
+  "startedAt": "2026-10-02T03:16:28.637Z",
+  "budget": 50,
+  "caseTarget": 25,
+  "totalCl": 26,
+  "totalImported": 6,
+  "byLane": {
+    "G2": {
+      "imported": 6,
+      "cl": 26,
+      "batches": 2
+    }
+  },
+  "perCourt": {
+    "nh": {
+      "imported": 6,
+      "cl": 26
+    }
+  },
+  "batches": [
+    {
+      "lane": "G2",
+      "court": "nh",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 6,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "nh",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 0,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    }
+  ],
+  "quarantined": [
+    {
+      "court": "nh",
+      "window": "nh|1980-01-01|1989-12-31",
+      "reason": "zero_yield"
+    }
+  ],
+  "rolling": [
+    {
+      "cl": 13,
+      "imp": 6
+    },
+    {
+      "cl": 13,
+      "imp": 0
+    }
+  ],
+  "stopReason": "efficiency_breaker",
+  "reliability": {
+    "408": 0,
+    "429": 0
+  },
+  "waste": {
+    "empty": 0,
+    "rehit": 0
+  },
+  "efficiency": {
+    "overall": 4.333
+  },
+  "finishedAt": "2026-10-02T03:17:55.149Z"
+}

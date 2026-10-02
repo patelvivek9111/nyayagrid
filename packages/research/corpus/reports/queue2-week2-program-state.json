@@ -1,42 +1,35 @@
 {
   "classification": "QUEUE2_WEEK2_PROGRAM_STATE",
-  "generatedAt": "2026-10-02T02:05:00.000Z",
+  "generatedAt": "2026-10-02T03:20:00.000Z",
   "week1Status": "PASS",
   "week1Cases": 3568,
   "week2Status": "YELLOW",
-  "week2Cases": 3754,
+  "week2Cases": 3867,
   "week2Target": 4700,
-  "week2Remaining": 946,
-  "week2GrowthFromLaunch": 186,
+  "week2Remaining": 833,
+  "week2GrowthFromLaunch": 299,
   "lastSession": {
-    "classification": "MANUAL_WEEK2_HIGH_EFFICIENCY_SCALE",
-    "casesStart": 3652,
-    "casesEnd": 3754,
-    "netAdded": 102,
-    "clRequests": 276,
-    "probes": 2,
-    "g2Cl": 256,
-    "g2Imported": 102,
-    "g2ClPerCase": 2.51,
-    "districtContCl": 18,
-    "districtContImported": 0,
-    "sessionOverallClPerCase": 2.706,
-    "stopReason": "budget_exhausted",
+    "classification": "MANUAL_WEEK2_PRODUCTIVE_STATE_EXPANSION",
+    "casesStart": 3754,
+    "casesEnd": 3867,
+    "netAdded": 113,
+    "clRequests": 296,
+    "probes": 1,
+    "block1Cl": 50,
+    "block1Imported": 18,
+    "contCl": 219,
+    "contImported": 89,
+    "contClPerCase": 2.461,
+    "cont2Cl": 26,
+    "cont2Imported": 6,
+    "sessionOverallClPerCase": 2.611,
+    "productiveContClPerCase": 2.461,
+    "stopReason": "budget_and_efficiency",
     "429": 0,
-    "408": 0,
-    "quarantined": [
-      "iowa|1995-1999",
-      "minn|1995-1999",
-      "nc|1995-1999",
-      "nj|1990-1994",
-      "mich|1990-1994",
-      "va|1990-1994",
-      "cand|2010-2019_dense",
-      "dcd|2010-2019_dense"
-    ]
+    "408": 0
   },
   "composition": {
-    "stateDc": 2960,
+    "stateDc": 3073,
     "federal": 794
   },
   "queues": {
@@ -46,7 +39,7 @@
     "#4": "OPEN",
     "#5": "NOT_OPEN"
   },
-  "note": "High-efficiency G2 1990s/1980s underfilled states restored ~2.51 CL/case. District 2010s cand/dcd scrap was zero-yield (quarantine). Day/hour floors capped volume below +175.",
+  "note": "Productive cont restored 2.461 CL/case on Utah/ME/WI/AZ/IN/VT/MA/DC. Exploratory MI/NJ/WA/CT-1980s and NH-1980s re-hit hurt overall to 2.611. No districts/circuits this session.",
   "courtListenerHttpCalls": 0,
   "mutations": 0
 }
