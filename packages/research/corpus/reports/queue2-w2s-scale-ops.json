@@ -1,0 +1,961 @@
+{
+  "classification": "MANUAL_WEEK2_HIGH_EFFICIENCY_SCALE_OPS",
+  "startedAt": "2026-10-02T01:40:53.722Z",
+  "budget": 260,
+  "caseTarget": 175,
+  "casesStart": 3652,
+  "totalCl": 256,
+  "totalImported": 102,
+  "byLane": {
+    "G2": {
+      "imported": 102,
+      "cl": 256,
+      "batches": 32,
+      "searchCl": 32,
+      "fetchCl": 224,
+      "skipped": 0
+    }
+  },
+  "perCourt": {
+    "wva": {
+      "imported": 12,
+      "cl": 27,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "dc": {
+      "imported": 10,
+      "cl": 23,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "del": {
+      "imported": 11,
+      "cl": 25,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "nj": {
+      "imported": 5,
+      "cl": 12,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    },
+    "mich": {
+      "imported": 1,
+      "cl": 4,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    },
+    "kan": {
+      "imported": 12,
+      "cl": 27,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "vt": {
+      "imported": 6,
+      "cl": 13,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "alaska": {
+      "imported": 5,
+      "cl": 14,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    },
+    "nev": {
+      "imported": 3,
+      "cl": 7,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "wash": {
+      "imported": 1,
+      "cl": 3,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "va": {
+      "imported": 3,
+      "cl": 8,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    },
+    "iowa": {
+      "imported": 0,
+      "cl": 7,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    },
+    "minn": {
+      "imported": 0,
+      "cl": 13,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    },
+    "nc": {
+      "imported": 0,
+      "cl": 1,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    },
+    "ind": {
+      "imported": 14,
+      "cl": 30,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "mass": {
+      "imported": 7,
+      "cl": 16,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "conn": {
+      "imported": 12,
+      "cl": 26,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    }
+  },
+  "perWindow": {
+    "wva|1995-01-01|1999-12-31": {
+      "imported": 4,
+      "cl": 9,
+      "status": "PARTIAL"
+    },
+    "dc|1995-01-01|1999-12-31": {
+      "imported": 5,
+      "cl": 11,
+      "status": "PARTIAL"
+    },
+    "del|1995-01-01|1999-12-31": {
+      "imported": 1,
+      "cl": 3,
+      "status": "PARTIAL"
+    },
+    "nj|1995-01-01|1999-12-31": {
+      "imported": 5,
+      "cl": 11,
+      "status": "PARTIAL"
+    },
+    "mich|1995-01-01|1999-12-31": {
+      "imported": 1,
+      "cl": 3,
+      "status": "PARTIAL"
+    },
+    "kan|1995-01-01|1999-12-31": {
+      "imported": 5,
+      "cl": 11,
+      "status": "PARTIAL"
+    },
+    "vt|1995-01-01|1999-12-31": {
+      "imported": 6,
+      "cl": 13,
+      "status": "PARTIAL"
+    },
+    "alaska|1995-01-01|1999-12-31": {
+      "imported": 5,
+      "cl": 11,
+      "status": "PARTIAL"
+    },
+    "nev|1995-01-01|1999-12-31": {
+      "imported": 3,
+      "cl": 7,
+      "status": "PARTIAL"
+    },
+    "wash|1995-01-01|1999-12-31": {
+      "imported": 1,
+      "cl": 3,
+      "status": "PARTIAL"
+    },
+    "va|1995-01-01|1999-12-31": {
+      "imported": 3,
+      "cl": 7,
+      "status": "PARTIAL"
+    },
+    "iowa|1995-01-01|1999-12-31": {
+      "imported": 0,
+      "cl": 7,
+      "status": "QUARANTINED"
+    },
+    "minn|1995-01-01|1999-12-31": {
+      "imported": 0,
+      "cl": 13,
+      "status": "QUARANTINED"
+    },
+    "nc|1995-01-01|1999-12-31": {
+      "imported": 0,
+      "cl": 1,
+      "status": "QUARANTINED"
+    },
+    "ind|1995-01-01|1999-12-31": {
+      "imported": 6,
+      "cl": 13,
+      "status": "PARTIAL"
+    },
+    "mass|1995-01-01|1999-12-31": {
+      "imported": 6,
+      "cl": 13,
+      "status": "PARTIAL"
+    },
+    "conn|1995-01-01|1999-12-31": {
+      "imported": 6,
+      "cl": 13,
+      "status": "PARTIAL"
+    },
+    "wva|1990-01-01|1994-12-31": {
+      "imported": 5,
+      "cl": 11,
+      "status": "PARTIAL"
+    },
+    "dc|1990-01-01|1994-12-31": {
+      "imported": 3,
+      "cl": 7,
+      "status": "PARTIAL"
+    },
+    "del|1990-01-01|1994-12-31": {
+      "imported": 4,
+      "cl": 9,
+      "status": "PARTIAL"
+    },
+    "nj|1990-01-01|1994-12-31": {
+      "imported": 0,
+      "cl": 1,
+      "status": "QUARANTINED"
+    },
+    "mich|1990-01-01|1994-12-31": {
+      "imported": 0,
+      "cl": 1,
+      "status": "QUARANTINED"
+    },
+    "kan|1990-01-01|1994-12-31": {
+      "imported": 2,
+      "cl": 5,
+      "status": "PARTIAL"
+    },
+    "alaska|1990-01-01|1994-12-31": {
+      "imported": 0,
+      "cl": 3,
+      "status": "PARTIAL"
+    },
+    "va|1990-01-01|1994-12-31": {
+      "imported": 0,
+      "cl": 1,
+      "status": "QUARANTINED"
+    },
+    "ind|1990-01-01|1994-12-31": {
+      "imported": 8,
+      "cl": 17,
+      "status": "PARTIAL"
+    },
+    "mass|1990-01-01|1994-12-31": {
+      "imported": 1,
+      "cl": 3,
+      "status": "PARTIAL"
+    },
+    "conn|1990-01-01|1994-12-31": {
+      "imported": 6,
+      "cl": 13,
+      "status": "PARTIAL"
+    },
+    "wva|1980-01-01|1989-12-31": {
+      "imported": 3,
+      "cl": 7,
+      "status": "PARTIAL"
+    },
+    "dc|1980-01-01|1989-12-31": {
+      "imported": 2,
+      "cl": 5,
+      "status": "PARTIAL"
+    },
+    "del|1980-01-01|1989-12-31": {
+      "imported": 6,
+      "cl": 13,
+      "status": "PARTIAL"
+    },
+    "kan|1980-01-01|1989-12-31": {
+      "imported": 5,
+      "cl": 11,
+      "status": "PARTIAL"
+    }
+  },
+  "batches": [
+    {
+      "lane": "G2",
+      "court": "wva",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 4,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "dc",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 5,
+      "cl": 11,
+      "searchCl": 1,
+      "fetchCl": 10,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "del",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "nj",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 5,
+      "cl": 11,
+      "searchCl": 1,
+      "fetchCl": 10,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "mich",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "kan",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 5,
+      "cl": 11,
+      "searchCl": 1,
+      "fetchCl": 10,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "vt",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 6,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "alaska",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 5,
+      "cl": 11,
+      "searchCl": 1,
+      "fetchCl": 10,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "nev",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 3,
+      "cl": 7,
+      "searchCl": 1,
+      "fetchCl": 6,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "wash",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "va",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 3,
+      "cl": 7,
+      "searchCl": 1,
+      "fetchCl": 6,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "iowa",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 7,
+      "searchCl": 1,
+      "fetchCl": 6,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "minn",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "nc",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "empty",
+      "searchCl": 1,
+      "fetchCl": 0,
+      "skipped": 0,
+      "emptyPages": 1
+    },
+    {
+      "lane": "G2",
+      "court": "ind",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 6,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "mass",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 6,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "conn",
+      "gte": "1995-01-01",
+      "lte": "1999-12-31",
+      "imported": 6,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "wva",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 5,
+      "cl": 11,
+      "searchCl": 1,
+      "fetchCl": 10,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "dc",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 3,
+      "cl": 7,
+      "searchCl": 1,
+      "fetchCl": 6,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "del",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 4,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "nj",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "empty",
+      "searchCl": 1,
+      "fetchCl": 0,
+      "skipped": 0,
+      "emptyPages": 1
+    },
+    {
+      "lane": "G2",
+      "court": "mich",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "empty",
+      "searchCl": 1,
+      "fetchCl": 0,
+      "skipped": 0,
+      "emptyPages": 1
+    },
+    {
+      "lane": "G2",
+      "court": "kan",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 2,
+      "cl": 5,
+      "searchCl": 1,
+      "fetchCl": 4,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "alaska",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 0,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "va",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "empty",
+      "searchCl": 1,
+      "fetchCl": 0,
+      "skipped": 0,
+      "emptyPages": 1
+    },
+    {
+      "lane": "G2",
+      "court": "ind",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 8,
+      "cl": 17,
+      "searchCl": 1,
+      "fetchCl": 16,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "mass",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "conn",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 6,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "wva",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 3,
+      "cl": 7,
+      "searchCl": 1,
+      "fetchCl": 6,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "dc",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 2,
+      "cl": 5,
+      "searchCl": 1,
+      "fetchCl": 4,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "del",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 6,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    },
+    {
+      "lane": "G2",
+      "court": "kan",
+      "gte": "1980-01-01",
+      "lte": "1989-12-31",
+      "imported": 5,
+      "cl": 11,
+      "searchCl": 1,
+      "fetchCl": 10,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0,
+      "emptyPages": 0
+    }
+  ],
+  "circuitBreaks": [
+    {
+      "court": "iowa",
+      "reason": "empty_once"
+    },
+    {
+      "court": "minn",
+      "reason": "empty_once"
+    },
+    {
+      "court": "nc",
+      "reason": "empty_once"
+    },
+    {
+      "court": "nj",
+      "reason": "empty_once"
+    },
+    {
+      "court": "mich",
+      "reason": "empty_once"
+    }
+  ],
+  "quarantined": [
+    {
+      "court": "iowa",
+      "window": "iowa|1995-01-01|1999-12-31",
+      "reason": "zero_yield_after_fetch"
+    },
+    {
+      "court": "minn",
+      "window": "minn|1995-01-01|1999-12-31",
+      "reason": "zero_yield_after_fetch"
+    },
+    {
+      "court": "nc",
+      "window": "nc|1995-01-01|1999-12-31",
+      "reason": "empty_search"
+    },
+    {
+      "court": "nj",
+      "window": "nj|1990-01-01|1994-12-31",
+      "reason": "empty_search"
+    },
+    {
+      "court": "mich",
+      "window": "mich|1990-01-01|1994-12-31",
+      "reason": "empty_search"
+    },
+    {
+      "court": "va",
+      "window": "va|1990-01-01|1994-12-31",
+      "reason": "empty_search"
+    }
+  ],
+  "saturation": {
+    "DENSE": [],
+    "SATURATED": [],
+    "QUARANTINED": [
+      "iowa|1995-01-01|1999-12-31",
+      "minn|1995-01-01|1999-12-31",
+      "nc|1995-01-01|1999-12-31",
+      "nj|1990-01-01|1994-12-31",
+      "mich|1990-01-01|1994-12-31",
+      "va|1990-01-01|1994-12-31"
+    ]
+  },
+  "rolling": [
+    {
+      "cl": 9,
+      "imp": 4
+    },
+    {
+      "cl": 11,
+      "imp": 5
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 11,
+      "imp": 5
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 11,
+      "imp": 5
+    },
+    {
+      "cl": 13,
+      "imp": 6
+    },
+    {
+      "cl": 11,
+      "imp": 5
+    },
+    {
+      "cl": 7,
+      "imp": 3
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 7,
+      "imp": 3
+    },
+    {
+      "cl": 7,
+      "imp": 0
+    },
+    {
+      "cl": 13,
+      "imp": 0
+    },
+    {
+      "cl": 1,
+      "imp": 0
+    },
+    {
+      "cl": 13,
+      "imp": 6
+    },
+    {
+      "cl": 13,
+      "imp": 6
+    },
+    {
+      "cl": 13,
+      "imp": 6
+    },
+    {
+      "cl": 11,
+      "imp": 5
+    },
+    {
+      "cl": 7,
+      "imp": 3
+    },
+    {
+      "cl": 9,
+      "imp": 4
+    },
+    {
+      "cl": 1,
+      "imp": 0
+    },
+    {
+      "cl": 1,
+      "imp": 0
+    },
+    {
+      "cl": 5,
+      "imp": 2
+    },
+    {
+      "cl": 3,
+      "imp": 0
+    },
+    {
+      "cl": 1,
+      "imp": 0
+    },
+    {
+      "cl": 17,
+      "imp": 8
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 13,
+      "imp": 6
+    },
+    {
+      "cl": 7,
+      "imp": 3
+    },
+    {
+      "cl": 5,
+      "imp": 2
+    },
+    {
+      "cl": 13,
+      "imp": 6
+    },
+    {
+      "cl": 11,
+      "imp": 5
+    }
+  ],
+  "stopReason": "budget_exhausted",
+  "reliability": {
+    "408": 0,
+    "429": 0
+  },
+  "waste": {
+    "empty": 4,
+    "rehit": 0,
+    "filtered": 0
+  },
+  "efficiency": {
+    "overall": 2.51,
+    "rolling20": {
+      "cl": 160,
+      "imp": 63,
+      "clPer": 2.54
+    },
+    "rolling50": {
+      "cl": 256,
+      "imp": 102,
+      "clPer": 2.51
+    },
+    "rolling100": {
+      "cl": 256,
+      "imp": 102,
+      "clPer": 2.51
+    },
+    "priorOverall": 3.58,
+    "priorCont": 2.643,
+    "improvementVs358": 1.07,
+    "improvementVs2643": 0.133,
+    "productiveCl": 252
+  },
+  "finishedAt": "2026-10-02T01:58:23.904Z"
+}

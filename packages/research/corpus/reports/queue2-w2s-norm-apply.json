@@ -1,0 +1,107 @@
+{
+  "ok": true,
+  "classification": "EARLY_WEEK2_NORMALIZATION_CURRENTNESS_AUDIT",
+  "generatedAt": "2026-10-02T02:02:26.280Z",
+  "courtListenerHttpCalls": 0,
+  "aiCalls": 0,
+  "mutations": 102,
+  "apply": true,
+  "corpus": {
+    "cases": 3754,
+    "authorities": 5109,
+    "statutes": 904,
+    "regulations": 196,
+    "rules": 254,
+    "missing_provider": 0,
+    "missing_external_id": 0,
+    "cases_missing_norm_cite": 3614,
+    "cases_with_court_id": 3754,
+    "cases_with_jurisdiction": 3754,
+    "cases_with_court": 3754
+  },
+  "currentnessByType": [
+    {
+      "authority_type": "case",
+      "currentness_status": "unknown",
+      "n": 108
+    },
+    {
+      "authority_type": "case",
+      "currentness_status": "historical",
+      "n": 3646
+    },
+    {
+      "authority_type": "statute",
+      "currentness_status": "unknown",
+      "n": 115
+    },
+    {
+      "authority_type": "statute",
+      "currentness_status": "current_as_of_source_date",
+      "n": 789
+    },
+    {
+      "authority_type": "regulation",
+      "currentness_status": "unknown",
+      "n": 15
+    },
+    {
+      "authority_type": "regulation",
+      "currentness_status": "current_as_of_source_date",
+      "n": 181
+    },
+    {
+      "authority_type": "constitution",
+      "currentness_status": "unknown",
+      "n": 1
+    },
+    {
+      "authority_type": "rule",
+      "currentness_status": "unknown",
+      "n": 7
+    },
+    {
+      "authority_type": "rule",
+      "currentness_status": "current_as_of_source_date",
+      "n": 247
+    }
+  ],
+  "currentnessTotals": [
+    {
+      "currentness_status": "unknown",
+      "n": 144
+    },
+    {
+      "currentness_status": "current_as_of_source_date",
+      "n": 1217
+    },
+    {
+      "currentness_status": "historical",
+      "n": 3748
+    }
+  ],
+  "silentCurrentSuspects": [],
+  "duplicateProviderSourceIdPairs": 0,
+  "duplicateNormalizedCaseCitations": 0,
+  "integrity": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "duplicateCitationEdges": 0
+  },
+  "spacingVariantUnresolvedSamples": [
+    {
+      "normalized_citation": "455 F. 3D 225",
+      "n": 1
+    },
+    {
+      "normalized_citation": "802 F. 3D 239",
+      "n": 1
+    }
+  ],
+  "caseHistoricalBackfill": {
+    "applied": true,
+    "wouldUpdate": 102,
+    "updated": 102
+  }
+}

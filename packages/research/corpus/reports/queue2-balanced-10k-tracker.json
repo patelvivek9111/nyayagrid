@@ -1,7 +1,7 @@
 {
   "ok": true,
   "classification": "QUEUE2_BALANCED_10K_TRACKER",
-  "generatedAt": "2026-10-02T00:32:51.648Z",
+  "generatedAt": "2026-10-02T02:02:17.044Z",
   "courtListenerHttpCalls": 0,
   "mutations": 0,
   "targets": {
@@ -12,18 +12,18 @@
   },
   "baseline": {
     "corpus": {
-      "authorities": 5007,
-      "cases": 3652,
-      "cl_cases": 3607,
+      "authorities": 5109,
+      "cases": 3754,
+      "cl_cases": 3709,
       "statutes": 904,
       "regulations": 196,
       "rules": 254,
       "federal_cases": 794,
-      "state_dc_cases": 2858
+      "state_dc_cases": 2960
     },
     "chunks": {
-      "chunks": 80555,
-      "embeddings": 80555,
+      "chunks": 81902,
+      "embeddings": 81902,
       "missing_embeddings": 0
     },
     "duplicates": 0,
@@ -37,78 +37,30 @@
     }
   },
   "progress": {
-    "casesCurrent": 3652,
-    "casesRemaining": 6348,
-    "pctComplete": 36.52,
-    "stateDcCurrent": 2858,
-    "stateDcRemaining": 4792,
+    "casesCurrent": 3754,
+    "casesRemaining": 6246,
+    "pctComplete": 37.54,
+    "stateDcCurrent": 2960,
+    "stateDcRemaining": 4690,
     "federalCurrent": 794,
     "federalRemaining": 1556
   },
   "states": [
     {
-      "jurisdiction": "NJ",
-      "cases": 46,
-      "highCourt": 46,
-      "intermediateAppellate": 0,
-      "earliestYear": 1960,
-      "latestYear": 2026,
-      "pre2000": 2,
-      "pre1980": 1,
-      "planningTarget": 150,
-      "deficit": 104,
-      "intermediateLayerGap": true,
-      "historicalGap": false,
-      "citationDemand": 121,
-      "balancedPriority": 410.15
-    },
-    {
       "jurisdiction": "MI",
-      "cases": 46,
-      "highCourt": 46,
-      "intermediateAppellate": 0,
-      "earliestYear": 1978,
-      "latestYear": 2026,
-      "pre2000": 2,
-      "pre1980": 1,
-      "planningTarget": 150,
-      "deficit": 104,
-      "intermediateLayerGap": true,
-      "historicalGap": false,
-      "citationDemand": 90,
-      "balancedPriority": 405.5
-    },
-    {
-      "jurisdiction": "KS",
       "cases": 47,
       "highCourt": 47,
       "intermediateAppellate": 0,
-      "earliestYear": 1990,
+      "earliestYear": 1978,
       "latestYear": 2026,
-      "pre2000": 2,
-      "pre1980": 0,
+      "pre2000": 3,
+      "pre1980": 1,
       "planningTarget": 150,
       "deficit": 103,
       "intermediateLayerGap": true,
       "historicalGap": false,
-      "citationDemand": 76,
-      "balancedPriority": 400.4
-    },
-    {
-      "jurisdiction": "WA",
-      "cases": 49,
-      "highCourt": 49,
-      "intermediateAppellate": 0,
-      "earliestYear": 1980,
-      "latestYear": 2026,
-      "pre2000": 4,
-      "pre1980": 0,
-      "planningTarget": 150,
-      "deficit": 101,
-      "intermediateLayerGap": true,
-      "historicalGap": false,
-      "citationDemand": 113,
-      "balancedPriority": 399.95
+      "citationDemand": 90,
+      "balancedPriority": 402.5
     },
     {
       "jurisdiction": "IA",
@@ -127,36 +79,36 @@
       "balancedPriority": 397.25
     },
     {
-      "jurisdiction": "VA",
-      "cases": 49,
-      "highCourt": 49,
+      "jurisdiction": "WA",
+      "cases": 50,
+      "highCourt": 50,
       "intermediateAppellate": 0,
       "earliestYear": 1980,
       "latestYear": 2026,
-      "pre2000": 4,
+      "pre2000": 5,
       "pre1980": 0,
       "planningTarget": 150,
-      "deficit": 101,
+      "deficit": 100,
       "intermediateLayerGap": true,
       "historicalGap": false,
-      "citationDemand": 91,
-      "balancedPriority": 396.65
+      "citationDemand": 113,
+      "balancedPriority": 396.95
     },
     {
-      "jurisdiction": "NV",
-      "cases": 48,
-      "highCourt": 48,
+      "jurisdiction": "NJ",
+      "cases": 51,
+      "highCourt": 51,
       "intermediateAppellate": 0,
-      "earliestYear": 1898,
+      "earliestYear": 1960,
       "latestYear": 2026,
-      "pre2000": 26,
-      "pre1980": 23,
+      "pre2000": 7,
+      "pre1980": 1,
       "planningTarget": 150,
-      "deficit": 102,
+      "deficit": 99,
       "intermediateLayerGap": true,
       "historicalGap": false,
-      "citationDemand": 53,
-      "balancedPriority": 393.95
+      "citationDemand": 121,
+      "balancedPriority": 395.15
     },
     {
       "jurisdiction": "NC",
@@ -191,20 +143,20 @@
       "balancedPriority": 391.4
     },
     {
-      "jurisdiction": "AK",
-      "cases": 48,
-      "highCourt": 48,
+      "jurisdiction": "VA",
+      "cases": 52,
+      "highCourt": 52,
       "intermediateAppellate": 0,
       "earliestYear": 1980,
       "latestYear": 2026,
-      "pre2000": 3,
+      "pre2000": 7,
       "pre1980": 0,
       "planningTarget": 150,
-      "deficit": 102,
+      "deficit": 98,
       "intermediateLayerGap": true,
       "historicalGap": false,
-      "citationDemand": 34,
-      "balancedPriority": 391.1
+      "citationDemand": 91,
+      "balancedPriority": 387.65
     },
     {
       "jurisdiction": "NE",
@@ -237,6 +189,22 @@
       "historicalGap": false,
       "citationDemand": 56,
       "balancedPriority": 385.4
+    },
+    {
+      "jurisdiction": "NV",
+      "cases": 51,
+      "highCourt": 51,
+      "intermediateAppellate": 0,
+      "earliestYear": 1898,
+      "latestYear": 2026,
+      "pre2000": 29,
+      "pre1980": 23,
+      "planningTarget": 150,
+      "deficit": 99,
+      "intermediateLayerGap": true,
+      "historicalGap": false,
+      "citationDemand": 53,
+      "balancedPriority": 384.95
     },
     {
       "jurisdiction": "CO",
@@ -287,6 +255,22 @@
       "balancedPriority": 379.7
     },
     {
+      "jurisdiction": "AK",
+      "cases": 53,
+      "highCourt": 53,
+      "intermediateAppellate": 0,
+      "earliestYear": 1980,
+      "latestYear": 2026,
+      "pre2000": 8,
+      "pre1980": 0,
+      "planningTarget": 150,
+      "deficit": 97,
+      "intermediateLayerGap": true,
+      "historicalGap": false,
+      "citationDemand": 34,
+      "balancedPriority": 376.1
+    },
+    {
       "jurisdiction": "OR",
       "cases": 53,
       "highCourt": 53,
@@ -301,22 +285,6 @@
       "historicalGap": false,
       "citationDemand": 27,
       "balancedPriority": 375.05
-    },
-    {
-      "jurisdiction": "WV",
-      "cases": 45,
-      "highCourt": 45,
-      "intermediateAppellate": 0,
-      "earliestYear": 2026,
-      "latestYear": 2026,
-      "pre2000": 0,
-      "pre1980": 0,
-      "planningTarget": 150,
-      "deficit": 105,
-      "intermediateLayerGap": false,
-      "historicalGap": true,
-      "citationDemand": 3,
-      "balancedPriority": 370.45
     },
     {
       "jurisdiction": "HI",
@@ -349,6 +317,22 @@
       "historicalGap": false,
       "citationDemand": 55,
       "balancedPriority": 370.25
+    },
+    {
+      "jurisdiction": "KS",
+      "cases": 59,
+      "highCourt": 59,
+      "intermediateAppellate": 0,
+      "earliestYear": 1980,
+      "latestYear": 2026,
+      "pre2000": 14,
+      "pre1980": 0,
+      "planningTarget": 150,
+      "deficit": 91,
+      "intermediateLayerGap": true,
+      "historicalGap": false,
+      "citationDemand": 76,
+      "balancedPriority": 364.4
     },
     {
       "jurisdiction": "GA",
@@ -431,22 +415,6 @@
       "balancedPriority": 350.9
     },
     {
-      "jurisdiction": "DC",
-      "cases": 45,
-      "highCourt": 45,
-      "intermediateAppellate": 0,
-      "earliestYear": 1978,
-      "latestYear": 2026,
-      "pre2000": 4,
-      "pre1980": 2,
-      "planningTarget": 150,
-      "deficit": 105,
-      "intermediateLayerGap": false,
-      "historicalGap": false,
-      "citationDemand": 192,
-      "balancedPriority": 343.8
-    },
-    {
       "jurisdiction": "SC",
       "cases": 65,
       "highCourt": 65,
@@ -511,36 +479,20 @@
       "balancedPriority": 325.45
     },
     {
-      "jurisdiction": "VT",
-      "cases": 47,
-      "highCourt": 47,
+      "jurisdiction": "DC",
+      "cases": 55,
+      "highCourt": 55,
       "intermediateAppellate": 0,
-      "earliestYear": 1950,
+      "earliestYear": 1978,
       "latestYear": 2026,
-      "pre2000": 4,
-      "pre1980": 4,
-      "planningTarget": 150,
-      "deficit": 103,
-      "intermediateLayerGap": false,
-      "historicalGap": false,
-      "citationDemand": 93,
-      "balancedPriority": 322.95
-    },
-    {
-      "jurisdiction": "DE",
-      "cases": 45,
-      "highCourt": 45,
-      "intermediateAppellate": 0,
-      "earliestYear": 1976,
-      "latestYear": 2026,
-      "pre2000": 2,
+      "pre2000": 14,
       "pre1980": 2,
       "planningTarget": 150,
-      "deficit": 105,
+      "deficit": 95,
       "intermediateLayerGap": false,
       "historicalGap": false,
-      "citationDemand": 15,
-      "balancedPriority": 317.25
+      "citationDemand": 192,
+      "balancedPriority": 313.8
     },
     {
       "jurisdiction": "MS",
@@ -575,20 +527,20 @@
       "balancedPriority": 311.4
     },
     {
-      "jurisdiction": "MA",
-      "cases": 54,
-      "highCourt": 30,
-      "intermediateAppellate": 24,
-      "earliestYear": 1985,
+      "jurisdiction": "VT",
+      "cases": 53,
+      "highCourt": 53,
+      "intermediateAppellate": 0,
+      "earliestYear": 1950,
       "latestYear": 2026,
-      "pre2000": 9,
-      "pre1980": 0,
+      "pre2000": 10,
+      "pre1980": 4,
       "planningTarget": 150,
-      "deficit": 96,
+      "deficit": 97,
       "intermediateLayerGap": false,
       "historicalGap": false,
       "citationDemand": 93,
-      "balancedPriority": 301.95
+      "balancedPriority": 304.95
     },
     {
       "jurisdiction": "SD",
@@ -687,22 +639,6 @@
       "balancedPriority": 289.35
     },
     {
-      "jurisdiction": "IN",
-      "cases": 58,
-      "highCourt": 45,
-      "intermediateAppellate": 13,
-      "earliestYear": 1985,
-      "latestYear": 2026,
-      "pre2000": 2,
-      "pre1980": 0,
-      "planningTarget": 150,
-      "deficit": 92,
-      "intermediateLayerGap": false,
-      "historicalGap": false,
-      "citationDemand": 89,
-      "balancedPriority": 289.35
-    },
-    {
       "jurisdiction": "NM",
       "cases": 59,
       "highCourt": 47,
@@ -749,6 +685,22 @@
       "historicalGap": false,
       "citationDemand": 29,
       "balancedPriority": 286.35
+    },
+    {
+      "jurisdiction": "DE",
+      "cases": 56,
+      "highCourt": 56,
+      "intermediateAppellate": 0,
+      "earliestYear": 1976,
+      "latestYear": 2026,
+      "pre2000": 13,
+      "pre1980": 2,
+      "planningTarget": 150,
+      "deficit": 94,
+      "intermediateLayerGap": false,
+      "historicalGap": false,
+      "citationDemand": 15,
+      "balancedPriority": 284.25
     },
     {
       "jurisdiction": "PA",
@@ -799,6 +751,38 @@
       "balancedPriority": 280.95
     },
     {
+      "jurisdiction": "MA",
+      "cases": 61,
+      "highCourt": 37,
+      "intermediateAppellate": 24,
+      "earliestYear": 1985,
+      "latestYear": 2026,
+      "pre2000": 16,
+      "pre1980": 0,
+      "planningTarget": 150,
+      "deficit": 89,
+      "intermediateLayerGap": false,
+      "historicalGap": false,
+      "citationDemand": 93,
+      "balancedPriority": 280.95
+    },
+    {
+      "jurisdiction": "WV",
+      "cases": 57,
+      "highCourt": 57,
+      "intermediateAppellate": 0,
+      "earliestYear": 1980,
+      "latestYear": 2026,
+      "pre2000": 12,
+      "pre1980": 0,
+      "planningTarget": 150,
+      "deficit": 93,
+      "intermediateLayerGap": false,
+      "historicalGap": false,
+      "citationDemand": 3,
+      "balancedPriority": 279.45
+    },
+    {
       "jurisdiction": "ME",
       "cases": 69,
       "highCourt": 69,
@@ -831,20 +815,20 @@
       "balancedPriority": 255.45
     },
     {
-      "jurisdiction": "CT",
-      "cases": 75,
-      "highCourt": 46,
-      "intermediateAppellate": 29,
-      "earliestYear": 1990,
+      "jurisdiction": "IN",
+      "cases": 72,
+      "highCourt": 59,
+      "intermediateAppellate": 13,
+      "earliestYear": 1985,
       "latestYear": 2026,
-      "pre2000": 13,
+      "pre2000": 16,
       "pre1980": 0,
       "planningTarget": 150,
-      "deficit": 75,
+      "deficit": 78,
       "intermediateLayerGap": false,
       "historicalGap": false,
-      "citationDemand": 168,
-      "balancedPriority": 250.2
+      "citationDemand": 89,
+      "balancedPriority": 247.35
     },
     {
       "jurisdiction": "KY",
@@ -861,72 +845,40 @@
       "historicalGap": false,
       "citationDemand": 78,
       "balancedPriority": 221.7
+    },
+    {
+      "jurisdiction": "CT",
+      "cases": 87,
+      "highCourt": 58,
+      "intermediateAppellate": 29,
+      "earliestYear": 1990,
+      "latestYear": 2026,
+      "pre2000": 25,
+      "pre1980": 0,
+      "planningTarget": 150,
+      "deficit": 63,
+      "intermediateLayerGap": false,
+      "historicalGap": false,
+      "citationDemand": 168,
+      "balancedPriority": 214.2
     }
   ],
   "topUnderrepresented": [
     {
-      "jurisdiction": "NJ",
-      "cases": 46,
-      "highCourt": 46,
-      "intermediateAppellate": 0,
-      "earliestYear": 1960,
-      "latestYear": 2026,
-      "pre2000": 2,
-      "pre1980": 1,
-      "planningTarget": 150,
-      "deficit": 104,
-      "intermediateLayerGap": true,
-      "historicalGap": false,
-      "citationDemand": 121,
-      "balancedPriority": 410.15
-    },
-    {
       "jurisdiction": "MI",
-      "cases": 46,
-      "highCourt": 46,
-      "intermediateAppellate": 0,
-      "earliestYear": 1978,
-      "latestYear": 2026,
-      "pre2000": 2,
-      "pre1980": 1,
-      "planningTarget": 150,
-      "deficit": 104,
-      "intermediateLayerGap": true,
-      "historicalGap": false,
-      "citationDemand": 90,
-      "balancedPriority": 405.5
-    },
-    {
-      "jurisdiction": "KS",
       "cases": 47,
       "highCourt": 47,
       "intermediateAppellate": 0,
-      "earliestYear": 1990,
+      "earliestYear": 1978,
       "latestYear": 2026,
-      "pre2000": 2,
-      "pre1980": 0,
+      "pre2000": 3,
+      "pre1980": 1,
       "planningTarget": 150,
       "deficit": 103,
       "intermediateLayerGap": true,
       "historicalGap": false,
-      "citationDemand": 76,
-      "balancedPriority": 400.4
-    },
-    {
-      "jurisdiction": "WA",
-      "cases": 49,
-      "highCourt": 49,
-      "intermediateAppellate": 0,
-      "earliestYear": 1980,
-      "latestYear": 2026,
-      "pre2000": 4,
-      "pre1980": 0,
-      "planningTarget": 150,
-      "deficit": 101,
-      "intermediateLayerGap": true,
-      "historicalGap": false,
-      "citationDemand": 113,
-      "balancedPriority": 399.95
+      "citationDemand": 90,
+      "balancedPriority": 402.5
     },
     {
       "jurisdiction": "IA",
@@ -945,36 +897,36 @@
       "balancedPriority": 397.25
     },
     {
-      "jurisdiction": "VA",
-      "cases": 49,
-      "highCourt": 49,
+      "jurisdiction": "WA",
+      "cases": 50,
+      "highCourt": 50,
       "intermediateAppellate": 0,
       "earliestYear": 1980,
       "latestYear": 2026,
-      "pre2000": 4,
+      "pre2000": 5,
       "pre1980": 0,
       "planningTarget": 150,
-      "deficit": 101,
+      "deficit": 100,
       "intermediateLayerGap": true,
       "historicalGap": false,
-      "citationDemand": 91,
-      "balancedPriority": 396.65
+      "citationDemand": 113,
+      "balancedPriority": 396.95
     },
     {
-      "jurisdiction": "NV",
-      "cases": 48,
-      "highCourt": 48,
+      "jurisdiction": "NJ",
+      "cases": 51,
+      "highCourt": 51,
       "intermediateAppellate": 0,
-      "earliestYear": 1898,
+      "earliestYear": 1960,
       "latestYear": 2026,
-      "pre2000": 26,
-      "pre1980": 23,
+      "pre2000": 7,
+      "pre1980": 1,
       "planningTarget": 150,
-      "deficit": 102,
+      "deficit": 99,
       "intermediateLayerGap": true,
       "historicalGap": false,
-      "citationDemand": 53,
-      "balancedPriority": 393.95
+      "citationDemand": 121,
+      "balancedPriority": 395.15
     },
     {
       "jurisdiction": "NC",
@@ -1009,23 +961,87 @@
       "balancedPriority": 391.4
     },
     {
-      "jurisdiction": "AK",
-      "cases": 48,
-      "highCourt": 48,
+      "jurisdiction": "VA",
+      "cases": 52,
+      "highCourt": 52,
       "intermediateAppellate": 0,
       "earliestYear": 1980,
       "latestYear": 2026,
-      "pre2000": 3,
+      "pre2000": 7,
       "pre1980": 0,
       "planningTarget": 150,
-      "deficit": 102,
+      "deficit": 98,
       "intermediateLayerGap": true,
       "historicalGap": false,
-      "citationDemand": 34,
-      "balancedPriority": 391.1
+      "citationDemand": 91,
+      "balancedPriority": 387.65
+    },
+    {
+      "jurisdiction": "NE",
+      "cases": 52,
+      "highCourt": 52,
+      "intermediateAppellate": 0,
+      "earliestYear": 1980,
+      "latestYear": 2026,
+      "pre2000": 7,
+      "pre1980": 0,
+      "planningTarget": 150,
+      "deficit": 98,
+      "intermediateLayerGap": true,
+      "historicalGap": false,
+      "citationDemand": 84,
+      "balancedPriority": 386.6
+    },
+    {
+      "jurisdiction": "MD",
+      "cases": 51,
+      "highCourt": 51,
+      "intermediateAppellate": 0,
+      "earliestYear": 1980,
+      "latestYear": 2026,
+      "pre2000": 6,
+      "pre1980": 0,
+      "planningTarget": 150,
+      "deficit": 99,
+      "intermediateLayerGap": true,
+      "historicalGap": false,
+      "citationDemand": 56,
+      "balancedPriority": 385.4
+    },
+    {
+      "jurisdiction": "NV",
+      "cases": 51,
+      "highCourt": 51,
+      "intermediateAppellate": 0,
+      "earliestYear": 1898,
+      "latestYear": 2026,
+      "pre2000": 29,
+      "pre1980": 23,
+      "planningTarget": 150,
+      "deficit": 99,
+      "intermediateLayerGap": true,
+      "historicalGap": false,
+      "citationDemand": 53,
+      "balancedPriority": 384.95
     }
   ],
   "topOverrepresented": [
+    {
+      "jurisdiction": "CT",
+      "cases": 87,
+      "highCourt": 58,
+      "intermediateAppellate": 29,
+      "earliestYear": 1990,
+      "latestYear": 2026,
+      "pre2000": 25,
+      "pre1980": 0,
+      "planningTarget": 150,
+      "deficit": 63,
+      "intermediateLayerGap": false,
+      "historicalGap": false,
+      "citationDemand": 168,
+      "balancedPriority": 214.2
+    },
     {
       "jurisdiction": "KY",
       "cases": 80,
@@ -1059,20 +1075,20 @@
       "balancedPriority": 313.25
     },
     {
-      "jurisdiction": "CT",
-      "cases": 75,
-      "highCourt": 46,
-      "intermediateAppellate": 29,
-      "earliestYear": 1990,
+      "jurisdiction": "IN",
+      "cases": 72,
+      "highCourt": 59,
+      "intermediateAppellate": 13,
+      "earliestYear": 1985,
       "latestYear": 2026,
-      "pre2000": 13,
+      "pre2000": 16,
       "pre1980": 0,
       "planningTarget": 150,
-      "deficit": 75,
+      "deficit": 78,
       "intermediateLayerGap": false,
       "historicalGap": false,
-      "citationDemand": 168,
-      "balancedPriority": 250.2
+      "citationDemand": 89,
+      "balancedPriority": 247.35
     },
     {
       "jurisdiction": "AZ",
@@ -1169,22 +1185,6 @@
       "historicalGap": false,
       "citationDemand": 90,
       "balancedPriority": 351.5
-    },
-    {
-      "jurisdiction": "UT",
-      "cases": 63,
-      "highCourt": 45,
-      "intermediateAppellate": 18,
-      "earliestYear": 2025,
-      "latestYear": 2026,
-      "pre2000": 0,
-      "pre1980": 0,
-      "planningTarget": 150,
-      "deficit": 87,
-      "intermediateLayerGap": false,
-      "historicalGap": true,
-      "citationDemand": 84,
-      "balancedPriority": 328.6
     }
   ],
   "federal": {
@@ -1599,28 +1599,10 @@
   "lanes": {
     "G1": [
       {
-        "jurisdiction": "NJ",
-        "deficit": 104,
-        "intermediateLayerGap": true,
-        "priority": 410.15
-      },
-      {
         "jurisdiction": "MI",
-        "deficit": 104,
-        "intermediateLayerGap": true,
-        "priority": 405.5
-      },
-      {
-        "jurisdiction": "KS",
         "deficit": 103,
         "intermediateLayerGap": true,
-        "priority": 400.4
-      },
-      {
-        "jurisdiction": "WA",
-        "deficit": 101,
-        "intermediateLayerGap": true,
-        "priority": 399.95
+        "priority": 402.5
       },
       {
         "jurisdiction": "IA",
@@ -1629,16 +1611,16 @@
         "priority": 397.25
       },
       {
-        "jurisdiction": "VA",
-        "deficit": 101,
+        "jurisdiction": "WA",
+        "deficit": 100,
         "intermediateLayerGap": true,
-        "priority": 396.65
+        "priority": 396.95
       },
       {
-        "jurisdiction": "NV",
-        "deficit": 102,
+        "jurisdiction": "NJ",
+        "deficit": 99,
         "intermediateLayerGap": true,
-        "priority": 393.95
+        "priority": 395.15
       },
       {
         "jurisdiction": "NC",
@@ -1653,10 +1635,10 @@
         "priority": 391.4
       },
       {
-        "jurisdiction": "AK",
-        "deficit": 102,
+        "jurisdiction": "VA",
+        "deficit": 98,
         "intermediateLayerGap": true,
-        "priority": 391.1
+        "priority": 387.65
       },
       {
         "jurisdiction": "NE",
@@ -1669,6 +1651,12 @@
         "deficit": 99,
         "intermediateLayerGap": true,
         "priority": 385.4
+      },
+      {
+        "jurisdiction": "NV",
+        "deficit": 99,
+        "intermediateLayerGap": true,
+        "priority": 384.95
       },
       {
         "jurisdiction": "CO",
@@ -1687,16 +1675,21 @@
         "deficit": 97,
         "intermediateLayerGap": true,
         "priority": 379.7
+      },
+      {
+        "jurisdiction": "AK",
+        "deficit": 97,
+        "intermediateLayerGap": true,
+        "priority": 376.1
+      },
+      {
+        "jurisdiction": "OR",
+        "deficit": 97,
+        "intermediateLayerGap": true,
+        "priority": 375.05
       }
     ],
     "G2": [
-      {
-        "jurisdiction": "WV",
-        "earliestYear": 2026,
-        "latestYear": 2026,
-        "pre2000": 0,
-        "priority": 370.45
-      },
       {
         "jurisdiction": "UT",
         "earliestYear": 2025,

@@ -1,0 +1,77 @@
+{
+  "classification": "MANUAL_WEEK2_HIGH_EFFICIENCY_SCALE_CONT",
+  "startedAt": "2026-10-02T01:59:43.144Z",
+  "budget": 14,
+  "caseTarget": 8,
+  "totalCl": 18,
+  "totalImported": 0,
+  "byLane": {
+    "DISTRICT": {
+      "imported": 0,
+      "cl": 18,
+      "batches": 2,
+      "searchCl": 2,
+      "fetchCl": 16
+    }
+  },
+  "perCourt": {
+    "cand": {
+      "imported": 0,
+      "cl": 9,
+      "consecutiveEmpty": 1
+    },
+    "dcd": {
+      "imported": 0,
+      "cl": 9,
+      "consecutiveEmpty": 1
+    }
+  },
+  "batches": [
+    {
+      "lane": "DISTRICT",
+      "court": "cand",
+      "gte": "2010-01-01",
+      "lte": "2019-12-31",
+      "imported": 0,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "dcd",
+      "gte": "2010-01-01",
+      "lte": "2019-12-31",
+      "imported": 0,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    }
+  ],
+  "circuitBreaks": [],
+  "rolling": [
+    {
+      "cl": 9,
+      "imp": 0
+    },
+    {
+      "cl": 9,
+      "imp": 0
+    }
+  ],
+  "stopReason": "budget_exhausted",
+  "reliability": {
+    "408": 0,
+    "429": 0
+  },
+  "efficiency": {
+    "overall": null
+  },
+  "finishedAt": "2026-10-02T02:01:14.763Z"
+}

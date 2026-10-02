@@ -1,35 +1,42 @@
 {
   "classification": "QUEUE2_WEEK2_PROGRAM_STATE",
-  "generatedAt": "2026-10-02T00:40:00.000Z",
+  "generatedAt": "2026-10-02T02:05:00.000Z",
   "week1Status": "PASS",
   "week1Cases": 3568,
-  "week1CrossedAt": "2026-10-01T22:15:19.163Z",
   "week2Status": "YELLOW",
-  "week2Cases": 3652,
+  "week2Cases": 3754,
   "week2Target": 4700,
-  "week2Remaining": 1048,
+  "week2Remaining": 946,
+  "week2GrowthFromLaunch": 186,
   "lastSession": {
-    "classification": "MANUAL_WEEK2_REQUEST_EFFICIENCY_RECOVERY_AND_SCALE",
-    "casesStart": 3568,
-    "casesEnd": 3652,
-    "netAdded": 84,
-    "clRequests": 302,
-    "probe": 1,
-    "block1ClPerCase": 5.464,
-    "contClPerCase": 2.643,
-    "sessionOverallClPerCase": 3.583,
-    "priorOverall": 3.17,
-    "stopReason": "429_hour",
+    "classification": "MANUAL_WEEK2_HIGH_EFFICIENCY_SCALE",
+    "casesStart": 3652,
+    "casesEnd": 3754,
+    "netAdded": 102,
+    "clRequests": 276,
+    "probes": 2,
+    "g2Cl": 256,
+    "g2Imported": 102,
+    "g2ClPerCase": 2.51,
+    "districtContCl": 18,
+    "districtContImported": 0,
+    "sessionOverallClPerCase": 2.706,
+    "stopReason": "budget_exhausted",
+    "429": 0,
+    "408": 0,
     "quarantined": [
-      "ca2_hist",
-      "ca4_hist",
-      "ca10_hist",
-      "cafc_empty_windows",
-      "waed_1985_1994"
+      "iowa|1995-1999",
+      "minn|1995-1999",
+      "nc|1995-1999",
+      "nj|1990-1994",
+      "mich|1990-1994",
+      "va|1990-1994",
+      "cand|2010-2019_dense",
+      "dcd|2010-2019_dense"
     ]
   },
   "composition": {
-    "stateDc": 2858,
+    "stateDc": 2960,
     "federal": 794
   },
   "queues": {
@@ -39,7 +46,7 @@
     "#4": "OPEN",
     "#5": "NOT_OPEN"
   },
-  "note": "Week 2 efficiency recovery: forensics proved 3.17 was zero-yield circuit/district waste. Cont path restored 2.643 CL/case on underfilled 1990s states. Hour 429 stop. Dual-lane worker remains NOT_OPEN.",
+  "note": "High-efficiency G2 1990s/1980s underfilled states restored ~2.51 CL/case. District 2010s cand/dcd scrap was zero-yield (quarantine). Day/hour floors capped volume below +175.",
   "courtListenerHttpCalls": 0,
   "mutations": 0
 }
