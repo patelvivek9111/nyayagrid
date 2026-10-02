@@ -1,0 +1,101 @@
+{
+  "classification": "WEEK2_EFFICIENCY_FORENSICS",
+  "generatedAt": "2026-10-02T00:10:07.779Z",
+  "priorSession": {
+    "totalCl": 247,
+    "probe": 1,
+    "grand": 248,
+    "useful": 78,
+    "overall": 3.167
+  },
+  "emptyBatchCl": 3,
+  "zeroYieldCourtCl": 63,
+  "productiveCourtCl": 184,
+  "productiveUseful": 78,
+  "productiveClPerCase": 2.359,
+  "causes": {
+    "EMPTY_WINDOW_OR_ZERO_YIELD": 63,
+    "LOW_HIT_FEDERAL_CIRCUIT": 64,
+    "DISTRICT_MIXED": 44,
+    "STATE_HIST_GOOD": 139
+  },
+  "counterfactualWithoutZeroYield": 2.359,
+  "deltaVsPriorHealthy": 0.808,
+  "quarantineUnchanged": [
+    "ca2_hist",
+    "ca4_hist",
+    "ca10_hist",
+    "cafc_empty_windows",
+    "waed_1985_1994"
+  ],
+  "tierA": [
+    {
+      "court": "sd",
+      "cl": 20,
+      "imp": 9,
+      "clPer": 2.22
+    },
+    {
+      "court": "wyo",
+      "cl": 24,
+      "imp": 11,
+      "clPer": 2.18
+    },
+    {
+      "court": "nd",
+      "cl": 24,
+      "imp": 11,
+      "clPer": 2.18
+    },
+    {
+      "court": "cand",
+      "cl": 11,
+      "imp": 5,
+      "clPer": 2.2
+    },
+    {
+      "court": "mont",
+      "cl": 11,
+      "imp": 5,
+      "clPer": 2.2
+    },
+    {
+      "court": "miss",
+      "cl": 13,
+      "imp": 6,
+      "clPer": 2.17
+    },
+    {
+      "court": "me",
+      "cl": 9,
+      "imp": 4,
+      "clPer": 2.25
+    }
+  ],
+  "tierB": [
+    {
+      "court": "nh",
+      "cl": 16,
+      "imp": 7,
+      "clPer": 2.29
+    },
+    {
+      "court": "ri",
+      "cl": 10,
+      "imp": 4,
+      "clPer": 2.5
+    },
+    {
+      "court": "dcd",
+      "cl": 14,
+      "imp": 6,
+      "clPer": 2.33
+    },
+    {
+      "court": "vt",
+      "cl": 5,
+      "imp": 2,
+      "clPer": 2.5
+    }
+  ]
+}

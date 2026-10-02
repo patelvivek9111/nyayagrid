@@ -1,0 +1,602 @@
+{
+  "classification": "MANUAL_WEEK2_EFFICIENCY_RECOVERY_OPS",
+  "startedAt": "2026-10-02T00:10:27.407Z",
+  "budget": 300,
+  "caseTarget": 180,
+  "casesStart": 3568,
+  "totalCl": 153,
+  "totalImported": 28,
+  "byLane": {
+    "G2": {
+      "imported": 12,
+      "cl": 109,
+      "batches": 11,
+      "searchCl": 11,
+      "fetchCl": 98
+    },
+    "DISTRICT": {
+      "imported": 12,
+      "cl": 32,
+      "batches": 8,
+      "searchCl": 8,
+      "fetchCl": 24
+    },
+    "G3H": {
+      "imported": 4,
+      "cl": 12,
+      "batches": 2,
+      "searchCl": 2,
+      "fetchCl": 10
+    }
+  },
+  "perCourt": {
+    "wyo": {
+      "imported": 0,
+      "cl": 13,
+      "consecutiveEmpty": 1,
+      "searchCl": 1,
+      "fetchCl": 12
+    },
+    "nd": {
+      "imported": 1,
+      "cl": 15,
+      "consecutiveEmpty": 0,
+      "searchCl": 1,
+      "fetchCl": 14
+    },
+    "sd": {
+      "imported": 0,
+      "cl": 7,
+      "consecutiveEmpty": 1,
+      "searchCl": 1,
+      "fetchCl": 6
+    },
+    "miss": {
+      "imported": 2,
+      "cl": 17,
+      "consecutiveEmpty": 0,
+      "searchCl": 1,
+      "fetchCl": 16
+    },
+    "mont": {
+      "imported": 0,
+      "cl": 11,
+      "consecutiveEmpty": 1,
+      "searchCl": 1,
+      "fetchCl": 10
+    },
+    "nh": {
+      "imported": 0,
+      "cl": 3,
+      "consecutiveEmpty": 1,
+      "searchCl": 1,
+      "fetchCl": 2
+    },
+    "me": {
+      "imported": 0,
+      "cl": 9,
+      "consecutiveEmpty": 1,
+      "searchCl": 1,
+      "fetchCl": 8
+    },
+    "ri": {
+      "imported": 0,
+      "cl": 9,
+      "consecutiveEmpty": 1,
+      "searchCl": 1,
+      "fetchCl": 8
+    },
+    "vt": {
+      "imported": 0,
+      "cl": 5,
+      "consecutiveEmpty": 1,
+      "searchCl": 1,
+      "fetchCl": 4
+    },
+    "alaska": {
+      "imported": 1,
+      "cl": 3,
+      "consecutiveEmpty": 0,
+      "searchCl": 1,
+      "fetchCl": 2
+    },
+    "ala": {
+      "imported": 8,
+      "cl": 17,
+      "consecutiveEmpty": 0,
+      "searchCl": 1,
+      "fetchCl": 16
+    },
+    "cand": {
+      "imported": 3,
+      "cl": 7,
+      "consecutiveEmpty": 0,
+      "searchCl": 1,
+      "fetchCl": 6
+    },
+    "dcd": {
+      "imported": 1,
+      "cl": 3,
+      "consecutiveEmpty": 0,
+      "searchCl": 1,
+      "fetchCl": 2
+    },
+    "nysd": {
+      "imported": 1,
+      "cl": 3,
+      "consecutiveEmpty": 0,
+      "searchCl": 1,
+      "fetchCl": 2
+    },
+    "cacd": {
+      "imported": 1,
+      "cl": 3,
+      "consecutiveEmpty": 0,
+      "searchCl": 1,
+      "fetchCl": 2
+    },
+    "ilnd": {
+      "imported": 1,
+      "cl": 3,
+      "consecutiveEmpty": 0,
+      "searchCl": 1,
+      "fetchCl": 2
+    },
+    "flsd": {
+      "imported": 4,
+      "cl": 9,
+      "consecutiveEmpty": 0,
+      "searchCl": 1,
+      "fetchCl": 8
+    },
+    "njd": {
+      "imported": 0,
+      "cl": 1,
+      "consecutiveEmpty": 1,
+      "searchCl": 1,
+      "fetchCl": 0
+    },
+    "paed": {
+      "imported": 1,
+      "cl": 3,
+      "consecutiveEmpty": 0,
+      "searchCl": 1,
+      "fetchCl": 2
+    },
+    "cadc": {
+      "imported": 1,
+      "cl": 3,
+      "consecutiveEmpty": 0,
+      "searchCl": 1,
+      "fetchCl": 2
+    },
+    "ca1": {
+      "imported": 3,
+      "cl": 9,
+      "consecutiveEmpty": 0,
+      "searchCl": 1,
+      "fetchCl": 8
+    }
+  },
+  "batches": [
+    {
+      "lane": "G2",
+      "court": "wyo",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 0,
+      "cl": 13,
+      "searchCl": 1,
+      "fetchCl": 12,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "nd",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 1,
+      "cl": 15,
+      "searchCl": 1,
+      "fetchCl": 14,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "sd",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 0,
+      "cl": 7,
+      "searchCl": 1,
+      "fetchCl": 6,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "miss",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 2,
+      "cl": 17,
+      "searchCl": 1,
+      "fetchCl": 16,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "mont",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 0,
+      "cl": 11,
+      "searchCl": 1,
+      "fetchCl": 10,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "nh",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 0,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "me",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 0,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "ri",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 0,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "vt",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 0,
+      "cl": 5,
+      "searchCl": 1,
+      "fetchCl": 4,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "alaska",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "ala",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 8,
+      "cl": 17,
+      "searchCl": 1,
+      "fetchCl": 16,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "cand",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 3,
+      "cl": 7,
+      "searchCl": 1,
+      "fetchCl": 6,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "dcd",
+      "gte": "1995-01-01",
+      "lte": "2004-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "nysd",
+      "gte": "2010-01-01",
+      "lte": "2019-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "cacd",
+      "gte": "2010-01-01",
+      "lte": "2019-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "ilnd",
+      "gte": "2010-01-01",
+      "lte": "2019-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "flsd",
+      "gte": "2010-01-01",
+      "lte": "2019-12-31",
+      "imported": 4,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "njd",
+      "gte": "2010-01-01",
+      "lte": "2019-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "empty",
+      "searchCl": 1,
+      "fetchCl": 0
+    },
+    {
+      "lane": "DISTRICT",
+      "court": "paed",
+      "gte": "2010-01-01",
+      "lte": "2019-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G3H",
+      "court": "cadc",
+      "gte": "1970-01-01",
+      "lte": "1979-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G3H",
+      "court": "ca1",
+      "gte": "2000-01-01",
+      "lte": "2010-12-31",
+      "imported": 3,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    }
+  ],
+  "quarantined": [],
+  "circuitBreaks": [
+    {
+      "court": "wyo",
+      "reason": "low_yield",
+      "imported": 0,
+      "cl": 13,
+      "consecutiveEmpty": 1,
+      "searchCl": 1,
+      "fetchCl": 12
+    },
+    {
+      "court": "nd",
+      "reason": "low_yield",
+      "imported": 1,
+      "cl": 15,
+      "consecutiveEmpty": 0,
+      "searchCl": 1,
+      "fetchCl": 14
+    },
+    {
+      "court": "mont",
+      "reason": "low_yield",
+      "imported": 0,
+      "cl": 11,
+      "consecutiveEmpty": 1,
+      "searchCl": 1,
+      "fetchCl": 10
+    },
+    {
+      "court": "me",
+      "reason": "low_yield",
+      "imported": 0,
+      "cl": 9,
+      "consecutiveEmpty": 1,
+      "searchCl": 1,
+      "fetchCl": 8
+    }
+  ],
+  "rolling": [
+    {
+      "cl": 13,
+      "imp": 0
+    },
+    {
+      "cl": 15,
+      "imp": 1
+    },
+    {
+      "cl": 7,
+      "imp": 0
+    },
+    {
+      "cl": 17,
+      "imp": 2
+    },
+    {
+      "cl": 11,
+      "imp": 0
+    },
+    {
+      "cl": 3,
+      "imp": 0
+    },
+    {
+      "cl": 9,
+      "imp": 0
+    },
+    {
+      "cl": 9,
+      "imp": 0
+    },
+    {
+      "cl": 5,
+      "imp": 0
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 17,
+      "imp": 8
+    },
+    {
+      "cl": 7,
+      "imp": 3
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 9,
+      "imp": 4
+    },
+    {
+      "cl": 1,
+      "imp": 0
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 9,
+      "imp": 3
+    }
+  ],
+  "stopReason": "plan_complete",
+  "reliability": {
+    "408": 0,
+    "429": 0
+  },
+  "efficiency": {
+    "overall": 5.464,
+    "rolling20": {
+      "batches": 20,
+      "cl": 140,
+      "imp": 28,
+      "clPer": 5
+    },
+    "rolling50": {
+      "batches": 21,
+      "cl": 153,
+      "imp": 28,
+      "clPer": 5.464
+    },
+    "priorSession": 3.17,
+    "improvement": -2.294
+  },
+  "finishedAt": "2026-10-02T00:21:41.291Z"
+}

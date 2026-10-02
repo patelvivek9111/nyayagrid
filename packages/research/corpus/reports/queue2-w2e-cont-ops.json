@@ -1,0 +1,407 @@
+{
+  "classification": "MANUAL_WEEK2_EFFICIENCY_CONT_OPS",
+  "startedAt": "2026-10-02T00:22:16.938Z",
+  "budget": 220,
+  "caseTarget": 120,
+  "totalCl": 148,
+  "totalImported": 56,
+  "byLane": {
+    "G2": {
+      "imported": 56,
+      "cl": 148,
+      "batches": 16,
+      "searchCl": 15,
+      "fetchCl": 133,
+      "skipped": 0
+    }
+  },
+  "perCourt": {
+    "okla": {
+      "imported": 0,
+      "cl": 0,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    },
+    "idaho": {
+      "imported": 4,
+      "cl": 9,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "neb": {
+      "imported": 4,
+      "cl": 9,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "or": {
+      "imported": 5,
+      "cl": 11,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "mo": {
+      "imported": 8,
+      "cl": 17,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "ark": {
+      "imported": 7,
+      "cl": 15,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "colo": {
+      "imported": 3,
+      "cl": 7,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "tenn": {
+      "imported": 5,
+      "cl": 11,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "haw": {
+      "imported": 1,
+      "cl": 3,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "sc": {
+      "imported": 3,
+      "cl": 7,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "ohio": {
+      "imported": 8,
+      "cl": 17,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "ky": {
+      "imported": 8,
+      "cl": 17,
+      "consecutiveEmpty": 0,
+      "skipped": 0
+    },
+    "la": {
+      "imported": 0,
+      "cl": 9,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    },
+    "md": {
+      "imported": 0,
+      "cl": 5,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    },
+    "ga": {
+      "imported": 0,
+      "cl": 10,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    },
+    "wash": {
+      "imported": 0,
+      "cl": 1,
+      "consecutiveEmpty": 1,
+      "skipped": 0
+    }
+  },
+  "batches": [
+    {
+      "lane": "G2",
+      "court": "okla",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 0,
+      "status": "empty",
+      "searchCl": 0,
+      "fetchCl": 0,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "idaho",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 4,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "neb",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 4,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "or",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 5,
+      "cl": 11,
+      "searchCl": 1,
+      "fetchCl": 10,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "mo",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 8,
+      "cl": 17,
+      "searchCl": 1,
+      "fetchCl": 16,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "ark",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 7,
+      "cl": 15,
+      "searchCl": 1,
+      "fetchCl": 14,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "colo",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 3,
+      "cl": 7,
+      "searchCl": 1,
+      "fetchCl": 6,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "tenn",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 5,
+      "cl": 11,
+      "searchCl": 1,
+      "fetchCl": 10,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "haw",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 1,
+      "cl": 3,
+      "searchCl": 1,
+      "fetchCl": 2,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "sc",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 3,
+      "cl": 7,
+      "searchCl": 1,
+      "fetchCl": 6,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "ohio",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 8,
+      "cl": 17,
+      "searchCl": 1,
+      "fetchCl": 16,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "ky",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 8,
+      "cl": 17,
+      "searchCl": 1,
+      "fetchCl": 16,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "la",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 9,
+      "searchCl": 1,
+      "fetchCl": 8,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "md",
+      "gte": "1990-01-01",
+      "lte": "1999-12-31",
+      "imported": 0,
+      "cl": 5,
+      "searchCl": 1,
+      "fetchCl": 4,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "ga",
+      "gte": "1990-01-01",
+      "lte": "1994-12-31",
+      "imported": 0,
+      "cl": 10,
+      "searchCl": 1,
+      "fetchCl": 9,
+      "status": "done",
+      "rateLimited": false,
+      "skipped": 0
+    },
+    {
+      "lane": "G2",
+      "court": "wash",
+      "gte": "1995-01-01",
+      "lte": "2004-12-31",
+      "imported": 0,
+      "cl": 1,
+      "status": "429",
+      "rateLimited": true,
+      "searchCl": 1,
+      "fetchCl": 0,
+      "skipped": 0
+    }
+  ],
+  "circuitBreaks": [],
+  "rolling": [
+    {
+      "cl": 0,
+      "imp": 0
+    },
+    {
+      "cl": 9,
+      "imp": 4
+    },
+    {
+      "cl": 9,
+      "imp": 4
+    },
+    {
+      "cl": 11,
+      "imp": 5
+    },
+    {
+      "cl": 17,
+      "imp": 8
+    },
+    {
+      "cl": 15,
+      "imp": 7
+    },
+    {
+      "cl": 7,
+      "imp": 3
+    },
+    {
+      "cl": 11,
+      "imp": 5
+    },
+    {
+      "cl": 3,
+      "imp": 1
+    },
+    {
+      "cl": 7,
+      "imp": 3
+    },
+    {
+      "cl": 17,
+      "imp": 8
+    },
+    {
+      "cl": 17,
+      "imp": 8
+    },
+    {
+      "cl": 9,
+      "imp": 0
+    },
+    {
+      "cl": 5,
+      "imp": 0
+    },
+    {
+      "cl": 10,
+      "imp": 0
+    },
+    {
+      "cl": 1,
+      "imp": 0
+    }
+  ],
+  "stopReason": "429",
+  "reliability": {
+    "408": 0,
+    "429": 1
+  },
+  "efficiency": {
+    "overall": 2.643,
+    "rolling20": {
+      "cl": 148,
+      "imp": 56,
+      "clPer": 2.643
+    },
+    "priorSession": 3.17
+  },
+  "finishedAt": "2026-10-02T00:32:13.921Z"
+}
