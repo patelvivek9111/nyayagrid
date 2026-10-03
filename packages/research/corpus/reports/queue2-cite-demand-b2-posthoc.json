@@ -1,0 +1,80 @@
+{
+  "ok": true,
+  "mode": "edge_counts",
+  "counts": [
+    {
+      "citation": "523 U.S. 83",
+      "variants": [
+        "523 U.S. 83",
+        "523 US 83",
+        "523U.S.83",
+        "523 U. S. 83"
+      ],
+      "total": 9,
+      "unresolved": 0,
+      "resolved": 9
+    },
+    {
+      "citation": "844 F.2d 461",
+      "variants": [
+        "844 F.2d 461",
+        "844 F.2D 461",
+        "844 F2d 461",
+        "844F.2d461"
+      ],
+      "total": 4,
+      "unresolved": 0,
+      "resolved": 4
+    },
+    {
+      "citation": "251 P.3d 829",
+      "variants": [
+        "251 P.3d 829",
+        "251 P.3D 829",
+        "251 P3d 829",
+        "251P.3d829"
+      ],
+      "total": 5,
+      "unresolved": 0,
+      "resolved": 5
+    },
+    {
+      "citation": "380 U.S. 400",
+      "variants": [
+        "380 U.S. 400",
+        "380 US 400",
+        "380U.S.400",
+        "380 U. S. 400"
+      ],
+      "total": 9,
+      "unresolved": 0,
+      "resolved": 9
+    },
+    {
+      "citation": "850 F.2d 1180",
+      "variants": [
+        "850 F.2d 1180",
+        "850 F.2D 1180",
+        "850 F2d 1180",
+        "850F.2d1180"
+      ],
+      "total": 5,
+      "unresolved": 0,
+      "resolved": 5
+    },
+    {
+      "citation": "436 U.S. 658",
+      "variants": [
+        "436 U.S. 658",
+        "436 US 658",
+        "436U.S.658",
+        "436 U. S. 658"
+      ],
+      "total": 9,
+      "unresolved": 0,
+      "resolved": 9
+    }
+  ],
+  "courtListenerHttpCalls": 0,
+  "aiCalls": 0
+}

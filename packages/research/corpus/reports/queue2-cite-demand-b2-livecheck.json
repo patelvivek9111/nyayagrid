@@ -1,0 +1,655 @@
+{
+  "ok": true,
+  "mode": "edge_counts",
+  "counts": [
+    {
+      "citation": "573 U.S. 373",
+      "variants": [
+        "573 U.S. 373",
+        "573 US 373",
+        "573U.S.373",
+        "573 U. S. 373"
+      ],
+      "total": 11,
+      "unresolved": 11,
+      "resolved": 0
+    },
+    {
+      "citation": "523 U.S. 83",
+      "variants": [
+        "523 U.S. 83",
+        "523 US 83",
+        "523U.S.83",
+        "523 U. S. 83"
+      ],
+      "total": 9,
+      "unresolved": 0,
+      "resolved": 9
+    },
+    {
+      "citation": "380 U.S. 400",
+      "variants": [
+        "380 U.S. 400",
+        "380 US 400",
+        "380U.S.400",
+        "380 U. S. 400"
+      ],
+      "total": 9,
+      "unresolved": 0,
+      "resolved": 9
+    },
+    {
+      "citation": "436 U.S. 658",
+      "variants": [
+        "436 U.S. 658",
+        "436 US 658",
+        "436U.S.658",
+        "436 U. S. 658"
+      ],
+      "total": 9,
+      "unresolved": 0,
+      "resolved": 9
+    },
+    {
+      "citation": "364 U.S. 206",
+      "variants": [
+        "364 U.S. 206",
+        "364 US 206",
+        "364U.S.206",
+        "364 U. S. 206"
+      ],
+      "total": 9,
+      "unresolved": 9,
+      "resolved": 0
+    },
+    {
+      "citation": "408 U.S. 564",
+      "variants": [
+        "408 U.S. 564",
+        "408 US 564",
+        "408U.S.564",
+        "408 U. S. 564"
+      ],
+      "total": 9,
+      "unresolved": 9,
+      "resolved": 0
+    },
+    {
+      "citation": "455 U.S. 104",
+      "variants": [
+        "455 U.S. 104",
+        "455 US 104",
+        "455U.S.104",
+        "455 U. S. 104"
+      ],
+      "total": 8,
+      "unresolved": 8,
+      "resolved": 0
+    },
+    {
+      "citation": "427 U.S. 97",
+      "variants": [
+        "427 U.S. 97",
+        "427 US 97",
+        "427U.S.97",
+        "427 U. S. 97"
+      ],
+      "total": 8,
+      "unresolved": 8,
+      "resolved": 0
+    },
+    {
+      "citation": "533 U.S. 27",
+      "variants": [
+        "533 U.S. 27",
+        "533 US 27",
+        "533U.S.27",
+        "533 U. S. 27"
+      ],
+      "total": 8,
+      "unresolved": 8,
+      "resolved": 0
+    },
+    {
+      "citation": "463 U.S. 29",
+      "variants": [
+        "463 U.S. 29",
+        "463 US 29",
+        "463U.S.29",
+        "463 U. S. 29"
+      ],
+      "total": 8,
+      "unresolved": 8,
+      "resolved": 0
+    },
+    {
+      "citation": "457 U.S. 800",
+      "variants": [
+        "457 U.S. 800",
+        "457 US 800",
+        "457U.S.800",
+        "457 U. S. 800"
+      ],
+      "total": 9,
+      "unresolved": 9,
+      "resolved": 0
+    },
+    {
+      "citation": "391 U.S. 123",
+      "variants": [
+        "391 U.S. 123",
+        "391 US 123",
+        "391U.S.123",
+        "391 U. S. 123"
+      ],
+      "total": 8,
+      "unresolved": 8,
+      "resolved": 0
+    },
+    {
+      "citation": "481 U.S. 200",
+      "variants": [
+        "481 U.S. 200",
+        "481 US 200",
+        "481U.S.200",
+        "481 U. S. 200"
+      ],
+      "total": 8,
+      "unresolved": 8,
+      "resolved": 0
+    },
+    {
+      "citation": "517 U.S. 690",
+      "variants": [
+        "517 U.S. 690",
+        "517 US 690",
+        "517U.S.690",
+        "517 U. S. 690"
+      ],
+      "total": 8,
+      "unresolved": 8,
+      "resolved": 0
+    },
+    {
+      "citation": "391 U.S. 145",
+      "variants": [
+        "391 U.S. 145",
+        "391 US 145",
+        "391U.S.145",
+        "391 U. S. 145"
+      ],
+      "total": 8,
+      "unresolved": 8,
+      "resolved": 0
+    },
+    {
+      "citation": "405 U.S. 645",
+      "variants": [
+        "405 U.S. 645",
+        "405 US 645",
+        "405U.S.645",
+        "405 U. S. 645"
+      ],
+      "total": 8,
+      "unresolved": 8,
+      "resolved": 0
+    },
+    {
+      "citation": "397 U.S. 358",
+      "variants": [
+        "397 U.S. 358",
+        "397 US 358",
+        "397U.S.358",
+        "397 U. S. 358"
+      ],
+      "total": 8,
+      "unresolved": 8,
+      "resolved": 0
+    },
+    {
+      "citation": "460 U.S. 1",
+      "variants": [
+        "460 U.S. 1",
+        "460 US 1",
+        "460U.S.1",
+        "460 U. S. 1"
+      ],
+      "total": 8,
+      "unresolved": 8,
+      "resolved": 0
+    },
+    {
+      "citation": "844 F.2d 461",
+      "variants": [
+        "844 F.2d 461",
+        "844 F.2D 461",
+        "844 F2d 461",
+        "844F.2d461"
+      ],
+      "total": 4,
+      "unresolved": 0,
+      "resolved": 4
+    },
+    {
+      "citation": "850 F.2d 1180",
+      "variants": [
+        "850 F.2d 1180",
+        "850 F.2D 1180",
+        "850 F2d 1180",
+        "850F.2d1180"
+      ],
+      "total": 5,
+      "unresolved": 0,
+      "resolved": 5
+    },
+    {
+      "citation": "140 F.4th 68",
+      "variants": [
+        "140 F.4th 68",
+        "140 F.4TH 68",
+        "140 F4th 68",
+        "140F.4th68"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "112 F.4th 45",
+      "variants": [
+        "112 F.4th 45",
+        "112 F.4TH 45",
+        "112 F4th 45",
+        "112F.4th45"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "180 F.4th 512",
+      "variants": [
+        "180 F.4th 512",
+        "180 F.4TH 512",
+        "180 F4th 512",
+        "180F.4th512"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "166 F.4th 494",
+      "variants": [
+        "166 F.4th 494",
+        "166 F.4TH 494",
+        "166 F4th 494",
+        "166F.4th494"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "175 F.4th 61",
+      "variants": [
+        "175 F.4th 61",
+        "175 F.4TH 61",
+        "175 F4th 61",
+        "175F.4th61"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "93 F.4th 619",
+      "variants": [
+        "93 F.4th 619",
+        "93 F.4TH 619",
+        "93 F4th 619",
+        "93F.4th619"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "650 F.2d 534",
+      "variants": [
+        "650 F.2d 534",
+        "650 F.2D 534",
+        "650 F2d 534",
+        "650F.2d534"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "515 F.3d 327",
+      "variants": [
+        "515 F.3d 327",
+        "515 F.3D 327",
+        "515 F3d 327",
+        "515F.3d327"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "130 F.4th 420",
+      "variants": [
+        "130 F.4th 420",
+        "130 F.4TH 420",
+        "130 F4th 420",
+        "130F.4th420"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "167 F.4th 677",
+      "variants": [
+        "167 F.4th 677",
+        "167 F.4TH 677",
+        "167 F4th 677",
+        "167F.4th677"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "972 F.3d 442",
+      "variants": [
+        "972 F.3d 442",
+        "972 F.3D 442",
+        "972 F3d 442",
+        "972F.3d442"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "957 F.3d 218",
+      "variants": [
+        "957 F.3d 218",
+        "957 F.3D 218",
+        "957 F3d 218",
+        "957F.3d218"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "888 F.2d 1014",
+      "variants": [
+        "888 F.2d 1014",
+        "888 F.2D 1014",
+        "888 F2d 1014",
+        "888F.2d1014"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "300 F.3d 466",
+      "variants": [
+        "300 F.3d 466",
+        "300 F.3D 466",
+        "300 F3d 466",
+        "300F.3d466"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "116 F.3d 1066",
+      "variants": [
+        "116 F.3d 1066",
+        "116 F.3D 1066",
+        "116 F3d 1066",
+        "116F.3d1066"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "161 F.3d 256",
+      "variants": [
+        "161 F.3d 256",
+        "161 F.3D 256",
+        "161 F3d 256",
+        "161F.3d256"
+      ],
+      "total": 3,
+      "unresolved": 3,
+      "resolved": 0
+    },
+    {
+      "citation": "251 P.3d 829",
+      "variants": [
+        "251 P.3d 829",
+        "251 P.3D 829",
+        "251 P3d 829",
+        "251P.3d829"
+      ],
+      "total": 5,
+      "unresolved": 0,
+      "resolved": 5
+    },
+    {
+      "citation": "563 P.3d 610",
+      "variants": [
+        "563 P.3d 610",
+        "563 P.3D 610",
+        "563 P3d 610",
+        "563P.3d610"
+      ],
+      "total": 5,
+      "unresolved": 5,
+      "resolved": 0
+    },
+    {
+      "citation": "525 P.3d 709",
+      "variants": [
+        "525 P.3d 709",
+        "525 P.3D 709",
+        "525 P3d 709",
+        "525P.3d709"
+      ],
+      "total": 5,
+      "unresolved": 5,
+      "resolved": 0
+    },
+    {
+      "citation": "234 P.3d 1245",
+      "variants": [
+        "234 P.3d 1245",
+        "234 P.3D 1245",
+        "234 P3d 1245",
+        "234P.3d1245"
+      ],
+      "total": 5,
+      "unresolved": 5,
+      "resolved": 0
+    },
+    {
+      "citation": "573 S.E.2d 354",
+      "variants": [
+        "573 S.E.2d 354",
+        "573 S.E.2D 354",
+        "573 SE2d 354",
+        "573S.E.2d354"
+      ],
+      "total": 5,
+      "unresolved": 5,
+      "resolved": 0
+    },
+    {
+      "citation": "859 S.E.2d 732",
+      "variants": [
+        "859 S.E.2d 732",
+        "859 S.E.2D 732",
+        "859 SE2d 732",
+        "859S.E.2d732"
+      ],
+      "total": 5,
+      "unresolved": 5,
+      "resolved": 0
+    },
+    {
+      "citation": "194 S.E.2d 657",
+      "variants": [
+        "194 S.E.2d 657",
+        "194 S.E.2D 657",
+        "194 SE2d 657",
+        "194S.E.2d657"
+      ],
+      "total": 5,
+      "unresolved": 5,
+      "resolved": 0
+    },
+    {
+      "citation": "513 S.E.2d 657",
+      "variants": [
+        "513 S.E.2d 657",
+        "513 S.E.2D 657",
+        "513 SE2d 657",
+        "513S.E.2d657"
+      ],
+      "total": 5,
+      "unresolved": 5,
+      "resolved": 0
+    },
+    {
+      "citation": "492 S.E.2d 167",
+      "variants": [
+        "492 S.E.2d 167",
+        "492 S.E.2D 167",
+        "492 SE2d 167",
+        "492S.E.2d167"
+      ],
+      "total": 5,
+      "unresolved": 5,
+      "resolved": 0
+    },
+    {
+      "citation": "518 S.E.2d 368",
+      "variants": [
+        "518 S.E.2d 368",
+        "518 S.E.2D 368",
+        "518 SE2d 368",
+        "518S.E.2d368"
+      ],
+      "total": 5,
+      "unresolved": 5,
+      "resolved": 0
+    },
+    {
+      "citation": "388 S.E.2d 480",
+      "variants": [
+        "388 S.E.2d 480",
+        "388 S.E.2D 480",
+        "388 SE2d 480",
+        "388S.E.2d480"
+      ],
+      "total": 5,
+      "unresolved": 5,
+      "resolved": 0
+    },
+    {
+      "citation": "786 S.E.2d 594",
+      "variants": [
+        "786 S.E.2d 594",
+        "786 S.E.2D 594",
+        "786 SE2d 594",
+        "786S.E.2d594"
+      ],
+      "total": 5,
+      "unresolved": 5,
+      "resolved": 0
+    },
+    {
+      "citation": "474 S.E.2d 872",
+      "variants": [
+        "474 S.E.2d 872",
+        "474 S.E.2D 872",
+        "474 SE2d 872",
+        "474S.E.2d872"
+      ],
+      "total": 5,
+      "unresolved": 5,
+      "resolved": 0
+    },
+    {
+      "citation": "888 S.E.2d 920",
+      "variants": [
+        "888 S.E.2d 920",
+        "888 S.E.2D 920",
+        "888 SE2d 920",
+        "888S.E.2d920"
+      ],
+      "total": 5,
+      "unresolved": 5,
+      "resolved": 0
+    },
+    {
+      "citation": "561 P3d 602",
+      "variants": [
+        "561 P3d 602",
+        "561 P3D 602",
+        "561P3d602"
+      ],
+      "total": 4,
+      "unresolved": 4,
+      "resolved": 0
+    },
+    {
+      "citation": "537 P.3d 1154",
+      "variants": [
+        "537 P.3d 1154",
+        "537 P.3D 1154",
+        "537 P3d 1154",
+        "537P.3d1154"
+      ],
+      "total": 4,
+      "unresolved": 4,
+      "resolved": 0
+    },
+    {
+      "citation": "368 P.2d 546",
+      "variants": [
+        "368 P.2d 546",
+        "368 P.2D 546",
+        "368 P2d 546",
+        "368P.2d546"
+      ],
+      "total": 4,
+      "unresolved": 4,
+      "resolved": 0
+    },
+    {
+      "citation": "496 P.3d 83",
+      "variants": [
+        "496 P.3d 83",
+        "496 P.3D 83",
+        "496 P3d 83",
+        "496P.3d83"
+      ],
+      "total": 4,
+      "unresolved": 4,
+      "resolved": 0
+    }
+  ],
+  "courtListenerHttpCalls": 0,
+  "aiCalls": 0
+}

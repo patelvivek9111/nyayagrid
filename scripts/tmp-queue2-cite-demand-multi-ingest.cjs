@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env node
+#!/usr/bin/env node
 /**
  * Citation-demand multi-family verified ingest:
  * citation-lookup pre-verify only (no search fallback), then acquire.
@@ -210,7 +210,7 @@ async function clFetch(url, apiKey, counters, init = {}) {
   if (counters.apiCalls >= counters.maxCalls) {
     return { status: 0, ok: false, rateLimited: false, budgetExhausted: true, json: async () => ({}) };
   }
-  const rateMs = Math.max(Number(process.env.CL_RATE_MS || 4500), 400);
+  const rateMs = Math.max(Number(process.env.CL_RATE_MS || 5000), 400);
   const wait = rateMs - (Date.now() - (counters.lastAt || 0));
   if (wait > 0) await sleep(wait);
   counters.apiCalls += 1;

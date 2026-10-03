@@ -1,0 +1,98 @@
+{
+  "ok": true,
+  "mode": "fsupp_top",
+  "targets": [
+    {
+      "citation": "406 F. Supp.10",
+      "edgeDemand": 3,
+      "citationFamily": "federal_supplement",
+      "status": "READY_CL_SUPPLEMENTAL"
+    },
+    {
+      "citation": "112 F. Supp. 3d 817",
+      "edgeDemand": 2,
+      "citationFamily": "federal_supplement",
+      "status": "READY_CL_SUPPLEMENTAL"
+    },
+    {
+      "citation": "310 F. Supp. 3d 1318",
+      "edgeDemand": 2,
+      "citationFamily": "federal_supplement",
+      "status": "READY_CL_SUPPLEMENTAL"
+    },
+    {
+      "citation": "795 F. Supp. 3d 475",
+      "edgeDemand": 2,
+      "citationFamily": "federal_supplement",
+      "status": "READY_CL_SUPPLEMENTAL"
+    },
+    {
+      "citation": "504 F. Supp. 2d 939",
+      "edgeDemand": 2,
+      "citationFamily": "federal_supplement",
+      "status": "READY_CL_SUPPLEMENTAL"
+    },
+    {
+      "citation": "809 F. Supp. 3d 502",
+      "edgeDemand": 2,
+      "citationFamily": "federal_supplement",
+      "status": "READY_CL_SUPPLEMENTAL"
+    },
+    {
+      "citation": "892 F. Supp. 2d 881",
+      "edgeDemand": 2,
+      "citationFamily": "federal_supplement",
+      "status": "READY_CL_SUPPLEMENTAL"
+    },
+    {
+      "citation": "678 F. Supp. 3",
+      "edgeDemand": 2,
+      "citationFamily": "federal_supplement",
+      "status": "READY_CL_SUPPLEMENTAL"
+    },
+    {
+      "citation": "678 F. Supp. 3d 443",
+      "edgeDemand": 2,
+      "citationFamily": "federal_supplement",
+      "status": "READY_CL_SUPPLEMENTAL"
+    },
+    {
+      "citation": "20 F. Supp. 2d 1267",
+      "edgeDemand": 2,
+      "citationFamily": "federal_supplement",
+      "status": "READY_CL_SUPPLEMENTAL"
+    },
+    {
+      "citation": "763 F. Supp. 3d 1054",
+      "edgeDemand": 2,
+      "citationFamily": "federal_supplement",
+      "status": "READY_CL_SUPPLEMENTAL"
+    },
+    {
+      "citation": "168 F. Supp. 2d 751",
+      "edgeDemand": 2,
+      "citationFamily": "federal_supplement",
+      "status": "READY_CL_SUPPLEMENTAL"
+    },
+    {
+      "citation": "892 F. Supp. 2",
+      "edgeDemand": 2,
+      "citationFamily": "federal_supplement",
+      "status": "READY_CL_SUPPLEMENTAL"
+    },
+    {
+      "citation": "293 F. Supp. 792",
+      "edgeDemand": 2,
+      "citationFamily": "federal_supplement",
+      "status": "READY_CL_SUPPLEMENTAL"
+    },
+    {
+      "citation": "27 F. Supp. 2d 472",
+      "edgeDemand": 2,
+      "citationFamily": "federal_supplement",
+      "status": "READY_CL_SUPPLEMENTAL"
+    }
+  ],
+  "courtListenerHttpCalls": 0,
+  "aiCalls": 0
+}

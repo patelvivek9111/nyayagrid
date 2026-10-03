@@ -587,14 +587,36 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=9",
       "citationDemandScore": 9,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "acquired": true,
+      "found": true,
+      "actualOldEdgesResolved": 9,
+      "actualCLRequests": 2,
+      "lastAttemptedAt": "2026-10-03T01:03:16.870Z",
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T00:35:43.594Z",
+          "block": "cal_b2_partial_posthoc",
+          "oldEdgesResolved": 9
+        },
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.870Z",
+          "cl": 2,
+          "oldEdgesResolved": 9,
+          "block": "cal_b2"
+        }
+      ],
+      "actualEdgesPerCL": 4.5,
+      "failureReason": null
     },
     {
       "rank": 21,
@@ -611,14 +633,36 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=9",
       "citationDemandScore": 9,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "acquired": true,
+      "found": true,
+      "actualOldEdgesResolved": 9,
+      "actualCLRequests": 2,
+      "lastAttemptedAt": "2026-10-03T01:03:16.870Z",
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T00:35:43.594Z",
+          "block": "cal_b2_partial_posthoc",
+          "oldEdgesResolved": 9
+        },
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.870Z",
+          "cl": 2,
+          "oldEdgesResolved": 9,
+          "block": "cal_b2"
+        }
+      ],
+      "actualEdgesPerCL": 4.5,
+      "failureReason": null
     },
     {
       "rank": 22,
@@ -635,14 +679,36 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=9",
       "citationDemandScore": 9,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "acquired": true,
+      "found": true,
+      "actualOldEdgesResolved": 9,
+      "actualCLRequests": 2,
+      "lastAttemptedAt": "2026-10-03T01:03:16.870Z",
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T00:35:43.594Z",
+          "block": "cal_b2_partial_posthoc",
+          "oldEdgesResolved": 9
+        },
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.870Z",
+          "cl": 2,
+          "oldEdgesResolved": 9,
+          "block": "cal_b2"
+        }
+      ],
+      "actualEdgesPerCL": 4.5,
+      "failureReason": null
     },
     {
       "rank": 23,
@@ -659,14 +725,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=9",
       "citationDemandScore": 9,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.870Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 9,
+      "actualEdgesPerCL": 4.5,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.870Z",
+          "cl": 2,
+          "oldEdgesResolved": 9,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 24,
@@ -683,14 +765,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=9",
       "citationDemandScore": 9,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 9,
+      "actualEdgesPerCL": 4.5,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 9,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 25,
@@ -765,14 +863,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=8",
       "citationDemandScore": 8,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 8,
+      "actualEdgesPerCL": 4,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 8,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 28,
@@ -789,14 +903,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=8",
       "citationDemandScore": 8,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 8,
+      "actualEdgesPerCL": 4,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 8,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 29,
@@ -813,14 +943,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=8",
       "citationDemandScore": 8,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 8,
+      "actualEdgesPerCL": 4,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 8,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 30,
@@ -837,14 +983,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=8",
       "citationDemandScore": 8,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 8,
+      "actualEdgesPerCL": 4,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 8,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 31,
@@ -861,14 +1023,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=8",
       "citationDemandScore": 8,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 9,
+      "actualEdgesPerCL": 4.5,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 9,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 32,
@@ -885,14 +1063,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=8",
       "citationDemandScore": 8,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 8,
+      "actualEdgesPerCL": 4,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 8,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 33,
@@ -909,14 +1103,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=8",
       "citationDemandScore": 8,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 8,
+      "actualEdgesPerCL": 4,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 8,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 34,
@@ -933,14 +1143,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=8",
       "citationDemandScore": 8,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 8,
+      "actualEdgesPerCL": 4,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 8,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 35,
@@ -957,14 +1183,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=8",
       "citationDemandScore": 8,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 8,
+      "actualEdgesPerCL": 4,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 8,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 36,
@@ -981,14 +1223,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=8",
       "citationDemandScore": 8,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 9,
+      "actualEdgesPerCL": 4.5,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 9,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 37,
@@ -5148,7 +5406,7 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 1,
@@ -5156,17 +5414,34 @@
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
       "expectedEdgesPerClConfidence": "UNKNOWN",
-      "lastAttemptedAt": "2026-10-02T22:07:11.414Z",
+      "lastAttemptedAt": "2026-10-03T01:03:16.870Z",
       "actualCLRequests": 2,
-      "failureReason": "rate_limited_429",
+      "failureReason": null,
       "statusHistory": [
         {
           "status": "SOURCE_ERROR",
           "at": "2026-10-02T22:07:11.414Z",
           "cl": 2,
           "reason": "429_minute"
+        },
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T00:35:43.594Z",
+          "block": "cal_b2_partial_posthoc",
+          "oldEdgesResolved": 5
+        },
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.870Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "cal_b2"
         }
-      ]
+      ],
+      "acquired": true,
+      "found": true,
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5
     },
     {
       "rank": 206,
@@ -5183,14 +5458,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "NOT_FOUND_CL",
       "priorityReason": "edgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 1,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "failureReason": "no_verified_cluster_match",
+      "lastAttemptedAt": "2026-10-03T01:03:16.870Z",
+      "actualCLRequests": 1,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": 0,
+      "found": false,
+      "acquired": false,
+      "statusHistory": [
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:03:16.870Z",
+          "cl": 1,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 207,
@@ -5207,14 +5498,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 1,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.870Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.870Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 208,
@@ -5231,14 +5538,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 1,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.870Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.870Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 209,
@@ -5255,14 +5578,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 1,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 210,
@@ -5279,14 +5618,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "NOT_FOUND_CL",
       "priorityReason": "edgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 1,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 1,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": 0,
+      "found": false,
+      "acquired": false,
+      "failureReason": "no_verified_cluster_match",
+      "statusHistory": [
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 1,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 211,
@@ -5303,14 +5658,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 1,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 212,
@@ -5327,14 +5698,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 1,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 213,
@@ -5351,14 +5738,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 1,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 214,
@@ -5375,14 +5778,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 1,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 215,
@@ -5399,14 +5818,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 1,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 6,
+      "actualEdgesPerCL": 3,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 6,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 216,
@@ -5423,14 +5858,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 1,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 217,
@@ -5447,14 +5898,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 1,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 6,
+      "actualEdgesPerCL": 3,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 6,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 218,
@@ -5471,14 +5938,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "NOT_FOUND_CL",
       "priorityReason": "edgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 1,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 1,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": 0,
+      "found": false,
+      "acquired": false,
+      "failureReason": "no_verified_cluster_match",
+      "statusHistory": [
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 1,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 219,
@@ -9327,14 +9810,36 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=4",
       "citationDemandScore": 4,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "acquired": true,
+      "found": true,
+      "actualOldEdgesResolved": 4,
+      "actualCLRequests": 2,
+      "lastAttemptedAt": "2026-10-03T01:03:16.870Z",
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T00:35:43.594Z",
+          "block": "cal_b2_partial_posthoc",
+          "oldEdgesResolved": 4
+        },
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.870Z",
+          "cl": 2,
+          "oldEdgesResolved": 4,
+          "block": "cal_b2"
+        }
+      ],
+      "actualEdgesPerCL": 2,
+      "failureReason": null
     },
     {
       "rank": 377,
@@ -9567,14 +10072,36 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=4",
       "citationDemandScore": 4,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "acquired": true,
+      "found": true,
+      "actualOldEdgesResolved": 5,
+      "actualCLRequests": 2,
+      "lastAttemptedAt": "2026-10-03T01:03:16.870Z",
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T00:35:43.594Z",
+          "block": "cal_b2_partial_posthoc",
+          "oldEdgesResolved": 5
+        },
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.870Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "cal_b2"
+        }
+      ],
+      "actualEdgesPerCL": 2.5,
+      "failureReason": null
     },
     {
       "rank": 387,
@@ -9663,14 +10190,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "NOT_FOUND_CL",
       "priorityReason": "edgeDemand=4",
       "citationDemandScore": 4,
       "coverageValue": 1,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 1,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": 0,
+      "found": false,
+      "acquired": false,
+      "failureReason": "no_verified_cluster_match",
+      "statusHistory": [
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 1,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 391,
@@ -10743,14 +11286,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=3",
       "citationDemandScore": 3,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.870Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 3,
+      "actualEdgesPerCL": 1.5,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.870Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 436,
@@ -10839,14 +11398,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=3",
       "citationDemandScore": 3,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.870Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 3,
+      "actualEdgesPerCL": 1.5,
+      "found": true,
+      "acquired": true,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.870Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 440,
@@ -11271,14 +11846,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "NOT_FOUND_CL",
       "priorityReason": "edgeDemand=3",
       "citationDemandScore": 3,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 1,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": 0,
+      "found": false,
+      "acquired": false,
+      "failureReason": "no_verified_cluster_match",
+      "statusHistory": [
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 1,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 458,
@@ -11487,14 +12078,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "NOT_FOUND_CL",
       "priorityReason": "edgeDemand=3",
       "citationDemandScore": 3,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 1,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": 0,
+      "found": false,
+      "acquired": false,
+      "failureReason": "no_verified_cluster_match",
+      "statusHistory": [
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 1,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 467,
@@ -11511,14 +12118,30 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "NOT_FOUND_CL",
       "priorityReason": "edgeDemand=3",
       "citationDemandScore": 3,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 1,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": 0,
+      "found": false,
+      "acquired": false,
+      "failureReason": "no_verified_cluster_match",
+      "statusHistory": [
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 1,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 468,
@@ -11631,14 +12254,37 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=3",
       "citationDemandScore": 3,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "found": true,
+      "acquired": true,
+      "actualOldEdgesResolved": 3,
+      "actualEdgesPerCL": 1.5,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T00:58:03.703Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        },
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 473,
@@ -11655,14 +12301,37 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=3",
       "citationDemandScore": 3,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "found": true,
+      "acquired": true,
+      "actualOldEdgesResolved": 3,
+      "actualEdgesPerCL": 1.5,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T00:58:41.494Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        },
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 474,
@@ -11679,14 +12348,37 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=3",
       "citationDemandScore": 3,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "found": true,
+      "acquired": true,
+      "actualOldEdgesResolved": 3,
+      "actualEdgesPerCL": 1.5,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T00:59:21.141Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        },
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 475,
@@ -11703,14 +12395,37 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=3",
       "citationDemandScore": 3,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "found": true,
+      "acquired": true,
+      "actualOldEdgesResolved": 3,
+      "actualEdgesPerCL": 1.5,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T00:59:57.378Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        },
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 476,
@@ -11727,14 +12442,37 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "NOT_FOUND_CL",
       "priorityReason": "edgeDemand=3",
       "citationDemandScore": 3,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 1,
+      "found": false,
+      "acquired": false,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": 0,
+      "failureReason": "no_verified_cluster_match",
+      "statusHistory": [
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:00:16.401Z",
+          "cl": 1,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        },
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 1,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 477,
@@ -11751,14 +12489,37 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "NOT_FOUND_CL",
       "priorityReason": "edgeDemand=3",
       "citationDemandScore": 3,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 1,
+      "found": false,
+      "acquired": false,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": 0,
+      "failureReason": "no_verified_cluster_match",
+      "statusHistory": [
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:00:42.528Z",
+          "cl": 1,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        },
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 1,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 478,
@@ -11775,14 +12536,37 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=3",
       "citationDemandScore": 3,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "found": true,
+      "acquired": true,
+      "actualOldEdgesResolved": 3,
+      "actualEdgesPerCL": 1.5,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:01:21.851Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        },
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 479,
@@ -11799,14 +12583,37 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=3",
       "citationDemandScore": 3,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "found": true,
+      "acquired": true,
+      "actualOldEdgesResolved": 3,
+      "actualEdgesPerCL": 1.5,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:02:00.236Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        },
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 480,
@@ -11823,14 +12630,37 @@
       "courtListenerEligible": true,
       "zeroCLSourceAvailable": false,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "edgeDemand=3",
       "citationDemandScore": 3,
       "coverageValue": 2,
       "balanceValue": 0,
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
-      "expectedEdgesPerClConfidence": "UNKNOWN"
+      "expectedEdgesPerClConfidence": "UNKNOWN",
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "found": true,
+      "acquired": true,
+      "actualOldEdgesResolved": 3,
+      "actualEdgesPerCL": 1.5,
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:02:42.400Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        },
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 3,
+          "block": "cal_b2"
+        }
+      ]
     },
     {
       "rank": 481,
@@ -12311,6 +13141,181 @@
       "efficiencyBonus": null,
       "expectedEdgesPerCl": null,
       "expectedEdgesPerClConfidence": "UNKNOWN"
+    },
+    {
+      "citation": "406 F. Supp.10",
+      "canonicalTargetKey": "406 F. Supp.10",
+      "citationFamily": "federal_supplement",
+      "edgeDemand": 3,
+      "coverageValue": 1,
+      "supplemental": true,
+      "lastAttemptedAt": "2026-10-03T01:03:16.870Z",
+      "actualCLRequests": 0,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": null,
+      "found": false,
+      "acquired": false,
+      "status": "NOT_FOUND_CL",
+      "failureReason": "NOT_FOUND_CL",
+      "statusHistory": [
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:03:16.870Z",
+          "cl": 0,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
+    },
+    {
+      "citation": "874 F. Supp.1072",
+      "canonicalTargetKey": "874 F. Supp.1072",
+      "citationFamily": "federal_supplement",
+      "edgeDemand": 2,
+      "coverageValue": 1,
+      "supplemental": true,
+      "lastAttemptedAt": "2026-10-03T01:03:16.870Z",
+      "actualCLRequests": 0,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": null,
+      "found": false,
+      "acquired": false,
+      "status": "NOT_FOUND_CL",
+      "failureReason": "NOT_FOUND_CL",
+      "statusHistory": [
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:03:16.870Z",
+          "cl": 0,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
+    },
+    {
+      "citation": "762 F. Supp. 3d 615",
+      "canonicalTargetKey": "762 F. Supp. 3d 615",
+      "citationFamily": "federal_supplement",
+      "edgeDemand": 2,
+      "coverageValue": 1,
+      "supplemental": true,
+      "lastAttemptedAt": "2026-10-03T01:03:16.870Z",
+      "actualCLRequests": 1,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": 0,
+      "found": false,
+      "acquired": false,
+      "status": "NOT_FOUND_CL",
+      "failureReason": "no_verified_cluster_match",
+      "statusHistory": [
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:03:16.870Z",
+          "cl": 1,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
+    },
+    {
+      "citation": "1 F. Supp. 2d 628",
+      "canonicalTargetKey": "1 F. Supp. 2d 628",
+      "citationFamily": "federal_supplement",
+      "edgeDemand": 2,
+      "coverageValue": 1,
+      "supplemental": true,
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 2,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": 0,
+      "found": true,
+      "acquired": true,
+      "status": "ACQUIRED",
+      "failureReason": null,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 2,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
+    },
+    {
+      "citation": "539 F. Supp. 3d 562",
+      "canonicalTargetKey": "539 F. Supp. 3d 562",
+      "citationFamily": "federal_supplement",
+      "edgeDemand": 2,
+      "coverageValue": 1,
+      "supplemental": true,
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 1,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": 0,
+      "found": false,
+      "acquired": false,
+      "status": "NOT_FOUND_CL",
+      "failureReason": "no_verified_cluster_match",
+      "statusHistory": [
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 1,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
+    },
+    {
+      "citation": "660 F. Supp.1291",
+      "canonicalTargetKey": "660 F. Supp.1291",
+      "citationFamily": "federal_supplement",
+      "edgeDemand": 2,
+      "coverageValue": 1,
+      "supplemental": true,
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 0,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": null,
+      "found": false,
+      "acquired": false,
+      "status": "NOT_FOUND_CL",
+      "failureReason": "NOT_FOUND_CL",
+      "statusHistory": [
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 0,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
+    },
+    {
+      "citation": "678 F. Supp. 3d 443",
+      "canonicalTargetKey": "678 F. Supp. 3d 443",
+      "citationFamily": "federal_supplement",
+      "edgeDemand": 2,
+      "coverageValue": 1,
+      "supplemental": true,
+      "lastAttemptedAt": "2026-10-03T01:03:16.871Z",
+      "actualCLRequests": 1,
+      "actualOldEdgesResolved": 0,
+      "actualEdgesPerCL": 0,
+      "found": false,
+      "acquired": false,
+      "status": "NOT_FOUND_CL",
+      "failureReason": "no_verified_cluster_match",
+      "statusHistory": [
+        {
+          "status": "NOT_FOUND_CL",
+          "at": "2026-10-03T01:03:16.871Z",
+          "cl": 1,
+          "oldEdgesResolved": 0,
+          "block": "cal_b2"
+        }
+      ]
     }
   ],
   "pilotStats": {
@@ -12600,5 +13605,415 @@
       }
     ]
   },
-  "familyPilotStatsVersion": "cite-demand-pilot-v1"
+  "familyPilotStatsVersion": "cite-demand-cal-b2-v1",
+  "calibrationBlock2": {
+    "generatedAt": "2026-10-03T01:03:39.016Z",
+    "version": "cite-demand-cal-b2-v1",
+    "totalCl": 88,
+    "acquired": 38,
+    "oldEdgesResolvedExact": 220,
+    "metrics": {
+      "overallClPerAcquired": 2.316,
+      "overallOldEdgesPerAcquired": 5.789,
+      "overallOldEdgesPerCl": 2.5,
+      "globalResolvedDelta": 275,
+      "demandPredicted": 264,
+      "demandActual": 220,
+      "demandRealization": 0.833
+    },
+    "familyTable": {
+      "us_reports": {
+        "attempts": 15,
+        "found": 15,
+        "acquired": 15,
+        "notFound": 0,
+        "ambiguous": 0,
+        "sourceErrors": 0,
+        "cl": 30,
+        "oldEdgesResolved": 127,
+        "foundRate": 1,
+        "acquisitionRate": 1,
+        "clPerAcquired": 2,
+        "edgesPerAcquired": 8.467,
+        "edgesPerCl": 4.233,
+        "medianEdgeDemand": 8,
+        "demandRealization": 1.016,
+        "sampleConfidence": "MODERATE"
+      },
+      "federal_reporter": {
+        "attempts": 16,
+        "found": 11,
+        "acquired": 11,
+        "notFound": 5,
+        "ambiguous": 0,
+        "sourceErrors": 0,
+        "cl": 27,
+        "oldEdgesResolved": 36,
+        "foundRate": 0.688,
+        "acquisitionRate": 0.688,
+        "clPerAcquired": 2.455,
+        "edgesPerAcquired": 3.273,
+        "edgesPerCl": 1.333,
+        "medianEdgeDemand": 3,
+        "demandRealization": 0.72,
+        "sampleConfidence": "MODERATE"
+      },
+      "regional_reporter": {
+        "attempts": 15,
+        "found": 11,
+        "acquired": 11,
+        "notFound": 4,
+        "ambiguous": 0,
+        "sourceErrors": 0,
+        "cl": 26,
+        "oldEdgesResolved": 57,
+        "foundRate": 0.733,
+        "acquisitionRate": 0.733,
+        "clPerAcquired": 2.364,
+        "edgesPerAcquired": 5.182,
+        "edgesPerCl": 2.192,
+        "medianEdgeDemand": 5,
+        "demandRealization": 0.77,
+        "sampleConfidence": "MODERATE"
+      },
+      "federal_supplement": {
+        "attempts": 7,
+        "found": 1,
+        "acquired": 1,
+        "notFound": 6,
+        "ambiguous": 0,
+        "sourceErrors": 0,
+        "cl": 5,
+        "oldEdgesResolved": 0,
+        "foundRate": 0.143,
+        "acquisitionRate": 0.143,
+        "clPerAcquired": 5,
+        "edgesPerAcquired": 0,
+        "edgesPerCl": 0,
+        "medianEdgeDemand": 2,
+        "demandRealization": 0,
+        "sampleConfidence": "LOW_SAMPLE"
+      }
+    },
+    "calibrationGate": {
+      "status": "CALIBRATION_SUFFICIENT",
+      "reason": ">=8 acquires for US/federal/regional; families measured=us_reports,federal_reporter,regional_reporter; fsupp acquired=1",
+      "fsuppNote": null
+    },
+    "productivityBands": {
+      "HIGH": {
+        "families": [
+          "us_reports"
+        ],
+        "range": [
+          4.233
+        ],
+        "mean": 4.233,
+        "sampleCount": 15
+      },
+      "MEDIUM": {
+        "families": [
+          "regional_reporter"
+        ],
+        "range": [
+          2.192
+        ],
+        "sampleCount": 11
+      },
+      "LOW": {
+        "families": [
+          "federal_reporter"
+        ],
+        "range": [
+          1.333
+        ],
+        "sampleCount": 11
+      },
+      "observedValues": [
+        4.233,
+        2.192,
+        1.333
+      ],
+      "method": "rank_by_measured_edges_per_cl_min8"
+    },
+    "equalShareUsed": false,
+    "attributionMethod": "exact_per_citation_edge_delta",
+    "provisionalRerankTop25": [
+      {
+        "rank": 1,
+        "citation": "573 U.S. 373",
+        "family": "us_reports",
+        "edgeDemand": 11,
+        "measuredFamilyProductivity": 4.233,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 57.56,
+        "finalScore": 61.56
+      },
+      {
+        "rank": 2,
+        "citation": "537 P.3d 1154",
+        "family": "regional_reporter",
+        "edgeDemand": 4,
+        "measuredFamilyProductivity": 2.192,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 1,
+        "citationImpact": 12.77,
+        "finalScore": 14.77
+      },
+      {
+        "rank": 3,
+        "citation": "116 F.3d 1066",
+        "family": "federal_reporter",
+        "edgeDemand": 3,
+        "measuredFamilyProductivity": 1.333,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 7,
+        "finalScore": 11
+      },
+      {
+        "rank": 4,
+        "citation": "397 U.S. 358",
+        "family": "us_reports",
+        "edgeDemand": 8,
+        "measuredFamilyProductivity": 4.233,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 41.86,
+        "finalScore": 45.86
+      },
+      {
+        "rank": 5,
+        "citation": "368 P.2d 546",
+        "family": "regional_reporter",
+        "edgeDemand": 4,
+        "measuredFamilyProductivity": 2.192,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 1,
+        "citationImpact": 12.77,
+        "finalScore": 14.77
+      },
+      {
+        "rank": 6,
+        "citation": "161 F.3d 256",
+        "family": "federal_reporter",
+        "edgeDemand": 3,
+        "measuredFamilyProductivity": 1.333,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 7,
+        "finalScore": 11
+      },
+      {
+        "rank": 7,
+        "citation": "460 U.S. 1",
+        "family": "us_reports",
+        "edgeDemand": 8,
+        "measuredFamilyProductivity": 4.233,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 41.86,
+        "finalScore": 45.86
+      },
+      {
+        "rank": 8,
+        "citation": "496 P.3d 83",
+        "family": "regional_reporter",
+        "edgeDemand": 4,
+        "measuredFamilyProductivity": 2.192,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 1,
+        "citationImpact": 12.77,
+        "finalScore": 14.77
+      },
+      {
+        "rank": 9,
+        "citation": "49 F.4th 1000",
+        "family": "federal_reporter",
+        "edgeDemand": 3,
+        "measuredFamilyProductivity": 1.333,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 7,
+        "finalScore": 11
+      },
+      {
+        "rank": 10,
+        "citation": "454 U.S. 464",
+        "family": "us_reports",
+        "edgeDemand": 8,
+        "measuredFamilyProductivity": 4.233,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 41.86,
+        "finalScore": 45.86
+      },
+      {
+        "rank": 11,
+        "citation": "516 P.3d 73",
+        "family": "regional_reporter",
+        "edgeDemand": 4,
+        "measuredFamilyProductivity": 2.192,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 1,
+        "citationImpact": 12.77,
+        "finalScore": 14.77
+      },
+      {
+        "rank": 12,
+        "citation": "168 F.4th 2",
+        "family": "federal_reporter",
+        "edgeDemand": 3,
+        "measuredFamilyProductivity": 1.333,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 7,
+        "finalScore": 11
+      },
+      {
+        "rank": 13,
+        "citation": "355 U.S. 41",
+        "family": "us_reports",
+        "edgeDemand": 8,
+        "measuredFamilyProductivity": 4.233,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 41.86,
+        "finalScore": 45.86
+      },
+      {
+        "rank": 14,
+        "citation": "387 P.3d 761",
+        "family": "regional_reporter",
+        "edgeDemand": 4,
+        "measuredFamilyProductivity": 2.192,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 1,
+        "citationImpact": 12.77,
+        "finalScore": 14.77
+      },
+      {
+        "rank": 15,
+        "citation": "565 U.S. 400",
+        "family": "us_reports",
+        "edgeDemand": 7,
+        "measuredFamilyProductivity": 4.233,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 36.63,
+        "finalScore": 40.63
+      },
+      {
+        "rank": 16,
+        "citation": "524 P.3d 397",
+        "family": "regional_reporter",
+        "edgeDemand": 4,
+        "measuredFamilyProductivity": 2.192,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 1,
+        "citationImpact": 12.77,
+        "finalScore": 14.77
+      },
+      {
+        "rank": 17,
+        "citation": "432 U.S. 333",
+        "family": "us_reports",
+        "edgeDemand": 7,
+        "measuredFamilyProductivity": 4.233,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 36.63,
+        "finalScore": 40.63
+      },
+      {
+        "rank": 18,
+        "citation": "435 P.3d 918",
+        "family": "regional_reporter",
+        "edgeDemand": 4,
+        "measuredFamilyProductivity": 2.192,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 1,
+        "citationImpact": 12.77,
+        "finalScore": 14.77
+      },
+      {
+        "rank": 19,
+        "citation": "483 U.S. 635",
+        "family": "us_reports",
+        "edgeDemand": 7,
+        "measuredFamilyProductivity": 4.233,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 36.63,
+        "finalScore": 40.63
+      },
+      {
+        "rank": 20,
+        "citation": "547 U.S. 586",
+        "family": "us_reports",
+        "edgeDemand": 7,
+        "measuredFamilyProductivity": 4.233,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 36.63,
+        "finalScore": 40.63
+      },
+      {
+        "rank": 21,
+        "citation": "598 U.S. 411",
+        "family": "us_reports",
+        "edgeDemand": 7,
+        "measuredFamilyProductivity": 4.233,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 36.63,
+        "finalScore": 40.63
+      },
+      {
+        "rank": 22,
+        "citation": "501 U.S. 429",
+        "family": "us_reports",
+        "edgeDemand": 7,
+        "measuredFamilyProductivity": 4.233,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 36.63,
+        "finalScore": 40.63
+      },
+      {
+        "rank": 23,
+        "citation": "312 U.S. 496",
+        "family": "us_reports",
+        "edgeDemand": 7,
+        "measuredFamilyProductivity": 4.233,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 36.63,
+        "finalScore": 40.63
+      },
+      {
+        "rank": 24,
+        "citation": "408 U.S. 238",
+        "family": "us_reports",
+        "edgeDemand": 7,
+        "measuredFamilyProductivity": 4.233,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 36.63,
+        "finalScore": 40.63
+      },
+      {
+        "rank": 25,
+        "citation": "522 U.S. 136",
+        "family": "us_reports",
+        "edgeDemand": 7,
+        "measuredFamilyProductivity": 4.233,
+        "identityConfidence": 1,
+        "corpusCoverageValue": 2,
+        "citationImpact": 36.63,
+        "finalScore": 40.63
+      }
+    ]
+  }
 }
