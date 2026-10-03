@@ -1,27 +1,27 @@
 {
   "classification": "QUEUE2_WEEK2_PROGRAM_STATE",
-  "generatedAt": "2026-10-03T01:04:34.180Z",
+  "generatedAt": "2026-10-03T02:09:12.959Z",
   "week1Status": "PASS",
   "week1Cases": 3568,
   "week2Status": "YELLOW",
-  "week2Cases": 3913,
+  "week2Cases": 3986,
   "week2Target": 4700,
-  "week2Remaining": 787,
+  "week2Remaining": 714,
   "week2GrowthFromLaunch": 299,
   "lastSession": {
-    "classification": "CITATION_DEMAND_CALIBRATION_BLOCK_2",
-    "casesEnd": 3913,
-    "resolvedEnd": 2155,
-    "cl": 88,
-    "acquired": 38,
-    "oldEdgesExact": 220,
-    "edgesPerCl": 2.5,
-    "gate": "CALIBRATION_SUFFICIENT",
+    "classification": "CITATION_DEMAND_ADAPTIVE_SCALE_1",
+    "casesEnd": 3986,
+    "resolvedEnd": 2706,
+    "cl": 147,
+    "acquired": 73,
+    "oldEdgesExact": 442,
+    "edgesPerCl": 3.007,
+    "usEdgesPerCl": 3.5,
     "stop": "budget_exhausted"
   },
   "composition": {
     "stateDc": 3073,
-    "federal": 812
+    "federal": 862
   },
   "queues": {
     "#2": "OPEN",

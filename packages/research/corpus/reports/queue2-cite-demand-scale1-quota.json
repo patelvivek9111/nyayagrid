@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "classification": "CITATION_DEMAND_ADAPTIVE_SCALE_1_QUOTA",
+  "membership": {
+    "level": "CL Membership - Tier 2",
+    "is_active": true
+  },
+  "limits": {
+    "minute": {
+      "scope": "user",
+      "period": "minute",
+      "limit": 15,
+      "usage": 0,
+      "remaining": 15,
+      "reset_at": null,
+      "blocked": false
+    },
+    "hour": {
+      "scope": "user",
+      "period": "hour",
+      "limit": 150,
+      "usage": 88,
+      "remaining": 62,
+      "reset_at": "2026-10-03T01:28:33.543826+00:00",
+      "blocked": false
+    },
+    "day": {
+      "scope": "user",
+      "period": "day",
+      "limit": 600,
+      "usage": 107,
+      "remaining": 493,
+      "reset_at": "2026-10-03T22:02:34.920900+00:00",
+      "blocked": false
+    }
+  },
+  "courtListenerHttpCalls": 1,
+  "generatedAt": "2026-10-03T01:07:59.637Z",
+  "pacingMs": 5000,
+  "plannedBudget": 100,
+  "stretchBudget": 150,
+  "hourFloor": 25,
+  "dayFloor": 50,
+  "minuteFloor": 2
+}
