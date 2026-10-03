@@ -1,66 +1,66 @@
 {
-  "generatedAt": "2026-10-03T02:09:12.958Z",
-  "classification": "CITATION_DEMAND_ADAPTIVE_SCALE_1",
-  "extracted": 40606,
-  "resolved": 2706,
-  "unresolved": 37900,
-  "resolutionPct": 6.66,
-  "oldUnresolvedResolvedExact": 442,
-  "oldUnresolvedResolvedGlobal": 551,
-  "remainingTo10Pct": 1355,
+  "generatedAt": "2026-10-03T03:08:55.805Z",
+  "classification": "CITATION_DEMAND_ADAPTIVE_SCALE_2",
+  "extracted": 42915,
+  "resolved": 3437,
+  "unresolved": 39478,
+  "resolutionPct": 8.01,
+  "oldUnresolvedResolvedExact": 554,
+  "oldUnresolvedResolvedGlobal": 731,
+  "remainingTo10Pct": 855,
   "familyTable": {
     "us_reports": {
-      "attempts": 50,
-      "found": 50,
-      "acquired": 50,
-      "notFound": 0,
-      "cl": 100,
-      "oldEdgesResolved": 350,
-      "foundRate": 1,
-      "acquisitionRate": 1,
-      "clPerAcquired": 2,
-      "edgesPerAcquired": 7,
-      "edgesPerCl": 3.5,
-      "recentEdgesPerCl": 3.25,
-      "pilotBaseline": 4.233,
+      "attempts": 54,
+      "found": 53,
+      "acquired": 53,
+      "notFound": 1,
+      "cl": 107,
+      "oldEdgesResolved": 482,
+      "foundRate": 0.981,
+      "acquisitionRate": 0.981,
+      "clPerAcquired": 2.019,
+      "edgesPerAcquired": 9.094,
+      "edgesPerCl": 4.505,
+      "recentEdgesPerCl": 3.95,
+      "pilotBaseline": 3.5,
       "productivityDecay": false,
-      "demandRealization": 1.064,
+      "demandRealization": 1.048,
       "paused": false
     },
     "regional_reporter": {
-      "attempts": 20,
-      "found": 20,
-      "acquired": 20,
-      "notFound": 0,
-      "cl": 40,
-      "oldEdgesResolved": 83,
-      "foundRate": 1,
-      "acquisitionRate": 1,
-      "clPerAcquired": 2,
-      "edgesPerAcquired": 4.15,
-      "edgesPerCl": 2.075,
-      "recentEdgesPerCl": 2.15,
-      "pilotBaseline": 2.192,
+      "attempts": 21,
+      "found": 16,
+      "acquired": 16,
+      "notFound": 5,
+      "cl": 37,
+      "oldEdgesResolved": 72,
+      "foundRate": 0.762,
+      "acquisitionRate": 0.762,
+      "clPerAcquired": 2.313,
+      "edgesPerAcquired": 4.5,
+      "edgesPerCl": 1.946,
+      "recentEdgesPerCl": 1.5,
+      "pilotBaseline": 2.075,
       "productivityDecay": false,
-      "demandRealization": 1.038,
+      "demandRealization": 0.679,
       "paused": false
     },
     "federal_reporter": {
-      "attempts": 4,
-      "found": 3,
-      "acquired": 3,
+      "attempts": 1,
+      "found": 0,
+      "acquired": 0,
       "notFound": 1,
-      "cl": 7,
-      "oldEdgesResolved": 9,
-      "foundRate": 0.75,
-      "acquisitionRate": 0.75,
-      "clPerAcquired": 2.333,
-      "edgesPerAcquired": 3,
-      "edgesPerCl": 1.286,
-      "recentEdgesPerCl": 1.5,
-      "pilotBaseline": 1.333,
+      "cl": 2,
+      "oldEdgesResolved": 0,
+      "foundRate": 0,
+      "acquisitionRate": 0,
+      "clPerAcquired": null,
+      "edgesPerAcquired": null,
+      "edgesPerCl": 0,
+      "recentEdgesPerCl": null,
+      "pilotBaseline": 1.286,
       "productivityDecay": false,
-      "demandRealization": 0.75,
+      "demandRealization": 0,
       "paused": false
     },
     "federal_supplement": {
@@ -84,42 +84,22 @@
   },
   "bySubfamily": {
     "U.S.": {
-      "acquired": 50,
-      "cl": 100,
-      "oldEdgesResolved": 350
-    },
-    "S.E.2d": {
-      "acquired": 3,
-      "cl": 6,
-      "oldEdgesResolved": 12
-    },
-    "F.3d": {
-      "acquired": 2,
-      "cl": 4,
-      "oldEdgesResolved": 6
+      "acquired": 53,
+      "cl": 106,
+      "oldEdgesResolved": 482
     },
     "P.3d": {
-      "acquired": 14,
-      "cl": 28,
-      "oldEdgesResolved": 59
-    },
-    "F.4th": {
-      "acquired": 1,
-      "cl": 2,
-      "oldEdgesResolved": 3
-    },
-    "P.2d": {
-      "acquired": 2,
-      "cl": 4,
-      "oldEdgesResolved": 8
-    },
-    "S.W.": {
-      "acquired": 1,
-      "cl": 2,
-      "oldEdgesResolved": 4
+      "acquired": 16,
+      "cl": 32,
+      "oldEdgesResolved": 72
     }
   },
   "equalShareUsed": false,
-  "fsuppStatus": "PAUSED_LOW_SAMPLE_NONPRODUCTIVE",
-  "blendedEdgesPerCl": 3.007
+  "blendedEdgesPerCl": 3.795,
+  "readyPoolsAtStart": {
+    "us": 400,
+    "regional": 200,
+    "federal": 100,
+    "fsupp": 35
+  }
 }

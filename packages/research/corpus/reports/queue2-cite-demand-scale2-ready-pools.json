@@ -1,0 +1,188 @@
+{
+  "ok": true,
+  "classification": "CITATION_DEMAND_SCALE2_READY_REBUILD_LOCAL",
+  "generatedAt": "2026-10-03T02:22:34.898Z",
+  "courtListenerHttpCalls": 0,
+  "poolCounts": {
+    "us_reports_ready": 1503,
+    "regional_ready": 781,
+    "federal_ready": 558,
+    "fsupp_candidates": 35,
+    "selectedUs": 400,
+    "selectedRegional": 200,
+    "selectedFederal": 100,
+    "terminalPreserved": 0
+  },
+  "localReady": {
+    "us": 400,
+    "regional": 200,
+    "federal": 100,
+    "fsupp": 35
+  },
+  "topUs": [
+    {
+      "c": "116 U.S. 616",
+      "d": 17
+    },
+    {
+      "c": "405 U.S. 727",
+      "d": 14
+    },
+    {
+      "c": "333 U.S. 10",
+      "d": 13
+    },
+    {
+      "c": "428 U.S. 465",
+      "d": 12
+    },
+    {
+      "c": "468 U.S. 737",
+      "d": 12
+    },
+    {
+      "c": "429 U.S. 97",
+      "d": 11
+    },
+    {
+      "c": "338 U.S. 160",
+      "d": 11
+    },
+    {
+      "c": "418 U.S. 208",
+      "d": 11
+    },
+    {
+      "c": "475 U.S. 574",
+      "d": 11
+    },
+    {
+      "c": "371 U.S. 471",
+      "d": 11
+    }
+  ],
+  "topRegional": [
+    {
+      "c": "421 P.3d 187",
+      "d": 15,
+      "s": "P.3d"
+    },
+    {
+      "c": "206 P.3d 1042",
+      "d": 14,
+      "s": "P.3d"
+    },
+    {
+      "c": "310 P.3d 943",
+      "d": 7,
+      "s": "P.3d"
+    },
+    {
+      "c": "572 P.3d 1045",
+      "d": 6,
+      "s": "P.3d"
+    },
+    {
+      "c": "43 P.3d 4",
+      "d": 6,
+      "s": "P.3d"
+    },
+    {
+      "c": "563 P.3d 610",
+      "d": 5,
+      "s": "P.3d"
+    },
+    {
+      "c": "273 P.3d 594",
+      "d": 5,
+      "s": "P.3d"
+    },
+    {
+      "c": "375 P.3d 51",
+      "d": 4,
+      "s": "P.3d"
+    },
+    {
+      "c": "266 P.3d 828",
+      "d": 4,
+      "s": "P.3d"
+    },
+    {
+      "c": "229 P.3d 1146",
+      "d": 4,
+      "s": "P.3d"
+    }
+  ],
+  "topFederal": [
+    {
+      "c": "45 F.3d 444",
+      "d": 8,
+      "s": "F.3d"
+    },
+    {
+      "c": "46 F.3d 1151",
+      "d": 7,
+      "s": "F.3d"
+    },
+    {
+      "c": "124 F.4th 218",
+      "d": 6,
+      "s": "F.4th"
+    },
+    {
+      "c": "45 F.3d 428",
+      "d": 6,
+      "s": "F.3d"
+    },
+    {
+      "c": "919 F.3d 437",
+      "d": 5,
+      "s": "F.3d"
+    },
+    {
+      "c": "484 F.2d 820",
+      "d": 5,
+      "s": "F.2d"
+    },
+    {
+      "c": "371 F.3d 865",
+      "d": 4,
+      "s": "F.3d"
+    },
+    {
+      "c": "665 F.3d 768",
+      "d": 4,
+      "s": "F.3d"
+    },
+    {
+      "c": "924 F.3d 718",
+      "d": 4,
+      "s": "F.3d"
+    },
+    {
+      "c": "135 F.3d 478",
+      "d": 3,
+      "s": "F.3d"
+    }
+  ],
+  "regionalSubfamilyCounts": {
+    "P.3d": 368,
+    "S.E.2d": 50,
+    "P.2d": 118,
+    "A.3d": 48,
+    "So.2d": 61,
+    "A.2d": 67,
+    "S.W.3d": 19,
+    "N.W.2d": 16,
+    "So.3d": 24,
+    "S.W.2d": 10
+  },
+  "skipped": {
+    "present": 1,
+    "unparsed": 1167,
+    "prior_not_found": 0,
+    "acquired": 0,
+    "deny": 1
+  },
+  "terminalPreserved": 135
+}
