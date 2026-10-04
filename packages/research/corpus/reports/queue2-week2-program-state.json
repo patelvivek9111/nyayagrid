@@ -1,12 +1,12 @@
 {
   "classification": "QUEUE2_WEEK2_PROGRAM_STATE",
-  "generatedAt": "2026-10-04T19:49:04.448Z",
+  "generatedAt": "2026-10-04T20:30:13.589Z",
   "week1Status": "PASS",
   "week1Cases": 3568,
   "week2Status": "YELLOW",
-  "week2Cases": 4228,
+  "week2Cases": 4270,
   "week2Target": 4700,
-  "week2Remaining": 472,
+  "week2Remaining": 430,
   "week2GrowthFromLaunch": 299,
   "lastSession": {
     "classification": "CITATION_DEMAND_ADAPTIVE_SCALE_4_POST_RESET_HEAVY_RESUME",
@@ -41,5 +41,12 @@
     "laneACases": 14,
     "laneBAcquired": 28,
     "resolutionPct": null
+  },
+  "lastHybridCloseoutRun2": {
+    "status": "PASS",
+    "totalCl": 98,
+    "laneACases": 28,
+    "laneBAcquired": 14,
+    "resolutionPct": 11.34
   }
 }

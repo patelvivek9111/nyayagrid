@@ -1,0 +1,103 @@
+{
+  "classification": "WEEK2_HYBRID_CLOSEOUT_RUN2_EXTENSION",
+  "startedAt": "2026-10-04T20:14:03.454Z",
+  "startCases": 4242,
+  "startResolved": 5273,
+  "laneA": {
+    "budget": 40,
+    "cl": 40,
+    "casesAdded": 14,
+    "batches": [
+      {
+        "jurisdiction": "WI",
+        "clCourt": "wisctapp",
+        "batchSize": "5",
+        "targetMax": "140",
+        "maxCalls": "10",
+        "tag": "w2r2x-wisctapp",
+        "cl": 10,
+        "liveDelta": 4,
+        "casesBefore": 4242,
+        "casesAfter": 4246,
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR"
+      },
+      {
+        "jurisdiction": "UT",
+        "clCourt": "utahctapp",
+        "batchSize": "5",
+        "targetMax": "120",
+        "maxCalls": "10",
+        "tag": "w2r2x-utahctapp",
+        "cl": 10,
+        "liveDelta": 3,
+        "casesBefore": 4246,
+        "casesAfter": 4249,
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR"
+      },
+      {
+        "jurisdiction": "IN",
+        "clCourt": "indctapp",
+        "batchSize": "5",
+        "targetMax": "120",
+        "maxCalls": "10",
+        "tag": "w2r2x-indctapp",
+        "cl": 10,
+        "liveDelta": 4,
+        "casesBefore": 4249,
+        "casesAfter": 4253,
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR"
+      },
+      {
+        "jurisdiction": "KY",
+        "clCourt": "kyctapp",
+        "batchSize": "5",
+        "targetMax": "120",
+        "maxCalls": "10",
+        "tag": "w2r2x-kyctapp",
+        "cl": 10,
+        "liveDelta": 3,
+        "casesBefore": 4253,
+        "casesAfter": 4256,
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR"
+      }
+    ],
+    "productive": [
+      {
+        "path": "w2r2x-wisctapp",
+        "cl": 10,
+        "liveDelta": 4
+      },
+      {
+        "path": "w2r2x-utahctapp",
+        "cl": 10,
+        "liveDelta": 3
+      },
+      {
+        "path": "w2r2x-indctapp",
+        "cl": 10,
+        "liveDelta": 4
+      },
+      {
+        "path": "w2r2x-kyctapp",
+        "cl": 10,
+        "liveDelta": 3
+      }
+    ],
+    "stopped": [],
+    "oldEdgesResolved": 4
+  },
+  "laneB": {
+    "budget": 30,
+    "cl": 28,
+    "acquired": 14,
+    "oldEdgesResolved": 87,
+    "attempted": 14,
+    "edgesPerCl": 3.107
+  },
+  "totalCl": 68,
+  "clWastedOnInvalidMapping": 0,
+  "endCases": 4270,
+  "endResolved": 5445,
+  "endExtracted": 48020,
+  "finishedAt": "2026-10-04T20:29:30.188Z"
+}
