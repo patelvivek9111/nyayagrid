@@ -1,0 +1,70 @@
+{
+  "ok": true,
+  "classification": "WEEK2_HYBRID_CLOSEOUT_RUN3_BOOTSTRAP",
+  "generatedAt": "2026-10-04T20:46:12.093Z",
+  "membership": {
+    "level": "CL Membership - Tier 4",
+    "is_active": true
+  },
+  "limits": {
+    "minute": {
+      "scope": "user",
+      "period": "minute",
+      "limit": 25,
+      "usage": 0,
+      "remaining": 25,
+      "reset_at": null,
+      "blocked": false
+    },
+    "hour": {
+      "scope": "user",
+      "period": "hour",
+      "limit": 300,
+      "usage": 122,
+      "remaining": 178,
+      "reset_at": "2026-10-04T20:43:32.235827+00:00",
+      "blocked": false
+    },
+    "day": {
+      "scope": "user",
+      "period": "day",
+      "limit": 1400,
+      "usage": 353,
+      "remaining": 1047,
+      "reset_at": "2026-10-05T02:01:52.415457+00:00",
+      "blocked": false
+    }
+  },
+  "hourFloor": 25,
+  "dayFloor": 50,
+  "preferred": 120,
+  "safeBudget": 120,
+  "pacingMs": 4000,
+  "laneAShare": 0.7,
+  "laneBShare": 0.3,
+  "start": {
+    "cases": 4270,
+    "extracted": 48020,
+    "resolved": 5445,
+    "unresolved": 42575,
+    "stateDc": 3115,
+    "federal": 1084,
+    "resolutionPct": 11.34,
+    "live12_5Target": 6003,
+    "liveGap12_5": 558,
+    "week2Gap": 430,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0
+  },
+  "mapping": {
+    "total": 69,
+    "VALID_MAPPED": 66,
+    "INVALID_MAPPING": 3,
+    "UNKNOWN_MAPPING": 0,
+    "newlyValidated": 0,
+    "clSpentOnMapping": 0
+  },
+  "newlyValidated": [],
+  "courtListenerHttpCalls": 1
+}

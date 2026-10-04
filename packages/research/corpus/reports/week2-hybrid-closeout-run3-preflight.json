@@ -1,0 +1,219 @@
+{
+  "classification": "WEEK2_HYBRID_CLOSEOUT_RUN3_PREFLIGHT",
+  "generatedAt": "2026-10-04T20:46:12.099Z",
+  "courtListenerHttpCalls": 0,
+  "mappingSummary": {
+    "total": 69,
+    "VALID_MAPPED": 66,
+    "INVALID_MAPPING": 3,
+    "UNKNOWN_MAPPING": 0,
+    "newlyValidated": 0,
+    "clSpentOnMapping": 0,
+    "unknownBefore": 0,
+    "newVALID_MAPPED": 0,
+    "remainingUNKNOWN": 0,
+    "INVALID": 3,
+    "clSpent": 0
+  },
+  "targetMaxSummary": {
+    "cappedBefore": 0,
+    "fixed": 27,
+    "clWasted": 0
+  },
+  "laneAPlan": [
+    {
+      "jurisdiction": "WI",
+      "clCourt": "wisctapp",
+      "courtLevel": "state_appellate",
+      "batchSize": "6",
+      "targetMax": "160",
+      "microCalls": "10",
+      "scaleCalls": "18",
+      "tag": "w2r3-wisctapp",
+      "deficit": 63,
+      "intermediateLayerGap": false,
+      "itemsImportedEstimate": 26,
+      "remainingCapacity": 134
+    },
+    {
+      "jurisdiction": "UT",
+      "clCourt": "utahctapp",
+      "courtLevel": "state_appellate",
+      "batchSize": "6",
+      "targetMax": "160",
+      "microCalls": "10",
+      "scaleCalls": "18",
+      "tag": "w2r3-utahctapp",
+      "deficit": 66,
+      "intermediateLayerGap": false,
+      "itemsImportedEstimate": 21,
+      "remainingCapacity": 139
+    },
+    {
+      "jurisdiction": "IN",
+      "clCourt": "indctapp",
+      "courtLevel": "state_appellate",
+      "batchSize": "6",
+      "targetMax": "160",
+      "microCalls": "10",
+      "scaleCalls": "18",
+      "tag": "w2r3-indctapp",
+      "deficit": 60,
+      "intermediateLayerGap": false,
+      "itemsImportedEstimate": 14,
+      "remainingCapacity": 146
+    },
+    {
+      "jurisdiction": "KY",
+      "clCourt": "kyctapp",
+      "courtLevel": "state_appellate",
+      "batchSize": "6",
+      "targetMax": "160",
+      "microCalls": "10",
+      "scaleCalls": "18",
+      "tag": "w2r3-kyctapp",
+      "deficit": 64,
+      "intermediateLayerGap": false,
+      "itemsImportedEstimate": 8,
+      "remainingCapacity": 152
+    },
+    {
+      "jurisdiction": "LA",
+      "clCourt": "la",
+      "courtLevel": "state_high",
+      "batchSize": "6",
+      "targetMax": "160",
+      "microCalls": "10",
+      "scaleCalls": "18",
+      "tag": "w2r3-la",
+      "deficit": 96,
+      "intermediateLayerGap": true,
+      "itemsImportedEstimate": 49,
+      "remainingCapacity": 111
+    },
+    {
+      "jurisdiction": "WA",
+      "clCourt": "wash",
+      "courtLevel": "state_high",
+      "batchSize": "6",
+      "targetMax": "160",
+      "microCalls": "10",
+      "scaleCalls": "18",
+      "tag": "w2r3-wash",
+      "deficit": 96,
+      "intermediateLayerGap": true,
+      "itemsImportedEstimate": 49,
+      "remainingCapacity": 111
+    },
+    {
+      "jurisdiction": "MD",
+      "clCourt": "md",
+      "courtLevel": "state_high",
+      "batchSize": "6",
+      "targetMax": "160",
+      "microCalls": "10",
+      "scaleCalls": "18",
+      "tag": "w2r3-md",
+      "deficit": 95,
+      "intermediateLayerGap": true,
+      "itemsImportedEstimate": 49,
+      "remainingCapacity": 111
+    },
+    {
+      "jurisdiction": "MI",
+      "clCourt": "mich",
+      "courtLevel": "state_high",
+      "batchSize": "6",
+      "targetMax": "160",
+      "microCalls": "10",
+      "scaleCalls": "18",
+      "tag": "w2r3-mich",
+      "deficit": 99,
+      "intermediateLayerGap": true,
+      "itemsImportedEstimate": 46,
+      "remainingCapacity": 114
+    },
+    {
+      "jurisdiction": "AZ",
+      "clCourt": "arizctapp",
+      "courtLevel": "state_appellate",
+      "batchSize": "6",
+      "targetMax": "160",
+      "microCalls": "8",
+      "scaleCalls": "14",
+      "tag": "w2r3-arizctapp",
+      "deficit": 72,
+      "intermediateLayerGap": false,
+      "itemsImportedEstimate": 0,
+      "remainingCapacity": 160
+    },
+    {
+      "jurisdiction": "NM",
+      "clCourt": "nmctapp",
+      "courtLevel": "state_appellate",
+      "batchSize": "6",
+      "targetMax": "160",
+      "microCalls": "8",
+      "scaleCalls": "14",
+      "tag": "w2r3-nmctapp",
+      "deficit": 89,
+      "intermediateLayerGap": false,
+      "itemsImportedEstimate": 0,
+      "remainingCapacity": 160
+    },
+    {
+      "jurisdiction": "CT",
+      "clCourt": "connappct",
+      "courtLevel": "state_appellate",
+      "batchSize": "6",
+      "targetMax": "160",
+      "microCalls": "8",
+      "scaleCalls": "14",
+      "tag": "w2r3-connappct",
+      "deficit": 63,
+      "intermediateLayerGap": false,
+      "itemsImportedEstimate": 0,
+      "remainingCapacity": 160
+    },
+    {
+      "jurisdiction": "CA",
+      "clCourt": "calctapp",
+      "courtLevel": "state_appellate",
+      "batchSize": "6",
+      "targetMax": "160",
+      "microCalls": "8",
+      "scaleCalls": "14",
+      "tag": "w2r3-calctapp",
+      "deficit": 101,
+      "intermediateLayerGap": false,
+      "itemsImportedEstimate": 15,
+      "remainingCapacity": 145
+    }
+  ],
+  "intermediateGaps": [
+    {
+      "jurisdiction": "PA",
+      "clCourtId": "pacommwlth",
+      "status": "INVALID",
+      "note": "mapped invalid"
+    },
+    {
+      "jurisdiction": "NJ",
+      "clCourtId": "njsuperct",
+      "status": "INVALID",
+      "note": "mapped invalid"
+    },
+    {
+      "jurisdiction": "VA",
+      "clCourtId": "vacapp",
+      "status": "INVALID",
+      "note": "mapped invalid"
+    },
+    {
+      "jurisdiction": "DE",
+      "status": "NO_STRUCTURE",
+      "note": "wave2o structureExists:false"
+    }
+  ],
+  "newlyValidated": []
+}

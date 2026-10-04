@@ -1,0 +1,650 @@
+{
+  "classification": "WEEK2_HYBRID_CLOSEOUT_RUN_3",
+  "status": "PASS",
+  "stopReason": "budget_exhausted",
+  "generatedAt": "2026-10-04T21:11:48.531Z",
+  "quota": {
+    "408": 0,
+    "429": 0,
+    "limits": {
+      "minute": {
+        "scope": "user",
+        "period": "minute",
+        "limit": 25,
+        "usage": 0,
+        "remaining": 25,
+        "reset_at": null,
+        "blocked": false
+      },
+      "hour": {
+        "scope": "user",
+        "period": "hour",
+        "limit": 300,
+        "usage": 122,
+        "remaining": 178,
+        "reset_at": "2026-10-04T20:43:32.235827+00:00",
+        "blocked": false
+      },
+      "day": {
+        "scope": "user",
+        "period": "day",
+        "limit": 1400,
+        "usage": 353,
+        "remaining": 1047,
+        "reset_at": "2026-10-05T02:01:52.415457+00:00",
+        "blocked": false
+      }
+    },
+    "startRemaining": {
+      "minute": 25,
+      "hour": 178,
+      "day": 1047
+    },
+    "pacingMs": 4000,
+    "planned": 120,
+    "actual": 126
+  },
+  "week2": {
+    "startCases": 4270,
+    "endCases": 4323,
+    "remainingTo4700": 377,
+    "stateDc": {
+      "start": 3115,
+      "end": 3159,
+      "delta": 44
+    },
+    "federal": {
+      "start": 1084,
+      "end": 1093,
+      "delta": 9
+    }
+  },
+  "mapping": {
+    "total": 69,
+    "VALID_MAPPED": 66,
+    "INVALID_MAPPING": 3,
+    "UNKNOWN_MAPPING": 0,
+    "newlyValidated": 0,
+    "clSpentOnMapping": 0,
+    "unknownBefore": 0,
+    "newVALID_MAPPED": 0,
+    "remainingUNKNOWN": 0,
+    "INVALID": 3,
+    "clSpent": 0
+  },
+  "newlyValidated": [],
+  "targetMax": {
+    "cappedBefore": 0,
+    "fixed": 27,
+    "clWasted": 0
+  },
+  "laneA": {
+    "cl": 108,
+    "usefulCases": 44,
+    "clPerCase": 2.455,
+    "casesPerCl": 0.407,
+    "oldCitationEdges": 18,
+    "productive": [
+      {
+        "path": "w2r3-wisctapp",
+        "jurisdiction": "WI",
+        "clCourt": "wisctapp",
+        "phase": "MICRO",
+        "cl": 10,
+        "liveDelta": 4,
+        "clPerCase": 2.5
+      },
+      {
+        "path": "w2r3-wisctapp",
+        "jurisdiction": "WI",
+        "clCourt": "wisctapp",
+        "phase": "SCALE",
+        "cl": 13,
+        "liveDelta": 6,
+        "clPerCase": 2.167
+      },
+      {
+        "path": "w2r3-utahctapp",
+        "jurisdiction": "UT",
+        "clCourt": "utahctapp",
+        "phase": "MICRO",
+        "cl": 10,
+        "liveDelta": 3,
+        "clPerCase": 3.333
+      },
+      {
+        "path": "w2r3-utahctapp",
+        "jurisdiction": "UT",
+        "clCourt": "utahctapp",
+        "phase": "SCALE",
+        "cl": 14,
+        "liveDelta": 6,
+        "clPerCase": 2.333
+      },
+      {
+        "path": "w2r3-indctapp",
+        "jurisdiction": "IN",
+        "clCourt": "indctapp",
+        "phase": "MICRO",
+        "cl": 10,
+        "liveDelta": 4,
+        "clPerCase": 2.5
+      },
+      {
+        "path": "w2r3-indctapp",
+        "jurisdiction": "IN",
+        "clCourt": "indctapp",
+        "phase": "SCALE",
+        "cl": 13,
+        "liveDelta": 6,
+        "clPerCase": 2.167
+      },
+      {
+        "path": "w2r3-kyctapp",
+        "jurisdiction": "KY",
+        "clCourt": "kyctapp",
+        "phase": "MICRO",
+        "cl": 10,
+        "liveDelta": 3,
+        "clPerCase": 3.333
+      },
+      {
+        "path": "w2r3-kyctapp",
+        "jurisdiction": "KY",
+        "clCourt": "kyctapp",
+        "phase": "SCALE",
+        "cl": 13,
+        "liveDelta": 6,
+        "clPerCase": 2.167
+      },
+      {
+        "path": "w2r3-la",
+        "jurisdiction": "LA",
+        "clCourt": "la",
+        "phase": "MICRO",
+        "cl": 10,
+        "liveDelta": 4,
+        "clPerCase": 2.5
+      },
+      {
+        "path": "w2r3-wash",
+        "jurisdiction": "WA",
+        "clCourt": "wash",
+        "phase": "MICRO",
+        "cl": 5,
+        "liveDelta": 2,
+        "clPerCase": 2.5
+      }
+    ],
+    "stopped": [],
+    "batches": [
+      {
+        "jurisdiction": "WI",
+        "clCourt": "wisctapp",
+        "courtLevel": "state_appellate",
+        "batchSize": "6",
+        "targetMax": "160",
+        "microCalls": "10",
+        "scaleCalls": "18",
+        "tag": "w2r3-wisctapp",
+        "deficit": 63,
+        "intermediateLayerGap": false,
+        "itemsImportedEstimate": 26,
+        "remainingCapacity": 134,
+        "phase": "MICRO",
+        "cl": 10,
+        "casesBefore": 4270,
+        "casesAfter": 4274,
+        "liveDelta": 4,
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+        "status": "quota_paused",
+        "rateLimited": false,
+        "unmapped": false
+      },
+      {
+        "jurisdiction": "WI",
+        "clCourt": "wisctapp",
+        "courtLevel": "state_appellate",
+        "batchSize": "6",
+        "targetMax": "160",
+        "microCalls": "10",
+        "scaleCalls": "18",
+        "tag": "w2r3-wisctapp",
+        "deficit": 63,
+        "intermediateLayerGap": false,
+        "itemsImportedEstimate": 26,
+        "remainingCapacity": 134,
+        "phase": "SCALE",
+        "cl": 13,
+        "casesBefore": 4274,
+        "casesAfter": 4280,
+        "liveDelta": 6,
+        "reason": null,
+        "status": "paused",
+        "rateLimited": false,
+        "unmapped": false
+      },
+      {
+        "jurisdiction": "UT",
+        "clCourt": "utahctapp",
+        "courtLevel": "state_appellate",
+        "batchSize": "6",
+        "targetMax": "160",
+        "microCalls": "10",
+        "scaleCalls": "18",
+        "tag": "w2r3-utahctapp",
+        "deficit": 66,
+        "intermediateLayerGap": false,
+        "itemsImportedEstimate": 21,
+        "remainingCapacity": 139,
+        "phase": "MICRO",
+        "cl": 10,
+        "casesBefore": 4280,
+        "casesAfter": 4283,
+        "liveDelta": 3,
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+        "status": "quota_paused",
+        "rateLimited": false,
+        "unmapped": false
+      },
+      {
+        "jurisdiction": "UT",
+        "clCourt": "utahctapp",
+        "courtLevel": "state_appellate",
+        "batchSize": "6",
+        "targetMax": "160",
+        "microCalls": "10",
+        "scaleCalls": "18",
+        "tag": "w2r3-utahctapp",
+        "deficit": 66,
+        "intermediateLayerGap": false,
+        "itemsImportedEstimate": 21,
+        "remainingCapacity": 139,
+        "phase": "SCALE",
+        "cl": 14,
+        "casesBefore": 4283,
+        "casesAfter": 4289,
+        "liveDelta": 6,
+        "reason": null,
+        "status": "paused",
+        "rateLimited": false,
+        "unmapped": false
+      },
+      {
+        "jurisdiction": "IN",
+        "clCourt": "indctapp",
+        "courtLevel": "state_appellate",
+        "batchSize": "6",
+        "targetMax": "160",
+        "microCalls": "10",
+        "scaleCalls": "18",
+        "tag": "w2r3-indctapp",
+        "deficit": 60,
+        "intermediateLayerGap": false,
+        "itemsImportedEstimate": 14,
+        "remainingCapacity": 146,
+        "phase": "MICRO",
+        "cl": 10,
+        "casesBefore": 4289,
+        "casesAfter": 4293,
+        "liveDelta": 4,
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+        "status": "quota_paused",
+        "rateLimited": false,
+        "unmapped": false
+      },
+      {
+        "jurisdiction": "IN",
+        "clCourt": "indctapp",
+        "courtLevel": "state_appellate",
+        "batchSize": "6",
+        "targetMax": "160",
+        "microCalls": "10",
+        "scaleCalls": "18",
+        "tag": "w2r3-indctapp",
+        "deficit": 60,
+        "intermediateLayerGap": false,
+        "itemsImportedEstimate": 14,
+        "remainingCapacity": 146,
+        "phase": "SCALE",
+        "cl": 13,
+        "casesBefore": 4293,
+        "casesAfter": 4299,
+        "liveDelta": 6,
+        "reason": null,
+        "status": "paused",
+        "rateLimited": false,
+        "unmapped": false
+      },
+      {
+        "jurisdiction": "KY",
+        "clCourt": "kyctapp",
+        "courtLevel": "state_appellate",
+        "batchSize": "6",
+        "targetMax": "160",
+        "microCalls": "10",
+        "scaleCalls": "18",
+        "tag": "w2r3-kyctapp",
+        "deficit": 64,
+        "intermediateLayerGap": false,
+        "itemsImportedEstimate": 8,
+        "remainingCapacity": 152,
+        "phase": "MICRO",
+        "cl": 10,
+        "casesBefore": 4299,
+        "casesAfter": 4302,
+        "liveDelta": 3,
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+        "status": "quota_paused",
+        "rateLimited": false,
+        "unmapped": false
+      },
+      {
+        "jurisdiction": "KY",
+        "clCourt": "kyctapp",
+        "courtLevel": "state_appellate",
+        "batchSize": "6",
+        "targetMax": "160",
+        "microCalls": "10",
+        "scaleCalls": "18",
+        "tag": "w2r3-kyctapp",
+        "deficit": 64,
+        "intermediateLayerGap": false,
+        "itemsImportedEstimate": 8,
+        "remainingCapacity": 152,
+        "phase": "SCALE",
+        "cl": 13,
+        "casesBefore": 4302,
+        "casesAfter": 4308,
+        "liveDelta": 6,
+        "reason": null,
+        "status": "paused",
+        "rateLimited": false,
+        "unmapped": false
+      },
+      {
+        "jurisdiction": "LA",
+        "clCourt": "la",
+        "courtLevel": "state_high",
+        "batchSize": "6",
+        "targetMax": "160",
+        "microCalls": "10",
+        "scaleCalls": "18",
+        "tag": "w2r3-la",
+        "deficit": 96,
+        "intermediateLayerGap": true,
+        "itemsImportedEstimate": 49,
+        "remainingCapacity": 111,
+        "phase": "MICRO",
+        "cl": 10,
+        "casesBefore": 4308,
+        "casesAfter": 4312,
+        "liveDelta": 4,
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+        "status": "quota_paused",
+        "rateLimited": false,
+        "unmapped": false
+      },
+      {
+        "jurisdiction": "WA",
+        "clCourt": "wash",
+        "courtLevel": "state_high",
+        "batchSize": "6",
+        "targetMax": "160",
+        "microCalls": "10",
+        "scaleCalls": "18",
+        "tag": "w2r3-wash",
+        "deficit": 96,
+        "intermediateLayerGap": true,
+        "itemsImportedEstimate": 49,
+        "remainingCapacity": 111,
+        "phase": "MICRO",
+        "cl": 5,
+        "casesBefore": 4312,
+        "casesAfter": 4314,
+        "liveDelta": 2,
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+        "status": "quota_paused",
+        "rateLimited": false,
+        "unmapped": false
+      }
+    ]
+  },
+  "laneB": {
+    "cl": 18,
+    "attempted": 9,
+    "found": 9,
+    "acquired": 9,
+    "exactOldEdges": 56,
+    "edgesPerCl": 3.111
+  },
+  "reallocationLog": [
+    {
+      "checkpoint": "start",
+      "laneAShare": 0.7,
+      "laneBShare": 0.3,
+      "reason": "scale_validated_state_depth"
+    },
+    {
+      "checkpoint": "after_50cl",
+      "laneAShare": 0.75,
+      "laneBShare": 0.25,
+      "laneACasesPerCl": 0.414,
+      "reason": "laneA_strong_favor_state"
+    },
+    {
+      "checkpoint": "after_100cl",
+      "laneAShare": 0.9,
+      "laneBShare": 0.1,
+      "laneACasesPerCl": 0.408,
+      "reason": "progress_checkpoint"
+    }
+  ],
+  "throughput": {
+    "laneACasesThisRun": 44,
+    "previousLaneACases": 28,
+    "improved": true
+  },
+  "citations": {
+    "resolvedStart": 5445,
+    "resolvedEnd": 5552,
+    "resolutionStart": 11.34,
+    "resolutionEnd": 11.49,
+    "live12_5Target": 6038,
+    "liveGap12_5": 486,
+    "laneAOldResolves": 18,
+    "laneBOldResolves": 56
+  },
+  "tracker": {
+    "intermediate": 347,
+    "pre2000": 715,
+    "pre1980": 188,
+    "topDeficits": [
+      {
+        "j": "MI",
+        "deficit": 99,
+        "intermediateLayerGap": true
+      },
+      {
+        "j": "NV",
+        "deficit": 99,
+        "intermediateLayerGap": true
+      },
+      {
+        "j": "NJ",
+        "deficit": 99,
+        "intermediateLayerGap": true
+      },
+      {
+        "j": "NE",
+        "deficit": 98,
+        "intermediateLayerGap": true
+      },
+      {
+        "j": "NC",
+        "deficit": 98,
+        "intermediateLayerGap": true
+      },
+      {
+        "j": "TN",
+        "deficit": 98,
+        "intermediateLayerGap": true
+      },
+      {
+        "j": "VA",
+        "deficit": 98,
+        "intermediateLayerGap": true
+      },
+      {
+        "j": "AK",
+        "deficit": 97,
+        "intermediateLayerGap": true
+      }
+    ]
+  },
+  "queue4": {
+    "unknown": 144,
+    "silentCurrent": 0
+  },
+  "extraction": {
+    "status": "PASS",
+    "processedPct": 100,
+    "failed": 0,
+    "notProcessed": 0
+  },
+  "integrity": {
+    "status": "PASS",
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "duplicateCitationEdges": 0,
+    "orphanCitationEdges": 0
+  },
+  "validations": {
+    "citations": "PASS",
+    "resolver": "PASS",
+    "queue2": "PASS",
+    "queue3": "PASS",
+    "queue4": "PASS",
+    "preflight": "PASS",
+    "typecheck": "PASS"
+  },
+  "externalAi": 0,
+  "productionEmbeddings": {
+    "chunks": 96532,
+    "experimental": 0
+  },
+  "week2ExitScorecard": {
+    "usefulCases": {
+      "status": "FAIL",
+      "current": 4323,
+      "remaining": 377
+    },
+    "stateDepth": {
+      "status": "PARTIAL",
+      "stateDc": 3159,
+      "federal": 1093,
+      "stateDelta": 44,
+      "federalDelta": 9
+    },
+    "intermediateAppellate": {
+      "status": "PARTIAL",
+      "intermediateTotal": 347,
+      "unknownMappingGaps": 0,
+      "invalidOrNoStructure": 4,
+      "newlyValidated": []
+    },
+    "historicalDepth": {
+      "status": "PARTIAL",
+      "pre2000": 715,
+      "pre1980": 188
+    },
+    "federalCoverage": {
+      "status": "PASS",
+      "federal": 1093
+    },
+    "trackerCurrent": {
+      "status": "PASS"
+    },
+    "queue2": {
+      "status": "PASS"
+    },
+    "queue3": {
+      "status": "PASS"
+    },
+    "queue4": {
+      "status": "PASS"
+    },
+    "silentCurrent": {
+      "status": "PASS",
+      "count": 0
+    },
+    "extraction": {
+      "status": "PASS",
+      "processedPct": 100,
+      "failed": 0,
+      "notProcessed": 0
+    },
+    "resolverDefects": {
+      "status": "PASS"
+    },
+    "integrity": {
+      "status": "PASS",
+      "duplicates": 0,
+      "orphans": 0,
+      "missingEmbeddings": 0,
+      "duplicateCitationEdges": 0,
+      "orphanCitationEdges": 0
+    }
+  },
+  "week2Classification": "WEEK2_CONTINUE",
+  "blockers": [
+    {
+      "id": "USEFUL_CASES_LT_4700",
+      "severity": "BLOCKS_WEEK2",
+      "remaining": 377
+    },
+    {
+      "id": "STATE_DEPTH_REBALANCE",
+      "severity": "BLOCKS_WEEK2"
+    },
+    {
+      "id": "INTERMEDIATE_APPELLATE",
+      "severity": "BLOCKS_WEEK2",
+      "unknownMappingGaps": 0
+    },
+    {
+      "id": "HISTORICAL_DEPTH",
+      "severity": "BLOCKS_WEEK2"
+    }
+  ],
+  "schedule": {
+    "remainingCases": 377,
+    "measuredLaneAClPerCase": 2.455,
+    "estimatedClTo4700": 926,
+    "likelyProductiveRuns": 12
+  },
+  "next100Cl": {
+    "balancedCorpusPct": 75,
+    "citationDemandPct": 25,
+    "topBalancedLanes": [
+      "wisctapp",
+      "wisctapp",
+      "utahctapp",
+      "utahctapp",
+      "indctapp",
+      "indctapp"
+    ],
+    "topCitationLane": "us_reports"
+  },
+  "nextBestAction": "Repeat micro→scale on validated intermediate winners (wisctapp/utahctapp/indctapp/kyctapp) at ~75/25 until ~4700; mapping CL=0.",
+  "safeToResume": true,
+  "recommendedNextSplit": {
+    "laneA": 0.75,
+    "laneB": 0.25
+  },
+  "git": {
+    "commit": null,
+    "pushed": false
+  }
+}
