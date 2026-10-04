@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-10-04T19:50:11.524Z",
+  "classification": "WEEK2_HYBRID_CLOSEOUT_BALANCED_CORPUS_AND_CITATION_DEMAND",
+  "status": "PARTIAL_QUOTA_WAIT",
+  "cases": 4228,
+  "stateDc": 3087,
+  "federal": 1070,
+  "extracted": 47560,
+  "resolved": 5266,
+  "resolutionPct": 11.07,
+  "laneAUsefulCases": 14,
+  "laneACl": 95,
+  "laneBAcquired": 28,
+  "laneBEdgesExact": 197,
+  "laneBEdgesPerCl": 3.339,
+  "remainingTo4700": 472,
+  "live12_5Target": 5945,
+  "liveGap12_5": 679,
+  "week2Classification": "WEEK2_CONTINUE",
+  "validations": {
+    "citations": "PASS",
+    "resolver": "PASS",
+    "queue2": "PASS",
+    "queue3": "PASS",
+    "queue4": "PASS",
+    "preflight": "PASS",
+    "typecheck": "PASS"
+  }
+}

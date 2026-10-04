@@ -1,0 +1,248 @@
+{
+  "classification": "WEEK2_HYBRID_CLOSEOUT_BALANCED_CORPUS_AND_CITATION_DEMAND",
+  "status": "PARTIAL_QUOTA_WAIT",
+  "stopReason": "LOCAL_QUOTA_SAFETY_FLOOR_AFTER_PRODUCTIVE_REOPEN",
+  "generatedAt": "2026-10-04T19:50:11.524Z",
+  "quota": {
+    "408": "fly_exec_timeouts_observed_on_some_laneA_attempts",
+    "429": 0,
+    "start": {
+      "minute": {
+        "limit": 25,
+        "usage": 0,
+        "remaining": 25,
+        "blocked": false
+      },
+      "hour": {
+        "limit": 300,
+        "usage": 0,
+        "remaining": 300,
+        "blocked": false
+      },
+      "day": {
+        "limit": 1400,
+        "usage": 124,
+        "remaining": 1276,
+        "reset_at": "2026-10-05T02:01:52.415457+00:00",
+        "blocked": false
+      }
+    },
+    "pacingMs": 4000,
+    "plannedBudget": 100,
+    "actualCl": 154,
+    "extensionCl": 40
+  },
+  "start": {
+    "ok": true,
+    "classification": "WEEK2_HYBRID_CLOSEOUT_START",
+    "cases": 4186,
+    "extracted": 46966,
+    "resolved": 4958,
+    "unresolved": 42008,
+    "stateDc": 3073,
+    "federal": 1042,
+    "resolutionPct": 10.56,
+    "live12_5Target": 5871,
+    "liveGap12_5": 913,
+    "week2Gap": 514,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "dbMatch": true
+  },
+  "end": {
+    "cases": 4228,
+    "extracted": 47560,
+    "resolved": 5266,
+    "resolutionPct": 11.07,
+    "stateDc": 3087,
+    "federal": 1070,
+    "live12_5Target": 5945,
+    "liveGap12_5": 679,
+    "remainingTo4700": 472
+  },
+  "laneA": {
+    "initialCl": 55,
+    "initialCasesReported": 0,
+    "initialFailure": "unmapped_court IDs (michctapp/lactapp/mdctapp/nevctapp/tennctapp)",
+    "reopenCl": 40,
+    "usefulCasesAdded": 14,
+    "clPerCase": 2.857,
+    "productive": [
+      {
+        "path": "w2hr-wisctapp",
+        "jurisdiction": "WI",
+        "cl": 8,
+        "liveDelta": 3
+      },
+      {
+        "path": "w2hr-utahctapp",
+        "jurisdiction": "UT",
+        "cl": 8,
+        "liveDelta": 3
+      },
+      {
+        "path": "w2hr-indctapp",
+        "jurisdiction": "IN",
+        "cl": 8,
+        "liveDelta": 3
+      },
+      {
+        "path": "w2hr-kyctapp",
+        "jurisdiction": "KY",
+        "cl": 8,
+        "liveDelta": 3
+      },
+      {
+        "path": "w2hr-mich",
+        "jurisdiction": "MI",
+        "cl": 8,
+        "liveDelta": 2
+      }
+    ],
+    "oldCitationEdgesResolved": 3
+  },
+  "laneB": {
+    "cl": 59,
+    "attempted": 30,
+    "found": 28,
+    "acquired": 28,
+    "exactOldEdgesResolved": 197,
+    "edgesPerCl": 3.339,
+    "foundRate": 0.933,
+    "usWindows": {
+      "first10": 3.7,
+      "last10": 3.3,
+      "last20": 3.45
+    }
+  },
+  "reallocationLog": [
+    {
+      "at": "2026-10-04T18:56:32.033Z",
+      "checkpoint": "after_laneA_block",
+      "laneAShare": 0.4,
+      "laneBShare": 0.6,
+      "laneACasesPerCl": 0,
+      "reason": "laneA_weak_shift_to_citation"
+    }
+  ],
+  "integrity": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "chunks": 94182,
+    "embeddings": 94182
+  },
+  "norm": {
+    "ok": true,
+    "silentCurrent": 0,
+    "unknown": 144,
+    "rawKeys": [
+      "ok",
+      "classification",
+      "generatedAt",
+      "courtListenerHttpCalls",
+      "aiCalls",
+      "mutations",
+      "apply",
+      "corpus",
+      "currentnessByType",
+      "currentnessTotals",
+      "silentCurrentSuspects",
+      "duplicateProviderSourceIdPairs",
+      "duplicateNormalizedCaseCitations",
+      "integrity",
+      "spacingVariantUnresolvedSamples",
+      "caseHistoricalBackfill"
+    ]
+  },
+  "validations": {
+    "citations": "PASS",
+    "resolver": "PASS",
+    "queue2": "PASS",
+    "queue3": "PASS",
+    "queue4": "PASS",
+    "preflight": "PASS",
+    "typecheck": "PASS"
+  },
+  "week2Classification": "WEEK2_CONTINUE",
+  "safeToResume": true,
+  "recommendedNextAllocation": {
+    "balancedCorpusPct": 70,
+    "citationDemandPct": 30,
+    "topStateLanes": [
+      "wisctapp",
+      "utahctapp",
+      "indctapp",
+      "kyctapp",
+      "mich",
+      "la",
+      "wash",
+      "md"
+    ],
+    "topCitationLane": "U.S. Reports",
+    "note": "Lane A requires targetMax > items_imported; avoid unmapped *ctapp IDs."
+  },
+  "trackerTopDeficits": [
+    {
+      "j": "MI",
+      "deficit": 101,
+      "intermediate": 0,
+      "intermediateGap": true
+    },
+    {
+      "j": "LA",
+      "deficit": 100,
+      "intermediate": 0,
+      "intermediateGap": true
+    },
+    {
+      "j": "WA",
+      "deficit": 100,
+      "intermediate": 0,
+      "intermediateGap": true
+    },
+    {
+      "j": "MD",
+      "deficit": 99,
+      "intermediate": 0,
+      "intermediateGap": true
+    },
+    {
+      "j": "NV",
+      "deficit": 99,
+      "intermediate": 0,
+      "intermediateGap": true
+    },
+    {
+      "j": "NJ",
+      "deficit": 99,
+      "intermediate": 0,
+      "intermediateGap": true
+    },
+    {
+      "j": "NE",
+      "deficit": 98,
+      "intermediate": 0,
+      "intermediateGap": true
+    },
+    {
+      "j": "NC",
+      "deficit": 98,
+      "intermediate": 0,
+      "intermediateGap": true
+    },
+    {
+      "j": "TN",
+      "deficit": 98,
+      "intermediate": 0,
+      "intermediateGap": true
+    },
+    {
+      "j": "VA",
+      "deficit": 98,
+      "intermediate": 0,
+      "intermediateGap": true
+    }
+  ]
+}

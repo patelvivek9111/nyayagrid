@@ -1,0 +1,57 @@
+{
+  "ok": true,
+  "classification": "WEEK2_HYBRID_CLOSEOUT_BOOTSTRAP",
+  "generatedAt": "2026-10-04T18:52:00.000Z",
+  "membership": { "level": "CL Membership - Tier 4", "is_active": true },
+  "limits": {
+    "minute": { "limit": 25, "usage": 0, "remaining": 25, "blocked": false },
+    "hour": { "limit": 300, "usage": 0, "remaining": 300, "blocked": false },
+    "day": {
+      "limit": 1400,
+      "usage": 124,
+      "remaining": 1276,
+      "reset_at": "2026-10-05T02:01:52.415457+00:00",
+      "blocked": false
+    }
+  },
+  "hourFloor": 25,
+  "dayFloor": 50,
+  "preferred": 100,
+  "safeBudget": 100,
+  "pacingMs": 4000,
+  "laneAShare": 0.55,
+  "laneBShare": 0.45,
+  "start": {
+    "cases": 4186,
+    "extracted": 46966,
+    "resolved": 4958,
+    "unresolved": 42008,
+    "stateDc": 3073,
+    "federal": 1042,
+    "resolutionPct": 10.56,
+    "live12_5Target": 5871,
+    "liveGap12_5": 913,
+    "week2Gap": 514,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0
+  },
+  "topG1": [
+    { "jurisdiction": "MI", "deficit": 103, "intermediateLayerGap": true },
+    { "jurisdiction": "LA", "deficit": 100, "intermediateLayerGap": true },
+    { "jurisdiction": "WA", "deficit": 100, "intermediateLayerGap": true },
+    { "jurisdiction": "MD", "deficit": 99, "intermediateLayerGap": true },
+    { "jurisdiction": "NV", "deficit": 99, "intermediateLayerGap": true },
+    { "jurisdiction": "NJ", "deficit": 99, "intermediateLayerGap": true },
+    { "jurisdiction": "NE", "deficit": 98, "intermediateLayerGap": true },
+    { "jurisdiction": "NC", "deficit": 98, "intermediateLayerGap": true },
+    { "jurisdiction": "TN", "deficit": 98, "intermediateLayerGap": true },
+    { "jurisdiction": "VA", "deficit": 98, "intermediateLayerGap": true },
+    { "jurisdiction": "AK", "deficit": 97, "intermediateLayerGap": true },
+    { "jurisdiction": "ID", "deficit": 97, "intermediateLayerGap": true },
+    { "jurisdiction": "OR", "deficit": 97, "intermediateLayerGap": true },
+    { "jurisdiction": "IA", "deficit": 96, "intermediateLayerGap": true },
+    { "jurisdiction": "HI", "deficit": 96, "intermediateLayerGap": true }
+  ],
+  "courtListenerHttpCalls": 1
+}

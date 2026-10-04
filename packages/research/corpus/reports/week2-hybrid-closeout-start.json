@@ -1,0 +1,18 @@
+{
+  "ok": true,
+  "classification": "WEEK2_HYBRID_CLOSEOUT_START",
+  "cases": 4186,
+  "extracted": 46966,
+  "resolved": 4958,
+  "unresolved": 42008,
+  "stateDc": 3073,
+  "federal": 1042,
+  "resolutionPct": 10.56,
+  "live12_5Target": 5871,
+  "liveGap12_5": 913,
+  "week2Gap": 514,
+  "duplicates": 0,
+  "orphans": 0,
+  "missingEmbeddings": 0,
+  "dbMatch": true
+}

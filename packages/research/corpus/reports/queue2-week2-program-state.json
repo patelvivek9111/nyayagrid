@@ -1,12 +1,12 @@
 {
   "classification": "QUEUE2_WEEK2_PROGRAM_STATE",
-  "generatedAt": "2026-10-04T02:42:59.658Z",
+  "generatedAt": "2026-10-04T19:49:04.448Z",
   "week1Status": "PASS",
   "week1Cases": 3568,
   "week2Status": "YELLOW",
-  "week2Cases": 4186,
+  "week2Cases": 4228,
   "week2Target": 4700,
-  "week2Remaining": 514,
+  "week2Remaining": 472,
   "week2GrowthFromLaunch": 299,
   "lastSession": {
     "classification": "CITATION_DEMAND_ADAPTIVE_SCALE_4_POST_RESET_HEAVY_RESUME",
@@ -34,5 +34,12 @@
   },
   "note": "Productive cont restored 2.461 CL/case on Utah/ME/WI/AZ/IN/VT/MA/DC. Exploratory MI/NJ/WA/CT-1980s and NH-1980s re-hit hurt overall to 2.611. No districts/circuits this session.",
   "courtListenerHttpCalls": 0,
-  "mutations": 0
+  "mutations": 0,
+  "lastHybridCloseout": {
+    "status": "PARTIAL_QUOTA_WAIT",
+    "totalCl": 154,
+    "laneACases": 14,
+    "laneBAcquired": 28,
+    "resolutionPct": null
+  }
 }

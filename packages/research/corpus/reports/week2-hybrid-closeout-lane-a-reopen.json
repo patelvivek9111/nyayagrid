@@ -1,0 +1,137 @@
+{
+  "classification": "WEEK2_HYBRID_LANE_A_REOPEN",
+  "startedAt": "2026-10-04T19:37:01.763Z",
+  "budget": 40,
+  "startCases": 4214,
+  "batches": [
+    {
+      "jurisdiction": "WI",
+      "clCourt": "wisctapp",
+      "batchSize": "5",
+      "targetMax": "100",
+      "maxCalls": "8",
+      "tag": "w2hr-wisctapp",
+      "cl": 8,
+      "casesBefore": 4214,
+      "casesAfter": 4217,
+      "liveDelta": 3,
+      "reportedImported": 26,
+      "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+      "status": "quota_paused",
+      "rateLimited": false,
+      "already": false,
+      "mappingInvalid": false
+    },
+    {
+      "jurisdiction": "UT",
+      "clCourt": "utahctapp",
+      "batchSize": "5",
+      "targetMax": "80",
+      "maxCalls": "8",
+      "tag": "w2hr-utahctapp",
+      "cl": 8,
+      "casesBefore": 4217,
+      "casesAfter": 4220,
+      "liveDelta": 3,
+      "reportedImported": 21,
+      "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+      "status": "quota_paused",
+      "rateLimited": false,
+      "already": false,
+      "mappingInvalid": false
+    },
+    {
+      "jurisdiction": "IN",
+      "clCourt": "indctapp",
+      "batchSize": "5",
+      "targetMax": "80",
+      "maxCalls": "8",
+      "tag": "w2hr-indctapp",
+      "cl": 8,
+      "casesBefore": 4220,
+      "casesAfter": 4223,
+      "liveDelta": 3,
+      "reportedImported": 14,
+      "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+      "status": "quota_paused",
+      "rateLimited": false,
+      "already": false,
+      "mappingInvalid": false
+    },
+    {
+      "jurisdiction": "KY",
+      "clCourt": "kyctapp",
+      "batchSize": "5",
+      "targetMax": "80",
+      "maxCalls": "8",
+      "tag": "w2hr-kyctapp",
+      "cl": 8,
+      "casesBefore": 4223,
+      "casesAfter": 4226,
+      "liveDelta": 3,
+      "reportedImported": 8,
+      "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+      "status": "quota_paused",
+      "rateLimited": false,
+      "already": false,
+      "mappingInvalid": false
+    },
+    {
+      "jurisdiction": "MI",
+      "clCourt": "mich",
+      "batchSize": "5",
+      "targetMax": "100",
+      "maxCalls": "8",
+      "tag": "w2hr-mich",
+      "cl": 8,
+      "casesBefore": 4226,
+      "casesAfter": 4228,
+      "liveDelta": 2,
+      "reportedImported": 46,
+      "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+      "status": "quota_paused",
+      "rateLimited": false,
+      "already": false,
+      "mappingInvalid": false
+    }
+  ],
+  "quarantined": [],
+  "productive": [
+    {
+      "path": "w2hr-wisctapp",
+      "jurisdiction": "WI",
+      "cl": 8,
+      "liveDelta": 3
+    },
+    {
+      "path": "w2hr-utahctapp",
+      "jurisdiction": "UT",
+      "cl": 8,
+      "liveDelta": 3
+    },
+    {
+      "path": "w2hr-indctapp",
+      "jurisdiction": "IN",
+      "cl": 8,
+      "liveDelta": 3
+    },
+    {
+      "path": "w2hr-kyctapp",
+      "jurisdiction": "KY",
+      "cl": 8,
+      "liveDelta": 3
+    },
+    {
+      "path": "w2hr-mich",
+      "jurisdiction": "MI",
+      "cl": 8,
+      "liveDelta": 2
+    }
+  ],
+  "cl": 40,
+  "liveCasesAdded": 14,
+  "stopReason": "budget_exhausted",
+  "finishedAt": "2026-10-04T19:47:52.361Z",
+  "endCases": 4228,
+  "clPerCase": 2.857
+}
