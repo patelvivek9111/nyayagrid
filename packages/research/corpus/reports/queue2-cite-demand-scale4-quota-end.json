@@ -1,0 +1,19 @@
+{
+  "ok": true,
+  "classification": "CITATION_DEMAND_ADAPTIVE_SCALE_4_QUOTA_END",
+  "at": "2026-10-04T02:42:59.659Z",
+  "limits": {
+    "minute": {
+      "limit": 15,
+      "remaining": 13
+    },
+    "hour": {
+      "limit": 150,
+      "remaining": 26
+    },
+    "day": {
+      "limit": 600,
+      "remaining": 250
+    }
+  }
+}

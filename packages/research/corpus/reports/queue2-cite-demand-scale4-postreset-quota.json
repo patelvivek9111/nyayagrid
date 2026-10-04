@@ -1,0 +1,38 @@
+{
+  "ok": true,
+  "classification": "CITATION_DEMAND_ADAPTIVE_SCALE_4_POSTRESET_BOOTSTRAP",
+  "generatedAt": "2026-10-04T02:01:10.000Z",
+  "dbMatch": true,
+  "membership": { "level": "CL Membership - Tier 2", "is_active": true },
+  "limits": {
+    "minute": { "limit": 15, "usage": 0, "remaining": 15, "blocked": false },
+    "hour": { "limit": 150, "usage": 0, "remaining": 150, "blocked": false },
+    "day": {
+      "limit": 600,
+      "usage": 313,
+      "remaining": 287,
+      "reset_at": "2026-10-04T02:01:09.613662+00:00",
+      "blocked": false
+    }
+  },
+  "hourFloor": 25,
+  "dayFloor": 50,
+  "priorCl": 25,
+  "desiredAdd": 125,
+  "safeAdd": 125,
+  "targetBudget": 150,
+  "pacingMs": 5000,
+  "start": {
+    "cases": 4124,
+    "extracted": 45090,
+    "resolved": 4230,
+    "unresolved": 40860,
+    "resolutionPct": 9.38,
+    "liveTenPercentTarget": 4509,
+    "liveRemainingTo10": 279,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0
+  },
+  "courtListenerHttpCalls": 1
+}

@@ -1,0 +1,61 @@
+{
+  "ok": true,
+  "classification": "CITATION_DEMAND_ADAPTIVE_SCALE_4_RESUME_CHECKPOINT",
+  "timestamp": "2026-10-04T02:42:59.658Z",
+  "status": "PASS",
+  "stopReason": "budget_exhausted",
+  "blockA": {
+    "totalCl": 25,
+    "acquired": 11,
+    "exactOldEdges": 103,
+    "usEdgesPerCl": 4.12
+  },
+  "continuation": {
+    "cl": 124,
+    "acquired": 62,
+    "exactOldEdges": 436
+  },
+  "sessionTotals": {
+    "totalCl": 149,
+    "acquired": 73,
+    "exactOldEdges": 539,
+    "usEdgesPerCl": 3.617
+  },
+  "live": {
+    "cases": 4186,
+    "extracted": 46966,
+    "resolved": 4958,
+    "unresolved": 42008,
+    "resolutionPct": 10.56,
+    "liveTenPercentTarget": 4697,
+    "liveRemainingTo10": 0
+  },
+  "tenPercentMilestone": {
+    "reached": true,
+    "at": "2026-10-04T02:41:29.406Z",
+    "checkpoint": "end",
+    "extracted": 46966,
+    "resolved": 4958,
+    "resolutionPct": 10.56
+  },
+  "us": {
+    "edgesPerCl": 3.617,
+    "last10": 3.3,
+    "last20": 3.225,
+    "foundRate": 0.973
+  },
+  "quotaEnd": {
+    "minute": 13,
+    "hour": 26,
+    "day": 250
+  },
+  "safeToResume": true,
+  "recommendedNextBudget": 100,
+  "validation": {
+    "citations": true,
+    "resolver": false,
+    "queue2": true,
+    "preflight": true,
+    "typecheck": true
+  }
+}

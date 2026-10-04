@@ -1,0 +1,236 @@
+{
+  "STATUS": "PASS",
+  "STOP_REASON": "budget_exhausted",
+  "RESUME_SOURCE": {
+    "blockA": "packages/research/corpus/reports/queue2-cite-demand-scale4-block-a.json",
+    "resumeCheckpoint": "packages/research/corpus/reports/queue2-cite-demand-scale4-resume-checkpoint.json",
+    "validated": true
+  },
+  "COURTLISTENER": {
+    "408": 0,
+    "429": 0,
+    "limits": {
+      "minute": 15,
+      "hour": 150,
+      "day": 600
+    },
+    "startRemaining": {
+      "minute": 15,
+      "hour": 150,
+      "day": 287
+    },
+    "endRemaining": {
+      "minute": 13,
+      "hour": 26,
+      "day": 250
+    },
+    "pacing": 5000,
+    "safeBudget": 125,
+    "actualContinuationCL": 124,
+    "combinedScale4CL": 149
+  },
+  "START_LIVE_STATE": {
+    "ok": true,
+    "courtListenerHttpCalls": 0,
+    "aiCalls": 0,
+    "featureAgents": "0",
+    "resolvedBefore": 4230,
+    "extracted": 45090,
+    "resolvedAfter": 4230,
+    "newResolved": 0,
+    "targetAbsent": 40860,
+    "parserGap": 0,
+    "targetAbsentBefore": 40860,
+    "parserGapBefore": 0,
+    "chunks": {
+      "chunks": 91237,
+      "embeddings": 91237,
+      "missing_embeddings": 0
+    },
+    "orphans": 0,
+    "duplicateSourceIds": 0,
+    "corpus": {
+      "authorities": 5479,
+      "cases": 4124,
+      "cl_cases": 4079,
+      "statutes": 904,
+      "regulations": 196,
+      "rules": 254
+    },
+    "jurisdictions": [
+      {
+        "j": "AR",
+        "cases": 56
+      },
+      {
+        "j": "WI",
+        "cases": 80
+      }
+    ],
+    "liveTenPercentTarget": 4509,
+    "liveRemainingTo10": 279,
+    "dbMatch": true
+  },
+  "READY_POOLS": {
+    "us": 400,
+    "regional": 50,
+    "federal": 20,
+    "fsupp": 35
+  },
+  "CONTINUATION": {
+    "attempted": 62,
+    "found": 62,
+    "acquired": 62,
+    "exactOldEdges": 436,
+    "newAuthorities": 62
+  },
+  "COMBINED": {
+    "blockA": {
+      "CL": 25,
+      "acquired": 11,
+      "edges": 103
+    },
+    "continuation": {
+      "CL": 124,
+      "acquired": 62,
+      "edges": 436
+    },
+    "total": {
+      "CL": 149,
+      "acquired": 73,
+      "edges": 539
+    }
+  },
+  "EFFICIENCY": {
+    "continuationClPerAcquired": 2,
+    "continuationOldEdgesPerAcquired": 7.032,
+    "continuationOldEdgesPerCl": 3.516,
+    "combinedOldEdgesPerCl": 3.617
+  },
+  "US": {
+    "attempts": 75,
+    "found": 73,
+    "acquired": 73,
+    "notFound": 2,
+    "cl": 149,
+    "oldEdgesResolved": 539,
+    "foundRate": 0.973,
+    "acquisitionRate": 0.973,
+    "clPerAcquired": 2.041,
+    "edgesPerAcquired": 7.384,
+    "edgesPerCl": 3.617,
+    "recentEdgesPerCl": 3.3,
+    "pilotBaseline": 3.757,
+    "productivityDecay": false,
+    "demandRealization": 1.002,
+    "paused": false
+  },
+  "usWindows": {
+    "first10": 4.7,
+    "last10": 3.3,
+    "last20": 3.225
+  },
+  "REGIONAL": {
+    "used": false,
+    "CL": 0
+  },
+  "FEDERAL": {
+    "CL": 0
+  },
+  "FSUPP": {
+    "CL": 0
+  },
+  "TEN_PERCENT_MILESTONE": {
+    "reached": true,
+    "at": "2026-10-04T02:41:29.406Z",
+    "checkpoint": "end",
+    "extracted": 46966,
+    "resolved": 4958,
+    "resolutionPct": 10.56
+  },
+  "STARTING_GAP": {
+    "startingGap": 279,
+    "continuationExact": 436,
+    "combinedExact": 539
+  },
+  "LIVE_GAP": {
+    "endExtracted": 46966,
+    "endResolved": 4958,
+    "endTen": 4697,
+    "endGap": 0,
+    "overshoot": 261
+  },
+  "DEMAND_REALIZATION": {
+    "predicted": 538,
+    "actual": 539,
+    "ratio": 1.002
+  },
+  "FAILURES": {
+    "ACQUIRED_RESOLVED": 73,
+    "NOT_FOUND_CL": 2
+  },
+  "CORPUS": {
+    "startCases": 4124,
+    "endCases": 4186,
+    "newContinuation": 62,
+    "combinedNew": 73,
+    "stateDc": 3073,
+    "federal": 1042
+  },
+  "EXTRACTION": {
+    "eligible": 62,
+    "processed": 62,
+    "coverage": 1,
+    "NOT_PROCESSED": 0,
+    "FAILED": 0
+  },
+  "QUEUE3": {
+    "status": "PASS",
+    "mutations": 0,
+    "silentCurrent": 0,
+    "defects": 0
+  },
+  "QUEUE4": {
+    "status": "PASS",
+    "silentCurrentDefects": 0
+  },
+  "INTEGRITY": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "duplicateCitationEdges": 0,
+    "orphanCitationEdges": 0
+  },
+  "PRODUCTION_EMBEDDINGS": {
+    "chunks": 1986,
+    "experimental": 0
+  },
+  "VALIDATION": {
+    "citations": "PASS",
+    "resolver": "PASS",
+    "queue2": "PASS",
+    "queue3": "PASS",
+    "queue4": "PASS",
+    "preflight": "PASS",
+    "typecheck": "PASS"
+  },
+  "EXTERNAL_AI": {
+    "LLM": 0,
+    "rerankers": 0,
+    "judges": 0,
+    "subagents": 0
+  },
+  "SCORECARD": {
+    "updated": true,
+    "path": "packages/research/corpus/reports/citation-production-scorecard.json"
+  },
+  "MANIFEST": {
+    "updated": true,
+    "attemptHistoryPersisted": true
+  },
+  "CHECKPOINT": {
+    "written": true,
+    "path": "packages/research/corpus/reports/queue2-cite-demand-scale4-resume-checkpoint.json"
+  },
+  "SAFE_TO_RESUME": "YES"
+}

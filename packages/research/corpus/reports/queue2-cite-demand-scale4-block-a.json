@@ -1,0 +1,13 @@
+{
+  "ok": true,
+  "classification": "CITATION_DEMAND_ADAPTIVE_SCALE_4_BLOCK_A",
+  "at": "2026-10-03T12:07:24.849Z",
+  "totalCl": 25,
+  "acquired": 11,
+  "exactOldEdges": 103,
+  "usEdgesPerCl": 4.12,
+  "regionalCl": 0,
+  "liveGap": 279,
+  "dayRemAfter": 51,
+  "next": "wait_day_reset_then_100"
+}
