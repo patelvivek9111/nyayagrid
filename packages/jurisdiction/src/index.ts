@@ -14,3 +14,5 @@ export * from "./abstention";
 export * from "./sensitive";
 export * from "./rank";
 export * from "./authority-meta";
+export * from "./hierarchy";
+export * from "./authority-status";
