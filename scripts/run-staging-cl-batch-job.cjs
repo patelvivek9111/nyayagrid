@@ -24,7 +24,7 @@ const {
 const sha = process.argv[2] || "HEAD";
 const clCourt = (process.argv[3] || "").toLowerCase();
 const batchSize = String(Math.min(Math.max(Number.parseInt(process.argv[4] || "5", 10) || 5, 1), 25));
-const targetMax = String(Math.min(Math.max(Number.parseInt(process.argv[5] || "20", 10) || 20, 1), 200));
+const targetMax = String(Math.min(Math.max(Number.parseInt(process.argv[5] || "20", 10) || 20, 1), 500));
 const dayTargetEnv = process.env.CL_DAY_TARGET || "";
 const hourTargetEnv = process.env.CL_HOUR_TARGET || "";
 const dateFiledLteEnv = process.env.CL_DATE_FILED_LTE || "";

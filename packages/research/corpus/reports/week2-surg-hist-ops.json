@@ -1,0 +1,577 @@
+{
+  "classification": "WEEK2_SURGICAL_HISTORICAL_CLOSEOUT",
+  "startedAt": "2026-10-05T16:05:38.646Z",
+  "totalBudget": 175,
+  "safeBudget": 175,
+  "pacingMs": 4000,
+  "startCases": 4605,
+  "startResolved": 6093,
+  "startExtracted": 49826,
+  "startStateDc": 3400,
+  "startFederal": 1134,
+  "startIntermediate": 527,
+  "startPre2000": 866,
+  "startPre1980": 240,
+  "gapsStart": {
+    "state": 50,
+    "pre2000": 34,
+    "pre1980": 20,
+    "to4650": 45,
+    "to4700": 95
+  },
+  "targetMaxPreflight": {
+    "lanesExpanded": [
+      {
+        "clCourt": "wash",
+        "itemsImported": 88,
+        "priorTargetMax": 200,
+        "newTargetMax": 280,
+        "saturationDiagnosis": "WINDOW_OR_SOURCE_LIKELY"
+      },
+      {
+        "clCourt": "kyctapp",
+        "itemsImported": 52,
+        "priorTargetMax": 200,
+        "newTargetMax": 280,
+        "saturationDiagnosis": "WINDOW_OR_SOURCE_LIKELY"
+      },
+      {
+        "clCourt": "indctapp",
+        "itemsImported": 70,
+        "priorTargetMax": 200,
+        "newTargetMax": 280,
+        "saturationDiagnosis": "WINDOW_OR_SOURCE_LIKELY"
+      },
+      {
+        "clCourt": "arizctapp",
+        "itemsImported": 37,
+        "priorTargetMax": 200,
+        "newTargetMax": 280,
+        "saturationDiagnosis": "WINDOW_OR_SOURCE_LIKELY"
+      },
+      {
+        "clCourt": "nmctapp",
+        "itemsImported": 33,
+        "priorTargetMax": 200,
+        "newTargetMax": 280,
+        "saturationDiagnosis": "WINDOW_OR_SOURCE_LIKELY"
+      },
+      {
+        "clCourt": "utahctapp",
+        "itemsImported": 65,
+        "priorTargetMax": 200,
+        "newTargetMax": 280,
+        "saturationDiagnosis": "WINDOW_OR_SOURCE_LIKELY"
+      },
+      {
+        "clCourt": "wisctapp",
+        "itemsImported": 72,
+        "priorTargetMax": 200,
+        "newTargetMax": 280,
+        "saturationDiagnosis": "WINDOW_OR_SOURCE_LIKELY"
+      }
+    ],
+    "clWastedDueCap": 0
+  },
+  "laneA": {
+    "cl": 124,
+    "casesAdded": 53,
+    "batches": [
+      {
+        "clCourt": "wash",
+        "phase": "PRE80",
+        "window": "1900-01-01..1979-12-31",
+        "cl": 18,
+        "liveDelta": 8,
+        "pre2000": 8,
+        "pre1980": 8,
+        "state": 8,
+        "histCasesPerCl": 0.444,
+        "reason": null,
+        "rateLimited": false,
+        "unmapped": false,
+        "alreadyCompleted": false
+      },
+      {
+        "clCourt": "kyctapp",
+        "phase": "PRE80",
+        "window": "1900-01-01..1979-12-31",
+        "cl": 15,
+        "liveDelta": 6,
+        "pre2000": 6,
+        "pre1980": 6,
+        "state": 6,
+        "histCasesPerCl": 0.4,
+        "reason": null,
+        "rateLimited": false,
+        "unmapped": false,
+        "alreadyCompleted": false
+      },
+      {
+        "clCourt": "indctapp",
+        "phase": "PRE80",
+        "window": "1900-01-01..1979-12-31",
+        "cl": 1,
+        "liveDelta": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "state": 0,
+        "histCasesPerCl": 0,
+        "reason": null,
+        "rateLimited": false,
+        "unmapped": false,
+        "alreadyCompleted": false
+      },
+      {
+        "clCourt": "arizctapp",
+        "phase": "PRE80",
+        "window": "1900-01-01..1979-12-31",
+        "cl": 15,
+        "liveDelta": 7,
+        "pre2000": 7,
+        "pre1980": 7,
+        "state": 7,
+        "histCasesPerCl": 0.467,
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+        "rateLimited": false,
+        "unmapped": false,
+        "alreadyCompleted": false
+      },
+      {
+        "clCourt": "nmctapp",
+        "phase": "PRE80",
+        "window": "1900-01-01..1979-12-31",
+        "cl": 3,
+        "liveDelta": 1,
+        "pre2000": 1,
+        "pre1980": 1,
+        "state": 1,
+        "histCasesPerCl": 0.333,
+        "reason": null,
+        "rateLimited": false,
+        "unmapped": false,
+        "alreadyCompleted": false
+      },
+      {
+        "clCourt": "utahctapp",
+        "phase": "PRE80",
+        "window": "1900-01-01..1979-12-31",
+        "cl": 1,
+        "liveDelta": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "state": 0,
+        "histCasesPerCl": 0,
+        "reason": null,
+        "rateLimited": false,
+        "unmapped": false,
+        "alreadyCompleted": false
+      },
+      {
+        "clCourt": "wisctapp",
+        "phase": "PRE80",
+        "window": "1900-01-01..1979-12-31",
+        "cl": 15,
+        "liveDelta": 7,
+        "pre2000": 7,
+        "pre1980": 7,
+        "state": 7,
+        "histCasesPerCl": 0.467,
+        "reason": "LOCAL_QUOTA_SAFETY_FLOOR",
+        "rateLimited": false,
+        "unmapped": false,
+        "alreadyCompleted": false
+      },
+      {
+        "clCourt": "wash",
+        "phase": "PRE2K",
+        "window": "1980-01-01..1999-12-31",
+        "cl": 1,
+        "liveDelta": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "state": 0,
+        "histCasesPerCl": 0,
+        "reason": null,
+        "rateLimited": false,
+        "unmapped": false,
+        "alreadyCompleted": false
+      },
+      {
+        "clCourt": "kyctapp",
+        "phase": "PRE2K",
+        "window": "1980-01-01..1999-12-31",
+        "cl": 1,
+        "liveDelta": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "state": 0,
+        "histCasesPerCl": 0,
+        "reason": null,
+        "rateLimited": false,
+        "unmapped": false,
+        "alreadyCompleted": false
+      },
+      {
+        "clCourt": "indctapp",
+        "phase": "PRE2K",
+        "window": "1980-01-01..1999-12-31",
+        "cl": 1,
+        "liveDelta": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "state": 0,
+        "histCasesPerCl": 0,
+        "reason": null,
+        "rateLimited": false,
+        "unmapped": false,
+        "alreadyCompleted": false
+      },
+      {
+        "clCourt": "arizctapp",
+        "phase": "PRE80_EXT",
+        "window": "1900-01-01..1979-12-31",
+        "cl": 17,
+        "liveDelta": 8,
+        "reason": null
+      },
+      {
+        "clCourt": "wisctapp",
+        "phase": "PRE80_EXT",
+        "window": "1900-01-01..1979-12-31",
+        "cl": 17,
+        "liveDelta": 8,
+        "reason": null
+      },
+      {
+        "clCourt": "wash",
+        "phase": "PRE80_EXT",
+        "window": "1900-01-01..1979-12-31",
+        "cl": 1,
+        "liveDelta": 0,
+        "reason": null
+      },
+      {
+        "clCourt": "kyctapp",
+        "phase": "PRE80_EXT",
+        "window": "1900-01-01..1979-12-31",
+        "cl": 1,
+        "liveDelta": 0,
+        "reason": null
+      },
+      {
+        "clCourt": "arizctapp",
+        "phase": "PRE80_EXT",
+        "window": "1900-01-01..1979-12-31",
+        "cl": 17,
+        "liveDelta": 8,
+        "reason": null
+      }
+    ],
+    "productive": [
+      {
+        "clCourt": "wash",
+        "phase": "PRE80",
+        "cl": 18,
+        "liveDelta": 8,
+        "pre1980": 8
+      },
+      {
+        "clCourt": "kyctapp",
+        "phase": "PRE80",
+        "cl": 15,
+        "liveDelta": 6,
+        "pre1980": 6
+      },
+      {
+        "clCourt": "arizctapp",
+        "phase": "PRE80",
+        "cl": 15,
+        "liveDelta": 7,
+        "pre1980": 7
+      },
+      {
+        "clCourt": "nmctapp",
+        "phase": "PRE80",
+        "cl": 3,
+        "liveDelta": 1,
+        "pre1980": 1
+      },
+      {
+        "clCourt": "wisctapp",
+        "phase": "PRE80",
+        "cl": 15,
+        "liveDelta": 7,
+        "pre1980": 7
+      }
+    ],
+    "stopped": [
+      {
+        "path": "indctapp-PRE80",
+        "reason": "zero",
+        "cl": 1
+      },
+      {
+        "path": "utahctapp-PRE80",
+        "reason": "zero",
+        "cl": 1
+      },
+      {
+        "path": "wash-PRE2K",
+        "reason": "zero",
+        "cl": 1
+      },
+      {
+        "path": "kyctapp-PRE2K",
+        "reason": "zero",
+        "cl": 1
+      },
+      {
+        "path": "indctapp-PRE2K",
+        "reason": "zero",
+        "cl": 1
+      }
+    ],
+    "histCases": 53,
+    "pre80Adds": 29,
+    "pre2kAdds": 29,
+    "perLane": {
+      "wash": {
+        "cl": 20,
+        "cases": 8,
+        "pre2000": 8,
+        "pre1980": 8,
+        "state": 8,
+        "histCasesPerCl": 0.421,
+        "decision": "continue"
+      },
+      "kyctapp": {
+        "cl": 17,
+        "cases": 6,
+        "pre2000": 6,
+        "pre1980": 6,
+        "state": 6,
+        "histCasesPerCl": 0.375,
+        "decision": "continue"
+      },
+      "indctapp": {
+        "cl": 2,
+        "cases": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "state": 0,
+        "histCasesPerCl": 0,
+        "decision": "continue"
+      },
+      "arizctapp": {
+        "cl": 49,
+        "cases": 23,
+        "pre2000": 7,
+        "pre1980": 7,
+        "state": 7,
+        "histCasesPerCl": 0.467,
+        "decision": "continue"
+      },
+      "nmctapp": {
+        "cl": 3,
+        "cases": 1,
+        "pre2000": 1,
+        "pre1980": 1,
+        "state": 1,
+        "histCasesPerCl": 0.333,
+        "decision": "continue"
+      },
+      "utahctapp": {
+        "cl": 1,
+        "cases": 0,
+        "pre2000": 0,
+        "pre1980": 0,
+        "state": 0,
+        "histCasesPerCl": 0,
+        "decision": "stop_window"
+      },
+      "wisctapp": {
+        "cl": 32,
+        "cases": 15,
+        "pre2000": 7,
+        "pre1980": 7,
+        "state": 7,
+        "histCasesPerCl": 0.467,
+        "decision": "continue"
+      }
+    }
+  },
+  "laneB": {
+    "cl": 0,
+    "acquired": 0
+  },
+  "certCheckpoints": [
+    {
+      "name": "after_50cl",
+      "totalCl": 52,
+      "cases": 4627,
+      "stateDc": 3422,
+      "federal": 1134,
+      "intermediate": 541,
+      "pre2000": 888,
+      "pre1980": 262,
+      "statePass": false,
+      "histPass": false,
+      "intermediatePass": true,
+      "federalPass": true,
+      "usefulPass": false,
+      "allMaterial": false
+    },
+    {
+      "name": "end",
+      "totalCl": 71,
+      "cases": 4634,
+      "stateDc": 3429,
+      "federal": 1134,
+      "intermediate": 548,
+      "pre2000": 895,
+      "pre1980": 269,
+      "statePass": false,
+      "histPass": false,
+      "intermediatePass": true,
+      "federalPass": true,
+      "usefulPass": false,
+      "allMaterial": false
+    }
+  ],
+  "totalCl": 124,
+  "stopReason": "CERTIFIED_EARLY_EXT",
+  "reliability": {
+    "408": 0,
+    "429": 0
+  },
+  "clWastedOnInvalidMapping": 0,
+  "clWastedDueCap": 0,
+  "endCases": 4658,
+  "endResolved": 6105,
+  "endExtracted": 49863,
+  "finishedAt": "2026-10-05T16:32:59.050Z",
+  "status": "PASS",
+  "metrics": {
+    "laneAClPerCase": 2.448,
+    "histCasesPerCl": 0.408,
+    "remainingTo4700": 66
+  },
+  "extension": {
+    "classification": "WEEK2_SURGICAL_HISTORICAL_EXTENSION",
+    "startedAt": "2026-10-05T16:24:52.479Z",
+    "priorCl": 71,
+    "maxCl": 80,
+    "start": {
+      "cases": 4634,
+      "stateDc": 3429,
+      "federal": 1134,
+      "intermediate": 548,
+      "pre2000": 895,
+      "pre1980": 269,
+      "statePass": false,
+      "histPass": false,
+      "usefulPass": false,
+      "allMaterial": false
+    },
+    "batches": [
+      {
+        "clCourt": "arizctapp",
+        "cl": 17,
+        "liveDelta": 8,
+        "cases": 4642,
+        "stateDc": 3437,
+        "federal": 1134,
+        "intermediate": 556,
+        "pre2000": 903,
+        "pre1980": 277,
+        "statePass": false,
+        "histPass": true,
+        "usefulPass": false,
+        "allMaterial": false,
+        "reason": null
+      },
+      {
+        "clCourt": "wisctapp",
+        "cl": 17,
+        "liveDelta": 8,
+        "cases": 4650,
+        "stateDc": 3445,
+        "federal": 1134,
+        "intermediate": 564,
+        "pre2000": 911,
+        "pre1980": 285,
+        "statePass": false,
+        "histPass": true,
+        "usefulPass": false,
+        "allMaterial": false,
+        "reason": null
+      },
+      {
+        "clCourt": "wash",
+        "cl": 1,
+        "liveDelta": 0,
+        "cases": 4650,
+        "stateDc": 3445,
+        "federal": 1134,
+        "intermediate": 564,
+        "pre2000": 911,
+        "pre1980": 285,
+        "statePass": false,
+        "histPass": true,
+        "usefulPass": false,
+        "allMaterial": false,
+        "reason": null
+      },
+      {
+        "clCourt": "kyctapp",
+        "cl": 1,
+        "liveDelta": 0,
+        "cases": 4650,
+        "stateDc": 3445,
+        "federal": 1134,
+        "intermediate": 564,
+        "pre2000": 911,
+        "pre1980": 285,
+        "statePass": false,
+        "histPass": true,
+        "usefulPass": false,
+        "allMaterial": false,
+        "reason": null
+      },
+      {
+        "clCourt": "arizctapp",
+        "cl": 17,
+        "liveDelta": 8,
+        "cases": 4658,
+        "stateDc": 3453,
+        "federal": 1134,
+        "intermediate": 572,
+        "pre2000": 919,
+        "pre1980": 293,
+        "statePass": true,
+        "histPass": true,
+        "usefulPass": true,
+        "allMaterial": true,
+        "reason": null
+      }
+    ],
+    "totalCl": 53,
+    "casesAdded": 24,
+    "stopReason": "CERTIFIED_EARLY_EXT",
+    "end": {
+      "cases": 4658,
+      "stateDc": 3453,
+      "federal": 1134,
+      "intermediate": 572,
+      "pre2000": 919,
+      "pre1980": 293,
+      "statePass": true,
+      "histPass": true,
+      "usefulPass": true,
+      "allMaterial": true
+    },
+    "finishedAt": "2026-10-05T16:32:59.050Z",
+    "combinedCl": 124
+  }
+}

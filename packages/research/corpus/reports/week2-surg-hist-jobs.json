@@ -1,0 +1,104 @@
+{
+  "ok": true,
+  "classification": "WEEK2_SURGICAL_JOB_PROBE",
+  "generatedAt": "2026-10-05T16:03:46.931Z",
+  "jobs": [
+    {
+      "cl_court": "arizctapp",
+      "status": "paused",
+      "items_imported": 37,
+      "items_skipped": 16,
+      "target_max": 200,
+      "api_calls": 1,
+      "cursor": "cl-opinion-9855567",
+      "has_next": true,
+      "last_error": null,
+      "updated_at": "2026-10-05T14:20:37.630Z"
+    },
+    {
+      "cl_court": "indctapp",
+      "status": "paused",
+      "items_imported": 70,
+      "items_skipped": 6,
+      "target_max": 200,
+      "api_calls": 12,
+      "cursor": "cl-opinion-9884261",
+      "has_next": true,
+      "last_error": null,
+      "updated_at": "2026-10-05T14:47:45.060Z"
+    },
+    {
+      "cl_court": "kyctapp",
+      "status": "paused",
+      "items_imported": 52,
+      "items_skipped": 7,
+      "target_max": 200,
+      "api_calls": 17,
+      "cursor": "cl-opinion-9777060",
+      "has_next": true,
+      "last_error": null,
+      "updated_at": "2026-10-05T14:38:24.913Z"
+    },
+    {
+      "cl_court": "la",
+      "status": "paused",
+      "items_imported": 77,
+      "items_skipped": 41,
+      "target_max": 200,
+      "api_calls": 1,
+      "cursor": "cl-opinion-9922579",
+      "has_next": true,
+      "last_error": null,
+      "updated_at": "2026-10-05T14:27:52.600Z"
+    },
+    {
+      "cl_court": "nmctapp",
+      "status": "paused",
+      "items_imported": 33,
+      "items_skipped": 16,
+      "target_max": 200,
+      "api_calls": 1,
+      "cursor": "cl-opinion-9850806",
+      "has_next": true,
+      "last_error": null,
+      "updated_at": "2026-10-05T14:22:49.802Z"
+    },
+    {
+      "cl_court": "utahctapp",
+      "status": "paused",
+      "items_imported": 65,
+      "items_skipped": 16,
+      "target_max": 200,
+      "api_calls": 1,
+      "cursor": "cl-opinion-9850733",
+      "has_next": true,
+      "last_error": null,
+      "updated_at": "2026-10-05T14:29:12.072Z"
+    },
+    {
+      "cl_court": "wash",
+      "status": "paused",
+      "items_imported": 88,
+      "items_skipped": 11,
+      "target_max": 200,
+      "api_calls": 8,
+      "cursor": "cl-opinion-9855381",
+      "has_next": true,
+      "last_error": null,
+      "updated_at": "2026-10-05T14:19:22.282Z"
+    },
+    {
+      "cl_court": "wisctapp",
+      "status": "paused",
+      "items_imported": 72,
+      "items_skipped": 16,
+      "target_max": 200,
+      "api_calls": 2,
+      "cursor": "cl-opinion-9851391",
+      "has_next": true,
+      "last_error": null,
+      "updated_at": "2026-10-05T14:36:14.724Z"
+    }
+  ],
+  "courtListenerHttpCalls": 0
+}

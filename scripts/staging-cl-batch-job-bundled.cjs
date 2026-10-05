@@ -3396,7 +3396,7 @@ async function main() {
   const clCourt = (process.env.CL_COURT ?? "").trim().toLowerCase();
   const proofMode = process.env.CL_PROOF === "1";
   const batchSize = Math.min(Math.max(Number.parseInt(process.env.CL_BATCH_SIZE ?? "5", 10) || 5, 1), 25);
-  const targetMax = Math.min(Math.max(Number.parseInt(process.env.CL_TARGET_MAX ?? "20", 10) || 20, 1), 200);
+  const targetMax = Math.min(Math.max(Number.parseInt(process.env.CL_TARGET_MAX ?? "20", 10) || 20, 1), 500);
   const maxRetries = Math.min(Math.max(Number.parseInt(process.env.CL_MAX_RETRIES ?? "6", 10) || 6, 1), 10);
   const bootstrapUsage = process.env.CL_BOOTSTRAP_USAGE !== "0";
   const dateFiledLte = (process.env.CL_DATE_FILED_LTE ?? "").trim();

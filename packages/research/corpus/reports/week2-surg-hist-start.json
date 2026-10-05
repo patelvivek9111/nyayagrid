@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "cases": 4605,
+  "extracted": 49826,
+  "resolved": 6093,
+  "unresolved": 43733,
+  "parserGap": 0,
+  "stateDc": 3400,
+  "federal": 1134,
+  "intermediate": 527,
+  "pre2000": 866,
+  "pre1980": 240,
+  "duplicates": 0,
+  "orphans": 0,
+  "missingEmbeddings": 0
+}
