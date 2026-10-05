@@ -273,6 +273,19 @@ export type ElementMatrixRow = {
   missingEvidenceIds: string[];
   authorityIds: string[];
   provenance: SourceProvenance;
+  humanReviewStatus: string;
+  legalStandard:
+    | {
+        id: string;
+        ruleText: string;
+        sourceSpan: string;
+        sourceCitation: string;
+        authorityId: string;
+      }
+    | "STANDARD_NOT_EXTRACTED";
+  bindingAuthorities: Array<{ authorityId: string; status: string; reasonCode: string; citation: string | null }>;
+  persuasiveAuthorities: Array<{ authorityId: string; status: string; reasonCode: string; citation: string | null }>;
+  contraryAuthorities: Array<{ authorityId: string; status: string; reasonCode: string; citation: string | null }>;
   guiltConclusion: null;
 };
 
@@ -288,6 +301,11 @@ export function buildElementsMatrix(input: {
     missingEvidenceIds: string[];
     relatedAuthorityIds: string[];
     provenance: SourceProvenance;
+    humanReviewStatus?: string;
+    legalStandard?: ElementMatrixRow["legalStandard"];
+    bindingAuthorities?: ElementMatrixRow["bindingAuthorities"];
+    persuasiveAuthorities?: ElementMatrixRow["persuasiveAuthorities"];
+    contraryAuthorities?: ElementMatrixRow["contraryAuthorities"];
   }>;
 }): ElementMatrixRow[] {
   return input.elements.map((element) => {
@@ -309,6 +327,11 @@ export function buildElementsMatrix(input: {
       missingEvidenceIds: element.missingEvidenceIds,
       authorityIds: element.relatedAuthorityIds,
       provenance: element.provenance,
+      humanReviewStatus: element.humanReviewStatus ?? "unreviewed",
+      legalStandard: element.legalStandard ?? "STANDARD_NOT_EXTRACTED",
+      bindingAuthorities: element.bindingAuthorities ?? [],
+      persuasiveAuthorities: element.persuasiveAuthorities ?? [],
+      contraryAuthorities: element.contraryAuthorities ?? [],
       guiltConclusion: null,
     };
   });

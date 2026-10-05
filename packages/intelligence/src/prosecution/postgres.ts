@@ -1,6 +1,7 @@
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import {
   criminalCases,
+  documents,
   ensureProsecutionRoles,
   prosecutionAgencies,
   prosecutionChargeElements,
@@ -175,6 +176,7 @@ export async function getProsecutionOverview(db: Database, params: { userId: str
       missingEvidenceIds: element.missingEvidenceIds,
       relatedAuthorityIds: element.relatedAuthorityIds,
       provenance: element.provenance,
+      humanReviewStatus: element.humanReviewStatus,
     })),
   });
   return {
@@ -191,6 +193,57 @@ export async function getProsecutionOverview(db: Database, params: { userId: str
     matrix,
     guiltConclusion: null,
   };
+}
+
+async function assertLinkTarget(
+  db: Database,
+  params: { organizationId: string; criminalCaseId: string; targetType: string; targetId: string },
+) {
+  const kind = params.targetType.toLowerCase();
+  if (kind === "charge") {
+    const [row] = await db
+      .select()
+      .from(prosecutionCharges)
+      .where(and(eq(prosecutionCharges.id, params.targetId), eq(prosecutionCharges.organizationId, params.organizationId)))
+      .limit(1);
+    if (!row) throw new ProsecutionError("ORPHAN_REFERENCE", "Charge not found.", 404);
+    assertSameCase(params.criminalCaseId, row.criminalCaseId);
+    return;
+  }
+  if (kind === "chargeelement" || kind === "element") {
+    const [row] = await db
+      .select()
+      .from(prosecutionChargeElements)
+      .where(and(eq(prosecutionChargeElements.id, params.targetId), eq(prosecutionChargeElements.organizationId, params.organizationId)))
+      .limit(1);
+    if (!row) throw new ProsecutionError("ORPHAN_REFERENCE", "Element not found.", 404);
+    assertSameCase(params.criminalCaseId, row.criminalCaseId);
+    return;
+  }
+  if (kind === "warrant") {
+    const [row] = await db
+      .select()
+      .from(prosecutionWarrants)
+      .where(and(eq(prosecutionWarrants.id, params.targetId), eq(prosecutionWarrants.organizationId, params.organizationId)))
+      .limit(1);
+    if (!row) throw new ProsecutionError("ORPHAN_REFERENCE", "Warrant not found.", 404);
+    assertSameCase(params.criminalCaseId, row.criminalCaseId);
+  }
+}
+
+async function assertEvidenceIdsInCase(
+  db: Database,
+  params: { organizationId: string; criminalCaseId: string; evidenceIds: string[] },
+) {
+  if (params.evidenceIds.length === 0) return;
+  const rows = await db
+    .select()
+    .from(prosecutionEvidenceItems)
+    .where(and(eq(prosecutionEvidenceItems.organizationId, params.organizationId), inArray(prosecutionEvidenceItems.id, params.evidenceIds)));
+  if (rows.length !== params.evidenceIds.length) {
+    throw new ProsecutionError("ORPHAN_REFERENCE", "Evidence item not found.", 404);
+  }
+  for (const row of rows) assertSameCase(params.criminalCaseId, row.criminalCaseId);
 }
 
 export async function addProsecutionRecord(
@@ -351,6 +404,12 @@ export async function addProsecutionRecord(
     if (!(EVIDENCE_RELATIONSHIPS as readonly string[]).includes(relationship)) {
       throw new ProsecutionError("INVALID_EVIDENCE_RELATIONSHIP", "Unsupported evidence relationship.");
     }
+    await assertLinkTarget(db, {
+      organizationId,
+      criminalCaseId,
+      targetType: String(params.body.targetType ?? ""),
+      targetId: String(params.body.targetId ?? ""),
+    });
     const [row] = await db
       .insert(prosecutionEvidenceLinks)
       .values({
@@ -420,6 +479,23 @@ export async function addProsecutionRecord(
   }
 
   if (params.resource === "discovery") {
+    const relatedDocumentIds = Array.isArray(params.body.relatedDocumentIds)
+      ? params.body.relatedDocumentIds.map(String)
+      : [];
+    if (relatedDocumentIds.length > 0) {
+      const rows = await db
+        .select()
+        .from(documents)
+        .where(and(eq(documents.organizationId, organizationId), inArray(documents.id, relatedDocumentIds)));
+      if (rows.length !== relatedDocumentIds.length) {
+        throw new ProsecutionError("ORPHAN_REFERENCE", "A discovery document was not found in this organization.", 404);
+      }
+      for (const document of rows) {
+        if (criminalCase.matterId && document.matterId && document.matterId !== criminalCase.matterId) {
+          throw new ProsecutionError("CROSS_CASE", "Discovery cannot attach a document from another matter.", 403);
+        }
+      }
+    }
     const [row] = await db
       .insert(prosecutionDiscoveryItems)
       .values({
@@ -430,6 +506,7 @@ export async function addProsecutionRecord(
         reviewStatus: (params.body.reviewStatus as string) ?? "RECEIVED",
         productionStatus: (params.body.productionStatus as string) ?? "RECEIVED",
         notes: (params.body.notes as string) ?? null,
+        relatedDocumentIds,
         provenance,
       })
       .returning();
@@ -495,6 +572,8 @@ export async function addProsecutionRecord(
   }
 
   if (params.resource === "warrants") {
+    const seizedEvidenceIds = Array.isArray(params.body.seizedEvidenceIds) ? params.body.seizedEvidenceIds.map(String) : [];
+    await assertEvidenceIdsInCase(db, { organizationId, criminalCaseId, evidenceIds: seizedEvidenceIds });
     const [row] = await db
       .insert(prosecutionWarrants)
       .values({
@@ -505,6 +584,7 @@ export async function addProsecutionRecord(
         issuingJudge: (params.body.issuingJudge as string) ?? null,
         scope: (params.body.scope as string) ?? null,
         probableCauseFacts: (params.body.probableCauseFacts as string[]) ?? [],
+        seizedEvidenceIds,
         provenance,
       })
       .returning();
@@ -762,4 +842,87 @@ export async function addProsecutionRecord(
   }
 
   throw new ProsecutionError("UNKNOWN_RESOURCE", "Unsupported prosecution resource.");
+}
+
+export async function createChargeWithElements(
+  db: Database,
+  params: {
+    userId: string;
+    organizationId: string;
+    caseId: string;
+    charge: {
+      defendantId: string;
+      countNumber: string;
+      offenseName: string;
+      jurisdiction: string;
+      statuteCitation?: string | null;
+      provenance: RecordProvenance;
+    };
+    elements: Array<{
+      elementOrder: number;
+      elementText: string;
+      elementType: string;
+      status?: string;
+      provenance: RecordProvenance;
+    }>;
+  },
+) {
+  await authorize(db, { userId: params.userId, organizationId: params.organizationId, action: "edit" });
+  const criminalCase = await requireCase(db, params.organizationId, params.caseId);
+  const provenance = provenanceOf(params.charge.provenance);
+  for (const element of params.elements) provenanceOf(element.provenance);
+  return db.transaction(async (tx) => {
+    const [defendant] = await tx
+      .select()
+      .from(prosecutionDefendants)
+      .where(and(eq(prosecutionDefendants.id, params.charge.defendantId), eq(prosecutionDefendants.organizationId, params.organizationId)))
+      .limit(1);
+    if (!defendant) throw new ProsecutionError("ORPHAN_REFERENCE", "Defendant not found.", 404);
+    assertSameCase(criminalCase.id, defendant.criminalCaseId);
+    const [charge] = await tx
+      .insert(prosecutionCharges)
+      .values({
+        organizationId: params.organizationId,
+        criminalCaseId: criminalCase.id,
+        defendantId: defendant.id,
+        countNumber: params.charge.countNumber,
+        offenseName: params.charge.offenseName,
+        jurisdiction: params.charge.jurisdiction,
+        statuteCitation: params.charge.statuteCitation ?? null,
+        provenance,
+      })
+      .returning();
+    if (!charge) throw new ProsecutionError("ORPHAN_REFERENCE", "Charge was not created.");
+    const elements = [];
+    for (const element of params.elements) {
+      const status = element.status ?? "UNKNOWN";
+      assertElementStatus(status);
+      const [row] = await tx
+        .insert(prosecutionChargeElements)
+        .values({
+          organizationId: params.organizationId,
+          criminalCaseId: criminalCase.id,
+          chargeId: charge.id,
+          elementOrder: element.elementOrder,
+          elementText: element.elementText,
+          elementType: element.elementType,
+          status,
+          provenance: provenanceOf(element.provenance),
+        })
+        .returning();
+      elements.push(row);
+    }
+    return { charge, elements };
+  }).then(async (created) => {
+    await writeAuditEvent(db, {
+      organizationId: params.organizationId,
+      actorUserId: params.userId,
+      matterId: criminalCase.matterId,
+      action: "prosecution.charge_modified",
+      targetType: "charge",
+      targetId: created.charge.id,
+      metadata: { criminalCaseId: criminalCase.id, elementCount: created.elements.length },
+    });
+    return created;
+  });
 }

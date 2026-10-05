@@ -112,6 +112,7 @@ export const prosecutionResourceSchemas = {
     reviewStatus: z.enum(["RECEIVED", "REVIEWED", "FLAGGED", "PRODUCED", "WITHHELD_FOR_ATTORNEY_REVIEW", "UNKNOWN"]).optional(),
     productionStatus: z.enum(["RECEIVED", "REVIEWED", "FLAGGED", "PRODUCED", "WITHHELD_FOR_ATTORNEY_REVIEW", "UNKNOWN"]).optional(),
     notes: optionalText,
+    relatedDocumentIds: z.array(z.string().uuid()).max(100).optional(),
     provenance: provenanceSchema,
   }),
   disclosure: z.object({
@@ -143,6 +144,7 @@ export const prosecutionResourceSchemas = {
     issuingJudge: optionalText,
     scope: optionalText,
     probableCauseFacts: z.array(z.string().max(2000)).max(50).optional(),
+    seizedEvidenceIds: z.array(z.string().uuid()).max(100).optional(),
     provenance: provenanceSchema,
   }),
   "warrant-affidavits": z.object({
