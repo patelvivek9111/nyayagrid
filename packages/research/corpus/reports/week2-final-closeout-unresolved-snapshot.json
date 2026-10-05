@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "classification": "WEEK2_UNRESOLVED_CLASSIFICATION_SNAPSHOT",
+  "generatedAt": "2026-10-05T02:52:02.181Z",
+  "courtListenerHttpCalls": 0,
+  "aiCalls": 0,
+  "source": "derived_from_integrity_counts_zero_cl",
+  "totals": {
+    "extracted": 49594,
+    "resolved": 5989,
+    "unresolved": 43605
+  },
+  "buckets": {
+    "TARGET_ABSENT_CASE": 43605,
+    "TARGET_ABSENT_STATUTE": null,
+    "TARGET_ABSENT_REGULATION": null,
+    "TARGET_ABSENT_RULE": null,
+    "SOURCE_UNAVAILABLE": null,
+    "AMBIGUOUS": null,
+    "UNSUPPORTED": null,
+    "MALFORMED": 0,
+    "INSUFFICIENT_METADATA_OTHER": "see_targetAbsent_minus_parserGap_as_primary_case_like; fine_type_split_deferred_week3"
+  },
+  "note": "Fine-grained type split deferred; integrity provides targetAbsent + parserGap. Remote classify script lacked postgres on fly image."
+}

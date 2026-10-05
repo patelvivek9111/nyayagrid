@@ -1,0 +1,69 @@
+{
+  "ok": true,
+  "classification": "WEEK2_FINAL_CLOSEOUT_BOOTSTRAP",
+  "generatedAt": "2026-10-05T02:16:40.969Z",
+  "membership": {
+    "level": "CL Membership - Tier 4",
+    "is_active": true
+  },
+  "limits": {
+    "minute": {
+      "scope": "user",
+      "period": "minute",
+      "limit": 25,
+      "usage": 0,
+      "remaining": 25,
+      "reset_at": null,
+      "blocked": false
+    },
+    "hour": {
+      "scope": "user",
+      "period": "hour",
+      "limit": 300,
+      "usage": 0,
+      "remaining": 300,
+      "reset_at": null,
+      "blocked": false
+    },
+    "day": {
+      "scope": "user",
+      "period": "day",
+      "limit": 1400,
+      "usage": 731,
+      "remaining": 669,
+      "reset_at": "2026-10-05T02:14:23.704136+00:00",
+      "blocked": false
+    }
+  },
+  "hourFloor": 25,
+  "dayFloor": 50,
+  "safeHourBudget": 275,
+  "safeDayBudget": 619,
+  "safeBudget": 275,
+  "preferred": 270,
+  "closeoutMode": true,
+  "reducedMode": false,
+  "pacingMs": 4000,
+  "laneAShare": 0.9,
+  "laneBShare": 0.1,
+  "reservedLaneBCl": 27,
+  "start": {
+    "cases": 4448,
+    "extracted": 48978,
+    "resolved": 5815,
+    "unresolved": 43163,
+    "stateDc": 3265,
+    "federal": 1112,
+    "intermediate": 421,
+    "pre2000": 731,
+    "pre1980": 204,
+    "resolutionPct": 11.87,
+    "live12_5Target": 6123,
+    "liveGap12_5": 308,
+    "week2Gap": 252,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0
+  },
+  "courtListenerHttpCalls": 1
+}

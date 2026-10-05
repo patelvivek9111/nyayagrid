@@ -1,0 +1,19 @@
+{
+  "ok": true,
+  "cases": 4448,
+  "extracted": 48978,
+  "resolved": 5815,
+  "unresolved": 43163,
+  "stateDc": 3265,
+  "federal": 1112,
+  "intermediate": 421,
+  "pre2000": 731,
+  "pre1980": 204,
+  "resolutionPct": 11.87,
+  "live12_5Target": 6123,
+  "liveGap12_5": 308,
+  "week2Gap": 252,
+  "duplicates": 0,
+  "orphans": 0,
+  "missingEmbeddings": 0
+}

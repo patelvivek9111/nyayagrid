@@ -1,0 +1,148 @@
+{
+  "classification": "WEEK3_HANDOFF_FROM_WEEK2",
+  "generatedAt": "2026-10-05T02:50:57.416Z",
+  "week2Classification": "WEEK2_CONTINUE",
+  "corpus": {
+    "cases": 4572,
+    "stateDc": 3376,
+    "federal": 1125,
+    "intermediate": 508,
+    "pre2000": 842,
+    "pre1980": 223
+  },
+  "knownCoverageGaps": [
+    {
+      "j": "MI",
+      "deficit": 99,
+      "intermediateLayerGap": true,
+      "pre2000": 3,
+      "pre1980": 1
+    },
+    {
+      "j": "NV",
+      "deficit": 99,
+      "intermediateLayerGap": true,
+      "pre2000": 29,
+      "pre1980": 23
+    },
+    {
+      "j": "NJ",
+      "deficit": 99,
+      "intermediateLayerGap": true,
+      "pre2000": 7,
+      "pre1980": 1
+    },
+    {
+      "j": "NE",
+      "deficit": 98,
+      "intermediateLayerGap": true,
+      "pre2000": 7,
+      "pre1980": 0
+    },
+    {
+      "j": "NC",
+      "deficit": 98,
+      "intermediateLayerGap": true,
+      "pre2000": 6,
+      "pre1980": 4
+    },
+    {
+      "j": "TN",
+      "deficit": 98,
+      "intermediateLayerGap": true,
+      "pre2000": 32,
+      "pre1980": 23
+    },
+    {
+      "j": "VA",
+      "deficit": 98,
+      "intermediateLayerGap": true,
+      "pre2000": 7,
+      "pre1980": 0
+    },
+    {
+      "j": "AK",
+      "deficit": 97,
+      "intermediateLayerGap": true,
+      "pre2000": 8,
+      "pre1980": 0
+    },
+    {
+      "j": "ID",
+      "deficit": 97,
+      "intermediateLayerGap": true,
+      "pre2000": 8,
+      "pre1980": 0
+    },
+    {
+      "j": "OR",
+      "deficit": 97,
+      "intermediateLayerGap": true,
+      "pre2000": 8,
+      "pre1980": 0
+    },
+    {
+      "j": "IA",
+      "deficit": 96,
+      "intermediateLayerGap": true,
+      "pre2000": 10,
+      "pre1980": 4
+    },
+    {
+      "j": "HI",
+      "deficit": 96,
+      "intermediateLayerGap": true,
+      "pre2000": 9,
+      "pre1980": 3
+    }
+  ],
+  "unavailableCourtMappings": [
+    {
+      "clCourtId": "pacommwlth",
+      "status": "INVALID_MAPPING",
+      "jurisdiction": "PA"
+    },
+    {
+      "clCourtId": "njsuperct",
+      "status": "INVALID_MAPPING",
+      "jurisdiction": "NJ"
+    },
+    {
+      "clCourtId": "vacapp",
+      "status": "INVALID_MAPPING",
+      "jurisdiction": "VA"
+    }
+  ],
+  "citationHealth": {
+    "extracted": 49594,
+    "resolved": 5989,
+    "resolutionPct": 12.08,
+    "live12_5Gap": 211
+  },
+  "unresolvedClassificationSnapshot": {
+    "TARGET_ABSENT_CASE": 43605,
+    "TARGET_ABSENT_STATUTE": null,
+    "TARGET_ABSENT_REGULATION": null,
+    "TARGET_ABSENT_RULE": null,
+    "SOURCE_UNAVAILABLE": null,
+    "AMBIGUOUS": null,
+    "UNSUPPORTED": null,
+    "MALFORMED": 0,
+    "INSUFFICIENT_METADATA_OTHER": "see_targetAbsent_minus_parserGap_as_primary_case_like; fine_type_split_deferred_week3"
+  },
+  "topRemainingMissingAuthorities": "defer_to_citation_demand_READY_pools",
+  "queues": {
+    "queue2": "OPEN",
+    "queue3": "program_OPEN_worker_NOT_OPEN",
+    "queue4": "program_OPEN_worker_NOT_OPEN",
+    "queue5": "NOT_OPEN"
+  },
+  "technicalDebt": [
+    "md/mich empty-window stops",
+    "HIST_QUERY_TIMEOUT risk on some courts",
+    "citation % not Week2 gate"
+  ],
+  "deferredMysteryBucket": "see_targetAbsent_minus_parserGap_as_primary_case_like; fine_type_split_deferred_week3",
+  "benchmarkBlockingAuthorityMechanism": "flag BENCHMARK_BLOCKING_AUTHORITY only when a known production/benchmark scenario cites a missing controlling authority; otherwise ordinary corpus gap",
+  "readyForWeek3": false
+}
