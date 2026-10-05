@@ -5,3 +5,4 @@ export * from "./precedent";
 export * from "./treatment";
 export * from "./citation-health";
 export * from "./law-to-evidence";
+export * from "./retrieval";

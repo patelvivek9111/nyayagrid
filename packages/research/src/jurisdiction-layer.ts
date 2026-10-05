@@ -9,6 +9,7 @@ import {
   type TemporalApplicability,
 } from "@nyayagrid/jurisdiction";
 import type { Database } from "@nyayagrid/database";
+import { annotateRetrievedAuthorities, type AuthorityRetrievalContext } from "@nyayagrid/intelligence";
 import type { AuthoritySearchHit } from "./provider";
 import type { AuthoritySearchOptions } from "./search";
 
@@ -28,6 +29,19 @@ export type LabeledResearchHit<T extends AuthoritySearchHit = AuthoritySearchHit
   hierarchyRelationship: string;
   hierarchyReason: string;
   temporalApplicability: TemporalApplicability;
+  authorityStatus: string;
+  reasonCode: string;
+  courtRelationship: string;
+  jurisdictionRelationship: string;
+  currentnessConsideration: string;
+  authorityConfidence: string;
+  abstention: string | null;
+  statusRankContribution: number;
+  precedentRankContribution: number;
+  treatmentDisplay: string;
+  issueRelation: string;
+  legalStandard: unknown;
+  adjustedScore: number;
 };
 
 export async function loadMatterJurisdictionForResearch(params: {
@@ -75,19 +89,61 @@ export async function loadMatterJurisdictionForResearch(params: {
  * Temporal applicability uses effective start/end only; missing windows stay UNKNOWN
  * and are not treated as currently applicable.
  */
+function retrievalContextFromMatter(
+  context: MatterJurisdictionContext | null,
+  options?: AuthorityRetrievalContext,
+): AuthorityRetrievalContext {
+  const issueType = options?.issueType ?? "UNKNOWN";
+  const federal =
+    issueType === "FEDERAL_CONSTITUTIONAL" ||
+    issueType === "FEDERAL_STATUTORY" ||
+    issueType === "SPECIALIZED_FEDERAL";
+  return {
+    ...options,
+    issueType,
+    forumCourtId: options?.forumCourtId ?? context?.courtId ?? null,
+    questionJurisdiction:
+      options?.questionJurisdiction ??
+      (issueType === "UNKNOWN" ? null : federal ? "US" : (context?.governingLawState ?? context?.primaryState ?? null)),
+    asOfDate: options?.asOfDate ?? context?.asOfDate ?? null,
+  };
+}
+
+function withAuthorityStatus<T extends AuthoritySearchHit>(
+  context: MatterJurisdictionContext | null,
+  hits: Array<T & { hierarchyRelationship: string; hierarchyReason: string; temporalApplicability: TemporalApplicability; rankingScore?: number }>,
+  options?: AuthorityRetrievalContext,
+): LabeledResearchHit<T>[] {
+  const retrieval = retrievalContextFromMatter(context, options);
+  const annotated = annotateRetrievedAuthorities(
+    hits.map((hit) => ({
+      ...hit,
+      currentnessStatus: (hit as { currentnessStatus?: string | null }).currentnessStatus ?? null,
+    })),
+    retrieval,
+    { applyStatusRank: retrieval.issueType !== "UNKNOWN" },
+  );
+  return annotated;
+}
+
 export function labelResearchHits<T extends AuthoritySearchHit>(
   context: MatterJurisdictionContext | null,
   hits: T[],
+  options?: AuthorityRetrievalContext,
 ): LabeledResearchHit<T>[] {
   if (!context) {
-    return hits.map((hit) => ({
-      ...hit,
-      hierarchyRelationship: "unknown",
-      hierarchyReason: "No Case jurisdiction context was available.",
-      temporalApplicability: "unknown" as const,
-    }));
+    return withAuthorityStatus(
+      null,
+      hits.map((hit) => ({
+        ...hit,
+        hierarchyRelationship: "unknown",
+        hierarchyReason: "No Case jurisdiction context was available.",
+        temporalApplicability: "unknown" as const,
+      })),
+      options,
+    );
   }
-  return rankAuthoritiesForMatter(
+  const ranked = rankAuthoritiesForMatter(
     context,
     hits.map((hit) => ({
       ...hit,
@@ -96,12 +152,10 @@ export function labelResearchHits<T extends AuthoritySearchHit>(
       effectiveEnd: hit.effectiveEnd ?? null,
     })),
     (item) => item.score,
-  ).map((ranked) => ({
-    ...ranked,
-    hierarchyRelationship: ranked.hierarchyRelationship,
-    hierarchyReason: ranked.hierarchyReason,
-    temporalApplicability: ranked.temporalApplicability,
-  }));
+  );
+  const labeled = withAuthorityStatus(context, ranked, options);
+  if ((options?.issueType ?? "UNKNOWN") === "UNKNOWN") return labeled;
+  return [...labeled].sort((left, right) => right.adjustedScore - left.adjustedScore);
 }
 
 export function hitToAuthorityMeta(hit: AuthoritySearchHit) {
