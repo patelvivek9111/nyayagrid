@@ -19,7 +19,64 @@ export const OWNER_CAPABILITIES: Capability[] = [
   "drafts.create",
   "audit.view",
   "compliance.manage",
+  "prosecution.view",
+  "prosecution.edit",
+  "prosecution.review",
 ];
+
+const PROSECUTION_VIEW = ["prosecution.view", "documents.view"] as const satisfies readonly Capability[];
+const PROSECUTION_WORK = [
+  "prosecution.view",
+  "prosecution.edit",
+  "documents.view",
+  "documents.upload",
+  "timeline.manage",
+  "research.run",
+] as const satisfies readonly Capability[];
+
+export const PROSECUTION_ROLE_DEFINITIONS = [
+  {
+    key: "prosecution_office_admin",
+    name: "Prosecution office admin",
+    description: "Administer a prosecution office inside the organization",
+    capabilities: [
+      ...PROSECUTION_WORK,
+      "prosecution.review",
+      "audit.view",
+      "organization.manage",
+    ] as Capability[],
+  },
+  {
+    key: "supervising_prosecutor",
+    name: "Supervising prosecutor",
+    description: "Review prosecutors' work, including disclosure review",
+    capabilities: [...PROSECUTION_WORK, "prosecution.review"] as Capability[],
+  },
+  {
+    key: "prosecutor",
+    name: "Prosecutor",
+    description: "Work a criminal case. Disclosure decisions stay with a reviewer.",
+    capabilities: [...PROSECUTION_WORK] as Capability[],
+  },
+  {
+    key: "investigator",
+    name: "Investigator",
+    description: "Add evidence and documents. Cannot edit charges or disclosure decisions.",
+    capabilities: ["prosecution.view", "documents.view", "documents.upload"] as Capability[],
+  },
+  {
+    key: "legal_support",
+    name: "Legal support",
+    description: "Prepare files and discovery intake without final disclosure authority",
+    capabilities: ["prosecution.view", "prosecution.edit", "documents.view", "documents.upload"] as Capability[],
+  },
+  {
+    key: "prosecution_read_only",
+    name: "Prosecution read only",
+    description: "Read prosecution case records",
+    capabilities: [...PROSECUTION_VIEW] as Capability[],
+  },
+] as const;
 
 export const LAWYER_CAPABILITIES: Capability[] = [
   "clients.view",

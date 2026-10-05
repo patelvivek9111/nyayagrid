@@ -10,6 +10,7 @@ import * as schemaPhase10 from "./schema/phase10";
 import * as schemaPhase11 from "./schema/phase11";
 import * as schemaPhase12 from "./schema/phase12";
 import * as schemaPhase13 from "./schema/phase13";
+import * as schemaPhase14 from "./schema/phase14";
 
 const schema = {
   ...schemaCore,
@@ -22,6 +23,7 @@ const schema = {
   ...schemaPhase11,
   ...schemaPhase12,
   ...schemaPhase13,
+  ...schemaPhase14,
 };
 
 export type Database = ReturnType<typeof createDb>;
@@ -53,7 +55,9 @@ export * from "./schema/phase10";
 export * from "./schema/phase11";
 export * from "./schema/phase12";
 export * from "./schema/phase13";
+export * from "./schema/phase14";
 export { schema };
-export { SYSTEM_ROLE_DEFINITIONS, OWNER_CAPABILITIES } from "./system-roles";
+export { SYSTEM_ROLE_DEFINITIONS, OWNER_CAPABILITIES, PROSECUTION_ROLE_DEFINITIONS } from "./system-roles";
 export { createOrganizationWithDefaults } from "./organizations";
+export { ensureProsecutionRoles } from "./prosecution-roles";
 export { sql, eq, and, desc, asc, inArray, isNull, or } from "drizzle-orm";

@@ -20,3 +20,5 @@ export * from "./recovery";
 export * from "./analysis/contract";
 export * from "./analysis/contract-span";
 export * from "./analysis/compare";
+export * from "./legal";
+export * from "./prosecution";

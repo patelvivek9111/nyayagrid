@@ -2,7 +2,7 @@ import { eq } from "drizzle-orm";
 import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import * as schema from "./schema/index";
 import { memberships, organizations, permissions, roles } from "./schema/index";
-import { SYSTEM_ROLE_DEFINITIONS } from "./system-roles";
+import { PROSECUTION_ROLE_DEFINITIONS, SYSTEM_ROLE_DEFINITIONS } from "./system-roles";
 
 type Db = PostgresJsDatabase<typeof schema>;
 
@@ -36,6 +36,29 @@ export async function createOrganizationWithDefaults(
 
     const roleIdByKey = new Map<string, string>();
     for (const def of SYSTEM_ROLE_DEFINITIONS) {
+      const [role] = await tx
+        .insert(roles)
+        .values({
+          organizationId: org.id,
+          key: def.key,
+          name: def.name,
+          description: def.description,
+          isSystem: true,
+        })
+        .returning();
+      if (!role) throw new Error(`Failed to create role ${def.key}`);
+      roleIdByKey.set(def.key, role.id);
+      if (def.capabilities.length > 0) {
+        await tx.insert(permissions).values(
+          def.capabilities.map((capability) => ({
+            roleId: role.id,
+            capability,
+          })),
+        );
+      }
+    }
+
+    for (const def of PROSECUTION_ROLE_DEFINITIONS) {
       const [role] = await tx
         .insert(roles)
         .values({

@@ -46,6 +46,9 @@ export const capabilitySchema = z.enum([
   "drafts.create",
   "audit.view",
   "compliance.manage",
+  "prosecution.view",
+  "prosecution.edit",
+  "prosecution.review",
 ]);
 
 export type Capability = z.infer<typeof capabilitySchema>;
