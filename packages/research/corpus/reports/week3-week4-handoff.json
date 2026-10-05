@@ -1,0 +1,56 @@
+{
+  "classification": "WEEK3_PASS_OPEN_WEEK4",
+  "completedAt": "2026-10-05",
+  "authorityHierarchy": "PASS",
+  "retrievalIntegration": {
+    "evaluateAuthorityStatusConnected": true,
+    "insertionPoint": "labelResearchHits and annotateRetrievedAuthorities",
+    "ranking": "Authority status contributes at most 0.15 and does not outrank a substantially more relevant hit. Missing issue type stays UNKNOWN.",
+    "unknownAbstention": "ISSUE_TYPE_UNKNOWN or JURISDICTION_UNKNOWN",
+    "currentness": "Superseded metadata classifies NONCONTROLLING"
+  },
+  "legalStandards": "Attached when a sourced standard exists. Otherwise STANDARD_NOT_EXTRACTED.",
+  "precedentGraph": "Inbound citation contribution is capped at 0.02. Volume does not outrank issue relevance.",
+  "treatment": "Verified treatment is surfaced. Unverified citation-graph treatment stays TREATMENT_UNVERIFIED and does not suppress the hit.",
+  "issueMapping": "Legal issues and prosecution charges build retrieval context and relation labels CONTROLLING, BINDING_RELEVANT, PERSUASIVE_RELEVANT, CONTRARY, DISTINGUISHABLE, BACKGROUND, UNKNOWN.",
+  "prosecutionModel": "Migration 0018 applied. Migration 0019 adds organization and case composite foreign keys.",
+  "elementsMatrix": "Rows include evidence, human review status, legal standard, and binding, persuasive, and contrary authorities. No guilt conclusion.",
+  "witnessDisclosureSuppression": "Statement differences stay structural. Disclosure finalization requires a human with prosecution.review. Suppression research returns authorities and a null conclusion.",
+  "rbac": "Inviteable roles: prosecutor, investigator, legal_support, prosecution_read_only. Owner-assigned: prosecution_office_admin, supervising_prosecutor.",
+  "api": "Case list, create, and overview exercised in the signed-in app. Service writes enforce tenant, case, and role checks.",
+  "browserFlow": "Dev-authenticated Playwright flow created a criminal case and opened Overview, Charges, Evidence, Witnesses, Discovery, Timeline, Research, Motions, Hearings, and Tasks.",
+  "security": {
+    "database": "local postgres nyayagrid on localhost:5433",
+    "crossTenant": "PASS",
+    "crossCase": "PASS",
+    "readOnlyMutation": "PASS",
+    "investigatorDisclosure": "DENIED",
+    "supportAdmin": "DENIED"
+  },
+  "citationHealth": {
+    "databaseNote": "The configured local database holds 193 authorities and 5 citation edges, not the Week 2 corpus store.",
+    "duplicateGroups": 0,
+    "orphanEdges": 0,
+    "courtListenerRequests": 0,
+    "citationRowsMutated": false
+  },
+  "knownGaps": [
+    "The Week 2 corpus citation census was not remeasured because those rows are not in this local database.",
+    "Agency, officer, subpoena, motion, hearing, and disposition record workflows were not created through the signed-in form.",
+    "Shared traversal is a projection bridge. Prosecution nodes are not inserted into matter graph_nodes."
+  ],
+  "p1": [
+    "Mount or point a read-only check at the Week 2 corpus database before treating the 49,926-edge census as reconfirmed.",
+    "Add signed-in create flows for motions, hearings, and dispositions.",
+    "HTTP negative tests for every prosecution resource schema."
+  ],
+  "p2": [
+    "Precedent inbound counts are supplied by the caller. Overview does not run a citation-count query.",
+    "tesseract.js is unresolved in the dev server and is unrelated to Week 3."
+  ],
+  "week4Prerequisites": [
+    "Use evaluateAuthorityStatus output already attached to research hits.",
+    "Keep prosecution records case-scoped and traverse them through the projection bridge.",
+    "Do not reopen corpus acquisition. CourtListener stays at zero unless one named authority is missing."
+  ]
+}

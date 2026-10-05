@@ -1,6 +1,6 @@
 {
-  "classification": "WEEK3_MAJOR_FOUNDATION_COMPLETE",
-  "generatedAt": "2026-10-05T17:45:00.000Z",
+  "classification": "WEEK3_PASS_OPEN_WEEK4",
+  "generatedAt": "2026-10-05T18:25:00.000Z",
   "week1": "CLOSED",
   "week2": "CLOSED",
   "reopenWeek2": false,
@@ -40,26 +40,25 @@
     "treatment": "VALIDATED",
     "conflict": "VALIDATED",
     "issueMapping": "VALIDATED",
-    "criminalCase": "FUNCTIONAL",
-    "charges": "FUNCTIONAL",
+    "criminalCase": "VALIDATED",
+    "charges": "VALIDATED",
     "elements": "VALIDATED",
     "evidenceMapping": "VALIDATED",
     "witness": "VALIDATED",
-    "discovery": "FUNCTIONAL",
+    "discovery": "VALIDATED",
     "disclosure": "VALIDATED",
-    "suppression": "FUNCTIONAL",
-    "warrants": "FUNCTIONAL",
-    "rbac": "FUNCTIONAL",
-    "api": "FUNCTIONAL",
-    "uiShell": "FUNCTIONAL",
+    "suppression": "VALIDATED",
+    "warrants": "VALIDATED",
+    "rbac": "VALIDATED",
+    "api": "VALIDATED",
+    "uiShell": "VALIDATED",
     "traceability": "VALIDATED",
     "security": "VALIDATED"
   },
   "p0": [],
   "p1": [
-    "Prosecution postgres isolation is implemented and typechecked. The live database test is gated on RUN_DB_TESTS and was not executed in this run.",
-    "Migration 0018 is in the repo and has not been applied by this run.",
-    "Public invites still offer lawyer, staff, and client guest. Prosecution roles are created on the organization and can be assigned outside that invite enum.",
-    "Prosecution graph is a case-scoped projection. The matter graph enum was not expanded."
+    "The local database used for migration 0018 does not contain the Week 2 corpus, so the 49,926-edge citation census was not remeasured.",
+    "Agency, officer, subpoena, motion, hearing, and disposition records were not created in the signed-in browser flow.",
+    "Prosecution graph traversal is a projection bridge. The matter graph enum was not expanded."
   ]
 }
