@@ -18,8 +18,21 @@ import { memberships, organizationInvites, organizations, roles, users } from "@
 import { writeAuditEvent } from "@nyayagrid/permissions";
 import { sendInviteEmail, type EmailProvider } from "@nyayagrid/platform";
 
-export const INVITEABLE_ROLE_KEYS = ["lawyer", "staff", "client_guest"] as const;
+/**
+ * Public invitation roles. Supervising and office-admin prosecution roles stay with the owner.
+ */
+export const INVITEABLE_ROLE_KEYS = [
+  "lawyer",
+  "staff",
+  "client_guest",
+  "prosecutor",
+  "investigator",
+  "legal_support",
+  "prosecution_read_only",
+] as const;
 export type InviteableRoleKey = (typeof INVITEABLE_ROLE_KEYS)[number];
+
+export const OWNER_ASSIGNED_ROLE_KEYS = ["prosecution_office_admin", "supervising_prosecutor"] as const;
 
 export function isInviteableRoleKey(roleKey: string): roleKey is InviteableRoleKey {
   return (INVITEABLE_ROLE_KEYS as readonly string[]).includes(roleKey);

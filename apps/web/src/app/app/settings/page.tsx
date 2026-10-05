@@ -491,7 +491,7 @@ export default function SettingsPage() {
               members.length === 0 ? (
                 <FirmEmpty
                   title="No members found."
-                  description="Invite a lawyer, staff member, or client guest to this firm."
+                  description="Invite a lawyer, staff member, client guest, or prosecution role. Supervising roles are assigned by an owner."
                 />
               ) : (
                 <ul className="space-y-2">
@@ -772,6 +772,10 @@ export default function SettingsPage() {
             <option value="lawyer">Lawyer</option>
             <option value="staff">Staff</option>
             <option value="client_guest">Client guest</option>
+            <option value="prosecutor">Prosecutor</option>
+            <option value="investigator">Investigator</option>
+            <option value="legal_support">Legal support</option>
+            <option value="prosecution_read_only">Prosecution read only</option>
           </select>
           <Button type="submit" disabled={busy}>
             Create invite

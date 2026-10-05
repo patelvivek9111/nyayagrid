@@ -20,7 +20,15 @@ export const createOrganizationSchema = z.object({
 
 export const inviteMembershipSchema = z.object({
   email: z.string().email(),
-  roleKey: z.enum(["lawyer", "staff", "client_guest"]),
+  roleKey: z.enum([
+    "lawyer",
+    "staff",
+    "client_guest",
+    "prosecutor",
+    "investigator",
+    "legal_support",
+    "prosecution_read_only",
+  ]),
 });
 
 export const acceptOrganizationInviteSchema = z.object({

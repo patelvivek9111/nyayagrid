@@ -25,7 +25,7 @@ function chain(result: unknown) {
 }
 
 /** Queues one result per `select` call, in call order, regardless of which table is queried. */
-function fakeDb(selectResults: unknown[][], overrides: Partial<Database> = {}): Database {
+function fakeDb(selectResults: unknown[][], overrides: Record<string, unknown> = {}): Database {
   let call = 0;
   return {
     select: vi.fn(() => chain(selectResults[call++] ?? [])),
