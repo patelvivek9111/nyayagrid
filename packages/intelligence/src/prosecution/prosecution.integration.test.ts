@@ -383,4 +383,133 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
       }),
     ).rejects.toThrow();
   });
+
+  it("validates Agency, Officer, Subpoena, Motion, Hearing, and Disposition workflows with audits", async () => {
+    const agency = await addProsecutionRecord(db, {
+      userId: ids.prosecutor!,
+      organizationId: ids.orgA!,
+      caseId: ids.caseA!,
+      resource: "agencies",
+      body: { name: `Agency ${suffix}`, agencyType: "police", jurisdiction: "PA" },
+    });
+    const officer = await addProsecutionRecord(db, {
+      userId: ids.prosecutor!,
+      organizationId: ids.orgA!,
+      caseId: ids.caseA!,
+      resource: "officers",
+      body: {
+        agencyId: (agency as { id: string }).id,
+        name: `Officer ${suffix}`,
+        role: "investigator",
+        badgeIdentifier: `B-${suffix}`,
+      },
+    });
+    const subpoena = await addProsecutionRecord(db, {
+      userId: ids.prosecutor!,
+      organizationId: ids.orgA!,
+      caseId: ids.caseA!,
+      resource: "subpoenas",
+      body: {
+        recipient: "Synthetic Custodian",
+        requestScope: "bodycam files",
+        status: "issued",
+        provenance,
+      },
+    });
+    const motion = await addProsecutionRecord(db, {
+      userId: ids.prosecutor!,
+      organizationId: ids.orgA!,
+      caseId: ids.caseA!,
+      resource: "motions",
+      body: {
+        motionType: "suppress",
+        filingParty: "defense",
+        status: "filed",
+        provenance,
+      },
+    });
+    const hearing = await addProsecutionRecord(db, {
+      userId: ids.prosecutor!,
+      organizationId: ids.orgA!,
+      caseId: ids.caseA!,
+      resource: "hearings",
+      body: {
+        hearingType: "suppression",
+        court: "st-pa-trial",
+        judge: "Synthetic Judge",
+        participants: [(officer as { id: string }).id],
+        provenance,
+      },
+    });
+    const charge = await addProsecutionRecord(db, {
+      userId: ids.prosecutor!,
+      organizationId: ids.orgA!,
+      caseId: ids.caseA!,
+      resource: "charges",
+      body: {
+        defendantId: ids.defendantA!,
+        countNumber: `ops-${suffix}`,
+        offenseName: "Synthetic ops count",
+        jurisdiction: "PA",
+        provenance,
+      },
+    });
+    const disposition = await addProsecutionRecord(db, {
+      userId: ids.prosecutor!,
+      organizationId: ids.orgA!,
+      caseId: ids.caseA!,
+      resource: "dispositions",
+      body: {
+        chargeId: (charge as { id: string }).id,
+        result: "pending",
+        notes: "Record only. No autonomous recommendation.",
+        provenance,
+      },
+    });
+
+    expect((agency as { name: string }).name).toContain("Agency");
+    expect((officer as { agencyId: string }).agencyId).toBe((agency as { id: string }).id);
+    expect((subpoena as { recipient: string }).recipient).toBe("Synthetic Custodian");
+    expect((motion as { motionType: string }).motionType).toBe("suppress");
+    expect((hearing as { hearingType: string }).hearingType).toBe("suppression");
+    expect((disposition as { result: string }).result).toBe("pending");
+
+    const overview = await getProsecutionOverview(db, {
+      userId: ids.prosecutor!,
+      organizationId: ids.orgA!,
+      caseId: ids.caseA!,
+    });
+    expect(overview.agencies.some((row: { id: string }) => row.id === (agency as { id: string }).id)).toBe(true);
+    expect(overview.officers.some((row: { id: string }) => row.id === (officer as { id: string }).id)).toBe(true);
+    expect(overview.motions.some((row: { id: string }) => row.id === (motion as { id: string }).id)).toBe(true);
+    expect(overview.hearings.some((row: { id: string }) => row.id === (hearing as { id: string }).id)).toBe(true);
+    expect(overview.subpoenas.some((row: { id: string }) => row.id === (subpoena as { id: string }).id)).toBe(true);
+    expect(overview.discoveryDashboard).toBeTruthy();
+    expect(overview.guiltConclusion).toBeNull();
+
+    for (const action of [
+      "prosecution.agency_modified",
+      "prosecution.officer_modified",
+      "prosecution.subpoena_modified",
+      "prosecution.motion_modified",
+      "prosecution.hearing_modified",
+      "prosecution.disposition_modified",
+    ]) {
+      const rows = await db
+        .select()
+        .from(auditEvents)
+        .where(and(eq(auditEvents.organizationId, ids.orgA!), eq(auditEvents.action, action)));
+      expect(rows.length).toBeGreaterThan(0);
+    }
+
+    await expect(
+      addProsecutionRecord(db, {
+        userId: ids.ownerB!,
+        organizationId: ids.orgA!,
+        caseId: ids.caseA!,
+        resource: "motions",
+        body: { motionType: "leak", filingParty: "defense", provenance },
+      }),
+    ).rejects.toBeInstanceOf(AuthorizationError);
+  });
 });

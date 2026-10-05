@@ -32,6 +32,7 @@ import {
 } from "@nyayagrid/database";
 import { requireAnyCapability, requireCapability, writeAuditEvent } from "@nyayagrid/permissions";
 import { assertProvenance } from "../legal/standards";
+import { notifyProsecutionEvent } from "../week4/notifications";
 import {
   EVIDENCE_RELATIONSHIPS,
   PROCEDURE_ISSUE_TYPES,
@@ -45,6 +46,7 @@ import {
   transitionDisclosure,
   type ChargeElementStatus,
 } from "./domain";
+import { buildDiscoveryDashboard } from "../week4/discovery-ops";
 
 async function authorize(
   db: Database,
@@ -153,17 +155,23 @@ export async function createCriminalCase(
 export async function getProsecutionOverview(db: Database, params: { userId: string; organizationId: string; caseId: string }) {
   await authorize(db, { userId: params.userId, organizationId: params.organizationId, action: "view" });
   const criminalCase = await requireCase(db, params.organizationId, params.caseId);
-  const [defendants, charges, elements, evidence, discovery, witnesses, hearings, tasks, issues] = await Promise.all([
-    db.select().from(prosecutionDefendants).where(eq(prosecutionDefendants.criminalCaseId, criminalCase.id)),
-    db.select().from(prosecutionCharges).where(eq(prosecutionCharges.criminalCaseId, criminalCase.id)),
-    db.select().from(prosecutionChargeElements).where(eq(prosecutionChargeElements.criminalCaseId, criminalCase.id)),
-    db.select().from(prosecutionEvidenceItems).where(eq(prosecutionEvidenceItems.criminalCaseId, criminalCase.id)),
-    db.select().from(prosecutionDiscoveryItems).where(eq(prosecutionDiscoveryItems.criminalCaseId, criminalCase.id)),
-    db.select().from(prosecutionWitnesses).where(eq(prosecutionWitnesses.criminalCaseId, criminalCase.id)),
-    db.select().from(prosecutionHearings).where(eq(prosecutionHearings.criminalCaseId, criminalCase.id)),
-    db.select().from(prosecutionTasks).where(eq(prosecutionTasks.criminalCaseId, criminalCase.id)),
-    db.select().from(prosecutionProcedureIssues).where(eq(prosecutionProcedureIssues.criminalCaseId, criminalCase.id)),
-  ]);
+  const [defendants, charges, elements, evidence, discovery, disclosures, witnesses, hearings, motions, subpoenas, tasks, issues, agencies, officers] =
+    await Promise.all([
+      db.select().from(prosecutionDefendants).where(eq(prosecutionDefendants.criminalCaseId, criminalCase.id)),
+      db.select().from(prosecutionCharges).where(eq(prosecutionCharges.criminalCaseId, criminalCase.id)),
+      db.select().from(prosecutionChargeElements).where(eq(prosecutionChargeElements.criminalCaseId, criminalCase.id)),
+      db.select().from(prosecutionEvidenceItems).where(eq(prosecutionEvidenceItems.criminalCaseId, criminalCase.id)),
+      db.select().from(prosecutionDiscoveryItems).where(eq(prosecutionDiscoveryItems.criminalCaseId, criminalCase.id)),
+      db.select().from(prosecutionDisclosureCandidates).where(eq(prosecutionDisclosureCandidates.criminalCaseId, criminalCase.id)),
+      db.select().from(prosecutionWitnesses).where(eq(prosecutionWitnesses.criminalCaseId, criminalCase.id)),
+      db.select().from(prosecutionHearings).where(eq(prosecutionHearings.criminalCaseId, criminalCase.id)),
+      db.select().from(prosecutionMotions).where(eq(prosecutionMotions.criminalCaseId, criminalCase.id)),
+      db.select().from(prosecutionSubpoenas).where(eq(prosecutionSubpoenas.criminalCaseId, criminalCase.id)),
+      db.select().from(prosecutionTasks).where(eq(prosecutionTasks.criminalCaseId, criminalCase.id)),
+      db.select().from(prosecutionProcedureIssues).where(eq(prosecutionProcedureIssues.criminalCaseId, criminalCase.id)),
+      db.select().from(prosecutionAgencies).where(eq(prosecutionAgencies.organizationId, params.organizationId)),
+      db.select().from(prosecutionOfficers).where(eq(prosecutionOfficers.criminalCaseId, criminalCase.id)),
+    ]);
   const matrix = buildElementsMatrix({
     charges: charges.map((charge) => ({ id: charge.id, offenseName: charge.offenseName })),
     elements: elements.map((element) => ({
@@ -179,11 +187,35 @@ export async function getProsecutionOverview(db: Database, params: { userId: str
       humanReviewStatus: element.humanReviewStatus,
     })),
   });
+  const discoveryDashboard = buildDiscoveryDashboard({
+    items: discovery.map((item) => ({
+      id: item.id,
+      reviewStatus: item.reviewStatus,
+      productionStatus: item.productionStatus,
+      disclosureReviewStatus: item.disclosureReviewStatus,
+      category: item.category,
+      relatedEvidenceIds: item.relatedEvidenceIds,
+      relatedDocumentIds: item.relatedDocumentIds,
+      receivedDate: item.receivedDate,
+      producedDate: item.producedDate,
+    })),
+    disclosureCandidates: disclosures.map((item) => ({
+      id: item.id,
+      category: item.category,
+      status: item.status,
+      origin: "other" as const,
+      notes: item.notes,
+    })),
+  });
   return {
     case: criminalCase,
     defendants,
     charges,
     hearings,
+    motions,
+    subpoenas,
+    agencies,
+    officers,
     openTasks: tasks.filter((task) => task.status === "open"),
     evidenceCount: evidence.length,
     discoveryCount: discovery.length,
@@ -191,6 +223,7 @@ export async function getProsecutionOverview(db: Database, params: { userId: str
     elementGaps: matrix.filter((row) => row.status !== "SUPPORTED"),
     issueFlags: issues,
     matrix,
+    discoveryDashboard,
     guiltConclusion: null,
   };
 }
@@ -657,6 +690,15 @@ export async function addProsecutionRecord(
         provenance,
       })
       .returning();
+    await writeAuditEvent(db, {
+      organizationId,
+      actorUserId: params.userId,
+      matterId: criminalCase.matterId,
+      action: "prosecution.motion_modified",
+      targetType: "motion",
+      targetId: row?.id,
+      metadata: { criminalCaseId },
+    });
     return row;
   }
 
@@ -674,6 +716,24 @@ export async function addProsecutionRecord(
         provenance,
       })
       .returning();
+    await writeAuditEvent(db, {
+      organizationId,
+      actorUserId: params.userId,
+      matterId: criminalCase.matterId,
+      action: "prosecution.hearing_modified",
+      targetType: "hearing",
+      targetId: row?.id,
+      metadata: { criminalCaseId },
+    });
+    await notifyProsecutionEvent(db, {
+      organizationId,
+      userId: params.userId,
+      kind: "upcoming_hearing",
+      title: `Hearing scheduled: ${String(params.body.hearingType ?? "hearing")}`,
+      body: `Case ${criminalCase.caseNumber} hearing recorded.`,
+      href: `/app/prosecution/${criminalCaseId}/hearings`,
+      matterId: criminalCase.matterId,
+    });
     return row;
   }
 
@@ -689,6 +749,24 @@ export async function addProsecutionRecord(
         provenance,
       })
       .returning();
+    await writeAuditEvent(db, {
+      organizationId,
+      actorUserId: params.userId,
+      matterId: criminalCase.matterId,
+      action: "prosecution.subpoena_modified",
+      targetType: "subpoena",
+      targetId: row?.id,
+      metadata: { criminalCaseId },
+    });
+    await notifyProsecutionEvent(db, {
+      organizationId,
+      userId: params.userId,
+      kind: "subpoena_return_due",
+      title: `Subpoena issued: ${String(params.body.recipient ?? "recipient")}`,
+      body: `Case ${criminalCase.caseNumber} subpoena recorded.`,
+      href: `/app/prosecution/${criminalCaseId}`,
+      matterId: criminalCase.matterId,
+    });
     return row;
   }
 
@@ -816,6 +894,15 @@ export async function addProsecutionRecord(
         contact: (params.body.contact as Record<string, string>) ?? {},
       })
       .returning();
+    await writeAuditEvent(db, {
+      organizationId,
+      actorUserId: params.userId,
+      matterId: criminalCase.matterId,
+      action: "prosecution.agency_modified",
+      targetType: "agency",
+      targetId: row?.id,
+      metadata: { criminalCaseId },
+    });
     return row;
   }
 
@@ -838,6 +925,15 @@ export async function addProsecutionRecord(
         badgeIdentifier: (params.body.badgeIdentifier as string) ?? null,
       })
       .returning();
+    await writeAuditEvent(db, {
+      organizationId,
+      actorUserId: params.userId,
+      matterId: criminalCase.matterId,
+      action: "prosecution.officer_modified",
+      targetType: "officer",
+      targetId: row?.id,
+      metadata: { criminalCaseId },
+    });
     return row;
   }
 

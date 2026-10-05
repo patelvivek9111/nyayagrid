@@ -60,6 +60,9 @@ import {
   formatActiveMemoryForPrompt,
   loadProfessionalAnalysisContext,
   formatProfessionalAnalysisForPrompt,
+  buildAskNyayaCombinedContext,
+  formatStructuredAnswerContextForPrompt,
+  type StructuredAnswerContext,
 } from "@nyayagrid/intelligence";
 import {
   AuthorityHybridRetriever,
@@ -799,6 +802,53 @@ export async function askNyayaAboutMatter(params: {
           });
     mark("authorityMs", authorityStarted);
     const authorityText = authority?.text ?? null;
+
+    let week4Structured: StructuredAnswerContext | null = null;
+    let week4ContextText: string | null = null;
+    if (!flags.webEnabled && (passages.length > 0 || (authority?.corpusHits.length ?? 0) > 0)) {
+      const combined = buildAskNyayaCombinedContext({
+        context: {
+          organizationId: params.organizationId,
+          workspaceType: "professional",
+          matterId: params.matterId,
+          jurisdiction: jurisdictionContext?.governingLawState ?? jurisdictionContext?.primaryState ?? null,
+          forumCourt: jurisdictionContext?.courtId ?? null,
+          userQuestion: params.question,
+          subjectMatter: "general",
+        },
+        evidenceCorpus: passages.map((passage) => ({
+          id: passage.chunkId,
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          kind: "document",
+          text: passage.quote,
+          documentId: passage.documentId,
+          relation: null,
+          provenance: {
+            documentId: passage.documentId,
+            sourceSpan: passage.quote.slice(0, 240),
+            extractionOrigin: "source_metadata" as const,
+            humanEntered: false,
+          },
+        })),
+        authorityHits: (authority?.corpusHits ?? []).map((hit) => ({
+          authorityId: hit.authorityId,
+          citation: hit.citation,
+          title: hit.title,
+          court: hit.court,
+          courtId: hit.courtId,
+          jurisdiction: hit.jurisdiction,
+          authorityType: hit.authorityType,
+          decisionDate: hit.decisionDate,
+          score: hit.score,
+          snippet: hit.snippet,
+          canonicalSourceUrl: hit.canonicalSourceUrl,
+        })),
+      });
+      week4Structured = combined.structured;
+      week4ContextText = formatStructuredAnswerContextForPrompt(combined.structured);
+    }
+
     if (authority) {
       const emitted = new Set<string>();
       for (const hit of authority.corpusHits.slice(0, 12)) {
@@ -947,7 +997,7 @@ export async function askNyayaAboutMatter(params: {
           )
           .join("\n") || "(none)"}`
       : useResearchPrompt
-        ? `${jurisdictionBlock}${buildNyayaUserPromptWithResearch(
+        ? `${jurisdictionBlock}${week4ContextText ? `${week4ContextText}\n\n` : ""}${buildNyayaUserPromptWithResearch(
             params.question,
             passages,
             authorityText ?? "",
@@ -957,7 +1007,7 @@ export async function askNyayaAboutMatter(params: {
             analysisText,
             assessmentText,
           )}`
-        : `${jurisdictionBlock}${buildNyayaUserPrompt(
+        : `${jurisdictionBlock}${week4ContextText ? `${week4ContextText}\n\n` : ""}${buildNyayaUserPrompt(
             params.question,
             passages,
             verifiedText,
@@ -1303,6 +1353,8 @@ export async function askNyayaAboutMatter(params: {
           usedMemory: Boolean(memoryText),
           usedProfessionalAnalysis: Boolean(analysisText),
           usedLegalAuthority: Boolean(authorityText),
+          usedWeek4CombinedContext: Boolean(week4Structured),
+          week4CoverageWarnings: week4Structured?.COVERAGE_WARNINGS ?? [],
           doctrineQuestion,
           savedAuthorityCount: authority?.savedAuthorityCount ?? 0,
           authorityCorpusHitCount: authority?.corpusHitCount ?? 0,
@@ -1357,6 +1409,8 @@ export async function askNyayaAboutMatter(params: {
       usedMemory: Boolean(memoryText),
       usedProfessionalAnalysis: Boolean(analysisText),
       usedLegalAuthority: Boolean(authorityText),
+      usedWeek4CombinedContext: Boolean(week4Structured),
+      week4StructuredContext: week4Structured,
       doctrineQuestion,
       authorityResearchMissing: authorityMissingForDoctrine,
       authorityWarnings: authority?.warnings ?? [],
