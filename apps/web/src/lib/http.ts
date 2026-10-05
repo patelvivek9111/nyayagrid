@@ -16,6 +16,7 @@ import { FeatureDisabledError } from "./features";
 import { InvalidJurisdictionError } from "@nyayagrid/jurisdiction";
 import { RouterUnavailableError, ROUTER_UNAVAILABLE_USER_MESSAGE } from "@nyayagrid/ai";
 import { LegalWorkError } from "@nyayagrid/intelligence";
+import { ProsecutionError, LegalIntelligenceError } from "@nyayagrid/intelligence";
 import { createLogger } from "@nyayagrid/observability";
 
 const logger = createLogger("web.http");
@@ -105,6 +106,12 @@ export function handleRouteError(error: unknown) {
   }
   if (error instanceof LegalWorkError) {
     return jsonError(error.code, error.message, error.status, error.details);
+  }
+  if (error instanceof ProsecutionError) {
+    return jsonError(error.code, error.message, error.status);
+  }
+  if (error instanceof LegalIntelligenceError) {
+    return jsonError(error.code, error.message, 400);
   }
   if (error instanceof ZodError) {
     const first = error.issues[0]?.message?.trim();

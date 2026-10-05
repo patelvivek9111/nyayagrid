@@ -1,0 +1,65 @@
+{
+  "classification": "WEEK3_MAJOR_FOUNDATION_COMPLETE",
+  "generatedAt": "2026-10-05T17:45:00.000Z",
+  "week1": "CLOSED",
+  "week2": "CLOSED",
+  "reopenWeek2": false,
+  "courtListenerRequests": 0,
+  "materialCorpusGaps": [],
+  "implementationMap": {
+    "EXISTING": [
+      "matter facts, entities, timeline, evidence matrix, Nyaya Graph, research authorities, citation edges, drafts, RBAC capabilities, documents"
+    ],
+    "EXTEND": [
+      "court registry with explainable binding status",
+      "citation edges with cycle-safe precedent traversal",
+      "treatment records that require source text",
+      "organization roles with prosecution capabilities"
+    ],
+    "NEW": [
+      "LegalStandard, LegalIssue, issue-authority links, AuthorityConflict",
+      "criminal case aggregate and elements matrix",
+      "witness comparison, disclosure review, suppression, warrant, motion, hearing, subpoena, plea, disposition, sentencing",
+      "prosecution graph projection and timeline event catalog",
+      "prosecution API and navigation shell"
+    ],
+    "DEFER_LATER_WEEK": [
+      "corpus growth and citation-percentage optimization",
+      "exhaustive treatment classification",
+      "model-generated legal analysis",
+      "semantic witness comparison",
+      "prosecutor CMS visual polish",
+      "autonomous plea or sentencing recommendations"
+    ]
+  },
+  "completion": {
+    "authorityHierarchy": "VALIDATED",
+    "bindingPersuasive": "VALIDATED",
+    "legalStandards": "VALIDATED",
+    "precedentGraph": "VALIDATED",
+    "treatment": "VALIDATED",
+    "conflict": "VALIDATED",
+    "issueMapping": "VALIDATED",
+    "criminalCase": "FUNCTIONAL",
+    "charges": "FUNCTIONAL",
+    "elements": "VALIDATED",
+    "evidenceMapping": "VALIDATED",
+    "witness": "VALIDATED",
+    "discovery": "FUNCTIONAL",
+    "disclosure": "VALIDATED",
+    "suppression": "FUNCTIONAL",
+    "warrants": "FUNCTIONAL",
+    "rbac": "FUNCTIONAL",
+    "api": "FUNCTIONAL",
+    "uiShell": "FUNCTIONAL",
+    "traceability": "VALIDATED",
+    "security": "VALIDATED"
+  },
+  "p0": [],
+  "p1": [
+    "Prosecution postgres isolation is implemented and typechecked. The live database test is gated on RUN_DB_TESTS and was not executed in this run.",
+    "Migration 0018 is in the repo and has not been applied by this run.",
+    "Public invites still offer lawyer, staff, and client guest. Prosecution roles are created on the organization and can be assigned outside that invite enum.",
+    "Prosecution graph is a case-scoped projection. The matter graph enum was not expanded."
+  ]
+}

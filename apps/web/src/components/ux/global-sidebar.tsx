@@ -20,6 +20,8 @@ export function GlobalSidebar() {
   const { organizationId, organizations, selectOrganization, loading } = useActiveOrganization();
   const { flags } = useFeatureFlags();
   const complianceCap = useOrgCapability(organizationId, "compliance.manage");
+  const prosecutionView = useOrgCapability(organizationId, "prosecution.view");
+  const prosecutionAdmin = useOrgCapability(organizationId, "organization.manage");
   const [cases, setCases] = useState<CaseRow[]>([]);
   const [chats, setChats] = useState<ChatRow[]>([]);
   const [switchOpen, setSwitchOpen] = useState(false);
@@ -311,6 +313,14 @@ export function GlobalSidebar() {
           title="Search legal sources"
           active={pathname.startsWith("/app/research")}
         />
+        {(prosecutionView.allowed || prosecutionAdmin.allowed) ? (
+          <WorkspaceNavLink
+            href="/app/prosecution"
+            label="Prosecution"
+            title="Criminal cases, charges, and evidence"
+            active={pathname.startsWith("/app/prosecution")}
+          />
+        ) : null}
         {complianceCap.allowed ? (
           <WorkspaceNavLink
             href="/app/compliance"
