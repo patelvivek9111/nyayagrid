@@ -22,3 +22,4 @@ export * from "./analysis/contract-span";
 export * from "./analysis/compare";
 export * from "./legal";
 export * from "./prosecution";
+export * from "./week4";
