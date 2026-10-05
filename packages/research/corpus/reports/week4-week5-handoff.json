@@ -1,0 +1,83 @@
+{
+  "classification": "WEEK4_PASS_OPEN_WEEK5",
+  "completedAt": "2026-10-05",
+  "objective": "Full retrieval + matter/case intelligence + prosecution operational workflows",
+  "sharedQueryContext": "QueryContext drives decomposition, evidence scoping, and authority ranking for professional and prosecution workspaces.",
+  "hybridRetrieval": {
+    "explainableScores": true,
+    "signals": [
+      "semantic",
+      "lexical",
+      "authorityContribution",
+      "citationContribution",
+      "jurisdictionFilter",
+      "currentnessAdjustment",
+      "issueMatchContribution"
+    ],
+    "bindingDoesNotBuryRelevance": true,
+    "usesWeek3EvaluateAuthorityStatus": true
+  },
+  "lawEvidenceJoin": "LawEvidenceBundle joins issues, standards, requirements, supporting/contrary evidence, authorities, treatment, coverage warnings, weaknesses, and investigation gaps with GUILT_CONCLUSION always null.",
+  "claimAndElementsMatrices": {
+    "civilClaimMatrix": "Claim/defense requirement rows with supporting, contrary, missing evidence and governing authorities.",
+    "elementsMatrix": "Retrieval-aware element rows with legal standard, supporting/contrary/uncertain/missing evidence, binding/persuasive/contrary authorities, and null guilt conclusion."
+  },
+  "witnessCustodyTimeline": {
+    "witness": "Source-linked consistent points, contradictions, omissions, added detail, timeline differences. No truthfulness conclusion.",
+    "custody": "Transfer chain with CHAIN_GAP, SEQUENCE_INCONSISTENCY, MISSING_RECORD, UNKNOWN. No tampering assertion.",
+    "timeline": "Unified criminal chronology with source-backed TIME_CONFLICT / DATE_CONFLICT preservation."
+  },
+  "discoveryDisclosure": {
+    "dashboard": "total, unreviewed, flagged, potential disclosure review, produced, pending, missing/expected",
+    "disclosure": "Candidate suggestion only. Human final control required. Audit on status transitions."
+  },
+  "suppressionWarrant": {
+    "suppression": "Facts, missing facts, authorities, legal standard, null conclusion when support insufficient.",
+    "warrant": "Assertion to source-fact map with corroboration, contradictions, coverage warnings, null validity conclusion."
+  },
+  "prosecutionOpsValidated": [
+    "Agency",
+    "Officer",
+    "Subpoena",
+    "Motion",
+    "Hearing",
+    "Disposition"
+  ],
+  "askNyaya": {
+    "combinedContextInjected": true,
+    "insertionPoint": "askNyayaAboutMatter builds WEEK4_COMBINED_RETRIEVAL_CONTEXT from scoped passages and corpus authority hits",
+    "artifactMetadata": ["usedWeek4CombinedContext", "week4CoverageWarnings", "week4StructuredContext"]
+  },
+  "security": {
+    "database": "local postgres nyayagrid on localhost:5433",
+    "crossTenantEvidence": "PASS",
+    "crossTenantOps": "PASS",
+    "unknownRelationNotInferred": "PASS",
+    "restrictedDisclosure": "DENIED in Week 3 suite retained"
+  },
+  "browser": {
+    "prosecutionNavAndOpsCrud": "Playwright signed-in flow creates agency, officer, subpoena, motion, hearing, charge, disposition via API after case open",
+    "lawFirmSurfaces": "Existing case-intelligence Playwright surfaces for timeline, evidence, people, graph remain the validation path"
+  },
+  "citationHealth": {
+    "status": "CORPUS_HEALTH_NOT_REMEASURED",
+    "reason": "Local Week 4 database is not the Week 2 corpus store",
+    "courtListenerRequests": 0,
+    "broadAcquisition": false
+  },
+  "knownGaps": [
+    "Week 2 corpus citation census remains unre-measured against its actual store.",
+    "Notifications reuse deadline/review_queue kinds; dedicated prosecution notification kinds are deferred.",
+    "Ask Nyaya week4 context is deterministic join of retrieved passages/authorities; live LLM answer quality is Week 5 certification."
+  ],
+  "p1": [
+    "Mount read-only Week 2 corpus census when that store is available.",
+    "Add dedicated notification kinds if product wants distinct prosecution labels beyond deadline/review_queue.",
+    "Expand law-firm browser Ask Nyaya assertion for week4StructuredContext in signed-in e2e."
+  ],
+  "week5Prerequisites": [
+    "Use LawEvidenceBundle / StructuredAnswerContext as the benchmark answer substrate.",
+    "Certify realistic full-matter and full-case questions with critical-failure tracking.",
+    "Do not reopen Week 1–4 closed gates without a true regression."
+  ]
+}
