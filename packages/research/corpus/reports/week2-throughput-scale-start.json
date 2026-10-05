@@ -1,0 +1,16 @@
+{
+  "ok": true,
+  "cases": 4323,
+  "extracted": 48301,
+  "resolved": 5552,
+  "unresolved": 42749,
+  "stateDc": 3159,
+  "federal": 1093,
+  "resolutionPct": 11.49,
+  "live12_5Target": 6038,
+  "liveGap12_5": 486,
+  "week2Gap": 377,
+  "duplicates": 0,
+  "orphans": 0,
+  "missingEmbeddings": 0
+}

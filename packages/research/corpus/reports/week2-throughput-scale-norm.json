@@ -1,0 +1,179 @@
+{
+  "ok": true,
+  "classification": "EARLY_WEEK2_NORMALIZATION_CURRENTNESS_AUDIT",
+  "generatedAt": "2026-10-05T01:06:25.060Z",
+  "courtListenerHttpCalls": 0,
+  "aiCalls": 0,
+  "mutations": 125,
+  "apply": true,
+  "corpus": {
+    "cases": 4448,
+    "authorities": 5803,
+    "statutes": 904,
+    "regulations": 196,
+    "rules": 254,
+    "missing_provider": 0,
+    "missing_external_id": 0,
+    "cases_missing_norm_cite": 3919,
+    "cases_with_court_id": 4448,
+    "cases_with_jurisdiction": 4448,
+    "cases_with_court": 4448
+  },
+  "currentnessByType": [
+    {
+      "authority_type": "case",
+      "currentness_status": "unknown",
+      "n": 131
+    },
+    {
+      "authority_type": "case",
+      "currentness_status": "historical",
+      "n": 4317
+    },
+    {
+      "authority_type": "statute",
+      "currentness_status": "unknown",
+      "n": 115
+    },
+    {
+      "authority_type": "statute",
+      "currentness_status": "current_as_of_source_date",
+      "n": 789
+    },
+    {
+      "authority_type": "regulation",
+      "currentness_status": "unknown",
+      "n": 15
+    },
+    {
+      "authority_type": "regulation",
+      "currentness_status": "current_as_of_source_date",
+      "n": 181
+    },
+    {
+      "authority_type": "constitution",
+      "currentness_status": "unknown",
+      "n": 1
+    },
+    {
+      "authority_type": "rule",
+      "currentness_status": "unknown",
+      "n": 7
+    },
+    {
+      "authority_type": "rule",
+      "currentness_status": "current_as_of_source_date",
+      "n": 247
+    }
+  ],
+  "currentnessTotals": [
+    {
+      "currentness_status": "unknown",
+      "n": 144
+    },
+    {
+      "currentness_status": "current_as_of_source_date",
+      "n": 1217
+    },
+    {
+      "currentness_status": "historical",
+      "n": 4442
+    }
+  ],
+  "silentCurrentSuspects": [],
+  "duplicateProviderSourceIdPairs": 0,
+  "duplicateNormalizedCaseCitations": 0,
+  "integrity": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "duplicateCitationEdges": 0
+  },
+  "spacingVariantUnresolvedSamples": [
+    {
+      "normalized_citation": "26 A. 2d 582",
+      "n": 2
+    },
+    {
+      "normalized_citation": "254 A. 2d 162",
+      "n": 2
+    },
+    {
+      "normalized_citation": "294 P. 2d 6",
+      "n": 2
+    },
+    {
+      "normalized_citation": "387 P. 2d 6",
+      "n": 2
+    },
+    {
+      "normalized_citation": "150 P. 2d 17",
+      "n": 2
+    },
+    {
+      "normalized_citation": "154 A. 2d 434",
+      "n": 2
+    },
+    {
+      "normalized_citation": "213 A. 2d 185",
+      "n": 2
+    },
+    {
+      "normalized_citation": "282 P. 2d 905",
+      "n": 2
+    },
+    {
+      "normalized_citation": "408 P. 2d 108",
+      "n": 2
+    },
+    {
+      "normalized_citation": "493 P. 2d 880",
+      "n": 2
+    },
+    {
+      "normalized_citation": "113 A. 2d 671",
+      "n": 1
+    },
+    {
+      "normalized_citation": "124 A. 2d 30",
+      "n": 1
+    },
+    {
+      "normalized_citation": "124 A. 2d 764",
+      "n": 1
+    },
+    {
+      "normalized_citation": "125 A. 2d 94",
+      "n": 1
+    },
+    {
+      "normalized_citation": "122 P. 3d 506",
+      "n": 1
+    },
+    {
+      "normalized_citation": "112 A. 2d 379",
+      "n": 1
+    },
+    {
+      "normalized_citation": "11 A. 2d 856",
+      "n": 1
+    },
+    {
+      "normalized_citation": "122 A. 2d 109",
+      "n": 1
+    },
+    {
+      "normalized_citation": "136 A. 2d 229",
+      "n": 1
+    },
+    {
+      "normalized_citation": "121 A. 2d 783",
+      "n": 1
+    }
+  ],
+  "caseHistoricalBackfill": {
+    "applied": true,
+    "wouldUpdate": 125,
+    "updated": 125
+  }
+}

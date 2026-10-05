@@ -1,0 +1,66 @@
+{
+  "ok": true,
+  "classification": "WEEK2_THROUGHPUT_SCALE_BOOTSTRAP",
+  "generatedAt": "2026-10-05T00:13:07.081Z",
+  "membership": {
+    "level": "CL Membership - Tier 4",
+    "is_active": true
+  },
+  "limits": {
+    "minute": {
+      "scope": "user",
+      "period": "minute",
+      "limit": 25,
+      "usage": 0,
+      "remaining": 25,
+      "reset_at": null,
+      "blocked": false
+    },
+    "hour": {
+      "scope": "user",
+      "period": "hour",
+      "limit": 300,
+      "usage": 0,
+      "remaining": 300,
+      "reset_at": null,
+      "blocked": false
+    },
+    "day": {
+      "scope": "user",
+      "period": "day",
+      "limit": 1400,
+      "usage": 483,
+      "remaining": 917,
+      "reset_at": "2026-10-05T02:01:52.415457+00:00",
+      "blocked": false
+    }
+  },
+  "hourFloor": 25,
+  "dayFloor": 50,
+  "targetMaxCl": 275,
+  "safeHourBudget": 275,
+  "safeDayBudget": 867,
+  "safeBudget": 275,
+  "preferred": 260,
+  "throughputMode": true,
+  "reducedMode": false,
+  "pacingMs": 4000,
+  "laneAShare": 0.84,
+  "laneBShare": 0.16,
+  "start": {
+    "cases": 4323,
+    "extracted": 48301,
+    "resolved": 5552,
+    "unresolved": 42749,
+    "stateDc": 3159,
+    "federal": 1093,
+    "resolutionPct": 11.49,
+    "live12_5Target": 6038,
+    "liveGap12_5": 486,
+    "week2Gap": 377,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0
+  },
+  "courtListenerHttpCalls": 1
+}
