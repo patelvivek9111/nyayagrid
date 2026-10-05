@@ -3535,7 +3535,7 @@
       "sourceStrategy": "courtlistener",
       "courtListenerEligible": true,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "liveEdgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 2,
@@ -3545,10 +3545,24 @@
       "identityConfidence": 1,
       "refreshedAt": "2026-10-04T18:56:38.605Z",
       "refreshSource": "live_unresolved_edges_scale2",
-      "attemptCount": 0,
-      "statusHistory": [],
-      "actualCLRequests": 0,
-      "lastAttemptedAt": null
+      "attemptCount": 1,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-05T14:49:19.399Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "week2_hybrid_lane_b"
+        }
+      ],
+      "actualCLRequests": 2,
+      "lastAttemptedAt": "2026-10-05T14:49:19.399Z",
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5,
+      "lookupMethod": "citation-lookup",
+      "found": true,
+      "acquired": true,
+      "failureReason": null
     },
     {
       "rank": 87,
@@ -3562,7 +3576,7 @@
       "sourceStrategy": "courtlistener",
       "courtListenerEligible": true,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "liveEdgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 2,
@@ -3572,10 +3586,24 @@
       "identityConfidence": 1,
       "refreshedAt": "2026-10-04T18:56:38.605Z",
       "refreshSource": "live_unresolved_edges_scale2",
-      "attemptCount": 0,
-      "statusHistory": [],
-      "actualCLRequests": 0,
-      "lastAttemptedAt": null
+      "attemptCount": 1,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-05T14:50:04.492Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "week2_hybrid_lane_b"
+        }
+      ],
+      "actualCLRequests": 2,
+      "lastAttemptedAt": "2026-10-05T14:50:04.492Z",
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5,
+      "lookupMethod": "citation-lookup",
+      "found": true,
+      "acquired": true,
+      "failureReason": null
     },
     {
       "rank": 88,
@@ -3589,7 +3617,7 @@
       "sourceStrategy": "courtlistener",
       "courtListenerEligible": true,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "liveEdgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 2,
@@ -3599,10 +3627,24 @@
       "identityConfidence": 1,
       "refreshedAt": "2026-10-04T18:56:38.605Z",
       "refreshSource": "live_unresolved_edges_scale2",
-      "attemptCount": 0,
-      "statusHistory": [],
-      "actualCLRequests": 0,
-      "lastAttemptedAt": null
+      "attemptCount": 1,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-05T14:50:47.467Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "week2_hybrid_lane_b"
+        }
+      ],
+      "actualCLRequests": 2,
+      "lastAttemptedAt": "2026-10-05T14:50:47.467Z",
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5,
+      "lookupMethod": "citation-lookup",
+      "found": true,
+      "acquired": true,
+      "failureReason": null
     },
     {
       "rank": 89,
@@ -3616,7 +3658,7 @@
       "sourceStrategy": "courtlistener",
       "courtListenerEligible": true,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "liveEdgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 2,
@@ -3626,10 +3668,24 @@
       "identityConfidence": 1,
       "refreshedAt": "2026-10-04T18:56:38.605Z",
       "refreshSource": "live_unresolved_edges_scale2",
-      "attemptCount": 0,
-      "statusHistory": [],
-      "actualCLRequests": 0,
-      "lastAttemptedAt": null
+      "attemptCount": 1,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-05T14:51:30.138Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "week2_hybrid_lane_b"
+        }
+      ],
+      "actualCLRequests": 2,
+      "lastAttemptedAt": "2026-10-05T14:51:30.138Z",
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5,
+      "lookupMethod": "citation-lookup",
+      "found": true,
+      "acquired": true,
+      "failureReason": null
     },
     {
       "rank": 90,
@@ -3643,7 +3699,7 @@
       "sourceStrategy": "courtlistener",
       "courtListenerEligible": true,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "liveEdgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 2,
@@ -3653,10 +3709,24 @@
       "identityConfidence": 1,
       "refreshedAt": "2026-10-04T18:56:38.605Z",
       "refreshSource": "live_unresolved_edges_scale2",
-      "attemptCount": 0,
-      "statusHistory": [],
-      "actualCLRequests": 0,
-      "lastAttemptedAt": null
+      "attemptCount": 1,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-05T14:52:10.478Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "week2_hybrid_lane_b"
+        }
+      ],
+      "actualCLRequests": 2,
+      "lastAttemptedAt": "2026-10-05T14:52:10.478Z",
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5,
+      "lookupMethod": "citation-lookup",
+      "found": true,
+      "acquired": true,
+      "failureReason": null
     },
     {
       "rank": 91,
@@ -3670,7 +3740,7 @@
       "sourceStrategy": "courtlistener",
       "courtListenerEligible": true,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "liveEdgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 2,
@@ -3680,10 +3750,24 @@
       "identityConfidence": 1,
       "refreshedAt": "2026-10-04T18:56:38.605Z",
       "refreshSource": "live_unresolved_edges_scale2",
-      "attemptCount": 0,
-      "statusHistory": [],
-      "actualCLRequests": 0,
-      "lastAttemptedAt": null
+      "attemptCount": 1,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-05T14:52:53.994Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "week2_hybrid_lane_b"
+        }
+      ],
+      "actualCLRequests": 2,
+      "lastAttemptedAt": "2026-10-05T14:52:53.994Z",
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5,
+      "lookupMethod": "citation-lookup",
+      "found": true,
+      "acquired": true,
+      "failureReason": null
     },
     {
       "rank": 92,
@@ -3697,7 +3781,7 @@
       "sourceStrategy": "courtlistener",
       "courtListenerEligible": true,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "liveEdgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 2,
@@ -3707,10 +3791,24 @@
       "identityConfidence": 1,
       "refreshedAt": "2026-10-04T18:56:38.605Z",
       "refreshSource": "live_unresolved_edges_scale2",
-      "attemptCount": 0,
-      "statusHistory": [],
-      "actualCLRequests": 0,
-      "lastAttemptedAt": null
+      "attemptCount": 1,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-05T14:53:37.143Z",
+          "cl": 2,
+          "oldEdgesResolved": 5,
+          "block": "week2_hybrid_lane_b"
+        }
+      ],
+      "actualCLRequests": 2,
+      "lastAttemptedAt": "2026-10-05T14:53:37.143Z",
+      "actualOldEdgesResolved": 5,
+      "actualEdgesPerCL": 2.5,
+      "lookupMethod": "citation-lookup",
+      "found": true,
+      "acquired": true,
+      "failureReason": null
     },
     {
       "rank": 93,
@@ -3724,7 +3822,7 @@
       "sourceStrategy": "courtlistener",
       "courtListenerEligible": true,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "liveEdgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 2,
@@ -3734,10 +3832,24 @@
       "identityConfidence": 1,
       "refreshedAt": "2026-10-04T18:56:38.605Z",
       "refreshSource": "live_unresolved_edges_scale2",
-      "attemptCount": 0,
-      "statusHistory": [],
-      "actualCLRequests": 0,
-      "lastAttemptedAt": null
+      "attemptCount": 1,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-05T14:54:21.307Z",
+          "cl": 2,
+          "oldEdgesResolved": 7,
+          "block": "week2_hybrid_lane_b"
+        }
+      ],
+      "actualCLRequests": 2,
+      "lastAttemptedAt": "2026-10-05T14:54:21.307Z",
+      "actualOldEdgesResolved": 7,
+      "actualEdgesPerCL": 3.5,
+      "lookupMethod": "citation-lookup",
+      "found": true,
+      "acquired": true,
+      "failureReason": null
     },
     {
       "rank": 94,
@@ -3751,7 +3863,7 @@
       "sourceStrategy": "courtlistener",
       "courtListenerEligible": true,
       "localTargetPresent": false,
-      "status": "READY_CL",
+      "status": "ACQUIRED",
       "priorityReason": "liveEdgeDemand=5",
       "citationDemandScore": 5,
       "coverageValue": 2,
@@ -3761,10 +3873,24 @@
       "identityConfidence": 1,
       "refreshedAt": "2026-10-04T18:56:38.605Z",
       "refreshSource": "live_unresolved_edges_scale2",
-      "attemptCount": 0,
-      "statusHistory": [],
-      "actualCLRequests": 0,
-      "lastAttemptedAt": null
+      "attemptCount": 1,
+      "statusHistory": [
+        {
+          "status": "ACQUIRED",
+          "at": "2026-10-05T14:55:01.319Z",
+          "cl": 2,
+          "oldEdgesResolved": 8,
+          "block": "week2_hybrid_lane_b"
+        }
+      ],
+      "actualCLRequests": 2,
+      "lastAttemptedAt": "2026-10-05T14:55:01.319Z",
+      "actualOldEdgesResolved": 8,
+      "actualEdgesPerCL": 4,
+      "lookupMethod": "citation-lookup",
+      "found": true,
+      "acquired": true,
+      "failureReason": null
     },
     {
       "rank": 95,
@@ -27058,38 +27184,38 @@
     "equalShareUsed": false
   },
   "week2HybridLaneB": {
-    "generatedAt": "2026-10-05T02:49:57.580Z",
+    "generatedAt": "2026-10-05T14:55:13.353Z",
     "version": "cite-demand-scale4-v1",
-    "totalCl": 26,
-    "acquired": 13,
-    "oldEdgesResolvedExact": 76,
+    "totalCl": 18,
+    "acquired": 9,
+    "oldEdgesResolvedExact": 50,
     "metrics": {
       "overallClPerAcquired": 2,
-      "overallOldEdgesPerAcquired": 5.846,
-      "overallOldEdgesPerCl": 2.923,
-      "globalResolvedDelta": 148,
-      "demandPredicted": 66,
-      "demandActual": 76,
-      "demandRealization": 1.152,
-      "remainingTo10Pct": -1029
+      "overallOldEdgesPerAcquired": 5.556,
+      "overallOldEdgesPerCl": 2.778,
+      "globalResolvedDelta": 104,
+      "demandPredicted": 45,
+      "demandActual": 50,
+      "demandRealization": 1.111,
+      "remainingTo10Pct": -1110
     },
     "familyTable": {
       "us_reports": {
-        "attempts": 13,
-        "found": 13,
-        "acquired": 13,
+        "attempts": 9,
+        "found": 9,
+        "acquired": 9,
         "notFound": 0,
-        "cl": 26,
-        "oldEdgesResolved": 76,
+        "cl": 18,
+        "oldEdgesResolved": 50,
         "foundRate": 1,
         "acquisitionRate": 1,
         "clPerAcquired": 2,
-        "edgesPerAcquired": 5.846,
-        "edgesPerCl": 2.923,
-        "recentEdgesPerCl": 2.9,
+        "edgesPerAcquired": 5.556,
+        "edgesPerCl": 2.778,
+        "recentEdgesPerCl": 2.778,
         "pilotBaseline": 3.757,
         "productivityDecay": false,
-        "demandRealization": 1.152,
+        "demandRealization": 1.111,
         "paused": false
       },
       "regional_reporter": {
@@ -27149,14 +27275,14 @@
     },
     "bySubfamily": {
       "U.S.": {
-        "acquired": 13,
-        "cl": 26,
-        "oldEdgesResolved": 76
+        "acquired": 9,
+        "cl": 18,
+        "oldEdgesResolved": 50
       }
     },
     "reallocationLog": [
       {
-        "at": "2026-10-05T02:41:37.477Z",
+        "at": "2026-10-05T14:48:32.220Z",
         "checkpoint": "start",
         "weights": {
           "us": 1,
@@ -27188,7 +27314,7 @@
         }
       },
       {
-        "at": "2026-10-05T02:49:57.580Z",
+        "at": "2026-10-05T14:55:13.353Z",
         "checkpoint": "end",
         "weights": {
           "us": 1,
@@ -27197,21 +27323,21 @@
         },
         "familyTable": {
           "us_reports": {
-            "attempts": 13,
-            "found": 13,
-            "acquired": 13,
+            "attempts": 9,
+            "found": 9,
+            "acquired": 9,
             "notFound": 0,
-            "cl": 26,
-            "oldEdgesResolved": 76,
+            "cl": 18,
+            "oldEdgesResolved": 50,
             "foundRate": 1,
             "acquisitionRate": 1,
             "clPerAcquired": 2,
-            "edgesPerAcquired": 5.846,
-            "edgesPerCl": 2.923,
-            "recentEdgesPerCl": 2.9,
+            "edgesPerAcquired": 5.556,
+            "edgesPerCl": 2.778,
+            "recentEdgesPerCl": 2.778,
             "pilotBaseline": 3.757,
             "productivityDecay": false,
-            "demandRealization": 1.152,
+            "demandRealization": 1.111,
             "paused": false
           },
           "regional_reporter": {

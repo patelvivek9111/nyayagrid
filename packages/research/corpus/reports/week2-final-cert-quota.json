@@ -1,0 +1,551 @@
+{
+  "ok": true,
+  "classification": "WEEK2_FINAL_CERTIFICATION_BOOTSTRAP",
+  "generatedAt": "2026-10-05T14:14:21.756Z",
+  "membership": {
+    "level": "CL Membership - Tier 4",
+    "is_active": true
+  },
+  "limits": {
+    "minute": {
+      "scope": "user",
+      "period": "minute",
+      "limit": 25,
+      "usage": 0,
+      "remaining": 25,
+      "reset_at": null,
+      "blocked": false
+    },
+    "hour": {
+      "scope": "user",
+      "period": "hour",
+      "limit": 300,
+      "usage": 0,
+      "remaining": 300,
+      "reset_at": null,
+      "blocked": false
+    },
+    "day": {
+      "scope": "user",
+      "period": "day",
+      "limit": 1400,
+      "usage": 917,
+      "remaining": 483,
+      "reset_at": "2026-10-05T18:57:04.110578+00:00",
+      "blocked": false
+    }
+  },
+  "hourFloor": 25,
+  "dayFloor": 50,
+  "safeBudget": 275,
+  "preferred": 225,
+  "thresholds": {
+    "STATE_PASS_FLOOR": 3450,
+    "PRE2000_PASS_FLOOR": 900,
+    "PRE1980_PASS_FLOOR": 260,
+    "HIST_JURIS_MIN_PRE2000": 15,
+    "HIST_JURIS_MIN_PRE1980": 3,
+    "sufficientlyCloseCases": 4650
+  },
+  "start": {
+    "cases": 4572,
+    "extracted": 49594,
+    "resolved": 5989,
+    "unresolved": 43605,
+    "parserGap": 0,
+    "stateDc": 3376,
+    "federal": 1125,
+    "intermediate": 508,
+    "pre2000": 842,
+    "pre1980": 223,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0
+  },
+  "sufficiencyPre": {
+    "stateFoundation": "PARTIAL",
+    "historicalFoundation": "PARTIAL",
+    "intermediateFoundation": "PASS",
+    "federalFoundation": "PASS",
+    "materialStateGaps": [
+      {
+        "jurisdiction": "CO",
+        "cases": 49,
+        "highCourt": 49,
+        "intermediateAppellate": 0,
+        "deficit": 101,
+        "pre2000": 4,
+        "pre1980": 0,
+        "intermediateLayerGap": true,
+        "availability": "SOURCE_LIMITED_OR_HIGH_ONLY",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": false
+      },
+      {
+        "jurisdiction": "CA",
+        "cases": 49,
+        "highCourt": 30,
+        "intermediateAppellate": 19,
+        "deficit": 101,
+        "pre2000": 6,
+        "pre1980": 2,
+        "intermediateLayerGap": false,
+        "availability": "ACQUIRABLE_NOW",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": true
+      },
+      {
+        "jurisdiction": "MI",
+        "cases": 51,
+        "highCourt": 51,
+        "intermediateAppellate": 0,
+        "deficit": 99,
+        "pre2000": 3,
+        "pre1980": 1,
+        "intermediateLayerGap": true,
+        "availability": "SOURCE_LIMITED_OR_HIGH_ONLY",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": false
+      },
+      {
+        "jurisdiction": "NV",
+        "cases": 51,
+        "highCourt": 51,
+        "intermediateAppellate": 0,
+        "deficit": 99,
+        "pre2000": 29,
+        "pre1980": 23,
+        "intermediateLayerGap": true,
+        "availability": "SOURCE_LIMITED_OR_HIGH_ONLY",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": false
+      },
+      {
+        "jurisdiction": "NJ",
+        "cases": 51,
+        "highCourt": 51,
+        "intermediateAppellate": 0,
+        "deficit": 99,
+        "pre2000": 7,
+        "pre1980": 1,
+        "intermediateLayerGap": true,
+        "availability": "INVALID_MAPPING",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": false
+      },
+      {
+        "jurisdiction": "NE",
+        "cases": 52,
+        "highCourt": 52,
+        "intermediateAppellate": 0,
+        "deficit": 98,
+        "pre2000": 7,
+        "pre1980": 0,
+        "intermediateLayerGap": true,
+        "availability": "SOURCE_LIMITED_OR_HIGH_ONLY",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": false
+      },
+      {
+        "jurisdiction": "NC",
+        "cases": 52,
+        "highCourt": 52,
+        "intermediateAppellate": 0,
+        "deficit": 98,
+        "pre2000": 6,
+        "pre1980": 4,
+        "intermediateLayerGap": true,
+        "availability": "SOURCE_LIMITED_OR_HIGH_ONLY",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": false
+      },
+      {
+        "jurisdiction": "TN",
+        "cases": 52,
+        "highCourt": 52,
+        "intermediateAppellate": 0,
+        "deficit": 98,
+        "pre2000": 32,
+        "pre1980": 23,
+        "intermediateLayerGap": true,
+        "availability": "SOURCE_LIMITED_OR_HIGH_ONLY",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": false
+      },
+      {
+        "jurisdiction": "VA",
+        "cases": 52,
+        "highCourt": 52,
+        "intermediateAppellate": 0,
+        "deficit": 98,
+        "pre2000": 7,
+        "pre1980": 0,
+        "intermediateLayerGap": true,
+        "availability": "INVALID_MAPPING",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": false
+      },
+      {
+        "jurisdiction": "AK",
+        "cases": 53,
+        "highCourt": 53,
+        "intermediateAppellate": 0,
+        "deficit": 97,
+        "pre2000": 8,
+        "pre1980": 0,
+        "intermediateLayerGap": true,
+        "availability": "SOURCE_LIMITED_OR_HIGH_ONLY",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": false
+      },
+      {
+        "jurisdiction": "ID",
+        "cases": 53,
+        "highCourt": 53,
+        "intermediateAppellate": 0,
+        "deficit": 97,
+        "pre2000": 8,
+        "pre1980": 0,
+        "intermediateLayerGap": true,
+        "availability": "SOURCE_LIMITED_OR_HIGH_ONLY",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": false
+      },
+      {
+        "jurisdiction": "OR",
+        "cases": 53,
+        "highCourt": 53,
+        "intermediateAppellate": 0,
+        "deficit": 97,
+        "pre2000": 8,
+        "pre1980": 0,
+        "intermediateLayerGap": true,
+        "availability": "SOURCE_LIMITED_OR_HIGH_ONLY",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": false
+      }
+    ],
+    "acquirableMaterialState": [
+      {
+        "jurisdiction": "CA",
+        "cases": 49,
+        "highCourt": 30,
+        "intermediateAppellate": 19,
+        "deficit": 101,
+        "pre2000": 6,
+        "pre1980": 2,
+        "intermediateLayerGap": false,
+        "availability": "ACQUIRABLE_NOW",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": true
+      },
+      {
+        "jurisdiction": "IL",
+        "cases": 53,
+        "highCourt": 37,
+        "intermediateAppellate": 15,
+        "deficit": 97,
+        "pre2000": 1,
+        "pre1980": 0,
+        "intermediateLayerGap": false,
+        "availability": "ACQUIRABLE_NOW",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": true
+      },
+      {
+        "jurisdiction": "SD",
+        "cases": 54,
+        "highCourt": 54,
+        "intermediateAppellate": 0,
+        "deficit": 96,
+        "pre2000": 9,
+        "pre1980": 3,
+        "intermediateLayerGap": false,
+        "availability": "ACQUIRABLE_NOW",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": true
+      },
+      {
+        "jurisdiction": "FL",
+        "cases": 54,
+        "highCourt": 30,
+        "intermediateAppellate": 24,
+        "deficit": 96,
+        "pre2000": 9,
+        "pre1980": 0,
+        "intermediateLayerGap": false,
+        "availability": "ACQUIRABLE_NOW",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": true
+      },
+      {
+        "jurisdiction": "NY",
+        "cases": 55,
+        "highCourt": 30,
+        "intermediateAppellate": 25,
+        "deficit": 95,
+        "pre2000": 12,
+        "pre1980": 1,
+        "intermediateLayerGap": false,
+        "availability": "ACQUIRABLE_NOW",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": true
+      },
+      {
+        "jurisdiction": "PA",
+        "cases": 56,
+        "highCourt": 30,
+        "intermediateAppellate": 26,
+        "deficit": 94,
+        "pre2000": 11,
+        "pre1980": 0,
+        "intermediateLayerGap": false,
+        "availability": "ACQUIRABLE_NOW",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": true
+      },
+      {
+        "jurisdiction": "RI",
+        "cases": 56,
+        "highCourt": 56,
+        "intermediateAppellate": 0,
+        "deficit": 94,
+        "pre2000": 4,
+        "pre1980": 4,
+        "intermediateLayerGap": false,
+        "availability": "ACQUIRABLE_NOW",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": true
+      },
+      {
+        "jurisdiction": "WY",
+        "cases": 56,
+        "highCourt": 56,
+        "intermediateAppellate": 0,
+        "deficit": 94,
+        "pre2000": 11,
+        "pre1980": 6,
+        "intermediateLayerGap": false,
+        "availability": "ACQUIRABLE_NOW",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": true
+      },
+      {
+        "jurisdiction": "ND",
+        "cases": 57,
+        "highCourt": 57,
+        "intermediateAppellate": 0,
+        "deficit": 93,
+        "pre2000": 12,
+        "pre1980": 7,
+        "intermediateLayerGap": false,
+        "availability": "ACQUIRABLE_NOW",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": true
+      },
+      {
+        "jurisdiction": "TX",
+        "cases": 57,
+        "highCourt": 41,
+        "intermediateAppellate": 15,
+        "deficit": 93,
+        "pre2000": 12,
+        "pre1980": 5,
+        "intermediateLayerGap": false,
+        "availability": "ACQUIRABLE_NOW",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": true
+      },
+      {
+        "jurisdiction": "MT",
+        "cases": 58,
+        "highCourt": 58,
+        "intermediateAppellate": 0,
+        "deficit": 92,
+        "pre2000": 13,
+        "pre1980": 10,
+        "intermediateLayerGap": false,
+        "availability": "ACQUIRABLE_NOW",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": true
+      },
+      {
+        "jurisdiction": "NH",
+        "cases": 58,
+        "highCourt": 58,
+        "intermediateAppellate": 0,
+        "deficit": 92,
+        "pre2000": 13,
+        "pre1980": 1,
+        "intermediateLayerGap": false,
+        "availability": "ACQUIRABLE_NOW",
+        "criticality": "MATERIAL_WEEK2",
+        "blocksWeek3": true
+      }
+    ],
+    "sourceLimitedStateCount": 26,
+    "materialHistoricalGaps": [
+      {
+        "jurisdiction": "IL",
+        "cases": 53,
+        "pre2000": 1,
+        "pre1980": 0,
+        "thinPre2000": true,
+        "thinPre1980": true,
+        "criticality": "MATERIAL_WEEK2"
+      },
+      {
+        "jurisdiction": "MI",
+        "cases": 51,
+        "pre2000": 3,
+        "pre1980": 1,
+        "thinPre2000": true,
+        "thinPre1980": true,
+        "criticality": "MATERIAL_WEEK2"
+      },
+      {
+        "jurisdiction": "CO",
+        "cases": 49,
+        "pre2000": 4,
+        "pre1980": 0,
+        "thinPre2000": true,
+        "thinPre1980": true,
+        "criticality": "MATERIAL_WEEK2"
+      },
+      {
+        "jurisdiction": "RI",
+        "cases": 56,
+        "pre2000": 4,
+        "pre1980": 4,
+        "thinPre2000": true,
+        "thinPre1980": false,
+        "criticality": "MATERIAL_WEEK2"
+      },
+      {
+        "jurisdiction": "NC",
+        "cases": 52,
+        "pre2000": 6,
+        "pre1980": 4,
+        "thinPre2000": true,
+        "thinPre1980": false,
+        "criticality": "MATERIAL_WEEK2"
+      },
+      {
+        "jurisdiction": "MD",
+        "cases": 55,
+        "pre2000": 6,
+        "pre1980": 0,
+        "thinPre2000": true,
+        "thinPre1980": true,
+        "criticality": "MATERIAL_WEEK2"
+      },
+      {
+        "jurisdiction": "CA",
+        "cases": 49,
+        "pre2000": 6,
+        "pre1980": 2,
+        "thinPre2000": true,
+        "thinPre1980": true,
+        "criticality": "MATERIAL_WEEK2"
+      },
+      {
+        "jurisdiction": "NJ",
+        "cases": 51,
+        "pre2000": 7,
+        "pre1980": 1,
+        "thinPre2000": true,
+        "thinPre1980": true,
+        "criticality": "MATERIAL_WEEK2"
+      },
+      {
+        "jurisdiction": "NE",
+        "cases": 52,
+        "pre2000": 7,
+        "pre1980": 0,
+        "thinPre2000": true,
+        "thinPre1980": true,
+        "criticality": "MATERIAL_WEEK2"
+      },
+      {
+        "jurisdiction": "VA",
+        "cases": 52,
+        "pre2000": 7,
+        "pre1980": 0,
+        "thinPre2000": true,
+        "thinPre1980": true,
+        "criticality": "MATERIAL_WEEK2"
+      },
+      {
+        "jurisdiction": "AK",
+        "cases": 53,
+        "pre2000": 8,
+        "pre1980": 0,
+        "thinPre2000": true,
+        "thinPre1980": true,
+        "criticality": "MATERIAL_WEEK2"
+      },
+      {
+        "jurisdiction": "ID",
+        "cases": 53,
+        "pre2000": 8,
+        "pre1980": 0,
+        "thinPre2000": true,
+        "thinPre1980": true,
+        "criticality": "MATERIAL_WEEK2"
+      },
+      {
+        "jurisdiction": "OR",
+        "cases": 53,
+        "pre2000": 8,
+        "pre1980": 0,
+        "thinPre2000": true,
+        "thinPre1980": true,
+        "criticality": "MATERIAL_WEEK2"
+      },
+      {
+        "jurisdiction": "HI",
+        "cases": 54,
+        "pre2000": 9,
+        "pre1980": 3,
+        "thinPre2000": true,
+        "thinPre1980": false,
+        "criticality": "MATERIAL_WEEK2"
+      },
+      {
+        "jurisdiction": "SD",
+        "cases": 54,
+        "pre2000": 9,
+        "pre1980": 3,
+        "thinPre2000": true,
+        "thinPre1980": false,
+        "criticality": "MATERIAL_WEEK2"
+      }
+    ],
+    "pre2000Concentration": {
+      "top5Share": 0.254,
+      "top5": [
+        {
+          "j": "LA",
+          "pre2000": 62
+        },
+        {
+          "j": "MS",
+          "pre2000": 46
+        },
+        {
+          "j": "KY",
+          "pre2000": 37
+        },
+        {
+          "j": "IN",
+          "pre2000": 37
+        },
+        {
+          "j": "TN",
+          "pre2000": 32
+        }
+      ]
+    }
+  },
+  "courtListenerHttpCalls": 1
+}

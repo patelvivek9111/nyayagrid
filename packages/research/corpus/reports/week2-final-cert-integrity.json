@@ -1,0 +1,39 @@
+{
+  "ok": true,
+  "courtListenerHttpCalls": 0,
+  "aiCalls": 0,
+  "featureAgents": "0",
+  "resolvedBefore": 6093,
+  "extracted": 49826,
+  "resolvedAfter": 6093,
+  "newResolved": 0,
+  "targetAbsent": 43733,
+  "parserGap": 0,
+  "targetAbsentBefore": 43733,
+  "parserGapBefore": 0,
+  "chunks": {
+    "chunks": 101963,
+    "embeddings": 101963,
+    "missing_embeddings": 0
+  },
+  "orphans": 0,
+  "duplicateSourceIds": 0,
+  "corpus": {
+    "authorities": 5960,
+    "cases": 4605,
+    "cl_cases": 4560,
+    "statutes": 904,
+    "regulations": 196,
+    "rules": 254
+  },
+  "jurisdictions": [
+    {
+      "j": "AR",
+      "cases": 56
+    },
+    {
+      "j": "WI",
+      "cases": 129
+    }
+  ]
+}

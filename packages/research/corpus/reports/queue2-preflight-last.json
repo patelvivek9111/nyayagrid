@@ -26,10 +26,10 @@
   "resource": {
     "ok": true,
     "reasons": [],
-    "freeDiskBytes": 80198639616,
-    "tempFreeBytes": 80198639616
+    "freeDiskBytes": 83390308352,
+    "tempFreeBytes": 83390308352
   },
-  "generatedAt": "2026-10-05T02:50:47.621Z",
+  "generatedAt": "2026-10-05T14:56:58.458Z",
   "codeFingerprint": "de35db200ac519a4940e81842c71c95be627c456f87fa7eda4890605a4ddd772",
   "workerVersion": "queue2-safety-gate-1"
 }
