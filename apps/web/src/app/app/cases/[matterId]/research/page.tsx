@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Badge, Button, Panel } from "@nyayagrid/ui";
 import { ErrorState } from "@/components/ux";
-import { formatCoverageWarning } from "@/lib/plain-labels";
+import { formatCoverageWarning, humanizeKey } from "@/lib/plain-labels";
 
 type MatterAuthorityItem = {
   id: string;
@@ -274,7 +274,7 @@ export default function MatterResearchPage() {
                     {item.authority.title}
                   </Link>
                   <div className="mt-1 flex flex-wrap items-center gap-2">
-                    <Badge>{item.status}</Badge>
+                    <Badge>{humanizeKey(item.status)}</Badge>
                     {item.authority.citation ? (
                       <span className="text-xs text-ink/60">{item.authority.citation}</span>
                     ) : null}
@@ -288,7 +288,7 @@ export default function MatterResearchPage() {
                         onClick={() => updateStatus(item.id, status)}
                         disabled={busy}
                       >
-                        {status.replace("_", " ")}
+                        {humanizeKey(status)}
                       </button>
                     ))}
                   </div>

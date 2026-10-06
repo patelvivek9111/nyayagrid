@@ -130,6 +130,9 @@ const LABELS: Record<string, string> = {
   post_disposition: "Post-disposition",
   closed: "Closed",
   open_case: "Open",
+  key_authority: "Key authority",
+  not_relevant: "Not relevant",
+  saved: "Saved",
 };
 
 /** Prefer mapped labels; otherwise title-case spaced tokens (never leak SCREAMING_SNAKE). */

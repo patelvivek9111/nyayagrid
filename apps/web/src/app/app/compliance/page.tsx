@@ -8,6 +8,7 @@ import { IntelligenceDialog } from "@/components/ux/case-intelligence";
 import {
   FirmEmpty,
   FirmError,
+  FirmLoading,
   FirmNotice,
   FirmPageHeader,
   FirmRow,
@@ -45,6 +46,7 @@ export default function CompliancePage() {
   const [trains, setTrains] = useState(false);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [tab, setTab] = useState("holds");
   const [holdOpen, setHoldOpen] = useState(false);
   const [deletionOpen, setDeletionOpen] = useState(false);
@@ -71,7 +73,10 @@ export default function CompliancePage() {
 
   useEffect(() => {
     if (!organizationId) return;
-    load(organizationId).catch((err) => setError(err instanceof Error ? err.message : "Failed"));
+    setLoading(true);
+    load(organizationId)
+      .catch((err) => setError(err instanceof Error ? err.message : "Failed"))
+      .finally(() => setLoading(false));
   }, [organizationId]);
 
   async function placeHold(event: FormEvent) {
@@ -227,7 +232,13 @@ export default function CompliancePage() {
           <FirmError message={error} />
         </div>
       ) : null}
+      {loading ? (
+        <div className="mt-6">
+          <FirmLoading label="Loading holds and privacy…" />
+        </div>
+      ) : null}
 
+      {!loading ? (
       <div className="mt-6 space-y-4">
         <FirmTabs
           value={tab}
@@ -358,6 +369,7 @@ export default function CompliancePage() {
           </div>
         ) : null}
       </div>
+      ) : null}
 
       <IntelligenceDialog
         open={holdOpen}

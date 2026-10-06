@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { Badge, Button, Panel } from "@nyayagrid/ui";
-import { ErrorState } from "@/components/ux";
+import { ErrorState, LoadingState } from "@/components/ux";
 import { humanizeKey } from "@/lib/plain-labels";
 
 type DocumentRow = {
@@ -41,11 +41,14 @@ export default function MatterAnalysisPage() {
   const [tab, setTab] = useState<Tab>("contracts");
   const [documents, setDocuments] = useState<DocumentRow[]>([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     fetchJson(`/api/v1/matters/${matterId}/documents`)
       .then((json) => setDocuments(json.documents ?? []))
-      .catch((err) => setError(err.message));
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
   }, [matterId]);
 
   return (
@@ -59,6 +62,9 @@ export default function MatterAnalysisPage() {
         Review contracts, depositions, and evidence for this case. Findings stay suggested until you
         review them.
       </p>
+      {loading ? <LoadingState label="Loading analysis documents…" /> : null}
+      {!loading ? (
+        <>
       <div className="mb-4 flex flex-wrap gap-2" role="tablist" aria-label="Analysis views">
         {TABS.map((t) => (
           <button
@@ -87,6 +93,8 @@ export default function MatterAnalysisPage() {
       ) : null}
       {tab === "evidence" ? <EvidenceSection matterId={matterId} onError={setError} /> : null}
       {tab === "discovery" ? <DiscoverySection matterId={matterId} onError={setError} /> : null}
+        </>
+      ) : null}
     </>
   );
 }

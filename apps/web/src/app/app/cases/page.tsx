@@ -9,6 +9,7 @@ import { useOrgCapability } from "@/components/use-org-capability";
 import { EmptyState, ErrorState, LoadingState } from "@/components/ux";
 import { Button } from "@nyayagrid/ui";
 import { isClientGuestRole } from "@/lib/first-run";
+import { humanizeKey } from "@/lib/plain-labels";
 
 type CaseRow = {
   id: string;
@@ -90,7 +91,7 @@ export default function CasesListPage() {
               <Link href={`/app/cases/${c.id}`} className="block px-4 py-3 hover:bg-accent-soft/30">
                 <p className="font-semibold text-ink">{c.title}</p>
                 <p className="text-xs text-ink/55">
-                  {c.matterNumber} · {c.clientDisplayName} · {c.status}
+                  {c.matterNumber} · {c.clientDisplayName} · {humanizeKey(c.status)}
                   {c.jurisdiction ? ` · ${c.jurisdiction}` : ""}
                 </p>
               </Link>

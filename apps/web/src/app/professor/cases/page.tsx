@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState, type FormEvent } from "react";
 import { StudyAidNotice } from "@/components/professor/study-aid-notice";
+import { EmptyState, ErrorState, LoadingState } from "@/components/ux";
+import { humanizeKey } from "@/lib/plain-labels";
 import { Badge, Button, PageHeader, Panel } from "@nyayagrid/ui";
 
 type CaseRow = {
@@ -109,7 +111,7 @@ export default function ProfessorCasesPage() {
       <div className="mb-4">
         <StudyAidNotice compact />
       </div>
-      {error ? <p className="mb-4 text-sm text-[var(--ng-danger)]">{error}</p> : null}
+      {error ? <div className="mb-4"><ErrorState message={error} /></div> : null}
       {message ? <p className="mb-4 text-sm text-accent">{message}</p> : null}
 
       <div className="mb-4">
@@ -171,9 +173,12 @@ export default function ProfessorCasesPage() {
 
         <Panel title="Case library">
           {loading ? (
-            <p className="text-sm text-ink/70">Loading your cases…</p>
+            <LoadingState label="Loading your cases…" />
           ) : cases.length === 0 ? (
-            <p className="text-sm text-ink/70">No cases yet. Upload one to get started.</p>
+            <EmptyState
+              title="No cases yet"
+              description="Upload or paste an opinion to start briefing and study questions."
+            />
           ) : (
             <ul className="space-y-2 text-sm">
               {cases.map((studentCase) => (
@@ -188,7 +193,7 @@ export default function ProfessorCasesPage() {
                     {studentCase.citation ? <span>{studentCase.citation}</span> : null}
                     {studentCase.court ? <span>· {studentCase.court}</span> : null}
                     {studentCase.courseLabel ? <Badge>{studentCase.courseLabel}</Badge> : null}
-                    <Badge>{studentCase.processingState}</Badge>
+                    <Badge>{humanizeKey(studentCase.processingState)}</Badge>
                   </div>
                 </li>
               ))}

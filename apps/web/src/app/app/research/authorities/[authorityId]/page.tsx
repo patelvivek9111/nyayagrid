@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { ProfessionalShell } from "@/components/shell";
 import { useActiveOrganization } from "@/components/use-active-organization";
+import { EmptyState, ErrorState, LoadingState } from "@/components/ux";
+import { humanizeKey } from "@/lib/plain-labels";
 import { Badge, Button, Panel } from "@nyayagrid/ui";
 
 export default function AuthorityViewerPage() {
@@ -15,6 +17,7 @@ export default function AuthorityViewerPage() {
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [summary, setSummary] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   async function load() {
     const res = await fetch(`/api/v1/research/authorities/${authorityId}`);
@@ -24,7 +27,10 @@ export default function AuthorityViewerPage() {
   }
 
   useEffect(() => {
-    load().catch((err) => setError(err.message));
+    setLoading(true);
+    load()
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authorityId]);
 
@@ -48,17 +54,33 @@ export default function AuthorityViewerPage() {
     }
   }
 
+  if (loading) {
+    return (
+      <ProfessionalShell title="Authority">
+        <LoadingState label="Loading authority…" />
+      </ProfessionalShell>
+    );
+  }
   if (error && !data) {
     return (
       <ProfessionalShell title="Authority">
-        <p className="text-sm text-[var(--ng-danger)]">{error}</p>
+        <ErrorState message={error} onRetry={() => {
+          setError("");
+          setLoading(true);
+          load()
+            .catch((err) => setError(err.message))
+            .finally(() => setLoading(false));
+        }} />
       </ProfessionalShell>
     );
   }
   if (!data) {
     return (
       <ProfessionalShell title="Authority">
-        <p>Loading…</p>
+        <EmptyState
+          title="Authority not found"
+          description="This authority is unavailable or you do not have access to it."
+        />
       </ProfessionalShell>
     );
   }
@@ -82,9 +104,9 @@ export default function AuthorityViewerPage() {
 
   return (
     <ProfessionalShell title={authority.shortTitle ?? authority.title}>
-      {error ? <p className="mb-3 text-sm text-[var(--ng-danger)]">{error}</p> : null}
+      {error ? <div className="mb-3"><ErrorState message={error} /></div> : null}
       <div className="mb-4 flex flex-wrap items-center gap-2">
-        <Badge>{authority.authorityType}</Badge>
+        <Badge>{humanizeKey(authority.authorityType)}</Badge>
         {authority.jurisdiction ? <Badge>{authority.jurisdiction}</Badge> : null}
         {authority.court ? <Badge>{authority.court}</Badge> : null}
         {authority.decisionDate ? <Badge>{authority.decisionDate}</Badge> : null}

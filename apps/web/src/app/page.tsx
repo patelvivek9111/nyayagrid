@@ -7,36 +7,36 @@ export default function HomePage() {
       <PageHeader
         eyebrow="NyayaGrid"
         title="Legal intelligence and legal work in one system."
-        description="Phase 1 foundation: authentication, organizations, authorization, storage, audit, and workspace shells."
+        description="NyayaGrid serves law firms, solo lawyers, law students, and the public — with source-grounded answers and matter-centered workflows."
       />
       <div className="flex flex-wrap gap-3">
         <Badge>Professional</Badge>
-        <Badge>Student shell</Badge>
-        <Badge>Public shell</Badge>
+        <Badge>Nyaya Professor</Badge>
+        <Badge>Nyaya Guide</Badge>
       </div>
       <div className="grid gap-4 md:grid-cols-3">
         <Panel title="Professional Workspace">
           <p className="mb-4 text-sm text-ink/70">
-            Firm and solo lawyer tenancy on one Organization model.
+            Matters, documents, Ask Nyaya, research, drafting, and prosecution case work for firms and solo lawyers.
           </p>
           <Link className="text-sm font-semibold text-accent underline" href="/app">
-            Enter /app
+            Enter workspace
           </Link>
         </Panel>
         <Panel title="Nyaya Professor">
           <p className="mb-4 text-sm text-ink/70">
-            Student shell only in Phase 1. No Professor features yet.
+            Case upload, briefing, comparison, and citation-backed study answers for law students.
           </p>
           <Link className="text-sm font-semibold text-accent underline" href="/professor">
-            Open shell
+            Open Nyaya Professor
           </Link>
         </Panel>
         <Panel title="Nyaya Guide">
           <p className="mb-4 text-sm text-ink/70">
-            Public shell only in Phase 1. No Guide features yet.
+            Plain-language legal information, document explanation, and consultation prep for the public.
           </p>
           <Link className="text-sm font-semibold text-accent underline" href="/guide">
-            Open shell
+            Open Nyaya Guide
           </Link>
         </Panel>
       </div>

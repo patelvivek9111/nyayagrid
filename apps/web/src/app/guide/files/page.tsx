@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { EmptyState, ErrorState, LoadingState } from "@/components/ux";
+import { humanizeKey } from "@/lib/plain-labels";
 import { Badge, PageHeader, Panel } from "@nyayagrid/ui";
 
 type DocumentRow = {
@@ -15,15 +17,18 @@ type DocumentRow = {
 export default function GuideFilesPage() {
   const [documents, setDocuments] = useState<DocumentRow[]>([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     fetch("/api/v1/guide/documents")
       .then(async (res) => {
         const data = await res.json();
         if (!res.ok) throw new Error(data?.error?.message ?? "Failed to load files");
         setDocuments(data.documents ?? []);
       })
-      .catch((err) => setError(err instanceof Error ? err.message : "Failed to load"));
+      .catch((err) => setError(err instanceof Error ? err.message : "Failed to load"))
+      .finally(() => setLoading(false));
   }, []);
 
   return (
@@ -33,22 +38,26 @@ export default function GuideFilesPage() {
         title="My Files"
         description="Documents you uploaded to Nyaya Guide. They are private to this account and are not a Case file."
       />
-      {error ? <p className="mb-4 text-sm text-[var(--ng-danger)]">{error}</p> : null}
+      {error ? <div className="mb-4"><ErrorState message={error} /></div> : null}
+      {loading ? <LoadingState label="Loading your files…" /> : null}
+      {!loading ? (
       <Panel title="Uploaded documents">
         {documents.length === 0 ? (
-          <p className="text-sm text-ink/70">
-            No files yet.{" "}
-            <Link className="font-semibold text-accent underline" href="/guide/explain">
-              Explain a document
-            </Link>
-            .
-          </p>
+          <EmptyState
+            title="No files yet"
+            description="Upload or paste a document on Explain a Document to keep it here."
+            action={
+              <Link className="text-sm font-semibold text-accent underline" href="/guide/explain">
+                Explain a document
+              </Link>
+            }
+          />
         ) : (
           <ul className="space-y-2 text-sm">
             {documents.map((document) => (
               <li
                 key={document.id}
-                className="flex items-center justify-between rounded border border-line px-3 py-2"
+                className="flex flex-wrap items-center justify-between gap-2 rounded border border-line px-3 py-2"
               >
                 <Link
                   className="font-semibold text-accent underline"
@@ -56,12 +65,16 @@ export default function GuideFilesPage() {
                 >
                   {document.title}
                 </Link>
-                <Badge>{document.documentKind ?? "other"}</Badge>
+                <div className="flex flex-wrap gap-2">
+                  <Badge>{humanizeKey(document.documentKind ?? "other")}</Badge>
+                  <Badge>{humanizeKey(document.processingState)}</Badge>
+                </div>
               </li>
             ))}
           </ul>
         )}
       </Panel>
+      ) : null}
     </>
   );
 }
