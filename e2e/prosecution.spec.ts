@@ -35,13 +35,18 @@ test.describe.serial("signed-in prosecution workspace", () => {
     for (const label of [
       "Overview",
       "Charges",
+      "Elements Matrix",
       "Evidence",
       "Witnesses",
       "Discovery",
-      "Timeline",
-      "Research",
+      "Disclosure",
+      "Warrants",
+      "Subpoenas",
       "Motions",
       "Hearings",
+      "Pleas",
+      "Timeline",
+      "Research",
       "Tasks",
     ]) {
       const link = sections.getByRole("link", { name: label, exact: true });
