@@ -1,0 +1,85 @@
+{
+  "classification": "CORPUS_PASS_BLOCKED",
+  "classLabel": "CONTINUOUS_CORPUS_CITATION_STRENGTHENING_PASS1",
+  "stopReason": "REAL_CORPUS_STORE_UNAVAILABLE",
+  "generatedAt": "2026-10-06T13:40:00.000Z",
+  "worktree": "C:/Users/patel/Documents/nyayagrid-corpus",
+  "branch": "nyaya/corpus-citation-strengthening",
+  "baseSha": "8c823dc701058d89c3308c0e40da9dde228ae1be",
+  "weeks1to7": "CLOSED",
+  "productCodeModified": false,
+  "sharedFilesModified": false,
+  "migrationCreated": false,
+  "lockfileModified": false,
+  "mainModified": false,
+  "aBranchModified": false,
+  "courtListener": {
+    "authoritativeProbe": false,
+    "reason": "COURTLISTENER_API_KEY is not in the local environment. Week 2 probes ran on fly app nyayagrid-staging, which this session cannot access.",
+    "httpCalls": 0,
+    "429": 0,
+    "408": 0,
+    "longWaitsOver5m": 0
+  },
+  "realWeek2Store": {
+    "available": false,
+    "status": "REAL_CORPUS_STORE_UNAVAILABLE",
+    "expectedShape": {
+      "source": "packages/research/corpus/reports/week2-week3-handoff.json",
+      "cases": 4658,
+      "stateDc": 3453,
+      "federal": 1134,
+      "intermediate": 572,
+      "pre2000": 919,
+      "pre1980": 293,
+      "extracted": 49926,
+      "resolved": 6122
+    },
+    "accessPath": "fly machine exec on nyayagrid-staging (machine 811d3e3f522648), DATABASE_URL pointing at Neon host ep-jolly-brook-auhdpay3-pooler.c-10.us-east-1.aws.neon.tech",
+    "attempts": [
+      {
+        "target": "local docker postgres databases nyayagrid, nyayagrid_restore_test, nyayagrid_staging_6w, nyayagrid_staging_6w_restore",
+        "result": "not the Week 2 store",
+        "nyayagridCases": 47,
+        "nyayagridAuthorities": 193,
+        "nyayagridCitationsExtracted": 5,
+        "nyayagridCitationsResolved": 1,
+        "nyayagridCitationsUnresolved": 4
+      },
+      {
+        "target": "fly app nyayagrid-staging",
+        "result": "unauthorized",
+        "detail": "flyctl auth whoami succeeded for the local fo1 token. apps list, status, and machine exec returned unauthorized."
+      },
+      {
+        "target": "Neon API",
+        "result": "stored access token rejected (401). Refresh returned invalid_grant on the follow-up call.",
+        "operatorNote": "The first refresh against oauth2.neon.tech succeeded and rotated the refresh token. The replacement token was not persisted, so the copy in ~/.config/neon/credentials.json is no longer accepted. neonctl auth is required before another Neon attempt."
+      }
+    ]
+  },
+  "acquisition": {
+    "performed": false,
+    "reason": "Refused to ingest into the 47-case local development database. That database is the product runtime, not the Week 2 corpus."
+  },
+  "sharedRuntimeLock": {
+    "usedForCorpusWrites": false,
+    "localReadOnlyIdentityCheck": true,
+    "released": true
+  },
+  "chatARequests": {
+    "warrantSuppression": "NOT_ACQUIRED_STORE_UNAVAILABLE",
+    "realConflict": "NOT_ACQUIRED_STORE_UNAVAILABLE",
+    "treatment": "NOT_SUPPORTED_BY_SOURCE"
+  },
+  "sharedFileEscalations": "NONE",
+  "p0": [
+    "Restore access to the Week 2 corpus store before any further acquisition. Do not treat localhost:5433 as that store."
+  ],
+  "p1": [
+    "Re-authenticate flyctl against the org that owns nyayagrid-staging, or restore a Neon connection string for ep-jolly-brook-auhdpay3.",
+    "Re-run neonctl auth. The stored refresh token was rotated during this session and the replacement was not saved.",
+    "After the store is reachable, rerun pass 1 from the read-only census. No authorities were added in this attempt."
+  ],
+  "nextBAction": "Reconnect to the Week 2 Neon corpus (via an authorized fly machine exec or a fresh Neon credential) and rerun the read-only census before any CourtListener request."
+}
