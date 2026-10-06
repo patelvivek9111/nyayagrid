@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useActiveOrganization } from "@/components/use-active-organization";
 import { EmptyState, ErrorState, LoadingState, StatusLabel } from "@/components/ux";
 import { formatCoverageWarning, humanizeKey } from "@/lib/plain-labels";
+import { WarrantReviewPanel, type SuppressionAnswerView, type SuppressionReviewView } from "@/components/prosecution/warrant-review";
 
 export const PROSECUTION_SECTIONS = [
   { segment: "", label: "Overview" },
@@ -94,6 +95,8 @@ type Overview = {
   };
   matrix?: MatrixRow[];
   discoveryDashboard?: DiscoveryDashboard;
+  suppressionReview?: SuppressionReviewView;
+  suppressionAnswer?: SuppressionAnswerView;
   guiltConclusion: null;
 };
 
@@ -205,10 +208,7 @@ export function ProsecutionSection({ caseId, section }: { caseId: string; sectio
       {section === "discovery" ? <DiscoveryBody overview={overview} /> : null}
       {section === "disclosure" ? <DisclosureBody overview={overview} /> : null}
       {section === "warrants" ? (
-        <EmptyState
-          title="Warrants"
-          description="Warrant, affidavit, and execution records are stored on this case. Nyaya does not auto-validate warrants."
-        />
+        <WarrantReviewPanel review={overview.suppressionReview} answer={overview.suppressionAnswer} />
       ) : null}
       {section === "subpoenas" ? <SubpoenasBody overview={overview} /> : null}
       {section === "motions" ? <MotionsBody overview={overview} /> : null}
@@ -318,10 +318,19 @@ function OverviewBody({ overview }: { overview: Overview }) {
         />
       </section>
       <section className="rounded-md border border-line p-3">
-        <h2 className="text-sm font-semibold text-ink">Procedure issues</h2>
+        <h2 className="text-sm font-semibold text-ink">Suppression review</h2>
+        <p className="mt-1 text-sm text-ink/70">
+          Open Warrants for the separated review. Nyaya does not decide suppression, warrant validity, or guilt.
+        </p>
         <RecordList
-          empty="No procedure issues flagged."
-          rows={overview.issueFlags.map((issue) => `${humanizeKey(issue.issueType)} (${humanizeKey(issue.status)})`)}
+          empty="No suppression review issues are open."
+          rows={
+            overview.suppressionReview && overview.suppressionReview.issues.length > 0
+              ? overview.suppressionReview.issues.map(
+                  (issue) => `${humanizeKey(issue.dimension)} — ${humanizeKey(issue.reviewStatus)}`,
+                )
+              : overview.issueFlags.map((issue) => `${humanizeKey(issue.issueType)} (${humanizeKey(issue.status)})`)
+          }
         />
       </section>
     </div>

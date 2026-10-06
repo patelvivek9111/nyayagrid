@@ -4,3 +4,6 @@ export * from "./fixture";
 export * from "./postgres";
 export * from "./graph-bridge";
 export * from "./research-context";
+export * from "./suppression-review";
+export * from "./suppression-catalog";
+export * from "./suppression-fixtures";

@@ -1,6 +1,7 @@
 import { partitionEvidenceByDefendant, separateProsecutionCaseIssues } from "../deepening/evidence-scope";
 import { assertProvenance } from "../legal/standards";
 import type { SourceProvenance } from "../legal/types";
+import { suppressionPayload } from "./suppression-review";
 import {
   EVIDENCE_RELATIONSHIPS,
   PROSECUTION_GRAPH_NODE_TYPES,
@@ -771,6 +772,17 @@ export class ProsecutionWorkspace {
       evidenceScope: partitionEvidenceByDefendant({
         defendants: defendants.map((defendant) => ({ id: defendant.id, displayName: defendant.displayName })),
         evidence: evidence.map((item) => ({ id: item.id, relatedDefendantIds: item.relatedDefendantIds })),
+      }),
+      ...suppressionPayload({
+        jurisdiction: criminalCase.jurisdiction,
+        forumCourtId: criminalCase.court,
+        warrants: snapshot.warrants.filter((item) => item.criminalCaseId === caseId),
+        procedureIssues: issueFlags,
+        evidence,
+        officers: snapshot.officers.filter((item) => item.criminalCaseId === caseId),
+        witnesses: snapshot.witnesses.filter((item) => item.criminalCaseId === caseId),
+        statements: snapshot.statements.filter((item) => item.criminalCaseId === caseId),
+        timeline: snapshot.timeline.filter((item) => item.criminalCaseId === caseId),
       }),
       guiltConclusion: null,
     };
