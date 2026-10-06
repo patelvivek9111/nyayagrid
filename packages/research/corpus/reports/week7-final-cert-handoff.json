@@ -1,0 +1,41 @@
+{
+  "classification": "WEEK7_PASS_READY_FOR_FINAL_CERTIFICATION",
+  "completedAt": "2026-10-06",
+  "releaseCandidateTag": "rc-week7-2026-10-06",
+  "testCommands": [
+    "npm run bench:week5",
+    "npm run bench:week6",
+    "npm run bench:week7",
+    "npm run build -w apps/web",
+    "npx playwright test e2e/firm-workspace.spec.ts e2e/prosecution.spec.ts e2e/professor.spec.ts e2e/guide.spec.ts"
+  ],
+  "benchmarkState": {
+    "week5": "27/27 PASS critical=0 high=0",
+    "week6": "31/31 PASS",
+    "week7": "9/9 PASS"
+  },
+  "securityState": "Week 6 hardening regression PASS; no P0 boundary failures",
+  "performanceState": "Week 6 baselines retained (search P95 ~574ms synthetic)",
+  "deploymentState": "Production build PASS on Next 15.5.27; local backup rehearsal previously PASS",
+  "paidModelState": "PAID_MODEL_CERT_PENDING_FINAL_CERTIFICATION",
+  "corpusCensusState": "CORPUS_HEALTH_PENDING_FINAL_CERTIFICATION",
+  "pitrState": "PITR_ENVIRONMENT_DEPENDENT",
+  "remainingP1": [
+    "Week 2 corpus census when store available (FINAL_CERT_ITEM)",
+    "Paid-model certification subset (FINAL_CERT_ITEM)",
+    "Managed PITR (ENVIRONMENT_DEPENDENT)",
+    "Transitive npm audit highs without Next 16 force (ACCEPTED_NONBLOCKING)",
+    "Optional prosecution notification taxonomy (ACCEPTED_NONBLOCKING)"
+  ],
+  "remainingP2": [
+    "Expand multi-domain law-firm document packs",
+    "UI metadata assertion for week4StructuredContext"
+  ],
+  "novemberFinalSequence": {
+    "Nov16": "law-firm certification",
+    "Nov17": "prosecution certification",
+    "Nov18": "security/reliability/data-isolation certification",
+    "Nov19": "performance/deployment/regression certification",
+    "Nov20": "final full-platform completion certification and release freeze"
+  }
+}
