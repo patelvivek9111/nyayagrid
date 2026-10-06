@@ -1,0 +1,58 @@
+{
+  "classification": "WEEK5_PASS_OPEN_WEEK6",
+  "completedAt": "2026-10-05",
+  "benchmarkBaseline": {
+    "datasetId": "week5-e2e-workflow-cert",
+    "datasetVersion": "week5-2026-10-05",
+    "graderVersion": "week5-grade-2026-10-05",
+    "assignments": 27,
+    "passRate": 1,
+    "critical": 0,
+    "high": 0,
+    "runCommand": "npm run bench:week5"
+  },
+  "substrate": "Week 4 LawEvidenceBundle / StructuredAnswerContext / fixtures A-E",
+  "askNyaya": {
+    "usedWeek4CombinedContext": true,
+    "assertion": "packages/permissions/src/phase2.integration.test.ts + W5-ASK-01",
+    "guiltConclusion": null
+  },
+  "holdouts": {
+    "count": 5,
+    "passRate": 1,
+    "contaminationControls": {
+      "expectedAnswersFedIntoProductionPrompts": false,
+      "storedSeparately": "datasets/week5/holdouts.ts"
+    }
+  },
+  "securityBaseline": {
+    "crossTenantRetrieval": "PASS",
+    "promptInjectionTreatedAsEvidence": "PASS",
+    "e2eSecurity": "PASS"
+  },
+  "latencyBaseline": {
+    "note": "Deterministic Week 5 substrate timings only; not Week 6 load test",
+    "model": "week4-substrate"
+  },
+  "costBaseline": {
+    "week5CertificationExternalLlmCalls": 0,
+    "courtListenerRequests": 0
+  },
+  "corpusHealth": "CORPUS_HEALTH_NOT_REMEASURED",
+  "p1": [
+    "Remeasure Week 2 corpus census when that store is available",
+    "Optional production-model certification subset after deterministic gates",
+    "Guide prepare page does not always render Print packet after a successful consultation API response; API path is certified",
+    "Dedicated prosecution notification kinds only if product requires distinct labels"
+  ],
+  "p2": [
+    "Expand multi-domain law-firm document packs beyond synthetic notice/prosecution cores",
+    "Add signed-in browser assertion that surfaces week4StructuredContext in UI metadata"
+  ],
+  "week6Prerequisites": [
+    "Use week5 scorecard as regression baseline",
+    "Large-matter and large-prosecution fixtures for load/reliability",
+    "Security hardening, failure recovery, cost controls, deployment readiness",
+    "Do not reopen Weeks 1–5 without a true regression"
+  ]
+}
