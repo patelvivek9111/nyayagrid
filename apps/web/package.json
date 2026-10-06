@@ -11,6 +11,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@clerk/backend": "^2.29.0",
     "@inngest/ai": "^0.1.7",
     "@nyayagrid/agents": "*",
     "@nyayagrid/ai": "*",
@@ -32,10 +33,10 @@
     "drizzle-orm": "^0.45.2",
     "hash.js": "^1.1.7",
     "inngest": "^3.32.9",
-    "@clerk/backend": "^2.29.0",
-    "next": "^15.5.23",
+    "next": "^15.5.27",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "sharp": "^0.35.4",
     "zod": "^3.24.2"
   },
   "devDependencies": {

@@ -77,11 +77,8 @@
     "drizzle-orm": "0.45.2",
     "esbuild": "0.25.12",
     "postcss": "8.5.26",
-    "sharp": "0.35.3",
-    "next": {
-      "postcss": "8.5.26",
-      "sharp": "0.35.3"
-    },
+    "sharp": "0.35.4",
+    "next": "15.5.27",
     "drizzle-kit": {
       "esbuild": "0.25.12",
       "@esbuild-kit/core-utils": {

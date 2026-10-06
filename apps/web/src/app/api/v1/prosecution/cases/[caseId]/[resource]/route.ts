@@ -24,7 +24,7 @@ const provenanceSchema = z
 const text = z.string().trim().min(1).max(500);
 const optionalText = z.string().trim().max(4000).nullable().optional();
 
-export const prosecutionResourceSchemas = {
+const prosecutionResourceSchemas = {
   defendants: z.object({
     displayName: text,
     aliases: z.array(z.string().max(200)).max(20).optional(),
