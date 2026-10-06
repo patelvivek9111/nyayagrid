@@ -3,10 +3,11 @@
 import { useCallback, useEffect, useRef, useState, type FormEvent } from "react";
 import { useParams } from "next/navigation";
 import { Button, Panel, Badge } from "@nyayagrid/ui";
-import { EvidenceStateBadge } from "@/components/ux";
+import { EvidenceStateBadge, StatusLabel } from "@/components/ux";
 import { openMatterDocument } from "@/lib/document-open";
 import { useFeatureFlags } from "@/components/use-feature-flags";
 import { ExecutionStrategyControl, type ExecutionStrategyValue } from "@/components/ux/execution-strategy-control";
+import { humanizeKey } from "@/lib/plain-labels";
 import { USER_FACING_ASK_ERROR } from "@/lib/user-facing-error";
 
 type Citation = {
@@ -206,13 +207,13 @@ export default function MatterNyayaPage() {
 
   async function openCitation(chunkId?: string) {
     if (!chunkId) {
-      setMessage("Citation missing chunkId");
+      setMessage("This citation does not include a source location, so the passage cannot be opened.");
       return;
     }
     const res = await fetch(`/api/v1/matters/${matterId}/citations/${chunkId}`);
     const data = await res.json();
     if (!res.ok) {
-      setMessage(data?.error?.message ?? "Citation unavailable");
+      setMessage(data?.error?.message ?? "Source unavailable — the cited passage could not be loaded.");
       return;
     }
     setSelectedSource(chunkId);
@@ -404,12 +405,28 @@ export default function MatterNyayaPage() {
                     >
                       <div className="mb-2 flex flex-wrap gap-2">
                         <EvidenceStateBadge state={item.answer.evidenceState} />
+                        {item.answer.unresolvedQuestions.length > 0 ? (
+                          <StatusLabel label="Open questions remain" tone="warn" />
+                        ) : null}
                       </div>
-                      <p className="whitespace-pre-wrap">{item.answer.answer}</p>
+                      <p className="text-xs font-semibold uppercase tracking-wide text-ink/45">Short answer</p>
+                      <p className="mt-1 whitespace-pre-wrap">{item.answer.answer}</p>
+                      {item.answer.unresolvedQuestions.length > 0 ? (
+                        <div className="mt-3 rounded border border-amber-700/25 bg-amber-50/70 p-3" role="status">
+                          <p className="text-xs font-semibold uppercase tracking-wide text-amber-950">
+                            Unresolved / limitations
+                          </p>
+                          <ul className="mt-1 list-disc pl-4 text-sm text-amber-950">
+                            {item.answer.unresolvedQuestions.map((question, idx) => (
+                              <li key={`${item.artifact.id}-uq-${idx}`}>{question}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ) : null}
                       <div className="mt-3 space-y-2">
-                        <p className="font-semibold">Citations</p>
+                        <p className="font-semibold">Sources</p>
                         {item.answer.sources.length === 0 ? (
-                          <p className="text-ink/60">No citations (insufficient evidence).</p>
+                          <p className="text-ink/60">No sources attached — treat this as insufficiently grounded.</p>
                         ) : (
                           item.answer.sources.map((source, idx) => (
                             <button
@@ -418,7 +435,10 @@ export default function MatterNyayaPage() {
                               className="block w-full rounded bg-accent-soft/40 px-2 py-2 text-left hover:bg-accent-soft"
                               onClick={() => openCitation(source.chunkId)}
                             >
-                              {source.page ? `p.${source.page} · ` : ""}
+                              <span className="block text-xs font-semibold text-ink/55">
+                                {source.page ? `Page ${source.page}` : "Source passage"}
+                                {source.chunkId ? "" : " · location unavailable"}
+                              </span>
                               {source.quote.slice(0, 180)}
                             </button>
                           ))
@@ -549,7 +569,7 @@ export default function MatterNyayaPage() {
                       >
                         <div className="line-clamp-2 font-semibold">{run.goal}</div>
                         <div className={`text-xs ${statusTone(run.status)}`}>
-                          {run.status} · {run.intent ?? "unclassified"}
+                          {humanizeKey(run.status)} · {run.intent ? humanizeKey(run.intent) : "Unclassified"}
                         </div>
                       </button>
                     </li>

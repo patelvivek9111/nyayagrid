@@ -146,3 +146,55 @@ export function ErrorState({ message, onRetry }: { message: string; onRetry?: ()
     </div>
   );
 }
+
+/** Status chip that never relies on color alone — text + optional glyph. */
+export function StatusLabel({
+  label,
+  tone = "neutral",
+}: {
+  label: string;
+  tone?: "neutral" | "ok" | "warn" | "danger" | "info";
+}) {
+  const glyph =
+    tone === "ok" ? "✓" : tone === "warn" ? "!" : tone === "danger" ? "×" : tone === "info" ? "i" : "·";
+  const toneClass =
+    tone === "ok"
+      ? "border-emerald-700/25 bg-emerald-50 text-emerald-900"
+      : tone === "warn"
+        ? "border-amber-700/25 bg-amber-50 text-amber-900"
+        : tone === "danger"
+          ? "border-[var(--ng-danger)]/30 bg-red-50 text-[var(--ng-danger)]"
+          : tone === "info"
+            ? "border-accent/30 bg-accent-soft/60 text-accent"
+            : "border-line bg-black/[0.03] text-ink/70";
+  return (
+    <span
+      className={cx(
+        "inline-flex items-center gap-1 rounded border px-2 py-0.5",
+        "text-[11px] font-semibold tracking-wide",
+        toneClass,
+      )}
+    >
+      <span aria-hidden="true">{glyph}</span>
+      <span>{label}</span>
+    </span>
+  );
+}
+
+export function CoverageWarningList({ warnings }: { warnings: string[] }) {
+  if (warnings.length === 0) return null;
+  return (
+    <div
+      className="rounded border border-amber-700/25 bg-amber-50/80 p-3 text-sm text-amber-950"
+      role="status"
+      aria-live="polite"
+    >
+      <p className="font-semibold">Coverage warnings</p>
+      <ul className="mt-1 list-disc pl-5">
+        {warnings.map((warning, index) => (
+          <li key={`${warning}-${index}`}>{warning}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}

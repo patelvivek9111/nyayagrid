@@ -96,11 +96,64 @@ const LABELS: Record<string, string> = {
   controlling: "Controlling",
   persuasive: "Persuasive",
   out_of_jurisdiction: "Other jurisdiction",
+  // Evidence / charge-element statuses (uppercase enums from intelligence)
+  SUPPORTED: "Supported",
+  PARTIALLY_SUPPORTED: "Partially supported",
+  CONFLICTED: "Conflicted",
+  NO_EVIDENCE_FOUND: "No evidence found",
+  UNKNOWN: "Unknown",
+  REVIEW_REQUIRED: "Review required",
+  UNREVIEWED: "Unreviewed",
+  REVIEWED_DISCLOSE: "Reviewed — disclose",
+  REVIEWED_NOT_DISCLOSE: "Reviewed — do not disclose",
+  RECEIVED: "Received",
+  FLAGGED: "Flagged",
+  PRODUCED: "Produced",
+  PENDING: "Pending",
+  WITHHELD_FOR_ATTORNEY_REVIEW: "Withheld for attorney review",
+  MISSING_EXPECTED: "Missing / expected",
+  STANDARD_NOT_EXTRACTED: "Legal standard not extracted",
+  // Coverage / retrieval warning codes
+  NO_BINDING_AUTHORITY_FOUND: "No binding authority found for this issue",
+  CURRENTNESS_UNCERTAIN: "Currentness of this authority is uncertain",
+  MISSING_DOCUMENT: "A referenced document is missing",
+  MISSING_EVIDENCE: "Evidence needed for this issue is missing",
+  TREATMENT_UNVERIFIED: "Treatment status has not been verified",
+  CONTEXT_LIMIT_REACHED: "Context limit reached — review may be incomplete",
+  SOURCE_UNAVAILABLE: "Source is unavailable",
+  PARTIAL_ANSWER: "Partial answer — verify before relying on it",
+  // Prosecution case statuses
+  investigation: "Investigation",
+  charged: "Charged",
+  pretrial: "Pretrial",
+  trial: "Trial",
+  post_disposition: "Post-disposition",
+  closed: "Closed",
+  open_case: "Open",
 };
 
+/** Prefer mapped labels; otherwise title-case spaced tokens (never leak SCREAMING_SNAKE). */
 export function humanizeKey(value: string | null | undefined): string {
   if (!value) return "";
-  const mapped = LABELS[value];
+  const mapped = LABELS[value] ?? LABELS[value.toLowerCase()] ?? LABELS[value.toUpperCase()];
   if (mapped) return mapped;
-  return value.replace(/[_-]+/g, " ");
+  const spaced = value.replace(/[_-]+/g, " ").trim();
+  if (!spaced) return "";
+  // Title-case for all-caps enums; leave mixed-case mostly intact with spaces.
+  if (/^[A-Z0-9_ -]+$/.test(value)) {
+    return spaced
+      .toLowerCase()
+      .split(/\s+/)
+      .map((part) => (part ? part[0]!.toUpperCase() + part.slice(1) : part))
+      .join(" ");
+  }
+  return spaced;
+}
+
+/** User-facing coverage / warning copy for research and Ask Nyaya surfaces. */
+export function formatCoverageWarning(code: string | null | undefined): string {
+  if (!code) return "";
+  const mapped = LABELS[code] ?? LABELS[code.toUpperCase()];
+  if (mapped) return mapped;
+  return humanizeKey(code);
 }

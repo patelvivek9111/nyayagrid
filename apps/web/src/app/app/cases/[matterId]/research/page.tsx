@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Badge, Button, Panel } from "@nyayagrid/ui";
 import { ErrorState } from "@/components/ux";
+import { formatCoverageWarning } from "@/lib/plain-labels";
 
 type MatterAuthorityItem = {
   id: string;
@@ -205,11 +206,11 @@ export default function MatterResearchPage() {
           </form>
 
           {coverageWarnings.length > 0 ? (
-            <div className="mb-3 rounded border border-line bg-[color-mix(in_srgb,var(--ng-danger)_8%,white)] p-2 text-xs">
+            <div className="mb-3 rounded border border-amber-700/25 bg-amber-50/80 p-2 text-xs text-amber-950" role="status">
               <p className="font-semibold">Coverage warnings</p>
               <ul className="list-disc pl-4">
                 {coverageWarnings.map((warning, i) => (
-                  <li key={i}>{warning}</li>
+                  <li key={i}>{formatCoverageWarning(warning)}</li>
                 ))}
               </ul>
             </div>

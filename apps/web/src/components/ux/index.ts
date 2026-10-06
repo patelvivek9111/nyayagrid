@@ -26,6 +26,8 @@ export {
   EmptyState,
   LoadingState,
   ErrorState,
+  StatusLabel,
+  CoverageWarningList,
 } from "./trust";
 export {
   IntelligenceHeader,

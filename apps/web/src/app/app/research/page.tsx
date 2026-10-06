@@ -15,7 +15,7 @@ import {
   FirmStatusText,
 } from "@/components/ux/firm-workspace";
 import { researchSessionKindLabel, authorityRelationshipLabel } from "@/lib/firm-workspace-ux";
-import { humanizeKey } from "@/lib/plain-labels";
+import { formatCoverageWarning, humanizeKey } from "@/lib/plain-labels";
 import { ExecutionStrategyControl, type ExecutionStrategyValue } from "@/components/ux/execution-strategy-control";
 
 type ResearchSession = {
@@ -271,11 +271,11 @@ export default function ResearchHomePage() {
             ) : (
               <div className="space-y-4 rounded-xl border border-line bg-white/80 p-4 text-sm">
                 {coverageWarnings.length > 0 ? (
-                  <div className="rounded border border-line bg-[color-mix(in_srgb,var(--ng-danger)_8%,white)] p-3 text-xs">
+                  <div className="rounded border border-amber-700/25 bg-amber-50/80 p-3 text-xs text-amber-950" role="status">
                     <p className="font-semibold">Coverage warnings</p>
                     <ul className="mt-1 list-disc pl-4">
                       {coverageWarnings.map((warning, i) => (
-                        <li key={i}>{warning}</li>
+                        <li key={i}>{formatCoverageWarning(warning)}</li>
                       ))}
                     </ul>
                   </div>
