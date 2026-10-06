@@ -1,3 +1,5 @@
+import { decomposeMatterIssues } from "../deepening/decompose-matter";
+import { buildWholeMatterAnalysis, type WholeMatterAnalysis } from "../deepening/whole-matter";
 import { buildLawEvidenceBundle, toStructuredAnswerContext } from "./law-evidence-join";
 import type { EvidenceCorpusItem } from "./evidence-retrieval";
 import type { RetrievedAuthorityHit, RetrievedLegalStandard } from "../legal/retrieval";
@@ -23,9 +25,11 @@ export function buildAskNyayaCombinedContext(params: {
 }): {
   bundle: ReturnType<typeof buildLawEvidenceBundle>;
   structured: StructuredAnswerContext;
+  wholeMatter: WholeMatterAnalysis;
 } {
   const bundle = buildLawEvidenceBundle(params);
-  return { bundle, structured: toStructuredAnswerContext(bundle) };
+  const wholeMatter = buildWholeMatterAnalysis({ context: params.context, bundle });
+  return { bundle, structured: toStructuredAnswerContext(bundle), wholeMatter };
 }
 
 /** Compact prompt block for Ask Nyaya. Never includes a guilt conclusion. */
@@ -55,5 +59,17 @@ export function formatStructuredAnswerContextForPrompt(structured: StructuredAns
     `COVERAGE_WARNINGS: ${structured.COVERAGE_WARNINGS.map((warning) => warning.code).join(" | ") || "(none)"}`,
     "GUILT_CONCLUSION: null",
   ];
+  const separated = decomposeMatterIssues({
+    organizationId: "prompt",
+    workspaceType: "professional",
+    userQuestion: structured.QUESTION,
+  });
+  if (separated.issues.length > 1) {
+    lines.push(
+      `SEPARATED_ISSUES (do not collapse): ${separated.issues.map((issue) => issue.description).join(" | ")}`,
+      "DECISIVE_CONCLUSION: null",
+      "Keep contrary evidence, missing evidence, and unresolved authority attached to the issue they concern.",
+    );
+  }
   return lines.join("\n");
 }

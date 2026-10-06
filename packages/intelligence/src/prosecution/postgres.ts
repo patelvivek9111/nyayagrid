@@ -32,6 +32,7 @@ import {
 } from "@nyayagrid/database";
 import { requireAnyCapability, requireCapability, writeAuditEvent } from "@nyayagrid/permissions";
 import { assertProvenance } from "../legal/standards";
+import { partitionEvidenceByDefendant, separateProsecutionCaseIssues } from "../deepening/evidence-scope";
 import { notifyProsecutionEvent } from "../week4/notifications";
 import {
   EVIDENCE_RELATIONSHIPS,
@@ -207,6 +208,33 @@ export async function getProsecutionOverview(db: Database, params: { userId: str
       notes: item.notes,
     })),
   });
+  const elementGaps = matrix.filter((row) => row.status !== "SUPPORTED");
+  const issueSeparation = separateProsecutionCaseIssues({
+    charges: charges.map((charge) => ({
+      id: charge.id,
+      offenseName: charge.offenseName,
+      countNumber: charge.countNumber,
+      status: charge.status,
+      defendantId: charge.defendantId,
+    })),
+    procedureIssues: issues.map((issue) => ({
+      id: issue.id,
+      issueType: issue.issueType,
+      status: issue.status,
+    })),
+    elementGaps: elementGaps.map((gap) => ({
+      id: gap.elementId,
+      elementText: gap.elementText,
+      status: gap.status,
+    })),
+  });
+  const evidenceScope = partitionEvidenceByDefendant({
+    defendants: defendants.map((defendant) => ({ id: defendant.id, displayName: defendant.displayName })),
+    evidence: evidence.map((item) => ({
+      id: item.id,
+      relatedDefendantIds: item.relatedDefendantIds ?? [],
+    })),
+  });
   return {
     case: criminalCase,
     defendants,
@@ -220,8 +248,10 @@ export async function getProsecutionOverview(db: Database, params: { userId: str
     evidenceCount: evidence.length,
     discoveryCount: discovery.length,
     witnessCount: witnesses.length,
-    elementGaps: matrix.filter((row) => row.status !== "SUPPORTED"),
+    elementGaps,
     issueFlags: issues,
+    issueSeparation,
+    evidenceScope,
     matrix,
     discoveryDashboard,
     guiltConclusion: null,
@@ -406,6 +436,21 @@ export async function addProsecutionRecord(
   }
 
   if (params.resource === "evidence") {
+    const relatedDefendantIds = Array.isArray(params.body.relatedDefendantIds)
+      ? [...new Set(params.body.relatedDefendantIds.map((id) => String(id)))]
+      : [];
+    if (relatedDefendantIds.length > 0) {
+      const known = await db
+        .select({ id: prosecutionDefendants.id })
+        .from(prosecutionDefendants)
+        .where(
+          and(eq(prosecutionDefendants.organizationId, organizationId), eq(prosecutionDefendants.criminalCaseId, criminalCaseId)),
+        );
+      const knownIds = new Set(known.map((defendant) => defendant.id));
+      if (relatedDefendantIds.some((id) => !knownIds.has(id))) {
+        throw new ProsecutionError("ORPHAN_REFERENCE", "Defendant not found for evidence scope.");
+      }
+    }
     const [row] = await db
       .insert(prosecutionEvidenceItems)
       .values({
@@ -416,6 +461,7 @@ export async function addProsecutionRecord(
         collector: (params.body.collector as string) ?? null,
         storageReference: (params.body.storageReference as string) ?? null,
         chainOfCustody: (params.body.chainOfCustody as string[]) ?? [],
+        relatedDefendantIds,
         sensitivity: (params.body.sensitivity as string) ?? "standard",
         reviewStatus: (params.body.reviewStatus as string) ?? "received",
         provenance,
