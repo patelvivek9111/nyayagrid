@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import type { Database } from "@nyayagrid/database";
-import { conversations, messages, aiArtifacts, documents, documentVersions, and, eq, or, sql } from "@nyayagrid/database";
+import { conversations, messages, aiArtifacts, documents, documentVersions, criminalCases, and, eq, or, sql } from "@nyayagrid/database";
 import {
   assessNeedMoreDocuments,
   assessRetrievedEvidence,
@@ -62,7 +62,11 @@ import {
   formatProfessionalAnalysisForPrompt,
   buildAskNyayaCombinedContext,
   formatStructuredAnswerContextForPrompt,
+  answerSuppressionQuestion,
+  formatSuppressionAnswer,
+  getProsecutionOverview,
   type StructuredAnswerContext,
+  type SuppressionReview,
 } from "@nyayagrid/intelligence";
 import {
   AuthorityHybridRetriever,
@@ -101,6 +105,70 @@ export type NyayaAuthorityRetriever = {
 };
 
 const AUTHORITY_HIT_LIMIT = 6;
+
+/**
+ * Question-only gate for prosecution warrant/suppression Ask context.
+ * Does not inspect case documents, evidence text, or other case fields.
+ */
+export function isSuppressionAskQuestion(question: string): boolean {
+  return /(warrant|suppression|probable cause|miranda|exigen|good.?faith|knock.?and.?announce)/i.test(
+    question,
+  );
+}
+
+/**
+ * Builds the validated suppression Ask block. All three gates are required:
+ * prosecution workspace, case-scoped suppressionReview, and a suppression question.
+ */
+export function buildSuppressionAskContextBlock(params: {
+  workspaceType: string | null | undefined;
+  question: string;
+  suppressionReview: SuppressionReview | null | undefined;
+}): string | null {
+  if (params.workspaceType !== "prosecution") return null;
+  if (!params.suppressionReview) return null;
+  if (!isSuppressionAskQuestion(params.question)) return null;
+  if (params.suppressionReview.issues.length === 0 && params.suppressionReview.warrants.length === 0) {
+    return null;
+  }
+  return formatSuppressionAnswer(
+    answerSuppressionQuestion({
+      review: params.suppressionReview,
+      question: params.question,
+    }),
+  );
+}
+
+/** Prefixed Ask context. Week-4 and suppression blocks stay independent. */
+export function mergeAskContextText(week4ContextText: string | null, suppressionContextText: string | null): string | null {
+  const parts = [week4ContextText, suppressionContextText].filter((part): part is string => Boolean(part && part.trim()));
+  return parts.length > 0 ? parts.join("\n\n") : null;
+}
+
+async function loadProsecutionSuppressionReviewForMatter(params: {
+  db: Database;
+  userId: string;
+  organizationId: string;
+  matterId: string;
+  criminalCaseId?: string | null;
+}): Promise<{ workspaceType: "prosecution"; suppressionReview: SuppressionReview } | null> {
+  const caseFilter = params.criminalCaseId
+    ? and(
+        eq(criminalCases.organizationId, params.organizationId),
+        eq(criminalCases.id, params.criminalCaseId),
+        eq(criminalCases.matterId, params.matterId),
+      )
+    : and(eq(criminalCases.organizationId, params.organizationId), eq(criminalCases.matterId, params.matterId));
+  const [row] = await params.db.select({ id: criminalCases.id }).from(criminalCases).where(caseFilter).limit(1);
+  if (!row) return null;
+  const overview = await getProsecutionOverview(params.db, {
+    userId: params.userId,
+    organizationId: params.organizationId,
+    caseId: row.id,
+  });
+  if (!overview.suppressionReview) return null;
+  return { workspaceType: "prosecution", suppressionReview: overview.suppressionReview };
+}
 
 async function loadAmendmentHits(params: {
   db: Database;
@@ -399,6 +467,13 @@ export async function askNyayaAboutMatter(params: {
   webPageFetcher?: WebPageFetcher;
   /** Resume after a safe interruption (skips duplicate user-message insert). */
   continueToken?: string;
+  /**
+   * Optional prosecution Ask overrides. When omitted, suppression context loads from the
+   * matter-linked criminal case only after question gating matches.
+   */
+  workspaceType?: string | null;
+  criminalCaseId?: string | null;
+  suppressionReview?: SuppressionReview | null;
 }) {
   const sourceScope: SourceScope = params.sourceScope ?? "case";
   const flags = resolveSourceScopeFlags(sourceScope);
@@ -849,6 +924,31 @@ export async function askNyayaAboutMatter(params: {
       week4ContextText = formatStructuredAnswerContextForPrompt(combined.structured);
     }
 
+    let suppressionContextText: string | null = null;
+    if (isSuppressionAskQuestion(params.question) && params.workspaceType !== "professional") {
+      let workspaceType = params.workspaceType ?? null;
+      let suppressionReview = params.suppressionReview ?? null;
+      if (workspaceType !== "prosecution" || !suppressionReview) {
+        const loaded = await loadProsecutionSuppressionReviewForMatter({
+          db: params.db,
+          userId: params.userId,
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          criminalCaseId: params.criminalCaseId,
+        });
+        if (loaded) {
+          workspaceType = workspaceType === "prosecution" ? workspaceType : loaded.workspaceType;
+          suppressionReview = suppressionReview ?? loaded.suppressionReview;
+        }
+      }
+      suppressionContextText = buildSuppressionAskContextBlock({
+        workspaceType,
+        question: params.question,
+        suppressionReview,
+      });
+    }
+    const askStructuredContextText = mergeAskContextText(week4ContextText, suppressionContextText);
+
     if (authority) {
       const emitted = new Set<string>();
       for (const hit of authority.corpusHits.slice(0, 12)) {
@@ -997,7 +1097,7 @@ export async function askNyayaAboutMatter(params: {
           )
           .join("\n") || "(none)"}`
       : useResearchPrompt
-        ? `${jurisdictionBlock}${week4ContextText ? `${week4ContextText}\n\n` : ""}${buildNyayaUserPromptWithResearch(
+        ? `${jurisdictionBlock}${askStructuredContextText ? `${askStructuredContextText}\n\n` : ""}${buildNyayaUserPromptWithResearch(
             params.question,
             passages,
             authorityText ?? "",
@@ -1007,7 +1107,7 @@ export async function askNyayaAboutMatter(params: {
             analysisText,
             assessmentText,
           )}`
-        : `${jurisdictionBlock}${week4ContextText ? `${week4ContextText}\n\n` : ""}${buildNyayaUserPrompt(
+        : `${jurisdictionBlock}${askStructuredContextText ? `${askStructuredContextText}\n\n` : ""}${buildNyayaUserPrompt(
             params.question,
             passages,
             verifiedText,
