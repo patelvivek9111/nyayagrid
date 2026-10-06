@@ -31,8 +31,13 @@ export type GenerateConsultationPacketInput = {
 };
 
 export type GenerateConsultationPacketResult = {
-  /** Full, structured packet returned to the caller — richer than what gets persisted. */
-  packet: ConsultationPacket;
+  /**
+   * UI/persist shape for Guide prepare. Callers that need the richer AI schema should use
+   * `aiPacket` — never assume `packet` has AI-only fields like `peopleAndOrganizations`.
+   */
+  packet: GuideConsultationPacketContent;
+  /** Richer AI-facing schema (not used by the Guide prepare UI). */
+  aiPacket: ConsultationPacket;
   record: GuideConsultationPacketRow;
 };
 
@@ -206,5 +211,5 @@ export async function generateConsultationPacket(
     .returning();
   if (!record) throw new Error("Failed to persist guide consultation packet");
 
-  return { packet: parsed, record };
+  return { packet: packetContent, aiPacket: parsed, record };
 }

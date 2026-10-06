@@ -44,7 +44,21 @@ export default function GuidePreparePage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error?.message ?? "Failed to generate packet");
-      setPacket(data.packet);
+      const raw = (data.packet ?? data.record?.packet) as ConsultationPacket | null;
+      if (!raw?.situationSummary) {
+        throw new Error("Consultation packet was empty or in an unexpected shape.");
+      }
+      setPacket({
+        situationSummary: raw.situationSummary,
+        peopleInvolved: raw.peopleInvolved ?? [],
+        timeline: raw.timeline ?? [],
+        documentsAvailable: raw.documentsAvailable ?? [],
+        questionsForTheLawyer: raw.questionsForTheLawyer ?? [],
+        desiredOutcome: raw.desiredOutcome ?? null,
+        missingInformation: raw.missingInformation ?? [],
+        potentiallyUrgentItems: raw.potentiallyUrgentItems ?? [],
+        limitations: raw.limitations ?? [],
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to generate packet");
     } finally {

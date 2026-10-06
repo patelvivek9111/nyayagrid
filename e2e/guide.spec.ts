@@ -85,22 +85,19 @@ test.describe.serial("Nyaya Guide (public workspace)", () => {
     await page.waitForLoadState("networkidle");
     await page.getByPlaceholder(/Lease dispute with landlord/).fill(packetTitle);
     await page.getByRole("button", { name: "Create situation" }).click();
-    const situationControl = page.getByLabel("Situation");
-    await expect(situationControl).not.toHaveValue("", { timeout: 15_000 });
-    const situationId = await situationControl.inputValue();
-
-    const packetRes = await page.request.post(`/api/v1/guide/situations/${situationId}/consultation`);
-    expect(packetRes.ok(), await packetRes.text()).toBeTruthy();
-    const packetBody = (await packetRes.json()) as {
-      packet?: { situationSummary?: string };
-    };
-    expect(packetBody.packet?.situationSummary).toBeTruthy();
+    await expect(page.getByLabel("Situation")).not.toHaveValue("", { timeout: 15_000 });
 
     await page.goto("/guide/prepare");
     await page.waitForLoadState("networkidle");
-    await expect(page.getByRole("heading", { name: "Prepare for a lawyer" })).toBeVisible();
-    await expect(
-      page.getByText(/does not reach a legal conclusion/i).first(),
-    ).toBeVisible();
+    const situationSelect = page.locator("select");
+    await expect(situationSelect.locator("option", { hasText: packetTitle })).toHaveCount(1, {
+      timeout: 15_000,
+    });
+    await situationSelect.selectOption({ label: packetTitle });
+    await expect(situationSelect).not.toHaveValue("");
+    await page.getByRole("button", { name: "Generate consultation packet" }).click();
+    await expect(page.getByRole("button", { name: "Print packet" })).toBeVisible({ timeout: 20_000 });
+    await expect(page.getByRole("heading", { name: "Summary" })).toBeVisible();
+    await expect(page.getByText(/does not reach any legal conclusion/i).first()).toBeVisible();
   });
 });
