@@ -1,0 +1,774 @@
+{
+  "ok": true,
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "forumCounts": {
+    "totalScanned": 564,
+    "warrantRelevant": 85
+  },
+  "existingWarrantRelevant": [
+    {
+      "citation": "468 U.S. 897",
+      "authorityId": "c494cde9-c897-4bb4-a920-b7ea085fb468",
+      "providerId": "cl-opinion-9429769",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "1984-09-18",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": true,
+        "probableCause": true,
+        "warrant": true,
+        "search": true,
+        "seizure": true,
+        "suppression": false,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": true
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "564 U.S. 229",
+      "authorityId": "e67d1763-da45-4c07-b2e8-625309542a1f",
+      "providerId": "cl-opinion-7263677",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "2011-06-16",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": true,
+        "probableCause": false,
+        "warrant": false,
+        "search": true,
+        "seizure": true,
+        "suppression": true,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": true
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "563 U.S. 452",
+      "authorityId": "b8cfd34d-53f1-4be1-a8ae-4deb904ff1a5",
+      "providerId": "cl-opinion-9441560",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "2011-05-16",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": true,
+        "probableCause": true,
+        "warrant": true,
+        "search": true,
+        "seizure": true,
+        "suppression": false,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "462 U.S. 213",
+      "authorityId": "83949afa-33e2-4cec-8fe5-1e7b0138eef9",
+      "providerId": "cl-opinion-9429232",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "1983-06-08",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": true,
+        "probableCause": false,
+        "warrant": true,
+        "search": true,
+        "seizure": true,
+        "suppression": true,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "334 U.S. 699",
+      "authorityId": "889cf6b5-e61d-4cc2-9c40-8b596a1f1596",
+      "providerId": "cl-opinion-104576",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "1948-06-14",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": true,
+        "probableCause": true,
+        "warrant": true,
+        "search": true,
+        "seizure": true,
+        "suppression": false,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "547 U.S. 586",
+      "authorityId": "9fe84e04-d4dc-4aaa-b75f-c4ec005100dc",
+      "providerId": "cl-opinion-145646",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "2006-06-15",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": false,
+        "probableCause": false,
+        "warrant": true,
+        "search": true,
+        "seizure": true,
+        "suppression": true,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "524 U.S. 357",
+      "authorityId": "255d3085-72dc-4e87-a5bc-56f7f8dd18f3",
+      "providerId": "cl-opinion-9433685",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "1998-06-25",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": true,
+        "probableCause": false,
+        "warrant": true,
+        "search": true,
+        "seizure": false,
+        "suppression": false,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": true
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "466 U.S. 740",
+      "authorityId": "f6fac4af-1858-4098-9a36-12cfeca6649c",
+      "providerId": "cl-opinion-9429597",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "1984-05-15",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": true,
+        "probableCause": true,
+        "warrant": true,
+        "search": true,
+        "seizure": false,
+        "suppression": false,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "446 U.S. 544",
+      "authorityId": "76a1d9e3-3dc2-444e-bff4-6177b8ad611c",
+      "providerId": "cl-opinion-9427929",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "1980-06-30",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": true,
+        "probableCause": false,
+        "warrant": false,
+        "search": true,
+        "seizure": true,
+        "suppression": true,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "433 U.S. 1",
+      "authorityId": "25a42cb9-3cb9-4d54-b60a-2eead62858a2",
+      "providerId": "cl-opinion-9426913",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "1977-06-21",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": false,
+        "probableCause": true,
+        "warrant": true,
+        "search": true,
+        "seizure": true,
+        "suppression": false,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "387 U.S. 294",
+      "authorityId": "fa0c1aa9-95ee-4ad9-a7eb-e4081897bc21",
+      "providerId": "cl-opinion-9423434",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "1967-05-29",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": true,
+        "probableCause": false,
+        "warrant": true,
+        "search": true,
+        "seizure": true,
+        "suppression": false,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "379 U.S. 476",
+      "authorityId": "6b7c0bb0-3ac7-409d-83c4-5cfdd3a62682",
+      "providerId": "cl-opinion-106964",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "1965-03-01",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": false,
+        "probableCause": false,
+        "warrant": true,
+        "search": true,
+        "seizure": true,
+        "suppression": true,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "342 U.S. 48",
+      "authorityId": "ad30289b-d29e-4f49-ba4b-35ef3d6e8eab",
+      "providerId": "cl-opinion-104932",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "1951-11-26",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": false,
+        "probableCause": false,
+        "warrant": true,
+        "search": true,
+        "seizure": true,
+        "suppression": true,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "290 U.S. 41",
+      "authorityId": "b039fecb-defd-4011-87c7-65ea4e04d3ac",
+      "providerId": "cl-opinion-102129",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "1933-11-06",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": true,
+        "probableCause": false,
+        "warrant": true,
+        "search": true,
+        "seizure": true,
+        "suppression": false,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": null,
+      "authorityId": "81d2fb3c-bb80-446d-9c07-6a49b0d329ea",
+      "providerId": "cl-opinion-11442334",
+      "provider": "courtlistener",
+      "court": "us-ca-3",
+      "date": "2026-09-16",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": false,
+        "probableCause": true,
+        "warrant": true,
+        "search": true,
+        "seizure": false,
+        "suppression": false,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "binding_in_third_circuit"
+    },
+    {
+      "citation": "565 U.S. 400",
+      "authorityId": "2a2a52a7-a0a4-49ff-b192-6bddced966d5",
+      "providerId": "cl-opinion-7268856",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "2012-01-23",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": true,
+        "probableCause": false,
+        "warrant": false,
+        "search": true,
+        "seizure": true,
+        "suppression": false,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "517 U.S. 806",
+      "authorityId": "0bc97316-ea4b-44e4-b9d9-8d4cd919e54f",
+      "providerId": "cl-opinion-118036",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "1996-05-15",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": true,
+        "probableCause": true,
+        "warrant": false,
+        "search": false,
+        "seizure": true,
+        "suppression": false,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "438 U.S. 154",
+      "authorityId": "33503a81-0eb2-483b-8895-c5b38532565d",
+      "providerId": "cl-opinion-109925",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "1978-06-26",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": true,
+        "probableCause": false,
+        "warrant": true,
+        "search": true,
+        "seizure": false,
+        "suppression": false,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "423 U.S. 411",
+      "authorityId": "f36410ae-aad3-4804-a83c-0bd86ead094f",
+      "providerId": "cl-opinion-109352",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "1975-10-06",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": true,
+        "probableCause": false,
+        "warrant": true,
+        "search": true,
+        "seizure": false,
+        "suppression": false,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    },
+    {
+      "citation": "403 U.S. 388",
+      "authorityId": "c2a71133-51d8-451e-ac13-a1ded69267f0",
+      "providerId": "cl-opinion-108375",
+      "provider": "courtlistener",
+      "court": "us-scotus",
+      "date": "1971-06-21",
+      "jurisdiction": "US",
+      "flags": {
+        "fourth": true,
+        "probableCause": false,
+        "warrant": false,
+        "search": true,
+        "seizure": true,
+        "suppression": false,
+        "particularity": false,
+        "staleness": false,
+        "nexus": false,
+        "exclusionary": false
+      },
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "benchmarkWorkflow": "prosecution_warrant_suppression_review",
+      "authorityStatusContext": "potentially_binding_constitutional"
+    }
+  ],
+  "REAL_CONFLICT_AUTHORITY_TARGET_SET": [
+    {
+      "authorityA": {
+        "citation": "468 U.S. 897",
+        "id": "c494cde9-c897-4bb4-a920-b7ea085fb468",
+        "court": "us-scotus",
+        "date": "1984-09-18",
+        "title": "United States v. Leon"
+      },
+      "authorityB": {
+        "citation": null,
+        "id": "81d2fb3c-bb80-446d-9c07-6a49b0d329ea",
+        "court": "us-ca-3",
+        "date": "2026-09-16",
+        "title": "Kyle Beatty v. Clinton Gardner"
+      },
+      "sharedIssueSignals": [
+        "probableCause",
+        "warrant",
+        "search"
+      ],
+      "relationship": "UNKNOWN",
+      "sourceSupport": "keyword_overlap_in_source_text_only_not_holding_comparison",
+      "sameForum": false,
+      "benchmarkSuitability": "PENDING_HOLDING_REVIEW",
+      "note": "Do not label CONTRARY without holding comparison. Candidate for Chat A manual/legal review."
+    },
+    {
+      "authorityA": {
+        "citation": "468 U.S. 897",
+        "id": "c494cde9-c897-4bb4-a920-b7ea085fb468",
+        "court": "us-scotus",
+        "date": "1984-09-18",
+        "title": "United States v. Leon"
+      },
+      "authorityB": {
+        "citation": null,
+        "id": "9663daa7-f654-4a99-b334-ea921f27889e",
+        "court": "us-d-paed",
+        "date": "1985-01-17",
+        "title": "Forrest v. Case"
+      },
+      "sharedIssueSignals": [
+        "search",
+        "seizure"
+      ],
+      "relationship": "UNKNOWN",
+      "sourceSupport": "keyword_overlap_in_source_text_only_not_holding_comparison",
+      "sameForum": false,
+      "benchmarkSuitability": "PENDING_HOLDING_REVIEW",
+      "note": "Do not label CONTRARY without holding comparison. Candidate for Chat A manual/legal review."
+    },
+    {
+      "authorityA": {
+        "citation": "564 U.S. 229",
+        "id": "e67d1763-da45-4c07-b2e8-625309542a1f",
+        "court": "us-scotus",
+        "date": "2011-06-16",
+        "title": "Davis v. United States"
+      },
+      "authorityB": {
+        "citation": null,
+        "id": "9663daa7-f654-4a99-b334-ea921f27889e",
+        "court": "us-d-paed",
+        "date": "1985-01-17",
+        "title": "Forrest v. Case"
+      },
+      "sharedIssueSignals": [
+        "search",
+        "seizure"
+      ],
+      "relationship": "UNKNOWN",
+      "sourceSupport": "keyword_overlap_in_source_text_only_not_holding_comparison",
+      "sameForum": false,
+      "benchmarkSuitability": "PENDING_HOLDING_REVIEW",
+      "note": "Do not label CONTRARY without holding comparison. Candidate for Chat A manual/legal review."
+    },
+    {
+      "authorityA": {
+        "citation": "563 U.S. 452",
+        "id": "b8cfd34d-53f1-4be1-a8ae-4deb904ff1a5",
+        "court": "us-scotus",
+        "date": "2011-05-16",
+        "title": "Kentucky v. King"
+      },
+      "authorityB": {
+        "citation": null,
+        "id": "81d2fb3c-bb80-446d-9c07-6a49b0d329ea",
+        "court": "us-ca-3",
+        "date": "2026-09-16",
+        "title": "Kyle Beatty v. Clinton Gardner"
+      },
+      "sharedIssueSignals": [
+        "probableCause",
+        "warrant",
+        "search"
+      ],
+      "relationship": "UNKNOWN",
+      "sourceSupport": "keyword_overlap_in_source_text_only_not_holding_comparison",
+      "sameForum": false,
+      "benchmarkSuitability": "PENDING_HOLDING_REVIEW",
+      "note": "Do not label CONTRARY without holding comparison. Candidate for Chat A manual/legal review."
+    },
+    {
+      "authorityA": {
+        "citation": "563 U.S. 452",
+        "id": "b8cfd34d-53f1-4be1-a8ae-4deb904ff1a5",
+        "court": "us-scotus",
+        "date": "2011-05-16",
+        "title": "Kentucky v. King"
+      },
+      "authorityB": {
+        "citation": null,
+        "id": "9663daa7-f654-4a99-b334-ea921f27889e",
+        "court": "us-d-paed",
+        "date": "1985-01-17",
+        "title": "Forrest v. Case"
+      },
+      "sharedIssueSignals": [
+        "search",
+        "seizure"
+      ],
+      "relationship": "UNKNOWN",
+      "sourceSupport": "keyword_overlap_in_source_text_only_not_holding_comparison",
+      "sameForum": false,
+      "benchmarkSuitability": "PENDING_HOLDING_REVIEW",
+      "note": "Do not label CONTRARY without holding comparison. Candidate for Chat A manual/legal review."
+    },
+    {
+      "authorityA": {
+        "citation": "462 U.S. 213",
+        "id": "83949afa-33e2-4cec-8fe5-1e7b0138eef9",
+        "court": "us-scotus",
+        "date": "1983-06-08",
+        "title": "Illinois v. Gates"
+      },
+      "authorityB": {
+        "citation": null,
+        "id": "81d2fb3c-bb80-446d-9c07-6a49b0d329ea",
+        "court": "us-ca-3",
+        "date": "2026-09-16",
+        "title": "Kyle Beatty v. Clinton Gardner"
+      },
+      "sharedIssueSignals": [
+        "warrant",
+        "search"
+      ],
+      "relationship": "UNKNOWN",
+      "sourceSupport": "keyword_overlap_in_source_text_only_not_holding_comparison",
+      "sameForum": false,
+      "benchmarkSuitability": "PENDING_HOLDING_REVIEW",
+      "note": "Do not label CONTRARY without holding comparison. Candidate for Chat A manual/legal review."
+    },
+    {
+      "authorityA": {
+        "citation": "462 U.S. 213",
+        "id": "83949afa-33e2-4cec-8fe5-1e7b0138eef9",
+        "court": "us-scotus",
+        "date": "1983-06-08",
+        "title": "Illinois v. Gates"
+      },
+      "authorityB": {
+        "citation": null,
+        "id": "27945a3b-cfa2-49de-9b88-d1cd13a356a5",
+        "court": "us-ca-3",
+        "date": "2026-09-15",
+        "title": "United States v. Davone Walker"
+      },
+      "sharedIssueSignals": [
+        "warrant",
+        "suppression"
+      ],
+      "relationship": "UNKNOWN",
+      "sourceSupport": "keyword_overlap_in_source_text_only_not_holding_comparison",
+      "sameForum": false,
+      "benchmarkSuitability": "PENDING_HOLDING_REVIEW",
+      "note": "Do not label CONTRARY without holding comparison. Candidate for Chat A manual/legal review."
+    },
+    {
+      "authorityA": {
+        "citation": "462 U.S. 213",
+        "id": "83949afa-33e2-4cec-8fe5-1e7b0138eef9",
+        "court": "us-scotus",
+        "date": "1983-06-08",
+        "title": "Illinois v. Gates"
+      },
+      "authorityB": {
+        "citation": null,
+        "id": "d6f92001-1e74-4c44-ba52-4357b1417f48",
+        "court": "us-ca-3",
+        "date": "2026-09-01",
+        "title": "United States v. Davone Walker"
+      },
+      "sharedIssueSignals": [
+        "warrant",
+        "suppression"
+      ],
+      "relationship": "UNKNOWN",
+      "sourceSupport": "keyword_overlap_in_source_text_only_not_holding_comparison",
+      "sameForum": false,
+      "benchmarkSuitability": "PENDING_HOLDING_REVIEW",
+      "note": "Do not label CONTRARY without holding comparison. Candidate for Chat A manual/legal review."
+    },
+    {
+      "authorityA": {
+        "citation": "462 U.S. 213",
+        "id": "83949afa-33e2-4cec-8fe5-1e7b0138eef9",
+        "court": "us-scotus",
+        "date": "1983-06-08",
+        "title": "Illinois v. Gates"
+      },
+      "authorityB": {
+        "citation": null,
+        "id": "9663daa7-f654-4a99-b334-ea921f27889e",
+        "court": "us-d-paed",
+        "date": "1985-01-17",
+        "title": "Forrest v. Case"
+      },
+      "sharedIssueSignals": [
+        "search",
+        "seizure"
+      ],
+      "relationship": "UNKNOWN",
+      "sourceSupport": "keyword_overlap_in_source_text_only_not_holding_comparison",
+      "sameForum": false,
+      "benchmarkSuitability": "PENDING_HOLDING_REVIEW",
+      "note": "Do not label CONTRARY without holding comparison. Candidate for Chat A manual/legal review."
+    },
+    {
+      "authorityA": {
+        "citation": "334 U.S. 699",
+        "id": "889cf6b5-e61d-4cc2-9c40-8b596a1f1596",
+        "court": "us-scotus",
+        "date": "1948-06-14",
+        "title": "Trupiano v. United States"
+      },
+      "authorityB": {
+        "citation": null,
+        "id": "81d2fb3c-bb80-446d-9c07-6a49b0d329ea",
+        "court": "us-ca-3",
+        "date": "2026-09-16",
+        "title": "Kyle Beatty v. Clinton Gardner"
+      },
+      "sharedIssueSignals": [
+        "probableCause",
+        "warrant",
+        "search"
+      ],
+      "relationship": "UNKNOWN",
+      "sourceSupport": "keyword_overlap_in_source_text_only_not_holding_comparison",
+      "sameForum": false,
+      "benchmarkSuitability": "PENDING_HOLDING_REVIEW",
+      "note": "Do not label CONTRARY without holding comparison. Candidate for Chat A manual/legal review."
+    }
+  ],
+  "treatmentsSample": [],
+  "coverageGaps": {
+    "scotusWarrantish": 78,
+    "ca3Warrantish": 4,
+    "edpaWarrantish": 1,
+    "paHighWarrantish": 1,
+    "paSuperWarrantish": 1
+  }
+}

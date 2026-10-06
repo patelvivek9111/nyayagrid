@@ -1,0 +1,230 @@
+{
+  "ok": true,
+  "apply": false,
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "presentTargetUnresolvedWouldResolve": 20,
+  "resolvedThisPass": 0,
+  "citationTotals": {
+    "extracted": 49926,
+    "resolved": 6122,
+    "unresolved": 43804
+  },
+  "priorityPresence": [
+    {
+      "cite": "407 U.S. 67",
+      "present": false,
+      "hits": [],
+      "unresolvedEdges": 7
+    },
+    {
+      "cite": "466 U.S. 648",
+      "present": false,
+      "hits": [],
+      "unresolvedEdges": 10
+    },
+    {
+      "cite": "462 U.S. 213",
+      "present": true,
+      "hits": [
+        {
+          "id": "83949afa-33e2-4cec-8fe5-1e7b0138eef9",
+          "citation": "462 U.S. 213",
+          "normalized": "462 U.S. 213",
+          "courtId": "us-scotus",
+          "title": "Illinois v. Gates",
+          "date": "1983-06-08",
+          "externalId": "cl-opinion-9429232",
+          "treatment": "unknown"
+        }
+      ],
+      "unresolvedEdges": 0
+    },
+    {
+      "cite": "468 U.S. 897",
+      "present": true,
+      "hits": [
+        {
+          "id": "c494cde9-c897-4bb4-a920-b7ea085fb468",
+          "citation": "468 U.S. 897",
+          "normalized": "468 U.S. 897",
+          "courtId": "us-scotus",
+          "title": "United States v. Leon",
+          "date": "1984-09-18",
+          "externalId": "cl-opinion-9429769",
+          "treatment": "unknown"
+        }
+      ],
+      "unresolvedEdges": 0
+    },
+    {
+      "cite": "347 U.S. 62",
+      "present": false,
+      "hits": [],
+      "unresolvedEdges": 6
+    },
+    {
+      "cite": "379 U.S. 89",
+      "present": false,
+      "hits": [],
+      "unresolvedEdges": 8
+    },
+    {
+      "cite": "361 U.S. 98",
+      "present": false,
+      "hits": [],
+      "unresolvedEdges": 6
+    },
+    {
+      "cite": "466 U.S. 740",
+      "present": true,
+      "hits": [
+        {
+          "id": "f6fac4af-1858-4098-9a36-12cfeca6649c",
+          "citation": "466 U.S. 740",
+          "normalized": "466 U.S. 740",
+          "courtId": "us-scotus",
+          "title": "Welsh v. Wisconsin",
+          "date": "1984-05-15",
+          "externalId": "cl-opinion-9429597",
+          "treatment": "unknown"
+        }
+      ],
+      "unresolvedEdges": 0
+    },
+    {
+      "cite": "547 U.S. 586",
+      "present": true,
+      "hits": [
+        {
+          "id": "9fe84e04-d4dc-4aaa-b75f-c4ec005100dc",
+          "citation": "547 U.S. 586",
+          "normalized": "547 U.S. 586",
+          "courtId": "us-scotus",
+          "title": "Hudson v. Michigan",
+          "date": "2006-06-15",
+          "externalId": "cl-opinion-145646",
+          "treatment": "unknown"
+        }
+      ],
+      "unresolvedEdges": 0
+    },
+    {
+      "cite": "564 U.S. 229",
+      "present": true,
+      "hits": [
+        {
+          "id": "e67d1763-da45-4c07-b2e8-625309542a1f",
+          "citation": "564 U.S. 229",
+          "normalized": "564 U.S. 229",
+          "courtId": "us-scotus",
+          "title": "Davis v. United States",
+          "date": "2011-06-16",
+          "externalId": "cl-opinion-7263677",
+          "treatment": "unknown"
+        }
+      ],
+      "unresolvedEdges": 0
+    },
+    {
+      "cite": "563 U.S. 452",
+      "present": true,
+      "hits": [
+        {
+          "id": "b8cfd34d-53f1-4be1-a8ae-4deb904ff1a5",
+          "citation": "563 U.S. 452",
+          "normalized": "563 U.S. 452",
+          "courtId": "us-scotus",
+          "title": "Kentucky v. King",
+          "date": "2011-05-16",
+          "externalId": "cl-opinion-9441560",
+          "treatment": "unknown"
+        }
+      ],
+      "unresolvedEdges": 0
+    },
+    {
+      "cite": "524 U.S. 357",
+      "present": true,
+      "hits": [
+        {
+          "id": "255d3085-72dc-4e87-a5bc-56f7f8dd18f3",
+          "citation": "524 U.S. 357",
+          "normalized": "524 U.S. 357",
+          "courtId": "us-scotus",
+          "title": "Pennsylvania Bd. of Probation and Parole v. Scott",
+          "date": "1998-06-25",
+          "externalId": "cl-opinion-9433685",
+          "treatment": "unknown"
+        }
+      ],
+      "unresolvedEdges": 0
+    }
+  ],
+  "missingPriority": [
+    {
+      "cite": "407 U.S. 67",
+      "edges": 7
+    },
+    {
+      "cite": "466 U.S. 648",
+      "edges": 10
+    },
+    {
+      "cite": "347 U.S. 62",
+      "edges": 6
+    },
+    {
+      "cite": "379 U.S. 89",
+      "edges": 8
+    },
+    {
+      "cite": "361 U.S. 98",
+      "edges": 6
+    }
+  ],
+  "presentPriority": [
+    {
+      "cite": "462 U.S. 213",
+      "edges": 0,
+      "id": "83949afa-33e2-4cec-8fe5-1e7b0138eef9",
+      "title": "Illinois v. Gates"
+    },
+    {
+      "cite": "468 U.S. 897",
+      "edges": 0,
+      "id": "c494cde9-c897-4bb4-a920-b7ea085fb468",
+      "title": "United States v. Leon"
+    },
+    {
+      "cite": "466 U.S. 740",
+      "edges": 0,
+      "id": "f6fac4af-1858-4098-9a36-12cfeca6649c",
+      "title": "Welsh v. Wisconsin"
+    },
+    {
+      "cite": "547 U.S. 586",
+      "edges": 0,
+      "id": "9fe84e04-d4dc-4aaa-b75f-c4ec005100dc",
+      "title": "Hudson v. Michigan"
+    },
+    {
+      "cite": "564 U.S. 229",
+      "edges": 0,
+      "id": "e67d1763-da45-4c07-b2e8-625309542a1f",
+      "title": "Davis v. United States"
+    },
+    {
+      "cite": "563 U.S. 452",
+      "edges": 0,
+      "id": "b8cfd34d-53f1-4be1-a8ae-4deb904ff1a5",
+      "title": "Kentucky v. King"
+    },
+    {
+      "cite": "524 U.S. 357",
+      "edges": 0,
+      "id": "255d3085-72dc-4e87-a5bc-56f7f8dd18f3",
+      "title": "Pennsylvania Bd. of Probation and Parole v. Scott"
+    }
+  ]
+}
