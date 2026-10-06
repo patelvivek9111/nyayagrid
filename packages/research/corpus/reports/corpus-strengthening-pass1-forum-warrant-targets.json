@@ -1,0 +1,304 @@
+{
+  "ok": true,
+  "classification": "PASS1_FORUM_WARRANT_TARGET_DISCOVERY",
+  "generatedAt": "2026-10-06T15:11:41.783Z",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "forumCounts": {
+    "st-pa-high": {
+      "total": 30,
+      "warrantRelevant": 1
+    },
+    "st-pa-super": {
+      "total": 26,
+      "warrantRelevant": 1
+    },
+    "us-ca-3": {
+      "total": 32,
+      "warrantRelevant": 7
+    },
+    "us-d-paed": {
+      "total": 17,
+      "warrantRelevant": 1
+    }
+  },
+  "warrantRelevantForumAuthorities": [
+    {
+      "id": "aa9d234e-ffdd-4ad1-8ff9-819414726a4d",
+      "citation": null,
+      "courtId": "us-ca-3",
+      "title": "Kindra O'Bryant v. DCP&P",
+      "date": "2026-09-16T00:00:00.000Z"
+    },
+    {
+      "id": "81d2fb3c-bb80-446d-9c07-6a49b0d329ea",
+      "citation": null,
+      "courtId": "us-ca-3",
+      "title": "Kyle Beatty v. Clinton Gardner",
+      "date": "2026-09-16T00:00:00.000Z"
+    },
+    {
+      "id": "27945a3b-cfa2-49de-9b88-d1cd13a356a5",
+      "citation": null,
+      "courtId": "us-ca-3",
+      "title": "United States v. Davone Walker",
+      "date": "2026-09-15T00:00:00.000Z"
+    },
+    {
+      "id": "d6f92001-1e74-4c44-ba52-4357b1417f48",
+      "citation": null,
+      "courtId": "us-ca-3",
+      "title": "United States v. Davone Walker",
+      "date": "2026-09-01T00:00:00.000Z"
+    },
+    {
+      "id": "f914472f-96e4-4637-bbdc-3fdeea02cd9c",
+      "citation": null,
+      "courtId": "us-ca-3",
+      "title": "United States v. Diego Aleman-Lozano",
+      "date": "2026-09-01T00:00:00.000Z"
+    },
+    {
+      "id": "d1afb5f8-b41d-4b58-9c5b-b24836827ef5",
+      "citation": null,
+      "courtId": "us-ca-3",
+      "title": "United States v. Joseph Berger",
+      "date": "2026-09-01T00:00:00.000Z"
+    },
+    {
+      "id": "abd6276b-ae2b-4fa8-961f-4b84ddd0dc8e",
+      "citation": null,
+      "courtId": "st-pa-high",
+      "title": "Commonwealth v. Curry, A.",
+      "date": "2026-09-15T00:00:00.000Z"
+    },
+    {
+      "id": "a472ee8e-c797-4e5c-a6ec-9ea2851fac1c",
+      "citation": null,
+      "courtId": "st-pa-super",
+      "title": "Com. v. Serrano, C.",
+      "date": "2026-09-18T00:00:00.000Z"
+    },
+    {
+      "id": "3e4e52bd-49b2-4e2b-a3fa-bea7218840ed",
+      "citation": null,
+      "courtId": "us-ca-3",
+      "title": "United States v. Paris Carter",
+      "date": "2026-09-25T00:00:00.000Z"
+    },
+    {
+      "id": "696ac350-3a06-4e82-bd05-5aef2e7eb5c0",
+      "citation": null,
+      "courtId": "us-d-paed",
+      "title": "CourtListener opinion 11453519",
+      "date": "2026-09-28T00:00:00.000Z"
+    }
+  ],
+  "proposedAcquireBatch": [
+    {
+      "citation": "597 F.3d 140",
+      "reporter": "F.3d",
+      "incomingUnresolvedEdges": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "769 F.3d 163",
+      "reporter": "F.3d",
+      "incomingUnresolvedEdges": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "821 F.3d 467",
+      "reporter": "F.3d",
+      "incomingUnresolvedEdges": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "777 F.3d 635",
+      "reporter": "F.3d",
+      "incomingUnresolvedEdges": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "124 F.4th 218",
+      "reporter": "F.4th",
+      "incomingUnresolvedEdges": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "180 F.4th 512",
+      "reporter": "F.4th",
+      "incomingUnresolvedEdges": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "115 F.4th 197",
+      "reporter": "F.4th",
+      "incomingUnresolvedEdges": 1,
+      "sourceCourts": [
+        "us-d-paed"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "12 F.4th 366",
+      "reporter": "F.4th",
+      "incomingUnresolvedEdges": 1,
+      "sourceCourts": [
+        "us-d-paed"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "125 F.4th 428",
+      "reporter": "F.4th",
+      "incomingUnresolvedEdges": 1,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "126 F.4th 215",
+      "reporter": "F.4th",
+      "incomingUnresolvedEdges": 1,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "13 F.3d 711",
+      "reporter": "F.3d",
+      "incomingUnresolvedEdges": 1,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "133 F.4th 852",
+      "reporter": "F.4th",
+      "incomingUnresolvedEdges": 1,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "137 F.4th 743",
+      "reporter": "F.4th",
+      "incomingUnresolvedEdges": 1,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "14 F.4th 190",
+      "reporter": "F.4th",
+      "incomingUnresolvedEdges": 1,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "141 F.4th 76",
+      "reporter": "F.4th",
+      "incomingUnresolvedEdges": 1,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "142 F.3d 582",
+      "reporter": "F.3d",
+      "incomingUnresolvedEdges": 1,
+      "sourceCourts": [
+        "us-d-paed"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "143 F.4th 877",
+      "reporter": "F.4th",
+      "incomingUnresolvedEdges": 1,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "150 F.4th 1339",
+      "reporter": "F.4th",
+      "incomingUnresolvedEdges": 1,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "150 F.4th 517",
+      "reporter": "F.4th",
+      "incomingUnresolvedEdges": 1,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    },
+    {
+      "citation": "151 F.4th 584",
+      "reporter": "F.4th",
+      "incomingUnresolvedEdges": 1,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "role": "forum_warrant_depth_candidate",
+      "alreadyInCorpus": false
+    }
+  ],
+  "notes": [
+    "Zero-CL discovery only. Acquire via citation-lookup verified ingest; no search fallback.",
+    "Do not restart completed SCOTUS five-target or prior zero-CL compact-resolve work.",
+    "Treatment remains TREATMENT_UNVERIFIED until source-holding review."
+  ]
+}

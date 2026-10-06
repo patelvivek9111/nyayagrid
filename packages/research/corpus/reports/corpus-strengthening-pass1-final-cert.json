@@ -1,0 +1,554 @@
+{
+  "ok": true,
+  "classification": "CORPUS_STRENGTHENING_PASS1_FINAL_CERT",
+  "courtListenerHttpCalls": 0,
+  "live": {
+    "cases": 4680,
+    "authorities": 6035,
+    "extracted": 50623,
+    "resolved": 6306,
+    "unresolved": 44317
+  },
+  "health": {
+    "duplicateSourceIds": 0,
+    "duplicateEdges": 0,
+    "orphanEdges": 0,
+    "missingEmbeddings": 0,
+    "FAILED": 0,
+    "NOT_PROCESSED": 0,
+    "silentCURRENT": 0,
+    "presentTargetDefects": 0,
+    "status": "GREEN"
+  },
+  "forumCounts": {
+    "st-pa-high": 33,
+    "st-pa-super": 27,
+    "us-ca-3": 39,
+    "us-d-paed": 23,
+    "us-scotus": 464
+  },
+  "targetedAuthorities": [
+    {
+      "label": "Gates",
+      "citation": "462 U.S. 213",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "83949afa-33e2-4cec-8fe5-1e7b0138eef9",
+          "title": "Illinois v. Gates",
+          "courtId": "us-scotus",
+          "court": "Supreme Court of the United States",
+          "date": "1983-06-08T00:00:00.000Z",
+          "providerId": "cl-opinion-9429232",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/110959/illinois-v-gates/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Leon",
+      "citation": "468 U.S. 897",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "c494cde9-c897-4bb4-a920-b7ea085fb468",
+          "title": "United States v. Leon",
+          "courtId": "us-scotus",
+          "court": "Supreme Court of the United States",
+          "date": "1984-09-18T00:00:00.000Z",
+          "providerId": "cl-opinion-9429769",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/111262/united-states-v-leon/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Welsh",
+      "citation": "466 U.S. 740",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "f6fac4af-1858-4098-9a36-12cfeca6649c",
+          "title": "Welsh v. Wisconsin",
+          "courtId": "us-scotus",
+          "court": "Supreme Court of the United States",
+          "date": "1984-05-15T00:00:00.000Z",
+          "providerId": "cl-opinion-9429597",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/111173/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Hudson",
+      "citation": "547 U.S. 586",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "9fe84e04-d4dc-4aaa-b75f-c4ec005100dc",
+          "title": "Hudson v. Michigan",
+          "courtId": "us-scotus",
+          "court": "Supreme Court of the United States",
+          "date": "2006-06-15T00:00:00.000Z",
+          "providerId": "cl-opinion-145646",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/145646/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Davis",
+      "citation": "564 U.S. 229",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "e67d1763-da45-4c07-b2e8-625309542a1f",
+          "title": "Davis v. United States",
+          "courtId": "us-scotus",
+          "court": "Supreme Court of the United States",
+          "date": "2011-06-16T00:00:00.000Z",
+          "providerId": "cl-opinion-7263677",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/7345713/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "King",
+      "citation": "563 U.S. 452",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "b8cfd34d-53f1-4be1-a8ae-4deb904ff1a5",
+          "title": "Kentucky v. King",
+          "courtId": "us-scotus",
+          "court": "Supreme Court of the United States",
+          "date": "2011-05-16T00:00:00.000Z",
+          "providerId": "cl-opinion-9441560",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/216733/kentucky-v-king/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Scott",
+      "citation": "524 U.S. 357",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "255d3085-72dc-4e87-a5bc-56f7f8dd18f3",
+          "title": "Pennsylvania Bd. of Probation and Parole v. Scott",
+          "courtId": "us-scotus",
+          "court": "Supreme Court of the United States",
+          "date": "1998-06-25T00:00:00.000Z",
+          "providerId": "cl-opinion-9433685",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/118235/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Fuentes",
+      "citation": "407 U.S. 67",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "ba1412b6-17d0-4f2a-b075-37cc60f69658",
+          "title": "Fuentes v. Shevin",
+          "courtId": "us-scotus",
+          "court": "Supreme Court of the United States",
+          "date": "1972-10-10T00:00:00.000Z",
+          "providerId": "cl-opinion-108568",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/108568/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Cronic",
+      "citation": "466 U.S. 648",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "d5a945f9-c188-4f05-8274-db66e486b4ac",
+          "title": "United States v. Cronic",
+          "courtId": "us-scotus",
+          "court": "Supreme Court of the United States",
+          "date": "1984-05-14T00:00:00.000Z",
+          "providerId": "cl-opinion-111169",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/111169/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Walder",
+      "citation": "347 U.S. 62",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "a3a5e8bb-5e26-422d-a4d8-b56af4a1d897",
+          "title": "Walder v. United States",
+          "courtId": "us-scotus",
+          "court": "Supreme Court of the United States",
+          "date": "1954-02-01T00:00:00.000Z",
+          "providerId": "cl-opinion-105188",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/105188/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Beck",
+      "citation": "379 U.S. 89",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "9d5f025e-aea1-4e90-9331-3f24bde88429",
+          "title": "Beck v. Ohio",
+          "courtId": "us-scotus",
+          "court": "Supreme Court of the United States",
+          "date": "1964-11-23T00:00:00.000Z",
+          "providerId": "cl-opinion-106936",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/106936/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Henry",
+      "citation": "361 U.S. 98",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "f1298c51-3bd9-47d7-8aba-a3a983da61c0",
+          "title": "Henry v. United States",
+          "courtId": "us-scotus",
+          "court": "Supreme Court of the United States",
+          "date": "1959-11-23T00:00:00.000Z",
+          "providerId": "cl-opinion-105963",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/105963/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Tracey",
+      "citation": "597 F.3d 140",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "37442c0b-fd17-4528-a929-515d6e1c2a0e",
+          "title": "United States v. Tracey",
+          "courtId": "us-ca-3",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "date": "2010-03-01T00:00:00.000Z",
+          "providerId": "cl-opinion-62",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/62/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Katzin",
+      "citation": "769 F.3d 163",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "5b443a32-2dd0-4aef-858b-8490b43caa1e",
+          "title": "United States v. Harry Katzin",
+          "courtId": "us-ca-3",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "date": "2014-10-01T00:00:00.000Z",
+          "providerId": "cl-opinion-2738861",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/2738861/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Vasquez-Algarin",
+      "citation": "821 F.3d 467",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "07d6e7fb-d887-4e9f-8af7-121539e261b2",
+          "title": "United States v. Johnny Vasquez-Algarin",
+          "courtId": "us-ca-3",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "date": "2016-05-02T00:00:00.000Z",
+          "providerId": "cl-opinion-3199527",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/3199633/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Wright",
+      "citation": "777 F.3d 635",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "08399051-449b-47da-a266-ca68f4d8c016",
+          "title": "United States v. Michael Wright",
+          "courtId": "us-ca-3",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "date": "2015-02-06T00:00:00.000Z",
+          "providerId": "cl-opinion-2777610",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/2777610/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Fisher",
+      "citation": "115 F.4th 197",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "03c30a24-de94-493d-8187-29425e9f4bbc",
+          "title": "Tony Fisher v. Jordan Hollingsworth",
+          "courtId": "us-ca-3",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "date": "2024-08-15T00:00:00.000Z",
+          "providerId": "cl-opinion-10508058",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/10041457/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "In re T.B.",
+      "citation": "75 A.3d 485",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "739f13e5-71c9-40b4-a6ee-75d0ea581deb",
+          "title": "In re T.B.",
+          "courtId": "st-pa-super",
+          "court": "Superior Court of Pennsylvania",
+          "date": "2013-06-24T00:00:00.000Z",
+          "providerId": "cl-opinion-4967835",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/5147086/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Pustilnik",
+      "citation": "439 A.2d 1149",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "33068440-94da-422d-bfc8-8ff5bfece006",
+          "title": "Associated Hospital Service v. Pustilnik",
+          "courtId": "st-pa-high",
+          "court": "Supreme Court of Pennsylvania",
+          "date": "1981-12-24T00:00:00.000Z",
+          "providerId": "cl-opinion-9543997",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/2063462/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Ness",
+      "citation": "105 A.3d 1257",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "6aac6edc-63d2-44af-aed7-c954f027240d",
+          "title": "Ness v. York Township Board of Commissioners",
+          "courtId": "st-pa-high",
+          "court": "Supreme Court of Pennsylvania",
+          "date": "2014-12-15T00:00:00.000Z",
+          "providerId": "cl-opinion-6269232",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/6398735/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Grigsby",
+      "citation": "47 A.3d 1176",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "7900a059-d314-4004-9eab-12d61a1f64d4",
+          "title": "Grigsby v. Department of Corrections Sci-Retreat",
+          "courtId": "st-pa-high",
+          "court": "Supreme Court of Pennsylvania",
+          "date": "2012-07-06T00:00:00.000Z",
+          "providerId": "cl-opinion-4965812",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/5145335/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Google SW 16-960-M-1",
+      "citation": "275 F.Supp.3d 605",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "40e6b507-2a06-4152-8df8-df4cb35615a3",
+          "title": "In re Search Warrant No. 16-960-M-1 to Google",
+          "courtId": "us-d-paed",
+          "court": "United States District Court for the Eastern District of Pennsylvania",
+          "date": "2017-08-17T00:00:00.000Z",
+          "providerId": "cl-opinion-7245264",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/7327348/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Google SW 16-960-M-01",
+      "citation": "232 F.Supp.3d 708",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "65463744-8938-4d75-8a39-7778a80607ca",
+          "title": "In re Search Warrant No. 16-960-M-01 to Google",
+          "courtId": "us-d-paed",
+          "court": "United States District Court for the Eastern District of Pennsylvania",
+          "date": "2017-02-03T00:00:00.000Z",
+          "providerId": "cl-opinion-7241900",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/7323989/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Bamont",
+      "citation": "163 F.Supp.3d 138",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "6e544395-7ba1-4f67-95fc-a086db946a4d",
+          "title": "Bamont v. Pennsylvania Society for the Prevention of Cruelty to Animals",
+          "courtId": "us-d-paed",
+          "court": "United States District Court for the Eastern District of Pennsylvania",
+          "date": "2016-02-16T00:00:00.000Z",
+          "providerId": "cl-opinion-7236374",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/7318464/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Mooty",
+      "citation": "96 F.Supp.3d 472",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "a0a9ad1b-af45-4d21-a46e-409b4ff50d86",
+          "title": "United States v. Mooty",
+          "courtId": "us-d-paed",
+          "court": "United States District Court for the Eastern District of Pennsylvania",
+          "date": "2015-03-10T00:00:00.000Z",
+          "providerId": "cl-opinion-7230710",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/7312805/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    },
+    {
+      "label": "Lawson",
+      "citation": "124 F.Supp.3d 394",
+      "present": true,
+      "rows": [
+        {
+          "authorityId": "971da801-b9f3-460d-9ad2-afc95dcf4f83",
+          "title": "Lawson v. Pennsylvania SPCA",
+          "courtId": "us-d-paed",
+          "court": "United States District Court for the Eastern District of Pennsylvania",
+          "date": "2015-08-19T00:00:00.000Z",
+          "providerId": "cl-opinion-7233065",
+          "provider": "courtlistener",
+          "url": "https://www.courtlistener.com/opinion/7315160/",
+          "ingestionStatus": "ready",
+          "treatment": "TREATMENT_UNVERIFIED",
+          "sourceAvailable": true
+        }
+      ]
+    }
+  ],
+  "treatmentPolicy": "TREATMENT_UNVERIFIED unless explicit treatment source; no invented VERIFIED_TREATMENT",
+  "unsupportedTreatmentLabels": 0
+}
