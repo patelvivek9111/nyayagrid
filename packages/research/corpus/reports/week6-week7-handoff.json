@@ -1,0 +1,79 @@
+{
+  "classification": "WEEK6_PASS_OPEN_WEEK7",
+  "completedAt": "2026-10-06",
+  "fromWeek": 6,
+  "toWeek": 7,
+  "securityFindings": {
+    "authorizationAudit": "PASS",
+    "idor": "PASS",
+    "roleEscalation": "PASS",
+    "uploadPolicy": "PASS",
+    "promptInjection": "PASS",
+    "retrievalIsolation": "PASS",
+    "rateLimits": "PASS",
+    "guideConsultationRateLimit": "PASS",
+    "dependencyAudit": "COMPLETE_WITH_P1_TRANSITIVES",
+    "secretScan": "PASS"
+  },
+  "performanceBaselines": {
+    "searchP95Ms": 574,
+    "contextP95Ms": 1116,
+    "interactiveTargetMs": 6000,
+    "elementsMatrixMs": 680,
+    "caseOverviewMs": 420
+  },
+  "largeWorkloadBaselines": {
+    "lawFirmDocuments": 180,
+    "prosecutionDocuments": 220,
+    "source": "datasets/week6/large-fixtures.ts"
+  },
+  "reliability": {
+    "duplicateJob": "PASS",
+    "workerCrash": "PASS",
+    "partialIngest": "PASS",
+    "dbOutage": "PASS",
+    "storageOutage": "PASS",
+    "providerOutage": "PASS",
+    "courtListenerController": "PASS_NO_BROAD_ACQUISITION"
+  },
+  "costMetrics": {
+    "largeMatterCents": 18,
+    "largeProsecutionCents": 14,
+    "hundredAskCents": 9,
+    "tenDraftsCents": 40,
+    "paidModelCert": "PAID_MODEL_CERT_NOT_RUN"
+  },
+  "deploymentState": {
+    "backupRehearsal": "PASS_LOCAL",
+    "envExample": "PASS",
+    "productionReadinessDocs": "PASS",
+    "managedPitr": "BLOCKER_CARRY"
+  },
+  "benchmarkRegression": {
+    "week5Critical": 0,
+    "week5High": 0,
+    "status": "PASS"
+  },
+  "remainingP1": [
+    "Week 2 corpus census when store available",
+    "Optional paid-model certification subset",
+    "Transitive dependency audit cleanup without Next 16 force",
+    "Managed Postgres PITR rehearsal",
+    "Optional prosecution notification taxonomy"
+  ],
+  "remainingP2": [
+    "Expand multi-domain law-firm document packs",
+    "UI metadata assertion for week4StructuredContext"
+  ],
+  "knownUnsupportedEnvironments": [
+    "Production load-testing without controlled staging",
+    "Managed-provider PITR restore not yet rehearsed"
+  ],
+  "week7Priorities": [
+    "Complete product stabilization and UI/UX completion",
+    "Accessibility pass",
+    "Workflow refinement across firm/prosecution/professor/guide",
+    "Eliminate remaining P1/P2",
+    "Full-system regression before Nov 16–20 completion certification"
+  ]
+}

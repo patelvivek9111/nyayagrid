@@ -1,0 +1,116 @@
+{
+  "generatedAt": "2026-10-06T01:15:00Z",
+  "dataset": "week6-production-hardening",
+  "rows": [
+    {
+      "id": "T-CROSS-TENANT",
+      "attack": "Cross-tenant matter/document/case access",
+      "component": "API + retrieval",
+      "existingControl": "requireCapability + organization scoping",
+      "test": "W6-SEC-IDOR + W6-LOAD-CONCURRENT-ISO + permissions suites",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "remainingRisk": "New endpoints must wire authorize checks",
+      "fix": "NONE"
+    },
+    {
+      "id": "T-IDOR",
+      "attack": "IDOR via forged matter/case/document IDs",
+      "component": "REST routes",
+      "existingControl": "ownership asserts; e2e forged IDs",
+      "test": "W6-SEC-IDOR + e2e/security.spec.ts",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "remainingRisk": "Export/admin routes continuous coverage",
+      "fix": "NONE"
+    },
+    {
+      "id": "T-ROLE-ESCALATION",
+      "attack": "Self-promote or invite superior role",
+      "component": "memberships/invites",
+      "existingControl": "capability-gated invite + role assignment",
+      "test": "W6-SEC-ROLE-ESC",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "remainingRisk": "Owner transfer remains privileged path",
+      "fix": "NONE"
+    },
+    {
+      "id": "T-PROMPT-INJECTION",
+      "attack": "Document instructions override system",
+      "component": "Ask Nyaya / Guide / retrieval",
+      "existingControl": "document text treated as data",
+      "test": "W6-SEC-INJECTION + Week5 W5-SEC-02",
+      "result": "PASS",
+      "severity": "HIGH",
+      "remainingRisk": "Live-model non-determinism",
+      "fix": "NONE"
+    },
+    {
+      "id": "T-UPLOAD",
+      "attack": "Malicious/oversized upload",
+      "component": "documents pipeline",
+      "existingControl": "malware scan + size/type validation",
+      "test": "W6-SEC-UPLOAD",
+      "result": "PASS",
+      "severity": "HIGH",
+      "remainingRisk": "ClamAV required in production",
+      "fix": "NONE"
+    },
+    {
+      "id": "T-SIGNED-URL",
+      "attack": "Predictable or long-lived object URL",
+      "component": "MinIO signed downloads",
+      "existingControl": "short-lived signed URLs after authz",
+      "test": "documents download authorization path (existing)",
+      "result": "PASS",
+      "severity": "HIGH",
+      "remainingRisk": "Clock skew / URL reuse window",
+      "fix": "NONE"
+    },
+    {
+      "id": "T-ABUSE",
+      "attack": "API/Ask/upload flood",
+      "component": "rate limiter",
+      "existingControl": "ENDPOINT_CLASSES presets incl. guide",
+      "test": "W6-SEC-RATE-LIMIT",
+      "result": "PASS",
+      "severity": "HIGH",
+      "remainingRisk": "memory limiter is single-instance",
+      "fix": "Guide consultation now enforces guide class"
+    },
+    {
+      "id": "T-JOB-DUPLICATE",
+      "attack": "Duplicate job delivery",
+      "component": "background jobs",
+      "existingControl": "idempotency keys",
+      "test": "W6-REL-DUP",
+      "result": "PASS",
+      "severity": "HIGH",
+      "remainingRisk": "New jobs must declare keys",
+      "fix": "NONE"
+    },
+    {
+      "id": "T-PROVIDER-FAIL",
+      "attack": "AI/storage/DB outage",
+      "component": "providers + workers",
+      "existingControl": "bounded retries, explicit failure states",
+      "test": "W6-REL-PROVIDER/DB/STORAGE/CL",
+      "result": "PASS",
+      "severity": "HIGH",
+      "remainingRisk": "Staging alerting still external",
+      "fix": "NONE"
+    },
+    {
+      "id": "T-SECRET",
+      "attack": "Secret exposure in repo/logs",
+      "component": "config/logs",
+      "existingControl": "observability redaction + env secrets",
+      "test": "W6-SEC-SECRET-SCAN",
+      "result": "PASS",
+      "severity": "CRITICAL",
+      "remainingRisk": "Human review of new fixtures",
+      "fix": "NONE"
+    }
+  ]
+}

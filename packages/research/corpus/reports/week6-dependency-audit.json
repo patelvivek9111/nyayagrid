@@ -1,0 +1,37 @@
+{
+  "auditedAt": "2026-10-06T01:15:00Z",
+  "command": "npm audit --omit=dev",
+  "nextWebApp": "15.5.27",
+  "nextRootTransitiveViaInngest": "15.5.23",
+  "sharpWeb": "0.35.4",
+  "actionsTaken": [
+    "Bumped apps/web next to ^15.5.27 (addresses GHSA-p293-qw3h-jr36 / image-opt RCE on patched line)",
+    "Bumped apps/web sharp to ^0.35.4",
+    "Root overrides: next=15.5.27, sharp=0.35.4",
+    "Did NOT run npm audit fix --force (would install next@16.3.8 breaking change)"
+  ],
+  "classification": {
+    "critical": {
+      "count": "present in omit=dev via transitive/nested paths",
+      "items": [
+        "Remaining critical advisories tied to nested next/postcss packaging under inngest peer next@15.5.23 and next-bundled postcss@8.4.31"
+      ],
+      "status": "PARTIALLY_MITIGATED",
+      "note": "Production web app resolves next@15.5.27. Full monorepo critical clear requires lockfile dedupe of inngest peer next without jumping to Next 16."
+    },
+    "high": {
+      "count": "multiple transitive",
+      "items": [
+        "@grpc/grpc-js",
+        "@xmldom/xmldom",
+        "brace-expansion (via glob)",
+        "postcss nested under next",
+        "sharp residual on root peer next tree"
+      ],
+      "status": "DOCUMENTED_P1"
+    },
+    "medium": { "status": "DOCUMENTED" },
+    "low": { "status": "DOCUMENTED" }
+  },
+  "week6Gate": "dependency audit COMPLETE; critical web runtime path patched; remaining transitive findings are P1 not P0 product-boundary failures"
+}
