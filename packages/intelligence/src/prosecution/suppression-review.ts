@@ -1,6 +1,7 @@
 import { evaluateAuthorityStatus, getCourtById, type AuthorityStatusClassification, type LegalIssueType } from "@nyayagrid/jurisdiction";
 import { assessAnalysisFreshness } from "../deepening/freshness";
 import { compareWitnessStatements, type StatementClaim } from "./domain";
+import { SOURCE_BACKED_SUPPRESSION_AUTHORITIES } from "./suppression-source-backed";
 
 export const SUPPRESSION_DIMENSIONS = [
   "PROBABLE_CAUSE",
@@ -1100,7 +1101,32 @@ export function suppressionPayload(input: SuppressionReviewInput): {
   suppressionReview: SuppressionReview;
   suppressionAnswer: SuppressionAnswer;
 } {
-  const suppressionReview = buildSuppressionReview(input);
+  const warrantIds = input.warrants.map((warrant) => warrant.id);
+  const seeded = input.authorityCandidates ?? [];
+  const corpus =
+    warrantIds.length === 0
+      ? []
+      : SOURCE_BACKED_SUPPRESSION_AUTHORITIES.filter((row) => row.autoAttach).map((row) => ({
+          authorityId: row.authorityId,
+          citation: row.citation,
+          title: row.caseName,
+          courtId: row.courtId,
+          jurisdiction: row.jurisdiction,
+          dimensions: [row.dimension as SuppressionDimension],
+          warrantIds,
+          proposition: row.proposition,
+          sourceSpan: row.sourceSpan,
+          sourceText: row.sourceText,
+          treatmentVerification: row.treatmentVerification as "unknown",
+          doctrine: row.doctrine as SuppressionDoctrine,
+          relation: "RELEVANT" as const,
+          currentnessStatus: row.currentnessStatus,
+          canonicalSourceUrl: row.canonicalSourceUrl,
+        }));
+  const suppressionReview = buildSuppressionReview({
+    ...input,
+    authorityCandidates: [...seeded, ...corpus],
+  });
   return {
     suppressionReview,
     suppressionAnswer: answerSuppressionQuestion({

@@ -7,3 +7,4 @@ export * from "./research-context";
 export * from "./suppression-review";
 export * from "./suppression-catalog";
 export * from "./suppression-fixtures";
+export * from "./suppression-source-backed";

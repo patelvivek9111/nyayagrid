@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { CORPUS_HOLDING_SCREEN } from "./suppression-catalog";
 import {
+  HOLDING_SCREEN_IDENTITY,
+  HOLDING_SCREEN_REJECTED,
+  SOURCE_BACKED_SUPPRESSION_AUTHORITIES,
+} from "./suppression-source-backed";
+import {
   runMirandaReview,
   runMissingAffidavitReview,
   runMultiTheoryWarrantReview,
@@ -16,6 +21,7 @@ import {
   formatSuppressionAnswer,
   inferSuppressionDoctrine,
   screenHoldingProposition,
+  suppressionPayload,
 } from "./suppression-review";
 
 describe("suppression review dimensions", () => {
@@ -115,11 +121,16 @@ describe("authority hierarchy and treatment", () => {
     expect(status("auth-scotus")).toBe("NONCONTROLLING");
   });
 
-  it("does not attach corpus authorities without a source span", () => {
-    expect(CORPUS_HOLDING_SCREEN.every((entry) => entry.sourceSupported === false && entry.proposition === null)).toBe(true);
-    expect(CORPUS_HOLDING_SCREEN.every((entry) => entry.treatment === "UNVERIFIED")).toBe(true);
-    expect(CORPUS_HOLDING_SCREEN.find((entry) => entry.caseName === "Cronic")?.issueStatus).toBe("UNKNOWN_PENDING_SOURCE");
-    expect(CORPUS_HOLDING_SCREEN.find((entry) => entry.caseName === "Bamont")?.requiresHoldingReview).toBe(true);
+  it("attaches only Neon source-backed propositions and keeps treatment unverified", () => {
+    expect(SOURCE_BACKED_SUPPRESSION_AUTHORITIES.every((entry) => entry.sourceSupported && entry.treatment === "UNVERIFIED")).toBe(
+      true,
+    );
+    expect(SOURCE_BACKED_SUPPRESSION_AUTHORITIES.some((entry) => entry.caseName === "Illinois v. Gates" && entry.autoAttach)).toBe(
+      true,
+    );
+    expect(HOLDING_SCREEN_REJECTED.some((entry) => entry.caseName === "Fuentes v. Shevin")).toBe(true);
+    expect(HOLDING_SCREEN_REJECTED.some((entry) => entry.caseName === "Bamont")).toBe(true);
+    expect(HOLDING_SCREEN_IDENTITY.cases).toBe(4680);
     const screened = screenHoldingProposition({
       proposition: "probable cause existed",
       sourceSpan: "probable cause existed",
@@ -127,6 +138,56 @@ describe("authority hierarchy and treatment", () => {
     });
     expect(screened.sourceSupported).toBe(false);
     expect(screened.proposition).toBeNull();
+  });
+
+  it("places Gates and Leon on the matching warrant issues only", () => {
+    const payload = suppressionPayload({
+      jurisdiction: "US",
+      forumCourtId: "us-d-pa-ed",
+      doctrine: "FEDERAL_CONSTITUTIONAL",
+      warrants: [
+        {
+          id: "warrant-phone",
+          warrantType: "search",
+          issuingCourt: "us-d-pa-ed",
+          issuingJudge: null,
+          applicationDate: "2026-04-01",
+          issueDate: "2026-04-02",
+          executionDate: "2026-05-20",
+          scope: "cellular phone",
+          probableCauseFacts: ["Officer report describes a witness observation."],
+          sourceFactIds: [],
+          seizedEvidenceIds: ["ev-phone"],
+          returnNotes: null,
+          relatedSuppressionIssueIds: [],
+          openedDimensions: ["GOOD_FAITH", "EXIGENCY"],
+        },
+      ],
+      procedureIssues: [],
+      evidence: [
+        {
+          id: "ev-phone",
+          evidenceType: "device",
+          documentId: "doc-phone",
+          storageReference: null,
+          relatedDefendantIds: ["def-ada"],
+          relatedWitnessIds: [],
+        },
+      ],
+    });
+    const probableCause = payload.suppressionReview.issues.find((issue) => issue.dimension === "PROBABLE_CAUSE");
+    const goodFaith = payload.suppressionReview.issues.find((issue) => issue.dimension === "GOOD_FAITH");
+    const execution = payload.suppressionReview.issues.find((issue) => issue.dimension === "EXECUTION");
+    expect(probableCause?.authorities.some((authority) => authority.citation === "462 U.S. 213")).toBe(true);
+    expect(goodFaith?.authorities.some((authority) => authority.citation === "468 U.S. 897")).toBe(true);
+    expect(goodFaith?.authorities.every((authority) => authority.treatment === "UNVERIFIED")).toBe(true);
+    expect(execution?.authorities.some((authority) => /Hudson/i.test(authority.title ?? "") || authority.citation === "547 U.S. 586")).toBe(
+      true,
+    );
+    expect(probableCause?.authorities.some((authority) => authority.citation === "468 U.S. 897")).toBe(false);
+    expect(payload.suppressionReview.suppressionConclusion).toBeNull();
+    expect(payload.suppressionReview.validityConclusion).toBeNull();
+    expect(payload.suppressionReview.guiltConclusion).toBeNull();
   });
 });
 
