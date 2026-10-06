@@ -23,7 +23,7 @@ export function decomposeQuestion(context: QueryContext): DecomposedQuestion {
       ? "US"
       : (context.jurisdiction ?? null);
   const missingContext: string[] = [];
-  if (!context.jurisdiction && issueType === "STATE_LAW") missingContext.push("jurisdiction");
+  if (!context.jurisdiction || context.jurisdiction === "UNKNOWN") missingContext.push("jurisdiction");
   if (!context.forumCourt) missingContext.push("forumCourt");
   if (!context.matterId && !context.criminalCaseId) missingContext.push("matterOrCase");
 

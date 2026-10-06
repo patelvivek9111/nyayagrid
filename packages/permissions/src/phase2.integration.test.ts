@@ -248,6 +248,10 @@ describe.runIf(runDbTests)("phase 2 matter workflow integration", () => {
     expect(answer.answer.evidenceState).toBe("grounded");
     expect(answer.answer.sources.length).toBeGreaterThan(0);
     expect(answer.artifact?.id).toBeTruthy();
+    expect(answer.usedWeek4CombinedContext).toBe(true);
+    expect(answer.week4StructuredContext).toBeTruthy();
+    expect(answer.week4StructuredContext?.GUILT_CONCLUSION).toBeNull();
+    expect(answer.week4StructuredContext?.QUESTION).toMatch(/termination/i);
 
     const insufficient = await askNyayaAboutMatter({
       db,

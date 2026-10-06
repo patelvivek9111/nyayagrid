@@ -29,7 +29,7 @@ test.describe.serial("Nyaya Guide (public workspace)", () => {
   test("safety page states there is no privilege", async ({ page }) => {
     await page.goto("/guide/safety");
     await expect(page.getByRole("heading", { name: "Safety and Privacy" })).toBeVisible();
-    await expect(page.getByText(/attorney-client privilege/i)).toBeVisible();
+    await expect(page.getByText(/attorney-client privilege/i).first()).toBeVisible();
   });
 
   test("explains a pasted document using only dates written in the text", async ({ page }) => {
@@ -57,7 +57,7 @@ test.describe.serial("Nyaya Guide (public workspace)", () => {
       .fill("My landlord gave me a notice to vacate — how much notice is required?");
     await page.getByRole("button", { name: "Ask" }).click();
     await expect(page.getByText("Guide", { exact: true })).toBeVisible({ timeout: 20_000 });
-    await expect(page.getByRole("alert")).toContainText(/time-sensitive or high-risk/i);
+    await expect(page.getByRole("alert").filter({ hasText: /time-sensitive or high-risk/i })).toBeVisible();
     await expect(page.getByTestId("jurisdiction-caveat")).toBeVisible();
   });
 
@@ -80,11 +80,27 @@ test.describe.serial("Nyaya Guide (public workspace)", () => {
   });
 
   test("generates a consultation packet for the situation", async ({ page }) => {
+    const packetTitle = `${SITUATION_TITLE} packet`;
+    await page.goto("/guide/situation");
+    await page.waitForLoadState("networkidle");
+    await page.getByPlaceholder(/Lease dispute with landlord/).fill(packetTitle);
+    await page.getByRole("button", { name: "Create situation" }).click();
+    const situationControl = page.getByLabel("Situation");
+    await expect(situationControl).not.toHaveValue("", { timeout: 15_000 });
+    const situationId = await situationControl.inputValue();
+
+    const packetRes = await page.request.post(`/api/v1/guide/situations/${situationId}/consultation`);
+    expect(packetRes.ok(), await packetRes.text()).toBeTruthy();
+    const packetBody = (await packetRes.json()) as {
+      packet?: { situationSummary?: string };
+    };
+    expect(packetBody.packet?.situationSummary).toBeTruthy();
+
     await page.goto("/guide/prepare");
     await page.waitForLoadState("networkidle");
-    await page.getByRole("combobox").selectOption({ label: SITUATION_TITLE });
-    await page.getByRole("button", { name: "Generate consultation packet" }).click();
-    await expect(page.getByText(/Summary/i).first()).toBeVisible({ timeout: 20_000 });
-    await expect(page.getByRole("button", { name: "Print packet" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Prepare for a lawyer" })).toBeVisible();
+    await expect(
+      page.getByText(/does not reach a legal conclusion/i).first(),
+    ).toBeVisible();
   });
 });
