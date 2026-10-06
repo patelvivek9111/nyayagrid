@@ -2,6 +2,7 @@
   "classification": "WEEK7_PASS_READY_FOR_FINAL_CERTIFICATION",
   "completedAt": "2026-10-06",
   "releaseCandidateTag": "rc-week7-2026-10-06",
+  "releaseCandidateSha": "092811ba2d42c4e9dbf7ce825a8f7a4736adb8f3",
   "testCommands": [
     "npm run bench:week5",
     "npm run bench:week6",
