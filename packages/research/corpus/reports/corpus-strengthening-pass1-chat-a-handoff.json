@@ -1,0 +1,154 @@
+{
+  "classification": "CHAT_A_HANDOFF_FROM_CORPUS_PASS1",
+  "generatedAt": "2026-10-06T14:00:00.000Z",
+  "newAuthoritiesAcquiredThisPass": [],
+  "zeroClResolves": {
+    "presentTargetCompactMatches": 20,
+    "resolvedCitationsAfter": 6142,
+    "unresolvedAfter": 43784
+  },
+  "existingSourceBackedAuthoritiesChatAShouldUse": [
+    {
+      "citation": "462 U.S. 213",
+      "authorityId": "83949afa-33e2-4cec-8fe5-1e7b0138eef9",
+      "providerId": "cl-opinion-9429232",
+      "court": "us-scotus",
+      "date": "1983-06-08",
+      "jurisdiction": "US",
+      "title": "Illinois v. Gates",
+      "benchmarkWorkflow": "prosecution_warrant_suppression_probable_cause",
+      "authorityStatusContext": "potentially_binding_federal_constitutional_totality_of_circumstances_probable_cause",
+      "relationship": null,
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true
+    },
+    {
+      "citation": "468 U.S. 897",
+      "authorityId": "c494cde9-c897-4bb4-a920-b7ea085fb468",
+      "providerId": "cl-opinion-9429769",
+      "court": "us-scotus",
+      "date": "1984-09-18",
+      "jurisdiction": "US",
+      "title": "United States v. Leon",
+      "benchmarkWorkflow": "prosecution_warrant_suppression_good_faith",
+      "authorityStatusContext": "potentially_binding_federal_constitutional_exclusionary_rule_good_faith",
+      "relationship": "DISTINGUISHABLE_CANDIDATE_VS_CA3_EDPA_KEYWORD_OVERLAP_ONLY",
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true
+    },
+    {
+      "citation": "466 U.S. 740",
+      "authorityId": "f6fac4af-1858-4098-9a36-12cfeca6649c",
+      "providerId": "cl-opinion-9429597",
+      "court": "us-scotus",
+      "date": "1984-05-15",
+      "jurisdiction": "US",
+      "title": "Welsh v. Wisconsin",
+      "benchmarkWorkflow": "prosecution_warrant_exigent_circumstances",
+      "authorityStatusContext": "potentially_binding_federal_constitutional",
+      "relationship": null,
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true
+    },
+    {
+      "citation": "547 U.S. 586",
+      "authorityId": "9fe84e04-d4dc-4aaa-b75f-c4ec005100dc",
+      "providerId": "cl-opinion-145646",
+      "court": "us-scotus",
+      "date": "2006-06-15",
+      "jurisdiction": "US",
+      "title": "Hudson v. Michigan",
+      "benchmarkWorkflow": "prosecution_warrant_knock_and_announce_suppression",
+      "authorityStatusContext": "potentially_binding_federal_constitutional",
+      "relationship": null,
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true
+    },
+    {
+      "citation": "564 U.S. 229",
+      "authorityId": "e67d1763-da45-4c07-b2e8-625309542a1f",
+      "providerId": "cl-opinion-7263677",
+      "court": "us-scotus",
+      "date": "2011-06-16",
+      "jurisdiction": "US",
+      "title": "Davis v. United States",
+      "benchmarkWorkflow": "prosecution_suppression_good_faith_binding_precedent",
+      "authorityStatusContext": "potentially_binding_federal_constitutional",
+      "relationship": null,
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true
+    },
+    {
+      "citation": "563 U.S. 452",
+      "authorityId": "b8cfd34d-53f1-4be1-a8ae-4deb904ff1a5",
+      "providerId": "cl-opinion-9441560",
+      "court": "us-scotus",
+      "date": "2011-05-16",
+      "jurisdiction": "US",
+      "title": "Kentucky v. King",
+      "benchmarkWorkflow": "prosecution_warrant_exigent_circumstances_police_created_exigency",
+      "authorityStatusContext": "potentially_binding_federal_constitutional",
+      "relationship": null,
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true
+    },
+    {
+      "citation": "524 U.S. 357",
+      "authorityId": "255d3085-72dc-4e87-a5bc-56f7f8dd18f3",
+      "providerId": "cl-opinion-9433685",
+      "court": "us-scotus",
+      "date": "1998-06-25",
+      "jurisdiction": "US",
+      "title": "Pennsylvania Bd. of Probation and Parole v. Scott",
+      "benchmarkWorkflow": "prosecution_exclusionary_rule_parole_search_PA_related_SCOTUS",
+      "authorityStatusContext": "potentially_binding_federal_constitutional",
+      "relationship": null,
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true
+    },
+    {
+      "citation": null,
+      "authorityId": "81d2fb3c-bb80-446d-9c07-6a49b0d329ea",
+      "providerId": "cl-opinion-11442334",
+      "court": "us-ca-3",
+      "date": "2026-09-16",
+      "jurisdiction": "US",
+      "title": "Kyle Beatty v. Clinton Gardner",
+      "benchmarkWorkflow": "third_circuit_probable_cause_warrant_keyword_hit_not_certified_holding",
+      "authorityStatusContext": "binding_in_third_circuit_if_on_point_after_holding_review",
+      "relationship": "UNKNOWN_vs_Leon",
+      "treatment": "TREATMENT_UNVERIFIED",
+      "sourceAvailable": true,
+      "caution": "Citation field empty. Keyword overlap with warrant/probable cause only. Do not treat as contrary to Leon without source-holding review."
+    }
+  ],
+  "REAL_CONFLICT_AUTHORITY_TARGET_SET": [
+    {
+      "authorityA": "468 U.S. 897 United States v. Leon",
+      "authorityB": "Kyle Beatty v. Clinton Gardner (us-ca-3, citation unset)",
+      "courts": ["us-scotus", "us-ca-3"],
+      "issue": "probable cause / warrant / search (keyword overlap)",
+      "relationship": "UNKNOWN",
+      "sourceSupported": false,
+      "benchmarkReady": false,
+      "note": "Not certified as CONTRARY or DISTINGUISHABLE. Holdings were not compared beyond first-chunk keywords."
+    }
+  ],
+  "coverageGapsForNextBPass": {
+    "missingHighDemandScotusCites": [
+      { "citation": "407 U.S. 67", "incomingUnresolvedEdges": 7, "note": "warrant-term source titles in demand scan" },
+      { "citation": "466 U.S. 648", "incomingUnresolvedEdges": 10 },
+      { "citation": "347 U.S. 62", "incomingUnresolvedEdges": 6 },
+      { "citation": "379 U.S. 89", "incomingUnresolvedEdges": 8 },
+      { "citation": "361 U.S. 98", "incomingUnresolvedEdges": 6 }
+    ],
+    "forumWarrantRelevantCounts": {
+      "scotus": 78,
+      "ca3": 4,
+      "edpa": 1,
+      "paHigh": 1,
+      "paSuper": 1
+    }
+  },
+  "productCodeChanges": "NONE"
+}

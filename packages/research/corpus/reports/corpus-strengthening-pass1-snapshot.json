@@ -1,0 +1,28 @@
+{
+  "snapshotId": "corpus-pass1-2026-10-06-zero-cl-blocked",
+  "timestamp": "2026-10-06T14:00:00.000Z",
+  "branch": "nyaya/corpus-citation-strengthening",
+  "baseCommitAtPassStart": "d4db3da866d933a142d43dc5a16793f2a13a3d2c",
+  "courtListenerRequests": 0,
+  "certificationResult": "HEALTH_GREEN_NO_NEW_AUTHORITIES_CL_BLOCKED",
+  "start": {
+    "cases": 4658,
+    "authorities": 6013,
+    "extracted": 49926,
+    "resolved": 6122,
+    "unresolved": 43804
+  },
+  "end": {
+    "cases": 4658,
+    "authorities": 6013,
+    "extracted": 49926,
+    "resolved": 6142,
+    "unresolved": 43784
+  },
+  "integrity": {
+    "duplicateEdges": 0,
+    "orphanEdges": 0,
+    "missingEmbeddings": 0,
+    "silentCurrent": 0
+  }
+}

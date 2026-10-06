@@ -1,0 +1,137 @@
+{
+  "classification": "CONTINUOUS_CORPUS_CITATION_STRENGTHENING_PASS1",
+  "status": "CORPUS_PASS_BLOCKED",
+  "stopReason": "COURTLISTENER_API_KEY_UNAVAILABLE_AND_FLY_STAGING_UNAUTHORIZED",
+  "generatedAt": "2026-10-06T14:00:00.000Z",
+  "worktree": "C:/Users/patel/Documents/nyayagrid-corpus",
+  "branch": "nyaya/corpus-citation-strengthening",
+  "head": "d4db3da866d933a142d43dc5a16793f2a13a3d2c",
+  "weeks1to7": "CLOSED",
+  "corpusConnection": {
+    "neonAuth": "AVAILABLE",
+    "correctDatabaseVerified": true,
+    "localhostUsedForWrites": false,
+    "identityStartCases": 4658,
+    "identityStartExtracted": 49926,
+    "identityStartResolved": 6122
+  },
+  "courtListener": {
+    "probePerformed": false,
+    "reason": "COURTLISTENER_API_KEY missing in process env and worktree/origin .env. Fly app nyayagrid-staging remains unauthorized so staging secret cannot be used. Zero CL HTTP by design.",
+    "actualRequests": 0,
+    "429": 0,
+    "408": 0,
+    "longWaitsOver5m": 0
+  },
+  "startSnapshot": {
+    "cases": 4658,
+    "stateDc": 3453,
+    "federal": 1134,
+    "intermediateStateDc": 572,
+    "pre2000StateDc": 919,
+    "pre1980StateDc": 293,
+    "authorities": 6013,
+    "extracted": 49926,
+    "resolved": 6122,
+    "unresolved": 43804,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "silentCurrent": 0
+  },
+  "endSnapshot": {
+    "cases": 4658,
+    "stateDc": 3453,
+    "federal": 1134,
+    "intermediateStateDc": 572,
+    "pre2000StateDc": 919,
+    "pre1980StateDc": 293,
+    "authorities": 6013,
+    "extracted": 49926,
+    "resolved": 6142,
+    "unresolved": 43784,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "silentCurrent": 0
+  },
+  "zeroClWork": {
+    "presentTargetCompactMatchesResolved": 20,
+    "casesAdded": 0,
+    "newCitationEdges": 0,
+    "netUnresolvedChange": -20
+  },
+  "unresolvedClassificationByEdgeCount": {
+    "CASE_TARGET_ABSENT": 38894,
+    "STATUTE": 1329,
+    "REGULATION": 115,
+    "RULE": 167,
+    "MALFORMED": 0,
+    "SHORT_FORM": 0,
+    "ID_SUPRA": 0,
+    "UNSUPPORTED_REPORTER": 0,
+    "NON_CASE": 1,
+    "MISSING_METADATA": 0,
+    "PARSER_LIMITATION": 0,
+    "UNKNOWN": 3298
+  },
+  "classificationNote": "Heuristic from citation text on unique groups summed to edges. Residual UNKNOWN is leftover after CASE/STATUTE/REG/RULE/NON_CASE. SHORT_FORM/ID_SUPRA not densely represented as standalone normalized strings.",
+  "acquisition": {
+    "casesAdded": 0,
+    "scotus": 0,
+    "thirdCircuit": 0,
+    "otherFederalCircuit": 0,
+    "district": 0,
+    "paSupreme": 0,
+    "paSuperior": 0,
+    "otherState": 0,
+    "historical": 0
+  },
+  "citationImpact": {
+    "oldUnresolvedResolved": 20,
+    "newEdges": 0,
+    "newUnresolved": 0,
+    "netUnresolved": -20,
+    "uniqueMissingTargetsRemoved": 0
+  },
+  "efficiency": {
+    "oldResolvesPerCl": null,
+    "casesPerCl": null,
+    "uniqueTargetsPerCl": null,
+    "benchmarkRelevantPerCl": null,
+    "note": "No CourtListener requests. Zero-CL compact-citation present-target resolve only."
+  },
+  "treatment": {
+    "verified": 0,
+    "unverified": "all scanned warrant-relevant authorities remain TREATMENT_UNVERIFIED",
+    "unsupportedTreatmentLabels": 0
+  },
+  "corpusHealth": {
+    "extraction": "unchanged 49926/4658-case baseline",
+    "presentTargetDefectsAfterCompactResolve": 0,
+    "duplicateEdges": 0,
+    "orphanEdges": 0,
+    "missingEmbeddings": 0,
+    "FAILED": 0,
+    "NOT_PROCESSED": 0,
+    "silentCurrent": 0,
+    "status": "GREEN"
+  },
+  "chatARequestStatus": {
+    "warrantSuppression": "PARTIAL",
+    "realAuthorityConflict": "NOT_FOUND",
+    "treatment": "NOT_SUPPORTED"
+  },
+  "p0": [
+    "Provide COURTLISTENER_API_KEY in the Chat B environment (or restore Fly org token that can exec nyayagrid-staging) so Lane A/B acquisition can run against Neon production."
+  ],
+  "p1": [
+    "Acquire missing high-value SCOTUS demand cites 407 U.S. 67, 466 U.S. 648, 347 U.S. 62, 379 U.S. 89, 361 U.S. 98 after CL access.",
+    "Acquire additional Third Circuit / EDPA / PA Superior search-and-seizure opinions; current warrant-relevant depth is SCOTUS-heavy (78) vs CA3 (4), EDPA (1), PA high (1), PA Super (1).",
+    "Holding-level review of Leon vs CA3/EDPA keyword-overlap candidates before labeling DISTINGUISHABLE."
+  ],
+  "nextBAction": "Once COURTLISTENER_API_KEY is available in this worktree, acquire the five missing high-demand SCOTUS CASE_TARGET_ABSENT cites (starting with 407 U.S. 67) into Neon production, then CA3/EDPA warrant opinions.",
+  "sharedRuntimeLockReleased": true,
+  "productFilesModified": false,
+  "localhostWrites": false
+}
