@@ -1,0 +1,91 @@
+{
+  "classification": "CORPUS_STRENGTHENING_PASS1_FINAL",
+  "finalClassification": "CORPUS_STRENGTHENING_PASS1_COMPLETE_WITH_EDPA_LIMITATION",
+  "status": "CERTIFIED",
+  "generatedAt": "2026-10-06T16:55:00.000Z",
+  "worktree": "C:/Users/patel/Documents/nyayagrid-corpus",
+  "branch": "nyaya/corpus-citation-strengthening",
+  "weeks1to7": "CLOSED",
+  "certifiedProductBaselinePreserved": true,
+  "sharedRuntimeLockReleased": true,
+  "snapshot": {
+    "start": {
+      "cases": 4658,
+      "resolved": 6142,
+      "extracted": 49926,
+      "unresolved": 43784
+    },
+    "end": {
+      "cases": 4680,
+      "authorities": 6035,
+      "extracted": 50623,
+      "resolved": 6306,
+      "unresolved": 44317
+    },
+    "casesAdded": 22,
+    "resolvedDelta": 164,
+    "extractedDelta": 697,
+    "unresolvedDelta": 533
+  },
+  "courtListener": {
+    "authoritativeQuotaProbes": 1,
+    "accidentalQuotaProbes": 1,
+    "note": "Full Pass-1-with-key session including resume + close. Exact productive HTTP total estimated from artifacts ≈ 110–130 including acquisition, court repairs, EDPA search/cluster recovery, and PA retry. No 429. Gateway 502/504 observed on some PA A.3d lookups earlier; bounded PA retry succeeded for 2/3.",
+    "429": 0,
+    "502_504": "observed_earlier_on_PA_A3d; close-retry mostly clean",
+    "longWaitsOver5m": 0
+  },
+  "acquisition": {
+    "scotus": 5,
+    "thirdCircuit": 7,
+    "edpa": 6,
+    "edpaNote": "5 warrant-search recovered via court-filtered search + 1 earlier insurance false-positive (Caln Village) from weak keyword; do not treat Caln as warrant authority",
+    "paSupreme": 3,
+    "paSuperior": 1,
+    "totalCasesAdded": 22
+  },
+  "citationImpact": {
+    "startResolved": 6142,
+    "endResolved": 6306,
+    "oldUnresolvedResolvedApprox": 164,
+    "newCitationEdges": 697,
+    "newUnresolvedNet": 533,
+    "netUnresolvedChange": 533,
+    "note": "New opinions add outbound citation edges; resolved still rose +164 vs resume baseline 6142."
+  },
+  "health": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "FAILED": 0,
+    "NOT_PROCESSED": 0,
+    "silentCURRENT": 0,
+    "presentTargetDefects": 0,
+    "status": "GREEN",
+    "stuckProcessingCloseout": "2 pre-existing processing authorities (Sixarp MI; KS statute) chunked+embedded and marked ready; zero CL"
+  },
+  "edpa": {
+    "recoveredAuthorities": [
+      "275 F.Supp.3d 605 In re Search Warrant No. 16-960-M-1 to Google",
+      "232 F.Supp.3d 708 In re Search Warrant No. 16-960-M-01 to Google",
+      "96 F.Supp.3d 472 United States v. Mooty",
+      "163 F.Supp.3d 138 Bamont v. PSPCA",
+      "124 F.Supp.3d 394 Lawson v. PSPCA"
+    ],
+    "forumCountAfter": 23,
+    "remainingLimitation": "EDPA_LOOKUP_LIMITATION — exact F.Supp.2d string-match gate in shared cite-demand ingest still fails on CL citation object spacing/normalization",
+    "sharedArchitectureChangeRequired": true,
+    "sharedArchitectureChanged": false
+  },
+  "pa": {
+    "additionalRecovered": ["105 A.3d 1257 Ness", "47 A.3d 1176 Grigsby"],
+    "remaining502504OrUnmatched": ["218 A.3d 404 no_verified_cluster_match"]
+  },
+  "treatment": {
+    "verified": 0,
+    "unverified": "all pass authorities",
+    "unsupportedLabels": 0
+  },
+  "chatAHandoff": "packages/research/corpus/reports/corpus-strengthening-pass1-chat-a-handoff-resume.json",
+  "realConflictPair": "NONE — DO NOT INVENT"
+}

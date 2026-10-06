@@ -1,0 +1,2188 @@
+{
+  "ok": true,
+  "classification": "PASS1_ZERO_CL_DEMAND_DISCOVERY",
+  "generatedAt": "2026-10-06T13:53:40.474Z",
+  "courtListenerHttpCalls": 0,
+  "mutations": 0,
+  "citationTotals": {
+    "extracted": 49926,
+    "resolved": 6122,
+    "unresolved": 43804
+  },
+  "unresolvedClassificationByEdgeCount": {
+    "CASE_TARGET_ABSENT": 38894,
+    "STATUTE": 1329,
+    "REGULATION": 115,
+    "RULE": 167,
+    "MALFORMED": 0,
+    "SHORT_FORM": 0,
+    "ID_SUPRA": 0,
+    "UNSUPPORTED_REPORTER": 0,
+    "NON_CASE": 1,
+    "MISSING_METADATA": 0,
+    "PARSER_LIMITATION": 0,
+    "UNKNOWN": 3298
+  },
+  "uniqueUnresolvedTargetsSampled": 35683,
+  "paThirdCircuitCoverage": [
+    {
+      "authority_state": "US",
+      "court_level": "scotus",
+      "court_id": "us-scotus",
+      "n": 459
+    },
+    {
+      "authority_state": "US",
+      "court_level": "circuit",
+      "court_id": "us-ca-3",
+      "n": 32
+    },
+    {
+      "authority_state": "PA",
+      "court_level": "state_high",
+      "court_id": "st-pa-high",
+      "n": 30
+    },
+    {
+      "authority_state": "PA",
+      "court_level": "state_appellate",
+      "court_id": "st-pa-super",
+      "n": 26
+    },
+    {
+      "authority_state": "US",
+      "court_level": "district",
+      "court_id": "us-d-paed",
+      "n": 17
+    }
+  ],
+  "existingWarrantishAuthorities": [
+    {
+      "id": "83949afa-33e2-4cec-8fe5-1e7b0138eef9",
+      "citation": "462 U.S. 213",
+      "normalized": "462 U.S. 213",
+      "court": "Supreme Court of the United States",
+      "courtId": "us-scotus",
+      "courtLevel": "scotus",
+      "state": "US",
+      "date": "1983-06-08",
+      "title": "Illinois v. Gates",
+      "provider": "courtlistener",
+      "externalId": "cl-opinion-9429232",
+      "treatment": "unknown"
+    },
+    {
+      "id": "33503a81-0eb2-483b-8895-c5b38532565d",
+      "citation": "438 U.S. 154",
+      "normalized": "438 U.S. 154",
+      "court": "Supreme Court of the United States",
+      "courtId": "us-scotus",
+      "courtLevel": "scotus",
+      "state": "US",
+      "date": "1978-06-26",
+      "title": "Franks v. Delaware",
+      "provider": "courtlistener",
+      "externalId": "cl-opinion-109925",
+      "treatment": "unknown"
+    },
+    {
+      "id": "59a022cd-feb8-4aae-88c1-aed3c160a8ef",
+      "citation": "367 U.S. 717",
+      "normalized": "367 U.S. 717",
+      "court": "Supreme Court of the United States",
+      "courtId": "us-scotus",
+      "courtLevel": "scotus",
+      "state": "US",
+      "date": "1961-06-19",
+      "title": "Marcus v. Search Warrant of Property",
+      "provider": "courtlistener",
+      "externalId": "cl-opinion-106287",
+      "treatment": "unknown"
+    },
+    {
+      "id": "9e3108e8-b088-4e4c-918f-dc8112407f98",
+      "citation": null,
+      "normalized": null,
+      "court": "New York Supreme Court, Appellate Division",
+      "courtId": "st-ny-app",
+      "courtLevel": "state_appellate",
+      "state": "NY",
+      "date": "2026-09-17",
+      "title": "Matter of Application for a Search Warrant to Search the Premises Located at the Art Inst. of Chicago",
+      "provider": "courtlistener",
+      "externalId": "cl-opinion-11443311",
+      "treatment": "unknown"
+    },
+    {
+      "id": "2a9044a4-4ffa-4d8a-858e-e04ce1f54cf4",
+      "citation": null,
+      "normalized": null,
+      "court": "Wyoming Supreme Court",
+      "courtId": "st-wy-high",
+      "courtLevel": "state_high",
+      "state": "WY",
+      "date": "2026-04-22",
+      "title": "Memorial Hospital of Converse County - Advanced Medicine, Hometown Care and Jonathan L. Grosdidier, M.D. F.A.C.S. v. Laney Gates",
+      "provider": "courtlistener",
+      "externalId": "cl-opinion-11314081",
+      "treatment": "unknown"
+    }
+  ],
+  "highValueCaseTargetAbsent": [
+    {
+      "cite": "407 U.S. 67",
+      "edges": 7,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 8,
+      "warrantTerms": [
+        "search warrant"
+      ],
+      "valueScore": 117,
+      "sampleSources": [
+        {
+          "title": "Matter of Application for a Search Warrant to Search the Premises Located at the Art Inst. of Chicago",
+          "state": "NY",
+          "court_level": "state_appellate",
+          "citation": null
+        },
+        {
+          "title": "Vail v. Quinlan",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Schneckloth v. Bustamonte",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "412 U.S. 218"
+        }
+      ]
+    },
+    {
+      "cite": "7 Cranch 339",
+      "edges": 6,
+      "j": "UNKNOWN",
+      "court": "unknown",
+      "role": "unknown",
+      "warrantScore": 9,
+      "warrantTerms": [
+        "illinois v. gates",
+        "gates"
+      ],
+      "valueScore": 101,
+      "sampleSources": [
+        {
+          "title": "Aguilar v. Texas",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "378 U.S. 108"
+        },
+        {
+          "title": "Illinois v. Gates",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "462 U.S. 213"
+        },
+        {
+          "title": "Brinegar v. United States",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "338 U.S. 160"
+        }
+      ]
+    },
+    {
+      "cite": "347 U.S. 62",
+      "edges": 6,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 5,
+      "warrantTerms": [
+        "franks"
+      ],
+      "valueScore": 86,
+      "sampleSources": [
+        {
+          "title": "Franks v. Delaware",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "438 U.S. 154"
+        },
+        {
+          "title": "Richardson v. Marsh",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "481 U.S. 200"
+        },
+        {
+          "title": "Doyle v. Ohio",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "426 U.S. 610"
+        }
+      ]
+    },
+    {
+      "cite": "379 U.S. 89",
+      "edges": 8,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 3,
+      "warrantTerms": [
+        "terry"
+      ],
+      "valueScore": 68,
+      "sampleSources": [
+        {
+          "title": "United States v. Leon",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "468 U.S. 897"
+        },
+        {
+          "title": "Terry v. Ohio",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "392 U.S. 1"
+        },
+        {
+          "title": "Spinelli v. United States",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "393 U.S. 410"
+        }
+      ]
+    },
+    {
+      "cite": "361 U.S. 98",
+      "edges": 6,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 3,
+      "warrantTerms": [
+        "terry"
+      ],
+      "valueScore": 66,
+      "sampleSources": [
+        {
+          "title": "Opinion 8827424",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "United States v. Leon",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "468 U.S. 897"
+        },
+        {
+          "title": "Terry v. Ohio",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "392 U.S. 1"
+        }
+      ]
+    },
+    {
+      "cite": "573 U.S. 373",
+      "edges": 11,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 41,
+      "sampleSources": [
+        {
+          "title": "Chatrie v. United States",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": null
+        },
+        {
+          "title": "United States v. Alisigwe",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "Kyle Beatty v. Clinton Gardner",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        }
+      ]
+    },
+    {
+      "cite": "106 S.Ct. 2505",
+      "edges": 11,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 41,
+      "sampleSources": [
+        {
+          "title": "Stonewell Corp. v. CONESTOGA TITLE INSURANCE CO.",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Salinas v. Amteck of Kentucky, Inc.",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Magnuson v. City of Hickory Hills",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        }
+      ]
+    },
+    {
+      "cite": "106 S.Ct. 2548",
+      "edges": 11,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 41,
+      "sampleSources": [
+        {
+          "title": "Heimsoth v. Ghobrial",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Sneede Ex Rel. Thompson v. Kizer",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Salinas v. Amteck of Kentucky, Inc.",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        }
+      ]
+    },
+    {
+      "cite": "344 U.S. 183",
+      "edges": 11,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 41,
+      "sampleSources": [
+        {
+          "title": "John McAdams v. Marquette University",
+          "state": "WI",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "Board of Regents of State Colleges v. Roth",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "408 U.S. 564"
+        },
+        {
+          "title": "Speiser v. Randall",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "357 U.S. 513"
+        }
+      ]
+    },
+    {
+      "cite": "466 U.S. 648",
+      "edges": 10,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 40,
+      "sampleSources": [
+        {
+          "title": "Tescil Romalis Mason-Kimmons v. State of Minnesota",
+          "state": "MN",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "State v. Farook",
+          "state": "NC",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "State ex rel. Brian Dorsey v. David Vandergriff, Respondent; and In re Brian Dorsey v. David Vandergriff, Warden, Potosi",
+          "state": "MO",
+          "court_level": "state_high",
+          "citation": null
+        }
+      ]
+    },
+    {
+      "cite": "395 U.S. 337",
+      "edges": 9,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 39,
+      "sampleSources": [
+        {
+          "title": "Vail v. Quinlan",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Mathews v. Eldridge",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "424 U.S. 319"
+        },
+        {
+          "title": "Stanley v. Illinois",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "405 U.S. 645"
+        }
+      ]
+    },
+    {
+      "cite": "573 U.S. 149",
+      "edges": 9,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 39,
+      "sampleSources": [
+        {
+          "title": "Trump v. California",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": null
+        },
+        {
+          "title": "National Republican Senatorial Committee v. Federal Election Comm'n",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": null
+        },
+        {
+          "title": "National Shooting Sports Foundation v. Attorney General New Jersey",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        }
+      ]
+    },
+    {
+      "cite": "302 U.S. 633",
+      "edges": 9,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 39,
+      "sampleSources": [
+        {
+          "title": "United States v. Richardson",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "418 U.S. 166"
+        },
+        {
+          "title": "Spokeo, Inc. v. Robins",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "578 U.S. 330"
+        },
+        {
+          "title": "Lujan v. Defenders of Wildlife",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "504 U.S. 555"
+        }
+      ]
+    },
+    {
+      "cite": "410 U.S. 284",
+      "edges": 9,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 39,
+      "sampleSources": [
+        {
+          "title": "State v. Kyle Lee Monahan",
+          "state": "WI",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "James Lewis Watts v. Commonwealth of Kentucky",
+          "state": "KY",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "Chelsea L. Crossland v. State of Indiana",
+          "state": "IN",
+          "court_level": "state_high",
+          "citation": null
+        }
+      ]
+    },
+    {
+      "cite": "316 U.S. 455",
+      "edges": 9,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 39,
+      "sampleSources": [
+        {
+          "title": "Brian K. Allison v. State of iowa",
+          "state": "IA",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "McDonald v. City of Chicago",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "561 U.S. 742"
+        },
+        {
+          "title": "Faretta v. California",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "422 U.S. 806"
+        }
+      ]
+    },
+    {
+      "cite": "389 U.S. 241",
+      "edges": 9,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 39,
+      "sampleSources": [
+        {
+          "title": "Harward v. City of Austin",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "Huffman v. Pursue, Ltd.",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "420 U.S. 592"
+        },
+        {
+          "title": "Steffel v. Thompson",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "415 U.S. 452"
+        }
+      ]
+    },
+    {
+      "cite": "420 U.S. 103",
+      "edges": 8,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "sampleSources": [
+        {
+          "title": "Gregory Hartmann v. Brian Chudzik",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "United States v. Salerno",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "481 U.S. 739"
+        },
+        {
+          "title": "Bell v. Wolfish",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "441 U.S. 520"
+        }
+      ]
+    },
+    {
+      "cite": "106 S.Ct. 1348",
+      "edges": 8,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "sampleSources": [
+        {
+          "title": "Stonewell Corp. v. CONESTOGA TITLE INSURANCE CO.",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Whitlock v. Pepsi Americas",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Carter v. Variflex, Inc.",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        }
+      ]
+    },
+    {
+      "cite": "362 U.S. 199",
+      "edges": 8,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "sampleSources": [
+        {
+          "title": "Matter of Trapp",
+          "state": "MO",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "Jackson v. Virginia",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "443 U.S. 307"
+        },
+        {
+          "title": "Boddie v. Connecticut",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "401 U.S. 371"
+        }
+      ]
+    },
+    {
+      "cite": "339 U.S. 382",
+      "edges": 8,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "sampleSources": [
+        {
+          "title": "State ex rel. Bunker Resource Recycling & Reclamation, Inc. v. Mehan",
+          "state": "MO",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "Board of Regents of State Colleges v. Roth",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "408 U.S. 564"
+        },
+        {
+          "title": "National Ass'n for the Advancement of Colored People v. Alabama Ex Rel. Patterson",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "357 U.S. 449"
+        }
+      ]
+    },
+    {
+      "cite": "273 U.S. 510",
+      "edges": 8,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "sampleSources": [
+        {
+          "title": "People v. Class",
+          "state": "IL",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "Van Ness v. United States",
+          "state": "DC",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "Johnson v. United States",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "520 U.S. 461"
+        }
+      ]
+    },
+    {
+      "cite": "375 U.S. 411",
+      "edges": 8,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "sampleSources": [
+        {
+          "title": "Exxon Mobil Corp. v. Saudi Basic Industries Corp.",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "544 U.S. 280"
+        },
+        {
+          "title": "Huffman v. Pursue, Ltd.",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "420 U.S. 592"
+        },
+        {
+          "title": "Colorado River Water Conservation District v. United States",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "424 U.S. 800"
+        }
+      ]
+    },
+    {
+      "cite": "303 U.S. 444",
+      "edges": 8,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "sampleSources": [
+        {
+          "title": "New York Times Co. v. Sullivan",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "376 U.S. 254"
+        },
+        {
+          "title": "Chaplinsky v. New Hampshire",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "315 U.S. 568"
+        },
+        {
+          "title": "Prince v. Massachusetts",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "321 U.S. 158"
+        }
+      ]
+    },
+    {
+      "cite": "197 U.S. 11",
+      "edges": 8,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "sampleSources": [
+        {
+          "title": "Camara v. Municipal Court of City and County of San Francisco",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "387 U.S. 523"
+        },
+        {
+          "title": "Prince v. Massachusetts",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "321 U.S. 158"
+        },
+        {
+          "title": "Wisconsin v. Yoder",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "406 U.S. 205"
+        }
+      ]
+    },
+    {
+      "cite": "558 U.S. 310",
+      "edges": 7,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 37,
+      "sampleSources": [
+        {
+          "title": "Americans for Prosperity Foundation v. Anthony Albence",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "Shannon MacDonald v. President NJ State Board of Medical Examiners",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "The Florida Bar v. Christopher W. Crowley",
+          "state": "FL",
+          "court_level": "state_high",
+          "citation": null
+        }
+      ]
+    },
+    {
+      "cite": "104 S.Ct. 2778",
+      "edges": 7,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 37,
+      "sampleSources": [
+        {
+          "title": "Opinion 539993",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "First American Discount Corporation v. Commodity Futures Trading Commission",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "Bankers v. Federal Deposit Insurance",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        }
+      ]
+    },
+    {
+      "cite": "360 U.S. 474",
+      "edges": 7,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 37,
+      "sampleSources": [
+        {
+          "title": "Davis v. Alaska",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "415 U.S. 308"
+        },
+        {
+          "title": "Goldberg v. Kelly",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "397 U.S. 254"
+        },
+        {
+          "title": "Wolff v. McDonnell",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "418 U.S. 539"
+        }
+      ]
+    },
+    {
+      "cite": "459 U.S. 553",
+      "edges": 7,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 37,
+      "sampleSources": [
+        {
+          "title": "State of Maine v. Lyanne Lemeunier-Fitzgerald",
+          "state": "ME",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "State v. Richared E. Ladue",
+          "state": "VT",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "State v. Trequan Baker",
+          "state": "RI",
+          "court_level": "state_high",
+          "citation": null
+        }
+      ]
+    },
+    {
+      "cite": "117 U.S. 241",
+      "edges": 7,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 37,
+      "sampleSources": [
+        {
+          "title": "Wainwright v. Sykes",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "433 U.S. 72"
+        },
+        {
+          "title": "Fay v. Noia",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "372 U.S. 391"
+        },
+        {
+          "title": "Moore v. Dempsey",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "261 U.S. 86"
+        }
+      ]
+    },
+    {
+      "cite": "393 U.S. 503",
+      "edges": 7,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 37,
+      "sampleSources": [
+        {
+          "title": "Fellers v. Kelley",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "Colin Ex Rel. Colin v. Orange Unified School District",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Virginia v. Black",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "538 U.S. 343"
+        }
+      ]
+    },
+    {
+      "cite": "301 U.S. 242",
+      "edges": 7,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 37,
+      "sampleSources": [
+        {
+          "title": "Chaplinsky v. New Hampshire",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "315 U.S. 568"
+        },
+        {
+          "title": "Cantwell v. Connecticut",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "310 U.S. 296"
+        },
+        {
+          "title": "Palko v. Connecticut",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "302 U.S. 319"
+        }
+      ]
+    },
+    {
+      "cite": "386 U.S. 213",
+      "edges": 7,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 37,
+      "sampleSources": [
+        {
+          "title": "Calvin Gibson a/k/a Fernandis v. State of Mississippi",
+          "state": "MS",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "Barker v. Wingo",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "407 U.S. 514"
+        },
+        {
+          "title": "Duncan v. Louisiana",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "391 U.S. 145"
+        }
+      ]
+    },
+    {
+      "cite": "322 U.S. 143",
+      "edges": 7,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 37,
+      "sampleSources": [
+        {
+          "title": "Schneckloth v. Bustamonte",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "412 U.S. 218"
+        },
+        {
+          "title": "Malloy v. Hogan",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "378 U.S. 1"
+        },
+        {
+          "title": "Napue v. Illinois",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "360 U.S. 264"
+        }
+      ]
+    },
+    {
+      "cite": "323 U.S. 516",
+      "edges": 7,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 37,
+      "sampleSources": [
+        {
+          "title": "Cap Santa Vue, Inc. v. National Labor Relations Board",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "Colin Ex Rel. Colin v. Orange Unified School District",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "National Ass'n for the Advancement of Colored People v. Alabama Ex Rel. Patterson",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "357 U.S. 449"
+        }
+      ]
+    },
+    {
+      "cite": "256 U.S. 465",
+      "edges": 7,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 37,
+      "sampleSources": [
+        {
+          "title": "State v. Michael Joseph Gasper",
+          "state": "WI",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "Warden, Maryland Penitentiary v. Hayden",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "387 U.S. 294"
+        },
+        {
+          "title": "Go-Bart Importing Co. v. United States",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "282 U.S. 344"
+        }
+      ]
+    },
+    {
+      "cite": "386 U.S. 58",
+      "edges": 7,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 37,
+      "sampleSources": [
+        {
+          "title": "Coolidge v. New Hampshire",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "403 U.S. 443"
+        },
+        {
+          "title": "Warden, Maryland Penitentiary v. Hayden",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "387 U.S. 294"
+        },
+        {
+          "title": "United States v. Chadwick",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "433 U.S. 1"
+        }
+      ]
+    },
+    {
+      "cite": "306 U.S. 354",
+      "edges": 7,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 37,
+      "sampleSources": [
+        {
+          "title": "Batson v. Kentucky",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "476 U.S. 79"
+        },
+        {
+          "title": "Ker v. California",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "374 U.S. 23"
+        },
+        {
+          "title": "Brown v. Allen",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "344 U.S. 443"
+        }
+      ]
+    },
+    {
+      "cite": "442 U.S. 1",
+      "edges": 7,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 37,
+      "sampleSources": [
+        {
+          "title": "State of Iowa v. Eric Martin Schadl",
+          "state": "IA",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "State of Iowa v. Eric Martin Schadl",
+          "state": "IA",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "In the Matter of Petition for Rulemaking to Amend N.J.A.C. 10A:71-3.11, N.J.A.C. 10A:71-2.2, and N.J.A.C. 10A:71-3.20",
+          "state": "NJ",
+          "court_level": "state_high",
+          "citation": null
+        }
+      ]
+    },
+    {
+      "cite": "572 U.S. 393",
+      "edges": 6,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 36,
+      "sampleSources": [
+        {
+          "title": "United States v. Alisigwe",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "Fareed Hayat v. Casey Diaz",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "Johnson v. United States",
+          "state": "DC",
+          "court_level": "state_high",
+          "citation": null
+        }
+      ]
+    },
+    {
+      "cite": "361 U.S. 199",
+      "edges": 6,
+      "j": "US",
+      "court": "scotus",
+      "role": "binding_federal_constitutional",
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 36,
+      "sampleSources": [
+        {
+          "title": "Schneckloth v. Bustamonte",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "412 U.S. 218"
+        },
+        {
+          "title": "Mincey v. Arizona",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "437 U.S. 385"
+        },
+        {
+          "title": "Jackson v. Denno",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "378 U.S. 368"
+        }
+      ]
+    }
+  ],
+  "alreadyPresentAmongTop": [],
+  "WARRANT_SUPPRESSION_TARGET_SET": [
+    {
+      "citation": "407 U.S. 67",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 7,
+      "warrantScore": 8,
+      "warrantTerms": [
+        "search warrant"
+      ],
+      "valueScore": 117,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Matter of Application for a Search Warrant to Search the Premises Located at the Art Inst. of Chicago",
+          "state": "NY",
+          "court_level": "state_appellate",
+          "citation": null
+        },
+        {
+          "title": "Vail v. Quinlan",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Schneckloth v. Bustamonte",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "412 U.S. 218"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "7 Cranch 339",
+      "court": "unknown",
+      "jurisdiction": "UNKNOWN",
+      "role": "unknown",
+      "incomingUnresolvedEdges": 6,
+      "warrantScore": 9,
+      "warrantTerms": [
+        "illinois v. gates",
+        "gates"
+      ],
+      "valueScore": 101,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Aguilar v. Texas",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "378 U.S. 108"
+        },
+        {
+          "title": "Illinois v. Gates",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "462 U.S. 213"
+        },
+        {
+          "title": "Brinegar v. United States",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "338 U.S. 160"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "347 U.S. 62",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 6,
+      "warrantScore": 5,
+      "warrantTerms": [
+        "franks"
+      ],
+      "valueScore": 86,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Franks v. Delaware",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "438 U.S. 154"
+        },
+        {
+          "title": "Richardson v. Marsh",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "481 U.S. 200"
+        },
+        {
+          "title": "Doyle v. Ohio",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "426 U.S. 610"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "379 U.S. 89",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 8,
+      "warrantScore": 3,
+      "warrantTerms": [
+        "terry"
+      ],
+      "valueScore": 68,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "United States v. Leon",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "468 U.S. 897"
+        },
+        {
+          "title": "Terry v. Ohio",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "392 U.S. 1"
+        },
+        {
+          "title": "Spinelli v. United States",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "393 U.S. 410"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "361 U.S. 98",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 6,
+      "warrantScore": 3,
+      "warrantTerms": [
+        "terry"
+      ],
+      "valueScore": 66,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Opinion 8827424",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "United States v. Leon",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "468 U.S. 897"
+        },
+        {
+          "title": "Terry v. Ohio",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "392 U.S. 1"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "573 U.S. 373",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 11,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 41,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Chatrie v. United States",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": null
+        },
+        {
+          "title": "United States v. Alisigwe",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "Kyle Beatty v. Clinton Gardner",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "106 S.Ct. 2505",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 11,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 41,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Stonewell Corp. v. CONESTOGA TITLE INSURANCE CO.",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Salinas v. Amteck of Kentucky, Inc.",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Magnuson v. City of Hickory Hills",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "106 S.Ct. 2548",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 11,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 41,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Heimsoth v. Ghobrial",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Sneede Ex Rel. Thompson v. Kizer",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Salinas v. Amteck of Kentucky, Inc.",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "344 U.S. 183",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 11,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 41,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "John McAdams v. Marquette University",
+          "state": "WI",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "Board of Regents of State Colleges v. Roth",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "408 U.S. 564"
+        },
+        {
+          "title": "Speiser v. Randall",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "357 U.S. 513"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "466 U.S. 648",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 10,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 40,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Tescil Romalis Mason-Kimmons v. State of Minnesota",
+          "state": "MN",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "State v. Farook",
+          "state": "NC",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "State ex rel. Brian Dorsey v. David Vandergriff, Respondent; and In re Brian Dorsey v. David Vandergriff, Warden, Potosi",
+          "state": "MO",
+          "court_level": "state_high",
+          "citation": null
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "395 U.S. 337",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 9,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 39,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Vail v. Quinlan",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Mathews v. Eldridge",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "424 U.S. 319"
+        },
+        {
+          "title": "Stanley v. Illinois",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "405 U.S. 645"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "573 U.S. 149",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 9,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 39,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Trump v. California",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": null
+        },
+        {
+          "title": "National Republican Senatorial Committee v. Federal Election Comm'n",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": null
+        },
+        {
+          "title": "National Shooting Sports Foundation v. Attorney General New Jersey",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "302 U.S. 633",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 9,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 39,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "United States v. Richardson",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "418 U.S. 166"
+        },
+        {
+          "title": "Spokeo, Inc. v. Robins",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "578 U.S. 330"
+        },
+        {
+          "title": "Lujan v. Defenders of Wildlife",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "504 U.S. 555"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "410 U.S. 284",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 9,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 39,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "State v. Kyle Lee Monahan",
+          "state": "WI",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "James Lewis Watts v. Commonwealth of Kentucky",
+          "state": "KY",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "Chelsea L. Crossland v. State of Indiana",
+          "state": "IN",
+          "court_level": "state_high",
+          "citation": null
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "316 U.S. 455",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 9,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 39,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Brian K. Allison v. State of iowa",
+          "state": "IA",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "McDonald v. City of Chicago",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "561 U.S. 742"
+        },
+        {
+          "title": "Faretta v. California",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "422 U.S. 806"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "389 U.S. 241",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 9,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 39,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Harward v. City of Austin",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "Huffman v. Pursue, Ltd.",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "420 U.S. 592"
+        },
+        {
+          "title": "Steffel v. Thompson",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "415 U.S. 452"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "420 U.S. 103",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 8,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Gregory Hartmann v. Brian Chudzik",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "United States v. Salerno",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "481 U.S. 739"
+        },
+        {
+          "title": "Bell v. Wolfish",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "441 U.S. 520"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "106 S.Ct. 1348",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 8,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Stonewell Corp. v. CONESTOGA TITLE INSURANCE CO.",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Whitlock v. Pepsi Americas",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        },
+        {
+          "title": "Carter v. Variflex, Inc.",
+          "state": "US",
+          "court_level": "district",
+          "citation": null
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "362 U.S. 199",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 8,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Matter of Trapp",
+          "state": "MO",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "Jackson v. Virginia",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "443 U.S. 307"
+        },
+        {
+          "title": "Boddie v. Connecticut",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "401 U.S. 371"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "339 U.S. 382",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 8,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "State ex rel. Bunker Resource Recycling & Reclamation, Inc. v. Mehan",
+          "state": "MO",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "Board of Regents of State Colleges v. Roth",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "408 U.S. 564"
+        },
+        {
+          "title": "National Ass'n for the Advancement of Colored People v. Alabama Ex Rel. Patterson",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "357 U.S. 449"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "273 U.S. 510",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 8,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "People v. Class",
+          "state": "IL",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "Van Ness v. United States",
+          "state": "DC",
+          "court_level": "state_high",
+          "citation": null
+        },
+        {
+          "title": "Johnson v. United States",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "520 U.S. 461"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "375 U.S. 411",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 8,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Exxon Mobil Corp. v. Saudi Basic Industries Corp.",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "544 U.S. 280"
+        },
+        {
+          "title": "Huffman v. Pursue, Ltd.",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "420 U.S. 592"
+        },
+        {
+          "title": "Colorado River Water Conservation District v. United States",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "424 U.S. 800"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "303 U.S. 444",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 8,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "New York Times Co. v. Sullivan",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "376 U.S. 254"
+        },
+        {
+          "title": "Chaplinsky v. New Hampshire",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "315 U.S. 568"
+        },
+        {
+          "title": "Prince v. Massachusetts",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "321 U.S. 158"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "197 U.S. 11",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 8,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 38,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Camara v. Municipal Court of City and County of San Francisco",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "387 U.S. 523"
+        },
+        {
+          "title": "Prince v. Massachusetts",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "321 U.S. 158"
+        },
+        {
+          "title": "Wisconsin v. Yoder",
+          "state": "US",
+          "court_level": "scotus",
+          "citation": "406 U.S. 205"
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    },
+    {
+      "citation": "558 U.S. 310",
+      "court": "scotus",
+      "jurisdiction": "US",
+      "role": "binding_federal_constitutional",
+      "incomingUnresolvedEdges": 7,
+      "warrantScore": 0,
+      "warrantTerms": [],
+      "valueScore": 37,
+      "alreadyInCorpus": false,
+      "sampleSources": [
+        {
+          "title": "Americans for Prosperity Foundation v. Anthony Albence",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "Shannon MacDonald v. President NJ State Board of Medical Examiners",
+          "state": "US",
+          "court_level": "circuit",
+          "citation": null
+        },
+        {
+          "title": "The Florida Bar v. Christopher W. Crowley",
+          "state": "FL",
+          "court_level": "state_high",
+          "citation": null
+        }
+      ],
+      "estimatedClCost": 2,
+      "acquired": false
+    }
+  ],
+  "REAL_CONFLICT_AUTHORITY_TARGET_SET": [],
+  "notes": [
+    "Conflict pair left empty until source text can be compared after acquisition or among existing authorities.",
+    "Classification is heuristic from citation text; CASE_TARGET_ABSENT counts are edge totals."
+  ]
+}

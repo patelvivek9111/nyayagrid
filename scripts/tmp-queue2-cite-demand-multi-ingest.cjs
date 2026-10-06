@@ -222,7 +222,7 @@ async function clFetch(url, apiKey, counters, init = {}) {
       Accept: "application/json",
       ...(init.headers || {}),
     },
-    signal: AbortSignal.timeout(45000),
+    signal: AbortSignal.timeout(Math.max(Number(process.env.CL_FETCH_TIMEOUT_MS || 120000), 45000)),
   });
   if (res.status === 429) {
     counters.rateLimited = true;

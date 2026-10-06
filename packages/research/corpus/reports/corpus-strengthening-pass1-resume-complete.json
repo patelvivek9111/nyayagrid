@@ -1,0 +1,139 @@
+{
+  "classification": "CONTINUOUS_CORPUS_CITATION_STRENGTHENING_PASS1_RESUMED",
+  "status": "CORPUS_PASS_PARTIAL_COMPLETE",
+  "stopReason": "SCOTUS_FIVE_ACQUIRED_FORUM_PARTIAL_EDPA_FSupp_DEFERRED",
+  "generatedAt": "2026-10-06T16:30:00.000Z",
+  "worktree": "C:/Users/patel/Documents/nyayagrid-corpus",
+  "branch": "nyaya/corpus-citation-strengthening",
+  "head": "0663756",
+  "weeks1to7": "CLOSED",
+  "auth": {
+    "courtListenerKeyPresent": true,
+    "valuePrinted": false,
+    "neonVerifiedThisResume": true,
+    "localhostUsedForWrites": false
+  },
+  "corpusConnection": {
+    "neonAuth": "AVAILABLE",
+    "correctDatabaseVerified": true,
+    "hostMatchesHistoricalWeek2Pooler": true,
+    "projectId": "odd-moon-90379900",
+    "branch": "production",
+    "identityStartCases": 4658,
+    "identityStartExtracted": 49926,
+    "identityStartResolved": 6142,
+    "identityStartUnresolved": 43784
+  },
+  "courtListener": {
+    "authoritativeQuotaProbe": {
+      "performed": true,
+      "status": 200,
+      "membership": "CL Membership - Tier 4",
+      "dayRemainingAtProbe": 1273,
+      "dayLimit": 1400,
+      "dayUsed": 127,
+      "minuteRemaining": 25,
+      "hourRemaining": 300,
+      "artifact": "corpus-strengthening-pass1-quota-probe.json"
+    },
+    "note": "One additional accidental api-usage health check occurred during PA timeout debugging after the authoritative probe. Productive acquisition/repair calls followed. No search-fallback acquisition.",
+    "429": 0,
+    "408": 0,
+    "longWaitsOver5m": 0,
+    "gatewayErrorsObserved": ["502", "504 on some A.3d/F.Supp citation-lookup attempts"]
+  },
+  "zeroClWork": {
+    "restartedFromScratch": false,
+    "priorCompactResolvePreserved": true,
+    "priorResolvedBaseline": 6142,
+    "additiveForumDiscoveryOnly": true
+  },
+  "acquisition": {
+    "casesAdded": 14,
+    "scotus": {
+      "407 U.S. 67": "ACQUIRED Fuentes v. Shevin",
+      "466 U.S. 648": "ACQUIRED United States v. Cronic",
+      "347 U.S. 62": "ACQUIRED Walder v. United States",
+      "379 U.S. 89": "ACQUIRED Beck v. Ohio",
+      "361 U.S. 98": "ACQUIRED Henry v. United States"
+    },
+    "thirdCircuit": {
+      "597 F.3d 140": "ACQUIRED United States v. Tracey",
+      "769 F.3d 163": "ACQUIRED United States v. Harry Katzin",
+      "821 F.3d 467": "ACQUIRED United States v. Johnny Vasquez-Algarin",
+      "777 F.3d 635": "ACQUIRED United States v. Michael Wright",
+      "115 F.4th 197": "ACQUIRED Tony Fisher v. Jordan Hollingsworth",
+      "12 F.4th 366": "ACQUIRED Christopher Shorter v. United States",
+      "142 F.3d 582": "ACQUIRED Sameric Corp of DE v. Cty of Philadelphia"
+    },
+    "pennsylvania": {
+      "75 A.3d 485": "ACQUIRED In re T.B. (st-pa-super)",
+      "439 A.2d 1149": "ACQUIRED Associated Hospital Service v. Pustilnik (st-pa-high)"
+    },
+    "edpaDistrict": {
+      "status": "NOT_INCREASED",
+      "attempts": ["75 F.Supp.2d 411", "248 F.Supp.2d 393", "390 F.Supp.2d 471"],
+      "result": "citation-lookup verified clusters but opinion/cluster citation string mismatch on F.Supp.2d normalization; deferred"
+    },
+    "forumCountsAfter": {
+      "us-ca-3": 39,
+      "us-d-paed": 17,
+      "st-pa-high": 31,
+      "st-pa-super": 27
+    }
+  },
+  "citationImpact": {
+    "startResolved": 6142,
+    "startUnresolved": 43784,
+    "endResolved": 6287,
+    "endUnresolved": 44068,
+    "endExtracted": 50355,
+    "endCases": 4672,
+    "note": "Resolved rose +145 vs resume baseline. Extracted/unresolved also rose because newly acquired opinions contributed outbound citation edges; net unresolved is not a pure decrease."
+  },
+  "treatment": {
+    "verified": 0,
+    "unsupportedTreatmentLabels": 0,
+    "policy": "All newly acquired authorities remain TREATMENT_UNVERIFIED / holding review not certified. No CONTRARY/DISTINGUISHABLE labels added without source-holding comparison."
+  },
+  "corpusHealth": {
+    "duplicateSourceIds": 0,
+    "orphanChunks": 0,
+    "missingEmbeddings": 0,
+    "status": "GREEN"
+  },
+  "chatARequestStatus": {
+    "warrantSuppression": "IMPROVED_PARTIAL",
+    "realAuthorityConflict": "NOT_FOUND",
+    "treatment": "NOT_SUPPORTED"
+  },
+  "safety": {
+    "productCodeChanges": "TIMEOUT_ONLY_in_tmp-queue2-cite-demand-multi-ingest.cjs (CL_FETCH_TIMEOUT_MS default 120s)",
+    "migrations": false,
+    "lockfileModified": false,
+    "mainModified": false,
+    "secretsCommitted": false,
+    "localhostWrites": false,
+    "sharedRuntimeLockReleased": true
+  },
+  "p0": [],
+  "p1": [
+    "Repair F.Supp.2d citation-matching (space/dot variants) so EDPA district warrant opinions can ingest after citation-lookup verification.",
+    "Holding-level review before labeling Leon vs CA3 candidates DISTINGUISHABLE.",
+    "Retry deferred PA A.3d targets that hit CL 502/504 when gateway is stable."
+  ],
+  "nextBAction": "Fix F.Supp.2d normalized citation matching, then acquire EDPA district warrant opinions; optionally retry deferred PA A.3d cites. Do not restart zero-CL discovery.",
+  "artifacts": [
+    "corpus-strengthening-pass1-neon-identity-resume.json",
+    "corpus-strengthening-pass1-quota-probe.json",
+    "corpus-strengthening-pass1-scotus5-ingest.json",
+    "corpus-strengthening-pass1-scotus5-reresolve.json",
+    "corpus-strengthening-pass1-forum-warrant-targets.json",
+    "corpus-strengthening-pass1-forum-ingest-a.json",
+    "corpus-strengthening-pass1-forum-ingest-b.json",
+    "corpus-strengthening-pass1-forum-ingest-c.json",
+    "corpus-strengthening-pass1-edpa-ingest.json",
+    "corpus-strengthening-pass1-end-census.json",
+    "corpus-strengthening-pass1-end-reresolve.json"
+  ]
+}

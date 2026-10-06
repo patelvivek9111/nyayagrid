@@ -1,0 +1,31 @@
+{
+  "classification": "CORPUS_STRENGTHENING_PASS1_FINAL",
+  "finalClassification": "CORPUS_STRENGTHENING_PASS1_COMPLETE_WITH_EDPA_LIMITATION",
+  "status": "CORPUS_PASS_CLOSED",
+  "generatedAt": "2026-10-06T16:55:00.000Z",
+  "worktree": "C:/Users/patel/Documents/nyayagrid-corpus",
+  "branch": "nyaya/corpus-citation-strengthening",
+  "weeks1to7": "CLOSED",
+  "certifiedProductBaselinePreserved": true,
+  "sharedRuntimeLockReleased": true,
+  "readyForPass2": true,
+  "snapshot": {
+    "startCases": 4658,
+    "startResolved": 6142,
+    "endCases": 4680,
+    "endAuthorities": 6035,
+    "endExtracted": 50623,
+    "endResolved": 6306,
+    "endUnresolved": 44317
+  },
+  "health": "GREEN",
+  "edpaLimitation": "EDPA_LOOKUP_LIMITATION",
+  "sharedCitationArchitectureChanged": false,
+  "artifacts": [
+    "corpus-strengthening-pass1-snapshot-certified.json",
+    "corpus-strengthening-pass1-final-cert.json",
+    "corpus-strengthening-pass1-chat-a-handoff-resume.json",
+    "corpus-strengthening-pass1-edpa-recovery.json",
+    "corpus-strengthening-pass1-pa-retry.json"
+  ]
+}
