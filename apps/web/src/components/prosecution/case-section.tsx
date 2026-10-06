@@ -75,6 +75,23 @@ type Overview = {
   witnessCount: number;
   elementGaps: Array<{ elementText: string; status: string }>;
   issueFlags: Array<{ id: string; issueType: string; status: string }>;
+  issueSeparation?: Array<{
+    id: string;
+    kind: "charge" | "procedure" | "element_gap";
+    label: string;
+    status: string | null;
+    defendantId: string | null;
+  }>;
+  evidenceScope?: {
+    jointEvidenceIds: string[];
+    unassignedEvidenceIds: string[];
+    byDefendant: Array<{
+      defendantId: string;
+      displayName: string;
+      specificEvidenceIds: string[];
+      jointEvidenceIds: string[];
+    }>;
+  };
   matrix?: MatrixRow[];
   discoveryDashboard?: DiscoveryDashboard;
   guiltConclusion: null;
@@ -240,6 +257,38 @@ function OverviewBody({ overview }: { overview: Overview }) {
           <li>Witnesses: {overview.witnessCount}</li>
           <li>Open tasks: {overview.openTasks.length}</li>
         </ul>
+      </section>
+      <section className="rounded-md border border-line p-3 md:col-span-2">
+        <h2 className="text-sm font-semibold text-ink">Separated issues</h2>
+        <p className="mt-1 text-sm text-ink/70">
+          Charges, procedure issues, and element gaps stay separate. This list is not a guilt finding, and earlier
+          analysis is not current when new evidence or a contradiction appears.
+        </p>
+        <RecordList
+          empty="No separated issues recorded."
+          rows={(overview.issueSeparation ?? []).map((issue) =>
+            issue.status ? `${issue.label} — ${humanizeKey(issue.status)}` : issue.label,
+          )}
+        />
+      </section>
+      <section className="rounded-md border border-line p-3 md:col-span-2">
+        <h2 className="text-sm font-semibold text-ink">Evidence scope</h2>
+        <p className="mt-1 text-sm text-ink/70">
+          Joint evidence is shared by more than one defendant. Defendant-specific evidence is listed apart from it.
+        </p>
+        {overview.evidenceScope ? (
+          <ul className="mt-2 space-y-1 text-sm text-ink/80">
+            <li>Joint items: {overview.evidenceScope.jointEvidenceIds.length}</li>
+            <li>Unassigned items: {overview.evidenceScope.unassignedEvidenceIds.length}</li>
+            {overview.evidenceScope.byDefendant.map((row) => (
+              <li key={row.defendantId}>
+                {row.displayName}: {row.specificEvidenceIds.length} specific, {row.jointEvidenceIds.length} joint
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-2 text-sm text-ink/60">Evidence scope is not available for this case.</p>
+        )}
       </section>
       <section className="rounded-md border border-line p-3 md:col-span-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
