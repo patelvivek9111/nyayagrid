@@ -1,0 +1,91 @@
+{
+  "classification": "WEEK2_CORPUS_ACCESS_RECOVERY",
+  "status": "CORPUS_ACCESS_RECOVERED_AND_VERIFIED",
+  "stopReason": "READ_ONLY_IDENTITY_VERIFIED",
+  "generatedAt": "2026-10-06T13:45:00.000Z",
+  "worktree": "C:/Users/patel/Documents/nyayagrid-corpus",
+  "branch": "nyaya/corpus-citation-strengthening",
+  "baseSha": "5e9e5c8c51c88df73fd4749a453dbddb10551b86",
+  "courtListenerHttpCalls": 0,
+  "mutations": {
+    "insert": 0,
+    "update": 0,
+    "delete": 0,
+    "ddl": 0,
+    "migrations": 0
+  },
+  "authentication": {
+    "flyWhoami": "AVAILABLE",
+    "flyIdentity": "patelvivek9111@gmail.com",
+    "flyOrgVisible": "personal only",
+    "flyAppsList": "INVALID_UNAUTHORIZED",
+    "flyAppNyayagridStaging": "INVALID_UNAUTHORIZED",
+    "flyMachineHistorical": "INVALID_UNAUTHORIZED",
+    "neonStoredSessionBefore": "INVALID",
+    "neonAuthCommand": "npx neonctl@latest auth",
+    "neonAuthAfter": "AVAILABLE",
+    "credentialsPrinted": false,
+    "envNames": {
+      "DATABASE_URL": "MISSING",
+      "COURTLISTENER_API_KEY": "MISSING",
+      "FLY_API_TOKEN": "MISSING",
+      "NEON_API_KEY": "MISSING"
+    }
+  },
+  "corpusIdentity": {
+    "connectionMethod": "neonctl connection-string for project nyayagrid-staging, branch production, pooled host, BEGIN READ ONLY",
+    "neonProjectName": "nyayagrid-staging",
+    "neonProjectId": "odd-moon-90379900",
+    "neonBranch": "production",
+    "neonDatabase": "neondb",
+    "hostMatchesHistoricalWeek2Pooler": true,
+    "isLocal47CaseDb": false,
+    "realWeek2Corpus": true,
+    "transactionReadOnly": "on"
+  },
+  "liveCensus": {
+    "cases": 4658,
+    "stateDc": 3453,
+    "federal": 1134,
+    "intermediateGlobalIncludingFederalCircuit": 1056,
+    "pre2000Global": 1538,
+    "pre1980Global": 623,
+    "intermediateTrackerAlignedStateOnly": 572,
+    "pre2000TrackerAlignedStateOnly": 919,
+    "pre1980TrackerAlignedStateOnly": 293,
+    "authorities": 6013,
+    "extracted": 49926,
+    "resolved": 6122,
+    "unresolved": 43804,
+    "duplicateEdges": 0,
+    "orphanEdges": 0,
+    "missingEmbeddings": 0,
+    "chunks": 102501,
+    "silentCurrent": 0
+  },
+  "baselineComparison": {
+    "cases": "MATCH",
+    "stateDc": "MATCH",
+    "federal": "MATCH",
+    "intermediate": "MATCH_WHEN_STATE_SCOPED_AS_WEEK2_HANDOFF",
+    "intermediateGlobal": "HIGHER_EXPECTED",
+    "pre2000": "MATCH_WHEN_STATE_SCOPED_AS_WEEK2_HANDOFF",
+    "pre2000Global": "HIGHER_EXPECTED",
+    "pre1980": "MATCH_WHEN_STATE_SCOPED_AS_WEEK2_HANDOFF",
+    "pre1980Global": "HIGHER_EXPECTED",
+    "extracted": "MATCH",
+    "resolved": "MATCH",
+    "suspiciousDecrease": false,
+    "note": "Week 2 handoff intermediate/pre2000/pre1980 are state/DC tracker totals. Global counts are higher because they include federal circuit and federal historical cases. Case, state/DC, federal, extracted, and resolved counts match exactly."
+  },
+  "nextRunAccess": {
+    "preferredRoute": "direct Neon via neonctl, not Fly machine exec",
+    "requiredAuthentication": "npx neonctl@latest auth must already have succeeded for profile DEFAULT",
+    "projectSelector": "npx neonctl@latest projects list --org-id <personal-org-id>",
+    "connect": "npx neonctl@latest connection-string production --project-id odd-moon-90379900 --pooled --ssl require",
+    "readOnly": "BEGIN READ ONLY before census or acquisition-prep queries",
+    "flyStatus": "whoami works; nyayagrid-staging app/machine remain unauthorized with the current local Fly token. Do not use Fly as the corpus route until a token with app access is restored.",
+    "doNotUse": "localhost:5433 product database (47 cases)",
+    "secretMaterialCommitted": false
+  }
+}
