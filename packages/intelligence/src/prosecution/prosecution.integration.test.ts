@@ -512,4 +512,80 @@ describe.runIf(runDbTests)("week 3 live prosecution database", () => {
       }),
     ).rejects.toBeInstanceOf(AuthorizationError);
   });
+
+  it("persists joint and defendant-specific evidence and rejects outside-case defendant ids", async () => {
+    const criminalCase = await createCriminalCase(db, {
+      userId: ids.ownerA!,
+      organizationId: ids.orgA!,
+      caseNumber: `SYN-DEEP-${suffix}`,
+      jurisdiction: "PA",
+      court: "st-pa-trial",
+    });
+    const ada = (await addProsecutionRecord(db, {
+      userId: ids.ownerA!,
+      organizationId: ids.orgA!,
+      caseId: criminalCase.id,
+      resource: "defendants",
+      body: { displayName: "Synthetic Defendant Ada", provenance },
+    })) as { id: string; displayName: string };
+    const ben = (await addProsecutionRecord(db, {
+      userId: ids.ownerA!,
+      organizationId: ids.orgA!,
+      caseId: criminalCase.id,
+      resource: "defendants",
+      body: { displayName: "Synthetic Defendant Ben", provenance },
+    })) as { id: string; displayName: string };
+    const outsider = ids.defendantA!;
+    await expect(
+      addProsecutionRecord(db, {
+        userId: ids.ownerA!,
+        organizationId: ids.orgA!,
+        caseId: criminalCase.id,
+        resource: "evidence",
+        body: { evidenceType: "report", relatedDefendantIds: [outsider], provenance },
+      }),
+    ).rejects.toMatchObject({ code: "ORPHAN_REFERENCE" });
+
+    const joint = (await addProsecutionRecord(db, {
+      userId: ids.ownerA!,
+      organizationId: ids.orgA!,
+      caseId: criminalCase.id,
+      resource: "evidence",
+      body: { evidenceType: "scene_photo", relatedDefendantIds: [ada.id, ben.id], provenance },
+    })) as { id: string; relatedDefendantIds: string[] };
+    const adaOnly = (await addProsecutionRecord(db, {
+      userId: ids.ownerA!,
+      organizationId: ids.orgA!,
+      caseId: criminalCase.id,
+      resource: "evidence",
+      body: { evidenceType: "statement", relatedDefendantIds: [ada.id], provenance },
+    })) as { id: string; relatedDefendantIds: string[] };
+    const benOnly = (await addProsecutionRecord(db, {
+      userId: ids.ownerA!,
+      organizationId: ids.orgA!,
+      caseId: criminalCase.id,
+      resource: "evidence",
+      body: { evidenceType: "statement", relatedDefendantIds: [ben.id], provenance },
+    })) as { id: string; relatedDefendantIds: string[] };
+
+    expect(joint.relatedDefendantIds.sort()).toEqual([ada.id, ben.id].sort());
+    expect(adaOnly.relatedDefendantIds).toEqual([ada.id]);
+    expect(benOnly.relatedDefendantIds).toEqual([ben.id]);
+
+    const reloaded = await getProsecutionOverview(db, {
+      userId: ids.ownerA!,
+      organizationId: ids.orgA!,
+      caseId: criminalCase.id,
+    });
+    expect(reloaded.guiltConclusion).toBeNull();
+    expect(reloaded.evidenceScope.jointEvidenceIds).toEqual([joint.id]);
+    expect(reloaded.evidenceScope.unassignedEvidenceIds).toEqual([]);
+    const adaScope = reloaded.evidenceScope.byDefendant.find((row: { defendantId: string }) => row.defendantId === ada.id);
+    const benScope = reloaded.evidenceScope.byDefendant.find((row: { defendantId: string }) => row.defendantId === ben.id);
+    expect(adaScope?.specificEvidenceIds).toEqual([adaOnly.id]);
+    expect(benScope?.specificEvidenceIds).toEqual([benOnly.id]);
+    expect(adaScope?.jointEvidenceIds).toEqual([joint.id]);
+    expect(benScope?.jointEvidenceIds).toEqual([joint.id]);
+    expect(reloaded.issueSeparation.filter((row: { kind: string }) => row.kind === "charge")).toHaveLength(0);
+  });
 });

@@ -1,5 +1,7 @@
+import { partitionEvidenceByDefendant, separateProsecutionCaseIssues } from "../deepening/evidence-scope";
 import { assertProvenance } from "../legal/standards";
 import type { SourceProvenance } from "../legal/types";
+import { suppressionPayload } from "./suppression-review";
 import {
   EVIDENCE_RELATIONSHIPS,
   PROSECUTION_GRAPH_NODE_TYPES,
@@ -730,17 +732,58 @@ export class ProsecutionWorkspace {
     const snapshot = this.bucket(organizationId);
     const criminalCase = this.requireCase(organizationId, caseId);
     const matrix = this.matrix(organizationId, caseId);
+    const defendants = snapshot.defendants.filter((item) => item.criminalCaseId === caseId);
+    const charges = snapshot.charges.filter((item) => item.criminalCaseId === caseId);
+    const issueFlags = snapshot.procedureIssues.filter((item) => item.criminalCaseId === caseId);
+    const evidence = snapshot.evidence.filter((item) => item.criminalCaseId === caseId);
+    const elementGaps = matrix.filter(
+      (row) => row.status === "NO_EVIDENCE_FOUND" || row.status === "CONFLICTED" || row.status === "UNKNOWN",
+    );
     return {
       case: criminalCase,
-      defendants: snapshot.defendants.filter((item) => item.criminalCaseId === caseId),
-      charges: snapshot.charges.filter((item) => item.criminalCaseId === caseId),
+      defendants,
+      charges,
       hearings: snapshot.hearings.filter((item) => item.criminalCaseId === caseId),
       openTasks: snapshot.tasks.filter((item) => item.criminalCaseId === caseId && item.status === "open"),
-      evidenceCount: snapshot.evidence.filter((item) => item.criminalCaseId === caseId).length,
+      evidenceCount: evidence.length,
       discoveryCount: snapshot.discovery.filter((item) => item.criminalCaseId === caseId).length,
       witnessCount: snapshot.witnesses.filter((item) => item.criminalCaseId === caseId).length,
-      elementGaps: matrix.filter((row) => row.status === "NO_EVIDENCE_FOUND" || row.status === "CONFLICTED" || row.status === "UNKNOWN"),
-      issueFlags: snapshot.procedureIssues.filter((item) => item.criminalCaseId === caseId),
+      elementGaps,
+      issueFlags,
+      issueSeparation: separateProsecutionCaseIssues({
+        charges: charges.map((charge) => ({
+          id: charge.id,
+          offenseName: charge.offenseName,
+          countNumber: charge.countNumber,
+          status: charge.status,
+          defendantId: charge.defendantId,
+        })),
+        procedureIssues: issueFlags.map((issue) => ({
+          id: issue.id,
+          issueType: issue.issueType,
+          status: issue.status,
+        })),
+        elementGaps: elementGaps.map((gap) => ({
+          id: gap.elementId,
+          elementText: gap.elementText,
+          status: gap.status,
+        })),
+      }),
+      evidenceScope: partitionEvidenceByDefendant({
+        defendants: defendants.map((defendant) => ({ id: defendant.id, displayName: defendant.displayName })),
+        evidence: evidence.map((item) => ({ id: item.id, relatedDefendantIds: item.relatedDefendantIds })),
+      }),
+      ...suppressionPayload({
+        jurisdiction: criminalCase.jurisdiction,
+        forumCourtId: criminalCase.court,
+        warrants: snapshot.warrants.filter((item) => item.criminalCaseId === caseId),
+        procedureIssues: issueFlags,
+        evidence,
+        officers: snapshot.officers.filter((item) => item.criminalCaseId === caseId),
+        witnesses: snapshot.witnesses.filter((item) => item.criminalCaseId === caseId),
+        statements: snapshot.statements.filter((item) => item.criminalCaseId === caseId),
+        timeline: snapshot.timeline.filter((item) => item.criminalCaseId === caseId),
+      }),
       guiltConclusion: null,
     };
   }

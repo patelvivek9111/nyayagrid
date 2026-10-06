@@ -65,6 +65,7 @@ const prosecutionResourceSchemas = {
     collector: optionalText,
     storageReference: optionalText,
     chainOfCustody: z.array(z.string().max(200)).max(50).optional(),
+    relatedDefendantIds: z.array(z.string().uuid()).max(20).optional(),
     sensitivity: z.string().trim().max(40).optional(),
     reviewStatus: z.string().trim().max(40).optional(),
     provenance: provenanceSchema,

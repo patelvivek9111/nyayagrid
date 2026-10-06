@@ -32,7 +32,9 @@ import {
 } from "@nyayagrid/database";
 import { requireAnyCapability, requireCapability, writeAuditEvent } from "@nyayagrid/permissions";
 import { assertProvenance } from "../legal/standards";
+import { partitionEvidenceByDefendant, separateProsecutionCaseIssues } from "../deepening/evidence-scope";
 import { notifyProsecutionEvent } from "../week4/notifications";
+import { suppressionPayload } from "./suppression-review";
 import {
   EVIDENCE_RELATIONSHIPS,
   PROCEDURE_ISSUE_TYPES,
@@ -152,10 +154,16 @@ export async function createCriminalCase(
   return created;
 }
 
+function dateLabel(value: Date | string | null | undefined): string | null {
+  if (!value) return null;
+  if (value instanceof Date) return value.toISOString();
+  return String(value);
+}
+
 export async function getProsecutionOverview(db: Database, params: { userId: string; organizationId: string; caseId: string }) {
   await authorize(db, { userId: params.userId, organizationId: params.organizationId, action: "view" });
   const criminalCase = await requireCase(db, params.organizationId, params.caseId);
-  const [defendants, charges, elements, evidence, discovery, disclosures, witnesses, hearings, motions, subpoenas, tasks, issues, agencies, officers] =
+  const [defendants, charges, elements, evidence, discovery, disclosures, witnesses, hearings, motions, subpoenas, tasks, issues, agencies, officers, warrants, timeline, statements] =
     await Promise.all([
       db.select().from(prosecutionDefendants).where(eq(prosecutionDefendants.criminalCaseId, criminalCase.id)),
       db.select().from(prosecutionCharges).where(eq(prosecutionCharges.criminalCaseId, criminalCase.id)),
@@ -171,7 +179,29 @@ export async function getProsecutionOverview(db: Database, params: { userId: str
       db.select().from(prosecutionProcedureIssues).where(eq(prosecutionProcedureIssues.criminalCaseId, criminalCase.id)),
       db.select().from(prosecutionAgencies).where(eq(prosecutionAgencies.organizationId, params.organizationId)),
       db.select().from(prosecutionOfficers).where(eq(prosecutionOfficers.criminalCaseId, criminalCase.id)),
+      db.select().from(prosecutionWarrants).where(eq(prosecutionWarrants.criminalCaseId, criminalCase.id)),
+      db.select().from(prosecutionTimelineEvents).where(eq(prosecutionTimelineEvents.criminalCaseId, criminalCase.id)),
+      db.select().from(prosecutionWitnessStatements).where(eq(prosecutionWitnessStatements.criminalCaseId, criminalCase.id)),
     ]);
+  const warrantIds = warrants.map((warrant) => warrant.id);
+  const affidavits = warrantIds.length
+    ? await db
+        .select()
+        .from(prosecutionWarrantAffidavits)
+        .where(and(eq(prosecutionWarrantAffidavits.organizationId, params.organizationId), inArray(prosecutionWarrantAffidavits.warrantId, warrantIds)))
+    : [];
+  const executions = warrantIds.length
+    ? await db
+        .select()
+        .from(prosecutionWarrantExecutions)
+        .where(and(eq(prosecutionWarrantExecutions.organizationId, params.organizationId), inArray(prosecutionWarrantExecutions.warrantId, warrantIds)))
+    : [];
+  const returns = warrantIds.length
+    ? await db
+        .select()
+        .from(prosecutionWarrantReturns)
+        .where(and(eq(prosecutionWarrantReturns.organizationId, params.organizationId), inArray(prosecutionWarrantReturns.warrantId, warrantIds)))
+    : [];
   const matrix = buildElementsMatrix({
     charges: charges.map((charge) => ({ id: charge.id, offenseName: charge.offenseName })),
     elements: elements.map((element) => ({
@@ -207,6 +237,33 @@ export async function getProsecutionOverview(db: Database, params: { userId: str
       notes: item.notes,
     })),
   });
+  const elementGaps = matrix.filter((row) => row.status !== "SUPPORTED");
+  const issueSeparation = separateProsecutionCaseIssues({
+    charges: charges.map((charge) => ({
+      id: charge.id,
+      offenseName: charge.offenseName,
+      countNumber: charge.countNumber,
+      status: charge.status,
+      defendantId: charge.defendantId,
+    })),
+    procedureIssues: issues.map((issue) => ({
+      id: issue.id,
+      issueType: issue.issueType,
+      status: issue.status,
+    })),
+    elementGaps: elementGaps.map((gap) => ({
+      id: gap.elementId,
+      elementText: gap.elementText,
+      status: gap.status,
+    })),
+  });
+  const evidenceScope = partitionEvidenceByDefendant({
+    defendants: defendants.map((defendant) => ({ id: defendant.id, displayName: defendant.displayName })),
+    evidence: evidence.map((item) => ({
+      id: item.id,
+      relatedDefendantIds: item.relatedDefendantIds ?? [],
+    })),
+  });
   return {
     case: criminalCase,
     defendants,
@@ -220,10 +277,72 @@ export async function getProsecutionOverview(db: Database, params: { userId: str
     evidenceCount: evidence.length,
     discoveryCount: discovery.length,
     witnessCount: witnesses.length,
-    elementGaps: matrix.filter((row) => row.status !== "SUPPORTED"),
+    elementGaps,
     issueFlags: issues,
+    issueSeparation,
+    evidenceScope,
     matrix,
     discoveryDashboard,
+    ...suppressionPayload({
+      jurisdiction: criminalCase.jurisdiction,
+      forumCourtId: criminalCase.court,
+      warrants: warrants.map((warrant) => ({
+        id: warrant.id,
+        warrantType: warrant.warrantType,
+        issuingCourt: warrant.issuingCourt,
+        issuingJudge: warrant.issuingJudge,
+        applicationDate: dateLabel(warrant.applicationDate),
+        issueDate: dateLabel(warrant.issueDate),
+        executionDate: dateLabel(warrant.executionDate) ?? dateLabel(executions.find((row) => row.warrantId === warrant.id)?.executedAt),
+        scope: warrant.scope,
+        probableCauseFacts: warrant.probableCauseFacts ?? [],
+        sourceFactIds: warrant.sourceFactIds ?? [],
+        seizedEvidenceIds: warrant.seizedEvidenceIds ?? [],
+        returnNotes: warrant.returnNotes,
+        relatedSuppressionIssueIds: warrant.relatedSuppressionIssueIds ?? [],
+        affidavitStatements: affidavits.filter((row) => row.warrantId === warrant.id).map((row) => row.statement),
+        executionNotes: executions.filter((row) => row.warrantId === warrant.id).map((row) => row.notes).filter((note): note is string => Boolean(note)),
+        returnInventory: returns.filter((row) => row.warrantId === warrant.id).flatMap((row) => row.inventory ?? []),
+      })),
+      procedureIssues: issues.map((issue) => ({
+        id: issue.id,
+        issueType: issue.issueType,
+        relatedEvidenceIds: issue.relatedEvidenceIds ?? [],
+        relatedAuthorityIds: issue.relatedAuthorityIds ?? [],
+        missingFacts: issue.missingFacts ?? [],
+        status: issue.status,
+      })),
+      evidence: evidence.map((item) => ({
+        id: item.id,
+        evidenceType: item.evidenceType,
+        documentId: item.documentId,
+        storageReference: item.storageReference,
+        relatedDefendantIds: item.relatedDefendantIds ?? [],
+        relatedWitnessIds: item.relatedWitnessIds ?? [],
+        provenanceDocumentId: item.documentId,
+      })),
+      officers: officers.map((officer) => ({
+        id: officer.id,
+        name: officer.name,
+        warrantIds: officer.warrantIds ?? [],
+        reportIds: officer.reportIds ?? [],
+      })),
+      witnesses: witnesses.map((witness) => ({ id: witness.id, displayName: witness.displayName })),
+      statements: statements.map((statement) => ({
+        witnessId: statement.witnessId,
+        claims: (statement.claims ?? []).map((claim) => ({
+          key: claim.key,
+          value: claim.value,
+          kind: claim.kind === "time" ? "time" as const : "fact" as const,
+        })),
+      })),
+      timeline: timeline.map((event) => ({
+        id: event.id,
+        eventType: event.eventType,
+        title: event.title,
+        eventDate: dateLabel(event.eventDate),
+      })),
+    }),
     guiltConclusion: null,
   };
 }
@@ -406,6 +525,21 @@ export async function addProsecutionRecord(
   }
 
   if (params.resource === "evidence") {
+    const relatedDefendantIds = Array.isArray(params.body.relatedDefendantIds)
+      ? [...new Set(params.body.relatedDefendantIds.map((id) => String(id)))]
+      : [];
+    if (relatedDefendantIds.length > 0) {
+      const known = await db
+        .select({ id: prosecutionDefendants.id })
+        .from(prosecutionDefendants)
+        .where(
+          and(eq(prosecutionDefendants.organizationId, organizationId), eq(prosecutionDefendants.criminalCaseId, criminalCaseId)),
+        );
+      const knownIds = new Set(known.map((defendant) => defendant.id));
+      if (relatedDefendantIds.some((id) => !knownIds.has(id))) {
+        throw new ProsecutionError("ORPHAN_REFERENCE", "Defendant not found for evidence scope.");
+      }
+    }
     const [row] = await db
       .insert(prosecutionEvidenceItems)
       .values({
@@ -416,6 +550,7 @@ export async function addProsecutionRecord(
         collector: (params.body.collector as string) ?? null,
         storageReference: (params.body.storageReference as string) ?? null,
         chainOfCustody: (params.body.chainOfCustody as string[]) ?? [],
+        relatedDefendantIds,
         sensitivity: (params.body.sensitivity as string) ?? "standard",
         reviewStatus: (params.body.reviewStatus as string) ?? "received",
         provenance,

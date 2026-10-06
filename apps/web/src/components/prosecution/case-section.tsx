@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useActiveOrganization } from "@/components/use-active-organization";
 import { EmptyState, ErrorState, LoadingState, StatusLabel } from "@/components/ux";
 import { formatCoverageWarning, humanizeKey } from "@/lib/plain-labels";
+import { WarrantReviewPanel, type SuppressionAnswerView, type SuppressionReviewView } from "@/components/prosecution/warrant-review";
 
 export const PROSECUTION_SECTIONS = [
   { segment: "", label: "Overview" },
@@ -75,8 +76,27 @@ type Overview = {
   witnessCount: number;
   elementGaps: Array<{ elementText: string; status: string }>;
   issueFlags: Array<{ id: string; issueType: string; status: string }>;
+  issueSeparation?: Array<{
+    id: string;
+    kind: "charge" | "procedure" | "element_gap";
+    label: string;
+    status: string | null;
+    defendantId: string | null;
+  }>;
+  evidenceScope?: {
+    jointEvidenceIds: string[];
+    unassignedEvidenceIds: string[];
+    byDefendant: Array<{
+      defendantId: string;
+      displayName: string;
+      specificEvidenceIds: string[];
+      jointEvidenceIds: string[];
+    }>;
+  };
   matrix?: MatrixRow[];
   discoveryDashboard?: DiscoveryDashboard;
+  suppressionReview?: SuppressionReviewView;
+  suppressionAnswer?: SuppressionAnswerView;
   guiltConclusion: null;
 };
 
@@ -188,10 +208,7 @@ export function ProsecutionSection({ caseId, section }: { caseId: string; sectio
       {section === "discovery" ? <DiscoveryBody overview={overview} /> : null}
       {section === "disclosure" ? <DisclosureBody overview={overview} /> : null}
       {section === "warrants" ? (
-        <EmptyState
-          title="Warrants"
-          description="Warrant, affidavit, and execution records are stored on this case. Nyaya does not auto-validate warrants."
-        />
+        <WarrantReviewPanel review={overview.suppressionReview} answer={overview.suppressionAnswer} />
       ) : null}
       {section === "subpoenas" ? <SubpoenasBody overview={overview} /> : null}
       {section === "motions" ? <MotionsBody overview={overview} /> : null}
@@ -242,6 +259,38 @@ function OverviewBody({ overview }: { overview: Overview }) {
         </ul>
       </section>
       <section className="rounded-md border border-line p-3 md:col-span-2">
+        <h2 className="text-sm font-semibold text-ink">Separated issues</h2>
+        <p className="mt-1 text-sm text-ink/70">
+          Charges, procedure issues, and element gaps stay separate. This list is not a guilt finding, and earlier
+          analysis is not current when new evidence or a contradiction appears.
+        </p>
+        <RecordList
+          empty="No separated issues recorded."
+          rows={(overview.issueSeparation ?? []).map((issue) =>
+            issue.status ? `${issue.label} — ${humanizeKey(issue.status)}` : issue.label,
+          )}
+        />
+      </section>
+      <section className="rounded-md border border-line p-3 md:col-span-2">
+        <h2 className="text-sm font-semibold text-ink">Evidence scope</h2>
+        <p className="mt-1 text-sm text-ink/70">
+          Joint evidence is shared by more than one defendant. Defendant-specific evidence is listed apart from it.
+        </p>
+        {overview.evidenceScope ? (
+          <ul className="mt-2 space-y-1 text-sm text-ink/80">
+            <li>Joint items: {overview.evidenceScope.jointEvidenceIds.length}</li>
+            <li>Unassigned items: {overview.evidenceScope.unassignedEvidenceIds.length}</li>
+            {overview.evidenceScope.byDefendant.map((row) => (
+              <li key={row.defendantId}>
+                {row.displayName}: {row.specificEvidenceIds.length} specific, {row.jointEvidenceIds.length} joint
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-2 text-sm text-ink/60">Evidence scope is not available for this case.</p>
+        )}
+      </section>
+      <section className="rounded-md border border-line p-3 md:col-span-2">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <h2 className="text-sm font-semibold text-ink">Element gaps</h2>
           <Link className="text-sm font-semibold text-accent underline" href={`/app/prosecution/${overview.case.id}/elements`}>
@@ -269,10 +318,19 @@ function OverviewBody({ overview }: { overview: Overview }) {
         />
       </section>
       <section className="rounded-md border border-line p-3">
-        <h2 className="text-sm font-semibold text-ink">Procedure issues</h2>
+        <h2 className="text-sm font-semibold text-ink">Suppression review</h2>
+        <p className="mt-1 text-sm text-ink/70">
+          Open Warrants for the separated review. Nyaya does not decide suppression, warrant validity, or guilt.
+        </p>
         <RecordList
-          empty="No procedure issues flagged."
-          rows={overview.issueFlags.map((issue) => `${humanizeKey(issue.issueType)} (${humanizeKey(issue.status)})`)}
+          empty="No suppression review issues are open."
+          rows={
+            overview.suppressionReview && overview.suppressionReview.issues.length > 0
+              ? overview.suppressionReview.issues.map(
+                  (issue) => `${humanizeKey(issue.dimension)} — ${humanizeKey(issue.reviewStatus)}`,
+                )
+              : overview.issueFlags.map((issue) => `${humanizeKey(issue.issueType)} (${humanizeKey(issue.status)})`)
+          }
         />
       </section>
     </div>
