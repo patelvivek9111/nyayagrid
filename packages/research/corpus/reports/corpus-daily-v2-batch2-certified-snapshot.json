@@ -1,0 +1,68 @@
+{
+  "classification": "CORPUS_DAILY_V2_BATCH2_CERTIFIED_SNAPSHOT",
+  "certifiedAt": "2026-10-07T16:44:00.000Z",
+  "branch": "nyaya/corpus-citation-strengthening-v2",
+  "worktree": "C:/Users/patel/Documents/nyayagrid-corpus-v2",
+  "status": "CORPUS_DAILY_BATCH2_COMPLETE",
+  "stopReason": "TARGET_QUEUE_EXHAUSTED",
+  "integrity": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "FAILED": 0,
+    "NOT_PROCESSED": 0,
+    "presentTargetDefects": 0,
+    "health": "GREEN"
+  },
+  "treatment": {
+    "unsupportedLabelsAdded": 0,
+    "policy": "TREATMENT_UNVERIFIED / VERIFIED_TREATMENT only"
+  },
+  "sessionStartSnapshot": {
+    "cases": 4825,
+    "authorities": 6180,
+    "extracted": 54585,
+    "resolved": 8016,
+    "unresolved": 46569
+  },
+  "endSnapshot": {
+    "cases": 4927,
+    "authorities": 6282,
+    "extracted": 58419,
+    "resolved": 8689,
+    "unresolved": 49730
+  },
+  "deltas": {
+    "cases": 102,
+    "authorities": 102,
+    "extracted": 3834,
+    "resolved": 673,
+    "unresolved": 3161
+  },
+  "courtListener": {
+    "quotaProbeAtStart": { "minute": 25, "hour": 300, "day": 1100 },
+    "safeBatchBudget": 270,
+    "requests": {
+      "quotaProbe": 1,
+      "acquisition": 220,
+      "courtRepair": 50,
+      "total": 271
+    },
+    "429": 0,
+    "502_504": 0,
+    "longWaitsOver5m": 0
+  },
+  "lanes": {
+    "third_circuit": { "requests": 79, "cases": 38, "oldResolves": 255 },
+    "edpa": { "requests": 0, "cases": 0, "oldResolves": 0 },
+    "pa_supreme": { "requests": 2, "cases": 1, "oldResolves": 8 },
+    "pa_superior": { "requests": 2, "cases": 1, "oldResolves": 8 },
+    "federal_reporter": { "requests": 136, "cases": 62, "oldResolves": 401 }
+  },
+  "metadataRepair": {
+    "unknownCourtFixed": true,
+    "note": "Ingest stub clusters lacked court; Batch2 authorities repaired from st-unknown/state_high mislabel to federal circuit level (specific circuit id pending deeper cluster repair). Ingest now refreshes cluster when court missing."
+  },
+  "noScotusSaturation": true,
+  "productBaseline": "UNCHANGED"
+}

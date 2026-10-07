@@ -1,0 +1,70 @@
+{
+  "STATUS": "CORPUS_DAILY_BATCH2_COMPLETE",
+  "STOP_REASON": "TARGET_QUEUE_EXHAUSTED",
+  "CLASSIFICATION": "DAILY_HIGH_VALUE_COURTLISTENER_STRENGTHENING_BATCH2",
+  "generatedAt": "2026-10-07T16:44:15.000Z",
+  "COURTLISTENER": {
+    "limit_min": 25,
+    "limit_hour": 300,
+    "limit_day": 1400,
+    "remaining_at_start": { "minute": 25, "hour": 300, "day": 1100 },
+    "safe_batch_budget": 270,
+    "requests_actually_used": 271,
+    "breakdown": { "quota_probe": 1, "acquisition": 220, "court_repair": 50 },
+    "429": 0,
+    "502_504": 0,
+    "long_waits_gt_5m": 0
+  },
+  "START_SNAPSHOT": {
+    "cases": 4825,
+    "authorities": 6180,
+    "extracted": 54585,
+    "resolved": 8016,
+    "unresolved": 46569
+  },
+  "LANE_RESULTS": {
+    "third_circuit": { "requests": 79, "cases": 38, "old_resolves": 255 },
+    "edpa": { "requests": 0, "cases": 0, "old_resolves": 0 },
+    "pa_supreme": { "requests": 2, "cases": 1, "old_resolves": 8 },
+    "pa_superior": { "requests": 2, "cases": 1, "old_resolves": 8 },
+    "federal_reporter": { "requests": 136, "cases": 62, "old_resolves": 401 }
+  },
+  "TOTAL_ACQUISITION": {
+    "cases_added": 102,
+    "controlling_authorities_added": 102,
+    "benchmark_relevant_authorities_added": 1,
+    "unique_missing_targets_eliminated": 102
+  },
+  "CITATION_VALUE": {
+    "old_unresolved_resolved": 673,
+    "new_edges": 3834,
+    "new_unresolved": 3161,
+    "net_unresolved_change": 3161
+  },
+  "EFFICIENCY": {
+    "cases_per_CL": 0.464,
+    "old_resolves_per_CL": 3.059,
+    "unique_targets_per_CL": 0.464,
+    "controlling_authorities_per_CL": 0.464,
+    "benchmark_relevant_per_CL": 0.005
+  },
+  "CORPUS_HEALTH": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missing_embeddings": 0,
+    "FAILED": 0,
+    "NOT_PROCESSED": 0,
+    "present_target_defects": 0,
+    "status": "GREEN"
+  },
+  "END_SNAPSHOT": {
+    "cases": 4927,
+    "authorities": 6282,
+    "extracted": 58419,
+    "resolved": 8689,
+    "unresolved": 49730
+  },
+  "WHY_RUN_STOPPED": "TARGET_QUEUE_EXHAUSTED",
+  "NEXT_B_OBJECTIVE": "Exact-circuit + EDPA F.Supp cluster-court refinement; acquire READY EDPA/PA district depth when citation-lookup yields verified F.Supp targets.",
+  "FINAL_CLASSIFICATION": "CORPUS_DAILY_BATCH2_COMPLETE"
+}
