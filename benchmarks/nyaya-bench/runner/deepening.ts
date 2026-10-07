@@ -1,10 +1,18 @@
 import {
+  answerCivilClaimsQuestion,
   answerSuppressionQuestion,
+  buildCivilClaimMatrix,
+  buildCivilWholeMatterView,
   buildWholeMatterAnalysis,
+  checkCivilClaimsConsistency,
+  evidenceRelationsForParty,
   findAutonomousSuppressionViolations,
+  findCivilLiabilityViolations,
+  formatCivilClaimsAnswer,
   formatLongFormAnalysis,
   formatSuppressionAnswer,
   inferSuppressionDoctrine,
+  runComplexCivilClaimsFixture,
   runDeepeningLawFirm,
   runDeepeningProsecution,
   runMirandaReview,
@@ -207,6 +215,115 @@ function gradeMissingFacts(assignment: DeepeningAssignment): DeepeningGrade {
   return fail(assignment, failures);
 }
 
+function gradeCivilClaims(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review, whole } = runComplexCivilClaimsFixture();
+  const failures: string[] = [];
+  const currentClaims = review.claims.filter((claim) => claim.isCurrent && claim.kind === "CLAIM");
+  if (currentClaims.length < 2) failures.push("expected at least two current claims");
+  if (review.claims.some((claim) => claim.id === "claim-negligent-misrep" && claim.isCurrent)) {
+    failures.push("withdrawn claim treated as current");
+  }
+  if (review.parties.length < 3) failures.push("multi-party matter missing");
+  if (whole.partyOrientations.every((row) => row.targets.length < 1)) failures.push("party orientation missing");
+  if (review.liabilityConclusion !== null || whole.liabilityConclusion !== null) failures.push("liability conclusion");
+  return fail(assignment, failures);
+}
+
+function gradeCivilDefense(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexCivilClaimsFixture();
+  const failures: string[] = [];
+  const negating = review.defenses.find((defense) => defense.kind === "ELEMENT_NEGATING");
+  const affirmative = review.defenses.find((defense) => defense.kind === "AFFIRMATIVE");
+  const notice = review.defenses.find((defense) => defense.kind === "NOTICE");
+  if (!negating || !affirmative || !notice) failures.push("defense kinds collapsed");
+  if (negating?.id === affirmative?.id) failures.push("element-negating and affirmative defenses merged");
+  if (!affirmative?.elements.some((element) => element.missingEvidence.length > 0)) failures.push("waiver missing evidence lost");
+  if (review.defenses.some((defense) => defense.validityConclusion !== null)) failures.push("defense validity conclusion");
+  return fail(assignment, failures);
+}
+
+function gradeCivilCounter(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review, whole } = runComplexCivilClaimsFixture();
+  const failures: string[] = [];
+  const counter = review.claims.find((claim) => claim.kind === "COUNTERCLAIM");
+  if (!counter) failures.push("counterclaim missing");
+  if (review.defenses.some((defense) => /counterclaim/i.test(defense.label))) failures.push("counterclaim treated as defense");
+  if (!counter?.parties.some((party) => party.role === "COUNTERCLAIMANT")) failures.push("counterclaimant role missing");
+  if (!counter?.parties.some((party) => party.role === "COUNTERCLAIM_DEFENDANT")) failures.push("counterclaim-defendant role missing");
+  if (!counter?.elements.some((element) => element.supportingEvidence.some((item) => item.evidenceId === "ev-invoice"))) {
+    failures.push("invoice evidence missing from counterclaim");
+  }
+  if (!whole.counterclaims.some((claim) => claim.id === counter?.id)) failures.push("whole-matter lost counterclaim");
+  return fail(assignment, failures);
+}
+
+function gradeCivilAmend(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexCivilClaimsFixture();
+  const failures: string[] = [];
+  const complaintPleadings = review.pleadings.filter((pleading) => /complaint/i.test(pleading.label));
+  if (complaintPleadings.filter((pleading) => pleading.isCurrent).length !== 1) failures.push("multiple current complaints");
+  if (review.pleadings.find((pleading) => pleading.id === "plead-amended")?.isCurrent !== true) failures.push("amended complaint not current");
+  const withdrawn = review.claims.find((claim) => claim.id === "claim-negligent-misrep");
+  if (withdrawn?.isCurrent) failures.push("removed claim still current");
+  if (withdrawn?.provenance.documentId !== "doc-complaint") failures.push("original source lost");
+  if (!review.claims.some((claim) => claim.id === "claim-unfair-trade" && claim.isCurrent)) failures.push("added claim missing");
+  if (review.claims.find((claim) => claim.id === "claim-breach-v1")?.isCurrent) failures.push("superseded breach treated as current");
+  return fail(assignment, failures);
+}
+
+function gradeCivilSharedEvidence(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review, whole } = runComplexCivilClaimsFixture();
+  const failures: string[] = [];
+  if (review.evidence.filter((item) => item.id === "ev-notice").length !== 1) failures.push("notice evidence duplicated");
+  const roles = whole.sharedEvidenceRoles.find((row) => row.evidenceId === "ev-notice")?.roles ?? [];
+  if (new Set(roles.map((role) => role.role)).size < 2) failures.push("shared evidence roles collapsed");
+  const betaOnly = review.claims
+    .find((claim) => claim.id === "claim-unfair-trade")
+    ?.elements.find((element) => element.id === "el-utp-beta-only");
+  if (!betaOnly) failures.push("beta-specific element missing");
+  if (evidenceRelationsForParty(betaOnly?.supportingEvidence ?? [], "party-acme").length > 0) {
+    failures.push("beta evidence leaked to Acme");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeCivilAsk(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexCivilClaimsFixture();
+  const answer = answerCivilClaimsQuestion({
+    review,
+    question: "What claims are currently pleaded and which elements of breach are unsupported?",
+  });
+  const text = formatCivilClaimsAnswer(answer);
+  const failures: string[] = [];
+  if (!answer.claims.some((claim) => claim.id === "claim-breach" && claim.isCurrent)) failures.push("current breach claim missing");
+  if (!answer.claims.some((claim) => claim.id === "claim-unfair-trade" && claim.isCurrent)) failures.push("current statutory claim missing");
+  if (answer.claims.some((claim) => claim.id === "claim-negligent-misrep" && claim.isCurrent)) failures.push("withdrawn claim listed as current");
+  if (!answer.elements.some((element) => element.missing.length > 0 || element.status === "NO_EVIDENCE_FOUND")) {
+    failures.push("unsupported breach element not surfaced");
+  }
+  if (answer.liabilityConclusion !== null || answer.outcomeConclusion !== null) failures.push("liability conclusion");
+  if (findCivilLiabilityViolations(text).length > 0) failures.push("forbidden liability language");
+  if (!text.includes("LIABILITY_CONCLUSION: null")) failures.push("structured null liability missing");
+  return fail(assignment, failures);
+}
+
+function gradeCivilMatrix(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexCivilClaimsFixture();
+  const matrix = buildCivilClaimMatrix(review);
+  const whole = buildCivilWholeMatterView(review);
+  const consistency = checkCivilClaimsConsistency({ review, matrix, whole });
+  const failures: string[] = [];
+  if (!matrix.some((row) => row.rowKind === "claim")) failures.push("claim rows missing");
+  if (!matrix.some((row) => row.rowKind === "defense")) failures.push("defense rows missing");
+  if (!matrix.some((row) => row.rowKind === "counterclaim")) failures.push("counterclaim rows missing");
+  const breach = matrix.find((row) => row.elementId === "el-breach-breach");
+  if (!breach?.contraryEvidenceIds.includes("ev-log")) failures.push("contrary evidence lost");
+  if (!breach?.missingEvidence.some((item) => item.id === "missing-delivery")) failures.push("missing evidence lost");
+  if (!consistency.consistent) failures.push(consistency.conflicts.join("; ") || "inconsistent");
+  if (whole.liabilityConclusion !== null) failures.push("liability conclusion");
+  return fail(assignment, failures);
+}
+
 const GRADERS: Record<string, (assignment: DeepeningAssignment) => DeepeningGrade> = {
   "D1-LF-01": gradeLawFirm,
   "D1-PR-01": gradeProsecution,
@@ -220,6 +337,13 @@ const GRADERS: Record<string, (assignment: DeepeningAssignment) => DeepeningGrad
   "D2-ASK-SUPPRESS-01": gradeAskSuppression,
   "D2-AUTH-HIER-01": gradeHierarchy,
   "D2-MISSING-FACTS-01": gradeMissingFacts,
+  "D3-CIVIL-CLAIMS-01": gradeCivilClaims,
+  "D3-CIVIL-DEFENSE-01": gradeCivilDefense,
+  "D3-CIVIL-COUNTER-01": gradeCivilCounter,
+  "D3-CIVIL-AMEND-01": gradeCivilAmend,
+  "D3-CIVIL-SHARED-EVID-01": gradeCivilSharedEvidence,
+  "D3-CIVIL-ASK-01": gradeCivilAsk,
+  "D3-CIVIL-MATRIX-01": gradeCivilMatrix,
 };
 
 /** Deterministic deepening grades. No database, model, or CourtListener calls. */
