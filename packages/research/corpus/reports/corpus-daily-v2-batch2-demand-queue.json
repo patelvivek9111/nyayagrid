@@ -1,0 +1,2594 @@
+{
+  "ok": true,
+  "classification": "CORPUS_DAILY_V2_BATCH2_DEMAND_QUEUE",
+  "generatedAt": "2026-10-07T16:21:51.476Z",
+  "courtListenerHttpCalls": 0,
+  "policy": "NO_SCOTUS_US_REPORTS",
+  "skipped": {
+    "present": 0,
+    "unparsed": 2317,
+    "scotus": 2135,
+    "noLane": 679
+  },
+  "totals": {
+    "selected": 118,
+    "byLane": {
+      "third_circuit": 41,
+      "pa_supreme": 6,
+      "pa_superior": 1,
+      "federal_reporter": 70
+    },
+    "totalEdgeDemand": 342
+  },
+  "top20": [
+    {
+      "citation": "919 F.3d 437",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 6,
+      "sourceCaseCount": 6,
+      "sourceCourts": [
+        "st-unknown",
+        "us-ca-1",
+        "us-ca-3",
+        "us-ca-dc",
+        "us-scotus"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=6_sources=6",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 423,
+      "status": "READY_CL",
+      "rank": 1
+    },
+    {
+      "citation": "126 F.4th 215",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-ca-dc"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": true,
+      "expectedClCost": 3,
+      "valueScore": 415,
+      "status": "READY_CL",
+      "rank": 2
+    },
+    {
+      "citation": "180 F.4th 512",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": true,
+      "expectedClCost": 3,
+      "valueScore": 415,
+      "status": "READY_CL",
+      "rank": 3
+    },
+    {
+      "citation": "484 F.2d 820",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 5,
+      "sourceCaseCount": 5,
+      "sourceCourts": [
+        "st-md-high",
+        "st-nd-high",
+        "st-nh-high",
+        "us-ca-3",
+        "us-ca-dc"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=5_sources=5",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 404,
+      "status": "READY_CL",
+      "rank": 4
+    },
+    {
+      "citation": "452 F.3d 256",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-d-paed"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 398,
+      "status": "READY_CL",
+      "rank": 5
+    },
+    {
+      "citation": "643 F.3d 77",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-d-paed"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 383,
+      "status": "READY_CL",
+      "rank": 6
+    },
+    {
+      "citation": "75 F.3d 834",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-d-paed"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 383,
+      "status": "READY_CL",
+      "rank": 7
+    },
+    {
+      "citation": "109 F.3d 156",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-d-paed"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 383,
+      "status": "READY_CL",
+      "rank": 8
+    },
+    {
+      "citation": "111 F.4th 266",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-unknown",
+        "us-ca-3",
+        "us-ca-dc"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 380,
+      "status": "READY_CL",
+      "rank": 9
+    },
+    {
+      "citation": "86 F.4th 532",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 380,
+      "status": "READY_CL",
+      "rank": 10
+    },
+    {
+      "citation": "998 F.2d 1224",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-d-paed"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 379,
+      "status": "READY_CL",
+      "rank": 11
+    },
+    {
+      "citation": "967 F.3d 327",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 378,
+      "status": "READY_CL",
+      "rank": 12
+    },
+    {
+      "citation": "137 F.4th 743",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-1",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 365,
+      "status": "READY_CL",
+      "rank": 13
+    },
+    {
+      "citation": "175 F.4th 34",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-1",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 365,
+      "status": "READY_CL",
+      "rank": 14
+    },
+    {
+      "citation": "4 F.3d 57",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-1",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 15
+    },
+    {
+      "citation": "605 F.3d 223",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 16
+    },
+    {
+      "citation": "629 F.3d 121",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 17
+    },
+    {
+      "citation": "649 F.3d 258",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "st-wi-high",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 18
+    },
+    {
+      "citation": "660 F.3d 1228",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-10",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 19
+    },
+    {
+      "citation": "689 F.3d 301",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 20
+    }
+  ],
+  "targets": [
+    {
+      "citation": "919 F.3d 437",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 6,
+      "sourceCaseCount": 6,
+      "sourceCourts": [
+        "st-unknown",
+        "us-ca-1",
+        "us-ca-3",
+        "us-ca-dc",
+        "us-scotus"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=6_sources=6",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 423,
+      "status": "READY_CL",
+      "rank": 1
+    },
+    {
+      "citation": "126 F.4th 215",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-ca-dc"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": true,
+      "expectedClCost": 3,
+      "valueScore": 415,
+      "status": "READY_CL",
+      "rank": 2
+    },
+    {
+      "citation": "180 F.4th 512",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": true,
+      "expectedClCost": 3,
+      "valueScore": 415,
+      "status": "READY_CL",
+      "rank": 3
+    },
+    {
+      "citation": "484 F.2d 820",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 5,
+      "sourceCaseCount": 5,
+      "sourceCourts": [
+        "st-md-high",
+        "st-nd-high",
+        "st-nh-high",
+        "us-ca-3",
+        "us-ca-dc"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=5_sources=5",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 404,
+      "status": "READY_CL",
+      "rank": 4
+    },
+    {
+      "citation": "452 F.3d 256",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-d-paed"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 398,
+      "status": "READY_CL",
+      "rank": 5
+    },
+    {
+      "citation": "643 F.3d 77",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-d-paed"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 383,
+      "status": "READY_CL",
+      "rank": 6
+    },
+    {
+      "citation": "75 F.3d 834",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-d-paed"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 383,
+      "status": "READY_CL",
+      "rank": 7
+    },
+    {
+      "citation": "109 F.3d 156",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-d-paed"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 383,
+      "status": "READY_CL",
+      "rank": 8
+    },
+    {
+      "citation": "111 F.4th 266",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-unknown",
+        "us-ca-3",
+        "us-ca-dc"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 380,
+      "status": "READY_CL",
+      "rank": 9
+    },
+    {
+      "citation": "86 F.4th 532",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 380,
+      "status": "READY_CL",
+      "rank": 10
+    },
+    {
+      "citation": "998 F.2d 1224",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-d-paed"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 379,
+      "status": "READY_CL",
+      "rank": 11
+    },
+    {
+      "citation": "967 F.3d 327",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 378,
+      "status": "READY_CL",
+      "rank": 12
+    },
+    {
+      "citation": "137 F.4th 743",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-1",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 365,
+      "status": "READY_CL",
+      "rank": 13
+    },
+    {
+      "citation": "175 F.4th 34",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-1",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 365,
+      "status": "READY_CL",
+      "rank": 14
+    },
+    {
+      "citation": "4 F.3d 57",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-1",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 15
+    },
+    {
+      "citation": "605 F.3d 223",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 16
+    },
+    {
+      "citation": "629 F.3d 121",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 17
+    },
+    {
+      "citation": "649 F.3d 258",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "st-wi-high",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 18
+    },
+    {
+      "citation": "660 F.3d 1228",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-10",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 19
+    },
+    {
+      "citation": "689 F.3d 301",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 20
+    },
+    {
+      "citation": "71 F.3d 819",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-scotus"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 21
+    },
+    {
+      "citation": "75 F.3d 564",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-2",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 22
+    },
+    {
+      "citation": "756 F.3d 1208",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "st-unknown",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 23
+    },
+    {
+      "citation": "912 F.3d 79",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 24
+    },
+    {
+      "citation": "221 F.3d 425",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 25
+    },
+    {
+      "citation": "361 F.3d 232",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 363,
+      "status": "READY_CL",
+      "rank": 26
+    },
+    {
+      "citation": "661 F.2d 1206",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-1",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 359,
+      "status": "READY_CL",
+      "rank": 27
+    },
+    {
+      "citation": "690 F.2d 60",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-scotus"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 359,
+      "status": "READY_CL",
+      "rank": 28
+    },
+    {
+      "citation": "723 F.2d 238",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-scotus"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 359,
+      "status": "READY_CL",
+      "rank": 29
+    },
+    {
+      "citation": "743 F.2d 984",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-ca-6"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 359,
+      "status": "READY_CL",
+      "rank": 30
+    },
+    {
+      "citation": "753 F.2d 1224",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-scotus"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 359,
+      "status": "READY_CL",
+      "rank": 31
+    },
+    {
+      "citation": "753 F.2d 262",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 359,
+      "status": "READY_CL",
+      "rank": 32
+    },
+    {
+      "citation": "807 F.2d 49",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 359,
+      "status": "READY_CL",
+      "rank": 33
+    },
+    {
+      "citation": "836 F.2d 1292",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-11",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 359,
+      "status": "READY_CL",
+      "rank": 34
+    },
+    {
+      "citation": "840 F.2d 1124",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "st-unknown",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 359,
+      "status": "READY_CL",
+      "rank": 35
+    },
+    {
+      "citation": "868 F.2d 437",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-d-flsd"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 359,
+      "status": "READY_CL",
+      "rank": 36
+    },
+    {
+      "citation": "874 F.2d 307",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-scotus"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 359,
+      "status": "READY_CL",
+      "rank": 37
+    },
+    {
+      "citation": "884 F.2d 166",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-scotus"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 359,
+      "status": "READY_CL",
+      "rank": 38
+    },
+    {
+      "citation": "884 F.2d 713",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 359,
+      "status": "READY_CL",
+      "rank": 39
+    },
+    {
+      "citation": "933 F.2d 1207",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-1",
+        "us-ca-3"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 359,
+      "status": "READY_CL",
+      "rank": 40
+    },
+    {
+      "citation": "966 F.2d 112",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "us-ca-3",
+        "us-d-njd"
+      ],
+      "lane": 1,
+      "laneName": "third_circuit",
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 359,
+      "status": "READY_CL",
+      "rank": 41
+    },
+    {
+      "citation": "221 A.3d 717",
+      "family": "regional_reporter",
+      "subfamily": "A.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-pa-high"
+      ],
+      "lane": 3,
+      "laneName": "pa_supreme",
+      "reason": "LANE3_pa_supreme_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 251,
+      "status": "READY_CL",
+      "rank": 42
+    },
+    {
+      "citation": "306 A.3d 432",
+      "family": "regional_reporter",
+      "subfamily": "A.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-pa-high"
+      ],
+      "lane": 3,
+      "laneName": "pa_supreme",
+      "reason": "LANE3_pa_supreme_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 251,
+      "status": "READY_CL",
+      "rank": 43
+    },
+    {
+      "citation": "106 A.3d 583",
+      "family": "regional_reporter",
+      "subfamily": "A.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-pa-high",
+        "st-pa-super"
+      ],
+      "lane": 3,
+      "laneName": "pa_supreme",
+      "reason": "LANE3_pa_supreme_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 251,
+      "status": "READY_CL",
+      "rank": 44
+    },
+    {
+      "citation": "218 A.3d 404",
+      "family": "regional_reporter",
+      "subfamily": "A.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "st-pa-high"
+      ],
+      "lane": 3,
+      "laneName": "pa_supreme",
+      "reason": "LANE3_pa_supreme_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 236,
+      "status": "READY_CL",
+      "rank": 45
+    },
+    {
+      "citation": "265 A.3d 383",
+      "family": "regional_reporter",
+      "subfamily": "A.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "st-pa-high"
+      ],
+      "lane": 3,
+      "laneName": "pa_supreme",
+      "reason": "LANE3_pa_supreme_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 236,
+      "status": "READY_CL",
+      "rank": 46
+    },
+    {
+      "citation": "355 A.3d 801",
+      "family": "regional_reporter",
+      "subfamily": "A.3d",
+      "edgeDemand": 2,
+      "sourceCaseCount": 2,
+      "sourceCourts": [
+        "st-pa-high"
+      ],
+      "lane": 3,
+      "laneName": "pa_supreme",
+      "reason": "LANE3_pa_supreme_edges=2_sources=2",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 236,
+      "status": "READY_CL",
+      "rank": 47
+    },
+    {
+      "citation": "713 A.2d 81",
+      "family": "regional_reporter",
+      "subfamily": "A.2d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-pa-super"
+      ],
+      "lane": 4,
+      "laneName": "pa_superior",
+      "reason": "LANE4_pa_superior_high_demand_edges=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 185,
+      "status": "READY_CL",
+      "rank": 48
+    },
+    {
+      "citation": "45 F.3d 444",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 8,
+      "sourceCaseCount": 8,
+      "sourceCourts": [
+        "us-ca-fed"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=8_sources=8",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 248,
+      "status": "READY_CL",
+      "rank": 49
+    },
+    {
+      "citation": "45 F.3d 428",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 6,
+      "sourceCaseCount": 6,
+      "sourceCourts": [
+        "us-ca-4"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=6_sources=6",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 218,
+      "status": "READY_CL",
+      "rank": 50
+    },
+    {
+      "citation": "220 F.3d 737",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 6,
+      "sourceCaseCount": 6,
+      "sourceCourts": [
+        "st-ky-app"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=6_sources=6",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 218,
+      "status": "READY_CL",
+      "rank": 51
+    },
+    {
+      "citation": "190 F.3d 753",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 6,
+      "sourceCaseCount": 6,
+      "sourceCourts": [
+        "st-ky-app"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=6_sources=6",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 218,
+      "status": "READY_CL",
+      "rank": 52
+    },
+    {
+      "citation": "968 F.2d 606",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 6,
+      "sourceCaseCount": 6,
+      "sourceCourts": [
+        "st-ky-app"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=6_sources=6",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 214,
+      "status": "READY_CL",
+      "rank": 53
+    },
+    {
+      "citation": "8 F.4th 182",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-d-paed"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 195,
+      "status": "READY_CL",
+      "rank": 54
+    },
+    {
+      "citation": "293 F.3d 103",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-d-paed"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 193,
+      "status": "READY_CL",
+      "rank": 55
+    },
+    {
+      "citation": "113 F.4th 637",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 4,
+      "sourceCaseCount": 4,
+      "sourceCourts": [
+        "st-unknown",
+        "us-ca-1",
+        "us-ca-dc"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=4_sources=4",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 190,
+      "status": "READY_CL",
+      "rank": 56
+    },
+    {
+      "citation": "472 F.2d 769",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-d-paed",
+        "us-scotus"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 189,
+      "status": "READY_CL",
+      "rank": 57
+    },
+    {
+      "citation": "665 F.3d 768",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 4,
+      "sourceCaseCount": 4,
+      "sourceCourts": [
+        "st-nm-high",
+        "us-ca-7"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=4_sources=4",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 188,
+      "status": "READY_CL",
+      "rank": 58
+    },
+    {
+      "citation": "924 F.3d 718",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 4,
+      "sourceCaseCount": 4,
+      "sourceCourts": [
+        "us-ca-4"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=4_sources=4",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 188,
+      "status": "READY_CL",
+      "rank": 59
+    },
+    {
+      "citation": "371 F.3d 865",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 4,
+      "sourceCaseCount": 4,
+      "sourceCourts": [
+        "st-me-high",
+        "us-ca-6",
+        "us-ca-unknown"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=4_sources=4",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 188,
+      "status": "READY_CL",
+      "rank": 60
+    },
+    {
+      "citation": "110 F.4th 1120",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-unknown",
+        "us-ca-1",
+        "us-ca-dc"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 175,
+      "status": "READY_CL",
+      "rank": 61
+    },
+    {
+      "citation": "167 F.4th 677",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-4"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 175,
+      "status": "READY_CL",
+      "rank": 62
+    },
+    {
+      "citation": "168 F.4th 2",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-7"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 175,
+      "status": "READY_CL",
+      "rank": 63
+    },
+    {
+      "citation": "169 F.4th 727",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-6"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 175,
+      "status": "READY_CL",
+      "rank": 64
+    },
+    {
+      "citation": "103 F.4th 159",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-2"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 175,
+      "status": "READY_CL",
+      "rank": 65
+    },
+    {
+      "citation": "153 F.4th 213",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-dc-high",
+        "st-wy-high"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 175,
+      "status": "READY_CL",
+      "rank": 66
+    },
+    {
+      "citation": "137 F.4th 944",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-7"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 175,
+      "status": "READY_CL",
+      "rank": 67
+    },
+    {
+      "citation": "178 F.4th 1113",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-7"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 175,
+      "status": "READY_CL",
+      "rank": 68
+    },
+    {
+      "citation": "88 F.4th 1080",
+      "family": "federal_reporter",
+      "subfamily": "F.4th",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-7"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 175,
+      "status": "READY_CL",
+      "rank": 69
+    },
+    {
+      "citation": "160 F.3d 661",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 70
+    },
+    {
+      "citation": "97 F.3d 518",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 71
+    },
+    {
+      "citation": "97 F.3d 648",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-2",
+        "us-ca-6"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 72
+    },
+    {
+      "citation": "972 F.3d 442",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-4"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 73
+    },
+    {
+      "citation": "495 F.3d 888",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-7"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 74
+    },
+    {
+      "citation": "181 F.3d 1232",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 75
+    },
+    {
+      "citation": "146 F.3d 1338",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 76
+    },
+    {
+      "citation": "192 F.3d 157",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 77
+    },
+    {
+      "citation": "104 F.3d 377",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-vt-high",
+        "us-scotus"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 78
+    },
+    {
+      "citation": "118 F.3d 702",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 79
+    },
+    {
+      "citation": "148 F.3d 1262",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11",
+        "us-d-flsd"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 80
+    },
+    {
+      "citation": "534 F.3d 1116",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-d-cacd",
+        "us-d-cand"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 81
+    },
+    {
+      "citation": "169 F.3d 674",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 82
+    },
+    {
+      "citation": "572 F.3d 440",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-7",
+        "us-d-ilnd"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 83
+    },
+    {
+      "citation": "251 F.3d 1279",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-9",
+        "us-ca-unknown"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 84
+    },
+    {
+      "citation": "17 F.3d 1531",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 85
+    },
+    {
+      "citation": "20 F.3d 538",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 86
+    },
+    {
+      "citation": "252 F.3d 986",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-sd-high"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 87
+    },
+    {
+      "citation": "135 F.3d 478",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 88
+    },
+    {
+      "citation": "32 F.3d 1512",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 89
+    },
+    {
+      "citation": "1 F.3d 1144",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 90
+    },
+    {
+      "citation": "625 F.3d 97",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-ma-high",
+        "st-nj-high"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 91
+    },
+    {
+      "citation": "631 F.3d 802",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-me-high",
+        "st-tn-high"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 92
+    },
+    {
+      "citation": "65 F.3d 932",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 93
+    },
+    {
+      "citation": "433 F.3d 273",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-ct-high",
+        "us-scotus"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 94
+    },
+    {
+      "citation": "121 F.3d 628",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 95
+    },
+    {
+      "citation": "27 F.3d 511",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 96
+    },
+    {
+      "citation": "44 F.3d 1271",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 97
+    },
+    {
+      "citation": "270 F.3d 536",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-7"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 98
+    },
+    {
+      "citation": "750 F.3d 1036",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-sd-high"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 99
+    },
+    {
+      "citation": "760 F.3d 1165",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 100
+    },
+    {
+      "citation": "10 F.3d 554",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-7"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 101
+    },
+    {
+      "citation": "86 F.3d 206",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 102
+    },
+    {
+      "citation": "864 F.3d 650",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-dc-high",
+        "us-ca-dc",
+        "us-scotus"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 103
+    },
+    {
+      "citation": "280 F.3d 1217",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-9",
+        "us-ca-unknown"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 104
+    },
+    {
+      "citation": "16 F.3d 952",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 105
+    },
+    {
+      "citation": "885 F.3d 436",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-6"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 106
+    },
+    {
+      "citation": "885 F.3d 436",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-6"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 107
+    },
+    {
+      "citation": "106 F.3d 1118",
+      "family": "federal_reporter",
+      "subfamily": "F.3d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 173,
+      "status": "READY_CL",
+      "rank": 108
+    },
+    {
+      "citation": "931 F.2d 238",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 169,
+      "status": "READY_CL",
+      "rank": 109
+    },
+    {
+      "citation": "950 F.2d 13",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-7"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 169,
+      "status": "READY_CL",
+      "rank": 110
+    },
+    {
+      "citation": "115 F.2d 690",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-scotus"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 169,
+      "status": "READY_CL",
+      "rank": 111
+    },
+    {
+      "citation": "959 F.2d 1558",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 169,
+      "status": "READY_CL",
+      "rank": 112
+    },
+    {
+      "citation": "965 F.2d 1001",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 169,
+      "status": "READY_CL",
+      "rank": 113
+    },
+    {
+      "citation": "488 F.2d 714",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-10",
+        "us-d-flsd",
+        "us-scotus"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 169,
+      "status": "READY_CL",
+      "rank": 114
+    },
+    {
+      "citation": "981 F.2d 497",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-ca-11"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 169,
+      "status": "READY_CL",
+      "rank": 115
+    },
+    {
+      "citation": "985 F.2d 483",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-vt-high",
+        "us-scotus"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 169,
+      "status": "READY_CL",
+      "rank": 116
+    },
+    {
+      "citation": "184 F.2d 119",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "us-scotus"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 169,
+      "status": "READY_CL",
+      "rank": 117
+    },
+    {
+      "citation": "520 F.2d 650",
+      "family": "federal_reporter",
+      "subfamily": "F.2d",
+      "edgeDemand": 3,
+      "sourceCaseCount": 3,
+      "sourceCourts": [
+        "st-tn-high",
+        "us-scotus"
+      ],
+      "lane": 5,
+      "laneName": "federal_reporter",
+      "reason": "LANE5_federal_reporter_edges=3_sources=3",
+      "benchmarkRelevant": false,
+      "expectedClCost": 3,
+      "valueScore": 169,
+      "status": "READY_CL",
+      "rank": 118
+    }
+  ]
+}
