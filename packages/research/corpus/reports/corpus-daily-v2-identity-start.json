@@ -1,0 +1,30 @@
+{
+  "ok": true,
+  "classification": "CORPUS_DAILY_V2_IDENTITY_GATE",
+  "hostMatchesHistoricalWeek2Pooler": true,
+  "isLocal47CaseDb": false,
+  "transactionReadOnly": true,
+  "mutations": 0,
+  "courtListenerHttpCalls": 0,
+  "live": {
+    "cases": 4825,
+    "authorities": 6180,
+    "extracted": 54585,
+    "resolved": 8016,
+    "unresolved": 46569,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "silentCurrent": -1,
+    "presentTargetDefects": -1
+  },
+  "floors": {
+    "cases": 4680,
+    "authorities": 6035,
+    "extracted": 50623,
+    "resolved": 6306
+  },
+  "generatedAt": "2026-10-07T14:25:41.940Z"
+}

@@ -1,0 +1,27 @@
+{
+  "classification": "CORPUS_DAILY_PASS_BLOCKED",
+  "status": "BLOCKED",
+  "stopReason": "COURTLISTENER_API_KEY_MISSING_IN_AGENT_PROCESS",
+  "generatedAt": "2026-10-07T13:30:00.000Z",
+  "worktree": "C:/Users/patel/Documents/nyayagrid-corpus-v2",
+  "branch": "nyaya/corpus-citation-strengthening-v2",
+  "base": "f28e94953e576731fb59bd51f1ae1f89e61202c9",
+  "auth": {
+    "courtListenerKeyPresent": false,
+    "valuePrinted": false,
+    "checked": ["process.env", "User environment", "Machine environment", "nyayagrid .env", "corpus-v2 .env"],
+    "neonVerifiedThisRun": false,
+    "corpusWrites": false
+  },
+  "courtListener": {
+    "probePerformed": false,
+    "actualRequests": 0,
+    "429": 0,
+    "502_504": 0,
+    "longWaitsOver5m": 0
+  },
+  "acquisition": {
+    "casesAdded": 0
+  },
+  "operatorActionRequired": "Set COURTLISTENER_API_KEY in the Cursor agent/terminal process environment that Chat B V2 inherits, then resume. Do not commit the key."
+}
