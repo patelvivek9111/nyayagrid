@@ -1,0 +1,78 @@
+{
+  "classification": "CORPUS_DAILY_V2_CERTIFIED_SNAPSHOT",
+  "certifiedAt": "2026-10-07T14:26:30.000Z",
+  "branch": "nyaya/corpus-citation-strengthening-v2",
+  "base": "f28e94953e576731fb59bd51f1ae1f89e61202c9",
+  "worktree": "C:/Users/patel/Documents/nyayagrid-corpus-v2",
+  "weeks1to7": "CLOSED_UNREOPENED",
+  "stopReason": "429",
+  "status": "CORPUS_DAILY_PASS_PARTIAL_QUOTA",
+  "integrity": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "FAILED": 0,
+    "NOT_PROCESSED": 0,
+    "health": "GREEN"
+  },
+  "treatment": {
+    "policy": "TREATMENT_UNVERIFIED / VERIFIED_TREATMENT only; no unsupported inference from citation count/direction/date",
+    "unsupportedLabelsAdded": 0
+  },
+  "sessionStartSnapshot": {
+    "cases": 4680,
+    "authorities": 6035,
+    "extracted": 50623,
+    "resolved": 6306,
+    "unresolved": 44317
+  },
+  "endSnapshot": {
+    "cases": 4825,
+    "authorities": 6180,
+    "extracted": 54585,
+    "resolved": 8016,
+    "unresolved": 46569
+  },
+  "deltas": {
+    "cases": 145,
+    "authorities": 145,
+    "extracted": 3962,
+    "resolved": 1710,
+    "unresolved": 2252
+  },
+  "courtListener": {
+    "quotaProbeAtStart": {
+      "dayRemaining": 1285,
+      "dayUsed": 115,
+      "hourRemaining": 300,
+      "minuteRemaining": 25,
+      "membership": "CL Membership - Tier 4"
+    },
+    "requestsThisSession": {
+      "quotaProbe": 1,
+      "pilot": 9,
+      "mainRun": 292,
+      "total": 302
+    },
+    "429": 1,
+    "502_504": 0,
+    "longWaitsOver5m": 0,
+    "resumedAfter429": false
+  },
+  "value": {
+    "casesAddedIncludingPilot": 145,
+    "oldResolvesMainRun": 1664,
+    "oldResolvesPerClMainRun": 5.699,
+    "casesPerClMainRun": 0.486,
+    "controllingAuthorities": "predominantly SCOTUS high-demand missing targets",
+    "benchmarkRelevantApprox": 11
+  },
+  "productBaseline": "UNCHANGED",
+  "certificationNotes": [
+    "Integrity green after final resolve",
+    "Citation extraction healthy (embeddings complete, zero missing)",
+    "Resolver healthy (no present-target backlog introduced as defects)",
+    "Net unresolved rose because newly acquired controlling opinions introduced outbound citation edges — expected and not a quality failure",
+    "Stopped on CourtListener 429 per Phase 9; no auto-resume; no quota re-probe"
+  ]
+}

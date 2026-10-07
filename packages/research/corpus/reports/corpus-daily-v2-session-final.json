@@ -1,0 +1,82 @@
+{
+  "STATUS": "CORPUS_DAILY_PASS_PARTIAL_QUOTA",
+  "STOP_REASON": "429",
+  "CLASSIFICATION": "DAILY_HIGH_VALUE_COURTLISTENER_STRENGTHENING",
+  "generatedAt": "2026-10-07T14:26:45.000Z",
+  "COURTLISTENER": {
+    "limit_min": 25,
+    "limit_hour": 300,
+    "limit_day": 1400,
+    "day_remaining_at_start": 1285,
+    "safe_run_budget": 1000,
+    "requests_actually_used": 302,
+    "breakdown": { "quota_probe": 1, "pilot": 9, "main_run": 292 },
+    "account_usage_today_after_run_local": 417,
+    "429": 1,
+    "502_504": 0,
+    "long_waits_gt_5m": 0
+  },
+  "START_SNAPSHOT": {
+    "cases": 4680,
+    "authorities": 6035,
+    "extracted": 50623,
+    "resolved": 6306,
+    "unresolved": 44317
+  },
+  "ACQUISITION": {
+    "cases_added": 145,
+    "SCOTUS": 140,
+    "federal_circuits": 2,
+    "district_courts": 0,
+    "state_supreme": 3,
+    "state_intermediate": 0,
+    "historical": "included within SCOTUS/regional historical volumes"
+  },
+  "CITATION_VALUE": {
+    "old_unresolved_resolved": 1710,
+    "new_edges": 3962,
+    "new_unresolved": 2252,
+    "net_unresolved_change": 2252,
+    "unique_missing_targets_eliminated": 145
+  },
+  "EFFICIENCY": {
+    "cases_per_CL": 0.48,
+    "old_resolves_per_CL": 5.66,
+    "unique_targets_per_CL": 0.48,
+    "controlling_authorities_per_CL": 0.48,
+    "benchmark_relevant_per_CL": 0.036
+  },
+  "CHECKPOINTS": {
+    "250": {
+      "requests": 292,
+      "cases": 142,
+      "old_resolves": 1664,
+      "unique_targets": 142,
+      "health": "GREEN",
+      "decision": "NO_STOP_429"
+    },
+    "500": "NOT_REACHED",
+    "750": "NOT_REACHED",
+    "1000": "NOT_REACHED"
+  },
+  "CORPUS_HEALTH": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missing_embeddings": 0,
+    "FAILED": 0,
+    "NOT_PROCESSED": 0,
+    "silent_CURRENT": "column_probe_unavailable_-1",
+    "present_target_defects": "column_probe_unavailable_-1",
+    "status": "GREEN"
+  },
+  "END_SNAPSHOT": {
+    "cases": 4825,
+    "authorities": 6180,
+    "extracted": 54585,
+    "resolved": 8016,
+    "unresolved": 46569
+  },
+  "WHY_RUN_STOPPED": "429",
+  "NEXT_B_OBJECTIVE": "After CL quota recovers: Lane 3 weak-forum depth (Third Circuit / EDPA / PA appellate) plus federal-reporter high-demand — do not resume US-Reports-only saturation until CA3/EDPA deficits are addressed.",
+  "FINAL_CLASSIFICATION": "CORPUS_DAILY_PASS_PARTIAL_QUOTA"
+}
