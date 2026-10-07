@@ -1,0 +1,4076 @@
+{
+  "classification": "CORPUS_DAILY_V2_BATCH2_RUN",
+  "startedAt": "2026-10-07T16:21:52.549Z",
+  "totalBudget": 270,
+  "priorCl": 1,
+  "safeProductive": 269,
+  "startSnapshot": {
+    "cases": 4825,
+    "authorities": 6180,
+    "extracted": 54585,
+    "resolved": 8016,
+    "unresolved": 46569,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0
+  },
+  "startResolvedAfterIntegrity": 8016,
+  "pointer": 118,
+  "stopReason": "TARGET_QUEUE_EXHAUSTED",
+  "continue": false,
+  "metrics": {
+    "requestsUsed": 220,
+    "casesAdded": 102,
+    "oldResolves": 673,
+    "uniqueTargetsEliminated": 102,
+    "newEdges": 3834,
+    "controllingAdded": 102,
+    "benchmarkRelevantAdded": 1,
+    "rateLimited": 0,
+    "gateway502_504": 0,
+    "longWaitsOver5m": 0,
+    "acquired": [
+      {
+        "citation": "919 F.3d 437",
+        "title": "Rickey I. Kanter v. William P. Barr",
+        "court": "Unknown Court",
+        "authorityId": "fda43910-ea77-47e1-b306-10724b79d0a6",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=6_sources=6",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "126 F.4th 215",
+        "title": "United States v. Aqudre Quailes",
+        "court": "Unknown Court",
+        "authorityId": "4a8fe408-1a98-4534-94e4-5f3a7d678a3c",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": true,
+        "status": "imported"
+      },
+      {
+        "citation": "484 F.2d 820",
+        "title": "Robert G. Vaughn v. Bernard Rosen, Executive Director, United States Civil Service Commission",
+        "court": "Unknown Court",
+        "authorityId": "df2bc325-6422-45a2-bd8d-5ee38135dbe7",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=5_sources=5",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "452 F.3d 256",
+        "title": "Kathleen Buck v. The Hampton Township School District Lawrence C. Korchnak, Dr",
+        "court": "Unknown Court",
+        "authorityId": "9db69536-da63-44fd-bc8a-96873383a118",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "643 F.3d 77",
+        "title": "Warren General Hospital v. Amgen Inc.",
+        "court": "Unknown Court",
+        "authorityId": "21b0134c-1083-4610-850e-f8900713ccae",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "75 F.3d 834",
+        "title": "Focus v. Allegheny County Court of Common Pleas",
+        "court": "Unknown Court",
+        "authorityId": "e459a768-3a8d-457b-9e55-919b21702b56",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "109 F.3d 156",
+        "title": "City of Erie v. Guaranty National Insurance",
+        "court": "Unknown Court",
+        "authorityId": "66ee1199-ae6d-4f5d-8c66-1ce42bd24cc6",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "111 F.4th 266",
+        "title": "United States v. Diontai Moore",
+        "court": "Unknown Court",
+        "authorityId": "784dc1e3-a8fa-4e4b-9aab-7ed8e01cfa58",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "86 F.4th 532",
+        "title": "United States v. Bruce Stewart",
+        "court": "Unknown Court",
+        "authorityId": "e9df24cd-8e8a-4a4f-bb37-3f20098a9f89",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "998 F.2d 1224",
+        "title": "Petruzzi's IGA Supermarkets, Inc. v. Darling-Delaware Co.",
+        "court": "Unknown Court",
+        "authorityId": "f4d8d245-3057-4236-bc62-9c479081e164",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "137 F.4th 743",
+        "title": "United States v. Steven Duarte",
+        "court": "Unknown Court",
+        "authorityId": "73344775-5149-4367-95b2-7767e789758f",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "4 F.3d 57",
+        "title": "Garcia v. Island Program Designer, Inc.",
+        "court": "Unknown Court",
+        "authorityId": "53200f9c-c034-4352-b54e-1309ee596c72",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "605 F.3d 223",
+        "title": "Mayer v. Belichick",
+        "court": "Unknown Court",
+        "authorityId": "8df50398-a680-4b37-9fcd-d75baf039650",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "629 F.3d 121",
+        "title": "Santiago v. Warminster Township",
+        "court": "Unknown Court",
+        "authorityId": "6ed15e24-b783-4637-bef5-215003fcf461",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "649 F.3d 258",
+        "title": "United States v. Hill",
+        "court": "Unknown Court",
+        "authorityId": "705b3197-52ab-4884-a05f-714e29069c4b",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "660 F.3d 1228",
+        "title": "Koch v. City of Del City",
+        "court": "Unknown Court",
+        "authorityId": "969545ce-7c44-41d4-bb75-19d14c0d7555",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "689 F.3d 301",
+        "title": "United States v. Khayree Harrison",
+        "court": "Unknown Court",
+        "authorityId": "3cf07461-657a-48be-8c8f-036c320092fb",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "71 F.3d 819",
+        "title": "United States v. Augustin Gonzalez",
+        "court": "Unknown Court",
+        "authorityId": "ee6babd2-d43c-43fd-bae1-c97826d3e8c4",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "75 F.3d 564",
+        "title": "Utah Women's Clinic, Inc. v. Leavitt",
+        "court": "Unknown Court",
+        "authorityId": "82f3c45b-2608-4bd8-9e1b-703e02f96461",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "756 F.3d 1208",
+        "title": "Varnell v. Dora Consolidated School District",
+        "court": "Unknown Court",
+        "authorityId": "4e8e68bf-0209-427b-b7a3-72abd1f32547",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "912 F.3d 79",
+        "title": "Peter Bistrian v. Troy Levi",
+        "court": "Unknown Court",
+        "authorityId": "abda9ab6-c2ed-4e74-a0a4-1694fc33eebd",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "221 F.3d 425",
+        "title": "Bartholomew v. PA",
+        "court": "Unknown Court",
+        "authorityId": "a143921e-ef84-4be6-aae0-4965efcf3e90",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "361 F.3d 232",
+        "title": "Doe v. Groody",
+        "court": "Unknown Court",
+        "authorityId": "05ab549c-bdda-4306-8a75-1b90476a3c60",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "661 F.2d 1206",
+        "title": "Larry Bonner v. City of Prichard, Alabama",
+        "court": "Unknown Court",
+        "authorityId": "242dbfd4-eaf3-4f31-afe6-103a9df6f141",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "690 F.2d 60",
+        "title": "United States of America, in 81-2838 v. Howard U. Johnson, in 81-2839",
+        "court": "Unknown Court",
+        "authorityId": "668c12a3-91b1-45ef-ae84-1b6659583047",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "723 F.2d 238",
+        "title": "Zenith Radio Corp. v. Matsushita Electric Industrial Co.",
+        "court": "Unknown Court",
+        "authorityId": "bd1a45df-1245-415d-9f36-403f6f635a42",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "743 F.2d 984",
+        "title": "In Re Pacor, Inc. v. John Higgins, Jr. And Louise Higgins",
+        "court": "Unknown Court",
+        "authorityId": "c0395c04-4d14-45cd-9997-aa9e2b057e9d",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "753 F.2d 1224",
+        "title": "United States v. John W. Downing",
+        "court": "Unknown Court",
+        "authorityId": "0e240966-deef-4c37-8905-968854d0330d",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "753 F.2d 262",
+        "title": "Cunningham v. City of McKeesport",
+        "court": "Unknown Court",
+        "authorityId": "e0921f8c-388b-4ea3-ba9a-b3a04fba436d",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "807 F.2d 49",
+        "title": "Cunningham v. City of McKeesport",
+        "court": "Unknown Court",
+        "authorityId": "651658a0-eec4-4b9e-81ad-cdc15e94dcf0",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "836 F.2d 1292",
+        "title": "Mattie Norman, Clara Marshall, Individually and on Behalf of All Others Similarly Situated v. The Housing Authority of the City of Montgomery",
+        "court": "Unknown Court",
+        "authorityId": "c51c75a5-7ce0-403a-8061-c870be7bc70f",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "840 F.2d 1124",
+        "title": "Bello v. Walker",
+        "court": "Unknown Court",
+        "authorityId": "98e8fce9-f8dd-4de6-a50a-db92921f2f39",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "868 F.2d 437",
+        "title": "William LATTIMORE, Plaintiff-Appellee, v. OMAN CONSTRUCTION, Defendant-Appellant, Bill White, Defendant",
+        "court": "Unknown Court",
+        "authorityId": "ae338016-4fda-4f4a-8d7a-b4ce49307f8a",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "874 F.2d 307",
+        "title": "Mr. And Mrs. Floyd Brock, Individually and as Next Friend of Rachel Brock, a Minor v. Merrell Dow Pharmaceuticals, Inc.",
+        "court": "Unknown Court",
+        "authorityId": "751b5d47-671e-4f58-8233-3c76302eb663",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "884 F.2d 166",
+        "title": "Mr. & Mrs. Floyd Brock, Individually and as Next Friend of Rachel Brock, a Minor v. Merrell Dow Pharmaceuticals, Inc.",
+        "court": "Unknown Court",
+        "authorityId": "007e13e6-e60a-4a03-b1db-9b95f12c740d",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "884 F.2d 713",
+        "title": "Bell v. United Princeton Properties, Inc.",
+        "court": "Unknown Court",
+        "authorityId": "ec70e7b7-3f42-40f4-a6be-ccd9dead3730",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "933 F.2d 1207",
+        "title": "Foster v. Chesapeake Insurance",
+        "court": "Unknown Court",
+        "authorityId": "c5ed4c5d-4f13-43ef-922b-bbd8b4301488",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "966 F.2d 112",
+        "title": "McDonald v. McCarthy",
+        "court": "Unknown Court",
+        "authorityId": "d1885108-65f4-4fa6-9e9f-e2a85df12ad5",
+        "clRequests": 2,
+        "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+        "laneName": "third_circuit",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "106 A.3d 583",
+        "title": "Commonwealth v. Williams",
+        "court": "Unknown Court",
+        "authorityId": "59ed3d42-0316-4e4d-8aed-a4ba25c7f065",
+        "clRequests": 2,
+        "reason": "LANE3_pa_supreme_edges=3_sources=3",
+        "laneName": "pa_supreme",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "713 A.2d 81",
+        "title": "Commonwealth v. Grazier",
+        "court": "Unknown Court",
+        "authorityId": "3c7cd7b6-1fa7-43c2-a30f-8da81f13bfff",
+        "clRequests": 2,
+        "reason": "LANE4_pa_superior_high_demand_edges=3",
+        "laneName": "pa_superior",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "45 F.3d 428",
+        "title": "United States v. Gracie L. Collier",
+        "court": "Unknown Court",
+        "authorityId": "aa499c33-4598-41e5-a1c4-61d02a0aad49",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=6_sources=6",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "220 F.3d 737",
+        "title": "David Rutlin v. Prime Succession, Inc. Kerley & Starks Funeral Homes, Inc., Jointly and Severally",
+        "court": "Unknown Court",
+        "authorityId": "22d6acb7-e620-45cd-b1c5-74cd2c681517",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=6_sources=6",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "190 F.3d 753",
+        "title": "William Russell Aiken v. City of Memphis, Tennessee",
+        "court": "Unknown Court",
+        "authorityId": "6b570e11-3f4a-44cf-b21c-33020670c30f",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=6_sources=6",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "968 F.2d 606",
+        "title": "Marshall Martin, Jr., on Behalf of Himself and All Other Employees of the Ohio Turnpike Commission Similarly Situated v. Ohio Turnpike Commission",
+        "court": "Unknown Court",
+        "authorityId": "ad6333e4-fa59-4f9a-982d-bb08e7fd9eeb",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=6_sources=6",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "8 F.4th 182",
+        "title": "Steven Vogt v. John Wetzel",
+        "court": "Unknown Court",
+        "authorityId": "b299be5b-a1ce-42eb-9711-0f94ef2b14b1",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "293 F.3d 103",
+        "title": "Norman Grayson v. Mayview State Hospital Allegheny County Jail Camp Hill Prison United States of America, Intervenor",
+        "court": "Unknown Court",
+        "authorityId": "3690c463-cb2a-416c-ad58-4c296d9190ac",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "113 F.4th 637",
+        "title": "United States v. Erick Williams",
+        "court": "Unknown Court",
+        "authorityId": "17dfb289-d2cb-4a7a-be71-6e52e216efa5",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=4_sources=4",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "472 F.2d 769",
+        "title": "Phyllis Lynch v. Frank W. Snepp",
+        "court": "Unknown Court",
+        "authorityId": "4c390f3d-fc78-471d-9066-760a0ebe4377",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "665 F.3d 768",
+        "title": "Lg Display Company v. Lisa Madigan",
+        "court": "Unknown Court",
+        "authorityId": "4ab4c64c-a6f7-4dc1-bb2b-bda5e8b22d21",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=4_sources=4",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "924 F.3d 718",
+        "title": "Glenda Westmoreland v. TWC Administration LLC",
+        "court": "Unknown Court",
+        "authorityId": "2726b779-7b92-4d90-9ffc-ed204ffcf518",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=4_sources=4",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "371 F.3d 865",
+        "title": "United States v. Henry A. Bostic",
+        "court": "Unknown Court",
+        "authorityId": "028394a7-913c-4d4e-9566-e111da7b3abb",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=4_sources=4",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "110 F.4th 1120",
+        "title": "United States v. Edell Jackson",
+        "court": "Unknown Court",
+        "authorityId": "b66eae7b-32e1-4cf6-8ad3-f18892d00c4b",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "103 F.4th 159",
+        "title": "Sharikov v. Philips Medical Systems MR, Inc.",
+        "court": "Unknown Court",
+        "authorityId": "8e8563d7-90f5-492e-9b64-481b8a2fe134",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "137 F.4th 944",
+        "title": "Yelp Inc. v. Paxton",
+        "court": "Unknown Court",
+        "authorityId": "67270017-4da8-4f72-8e18-a2b4dee50cc3",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "88 F.4th 1080",
+        "title": "Netflix v. Babin",
+        "court": "Unknown Court",
+        "authorityId": "d5fe02d7-89ca-4be7-a3c8-4d8936c3f995",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "160 F.3d 661",
+        "title": "United States v. Hernandez",
+        "court": "Unknown Court",
+        "authorityId": "0cecf3ac-3369-49f1-bf7d-af05f13461c3",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "97 F.3d 518",
+        "title": "UNITED STATES of America, Plaintiff-Appellee, v. John E. CALHOON, Defendant-Appellant",
+        "court": "Unknown Court",
+        "authorityId": "c57e19e5-dbb3-4a6f-a40b-6de2ed9f295a",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "97 F.3d 648",
+        "title": "United States of America, Appellee/cross-Appellant v. Alfred J. Rioux, Appellant/cross-Appellee",
+        "court": "Unknown Court",
+        "authorityId": "d8e2debf-439e-465e-9519-4503b7431780",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "495 F.3d 888",
+        "title": "Jones v. the St. Paul Companies, Inc.",
+        "court": "Unknown Court",
+        "authorityId": "35010c42-d5a9-42fb-af3a-e4f3e29168de",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "181 F.3d 1232",
+        "title": "United States v. Cook",
+        "court": "Unknown Court",
+        "authorityId": "6ef91e38-7a07-4664-a713-59639aec401b",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "146 F.3d 1338",
+        "title": "United States v. Mitchell",
+        "court": "Unknown Court",
+        "authorityId": "7bba2257-e3cc-4b6d-9d50-f5a969cfb6e8",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "192 F.3d 157",
+        "title": "United States v. LaFortune",
+        "court": "Unknown Court",
+        "authorityId": "ea3ac728-add7-4282-aee9-a99ca71c5a44",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "104 F.3d 377",
+        "title": "United States v. Opio Moore",
+        "court": "Unknown Court",
+        "authorityId": "6661703f-2eb0-4517-9df3-ace851fa9aee",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "118 F.3d 702",
+        "title": "United States v. Gilkey",
+        "court": "Unknown Court",
+        "authorityId": "9de6abb7-55af-41c5-9514-6e11e3bfc7f5",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "148 F.3d 1262",
+        "title": "Tannenbaum v. United States",
+        "court": "Unknown Court",
+        "authorityId": "d982ad04-02db-4236-ae54-44ef7c5b71f7",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "534 F.3d 1116",
+        "title": "Johnson v. Riverside Healthcare System, LP",
+        "court": "Unknown Court",
+        "authorityId": "00c6596a-5249-44b5-87fc-542bee3f7e93",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "169 F.3d 674",
+        "title": "United States v. Wooden",
+        "court": "Unknown Court",
+        "authorityId": "c2ec1027-dd7b-4322-aa2b-47c12160a434",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "572 F.3d 440",
+        "title": "Apex Digital, Inc. v. Sears, Roebuck & Co.",
+        "court": "Unknown Court",
+        "authorityId": "9b366aed-80d9-4348-a4d2-069cef6deaeb",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "251 F.3d 1279",
+        "title": "Navaratwam Kamalthas v. Immigration and Naturalization Service",
+        "court": "Unknown Court",
+        "authorityId": "cd8c5d4c-35ab-45b2-aaa1-ba4fe13762fe",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "17 F.3d 1531",
+        "title": "United States v. Rosa",
+        "court": "Unknown Court",
+        "authorityId": "5b19eb20-f408-412a-8e18-7cacd24e21af",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "20 F.3d 538",
+        "title": "United States v. Michael Lee Matthews and Robert G. Prater",
+        "court": "Unknown Court",
+        "authorityId": "a60ee186-6e50-40c0-8ea4-6517d10f0cbe",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "252 F.3d 986",
+        "title": "Glastetter v. Novartis Pharmaceuticals Corp.",
+        "court": "Unknown Court",
+        "authorityId": "ec54bf1b-f17d-4511-826d-f1705bb6bbc2",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "135 F.3d 478",
+        "title": "United States v. Charles Taylor",
+        "court": "Unknown Court",
+        "authorityId": "74ac4498-625b-454b-886f-27a89d98835b",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "32 F.3d 1512",
+        "title": "United States v. Keyvee Jones",
+        "court": "Unknown Court",
+        "authorityId": "360d2802-f29c-4396-b52e-c04aa255e7de",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "1 F.3d 1144",
+        "title": "United States v. William Kimmons, Howard Small",
+        "court": "Unknown Court",
+        "authorityId": "7ac0208a-8a48-4dc5-8259-6ca37a522050",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "625 F.3d 97",
+        "title": "Farina v. Nokia, Inc.",
+        "court": "Unknown Court",
+        "authorityId": "29be738f-875e-4391-b5b0-0671557f2992",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "631 F.3d 802",
+        "title": "United States v. Stokes",
+        "court": "Unknown Court",
+        "authorityId": "38115fcd-d81c-4e65-a286-888e344ee0cf",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "65 F.3d 932",
+        "title": "United States v. Luis Rodriguez",
+        "court": "Unknown Court",
+        "authorityId": "532cf139-d744-4ff6-a6c1-a9810af1598f",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "433 F.3d 273",
+        "title": "United States v. Martha Stewart and Peter Bacanovic",
+        "court": "Unknown Court",
+        "authorityId": "f0899ffd-b536-4336-b8d2-9bef941fe6e4",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "121 F.3d 628",
+        "title": "United States v. Orozco",
+        "court": "Unknown Court",
+        "authorityId": "736ba684-69f5-4450-8bdf-203f40299d9f",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "27 F.3d 511",
+        "title": "United States v. Shawn Joseph Pessefall, United States of America v. Lawrence Whittaker, United States of America v. Roy Vinson Rickman",
+        "court": "Unknown Court",
+        "authorityId": "f3d473d6-4dd8-4cb9-92df-76ebe8c7b607",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "44 F.3d 1271",
+        "title": "United States v. Jerry Washington and Herbert Edward James",
+        "court": "Unknown Court",
+        "authorityId": "b3e71dec-0250-41c9-95c4-c3761f33edf1",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "270 F.3d 536",
+        "title": "Midwestern Gas Transmission Company v. William D. McCarty",
+        "court": "Unknown Court",
+        "authorityId": "164c7cf7-3d09-4271-bc07-8e4d318ff04a",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "750 F.3d 1036",
+        "title": "City of Pomona v. Sqm North America Corporation",
+        "court": "Unknown Court",
+        "authorityId": "6c0350d5-c176-40e8-9a03-5281bdf9b857",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "760 F.3d 1165",
+        "title": "Allan Campbell v. Air Jamaica LTD",
+        "court": "Unknown Court",
+        "authorityId": "20717c41-d271-4149-b7a4-8faca41b6ea3",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "10 F.3d 554",
+        "title": "City of Timber Lake v. Cheyenne River Sioux Tribe",
+        "court": "Unknown Court",
+        "authorityId": "7bf694e3-041f-427e-a6b6-5a2c50ef36c5",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "86 F.3d 206",
+        "title": "United States v. Antonietti",
+        "court": "Unknown Court",
+        "authorityId": "19ed2265-3228-40b6-bbe9-184aa7d96d83",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "864 F.3d 650",
+        "title": "Wrenn v. District of Columbia",
+        "court": "Unknown Court",
+        "authorityId": "b44c7529-a9d0-48b5-b9b8-f60539c48dc7",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "280 F.3d 1217",
+        "title": "Gerald Ross Pizzuto, Jr. v. A.J. Arave, Warden",
+        "court": "Unknown Court",
+        "authorityId": "40f89f11-9ee5-4d12-a40e-6cfb49e0e6ad",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "16 F.3d 952",
+        "title": "United States v. Robert D. Elkins",
+        "court": "Unknown Court",
+        "authorityId": "e15bc405-f059-408d-86d1-38188a0b5261",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "885 F.3d 436",
+        "title": "United States v. Khalil Abu Rayyan",
+        "court": "Unknown Court",
+        "authorityId": "daae8fa8-be01-4992-b006-ebfebf8bd60e",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "106 F.3d 1118",
+        "title": "United States v. Jose P. Molina",
+        "court": "Unknown Court",
+        "authorityId": "4d3ae902-2dd5-457f-a234-10106d0bcf4a",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "931 F.2d 238",
+        "title": "United States v. Darryl Johnson",
+        "court": "Unknown Court",
+        "authorityId": "603322bc-ff68-45e1-a8a0-3b7852a2a4b9",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "950 F.2d 13",
+        "title": "James L. McCoy Administrator of the Electrical Workers Trust Funds, Etc. v. Massachusetts Institute of Technology",
+        "court": "Unknown Court",
+        "authorityId": "e05010cc-6ad0-4d91-ad8c-1d8f676f76c1",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "115 F.2d 690",
+        "title": "Nueslein v. District of Columbia",
+        "court": "Unknown Court",
+        "authorityId": "86a02d05-29b9-4b53-a409-1ca9ed572197",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "959 F.2d 1558",
+        "title": "Bonanni Ship Supply, Inc. v. United States",
+        "court": "Unknown Court",
+        "authorityId": "af12bd42-96d6-45a9-bb23-d664225216a5",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "965 F.2d 1001",
+        "title": "United States v. William Kimmons, Howard Small, United States of America v. Bruce Lee Berta",
+        "court": "Unknown Court",
+        "authorityId": "5b57c449-cc6e-4162-9f3b-786ccb408c1e",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "488 F.2d 714",
+        "title": "Johnson v. Georgia Highway Express, Inc.",
+        "court": "Unknown Court",
+        "authorityId": "10595cce-5b95-4d1f-b51e-9d6679baae98",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "981 F.2d 497",
+        "title": "United States v. George Rodgers",
+        "court": "Unknown Court",
+        "authorityId": "e002c5fd-76d9-481c-93e0-0942199ac5b5",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "985 F.2d 483",
+        "title": "United States v. Richard Lee Canterbury",
+        "court": "Unknown Court",
+        "authorityId": "19d9a98d-3d4c-4f3d-8aea-0c61abb2b4b4",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "184 F.2d 119",
+        "title": "Cooper v. Hutchinson",
+        "court": "Unknown Court",
+        "authorityId": "ab6d4ef2-04b0-4f4d-813f-71f3dac17762",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      },
+      {
+        "citation": "520 F.2d 650",
+        "title": "Samuel Parkinson, as Custodian for Andrew Parkinson v. April Industries, Inc., and Alex M. Parker",
+        "court": "Unknown Court",
+        "authorityId": "0579849b-f5c9-47bb-b041-a51703bcca64",
+        "clRequests": 2,
+        "reason": "LANE5_federal_reporter_edges=3_sources=3",
+        "laneName": "federal_reporter",
+        "benchmarkRelevant": false,
+        "status": "imported"
+      }
+    ],
+    "batches": [
+      {
+        "at": "2026-10-07T16:24:26.098Z",
+        "attempted": [
+          {
+            "citation": "919 F.3d 437",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "126 F.4th 215",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "180 F.4th 512",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "484 F.2d 820",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "452 F.3d 256",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "643 F.3d 77",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "75 F.3d 834",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "109 F.3d 156",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "111 F.4th 266",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "86 F.4th 532",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "998 F.2d 1224",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "967 F.3d 327",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "137 F.4th 743",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "175 F.4th 34",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "4 F.3d 57",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "605 F.3d 223",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "629 F.3d 121",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "649 F.3d 258",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "660 F.3d 1228",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "689 F.3d 301",
+            "lane": "third_circuit"
+          }
+        ],
+        "clUsed": 37,
+        "casesAdded": 17,
+        "oldResolves": 110,
+        "efficiency": {
+          "casesPerCl": 0.459,
+          "oldResolvesPerCl": 2.973
+        },
+        "health": {
+          "duplicates": 0,
+          "orphans": 0,
+          "missingEmbeddings": 0,
+          "failed": 0,
+          "notProcessed": 0,
+          "status": "GREEN"
+        },
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "919 F.3d 437",
+            "title": "Rickey I. Kanter v. William P. Barr",
+            "court": "Unknown Court",
+            "authorityId": "fda43910-ea77-47e1-b306-10724b79d0a6",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=6_sources=6",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "126 F.4th 215",
+            "title": "United States v. Aqudre Quailes",
+            "court": "Unknown Court",
+            "authorityId": "4a8fe408-1a98-4534-94e4-5f3a7d678a3c",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": true,
+            "status": "imported"
+          },
+          {
+            "citation": "484 F.2d 820",
+            "title": "Robert G. Vaughn v. Bernard Rosen, Executive Director, United States Civil Service Commission",
+            "court": "Unknown Court",
+            "authorityId": "df2bc325-6422-45a2-bd8d-5ee38135dbe7",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=5_sources=5",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "452 F.3d 256",
+            "title": "Kathleen Buck v. The Hampton Township School District Lawrence C. Korchnak, Dr",
+            "court": "Unknown Court",
+            "authorityId": "9db69536-da63-44fd-bc8a-96873383a118",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "643 F.3d 77",
+            "title": "Warren General Hospital v. Amgen Inc.",
+            "court": "Unknown Court",
+            "authorityId": "21b0134c-1083-4610-850e-f8900713ccae",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "75 F.3d 834",
+            "title": "Focus v. Allegheny County Court of Common Pleas",
+            "court": "Unknown Court",
+            "authorityId": "e459a768-3a8d-457b-9e55-919b21702b56",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "109 F.3d 156",
+            "title": "City of Erie v. Guaranty National Insurance",
+            "court": "Unknown Court",
+            "authorityId": "66ee1199-ae6d-4f5d-8c66-1ce42bd24cc6",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "111 F.4th 266",
+            "title": "United States v. Diontai Moore",
+            "court": "Unknown Court",
+            "authorityId": "784dc1e3-a8fa-4e4b-9aab-7ed8e01cfa58",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "86 F.4th 532",
+            "title": "United States v. Bruce Stewart",
+            "court": "Unknown Court",
+            "authorityId": "e9df24cd-8e8a-4a4f-bb37-3f20098a9f89",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "998 F.2d 1224",
+            "title": "Petruzzi's IGA Supermarkets, Inc. v. Darling-Delaware Co.",
+            "court": "Unknown Court",
+            "authorityId": "f4d8d245-3057-4236-bc62-9c479081e164",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "137 F.4th 743",
+            "title": "United States v. Steven Duarte",
+            "court": "Unknown Court",
+            "authorityId": "73344775-5149-4367-95b2-7767e789758f",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "4 F.3d 57",
+            "title": "Garcia v. Island Program Designer, Inc.",
+            "court": "Unknown Court",
+            "authorityId": "53200f9c-c034-4352-b54e-1309ee596c72",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "605 F.3d 223",
+            "title": "Mayer v. Belichick",
+            "court": "Unknown Court",
+            "authorityId": "8df50398-a680-4b37-9fcd-d75baf039650",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "629 F.3d 121",
+            "title": "Santiago v. Warminster Township",
+            "court": "Unknown Court",
+            "authorityId": "6ed15e24-b783-4637-bef5-215003fcf461",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "649 F.3d 258",
+            "title": "United States v. Hill",
+            "court": "Unknown Court",
+            "authorityId": "705b3197-52ab-4884-a05f-714e29069c4b",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "660 F.3d 1228",
+            "title": "Koch v. City of Del City",
+            "court": "Unknown Court",
+            "authorityId": "969545ce-7c44-41d4-bb75-19d14c0d7555",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "689 F.3d 301",
+            "title": "United States v. Khayree Harrison",
+            "court": "Unknown Court",
+            "authorityId": "3cf07461-657a-48be-8c8f-036c320092fb",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-07T16:27:14.281Z",
+        "attempted": [
+          {
+            "citation": "71 F.3d 819",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "75 F.3d 564",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "756 F.3d 1208",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "912 F.3d 79",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "221 F.3d 425",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "361 F.3d 232",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "661 F.2d 1206",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "690 F.2d 60",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "723 F.2d 238",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "743 F.2d 984",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "753 F.2d 1224",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "753 F.2d 262",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "807 F.2d 49",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "836 F.2d 1292",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "840 F.2d 1124",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "868 F.2d 437",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "874 F.2d 307",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "884 F.2d 166",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "884 F.2d 713",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "933 F.2d 1207",
+            "lane": "third_circuit"
+          }
+        ],
+        "clUsed": 40,
+        "casesAdded": 20,
+        "oldResolves": 137,
+        "efficiency": {
+          "casesPerCl": 0.5,
+          "oldResolvesPerCl": 3.425
+        },
+        "health": {
+          "duplicates": 0,
+          "orphans": 0,
+          "missingEmbeddings": 0,
+          "failed": 0,
+          "notProcessed": 0,
+          "status": "GREEN"
+        },
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "71 F.3d 819",
+            "title": "United States v. Augustin Gonzalez",
+            "court": "Unknown Court",
+            "authorityId": "ee6babd2-d43c-43fd-bae1-c97826d3e8c4",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "75 F.3d 564",
+            "title": "Utah Women's Clinic, Inc. v. Leavitt",
+            "court": "Unknown Court",
+            "authorityId": "82f3c45b-2608-4bd8-9e1b-703e02f96461",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "756 F.3d 1208",
+            "title": "Varnell v. Dora Consolidated School District",
+            "court": "Unknown Court",
+            "authorityId": "4e8e68bf-0209-427b-b7a3-72abd1f32547",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "912 F.3d 79",
+            "title": "Peter Bistrian v. Troy Levi",
+            "court": "Unknown Court",
+            "authorityId": "abda9ab6-c2ed-4e74-a0a4-1694fc33eebd",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "221 F.3d 425",
+            "title": "Bartholomew v. PA",
+            "court": "Unknown Court",
+            "authorityId": "a143921e-ef84-4be6-aae0-4965efcf3e90",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "361 F.3d 232",
+            "title": "Doe v. Groody",
+            "court": "Unknown Court",
+            "authorityId": "05ab549c-bdda-4306-8a75-1b90476a3c60",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "661 F.2d 1206",
+            "title": "Larry Bonner v. City of Prichard, Alabama",
+            "court": "Unknown Court",
+            "authorityId": "242dbfd4-eaf3-4f31-afe6-103a9df6f141",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "690 F.2d 60",
+            "title": "United States of America, in 81-2838 v. Howard U. Johnson, in 81-2839",
+            "court": "Unknown Court",
+            "authorityId": "668c12a3-91b1-45ef-ae84-1b6659583047",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "723 F.2d 238",
+            "title": "Zenith Radio Corp. v. Matsushita Electric Industrial Co.",
+            "court": "Unknown Court",
+            "authorityId": "bd1a45df-1245-415d-9f36-403f6f635a42",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "743 F.2d 984",
+            "title": "In Re Pacor, Inc. v. John Higgins, Jr. And Louise Higgins",
+            "court": "Unknown Court",
+            "authorityId": "c0395c04-4d14-45cd-9997-aa9e2b057e9d",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "753 F.2d 1224",
+            "title": "United States v. John W. Downing",
+            "court": "Unknown Court",
+            "authorityId": "0e240966-deef-4c37-8905-968854d0330d",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "753 F.2d 262",
+            "title": "Cunningham v. City of McKeesport",
+            "court": "Unknown Court",
+            "authorityId": "e0921f8c-388b-4ea3-ba9a-b3a04fba436d",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "807 F.2d 49",
+            "title": "Cunningham v. City of McKeesport",
+            "court": "Unknown Court",
+            "authorityId": "651658a0-eec4-4b9e-81ad-cdc15e94dcf0",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "836 F.2d 1292",
+            "title": "Mattie Norman, Clara Marshall, Individually and on Behalf of All Others Similarly Situated v. The Housing Authority of the City of Montgomery",
+            "court": "Unknown Court",
+            "authorityId": "c51c75a5-7ce0-403a-8061-c870be7bc70f",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "840 F.2d 1124",
+            "title": "Bello v. Walker",
+            "court": "Unknown Court",
+            "authorityId": "98e8fce9-f8dd-4de6-a50a-db92921f2f39",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "868 F.2d 437",
+            "title": "William LATTIMORE, Plaintiff-Appellee, v. OMAN CONSTRUCTION, Defendant-Appellant, Bill White, Defendant",
+            "court": "Unknown Court",
+            "authorityId": "ae338016-4fda-4f4a-8d7a-b4ce49307f8a",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "874 F.2d 307",
+            "title": "Mr. And Mrs. Floyd Brock, Individually and as Next Friend of Rachel Brock, a Minor v. Merrell Dow Pharmaceuticals, Inc.",
+            "court": "Unknown Court",
+            "authorityId": "751b5d47-671e-4f58-8233-3c76302eb663",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "884 F.2d 166",
+            "title": "Mr. & Mrs. Floyd Brock, Individually and as Next Friend of Rachel Brock, a Minor v. Merrell Dow Pharmaceuticals, Inc.",
+            "court": "Unknown Court",
+            "authorityId": "007e13e6-e60a-4a03-b1db-9b95f12c740d",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "884 F.2d 713",
+            "title": "Bell v. United Princeton Properties, Inc.",
+            "court": "Unknown Court",
+            "authorityId": "ec70e7b7-3f42-40f4-a6be-ccd9dead3730",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "933 F.2d 1207",
+            "title": "Foster v. Chesapeake Insurance",
+            "court": "Unknown Court",
+            "authorityId": "c5ed4c5d-4f13-43ef-922b-bbd8b4301488",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-07T16:29:34.464Z",
+        "attempted": [
+          {
+            "citation": "966 F.2d 112",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "221 A.3d 717",
+            "lane": "pa_supreme"
+          },
+          {
+            "citation": "306 A.3d 432",
+            "lane": "pa_supreme"
+          },
+          {
+            "citation": "106 A.3d 583",
+            "lane": "pa_supreme"
+          },
+          {
+            "citation": "218 A.3d 404",
+            "lane": "pa_supreme"
+          },
+          {
+            "citation": "265 A.3d 383",
+            "lane": "pa_supreme"
+          },
+          {
+            "citation": "355 A.3d 801",
+            "lane": "pa_supreme"
+          },
+          {
+            "citation": "713 A.2d 81",
+            "lane": "pa_superior"
+          },
+          {
+            "citation": "45 F.3d 444",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "45 F.3d 428",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "220 F.3d 737",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "190 F.3d 753",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "968 F.2d 606",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "8 F.4th 182",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "293 F.3d 103",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "113 F.4th 637",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "472 F.2d 769",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "665 F.3d 768",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "924 F.3d 718",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "371 F.3d 865",
+            "lane": "federal_reporter"
+          }
+        ],
+        "clUsed": 35,
+        "casesAdded": 14,
+        "oldResolves": 115,
+        "efficiency": {
+          "casesPerCl": 0.4,
+          "oldResolvesPerCl": 3.286
+        },
+        "health": {
+          "duplicates": 0,
+          "orphans": 0,
+          "missingEmbeddings": 0,
+          "failed": 0,
+          "notProcessed": 0,
+          "status": "GREEN"
+        },
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "966 F.2d 112",
+            "title": "McDonald v. McCarthy",
+            "court": "Unknown Court",
+            "authorityId": "d1885108-65f4-4fa6-9e9f-e2a85df12ad5",
+            "clRequests": 2,
+            "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+            "laneName": "third_circuit",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "106 A.3d 583",
+            "title": "Commonwealth v. Williams",
+            "court": "Unknown Court",
+            "authorityId": "59ed3d42-0316-4e4d-8aed-a4ba25c7f065",
+            "clRequests": 2,
+            "reason": "LANE3_pa_supreme_edges=3_sources=3",
+            "laneName": "pa_supreme",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "713 A.2d 81",
+            "title": "Commonwealth v. Grazier",
+            "court": "Unknown Court",
+            "authorityId": "3c7cd7b6-1fa7-43c2-a30f-8da81f13bfff",
+            "clRequests": 2,
+            "reason": "LANE4_pa_superior_high_demand_edges=3",
+            "laneName": "pa_superior",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "45 F.3d 428",
+            "title": "United States v. Gracie L. Collier",
+            "court": "Unknown Court",
+            "authorityId": "aa499c33-4598-41e5-a1c4-61d02a0aad49",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=6_sources=6",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "220 F.3d 737",
+            "title": "David Rutlin v. Prime Succession, Inc. Kerley & Starks Funeral Homes, Inc., Jointly and Severally",
+            "court": "Unknown Court",
+            "authorityId": "22d6acb7-e620-45cd-b1c5-74cd2c681517",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=6_sources=6",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "190 F.3d 753",
+            "title": "William Russell Aiken v. City of Memphis, Tennessee",
+            "court": "Unknown Court",
+            "authorityId": "6b570e11-3f4a-44cf-b21c-33020670c30f",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=6_sources=6",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "968 F.2d 606",
+            "title": "Marshall Martin, Jr., on Behalf of Himself and All Other Employees of the Ohio Turnpike Commission Similarly Situated v. Ohio Turnpike Commission",
+            "court": "Unknown Court",
+            "authorityId": "ad6333e4-fa59-4f9a-982d-bb08e7fd9eeb",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=6_sources=6",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "8 F.4th 182",
+            "title": "Steven Vogt v. John Wetzel",
+            "court": "Unknown Court",
+            "authorityId": "b299be5b-a1ce-42eb-9711-0f94ef2b14b1",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "293 F.3d 103",
+            "title": "Norman Grayson v. Mayview State Hospital Allegheny County Jail Camp Hill Prison United States of America, Intervenor",
+            "court": "Unknown Court",
+            "authorityId": "3690c463-cb2a-416c-ad58-4c296d9190ac",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "113 F.4th 637",
+            "title": "United States v. Erick Williams",
+            "court": "Unknown Court",
+            "authorityId": "17dfb289-d2cb-4a7a-be71-6e52e216efa5",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=4_sources=4",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "472 F.2d 769",
+            "title": "Phyllis Lynch v. Frank W. Snepp",
+            "court": "Unknown Court",
+            "authorityId": "4c390f3d-fc78-471d-9066-760a0ebe4377",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "665 F.3d 768",
+            "title": "Lg Display Company v. Lisa Madigan",
+            "court": "Unknown Court",
+            "authorityId": "4ab4c64c-a6f7-4dc1-bb2b-bda5e8b22d21",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=4_sources=4",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "924 F.3d 718",
+            "title": "Glenda Westmoreland v. TWC Administration LLC",
+            "court": "Unknown Court",
+            "authorityId": "2726b779-7b92-4d90-9ffc-ed204ffcf518",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=4_sources=4",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "371 F.3d 865",
+            "title": "United States v. Henry A. Bostic",
+            "court": "Unknown Court",
+            "authorityId": "028394a7-913c-4d4e-9566-e111da7b3abb",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=4_sources=4",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-07T16:31:50.365Z",
+        "attempted": [
+          {
+            "citation": "110 F.4th 1120",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "167 F.4th 677",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "168 F.4th 2",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "169 F.4th 727",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "103 F.4th 159",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "153 F.4th 213",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "137 F.4th 944",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "178 F.4th 1113",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "88 F.4th 1080",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "160 F.3d 661",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "97 F.3d 518",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "97 F.3d 648",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "972 F.3d 442",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "495 F.3d 888",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "181 F.3d 1232",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "146 F.3d 1338",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "192 F.3d 157",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "104 F.3d 377",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "118 F.3d 702",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "148 F.3d 1262",
+            "lane": "federal_reporter"
+          }
+        ],
+        "clUsed": 34,
+        "casesAdded": 14,
+        "oldResolves": 88,
+        "efficiency": {
+          "casesPerCl": 0.412,
+          "oldResolvesPerCl": 2.588
+        },
+        "health": {
+          "duplicates": 0,
+          "orphans": 0,
+          "missingEmbeddings": 0,
+          "failed": 0,
+          "notProcessed": 0,
+          "status": "GREEN"
+        },
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "110 F.4th 1120",
+            "title": "United States v. Edell Jackson",
+            "court": "Unknown Court",
+            "authorityId": "b66eae7b-32e1-4cf6-8ad3-f18892d00c4b",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "103 F.4th 159",
+            "title": "Sharikov v. Philips Medical Systems MR, Inc.",
+            "court": "Unknown Court",
+            "authorityId": "8e8563d7-90f5-492e-9b64-481b8a2fe134",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "137 F.4th 944",
+            "title": "Yelp Inc. v. Paxton",
+            "court": "Unknown Court",
+            "authorityId": "67270017-4da8-4f72-8e18-a2b4dee50cc3",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "88 F.4th 1080",
+            "title": "Netflix v. Babin",
+            "court": "Unknown Court",
+            "authorityId": "d5fe02d7-89ca-4be7-a3c8-4d8936c3f995",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "160 F.3d 661",
+            "title": "United States v. Hernandez",
+            "court": "Unknown Court",
+            "authorityId": "0cecf3ac-3369-49f1-bf7d-af05f13461c3",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "97 F.3d 518",
+            "title": "UNITED STATES of America, Plaintiff-Appellee, v. John E. CALHOON, Defendant-Appellant",
+            "court": "Unknown Court",
+            "authorityId": "c57e19e5-dbb3-4a6f-a40b-6de2ed9f295a",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "97 F.3d 648",
+            "title": "United States of America, Appellee/cross-Appellant v. Alfred J. Rioux, Appellant/cross-Appellee",
+            "court": "Unknown Court",
+            "authorityId": "d8e2debf-439e-465e-9519-4503b7431780",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "495 F.3d 888",
+            "title": "Jones v. the St. Paul Companies, Inc.",
+            "court": "Unknown Court",
+            "authorityId": "35010c42-d5a9-42fb-af3a-e4f3e29168de",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "181 F.3d 1232",
+            "title": "United States v. Cook",
+            "court": "Unknown Court",
+            "authorityId": "6ef91e38-7a07-4664-a713-59639aec401b",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "146 F.3d 1338",
+            "title": "United States v. Mitchell",
+            "court": "Unknown Court",
+            "authorityId": "7bba2257-e3cc-4b6d-9d50-f5a969cfb6e8",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "192 F.3d 157",
+            "title": "United States v. LaFortune",
+            "court": "Unknown Court",
+            "authorityId": "ea3ac728-add7-4282-aee9-a99ca71c5a44",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "104 F.3d 377",
+            "title": "United States v. Opio Moore",
+            "court": "Unknown Court",
+            "authorityId": "6661703f-2eb0-4517-9df3-ace851fa9aee",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "118 F.3d 702",
+            "title": "United States v. Gilkey",
+            "court": "Unknown Court",
+            "authorityId": "9de6abb7-55af-41c5-9514-6e11e3bfc7f5",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "148 F.3d 1262",
+            "title": "Tannenbaum v. United States",
+            "court": "Unknown Court",
+            "authorityId": "d982ad04-02db-4236-ae54-44ef7c5b71f7",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-07T16:34:48.911Z",
+        "attempted": [
+          {
+            "citation": "534 F.3d 1116",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "169 F.3d 674",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "572 F.3d 440",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "251 F.3d 1279",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "17 F.3d 1531",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "20 F.3d 538",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "252 F.3d 986",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "135 F.3d 478",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "32 F.3d 1512",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "1 F.3d 1144",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "625 F.3d 97",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "631 F.3d 802",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "65 F.3d 932",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "433 F.3d 273",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "121 F.3d 628",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "27 F.3d 511",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "44 F.3d 1271",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "270 F.3d 536",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "750 F.3d 1036",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "760 F.3d 1165",
+            "lane": "federal_reporter"
+          }
+        ],
+        "clUsed": 40,
+        "casesAdded": 20,
+        "oldResolves": 113,
+        "efficiency": {
+          "casesPerCl": 0.5,
+          "oldResolvesPerCl": 2.825
+        },
+        "health": {
+          "duplicates": 0,
+          "orphans": 0,
+          "missingEmbeddings": 0,
+          "failed": 0,
+          "notProcessed": 0,
+          "status": "GREEN"
+        },
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "534 F.3d 1116",
+            "title": "Johnson v. Riverside Healthcare System, LP",
+            "court": "Unknown Court",
+            "authorityId": "00c6596a-5249-44b5-87fc-542bee3f7e93",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "169 F.3d 674",
+            "title": "United States v. Wooden",
+            "court": "Unknown Court",
+            "authorityId": "c2ec1027-dd7b-4322-aa2b-47c12160a434",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "572 F.3d 440",
+            "title": "Apex Digital, Inc. v. Sears, Roebuck & Co.",
+            "court": "Unknown Court",
+            "authorityId": "9b366aed-80d9-4348-a4d2-069cef6deaeb",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "251 F.3d 1279",
+            "title": "Navaratwam Kamalthas v. Immigration and Naturalization Service",
+            "court": "Unknown Court",
+            "authorityId": "cd8c5d4c-35ab-45b2-aaa1-ba4fe13762fe",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "17 F.3d 1531",
+            "title": "United States v. Rosa",
+            "court": "Unknown Court",
+            "authorityId": "5b19eb20-f408-412a-8e18-7cacd24e21af",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "20 F.3d 538",
+            "title": "United States v. Michael Lee Matthews and Robert G. Prater",
+            "court": "Unknown Court",
+            "authorityId": "a60ee186-6e50-40c0-8ea4-6517d10f0cbe",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "252 F.3d 986",
+            "title": "Glastetter v. Novartis Pharmaceuticals Corp.",
+            "court": "Unknown Court",
+            "authorityId": "ec54bf1b-f17d-4511-826d-f1705bb6bbc2",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "135 F.3d 478",
+            "title": "United States v. Charles Taylor",
+            "court": "Unknown Court",
+            "authorityId": "74ac4498-625b-454b-886f-27a89d98835b",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "32 F.3d 1512",
+            "title": "United States v. Keyvee Jones",
+            "court": "Unknown Court",
+            "authorityId": "360d2802-f29c-4396-b52e-c04aa255e7de",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "1 F.3d 1144",
+            "title": "United States v. William Kimmons, Howard Small",
+            "court": "Unknown Court",
+            "authorityId": "7ac0208a-8a48-4dc5-8259-6ca37a522050",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "625 F.3d 97",
+            "title": "Farina v. Nokia, Inc.",
+            "court": "Unknown Court",
+            "authorityId": "29be738f-875e-4391-b5b0-0671557f2992",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "631 F.3d 802",
+            "title": "United States v. Stokes",
+            "court": "Unknown Court",
+            "authorityId": "38115fcd-d81c-4e65-a286-888e344ee0cf",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "65 F.3d 932",
+            "title": "United States v. Luis Rodriguez",
+            "court": "Unknown Court",
+            "authorityId": "532cf139-d744-4ff6-a6c1-a9810af1598f",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "433 F.3d 273",
+            "title": "United States v. Martha Stewart and Peter Bacanovic",
+            "court": "Unknown Court",
+            "authorityId": "f0899ffd-b536-4336-b8d2-9bef941fe6e4",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "121 F.3d 628",
+            "title": "United States v. Orozco",
+            "court": "Unknown Court",
+            "authorityId": "736ba684-69f5-4450-8bdf-203f40299d9f",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "27 F.3d 511",
+            "title": "United States v. Shawn Joseph Pessefall, United States of America v. Lawrence Whittaker, United States of America v. Roy Vinson Rickman",
+            "court": "Unknown Court",
+            "authorityId": "f3d473d6-4dd8-4cb9-92df-76ebe8c7b607",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "44 F.3d 1271",
+            "title": "United States v. Jerry Washington and Herbert Edward James",
+            "court": "Unknown Court",
+            "authorityId": "b3e71dec-0250-41c9-95c4-c3761f33edf1",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "270 F.3d 536",
+            "title": "Midwestern Gas Transmission Company v. William D. McCarty",
+            "court": "Unknown Court",
+            "authorityId": "164c7cf7-3d09-4271-bc07-8e4d318ff04a",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "750 F.3d 1036",
+            "title": "City of Pomona v. Sqm North America Corporation",
+            "court": "Unknown Court",
+            "authorityId": "6c0350d5-c176-40e8-9a03-5281bdf9b857",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "760 F.3d 1165",
+            "title": "Allan Campbell v. Air Jamaica LTD",
+            "court": "Unknown Court",
+            "authorityId": "20717c41-d271-4149-b7a4-8faca41b6ea3",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-07T16:37:12.200Z",
+        "attempted": [
+          {
+            "citation": "10 F.3d 554",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "86 F.3d 206",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "864 F.3d 650",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "280 F.3d 1217",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "16 F.3d 952",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "885 F.3d 436",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "106 F.3d 1118",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "931 F.2d 238",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "950 F.2d 13",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "115 F.2d 690",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "959 F.2d 1558",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "965 F.2d 1001",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "488 F.2d 714",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "981 F.2d 497",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "985 F.2d 483",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "184 F.2d 119",
+            "lane": "federal_reporter"
+          },
+          {
+            "citation": "520 F.2d 650",
+            "lane": "federal_reporter"
+          }
+        ],
+        "clUsed": 34,
+        "casesAdded": 17,
+        "oldResolves": 110,
+        "efficiency": {
+          "casesPerCl": 0.5,
+          "oldResolvesPerCl": 3.235
+        },
+        "health": {
+          "duplicates": 0,
+          "orphans": 0,
+          "missingEmbeddings": 0,
+          "failed": 0,
+          "notProcessed": 0,
+          "status": "GREEN"
+        },
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "10 F.3d 554",
+            "title": "City of Timber Lake v. Cheyenne River Sioux Tribe",
+            "court": "Unknown Court",
+            "authorityId": "7bf694e3-041f-427e-a6b6-5a2c50ef36c5",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "86 F.3d 206",
+            "title": "United States v. Antonietti",
+            "court": "Unknown Court",
+            "authorityId": "19ed2265-3228-40b6-bbe9-184aa7d96d83",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "864 F.3d 650",
+            "title": "Wrenn v. District of Columbia",
+            "court": "Unknown Court",
+            "authorityId": "b44c7529-a9d0-48b5-b9b8-f60539c48dc7",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "280 F.3d 1217",
+            "title": "Gerald Ross Pizzuto, Jr. v. A.J. Arave, Warden",
+            "court": "Unknown Court",
+            "authorityId": "40f89f11-9ee5-4d12-a40e-6cfb49e0e6ad",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "16 F.3d 952",
+            "title": "United States v. Robert D. Elkins",
+            "court": "Unknown Court",
+            "authorityId": "e15bc405-f059-408d-86d1-38188a0b5261",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "885 F.3d 436",
+            "title": "United States v. Khalil Abu Rayyan",
+            "court": "Unknown Court",
+            "authorityId": "daae8fa8-be01-4992-b006-ebfebf8bd60e",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "106 F.3d 1118",
+            "title": "United States v. Jose P. Molina",
+            "court": "Unknown Court",
+            "authorityId": "4d3ae902-2dd5-457f-a234-10106d0bcf4a",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "931 F.2d 238",
+            "title": "United States v. Darryl Johnson",
+            "court": "Unknown Court",
+            "authorityId": "603322bc-ff68-45e1-a8a0-3b7852a2a4b9",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "950 F.2d 13",
+            "title": "James L. McCoy Administrator of the Electrical Workers Trust Funds, Etc. v. Massachusetts Institute of Technology",
+            "court": "Unknown Court",
+            "authorityId": "e05010cc-6ad0-4d91-ad8c-1d8f676f76c1",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "115 F.2d 690",
+            "title": "Nueslein v. District of Columbia",
+            "court": "Unknown Court",
+            "authorityId": "86a02d05-29b9-4b53-a409-1ca9ed572197",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "959 F.2d 1558",
+            "title": "Bonanni Ship Supply, Inc. v. United States",
+            "court": "Unknown Court",
+            "authorityId": "af12bd42-96d6-45a9-bb23-d664225216a5",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "965 F.2d 1001",
+            "title": "United States v. William Kimmons, Howard Small, United States of America v. Bruce Lee Berta",
+            "court": "Unknown Court",
+            "authorityId": "5b57c449-cc6e-4162-9f3b-786ccb408c1e",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "488 F.2d 714",
+            "title": "Johnson v. Georgia Highway Express, Inc.",
+            "court": "Unknown Court",
+            "authorityId": "10595cce-5b95-4d1f-b51e-9d6679baae98",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "981 F.2d 497",
+            "title": "United States v. George Rodgers",
+            "court": "Unknown Court",
+            "authorityId": "e002c5fd-76d9-481c-93e0-0942199ac5b5",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "985 F.2d 483",
+            "title": "United States v. Richard Lee Canterbury",
+            "court": "Unknown Court",
+            "authorityId": "19d9a98d-3d4c-4f3d-8aea-0c61abb2b4b4",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "184 F.2d 119",
+            "title": "Cooper v. Hutchinson",
+            "court": "Unknown Court",
+            "authorityId": "ab6d4ef2-04b0-4f4d-813f-71f3dac17762",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          },
+          {
+            "citation": "520 F.2d 650",
+            "title": "Samuel Parkinson, as Custodian for Andrew Parkinson v. April Industries, Inc., and Alex M. Parker",
+            "court": "Unknown Court",
+            "authorityId": "0579849b-f5c9-47bb-b041-a51703bcca64",
+            "clRequests": 2,
+            "reason": "LANE5_federal_reporter_edges=3_sources=3",
+            "laneName": "federal_reporter",
+            "benchmarkRelevant": false,
+            "status": "imported"
+          }
+        ]
+      }
+    ]
+  },
+  "lanes": {
+    "third_circuit": {
+      "requests": 79,
+      "cases": 38,
+      "oldResolves": 255,
+      "uniqueTargets": 38,
+      "acquired": [
+        {
+          "citation": "919 F.3d 437",
+          "title": "Rickey I. Kanter v. William P. Barr",
+          "court": "Unknown Court",
+          "authorityId": "fda43910-ea77-47e1-b306-10724b79d0a6",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=6_sources=6",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "126 F.4th 215",
+          "title": "United States v. Aqudre Quailes",
+          "court": "Unknown Court",
+          "authorityId": "4a8fe408-1a98-4534-94e4-5f3a7d678a3c",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": true,
+          "status": "imported"
+        },
+        {
+          "citation": "484 F.2d 820",
+          "title": "Robert G. Vaughn v. Bernard Rosen, Executive Director, United States Civil Service Commission",
+          "court": "Unknown Court",
+          "authorityId": "df2bc325-6422-45a2-bd8d-5ee38135dbe7",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=5_sources=5",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "452 F.3d 256",
+          "title": "Kathleen Buck v. The Hampton Township School District Lawrence C. Korchnak, Dr",
+          "court": "Unknown Court",
+          "authorityId": "9db69536-da63-44fd-bc8a-96873383a118",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "643 F.3d 77",
+          "title": "Warren General Hospital v. Amgen Inc.",
+          "court": "Unknown Court",
+          "authorityId": "21b0134c-1083-4610-850e-f8900713ccae",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "75 F.3d 834",
+          "title": "Focus v. Allegheny County Court of Common Pleas",
+          "court": "Unknown Court",
+          "authorityId": "e459a768-3a8d-457b-9e55-919b21702b56",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "109 F.3d 156",
+          "title": "City of Erie v. Guaranty National Insurance",
+          "court": "Unknown Court",
+          "authorityId": "66ee1199-ae6d-4f5d-8c66-1ce42bd24cc6",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "111 F.4th 266",
+          "title": "United States v. Diontai Moore",
+          "court": "Unknown Court",
+          "authorityId": "784dc1e3-a8fa-4e4b-9aab-7ed8e01cfa58",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "86 F.4th 532",
+          "title": "United States v. Bruce Stewart",
+          "court": "Unknown Court",
+          "authorityId": "e9df24cd-8e8a-4a4f-bb37-3f20098a9f89",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "998 F.2d 1224",
+          "title": "Petruzzi's IGA Supermarkets, Inc. v. Darling-Delaware Co.",
+          "court": "Unknown Court",
+          "authorityId": "f4d8d245-3057-4236-bc62-9c479081e164",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "137 F.4th 743",
+          "title": "United States v. Steven Duarte",
+          "court": "Unknown Court",
+          "authorityId": "73344775-5149-4367-95b2-7767e789758f",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "4 F.3d 57",
+          "title": "Garcia v. Island Program Designer, Inc.",
+          "court": "Unknown Court",
+          "authorityId": "53200f9c-c034-4352-b54e-1309ee596c72",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "605 F.3d 223",
+          "title": "Mayer v. Belichick",
+          "court": "Unknown Court",
+          "authorityId": "8df50398-a680-4b37-9fcd-d75baf039650",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "629 F.3d 121",
+          "title": "Santiago v. Warminster Township",
+          "court": "Unknown Court",
+          "authorityId": "6ed15e24-b783-4637-bef5-215003fcf461",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "649 F.3d 258",
+          "title": "United States v. Hill",
+          "court": "Unknown Court",
+          "authorityId": "705b3197-52ab-4884-a05f-714e29069c4b",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "660 F.3d 1228",
+          "title": "Koch v. City of Del City",
+          "court": "Unknown Court",
+          "authorityId": "969545ce-7c44-41d4-bb75-19d14c0d7555",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "689 F.3d 301",
+          "title": "United States v. Khayree Harrison",
+          "court": "Unknown Court",
+          "authorityId": "3cf07461-657a-48be-8c8f-036c320092fb",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "71 F.3d 819",
+          "title": "United States v. Augustin Gonzalez",
+          "court": "Unknown Court",
+          "authorityId": "ee6babd2-d43c-43fd-bae1-c97826d3e8c4",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "75 F.3d 564",
+          "title": "Utah Women's Clinic, Inc. v. Leavitt",
+          "court": "Unknown Court",
+          "authorityId": "82f3c45b-2608-4bd8-9e1b-703e02f96461",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "756 F.3d 1208",
+          "title": "Varnell v. Dora Consolidated School District",
+          "court": "Unknown Court",
+          "authorityId": "4e8e68bf-0209-427b-b7a3-72abd1f32547",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "912 F.3d 79",
+          "title": "Peter Bistrian v. Troy Levi",
+          "court": "Unknown Court",
+          "authorityId": "abda9ab6-c2ed-4e74-a0a4-1694fc33eebd",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "221 F.3d 425",
+          "title": "Bartholomew v. PA",
+          "court": "Unknown Court",
+          "authorityId": "a143921e-ef84-4be6-aae0-4965efcf3e90",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "361 F.3d 232",
+          "title": "Doe v. Groody",
+          "court": "Unknown Court",
+          "authorityId": "05ab549c-bdda-4306-8a75-1b90476a3c60",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "661 F.2d 1206",
+          "title": "Larry Bonner v. City of Prichard, Alabama",
+          "court": "Unknown Court",
+          "authorityId": "242dbfd4-eaf3-4f31-afe6-103a9df6f141",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "690 F.2d 60",
+          "title": "United States of America, in 81-2838 v. Howard U. Johnson, in 81-2839",
+          "court": "Unknown Court",
+          "authorityId": "668c12a3-91b1-45ef-ae84-1b6659583047",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "723 F.2d 238",
+          "title": "Zenith Radio Corp. v. Matsushita Electric Industrial Co.",
+          "court": "Unknown Court",
+          "authorityId": "bd1a45df-1245-415d-9f36-403f6f635a42",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "743 F.2d 984",
+          "title": "In Re Pacor, Inc. v. John Higgins, Jr. And Louise Higgins",
+          "court": "Unknown Court",
+          "authorityId": "c0395c04-4d14-45cd-9997-aa9e2b057e9d",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "753 F.2d 1224",
+          "title": "United States v. John W. Downing",
+          "court": "Unknown Court",
+          "authorityId": "0e240966-deef-4c37-8905-968854d0330d",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "753 F.2d 262",
+          "title": "Cunningham v. City of McKeesport",
+          "court": "Unknown Court",
+          "authorityId": "e0921f8c-388b-4ea3-ba9a-b3a04fba436d",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "807 F.2d 49",
+          "title": "Cunningham v. City of McKeesport",
+          "court": "Unknown Court",
+          "authorityId": "651658a0-eec4-4b9e-81ad-cdc15e94dcf0",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "836 F.2d 1292",
+          "title": "Mattie Norman, Clara Marshall, Individually and on Behalf of All Others Similarly Situated v. The Housing Authority of the City of Montgomery",
+          "court": "Unknown Court",
+          "authorityId": "c51c75a5-7ce0-403a-8061-c870be7bc70f",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "840 F.2d 1124",
+          "title": "Bello v. Walker",
+          "court": "Unknown Court",
+          "authorityId": "98e8fce9-f8dd-4de6-a50a-db92921f2f39",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "868 F.2d 437",
+          "title": "William LATTIMORE, Plaintiff-Appellee, v. OMAN CONSTRUCTION, Defendant-Appellant, Bill White, Defendant",
+          "court": "Unknown Court",
+          "authorityId": "ae338016-4fda-4f4a-8d7a-b4ce49307f8a",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "874 F.2d 307",
+          "title": "Mr. And Mrs. Floyd Brock, Individually and as Next Friend of Rachel Brock, a Minor v. Merrell Dow Pharmaceuticals, Inc.",
+          "court": "Unknown Court",
+          "authorityId": "751b5d47-671e-4f58-8233-3c76302eb663",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "884 F.2d 166",
+          "title": "Mr. & Mrs. Floyd Brock, Individually and as Next Friend of Rachel Brock, a Minor v. Merrell Dow Pharmaceuticals, Inc.",
+          "court": "Unknown Court",
+          "authorityId": "007e13e6-e60a-4a03-b1db-9b95f12c740d",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "884 F.2d 713",
+          "title": "Bell v. United Princeton Properties, Inc.",
+          "court": "Unknown Court",
+          "authorityId": "ec70e7b7-3f42-40f4-a6be-ccd9dead3730",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "933 F.2d 1207",
+          "title": "Foster v. Chesapeake Insurance",
+          "court": "Unknown Court",
+          "authorityId": "c5ed4c5d-4f13-43ef-922b-bbd8b4301488",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "966 F.2d 112",
+          "title": "McDonald v. McCarthy",
+          "court": "Unknown Court",
+          "authorityId": "d1885108-65f4-4fa6-9e9f-e2a85df12ad5",
+          "clRequests": 2,
+          "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+          "laneName": "third_circuit",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        }
+      ]
+    },
+    "edpa": {
+      "requests": 0,
+      "cases": 0,
+      "oldResolves": 0,
+      "uniqueTargets": 0,
+      "acquired": []
+    },
+    "pa_supreme": {
+      "requests": 2,
+      "cases": 1,
+      "oldResolves": 8,
+      "uniqueTargets": 1,
+      "acquired": [
+        {
+          "citation": "106 A.3d 583",
+          "title": "Commonwealth v. Williams",
+          "court": "Unknown Court",
+          "authorityId": "59ed3d42-0316-4e4d-8aed-a4ba25c7f065",
+          "clRequests": 2,
+          "reason": "LANE3_pa_supreme_edges=3_sources=3",
+          "laneName": "pa_supreme",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        }
+      ]
+    },
+    "pa_superior": {
+      "requests": 2,
+      "cases": 1,
+      "oldResolves": 8,
+      "uniqueTargets": 1,
+      "acquired": [
+        {
+          "citation": "713 A.2d 81",
+          "title": "Commonwealth v. Grazier",
+          "court": "Unknown Court",
+          "authorityId": "3c7cd7b6-1fa7-43c2-a30f-8da81f13bfff",
+          "clRequests": 2,
+          "reason": "LANE4_pa_superior_high_demand_edges=3",
+          "laneName": "pa_superior",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        }
+      ]
+    },
+    "federal_reporter": {
+      "requests": 136,
+      "cases": 62,
+      "oldResolves": 401,
+      "uniqueTargets": 62,
+      "acquired": [
+        {
+          "citation": "45 F.3d 428",
+          "title": "United States v. Gracie L. Collier",
+          "court": "Unknown Court",
+          "authorityId": "aa499c33-4598-41e5-a1c4-61d02a0aad49",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=6_sources=6",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "220 F.3d 737",
+          "title": "David Rutlin v. Prime Succession, Inc. Kerley & Starks Funeral Homes, Inc., Jointly and Severally",
+          "court": "Unknown Court",
+          "authorityId": "22d6acb7-e620-45cd-b1c5-74cd2c681517",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=6_sources=6",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "190 F.3d 753",
+          "title": "William Russell Aiken v. City of Memphis, Tennessee",
+          "court": "Unknown Court",
+          "authorityId": "6b570e11-3f4a-44cf-b21c-33020670c30f",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=6_sources=6",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "968 F.2d 606",
+          "title": "Marshall Martin, Jr., on Behalf of Himself and All Other Employees of the Ohio Turnpike Commission Similarly Situated v. Ohio Turnpike Commission",
+          "court": "Unknown Court",
+          "authorityId": "ad6333e4-fa59-4f9a-982d-bb08e7fd9eeb",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=6_sources=6",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "8 F.4th 182",
+          "title": "Steven Vogt v. John Wetzel",
+          "court": "Unknown Court",
+          "authorityId": "b299be5b-a1ce-42eb-9711-0f94ef2b14b1",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "293 F.3d 103",
+          "title": "Norman Grayson v. Mayview State Hospital Allegheny County Jail Camp Hill Prison United States of America, Intervenor",
+          "court": "Unknown Court",
+          "authorityId": "3690c463-cb2a-416c-ad58-4c296d9190ac",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "113 F.4th 637",
+          "title": "United States v. Erick Williams",
+          "court": "Unknown Court",
+          "authorityId": "17dfb289-d2cb-4a7a-be71-6e52e216efa5",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=4_sources=4",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "472 F.2d 769",
+          "title": "Phyllis Lynch v. Frank W. Snepp",
+          "court": "Unknown Court",
+          "authorityId": "4c390f3d-fc78-471d-9066-760a0ebe4377",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "665 F.3d 768",
+          "title": "Lg Display Company v. Lisa Madigan",
+          "court": "Unknown Court",
+          "authorityId": "4ab4c64c-a6f7-4dc1-bb2b-bda5e8b22d21",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=4_sources=4",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "924 F.3d 718",
+          "title": "Glenda Westmoreland v. TWC Administration LLC",
+          "court": "Unknown Court",
+          "authorityId": "2726b779-7b92-4d90-9ffc-ed204ffcf518",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=4_sources=4",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "371 F.3d 865",
+          "title": "United States v. Henry A. Bostic",
+          "court": "Unknown Court",
+          "authorityId": "028394a7-913c-4d4e-9566-e111da7b3abb",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=4_sources=4",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "110 F.4th 1120",
+          "title": "United States v. Edell Jackson",
+          "court": "Unknown Court",
+          "authorityId": "b66eae7b-32e1-4cf6-8ad3-f18892d00c4b",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "103 F.4th 159",
+          "title": "Sharikov v. Philips Medical Systems MR, Inc.",
+          "court": "Unknown Court",
+          "authorityId": "8e8563d7-90f5-492e-9b64-481b8a2fe134",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "137 F.4th 944",
+          "title": "Yelp Inc. v. Paxton",
+          "court": "Unknown Court",
+          "authorityId": "67270017-4da8-4f72-8e18-a2b4dee50cc3",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "88 F.4th 1080",
+          "title": "Netflix v. Babin",
+          "court": "Unknown Court",
+          "authorityId": "d5fe02d7-89ca-4be7-a3c8-4d8936c3f995",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "160 F.3d 661",
+          "title": "United States v. Hernandez",
+          "court": "Unknown Court",
+          "authorityId": "0cecf3ac-3369-49f1-bf7d-af05f13461c3",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "97 F.3d 518",
+          "title": "UNITED STATES of America, Plaintiff-Appellee, v. John E. CALHOON, Defendant-Appellant",
+          "court": "Unknown Court",
+          "authorityId": "c57e19e5-dbb3-4a6f-a40b-6de2ed9f295a",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "97 F.3d 648",
+          "title": "United States of America, Appellee/cross-Appellant v. Alfred J. Rioux, Appellant/cross-Appellee",
+          "court": "Unknown Court",
+          "authorityId": "d8e2debf-439e-465e-9519-4503b7431780",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "495 F.3d 888",
+          "title": "Jones v. the St. Paul Companies, Inc.",
+          "court": "Unknown Court",
+          "authorityId": "35010c42-d5a9-42fb-af3a-e4f3e29168de",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "181 F.3d 1232",
+          "title": "United States v. Cook",
+          "court": "Unknown Court",
+          "authorityId": "6ef91e38-7a07-4664-a713-59639aec401b",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "146 F.3d 1338",
+          "title": "United States v. Mitchell",
+          "court": "Unknown Court",
+          "authorityId": "7bba2257-e3cc-4b6d-9d50-f5a969cfb6e8",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "192 F.3d 157",
+          "title": "United States v. LaFortune",
+          "court": "Unknown Court",
+          "authorityId": "ea3ac728-add7-4282-aee9-a99ca71c5a44",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "104 F.3d 377",
+          "title": "United States v. Opio Moore",
+          "court": "Unknown Court",
+          "authorityId": "6661703f-2eb0-4517-9df3-ace851fa9aee",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "118 F.3d 702",
+          "title": "United States v. Gilkey",
+          "court": "Unknown Court",
+          "authorityId": "9de6abb7-55af-41c5-9514-6e11e3bfc7f5",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "148 F.3d 1262",
+          "title": "Tannenbaum v. United States",
+          "court": "Unknown Court",
+          "authorityId": "d982ad04-02db-4236-ae54-44ef7c5b71f7",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "534 F.3d 1116",
+          "title": "Johnson v. Riverside Healthcare System, LP",
+          "court": "Unknown Court",
+          "authorityId": "00c6596a-5249-44b5-87fc-542bee3f7e93",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "169 F.3d 674",
+          "title": "United States v. Wooden",
+          "court": "Unknown Court",
+          "authorityId": "c2ec1027-dd7b-4322-aa2b-47c12160a434",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "572 F.3d 440",
+          "title": "Apex Digital, Inc. v. Sears, Roebuck & Co.",
+          "court": "Unknown Court",
+          "authorityId": "9b366aed-80d9-4348-a4d2-069cef6deaeb",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "251 F.3d 1279",
+          "title": "Navaratwam Kamalthas v. Immigration and Naturalization Service",
+          "court": "Unknown Court",
+          "authorityId": "cd8c5d4c-35ab-45b2-aaa1-ba4fe13762fe",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "17 F.3d 1531",
+          "title": "United States v. Rosa",
+          "court": "Unknown Court",
+          "authorityId": "5b19eb20-f408-412a-8e18-7cacd24e21af",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "20 F.3d 538",
+          "title": "United States v. Michael Lee Matthews and Robert G. Prater",
+          "court": "Unknown Court",
+          "authorityId": "a60ee186-6e50-40c0-8ea4-6517d10f0cbe",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "252 F.3d 986",
+          "title": "Glastetter v. Novartis Pharmaceuticals Corp.",
+          "court": "Unknown Court",
+          "authorityId": "ec54bf1b-f17d-4511-826d-f1705bb6bbc2",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "135 F.3d 478",
+          "title": "United States v. Charles Taylor",
+          "court": "Unknown Court",
+          "authorityId": "74ac4498-625b-454b-886f-27a89d98835b",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "32 F.3d 1512",
+          "title": "United States v. Keyvee Jones",
+          "court": "Unknown Court",
+          "authorityId": "360d2802-f29c-4396-b52e-c04aa255e7de",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "1 F.3d 1144",
+          "title": "United States v. William Kimmons, Howard Small",
+          "court": "Unknown Court",
+          "authorityId": "7ac0208a-8a48-4dc5-8259-6ca37a522050",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "625 F.3d 97",
+          "title": "Farina v. Nokia, Inc.",
+          "court": "Unknown Court",
+          "authorityId": "29be738f-875e-4391-b5b0-0671557f2992",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "631 F.3d 802",
+          "title": "United States v. Stokes",
+          "court": "Unknown Court",
+          "authorityId": "38115fcd-d81c-4e65-a286-888e344ee0cf",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "65 F.3d 932",
+          "title": "United States v. Luis Rodriguez",
+          "court": "Unknown Court",
+          "authorityId": "532cf139-d744-4ff6-a6c1-a9810af1598f",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "433 F.3d 273",
+          "title": "United States v. Martha Stewart and Peter Bacanovic",
+          "court": "Unknown Court",
+          "authorityId": "f0899ffd-b536-4336-b8d2-9bef941fe6e4",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "121 F.3d 628",
+          "title": "United States v. Orozco",
+          "court": "Unknown Court",
+          "authorityId": "736ba684-69f5-4450-8bdf-203f40299d9f",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "27 F.3d 511",
+          "title": "United States v. Shawn Joseph Pessefall, United States of America v. Lawrence Whittaker, United States of America v. Roy Vinson Rickman",
+          "court": "Unknown Court",
+          "authorityId": "f3d473d6-4dd8-4cb9-92df-76ebe8c7b607",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "44 F.3d 1271",
+          "title": "United States v. Jerry Washington and Herbert Edward James",
+          "court": "Unknown Court",
+          "authorityId": "b3e71dec-0250-41c9-95c4-c3761f33edf1",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "270 F.3d 536",
+          "title": "Midwestern Gas Transmission Company v. William D. McCarty",
+          "court": "Unknown Court",
+          "authorityId": "164c7cf7-3d09-4271-bc07-8e4d318ff04a",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "750 F.3d 1036",
+          "title": "City of Pomona v. Sqm North America Corporation",
+          "court": "Unknown Court",
+          "authorityId": "6c0350d5-c176-40e8-9a03-5281bdf9b857",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "760 F.3d 1165",
+          "title": "Allan Campbell v. Air Jamaica LTD",
+          "court": "Unknown Court",
+          "authorityId": "20717c41-d271-4149-b7a4-8faca41b6ea3",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "10 F.3d 554",
+          "title": "City of Timber Lake v. Cheyenne River Sioux Tribe",
+          "court": "Unknown Court",
+          "authorityId": "7bf694e3-041f-427e-a6b6-5a2c50ef36c5",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "86 F.3d 206",
+          "title": "United States v. Antonietti",
+          "court": "Unknown Court",
+          "authorityId": "19ed2265-3228-40b6-bbe9-184aa7d96d83",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "864 F.3d 650",
+          "title": "Wrenn v. District of Columbia",
+          "court": "Unknown Court",
+          "authorityId": "b44c7529-a9d0-48b5-b9b8-f60539c48dc7",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "280 F.3d 1217",
+          "title": "Gerald Ross Pizzuto, Jr. v. A.J. Arave, Warden",
+          "court": "Unknown Court",
+          "authorityId": "40f89f11-9ee5-4d12-a40e-6cfb49e0e6ad",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "16 F.3d 952",
+          "title": "United States v. Robert D. Elkins",
+          "court": "Unknown Court",
+          "authorityId": "e15bc405-f059-408d-86d1-38188a0b5261",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "885 F.3d 436",
+          "title": "United States v. Khalil Abu Rayyan",
+          "court": "Unknown Court",
+          "authorityId": "daae8fa8-be01-4992-b006-ebfebf8bd60e",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "106 F.3d 1118",
+          "title": "United States v. Jose P. Molina",
+          "court": "Unknown Court",
+          "authorityId": "4d3ae902-2dd5-457f-a234-10106d0bcf4a",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "931 F.2d 238",
+          "title": "United States v. Darryl Johnson",
+          "court": "Unknown Court",
+          "authorityId": "603322bc-ff68-45e1-a8a0-3b7852a2a4b9",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "950 F.2d 13",
+          "title": "James L. McCoy Administrator of the Electrical Workers Trust Funds, Etc. v. Massachusetts Institute of Technology",
+          "court": "Unknown Court",
+          "authorityId": "e05010cc-6ad0-4d91-ad8c-1d8f676f76c1",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "115 F.2d 690",
+          "title": "Nueslein v. District of Columbia",
+          "court": "Unknown Court",
+          "authorityId": "86a02d05-29b9-4b53-a409-1ca9ed572197",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "959 F.2d 1558",
+          "title": "Bonanni Ship Supply, Inc. v. United States",
+          "court": "Unknown Court",
+          "authorityId": "af12bd42-96d6-45a9-bb23-d664225216a5",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "965 F.2d 1001",
+          "title": "United States v. William Kimmons, Howard Small, United States of America v. Bruce Lee Berta",
+          "court": "Unknown Court",
+          "authorityId": "5b57c449-cc6e-4162-9f3b-786ccb408c1e",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "488 F.2d 714",
+          "title": "Johnson v. Georgia Highway Express, Inc.",
+          "court": "Unknown Court",
+          "authorityId": "10595cce-5b95-4d1f-b51e-9d6679baae98",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "981 F.2d 497",
+          "title": "United States v. George Rodgers",
+          "court": "Unknown Court",
+          "authorityId": "e002c5fd-76d9-481c-93e0-0942199ac5b5",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "985 F.2d 483",
+          "title": "United States v. Richard Lee Canterbury",
+          "court": "Unknown Court",
+          "authorityId": "19d9a98d-3d4c-4f3d-8aea-0c61abb2b4b4",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "184 F.2d 119",
+          "title": "Cooper v. Hutchinson",
+          "court": "Unknown Court",
+          "authorityId": "ab6d4ef2-04b0-4f4d-813f-71f3dac17762",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        },
+        {
+          "citation": "520 F.2d 650",
+          "title": "Samuel Parkinson, as Custodian for Andrew Parkinson v. April Industries, Inc., and Alex M. Parker",
+          "court": "Unknown Court",
+          "authorityId": "0579849b-f5c9-47bb-b041-a51703bcca64",
+          "clRequests": 2,
+          "reason": "LANE5_federal_reporter_edges=3_sources=3",
+          "laneName": "federal_reporter",
+          "benchmarkRelevant": false,
+          "status": "imported"
+        }
+      ]
+    },
+    "other_controlling": {
+      "requests": 0,
+      "cases": 0,
+      "oldResolves": 0,
+      "uniqueTargets": 0,
+      "acquired": []
+    }
+  },
+  "lastResolved": 8689,
+  "lastUnresolved": 49730,
+  "lastExtracted": 58419,
+  "lastCases": 4927,
+  "finishedAt": "2026-10-07T16:37:13.205Z",
+  "endSnapshot": {
+    "cases": 4927,
+    "authorities": 6282,
+    "extracted": 58419,
+    "resolved": 8689,
+    "unresolved": 49730,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0
+  }
+}

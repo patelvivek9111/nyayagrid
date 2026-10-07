@@ -1,0 +1,333 @@
+{
+  "ok": true,
+  "classification": "DAILY_HIGH_VALUE_COURTLISTENER_STRENGTHENING_BATCH2",
+  "status": "CORPUS_DAILY_BATCH2_COMPLETE",
+  "stopReason": "TARGET_QUEUE_EXHAUSTED",
+  "courtListener": {
+    "limitMin": 25,
+    "limitHour": 300,
+    "limitDay": 1400,
+    "remainingAtStart": {
+      "minute": 25,
+      "hour": 300,
+      "day": 1100
+    },
+    "safeBatchBudget": 270,
+    "priorProbe": 1,
+    "productiveRequests": 220,
+    "requestsActuallyUsed": 221,
+    "rateLimited429": 0,
+    "gateway502_504": 0,
+    "longWaitsOver5m": 0
+  },
+  "startSnapshot": {
+    "cases": 4825,
+    "authorities": 6180,
+    "extracted": 54585,
+    "resolved": 8016,
+    "unresolved": 46569,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0
+  },
+  "laneResults": {
+    "third_circuit": {
+      "requests": 79,
+      "cases": 38,
+      "oldResolves": 255
+    },
+    "edpa": {
+      "requests": 0,
+      "cases": 0,
+      "oldResolves": 0
+    },
+    "pa_supreme": {
+      "requests": 2,
+      "cases": 1,
+      "oldResolves": 8
+    },
+    "pa_superior": {
+      "requests": 2,
+      "cases": 1,
+      "oldResolves": 8
+    },
+    "federal_reporter": {
+      "requests": 136,
+      "cases": 62,
+      "oldResolves": 401
+    },
+    "other_controlling": {
+      "requests": 0,
+      "cases": 0,
+      "oldResolves": 0
+    }
+  },
+  "acquisition": {
+    "casesAdded": 102,
+    "controllingAdded": 102,
+    "benchmarkRelevantAdded": 1,
+    "uniqueMissingTargetsEliminated": 102
+  },
+  "citationValue": {
+    "oldUnresolvedResolved": 673,
+    "newEdges": 3834,
+    "netUnresolvedChange": 3161,
+    "newUnresolved": 3834
+  },
+  "efficiency": {
+    "casesPerCl": 0.464,
+    "oldResolvesPerCl": 3.059,
+    "uniqueTargetsPerCl": 0.464,
+    "controllingPerCl": 0.464,
+    "benchmarkPerCl": 0.005
+  },
+  "corpusHealth": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "status": "GREEN"
+  },
+  "endSnapshot": {
+    "cases": 4927,
+    "authorities": 6282,
+    "extracted": 58419,
+    "resolved": 8689,
+    "unresolved": 49730,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0
+  },
+  "highValueHandoff": [
+    {
+      "citation": "919 F.3d 437",
+      "title": "Rickey I. Kanter v. William P. Barr",
+      "court": "Unknown Court",
+      "authorityId": "fda43910-ea77-47e1-b306-10724b79d0a6",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=6_sources=6",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "126 F.4th 215",
+      "title": "United States v. Aqudre Quailes",
+      "court": "Unknown Court",
+      "authorityId": "4a8fe408-1a98-4534-94e4-5f3a7d678a3c",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": true,
+      "status": "imported"
+    },
+    {
+      "citation": "484 F.2d 820",
+      "title": "Robert G. Vaughn v. Bernard Rosen, Executive Director, United States Civil Service Commission",
+      "court": "Unknown Court",
+      "authorityId": "df2bc325-6422-45a2-bd8d-5ee38135dbe7",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=5_sources=5",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "452 F.3d 256",
+      "title": "Kathleen Buck v. The Hampton Township School District Lawrence C. Korchnak, Dr",
+      "court": "Unknown Court",
+      "authorityId": "9db69536-da63-44fd-bc8a-96873383a118",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "643 F.3d 77",
+      "title": "Warren General Hospital v. Amgen Inc.",
+      "court": "Unknown Court",
+      "authorityId": "21b0134c-1083-4610-850e-f8900713ccae",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "75 F.3d 834",
+      "title": "Focus v. Allegheny County Court of Common Pleas",
+      "court": "Unknown Court",
+      "authorityId": "e459a768-3a8d-457b-9e55-919b21702b56",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "109 F.3d 156",
+      "title": "City of Erie v. Guaranty National Insurance",
+      "court": "Unknown Court",
+      "authorityId": "66ee1199-ae6d-4f5d-8c66-1ce42bd24cc6",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "111 F.4th 266",
+      "title": "United States v. Diontai Moore",
+      "court": "Unknown Court",
+      "authorityId": "784dc1e3-a8fa-4e4b-9aab-7ed8e01cfa58",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "86 F.4th 532",
+      "title": "United States v. Bruce Stewart",
+      "court": "Unknown Court",
+      "authorityId": "e9df24cd-8e8a-4a4f-bb37-3f20098a9f89",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=3_sources=3",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "998 F.2d 1224",
+      "title": "Petruzzi's IGA Supermarkets, Inc. v. Darling-Delaware Co.",
+      "court": "Unknown Court",
+      "authorityId": "f4d8d245-3057-4236-bc62-9c479081e164",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "137 F.4th 743",
+      "title": "United States v. Steven Duarte",
+      "court": "Unknown Court",
+      "authorityId": "73344775-5149-4367-95b2-7767e789758f",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "4 F.3d 57",
+      "title": "Garcia v. Island Program Designer, Inc.",
+      "court": "Unknown Court",
+      "authorityId": "53200f9c-c034-4352-b54e-1309ee596c72",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "605 F.3d 223",
+      "title": "Mayer v. Belichick",
+      "court": "Unknown Court",
+      "authorityId": "8df50398-a680-4b37-9fcd-d75baf039650",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "629 F.3d 121",
+      "title": "Santiago v. Warminster Township",
+      "court": "Unknown Court",
+      "authorityId": "6ed15e24-b783-4637-bef5-215003fcf461",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "649 F.3d 258",
+      "title": "United States v. Hill",
+      "court": "Unknown Court",
+      "authorityId": "705b3197-52ab-4884-a05f-714e29069c4b",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "660 F.3d 1228",
+      "title": "Koch v. City of Del City",
+      "court": "Unknown Court",
+      "authorityId": "969545ce-7c44-41d4-bb75-19d14c0d7555",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "689 F.3d 301",
+      "title": "United States v. Khayree Harrison",
+      "court": "Unknown Court",
+      "authorityId": "3cf07461-657a-48be-8c8f-036c320092fb",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "71 F.3d 819",
+      "title": "United States v. Augustin Gonzalez",
+      "court": "Unknown Court",
+      "authorityId": "ee6babd2-d43c-43fd-bae1-c97826d3e8c4",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "75 F.3d 564",
+      "title": "Utah Women's Clinic, Inc. v. Leavitt",
+      "court": "Unknown Court",
+      "authorityId": "82f3c45b-2608-4bd8-9e1b-703e02f96461",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "756 F.3d 1208",
+      "title": "Varnell v. Dora Consolidated School District",
+      "court": "Unknown Court",
+      "authorityId": "4e8e68bf-0209-427b-b7a3-72abd1f32547",
+      "clRequests": 2,
+      "reason": "LANE1_ca3_high_demand_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    }
+  ],
+  "finalResolve": {
+    "resolvedAfter": 8689,
+    "newResolved": 0
+  },
+  "batches": 6
+}

@@ -280,11 +280,18 @@ async function resolveClusterViaLookup(apiKey, target, counters) {
   return { ok: false, reason: "no_verified_cluster_match" };
 }
 
+function clusterHasCourt(cluster) {
+  if (!cluster || typeof cluster !== "object") return false;
+  const raw = cluster.court_id || cluster.court || "";
+  return Boolean(String(raw).trim());
+}
+
 async function fetchOpinionAndCluster(apiKey, seed, target, counters) {
   let cluster = seed.cluster || null;
   let clusterId = seed.clusterId || cluster?.id || null;
 
-  if (!cluster && clusterId) {
+  // Citation-lookup clusters are often stubs without court; refresh when court missing.
+  if ((!cluster || !clusterHasCourt(cluster)) && clusterId) {
     const cRes = await clFetch(`${CL_BASE}/clusters/${clusterId}/`, apiKey, counters);
     if (cRes.budgetExhausted) return { ok: false, reason: "budget_exhausted" };
     if (cRes.status === 429) return { ok: false, reason: "rate_limited" };
@@ -378,6 +385,8 @@ async function persistOpinion(sql, opinion, apiKey) {
     sourceClass: "PRIMARY_PUBLIC_REPOSITORY",
     adapter: "courtlistener-cite-demand-multi",
     clCourt: mapped.clCourt,
+    clusterId: opinion.clusterId || null,
+    opinionId: opinion.opinionId || null,
     retrievedAt: opinion.retrievedAt,
     citationStatus: "reported",
     a2TargetCitation: opinion.targetCitation,
