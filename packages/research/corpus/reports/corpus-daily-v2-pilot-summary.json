@@ -1,0 +1,16 @@
+﻿{
+  "ok": true,
+  "classification": "CORPUS_DAILY_V2_PILOT",
+  "casesAdded": 3,
+  "clRequests": 9,
+  "acquired": [
+    {"citation": "344 U.S. 183", "title": "Wieman v. Updegraff"},
+    {"citation": "395 U.S. 337", "title": "Sniadach v. Family Finance Corp. of Bay View"},
+    {"citation": "316 U.S. 455", "title": "Betts v. Brady"}
+  ],
+  "deferred": [
+    {"citation": "573 U.S. 149", "reason": "no_verified_cluster_match"},
+    {"citation": "302 U.S. 633", "reason": "empty_opinion_text"}
+  ],
+  "postResolve": {"resolvedAfter": 6352, "newResolved": 31, "extracted": 50728}
+}

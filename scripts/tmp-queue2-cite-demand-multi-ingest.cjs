@@ -502,13 +502,16 @@ async function main() {
   const clKey = process.env.COURTLISTENER_API_KEY?.trim();
   const databaseUrl = process.env.DATABASE_URL?.trim();
   const openaiKey = process.env.OPENAI_API_KEY?.trim();
+  // CORPUS_DAILY_V2 raises hard caps for demand-driven daily strengthening batches.
+  const hardMaxCalls = process.env.CORPUS_DAILY_V2 === "1" ? 120 : 15;
+  const hardMaxAcquire = process.env.CORPUS_DAILY_V2 === "1" ? 40 : 5;
   const maxCalls = Math.min(
     Math.max(Number.parseInt(process.argv[3] || process.env.A2_MAX_PRODUCTIVE_CALLS || "15", 10) || 15, 1),
-    15,
+    hardMaxCalls,
   );
   const acquireLimit = Math.min(
     Math.max(Number.parseInt(process.argv[4] || process.env.A2_ACQUIRE_LIMIT || "5", 10) || 5, 1),
-    5,
+    hardMaxAcquire,
   );
   const citations = String(process.argv[2] || process.env.A2_CITATIONS || "")
     .split("|")

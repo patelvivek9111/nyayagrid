@@ -1,0 +1,3248 @@
+{
+  "classification": "CORPUS_DAILY_V2_RUN",
+  "startedAt": "2026-10-07T14:05:25.153Z",
+  "safeDayBudget": 1000,
+  "batchCl": 75,
+  "batchAcquire": 25,
+  "clRateMs": 4000,
+  "startSnapshot": {
+    "cases": 4683,
+    "authorities": 6038,
+    "extracted": 50728,
+    "resolved": 6352,
+    "unresolved": 44376,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "silentCurrent": -1,
+    "presentTargetDefects": -1
+  },
+  "startResolvedAfterIntegrity": 6352,
+  "pointer": 150,
+  "stopReason": "429",
+  "metrics": {
+    "requestsUsed": 292,
+    "casesAdded": 142,
+    "oldResolves": 1664,
+    "uniqueTargetsEliminated": 142,
+    "newEdges": 3857,
+    "newUnresolved": 3857,
+    "netUnresolvedChange": 2193,
+    "controllingAdded": 142,
+    "benchmarkRelevantAdded": 11,
+    "byCourt": {
+      "scotus": 137,
+      "federal_circuit": 2,
+      "district": 0,
+      "state_supreme": 3,
+      "state_intermediate": 0,
+      "historical": 0,
+      "other": 0
+    },
+    "rateLimited": 1,
+    "gateway502_504": 0,
+    "longWaitsOver5m": 0,
+    "acquired": [
+      {
+        "citation": "389 U.S. 241",
+        "title": "Zwickler v. Koota",
+        "court": "Supreme Court of the United States",
+        "authorityId": "c4ee97bf-0c15-4a48-9f5d-46249de9ae4f",
+        "clRequests": 2,
+        "reason": "LANE1_high_demand_edges=9",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "420 U.S. 103",
+        "title": "Gerstein v. Pugh",
+        "court": "Supreme Court of the United States",
+        "authorityId": "b75d4df4-8428-45c7-a1e4-a098a080439c",
+        "clRequests": 2,
+        "reason": "LANE1_high_demand_edges=9",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "410 U.S. 284",
+        "title": "Chambers v. Mississippi",
+        "court": "Supreme Court of the United States",
+        "authorityId": "95a777f4-ea13-405a-89e0-dc70a6b976be",
+        "clRequests": 2,
+        "reason": "LANE1_high_demand_edges=9",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "266 S.E.2d 114",
+        "title": "In re R.J.M.",
+        "court": "Unknown Court",
+        "authorityId": "9120a736-8495-4fe5-9f4e-a814f205c802",
+        "clRequests": 2,
+        "reason": "LANE1_high_demand_edges=11",
+        "bucket": "state_supreme",
+        "status": "imported"
+      },
+      {
+        "citation": "490 U.S. 1",
+        "title": "United States v. Sokolow",
+        "court": "Supreme Court of the United States",
+        "authorityId": "d97fe414-1dec-49a9-a6b8-0cd4c8d46c74",
+        "clRequests": 2,
+        "reason": "LANE1_high_demand_edges=8",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "273 U.S. 510",
+        "title": "Tumey v. Ohio",
+        "court": "Supreme Court of the United States",
+        "authorityId": "448e9fa8-b2d5-40f5-b87e-2e1eaf094b8a",
+        "clRequests": 2,
+        "reason": "LANE1_high_demand_edges=8",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "375 U.S. 411",
+        "title": "England v. Louisiana State Board of Medical Examiners",
+        "court": "Supreme Court of the United States",
+        "authorityId": "407ddab5-5c8f-4e96-b021-4cd2e99d0799",
+        "clRequests": 2,
+        "reason": "LANE1_high_demand_edges=8",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "362 U.S. 199",
+        "title": "Thompson v. City of Louisville",
+        "court": "Supreme Court of the United States",
+        "authorityId": "3560f8bf-73a6-4b3b-b57d-fb1c67063265",
+        "clRequests": 2,
+        "reason": "LANE1_high_demand_edges=8",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "197 U.S. 11",
+        "title": "Jacobson v. Massachusetts",
+        "court": "Supreme Court of the United States",
+        "authorityId": "7b8e37b1-e6e8-4e33-b887-190cbb6a279f",
+        "clRequests": 2,
+        "reason": "LANE1_high_demand_edges=8",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "323 U.S. 126",
+        "title": "Armour & Co. v. Wantock",
+        "court": "Supreme Court of the United States",
+        "authorityId": "927a5bfb-fab9-4f97-b261-a4e302fa3999",
+        "clRequests": 2,
+        "reason": "LANE1_high_demand_edges=8",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "339 U.S. 382",
+        "title": "American Communications Assn. v. Douds",
+        "court": "Supreme Court of the United States",
+        "authorityId": "5ed3a9a0-0512-4856-8672-6d4cd2db3a6d",
+        "clRequests": 2,
+        "reason": "LANE1_high_demand_edges=8",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "303 U.S. 444",
+        "title": "Lovell v. City of Griffin",
+        "court": "Supreme Court of the United States",
+        "authorityId": "928fc0d3-d8cf-41a1-b47f-a05a6b0342f3",
+        "clRequests": 2,
+        "reason": "LANE1_high_demand_edges=8",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "712 S.E.2d 55",
+        "title": "In Re Kristin Y.",
+        "court": "Unknown Court",
+        "authorityId": "e81d4390-4a60-4637-85f8-cfde086f97a2",
+        "clRequests": 2,
+        "reason": "LANE1_high_demand_edges=10",
+        "bucket": "state_supreme",
+        "status": "imported"
+      },
+      {
+        "citation": "461 S.E.2d 163",
+        "title": "State v. Guthrie",
+        "court": "Unknown Court",
+        "authorityId": "e7e2adda-3683-4753-a0f0-f2755e4be638",
+        "clRequests": 2,
+        "reason": "LANE1_high_demand_edges=9",
+        "bucket": "state_supreme",
+        "status": "imported"
+      },
+      {
+        "citation": "388 U.S. 218",
+        "title": "United States v. Wade",
+        "court": "Supreme Court of the United States",
+        "authorityId": "9e489232-9614-4b4e-80ca-66e704ccdb59",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "460 U.S. 276",
+        "title": "United States v. Knotts",
+        "court": "Supreme Court of the United States",
+        "authorityId": "645aaf63-d864-415e-940c-845c069594ed",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "468 U.S. 981",
+        "title": "Massachusetts v. Sheppard",
+        "court": "Supreme Court of the United States",
+        "authorityId": "c8145800-fae4-439d-892c-799e3695e367",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "124 F.4th 218",
+        "title": "Bryan Range v. Attorney General United States",
+        "court": "Unknown Court",
+        "authorityId": "01a9ae13-d641-472d-a7e0-383c7234a6a2",
+        "clRequests": 2,
+        "reason": "LANE2_controlling_circuit_edges=6",
+        "bucket": "federal_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "499 U.S. 621",
+        "title": "California v. Hodari D.",
+        "court": "Supreme Court of the United States",
+        "authorityId": "9fdc0439-ce59-4976-a4a5-8f7906d5a59f",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "453 U.S. 454",
+        "title": "New York v. Belton",
+        "court": "Supreme Court of the United States",
+        "authorityId": "d599b341-4851-4411-9fb0-aa13a79c6b5b",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=4",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "514 U.S. 927",
+        "title": "Wilson v. Arkansas",
+        "court": "Supreme Court of the United States",
+        "authorityId": "1a339843-b09d-4b74-9ab8-26f0b7c54788",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=4",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "511 U.S. 825",
+        "title": "Farmer v. Brennan",
+        "court": "Supreme Court of the United States",
+        "authorityId": "45d5f7f4-f485-4c2e-9fea-86b878ff1172",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "256 U.S. 465",
+        "title": "Burdeau v. McDowell",
+        "court": "Supreme Court of the United States",
+        "authorityId": "1c0646e5-6608-45aa-a62b-1e974d680c22",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "459 U.S. 553",
+        "title": "South Dakota v. Neville",
+        "court": "Supreme Court of the United States",
+        "authorityId": "f4856154-78b7-4105-97eb-4ef2fda328ac",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "465 U.S. 168",
+        "title": "McKaskle v. Wiggins",
+        "court": "Supreme Court of the United States",
+        "authorityId": "c7bebccd-9e51-4c90-befd-aa785f2a0b40",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "558 U.S. 310",
+        "title": "Citizens United v. Federal Election Commission",
+        "court": "Supreme Court of the United States",
+        "authorityId": "2b757382-cd9d-4972-adac-4ed048f36d84",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "386 U.S. 213",
+        "title": "Klopfer v. North Carolina",
+        "court": "Supreme Court of the United States",
+        "authorityId": "0b31a06a-2e44-45e1-855c-bbcbd83bbe77",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "429 U.S. 545",
+        "title": "Weatherford v. Bursey",
+        "court": "Supreme Court of the United States",
+        "authorityId": "3fcf1785-b0c1-4724-9523-adae049048c5",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "393 U.S. 503",
+        "title": "Tinker v. Des Moines Independent Community School District",
+        "court": "Supreme Court of the United States",
+        "authorityId": "bce271a1-1c3e-4304-8cb1-3fb795085f6e",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "386 U.S. 58",
+        "title": "Cooper v. California",
+        "court": "Supreme Court of the United States",
+        "authorityId": "c1f18e02-1973-4e2b-a9d9-5ccfa4df0d38",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "323 U.S. 516",
+        "title": "Thomas v. Collins",
+        "court": "Supreme Court of the United States",
+        "authorityId": "585c3d8a-0c45-4b07-a734-632027d087fd",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "306 U.S. 354",
+        "title": "Pierre v. Louisiana",
+        "court": "Supreme Court of the United States",
+        "authorityId": "6f9c4c01-e433-4df6-a3a9-16a79526f17f",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "322 U.S. 143",
+        "title": "Ashcraft v. Tennessee",
+        "court": "Supreme Court of the United States",
+        "authorityId": "c461b25c-c688-4c21-ab79-7f3796f113eb",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "117 U.S. 241",
+        "title": "Ex Parte Royall",
+        "court": "Supreme Court of the United States",
+        "authorityId": "0bb03b50-6b94-4c9f-b484-c8f30dd11d83",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "360 U.S. 474",
+        "title": "Greene v. McElroy",
+        "court": "Supreme Court of the United States",
+        "authorityId": "a1bae3b7-a41a-4a52-a6e6-c4618df81b7b",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "442 U.S. 1",
+        "title": "Greenholtz v. Inmates of the Nebraska Penal & Correctional Complex",
+        "court": "Supreme Court of the United States",
+        "authorityId": "1ae950ea-07ff-4d3f-a24a-8d7b4fa830aa",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "301 U.S. 242",
+        "title": "Herndon v. Lowry",
+        "court": "Supreme Court of the United States",
+        "authorityId": "df1f8253-1b23-4dbd-990b-a19862a4714f",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=7",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "562 U.S. 443",
+        "title": "Snyder v. Phelps",
+        "court": "Supreme Court of the United States",
+        "authorityId": "e00d99db-9342-49b3-ae2d-601aadcc5f55",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=3",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "569 U.S. 141",
+        "title": "Missouri v. McNeely",
+        "court": "Supreme Court of the United States",
+        "authorityId": "140a5a39-ad74-428a-b113-b7ca86b22db6",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=3",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "579 U.S. 438",
+        "title": "Birchfield v. N. Dakota. William Robert Bernard",
+        "court": "Supreme Court of the United States",
+        "authorityId": "bebcd5a1-0346-4a98-bf1a-edb3eb475db6",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=3",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "442 U.S. 200",
+        "title": "Dunaway v. New York",
+        "court": "Supreme Court of the United States",
+        "authorityId": "4eb46489-b199-4da4-b6df-a0e4d901c7b8",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=3",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "396 U.S. 320",
+        "title": "Carter v. Jury Comm'n of Greene Cty.",
+        "court": "Supreme Court of the United States",
+        "authorityId": "9b33c48f-c078-44b8-a882-fc0c3c5c85c2",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "95 U.S. 714",
+        "title": "Pennoyer v. Neff",
+        "court": "Supreme Court of the United States",
+        "authorityId": "712153b1-c16a-4695-bd73-01d637563673",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "462 U.S. 696",
+        "title": "United States v. Place",
+        "court": "Supreme Court of the United States",
+        "authorityId": "62ac4138-8340-4136-961d-7eb567c1373a",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "463 U.S. 1032",
+        "title": "Michigan v. Long",
+        "court": "Supreme Court of the United States",
+        "authorityId": "0e48118b-9a79-4580-85f5-507d42156254",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "602 U.S. 779",
+        "title": "Smith v. Arizona",
+        "court": "Supreme Court of the United States",
+        "authorityId": "658aa9d3-265c-4d86-8d4c-4e84d7b373f2",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "501 U.S. 722",
+        "title": "Coleman v. Thompson",
+        "court": "Supreme Court of the United States",
+        "authorityId": "e660c040-fb80-4841-be9a-05917fb7c66e",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "284 U.S. 299",
+        "title": "Blockburger v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "002c1d58-41fa-4ffe-84f7-fe0027610a16",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "391 U.S. 563",
+        "title": "Pickering v. Board of Ed. of Township High School Dist. 205, Will Cty.",
+        "court": "Supreme Court of the United States",
+        "authorityId": "914c5a24-c390-41a7-92dd-eba81f42fda4",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "505 U.S. 377",
+        "title": "R. A. v. v. City of St. Paul",
+        "court": "Supreme Court of the United States",
+        "authorityId": "54dbb544-2fec-4a00-b096-e9dbfa75a24b",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "373 U.S. 1",
+        "title": "Sanders v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "1af3d360-4f16-4ea3-b58d-7e4700c28896",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "512 U.S. 477",
+        "title": "Heck v. Humphrey",
+        "court": "Supreme Court of the United States",
+        "authorityId": "dc45e75a-9e40-4b50-b117-51638950de64",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "443 U.S. 47",
+        "title": "Brown v. Texas",
+        "court": "Supreme Court of the United States",
+        "authorityId": "05733b20-c7da-4e02-b166-4616e26e6b49",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "410 U.S. 179",
+        "title": "Doe v. Bolton",
+        "court": "Supreme Court of the United States",
+        "authorityId": "0ba49b13-d1e4-428a-ae16-2f58b753a8c2",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "308 U.S. 287",
+        "title": "Bruno v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "f194060c-8ea4-47fc-8e91-8d9a3bffe1d1",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "505 U.S. 504",
+        "title": "Cipollone v. Liggett Group, Inc.",
+        "court": "Supreme Court of the United States",
+        "authorityId": "56dfc32a-d839-4cab-9913-19980761b48e",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "267 U.S. 498",
+        "title": "Steele v. United States No. 1",
+        "court": "Supreme Court of the United States",
+        "authorityId": "a964900b-18d3-416d-879b-daa733c8e949",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "300 U.S. 227",
+        "title": "Aetna Life Insurance v. Haworth",
+        "court": "Supreme Court of the United States",
+        "authorityId": "ef4ae706-6e82-4c58-8369-86669476de2d",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "406 U.S. 498",
+        "title": "Lake Carriers' Assn. v. MacMullan",
+        "court": "Supreme Court of the United States",
+        "authorityId": "db55597c-f121-4e43-91e0-6855eda42f8b",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "103 U.S. 370",
+        "title": "Neal v. Delaware",
+        "court": "Supreme Court of the United States",
+        "authorityId": "a303e18e-4eec-4769-b49c-ea69c82fba47",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "350 U.S. 551",
+        "title": "Slochower v. Board of Higher Ed. of New York City",
+        "court": "Supreme Court of the United States",
+        "authorityId": "6da95539-a1f2-453f-b7df-6388a8bc96e6",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "411 U.S. 1",
+        "title": "San Antonio Independent School District v. Rodriguez",
+        "court": "Supreme Court of the United States",
+        "authorityId": "c60ba677-eb96-4c0b-b93d-1bc560e2b5ee",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "250 U.S. 616",
+        "title": "Abrams v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "07b0a280-3878-442a-a1af-a994977cb3a2",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "378 U.S. 478",
+        "title": "Escobedo v. Illinois",
+        "court": "Supreme Court of the United States",
+        "authorityId": "9949e4ef-84f0-440c-b41b-707840146cd3",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "178 U.S. 458",
+        "title": "Motes v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "b45e886f-6682-4ee5-b13e-f761666b7327",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "380 U.S. 528",
+        "title": "Harman v. Forssenius",
+        "court": "Supreme Court of the United States",
+        "authorityId": "d3508925-1b6c-4406-b856-5677b81e1475",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "341 U.S. 494",
+        "title": "Dennis v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "65f4929d-2a39-4ccc-a6b4-16eb1196e647",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "598 U.S. 631",
+        "title": "Tyler v. Hennepin County",
+        "court": "Supreme Court of the United States",
+        "authorityId": "3f09bdef-26fb-469d-8c37-784d81f783cf",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "572 U.S. 393",
+        "title": "Prado Navarette v. California",
+        "court": "Supreme Court of the United States",
+        "authorityId": "e5aabaab-d848-48f7-9c13-6b4fff2a73cf",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "458 U.S. 858",
+        "title": "United States v. Valenzuela-Bernal",
+        "court": "Supreme Court of the United States",
+        "authorityId": "92d2e442-2268-4eda-84c4-c91942d0a87d",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "422 U.S. 873",
+        "title": "United States v. Brignoni-Ponce",
+        "court": "Supreme Court of the United States",
+        "authorityId": "028a6fef-c9a5-43e6-845b-07bc5125d72f",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "314 U.S. 252",
+        "title": "Bridges v. California",
+        "court": "Supreme Court of the United States",
+        "authorityId": "9b8a03ec-3b85-4644-a6a4-1f22d58e6aa1",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "458 U.S. 782",
+        "title": "Enmund v. Florida",
+        "court": "Supreme Court of the United States",
+        "authorityId": "a79a79fc-2e75-4bec-a9b3-91cc2fe2fdce",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "407 U.S. 225",
+        "title": "Mitchum v. Foster",
+        "court": "Supreme Court of the United States",
+        "authorityId": "84d68f36-21fc-48a4-8971-2b606b675816",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "384 U.S. 1",
+        "title": "Brookhart v. Janis",
+        "court": "Supreme Court of the United States",
+        "authorityId": "e5e02353-8fb5-41b8-9f93-8ba31a3e7557",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "557 U.S. 305",
+        "title": "Melendez-Diaz v. Massachusetts",
+        "court": "Supreme Court of the United States",
+        "authorityId": "33ba22e1-b98e-49a8-85dd-da83455b4d1d",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "143 U.S. 339",
+        "title": "Chicago & Grand Trunk Railway Co. v. Wellman",
+        "court": "Supreme Court of the United States",
+        "authorityId": "14dab2e0-db85-4670-949d-387ec694a0c2",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "361 U.S. 199",
+        "title": "Blackburn v. Alabama",
+        "court": "Supreme Court of the United States",
+        "authorityId": "13cc4b18-8436-4b7e-a0bf-2bd7686a2657",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "392 U.S. 40",
+        "title": "Sibron v. New York",
+        "court": "Supreme Court of the United States",
+        "authorityId": "30581ed4-202d-4e37-addd-25af677ae6b7",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "441 U.S. 91",
+        "title": "Gladstone, Realtors v. Village of Bellwood",
+        "court": "Supreme Court of the United States",
+        "authorityId": "248fb5c5-1fb9-4034-8921-1d3cc5934720",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "113 U.S. 33",
+        "title": "Liverpool, New York & Philadelphia Steamship Co. v. Commissioners of Emigration",
+        "court": "Supreme Court of the United States",
+        "authorityId": "cfec6f47-f0b6-4838-9664-db0588f673d7",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "360 U.S. 315",
+        "title": "Spano v. New York",
+        "court": "Supreme Court of the United States",
+        "authorityId": "c5339bb7-9e12-4dbf-add8-c91ff0cf1af7",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "218 U.S. 245",
+        "title": "Holt v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "7b6cc3e4-aea0-4238-b718-7ae8a7858bfb",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "294 U.S. 587",
+        "title": "Norris v. Alabama",
+        "court": "Supreme Court of the United States",
+        "authorityId": "6568590a-1d9d-4c89-98ca-3898f8a9fa84",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "445 U.S. 263",
+        "title": "Rummel v. Estelle",
+        "court": "Supreme Court of the United States",
+        "authorityId": "5fe1dc28-856a-43e2-8d3b-80da70f9bf18",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "274 U.S. 380",
+        "title": "Fiske v. Kansas",
+        "court": "Supreme Court of the United States",
+        "authorityId": "075b55b9-36b6-4b3c-a8a5-58f8c893bbf7",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "395 U.S. 444",
+        "title": "Brandenburg v. Ohio",
+        "court": "Supreme Court of the United States",
+        "authorityId": "e44fa411-bea7-41fa-8b59-19a54ed18af6",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "332 U.S. 708",
+        "title": "Von Moltke v. Gillies",
+        "court": "Supreme Court of the United States",
+        "authorityId": "eebd11ae-1081-41c5-a7e1-a049dc4ea947",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "430 U.S. 387",
+        "title": "Brewer v. Williams",
+        "court": "Supreme Court of the United States",
+        "authorityId": "506d9dc3-3cef-4e37-bed7-aaef817c84d7",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "420 U.S. 714",
+        "title": "Oregon v. Hass",
+        "court": "Supreme Court of the United States",
+        "authorityId": "7edc7fd4-e889-419d-aef9-eefbde9251b3",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "444 U.S. 555",
+        "title": "Ford Motor Credit Co. v. Milhollin",
+        "court": "Supreme Court of the United States",
+        "authorityId": "cc7d60d6-0f3a-4ba5-a335-040754ca56a4",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "393 U.S. 97",
+        "title": "Epperson v. Arkansas",
+        "court": "Supreme Court of the United States",
+        "authorityId": "a15f5c59-9919-4eb8-aeff-3ba8b7ee0518",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "316 U.S. 129",
+        "title": "Goldman v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "ba201fef-d361-4b7e-86e6-acd5b320cbd1",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "446 U.S. 335",
+        "title": "Cuyler v. Sullivan",
+        "court": "Supreme Court of the United States",
+        "authorityId": "1abaa568-2556-4f58-ae31-739cedbcff6c",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "312 U.S. 270",
+        "title": "Maryland Casualty Co. v. Pacific Coal & Oil Co.",
+        "court": "Supreme Court of the United States",
+        "authorityId": "0fb079a0-0258-4fda-b613-502cabcfaed5",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "401 U.S. 66",
+        "title": "SAMUELS Et Al. v. MACKELL, DISTRICT ATTORNEY OF QUEENS COUNTY, Et Al.",
+        "court": "Supreme Court of the United States",
+        "authorityId": "315e4a73-538d-4804-9fd3-7d281cc8ead7",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=6",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "46 F.3d 1151",
+        "title": "Chidi Onwuneme v. Immigration & Naturalization Service",
+        "court": "Unknown Court",
+        "authorityId": "437371e9-d94a-4df6-a8c4-77683a6e0fd0",
+        "clRequests": 2,
+        "reason": "LANE2_controlling_circuit_edges=7",
+        "bucket": "federal_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "328 U.S. 582",
+        "title": "Davis v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "efc39520-f6e5-4268-8177-2bfaad841376",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "506 U.S. 56",
+        "title": "Soldal v. Cook County",
+        "court": "Supreme Court of the United States",
+        "authorityId": "da8b77c0-840f-4f5a-9cce-1827bf5cbed9",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "394 U.S. 244",
+        "title": "Desist v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "7347d5e4-10a1-4960-8856-0ecac0ee5e67",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "437 U.S. 463",
+        "title": "Coopers & Lybrand v. Livesay",
+        "court": "Supreme Court of the United States",
+        "authorityId": "73c7b413-2c25-4020-91bf-720fa90a29d0",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "385 U.S. 554",
+        "title": "Spencer v. Texas",
+        "court": "Supreme Court of the United States",
+        "authorityId": "c6984cda-15fa-4fad-b269-2c7f95186bb3",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "438 U.S. 478",
+        "title": "Butz v. Economou",
+        "court": "Supreme Court of the United States",
+        "authorityId": "3f4c770a-7d95-43c6-a769-fcfc087f6193",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "269 U.S. 385",
+        "title": "Connally v. General Construction Co.",
+        "court": "Supreme Court of the United States",
+        "authorityId": "8c8412b1-45bb-470c-b879-05208d42524a",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "331 U.S. 549",
+        "title": "Rescue Army v. Municipal Court of Los Angeles",
+        "court": "Supreme Court of the United States",
+        "authorityId": "d52a228d-57eb-45e3-9d91-127ab5190105",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "385 U.S. 589",
+        "title": "Keyishian v. Board of Regents of Univ. of State of NY",
+        "court": "Supreme Court of the United States",
+        "authorityId": "19c92296-6f35-4eef-95cb-b839d5ce7765",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "441 U.S. 380",
+        "title": "Caban v. Mohammed",
+        "court": "Supreme Court of the United States",
+        "authorityId": "da5a1a8b-9e0c-4399-9a98-53fe6bf14135",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "408 U.S. 501",
+        "title": "United States v. Brewster",
+        "court": "Supreme Court of the United States",
+        "authorityId": "3e52bfdd-3d9e-4782-9329-15087109e540",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "442 U.S. 510",
+        "title": "Sandstrom v. Montana",
+        "court": "Supreme Court of the United States",
+        "authorityId": "8228a332-454b-4b0b-897a-952301ac3fb4",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "100 U.S. 313",
+        "title": "Virginia v. Rives",
+        "court": "Supreme Court of the United States",
+        "authorityId": "43e219b7-7d12-4134-860e-bbd0c4f292eb",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "529 U.S. 362",
+        "title": "Williams v. Taylor",
+        "court": "Supreme Court of the United States",
+        "authorityId": "c39f3a6d-608e-4efb-ac05-17a089603819",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "529 U.S. 473",
+        "title": "Slack v. McDaniel",
+        "court": "Supreme Court of the United States",
+        "authorityId": "b57b4eaf-1862-419f-8b2f-f46aff2f034a",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "443 U.S. 137",
+        "title": "Baker v. McCollan",
+        "court": "Supreme Court of the United States",
+        "authorityId": "70aa5810-f083-4254-bc45-75a245460c41",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "408 U.S. 665",
+        "title": "Branzburg v. Hayes",
+        "court": "Supreme Court of the United States",
+        "authorityId": "af6e68b8-1b18-4943-9a1c-2420dbad1d7e",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "165 U.S. 578",
+        "title": "Allgeyer v. Louisiana",
+        "court": "Supreme Court of the United States",
+        "authorityId": "6605870b-50fa-43e7-b913-3d332fedfbb8",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "316 U.S. 114",
+        "title": "Goldstein v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "509eb0ac-0b2c-4ace-98a2-4071ca866879",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "529 U.S. 861",
+        "title": "Geier v. American Honda Motor Co.",
+        "court": "Supreme Court of the United States",
+        "authorityId": "76eab756-5890-4c10-ab71-46cf26944316",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "316 U.S. 4",
+        "title": "Scripps-Howard Radio, Inc. v. Federal Communications Commission",
+        "court": "Supreme Court of the United States",
+        "authorityId": "b1548e41-6c1f-4a4b-b795-d92f420b4acb",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "395 U.S. 411",
+        "title": "Jenkins v. McKeithen",
+        "court": "Supreme Court of the United States",
+        "authorityId": "af13eb15-3d5f-456f-9389-5cee7d87e21d",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "395 U.S. 784",
+        "title": "Benton v. Maryland",
+        "court": "Supreme Court of the United States",
+        "authorityId": "79462abd-c102-480e-81ff-be7828ed27f4",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "339 U.S. 200",
+        "title": "Darr v. Burford",
+        "court": "Supreme Court of the United States",
+        "authorityId": "0f51f33b-56da-4e30-bda3-7da7810d2471",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "448 U.S. 555",
+        "title": "Richmond Newspapers, Inc. v. Virginia",
+        "court": "Supreme Court of the United States",
+        "authorityId": "00a27598-736c-4af5-8bcc-5e7ac4a8eb69",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "448 U.S. 56",
+        "title": "Ohio v. Roberts",
+        "court": "Supreme Court of the United States",
+        "authorityId": "3b5bdb75-b9e2-4c25-9644-ba3390073011",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "449 U.S. 383",
+        "title": "Upjohn Co. v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "955474ee-2989-4d3c-a25d-4e2cc803ab19",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "397 U.S. 159",
+        "title": "Barlow v. Collins",
+        "court": "Supreme Court of the United States",
+        "authorityId": "e995adc8-b8e2-4fe9-b1fc-4c1d76f1659a",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "317 U.S. 213",
+        "title": "Pyle v. Kansas",
+        "court": "Supreme Court of the United States",
+        "authorityId": "28a65188-31c4-4317-af42-9a8bb366ac74",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "205 U.S. 454",
+        "title": "Patterson v. Colorado Ex Rel. Attorney General of Colo.",
+        "court": "Supreme Court of the United States",
+        "authorityId": "f6e04f08-a6c6-4620-9326-7b8ab35f59bf",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "397 U.S. 742",
+        "title": "Brady v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "a6560086-c18c-490e-9ed0-54e5b19dbb13",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "411 U.S. 223",
+        "title": "Brown v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "c75ee961-de30-4f55-a4a8-451770e72990",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "318 U.S. 189",
+        "title": "Johnson v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "fe25b557-0bc0-474f-8e6a-00c588ec9b7e",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "168 U.S. 532",
+        "title": "Bram v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "e064dce5-8767-4896-8161-79ccd5eebc38",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "570 U.S. 178",
+        "title": "Salinas v. Texas",
+        "court": "Supreme Court of the United States",
+        "authorityId": "46beb195-ae68-4415-9b50-8f3224384028",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "318 U.S. 44",
+        "title": "Tileston v. Ullman",
+        "court": "Supreme Court of the United States",
+        "authorityId": "3a1ae8ed-ac1e-4c56-98f6-3478ae563a7a",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "343 U.S. 181",
+        "title": "Stroble v. California",
+        "court": "Supreme Court of the United States",
+        "authorityId": "a6dd66d3-c0ea-4d82-9c93-943aeb2ce43d",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "153 U.S. 684",
+        "title": "McKane v. Durston",
+        "court": "Supreme Court of the United States",
+        "authorityId": "8923ff57-4b4f-4771-ab93-3290942bd6a8",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "343 U.S. 747",
+        "title": "On Lee v. United States",
+        "court": "Supreme Court of the United States",
+        "authorityId": "50b175ae-0744-41cb-b42b-b4827874f738",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "456 U.S. 107",
+        "title": "Engle v. Isaac",
+        "court": "Supreme Court of the United States",
+        "authorityId": "5e9552e9-d764-43eb-87bf-032466941e93",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "534 U.S. 112",
+        "title": "United States v. Knights",
+        "court": "Supreme Court of the United States",
+        "authorityId": "dbd39f4c-6626-49c9-a2da-5f1650554499",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "534 U.S. 266",
+        "title": "United States v. Arvizu",
+        "court": "Supreme Court of the United States",
+        "authorityId": "15c7dc1f-5da9-4100-9368-989d4764c104",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "458 U.S. 141",
+        "title": "Fidelity Federal Savings & Loan Ass'n v. De La Cuesta",
+        "court": "Supreme Court of the United States",
+        "authorityId": "107236b4-7c93-4caa-be95-fff1f8c70e03",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "307 U.S. 268",
+        "title": "Lane v. Wilson",
+        "court": "Supreme Court of the United States",
+        "authorityId": "81815850-c8bc-484e-ad0b-34d24bb744b2",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      },
+      {
+        "citation": "399 U.S. 149",
+        "title": "California v. Green",
+        "court": "Supreme Court of the United States",
+        "authorityId": "f8a8b201-c4f4-4400-8677-bbbe75d03bac",
+        "clRequests": 2,
+        "reason": "LANE2_scotus_edges=5",
+        "bucket": "scotus",
+        "status": "imported"
+      }
+    ],
+    "checkpoints": [
+      {
+        "mark": 250,
+        "requests": 292,
+        "cases": 142,
+        "oldResolves": 1664,
+        "uniqueTargets": 142,
+        "health": "GREEN",
+        "decision": "NO"
+      }
+    ],
+    "batches": [
+      {
+        "at": "2026-10-07T14:08:17.388Z",
+        "attempted": [
+          "344 U.S. 183",
+          "395 U.S. 337",
+          "316 U.S. 455",
+          "573 U.S. 149",
+          "302 U.S. 633",
+          "389 U.S. 241",
+          "420 U.S. 103",
+          "410 U.S. 284",
+          "266 S.E.2d 114",
+          "490 U.S. 1",
+          "273 U.S. 510",
+          "375 U.S. 411",
+          "362 U.S. 199",
+          "197 U.S. 11",
+          "323 U.S. 126",
+          "339 U.S. 382",
+          "303 U.S. 444",
+          "712 S.E.2d 55",
+          "45 F.3d 444",
+          "461 S.E.2d 163",
+          "930 S.E.2d 400",
+          "388 U.S. 218",
+          "460 U.S. 276",
+          "468 U.S. 981",
+          "124 F.4th 218"
+        ],
+        "clUsed": 42,
+        "casesAdded": 18,
+        "oldResolves": 261,
+        "uniqueTargets": 18,
+        "newEdges": 646,
+        "netUnresolvedBatch": 385,
+        "efficiency": {
+          "casesPerCl": 0.429,
+          "oldResolvesPerCl": 6.214,
+          "uniqueTargetsPerCl": 0.429
+        },
+        "health": {
+          "duplicates": 0,
+          "orphans": 0,
+          "missingEmbeddings": 0,
+          "failed": 0,
+          "notProcessed": 0,
+          "status": "GREEN"
+        },
+        "ingestOk": true,
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "389 U.S. 241",
+            "title": "Zwickler v. Koota",
+            "court": "Supreme Court of the United States",
+            "authorityId": "c4ee97bf-0c15-4a48-9f5d-46249de9ae4f",
+            "clRequests": 2,
+            "reason": "LANE1_high_demand_edges=9",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "420 U.S. 103",
+            "title": "Gerstein v. Pugh",
+            "court": "Supreme Court of the United States",
+            "authorityId": "b75d4df4-8428-45c7-a1e4-a098a080439c",
+            "clRequests": 2,
+            "reason": "LANE1_high_demand_edges=9",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "410 U.S. 284",
+            "title": "Chambers v. Mississippi",
+            "court": "Supreme Court of the United States",
+            "authorityId": "95a777f4-ea13-405a-89e0-dc70a6b976be",
+            "clRequests": 2,
+            "reason": "LANE1_high_demand_edges=9",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "266 S.E.2d 114",
+            "title": "In re R.J.M.",
+            "court": "Unknown Court",
+            "authorityId": "9120a736-8495-4fe5-9f4e-a814f205c802",
+            "clRequests": 2,
+            "reason": "LANE1_high_demand_edges=11",
+            "bucket": "state_supreme",
+            "status": "imported"
+          },
+          {
+            "citation": "490 U.S. 1",
+            "title": "United States v. Sokolow",
+            "court": "Supreme Court of the United States",
+            "authorityId": "d97fe414-1dec-49a9-a6b8-0cd4c8d46c74",
+            "clRequests": 2,
+            "reason": "LANE1_high_demand_edges=8",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "273 U.S. 510",
+            "title": "Tumey v. Ohio",
+            "court": "Supreme Court of the United States",
+            "authorityId": "448e9fa8-b2d5-40f5-b87e-2e1eaf094b8a",
+            "clRequests": 2,
+            "reason": "LANE1_high_demand_edges=8",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "375 U.S. 411",
+            "title": "England v. Louisiana State Board of Medical Examiners",
+            "court": "Supreme Court of the United States",
+            "authorityId": "407ddab5-5c8f-4e96-b021-4cd2e99d0799",
+            "clRequests": 2,
+            "reason": "LANE1_high_demand_edges=8",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "362 U.S. 199",
+            "title": "Thompson v. City of Louisville",
+            "court": "Supreme Court of the United States",
+            "authorityId": "3560f8bf-73a6-4b3b-b57d-fb1c67063265",
+            "clRequests": 2,
+            "reason": "LANE1_high_demand_edges=8",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "197 U.S. 11",
+            "title": "Jacobson v. Massachusetts",
+            "court": "Supreme Court of the United States",
+            "authorityId": "7b8e37b1-e6e8-4e33-b887-190cbb6a279f",
+            "clRequests": 2,
+            "reason": "LANE1_high_demand_edges=8",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "323 U.S. 126",
+            "title": "Armour & Co. v. Wantock",
+            "court": "Supreme Court of the United States",
+            "authorityId": "927a5bfb-fab9-4f97-b261-a4e302fa3999",
+            "clRequests": 2,
+            "reason": "LANE1_high_demand_edges=8",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "339 U.S. 382",
+            "title": "American Communications Assn. v. Douds",
+            "court": "Supreme Court of the United States",
+            "authorityId": "5ed3a9a0-0512-4856-8672-6d4cd2db3a6d",
+            "clRequests": 2,
+            "reason": "LANE1_high_demand_edges=8",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "303 U.S. 444",
+            "title": "Lovell v. City of Griffin",
+            "court": "Supreme Court of the United States",
+            "authorityId": "928fc0d3-d8cf-41a1-b47f-a05a6b0342f3",
+            "clRequests": 2,
+            "reason": "LANE1_high_demand_edges=8",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "712 S.E.2d 55",
+            "title": "In Re Kristin Y.",
+            "court": "Unknown Court",
+            "authorityId": "e81d4390-4a60-4637-85f8-cfde086f97a2",
+            "clRequests": 2,
+            "reason": "LANE1_high_demand_edges=10",
+            "bucket": "state_supreme",
+            "status": "imported"
+          },
+          {
+            "citation": "461 S.E.2d 163",
+            "title": "State v. Guthrie",
+            "court": "Unknown Court",
+            "authorityId": "e7e2adda-3683-4753-a0f0-f2755e4be638",
+            "clRequests": 2,
+            "reason": "LANE1_high_demand_edges=9",
+            "bucket": "state_supreme",
+            "status": "imported"
+          },
+          {
+            "citation": "388 U.S. 218",
+            "title": "United States v. Wade",
+            "court": "Supreme Court of the United States",
+            "authorityId": "9e489232-9614-4b4e-80ca-66e704ccdb59",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "460 U.S. 276",
+            "title": "United States v. Knotts",
+            "court": "Supreme Court of the United States",
+            "authorityId": "645aaf63-d864-415e-940c-845c069594ed",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "468 U.S. 981",
+            "title": "Massachusetts v. Sheppard",
+            "court": "Supreme Court of the United States",
+            "authorityId": "c8145800-fae4-439d-892c-799e3695e367",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "124 F.4th 218",
+            "title": "Bryan Range v. Attorney General United States",
+            "court": "Unknown Court",
+            "authorityId": "01a9ae13-d641-472d-a7e0-383c7234a6a2",
+            "clRequests": 2,
+            "reason": "LANE2_controlling_circuit_edges=6",
+            "bucket": "federal_circuit",
+            "status": "imported"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-07T14:11:39.635Z",
+        "attempted": [
+          "499 U.S. 621",
+          "453 U.S. 454",
+          "514 U.S. 927",
+          "511 U.S. 825",
+          "256 U.S. 465",
+          "459 U.S. 553",
+          "465 U.S. 168",
+          "558 U.S. 310",
+          "386 U.S. 213",
+          "429 U.S. 545",
+          "393 U.S. 503",
+          "386 U.S. 58",
+          "323 U.S. 516",
+          "306 U.S. 354",
+          "322 U.S. 143",
+          "117 U.S. 241",
+          "360 U.S. 474",
+          "442 U.S. 1",
+          "301 U.S. 242",
+          "562 U.S. 443",
+          "569 U.S. 141",
+          "579 U.S. 438",
+          "442 U.S. 200",
+          "396 U.S. 320",
+          "95 U.S. 714"
+        ],
+        "clUsed": 50,
+        "casesAdded": 25,
+        "oldResolves": 290,
+        "uniqueTargets": 25,
+        "newEdges": 649,
+        "netUnresolvedBatch": 359,
+        "efficiency": {
+          "casesPerCl": 0.5,
+          "oldResolvesPerCl": 5.8,
+          "uniqueTargetsPerCl": 0.5
+        },
+        "health": {
+          "duplicates": 0,
+          "orphans": 0,
+          "missingEmbeddings": 0,
+          "failed": 0,
+          "notProcessed": 0,
+          "status": "GREEN"
+        },
+        "ingestOk": true,
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "499 U.S. 621",
+            "title": "California v. Hodari D.",
+            "court": "Supreme Court of the United States",
+            "authorityId": "9fdc0439-ce59-4976-a4a5-8f7906d5a59f",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "453 U.S. 454",
+            "title": "New York v. Belton",
+            "court": "Supreme Court of the United States",
+            "authorityId": "d599b341-4851-4411-9fb0-aa13a79c6b5b",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=4",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "514 U.S. 927",
+            "title": "Wilson v. Arkansas",
+            "court": "Supreme Court of the United States",
+            "authorityId": "1a339843-b09d-4b74-9ab8-26f0b7c54788",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=4",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "511 U.S. 825",
+            "title": "Farmer v. Brennan",
+            "court": "Supreme Court of the United States",
+            "authorityId": "45d5f7f4-f485-4c2e-9fea-86b878ff1172",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "256 U.S. 465",
+            "title": "Burdeau v. McDowell",
+            "court": "Supreme Court of the United States",
+            "authorityId": "1c0646e5-6608-45aa-a62b-1e974d680c22",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "459 U.S. 553",
+            "title": "South Dakota v. Neville",
+            "court": "Supreme Court of the United States",
+            "authorityId": "f4856154-78b7-4105-97eb-4ef2fda328ac",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "465 U.S. 168",
+            "title": "McKaskle v. Wiggins",
+            "court": "Supreme Court of the United States",
+            "authorityId": "c7bebccd-9e51-4c90-befd-aa785f2a0b40",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "558 U.S. 310",
+            "title": "Citizens United v. Federal Election Commission",
+            "court": "Supreme Court of the United States",
+            "authorityId": "2b757382-cd9d-4972-adac-4ed048f36d84",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "386 U.S. 213",
+            "title": "Klopfer v. North Carolina",
+            "court": "Supreme Court of the United States",
+            "authorityId": "0b31a06a-2e44-45e1-855c-bbcbd83bbe77",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "429 U.S. 545",
+            "title": "Weatherford v. Bursey",
+            "court": "Supreme Court of the United States",
+            "authorityId": "3fcf1785-b0c1-4724-9523-adae049048c5",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "393 U.S. 503",
+            "title": "Tinker v. Des Moines Independent Community School District",
+            "court": "Supreme Court of the United States",
+            "authorityId": "bce271a1-1c3e-4304-8cb1-3fb795085f6e",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "386 U.S. 58",
+            "title": "Cooper v. California",
+            "court": "Supreme Court of the United States",
+            "authorityId": "c1f18e02-1973-4e2b-a9d9-5ccfa4df0d38",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "323 U.S. 516",
+            "title": "Thomas v. Collins",
+            "court": "Supreme Court of the United States",
+            "authorityId": "585c3d8a-0c45-4b07-a734-632027d087fd",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "306 U.S. 354",
+            "title": "Pierre v. Louisiana",
+            "court": "Supreme Court of the United States",
+            "authorityId": "6f9c4c01-e433-4df6-a3a9-16a79526f17f",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "322 U.S. 143",
+            "title": "Ashcraft v. Tennessee",
+            "court": "Supreme Court of the United States",
+            "authorityId": "c461b25c-c688-4c21-ab79-7f3796f113eb",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "117 U.S. 241",
+            "title": "Ex Parte Royall",
+            "court": "Supreme Court of the United States",
+            "authorityId": "0bb03b50-6b94-4c9f-b484-c8f30dd11d83",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "360 U.S. 474",
+            "title": "Greene v. McElroy",
+            "court": "Supreme Court of the United States",
+            "authorityId": "a1bae3b7-a41a-4a52-a6e6-c4618df81b7b",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "442 U.S. 1",
+            "title": "Greenholtz v. Inmates of the Nebraska Penal & Correctional Complex",
+            "court": "Supreme Court of the United States",
+            "authorityId": "1ae950ea-07ff-4d3f-a24a-8d7b4fa830aa",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "301 U.S. 242",
+            "title": "Herndon v. Lowry",
+            "court": "Supreme Court of the United States",
+            "authorityId": "df1f8253-1b23-4dbd-990b-a19862a4714f",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=7",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "562 U.S. 443",
+            "title": "Snyder v. Phelps",
+            "court": "Supreme Court of the United States",
+            "authorityId": "e00d99db-9342-49b3-ae2d-601aadcc5f55",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=3",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "569 U.S. 141",
+            "title": "Missouri v. McNeely",
+            "court": "Supreme Court of the United States",
+            "authorityId": "140a5a39-ad74-428a-b113-b7ca86b22db6",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=3",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "579 U.S. 438",
+            "title": "Birchfield v. N. Dakota. William Robert Bernard",
+            "court": "Supreme Court of the United States",
+            "authorityId": "bebcd5a1-0346-4a98-bf1a-edb3eb475db6",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=3",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "442 U.S. 200",
+            "title": "Dunaway v. New York",
+            "court": "Supreme Court of the United States",
+            "authorityId": "4eb46489-b199-4da4-b6df-a0e4d901c7b8",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=3",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "396 U.S. 320",
+            "title": "Carter v. Jury Comm'n of Greene Cty.",
+            "court": "Supreme Court of the United States",
+            "authorityId": "9b33c48f-c078-44b8-a882-fc0c3c5c85c2",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "95 U.S. 714",
+            "title": "Pennoyer v. Neff",
+            "court": "Supreme Court of the United States",
+            "authorityId": "712153b1-c16a-4695-bd73-01d637563673",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-07T14:15:05.731Z",
+        "attempted": [
+          "462 U.S. 696",
+          "463 U.S. 1032",
+          "602 U.S. 779",
+          "501 U.S. 722",
+          "284 U.S. 299",
+          "391 U.S. 563",
+          "505 U.S. 377",
+          "373 U.S. 1",
+          "512 U.S. 477",
+          "443 U.S. 47",
+          "410 U.S. 179",
+          "308 U.S. 287",
+          "505 U.S. 504",
+          "267 U.S. 498",
+          "300 U.S. 227",
+          "406 U.S. 498",
+          "103 U.S. 370",
+          "350 U.S. 551",
+          "411 U.S. 1",
+          "250 U.S. 616",
+          "378 U.S. 478",
+          "178 U.S. 458",
+          "380 U.S. 528",
+          "341 U.S. 494",
+          "598 U.S. 631"
+        ],
+        "clUsed": 50,
+        "casesAdded": 25,
+        "oldResolves": 274,
+        "uniqueTargets": 25,
+        "newEdges": 649,
+        "netUnresolvedBatch": 375,
+        "efficiency": {
+          "casesPerCl": 0.5,
+          "oldResolvesPerCl": 5.48,
+          "uniqueTargetsPerCl": 0.5
+        },
+        "health": {
+          "duplicates": 0,
+          "orphans": 0,
+          "missingEmbeddings": 0,
+          "failed": 0,
+          "notProcessed": 0,
+          "status": "GREEN"
+        },
+        "ingestOk": true,
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "462 U.S. 696",
+            "title": "United States v. Place",
+            "court": "Supreme Court of the United States",
+            "authorityId": "62ac4138-8340-4136-961d-7eb567c1373a",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "463 U.S. 1032",
+            "title": "Michigan v. Long",
+            "court": "Supreme Court of the United States",
+            "authorityId": "0e48118b-9a79-4580-85f5-507d42156254",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "602 U.S. 779",
+            "title": "Smith v. Arizona",
+            "court": "Supreme Court of the United States",
+            "authorityId": "658aa9d3-265c-4d86-8d4c-4e84d7b373f2",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "501 U.S. 722",
+            "title": "Coleman v. Thompson",
+            "court": "Supreme Court of the United States",
+            "authorityId": "e660c040-fb80-4841-be9a-05917fb7c66e",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "284 U.S. 299",
+            "title": "Blockburger v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "002c1d58-41fa-4ffe-84f7-fe0027610a16",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "391 U.S. 563",
+            "title": "Pickering v. Board of Ed. of Township High School Dist. 205, Will Cty.",
+            "court": "Supreme Court of the United States",
+            "authorityId": "914c5a24-c390-41a7-92dd-eba81f42fda4",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "505 U.S. 377",
+            "title": "R. A. v. v. City of St. Paul",
+            "court": "Supreme Court of the United States",
+            "authorityId": "54dbb544-2fec-4a00-b096-e9dbfa75a24b",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "373 U.S. 1",
+            "title": "Sanders v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "1af3d360-4f16-4ea3-b58d-7e4700c28896",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "512 U.S. 477",
+            "title": "Heck v. Humphrey",
+            "court": "Supreme Court of the United States",
+            "authorityId": "dc45e75a-9e40-4b50-b117-51638950de64",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "443 U.S. 47",
+            "title": "Brown v. Texas",
+            "court": "Supreme Court of the United States",
+            "authorityId": "05733b20-c7da-4e02-b166-4616e26e6b49",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "410 U.S. 179",
+            "title": "Doe v. Bolton",
+            "court": "Supreme Court of the United States",
+            "authorityId": "0ba49b13-d1e4-428a-ae16-2f58b753a8c2",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "308 U.S. 287",
+            "title": "Bruno v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "f194060c-8ea4-47fc-8e91-8d9a3bffe1d1",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "505 U.S. 504",
+            "title": "Cipollone v. Liggett Group, Inc.",
+            "court": "Supreme Court of the United States",
+            "authorityId": "56dfc32a-d839-4cab-9913-19980761b48e",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "267 U.S. 498",
+            "title": "Steele v. United States No. 1",
+            "court": "Supreme Court of the United States",
+            "authorityId": "a964900b-18d3-416d-879b-daa733c8e949",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "300 U.S. 227",
+            "title": "Aetna Life Insurance v. Haworth",
+            "court": "Supreme Court of the United States",
+            "authorityId": "ef4ae706-6e82-4c58-8369-86669476de2d",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "406 U.S. 498",
+            "title": "Lake Carriers' Assn. v. MacMullan",
+            "court": "Supreme Court of the United States",
+            "authorityId": "db55597c-f121-4e43-91e0-6855eda42f8b",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "103 U.S. 370",
+            "title": "Neal v. Delaware",
+            "court": "Supreme Court of the United States",
+            "authorityId": "a303e18e-4eec-4769-b49c-ea69c82fba47",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "350 U.S. 551",
+            "title": "Slochower v. Board of Higher Ed. of New York City",
+            "court": "Supreme Court of the United States",
+            "authorityId": "6da95539-a1f2-453f-b7df-6388a8bc96e6",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "411 U.S. 1",
+            "title": "San Antonio Independent School District v. Rodriguez",
+            "court": "Supreme Court of the United States",
+            "authorityId": "c60ba677-eb96-4c0b-b93d-1bc560e2b5ee",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "250 U.S. 616",
+            "title": "Abrams v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "07b0a280-3878-442a-a1af-a994977cb3a2",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "378 U.S. 478",
+            "title": "Escobedo v. Illinois",
+            "court": "Supreme Court of the United States",
+            "authorityId": "9949e4ef-84f0-440c-b41b-707840146cd3",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "178 U.S. 458",
+            "title": "Motes v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "b45e886f-6682-4ee5-b13e-f761666b7327",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "380 U.S. 528",
+            "title": "Harman v. Forssenius",
+            "court": "Supreme Court of the United States",
+            "authorityId": "d3508925-1b6c-4406-b856-5677b81e1475",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "341 U.S. 494",
+            "title": "Dennis v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "65f4929d-2a39-4ccc-a6b4-16eb1196e647",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "598 U.S. 631",
+            "title": "Tyler v. Hennepin County",
+            "court": "Supreme Court of the United States",
+            "authorityId": "3f09bdef-26fb-469d-8c37-784d81f783cf",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-07T14:18:25.777Z",
+        "attempted": [
+          "572 U.S. 393",
+          "458 U.S. 858",
+          "422 U.S. 873",
+          "314 U.S. 252",
+          "458 U.S. 782",
+          "407 U.S. 225",
+          "384 U.S. 1",
+          "557 U.S. 305",
+          "143 U.S. 339",
+          "361 U.S. 199",
+          "392 U.S. 40",
+          "441 U.S. 91",
+          "113 U.S. 33",
+          "360 U.S. 315",
+          "218 U.S. 245",
+          "294 U.S. 587",
+          "445 U.S. 263",
+          "274 U.S. 380",
+          "395 U.S. 444",
+          "332 U.S. 708",
+          "430 U.S. 387",
+          "420 U.S. 714",
+          "444 U.S. 555",
+          "393 U.S. 97",
+          "316 U.S. 129"
+        ],
+        "clUsed": 50,
+        "casesAdded": 25,
+        "oldResolves": 319,
+        "uniqueTargets": 25,
+        "newEdges": 626,
+        "netUnresolvedBatch": 307,
+        "efficiency": {
+          "casesPerCl": 0.5,
+          "oldResolvesPerCl": 6.38,
+          "uniqueTargetsPerCl": 0.5
+        },
+        "health": {
+          "duplicates": 0,
+          "orphans": 0,
+          "missingEmbeddings": 0,
+          "failed": 0,
+          "notProcessed": 0,
+          "status": "GREEN"
+        },
+        "ingestOk": true,
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "572 U.S. 393",
+            "title": "Prado Navarette v. California",
+            "court": "Supreme Court of the United States",
+            "authorityId": "e5aabaab-d848-48f7-9c13-6b4fff2a73cf",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "458 U.S. 858",
+            "title": "United States v. Valenzuela-Bernal",
+            "court": "Supreme Court of the United States",
+            "authorityId": "92d2e442-2268-4eda-84c4-c91942d0a87d",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "422 U.S. 873",
+            "title": "United States v. Brignoni-Ponce",
+            "court": "Supreme Court of the United States",
+            "authorityId": "028a6fef-c9a5-43e6-845b-07bc5125d72f",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "314 U.S. 252",
+            "title": "Bridges v. California",
+            "court": "Supreme Court of the United States",
+            "authorityId": "9b8a03ec-3b85-4644-a6a4-1f22d58e6aa1",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "458 U.S. 782",
+            "title": "Enmund v. Florida",
+            "court": "Supreme Court of the United States",
+            "authorityId": "a79a79fc-2e75-4bec-a9b3-91cc2fe2fdce",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "407 U.S. 225",
+            "title": "Mitchum v. Foster",
+            "court": "Supreme Court of the United States",
+            "authorityId": "84d68f36-21fc-48a4-8971-2b606b675816",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "384 U.S. 1",
+            "title": "Brookhart v. Janis",
+            "court": "Supreme Court of the United States",
+            "authorityId": "e5e02353-8fb5-41b8-9f93-8ba31a3e7557",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "557 U.S. 305",
+            "title": "Melendez-Diaz v. Massachusetts",
+            "court": "Supreme Court of the United States",
+            "authorityId": "33ba22e1-b98e-49a8-85dd-da83455b4d1d",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "143 U.S. 339",
+            "title": "Chicago & Grand Trunk Railway Co. v. Wellman",
+            "court": "Supreme Court of the United States",
+            "authorityId": "14dab2e0-db85-4670-949d-387ec694a0c2",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "361 U.S. 199",
+            "title": "Blackburn v. Alabama",
+            "court": "Supreme Court of the United States",
+            "authorityId": "13cc4b18-8436-4b7e-a0bf-2bd7686a2657",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "392 U.S. 40",
+            "title": "Sibron v. New York",
+            "court": "Supreme Court of the United States",
+            "authorityId": "30581ed4-202d-4e37-addd-25af677ae6b7",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "441 U.S. 91",
+            "title": "Gladstone, Realtors v. Village of Bellwood",
+            "court": "Supreme Court of the United States",
+            "authorityId": "248fb5c5-1fb9-4034-8921-1d3cc5934720",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "113 U.S. 33",
+            "title": "Liverpool, New York & Philadelphia Steamship Co. v. Commissioners of Emigration",
+            "court": "Supreme Court of the United States",
+            "authorityId": "cfec6f47-f0b6-4838-9664-db0588f673d7",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "360 U.S. 315",
+            "title": "Spano v. New York",
+            "court": "Supreme Court of the United States",
+            "authorityId": "c5339bb7-9e12-4dbf-add8-c91ff0cf1af7",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "218 U.S. 245",
+            "title": "Holt v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "7b6cc3e4-aea0-4238-b718-7ae8a7858bfb",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "294 U.S. 587",
+            "title": "Norris v. Alabama",
+            "court": "Supreme Court of the United States",
+            "authorityId": "6568590a-1d9d-4c89-98ca-3898f8a9fa84",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "445 U.S. 263",
+            "title": "Rummel v. Estelle",
+            "court": "Supreme Court of the United States",
+            "authorityId": "5fe1dc28-856a-43e2-8d3b-80da70f9bf18",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "274 U.S. 380",
+            "title": "Fiske v. Kansas",
+            "court": "Supreme Court of the United States",
+            "authorityId": "075b55b9-36b6-4b3c-a8a5-58f8c893bbf7",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "395 U.S. 444",
+            "title": "Brandenburg v. Ohio",
+            "court": "Supreme Court of the United States",
+            "authorityId": "e44fa411-bea7-41fa-8b59-19a54ed18af6",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "332 U.S. 708",
+            "title": "Von Moltke v. Gillies",
+            "court": "Supreme Court of the United States",
+            "authorityId": "eebd11ae-1081-41c5-a7e1-a049dc4ea947",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "430 U.S. 387",
+            "title": "Brewer v. Williams",
+            "court": "Supreme Court of the United States",
+            "authorityId": "506d9dc3-3cef-4e37-bed7-aaef817c84d7",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "420 U.S. 714",
+            "title": "Oregon v. Hass",
+            "court": "Supreme Court of the United States",
+            "authorityId": "7edc7fd4-e889-419d-aef9-eefbde9251b3",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "444 U.S. 555",
+            "title": "Ford Motor Credit Co. v. Milhollin",
+            "court": "Supreme Court of the United States",
+            "authorityId": "cc7d60d6-0f3a-4ba5-a335-040754ca56a4",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "393 U.S. 97",
+            "title": "Epperson v. Arkansas",
+            "court": "Supreme Court of the United States",
+            "authorityId": "a15f5c59-9919-4eb8-aeff-3ba8b7ee0518",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "316 U.S. 129",
+            "title": "Goldman v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "ba201fef-d361-4b7e-86e6-acd5b320cbd1",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-07T14:21:51.485Z",
+        "attempted": [
+          "446 U.S. 335",
+          "312 U.S. 270",
+          "401 U.S. 66",
+          "46 F.3d 1151",
+          "328 U.S. 582",
+          "506 U.S. 56",
+          "394 U.S. 244",
+          "437 U.S. 463",
+          "385 U.S. 554",
+          "438 U.S. 478",
+          "269 U.S. 385",
+          "331 U.S. 549",
+          "385 U.S. 589",
+          "441 U.S. 380",
+          "408 U.S. 501",
+          "442 U.S. 510",
+          "100 U.S. 313",
+          "529 U.S. 362",
+          "529 U.S. 473",
+          "443 U.S. 137",
+          "408 U.S. 665",
+          "165 U.S. 578",
+          "316 U.S. 114",
+          "529 U.S. 861",
+          "316 U.S. 4"
+        ],
+        "clUsed": 50,
+        "casesAdded": 25,
+        "oldResolves": 281,
+        "uniqueTargets": 25,
+        "newEdges": 782,
+        "netUnresolvedBatch": 501,
+        "efficiency": {
+          "casesPerCl": 0.5,
+          "oldResolvesPerCl": 5.62,
+          "uniqueTargetsPerCl": 0.5
+        },
+        "health": {
+          "duplicates": 0,
+          "orphans": 0,
+          "missingEmbeddings": 0,
+          "failed": 0,
+          "notProcessed": 0,
+          "status": "GREEN"
+        },
+        "ingestOk": true,
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "446 U.S. 335",
+            "title": "Cuyler v. Sullivan",
+            "court": "Supreme Court of the United States",
+            "authorityId": "1abaa568-2556-4f58-ae31-739cedbcff6c",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "312 U.S. 270",
+            "title": "Maryland Casualty Co. v. Pacific Coal & Oil Co.",
+            "court": "Supreme Court of the United States",
+            "authorityId": "0fb079a0-0258-4fda-b613-502cabcfaed5",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "401 U.S. 66",
+            "title": "SAMUELS Et Al. v. MACKELL, DISTRICT ATTORNEY OF QUEENS COUNTY, Et Al.",
+            "court": "Supreme Court of the United States",
+            "authorityId": "315e4a73-538d-4804-9fd3-7d281cc8ead7",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=6",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "46 F.3d 1151",
+            "title": "Chidi Onwuneme v. Immigration & Naturalization Service",
+            "court": "Unknown Court",
+            "authorityId": "437371e9-d94a-4df6-a8c4-77683a6e0fd0",
+            "clRequests": 2,
+            "reason": "LANE2_controlling_circuit_edges=7",
+            "bucket": "federal_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "328 U.S. 582",
+            "title": "Davis v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "efc39520-f6e5-4268-8177-2bfaad841376",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "506 U.S. 56",
+            "title": "Soldal v. Cook County",
+            "court": "Supreme Court of the United States",
+            "authorityId": "da8b77c0-840f-4f5a-9cce-1827bf5cbed9",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "394 U.S. 244",
+            "title": "Desist v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "7347d5e4-10a1-4960-8856-0ecac0ee5e67",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "437 U.S. 463",
+            "title": "Coopers & Lybrand v. Livesay",
+            "court": "Supreme Court of the United States",
+            "authorityId": "73c7b413-2c25-4020-91bf-720fa90a29d0",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "385 U.S. 554",
+            "title": "Spencer v. Texas",
+            "court": "Supreme Court of the United States",
+            "authorityId": "c6984cda-15fa-4fad-b269-2c7f95186bb3",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "438 U.S. 478",
+            "title": "Butz v. Economou",
+            "court": "Supreme Court of the United States",
+            "authorityId": "3f4c770a-7d95-43c6-a769-fcfc087f6193",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "269 U.S. 385",
+            "title": "Connally v. General Construction Co.",
+            "court": "Supreme Court of the United States",
+            "authorityId": "8c8412b1-45bb-470c-b879-05208d42524a",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "331 U.S. 549",
+            "title": "Rescue Army v. Municipal Court of Los Angeles",
+            "court": "Supreme Court of the United States",
+            "authorityId": "d52a228d-57eb-45e3-9d91-127ab5190105",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "385 U.S. 589",
+            "title": "Keyishian v. Board of Regents of Univ. of State of NY",
+            "court": "Supreme Court of the United States",
+            "authorityId": "19c92296-6f35-4eef-95cb-b839d5ce7765",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "441 U.S. 380",
+            "title": "Caban v. Mohammed",
+            "court": "Supreme Court of the United States",
+            "authorityId": "da5a1a8b-9e0c-4399-9a98-53fe6bf14135",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "408 U.S. 501",
+            "title": "United States v. Brewster",
+            "court": "Supreme Court of the United States",
+            "authorityId": "3e52bfdd-3d9e-4782-9329-15087109e540",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "442 U.S. 510",
+            "title": "Sandstrom v. Montana",
+            "court": "Supreme Court of the United States",
+            "authorityId": "8228a332-454b-4b0b-897a-952301ac3fb4",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "100 U.S. 313",
+            "title": "Virginia v. Rives",
+            "court": "Supreme Court of the United States",
+            "authorityId": "43e219b7-7d12-4134-860e-bbd0c4f292eb",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "529 U.S. 362",
+            "title": "Williams v. Taylor",
+            "court": "Supreme Court of the United States",
+            "authorityId": "c39f3a6d-608e-4efb-ac05-17a089603819",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "529 U.S. 473",
+            "title": "Slack v. McDaniel",
+            "court": "Supreme Court of the United States",
+            "authorityId": "b57b4eaf-1862-419f-8b2f-f46aff2f034a",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "443 U.S. 137",
+            "title": "Baker v. McCollan",
+            "court": "Supreme Court of the United States",
+            "authorityId": "70aa5810-f083-4254-bc45-75a245460c41",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "408 U.S. 665",
+            "title": "Branzburg v. Hayes",
+            "court": "Supreme Court of the United States",
+            "authorityId": "af6e68b8-1b18-4943-9a1c-2420dbad1d7e",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "165 U.S. 578",
+            "title": "Allgeyer v. Louisiana",
+            "court": "Supreme Court of the United States",
+            "authorityId": "6605870b-50fa-43e7-b913-3d332fedfbb8",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "316 U.S. 114",
+            "title": "Goldstein v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "509eb0ac-0b2c-4ace-98a2-4071ca866879",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "529 U.S. 861",
+            "title": "Geier v. American Honda Motor Co.",
+            "court": "Supreme Court of the United States",
+            "authorityId": "76eab756-5890-4c10-ab71-46cf26944316",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "316 U.S. 4",
+            "title": "Scripps-Howard Radio, Inc. v. Federal Communications Commission",
+            "court": "Supreme Court of the United States",
+            "authorityId": "b1548e41-6c1f-4a4b-b795-d92f420b4acb",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-07T14:25:09.656Z",
+        "attempted": [
+          "395 U.S. 411",
+          "395 U.S. 784",
+          "339 U.S. 200",
+          "448 U.S. 555",
+          "448 U.S. 56",
+          "449 U.S. 383",
+          "397 U.S. 159",
+          "317 U.S. 213",
+          "205 U.S. 454",
+          "397 U.S. 742",
+          "411 U.S. 223",
+          "318 U.S. 189",
+          "168 U.S. 532",
+          "570 U.S. 178",
+          "318 U.S. 44",
+          "343 U.S. 181",
+          "153 U.S. 684",
+          "343 U.S. 747",
+          "456 U.S. 107",
+          "534 U.S. 112",
+          "534 U.S. 266",
+          "458 U.S. 141",
+          "307 U.S. 268",
+          "399 U.S. 149",
+          "388 U.S. 395"
+        ],
+        "clUsed": 50,
+        "casesAdded": 24,
+        "oldResolves": 239,
+        "uniqueTargets": 24,
+        "newEdges": 505,
+        "netUnresolvedBatch": 266,
+        "efficiency": {
+          "casesPerCl": 0.48,
+          "oldResolvesPerCl": 4.78,
+          "uniqueTargetsPerCl": 0.48
+        },
+        "health": {
+          "duplicates": 0,
+          "orphans": 0,
+          "missingEmbeddings": 0,
+          "failed": 0,
+          "notProcessed": 0,
+          "status": "GREEN"
+        },
+        "ingestOk": true,
+        "rateLimited": true,
+        "acquired": [
+          {
+            "citation": "395 U.S. 411",
+            "title": "Jenkins v. McKeithen",
+            "court": "Supreme Court of the United States",
+            "authorityId": "af13eb15-3d5f-456f-9389-5cee7d87e21d",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "395 U.S. 784",
+            "title": "Benton v. Maryland",
+            "court": "Supreme Court of the United States",
+            "authorityId": "79462abd-c102-480e-81ff-be7828ed27f4",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "339 U.S. 200",
+            "title": "Darr v. Burford",
+            "court": "Supreme Court of the United States",
+            "authorityId": "0f51f33b-56da-4e30-bda3-7da7810d2471",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "448 U.S. 555",
+            "title": "Richmond Newspapers, Inc. v. Virginia",
+            "court": "Supreme Court of the United States",
+            "authorityId": "00a27598-736c-4af5-8bcc-5e7ac4a8eb69",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "448 U.S. 56",
+            "title": "Ohio v. Roberts",
+            "court": "Supreme Court of the United States",
+            "authorityId": "3b5bdb75-b9e2-4c25-9644-ba3390073011",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "449 U.S. 383",
+            "title": "Upjohn Co. v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "955474ee-2989-4d3c-a25d-4e2cc803ab19",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "397 U.S. 159",
+            "title": "Barlow v. Collins",
+            "court": "Supreme Court of the United States",
+            "authorityId": "e995adc8-b8e2-4fe9-b1fc-4c1d76f1659a",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "317 U.S. 213",
+            "title": "Pyle v. Kansas",
+            "court": "Supreme Court of the United States",
+            "authorityId": "28a65188-31c4-4317-af42-9a8bb366ac74",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "205 U.S. 454",
+            "title": "Patterson v. Colorado Ex Rel. Attorney General of Colo.",
+            "court": "Supreme Court of the United States",
+            "authorityId": "f6e04f08-a6c6-4620-9326-7b8ab35f59bf",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "397 U.S. 742",
+            "title": "Brady v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "a6560086-c18c-490e-9ed0-54e5b19dbb13",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "411 U.S. 223",
+            "title": "Brown v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "c75ee961-de30-4f55-a4a8-451770e72990",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "318 U.S. 189",
+            "title": "Johnson v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "fe25b557-0bc0-474f-8e6a-00c588ec9b7e",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "168 U.S. 532",
+            "title": "Bram v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "e064dce5-8767-4896-8161-79ccd5eebc38",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "570 U.S. 178",
+            "title": "Salinas v. Texas",
+            "court": "Supreme Court of the United States",
+            "authorityId": "46beb195-ae68-4415-9b50-8f3224384028",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "318 U.S. 44",
+            "title": "Tileston v. Ullman",
+            "court": "Supreme Court of the United States",
+            "authorityId": "3a1ae8ed-ac1e-4c56-98f6-3478ae563a7a",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "343 U.S. 181",
+            "title": "Stroble v. California",
+            "court": "Supreme Court of the United States",
+            "authorityId": "a6dd66d3-c0ea-4d82-9c93-943aeb2ce43d",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "153 U.S. 684",
+            "title": "McKane v. Durston",
+            "court": "Supreme Court of the United States",
+            "authorityId": "8923ff57-4b4f-4771-ab93-3290942bd6a8",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "343 U.S. 747",
+            "title": "On Lee v. United States",
+            "court": "Supreme Court of the United States",
+            "authorityId": "50b175ae-0744-41cb-b42b-b4827874f738",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "456 U.S. 107",
+            "title": "Engle v. Isaac",
+            "court": "Supreme Court of the United States",
+            "authorityId": "5e9552e9-d764-43eb-87bf-032466941e93",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "534 U.S. 112",
+            "title": "United States v. Knights",
+            "court": "Supreme Court of the United States",
+            "authorityId": "dbd39f4c-6626-49c9-a2da-5f1650554499",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "534 U.S. 266",
+            "title": "United States v. Arvizu",
+            "court": "Supreme Court of the United States",
+            "authorityId": "15c7dc1f-5da9-4100-9368-989d4764c104",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "458 U.S. 141",
+            "title": "Fidelity Federal Savings & Loan Ass'n v. De La Cuesta",
+            "court": "Supreme Court of the United States",
+            "authorityId": "107236b4-7c93-4caa-be95-fff1f8c70e03",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "307 U.S. 268",
+            "title": "Lane v. Wilson",
+            "court": "Supreme Court of the United States",
+            "authorityId": "81815850-c8bc-484e-ad0b-34d24bb744b2",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          },
+          {
+            "citation": "399 U.S. 149",
+            "title": "California v. Green",
+            "court": "Supreme Court of the United States",
+            "authorityId": "f8a8b201-c4f4-4400-8677-bbbe75d03bac",
+            "clRequests": 2,
+            "reason": "LANE2_scotus_edges=5",
+            "bucket": "scotus",
+            "status": "imported"
+          }
+        ]
+      }
+    ]
+  },
+  "continue": false,
+  "lastResolved": 8016,
+  "lastUnresolved": 46569,
+  "lastExtracted": 54585,
+  "lastCases": 4825,
+  "retryAfter": null,
+  "finishedAt": "2026-10-07T14:25:10.934Z",
+  "endSnapshot": {
+    "cases": 4825,
+    "authorities": 6180,
+    "extracted": 54585,
+    "resolved": 8016,
+    "unresolved": 46569,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "silentCurrent": -1,
+    "presentTargetDefects": -1
+  },
+  "finalResolve": {
+    "resolvedAfter": 8016,
+    "newResolved": 0,
+    "extracted": 54585,
+    "targetAbsent": 46569
+  }
+}
