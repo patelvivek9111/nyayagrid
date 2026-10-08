@@ -374,6 +374,21 @@ function clusterHasCourt(cluster) {
   return Boolean(String(raw).trim());
 }
 
+async function enrichClusterCourtFromDocket(cluster, apiKey, counters) {
+  if (!cluster || clusterHasCourt(cluster)) return cluster;
+  let docketUrl = null;
+  if (typeof cluster.docket === "string") docketUrl = cluster.docket;
+  else if (cluster.docket_id) docketUrl = `${CL_BASE}/dockets/${cluster.docket_id}/`;
+  if (!docketUrl) return cluster;
+  const dRes = await clFetch(docketUrl, apiKey, counters);
+  if (dRes.budgetExhausted || dRes.status === 429 || !dRes.ok) return cluster;
+  const docket = await dRes.json();
+  if (docket?.court_id || docket?.court) {
+    return { ...cluster, court_id: docket.court_id || cluster.court_id, court: docket.court || cluster.court };
+  }
+  return cluster;
+}
+
 async function fetchOpinionAndCluster(apiKey, seed, target, counters) {
   let cluster = seed.cluster || null;
   let clusterId = seed.clusterId || cluster?.id || null;
@@ -386,6 +401,9 @@ async function fetchOpinionAndCluster(apiKey, seed, target, counters) {
     if (!cRes.ok) return { ok: false, reason: `cluster_http_${cRes.status}` };
     cluster = await cRes.json();
   }
+  // CL v4: court lives on docket
+  cluster = await enrichClusterCourtFromDocket(cluster, apiKey, counters);
+  if (counters.rateLimited) return { ok: false, reason: "rate_limited" };
 
   if (cluster) {
     const cites = collectClusterCites(cluster);

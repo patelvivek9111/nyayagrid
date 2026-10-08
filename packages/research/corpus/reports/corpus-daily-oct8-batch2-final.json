@@ -1,0 +1,139 @@
+{
+  "classification": "DAILY_HIGH_VALUE_COURTLISTENER_OCT8_BATCH2",
+  "status": "CORPUS_DAILY_OCT8_BATCH2_PARTIAL",
+  "stopReason": "429",
+  "retryAfter": null,
+  "courtListener": {
+    "limitMin": 25,
+    "limitHour": 300,
+    "limitDay": 1400,
+    "remainingAtStart": {
+      "minute": 25,
+      "hour": 287,
+      "day": 861
+    },
+    "safeBudget": 270,
+    "requestsUsed": 261,
+    "productiveAcquisition": 118,
+    "priorCl": 143,
+    "rateLimited429": 1,
+    "gateway502_504": 0,
+    "longWaitsOver5m": 0
+  },
+  "startSnapshot": {
+    "cases": 5007,
+    "authorities": 6362,
+    "extracted": 61405,
+    "resolved": 9204,
+    "unresolved": 52201,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": 0,
+    "usCircuitUnspecified": 155
+  },
+  "circuitRefinement": {
+    "usCircuitUnspecifiedReviewed": 20,
+    "exactCircuitsResolved": 20,
+    "thirdCircuitIdentified": 3,
+    "otherCircuitsIdentified": 17,
+    "stillUnresolved": 155,
+    "byCircuit": {
+      "us-ca-11": 4,
+      "us-ca-7": 3,
+      "us-ca-2": 5,
+      "us-ca-3": 3,
+      "us-ca-9": 2,
+      "us-ca-dc": 2,
+      "us-ca-8": 1
+    },
+    "normalizationDefectFound": true,
+    "normalizationFixMade": true,
+    "note": "CL v4 court is on docket not cluster; docket lookup + ingest enrichClusterCourtFromDocket"
+  },
+  "laneResults": {
+    "thirdCircuit": {
+      "requests": 110,
+      "cases": 13,
+      "oldResolves": "see_total_224_queue_lane",
+      "trueCourtCases": 13,
+      "citations": [
+        "614 F.3d 85",
+        "633 F.3d 168",
+        "910 F.3d 106",
+        "927 F.3d 150",
+        "948 F.3d 164",
+        "713 F.2d 972",
+        "758 F.2d 897",
+        "802 F.2d 648",
+        "816 F.2d 110",
+        "822 F.3d 136",
+        "98 F.3d 116",
+        "117 F.3d 742",
+        "256 F.3d 120"
+      ]
+    },
+    "otherCircuits": {
+      "requests": 8,
+      "cases": 11,
+      "oldResolves": "included_in_total",
+      "trueCourtCases": 11,
+      "byCourt": {
+        "United States Court of Appeals for the Tenth Circuit": 2,
+        "United States Court of Appeals for the Second Circuit": 1,
+        "United States Court of Appeals for the Fifth Circuit": 2,
+        "United States Court of Appeals for the Ninth Circuit": 2,
+        "United States Court of Appeals for the Fourth Circuit": 2,
+        "United States Court of Appeals for the Sixth Circuit": 2
+      }
+    },
+    "edpa": {
+      "requests": 0,
+      "cases": 0,
+      "oldResolves": 0
+    },
+    "otherFederalReporter": {
+      "requests": 0,
+      "cases": 0,
+      "oldResolves": 0
+    }
+  },
+  "totalValue": {
+    "casesAdded": 24,
+    "oldUnresolvedResolved": 224,
+    "newEdges": 920,
+    "newUnresolved": 696,
+    "netUnresolved": 696,
+    "uniqueMissingTargets": 24,
+    "controllingAuthorities": 24,
+    "benchmarkRelevant": 0
+  },
+  "efficiency": {
+    "casesPerCl": 0.203,
+    "oldResolvesPerCl": 1.898,
+    "uniqueTargetsPerCl": 0.203,
+    "courtIdentificationsPerCl": 0.333,
+    "controllingPerCl": 0.203
+  },
+  "corpusHealth": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "FAILED": 0,
+    "NOT_PROCESSED": 0,
+    "presentTargetDefects": 0,
+    "status": "GREEN"
+  },
+  "endSnapshot": {
+    "cases": 5031,
+    "authorities": 6386,
+    "extracted": 62325,
+    "resolved": 9428,
+    "unresolved": 52897,
+    "usCircuitUnspecified": 155
+  },
+  "nextBObjective": "After Retry-After clears: continue exact-circuit refinement for remaining ~155 us-circuit-unspecified F./F.2d/F.3d/F.4th via docket court lookups, then acquire verified CA3/EDPA/federal-reporter READY targets (no SCOTUS).",
+  "generatedAt": "2026-10-08T16:36:09.052Z"
+}

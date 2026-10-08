@@ -1,0 +1,27 @@
+{
+  "ok": true,
+  "classification": "CORPUS_DAILY_OCT8_BATCH2_IDENTITY_GATE",
+  "note": "authoritative start snapshot captured in run-state before acquisition",
+  "live": {
+    "cases": 5007,
+    "authorities": 6362,
+    "extracted": 61405,
+    "resolved": 9204,
+    "unresolved": 52201,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": 0,
+    "usCircuitUnspecified": 155
+  },
+  "floors": {
+    "cases": 5007,
+    "authorities": 6362,
+    "extracted": 61405,
+    "resolved": 9204
+  },
+  "generatedAt": "2026-10-08T16:25:51.597Z",
+  "courtListenerHttpCalls": 0
+}
