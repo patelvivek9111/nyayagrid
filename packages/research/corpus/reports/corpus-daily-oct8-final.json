@@ -1,0 +1,330 @@
+{
+  "ok": true,
+  "classification": "DAILY_HIGH_VALUE_COURTLISTENER_STRENGTHENING_OCT8",
+  "status": "CORPUS_DAILY_OCT8_COMPLETE",
+  "stopReason": "SAFE_HOURLY_HEADROOM",
+  "edpaFsuppRefinement": {
+    "normalizationIssueFound": true,
+    "issue": "cluster_citation_mismatch from F. Supp. / F.Supp. spacing and lookup-vs-cluster cite shapes",
+    "fixMade": true,
+    "readyEdpaTargets": 6,
+    "edpaCasesAcquired": 5
+  },
+  "courtListener": {
+    "limitMin": 25,
+    "limitHour": 300,
+    "limitDay": 1400,
+    "remainingAtStart": {
+      "minute": 25,
+      "hour": 300,
+      "day": 1130
+    },
+    "safeBatchBudget": 270,
+    "priorProbe": 10,
+    "productiveRequests": 260,
+    "requestsActuallyUsed": 270,
+    "rateLimited429": 0,
+    "gateway502_504": 0,
+    "longWaitsOver5m": 0
+  },
+  "startSnapshot": {
+    "cases": 4929,
+    "authorities": 6284,
+    "extracted": 58491,
+    "resolved": 8696,
+    "unresolved": 49795,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": -1
+  },
+  "laneResults": {
+    "edpa": {
+      "requests": 19,
+      "cases": 5,
+      "oldResolves": 27
+    },
+    "third_circuit": {
+      "requests": 104,
+      "cases": 34,
+      "oldResolves": 200
+    },
+    "federal_reporter": {
+      "requests": 137,
+      "cases": 39,
+      "oldResolves": 281
+    },
+    "pa_appellate": {
+      "requests": 0,
+      "cases": 0,
+      "oldResolves": 0
+    }
+  },
+  "totalValue": {
+    "casesAdded": 78,
+    "oldUnresolvedResolved": 508,
+    "newEdges": 2914,
+    "netUnresolvedChange": 2406,
+    "uniqueMissingTargetsEliminated": 78,
+    "controllingAuthorities": 78,
+    "benchmarkRelevant": 0
+  },
+  "efficiency": {
+    "casesPerCl": 0.3,
+    "oldResolvesPerCl": 1.954,
+    "uniqueTargetsPerCl": 0.3,
+    "edpaPerCl": 0.019,
+    "controllingPerCl": 0.3
+  },
+  "corpusHealth": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": -1,
+    "status": "GREEN"
+  },
+  "endSnapshot": {
+    "cases": 5007,
+    "authorities": 6362,
+    "extracted": 61405,
+    "resolved": 9204,
+    "unresolved": 52201,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": -1
+  },
+  "highValueHandoff": [
+    {
+      "citation": "176 F.Supp.2d 1301",
+      "title": "McKnight v. Benitez",
+      "court": "Unknown Court",
+      "authorityId": "81552a84-232d-4309-953d-7a5465a44488",
+      "clRequests": 3,
+      "reason": "LANE1_edpa_fsupp_edges=1_sources=1_fromEdpa",
+      "laneName": "edpa",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "126 F.Supp.2d 1083",
+      "title": "Sprouse v. City Credits Co.",
+      "court": "Unknown Court",
+      "authorityId": "4d0483d7-21d7-4533-bd4f-d05f8c5be9eb",
+      "clRequests": 3,
+      "reason": "LANE1_edpa_fsupp_edges=1_sources=1_fromEdpa",
+      "laneName": "edpa",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "15 F.Supp.3d 466",
+      "title": "In re Warrant to Search a Certain E-Mail Account Controlled & Maintained by Microsoft Corp.",
+      "court": "Unknown Court",
+      "authorityId": "f5d1e844-1d93-4d13-8ae1-a45c6b0f409e",
+      "clRequests": 3,
+      "reason": "LANE1_edpa_fsupp_edges=1_sources=1_fromEdpa",
+      "laneName": "edpa",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "134 F.Supp. 487",
+      "title": "Bredder v. Leidenfrost",
+      "court": "Unknown Court",
+      "authorityId": "c79e13b2-09ca-4b80-a7ca-71e2c7dba478",
+      "clRequests": 3,
+      "reason": "LANE1_edpa_fsupp_edges=1_sources=1_fromEdpa",
+      "laneName": "edpa",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "277 F.Supp. 864",
+      "title": "Huey v. Barloga",
+      "court": "Unknown Court",
+      "authorityId": "6b325a05-3dc4-479f-9dc4-a9c6d299459a",
+      "clRequests": 3,
+      "reason": "LANE1_edpa_fsupp_edges=1_sources=1_fromEdpa",
+      "laneName": "edpa",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "719 F.2d 670",
+      "title": "Ursic v. Bethlehem Mines",
+      "court": "Unknown Court",
+      "authorityId": "9abf5925-0de6-45f7-aecb-44aa5558cb59",
+      "clRequests": 3,
+      "reason": "LANE2_ca3_edges=3_sources=3",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "842 F.2d 31",
+      "title": "Corcoran v. Ardra Insurance",
+      "court": "Unknown Court",
+      "authorityId": "6d19dcb7-1312-4b2f-b5e0-d7fc157c868d",
+      "clRequests": 3,
+      "reason": "LANE2_ca3_edges=3_sources=3",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "464 F.3d 496",
+      "title": "United States v. Barrera",
+      "court": "Unknown Court",
+      "authorityId": "ff5eb302-9feb-4c15-9aee-83a5958ebbc7",
+      "clRequests": 3,
+      "reason": "LANE2_ca3_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "44 F.3d 1530",
+      "title": "United States v. Magluta",
+      "court": "Unknown Court",
+      "authorityId": "61ccd9ee-863c-436b-b65d-ff925a944394",
+      "clRequests": 3,
+      "reason": "LANE2_ca3_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "57 F.3d 212",
+      "title": "United States v. Phillip Lauter",
+      "court": "Unknown Court",
+      "authorityId": "db646ce7-ec28-4d29-a230-fe0bb3088ad4",
+      "clRequests": 3,
+      "reason": "LANE2_ca3_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "666 F.3d 577",
+      "title": "Bonneau v. Centennial School District No. 28J",
+      "court": "Unknown Court",
+      "authorityId": "0990927a-bad2-447f-ab90-62b310588b58",
+      "clRequests": 3,
+      "reason": "LANE2_ca3_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "830 F.2d 1190",
+      "title": "Margo Lynch, Ppa Dennis Lynch, Dennis Lynch and Margaret Lynch v. Merrell-National Laboratories, Division of Richardson-Merrell, Inc.",
+      "court": "Unknown Court",
+      "authorityId": "b25bffc3-ede9-4d68-8153-010c73e97a1a",
+      "clRequests": 3,
+      "reason": "LANE2_ca3_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "964 F.2d 706",
+      "title": "In the Matter of Amoco Petroleum Additives Company and Buck Isbell, in the Matter of Robin A.G. Jackson, an Underwriter at Lloyd's, London",
+      "court": "Unknown Court",
+      "authorityId": "7d56cb44-2cf2-4694-9d7f-51cd384d60b9",
+      "clRequests": 3,
+      "reason": "LANE2_ca3_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "891 F.2d 63",
+      "title": "Air-Shields, Inc. v. Fullam",
+      "court": "Unknown Court",
+      "authorityId": "89012029-e3a2-4dff-8f05-5b4fa0d9693a",
+      "clRequests": 3,
+      "reason": "LANE2_ca3_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "104 F.3d 59",
+      "title": "United States v. Route",
+      "court": "Unknown Court",
+      "authorityId": "cbf056cb-b412-4c1b-94da-aefd4fbbeb25",
+      "clRequests": 3,
+      "reason": "LANE2_ca3_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "172 F.3d 1220",
+      "title": "Valdez v. McPheters",
+      "court": "Unknown Court",
+      "authorityId": "3f8503f7-2e8a-4f5a-8343-694218cc2b95",
+      "clRequests": 3,
+      "reason": "LANE2_ca3_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "314 F.3d 1105",
+      "title": "United States v. Clarence Kenneth Gorman",
+      "court": "Unknown Court",
+      "authorityId": "717d0004-c498-4a52-a373-f01e6421fb22",
+      "clRequests": 3,
+      "reason": "LANE2_ca3_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "706 F.2d 1205",
+      "title": "Martha Johnson and Delores J. Ceballos, Etc. v. University College of the University of Alabama in Birmingham George W. Campbell, Etc.",
+      "court": "Unknown Court",
+      "authorityId": "1d5a5a21-7d27-4de1-a14f-e44fe3e885d9",
+      "clRequests": 3,
+      "reason": "LANE2_ca3_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "842 F.2d 1436",
+      "title": "Student Public Interest Research Group of New Jersey, Inc. And Friends of the Earth, in 86-5927 v. At & T Bell Laboratories, in 86-5895",
+      "court": "Unknown Court",
+      "authorityId": "94b57e04-1d26-49b5-bb06-ad197923ea13",
+      "clRequests": 3,
+      "reason": "LANE2_ca3_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    },
+    {
+      "citation": "576 F.3d 465",
+      "title": "United States v. Jackson",
+      "court": "Unknown Court",
+      "authorityId": "d2384010-f6ed-4d76-ae13-e63a49b25a88",
+      "clRequests": 3,
+      "reason": "LANE2_ca3_edges=2_sources=2",
+      "laneName": "third_circuit",
+      "benchmarkRelevant": false,
+      "status": "imported"
+    }
+  ],
+  "finalResolve": {
+    "resolvedAfter": 9204,
+    "newResolved": 0
+  },
+  "batches": 5
+}

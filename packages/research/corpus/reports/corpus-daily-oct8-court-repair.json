@@ -1,0 +1,475 @@
+{
+  "ok": true,
+  "candidates": 78,
+  "repaired": [
+    {
+      "citation": "176 F.Supp.2d 1301",
+      "courtId": "us-district-unspecified",
+      "method": "oct8_fsupp_district_family"
+    },
+    {
+      "citation": "126 F.Supp.2d 1083",
+      "courtId": "us-district-unspecified",
+      "method": "oct8_fsupp_district_family"
+    },
+    {
+      "citation": "15 F.Supp.3d 466",
+      "courtId": "us-d-paed",
+      "method": "oct8_fsupp_edpa_hint"
+    },
+    {
+      "citation": "134 F.Supp. 487",
+      "courtId": "us-d-paed",
+      "method": "oct8_fsupp_edpa_hint"
+    },
+    {
+      "citation": "277 F.Supp. 864",
+      "courtId": "us-d-paed",
+      "method": "oct8_fsupp_edpa_hint"
+    },
+    {
+      "citation": "891 F.2d 63",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "666 F.3d 577",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "964 F.2d 706",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "830 F.2d 1190",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "104 F.3d 59",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "911 F.2d 72",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "859 F.2d 649",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "926 F.2d 262",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "877 F.3d 136",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "916 F.2d 829",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "829 F.2d 367",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "911 F.2d 985",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "883 F.2d 551",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "880 F.2d 1204",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "619 F.2d 252",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "359 F.2d 994",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "808 F.2d 1298",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "719 F.2d 670",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "842 F.2d 31",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "44 F.3d 1530",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "464 F.3d 496",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "57 F.3d 212",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "172 F.3d 1220",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "842 F.2d 1436",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "314 F.3d 1105",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "706 F.2d 1205",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "538 F.3d 175",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "576 F.3d 465",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "616 F.2d 795",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "696 F.3d 352",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "609 F.3d 239",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "596 F.2d 84",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "585 F.2d 47",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "83 F.3d 212",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "683 F.2d 62",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "857 F.2d 823",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "122 F.3d 847",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "539 F.3d 404",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "583 F.2d 1208",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "898 F.2d 1465",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "429 F.3d 282",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "980 F.3d 897",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "924 F.2d 209",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "593 F.2d 1375",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "836 F.3d 336",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "500 F.3d 1099",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "913 F.3d 152",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "116 F.4th 458",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "984 F.2d 1136",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "899 F.2d 1097",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "198 F.2d 615",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "98 F.4th 843",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "670 F.3d 1244",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "73 F.3d 1067",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "738 F.3d 960",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "929 F.2d 1126",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "863 F.2d 835",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "873 F.2d 136",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "58 F.2d 629",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "741 F.2d 273",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "428 F.2d 1093",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "814 F.2d 607",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "594 F.3d 1111",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "89 F.2d 869",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "69 F.4th 96",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "139 F.2d 774",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "598 F.3d 768",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "870 F.2d 65",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "724 F.3d 426",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "614 F.3d 638",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "838 F.2d 656",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "702 F.3d 933",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "907 F.2d 1077",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    }
+  ],
+  "remainingUnknown": 0,
+  "courtListenerHttpCalls": 0,
+  "sample": [
+    {
+      "citation": "176 F.Supp.2d 1301",
+      "courtId": "us-district-unspecified",
+      "method": "oct8_fsupp_district_family"
+    },
+    {
+      "citation": "126 F.Supp.2d 1083",
+      "courtId": "us-district-unspecified",
+      "method": "oct8_fsupp_district_family"
+    },
+    {
+      "citation": "15 F.Supp.3d 466",
+      "courtId": "us-d-paed",
+      "method": "oct8_fsupp_edpa_hint"
+    },
+    {
+      "citation": "134 F.Supp. 487",
+      "courtId": "us-d-paed",
+      "method": "oct8_fsupp_edpa_hint"
+    },
+    {
+      "citation": "277 F.Supp. 864",
+      "courtId": "us-d-paed",
+      "method": "oct8_fsupp_edpa_hint"
+    },
+    {
+      "citation": "891 F.2d 63",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "666 F.3d 577",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "964 F.2d 706",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "830 F.2d 1190",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "104 F.3d 59",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "911 F.2d 72",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "859 F.2d 649",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "926 F.2d 262",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "877 F.3d 136",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    },
+    {
+      "citation": "916 F.2d 829",
+      "courtId": "us-circuit-unspecified",
+      "method": "oct8_federal_reporter_family"
+    }
+  ]
+}
