@@ -1,0 +1,1864 @@
+{
+  "classification": "CORPUS_DAILY_OCT8_BATCH3_RUN",
+  "startedAt": "2026-10-08T18:07:06.979Z",
+  "totalBudget": 270,
+  "priorCl": 76,
+  "safeProductive": 194,
+  "startSnapshot": {
+    "cases": 5031,
+    "authorities": 6386,
+    "extracted": 62325,
+    "resolved": 9428,
+    "unresolved": 52897,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": 0,
+    "usCircuitUnspecified": 130
+  },
+  "startCitationMark": {
+    "extracted": 62325,
+    "resolved": 9428,
+    "unresolved": 52897,
+    "maxCreatedAt": "2026-10-08T16:34:08.307Z"
+  },
+  "remainingAtStart": {
+    "minute": 25,
+    "hour": 300,
+    "day": 831
+  },
+  "pointer": 72,
+  "stopReason": "SAFE_HOURLY_HEADROOM",
+  "continue": false,
+  "metrics": {
+    "requestsUsed": 194,
+    "casesAdded": 42,
+    "oldResolves": 151,
+    "uniqueTargetsEliminated": 42,
+    "newEdges": 1393,
+    "controllingAdded": 42,
+    "benchmarkRelevantAdded": 0,
+    "rateLimited": 0,
+    "gateway502_504": 0,
+    "longWaitsOver5m": 0,
+    "acquired": [
+      {
+        "citation": "540 F.2d 102",
+        "title": "Lindy Bros. Builders, Inc. v. American Radiator & Standard Sanitary Corp.",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "a525d1a4-65cc-44ed-b449-0e4775ec743e",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=10",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "616 F.3d 685",
+        "title": "United States v. Williams",
+        "court": "United States Court of Appeals for the Seventh Circuit",
+        "authorityId": "78b4c350-1f31-4dd8-ad2a-c2d3116f47dd",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=7",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "487 F.2d 161",
+        "title": "Lindy Bros. Builders, Inc. of Phila. v. American Radiator & Standard Sanitary Corp.",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "eafaf2f7-8507-4689-be13-a6e7f61399c0",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=7",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "621 F.3d 681",
+        "title": "United States v. Yancey",
+        "court": "United States Court of Appeals for the Seventh Circuit",
+        "authorityId": "88a3eb0d-ef41-4908-bc57-dac22dd272fa",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=6",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "559 F.3d 348",
+        "title": "United States v. Anderson",
+        "court": "United States Court of Appeals for the Fifth Circuit",
+        "authorityId": "c7bed78b-3569-4a68-8f70-80b6e0ec27d5",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=6",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "578 F.2d 483",
+        "title": "Hughes v. Repko",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "190f6850-94ce-4261-bde9-2fb817c286e4",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=6",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "628 F.3d 673",
+        "title": "United States v. Chester",
+        "court": "United States Court of Appeals for the Fourth Circuit",
+        "authorityId": "a429725d-f160-47d7-9ab5-4da559da9fca",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=5",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "651 F.3d 684",
+        "title": "Rhonda Ezell v. City of Chicago",
+        "court": "United States Court of Appeals for the Seventh Circuit",
+        "authorityId": "def41af3-f158-4aef-af89-3fbc7211a47a",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=5",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "704 F.3d 980",
+        "title": "Jefferson Schrader v. Eric Holder, Jr.",
+        "court": "United States Court of Appeals for the District of Columbia Circuit",
+        "authorityId": "7d7222b0-1316-4cc8-920f-d771dcd03fac",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=5",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "583 F.3d 8",
+        "title": "United States v. Rene E.",
+        "court": "United States Court of Appeals for the First Circuit",
+        "authorityId": "4a54ba8f-62fc-4e51-bc73-798a763a3455",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=4",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "584 F.3d 132",
+        "title": "United States v. Fullmer",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "ce31ed99-33c7-441f-9889-a14782bb63ec",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=4",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "606 F.2d 635",
+        "title": "Rita Johnson, Plaintiffs-Appellees-Cross v. The State of Mississippi, Defendants-Appellants-Cross",
+        "court": "United States Court of Appeals for the Fifth Circuit",
+        "authorityId": "823bf199-4726-4ce0-80b4-e102550eeeba",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=4",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "641 F.2d 880",
+        "title": "Dolores J. Copeland, Individually and on Behalf of the Class of All Others Similarly Situated v. F. Ray Marshall, Secretary of Labor",
+        "court": "United States Court of Appeals for the District of Columbia Circuit",
+        "authorityId": "1d22e786-c82f-47a8-842c-f272c0dec12f",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=4",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "658 F.3d 110",
+        "title": "United States v. Torres-Rosario",
+        "court": "United States Court of Appeals for the First Circuit",
+        "authorityId": "652c9a66-d33b-4e1b-8198-7834bb7ca748",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=4",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "407 F.2d 433",
+        "title": "John Leggett v. United States",
+        "court": "United States Court of Appeals for the Ninth Circuit",
+        "authorityId": "ec70c30c-56f4-40b3-bd62-cb109e20029d",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "664 F.3d 1180",
+        "title": "United States v. Bena",
+        "court": "United States Court of Appeals for the Eighth Circuit",
+        "authorityId": "0d7eb8ab-bcf7-4621-bca7-63c79cf3068d",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "666 F.3d 313",
+        "title": "United States v. Moore",
+        "court": "United States Court of Appeals for the Fourth Circuit",
+        "authorityId": "4f701bc6-2ed2-4a30-bf8f-bc3206e1c30e",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "515 F.2d 165",
+        "title": "Merola v. Atlantic Richfield Co.",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "33918cb2-b767-4b19-8258-6e6c85ae693b",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "701 F.3d 974",
+        "title": "United States v. Nicolas Carpio-Leon",
+        "court": "United States Court of Appeals for the Fourth Circuit",
+        "authorityId": "ccc19c27-0258-4915-89d8-54a66ace375f",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "751 F.2d 562",
+        "title": "In re Fine Paper Antitrust Litigation",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "716c6e3c-b59e-4883-928a-cc319ce891a9",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "804 F.3d 242",
+        "title": "New York State Rifle & Pistol Ass'n v. Cuomo",
+        "court": "United States Court of Appeals for the Second Circuit",
+        "authorityId": "2e0cd333-bfde-420c-ac12-fed6e47cf415",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "837 F.3d 678",
+        "title": "Clifford Tyler v. Hillsdale County Sheriff's Dep't",
+        "court": "United States Court of Appeals for the Sixth Circuit",
+        "authorityId": "11328026-bf86-48b1-8cb0-23de27d5cd53",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "848 F.3d 614",
+        "title": "James Hamilton v. William Pallozzi",
+        "court": "United States Court of Appeals for the Fourth Circuit",
+        "authorityId": "7a64d989-4534-4143-81bc-3a93efc76177",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "531 F.2d 92",
+        "title": "Arthur H. Pitchford and Pitchford Scientific Instruments Corporation v. Pepi, Inc.",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "0bca3d08-2705-4f0e-89a5-8a99c77275a4",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "478 F.3d 370",
+        "title": "Parker v. District of Columbia",
+        "court": "United States Court of Appeals for the District of Columbia Circuit",
+        "authorityId": "74a86edc-377d-448b-b742-4b940c6ce17b",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "581 F.2d 275",
+        "title": "Larry Nadeau v. Raymond A. Helgemoe, Warden, New Hampshire State Prison",
+        "court": "United States Court of Appeals for the First Circuit",
+        "authorityId": "53a8b359-6ee3-44d9-b76f-a7edcaef7b38",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "587 F.3d 803",
+        "title": "United States v. Skoien",
+        "court": "United States Court of Appeals for the Seventh Circuit",
+        "authorityId": "fa687e67-3dc5-4cf4-bfa2-c179c015a13d",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "6 F.3d 147",
+        "title": "Tabron v. Grace",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "890e4ed3-d5e8-40f5-8d20-56c2e6e4c79e",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "644 F.3d 12",
+        "title": "United States v. Booker",
+        "court": "United States Court of Appeals for the First Circuit",
+        "authorityId": "f450a5b4-4d82-4c4a-bc7d-72ca09b52ce2",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "407 F.3d 193",
+        "title": "United States v. Aaron Agnew",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "e4e60aa2-1ad6-4263-9a4f-148012dac453",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "453 F.3d 164",
+        "title": "United States v. Samuel Veal A/K/A Ice Samuel Veal",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "b0e04139-ae87-406e-9136-a0adc012d8de",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "478 F.2d 1398",
+        "title": "Avalon Real Estate Agency v. Glens Falls Insurance Company",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "908e71f7-048f-43cf-97fa-6af0835978b9",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "486 F.3d 806",
+        "title": "Krim M. Ballentine v. United States",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "c6620fa1-fea4-4eb5-aa8b-2171eae5c642",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "501 F.3d 524",
+        "title": "United States v. Amos",
+        "court": "United States Court of Appeals for the Sixth Circuit",
+        "authorityId": "ed972854-7357-4d3d-8801-82ac765be942",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "515 F.3d 224",
+        "title": "Phillips v. County of Allegheny",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "1d9db89f-ad17-42fb-9861-93ea414cf4d0",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "538 F.3d 868",
+        "title": "United States v. Fincher",
+        "court": "United States Court of Appeals for the Eighth Circuit",
+        "authorityId": "430b6f7f-0d93-4ed5-84ca-46bd786804f4",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "546 F.2d 530",
+        "title": "Universal Athletic Sales Co., a Corporation v. American Gym, Recreational & Athletic Equipment Corporation, Inc.",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "8f893f76-9862-42bb-af83-aaa147b792b4",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "56 F.4th 992",
+        "title": "Bryan Range v. Attorney General United States",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "6e334629-3b52-4527-8e70-303193c36528",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "564 F.2d 609",
+        "title": "Anthony Souza v. Bradford Southworth",
+        "court": "United States Court of Appeals for the First Circuit",
+        "authorityId": "79cd368f-e2a6-4e74-aeec-2a8f47a57d96",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "593 F.3d 1199",
+        "title": "United States v. White",
+        "court": "United States Court of Appeals for the Eleventh Circuit",
+        "authorityId": "02cc7ec6-76a5-43eb-8e27-c46f29816510",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "594 F.2d 336",
+        "title": "Gagne v. Maher",
+        "court": "United States Court of Appeals for the Second Circuit",
+        "authorityId": "55535234-eaa2-4096-86f6-206f6b2cc67a",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "606 F.2d 411",
+        "title": "Bagby v. Beal",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "7e2ef223-1483-4929-807f-58d6d1cca55f",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      }
+    ],
+    "batches": [
+      {
+        "at": "2026-10-08T18:11:11.325Z",
+        "attempted": [
+          {
+            "citation": "540 F.2d 102",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "616 F.3d 685",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "487 F.2d 161",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "621 F.3d 681",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "559 F.3d 348",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "578 F.2d 483",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "628 F.3d 673",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "651 F.3d 684",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "704 F.3d 980",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "583 F.3d 8",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "584 F.3d 132",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "606 F.2d 635",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "641 F.2d 880",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "658 F.3d 110",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "679 F.3d 510",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "700 F.3d 185",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "717 F.3d 281",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "368 F.3d 517",
+            "lane": "third_circuit"
+          }
+        ],
+        "clUsed": 60,
+        "casesAdded": 14,
+        "resolvedDelta": 137,
+        "newEdges": 509,
+        "efficiency": {
+          "casesPerCl": 0.233,
+          "resolvedDeltaPerCl": 2.283
+        },
+        "health": "GREEN",
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "540 F.2d 102",
+            "title": "Lindy Bros. Builders, Inc. v. American Radiator & Standard Sanitary Corp.",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "a525d1a4-65cc-44ed-b449-0e4775ec743e",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=10",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "616 F.3d 685",
+            "title": "United States v. Williams",
+            "court": "United States Court of Appeals for the Seventh Circuit",
+            "authorityId": "78b4c350-1f31-4dd8-ad2a-c2d3116f47dd",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=7",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "487 F.2d 161",
+            "title": "Lindy Bros. Builders, Inc. of Phila. v. American Radiator & Standard Sanitary Corp.",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "eafaf2f7-8507-4689-be13-a6e7f61399c0",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=7",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "621 F.3d 681",
+            "title": "United States v. Yancey",
+            "court": "United States Court of Appeals for the Seventh Circuit",
+            "authorityId": "88a3eb0d-ef41-4908-bc57-dac22dd272fa",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=6",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "559 F.3d 348",
+            "title": "United States v. Anderson",
+            "court": "United States Court of Appeals for the Fifth Circuit",
+            "authorityId": "c7bed78b-3569-4a68-8f70-80b6e0ec27d5",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=6",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "578 F.2d 483",
+            "title": "Hughes v. Repko",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "190f6850-94ce-4261-bde9-2fb817c286e4",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=6",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "628 F.3d 673",
+            "title": "United States v. Chester",
+            "court": "United States Court of Appeals for the Fourth Circuit",
+            "authorityId": "a429725d-f160-47d7-9ab5-4da559da9fca",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=5",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "651 F.3d 684",
+            "title": "Rhonda Ezell v. City of Chicago",
+            "court": "United States Court of Appeals for the Seventh Circuit",
+            "authorityId": "def41af3-f158-4aef-af89-3fbc7211a47a",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=5",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "704 F.3d 980",
+            "title": "Jefferson Schrader v. Eric Holder, Jr.",
+            "court": "United States Court of Appeals for the District of Columbia Circuit",
+            "authorityId": "7d7222b0-1316-4cc8-920f-d771dcd03fac",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=5",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "583 F.3d 8",
+            "title": "United States v. Rene E.",
+            "court": "United States Court of Appeals for the First Circuit",
+            "authorityId": "4a54ba8f-62fc-4e51-bc73-798a763a3455",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=4",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "584 F.3d 132",
+            "title": "United States v. Fullmer",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "ce31ed99-33c7-441f-9889-a14782bb63ec",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=4",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "606 F.2d 635",
+            "title": "Rita Johnson, Plaintiffs-Appellees-Cross v. The State of Mississippi, Defendants-Appellants-Cross",
+            "court": "United States Court of Appeals for the Fifth Circuit",
+            "authorityId": "823bf199-4726-4ce0-80b4-e102550eeeba",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=4",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "641 F.2d 880",
+            "title": "Dolores J. Copeland, Individually and on Behalf of the Class of All Others Similarly Situated v. F. Ray Marshall, Secretary of Labor",
+            "court": "United States Court of Appeals for the District of Columbia Circuit",
+            "authorityId": "1d22e786-c82f-47a8-842c-f272c0dec12f",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=4",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "658 F.3d 110",
+            "title": "United States v. Torres-Rosario",
+            "court": "United States Court of Appeals for the First Circuit",
+            "authorityId": "652c9a66-d33b-4e1b-8198-7834bb7ca748",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=4",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-08T18:15:18.040Z",
+        "attempted": [
+          {
+            "citation": "407 F.2d 433",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "664 F.3d 1180",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "666 F.3d 313",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "515 F.2d 165",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "701 F.3d 974",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "751 F.2d 562",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "967 F.3d 327",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "804 F.3d 242",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "837 F.3d 678",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "848 F.3d 614",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "531 F.2d 92",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "478 F.3d 370",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "581 F.2d 275",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "587 F.3d 803",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "6 F.3d 147",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "602 F.3d 738",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "569 F.2d 1231",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "638 F.3d 581",
+            "lane": "third_circuit"
+          }
+        ],
+        "clUsed": 60,
+        "casesAdded": 14,
+        "resolvedDelta": 115,
+        "newEdges": 401,
+        "efficiency": {
+          "casesPerCl": 0.233,
+          "resolvedDeltaPerCl": 1.917
+        },
+        "health": "GREEN",
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "407 F.2d 433",
+            "title": "John Leggett v. United States",
+            "court": "United States Court of Appeals for the Ninth Circuit",
+            "authorityId": "ec70c30c-56f4-40b3-bd62-cb109e20029d",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "664 F.3d 1180",
+            "title": "United States v. Bena",
+            "court": "United States Court of Appeals for the Eighth Circuit",
+            "authorityId": "0d7eb8ab-bcf7-4621-bca7-63c79cf3068d",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "666 F.3d 313",
+            "title": "United States v. Moore",
+            "court": "United States Court of Appeals for the Fourth Circuit",
+            "authorityId": "4f701bc6-2ed2-4a30-bf8f-bc3206e1c30e",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "515 F.2d 165",
+            "title": "Merola v. Atlantic Richfield Co.",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "33918cb2-b767-4b19-8258-6e6c85ae693b",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "701 F.3d 974",
+            "title": "United States v. Nicolas Carpio-Leon",
+            "court": "United States Court of Appeals for the Fourth Circuit",
+            "authorityId": "ccc19c27-0258-4915-89d8-54a66ace375f",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "751 F.2d 562",
+            "title": "In re Fine Paper Antitrust Litigation",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "716c6e3c-b59e-4883-928a-cc319ce891a9",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "804 F.3d 242",
+            "title": "New York State Rifle & Pistol Ass'n v. Cuomo",
+            "court": "United States Court of Appeals for the Second Circuit",
+            "authorityId": "2e0cd333-bfde-420c-ac12-fed6e47cf415",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "837 F.3d 678",
+            "title": "Clifford Tyler v. Hillsdale County Sheriff's Dep't",
+            "court": "United States Court of Appeals for the Sixth Circuit",
+            "authorityId": "11328026-bf86-48b1-8cb0-23de27d5cd53",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "848 F.3d 614",
+            "title": "James Hamilton v. William Pallozzi",
+            "court": "United States Court of Appeals for the Fourth Circuit",
+            "authorityId": "7a64d989-4534-4143-81bc-3a93efc76177",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "531 F.2d 92",
+            "title": "Arthur H. Pitchford and Pitchford Scientific Instruments Corporation v. Pepi, Inc.",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "0bca3d08-2705-4f0e-89a5-8a99c77275a4",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "478 F.3d 370",
+            "title": "Parker v. District of Columbia",
+            "court": "United States Court of Appeals for the District of Columbia Circuit",
+            "authorityId": "74a86edc-377d-448b-b742-4b940c6ce17b",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "581 F.2d 275",
+            "title": "Larry Nadeau v. Raymond A. Helgemoe, Warden, New Hampshire State Prison",
+            "court": "United States Court of Appeals for the First Circuit",
+            "authorityId": "53a8b359-6ee3-44d9-b76f-a7edcaef7b38",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "587 F.3d 803",
+            "title": "United States v. Skoien",
+            "court": "United States Court of Appeals for the Seventh Circuit",
+            "authorityId": "fa687e67-3dc5-4cf4-bfa2-c179c015a13d",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "6 F.3d 147",
+            "title": "Tabron v. Grace",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "890e4ed3-d5e8-40f5-8d20-56c2e6e4c79e",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-08T18:20:46.166Z",
+        "attempted": [
+          {
+            "citation": "644 F.3d 12",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "407 F.3d 193",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "453 F.3d 164",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "478 F.2d 1398",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "486 F.3d 806",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "501 F.3d 524",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "515 F.3d 224",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "53 F.4th 262",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "538 F.3d 868",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "546 F.2d 530",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "56 F.4th 992",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "564 F.2d 609",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "593 F.3d 1199",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "594 F.2d 336",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "595 F.2d 1265",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "606 F.2d 411",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "622 F.2d 672",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "652 F.2d 1165",
+            "lane": "third_circuit"
+          }
+        ],
+        "clUsed": 60,
+        "casesAdded": 14,
+        "resolvedDelta": 80,
+        "newEdges": 483,
+        "efficiency": {
+          "casesPerCl": 0.233,
+          "resolvedDeltaPerCl": 1.333
+        },
+        "health": "GREEN",
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "644 F.3d 12",
+            "title": "United States v. Booker",
+            "court": "United States Court of Appeals for the First Circuit",
+            "authorityId": "f450a5b4-4d82-4c4a-bc7d-72ca09b52ce2",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "407 F.3d 193",
+            "title": "United States v. Aaron Agnew",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "e4e60aa2-1ad6-4263-9a4f-148012dac453",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "453 F.3d 164",
+            "title": "United States v. Samuel Veal A/K/A Ice Samuel Veal",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "b0e04139-ae87-406e-9136-a0adc012d8de",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "478 F.2d 1398",
+            "title": "Avalon Real Estate Agency v. Glens Falls Insurance Company",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "908e71f7-048f-43cf-97fa-6af0835978b9",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "486 F.3d 806",
+            "title": "Krim M. Ballentine v. United States",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "c6620fa1-fea4-4eb5-aa8b-2171eae5c642",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "501 F.3d 524",
+            "title": "United States v. Amos",
+            "court": "United States Court of Appeals for the Sixth Circuit",
+            "authorityId": "ed972854-7357-4d3d-8801-82ac765be942",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "515 F.3d 224",
+            "title": "Phillips v. County of Allegheny",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "1d9db89f-ad17-42fb-9861-93ea414cf4d0",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "538 F.3d 868",
+            "title": "United States v. Fincher",
+            "court": "United States Court of Appeals for the Eighth Circuit",
+            "authorityId": "430b6f7f-0d93-4ed5-84ca-46bd786804f4",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "546 F.2d 530",
+            "title": "Universal Athletic Sales Co., a Corporation v. American Gym, Recreational & Athletic Equipment Corporation, Inc.",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "8f893f76-9862-42bb-af83-aaa147b792b4",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "56 F.4th 992",
+            "title": "Bryan Range v. Attorney General United States",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "6e334629-3b52-4527-8e70-303193c36528",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "564 F.2d 609",
+            "title": "Anthony Souza v. Bradford Southworth",
+            "court": "United States Court of Appeals for the First Circuit",
+            "authorityId": "79cd368f-e2a6-4e74-aeec-2a8f47a57d96",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "593 F.3d 1199",
+            "title": "United States v. White",
+            "court": "United States Court of Appeals for the Eleventh Circuit",
+            "authorityId": "02cc7ec6-76a5-43eb-8e27-c46f29816510",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "594 F.2d 336",
+            "title": "Gagne v. Maher",
+            "court": "United States Court of Appeals for the Second Circuit",
+            "authorityId": "55535234-eaa2-4096-86f6-206f6b2cc67a",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "606 F.2d 411",
+            "title": "Bagby v. Beal",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "7e2ef223-1483-4929-807f-58d6d1cca55f",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-08T18:21:39.981Z",
+        "attempted": [
+          {
+            "citation": "652 F.3d 387",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "675 F.2d 1319",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "684 F.2d 1375",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "687 F.3d 1244",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "688 F.3d 637",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "720 F.2d 1124",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "747 F.2d 838",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "754 F.3d 153",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "784 F.3d 406",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "842 F.2d 556",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "849 F.3d 114",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "913 F.2d 64",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "974 F.2d 1358",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "995 F.2d 1526",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "175 F.4th 34",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "180 F.4th 512",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "205 F.3d 606",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "26 F.3d 375",
+            "lane": "third_circuit"
+          }
+        ],
+        "clUsed": 14,
+        "casesAdded": 0,
+        "resolvedDelta": 0,
+        "newEdges": 0,
+        "efficiency": {
+          "casesPerCl": 0,
+          "resolvedDeltaPerCl": 0
+        },
+        "health": "GREEN",
+        "rateLimited": false,
+        "acquired": []
+      }
+    ],
+    "resolution": {
+      "OLD_UNRESOLVED_RESOLVED": 151,
+      "NEW_EDGES_TOTAL": 1394,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 182,
+      "NEW_EDGES_STILL_UNRESOLVED": 1212,
+      "TOTAL_RESOLVED_THIS_RUN": 333,
+      "oldCohortStillUnresolved": 52746,
+      "newCohort": {
+        "total": 1394,
+        "resolved": 182,
+        "unresolved": 1212
+      }
+    }
+  },
+  "lanes": {
+    "third_circuit": {
+      "requests": 194,
+      "cases": 42,
+      "oldResolves": 332,
+      "acquired": [
+        {
+          "citation": "540 F.2d 102",
+          "title": "Lindy Bros. Builders, Inc. v. American Radiator & Standard Sanitary Corp.",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "a525d1a4-65cc-44ed-b449-0e4775ec743e",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=10",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "616 F.3d 685",
+          "title": "United States v. Williams",
+          "court": "United States Court of Appeals for the Seventh Circuit",
+          "authorityId": "78b4c350-1f31-4dd8-ad2a-c2d3116f47dd",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=7",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "487 F.2d 161",
+          "title": "Lindy Bros. Builders, Inc. of Phila. v. American Radiator & Standard Sanitary Corp.",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "eafaf2f7-8507-4689-be13-a6e7f61399c0",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=7",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "621 F.3d 681",
+          "title": "United States v. Yancey",
+          "court": "United States Court of Appeals for the Seventh Circuit",
+          "authorityId": "88a3eb0d-ef41-4908-bc57-dac22dd272fa",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=6",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "559 F.3d 348",
+          "title": "United States v. Anderson",
+          "court": "United States Court of Appeals for the Fifth Circuit",
+          "authorityId": "c7bed78b-3569-4a68-8f70-80b6e0ec27d5",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=6",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "578 F.2d 483",
+          "title": "Hughes v. Repko",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "190f6850-94ce-4261-bde9-2fb817c286e4",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=6",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "628 F.3d 673",
+          "title": "United States v. Chester",
+          "court": "United States Court of Appeals for the Fourth Circuit",
+          "authorityId": "a429725d-f160-47d7-9ab5-4da559da9fca",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=5",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "651 F.3d 684",
+          "title": "Rhonda Ezell v. City of Chicago",
+          "court": "United States Court of Appeals for the Seventh Circuit",
+          "authorityId": "def41af3-f158-4aef-af89-3fbc7211a47a",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=5",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "704 F.3d 980",
+          "title": "Jefferson Schrader v. Eric Holder, Jr.",
+          "court": "United States Court of Appeals for the District of Columbia Circuit",
+          "authorityId": "7d7222b0-1316-4cc8-920f-d771dcd03fac",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=5",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "583 F.3d 8",
+          "title": "United States v. Rene E.",
+          "court": "United States Court of Appeals for the First Circuit",
+          "authorityId": "4a54ba8f-62fc-4e51-bc73-798a763a3455",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=4",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "584 F.3d 132",
+          "title": "United States v. Fullmer",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "ce31ed99-33c7-441f-9889-a14782bb63ec",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=4",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "606 F.2d 635",
+          "title": "Rita Johnson, Plaintiffs-Appellees-Cross v. The State of Mississippi, Defendants-Appellants-Cross",
+          "court": "United States Court of Appeals for the Fifth Circuit",
+          "authorityId": "823bf199-4726-4ce0-80b4-e102550eeeba",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=4",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "641 F.2d 880",
+          "title": "Dolores J. Copeland, Individually and on Behalf of the Class of All Others Similarly Situated v. F. Ray Marshall, Secretary of Labor",
+          "court": "United States Court of Appeals for the District of Columbia Circuit",
+          "authorityId": "1d22e786-c82f-47a8-842c-f272c0dec12f",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=4",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "658 F.3d 110",
+          "title": "United States v. Torres-Rosario",
+          "court": "United States Court of Appeals for the First Circuit",
+          "authorityId": "652c9a66-d33b-4e1b-8198-7834bb7ca748",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=4",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "407 F.2d 433",
+          "title": "John Leggett v. United States",
+          "court": "United States Court of Appeals for the Ninth Circuit",
+          "authorityId": "ec70c30c-56f4-40b3-bd62-cb109e20029d",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "664 F.3d 1180",
+          "title": "United States v. Bena",
+          "court": "United States Court of Appeals for the Eighth Circuit",
+          "authorityId": "0d7eb8ab-bcf7-4621-bca7-63c79cf3068d",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "666 F.3d 313",
+          "title": "United States v. Moore",
+          "court": "United States Court of Appeals for the Fourth Circuit",
+          "authorityId": "4f701bc6-2ed2-4a30-bf8f-bc3206e1c30e",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "515 F.2d 165",
+          "title": "Merola v. Atlantic Richfield Co.",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "33918cb2-b767-4b19-8258-6e6c85ae693b",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "701 F.3d 974",
+          "title": "United States v. Nicolas Carpio-Leon",
+          "court": "United States Court of Appeals for the Fourth Circuit",
+          "authorityId": "ccc19c27-0258-4915-89d8-54a66ace375f",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "751 F.2d 562",
+          "title": "In re Fine Paper Antitrust Litigation",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "716c6e3c-b59e-4883-928a-cc319ce891a9",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "804 F.3d 242",
+          "title": "New York State Rifle & Pistol Ass'n v. Cuomo",
+          "court": "United States Court of Appeals for the Second Circuit",
+          "authorityId": "2e0cd333-bfde-420c-ac12-fed6e47cf415",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "837 F.3d 678",
+          "title": "Clifford Tyler v. Hillsdale County Sheriff's Dep't",
+          "court": "United States Court of Appeals for the Sixth Circuit",
+          "authorityId": "11328026-bf86-48b1-8cb0-23de27d5cd53",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "848 F.3d 614",
+          "title": "James Hamilton v. William Pallozzi",
+          "court": "United States Court of Appeals for the Fourth Circuit",
+          "authorityId": "7a64d989-4534-4143-81bc-3a93efc76177",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "531 F.2d 92",
+          "title": "Arthur H. Pitchford and Pitchford Scientific Instruments Corporation v. Pepi, Inc.",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "0bca3d08-2705-4f0e-89a5-8a99c77275a4",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "478 F.3d 370",
+          "title": "Parker v. District of Columbia",
+          "court": "United States Court of Appeals for the District of Columbia Circuit",
+          "authorityId": "74a86edc-377d-448b-b742-4b940c6ce17b",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "581 F.2d 275",
+          "title": "Larry Nadeau v. Raymond A. Helgemoe, Warden, New Hampshire State Prison",
+          "court": "United States Court of Appeals for the First Circuit",
+          "authorityId": "53a8b359-6ee3-44d9-b76f-a7edcaef7b38",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "587 F.3d 803",
+          "title": "United States v. Skoien",
+          "court": "United States Court of Appeals for the Seventh Circuit",
+          "authorityId": "fa687e67-3dc5-4cf4-bfa2-c179c015a13d",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "6 F.3d 147",
+          "title": "Tabron v. Grace",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "890e4ed3-d5e8-40f5-8d20-56c2e6e4c79e",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "644 F.3d 12",
+          "title": "United States v. Booker",
+          "court": "United States Court of Appeals for the First Circuit",
+          "authorityId": "f450a5b4-4d82-4c4a-bc7d-72ca09b52ce2",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "407 F.3d 193",
+          "title": "United States v. Aaron Agnew",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "e4e60aa2-1ad6-4263-9a4f-148012dac453",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "453 F.3d 164",
+          "title": "United States v. Samuel Veal A/K/A Ice Samuel Veal",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "b0e04139-ae87-406e-9136-a0adc012d8de",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "478 F.2d 1398",
+          "title": "Avalon Real Estate Agency v. Glens Falls Insurance Company",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "908e71f7-048f-43cf-97fa-6af0835978b9",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "486 F.3d 806",
+          "title": "Krim M. Ballentine v. United States",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "c6620fa1-fea4-4eb5-aa8b-2171eae5c642",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "501 F.3d 524",
+          "title": "United States v. Amos",
+          "court": "United States Court of Appeals for the Sixth Circuit",
+          "authorityId": "ed972854-7357-4d3d-8801-82ac765be942",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "515 F.3d 224",
+          "title": "Phillips v. County of Allegheny",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "1d9db89f-ad17-42fb-9861-93ea414cf4d0",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "538 F.3d 868",
+          "title": "United States v. Fincher",
+          "court": "United States Court of Appeals for the Eighth Circuit",
+          "authorityId": "430b6f7f-0d93-4ed5-84ca-46bd786804f4",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "546 F.2d 530",
+          "title": "Universal Athletic Sales Co., a Corporation v. American Gym, Recreational & Athletic Equipment Corporation, Inc.",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "8f893f76-9862-42bb-af83-aaa147b792b4",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "56 F.4th 992",
+          "title": "Bryan Range v. Attorney General United States",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "6e334629-3b52-4527-8e70-303193c36528",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "564 F.2d 609",
+          "title": "Anthony Souza v. Bradford Southworth",
+          "court": "United States Court of Appeals for the First Circuit",
+          "authorityId": "79cd368f-e2a6-4e74-aeec-2a8f47a57d96",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "593 F.3d 1199",
+          "title": "United States v. White",
+          "court": "United States Court of Appeals for the Eleventh Circuit",
+          "authorityId": "02cc7ec6-76a5-43eb-8e27-c46f29816510",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "594 F.2d 336",
+          "title": "Gagne v. Maher",
+          "court": "United States Court of Appeals for the Second Circuit",
+          "authorityId": "55535234-eaa2-4096-86f6-206f6b2cc67a",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "606 F.2d 411",
+          "title": "Bagby v. Beal",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "7e2ef223-1483-4929-807f-58d6d1cca55f",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        }
+      ]
+    },
+    "other_circuits": {
+      "requests": 0,
+      "cases": 0,
+      "oldResolves": 0,
+      "acquired": []
+    },
+    "edpa": {
+      "requests": 0,
+      "cases": 0,
+      "oldResolves": 0,
+      "acquired": []
+    },
+    "federal_reporter": {
+      "requests": 0,
+      "cases": 0,
+      "oldResolves": 0,
+      "acquired": []
+    },
+    "pa_appellate": {
+      "requests": 0,
+      "cases": 0,
+      "oldResolves": 0,
+      "acquired": []
+    }
+  },
+  "lastResolved": 9760,
+  "lastUnresolved": 53958,
+  "lastExtracted": 63718,
+  "lastCases": 5073,
+  "finishedAt": "2026-10-08T18:21:41.302Z",
+  "endSnapshot": {
+    "cases": 5073,
+    "authorities": 6428,
+    "extracted": 63718,
+    "resolved": 9760,
+    "unresolved": 53958,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": 0,
+    "usCircuitUnspecified": 130
+  },
+  "trueCourtAcq": {
+    "third_circuit": 16,
+    "other_circuits": 26,
+    "edpa": 0,
+    "other_federal": 0,
+    "pa_appellate": 0
+  }
+}

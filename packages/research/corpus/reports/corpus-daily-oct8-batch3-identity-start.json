@@ -1,0 +1,27 @@
+{
+  "ok": true,
+  "classification": "CORPUS_DAILY_OCT8_BATCH3_IDENTITY_GATE",
+  "hostMatchesHistoricalWeek2Pooler": true,
+  "live": {
+    "cases": 5031,
+    "authorities": 6386,
+    "extracted": 62325,
+    "resolved": 9428,
+    "unresolved": 52897,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": 0,
+    "usCircuitUnspecified": 155
+  },
+  "floors": {
+    "cases": 5031,
+    "authorities": 6386,
+    "extracted": 62325,
+    "resolved": 9428
+  },
+  "generatedAt": "2026-10-08T18:01:29.150Z",
+  "courtListenerHttpCalls": 0
+}

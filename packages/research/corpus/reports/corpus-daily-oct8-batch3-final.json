@@ -1,0 +1,416 @@
+{
+  "ok": true,
+  "classification": "DAILY_HIGH_VALUE_COURTLISTENER_OCT8_BATCH3",
+  "status": "CORPUS_DAILY_OCT8_BATCH3_PARTIAL",
+  "stopReason": "SAFE_HOURLY_HEADROOM",
+  "retryAfter": null,
+  "circuitRefinement": {
+    "reviewed": 25,
+    "exactCircuitsResolved": 25,
+    "thirdCircuitIdentified": 3,
+    "otherCircuitsIdentified": 22,
+    "stillUnresolved": 130,
+    "byCircuit": {
+      "us-ca-7": 2,
+      "us-ca-6": 2,
+      "us-ca-11": 5,
+      "us-ca-9": 2,
+      "us-ca-dc": 4,
+      "us-ca-10": 3,
+      "us-ca-5": 3,
+      "us-ca-3": 3,
+      "us-ca-8": 1
+    },
+    "refineCl": 75,
+    "reviewedCount": 25
+  },
+  "courtListener": {
+    "limitMin": 25,
+    "limitHour": 300,
+    "limitDay": 1400,
+    "remainingAtStart": {
+      "minute": 25,
+      "hour": 300,
+      "day": 831
+    },
+    "safeBudget": 270,
+    "priorCl": 76,
+    "productiveRequests": 194,
+    "requestsActuallyUsed": 270,
+    "rateLimited429": 0,
+    "gateway502_504": 0,
+    "longWaitsOver5m": 0
+  },
+  "startSnapshot": {
+    "cases": 5031,
+    "authorities": 6386,
+    "extracted": 62325,
+    "resolved": 9428,
+    "unresolved": 52897,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": 0,
+    "usCircuitUnspecified": 130
+  },
+  "acquisition": {
+    "casesAdded": 42,
+    "thirdCircuit": 16,
+    "otherCircuits": 26,
+    "edpa": 0,
+    "otherFederal": 0,
+    "paAppellate": 0
+  },
+  "laneResults": {
+    "third_circuit": {
+      "requests": 194,
+      "cases": 42,
+      "resolvedDeltaApprox": 332
+    },
+    "other_circuits": {
+      "requests": 0,
+      "cases": 0,
+      "resolvedDeltaApprox": 0
+    },
+    "edpa": {
+      "requests": 0,
+      "cases": 0,
+      "resolvedDeltaApprox": 0
+    },
+    "federal_reporter": {
+      "requests": 0,
+      "cases": 0,
+      "resolvedDeltaApprox": 0
+    },
+    "pa_appellate": {
+      "requests": 0,
+      "cases": 0,
+      "resolvedDeltaApprox": 0
+    }
+  },
+  "citationResolution": {
+    "OLD_UNRESOLVED_RESOLVED": 151,
+    "NEW_EDGES_TOTAL": 1394,
+    "NEW_EDGES_RESOLVED_IMMEDIATELY": 182,
+    "NEW_EDGES_STILL_UNRESOLVED": 1212,
+    "TOTAL_RESOLVED_THIS_RUN": 333,
+    "NET_UNRESOLVED_CHANGE": 1061,
+    "UNIQUE_MISSING_TARGETS_ELIMINATED": 42
+  },
+  "efficiency": {
+    "casesPerCl": 0.216,
+    "oldUnresolvedResolvedPerCl": 0.778,
+    "newImmediateResolvedPerCl": 0.938,
+    "totalResolvedPerCl": 1.716,
+    "uniqueTargetsPerCl": 0.216,
+    "courtIdentificationsPerCl": 0.333,
+    "controllingPerCl": 0.216
+  },
+  "corpusHealth": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": 0,
+    "status": "GREEN"
+  },
+  "endSnapshot": {
+    "cases": 5073,
+    "authorities": 6428,
+    "extracted": 63718,
+    "resolved": 9760,
+    "unresolved": 53958,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": 0,
+    "usCircuitUnspecified": 130
+  },
+  "highValueHandoff": [
+    {
+      "citation": "540 F.2d 102",
+      "title": "Lindy Bros. Builders, Inc. v. American Radiator & Standard Sanitary Corp.",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "a525d1a4-65cc-44ed-b449-0e4775ec743e",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=10",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "616 F.3d 685",
+      "title": "United States v. Williams",
+      "court": "United States Court of Appeals for the Seventh Circuit",
+      "authorityId": "78b4c350-1f31-4dd8-ad2a-c2d3116f47dd",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=7",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "487 F.2d 161",
+      "title": "Lindy Bros. Builders, Inc. of Phila. v. American Radiator & Standard Sanitary Corp.",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "eafaf2f7-8507-4689-be13-a6e7f61399c0",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=7",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "621 F.3d 681",
+      "title": "United States v. Yancey",
+      "court": "United States Court of Appeals for the Seventh Circuit",
+      "authorityId": "88a3eb0d-ef41-4908-bc57-dac22dd272fa",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=6",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "559 F.3d 348",
+      "title": "United States v. Anderson",
+      "court": "United States Court of Appeals for the Fifth Circuit",
+      "authorityId": "c7bed78b-3569-4a68-8f70-80b6e0ec27d5",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=6",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "578 F.2d 483",
+      "title": "Hughes v. Repko",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "190f6850-94ce-4261-bde9-2fb817c286e4",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=6",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "628 F.3d 673",
+      "title": "United States v. Chester",
+      "court": "United States Court of Appeals for the Fourth Circuit",
+      "authorityId": "a429725d-f160-47d7-9ab5-4da559da9fca",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=5",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "651 F.3d 684",
+      "title": "Rhonda Ezell v. City of Chicago",
+      "court": "United States Court of Appeals for the Seventh Circuit",
+      "authorityId": "def41af3-f158-4aef-af89-3fbc7211a47a",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=5",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "704 F.3d 980",
+      "title": "Jefferson Schrader v. Eric Holder, Jr.",
+      "court": "United States Court of Appeals for the District of Columbia Circuit",
+      "authorityId": "7d7222b0-1316-4cc8-920f-d771dcd03fac",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=5",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "583 F.3d 8",
+      "title": "United States v. Rene E.",
+      "court": "United States Court of Appeals for the First Circuit",
+      "authorityId": "4a54ba8f-62fc-4e51-bc73-798a763a3455",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=4",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "584 F.3d 132",
+      "title": "United States v. Fullmer",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "ce31ed99-33c7-441f-9889-a14782bb63ec",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=4",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "606 F.2d 635",
+      "title": "Rita Johnson, Plaintiffs-Appellees-Cross v. The State of Mississippi, Defendants-Appellants-Cross",
+      "court": "United States Court of Appeals for the Fifth Circuit",
+      "authorityId": "823bf199-4726-4ce0-80b4-e102550eeeba",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=4",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "641 F.2d 880",
+      "title": "Dolores J. Copeland, Individually and on Behalf of the Class of All Others Similarly Situated v. F. Ray Marshall, Secretary of Labor",
+      "court": "United States Court of Appeals for the District of Columbia Circuit",
+      "authorityId": "1d22e786-c82f-47a8-842c-f272c0dec12f",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=4",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "658 F.3d 110",
+      "title": "United States v. Torres-Rosario",
+      "court": "United States Court of Appeals for the First Circuit",
+      "authorityId": "652c9a66-d33b-4e1b-8198-7834bb7ca748",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=4",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "407 F.2d 433",
+      "title": "John Leggett v. United States",
+      "court": "United States Court of Appeals for the Ninth Circuit",
+      "authorityId": "ec70c30c-56f4-40b3-bd62-cb109e20029d",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "664 F.3d 1180",
+      "title": "United States v. Bena",
+      "court": "United States Court of Appeals for the Eighth Circuit",
+      "authorityId": "0d7eb8ab-bcf7-4621-bca7-63c79cf3068d",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "666 F.3d 313",
+      "title": "United States v. Moore",
+      "court": "United States Court of Appeals for the Fourth Circuit",
+      "authorityId": "4f701bc6-2ed2-4a30-bf8f-bc3206e1c30e",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "515 F.2d 165",
+      "title": "Merola v. Atlantic Richfield Co.",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "33918cb2-b767-4b19-8258-6e6c85ae693b",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "701 F.3d 974",
+      "title": "United States v. Nicolas Carpio-Leon",
+      "court": "United States Court of Appeals for the Fourth Circuit",
+      "authorityId": "ccc19c27-0258-4915-89d8-54a66ace375f",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "751 F.2d 562",
+      "title": "In re Fine Paper Antitrust Litigation",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "716c6e3c-b59e-4883-928a-cc319ce891a9",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "804 F.3d 242",
+      "title": "New York State Rifle & Pistol Ass'n v. Cuomo",
+      "court": "United States Court of Appeals for the Second Circuit",
+      "authorityId": "2e0cd333-bfde-420c-ac12-fed6e47cf415",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "837 F.3d 678",
+      "title": "Clifford Tyler v. Hillsdale County Sheriff's Dep't",
+      "court": "United States Court of Appeals for the Sixth Circuit",
+      "authorityId": "11328026-bf86-48b1-8cb0-23de27d5cd53",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "848 F.3d 614",
+      "title": "James Hamilton v. William Pallozzi",
+      "court": "United States Court of Appeals for the Fourth Circuit",
+      "authorityId": "7a64d989-4534-4143-81bc-3a93efc76177",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "531 F.2d 92",
+      "title": "Arthur H. Pitchford and Pitchford Scientific Instruments Corporation v. Pepi, Inc.",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "0bca3d08-2705-4f0e-89a5-8a99c77275a4",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "478 F.3d 370",
+      "title": "Parker v. District of Columbia",
+      "court": "United States Court of Appeals for the District of Columbia Circuit",
+      "authorityId": "74a86edc-377d-448b-b742-4b940c6ce17b",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    }
+  ],
+  "finalResolve": {
+    "resolvedAfter": 9760
+  },
+  "batches": 4,
+  "nextBObjective": "Continue docket-court refinement for remaining ~130 us-circuit-unspecified F./F.2d/F.3d/F.4th, then acquire verified CA3/EDPA/federal-reporter READY targets with OLD/NEW resolution accounting (no SCOTUS)."
+}
