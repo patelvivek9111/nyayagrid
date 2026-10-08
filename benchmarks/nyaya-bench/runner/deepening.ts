@@ -1,19 +1,25 @@
 import {
   answerCivilClaimsQuestion,
+  answerDiscoveryQuestion,
   answerSuppressionQuestion,
   buildCivilClaimMatrix,
   buildCivilClaimStrengthAnalysis,
   buildCivilWholeMatterView,
+  buildDiscoveryWholeMatterView,
   buildWholeMatterAnalysis,
   checkCivilClaimsConsistency,
   evidenceRelationsForParty,
   findAutonomousSuppressionViolations,
   findCivilLiabilityViolations,
+  findDiscoveryLedgerViolations,
   formatCivilClaimsAnswer,
+  formatDiscoveryAnswer,
   formatLongFormAnalysis,
   formatSuppressionAnswer,
   inferSuppressionDoctrine,
+  objectionOnlyItems,
   runComplexCivilClaimsFixture,
+  runComplexDiscoveryLedgerFixture,
   runDeepeningLawFirm,
   runDeepeningProsecution,
   runMirandaReview,
@@ -22,6 +28,7 @@ import {
   runMultiWarrantDefendantReview,
   runPennsylvaniaDoctrineReview,
   runSuppressionHierarchyReview,
+  unansweredItems,
 } from "@nyayagrid/intelligence";
 import { DEEPENING_ASSIGNMENTS, type DeepeningAssignment } from "../datasets/deepening/catalog";
 
@@ -425,6 +432,150 @@ function gradeCivilStrength(assignment: DeepeningAssignment): DeepeningGrade {
   return fail(assignment, failures);
 }
 
+function gradeDiscUnanswered(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexDiscoveryLedgerFixture();
+  const failures: string[] = [];
+  if (!unansweredItems(review).some((item) => item.id === "item-rog-3")) failures.push("ROG-3 not unanswered");
+  const text = formatDiscoveryAnswer(
+    answerDiscoveryQuestion({ review, question: "Which discovery requests are still unanswered?" }),
+  );
+  if (!text.includes("item-rog-3")) failures.push("Ask missed unanswered item");
+  if (review.sanctionsConclusion !== null || text.includes("SANCTIONS_CONCLUSION: null") === false) {
+    failures.push("sanctions conclusion");
+  }
+  if (findDiscoveryLedgerViolations(text).length > 0) failures.push("forbidden discovery conclusion language");
+  return fail(assignment, failures);
+}
+
+function gradeDiscResponseHistory(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexDiscoveryLedgerFixture();
+  const failures: string[] = [];
+  const responses = review.responses.filter((row) => row.itemId === "item-rfp-12");
+  if (responses.length < 2) failures.push("initial and supplemental responses missing");
+  if (!responses.some((row) => row.isSupplemental && row.supplementsResponseId === "resp-12")) {
+    failures.push("supplemental link missing");
+  }
+  if (!responses.every((row) => row.productionIds.length > 0)) failures.push("production linkage missing");
+  return fail(assignment, failures);
+}
+
+function gradeDiscObjection(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexDiscoveryLedgerFixture();
+  const failures: string[] = [];
+  if (!objectionOnlyItems(review).some((item) => item.id === "item-rfp-14")) failures.push("RFP-14 not objection-only");
+  const productionFor14 = review.productions.filter((row) => row.requestItemIds.includes("item-rfp-14"));
+  if (productionFor14.length > 0) failures.push("unexpected production for RFP-14");
+  if (review.sanctionsConclusion !== null) failures.push("sanctions conclusion");
+  return fail(assignment, failures);
+}
+
+function gradeDiscProduction(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexDiscoveryLedgerFixture();
+  const failures: string[] = [];
+  const text = formatDiscoveryAnswer(
+    answerDiscoveryQuestion({
+      review,
+      question: "What did Acme produce in response to Request No. 12?",
+    }),
+  );
+  if (!/prod-1|prod-2/.test(text)) failures.push("production not linked");
+  if (!/ACME000/.test(text)) failures.push("Bates not cited");
+  if (findDiscoveryLedgerViolations(text).length > 0) failures.push("forbidden discovery conclusion language");
+  return fail(assignment, failures);
+}
+
+function gradeDiscBatesDate(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexDiscoveryLedgerFixture();
+  const failures: string[] = [];
+  const text = formatDiscoveryAnswer(
+    answerDiscoveryQuestion({
+      review,
+      question: "What Bates ranges were produced on September 18?",
+    }),
+  );
+  if (!text.includes("ACME000200–ACME000220")) failures.push("September 18 Bates missing");
+  if (!/supplement|prod-2/i.test(text)) failures.push("supplemental production not identified");
+  return fail(assignment, failures);
+}
+
+function gradeDiscBatesSignal(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexDiscoveryLedgerFixture();
+  const failures: string[] = [];
+  if (!review.batesSignals.some((row) => row.kind === "OVERLAP")) failures.push("overlap signal missing");
+  if (!review.batesSignals.some((row) => row.kind === "APPARENT_GAP")) failures.push("gap signal missing");
+  if (!review.batesSignals.every((row) => row.legalDeficiencyConclusion === null)) {
+    failures.push("Bates signal asserted legal deficiency");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeDiscMissing(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexDiscoveryLedgerFixture();
+  const failures: string[] = [];
+  const missing = review.deficiencies.find((row) => row.id === "def-rfp15-attach");
+  if (!missing || missing.kind !== "MISSING_ATTACHMENT") failures.push("missing attachment deficiency absent");
+  if (missing?.itemId !== "item-rfp-15") failures.push("deficiency not linked to RFP-15");
+  if (review.sanctionsConclusion !== null) failures.push("sanctions conclusion");
+  return fail(assignment, failures);
+}
+
+function gradeDiscSupplement(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexDiscoveryLedgerFixture();
+  const failures: string[] = [];
+  const text = formatDiscoveryAnswer(
+    answerDiscoveryQuestion({
+      review,
+      question: "What changed in the supplemental production?",
+    }),
+  );
+  if (!review.productions.some((row) => row.isSupplemental && row.id === "prod-2")) {
+    failures.push("supplemental production missing");
+  }
+  if (!text.includes("ACME000200–ACME000220") && !text.includes("prod-2")) {
+    failures.push("supplemental Bates/production not surfaced");
+  }
+  if (!review.productions.some((row) => row.id === "prod-1" && !row.isSupplemental)) {
+    failures.push("prior production not traceable");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeDiscMotion(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexDiscoveryLedgerFixture();
+  const failures: string[] = [];
+  if (review.meetAndConferIssues.length === 0) failures.push("meet-and-confer missing");
+  if (!review.motionLinks.some((row) => row.motionType === "MOTION_TO_COMPEL")) {
+    failures.push("motion to compel missing");
+  }
+  const text = formatDiscoveryAnswer(
+    answerDiscoveryQuestion({
+      review,
+      question: "Which discovery issues are tied to the motion to compel?",
+    }),
+  );
+  if (!text.includes("motion-compel-1")) failures.push("motion link not in Ask answer");
+  if (!text.includes("def-rog3") && !/deficiencies=.*def-rog3/.test(text)) {
+    // motion notes include deficiency ids
+    if (!text.includes("def-rog3")) failures.push("deficiency ids not preserved on motion");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeDiscWhole(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexDiscoveryLedgerFixture();
+  const whole = buildDiscoveryWholeMatterView(review);
+  const failures: string[] = [];
+  if (whole.outstandingItemIds.length === 0) failures.push("outstanding items missing");
+  if (whole.openDeficiencyCount === 0) failures.push("open deficiencies missing");
+  if (whole.privilegeAssertionsUnderReview === 0) failures.push("privilege review state missing");
+  if (whole.sanctionsConclusion !== null) failures.push("sanctions conclusion");
+  if (whole.privilegeLegalConclusion !== null) failures.push("privilege legal conclusion");
+  if (review.privilegeAssertions.some((row) => row.courtRulingReferenced)) {
+    failures.push("privilege treated as court ruling");
+  }
+  return fail(assignment, failures);
+}
+
 const GRADERS: Record<string, (assignment: DeepeningAssignment) => DeepeningGrade> = {
   "D1-LF-01": gradeLawFirm,
   "D1-PR-01": gradeProsecution,
@@ -450,6 +601,16 @@ const GRADERS: Record<string, (assignment: DeepeningAssignment) => DeepeningGrad
   "D3-CIVIL-ASK-AUTH-01": gradeCivilAskAuthority,
   "D3-CIVIL-ASK-WHOLE-01": gradeCivilAskWhole,
   "D3-CIVIL-STRENGTH-01": gradeCivilStrength,
+  "D4-DISC-UNANS-01": gradeDiscUnanswered,
+  "D4-DISC-RESP-HIST-01": gradeDiscResponseHistory,
+  "D4-DISC-OBJ-01": gradeDiscObjection,
+  "D4-DISC-PROD-01": gradeDiscProduction,
+  "D4-DISC-BATES-01": gradeDiscBatesDate,
+  "D4-DISC-BATES-SIGNAL-01": gradeDiscBatesSignal,
+  "D4-DISC-MISSING-01": gradeDiscMissing,
+  "D4-DISC-SUPP-01": gradeDiscSupplement,
+  "D4-DISC-MOTION-01": gradeDiscMotion,
+  "D4-DISC-WHOLE-01": gradeDiscWhole,
 };
 
 /** Deterministic deepening grades. No database, model, or CourtListener calls. */
