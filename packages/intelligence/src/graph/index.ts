@@ -612,18 +612,36 @@ export async function loadVerifiedGraphContext(params: {
       .toLowerCase()
       .split(/\W+/)
       .filter((t) => t.length > 2);
+    const civilQuestion =
+      /(claim|counterclaim|defense|element|pleading|evidence|authority|waiver|breach)/i.test(
+        params.question,
+      );
     selected = selected
-      .map((e) => ({
-        edge: e,
-        score: tokens.reduce(
-          (sum, t) =>
-            sum +
-            (e.fromName.toLowerCase().includes(t) ? 2 : 0) +
-            (e.toName.toLowerCase().includes(t) ? 2 : 0) +
-            (e.relationshipType.includes(t) ? 1 : 0),
-          0,
-        ),
-      }))
+      .map((e) => {
+        const fromNode = byId.get(e.fromNodeId);
+        const toNode = byId.get(e.toNodeId);
+        const civilBoost =
+          civilQuestion &&
+          (fromNode?.nodeType === "claim" ||
+            fromNode?.nodeType === "defense" ||
+            toNode?.nodeType === "claim" ||
+            toNode?.nodeType === "defense")
+            ? 3
+            : 0;
+        return {
+          edge: e,
+          score:
+            civilBoost +
+            tokens.reduce(
+              (sum, t) =>
+                sum +
+                (e.fromName.toLowerCase().includes(t) ? 2 : 0) +
+                (e.toName.toLowerCase().includes(t) ? 2 : 0) +
+                (e.relationshipType.includes(t) ? 1 : 0),
+              0,
+            ),
+        };
+      })
       .filter((x) => x.score > 0)
       .sort((a, b) => b.score - a.score)
       .map((x) => x.edge);
