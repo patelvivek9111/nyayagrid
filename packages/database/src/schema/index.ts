@@ -92,7 +92,8 @@ export const intelligenceRunStatusEnum = pgEnum("intelligence_run_status", [
   "failed",
   "skipped",
 ]);
-export const graphNodeTypeEnum = pgEnum("graph_node_type", [
+/** Canonical shared matter-graph node types. Additive only — preserve existing values. */
+export const GRAPH_NODE_TYPES = [
   "person",
   "organization",
   "client",
@@ -103,7 +104,17 @@ export const graphNodeTypeEnum = pgEnum("graph_node_type", [
   "task",
   "matter",
   "other",
-]);
+  "claim",
+  "defense",
+] as const;
+
+export type GraphNodeType = (typeof GRAPH_NODE_TYPES)[number];
+
+export function isGraphNodeType(value: string): value is GraphNodeType {
+  return (GRAPH_NODE_TYPES as readonly string[]).includes(value);
+}
+
+export const graphNodeTypeEnum = pgEnum("graph_node_type", GRAPH_NODE_TYPES);
 export const graphEdgeDirectionEnum = pgEnum("graph_edge_direction", ["directed", "undirected"]);
 export const memoryStatusEnum = pgEnum("memory_status", [
   "proposed",
