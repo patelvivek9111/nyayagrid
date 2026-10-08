@@ -13,6 +13,9 @@ import {
   civilLegalIssueRelations,
   civilPleadings,
   civilStandardRelations,
+  legalAuthorities,
+  legalIssues,
+  legalStandards,
   matterEntities,
   matterFacts,
   matters,
@@ -66,6 +69,96 @@ async function requireMatterRow(db: Database, organizationId: string, matterId: 
     .limit(1);
   if (!row) throw new CivilError("NOT_FOUND", "Matter not found.", 404);
   return row;
+}
+
+async function requireClaimInMatter(
+  db: Database,
+  params: { organizationId: string; matterId: string; claimId: string },
+) {
+  const [claim] = await db
+    .select()
+    .from(civilClaims)
+    .where(
+      and(
+        eq(civilClaims.id, params.claimId),
+        eq(civilClaims.matterId, params.matterId),
+        eq(civilClaims.organizationId, params.organizationId),
+      ),
+    )
+    .limit(1);
+  if (!claim) throw new CivilError("CROSS_MATTER", "Claim not in matter.", 403);
+  return claim;
+}
+
+async function requireElementInMatter(
+  db: Database,
+  params: { organizationId: string; matterId: string; elementId: string },
+) {
+  const [element] = await db
+    .select()
+    .from(civilClaimElements)
+    .where(
+      and(
+        eq(civilClaimElements.id, params.elementId),
+        eq(civilClaimElements.matterId, params.matterId),
+        eq(civilClaimElements.organizationId, params.organizationId),
+      ),
+    )
+    .limit(1);
+  if (!element) throw new CivilError("CROSS_MATTER", "Element not in matter.", 403);
+  return element;
+}
+
+async function requireDefenseInMatter(
+  db: Database,
+  params: { organizationId: string; matterId: string; defenseId: string },
+) {
+  const [defense] = await db
+    .select()
+    .from(civilDefenses)
+    .where(
+      and(
+        eq(civilDefenses.id, params.defenseId),
+        eq(civilDefenses.matterId, params.matterId),
+        eq(civilDefenses.organizationId, params.organizationId),
+      ),
+    )
+    .limit(1);
+  if (!defense) throw new CivilError("CROSS_MATTER", "Defense not in matter.", 403);
+  return defense;
+}
+
+async function requireRelationTargetsInMatter(
+  db: Database,
+  params: {
+    organizationId: string;
+    matterId: string;
+    claimId?: string | null;
+    elementId?: string | null;
+    defenseId?: string | null;
+  },
+) {
+  if (params.claimId) {
+    await requireClaimInMatter(db, {
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      claimId: params.claimId,
+    });
+  }
+  if (params.elementId) {
+    await requireElementInMatter(db, {
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      elementId: params.elementId,
+    });
+  }
+  if (params.defenseId) {
+    await requireDefenseInMatter(db, {
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      defenseId: params.defenseId,
+    });
+  }
 }
 
 export async function createCivilPleading(
@@ -575,6 +668,7 @@ export async function linkCivilEvidence(
   if (targets.length !== 1) {
     throw new CivilError("INVALID_TARGET", "Evidence relation requires exactly one target.");
   }
+  await requireRelationTargetsInMatter(db, params);
   if (params.role === "MISSING_EXPECTED") {
     if (!params.note) throw new CivilError("INVALID_MISSING", "MISSING_EXPECTED requires a note.");
   } else if (!params.evidenceId) {
@@ -652,6 +746,7 @@ export async function linkCivilFact(
   if (targets.length !== 1) {
     throw new CivilError("INVALID_TARGET", "Fact relation requires exactly one target.");
   }
+  await requireRelationTargetsInMatter(db, params);
   const [fact] = await db
     .select()
     .from(matterFacts)
@@ -701,6 +796,20 @@ export async function linkCivilLegalIssue(
   if (targets.length !== 1) {
     throw new CivilError("INVALID_TARGET", "Legal issue relation requires exactly one target.");
   }
+  await requireRelationTargetsInMatter(db, params);
+  const [issue] = await db
+    .select()
+    .from(legalIssues)
+    .where(
+      and(
+        eq(legalIssues.id, params.legalIssueId),
+        eq(legalIssues.organizationId, params.organizationId),
+        eq(legalIssues.matterId, params.matterId),
+      ),
+    )
+    .limit(1);
+  if (!issue) throw new CivilError("CROSS_MATTER", "Legal issue not in matter.", 403);
+
   const [created] = await db
     .insert(civilLegalIssueRelations)
     .values({
@@ -742,6 +851,34 @@ export async function linkCivilAuthority(
   if (targets.length !== 1) {
     throw new CivilError("INVALID_TARGET", "Authority relation requires exactly one target.");
   }
+  await requireRelationTargetsInMatter(db, {
+    organizationId: params.organizationId,
+    matterId: params.matterId,
+    claimId: params.claimId,
+    elementId: params.elementId,
+    defenseId: params.defenseId,
+  });
+  if (params.legalIssueId) {
+    const [issue] = await db
+      .select()
+      .from(legalIssues)
+      .where(
+        and(
+          eq(legalIssues.id, params.legalIssueId),
+          eq(legalIssues.organizationId, params.organizationId),
+          eq(legalIssues.matterId, params.matterId),
+        ),
+      )
+      .limit(1);
+    if (!issue) throw new CivilError("CROSS_MATTER", "Legal issue not in matter.", 403);
+  }
+  const [authority] = await db
+    .select({ id: legalAuthorities.id })
+    .from(legalAuthorities)
+    .where(eq(legalAuthorities.id, params.authorityId))
+    .limit(1);
+  if (!authority) throw new CivilError("NOT_FOUND", "Authority not found.", 404);
+
   const [created] = await db
     .insert(civilAuthorityRelations)
     .values({
@@ -792,6 +929,13 @@ export async function createAmendedPleading(
     )
     .limit(1);
   if (!prior) throw new CivilError("NOT_FOUND", "Prior pleading not found.", 404);
+  if (!prior.isCurrent) {
+    throw new CivilError(
+      "PLEADING_SUPERSEDED",
+      "Historical superseded pleading cannot be amended as current.",
+      409,
+    );
+  }
 
   const amended = await createCivilPleading(db, {
     userId: params.userId,
@@ -859,6 +1003,13 @@ export async function supersedeCivilClaim(
     )
     .limit(1);
   if (!prior) throw new CivilError("NOT_FOUND", "Prior claim not found.", 404);
+  if (!prior.isCurrent) {
+    throw new CivilError(
+      "CLAIM_SUPERSEDED",
+      "Historical superseded claim cannot be amended as current.",
+      409,
+    );
+  }
 
   const replacement = await createCivilClaim(db, {
     userId: params.userId,
@@ -976,6 +1127,19 @@ export async function linkCivilStandard(
   if (targets.length !== 1) {
     throw new CivilError("INVALID_TARGET", "Standard relation requires exactly one target.");
   }
+  await requireRelationTargetsInMatter(db, params);
+  const [standard] = await db
+    .select()
+    .from(legalStandards)
+    .where(
+      and(
+        eq(legalStandards.id, params.standardId),
+        eq(legalStandards.organizationId, params.organizationId),
+      ),
+    )
+    .limit(1);
+  if (!standard) throw new CivilError("CROSS_ORG", "Legal standard not in organization.", 403);
+
   const [created] = await db
     .insert(civilStandardRelations)
     .values({

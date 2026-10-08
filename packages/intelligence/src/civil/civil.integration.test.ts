@@ -23,8 +23,11 @@ import {
   createCivilEvidenceItem,
   createCivilPleading,
   CivilError,
+  linkCivilAuthority,
   linkCivilEvidence,
   linkCivilFact,
+  linkCivilLegalIssue,
+  linkCivilStandard,
   listCivilClaimsByMatter,
   loadCivilClaimsReview,
   persistCivilClaimsReview,
@@ -33,7 +36,15 @@ import {
   updateCivilClaimStatus,
 } from "@nyayagrid/intelligence";
 import { and, eq } from "@nyayagrid/database";
-import { matterEntities, matterFacts, civilClaims, civilPleadings } from "@nyayagrid/database";
+import {
+  matterEntities,
+  matterFacts,
+  civilClaims,
+  civilPleadings,
+  legalAuthorities,
+  legalIssues,
+  legalStandards,
+} from "@nyayagrid/database";
 
 const runDbTests = process.env.RUN_DB_TESTS === "1";
 const provenance = { extractionOrigin: "human" as const, humanEntered: true };
@@ -380,6 +391,14 @@ describe.runIf(runDbTests)("civil claims schema integration", () => {
 
   it("rejects cross-org and cross-matter mutations", async () => {
     await expect(
+      listCivilClaimsByMatter(db, {
+        userId: ids.outsider!,
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+      }),
+    ).rejects.toBeInstanceOf(AuthorizationError);
+
+    await expect(
       createCivilClaim(db, {
         userId: ids.outsider!,
         organizationId: ids.orgB!,
@@ -409,6 +428,103 @@ describe.runIf(runDbTests)("civil claims schema integration", () => {
         kind: "NOTICE",
         label: "Bad cross-matter defense",
         againstClaimIds: [ids.claim!, "00000000-0000-4000-8000-000000000088"],
+        provenance,
+      }),
+    ).rejects.toBeInstanceOf(CivilError);
+
+    const foreignEvidence = await createCivilEvidenceItem(db, {
+      userId: ids.outsider!,
+      organizationId: ids.orgB!,
+      matterId: ids.matterB!,
+      label: "Foreign matter evidence",
+      provenance,
+    });
+    await expect(
+      linkCivilEvidence(db, {
+        userId: ids.owner!,
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        elementId: ids.element!,
+        evidenceId: foreignEvidence.id,
+        role: "SUPPORTS",
+        provenance,
+      }),
+    ).rejects.toBeInstanceOf(CivilError);
+
+    const [foreignFact] = await db
+      .insert(matterFacts)
+      .values({
+        organizationId: ids.orgB!,
+        matterId: ids.matterB!,
+        factKey: `foreign_${suffix}`,
+        label: "Foreign fact",
+        value: "Should not link into Matter A.",
+        status: "approved",
+        origin: "manual",
+        createdByUserId: ids.outsider!,
+      })
+      .returning();
+    await expect(
+      linkCivilFact(db, {
+        userId: ids.owner!,
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        elementId: ids.element!,
+        factId: foreignFact!.id,
+        role: "SUPPORTS",
+        provenance,
+      }),
+    ).rejects.toBeInstanceOf(CivilError);
+
+    const [foreignIssue] = await db
+      .insert(legalIssues)
+      .values({
+        organizationId: ids.orgB!,
+        matterId: ids.matterB!,
+        issueType: "civil",
+        description: "Foreign issue",
+        provenance,
+      })
+      .returning();
+    await expect(
+      linkCivilLegalIssue(db, {
+        userId: ids.owner!,
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        claimId: ids.claim!,
+        legalIssueId: foreignIssue!.id,
+        provenance,
+      }),
+    ).rejects.toBeInstanceOf(CivilError);
+
+    await expect(
+      linkCivilAuthority(db, {
+        userId: ids.owner!,
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        claimId: ids.claim!,
+        authorityId: "00000000-0000-4000-8000-000000000077",
+        relation: "PERSUASIVE",
+        provenance,
+      }),
+    ).rejects.toBeInstanceOf(CivilError);
+
+    const [foreignStandard] = await db
+      .insert(legalStandards)
+      .values({
+        organizationId: ids.orgB!,
+        ruleText: "Foreign standard",
+        standardType: "ELEMENT",
+        provenance,
+      })
+      .returning();
+    await expect(
+      linkCivilStandard(db, {
+        userId: ids.owner!,
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        claimId: ids.claim!,
+        standardId: foreignStandard!.id,
         provenance,
       }),
     ).rejects.toBeInstanceOf(CivilError);
@@ -446,6 +562,7 @@ describe.runIf(runDbTests)("civil claims schema integration", () => {
     });
     expect(replacement.isCurrent).toBe(true);
     expect(replacement.proceduralStatus).toBe("AMENDED");
+    ids.claim = replacement.id;
 
     const [priorRow] = await db
       .select()
@@ -478,6 +595,96 @@ describe.runIf(runDbTests)("civil claims schema integration", () => {
       .where(eq(civilPleadings.id, ids.pleading!));
     expect(oldPleading?.isCurrent).toBe(false);
     expect(oldPleading?.supersededById).toBe(amended.id);
+
+    await expect(
+      createAmendedPleading(db, {
+        userId: ids.owner!,
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        label: "Second amendment from historical pleading",
+        supersedesPleadingId: ids.pleading!,
+        provenance,
+      }),
+    ).rejects.toMatchObject({ code: "PLEADING_SUPERSEDED" });
+
+    await expect(
+      supersedeCivilClaim(db, {
+        userId: ids.owner!,
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        priorClaimId: prior.id,
+        label: "Re-amend historical claim",
+        pleadingId: amended.id,
+        provenance,
+      }),
+    ).rejects.toMatchObject({ code: "CLAIM_SUPERSEDED" });
+  });
+
+  it("persists legal issue, authority, and standard relations inside the matter", async () => {
+    const [issue] = await db
+      .insert(legalIssues)
+      .values({
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        issueType: "civil",
+        description: "Whether notice was delivered",
+        provenance,
+      })
+      .returning();
+    const [standard] = await db
+      .insert(legalStandards)
+      .values({
+        organizationId: ids.orgA!,
+        ruleText: "Notice must be recorded in documentary form.",
+        standardType: "ELEMENT",
+        provenance,
+      })
+      .returning();
+    const [authority] = await db
+      .insert(legalAuthorities)
+      .values({
+        authorityType: "case",
+        title: "Synthetic Civil Notice Authority",
+        citation: "SYNTHETIC-CIVIL-NOTICE-001",
+        jurisdiction: "US",
+        court: "Synthetic Court",
+        ingestionStatus: "ready",
+        treatmentStatus: "unknown",
+        currentnessStatus: "unknown",
+      })
+      .returning();
+
+    const issueRel = await linkCivilLegalIssue(db, {
+      userId: ids.owner!,
+      organizationId: ids.orgA!,
+      matterId: ids.matterA!,
+      claimId: ids.claim!,
+      legalIssueId: issue!.id,
+      provenance,
+    });
+    const standardRel = await linkCivilStandard(db, {
+      userId: ids.owner!,
+      organizationId: ids.orgA!,
+      matterId: ids.matterA!,
+      claimId: ids.claim!,
+      standardId: standard!.id,
+      provenance,
+    });
+    const authorityRel = await linkCivilAuthority(db, {
+      userId: ids.owner!,
+      organizationId: ids.orgA!,
+      matterId: ids.matterA!,
+      claimId: ids.claim!,
+      authorityId: authority!.id,
+      relation: "PERSUASIVE",
+      treatment: "UNVERIFIED",
+      provenance,
+    });
+
+    expect(issueRel?.legalIssueId).toBe(issue!.id);
+    expect(standardRel?.standardId).toBe(standard!.id);
+    expect(authorityRel?.authorityId).toBe(authority!.id);
+    expect(authorityRel?.treatment).toBe("UNVERIFIED");
   });
 
   it("rejects liability statuses at the database", async () => {
