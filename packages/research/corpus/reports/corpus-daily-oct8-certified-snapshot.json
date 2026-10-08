@@ -1,0 +1,58 @@
+{
+  "classification": "CORPUS_DAILY_OCT8_CERTIFIED_SNAPSHOT",
+  "certifiedAt": "2026-10-08T15:12:00.000Z",
+  "branch": "nyaya/corpus-citation-strengthening-v2",
+  "status": "CORPUS_DAILY_OCT8_COMPLETE",
+  "stopReason": "SAFE_HOURLY_HEADROOM",
+  "integrity": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "FAILED": 0,
+    "NOT_PROCESSED": 0,
+    "presentTargetDefects": 0,
+    "health": "GREEN"
+  },
+  "sessionStartSnapshot": {
+    "cases": 4927,
+    "authorities": 6282,
+    "extracted": 58419,
+    "resolved": 8689,
+    "unresolved": 49730
+  },
+  "endSnapshot": {
+    "cases": 5007,
+    "authorities": 6362,
+    "extracted": 61405,
+    "resolved": 9204,
+    "unresolved": 52201
+  },
+  "deltas": {
+    "cases": 80,
+    "authorities": 80,
+    "extracted": 2986,
+    "resolved": 515,
+    "unresolved": 2471
+  },
+  "courtListener": {
+    "remainingAtStart": { "minute": 25, "hour": 300, "day": 1130 },
+    "safeBatchBudget": 270,
+    "requests": {
+      "quotaProbe": 1,
+      "edpaPilot": 9,
+      "mainRun": 260,
+      "total": 270
+    },
+    "429": 0,
+    "502_504": 0
+  },
+  "edpaFsuppRefinement": {
+    "normalizationIssueFound": true,
+    "issue": "F.Supp spacing created F.Supp..2d; lookup cites vs cluster cites caused cluster_citation_mismatch",
+    "fixMade": true,
+    "readyEdpaTargets": 6,
+    "edpaCasesAcquiredSession": 7
+  },
+  "noScotusSaturation": true,
+  "productBaseline": "UNCHANGED"
+}

@@ -1,0 +1,72 @@
+{
+  "STATUS": "CORPUS_DAILY_OCT8_COMPLETE",
+  "STOP_REASON": "SAFE_HOURLY_HEADROOM",
+  "CLASSIFICATION": "DAILY_HIGH_VALUE_COURTLISTENER_STRENGTHENING_OCT8",
+  "generatedAt": "2026-10-08T15:12:30.000Z",
+  "COURTLISTENER": {
+    "limit_min": 25,
+    "limit_hour": 300,
+    "limit_day": 1400,
+    "remaining_at_start": { "minute": 25, "hour": 300, "day": 1130 },
+    "safe_batch_budget": 270,
+    "requests_actually_used": 270,
+    "breakdown": { "quota_probe": 1, "edpa_pilot": 9, "main_run": 260 },
+    "429": 0,
+    "502_504": 0,
+    "long_waits_gt_5m": 0
+  },
+  "START_SNAPSHOT": {
+    "cases": 4927,
+    "authorities": 6282,
+    "extracted": 58419,
+    "resolved": 8689,
+    "unresolved": 49730
+  },
+  "EDPA_FSUPP_REFINEMENT": {
+    "normalization_issue_found": true,
+    "fix_made": true,
+    "READY_EDPA_targets": 6,
+    "EDPA_cases_acquired": 7
+  },
+  "LANE_RESULTS": {
+    "edpa": { "requests": 19, "cases": 5, "old_resolves": 27, "note": "plus 2 pilot imports before main run" },
+    "third_circuit": { "requests": 104, "cases": 34, "old_resolves": 200 },
+    "federal_reporter": { "requests": 137, "cases": 39, "old_resolves": 281 },
+    "pa_appellate": { "requests": 0, "cases": 0, "old_resolves": 0 }
+  },
+  "TOTAL_VALUE": {
+    "cases_added": 80,
+    "old_unresolved_resolved": 515,
+    "new_edges": 2986,
+    "net_unresolved_change": 2471,
+    "unique_missing_targets_eliminated": 80,
+    "controlling_authorities": 80,
+    "benchmark_relevant": 2
+  },
+  "EFFICIENCY": {
+    "cases_per_CL": 0.296,
+    "old_resolves_per_CL": 1.907,
+    "unique_targets_per_CL": 0.296,
+    "EDPA_per_CL": 0.026,
+    "controlling_per_CL": 0.296
+  },
+  "CORPUS_HEALTH": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missing_embeddings": 0,
+    "FAILED": 0,
+    "NOT_PROCESSED": 0,
+    "present_target_defects": 0,
+    "status": "GREEN"
+  },
+  "END_SNAPSHOT": {
+    "cases": 5007,
+    "authorities": 6362,
+    "extracted": 61405,
+    "resolved": 9204,
+    "unresolved": 52201
+  },
+  "WHY_RUN_STOPPED": "SAFE_HOURLY_HEADROOM",
+  "NEXT_B_OBJECTIVE": "Exact-circuit ID refinement for us-circuit-unspecified federal reporter authorities via bounded cluster-court lookups.",
+  "FINAL_CLASSIFICATION": "CORPUS_DAILY_OCT8_COMPLETE"
+}
