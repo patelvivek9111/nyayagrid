@@ -1,5 +1,5 @@
 import { and, eq, inArray, isNull } from "@nyayagrid/database";
-import type { Database } from "@nyayagrid/database";
+import type { Database, GraphNodeType } from "@nyayagrid/database";
 import {
   graphNodes,
   graphEdges,
@@ -23,17 +23,8 @@ const APPROVED = ["approved", "edited_and_approved"] as const;
 export type CanonicalRef = {
   canonicalEntityType: string;
   canonicalEntityId: string;
-  nodeType:
-    | "person"
-    | "organization"
-    | "client"
-    | "document"
-    | "event"
-    | "fact"
-    | "deadline"
-    | "task"
-    | "matter"
-    | "other";
+  /** Shared graph_node_type enum, including claim/defense. */
+  nodeType: GraphNodeType;
   displayName: string;
   origin?: "ai" | "manual";
   metadata?: Record<string, unknown>;
