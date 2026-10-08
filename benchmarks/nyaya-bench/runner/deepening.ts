@@ -2,6 +2,7 @@ import {
   answerCivilClaimsQuestion,
   answerSuppressionQuestion,
   buildCivilClaimMatrix,
+  buildCivilClaimStrengthAnalysis,
   buildCivilWholeMatterView,
   buildWholeMatterAnalysis,
   checkCivilClaimsConsistency,
@@ -324,6 +325,106 @@ function gradeCivilMatrix(assignment: DeepeningAssignment): DeepeningGrade {
   return fail(assignment, failures);
 }
 
+function gradeCivilElements(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexCivilClaimsFixture();
+  const failures: string[] = [];
+  const breach = review.claims.find((claim) => claim.id === "claim-breach" && claim.isCurrent);
+  if (!breach || breach.elements.length < 2) failures.push("breach elements missing");
+  if (!breach?.elements.some((element) => element.status === "CONFLICTED" || element.status === "PARTIALLY_SUPPORTED")) {
+    failures.push("conflicted or partial element missing");
+  }
+  if (!breach?.elements.some((element) => element.missingEvidence.length > 0 || element.status === "NO_EVIDENCE_FOUND")) {
+    failures.push("missing evidence element missing");
+  }
+  if (breach?.liabilityConclusion !== null) failures.push("liability conclusion");
+  return fail(assignment, failures);
+}
+
+function gradeCivilAskParty(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexCivilClaimsFixture();
+  const answer = answerCivilClaimsQuestion({
+    review,
+    question: "Which claims involve Defendant Beta?",
+  });
+  const text = formatCivilClaimsAnswer(answer);
+  const failures: string[] = [];
+  if (answer.claims.length === 0 && answer.defenses.length === 0) failures.push("party-scoped civil rows missing");
+  if (!answer.claims.some((claim) => /unfair|beta|trade/i.test(claim.label) || claim.id.includes("unfair"))) {
+    // Beta may appear only on unfair-trade; require at least one Beta-linked claim id from fixture
+    const betaClaim = review.claims.find(
+      (claim) => claim.isCurrent && claim.parties.some((party) => party.partyId === "party-beta"),
+    );
+    if (!betaClaim || !answer.claims.some((claim) => claim.id === betaClaim.id)) {
+      failures.push("Beta claim not scoped");
+    }
+  }
+  if (answer.liabilityConclusion !== null) failures.push("liability conclusion");
+  if (findCivilLiabilityViolations(text).length > 0) failures.push("forbidden liability language");
+  return fail(assignment, failures);
+}
+
+function gradeCivilAskAuthority(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexCivilClaimsFixture();
+  const answer = answerCivilClaimsQuestion({
+    review,
+    question: "What authorities govern the waiver defense?",
+  });
+  const text = formatCivilClaimsAnswer(answer);
+  const failures: string[] = [];
+  if (!answer.defenses.some((defense) => /waiver/i.test(defense.label) || defense.kind === "WAIVER")) {
+    failures.push("waiver defense missing");
+  }
+  if (!answer.authorityNotes.some((note) => /SYNTHETIC-2D-2019-014|waiver|authority/i.test(note))) {
+    failures.push("waiver authority note missing");
+  }
+  if (answer.liabilityConclusion !== null) failures.push("liability conclusion");
+  if (findCivilLiabilityViolations(text).length > 0) failures.push("forbidden liability language");
+  return fail(assignment, failures);
+}
+
+function gradeCivilAskWhole(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review, whole } = runComplexCivilClaimsFixture();
+  const answer = answerCivilClaimsQuestion({
+    review,
+    question: "What are the major evidentiary weaknesses in this case and what should counsel investigate next?",
+  });
+  const text = formatCivilClaimsAnswer(answer);
+  const failures: string[] = [];
+  if (answer.claims.filter((claim) => claim.isCurrent).length < 2) failures.push("live claims flattened");
+  if (answer.investigationNotes.length === 0 && answer.evidenceNotes.length === 0) {
+    failures.push("investigation notes missing");
+  }
+  if (whole.sharedEvidenceRoles.every((row) => row.roles.length < 2) === false) {
+    // shared evidence must remain claim-separated in notes or whole view
+  }
+  if (!text.includes("CLAIMS:")) failures.push("claim separation lost");
+  if (answer.liabilityConclusion !== null || answer.outcomeConclusion !== null) failures.push("liability conclusion");
+  if (findCivilLiabilityViolations(text).length > 0) failures.push("forbidden liability language");
+  return fail(assignment, failures);
+}
+
+function gradeCivilStrength(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runComplexCivilClaimsFixture();
+  const breach = review.claims.find((claim) => claim.id === "claim-breach");
+  const failures: string[] = [];
+  if (!breach) {
+    failures.push("breach claim missing");
+    return fail(assignment, failures);
+  }
+  const strength = buildCivilClaimStrengthAnalysis(breach);
+  if (strength.elementSupportCompleteness.length === 0) failures.push("element completeness missing");
+  if (
+    !strength.elementSupportCompleteness.some(
+      (row) => row.missingEvidence.length > 0 || row.conflicted || row.contraryEvidenceIds.length > 0,
+    )
+  ) {
+    failures.push("missing or conflicted support not surfaced");
+  }
+  if (strength.investigationQuestions.length === 0) failures.push("investigation questions missing");
+  if (strength.liabilityConclusion !== null || strength.outcomeConclusion !== null) failures.push("liability conclusion");
+  return fail(assignment, failures);
+}
+
 const GRADERS: Record<string, (assignment: DeepeningAssignment) => DeepeningGrade> = {
   "D1-LF-01": gradeLawFirm,
   "D1-PR-01": gradeProsecution,
@@ -344,6 +445,11 @@ const GRADERS: Record<string, (assignment: DeepeningAssignment) => DeepeningGrad
   "D3-CIVIL-SHARED-EVID-01": gradeCivilSharedEvidence,
   "D3-CIVIL-ASK-01": gradeCivilAsk,
   "D3-CIVIL-MATRIX-01": gradeCivilMatrix,
+  "D3-CIVIL-ELEMENTS-01": gradeCivilElements,
+  "D3-CIVIL-ASK-PARTY-01": gradeCivilAskParty,
+  "D3-CIVIL-ASK-AUTH-01": gradeCivilAskAuthority,
+  "D3-CIVIL-ASK-WHOLE-01": gradeCivilAskWhole,
+  "D3-CIVIL-STRENGTH-01": gradeCivilStrength,
 };
 
 /** Deterministic deepening grades. No database, model, or CourtListener calls. */
