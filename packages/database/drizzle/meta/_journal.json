@@ -148,6 +148,13 @@
       "when": 1787800000000,
       "tag": "0020_civil_claims",
       "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1787900000000,
+      "tag": "0021_graph_claim_defense_node_types",
+      "breakpoints": true
     }
   ]
 }
