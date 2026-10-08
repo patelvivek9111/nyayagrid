@@ -331,7 +331,17 @@ export function pickVisibleGraphEdgeLabelIds(
 }
 
 export function userFacingLoadError(
-  kind: "timeline" | "evidence" | "people" | "graph" | "memory" | "home" | "chats" | "documents" | "review",
+  kind:
+    | "timeline"
+    | "evidence"
+    | "people"
+    | "graph"
+    | "memory"
+    | "home"
+    | "chats"
+    | "documents"
+    | "review"
+    | "claims",
   status?: number,
 ): string {
   if (status === 401) return USER_FACING_AUTH.unauthenticated;
@@ -344,6 +354,7 @@ export function userFacingLoadError(
   if (kind === "chats") return "We couldn't load this conversation. Try again.";
   if (kind === "documents") return "We couldn't load documents. Try again.";
   if (kind === "review") return "We couldn't load the review queue. Try again.";
+  if (kind === "claims") return "We couldn't load civil claims. Try again.";
   return "We couldn't load case memory. Try again.";
 }
 

@@ -1,8 +1,8 @@
 /**
  * Application-layer civil claims / defenses / counterclaims model (Deepening Pass 3).
  *
- * Deterministic, non-persisted prototype. Does not write to the database and does not
- * invent liability outcomes. Production L4 persistence requires a coordinated schema.
+ * Deterministic, non-deciding analysis helpers. Persistence lives in postgres/adapter
+ * against migration 0020_civil_claims. Does not invent liability outcomes.
  */
 
 export const CIVIL_CLAIM_KINDS = [
@@ -323,7 +323,34 @@ export type CivilAskAnswer = {
   defenses: Array<{ id: string; label: string; kind: CivilDefenseKind; againstClaimIds: string[] }>;
   evidenceNotes: string[];
   amendmentNotes: string[];
+  investigationNotes: string[];
+  authorityNotes: string[];
   limitations: string[];
+  liabilityConclusion: null;
+  outcomeConclusion: null;
+};
+
+/** Non-deciding structured claim strength analysis. Never includes liability/win-loss. */
+export type CivilClaimStrengthAnalysis = {
+  claimId: string;
+  claimLabel: string;
+  kind: CivilClaimKind;
+  proceduralStatus: CivilProceduralStatus;
+  elementSupportCompleteness: Array<{
+    elementId: string;
+    label: string;
+    status: CivilElementStatus;
+    supportingEvidenceIds: string[];
+    contraryEvidenceIds: string[];
+    conflicted: boolean;
+    missingEvidence: string[];
+  }>;
+  unresolvedFactualQuestions: string[];
+  unresolvedLegalQuestions: string[];
+  authorityGaps: string[];
+  investigationQuestions: string[];
+  discoveryOpportunities: string[];
+  proceduralConcerns: string[];
   liabilityConclusion: null;
   outcomeConclusion: null;
 };
@@ -554,9 +581,88 @@ export function currentClaims(review: CivilClaimsReview): CivilClaim[] {
 }
 
 export function isCivilClaimsAskQuestion(question: string): boolean {
-  return /(claim|counterclaim|defense|affirmative defense|element|requirement|pleading|amended complaint|notice defense|breach|cause of action)/i.test(
+  return /(claim|counterclaim|defense|affirmative defense|element|requirement|pleading|amended complaint|notice defense|breach|cause of action|waiver|investigate|evidentiary weakness|live claims|defendant|plaintiff|authority|authorities)/i.test(
     question,
   );
+}
+
+export function buildCivilClaimStrengthAnalysis(claim: CivilClaim): CivilClaimStrengthAnalysis {
+  const elementSupportCompleteness = claim.elements.map((element) => {
+    const supportingEvidenceIds = element.supportingEvidence.map((row) => row.evidenceId);
+    const contraryEvidenceIds = element.contraryEvidence.map((row) => row.evidenceId);
+    return {
+      elementId: element.id,
+      label: element.label,
+      status: element.status,
+      supportingEvidenceIds,
+      contraryEvidenceIds,
+      conflicted: element.status === "CONFLICTED" || (supportingEvidenceIds.length > 0 && contraryEvidenceIds.length > 0),
+      missingEvidence: element.missingEvidence.map((item) => item.description),
+    };
+  });
+
+  const unresolvedFactualQuestions: string[] = [];
+  const investigationQuestions: string[] = [];
+  const discoveryOpportunities: string[] = [];
+  for (const element of elementSupportCompleteness) {
+    if (element.status === "NO_EVIDENCE_FOUND" || element.missingEvidence.length > 0) {
+      unresolvedFactualQuestions.push(
+        `No evidence was found supporting ${element.label} on claim ${claim.id}.`,
+      );
+      investigationQuestions.push(`What documentary or testimonial support exists for ${element.label}?`);
+      for (const missing of element.missingEvidence) {
+        discoveryOpportunities.push(`Seek production or deposition testimony regarding: ${missing}`);
+      }
+    }
+    if (element.conflicted) {
+      unresolvedFactualQuestions.push(
+        `Evidence supporting ${element.label} conflicts with contrary evidence on claim ${claim.id}.`,
+      );
+      investigationQuestions.push(`How should counsel reconcile conflicting evidence on ${element.label}?`);
+    }
+    if (element.status === "PARTIALLY_SUPPORTED") {
+      investigationQuestions.push(
+        `Element ${element.label} currently has limited documentary support.`,
+      );
+    }
+  }
+
+  const authorityGaps: string[] = [];
+  const unresolvedLegalQuestions: string[] = [];
+  if (claim.authorities.length === 0) {
+    authorityGaps.push(`No linked authorities on claim ${claim.id} (${claim.label}).`);
+    unresolvedLegalQuestions.push(`Which authorities govern the elements of ${claim.label}?`);
+  }
+  if (claim.standards.length === 0) {
+    unresolvedLegalQuestions.push(`Which legal standards apply to ${claim.label}?`);
+  }
+  for (const gap of claim.uncertainty) {
+    unresolvedLegalQuestions.push(gap);
+  }
+
+  const proceduralConcerns: string[] = [];
+  if (claim.proceduralStatus === "SUPERSEDED" || !claim.isCurrent) {
+    proceduralConcerns.push(`Claim ${claim.id} is not current (proceduralStatus=${claim.proceduralStatus}).`);
+  }
+  if (claim.proceduralStatus === "AMENDED") {
+    proceduralConcerns.push(`Claim ${claim.id} reflects an amended pleading lineage; inspect superseded prior versions.`);
+  }
+
+  return {
+    claimId: claim.id,
+    claimLabel: claim.label,
+    kind: claim.kind,
+    proceduralStatus: claim.proceduralStatus,
+    elementSupportCompleteness,
+    unresolvedFactualQuestions,
+    unresolvedLegalQuestions,
+    authorityGaps,
+    investigationQuestions,
+    discoveryOpportunities,
+    proceduralConcerns,
+    liabilityConclusion: null,
+    outcomeConclusion: null,
+  };
 }
 
 export function answerCivilClaimsQuestion(params: {
@@ -566,23 +672,52 @@ export function answerCivilClaimsQuestion(params: {
   const review = params.review;
   const q = params.question.toLowerCase();
   const current = currentClaims(review);
-  const claims = (q.includes("current") || q.includes("pleaded") || q.includes("claim")
-    ? current
-    : review.claims
-  ).map((claim) => ({
-    id: claim.id,
-    label: claim.label,
-    kind: claim.kind,
-    isCurrent: claim.isCurrent,
-    supportStatus: claim.supportStatus,
-    proceduralStatus: claim.proceduralStatus,
-  }));
+  const partyMatch = review.parties.find((party) => {
+    const name = party.displayName.toLowerCase();
+    if (q.includes(name)) return true;
+    const tokens = name.split(/[^a-z0-9]+/).filter((token) => token.length >= 3);
+    return tokens.some((token) => new RegExp(`\\b${token}\\b`, "i").test(params.question));
+  });
 
-  const elements = current.flatMap((claim) =>
+  let scopedClaims = current;
+  if (partyMatch) {
+    scopedClaims = current.filter((claim) => claim.parties.some((party) => party.partyId === partyMatch.id));
+  } else if (
+    /counterclaim/i.test(params.question) &&
+    !/all live|all current|whole.?matter|currently pleaded/i.test(params.question)
+  ) {
+    scopedClaims = current.filter((claim) => claim.kind === "COUNTERCLAIM");
+  }
+
+  // Element focus may narrow to breach without removing other current claims from the claim list.
+  let elementScopedClaims = scopedClaims;
+  if (
+    /breach/i.test(params.question) &&
+    !partyMatch &&
+    !/all live|whole.?matter|major evidentiary/i.test(params.question)
+  ) {
+    elementScopedClaims = scopedClaims.filter(
+      (claim) => /breach/i.test(claim.label) || claim.elements.some((element) => /breach/i.test(element.label)),
+    );
+    if (elementScopedClaims.length === 0) elementScopedClaims = scopedClaims;
+  }
+
+  const listCurrentOnly = /current|pleaded|live claims|all live/i.test(params.question) || /claim/i.test(params.question);
+  const claims = (listCurrentOnly ? scopedClaims : review.claims.filter((claim) => scopedClaims.some((row) => row.id === claim.id) || !partyMatch))
+    .map((claim) => ({
+      id: claim.id,
+      label: claim.label,
+      kind: claim.kind,
+      isCurrent: claim.isCurrent,
+      supportStatus: claim.supportStatus,
+      proceduralStatus: claim.proceduralStatus,
+    }));
+
+  const elements = elementScopedClaims.flatMap((claim) =>
     claim.elements
       .filter((element) => {
-        if (/unsupported|missing|no evidence/i.test(params.question)) {
-          return element.status === "NO_EVIDENCE_FOUND" || element.status === "UNKNOWN" || element.missingEvidence.length > 0;
+        if (/unsupported|missing|no evidence|lack evidence|weakness/i.test(params.question)) {
+          return element.status === "NO_EVIDENCE_FOUND" || element.status === "UNKNOWN" || element.missingEvidence.length > 0 || element.status === "CONFLICTED" || element.status === "PARTIALLY_SUPPORTED";
         }
         if (/breach/i.test(params.question) && !/breach/i.test(claim.label) && !/breach/i.test(element.label)) {
           return false;
@@ -601,6 +736,16 @@ export function answerCivilClaimsQuestion(params: {
   const defenses = review.defenses
     .filter((defense) => defense.isCurrent)
     .filter((defense) => {
+      if (partyMatch) {
+        return (
+          defense.assertingPartyIds.includes(partyMatch.id) ||
+          defense.targetPartyIds.includes(partyMatch.id) ||
+          defense.againstClaimIds.some((claimId) =>
+            current.some((claim) => claim.id === claimId && claim.parties.some((party) => party.partyId === partyMatch.id)),
+          )
+        );
+      }
+      if (/waiver/i.test(params.question)) return /waiver/i.test(defense.label) || defense.kind === "WAIVER";
       if (/notice/i.test(params.question)) return /notice/i.test(defense.label) || defense.kind === "NOTICE";
       if (/defense/i.test(params.question)) return true;
       return /defense|notice|waiver|affirmative/i.test(params.question);
@@ -623,11 +768,24 @@ export function answerCivilClaimsQuestion(params: {
       }
     }
   }
-  if (/contrary|strongest contrary/i.test(params.question)) {
-    for (const claim of current) {
+  if (/contrary|contradict|conflicts with/i.test(params.question)) {
+    for (const claim of scopedClaims) {
       for (const element of claim.elements) {
         for (const relation of element.contraryEvidence) {
-          evidenceNotes.push(`Contrary for ${claim.id}/${element.id}: ${relation.evidenceId}`);
+          evidenceNotes.push(
+            `Evidence ${relation.evidenceId} conflicts with ${element.label} on claim ${claim.label} (${claim.id}).`,
+          );
+        }
+      }
+    }
+  }
+  if (/supports|supporting evidence/i.test(params.question)) {
+    for (const claim of scopedClaims) {
+      for (const element of claim.elements) {
+        for (const relation of element.supportingEvidence) {
+          evidenceNotes.push(
+            `Evidence ${relation.evidenceId} supports ${element.label} on claim ${claim.label} (${claim.id}).`,
+          );
         }
       }
     }
@@ -640,9 +798,16 @@ export function answerCivilClaimsQuestion(params: {
       }
     }
   }
+  if (/weakness|investigate|prioritize|discovery/i.test(params.question)) {
+    for (const claim of scopedClaims) {
+      const strength = buildCivilClaimStrengthAnalysis(claim);
+      for (const note of strength.unresolvedFactualQuestions) evidenceNotes.push(note);
+      for (const note of strength.investigationQuestions) evidenceNotes.push(note);
+    }
+  }
 
   const amendmentNotes: string[] = [];
-  if (/amended|complaint|changed|superseded|removed|added/i.test(params.question)) {
+  if (/amended|complaint|changed|superseded|removed|added|original/i.test(params.question)) {
     for (const claim of review.claims.filter((row) => !row.isCurrent)) {
       amendmentNotes.push(
         `Claim ${claim.id} (${claim.label}) is not current; proceduralStatus=${claim.proceduralStatus}; supersededBy=${claim.supersededByClaimId ?? "none"}`,
@@ -655,11 +820,58 @@ export function answerCivilClaimsQuestion(params: {
     }
   }
 
+  const authorityNotes: string[] = [];
+  if (/authorit|govern|standard|legal issue/i.test(params.question)) {
+    const defenseTargets = /waiver/i.test(params.question)
+      ? review.defenses.filter((defense) => defense.kind === "WAIVER" || /waiver/i.test(defense.label))
+      : review.defenses.filter((defense) => defense.isCurrent);
+    for (const defense of defenseTargets) {
+      for (const authority of defense.authorities) {
+        authorityNotes.push(
+          `Defense ${defense.id} authority ${authority.authorityId} relation=${authority.relation} treatment=${authority.treatment} citation=${authority.citation ?? "(none)"} sourceSupported=${authority.sourceSupported}`,
+        );
+      }
+      if (defense.authorities.length === 0 && /waiver|authorit|govern/i.test(params.question)) {
+        authorityNotes.push(`Defense ${defense.id} (${defense.label}) has no linked authorities.`);
+      }
+      for (const standard of defense.standards) {
+        authorityNotes.push(`Defense ${defense.id} standard ${standard.id} label=${standard.label}`);
+      }
+    }
+    for (const claim of scopedClaims) {
+      for (const authority of claim.authorities) {
+        authorityNotes.push(
+          `Claim ${claim.id} authority ${authority.authorityId} relation=${authority.relation} treatment=${authority.treatment} citation=${authority.citation ?? "(none)"}`,
+        );
+      }
+      for (const standard of claim.standards) {
+        authorityNotes.push(`Claim ${claim.id} standard ${standard.id} label=${standard.label}`);
+      }
+      for (const issueId of claim.legalIssueIds) {
+        const issue = review.legalIssues.find((row) => row.issueId === issueId);
+        authorityNotes.push(
+          `Claim ${claim.id} legal issue ${issueId} label=${issue?.label ?? "(unresolved label)"}`,
+        );
+      }
+    }
+  }
+
+  const investigationNotes: string[] = [];
+  if (/investigate|prioritize|discovery|weakness|whole.?matter/i.test(params.question)) {
+    for (const claim of scopedClaims) {
+      const strength = buildCivilClaimStrengthAnalysis(claim);
+      investigationNotes.push(...strength.investigationQuestions);
+      investigationNotes.push(...strength.discoveryOpportunities);
+      investigationNotes.push(...strength.proceduralConcerns);
+    }
+  }
+
   const limitations = [
     ...review.coverageWarnings,
     "Nyaya does not decide liability, win/lose outcomes, or claim validity.",
     "Procedural status is separate from factual support status.",
     "Superseded pleadings remain traceable but are not treated as current.",
+    "FACTS, EVIDENCE, LEGAL ISSUES, AUTHORITIES, and LEGAL STANDARDS remain separate categories.",
     "Human review is required before filing, settlement, or dispositive motion practice.",
   ];
 
@@ -670,6 +882,8 @@ export function answerCivilClaimsQuestion(params: {
     defenses,
     evidenceNotes,
     amendmentNotes,
+    investigationNotes,
+    authorityNotes,
     limitations,
     liabilityConclusion: null,
     outcomeConclusion: null,
@@ -694,10 +908,14 @@ export function formatCivilClaimsAnswer(answer: CivilAskAnswer): string {
     ...answer.defenses.map(
       (defense) => `- ${defense.id} [${defense.kind}] ${defense.label} against=${defense.againstClaimIds.join(",")}`,
     ),
-    "EVIDENCE_NOTES:",
+    "FACTS_EVIDENCE_NOTES:",
     ...(answer.evidenceNotes.length > 0 ? answer.evidenceNotes.map((note) => `- ${note}`) : ["- (none)"]),
+    "AUTHORITIES_AND_STANDARDS:",
+    ...(answer.authorityNotes.length > 0 ? answer.authorityNotes.map((note) => `- ${note}`) : ["- (none)"]),
     "AMENDMENT_NOTES:",
     ...(answer.amendmentNotes.length > 0 ? answer.amendmentNotes.map((note) => `- ${note}`) : ["- (none)"]),
+    "INVESTIGATION_NOTES:",
+    ...(answer.investigationNotes.length > 0 ? answer.investigationNotes.map((note) => `- ${note}`) : ["- (none)"]),
     `LIMITATIONS: ${answer.limitations.join(" | ")}`,
     "LIABILITY_CONCLUSION: null",
     "OUTCOME_CONCLUSION: null",

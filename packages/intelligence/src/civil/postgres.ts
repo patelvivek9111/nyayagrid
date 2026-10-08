@@ -899,6 +899,162 @@ export async function supersedeCivilClaim(
   return { replacement, prior };
 }
 
+export async function listCivilDefensesByMatter(
+  db: Database,
+  params: {
+    userId: string;
+    organizationId: string;
+    matterId: string;
+    currentOnly?: boolean;
+  },
+) {
+  await authorizeRead(db, params);
+  const conditions = [
+    eq(civilDefenses.organizationId, params.organizationId),
+    eq(civilDefenses.matterId, params.matterId),
+  ];
+  if (params.currentOnly !== false) {
+    conditions.push(eq(civilDefenses.isCurrent, true));
+  }
+  return db
+    .select()
+    .from(civilDefenses)
+    .where(and(...conditions));
+}
+
+export async function listCivilPleadingsByMatter(
+  db: Database,
+  params: {
+    userId: string;
+    organizationId: string;
+    matterId: string;
+    currentOnly?: boolean;
+  },
+) {
+  await authorizeRead(db, params);
+  const conditions = [
+    eq(civilPleadings.organizationId, params.organizationId),
+    eq(civilPleadings.matterId, params.matterId),
+  ];
+  if (params.currentOnly === true) {
+    conditions.push(eq(civilPleadings.isCurrent, true));
+  }
+  return db
+    .select()
+    .from(civilPleadings)
+    .where(and(...conditions));
+}
+
+export async function listCivilCounterclaimsByMatter(
+  db: Database,
+  params: {
+    userId: string;
+    organizationId: string;
+    matterId: string;
+    currentOnly?: boolean;
+  },
+) {
+  const claims = await listCivilClaimsByMatter(db, params);
+  return claims.filter((claim) => claim.kind === "COUNTERCLAIM");
+}
+
+export async function linkCivilStandard(
+  db: Database,
+  params: {
+    userId: string;
+    organizationId: string;
+    matterId: string;
+    standardId: string;
+    claimId?: string | null;
+    elementId?: string | null;
+    defenseId?: string | null;
+    provenance?: RecordProvenance;
+  },
+) {
+  await authorizeWrite(db, params);
+  const targets = [params.claimId, params.elementId, params.defenseId].filter(Boolean);
+  if (targets.length !== 1) {
+    throw new CivilError("INVALID_TARGET", "Standard relation requires exactly one target.");
+  }
+  const [created] = await db
+    .insert(civilStandardRelations)
+    .values({
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      claimId: params.claimId ?? null,
+      elementId: params.elementId ?? null,
+      defenseId: params.defenseId ?? null,
+      standardId: params.standardId,
+      provenance: provenanceOf(params.provenance),
+    })
+    .returning();
+  return created;
+}
+
+export async function unlinkCivilFact(
+  db: Database,
+  params: { userId: string; organizationId: string; matterId: string; relationId: string },
+) {
+  await authorizeWrite(db, params);
+  await db
+    .delete(civilFactRelations)
+    .where(
+      and(
+        eq(civilFactRelations.id, params.relationId),
+        eq(civilFactRelations.matterId, params.matterId),
+        eq(civilFactRelations.organizationId, params.organizationId),
+      ),
+    );
+}
+
+export async function unlinkCivilLegalIssue(
+  db: Database,
+  params: { userId: string; organizationId: string; matterId: string; relationId: string },
+) {
+  await authorizeWrite(db, params);
+  await db
+    .delete(civilLegalIssueRelations)
+    .where(
+      and(
+        eq(civilLegalIssueRelations.id, params.relationId),
+        eq(civilLegalIssueRelations.matterId, params.matterId),
+        eq(civilLegalIssueRelations.organizationId, params.organizationId),
+      ),
+    );
+}
+
+export async function unlinkCivilAuthority(
+  db: Database,
+  params: { userId: string; organizationId: string; matterId: string; relationId: string },
+) {
+  await authorizeWrite(db, params);
+  await db
+    .delete(civilAuthorityRelations)
+    .where(
+      and(
+        eq(civilAuthorityRelations.id, params.relationId),
+        eq(civilAuthorityRelations.matterId, params.matterId),
+        eq(civilAuthorityRelations.organizationId, params.organizationId),
+      ),
+    );
+}
+
+export async function unlinkCivilStandard(
+  db: Database,
+  params: { userId: string; organizationId: string; matterId: string; relationId: string },
+) {
+  await authorizeWrite(db, params);
+  await db
+    .delete(civilStandardRelations)
+    .where(
+      and(
+        eq(civilStandardRelations.id, params.relationId),
+        eq(civilStandardRelations.matterId, params.matterId),
+        eq(civilStandardRelations.organizationId, params.organizationId),
+      ),
+    );
+}
+
 export async function assertCivilTenantSafe(
   expected: { organizationId: string; matterId: string },
   actual: { organizationId: string; matterId: string },
