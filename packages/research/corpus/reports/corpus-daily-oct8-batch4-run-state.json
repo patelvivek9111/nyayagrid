@@ -1,0 +1,1479 @@
+{
+  "classification": "CORPUS_DAILY_OCT8_BATCH4_RUN",
+  "startedAt": "2026-10-08T22:08:36.392Z",
+  "totalBudget": 265,
+  "priorCl": 111,
+  "safeProductive": 154,
+  "startSnapshot": {
+    "cases": 5073,
+    "authorities": 6428,
+    "extracted": 63718,
+    "resolved": 9760,
+    "unresolved": 53958,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": 0,
+    "usCircuitUnspecified": 97
+  },
+  "startCitationMark": {
+    "extracted": 63718,
+    "resolved": 9760,
+    "unresolved": 53958,
+    "maxCreatedAt": "2026-10-08T18:20:44.612Z"
+  },
+  "remainingAtStart": {
+    "minute": 25,
+    "hour": 300,
+    "day": 562
+  },
+  "pointer": 54,
+  "stopReason": "SAFE_HOURLY_HEADROOM",
+  "continue": false,
+  "metrics": {
+    "requestsUsed": 154,
+    "casesAdded": 33,
+    "oldResolves": 110,
+    "uniqueTargetsEliminated": 33,
+    "newEdges": 1601,
+    "controllingAdded": 33,
+    "benchmarkRelevantAdded": 0,
+    "rateLimited": 0,
+    "gateway502_504": 0,
+    "longWaitsOver5m": 0,
+    "acquired": [
+      {
+        "citation": "52 F.3d 1236",
+        "title": "United States v. Edmonds",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "3838accb-4940-4266-8051-ac19dffbcec3",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=6",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "493 F.2d 292",
+        "title": "Merola v. Atlantic Richfield Co.",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "e03ce29e-f81d-4f64-9ddd-3b637c874bdc",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=6",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "679 F.3d 510",
+        "title": "United States v. Greeno",
+        "court": "United States Court of Appeals for the Sixth Circuit",
+        "authorityId": "3e8a9628-bea7-4f52-9270-80c794b8238c",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=5",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "717 F.2d 482",
+        "title": "United States v. Jack Leroy Underwood",
+        "court": "United States Court of Appeals for the Ninth Circuit",
+        "authorityId": "56b1f31b-b257-431f-a7c9-891e7f7b2888",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=5",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "702 F.2d 299",
+        "title": "United States v. Terry",
+        "court": "United States Court of Appeals for the Second Circuit",
+        "authorityId": "0b74d3f0-34a7-4087-badf-daa65d557406",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=5",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "638 F.3d 581",
+        "title": "United States v. Joos",
+        "court": "United States Court of Appeals for the Eighth Circuit",
+        "authorityId": "4e4b0abf-58ca-45bb-8cbf-b8c230a3291e",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=5",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "550 F.2d 464",
+        "title": "The Stanford Daily v. James Zurcher, Individually and as Chief of Police of the City of Palo Alto, County of Santa Clara, State of California",
+        "court": "United States Court of Appeals for the Ninth Circuit",
+        "authorityId": "408fee46-4d1f-47d5-8014-785999748fb1",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=4",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "561 F.2d 320",
+        "title": "Dorothy C. Parker v. Joseph A. Califano, Jr., Secretary of Health, Education and Welfare",
+        "court": "United States Court of Appeals for the District of Columbia Circuit",
+        "authorityId": "114b3c8d-365a-46dc-b429-7e0584d4aa8e",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=4",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "569 F.2d 1231",
+        "title": "Rodriguez v. Taylor",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "bcbde4fa-5ca9-47b1-b393-b39a7f55d28f",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=4",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "602 F.3d 738",
+        "title": "United States v. Carey",
+        "court": "United States Court of Appeals for the Sixth Circuit",
+        "authorityId": "196cd5ea-914c-48e6-8110-a172bd5914e4",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=4",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "428 F.2d 981",
+        "title": "Thomas v. Honeybrook Mines, Inc.",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "a06b135f-9e98-4dcd-a6f7-3bb9341f0f31",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=4",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "700 F.3d 185",
+        "title": "National Rifle Ass'n of America, Inc. v. Bureau of Alcohol, Tobacco, Firearms, & Explosives",
+        "court": "United States Court of Appeals for the Fifth Circuit",
+        "authorityId": "46e6c56b-d6f2-4797-a378-67a4612491b2",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=4",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "717 F.3d 281",
+        "title": "United States v. Bogle",
+        "court": "United States Court of Appeals for the Second Circuit",
+        "authorityId": "d9224f75-06e7-4509-b75b-9c7a2c9e914c",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=4",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "368 F.3d 517",
+        "title": "United States v. Everist",
+        "court": "United States Court of Appeals for the Fifth Circuit",
+        "authorityId": "45d966d5-8912-40dc-9d49-0095d7bc7d4c",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=4",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "1 F.3d 176",
+        "title": "Kost v. Kozakiewicz",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "29b188e7-b350-4f88-b50e-28f6ca8a61af",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "826 F.2d 43",
+        "title": "Save Our Cumberland Mountains, Inc. v. Donald P. Hodel, Secretary of the Interior",
+        "court": "United States Court of Appeals for the District of Columbia Circuit",
+        "authorityId": "43f226ea-e446-4951-b222-2ff4bcf8da97",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "503 F.2d 177",
+        "title": "Lorraine Evans v. Sheraton Park Hotel Lorraine Evans v. Sheraton Park Hotel, Hotel & Restaurant Employees and Bartenders International Union",
+        "court": "United States Court of Appeals for the District of Columbia Circuit",
+        "authorityId": "8cfdbca6-83c3-4975-b8b8-0249e282d9ce",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "465 F.2d 1298",
+        "title": "George S. Krasnov v. Brendan Dinan",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "8e8cc33f-a60e-48ac-b4d8-69047ac4ad01",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "911 F.2d 941",
+        "title": "DeLuca ex rel. DeLuca v. Merrell Dow Pharmaceuticals, Inc.",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "8c1ceff7-4e9a-4118-a8db-51752b949907",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "170 F.3d 339",
+        "title": "United States v. Joseph Lovelock",
+        "court": "United States Court of Appeals for the Second Circuit",
+        "authorityId": "f51326cf-2b22-4e96-926d-0d062598dec9",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "578 F.3d 203",
+        "title": "Fowler v. UPMC SHADYSIDE",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "7a2a79fb-11d8-4696-b7e8-d84f93f682ba",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=3",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "411 F.2d 365",
+        "title": "The Boeing Company v. Daniel C. Shipman",
+        "court": "United States Court of Appeals for the Fifth Circuit",
+        "authorityId": "ee85f9d6-1c90-4bc7-a210-b8937c1832f9",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "434 F.2d 727",
+        "title": "Joseph B. KAUFFMAN Et Al. v. the DREYFUS FUND, INC., Et Al., Investors Diversified Services, Inc., Et Al., Appellants",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "69c20eec-7d52-4f93-ae73-a62d5588fa9e",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "456 F.2d 173",
+        "title": "Tranberg v. Tranberg",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "be357c6b-b37b-4a73-9923-656d5acbb552",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "456 F.3d 298",
+        "title": "Kathleen Sanford, Individually and as Administratrix of the Estate of Michael R. Sanford v. Pamela Stiles Dennis Murphy East Penn School District",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "679ae15d-f8e4-495a-8a26-f1ec2ee92170",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "495 F.2d 448",
+        "title": "City of Detroit v. Grinnell Corporation, Manhattan-Ward, Incorporated v. Grinnell Corporation, 1225 Vine Street Building, Inc. v. Grinnell Corporation",
+        "court": "United States Court of Appeals for the Second Circuit",
+        "authorityId": "e3522487-72bf-4420-a33b-cca065babeb1",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "496 F.2d 747",
+        "title": "Reuben J. Katz, on Behalf of Himself and All Others Similarly Situated v. Carte Blanche Corporation",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "7ceaac74-37ab-4026-bcf2-fd326d3e770f",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "510 F.2d 1090",
+        "title": "Sergeant Edward A. Hairston v. R & R Apartments",
+        "court": "United States Court of Appeals for the Seventh Circuit",
+        "authorityId": "35f58b2e-b6f0-434d-bdfd-cd318f6dd619",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "538 F.2d 10",
+        "title": "Rosa Torres v. Alice Sachs, Raymond S. Velez v. Patrick Cunningham, Juana Lopez v. David Dinkins",
+        "court": "United States Court of Appeals for the Second Circuit",
+        "authorityId": "0f342d80-93f0-4a27-b00d-3a65ed7c149a",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "538 F.2d 53",
+        "title": "Dr. Joseph T. Skehan v. Board of Trustees of Bloomsburg State College",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "83f62683-ee62-4c29-9d3a-72c1f8941732",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "538 F.2d 991",
+        "title": "Samuel v. University of Pittsburgh",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "3fa27465-7b22-414e-b8d1-fc21dcb150a2",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      },
+      {
+        "citation": "543 F.2d 1117",
+        "title": "Earl Panior v. The Iberville Parish School Board",
+        "court": "United States Court of Appeals for the Fifth Circuit",
+        "authorityId": "f77c56b3-2e8f-42af-9ade-ec352319c8fc",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "other_circuits",
+        "status": "imported"
+      },
+      {
+        "citation": "546 F.2d 1077",
+        "title": "William Oscar Hampton v. Holmesburg Prison Officials. Appeal of Richard Burk",
+        "court": "United States Court of Appeals for the Third Circuit",
+        "authorityId": "2425b245-d8eb-43c9-8db2-271eb46e82cd",
+        "clRequests": 4,
+        "reason": "LANE1_ca3_edges=2",
+        "laneName": "third_circuit",
+        "trueCourtBucket": "third_circuit",
+        "status": "imported"
+      }
+    ],
+    "batches": [
+      {
+        "at": "2026-10-08T22:12:51.206Z",
+        "attempted": [
+          {
+            "citation": "52 F.3d 1236",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "493 F.2d 292",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "679 F.3d 510",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "717 F.2d 482",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "702 F.2d 299",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "638 F.3d 581",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "550 F.2d 464",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "561 F.2d 320",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "569 F.2d 1231",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "602 F.3d 738",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "428 F.2d 981",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "700 F.3d 185",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "717 F.3d 281",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "368 F.3d 517",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "664 F.2d 99",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "406 F.3d 207",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "967 F.3d 327",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "746 F.2d 4",
+            "lane": "third_circuit"
+          }
+        ],
+        "clUsed": 60,
+        "casesAdded": 14,
+        "resolvedDelta": 125,
+        "newEdges": 594,
+        "efficiency": {
+          "casesPerCl": 0.233,
+          "resolvedDeltaPerCl": 2.083
+        },
+        "health": "GREEN",
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "52 F.3d 1236",
+            "title": "United States v. Edmonds",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "3838accb-4940-4266-8051-ac19dffbcec3",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=6",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "493 F.2d 292",
+            "title": "Merola v. Atlantic Richfield Co.",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "e03ce29e-f81d-4f64-9ddd-3b637c874bdc",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=6",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "679 F.3d 510",
+            "title": "United States v. Greeno",
+            "court": "United States Court of Appeals for the Sixth Circuit",
+            "authorityId": "3e8a9628-bea7-4f52-9270-80c794b8238c",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=5",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "717 F.2d 482",
+            "title": "United States v. Jack Leroy Underwood",
+            "court": "United States Court of Appeals for the Ninth Circuit",
+            "authorityId": "56b1f31b-b257-431f-a7c9-891e7f7b2888",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=5",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "702 F.2d 299",
+            "title": "United States v. Terry",
+            "court": "United States Court of Appeals for the Second Circuit",
+            "authorityId": "0b74d3f0-34a7-4087-badf-daa65d557406",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=5",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "638 F.3d 581",
+            "title": "United States v. Joos",
+            "court": "United States Court of Appeals for the Eighth Circuit",
+            "authorityId": "4e4b0abf-58ca-45bb-8cbf-b8c230a3291e",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=5",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "550 F.2d 464",
+            "title": "The Stanford Daily v. James Zurcher, Individually and as Chief of Police of the City of Palo Alto, County of Santa Clara, State of California",
+            "court": "United States Court of Appeals for the Ninth Circuit",
+            "authorityId": "408fee46-4d1f-47d5-8014-785999748fb1",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=4",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "561 F.2d 320",
+            "title": "Dorothy C. Parker v. Joseph A. Califano, Jr., Secretary of Health, Education and Welfare",
+            "court": "United States Court of Appeals for the District of Columbia Circuit",
+            "authorityId": "114b3c8d-365a-46dc-b429-7e0584d4aa8e",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=4",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "569 F.2d 1231",
+            "title": "Rodriguez v. Taylor",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "bcbde4fa-5ca9-47b1-b393-b39a7f55d28f",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=4",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "602 F.3d 738",
+            "title": "United States v. Carey",
+            "court": "United States Court of Appeals for the Sixth Circuit",
+            "authorityId": "196cd5ea-914c-48e6-8110-a172bd5914e4",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=4",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "428 F.2d 981",
+            "title": "Thomas v. Honeybrook Mines, Inc.",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "a06b135f-9e98-4dcd-a6f7-3bb9341f0f31",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=4",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "700 F.3d 185",
+            "title": "National Rifle Ass'n of America, Inc. v. Bureau of Alcohol, Tobacco, Firearms, & Explosives",
+            "court": "United States Court of Appeals for the Fifth Circuit",
+            "authorityId": "46e6c56b-d6f2-4797-a378-67a4612491b2",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=4",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "717 F.3d 281",
+            "title": "United States v. Bogle",
+            "court": "United States Court of Appeals for the Second Circuit",
+            "authorityId": "d9224f75-06e7-4509-b75b-9c7a2c9e914c",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=4",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "368 F.3d 517",
+            "title": "United States v. Everist",
+            "court": "United States Court of Appeals for the Fifth Circuit",
+            "authorityId": "45d966d5-8912-40dc-9d49-0095d7bc7d4c",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=4",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-08T22:17:13.875Z",
+        "attempted": [
+          {
+            "citation": "1 F.3d 176",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "826 F.2d 43",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "503 F.2d 177",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "465 F.2d 1298",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "911 F.2d 941",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "170 F.3d 339",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "578 F.3d 203",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "411 F.2d 365",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "434 F.2d 727",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "456 F.2d 173",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "456 F.3d 298",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "495 F.2d 448",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "496 F.2d 747",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "510 F.2d 1090",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "523 F.2d 262",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "526 F.2d 603",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "53 F.4th 262",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "532 F.2d 950",
+            "lane": "third_circuit"
+          }
+        ],
+        "clUsed": 60,
+        "casesAdded": 14,
+        "resolvedDelta": 81,
+        "newEdges": 746,
+        "efficiency": {
+          "casesPerCl": 0.233,
+          "resolvedDeltaPerCl": 1.35
+        },
+        "health": "GREEN",
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "1 F.3d 176",
+            "title": "Kost v. Kozakiewicz",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "29b188e7-b350-4f88-b50e-28f6ca8a61af",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "826 F.2d 43",
+            "title": "Save Our Cumberland Mountains, Inc. v. Donald P. Hodel, Secretary of the Interior",
+            "court": "United States Court of Appeals for the District of Columbia Circuit",
+            "authorityId": "43f226ea-e446-4951-b222-2ff4bcf8da97",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "503 F.2d 177",
+            "title": "Lorraine Evans v. Sheraton Park Hotel Lorraine Evans v. Sheraton Park Hotel, Hotel & Restaurant Employees and Bartenders International Union",
+            "court": "United States Court of Appeals for the District of Columbia Circuit",
+            "authorityId": "8cfdbca6-83c3-4975-b8b8-0249e282d9ce",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "465 F.2d 1298",
+            "title": "George S. Krasnov v. Brendan Dinan",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "8e8cc33f-a60e-48ac-b4d8-69047ac4ad01",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "911 F.2d 941",
+            "title": "DeLuca ex rel. DeLuca v. Merrell Dow Pharmaceuticals, Inc.",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "8c1ceff7-4e9a-4118-a8db-51752b949907",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "170 F.3d 339",
+            "title": "United States v. Joseph Lovelock",
+            "court": "United States Court of Appeals for the Second Circuit",
+            "authorityId": "f51326cf-2b22-4e96-926d-0d062598dec9",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "578 F.3d 203",
+            "title": "Fowler v. UPMC SHADYSIDE",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "7a2a79fb-11d8-4696-b7e8-d84f93f682ba",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=3",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "411 F.2d 365",
+            "title": "The Boeing Company v. Daniel C. Shipman",
+            "court": "United States Court of Appeals for the Fifth Circuit",
+            "authorityId": "ee85f9d6-1c90-4bc7-a210-b8937c1832f9",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "434 F.2d 727",
+            "title": "Joseph B. KAUFFMAN Et Al. v. the DREYFUS FUND, INC., Et Al., Investors Diversified Services, Inc., Et Al., Appellants",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "69c20eec-7d52-4f93-ae73-a62d5588fa9e",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "456 F.2d 173",
+            "title": "Tranberg v. Tranberg",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "be357c6b-b37b-4a73-9923-656d5acbb552",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "456 F.3d 298",
+            "title": "Kathleen Sanford, Individually and as Administratrix of the Estate of Michael R. Sanford v. Pamela Stiles Dennis Murphy East Penn School District",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "679ae15d-f8e4-495a-8a26-f1ec2ee92170",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "495 F.2d 448",
+            "title": "City of Detroit v. Grinnell Corporation, Manhattan-Ward, Incorporated v. Grinnell Corporation, 1225 Vine Street Building, Inc. v. Grinnell Corporation",
+            "court": "United States Court of Appeals for the Second Circuit",
+            "authorityId": "e3522487-72bf-4420-a33b-cca065babeb1",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "496 F.2d 747",
+            "title": "Reuben J. Katz, on Behalf of Himself and All Others Similarly Situated v. Carte Blanche Corporation",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "7ceaac74-37ab-4026-bcf2-fd326d3e770f",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "510 F.2d 1090",
+            "title": "Sergeant Edward A. Hairston v. R & R Apartments",
+            "court": "United States Court of Appeals for the Seventh Circuit",
+            "authorityId": "35f58b2e-b6f0-434d-bdfd-cd318f6dd619",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          }
+        ]
+      },
+      {
+        "at": "2026-10-08T22:20:19.871Z",
+        "attempted": [
+          {
+            "citation": "538 F.2d 10",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "538 F.2d 53",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "538 F.2d 991",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "543 F.2d 1117",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "546 F.2d 1077",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "551 F.2d 918",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "557 F.2d 1015",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "593 F.2d 487",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "593 F.2d 49",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "595 F.2d 1265",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "600 F.2d 1003",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "622 F.2d 672",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "632 F.3d 822",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "634 F.2d 446",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "650 F.2d 885",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "652 F.2d 1165",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "652 F.3d 387",
+            "lane": "third_circuit"
+          },
+          {
+            "citation": "671 F.2d 766",
+            "lane": "third_circuit"
+          }
+        ],
+        "clUsed": 34,
+        "casesAdded": 5,
+        "resolvedDelta": 33,
+        "newEdges": 261,
+        "efficiency": {
+          "casesPerCl": 0.147,
+          "resolvedDeltaPerCl": 0.971
+        },
+        "health": "GREEN",
+        "rateLimited": false,
+        "acquired": [
+          {
+            "citation": "538 F.2d 10",
+            "title": "Rosa Torres v. Alice Sachs, Raymond S. Velez v. Patrick Cunningham, Juana Lopez v. David Dinkins",
+            "court": "United States Court of Appeals for the Second Circuit",
+            "authorityId": "0f342d80-93f0-4a27-b00d-3a65ed7c149a",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "538 F.2d 53",
+            "title": "Dr. Joseph T. Skehan v. Board of Trustees of Bloomsburg State College",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "83f62683-ee62-4c29-9d3a-72c1f8941732",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "538 F.2d 991",
+            "title": "Samuel v. University of Pittsburgh",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "3fa27465-7b22-414e-b8d1-fc21dcb150a2",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          },
+          {
+            "citation": "543 F.2d 1117",
+            "title": "Earl Panior v. The Iberville Parish School Board",
+            "court": "United States Court of Appeals for the Fifth Circuit",
+            "authorityId": "f77c56b3-2e8f-42af-9ade-ec352319c8fc",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "other_circuits",
+            "status": "imported"
+          },
+          {
+            "citation": "546 F.2d 1077",
+            "title": "William Oscar Hampton v. Holmesburg Prison Officials. Appeal of Richard Burk",
+            "court": "United States Court of Appeals for the Third Circuit",
+            "authorityId": "2425b245-d8eb-43c9-8db2-271eb46e82cd",
+            "clRequests": 4,
+            "reason": "LANE1_ca3_edges=2",
+            "laneName": "third_circuit",
+            "trueCourtBucket": "third_circuit",
+            "status": "imported"
+          }
+        ]
+      }
+    ],
+    "resolution": {
+      "OLD_UNRESOLVED_RESOLVED": 110,
+      "NEW_EDGES_TOTAL": 1601,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 129,
+      "NEW_EDGES_STILL_UNRESOLVED": 1472,
+      "TOTAL_RESOLVED_THIS_RUN": 239,
+      "oldCohortStillUnresolved": 53848,
+      "newCohort": {
+        "total": 1601,
+        "resolved": 129,
+        "unresolved": 1472
+      }
+    }
+  },
+  "lanes": {
+    "third_circuit": {
+      "requests": 154,
+      "cases": 33,
+      "oldResolves": 239,
+      "acquired": [
+        {
+          "citation": "52 F.3d 1236",
+          "title": "United States v. Edmonds",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "3838accb-4940-4266-8051-ac19dffbcec3",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=6",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "493 F.2d 292",
+          "title": "Merola v. Atlantic Richfield Co.",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "e03ce29e-f81d-4f64-9ddd-3b637c874bdc",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=6",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "679 F.3d 510",
+          "title": "United States v. Greeno",
+          "court": "United States Court of Appeals for the Sixth Circuit",
+          "authorityId": "3e8a9628-bea7-4f52-9270-80c794b8238c",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=5",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "717 F.2d 482",
+          "title": "United States v. Jack Leroy Underwood",
+          "court": "United States Court of Appeals for the Ninth Circuit",
+          "authorityId": "56b1f31b-b257-431f-a7c9-891e7f7b2888",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=5",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "702 F.2d 299",
+          "title": "United States v. Terry",
+          "court": "United States Court of Appeals for the Second Circuit",
+          "authorityId": "0b74d3f0-34a7-4087-badf-daa65d557406",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=5",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "638 F.3d 581",
+          "title": "United States v. Joos",
+          "court": "United States Court of Appeals for the Eighth Circuit",
+          "authorityId": "4e4b0abf-58ca-45bb-8cbf-b8c230a3291e",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=5",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "550 F.2d 464",
+          "title": "The Stanford Daily v. James Zurcher, Individually and as Chief of Police of the City of Palo Alto, County of Santa Clara, State of California",
+          "court": "United States Court of Appeals for the Ninth Circuit",
+          "authorityId": "408fee46-4d1f-47d5-8014-785999748fb1",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=4",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "561 F.2d 320",
+          "title": "Dorothy C. Parker v. Joseph A. Califano, Jr., Secretary of Health, Education and Welfare",
+          "court": "United States Court of Appeals for the District of Columbia Circuit",
+          "authorityId": "114b3c8d-365a-46dc-b429-7e0584d4aa8e",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=4",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "569 F.2d 1231",
+          "title": "Rodriguez v. Taylor",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "bcbde4fa-5ca9-47b1-b393-b39a7f55d28f",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=4",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "602 F.3d 738",
+          "title": "United States v. Carey",
+          "court": "United States Court of Appeals for the Sixth Circuit",
+          "authorityId": "196cd5ea-914c-48e6-8110-a172bd5914e4",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=4",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "428 F.2d 981",
+          "title": "Thomas v. Honeybrook Mines, Inc.",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "a06b135f-9e98-4dcd-a6f7-3bb9341f0f31",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=4",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "700 F.3d 185",
+          "title": "National Rifle Ass'n of America, Inc. v. Bureau of Alcohol, Tobacco, Firearms, & Explosives",
+          "court": "United States Court of Appeals for the Fifth Circuit",
+          "authorityId": "46e6c56b-d6f2-4797-a378-67a4612491b2",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=4",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "717 F.3d 281",
+          "title": "United States v. Bogle",
+          "court": "United States Court of Appeals for the Second Circuit",
+          "authorityId": "d9224f75-06e7-4509-b75b-9c7a2c9e914c",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=4",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "368 F.3d 517",
+          "title": "United States v. Everist",
+          "court": "United States Court of Appeals for the Fifth Circuit",
+          "authorityId": "45d966d5-8912-40dc-9d49-0095d7bc7d4c",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=4",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "1 F.3d 176",
+          "title": "Kost v. Kozakiewicz",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "29b188e7-b350-4f88-b50e-28f6ca8a61af",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "826 F.2d 43",
+          "title": "Save Our Cumberland Mountains, Inc. v. Donald P. Hodel, Secretary of the Interior",
+          "court": "United States Court of Appeals for the District of Columbia Circuit",
+          "authorityId": "43f226ea-e446-4951-b222-2ff4bcf8da97",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "503 F.2d 177",
+          "title": "Lorraine Evans v. Sheraton Park Hotel Lorraine Evans v. Sheraton Park Hotel, Hotel & Restaurant Employees and Bartenders International Union",
+          "court": "United States Court of Appeals for the District of Columbia Circuit",
+          "authorityId": "8cfdbca6-83c3-4975-b8b8-0249e282d9ce",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "465 F.2d 1298",
+          "title": "George S. Krasnov v. Brendan Dinan",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "8e8cc33f-a60e-48ac-b4d8-69047ac4ad01",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "911 F.2d 941",
+          "title": "DeLuca ex rel. DeLuca v. Merrell Dow Pharmaceuticals, Inc.",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "8c1ceff7-4e9a-4118-a8db-51752b949907",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "170 F.3d 339",
+          "title": "United States v. Joseph Lovelock",
+          "court": "United States Court of Appeals for the Second Circuit",
+          "authorityId": "f51326cf-2b22-4e96-926d-0d062598dec9",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "578 F.3d 203",
+          "title": "Fowler v. UPMC SHADYSIDE",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "7a2a79fb-11d8-4696-b7e8-d84f93f682ba",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=3",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "411 F.2d 365",
+          "title": "The Boeing Company v. Daniel C. Shipman",
+          "court": "United States Court of Appeals for the Fifth Circuit",
+          "authorityId": "ee85f9d6-1c90-4bc7-a210-b8937c1832f9",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "434 F.2d 727",
+          "title": "Joseph B. KAUFFMAN Et Al. v. the DREYFUS FUND, INC., Et Al., Investors Diversified Services, Inc., Et Al., Appellants",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "69c20eec-7d52-4f93-ae73-a62d5588fa9e",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "456 F.2d 173",
+          "title": "Tranberg v. Tranberg",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "be357c6b-b37b-4a73-9923-656d5acbb552",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "456 F.3d 298",
+          "title": "Kathleen Sanford, Individually and as Administratrix of the Estate of Michael R. Sanford v. Pamela Stiles Dennis Murphy East Penn School District",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "679ae15d-f8e4-495a-8a26-f1ec2ee92170",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "495 F.2d 448",
+          "title": "City of Detroit v. Grinnell Corporation, Manhattan-Ward, Incorporated v. Grinnell Corporation, 1225 Vine Street Building, Inc. v. Grinnell Corporation",
+          "court": "United States Court of Appeals for the Second Circuit",
+          "authorityId": "e3522487-72bf-4420-a33b-cca065babeb1",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "496 F.2d 747",
+          "title": "Reuben J. Katz, on Behalf of Himself and All Others Similarly Situated v. Carte Blanche Corporation",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "7ceaac74-37ab-4026-bcf2-fd326d3e770f",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "510 F.2d 1090",
+          "title": "Sergeant Edward A. Hairston v. R & R Apartments",
+          "court": "United States Court of Appeals for the Seventh Circuit",
+          "authorityId": "35f58b2e-b6f0-434d-bdfd-cd318f6dd619",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "538 F.2d 10",
+          "title": "Rosa Torres v. Alice Sachs, Raymond S. Velez v. Patrick Cunningham, Juana Lopez v. David Dinkins",
+          "court": "United States Court of Appeals for the Second Circuit",
+          "authorityId": "0f342d80-93f0-4a27-b00d-3a65ed7c149a",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "538 F.2d 53",
+          "title": "Dr. Joseph T. Skehan v. Board of Trustees of Bloomsburg State College",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "83f62683-ee62-4c29-9d3a-72c1f8941732",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "538 F.2d 991",
+          "title": "Samuel v. University of Pittsburgh",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "3fa27465-7b22-414e-b8d1-fc21dcb150a2",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        },
+        {
+          "citation": "543 F.2d 1117",
+          "title": "Earl Panior v. The Iberville Parish School Board",
+          "court": "United States Court of Appeals for the Fifth Circuit",
+          "authorityId": "f77c56b3-2e8f-42af-9ade-ec352319c8fc",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "other_circuits",
+          "status": "imported"
+        },
+        {
+          "citation": "546 F.2d 1077",
+          "title": "William Oscar Hampton v. Holmesburg Prison Officials. Appeal of Richard Burk",
+          "court": "United States Court of Appeals for the Third Circuit",
+          "authorityId": "2425b245-d8eb-43c9-8db2-271eb46e82cd",
+          "clRequests": 4,
+          "reason": "LANE1_ca3_edges=2",
+          "laneName": "third_circuit",
+          "trueCourtBucket": "third_circuit",
+          "status": "imported"
+        }
+      ]
+    },
+    "other_circuits": {
+      "requests": 0,
+      "cases": 0,
+      "oldResolves": 0,
+      "acquired": []
+    },
+    "edpa": {
+      "requests": 0,
+      "cases": 0,
+      "oldResolves": 0,
+      "acquired": []
+    },
+    "federal_reporter": {
+      "requests": 0,
+      "cases": 0,
+      "oldResolves": 0,
+      "acquired": []
+    },
+    "pa_appellate": {
+      "requests": 0,
+      "cases": 0,
+      "oldResolves": 0,
+      "acquired": []
+    }
+  },
+  "lastResolved": 9999,
+  "lastUnresolved": 55320,
+  "lastExtracted": 65319,
+  "lastCases": 5106,
+  "finishedAt": "2026-10-08T22:20:21.624Z",
+  "endSnapshot": {
+    "cases": 5106,
+    "authorities": 6461,
+    "extracted": 65319,
+    "resolved": 9999,
+    "unresolved": 55320,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": 0,
+    "usCircuitUnspecified": 97
+  },
+  "trueCourtAcq": {
+    "third_circuit": 15,
+    "other_circuits": 18,
+    "edpa": 0,
+    "other_federal": 0,
+    "pa_appellate": 0
+  }
+}

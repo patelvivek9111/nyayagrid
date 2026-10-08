@@ -1,0 +1,531 @@
+{
+  "ok": true,
+  "classification": "CORPUS_DAILY_OCT8_BATCH4_CIRCUIT_REFINE",
+  "candidates": 122,
+  "reviewed": [
+    {
+      "id": "75729b2f-ce07-4b5c-a74a-885763b43142",
+      "citation": "916 F.2d 829",
+      "edgeDemand": 0,
+      "year": "Wed ",
+      "opinionId": "8984822",
+      "status": "resolved",
+      "courtId": "us-ca-3",
+      "method": "cl_docket_ca3"
+    },
+    {
+      "id": "8bd14d5b-a410-4c66-b718-1b1855b7b2b7",
+      "citation": "926 F.2d 262",
+      "edgeDemand": 0,
+      "year": "Tue ",
+      "opinionId": "556426",
+      "status": "resolved",
+      "courtId": "us-ca-3",
+      "method": "cl_docket_ca3"
+    },
+    {
+      "id": "d8041935-8e92-4450-a7bb-0215467054b0",
+      "citation": "911 F.2d 72",
+      "edgeDemand": 0,
+      "year": "Mon ",
+      "opinionId": "546301",
+      "status": "resolved",
+      "courtId": "us-ca-8",
+      "method": "cl_docket_ca8"
+    },
+    {
+      "id": "7911c634-549e-4814-8b2c-2a8eb96ccd16",
+      "citation": "616 F.2d 795",
+      "edgeDemand": 0,
+      "year": "Tue ",
+      "opinionId": "375528",
+      "status": "resolved",
+      "courtId": "us-ca-5",
+      "method": "cl_docket_ca5"
+    },
+    {
+      "id": "c2f8db42-308a-42a5-a4f7-ae6e3ce971df",
+      "citation": "538 F.3d 175",
+      "edgeDemand": 0,
+      "year": "Mon ",
+      "opinionId": "1443025",
+      "status": "resolved",
+      "courtId": "us-ca-3",
+      "method": "cl_docket_ca3"
+    },
+    {
+      "id": "d2384010-f6ed-4d76-ae13-e63a49b25a88",
+      "citation": "576 F.3d 465",
+      "edgeDemand": 0,
+      "year": "Wed ",
+      "opinionId": "1188888",
+      "status": "resolved",
+      "courtId": "us-ca-7",
+      "method": "cl_docket_ca7"
+    },
+    {
+      "id": "94b57e04-1d26-49b5-bb06-ad197923ea13",
+      "citation": "842 F.2d 1436",
+      "edgeDemand": 0,
+      "year": "Wed ",
+      "opinionId": "503760",
+      "status": "resolved",
+      "courtId": "us-ca-3",
+      "method": "cl_docket_ca3"
+    },
+    {
+      "id": "1d5a5a21-7d27-4de1-a14f-e44fe3e885d9",
+      "citation": "706 F.2d 1205",
+      "edgeDemand": 0,
+      "year": "Thu ",
+      "opinionId": "418106",
+      "status": "resolved",
+      "courtId": "us-ca-11",
+      "method": "cl_docket_ca11"
+    },
+    {
+      "id": "717d0004-c498-4a52-a373-f01e6421fb22",
+      "citation": "314 F.3d 1105",
+      "edgeDemand": 0,
+      "year": "Mon ",
+      "opinionId": "780332",
+      "status": "resolved",
+      "courtId": "us-ca-9",
+      "method": "cl_docket_ca9"
+    },
+    {
+      "id": "3f8503f7-2e8a-4f5a-8343-694218cc2b95",
+      "citation": "172 F.3d 1220",
+      "edgeDemand": 0,
+      "year": "Sun ",
+      "opinionId": "9437006",
+      "status": "resolved",
+      "courtId": "us-ca-10",
+      "method": "cl_docket_ca10"
+    },
+    {
+      "id": "cbf056cb-b412-4c1b-94da-aefd4fbbeb25",
+      "citation": "104 F.3d 59",
+      "edgeDemand": 0,
+      "year": "Sun ",
+      "opinionId": "11180",
+      "status": "resolved",
+      "courtId": "us-ca-5",
+      "method": "cl_docket_ca5"
+    },
+    {
+      "id": "89012029-e3a2-4dff-8f05-5b4fa0d9693a",
+      "citation": "891 F.2d 63",
+      "edgeDemand": 0,
+      "year": "Wed ",
+      "opinionId": "8975999",
+      "status": "resolved",
+      "courtId": "us-ca-3",
+      "method": "cl_docket_ca3"
+    },
+    {
+      "id": "7d56cb44-2cf2-4694-9d7f-51cd384d60b9",
+      "citation": "964 F.2d 706",
+      "edgeDemand": 0,
+      "year": "Wed ",
+      "opinionId": "583671",
+      "status": "resolved",
+      "courtId": "us-ca-7",
+      "method": "cl_docket_ca7"
+    },
+    {
+      "id": "b25bffc3-ede9-4d68-8153-010c73e97a1a",
+      "citation": "830 F.2d 1190",
+      "edgeDemand": 0,
+      "year": "Tue ",
+      "opinionId": "495427",
+      "status": "resolved",
+      "courtId": "us-ca-1",
+      "method": "cl_docket_ca1"
+    },
+    {
+      "id": "0990927a-bad2-447f-ab90-62b310588b58",
+      "citation": "666 F.3d 577",
+      "edgeDemand": 0,
+      "year": "Tue ",
+      "opinionId": "620706",
+      "status": "resolved",
+      "courtId": "us-ca-9",
+      "method": "cl_docket_ca9"
+    },
+    {
+      "id": "db646ce7-ec28-4d29-a230-fe0bb3088ad4",
+      "citation": "57 F.3d 212",
+      "edgeDemand": 0,
+      "year": "Sun ",
+      "opinionId": "697665",
+      "status": "resolved",
+      "courtId": "us-ca-2",
+      "method": "cl_docket_ca2"
+    },
+    {
+      "id": "61ccd9ee-863c-436b-b65d-ff925a944394",
+      "citation": "44 F.3d 1530",
+      "edgeDemand": 0,
+      "year": "Mon ",
+      "opinionId": "6933417",
+      "status": "resolved",
+      "courtId": "us-ca-11",
+      "method": "cl_docket_ca11"
+    },
+    {
+      "id": "ff5eb302-9feb-4c15-9aee-83a5958ebbc7",
+      "citation": "464 F.3d 496",
+      "edgeDemand": 0,
+      "year": "Mon ",
+      "opinionId": "45965",
+      "status": "resolved",
+      "courtId": "us-ca-5",
+      "method": "cl_docket_ca5"
+    },
+    {
+      "id": "6d19dcb7-1312-4b2f-b5e0-d7fc157c868d",
+      "citation": "842 F.2d 31",
+      "edgeDemand": 0,
+      "year": "Wed ",
+      "opinionId": "8959074",
+      "status": "resolved",
+      "courtId": "us-ca-2",
+      "method": "cl_docket_ca2"
+    },
+    {
+      "id": "9abf5925-0de6-45f7-aecb-44aa5558cb59",
+      "citation": "719 F.2d 670",
+      "edgeDemand": 0,
+      "year": "Tue ",
+      "opinionId": "8917852",
+      "status": "resolved",
+      "courtId": "us-ca-3",
+      "method": "cl_docket_ca3"
+    },
+    {
+      "id": "0579849b-f5c9-47bb-b041-a51703bcca64",
+      "citation": "520 F.2d 650",
+      "edgeDemand": 0,
+      "year": "Sun ",
+      "opinionId": "329297",
+      "status": "resolved",
+      "courtId": "us-ca-2",
+      "method": "cl_docket_ca2"
+    },
+    {
+      "id": "ab6d4ef2-04b0-4f4d-813f-71f3dac17762",
+      "citation": "184 F.2d 119",
+      "edgeDemand": 0,
+      "year": "Thu ",
+      "opinionId": "225643",
+      "status": "resolved",
+      "courtId": "us-ca-3",
+      "method": "cl_docket_ca3"
+    },
+    {
+      "id": "19d9a98d-3d4c-4f3d-8aea-0c61abb2b4b4",
+      "citation": "985 F.2d 483",
+      "edgeDemand": 0,
+      "year": "Tue ",
+      "opinionId": "599386",
+      "status": "resolved",
+      "courtId": "us-ca-10",
+      "method": "cl_docket_ca10"
+    },
+    {
+      "id": "e002c5fd-76d9-481c-93e0-0942199ac5b5",
+      "citation": "981 F.2d 497",
+      "edgeDemand": 0,
+      "year": "Thu ",
+      "opinionId": "596473",
+      "status": "resolved",
+      "courtId": "us-ca-11",
+      "method": "cl_docket_ca11"
+    },
+    {
+      "id": "10595cce-5b95-4d1f-b51e-9d6679baae98",
+      "citation": "488 F.2d 714",
+      "edgeDemand": 0,
+      "year": "Sun ",
+      "opinionId": "8891557",
+      "status": "resolved",
+      "courtId": "us-ca-5",
+      "method": "cl_docket_ca5"
+    }
+  ],
+  "exactCircuitsResolved": 25,
+  "thirdCircuitIdentified": 7,
+  "otherCircuitsIdentified": 18,
+  "stillUnresolvedThisPass": 0,
+  "remainingUnspecifiedFederalReporter": 97,
+  "byCircuit": {
+    "us-ca-3": 7,
+    "us-ca-8": 1,
+    "us-ca-5": 4,
+    "us-ca-7": 2,
+    "us-ca-11": 3,
+    "us-ca-9": 2,
+    "us-ca-10": 2,
+    "us-ca-1": 1,
+    "us-ca-2": 3
+  },
+  "courtListenerHttpCalls": 75,
+  "rateLimited": false,
+  "retryAfter": null,
+  "gateway502_504": 0,
+  "fetchFailures": 0,
+  "sampleResolved": [
+    {
+      "id": "75729b2f-ce07-4b5c-a74a-885763b43142",
+      "citation": "916 F.2d 829",
+      "edgeDemand": 0,
+      "year": "Wed ",
+      "opinionId": "8984822",
+      "status": "resolved",
+      "courtId": "us-ca-3",
+      "method": "cl_docket_ca3"
+    },
+    {
+      "id": "8bd14d5b-a410-4c66-b718-1b1855b7b2b7",
+      "citation": "926 F.2d 262",
+      "edgeDemand": 0,
+      "year": "Tue ",
+      "opinionId": "556426",
+      "status": "resolved",
+      "courtId": "us-ca-3",
+      "method": "cl_docket_ca3"
+    },
+    {
+      "id": "d8041935-8e92-4450-a7bb-0215467054b0",
+      "citation": "911 F.2d 72",
+      "edgeDemand": 0,
+      "year": "Mon ",
+      "opinionId": "546301",
+      "status": "resolved",
+      "courtId": "us-ca-8",
+      "method": "cl_docket_ca8"
+    },
+    {
+      "id": "7911c634-549e-4814-8b2c-2a8eb96ccd16",
+      "citation": "616 F.2d 795",
+      "edgeDemand": 0,
+      "year": "Tue ",
+      "opinionId": "375528",
+      "status": "resolved",
+      "courtId": "us-ca-5",
+      "method": "cl_docket_ca5"
+    },
+    {
+      "id": "c2f8db42-308a-42a5-a4f7-ae6e3ce971df",
+      "citation": "538 F.3d 175",
+      "edgeDemand": 0,
+      "year": "Mon ",
+      "opinionId": "1443025",
+      "status": "resolved",
+      "courtId": "us-ca-3",
+      "method": "cl_docket_ca3"
+    },
+    {
+      "id": "d2384010-f6ed-4d76-ae13-e63a49b25a88",
+      "citation": "576 F.3d 465",
+      "edgeDemand": 0,
+      "year": "Wed ",
+      "opinionId": "1188888",
+      "status": "resolved",
+      "courtId": "us-ca-7",
+      "method": "cl_docket_ca7"
+    },
+    {
+      "id": "94b57e04-1d26-49b5-bb06-ad197923ea13",
+      "citation": "842 F.2d 1436",
+      "edgeDemand": 0,
+      "year": "Wed ",
+      "opinionId": "503760",
+      "status": "resolved",
+      "courtId": "us-ca-3",
+      "method": "cl_docket_ca3"
+    },
+    {
+      "id": "1d5a5a21-7d27-4de1-a14f-e44fe3e885d9",
+      "citation": "706 F.2d 1205",
+      "edgeDemand": 0,
+      "year": "Thu ",
+      "opinionId": "418106",
+      "status": "resolved",
+      "courtId": "us-ca-11",
+      "method": "cl_docket_ca11"
+    },
+    {
+      "id": "717d0004-c498-4a52-a373-f01e6421fb22",
+      "citation": "314 F.3d 1105",
+      "edgeDemand": 0,
+      "year": "Mon ",
+      "opinionId": "780332",
+      "status": "resolved",
+      "courtId": "us-ca-9",
+      "method": "cl_docket_ca9"
+    },
+    {
+      "id": "3f8503f7-2e8a-4f5a-8343-694218cc2b95",
+      "citation": "172 F.3d 1220",
+      "edgeDemand": 0,
+      "year": "Sun ",
+      "opinionId": "9437006",
+      "status": "resolved",
+      "courtId": "us-ca-10",
+      "method": "cl_docket_ca10"
+    },
+    {
+      "id": "cbf056cb-b412-4c1b-94da-aefd4fbbeb25",
+      "citation": "104 F.3d 59",
+      "edgeDemand": 0,
+      "year": "Sun ",
+      "opinionId": "11180",
+      "status": "resolved",
+      "courtId": "us-ca-5",
+      "method": "cl_docket_ca5"
+    },
+    {
+      "id": "89012029-e3a2-4dff-8f05-5b4fa0d9693a",
+      "citation": "891 F.2d 63",
+      "edgeDemand": 0,
+      "year": "Wed ",
+      "opinionId": "8975999",
+      "status": "resolved",
+      "courtId": "us-ca-3",
+      "method": "cl_docket_ca3"
+    },
+    {
+      "id": "7d56cb44-2cf2-4694-9d7f-51cd384d60b9",
+      "citation": "964 F.2d 706",
+      "edgeDemand": 0,
+      "year": "Wed ",
+      "opinionId": "583671",
+      "status": "resolved",
+      "courtId": "us-ca-7",
+      "method": "cl_docket_ca7"
+    },
+    {
+      "id": "b25bffc3-ede9-4d68-8153-010c73e97a1a",
+      "citation": "830 F.2d 1190",
+      "edgeDemand": 0,
+      "year": "Tue ",
+      "opinionId": "495427",
+      "status": "resolved",
+      "courtId": "us-ca-1",
+      "method": "cl_docket_ca1"
+    },
+    {
+      "id": "0990927a-bad2-447f-ab90-62b310588b58",
+      "citation": "666 F.3d 577",
+      "edgeDemand": 0,
+      "year": "Tue ",
+      "opinionId": "620706",
+      "status": "resolved",
+      "courtId": "us-ca-9",
+      "method": "cl_docket_ca9"
+    },
+    {
+      "id": "db646ce7-ec28-4d29-a230-fe0bb3088ad4",
+      "citation": "57 F.3d 212",
+      "edgeDemand": 0,
+      "year": "Sun ",
+      "opinionId": "697665",
+      "status": "resolved",
+      "courtId": "us-ca-2",
+      "method": "cl_docket_ca2"
+    },
+    {
+      "id": "61ccd9ee-863c-436b-b65d-ff925a944394",
+      "citation": "44 F.3d 1530",
+      "edgeDemand": 0,
+      "year": "Mon ",
+      "opinionId": "6933417",
+      "status": "resolved",
+      "courtId": "us-ca-11",
+      "method": "cl_docket_ca11"
+    },
+    {
+      "id": "ff5eb302-9feb-4c15-9aee-83a5958ebbc7",
+      "citation": "464 F.3d 496",
+      "edgeDemand": 0,
+      "year": "Mon ",
+      "opinionId": "45965",
+      "status": "resolved",
+      "courtId": "us-ca-5",
+      "method": "cl_docket_ca5"
+    },
+    {
+      "id": "6d19dcb7-1312-4b2f-b5e0-d7fc157c868d",
+      "citation": "842 F.2d 31",
+      "edgeDemand": 0,
+      "year": "Wed ",
+      "opinionId": "8959074",
+      "status": "resolved",
+      "courtId": "us-ca-2",
+      "method": "cl_docket_ca2"
+    },
+    {
+      "id": "9abf5925-0de6-45f7-aecb-44aa5558cb59",
+      "citation": "719 F.2d 670",
+      "edgeDemand": 0,
+      "year": "Tue ",
+      "opinionId": "8917852",
+      "status": "resolved",
+      "courtId": "us-ca-3",
+      "method": "cl_docket_ca3"
+    },
+    {
+      "id": "0579849b-f5c9-47bb-b041-a51703bcca64",
+      "citation": "520 F.2d 650",
+      "edgeDemand": 0,
+      "year": "Sun ",
+      "opinionId": "329297",
+      "status": "resolved",
+      "courtId": "us-ca-2",
+      "method": "cl_docket_ca2"
+    },
+    {
+      "id": "ab6d4ef2-04b0-4f4d-813f-71f3dac17762",
+      "citation": "184 F.2d 119",
+      "edgeDemand": 0,
+      "year": "Thu ",
+      "opinionId": "225643",
+      "status": "resolved",
+      "courtId": "us-ca-3",
+      "method": "cl_docket_ca3"
+    },
+    {
+      "id": "19d9a98d-3d4c-4f3d-8aea-0c61abb2b4b4",
+      "citation": "985 F.2d 483",
+      "edgeDemand": 0,
+      "year": "Tue ",
+      "opinionId": "599386",
+      "status": "resolved",
+      "courtId": "us-ca-10",
+      "method": "cl_docket_ca10"
+    },
+    {
+      "id": "e002c5fd-76d9-481c-93e0-0942199ac5b5",
+      "citation": "981 F.2d 497",
+      "edgeDemand": 0,
+      "year": "Thu ",
+      "opinionId": "596473",
+      "status": "resolved",
+      "courtId": "us-ca-11",
+      "method": "cl_docket_ca11"
+    },
+    {
+      "id": "10595cce-5b95-4d1f-b51e-9d6679baae98",
+      "citation": "488 F.2d 714",
+      "edgeDemand": 0,
+      "year": "Sun ",
+      "opinionId": "8891557",
+      "status": "resolved",
+      "courtId": "us-ca-5",
+      "method": "cl_docket_ca5"
+    }
+  ],
+  "generatedAt": "2026-10-08T22:08:24.180Z"
+}
