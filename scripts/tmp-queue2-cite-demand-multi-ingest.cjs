@@ -76,12 +76,27 @@ function normalizeLoose(cite) {
   return String(cite || "")
     .replace(/\u00a0/g, " ")
     .replace(/\s+/g, " ")
+    // Collapse F. Supp. variants WITHOUT creating "F.Supp..2d"
+    .replace(/\bF\.?\s*Supp\.?\s*3d\b/gi, "F.Supp.3d")
+    .replace(/\bF\.?\s*Supp\.?\s*2d\b/gi, "F.Supp.2d")
+    // First-series F.Supp: require upcoming page digits, and not 2d/3d
+    .replace(/\bF\.?\s*Supp\.?(?!\s*[23]d)(?=\s*\d)/gi, "F.Supp.")
+    // Repair glued page forms: "F. Supp.10" / "F.Supp.10"
+    .replace(/\bF\.Supp\.(\d+)/gi, "F.Supp. $1")
     .replace(/P3d/gi, "P.3d")
     .replace(/P2d/gi, "P.2d")
     .replace(/F3d/gi, "F.3d")
     .replace(/F2d/gi, "F.2d")
     .replace(/F4th/gi, "F.4th")
     .trim();
+}
+
+function reporterAliases(reporter) {
+  const r = String(reporter || "").toLowerCase().replace(/\s+/g, "").replace(/\./g, "");
+  if (r === "fsupp3d" || r === "federalsupplement3d") return "F.Supp.3d";
+  if (r === "fsupp2d" || r === "federalsupplement2d" || r === "federalsupplementsecondseries") return "F.Supp.2d";
+  if (r === "fsupp" || r === "federalsupplement") return "F.Supp.";
+  return null;
 }
 
 function parseCitation(cite) {
@@ -94,12 +109,28 @@ function parseCitation(cite) {
     const citation = spec.fmt(volume, page);
     return { volume, page, citation, reporter: spec.reporter, family: spec.family, demandFamily: spec.demandFamily };
   }
+  // Object-style leftovers: "75 Federal Supplement 2d 411"
+  const fed = raw.match(/^(\d{1,4})\s+Federal\s+Supplement(?:\s+(2d|3d))?\s+(\d{1,4})$/i);
+  if (fed) {
+    const series = (fed[2] || "").toLowerCase();
+    const reporter = series === "3d" ? "F.Supp.3d" : series === "2d" ? "F.Supp.2d" : "F.Supp.";
+    const volume = Number(fed[1]);
+    const page = Number(fed[3]);
+    const citation =
+      reporter === "F.Supp.3d" ? `${volume} F.Supp.3d ${page}` : reporter === "F.Supp.2d" ? `${volume} F.Supp.2d ${page}` : `${volume} F.Supp. ${page}`;
+    return { volume, page, citation, reporter, family: "federal_supplement", demandFamily: "federal_supplement" };
+  }
   return null;
 }
 function citationMatchesTarget(candidate, target) {
   const parsed = parseCitation(candidate);
   if (!parsed) return false;
-  return parsed.volume === target.volume && parsed.page === target.page && parsed.reporter === target.reporter;
+  if (parsed.volume !== target.volume || parsed.page !== target.page) return false;
+  if (parsed.reporter === target.reporter) return true;
+  // Soft-match F.Supp spacing/name variants
+  const a = reporterAliases(parsed.reporter) || parsed.reporter;
+  const b = reporterAliases(target.reporter) || target.reporter;
+  return a === b;
 }
 function collectClusterCites(cluster) {
   const cites = [];
@@ -112,8 +143,20 @@ function collectClusterCites(cluster) {
         if (c.cite) cites.push(String(c.cite));
         const vol = c.volume != null ? Number(c.volume) : null;
         const page = c.page != null ? Number(c.page) : null;
-        const reporter = String(c.reporter || c.reporter_name || "");
-        if (vol && page && reporter) cites.push(`${vol} ${reporter} ${page}`);
+        let reporter = String(c.reporter || c.reporter_name || "");
+        const alias = reporterAliases(reporter);
+        if (alias) reporter = alias;
+        // CL sometimes stores series separately
+        const series = String(c.reporter_volume || c.series || "").toLowerCase();
+        if (vol && page && reporter) {
+          if (/federal\s*supplement/i.test(reporter) && !/2d|3d/i.test(reporter)) {
+            if (series.includes("3")) cites.push(`${vol} F.Supp.3d ${page}`);
+            else if (series.includes("2")) cites.push(`${vol} F.Supp.2d ${page}`);
+            else cites.push(`${vol} F.Supp. ${page}`);
+          } else {
+            cites.push(`${vol} ${reporter} ${page}`);
+          }
+        }
       }
     }
   }
@@ -162,10 +205,55 @@ function mapCourt(cluster, hit, target) {
   if (key.includes("/")) key = key.split("/").filter(Boolean).pop() || key;
   key = key.replace(/[^a-z0-9]/g, "");
   if (CIRCUIT_MAP[key]) return CIRCUIT_MAP[key];
+  // EDPA / PA federal districts
+  if (key === "paed" || key === "edpa" || /paed|eastern.?district.?of.?pennsylvania/i.test(String(raw) + String(cluster?.court || ""))) {
+    return {
+      courtId: "us-d-paed",
+      courtLevel: "district",
+      authorityState: "US",
+      courtName: "United States District Court for the Eastern District of Pennsylvania",
+      federalCircuit: "3",
+      jurisdiction: "United States",
+      clCourt: "paed",
+    };
+  }
+  if (key === "pamd" || /middle.?district.?of.?pennsylvania/i.test(String(raw))) {
+    return {
+      courtId: "us-d-pamd",
+      courtLevel: "district",
+      authorityState: "US",
+      courtName: "United States District Court for the Middle District of Pennsylvania",
+      federalCircuit: "3",
+      jurisdiction: "United States",
+      clCourt: "pamd",
+    };
+  }
+  if (key === "pawd" || /western.?district.?of.?pennsylvania/i.test(String(raw))) {
+    return {
+      courtId: "us-d-pawd",
+      courtLevel: "district",
+      authorityState: "US",
+      courtName: "United States District Court for the Western District of Pennsylvania",
+      federalCircuit: "3",
+      jurisdiction: "United States",
+      clCourt: "pawd",
+    };
+  }
   if (target?.reporter === "U.S.") return CIRCUIT_MAP.scotus;
   // state / district / unknown from CL id
   const courtName = String(cluster?.court || hit?.court || key || "Unknown Court").slice(0, 200);
-  const looksFederal = /united states|u\.s\.|circuit|district/i.test(courtName) || /^ca\d|^cadc|^cafc|^d[a-z]{2,}|^nysd|^cand/.test(key);
+  if (/eastern district of pennsylvania/i.test(courtName)) {
+    return {
+      courtId: "us-d-paed",
+      courtLevel: "district",
+      authorityState: "US",
+      courtName: "United States District Court for the Eastern District of Pennsylvania",
+      federalCircuit: "3",
+      jurisdiction: "United States",
+      clCourt: "paed",
+    };
+  }
+  const looksFederal = /united states|u\.s\.|circuit|district/i.test(courtName) || /^ca\d|^cadc|^cafc|^d[a-z]{2,}|^nysd|^cand|^paed|^pamd|^pawd/.test(key);
   if (looksFederal) {
     return {
       courtId: key ? `us-${key}` : "us-unknown",
@@ -301,8 +389,15 @@ async function fetchOpinionAndCluster(apiKey, seed, target, counters) {
 
   if (cluster) {
     const cites = collectClusterCites(cluster);
-    if (!cites.some((c) => citationMatchesTarget(c, target))) {
-      return { ok: false, reason: "cluster_citation_mismatch", cites };
+    const seedCites = Array.isArray(seed.cites) ? seed.cites.map(String) : [];
+    const allCites = [...cites, ...seedCites];
+    if (!allCites.some((c) => citationMatchesTarget(c, target))) {
+      // Last resort: volume/page match against any parseable cite on cluster
+      const soft = allCites.some((c) => {
+        const p = parseCitation(c);
+        return p && p.volume === target.volume && p.page === target.page && p.family === target.family;
+      });
+      if (!soft) return { ok: false, reason: "cluster_citation_mismatch", cites: allCites.slice(0, 12) };
     }
   }
 
