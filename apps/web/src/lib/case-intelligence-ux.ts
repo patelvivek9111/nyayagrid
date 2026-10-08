@@ -261,13 +261,15 @@ export function peopleKindFilter(
 
 export function graphNodeFilterType(
   nodeType: string,
-): "people" | "organizations" | "documents" | "events" | "facts" | "other" {
+): "people" | "organizations" | "documents" | "events" | "facts" | "claims" | "defenses" | "other" {
   const type = nodeType.toLowerCase();
   if (type === "person" || type === "client") return "people";
   if (type === "organization") return "organizations";
   if (type === "document") return "documents";
   if (type === "event" || type === "deadline") return "events";
   if (type === "fact") return "facts";
+  if (type === "claim") return "claims";
+  if (type === "defense") return "defenses";
   return "other";
 }
 

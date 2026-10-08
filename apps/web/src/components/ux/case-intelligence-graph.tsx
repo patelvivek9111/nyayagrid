@@ -39,6 +39,8 @@ function nodeFill(nodeType: string): string {
   if (type === "document") return "#f3eee4";
   if (type === "event" || type === "deadline") return "#efe8dc";
   if (type === "fact") return "#e7ece8";
+  if (type === "claim") return "#e4ebe7";
+  if (type === "defense") return "#ebe6df";
   return "#f4f1ea";
 }
 

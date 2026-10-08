@@ -69,11 +69,19 @@ type Neighborhood = {
 };
 
 type GraphView = "graph" | "connections";
-type NodeFilter = "all" | "people" | "organizations" | "documents" | "events" | "facts";
+type NodeFilter =
+  | "all"
+  | "people"
+  | "organizations"
+  | "documents"
+  | "events"
+  | "facts"
+  | "claims"
+  | "defenses";
 
 function nodeHref(
   matterId: string,
-  node: Pick<GraphNode, "canonicalEntityType" | "canonicalEntityId">,
+  node: Pick<GraphNode, "canonicalEntityType" | "canonicalEntityId" | "nodeType">,
 ) {
   if (node.canonicalEntityType === "matter_entity") {
     return `/app/cases/${matterId}/people?entityId=${node.canonicalEntityId}`;
@@ -89,6 +97,12 @@ function nodeHref(
   }
   if (node.canonicalEntityType === "deadline_candidate") {
     return `/app/cases/${matterId}/tasks?deadlineId=${node.canonicalEntityId}`;
+  }
+  if (node.canonicalEntityType === "civil_claim" || node.nodeType === "claim") {
+    return `/app/cases/${matterId}/claims`;
+  }
+  if (node.canonicalEntityType === "civil_defense" || node.nodeType === "defense") {
+    return `/app/cases/${matterId}/claims`;
   }
   return null;
 }
@@ -362,6 +376,8 @@ export default function CaseGraphPage() {
           { id: "documents", label: "Documents" },
           { id: "events", label: "Events" },
           { id: "facts", label: "Facts" },
+          { id: "claims", label: "Claims" },
+          { id: "defenses", label: "Defenses" },
         ]}
       />
       <div className="flex flex-wrap items-center gap-2">
