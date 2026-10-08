@@ -8,6 +8,7 @@
 export const CIVIL_CLAIM_KINDS = [
   "CLAIM",
   "COUNTERCLAIM",
+  "CROSSCLAIM",
   "THIRD_PARTY_CLAIM",
 ] as const;
 export type CivilClaimKind = (typeof CIVIL_CLAIM_KINDS)[number];
