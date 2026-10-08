@@ -65,6 +65,11 @@ import {
   answerSuppressionQuestion,
   formatSuppressionAnswer,
   getProsecutionOverview,
+  answerCivilClaimsQuestion,
+  formatCivilClaimsAnswer,
+  isCivilClaimsAskQuestion as isCivilClaimsAskQuestionFromIntelligence,
+  loadCivilClaimsReview,
+  type CivilClaimsReview,
   type StructuredAnswerContext,
   type SuppressionReview,
 } from "@nyayagrid/intelligence";
@@ -139,10 +144,36 @@ export function buildSuppressionAskContextBlock(params: {
   );
 }
 
-/** Prefixed Ask context. Week-4 and suppression blocks stay independent. */
-export function mergeAskContextText(week4ContextText: string | null, suppressionContextText: string | null): string | null {
-  const parts = [week4ContextText, suppressionContextText].filter((part): part is string => Boolean(part && part.trim()));
-  return parts.length > 0 ? parts.join("\n\n") : null;
+/** Question-only gate for civil claims / defenses / counterclaims Ask context. */
+export function isCivilClaimsAskQuestion(question: string): boolean {
+  return isCivilClaimsAskQuestionFromIntelligence(question);
+}
+
+/**
+ * Builds the validated civil claims Ask block. Requires matter-scoped civil review
+ * and a civil question. Does not invent liability conclusions.
+ */
+export function buildCivilClaimsAskContextBlock(params: {
+  question: string;
+  civilReview: CivilClaimsReview | null | undefined;
+}): string | null {
+  if (!params.civilReview) return null;
+  if (!isCivilClaimsAskQuestion(params.question)) return null;
+  if (params.civilReview.claims.length === 0 && params.civilReview.defenses.length === 0) {
+    return null;
+  }
+  return formatCivilClaimsAnswer(
+    answerCivilClaimsQuestion({
+      review: params.civilReview,
+      question: params.question,
+    }),
+  );
+}
+
+/** Prefixed Ask context. Week-4, suppression, and civil blocks stay independent. */
+export function mergeAskContextText(...parts: Array<string | null | undefined>): string | null {
+  const merged = parts.filter((part): part is string => Boolean(part && part.trim()));
+  return merged.length > 0 ? merged.join("\n\n") : null;
 }
 
 async function loadProsecutionSuppressionReviewForMatter(params: {
@@ -947,7 +978,29 @@ export async function askNyayaAboutMatter(params: {
         suppressionReview,
       });
     }
-    const askStructuredContextText = mergeAskContextText(week4ContextText, suppressionContextText);
+
+    let civilContextText: string | null = null;
+    if (isCivilClaimsAskQuestion(params.question) && params.workspaceType !== "prosecution") {
+      try {
+        const civilReview = await loadCivilClaimsReview(params.db, {
+          userId: params.userId,
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+        });
+        civilContextText = buildCivilClaimsAskContextBlock({
+          question: params.question,
+          civilReview,
+        });
+      } catch {
+        // Matter may lack civil rows or access; leave civil context unset.
+        civilContextText = null;
+      }
+    }
+    const askStructuredContextText = mergeAskContextText(
+      week4ContextText,
+      suppressionContextText,
+      civilContextText,
+    );
 
     if (authority) {
       const emitted = new Set<string>();
