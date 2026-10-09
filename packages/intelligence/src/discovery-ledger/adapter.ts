@@ -623,6 +623,7 @@ export async function persistDiscoveryLedgerReview(
       motionId: deficiency.motionId,
       motionDocumentId: params.review.motionLinks.find((m) => m.motionId === deficiency.motionId)
         ?.documentId,
+      isReviewSignal: deficiency.isReviewSignal,
       provenance: toDbProvenance(deficiency.provenance),
     });
     deficiencyIdMap.set(deficiency.id, created.id);

@@ -776,6 +776,7 @@ export async function createDiscoveryDeficiency(
     meetAndConferId?: string | null;
     motionId?: string | null;
     motionDocumentId?: string | null;
+    isReviewSignal?: boolean;
     provenance?: RecordProvenance;
   },
 ) {
@@ -856,7 +857,7 @@ export async function createDiscoveryDeficiency(
       meetAndConferId: params.meetAndConferId ?? null,
       motionId: params.motionId ?? null,
       motionDocumentId: params.motionDocumentId ?? null,
-      isReviewSignal: true,
+      isReviewSignal: params.isReviewSignal ?? false,
       provenance: provenanceOf(params.provenance),
       createdByUserId: params.userId,
       updatedByUserId: params.userId,
