@@ -69,7 +69,12 @@ import {
   formatCivilClaimsAnswer,
   isCivilClaimsAskQuestion as isCivilClaimsAskQuestionFromIntelligence,
   loadCivilClaimsReview,
+  answerDiscoveryQuestion,
+  formatDiscoveryAnswer,
+  isDiscoveryAskQuestion as isDiscoveryAskQuestionFromIntelligence,
+  loadDiscoveryLedgerReview,
   type CivilClaimsReview,
+  type DiscoveryLedgerReview,
   type StructuredAnswerContext,
   type SuppressionReview,
 } from "@nyayagrid/intelligence";
@@ -170,7 +175,37 @@ export function buildCivilClaimsAskContextBlock(params: {
   );
 }
 
-/** Prefixed Ask context. Week-4, suppression, and civil blocks stay independent. */
+/** Question-only gate for discovery / production ledger Ask context. */
+export function isDiscoveryAskQuestion(question: string): boolean {
+  return isDiscoveryAskQuestionFromIntelligence(question);
+}
+
+/**
+ * Builds the validated discovery Ask block. Requires matter-scoped discovery review
+ * and a discovery question. Does not invent sanctions or privilege legal conclusions.
+ */
+export function buildDiscoveryAskContextBlock(params: {
+  question: string;
+  discoveryReview: DiscoveryLedgerReview | null | undefined;
+}): string | null {
+  if (!params.discoveryReview) return null;
+  if (!isDiscoveryAskQuestion(params.question)) return null;
+  if (
+    params.discoveryReview.items.length === 0 &&
+    params.discoveryReview.productions.length === 0 &&
+    params.discoveryReview.deficiencies.length === 0
+  ) {
+    return null;
+  }
+  return formatDiscoveryAnswer(
+    answerDiscoveryQuestion({
+      review: params.discoveryReview,
+      question: params.question,
+    }),
+  );
+}
+
+/** Prefixed Ask context. Week-4, suppression, civil, and discovery blocks stay independent. */
 export function mergeAskContextText(...parts: Array<string | null | undefined>): string | null {
   const merged = parts.filter((part): part is string => Boolean(part && part.trim()));
   return merged.length > 0 ? merged.join("\n\n") : null;
@@ -996,10 +1031,28 @@ export async function askNyayaAboutMatter(params: {
         civilContextText = null;
       }
     }
+
+    let discoveryContextText: string | null = null;
+    if (isDiscoveryAskQuestion(params.question) && params.workspaceType !== "prosecution") {
+      try {
+        const discoveryReview = await loadDiscoveryLedgerReview(params.db, {
+          userId: params.userId,
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+        });
+        discoveryContextText = buildDiscoveryAskContextBlock({
+          question: params.question,
+          discoveryReview,
+        });
+      } catch {
+        discoveryContextText = null;
+      }
+    }
     const askStructuredContextText = mergeAskContextText(
       week4ContextText,
       suppressionContextText,
       civilContextText,
+      discoveryContextText,
     );
 
     if (authority) {

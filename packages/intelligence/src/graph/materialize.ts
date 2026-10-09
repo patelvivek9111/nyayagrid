@@ -490,7 +490,7 @@ export async function materializeVerifiedGraph(params: {
       );
     void roles;
 
-    // Dynamic import avoids circular dependency with civil graph materializer.
+    // Dynamic import avoids circular dependency with civil / discovery graph materializers.
     const { materializeCivilGraph } = await import("../civil/graph-materialize");
     const civilGraph = await materializeCivilGraph({
       db: params.db,
@@ -501,12 +501,33 @@ export async function materializeVerifiedGraph(params: {
     nodesCreated += civilGraph.nodesUpserted;
     edgesCreated += civilGraph.edgesCreated;
 
+    let discoveryNodesUpserted = 0;
+    let discoveryEdgesCreated = 0;
+    let discoveryEdgesMerged = 0;
+    if (params.userId) {
+      const { materializeDiscoveryGraph } = await import("../discovery-ledger/graph-materialize");
+      const discoveryGraph = await materializeDiscoveryGraph({
+        db: params.db,
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        userId: params.userId,
+      });
+      nodesCreated += discoveryGraph.nodesUpserted;
+      edgesCreated += discoveryGraph.edgesCreated;
+      discoveryNodesUpserted = discoveryGraph.nodesUpserted;
+      discoveryEdgesCreated = discoveryGraph.edgesCreated;
+      discoveryEdgesMerged = discoveryGraph.edgesMerged;
+    }
+
     const stats = {
       nodesCreated,
       edgesCreated,
       civilNodesUpserted: civilGraph.nodesUpserted,
       civilEdgesCreated: civilGraph.edgesCreated,
       civilEdgesMerged: civilGraph.edgesMerged,
+      discoveryNodesUpserted,
+      discoveryEdgesCreated,
+      discoveryEdgesMerged,
     };
     const [completed] = await params.db
       .update(graphMaterializationRuns)
