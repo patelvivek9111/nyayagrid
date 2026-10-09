@@ -1,0 +1,27 @@
+{
+  "atLookup": 20,
+  "totalCl": 21,
+  "identityLookups": 20,
+  "targetsHigh": 18,
+  "targetsAmbiguous": 2,
+  "targetsNotFound": 0,
+  "targetsFailed": 0,
+  "edgesResolved": 122,
+  "newMetadataOnly": 16,
+  "existingMatched": 2,
+  "corpusCompleteMatched": 0,
+  "locallyResolvedBeforeExternal": 0,
+  "lookupsAvoidedByBatchLearning": 0,
+  "aliasesLearnedTotal": 44,
+  "parallelsLearnedTotal": 34,
+  "targetsResolvedFromNewAlias": 0,
+  "health": {
+    "green": true,
+    "resolved": 11323,
+    "unresolved": 55622,
+    "METADATA_ONLY_AUTHORITIES": 77,
+    "CORPUS_COMPLETE_AUTHORITIES": 5136
+  },
+  "hit429": false,
+  "updatedAt": "2026-10-09T16:20:23.517Z"
+}

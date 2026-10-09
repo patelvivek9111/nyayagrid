@@ -1,0 +1,2587 @@
+{
+  "ok": true,
+  "classification": "CITATION_IDENTITY_LIVE_BATCH3",
+  "stopReason": "BATCH_COMPLETE",
+  "courtListener": {
+    "quotaProbeRequests": 1,
+    "identityLookupRequests": 69,
+    "totalClRequests": 70,
+    "minuteAtStart": 25,
+    "hourAtStart": 212,
+    "dayAtStart": 397,
+    "estimatedDayRemaining": 328,
+    "hit429": false,
+    "hit502": 0
+  },
+  "start": {
+    "casesTyped": 5197,
+    "authorities": 6552,
+    "extracted": 66945,
+    "resolved": 11201,
+    "unresolved": 55744,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "presentTargetAmbiguous": 1,
+    "green": true,
+    "TOTAL_CANONICAL_AUTHORITIES": 6552,
+    "METADATA_ONLY_AUTHORITIES": 61,
+    "CORPUS_COMPLETE_AUTHORITIES": 5136,
+    "FULL_TEXT_READY_AUTHORITIES": 5136,
+    "EMBEDDED_AUTHORITIES": 5664,
+    "CASE_TYPED_AUTHORITIES": 5197,
+    "note": "case-typed count includes metadata-only AUTHORITY_RESOLVED identities; CORPUS_COMPLETE requires ready+embeddings",
+    "AUTHORITY_RESOLVED_EDGES": 11201,
+    "CORPUS_COMPLETE_EDGES": 10393,
+    "IDENTITY_UNRESOLVED_EDGES": 55744
+  },
+  "end": {
+    "casesTyped": 5246,
+    "authorities": 6601,
+    "extracted": 66945,
+    "resolved": 11520,
+    "unresolved": 55425,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "presentTargetAmbiguous": 1,
+    "green": true,
+    "TOTAL_CANONICAL_AUTHORITIES": 6601,
+    "METADATA_ONLY_AUTHORITIES": 110,
+    "CORPUS_COMPLETE_AUTHORITIES": 5136,
+    "FULL_TEXT_READY_AUTHORITIES": 5136,
+    "EMBEDDED_AUTHORITIES": 5664,
+    "CASE_TYPED_AUTHORITIES": 5246,
+    "note": "case-typed count includes metadata-only AUTHORITY_RESOLVED identities; CORPUS_COMPLETE requires ready+embeddings",
+    "AUTHORITY_RESOLVED_EDGES": 11520,
+    "CORPUS_COMPLETE_EDGES": 10393,
+    "IDENTITY_UNRESOLVED_EDGES": 55425
+  },
+  "resolvedDelta": 319,
+  "unresolvedDelta": -319,
+  "targets": {
+    "queuedTargetsConsidered": 149,
+    "localResolvedBeforeExternal": 0,
+    "externalUniqueTargetsAttempted": 69,
+    "resolvedHigh": 56,
+    "externalHigh": 56,
+    "ambiguous": 12,
+    "notFound": 0,
+    "providerFailure": 1
+  },
+  "resolution": {
+    "newMetadataOnlyAuthorities": 49,
+    "existingMetadataAuthoritiesMatched": 7,
+    "existingCorpusCompleteMatches": 0,
+    "AUTHORITY_RESOLVED_targets": 56,
+    "CORPUS_COMPLETE_targets": 0,
+    "fullTextAcquired": 0
+  },
+  "backfill": {
+    "edgesRepresented": 373,
+    "edgesResolved": 319,
+    "oldUnresolvedBackfilled": 319,
+    "backfillMultiplier": 5.696428571428571
+  },
+  "learning": {
+    "aliasesLearned": 130,
+    "parallelCitationsLearned": 105,
+    "targetsResolvedThroughNewlyLearnedAliases": 0,
+    "externalCallsAvoidedByLearning": 0,
+    "lookupsAvoidedByBatchLearning": 0,
+    "lookupsAvoidedByAliases": 0,
+    "lookupsAvoidedByParallelMappings": 0
+  },
+  "yield": {
+    "externalTargetResolutionRate": 0.8115942028985508,
+    "totalTargetResolutionRate": 0.8115942028985508,
+    "edgesResolvedPerExternalCl": 4.6231884057971016,
+    "edgesResolvedPerTotalCl": 4.557142857142857,
+    "ambiguityRate": 0.17391304347826086,
+    "noResultRate": 0,
+    "localLookupAvoidRate": 0,
+    "aliasLookupAvoidRate": 0,
+    "batch1": {
+      "targetResolution": 0.9,
+      "edgesPerCl": 14.15
+    },
+    "batch2": {
+      "targetResolution": 0.8696,
+      "edgesPerCl": 7.5
+    },
+    "comparedToBatch1": {
+      "targetRateDelta": -0.08840579710144925,
+      "edgesPerClDelta": -9.526811594202899
+    },
+    "comparedToBatch2": {
+      "targetRateDelta": -0.058005797101449263,
+      "edgesPerClDelta": -2.8768115942028984
+    }
+  },
+  "longTail": {
+    "primaryReasonForYieldChange": "lower_edge_demand_per_target_vs_batch1_head",
+    "edgeDemandBuckets": {
+      "high10plus": {
+        "attempted": 2,
+        "highResolved": 2,
+        "rate": 1
+      },
+      "mid5to9": {
+        "attempted": 49,
+        "highResolved": 43,
+        "rate": 0.8775510204081632
+      },
+      "lowUnder5": {
+        "attempted": 17,
+        "highResolved": 11,
+        "rate": 0.6470588235294118
+      }
+    },
+    "federalVsState": {
+      "federalAttempted": 68,
+      "federalHighRate": 0.8235294117647058,
+      "stateAttempted": 0,
+      "stateHighRate": null
+    },
+    "reporterQualityEffect": {
+      "parallelReporterAttempted": 22,
+      "parallelReporterHighRate": 0.8181818181818182
+    },
+    "providerCoverageEffect": {
+      "ambiguityRate": 0.17391304347826086,
+      "noResultRate": 0
+    }
+  },
+  "health": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "duplicateActiveMappings": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "status": "PASS"
+  },
+  "fullTextQueue": {
+    "newCandidatesThisBatch": 56,
+    "totalQueued": 111,
+    "highestDemand": [
+      {
+        "targetKey": "407 u.s. 143",
+        "authorityId": "9a7fd3ad-bee0-4174-9c4f-ec908c40ec1b",
+        "clusterId": "108571",
+        "citation": "407 U.S. 143",
+        "edgeCount": 11,
+        "caseName": "Adams v. Williams",
+        "court": null,
+        "priorityReason": "high_edge_demand_identity_only",
+        "unresolvedDemandRepresented": 11
+      },
+      {
+        "targetKey": "377 u.s. 360",
+        "authorityId": "9aa4f8da-cad5-4df3-8fc8-b84df98b2333",
+        "clusterId": "106837",
+        "citation": "377 U.S. 360",
+        "edgeCount": 10,
+        "caseName": "Baggett v. Bullitt",
+        "court": null,
+        "priorityReason": "high_edge_demand_identity_only",
+        "unresolvedDemandRepresented": 10
+      },
+      {
+        "targetKey": "552 u.s. 442",
+        "authorityId": "a266d1d6-74f7-4539-98cd-8c550de1b7ad",
+        "clusterId": "145824",
+        "citation": "552 U.S. 442",
+        "edgeCount": 8,
+        "caseName": "Washington State Grange v. Washington State Republican Party",
+        "court": null,
+        "priorityReason": "high_edge_demand_identity_only",
+        "unresolvedDemandRepresented": 8
+      },
+      {
+        "targetKey": "28 s. ct. 441",
+        "authorityId": "e4965302-b4e7-4ce9-a166-15be4e9b490d",
+        "clusterId": "96819",
+        "citation": "28 S. Ct. 441",
+        "edgeCount": 8,
+        "caseName": "Ex Parte Young",
+        "court": null,
+        "priorityReason": "high_edge_demand_identity_only",
+        "unresolvedDemandRepresented": 8
+      },
+      {
+        "targetKey": "103 s. ct. 927",
+        "authorityId": "9bf8e448-1540-4eb5-8f70-61095aa17a39",
+        "clusterId": "110873",
+        "citation": "103 S. Ct. 927",
+        "edgeCount": 8,
+        "caseName": "Moses H. Cone Memorial Hospital v. Mercury Construction Corp.",
+        "court": null,
+        "priorityReason": "high_edge_demand_identity_only",
+        "unresolvedDemandRepresented": 8
+      },
+      {
+        "targetKey": "102 s. ct. 2727",
+        "authorityId": "1e6cf417-3f9b-4313-a962-f8323241478a",
+        "clusterId": "110763",
+        "citation": "102 S. Ct. 2727",
+        "edgeCount": 8,
+        "caseName": "Harlow v. Fitzgerald",
+        "court": null,
+        "priorityReason": "high_edge_demand_identity_only",
+        "unresolvedDemandRepresented": 8
+      },
+      {
+        "targetKey": "107 s. ct. 3078",
+        "authorityId": "07701948-0d2d-4998-a3cd-576f64267332",
+        "clusterId": "111955",
+        "citation": "107 S. Ct. 3078",
+        "edgeCount": 8,
+        "caseName": "Pennsylvania v. Delaware Valley Citizens' Council for Clean Air",
+        "court": null,
+        "priorityReason": "high_edge_demand_identity_only",
+        "unresolvedDemandRepresented": 8
+      },
+      {
+        "targetKey": "96 s. ct. 584",
+        "authorityId": "befba553-d99f-4780-9bea-b91a20d26774",
+        "clusterId": "109348",
+        "citation": "96 S. Ct. 584",
+        "edgeCount": 8,
+        "caseName": "Thermtron Products, Inc. v. Hermansdorfer",
+        "court": null,
+        "priorityReason": "high_edge_demand_identity_only",
+        "unresolvedDemandRepresented": 8
+      },
+      {
+        "targetKey": "500 u.s. 565",
+        "authorityId": "aa968f52-91d4-4a8c-afde-e211bd703f85",
+        "clusterId": "112608",
+        "citation": "500 U.S. 565",
+        "edgeCount": 7,
+        "caseName": "California v. Acevedo",
+        "court": null,
+        "priorityReason": "high_edge_demand_identity_only",
+        "unresolvedDemandRepresented": 7
+      },
+      {
+        "targetKey": "523 u.s. 833",
+        "authorityId": "3c4870df-25ce-4188-b0d1-8fdd6bf6aa97",
+        "clusterId": "118214",
+        "citation": "523 U.S. 833",
+        "edgeCount": 7,
+        "caseName": "County of Sacramento v. Lewis",
+        "court": null,
+        "priorityReason": "high_edge_demand_identity_only",
+        "unresolvedDemandRepresented": 7
+      }
+    ]
+  },
+  "scaleDecision": "SCALE_FURTHER_TODAY",
+  "nextRecommendedBudget": 82,
+  "finalClassification": "CITATION_IDENTITY_BATCH3_MODERATE",
+  "results": [
+    {
+      "targetKey": "326 u.s. 99",
+      "citation": "326 U.S. 99",
+      "representativeRaw": "326 U. S. 99",
+      "edgeCount": 6,
+      "uniqueCitingCases": 6,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-1",
+        "us-d-ilnd",
+        "us-ca-dc",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "ambiguous",
+      "clusterId": null,
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "evidence": [
+        "clusters:1116658,104182"
+      ],
+      "externalLookup": true,
+      "status": "NO_AUTO_RESOLVE"
+    },
+    {
+      "targetKey": "374 u.s. 203",
+      "citation": "374 U.S. 203",
+      "representativeRaw": "374 U.S. 203",
+      "edgeCount": 6,
+      "uniqueCitingCases": 6,
+      "jurisdictions": [
+        "st-ma-high",
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "106658",
+      "citations": [
+        "374 U.S. 203",
+        "[object Object]"
+      ],
+      "caseName": "Abington School Dist. v. Schempp",
+      "court": null,
+      "dateFiled": "1963-06-17",
+      "evidence": [
+        "cluster:106658",
+        "cite:374 U.S. 203",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "36ccc9f7-146c-4cf7-b575-472b88926726",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 6,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "402 u.s. 389",
+      "citation": "402 U.S. 389",
+      "representativeRaw": "402 U.S. 389",
+      "edgeCount": 6,
+      "uniqueCitingCases": 6,
+      "jurisdictions": [
+        "us-d-nysd",
+        "us-ca-3",
+        "us-ca-6",
+        "us-scotus",
+        "st-wa-high"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "108333",
+      "citations": [
+        "402 U.S. 389",
+        "[object Object]"
+      ],
+      "caseName": "Richardson v. Perales",
+      "court": null,
+      "dateFiled": "1971-05-03",
+      "evidence": [
+        "cluster:108333",
+        "cite:402 U.S. 389",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "76f07090-51f8-4fd1-b644-b5a20bf9f0c4",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 6,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "417 u.s. 156",
+      "citation": "417 U.S. 156",
+      "representativeRaw": "417 U.S. 156",
+      "edgeCount": 6,
+      "uniqueCitingCases": 6,
+      "jurisdictions": [
+        "us-d-cand",
+        "us-d-txnd",
+        "us-d-mad",
+        "us-scotus",
+        "us-ca-2",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "109050",
+      "citations": [
+        "417 U.S. 156",
+        "[object Object]"
+      ],
+      "caseName": "Eisen v. Carlisle & Jacquelin",
+      "court": null,
+      "dateFiled": "1974-05-28",
+      "evidence": [
+        "cluster:109050",
+        "cite:417 U.S. 156",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "1673239f-c149-458d-9d04-b671183ea842",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 6,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "402 u.s. 313",
+      "citation": "402 U.S. 313",
+      "representativeRaw": "402 U.S. 313",
+      "edgeCount": 6,
+      "uniqueCitingCases": 6,
+      "jurisdictions": [
+        "us-ca-6",
+        "us-scotus",
+        "us-ca-1",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "108330",
+      "citations": [
+        "402 U.S. 313",
+        "[object Object]"
+      ],
+      "caseName": "Blonder-Tongue Laboratories, Inc. v. University of Illinois Foundation",
+      "court": null,
+      "dateFiled": "1971-05-03",
+      "evidence": [
+        "cluster:108330",
+        "cite:402 U.S. 313",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "b671a62d-36c1-4f7e-9021-c62d751b1ba4",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 6,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "480 u.s. 340",
+      "citation": "480 U.S. 340",
+      "representativeRaw": "480 U.S. 340",
+      "edgeCount": 6,
+      "uniqueCitingCases": 6,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3",
+        "us-ca-10"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "111835",
+      "citations": [
+        "480 U.S. 340",
+        "[object Object]"
+      ],
+      "caseName": "Illinois v. Krull",
+      "court": null,
+      "dateFiled": "1987-03-09",
+      "evidence": [
+        "cluster:111835",
+        "cite:480 U.S. 340",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "ab9affb0-59ca-4807-bfe6-8364c56fd543",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 6,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "428 u.s. 543",
+      "citation": "428 U.S. 543",
+      "representativeRaw": "428 U. S. 543",
+      "edgeCount": 6,
+      "uniqueCitingCases": 6,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "109541",
+      "citations": [
+        "428 U.S. 543",
+        "[object Object]"
+      ],
+      "caseName": "United States v. Martinez-Fuerte",
+      "court": null,
+      "dateFiled": "1976-07-06",
+      "evidence": [
+        "cluster:109541",
+        "cite:428 U.S. 543",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "3044168e-0fe9-4ed1-96b4-0d479bbc5f70",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 6,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "321 u.s. 114",
+      "citation": "321 U.S. 114",
+      "representativeRaw": "321 U. S. 114",
+      "edgeCount": 6,
+      "uniqueCitingCases": 6,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "103928",
+      "citations": [
+        "321 U.S. 114",
+        "[object Object]"
+      ],
+      "caseName": "Ex Parte Hawk",
+      "court": null,
+      "dateFiled": "1944-01-31",
+      "evidence": [
+        "cluster:103928",
+        "cite:321 U.S. 114",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "fc6805a1-4da3-4931-8a84-c701f0155785",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 6,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "341 u.s. 97",
+      "citation": "341 U.S. 97",
+      "representativeRaw": "341 U. S. 97",
+      "edgeCount": 6,
+      "uniqueCitingCases": 6,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3",
+        "us-ca-2"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "104890",
+      "citations": [
+        "341 U.S. 97",
+        "[object Object]"
+      ],
+      "caseName": "Williams v. United States",
+      "court": null,
+      "dateFiled": "1951-04-23",
+      "evidence": [
+        "cluster:104890",
+        "cite:341 U.S. 97",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "6c44d060-8bf5-433e-ad4d-ba26b93734de",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 6,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "407 u.s. 143",
+      "citation": "407 U.S. 143",
+      "representativeRaw": "407 U.S. 143",
+      "edgeCount": 11,
+      "uniqueCitingCases": 11,
+      "jurisdictions": [
+        "st-dc-high",
+        "us-scotus",
+        "us-ca-5"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "108571",
+      "citations": [
+        "407 U.S. 143",
+        "[object Object]"
+      ],
+      "caseName": "Adams v. Williams",
+      "court": null,
+      "dateFiled": "1972-06-12",
+      "evidence": [
+        "cluster:108571",
+        "cite:407 U.S. 143",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "9a7fd3ad-bee0-4174-9c4f-ec908c40ec1b",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 11,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "500 u.s. 565",
+      "citation": "500 U.S. 565",
+      "representativeRaw": "500 US 565",
+      "edgeCount": 7,
+      "uniqueCitingCases": 7,
+      "jurisdictions": [
+        "st-mi-high",
+        "us-scotus",
+        "us-d-paed",
+        "us-circuit-unspecified",
+        "us-ca-9"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "112608",
+      "citations": [
+        "500 U.S. 565",
+        "[object Object]"
+      ],
+      "caseName": "California v. Acevedo",
+      "court": null,
+      "dateFiled": "1991-06-03",
+      "evidence": [
+        "cluster:112608",
+        "cite:500 U.S. 565",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "aa968f52-91d4-4a8c-afde-e211bd703f85",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 7,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "552 u.s. 442",
+      "citation": "552 U.S. 442",
+      "representativeRaw": "552 U.S. 442",
+      "edgeCount": 8,
+      "uniqueCitingCases": 8,
+      "jurisdictions": [
+        "st-ks-high",
+        "us-ca-dc",
+        "us-ca-7",
+        "us-ca-3",
+        "us-ca-4",
+        "us-ca-1"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "145824",
+      "citations": [
+        "552 U.S. 442",
+        "[object Object]"
+      ],
+      "caseName": "Washington State Grange v. Washington State Republican Party",
+      "court": null,
+      "dateFiled": "2008-03-18",
+      "evidence": [
+        "cluster:145824",
+        "cite:552 U.S. 442",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "a266d1d6-74f7-4539-98cd-8c550de1b7ad",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 8,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "28 s. ct. 441",
+      "citation": "28 S. Ct. 441",
+      "representativeRaw": "28 S.Ct. 441",
+      "edgeCount": 8,
+      "uniqueCitingCases": 8,
+      "jurisdictions": [
+        "us-d-njd",
+        "us-ca-3",
+        "us-ca-1",
+        "us-ca-2",
+        "us-circuit-unspecified"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "96819",
+      "citations": [
+        "28 S. Ct. 441",
+        "[object Object]"
+      ],
+      "caseName": "Ex Parte Young",
+      "court": null,
+      "dateFiled": "1908-03-23",
+      "evidence": [
+        "cluster:96819",
+        "cite:28 S. Ct. 441",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "e4965302-b4e7-4ce9-a166-15be4e9b490d",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 8,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "103 s. ct. 927",
+      "citation": "103 S. Ct. 927",
+      "representativeRaw": "103 S.Ct. 927",
+      "edgeCount": 8,
+      "uniqueCitingCases": 8,
+      "jurisdictions": [
+        "us-d-nysd",
+        "us-d-ilnd",
+        "us-ca-2",
+        "us-ca-3",
+        "us-circuit-unspecified",
+        "us-ca-7",
+        "us-ca-9"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "110873",
+      "citations": [
+        "103 S. Ct. 927",
+        "[object Object]"
+      ],
+      "caseName": "Moses H. Cone Memorial Hospital v. Mercury Construction Corp.",
+      "court": null,
+      "dateFiled": "1983-02-23",
+      "evidence": [
+        "cluster:110873",
+        "cite:103 S. Ct. 927",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "9bf8e448-1540-4eb5-8f70-61095aa17a39",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 8,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "102 s. ct. 2727",
+      "citation": "102 S. Ct. 2727",
+      "representativeRaw": "102 S.Ct. 2727",
+      "edgeCount": 8,
+      "uniqueCitingCases": 8,
+      "jurisdictions": [
+        "us-ca-7",
+        "us-ca-2",
+        "st-unknown",
+        "us-circuit-unspecified",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "110763",
+      "citations": [
+        "102 S. Ct. 2727",
+        "[object Object]"
+      ],
+      "caseName": "Harlow v. Fitzgerald",
+      "court": null,
+      "dateFiled": "1982-06-24",
+      "evidence": [
+        "cluster:110763",
+        "cite:102 S. Ct. 2727",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "1e6cf417-3f9b-4313-a962-f8323241478a",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 8,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "107 s. ct. 3078",
+      "citation": "107 S. Ct. 3078",
+      "representativeRaw": "107 S.Ct. 3078",
+      "edgeCount": 8,
+      "uniqueCitingCases": 8,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-circuit-unspecified",
+        "us-ca-9",
+        "us-ca-dc"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "111955",
+      "citations": [
+        "107 S. Ct. 3078",
+        "[object Object]"
+      ],
+      "caseName": "Pennsylvania v. Delaware Valley Citizens' Council for Clean Air",
+      "court": null,
+      "dateFiled": "1987-06-26",
+      "evidence": [
+        "cluster:111955",
+        "cite:107 S. Ct. 3078",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "07701948-0d2d-4998-a3cd-576f64267332",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 8,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "96 s. ct. 584",
+      "citation": "96 S. Ct. 584",
+      "representativeRaw": "96 S.Ct. 584",
+      "edgeCount": 8,
+      "uniqueCitingCases": 8,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-circuit-unspecified",
+        "us-ca-2",
+        "us-ca-7",
+        "us-ca-9"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "109348",
+      "citations": [
+        "96 S. Ct. 584",
+        "[object Object]"
+      ],
+      "caseName": "Thermtron Products, Inc. v. Hermansdorfer",
+      "court": null,
+      "dateFiled": "1976-01-21",
+      "evidence": [
+        "cluster:109348",
+        "cite:96 S. Ct. 584",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "befba553-d99f-4780-9bea-b91a20d26774",
+      "createdAuthority": false,
+      "corpusComplete": false,
+      "edgesBackfilled": 8,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "533 u.s. 194",
+      "citation": "533 U.S. 194",
+      "representativeRaw": "533 U.S. 194",
+      "edgeCount": 4,
+      "uniqueCitingCases": 4,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-d-paed",
+        "us-circuit-unspecified"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "ambiguous",
+      "clusterId": null,
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "evidence": [
+        "clusters:118449,118448"
+      ],
+      "externalLookup": true,
+      "status": "NO_AUTO_RESOLVE"
+    },
+    {
+      "targetKey": "487 u.s. 42",
+      "citation": "487 U.S. 42",
+      "representativeRaw": "487 U.S. 42",
+      "edgeCount": 4,
+      "uniqueCitingCases": 4,
+      "jurisdictions": [
+        "us-d-txsd",
+        "us-d-paed",
+        "us-ca-6",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "112116",
+      "citations": [
+        "487 U.S. 42",
+        "[object Object]"
+      ],
+      "caseName": "West v. Atkins",
+      "court": null,
+      "dateFiled": "1988-06-20",
+      "evidence": [
+        "cluster:112116",
+        "cite:487 U.S. 42",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "8f98ea1b-3c05-41c9-9aab-2708bee0ed04",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 4,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "92 s. ct. 2694",
+      "citation": "92 S. Ct. 2694",
+      "representativeRaw": "92 S.Ct. 2694",
+      "edgeCount": 4,
+      "uniqueCitingCases": 4,
+      "jurisdictions": [
+        "us-d-txsd",
+        "us-ca-7",
+        "us-d-paed",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "108609",
+      "citations": [
+        "92 S. Ct. 2694",
+        "[object Object]"
+      ],
+      "caseName": "Perry v. Sindermann",
+      "court": null,
+      "dateFiled": "1972-06-29",
+      "evidence": [
+        "cluster:108609",
+        "cite:92 S. Ct. 2694",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "1211e51a-e158-48c1-9163-07f7130fb7b9",
+      "createdAuthority": false,
+      "corpusComplete": false,
+      "edgesBackfilled": 4,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "101 s. ct. 1908",
+      "citation": "101 S. Ct. 1908",
+      "representativeRaw": "101 S.Ct. 1908",
+      "edgeCount": 4,
+      "uniqueCitingCases": 4,
+      "jurisdictions": [
+        "us-d-paed",
+        "us-ca-6",
+        "us-ca-7",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "110478",
+      "citations": [
+        "101 S. Ct. 1908",
+        "[object Object]"
+      ],
+      "caseName": "Parratt v. Taylor",
+      "court": null,
+      "dateFiled": "1981-05-18",
+      "evidence": [
+        "cluster:110478",
+        "cite:101 S. Ct. 1908",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "a1aaa83c-10ca-44cc-a893-e6a88fd28a90",
+      "createdAuthority": false,
+      "corpusComplete": false,
+      "edgesBackfilled": 4,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "110 s. ct. 1056",
+      "citation": "110 S. Ct. 1056",
+      "representativeRaw": "110 S.Ct. 1056",
+      "edgeCount": 4,
+      "uniqueCitingCases": 4,
+      "jurisdictions": [
+        "us-d-paed",
+        "us-ca-dc",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "112382",
+      "citations": [
+        "110 S. Ct. 1056",
+        "[object Object]"
+      ],
+      "caseName": "United States v. Verdugo-Urquidez",
+      "court": null,
+      "dateFiled": "1990-02-28",
+      "evidence": [
+        "cluster:112382",
+        "cite:110 S. Ct. 1056",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "1535708c-3aee-4079-b556-0946083b551e",
+      "createdAuthority": false,
+      "corpusComplete": false,
+      "edgesBackfilled": 4,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "558 u.s. 45",
+      "citation": "558 U.S. 45",
+      "representativeRaw": "558 U.S. 45",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-ca-4",
+        "st-dc-high",
+        "us-scotus"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "1755",
+      "citations": [
+        "558 U.S. 45",
+        "[object Object]"
+      ],
+      "caseName": "Michigan v. Fisher",
+      "court": null,
+      "dateFiled": "2009-12-07",
+      "evidence": [
+        "cluster:1755",
+        "cite:558 U.S. 45",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "0accc54b-8ec4-43f5-bcdd-8f5142c0fdb6",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "163 u.s. 228",
+      "citation": "163 U.S. 228",
+      "representativeRaw": "163 U.S. 228",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-scotus"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "94479",
+      "citations": [
+        "163 U.S. 228",
+        "[object Object]"
+      ],
+      "caseName": "Wong Wing v. United States",
+      "court": null,
+      "dateFiled": "1896-05-18",
+      "evidence": [
+        "cluster:94479",
+        "cite:163 U.S. 228",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "be758fef-5eff-444d-9818-1a58f3cbdabd",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "149 u.s. 698",
+      "citation": "149 U.S. 698",
+      "representativeRaw": "149 U.S. 698",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-scotus"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "ambiguous",
+      "clusterId": null,
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "evidence": [
+        "clusters:8178705,93665"
+      ],
+      "externalLookup": true,
+      "status": "NO_AUTO_RESOLVE"
+    },
+    {
+      "targetKey": "596 u.s. 482",
+      "citation": "596 U.S. 482",
+      "representativeRaw": "596 U.S. 482",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-ca-7",
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "6475794",
+      "citations": [
+        "596 U.S. 482",
+        "[object Object]"
+      ],
+      "caseName": "Egbert v. Boule",
+      "court": null,
+      "dateFiled": "2022-06-08",
+      "evidence": [
+        "cluster:6475794",
+        "cite:596 U.S. 482",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "c52f0ec7-5eb6-4cda-83a4-8a1af72bf8bd",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "434 u.s. 412",
+      "citation": "434 U.S. 412",
+      "representativeRaw": "434 U.S. 412",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "st-dc-high",
+        "us-ca-6",
+        "us-scotus",
+        "us-ca-3",
+        "us-ca-1"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "109769",
+      "citations": [
+        "434 U.S. 412",
+        "[object Object]"
+      ],
+      "caseName": "Christiansburg Garment Co. v. Equal Employment Opportunity Commission",
+      "court": null,
+      "dateFiled": "1978-01-23",
+      "evidence": [
+        "cluster:109769",
+        "cite:434 U.S. 412",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "4dd332a2-6a64-4d0a-b548-e7d1d80391d1",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "282 u.s. 687",
+      "citation": "282 U.S. 687",
+      "representativeRaw": "282 U.S. 687",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "st-dc-high",
+        "us-scotus",
+        "st-nm-app",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "101681",
+      "citations": [
+        "282 U.S. 687",
+        "[object Object]"
+      ],
+      "caseName": "Alford v. United States",
+      "court": null,
+      "dateFiled": "1931-02-24",
+      "evidence": [
+        "cluster:101681",
+        "cite:282 U.S. 687",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "377e01e8-55a5-4ef5-bc91-610149b49c69",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "552 u.s. 264",
+      "citation": "552 U.S. 264",
+      "representativeRaw": "552 US 264",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "st-mi-high",
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "ambiguous",
+      "clusterId": null,
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "evidence": [
+        "clusters:9053440,145832"
+      ],
+      "externalLookup": true,
+      "status": "NO_AUTO_RESOLVE"
+    },
+    {
+      "targetKey": "551 u.s. 449",
+      "citation": "551 U.S. 449",
+      "representativeRaw": "551 U.S. 449",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "st-mo-high",
+        "us-ca-6",
+        "us-scotus",
+        "us-ca-3",
+        "us-ca-10"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "145706",
+      "citations": [
+        "551 U.S. 449",
+        "[object Object]"
+      ],
+      "caseName": "Federal Election Commission v. Wisconsin Right to Life, Inc.",
+      "court": null,
+      "dateFiled": "2007-06-25",
+      "evidence": [
+        "cluster:145706",
+        "cite:551 U.S. 449",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "9798f2b2-fc4e-4f64-a4af-65d7ca4e6b1c",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "540 u.s. 551",
+      "citation": "540 U.S. 551",
+      "representativeRaw": "540 U.S. 551",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "st-mn-high",
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "131161",
+      "citations": [
+        "540 U.S. 551",
+        "[object Object]"
+      ],
+      "caseName": "Groh v. Ramirez",
+      "court": null,
+      "dateFiled": "2004-02-24",
+      "evidence": [
+        "cluster:131161",
+        "cite:540 U.S. 551",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "5065188e-4f8e-4053-b60e-1307ba739e03",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "340 u.s. 36",
+      "citation": "340 U.S. 36",
+      "representativeRaw": "340 U.S. 36",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-ca-fed",
+        "us-scotus",
+        "st-unknown",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "104822",
+      "citations": [
+        "340 U.S. 36",
+        "[object Object]"
+      ],
+      "caseName": "United States v. Munsingwear, Inc.",
+      "court": null,
+      "dateFiled": "1950-11-13",
+      "evidence": [
+        "cluster:104822",
+        "cite:340 U.S. 36",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "920e8f59-a5fb-41a4-b58d-e4a534f616a8",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "301 u.s. 1",
+      "citation": "301 U.S. 1",
+      "representativeRaw": "301 U.S. 1",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-ca-dc",
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "102804",
+      "citations": [
+        "301 U.S. 1",
+        "[object Object]"
+      ],
+      "caseName": "National Labor Relations Board v. Jones & Laughlin Steel Corp.",
+      "court": null,
+      "dateFiled": "1937-04-12",
+      "evidence": [
+        "cluster:102804",
+        "cite:301 U.S. 1",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "a2536d9a-dcd4-4b41-a8e1-3be99102af02",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "383 u.s. 116",
+      "citation": "383 U.S. 116",
+      "representativeRaw": "383 U.S. 116",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "st-wy-high",
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "107166",
+      "citations": [
+        "383 U.S. 116",
+        "[object Object]"
+      ],
+      "caseName": "United States v. Ewell",
+      "court": null,
+      "dateFiled": "1966-02-23",
+      "evidence": [
+        "cluster:107166",
+        "cite:383 U.S. 116",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "9aab853e-7946-4008-abfd-90b196c85e3e",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "488 u.s. 235",
+      "citation": "488 U.S. 235",
+      "representativeRaw": "488 U.S. 235",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-d-nysd",
+        "us-scotus",
+        "us-ca-3",
+        "us-circuit-unspecified",
+        "us-ca-9"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "112166",
+      "citations": [
+        "488 U.S. 235",
+        "[object Object]"
+      ],
+      "caseName": "Owens v. Okure",
+      "court": null,
+      "dateFiled": "1989-01-10",
+      "evidence": [
+        "cluster:112166",
+        "cite:488 U.S. 235",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "24192f09-c59e-4b57-9f43-40fbbc34c4c2",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "521 u.s. 811",
+      "citation": "521 U.S. 811",
+      "representativeRaw": "521 U.S. 811",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-ca-1",
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "118146",
+      "citations": [
+        "521 U.S. 811",
+        "[object Object]"
+      ],
+      "caseName": "Raines v. Byrd",
+      "court": null,
+      "dateFiled": "1997-06-26",
+      "evidence": [
+        "cluster:118146",
+        "cite:521 U.S. 811",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "37e1220b-0814-41ed-a109-098b4e5d631a",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "423 u.s. 362",
+      "citation": "423 U.S. 362",
+      "representativeRaw": "423 U.S. 362",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-d-waed",
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "109349",
+      "citations": [
+        "423 U.S. 362",
+        "[object Object]"
+      ],
+      "caseName": "Rizzo v. Goode",
+      "court": null,
+      "dateFiled": "1976-01-26",
+      "evidence": [
+        "cluster:109349",
+        "cite:423 U.S. 362",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "4d56cb24-0c25-465e-ab68-6bbe59fd0310",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "91 s. ct. 674",
+      "citation": "91 S. Ct. 674",
+      "representativeRaw": "91 S.Ct. 674",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-scotus",
+        "us-ca-2",
+        "us-circuit-unspecified",
+        "us-ca-5"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "108266",
+      "citations": [
+        "91 S. Ct. 674",
+        "[object Object]"
+      ],
+      "caseName": "Perez v. Ledesma",
+      "court": null,
+      "dateFiled": "1971-02-23",
+      "evidence": [
+        "cluster:108266",
+        "cite:91 S. Ct. 674",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "7dd862d3-4596-4977-a4a7-94f0bf731db9",
+      "createdAuthority": false,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "116 u.s. 252",
+      "citation": "116 U.S. 252",
+      "representativeRaw": "116 U. S. 252",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "91528",
+      "citations": [
+        "116 U.S. 252",
+        "[object Object]"
+      ],
+      "caseName": "Presser v. Illinois",
+      "court": null,
+      "dateFiled": "1886-01-04",
+      "evidence": [
+        "cluster:91528",
+        "cite:116 U.S. 252",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "f65257f3-bddc-4752-848d-237687932a61",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "343 u.s. 790",
+      "citation": "343 U.S. 790",
+      "representativeRaw": "343 U. S. 790",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "105024",
+      "citations": [
+        "343 U.S. 790",
+        "[object Object]"
+      ],
+      "caseName": "Leland v. Oregon",
+      "court": null,
+      "dateFiled": "1952-10-13",
+      "evidence": [
+        "cluster:105024",
+        "cite:343 U.S. 790",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "a6a0493f-6627-4763-9950-920cfbdd817d",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "393 u.s. 483",
+      "citation": "393 U.S. 483",
+      "representativeRaw": "393 U. S. 483",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-scotus",
+        "us-circuit-unspecified",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "107840",
+      "citations": [
+        "393 U.S. 483",
+        "[object Object]"
+      ],
+      "caseName": "Johnson v. Avery",
+      "court": null,
+      "dateFiled": "1969-02-24",
+      "evidence": [
+        "cluster:107840",
+        "cite:393 U.S. 483",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "2e278734-ffc4-4f32-b8b3-58da567d5b2b",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "378 u.s. 546",
+      "citation": "378 U.S. 546",
+      "representativeRaw": "378 U. S. 546",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "ambiguous",
+      "clusterId": null,
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "evidence": [
+        "clusters:8958905,106889"
+      ],
+      "externalLookup": true,
+      "status": "NO_AUTO_RESOLVE"
+    },
+    {
+      "targetKey": "255 u.s. 81",
+      "citation": "255 U.S. 81",
+      "representativeRaw": "255 U.S. 81",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "99713",
+      "citations": [
+        "255 U.S. 81",
+        "[object Object]"
+      ],
+      "caseName": "United States v. L. Cohen Grocery Co.",
+      "court": null,
+      "dateFiled": "1921-02-28",
+      "evidence": [
+        "cluster:99713",
+        "cite:255 U.S. 81",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "284fb7f8-e162-4f41-8390-69772b832701",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "446 u.s. 14",
+      "status": "failed",
+      "reason": "The operation was aborted due to timeout"
+    },
+    {
+      "targetKey": "512 u.s. 622",
+      "citation": "512 U.S. 622",
+      "representativeRaw": "512 U. S. 622",
+      "edgeCount": 5,
+      "uniqueCitingCases": 5,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3",
+        "us-ca-dc"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "117869",
+      "citations": [
+        "512 U.S. 622",
+        "[object Object]"
+      ],
+      "caseName": "Turner Broadcasting System, Inc. v. Federal Communications Commission",
+      "court": null,
+      "dateFiled": "1994-08-24",
+      "evidence": [
+        "cluster:117869",
+        "cite:512 U.S. 622",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "bfe1675b-91eb-4153-98ff-dbdae2829aa5",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 5,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "377 u.s. 360",
+      "citation": "377 U.S. 360",
+      "representativeRaw": "377 U.S. 360",
+      "edgeCount": 10,
+      "uniqueCitingCases": 10,
+      "jurisdictions": [
+        "us-ca-5",
+        "us-scotus",
+        "us-circuit-unspecified"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "106837",
+      "citations": [
+        "377 U.S. 360",
+        "[object Object]"
+      ],
+      "caseName": "Baggett v. Bullitt",
+      "court": null,
+      "dateFiled": "1964-06-01",
+      "evidence": [
+        "cluster:106837",
+        "cite:377 U.S. 360",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "9aa4f8da-cad5-4df3-8fc8-b84df98b2333",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 10,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "480 u.s. 321",
+      "citation": "480 U.S. 321",
+      "representativeRaw": "480 U.S. 321",
+      "edgeCount": 6,
+      "uniqueCitingCases": 6,
+      "jurisdictions": [
+        "st-il-high",
+        "us-d-txnd",
+        "us-scotus",
+        "us-d-paed",
+        "us-ca-9"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "111834",
+      "citations": [
+        "480 U.S. 321",
+        "[object Object]"
+      ],
+      "caseName": "Arizona v. Hicks",
+      "court": null,
+      "dateFiled": "1987-03-03",
+      "evidence": [
+        "cluster:111834",
+        "cite:480 U.S. 321",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "b5e7d224-89ed-48d0-a1e1-243a79916e99",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 6,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "88 s. ct. 507",
+      "citation": "88 S. Ct. 507",
+      "representativeRaw": "88 S. Ct. 507",
+      "edgeCount": 6,
+      "uniqueCitingCases": 6,
+      "jurisdictions": [
+        "st-ct-app",
+        "us-scotus",
+        "us-d-paed",
+        "us-circuit-unspecified",
+        "us-ca-9",
+        "us-ca-2"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "107564",
+      "citations": [
+        "88 S. Ct. 507",
+        "[object Object]"
+      ],
+      "caseName": "Katz v. United States",
+      "court": null,
+      "dateFiled": "1967-12-18",
+      "evidence": [
+        "cluster:107564",
+        "cite:88 S. Ct. 507",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "ef19a7ee-717e-43ae-b383-f69ef768b4c4",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 6,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "523 u.s. 833",
+      "citation": "523 U.S. 833",
+      "representativeRaw": "523 U.S. 833",
+      "edgeCount": 7,
+      "uniqueCitingCases": 7,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-ca-11",
+        "st-nj-high",
+        "st-unknown"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "118214",
+      "citations": [
+        "523 U.S. 833",
+        "[object Object]"
+      ],
+      "caseName": "County of Sacramento v. Lewis",
+      "court": null,
+      "dateFiled": "1998-05-26",
+      "evidence": [
+        "cluster:118214",
+        "cite:523 U.S. 833",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "3c4870df-25ce-4188-b0d1-8fdd6bf6aa97",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 7,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "409 u.s. 942",
+      "citation": "409 U.S. 942",
+      "representativeRaw": "409 U.S. 942",
+      "edgeCount": 7,
+      "uniqueCitingCases": 7,
+      "jurisdictions": [
+        "us-ca-1",
+        "us-ca-2",
+        "us-ca-3",
+        "us-ca-9"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "ambiguous",
+      "clusterId": null,
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "evidence": [
+        "clusters:8990432,8990431,8990430,8990429,8990428,8990427"
+      ],
+      "externalLookup": true,
+      "status": "NO_AUTO_RESOLVE"
+    },
+    {
+      "targetKey": "93 s. ct. 290",
+      "citation": "93 S. Ct. 290",
+      "representativeRaw": "93 S.Ct. 290",
+      "edgeCount": 7,
+      "uniqueCitingCases": 7,
+      "jurisdictions": [
+        "us-ca-1",
+        "us-ca-2",
+        "us-ca-3",
+        "us-ca-9"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "ambiguous",
+      "clusterId": null,
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "evidence": [
+        "clusters:8990535,8990435,8990432"
+      ],
+      "externalLookup": true,
+      "status": "NO_AUTO_RESOLVE"
+    },
+    {
+      "targetKey": "125 s. ct. 738",
+      "citation": "125 S. Ct. 738",
+      "representativeRaw": "125 S.Ct. 738",
+      "edgeCount": 7,
+      "uniqueCitingCases": 7,
+      "jurisdictions": [
+        "us-ca-unknown",
+        "us-ca-2",
+        "us-ca-dc",
+        "us-ca-5",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "137739",
+      "citations": [
+        "125 S. Ct. 738",
+        "[object Object]"
+      ],
+      "caseName": "United States v. Booker",
+      "court": null,
+      "dateFiled": "2004-10-01",
+      "evidence": [
+        "cluster:137739",
+        "cite:125 S. Ct. 738",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "ad18610f-e731-4e2c-aa02-d1ad9d25c75a",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 7,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "412 u.s. 1",
+      "citation": "412 U.S. 1",
+      "representativeRaw": "412 U.S. 1",
+      "edgeCount": 7,
+      "uniqueCitingCases": 7,
+      "jurisdictions": [
+        "us-ca-5",
+        "us-ca-3",
+        "us-ca-7",
+        "us-ca-9",
+        "us-ca-2"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "108792",
+      "citations": [
+        "412 U.S. 1",
+        "[object Object]"
+      ],
+      "caseName": "Hall v. Cole",
+      "court": null,
+      "dateFiled": "1973-05-21",
+      "evidence": [
+        "cluster:108792",
+        "cite:412 U.S. 1",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "9f66efc4-ab88-46f6-a963-9f7bcbcd9d17",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 7,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "93 s. ct. 1943",
+      "citation": "93 S. Ct. 1943",
+      "representativeRaw": "93 S.Ct. 1943",
+      "edgeCount": 7,
+      "uniqueCitingCases": 7,
+      "jurisdictions": [
+        "us-ca-5",
+        "us-ca-3",
+        "us-ca-7",
+        "us-ca-9",
+        "us-ca-2"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "108792",
+      "citations": [
+        "93 S. Ct. 1943",
+        "[object Object]"
+      ],
+      "caseName": "Hall v. Cole",
+      "court": null,
+      "dateFiled": "1973-05-21",
+      "evidence": [
+        "cluster:108792",
+        "cite:93 S. Ct. 1943",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "9f66efc4-ab88-46f6-a963-9f7bcbcd9d17",
+      "createdAuthority": false,
+      "corpusComplete": false,
+      "edgesBackfilled": 7,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "106 s. ct. 2686",
+      "citation": "106 S. Ct. 2686",
+      "representativeRaw": "106 S.Ct. 2686",
+      "edgeCount": 7,
+      "uniqueCitingCases": 7,
+      "jurisdictions": [
+        "us-circuit-unspecified",
+        "us-ca-3",
+        "us-ca-9"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "111730",
+      "citations": [
+        "106 S. Ct. 2686",
+        "[object Object]"
+      ],
+      "caseName": "City of Riverside v. Rivera",
+      "court": null,
+      "dateFiled": "1986-06-27",
+      "evidence": [
+        "cluster:111730",
+        "cite:106 S. Ct. 2686",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "9e7052df-30eb-42e0-abed-96de0d0d5312",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 7,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "106 s. ct. 3088",
+      "citation": "106 S. Ct. 3088",
+      "representativeRaw": "106 S.Ct. 3088",
+      "edgeCount": 7,
+      "uniqueCitingCases": 7,
+      "jurisdictions": [
+        "us-circuit-unspecified",
+        "us-ca-3",
+        "us-ca-9",
+        "us-ca-6",
+        "us-ca-dc"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "111749",
+      "citations": [
+        "106 S. Ct. 3088",
+        "[object Object]"
+      ],
+      "caseName": "Pennsylvania v. Delaware Valley Citizens' Council for Clean Air",
+      "court": null,
+      "dateFiled": "1986-07-02",
+      "evidence": [
+        "cluster:111749",
+        "cite:106 S. Ct. 3088",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "fd16240e-bd9d-401d-bcd1-ab40587f4f0d",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 7,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "105 u.s. 527",
+      "citation": "105 U.S. 527",
+      "representativeRaw": "105 U.S. 527",
+      "edgeCount": 7,
+      "uniqueCitingCases": 7,
+      "jurisdictions": [
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "90604",
+      "citations": [
+        "105 U.S. 527",
+        "[object Object]"
+      ],
+      "caseName": "Trustees v. Greenough",
+      "court": null,
+      "dateFiled": "1882-05-18",
+      "evidence": [
+        "cluster:90604",
+        "cite:105 U.S. 527",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "a7c11f3f-5159-4c66-b4b3-deb568e5728a",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 7,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "121 s. ct. 2151",
+      "citation": "121 S. Ct. 2151",
+      "representativeRaw": "121 S.Ct. 2151",
+      "edgeCount": 3,
+      "uniqueCitingCases": 3,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-d-paed"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "ambiguous",
+      "clusterId": null,
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "evidence": [
+        "clusters:118449,118448"
+      ],
+      "externalLookup": true,
+      "status": "NO_AUTO_RESOLVE"
+    },
+    {
+      "targetKey": "87 s. ct. 1367",
+      "citation": "87 S. Ct. 1367",
+      "representativeRaw": "87 S.Ct. 1367",
+      "edgeCount": 3,
+      "uniqueCitingCases": 3,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-d-paed"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "ambiguous",
+      "clusterId": null,
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "evidence": [
+        "clusters:8967632,8967612,107436"
+      ],
+      "externalLookup": true,
+      "status": "NO_AUTO_RESOLVE"
+    },
+    {
+      "targetKey": "213 f.3d 113",
+      "citation": "213 F.3d 113",
+      "representativeRaw": "213 F.3d 113",
+      "edgeCount": 3,
+      "uniqueCitingCases": 3,
+      "jurisdictions": [
+        "us-d-paed",
+        "us-circuit-unspecified",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "768786",
+      "citations": [
+        "213 F.3d 113",
+        "[object Object]"
+      ],
+      "caseName": "Stanford Shane Otis Terrell Robert Stewart v. William Fauver, Commissioner James Barbo, Administrator Rogers, Chief Director of Custody",
+      "court": null,
+      "dateFiled": "2000-05-19",
+      "evidence": [
+        "cluster:768786",
+        "cite:213 F.3d 113",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "ca7f3b0c-71f5-4b83-8a53-76958a66262f",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 3,
+      "reporter": "F.3d"
+    },
+    {
+      "targetKey": "99 s. ct. 2689",
+      "citation": "99 S. Ct. 2689",
+      "representativeRaw": "99 S.Ct. 2689",
+      "edgeCount": 3,
+      "uniqueCitingCases": 3,
+      "jurisdictions": [
+        "us-ca-11",
+        "us-ca-3",
+        "us-d-paed"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "110132",
+      "citations": [
+        "99 S. Ct. 2689",
+        "[object Object]"
+      ],
+      "caseName": "Baker v. McCollan",
+      "court": null,
+      "dateFiled": "1979-06-26",
+      "evidence": [
+        "cluster:110132",
+        "cite:99 S. Ct. 2689",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "c46f9d40-364a-49c2-8d8b-671114dcd869",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 3,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "768 f.2d 503",
+      "citation": "768 F.2d 503",
+      "representativeRaw": "768 F.2d 503",
+      "edgeCount": 3,
+      "uniqueCitingCases": 3,
+      "jurisdictions": [
+        "us-d-paed",
+        "st-nm-app",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "ambiguous",
+      "clusterId": null,
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "evidence": [
+        "clusters:8942826,455940"
+      ],
+      "externalLookup": true,
+      "status": "NO_AUTO_RESOLVE"
+    },
+    {
+      "targetKey": "132 s. ct. 945",
+      "citation": "132 S. Ct. 945",
+      "representativeRaw": "132 S. Ct. 945",
+      "edgeCount": 3,
+      "uniqueCitingCases": 3,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-d-paed",
+        "us-circuit-unspecified"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "ambiguous",
+      "clusterId": null,
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "evidence": [
+        "clusters:7350871,622304"
+      ],
+      "externalLookup": true,
+      "status": "NO_AUTO_RESOLVE"
+    },
+    {
+      "targetKey": "111 s. ct. 2382",
+      "citation": "111 S. Ct. 2382",
+      "representativeRaw": "111 S.Ct. 2382",
+      "edgeCount": 3,
+      "uniqueCitingCases": 3,
+      "jurisdictions": [
+        "us-d-paed",
+        "us-circuit-unspecified",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "112631",
+      "citations": [
+        "111 S. Ct. 2382",
+        "[object Object]"
+      ],
+      "caseName": "Florida v. Bostick",
+      "court": null,
+      "dateFiled": "1991-06-20",
+      "evidence": [
+        "cluster:112631",
+        "cite:111 S. Ct. 2382",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "4bb2d0b9-c649-4e3e-be47-24372214edfc",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 3,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "103 s. ct. 1319",
+      "citation": "103 S. Ct. 1319",
+      "representativeRaw": "103 S.Ct. 1319",
+      "edgeCount": 3,
+      "uniqueCitingCases": 3,
+      "jurisdictions": [
+        "us-d-paed",
+        "us-circuit-unspecified",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "110890",
+      "citations": [
+        "103 S. Ct. 1319",
+        "[object Object]"
+      ],
+      "caseName": "Florida v. Royer",
+      "court": null,
+      "dateFiled": "1983-03-23",
+      "evidence": [
+        "cluster:110890",
+        "cite:103 S. Ct. 1319",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "861f44ca-c99d-482d-ab0d-48239f6ee6d1",
+      "createdAuthority": false,
+      "corpusComplete": false,
+      "edgesBackfilled": 3,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "318 f.3d 473",
+      "citation": "318 F.3d 473",
+      "representativeRaw": "318 F.3d 473",
+      "edgeCount": 3,
+      "uniqueCitingCases": 3,
+      "jurisdictions": [
+        "us-d-paed",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "ambiguous",
+      "clusterId": null,
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "evidence": [
+        "clusters:3013457,780721"
+      ],
+      "externalLookup": true,
+      "status": "NO_AUTO_RESOLVE"
+    },
+    {
+      "targetKey": "71 s. ct. 783",
+      "citation": "71 S. Ct. 783",
+      "representativeRaw": "71 S.Ct. 783",
+      "edgeCount": 3,
+      "uniqueCitingCases": 3,
+      "jurisdictions": [
+        "us-d-paed",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "104906",
+      "citations": [
+        "71 S. Ct. 783",
+        "[object Object]"
+      ],
+      "caseName": "Tenney v. Brandhove",
+      "court": null,
+      "dateFiled": "1951-05-21",
+      "evidence": [
+        "cluster:104906",
+        "cite:71 S. Ct. 783",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "06d798b7-93d2-48b1-b224-1c240036442f",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 3,
+      "reporter": "S. Ct."
+    },
+    {
+      "targetKey": "555 u.s. 223",
+      "citation": "555 U.S. 223",
+      "representativeRaw": "555 U.S. 223",
+      "edgeCount": 4,
+      "uniqueCitingCases": 4,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-scotus",
+        "us-ca-4"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "145918",
+      "citations": [
+        "555 U.S. 223",
+        "[object Object]"
+      ],
+      "caseName": "Pearson v. Callahan",
+      "court": null,
+      "dateFiled": "2009-01-21",
+      "evidence": [
+        "cluster:145918",
+        "cite:555 U.S. 223",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "683fe6bd-d322-4498-ae06-28b33839f982",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 4,
+      "reporter": "U.S."
+    },
+    {
+      "targetKey": "556 u.s. 332",
+      "citation": "556 U.S. 332",
+      "representativeRaw": "556 U.S. 332",
+      "edgeCount": 4,
+      "uniqueCitingCases": 4,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-scotus"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "145887",
+      "citations": [
+        "556 U.S. 332",
+        "[object Object]"
+      ],
+      "caseName": "Arizona v. Gant",
+      "court": null,
+      "dateFiled": "2009-04-21",
+      "evidence": [
+        "cluster:145887",
+        "cite:556 U.S. 332",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "c87da8f9-ff49-4c1f-a7ae-fa361aaf9987",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 4,
+      "reporter": "U.S."
+    }
+  ],
+  "generatedAt": "2026-10-09T16:25:23.987Z",
+  "resolverVersion": "citation-resolution-engine/v1",
+  "fullTextAcquired": 0
+}
