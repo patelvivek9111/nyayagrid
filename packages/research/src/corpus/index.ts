@@ -11,5 +11,6 @@ export * from "./currentness";
 export * from "./treatment-signals";
 export * from "./jurisdiction-sources";
 export * from "./citation-graph";
+export * from "./citation-resolution";
 export * from "./dedup";
 export * from "./adapters";
