@@ -1,0 +1,1420 @@
+{
+  "ok": true,
+  "diagnosticClassification": "UNRESOLVED_CITATION_RESOLUTION_DIAGNOSTIC",
+  "courtListenerHttpCalls": 0,
+  "corpusMutations": 0,
+  "generatedAt": "2026-10-09T15:26:53.935Z",
+  "elapsedMs": 2444,
+  "corpus": {
+    "cases": 5136,
+    "authorities": 6491,
+    "extracted": 66945,
+    "resolved": 10221,
+    "unresolved": 56724
+  },
+  "inventory": {
+    "TOTAL_UNRESOLVED_EDGES": 56724,
+    "UNIQUE_RAW_CITATIONS": 46196,
+    "UNIQUE_NORMALIZED_CITATIONS": 44974,
+    "UNIQUE_TARGET_KEYS": 44502,
+    "AGGREGATE_ROWS": 44974,
+    "medianEdgesPerTarget": 1,
+    "p95EdgesPerTarget": 3,
+    "top100": [
+      {
+        "key": "42 u.s.c. § 1983",
+        "lean": "42 U.S.C. § 1983",
+        "edges": 37,
+        "citingCases": 37,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "ALREADY_PRESENT_EXACT",
+        "sampleRaw": "42 U. S. C. § 1983"
+      },
+      {
+        "key": "fed. r. app. p. 34",
+        "lean": "Fed. R. App. P. 34",
+        "edges": 33,
+        "citingCases": 33,
+        "kind": "RULE",
+        "family": "federal_rules",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "Fed. R. App. P. 34"
+      },
+      {
+        "key": "18 u.s.c. § 922(g)(1",
+        "lean": "18 U.S.C. § 922(g)(1",
+        "edges": 32,
+        "citingCases": 32,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "18 U.S.C. § 922(g)(1"
+      },
+      {
+        "key": "28 u.s.c. § 2254",
+        "lean": "28 U.S.C. § 2254",
+        "edges": 31,
+        "citingCases": 31,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "28 U. S. C. § 2254"
+      },
+      {
+        "key": "18 u.s.c. § 924",
+        "lean": "18 U.S.C. § 924",
+        "edges": 25,
+        "citingCases": 25,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "18 U.S.C. § 924"
+      },
+      {
+        "key": "106 s. ct. 2505",
+        "lean": "106 S. Ct. 2505",
+        "edges": 23,
+        "citingCases": 23,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "106 S.Ct. 2505"
+      },
+      {
+        "key": "28 u.s.c. § 1257",
+        "lean": "28 U.S.C. § 1257",
+        "edges": 23,
+        "citingCases": 23,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "28 U. S. C. § 1257"
+      },
+      {
+        "key": "128 s. ct. 2783",
+        "lean": "128 S. Ct. 2783",
+        "edges": 23,
+        "citingCases": 23,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "128 S.Ct. 2783"
+      },
+      {
+        "key": "28 u.s.c. § 1343",
+        "lean": "28 U.S.C. § 1343",
+        "edges": 23,
+        "citingCases": 23,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "28 U. S. C. § 1343"
+      },
+      {
+        "key": "21 u.s.c. § 841",
+        "lean": "21 U.S.C. § 841",
+        "edges": 22,
+        "citingCases": 22,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "21 U.S.C. § 841"
+      },
+      {
+        "key": "1 cranch 137",
+        "lean": "1 Cranch 137",
+        "edges": 21,
+        "citingCases": 21,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "1 Cranch 137"
+      },
+      {
+        "key": "106 s. ct. 2548",
+        "lean": "106 S. Ct. 2548",
+        "edges": 21,
+        "citingCases": 21,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "106 S.Ct. 2548"
+      },
+      {
+        "key": "130 s. ct. 3020",
+        "lean": "130 S. Ct. 3020",
+        "edges": 19,
+        "citingCases": 19,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "130 S. Ct. 3020"
+      },
+      {
+        "key": "421 u.s. 240",
+        "lean": "421 U.S. 240",
+        "edges": 18,
+        "citingCases": 18,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "421 U. S. 240"
+      },
+      {
+        "key": "451 u.s. 204",
+        "lean": "451 U.S. 204",
+        "edges": 18,
+        "citingCases": 18,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "451 U. S. 204"
+      },
+      {
+        "key": "103 s. ct. 1933",
+        "lean": "103 S. Ct. 1933",
+        "edges": 17,
+        "citingCases": 17,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "103 S.Ct. 1933"
+      },
+      {
+        "key": "17 stat. 13",
+        "lean": "17 Stat. 13",
+        "edges": 17,
+        "citingCases": 17,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "17 Stat. 13"
+      },
+      {
+        "key": "106 s. ct. 1348",
+        "lean": "106 S. Ct. 1348",
+        "edges": 17,
+        "citingCases": 17,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "106 S.Ct. 1348"
+      },
+      {
+        "key": "95 s. ct. 1612",
+        "lean": "95 S. Ct. 1612",
+        "edges": 17,
+        "citingCases": 17,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "95 S.Ct. 1612"
+      },
+      {
+        "key": "18 u.s.c. § 3231",
+        "lean": "18 U.S.C. § 3231",
+        "edges": 17,
+        "citingCases": 17,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "18 U.S.C. § 3231"
+      },
+      {
+        "key": "63 l. ed. 2d 639",
+        "lean": "63 L. Ed. 2d 639",
+        "edges": 16,
+        "citingCases": 16,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "63 L.Ed.2d 639"
+      },
+      {
+        "key": "390 u.s. 400",
+        "lean": "390 U.S. 400",
+        "edges": 16,
+        "citingCases": 16,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "390 U. S. 400"
+      },
+      {
+        "key": "163 idaho 856",
+        "lean": "163 Idaho 856",
+        "edges": 16,
+        "citingCases": 16,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "163 Idaho 856"
+      },
+      {
+        "key": "100 s. ct. 1371",
+        "lean": "100 S. Ct. 1371",
+        "edges": 16,
+        "citingCases": 16,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "100 S.Ct. 1371"
+      },
+      {
+        "key": "21 u.s.c. § 846",
+        "lean": "21 U.S.C. § 846",
+        "edges": 16,
+        "citingCases": 16,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "21 U.S.C. § 846"
+      },
+      {
+        "key": "fed. r. civ. p. 56",
+        "lean": "Fed. R. Civ. P. 56",
+        "edges": 16,
+        "citingCases": 16,
+        "kind": "RULE",
+        "family": "federal_rules",
+        "localMatch": "ALREADY_PRESENT_EXACT",
+        "sampleRaw": "Fed.R.Civ.P. 56"
+      },
+      {
+        "key": "2026 page 3",
+        "lean": "2026 Page 3",
+        "edges": 15,
+        "citingCases": 15,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "2026 Page 3"
+      },
+      {
+        "key": "2026 page 2",
+        "lean": "2026 Page 2",
+        "edges": 15,
+        "citingCases": 15,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "2026 Page 2"
+      },
+      {
+        "key": "44 l. ed. 2d 141",
+        "lean": "44 L. Ed. 2d 141",
+        "edges": 15,
+        "citingCases": 15,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "44 L.Ed.2d 141"
+      },
+      {
+        "key": "171 l. ed. 2d 637",
+        "lean": "171 L. Ed. 2d 637",
+        "edges": 15,
+        "citingCases": 15,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "171 L.Ed.2d 637"
+      },
+      {
+        "key": "5 u.s.c. § 706",
+        "lean": "5 U.S.C. § 706",
+        "edges": 15,
+        "citingCases": 15,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "5 U.S.C. § 706"
+      },
+      {
+        "key": "18 u.s.c. § 371",
+        "lean": "18 U.S.C. § 371",
+        "edges": 15,
+        "citingCases": 15,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "18 U.S.C. § 371"
+      },
+      {
+        "key": "2026 page 4",
+        "lean": "2026 Page 4",
+        "edges": 14,
+        "citingCases": 14,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "2026 Page 4"
+      },
+      {
+        "key": "137 n.h. 321",
+        "lean": "137 N.H. 321",
+        "edges": 14,
+        "citingCases": 14,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "137 N.H. 321"
+      },
+      {
+        "key": "346 or 160",
+        "lean": "346 Or 160",
+        "edges": 14,
+        "citingCases": 14,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "346 Or 160"
+      },
+      {
+        "key": "88 s. ct. 964",
+        "lean": "88 S. Ct. 964",
+        "edges": 14,
+        "citingCases": 14,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "88 S.Ct. 964"
+      },
+      {
+        "key": "28 u.s.c. § 2255",
+        "lean": "28 U.S.C. § 2255",
+        "edges": 14,
+        "citingCases": 14,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "28 U. S.C. § 2255"
+      },
+      {
+        "key": "fed. r. civ. p. 54",
+        "lean": "Fed. R. Civ. P. 54",
+        "edges": 14,
+        "citingCases": 14,
+        "kind": "RULE",
+        "family": "federal_rules",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "Fed.R.Civ.P. 54"
+      },
+      {
+        "key": "2026 page 5",
+        "lean": "2026 Page 5",
+        "edges": 13,
+        "citingCases": 13,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "2026 Page 5"
+      },
+      {
+        "key": "19 l. ed. 2d 1263",
+        "lean": "19 L. Ed. 2d 1263",
+        "edges": 13,
+        "citingCases": 13,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "19 L.Ed.2d 1263"
+      },
+      {
+        "key": "2026 page 7",
+        "lean": "2026 Page 7",
+        "edges": 13,
+        "citingCases": 13,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "2026 Page 7"
+      },
+      {
+        "key": "2026 page 6",
+        "lean": "2026 Page 6",
+        "edges": 13,
+        "citingCases": 13,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "2026 Page 6"
+      },
+      {
+        "key": "401 u.s. 82",
+        "lean": "401 U.S. 82",
+        "edges": 13,
+        "citingCases": 13,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "401 U. S. 82"
+      },
+      {
+        "key": "42 u.s.c. § 2000e-5(k",
+        "lean": "42 U.S.C. § 2000e-5(k",
+        "edges": 13,
+        "citingCases": 13,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "42 U.S.C. § 2000e-5(k"
+      },
+      {
+        "key": "16 wall. 36",
+        "lean": "16 Wall. 36",
+        "edges": 13,
+        "citingCases": 13,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "16 Wall. 36"
+      },
+      {
+        "key": "76 l. ed. 2d 40",
+        "lean": "76 L. Ed. 2d 40",
+        "edges": 13,
+        "citingCases": 13,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "76 L.Ed.2d 40"
+      },
+      {
+        "key": "78 s. ct. 99",
+        "lean": "78 S. Ct. 99",
+        "edges": 13,
+        "citingCases": 13,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "78 S.Ct. 99"
+      },
+      {
+        "key": "69 s. ct. 1221",
+        "lean": "69 S. Ct. 1221",
+        "edges": 13,
+        "citingCases": 13,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "69 S.Ct. 1221"
+      },
+      {
+        "key": "fed. r. crim. p. 52",
+        "lean": "Fed. R. Crim. P. 52",
+        "edges": 13,
+        "citingCases": 13,
+        "kind": "RULE",
+        "family": "federal_rules",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "Fed.R.Crim.P. 52"
+      },
+      {
+        "key": "68 l. ed. 2d 38",
+        "lean": "68 L. Ed. 2d 38",
+        "edges": 12,
+        "citingCases": 12,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "68 L.Ed.2d 38"
+      },
+      {
+        "key": "2025 page 3",
+        "lean": "2025 Page 3",
+        "edges": 12,
+        "citingCases": 12,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "2025 Page 3"
+      },
+      {
+        "key": "2025 page 4",
+        "lean": "2025 Page 4",
+        "edges": 12,
+        "citingCases": 12,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "2025 Page 4"
+      },
+      {
+        "key": "2026 page 9",
+        "lean": "2026 Page 9",
+        "edges": 12,
+        "citingCases": 12,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "2026 Page 9"
+      },
+      {
+        "key": "2026 page 8",
+        "lean": "2026 Page 8",
+        "edges": 12,
+        "citingCases": 12,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "2026 Page 8"
+      },
+      {
+        "key": "101 s. ct. 1642",
+        "lean": "101 S. Ct. 1642",
+        "edges": 12,
+        "citingCases": 12,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "101 S.Ct. 1642"
+      },
+      {
+        "key": "2025 page 2",
+        "lean": "2025 Page 2",
+        "edges": 12,
+        "citingCases": 12,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "2025 Page 2"
+      },
+      {
+        "key": "28 u.s.c. § 1253",
+        "lean": "28 U.S.C. § 1253",
+        "edges": 12,
+        "citingCases": 12,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "28 U. S. C. § 1253"
+      },
+      {
+        "key": "28 u.s.c. § 2281",
+        "lean": "28 U.S.C. § 2281",
+        "edges": 12,
+        "citingCases": 12,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "28 U. S. C. § 2281"
+      },
+      {
+        "key": "415 u.s. 651",
+        "lean": "415 U.S. 651",
+        "edges": 11,
+        "citingCases": 11,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "415 U. S. 651"
+      },
+      {
+        "key": "407 u.s. 143",
+        "lean": "407 U.S. 143",
+        "edges": 11,
+        "citingCases": 11,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "407 U. S. 143"
+      },
+      {
+        "key": "307 u.s. 174",
+        "lean": "307 U.S. 174",
+        "edges": 11,
+        "citingCases": 11,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "307 U. S. 174"
+      },
+      {
+        "key": "573 u.s. 373",
+        "lean": "573 U.S. 373",
+        "edges": 11,
+        "citingCases": 11,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "573 U. S. 373"
+      },
+      {
+        "key": "91 l. ed. 2d 202",
+        "lean": "91 L. Ed. 2d 202",
+        "edges": 11,
+        "citingCases": 11,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "91 L.Ed.2d 202"
+      },
+      {
+        "key": "42 u.s.c. § 2000e",
+        "lean": "42 U.S.C. § 2000e",
+        "edges": 11,
+        "citingCases": 11,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "42 U. S. C. §2000e"
+      },
+      {
+        "key": "8 u.s.c. § 1101",
+        "lean": "8 U.S.C. § 1101",
+        "edges": 11,
+        "citingCases": 11,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "8 U. S. C. §1101"
+      },
+      {
+        "key": "89 l. ed. 2d 538",
+        "lean": "89 L. Ed. 2d 538",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "89 L.Ed.2d 538"
+      },
+      {
+        "key": "91 l. ed. 2d 265",
+        "lean": "91 L. Ed. 2d 265",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "91 L.Ed.2d 265"
+      },
+      {
+        "key": "93 l. ed.1528",
+        "lean": "93 L. Ed.1528",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "93 L.Ed. 1528"
+      },
+      {
+        "key": "94 s. ct. 1683",
+        "lean": "94 S. Ct. 1683",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "94 S.Ct. 1683"
+      },
+      {
+        "key": "360 u.s. 564",
+        "lean": "360 U.S. 564",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "360 U. S. 564"
+      },
+      {
+        "key": "460 u.s. 491",
+        "lean": "460 U.S. 491",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "460 U. S. 491"
+      },
+      {
+        "key": "2025 page 6",
+        "lean": "2025 Page 6",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "2025 Page 6"
+      },
+      {
+        "key": "491 u.s. 781",
+        "lean": "491 U.S. 781",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "491 U. S. 781"
+      },
+      {
+        "key": "2025 page 5",
+        "lean": "2025 Page 5",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "2025 Page 5"
+      },
+      {
+        "key": "489 u.s. 189",
+        "lean": "489 U.S. 189",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "489 U. S. 189"
+      },
+      {
+        "key": "423 u.s. 336",
+        "lean": "423 U.S. 336",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "423 U.S. 336"
+      },
+      {
+        "key": "377 u.s. 360",
+        "lean": "377 U.S. 360",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "377 U. S. 360"
+      },
+      {
+        "key": "104 s. ct. 1541",
+        "lean": "104 S. Ct. 1541",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "104 S.Ct. 1541"
+      },
+      {
+        "key": "18 how. 272",
+        "lean": "18 How. 272",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "18 How. 272"
+      },
+      {
+        "key": "2025 page 7",
+        "lean": "2025 Page 7",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "2025 Page 7"
+      },
+      {
+        "key": "21 u.s.c. § 174",
+        "lean": "21 U.S.C. § 174",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "21 U. S. C. § 174"
+      },
+      {
+        "key": "113 s. ct. 1770",
+        "lean": "113 S. Ct. 1770",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "113 S.Ct. 1770"
+      },
+      {
+        "key": "18 u.s.c. § 2113",
+        "lean": "18 U.S.C. § 2113",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "18 U.S.C. § 2113"
+      },
+      {
+        "key": "fed. r. crim. p. 11",
+        "lean": "Fed. R. Crim. P. 11",
+        "edges": 10,
+        "citingCases": 10,
+        "kind": "RULE",
+        "family": "federal_rules",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "Fed.R.Crim.P. 11"
+      },
+      {
+        "key": "24 l. ed. 2d 593",
+        "lean": "24 L. Ed. 2d 593",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "24 L.Ed.2d 593"
+      },
+      {
+        "key": "18 wall. 163",
+        "lean": "18 Wall. 163",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "18 Wall. 163"
+      },
+      {
+        "key": "302 u.s. 633",
+        "lean": "302 U.S. 633",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "302 U. S. 633"
+      },
+      {
+        "key": "1 stat. 73",
+        "lean": "1 Stat. 73",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "1 Stat. 73"
+      },
+      {
+        "key": "4 wheat. 316",
+        "lean": "4 Wheat. 316",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "4 Wheat. 316"
+      },
+      {
+        "key": "28 u.s.c. § 636",
+        "lean": "28 U.S.C. § 636",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "28 U.S.C. § 636"
+      },
+      {
+        "key": "52 stat. 1250",
+        "lean": "52 Stat. 1250",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "52 Stat. 1250"
+      },
+      {
+        "key": "15 id. 16",
+        "lean": "15 Id. 16",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "FULL_CASE_CITATION",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "15 Id. 16"
+      },
+      {
+        "key": "396 u.s. 375",
+        "lean": "396 U.S. 375",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "396 U.S. 375"
+      },
+      {
+        "key": "112 s. ct. 2130",
+        "lean": "112 S. Ct. 2130",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "PARALLEL_CITATION_CANDIDATE",
+        "family": "unknown",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "112 S.Ct. 2130"
+      },
+      {
+        "key": "391 u.s. 543",
+        "lean": "391 U.S. 543",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "391 U. S. 543"
+      },
+      {
+        "key": "471 u.s. 261",
+        "lean": "471 U.S. 261",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "471 U. S. 261"
+      },
+      {
+        "key": "29 u.s.c. § 1132",
+        "lean": "29 U.S.C. § 1132",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "STATUTE_OR_CODE",
+        "family": "usc",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "29 U.S.C. § 1132"
+      },
+      {
+        "key": "494 u.s. 325",
+        "lean": "494 U.S. 325",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "494 U.S. 325"
+      },
+      {
+        "key": "465 u.s. 886",
+        "lean": "465 U.S. 886",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "465 U.S. 886"
+      },
+      {
+        "key": "364 u.s. 479",
+        "lean": "364 U.S. 479",
+        "edges": 9,
+        "citingCases": 9,
+        "kind": "FULL_CASE_CITATION",
+        "family": "us_reports",
+        "localMatch": "NO_LOCAL_MATCH",
+        "sampleRaw": "364 U. S. 479"
+      }
+    ]
+  },
+  "citationKinds": {
+    "byEdges": {
+      "FULL_CASE_CITATION": 45091,
+      "SHORT_FORM_CASE_CITATION": 0,
+      "ID_CITATION": 0,
+      "SUPRA_CITATION": 0,
+      "PARALLEL_CITATION_CANDIDATE": 6149,
+      "MALFORMED_CASE_CITATION": 3,
+      "STATUTE_OR_CODE": 2075,
+      "REGULATION": 181,
+      "RULE": 326,
+      "SECONDARY_SOURCE": 0,
+      "UNKNOWN": 2899
+    },
+    "byUniqueTargets": {
+      "FULL_CASE_CITATION": 36158,
+      "SHORT_FORM_CASE_CITATION": 0,
+      "ID_CITATION": 0,
+      "SUPRA_CITATION": 0,
+      "PARALLEL_CITATION_CANDIDATE": 4213,
+      "MALFORMED_CASE_CITATION": 3,
+      "STATUTE_OR_CODE": 1168,
+      "REGULATION": 162,
+      "RULE": 100,
+      "SECONDARY_SOURCE": 0,
+      "UNKNOWN": 2698
+    }
+  },
+  "localResolution": {
+    "ALREADY_PRESENT_EXACT": 44,
+    "ALREADY_PRESENT_ALIAS": 0,
+    "ALREADY_PRESENT_PARALLEL": 0,
+    "ALREADY_PRESENT_AMBIGUOUS": 1,
+    "NO_LOCAL_MATCH": 44457,
+    "normalizationRecoverableTargets": 44,
+    "HIGH_confidenceEdges": 172,
+    "HIGH_confidenceUniqueTargets": 44,
+    "MEDIUM_confidenceEdges": 0,
+    "MEDIUM_confidenceUniqueTargets": 0,
+    "authoritiesWithParallelMeta": 168,
+    "aliasIndexSize": 3288,
+    "vrpIndexSize": 992
+  },
+  "ambiguity": {
+    "normalizationCollisions": 0,
+    "parallelAmbiguous": 0,
+    "shortCiteAmbiguous": 0,
+    "NO_AUTO_RESOLVE_targets": 2
+  },
+  "highLeverage": {
+    "topTargetEdgeCount": 37,
+    "top25EdgesCovered": 534,
+    "top100EdgesCovered": 1386,
+    "top500EdgesCovered": 3881,
+    "top25": [
+      {
+        "lean": "42 U.S.C. § 1983",
+        "edges": 37,
+        "localMatch": "ALREADY_PRESENT_EXACT",
+        "kind": "STATUTE_OR_CODE"
+      },
+      {
+        "lean": "Fed. R. App. P. 34",
+        "edges": 33,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "RULE"
+      },
+      {
+        "lean": "18 U.S.C. § 922(g)(1",
+        "edges": 32,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "STATUTE_OR_CODE"
+      },
+      {
+        "lean": "28 U.S.C. § 2254",
+        "edges": 31,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "STATUTE_OR_CODE"
+      },
+      {
+        "lean": "18 U.S.C. § 924",
+        "edges": 25,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "STATUTE_OR_CODE"
+      },
+      {
+        "lean": "106 S. Ct. 2505",
+        "edges": 23,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "PARALLEL_CITATION_CANDIDATE"
+      },
+      {
+        "lean": "28 U.S.C. § 1257",
+        "edges": 23,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "STATUTE_OR_CODE"
+      },
+      {
+        "lean": "128 S. Ct. 2783",
+        "edges": 23,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "PARALLEL_CITATION_CANDIDATE"
+      },
+      {
+        "lean": "28 U.S.C. § 1343",
+        "edges": 23,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "STATUTE_OR_CODE"
+      },
+      {
+        "lean": "21 U.S.C. § 841",
+        "edges": 22,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "STATUTE_OR_CODE"
+      },
+      {
+        "lean": "1 Cranch 137",
+        "edges": 21,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "FULL_CASE_CITATION"
+      },
+      {
+        "lean": "106 S. Ct. 2548",
+        "edges": 21,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "PARALLEL_CITATION_CANDIDATE"
+      },
+      {
+        "lean": "130 S. Ct. 3020",
+        "edges": 19,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "PARALLEL_CITATION_CANDIDATE"
+      },
+      {
+        "lean": "421 U.S. 240",
+        "edges": 18,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "FULL_CASE_CITATION"
+      },
+      {
+        "lean": "451 U.S. 204",
+        "edges": 18,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "FULL_CASE_CITATION"
+      },
+      {
+        "lean": "103 S. Ct. 1933",
+        "edges": 17,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "PARALLEL_CITATION_CANDIDATE"
+      },
+      {
+        "lean": "17 Stat. 13",
+        "edges": 17,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "FULL_CASE_CITATION"
+      },
+      {
+        "lean": "106 S. Ct. 1348",
+        "edges": 17,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "PARALLEL_CITATION_CANDIDATE"
+      },
+      {
+        "lean": "95 S. Ct. 1612",
+        "edges": 17,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "PARALLEL_CITATION_CANDIDATE"
+      },
+      {
+        "lean": "18 U.S.C. § 3231",
+        "edges": 17,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "STATUTE_OR_CODE"
+      },
+      {
+        "lean": "63 L. Ed. 2d 639",
+        "edges": 16,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "PARALLEL_CITATION_CANDIDATE"
+      },
+      {
+        "lean": "390 U.S. 400",
+        "edges": 16,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "FULL_CASE_CITATION"
+      },
+      {
+        "lean": "163 Idaho 856",
+        "edges": 16,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "FULL_CASE_CITATION"
+      },
+      {
+        "lean": "100 S. Ct. 1371",
+        "edges": 16,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "PARALLEL_CITATION_CANDIDATE"
+      },
+      {
+        "lean": "21 U.S.C. § 846",
+        "edges": 16,
+        "localMatch": "NO_LOCAL_MATCH",
+        "kind": "STATUTE_OR_CODE"
+      }
+    ]
+  },
+  "parallel": {
+    "groupsFound": 27,
+    "edgesPotentiallyResolvable": 102,
+    "uniqueTargetsCollapsible": 27,
+    "ambiguousGroups": 0,
+    "samples": [
+      {
+        "authorityId": "bceb5329-6b56-426b-bd52-b0107bb3ead3",
+        "citation": "28 U.S.C. § 1331",
+        "parallels": [
+          "28 USC § 1331"
+        ],
+        "unresolvedTargetsCovered": 1,
+        "edges": 6
+      },
+      {
+        "authorityId": "3a33a9e8-28bd-4e1a-9ddc-e41270af1a37",
+        "citation": "28 U.S.C. § 1441",
+        "parallels": [
+          "28 USC § 1441"
+        ],
+        "unresolvedTargetsCovered": 1,
+        "edges": 1
+      },
+      {
+        "authorityId": "6a851061-7c96-421f-847d-7ed9eaa89acb",
+        "citation": "28 U.S.C. § 1404",
+        "parallels": [
+          "28 USC § 1404"
+        ],
+        "unresolvedTargetsCovered": 1,
+        "edges": 1
+      },
+      {
+        "authorityId": "edb53463-6975-4131-a0a5-32c37b4aad64",
+        "citation": "42 U.S.C. § 1981",
+        "parallels": [
+          "42 USC § 1981"
+        ],
+        "unresolvedTargetsCovered": 1,
+        "edges": 2
+      },
+      {
+        "authorityId": "2743d19c-62af-43d0-be26-1206acdb3365",
+        "citation": "28 U.S.C. § 1391",
+        "parallels": [
+          "28 USC § 1391"
+        ],
+        "unresolvedTargetsCovered": 1,
+        "edges": 1
+      },
+      {
+        "authorityId": "067817e9-5a37-496c-8b82-757fab15ed6a",
+        "citation": "18 U.S.C. § 1001",
+        "parallels": [
+          "18 USC § 1001"
+        ],
+        "unresolvedTargetsCovered": 1,
+        "edges": 2
+      },
+      {
+        "authorityId": "8e12312f-2f95-400b-80b0-f7ee1587914a",
+        "citation": "28 U.S.C. § 1292",
+        "parallels": [
+          "28 USC § 1292"
+        ],
+        "unresolvedTargetsCovered": 1,
+        "edges": 4
+      },
+      {
+        "authorityId": "bf06a221-2520-4ed8-ae0c-0c5279167b24",
+        "citation": "28 U.S.C. § 2412",
+        "parallels": [
+          "28 USC § 2412"
+        ],
+        "unresolvedTargetsCovered": 1,
+        "edges": 1
+      },
+      {
+        "authorityId": "4d54e7e8-085f-4939-a0a9-13cfa1f46a94",
+        "citation": "15 U.S.C. § 45",
+        "parallels": [
+          "15 USC § 45"
+        ],
+        "unresolvedTargetsCovered": 1,
+        "edges": 1
+      },
+      {
+        "authorityId": "92053c15-5753-4a7c-bfe7-4b0b43daa930",
+        "citation": "18 U.S.C. § 1343",
+        "parallels": [
+          "18 USC § 1343"
+        ],
+        "unresolvedTargetsCovered": 1,
+        "edges": 1
+      },
+      {
+        "authorityId": "6173359f-bf59-4f1a-a03e-0277380ad819",
+        "citation": "18 U.S.C. § 1341",
+        "parallels": [
+          "18 USC § 1341"
+        ],
+        "unresolvedTargetsCovered": 1,
+        "edges": 3
+      },
+      {
+        "authorityId": "27b573f2-fcda-44f3-8474-a949d5e33dd5",
+        "citation": "28 U.S.C. § 2201",
+        "parallels": [
+          "28 USC § 2201"
+        ],
+        "unresolvedTargetsCovered": 1,
+        "edges": 6
+      },
+      {
+        "authorityId": "c58ac691-2224-4cd8-a5e6-218059bdae21",
+        "citation": "28 U.S.C. § 1651",
+        "parallels": [
+          "28 USC § 1651"
+        ],
+        "unresolvedTargetsCovered": 1,
+        "edges": 2
+      },
+      {
+        "authorityId": "b5ae8fa9-5566-462f-9112-e64f3f188da2",
+        "citation": "28 U.S.C. § 2283",
+        "parallels": [
+          "28 USC § 2283"
+        ],
+        "unresolvedTargetsCovered": 1,
+        "edges": 9
+      },
+      {
+        "authorityId": "95610d18-d0b0-431a-bea4-58faadb15b1e",
+        "citation": "29 U.S.C. § 207",
+        "parallels": [
+          "29 USC § 207"
+        ],
+        "unresolvedTargetsCovered": 1,
+        "edges": 1
+      }
+    ]
+  },
+  "contextual": {
+    "edgesSampled": 0,
+    "CONTEXTUALLY_DETERMINISTIC": 0,
+    "CONTEXTUALLY_LIKELY": 0,
+    "AMBIGUOUS": 0,
+    "NOT_RESOLVABLE_LOCALLY": 0,
+    "note": "Diagnostic only. Extracted unresolved edges contain no bare Id./ibid./supra/at-N rows (count=0); extractor appears to omit or expand short forms before storage. Contextual short-cite lane remains required for future ingestion."
+  },
+  "externalLookup": {
+    "citationLookupEndpoint": "POST /api/rest/v4/citation-lookup/",
+    "existingScripts": [
+      "scripts/tmp-queue2-cite-demand-multi-ingest.cjs",
+      "scripts/tmp-queue2-zero-cl-cite-pass.cjs"
+    ],
+    "supportsBatchLookupInRepo": true,
+    "note": "Existing multi-ingest uses citation-lookup per target then cluster/opinion fetch. No dedicated unique-target batch resolver lane yet; can be added by posting unique citations with pacing.",
+    "uniqueTargetsSuitableForExternalLookup": 40365,
+    "estimatedBatchesAt75": 539,
+    "estimatedCallsIfPerEdge": 56724,
+    "estimatedCallsIfUniqueTargets": 40365,
+    "estimatedCallsAvoidedVsPerEdge": 16359,
+    "estimatedCallsAvoidedVsFullAcquisition": 121095
+  },
+  "fullAcquisition": {
+    "uniqueTargetsAppearingToRequireFullOpinion": 1331,
+    "note": "Demand-gated; identity resolution alone does not require full text."
+  },
+  "projection": {
+    "currentUnresolved": 56724,
+    "afterHIGHConfidenceLocalResolution": 56552,
+    "afterProjectedExternalIdentityLookup_low": 33497,
+    "afterProjectedExternalIdentityLookup_high": 20688,
+    "remainingHardAmbiguousEstimate": 2902,
+    "fullOpinionAcquisitionsForHighLocalProjection": 0,
+    "labels": "Estimates; high-confidence local is deterministic from this diagnostic; external rates are bands."
+  },
+  "antiRegression": {
+    "estimatedMatureLocalResolutionRateForNewEdges": 0.7949002292031819,
+    "estimatedExternalLookupsAvoidedVsPerEdge": 16359,
+    "expectedBehaviorAsCorpusGrows": "local authority/alias index grows → local resolution rate rises → external requests per citation fall",
+    "oneTimeCleanupOnly": false
+  },
+  "recommendation": "BUILD_RESOLUTION_ENGINE",
+  "finalClassification": "DIAGNOSTIC_STRONG_RESOLUTION_OPPORTUNITY"
+}
