@@ -1,0 +1,1054 @@
+{
+  "ok": true,
+  "classification": "CITATION_IDENTITY_HEAVY_MIXED_BATCH3",
+  "stopReason": "BATCH_COMPLETE",
+  "identityStopReason": null,
+  "courtListener": {
+    "quotaProbeRequests": 1,
+    "identityLookupRequests": 41,
+    "fullTextRequests": 8,
+    "retryOtherCl": 0,
+    "totalClRequests": 50,
+    "minuteAtStart": 25,
+    "hourAtStart": 203,
+    "dayAtStart": 405,
+    "estimatedDayRemaining": 356,
+    "hit429": false,
+    "hit502": 0
+  },
+  "start": {
+    "casesTyped": 5288,
+    "authorities": 6643,
+    "extracted": 67312,
+    "resolved": 12023,
+    "unresolved": 55289,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "presentTargetAmbiguous": 1,
+    "green": true,
+    "TOTAL_CANONICAL_AUTHORITIES": 6643,
+    "METADATA_ONLY_AUTHORITIES": 138,
+    "CORPUS_COMPLETE_AUTHORITIES": 5150,
+    "FULL_TEXT_READY_AUTHORITIES": 5150,
+    "EMBEDDED_AUTHORITIES": 5678,
+    "CASE_TYPED_AUTHORITIES": 5288,
+    "AUTHORITY_RESOLVED_EDGES": 12023,
+    "CORPUS_COMPLETE_EDGES": 10870,
+    "IDENTITY_UNRESOLVED_EDGES": 55289
+  },
+  "end": {
+    "casesTyped": 5328,
+    "authorities": 6683,
+    "extracted": 67393,
+    "resolved": 12303,
+    "unresolved": 55090,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "presentTargetAmbiguous": 1,
+    "green": true,
+    "TOTAL_CANONICAL_AUTHORITIES": 6683,
+    "METADATA_ONLY_AUTHORITIES": 174,
+    "CORPUS_COMPLETE_AUTHORITIES": 5154,
+    "FULL_TEXT_READY_AUTHORITIES": 5154,
+    "EMBEDDED_AUTHORITIES": 5682,
+    "CASE_TYPED_AUTHORITIES": 5328,
+    "AUTHORITY_RESOLVED_EDGES": 12303,
+    "CORPUS_COMPLETE_EDGES": 10946,
+    "IDENTITY_UNRESOLVED_EDGES": 55090
+  },
+  "identityLane": {
+    "eligibleTargetsConsidered": 3043,
+    "targetsSelected": 121,
+    "localResolvedBeforeExternal": 0,
+    "externalAttempted": 41,
+    "highResolved": 40,
+    "ambiguous": 1,
+    "notFound": 0,
+    "providerFailure": 0,
+    "oldUnresolvedEdgesBackfilled": 274,
+    "edgesPerIdentityCl": 6.682926829268292,
+    "aliasesLearned": 94,
+    "parallelCitationsLearned": 80,
+    "targetsResolvedThroughNewLearning": 0,
+    "externalLookupsAvoided": 0,
+    "externalCallsAvoidedByNewLearning": 0,
+    "identityTargetSuccess": 0.975609756097561,
+    "comparedToBatch2": {
+      "targetSuccess": 0.867,
+      "edgesPerCl": 4.98,
+      "targetSuccessDelta": 0.10860975609756096,
+      "edgesPerClDelta": 1.702926829268292
+    },
+    "newMetadataOnlyAuthorities": 40,
+    "results": [
+      {
+        "targetKey": "174 u.s. 47",
+        "citation": "174 U.S. 47",
+        "edgeCount": 8,
+        "jurisdictions": [
+          "us-scotus",
+          "st-unknown"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "a10d320f-f68b-4528-b6b4-cb3902aaf925",
+        "createdAuthority": true,
+        "edgesBackfilled": 8,
+        "clusterId": "95045"
+      },
+      {
+        "targetKey": "360 u.s. 167",
+        "citation": "360 U.S. 167",
+        "edgeCount": 8,
+        "jurisdictions": [
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "d7774c1e-5be2-414f-9852-a84d01fd5589",
+        "createdAuthority": true,
+        "edgesBackfilled": 8,
+        "clusterId": "105903"
+      },
+      {
+        "targetKey": "427 u.s. 38",
+        "citation": "427 U.S. 38",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-ca-4",
+          "st-wi-high",
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "c08864c5-71d9-4344-b706-0117dcba73d6",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "109504"
+      },
+      {
+        "targetKey": "373 u.s. 503",
+        "citation": "373 U.S. 503",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-ca-5",
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "f8d3ea22-e494-4752-bd7b-d1e3c92225a2",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "106625"
+      },
+      {
+        "targetKey": "521 u.s. 844",
+        "citation": "521 U.S. 844",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "st-ia-high",
+          "us-scotus",
+          "st-in-app",
+          "us-ca-4"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "91d5b5a2-9009-4788-912a-94b02e6dea2c",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "118147"
+      },
+      {
+        "targetKey": "354 u.s. 476",
+        "citation": "354 U.S. 476",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "st-fl-high",
+          "us-scotus",
+          "us-circuit-unspecified"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "c924e7a5-5ce1-4e44-b540-8f72879d0977",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "105547"
+      },
+      {
+        "targetKey": "466 u.s. 485",
+        "citation": "466 U.S. 485",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "st-me-high",
+          "us-ca-10",
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "142a939c-f7ef-43b4-9da5-f67db1343831",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "111164"
+      },
+      {
+        "targetKey": "455 u.s. 603",
+        "citation": "455 U.S. 603",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "st-vt-high",
+          "st-wv-high",
+          "us-scotus",
+          "us-circuit-unspecified",
+          "us-ca-10"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "dd0efabb-8dc8-4534-bb54-b0de9ed419e6",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "110668"
+      },
+      {
+        "targetKey": "422 u.s. 171",
+        "citation": "422 U.S. 171",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "st-az-high",
+          "st-ri-high",
+          "us-scotus",
+          "us-ca-10"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "2067954e-3430-471c-9f3c-27bbf4dc6d1e",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "109289"
+      },
+      {
+        "targetKey": "379 u.s. 64",
+        "citation": "379 U.S. 64",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "st-ct-high",
+          "us-ca-7",
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "010f2395-58b9-4039-8896-e239f8ec4c30",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "106935"
+      },
+      {
+        "targetKey": "373 u.s. 132",
+        "citation": "373 U.S. 132",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "st-ks-high",
+          "st-nj-high",
+          "us-scotus",
+          "us-ca-1"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "66a0e9a7-3259-4629-bb60-360815fff433",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "106601"
+      },
+      {
+        "targetKey": "347 u.s. 497",
+        "citation": "347 U.S. 497",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "st-dc-high",
+          "us-scotus",
+          "st-unknown",
+          "us-circuit-unspecified",
+          "us-ca-dc"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "5230e592-6473-48a3-87df-c45d7a227d7f",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "105222"
+      },
+      {
+        "targetKey": "429 u.s. 190",
+        "citation": "429 U.S. 190",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "st-dc-high",
+          "us-ca-dc",
+          "st-unknown",
+          "us-scotus",
+          "us-ca-7"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "f8f5ba44-7368-42d3-b1ac-7327b5c9502f",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "109570"
+      },
+      {
+        "targetKey": "294 u.s. 176",
+        "citation": "294 U.S. 176",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-d-mad",
+          "us-scotus",
+          "us-circuit-unspecified"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "fb4ece73-bcad-46fa-adda-bc19e0cd9855",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "102379"
+      },
+      {
+        "targetKey": "66 s. ct. 1180",
+        "citation": "66 S. Ct. 1180",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-ca-2",
+          "us-ca-11",
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "9f33b66d-4e2a-4bd7-b113-add49fe736f3",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "104316"
+      },
+      {
+        "targetKey": "13 wall. 335",
+        "citation": "13 Wall. 335",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-scotus",
+          "us-ca-2"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "c561216c-a78a-47e0-b957-386c6d225a54",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "88468"
+      },
+      {
+        "targetKey": "390 u.s. 719",
+        "citation": "390 U.S. 719",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "st-in-high",
+          "st-mn-high",
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "72cce030-6383-4030-af12-f2780debe412",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "107668"
+      },
+      {
+        "targetKey": "312 u.s. 52",
+        "citation": "312 U.S. 52",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "st-ut-high",
+          "st-nj-high",
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "e05bb4be-f33e-4a92-9f5b-911b82c89299",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "103438"
+      },
+      {
+        "targetKey": "355 u.s. 184",
+        "citation": "355 U.S. 184",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "st-ne-high",
+          "st-md-high",
+          "us-scotus",
+          "st-wi-app"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "f699aed8-f14f-4c6d-9566-0d59380d6633",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "105594"
+      },
+      {
+        "targetKey": "7 cranch 339",
+        "citation": "7 Cranch 339",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "a0c834aa-569c-4ca5-915e-69166344c782",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "85007"
+      },
+      {
+        "targetKey": "384 u.s. 333",
+        "citation": "384 U.S. 333",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "st-de-high",
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "70ddead2-2981-4411-93ff-072ade6131b5",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "107247"
+      },
+      {
+        "targetKey": "4 wall. 277",
+        "citation": "4 Wall. 277",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "st-mo-high",
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "94a835d1-514e-4b9e-9cf3-aeb76944a74c",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "87778"
+      },
+      {
+        "targetKey": "177 u.s. 442",
+        "citation": "177 U.S. 442",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "54ade588-3f27-4df1-ace9-d7699a4b6b9a",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "95255"
+      },
+      {
+        "targetKey": "412 u.s. 291",
+        "citation": "412 U.S. 291",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "st-ky-high",
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "faa199ed-2f3b-427b-a729-7e0bb578df26",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "108801"
+      },
+      {
+        "targetKey": "278 u.s. 63",
+        "citation": "278 U.S. 63",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "dc9a696e-3e1e-44d3-963d-56f19861fa00",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "101335"
+      },
+      {
+        "targetKey": "287 u.s. 124",
+        "citation": "287 U.S. 124",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "b6ad2a38-799d-41a0-8cde-c0cd04131d44",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "101963"
+      },
+      {
+        "targetKey": "312 u.s. 45",
+        "citation": "312 U.S. 45",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "ca07fdf4-34e6-49f3-b6f7-f855bc929c98",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "103437"
+      },
+      {
+        "targetKey": "338 u.s. 49",
+        "citation": "338 U.S. 49",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "d049b3fb-1e1f-4bd6-97bf-85698346f360",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "104710"
+      },
+      {
+        "targetKey": "316 u.s. 101",
+        "citation": "316 U.S. 101",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "9b89416e-c0de-40ea-9682-8e0d0eec9e1b",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "103660"
+      },
+      {
+        "targetKey": "288 u.s. 249",
+        "citation": "288 U.S. 249",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "ambiguous",
+        "status": "NO_AUTO_RESOLVE"
+      },
+      {
+        "targetKey": "310 u.s. 88",
+        "citation": "310 U.S. 88",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "34d7044c-2f76-404f-9e9c-d89dde01917b",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "103347"
+      },
+      {
+        "targetKey": "312 u.s. 569",
+        "citation": "312 U.S. 569",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "c1437baa-7fb6-49c8-8fb4-d081ec300570",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "103490"
+      },
+      {
+        "targetKey": "110 u.s. 651",
+        "citation": "110 U.S. 651",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "f1fa1c06-f648-4607-9f73-41f45ee2df82",
+        "createdAuthority": true,
+        "edgesBackfilled": 7,
+        "clusterId": "91064"
+      },
+      {
+        "targetKey": "523 u.s. 224",
+        "citation": "523 U.S. 224",
+        "edgeCount": 6,
+        "jurisdictions": [
+          "us-scotus",
+          "st-ct-high",
+          "st-ks-high",
+          "st-nj-high",
+          "us-ca-11"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "85611fb9-c7d9-4afc-8992-3e0bebd259e4",
+        "createdAuthority": true,
+        "edgesBackfilled": 6,
+        "clusterId": "118188"
+      },
+      {
+        "targetKey": "450 u.s. 248",
+        "citation": "450 U.S. 248",
+        "edgeCount": 6,
+        "jurisdictions": [
+          "us-ca-4",
+          "us-ca-6",
+          "us-scotus",
+          "us-circuit-unspecified",
+          "us-ca-11"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "2d4c10a3-13a6-4a8e-b624-11c4acf6f524",
+        "createdAuthority": true,
+        "edgesBackfilled": 6,
+        "clusterId": "110424"
+      },
+      {
+        "targetKey": "373 u.s. 668",
+        "citation": "373 U.S. 668",
+        "edgeCount": 6,
+        "jurisdictions": [
+          "us-ca-5",
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "8bfdc2d3-6923-4965-8590-143802233cb6",
+        "createdAuthority": true,
+        "edgesBackfilled": 6,
+        "clusterId": "106629"
+      },
+      {
+        "targetKey": "461 u.s. 138",
+        "citation": "461 U.S. 138",
+        "edgeCount": 6,
+        "jurisdictions": [
+          "st-wi-high",
+          "st-ar-high",
+          "st-nc-high",
+          "us-ca-7",
+          "us-scotus"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "a3167bff-f5c6-4628-ada7-d8697dcb9700",
+        "createdAuthority": true,
+        "edgesBackfilled": 6,
+        "clusterId": "110917"
+      },
+      {
+        "targetKey": "417 u.s. 433",
+        "citation": "417 U.S. 433",
+        "edgeCount": 6,
+        "jurisdictions": [
+          "us-scotus",
+          "st-nh-high",
+          "us-ca-9"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "fe5a7674-7d4c-4820-acdd-d0d5cc1f0d0a",
+        "createdAuthority": true,
+        "edgesBackfilled": 6,
+        "clusterId": "109063"
+      },
+      {
+        "targetKey": "417 u.s. 817",
+        "citation": "417 U.S. 817",
+        "edgeCount": 6,
+        "jurisdictions": [
+          "st-ia-high",
+          "us-scotus",
+          "us-circuit-unspecified"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "6257e0df-9256-4c3e-8149-8b0df653d72e",
+        "createdAuthority": true,
+        "edgesBackfilled": 6,
+        "clusterId": "109079"
+      },
+      {
+        "targetKey": "521 u.s. 702",
+        "citation": "521 U.S. 702",
+        "edgeCount": 6,
+        "jurisdictions": [
+          "us-scotus",
+          "st-ri-high",
+          "us-ca-4"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "a7d8938d-5721-49fd-9f5b-d29bdaf70d13",
+        "createdAuthority": true,
+        "edgesBackfilled": 6,
+        "clusterId": "118144"
+      },
+      {
+        "targetKey": "400 u.s. 74",
+        "citation": "400 U.S. 74",
+        "edgeCount": 6,
+        "jurisdictions": [
+          "st-vt-high",
+          "us-scotus",
+          "us-circuit-unspecified"
+        ],
+        "externalLookup": true,
+        "httpStatus": 200,
+        "providerStatus": "resolved",
+        "status": "HIGH_RESOLVED",
+        "authorityId": "bdd6ca44-da35-4f50-b37e-99c691e4cb90",
+        "createdAuthority": true,
+        "edgesBackfilled": 6,
+        "clusterId": "108220"
+      }
+    ]
+  },
+  "fullTextLane": {
+    "tierASelected": 4,
+    "maxFtClBudget": 8,
+    "authoritiesAttempted": 4,
+    "authoritiesAcquired": 4,
+    "alreadyCompleteSkipped": 0,
+    "failed": 0,
+    "OLD_UNRESOLVED_RESOLVED": 0,
+    "NEW_EDGES_TOTAL": 81,
+    "NEW_EDGES_RESOLVED_IMMEDIATELY": 6,
+    "NEW_EDGES_STILL_UNRESOLVED": 75,
+    "NET_UNRESOLVED_CHANGE_FROM_FULLTEXT": 69,
+    "OLD_EDGES_BACKFILLED_FROM_NEW_FULLTEXT": 0,
+    "LOOKUPS_AVOIDED_BY_NEW_FULLTEXT": 0,
+    "aliasesLearned": 0,
+    "parallelCitationsLearned": 0,
+    "results": [
+      {
+        "citation": "401 U.S. 82",
+        "caseName": "Perez v. Ledesma",
+        "authorityId": "7dd862d3-4596-4977-a4a7-94f0bf731db9",
+        "clusterId": "108266",
+        "opinionId": "9424442",
+        "status": "acquired_corpus_complete",
+        "embeddedChunks": 12,
+        "NEW_EDGES_TOTAL": 8,
+        "NEW_EDGES_RESOLVED_IMMEDIATELY": 1,
+        "NEW_EDGES_STILL_UNRESOLVED": 7,
+        "OLD_EDGES_BACKFILLED_FROM_NEW_FULLTEXT": 0,
+        "unresolvedBeforeGlobal": 55015,
+        "unresolvedAfterGlobal": 55022,
+        "rankScore": 54
+      },
+      {
+        "citation": "69 S. Ct. 1221",
+        "caseName": "Cohen v. Beneficial Industrial Loan Corp.",
+        "authorityId": "c7df1dd4-3565-4bdf-8916-3a338a8a06b8",
+        "clusterId": "104695",
+        "opinionId": "9420349",
+        "status": "acquired_corpus_complete",
+        "embeddedChunks": 28,
+        "NEW_EDGES_TOTAL": 16,
+        "NEW_EDGES_RESOLVED_IMMEDIATELY": 2,
+        "NEW_EDGES_STILL_UNRESOLVED": 14,
+        "OLD_EDGES_BACKFILLED_FROM_NEW_FULLTEXT": 0,
+        "unresolvedBeforeGlobal": 55022,
+        "unresolvedAfterGlobal": 55036,
+        "rankScore": 54
+      },
+      {
+        "citation": "307 U.S. 174",
+        "caseName": "United States v. Miller",
+        "authorityId": "6827aba9-7d1c-41aa-b0f7-423cb0f9363f",
+        "clusterId": "103203",
+        "opinionId": "103203",
+        "status": "acquired_corpus_complete",
+        "embeddedChunks": 17,
+        "NEW_EDGES_TOTAL": 22,
+        "NEW_EDGES_RESOLVED_IMMEDIATELY": 1,
+        "NEW_EDGES_STILL_UNRESOLVED": 21,
+        "OLD_EDGES_BACKFILLED_FROM_NEW_FULLTEXT": 0,
+        "unresolvedBeforeGlobal": 55036,
+        "unresolvedAfterGlobal": 55057,
+        "rankScore": 50
+      },
+      {
+        "citation": "415 U.S. 651",
+        "caseName": "Edelman v. Jordan",
+        "authorityId": "8d9516a6-a2d3-4403-a6e8-e07821da560a",
+        "clusterId": "108990",
+        "opinionId": "9425645",
+        "status": "acquired_corpus_complete",
+        "embeddedChunks": 41,
+        "NEW_EDGES_TOTAL": 35,
+        "NEW_EDGES_RESOLVED_IMMEDIATELY": 2,
+        "NEW_EDGES_STILL_UNRESOLVED": 33,
+        "OLD_EDGES_BACKFILLED_FROM_NEW_FULLTEXT": 0,
+        "unresolvedBeforeGlobal": 55057,
+        "unresolvedAfterGlobal": 55090,
+        "rankScore": 50
+      }
+    ]
+  },
+  "stateTransitions": {
+    "metadataOnlyToCorpusComplete": 4,
+    "newMetadataOnlyFromIdentity": 40,
+    "METADATA_ONLY_AUTHORITIES_remaining": 174,
+    "CORPUS_COMPLETE_AUTHORITIES_end": 5154
+  },
+  "combined": {
+    "TOTAL_OLD_UNRESOLVED_RESOLVED": 274,
+    "TOTAL_NEW_EDGES_RESOLVED_IMMEDIATELY": 6,
+    "TOTAL_RESOLVED_THIS_RUN": 280,
+    "NET_UNRESOLVED_CHANGE": -199,
+    "AUTHORITY_RESOLVED_EDGES_end": 12303,
+    "CORPUS_COMPLETE_EDGES_end": 10946,
+    "IDENTITY_UNRESOLVED_EDGES_end": 55090
+  },
+  "health": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "duplicateActiveMappings": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "status": "PASS"
+  },
+  "efficiency": {
+    "identityOldEdgeResolutionPerCl": 6.682926829268292,
+    "fullTextOldEdgeResolutionPerCl": 0,
+    "combinedOldEdgeResolutionPerCl": 5.48,
+    "fullTextAuthoritiesPerCl": 0.5,
+    "productValueNotes": "Identity clears citation backlog without text. Full-text adds CORPUS_COMPLETE authorities for retrieval/reasoning and may introduce new outgoing edges."
+  },
+  "policyResult": "USE_80_10_10",
+  "nextRecommendedBudget": 55,
+  "permanentPipelineValidation": {
+    "confirmed": true,
+    "flow": "extract→classify→normalize→local resolve→eligibility gate→unique-target queue→external identity→authority resolved→demand-driven full text→corpus complete→global backfill",
+    "nonCaseOutsideIdentityLane": true
+  },
+  "checkpoints": [
+    {
+      "lane": "identity",
+      "atLookup": 10,
+      "totalCl": 11,
+      "idHigh": 10,
+      "idEdgesBackfilled": 72,
+      "edgesPerIdentityCl": 7.2,
+      "ambiguityRate": 0,
+      "notFoundRate": 0,
+      "rolling20": {
+        "n": 10,
+        "targetResolution": 1,
+        "edgesPerCl": 7.2,
+        "ambiguity": 0
+      },
+      "identityStopReason": null,
+      "health": {
+        "green": true,
+        "unresolved": 55217,
+        "METADATA_ONLY": 148
+      }
+    },
+    {
+      "lane": "identity",
+      "atLookup": 20,
+      "totalCl": 21,
+      "idHigh": 20,
+      "idEdgesBackfilled": 142,
+      "edgesPerIdentityCl": 7.1,
+      "ambiguityRate": 0,
+      "notFoundRate": 0,
+      "rolling20": {
+        "n": 20,
+        "targetResolution": 1,
+        "edgesPerCl": 7.1,
+        "ambiguity": 0
+      },
+      "identityStopReason": null,
+      "health": {
+        "green": true,
+        "unresolved": 55147,
+        "METADATA_ONLY": 158
+      }
+    },
+    {
+      "lane": "identity",
+      "atLookup": 30,
+      "totalCl": 31,
+      "idHigh": 29,
+      "idEdgesBackfilled": 205,
+      "edgesPerIdentityCl": 6.833333333333333,
+      "ambiguityRate": 0.03333333333333333,
+      "notFoundRate": 0,
+      "rolling20": {
+        "n": 20,
+        "targetResolution": 0.95,
+        "edgesPerCl": 6.65,
+        "ambiguity": 0.05
+      },
+      "identityStopReason": null,
+      "health": {
+        "green": true,
+        "unresolved": 55084,
+        "METADATA_ONLY": 167
+      }
+    },
+    {
+      "lane": "identity",
+      "atLookup": 40,
+      "totalCl": 41,
+      "idHigh": 39,
+      "idEdgesBackfilled": 268,
+      "edgesPerIdentityCl": 6.7,
+      "ambiguityRate": 0.025,
+      "notFoundRate": 0,
+      "rolling20": {
+        "n": 20,
+        "targetResolution": 0.95,
+        "edgesPerCl": 6.3,
+        "ambiguity": 0.05
+      },
+      "identityStopReason": null,
+      "health": {
+        "green": true,
+        "unresolved": 55021,
+        "METADATA_ONLY": 177
+      }
+    },
+    {
+      "lane": "fulltext",
+      "atAcquired": 2,
+      "totalCl": 46,
+      "fullTextCl": 4,
+      "ftAcquired": 2,
+      "ftNewEdgesTotal": 24,
+      "health": {
+        "green": true,
+        "unresolved": 55036,
+        "CORPUS_COMPLETE": 5152
+      }
+    },
+    {
+      "lane": "fulltext",
+      "atAcquired": 4,
+      "totalCl": 50,
+      "fullTextCl": 8,
+      "ftAcquired": 4,
+      "ftNewEdgesTotal": 81,
+      "health": {
+        "green": true,
+        "unresolved": 55090,
+        "CORPUS_COMPLETE": 5154
+      }
+    }
+  ],
+  "finalClassification": "CITATION_IDENTITY_HEAVY_BATCH3_STRONG",
+  "generatedAt": "2026-10-09T18:01:13.894Z",
+  "resolverVersion": "citation-resolution-engine/v1"
+}

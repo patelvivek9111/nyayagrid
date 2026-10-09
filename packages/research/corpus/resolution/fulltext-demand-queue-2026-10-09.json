@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-09T17:43:50.041Z",
-  "batch": "identity-batch1+2+3+4+mixed1+mixed2",
+  "generatedAt": "2026-10-09T18:01:13.893Z",
+  "batch": "identity-batch1+2+3+4+mixed1+mixed2+mixed3",
   "candidates": [
     {
       "targetKey": "346 or 160",
@@ -35,44 +35,6 @@
       "unresolvedDemandRepresented": 14,
       "controllingRelevance": false,
       "practiceValue": 61
-    },
-    {
-      "targetKey": "401 u.s. 82",
-      "authorityId": "7dd862d3-4596-4977-a4a7-94f0bf731db9",
-      "clusterId": "108266",
-      "citation": "401 U.S. 82",
-      "edgeCount": 13,
-      "caseName": "Perez v. Ledesma",
-      "court": null
-    },
-    {
-      "targetKey": "69 s. ct. 1221",
-      "authorityId": "c7df1dd4-3565-4bdf-8916-3a338a8a06b8",
-      "clusterId": "104695",
-      "citation": "69 S. Ct. 1221",
-      "edgeCount": 13,
-      "caseName": "Cohen v. Beneficial Industrial Loan Corp.",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 13
-    },
-    {
-      "targetKey": "307 u.s. 174",
-      "authorityId": "6827aba9-7d1c-41aa-b0f7-423cb0f9363f",
-      "clusterId": "103203",
-      "citation": "307 U.S. 174",
-      "edgeCount": 11,
-      "caseName": "United States v. Miller",
-      "court": null
-    },
-    {
-      "targetKey": "415 u.s. 651",
-      "authorityId": "8d9516a6-a2d3-4403-a6e8-e07821da560a",
-      "clusterId": "108990",
-      "citation": "415 U.S. 651",
-      "edgeCount": 11,
-      "caseName": "Edelman v. Jordan",
-      "court": null
     },
     {
       "targetKey": "407 u.s. 143",
