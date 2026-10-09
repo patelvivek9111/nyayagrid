@@ -106,6 +106,12 @@ export const GRAPH_NODE_TYPES = [
   "other",
   "claim",
   "defense",
+  "discovery_request_set",
+  "discovery_request_item",
+  "discovery_response",
+  "discovery_production",
+  "discovery_deficiency",
+  "privilege_assertion",
 ] as const;
 
 export type GraphNodeType = (typeof GRAPH_NODE_TYPES)[number];
