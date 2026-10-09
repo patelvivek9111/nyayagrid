@@ -1,0 +1,931 @@
+{
+  "generatedAt": "2026-10-09T15:40:33.148Z",
+  "gate": "CITATION_LOCAL_WRITE_AUTHORIZATION_REQUIRED",
+  "courtListenerHttpCalls": 0,
+  "corpusMutations": 0,
+  "diagnosticBaseline": {
+    "highTargets": 44,
+    "highEdges": 172
+  },
+  "reproduced": {
+    "highTargets": 44,
+    "highEdges": 172,
+    "ambiguousSkipped": 1,
+    "ambiguousAutoResolved": 0
+  },
+  "proposals": [
+    {
+      "targetKey": "fed. r. civ. p. 56",
+      "toAuthorityId": "3991a9f5-d65e-4afd-8211-113d352039a2",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 16,
+      "edgeIds": [
+        "d52b28e3-7c34-41d6-b2ec-90155dd6d342",
+        "497a0b3e-e79d-444b-ac69-ce5e710e57aa",
+        "7ee847a8-a1a4-4d42-8a85-a03039782802",
+        "a46089ff-8219-4859-8a8f-3fee01327f06",
+        "adc66165-638c-494e-a66a-c6dadbead6bd",
+        "3835404c-183a-4515-bb83-e2b225ad7680",
+        "6cebfcd6-fd12-4ff5-b0db-43cf4eb3dd48",
+        "44a0b1f0-7fe0-47c8-8529-80c7648f3d32",
+        "292c0362-ec31-4802-ad5c-9b609c0a2373",
+        "f8cee07b-3e58-44d5-b2ca-b8b10fd7f628",
+        "08b3e863-e06e-4adf-a1cc-877ca406a121",
+        "1cec9647-e3df-4861-a871-a1b4d9b1219e",
+        "81521f6e-10b2-4930-a114-8667566bd863",
+        "b6b66969-3dd4-4b2e-b14e-592fded1a9ff",
+        "d3e208a7-ae62-4dba-a142-a670220eb6e1",
+        "dfd68519-ba70-4ea0-88de-39d4c56fbbd4"
+      ],
+      "rawCitation": "Fed.R.Civ.P. 56",
+      "normalizedCitation": "Fed. R. Civ. P. 56",
+      "evidence": [
+        "alias:fed. r. civ. p. 56",
+        "exact:fed. r. civ. p. 56"
+      ]
+    },
+    {
+      "targetKey": "42 u.s.c. § 1983",
+      "toAuthorityId": "3c93f083-6014-4980-b3ed-6d7bb555efe8",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 37,
+      "edgeIds": [
+        "3e393fd0-6c39-42e3-a1e5-0fa9d28b0753",
+        "65e5b5de-27d4-432b-bcbb-19cd47328a10",
+        "343bcfb6-b52a-4678-8e4a-6c681b48e5c8",
+        "bfd7c43d-95e3-4b90-822e-7f47b63e82cf",
+        "dc13ae6b-ec64-4d54-90c9-eabb2a9440e9",
+        "333aed89-d472-452d-b3a4-39680c6dafb9",
+        "bd101eb4-b22e-4d2e-a3ca-1ad9ae418264",
+        "096a5b6f-c292-4b94-93bb-2c7d346e2551",
+        "ee3acd4b-a3df-4713-adb7-e258d6c0468a",
+        "7d3730b3-8bd0-4cf2-b99b-da5016b9198e",
+        "57e3db92-e7c5-43e5-b042-e056690c324d",
+        "ae64d8ab-d033-4bfd-b034-09399e1907c9",
+        "4f9cd4a5-0758-49d6-ae77-79cb1ec06610",
+        "b5a5c083-8a6c-4e99-9fd0-9a067e306b4c",
+        "2b7c0ffa-0cf5-4b2c-ae49-ba755291422a",
+        "8d4c9352-3284-4452-8b97-1ba4819fee76",
+        "8f18e1de-c22e-472a-b43d-4ac81a5c7a86",
+        "888bb60d-9245-46e9-84f1-d4f7da423034",
+        "5946abac-60b7-413d-8b96-02e07a5ccbd3",
+        "df5dad81-18e4-4e79-bd67-0b5369b87bd4",
+        "5ce8e551-ea2d-4a00-94ff-627544e7c4d4",
+        "1f08f8bf-4ad0-4486-b210-c8c6700ed3d4",
+        "6c6ecd42-35d8-47db-813e-cee60d3f4d45",
+        "2527f359-0934-4504-93de-a55318363292",
+        "d89229d4-60b3-48b7-9fd7-0e0ee933d5a3",
+        "e7106fc8-376c-4eff-87ff-2e84c09b0e55",
+        "ccf4846e-a610-4b14-92c2-e9acc90db1bc",
+        "7eaf5dc7-5e21-4f2f-8ed3-b798b40ca085",
+        "88acd51a-b6dc-4275-a901-f423d0fb7478",
+        "6d980346-1baf-4bef-ab46-a4e54b145ee5",
+        "26c712bf-ad86-4e80-8880-c32243bdf9d3",
+        "f7cc6668-6978-420f-bbca-e582d2f5ca88",
+        "cf6987de-34b7-418c-a7fd-a83dec373d70",
+        "27392fd0-a3c8-4dd5-8dcd-0eebd7304506",
+        "b2c21ca2-2720-4237-8473-ee657dff515d",
+        "44dcd45a-2ed7-4d9b-b31e-50abfd0d9d9d",
+        "31f9113a-af00-41b5-a022-c2aa3bb913f4"
+      ],
+      "rawCitation": "42 U. S. C. § 1983",
+      "normalizedCitation": "42 U.S.C. § 1983",
+      "evidence": [
+        "alias:42 u.s.c. § 1983",
+        "alias:42 usc § 1983",
+        "exact:42 u.s.c. § 1983"
+      ]
+    },
+    {
+      "targetKey": "fed. r. civ. p. 12",
+      "toAuthorityId": "46a5418c-bf30-437a-b77c-ecc17781e689",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 9,
+      "edgeIds": [
+        "e27b6384-8150-49a1-8fcc-f98249e907b4",
+        "4f70a083-08c4-48d0-a7ad-e77bb4035b96",
+        "db11ecb0-b22a-45f0-a188-309d4c30b75e",
+        "9ba47aba-2003-4581-96bc-5736790b54c2",
+        "03ec9dd2-3741-44c8-aeac-b6348fc8732c",
+        "25fda01b-a285-44a4-91a8-48c439790210",
+        "d1971373-9a2d-408d-a388-dd515dab0bee",
+        "a74d1b33-12fc-468d-956d-80a86f053ff7",
+        "867d0f6e-6b8d-4256-86ac-6c4b4ffba146"
+      ],
+      "rawCitation": "Fed.R.Civ.P. 12",
+      "normalizedCitation": "Fed. R. Civ. P. 12",
+      "evidence": [
+        "alias:fed. r. civ. p. 12",
+        "exact:fed. r. civ. p. 12"
+      ]
+    },
+    {
+      "targetKey": "441 u.s. 520",
+      "toAuthorityId": "8e034c58-782a-4008-b630-4f0d3e8a6650",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "0882b5e1-f7ee-4dfa-9260-89edf3927c6f"
+      ],
+      "rawCitation": "441 U.S 520",
+      "normalizedCitation": "441 U.S. 520",
+      "evidence": [
+        "alias:441 u.s. 520",
+        "alias:441 u. s. 520",
+        "exact:441 u.s. 520",
+        "vrp:us_reports|441|U.S.|520"
+      ]
+    },
+    {
+      "targetKey": "fed. r. evid. 702",
+      "toAuthorityId": "a5584dbd-bae1-4c41-a638-14f00396f94d",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 8,
+      "edgeIds": [
+        "f6c8383a-ddca-46ed-9776-118585da3d63",
+        "6742c3de-902c-493e-bd4c-4fc7a4fdaff7",
+        "712d6a11-e1df-4462-8e5e-743cdc16e81b",
+        "59cb226b-612b-4da1-ae83-a27868c15310",
+        "398ce96f-18c7-40c1-9b23-055552af13db",
+        "8f3b4a47-b72b-435c-b5ae-8ebd4da33da2",
+        "4c82c275-2abb-4293-a9a9-ff773a4bbc59",
+        "2cdb0f75-1595-4c3e-8a95-8933d4768d84"
+      ],
+      "rawCitation": "Fed.R.Evid. 702",
+      "normalizedCitation": "Fed. R. Evid. 702",
+      "evidence": [
+        "alias:fed. r. evid. 702",
+        "exact:fed. r. evid. 702"
+      ]
+    },
+    {
+      "targetKey": "28 u.s.c. § 2283",
+      "toAuthorityId": "b5ae8fa9-5566-462f-9112-e64f3f188da2",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 9,
+      "edgeIds": [
+        "1ea2938a-306f-4619-beac-80089f921e3a",
+        "63d85c3c-421f-485f-bcbd-d36baf1aa5a7",
+        "6ad21d52-17c5-4c1e-8378-aac9c1cea309",
+        "dc8b94b7-327e-401d-a64d-8552587b096e",
+        "e8538d2a-4118-4d22-a741-acc2c059daf2",
+        "d260362c-cef8-476f-9a89-361f1610d325",
+        "432f5c3e-eac2-477e-ab76-42e41dfb3e0b",
+        "f4f8162d-f784-472e-891c-13a108e37935",
+        "6a55cae9-c8a5-455e-96fb-b658c014f986"
+      ],
+      "rawCitation": "28 U. S. C. § 2283",
+      "normalizedCitation": "28 U.S.C. § 2283",
+      "evidence": [
+        "alias:28 u.s.c. § 2283",
+        "alias:28 usc § 2283",
+        "exact:28 u.s.c. § 2283"
+      ]
+    },
+    {
+      "targetKey": "fed. r. evid. 403",
+      "toAuthorityId": "4bf18b78-52b2-440c-a216-2d23e21a50eb",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 6,
+      "edgeIds": [
+        "5b72751c-f154-4ef0-aa2d-4d926fc9b28b",
+        "f3fbae77-c61a-4d42-9747-b0c343559a2f",
+        "af2accbd-df73-41ef-8adf-722756b7cf9d",
+        "4082e23f-b0ca-4075-93cd-7ef057889cad",
+        "dab2d805-a9f3-4b01-8f09-eaf852bb9526",
+        "89721f39-e42d-44dc-99c8-dbc560b4a880"
+      ],
+      "rawCitation": "Fed.R.Evid. 403",
+      "normalizedCitation": "Fed. R. Evid. 403",
+      "evidence": [
+        "alias:fed. r. evid. 403",
+        "exact:fed. r. evid. 403"
+      ]
+    },
+    {
+      "targetKey": "fed. r. evid. 801",
+      "toAuthorityId": "eedc984e-8445-43f8-a39d-81cbbad4f6fa",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 6,
+      "edgeIds": [
+        "bde88634-6a1d-456c-b990-0984ab4fa8f4",
+        "4c72af80-3f53-4bcc-9ef6-05933f6b3963",
+        "9e3df4ba-9903-47d4-96a8-5d9207c456fa",
+        "aa9e2821-be85-45dc-9c01-cbe6b67db07e",
+        "8392e948-f452-4ae9-8f73-5fe6a0c14efd",
+        "c0741ab8-c484-43e3-864d-44b4ef7ffbb1"
+      ],
+      "rawCitation": "Fed.R.Evid. 801",
+      "normalizedCitation": "Fed. R. Evid. 801",
+      "evidence": [
+        "alias:fed. r. evid. 801",
+        "exact:fed. r. evid. 801"
+      ]
+    },
+    {
+      "targetKey": "fed. r. civ. p. 23",
+      "toAuthorityId": "6ac64865-0b8f-4e02-bdc6-604e71b96827",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 6,
+      "edgeIds": [
+        "f820842e-237d-4ad8-8e64-a9b2cf40a967",
+        "ac8245c9-8e5d-4345-8387-6b4439624849",
+        "f9f21318-9c52-4efb-bf77-db8387d3e355",
+        "81cc5372-187b-40bf-8a4b-aded0cfed46c",
+        "94e4439e-f04f-4220-bbdb-c6e7510da571",
+        "5b95e742-4634-4aa7-8cdc-e2ea9ac94ed7"
+      ],
+      "rawCitation": "Fed.R.Civ.P. 23",
+      "normalizedCitation": "Fed. R. Civ. P. 23",
+      "evidence": [
+        "alias:fed. r. civ. p. 23",
+        "exact:fed. r. civ. p. 23"
+      ]
+    },
+    {
+      "targetKey": "fed. r. civ. p. 8",
+      "toAuthorityId": "63565586-2fc7-48bf-8871-791e99822bf8",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 3,
+      "edgeIds": [
+        "fbe262a9-9330-486b-a14f-bb47e089f81d",
+        "61991c80-690d-43c1-84ea-addad2c399f3",
+        "4fa4bf87-5acb-4406-a4f3-cc288e47af31"
+      ],
+      "rawCitation": "Fed.R.Civ.P. 8",
+      "normalizedCitation": "Fed. R. Civ. P. 8",
+      "evidence": [
+        "alias:fed. r. civ. p. 8",
+        "exact:fed. r. civ. p. 8"
+      ]
+    },
+    {
+      "targetKey": "338 u.s. 25",
+      "toAuthorityId": "3a20fd46-cf21-415e-acaf-beb6bd9564bd",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "1d921a68-a1ff-4772-a8ca-6bfbee043745"
+      ],
+      "rawCitation": "338 U S. 25",
+      "normalizedCitation": "338 U.S. 25",
+      "evidence": [
+        "alias:338 u.s. 25",
+        "alias:338 u. s. 25",
+        "exact:338 u.s. 25",
+        "vrp:us_reports|338|U.S.|25"
+      ]
+    },
+    {
+      "targetKey": "100 u.s. 313",
+      "toAuthorityId": "43e219b7-7d12-4134-860e-bbd0c4f292eb",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "58472838-95fb-4d46-bb22-6af994223a62"
+      ],
+      "rawCitation": "100 U. S 313",
+      "normalizedCitation": "100 U.S. 313",
+      "evidence": [
+        "alias:100 u.s. 313",
+        "alias:100 u. s. 313",
+        "exact:100 u.s. 313",
+        "vrp:us_reports|100|U.S.|313"
+      ]
+    },
+    {
+      "targetKey": "28 u.s.c. § 1291",
+      "toAuthorityId": "e7b28e20-0a78-4768-9cf7-b99d3f271ff8",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 7,
+      "edgeIds": [
+        "9f7720fa-d168-44a4-8d7d-928f8b8a1332",
+        "ec3975de-48de-4b2e-a9cb-e03cf703e3fe",
+        "78b299e1-a509-4b6a-aeb3-a6c708c08519",
+        "2c5e176b-f3bc-4233-998c-c3cd6645fef4",
+        "c801b63f-1b6d-4094-b586-612823788898",
+        "74fbf79f-27e4-4f71-903f-88d3bfde6ac4",
+        "e9e43108-ac31-4a98-8892-8a504cccfe6c"
+      ],
+      "rawCitation": "28 U. S. C. §1291",
+      "normalizedCitation": "28 U.S.C. § 1291",
+      "evidence": [
+        "alias:28 u.s.c. § 1291",
+        "alias:28 usc § 1291",
+        "exact:28 u.s.c. § 1291"
+      ]
+    },
+    {
+      "targetKey": "28 u.s.c. § 1331",
+      "toAuthorityId": "bceb5329-6b56-426b-bd52-b0107bb3ead3",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 6,
+      "edgeIds": [
+        "62e38d80-8cc3-4c71-a6a9-a6419107e1c1",
+        "73302b66-4c92-4af8-aa41-cbf7a38ea60d",
+        "29ea4b32-e63b-4f07-9af7-0ef418071bcf",
+        "4215297b-9ba2-49d2-9c87-937951d9eb0d",
+        "ebcbc122-e9da-479f-ad9f-7a1827cbaae6",
+        "3709d59d-7d6e-4912-8bee-33a7c6d23bcd"
+      ],
+      "rawCitation": "28 U. S. C. § 1331",
+      "normalizedCitation": "28 U.S.C. § 1331",
+      "evidence": [
+        "alias:28 u.s.c. § 1331",
+        "alias:28 usc § 1331",
+        "exact:28 u.s.c. § 1331"
+      ]
+    },
+    {
+      "targetKey": "28 u.s.c. § 2201",
+      "toAuthorityId": "27b573f2-fcda-44f3-8474-a949d5e33dd5",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 6,
+      "edgeIds": [
+        "9e5207cf-4a4a-43bc-be64-1f45ed1e4e4a",
+        "a9e38dd1-ec54-43ee-9481-dd5cd474086b",
+        "0cc7307c-6f5c-463f-822c-7b901a0890c0",
+        "44c2396e-18e2-4d9d-88a7-10b5c29c9e53",
+        "d7721c40-d09f-4f78-a718-bfee660a787a",
+        "bd0b41bd-0eab-4213-9a11-f178e3fd887d"
+      ],
+      "rawCitation": "28 U. S. C. § 2201",
+      "normalizedCitation": "28 U.S.C. § 2201",
+      "evidence": [
+        "alias:28 u.s.c. § 2201",
+        "alias:28 usc § 2201",
+        "exact:28 u.s.c. § 2201"
+      ]
+    },
+    {
+      "targetKey": "8 u.s.c. § 1252",
+      "toAuthorityId": "e3aa8a9f-c920-48d7-81f5-5c5ad50e6ba0",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 5,
+      "edgeIds": [
+        "432f2de0-599f-4bae-8a63-5adcd77bf229",
+        "dd66c420-4799-4d0f-93fc-0c79c2af8514",
+        "87547821-5915-4374-a8ec-baa7269fbab6",
+        "ed156e11-70a6-47bb-991b-271fa51e43c9",
+        "638a0883-3794-43d2-b12b-c2dc11053e2c"
+      ],
+      "rawCitation": "8 U. S. C. § 1252",
+      "normalizedCitation": "8 U.S.C. § 1252",
+      "evidence": [
+        "alias:8 u.s.c. § 1252",
+        "alias:8 usc § 1252",
+        "exact:8 u.s.c. § 1252"
+      ]
+    },
+    {
+      "targetKey": "466 u.s. 668",
+      "toAuthorityId": "6321aee3-313a-4c1c-936a-e9674c1f3ad2",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "997ddb05-775c-48d5-a9e0-828cb10e1a52"
+      ],
+      "rawCitation": "466 US 668",
+      "normalizedCitation": "466 U.S. 668",
+      "evidence": [
+        "alias:466 u.s. 668",
+        "alias:466 u. s. 668",
+        "exact:466 u.s. 668",
+        "vrp:us_reports|466|U.S.|668"
+      ]
+    },
+    {
+      "targetKey": "304 u.s. 64",
+      "toAuthorityId": "b29f2eeb-6f13-4294-9957-553fa1b2f87f",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "6d1a9aa7-9471-4d16-be3b-acf11609e08a"
+      ],
+      "rawCitation": "304 U. S. 64",
+      "normalizedCitation": "304 U.S. 64",
+      "evidence": [
+        "alias:304 u.s. 64",
+        "alias:304 u. s. 64",
+        "exact:304 u.s. 64",
+        "exact:304 u. s. 64",
+        "vrp:us_reports|304|U.S.|64"
+      ]
+    },
+    {
+      "targetKey": "333 u.s. 507",
+      "toAuthorityId": "203f8ace-3852-401b-abaa-f524cc79eb82",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "565f533d-862a-4c3d-b386-6edbf2094cc6"
+      ],
+      "rawCitation": "333 U. S. 507",
+      "normalizedCitation": "333 U.S. 507",
+      "evidence": [
+        "alias:333 u.s. 507",
+        "alias:333 u. s. 507",
+        "exact:333 u.s. 507",
+        "exact:333 u. s. 507",
+        "vrp:us_reports|333|U.S.|507"
+      ]
+    },
+    {
+      "targetKey": "28 u.s.c. § 1292",
+      "toAuthorityId": "8e12312f-2f95-400b-80b0-f7ee1587914a",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 4,
+      "edgeIds": [
+        "6eb889a2-b281-43ec-b24c-1ee12f754be3",
+        "96828de1-082d-41a0-b23c-701c1fa04286",
+        "3cb509e3-e185-47a7-b122-fc3359de5af4",
+        "a94a38c8-1a90-4089-9c28-17d4b4d287e2"
+      ],
+      "rawCitation": "28 U. S. C. § 1292",
+      "normalizedCitation": "28 U.S.C. § 1292",
+      "evidence": [
+        "alias:28 u.s.c. § 1292",
+        "alias:28 usc § 1292",
+        "exact:28 u.s.c. § 1292"
+      ]
+    },
+    {
+      "targetKey": "fed. r. civ. p. 15",
+      "toAuthorityId": "5a126f6f-21cc-451a-841c-0fa0d8ed1b41",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 2,
+      "edgeIds": [
+        "9713b097-c494-4ade-9c28-ade2055c6f8e",
+        "d71094fa-cdf9-4504-a91f-6d4a797a1a57"
+      ],
+      "rawCitation": "Fed.R.Civ.P. 15",
+      "normalizedCitation": "Fed. R. Civ. P. 15",
+      "evidence": [
+        "alias:fed. r. civ. p. 15",
+        "exact:fed. r. civ. p. 15"
+      ]
+    },
+    {
+      "targetKey": "18 u.s.c. § 1341",
+      "toAuthorityId": "6173359f-bf59-4f1a-a03e-0277380ad819",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 3,
+      "edgeIds": [
+        "f98b72e3-e5ff-4c6a-9494-a04f98896831",
+        "9e528718-fc68-4701-9ef5-fed018ab96a9",
+        "af78bd63-8797-4e50-8d91-00c4ce7c0e9e"
+      ],
+      "rawCitation": "18 U. S. C. § 1341",
+      "normalizedCitation": "18 U.S.C. § 1341",
+      "evidence": [
+        "alias:18 u.s.c. § 1341",
+        "alias:18 usc § 1341",
+        "exact:18 u.s.c. § 1341"
+      ]
+    },
+    {
+      "targetKey": "fed. r. evid. 803",
+      "toAuthorityId": "b25586e7-34a9-41dd-b131-cec96ec6382b",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 3,
+      "edgeIds": [
+        "ec4969d7-1bde-43ec-9af6-a0085c59736e",
+        "b126b83c-db02-4889-9a9e-507d4a2069cb",
+        "1d977166-f900-4d65-a305-65ee5b408a97"
+      ],
+      "rawCitation": "Fed.R.Evid. 803",
+      "normalizedCitation": "Fed. R. Evid. 803",
+      "evidence": [
+        "alias:fed. r. evid. 803",
+        "exact:fed. r. evid. 803"
+      ]
+    },
+    {
+      "targetKey": "42 u.s.c. § 3604",
+      "toAuthorityId": "b9eca390-f915-49a0-acf4-59e665029dfb",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 2,
+      "edgeIds": [
+        "50d68717-6423-4465-8a0e-bb106a12a829",
+        "9d8581da-f5f2-45a9-ad42-8aa0f8bc5944"
+      ],
+      "rawCitation": "42 U. S. C. § 3604",
+      "normalizedCitation": "42 U.S.C. § 3604",
+      "evidence": [
+        "alias:42 u.s.c. § 3604",
+        "alias:42 usc § 3604",
+        "exact:42 u.s.c. § 3604"
+      ]
+    },
+    {
+      "targetKey": "28 u.s.c. § 1651",
+      "toAuthorityId": "c58ac691-2224-4cd8-a5e6-218059bdae21",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 2,
+      "edgeIds": [
+        "5005f78d-601e-45e6-b1de-e7ae07a07fad",
+        "8fa0802b-3657-4687-ae82-8855b5daf79c"
+      ],
+      "rawCitation": "28 U. S. C. § 1651",
+      "normalizedCitation": "28 U.S.C. § 1651",
+      "evidence": [
+        "alias:28 u.s.c. § 1651",
+        "alias:28 usc § 1651",
+        "exact:28 u.s.c. § 1651"
+      ]
+    },
+    {
+      "targetKey": "42 u.s.c. § 1988",
+      "toAuthorityId": "5a01c3bf-643b-457a-94a7-c1a1d0555bd6",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 2,
+      "edgeIds": [
+        "6ebbc61e-16f2-41b6-815d-36e614cd73d1",
+        "a5f7e37d-18b8-4956-8360-5813e67c793d"
+      ],
+      "rawCitation": "42 U. S. C. § 1988",
+      "normalizedCitation": "42 U.S.C. § 1988",
+      "evidence": [
+        "alias:42 u.s.c. § 1988",
+        "alias:42 usc § 1988",
+        "exact:42 u.s.c. § 1988"
+      ]
+    },
+    {
+      "targetKey": "18 u.s.c. § 1001",
+      "toAuthorityId": "067817e9-5a37-496c-8b82-757fab15ed6a",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 2,
+      "edgeIds": [
+        "e1fdd629-e9ba-4752-afe6-bba6c77fecff",
+        "9400fc00-ded0-4152-8ece-4bae23f19f7b"
+      ],
+      "rawCitation": "18 U. S. C. § 1001",
+      "normalizedCitation": "18 U.S.C. § 1001",
+      "evidence": [
+        "alias:18 u.s.c. § 1001",
+        "alias:18 usc § 1001",
+        "exact:18 u.s.c. § 1001"
+      ]
+    },
+    {
+      "targetKey": "42 u.s.c. § 1981",
+      "toAuthorityId": "edb53463-6975-4131-a0a5-32c37b4aad64",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 2,
+      "edgeIds": [
+        "66fd3b3f-742e-47d0-9901-50b54e231fa7",
+        "e6a7b89c-02a7-4d90-9ca1-8a0f1e97dcda"
+      ],
+      "rawCitation": "42 U. S. C. § 1981",
+      "normalizedCitation": "42 U.S.C. § 1981",
+      "evidence": [
+        "alias:42 u.s.c. § 1981",
+        "alias:42 usc § 1981",
+        "exact:42 u.s.c. § 1981"
+      ]
+    },
+    {
+      "targetKey": "42 u.s.c. § 2000e-5",
+      "toAuthorityId": "c5a702dc-1ea9-46fe-9586-344d1069bcaf",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 2,
+      "edgeIds": [
+        "24ed2479-6757-4510-a90f-dff099719eaf",
+        "0c3a91a3-9cae-420f-8fb1-d8aaa83751be"
+      ],
+      "rawCitation": "42 U. S. C. § 2000e-5",
+      "normalizedCitation": "42 U.S.C. § 2000e-5",
+      "evidence": [
+        "alias:42 u.s.c. § 2000e-5",
+        "alias:42 usc § 2000e-5",
+        "exact:42 u.s.c. § 2000e-5"
+      ]
+    },
+    {
+      "targetKey": "fed. r. evid. 802",
+      "toAuthorityId": "1edd997c-68fa-44ca-afd5-1faa1d2529ea",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 2,
+      "edgeIds": [
+        "1a23886f-923d-488d-8dd0-45744fb3f8cd",
+        "e0cbdea1-d73f-4c55-a54f-8c8d9817429e"
+      ],
+      "rawCitation": "Fed.R.Evid. 802",
+      "normalizedCitation": "Fed. R. Evid. 802",
+      "evidence": [
+        "alias:fed. r. evid. 802",
+        "exact:fed. r. evid. 802"
+      ]
+    },
+    {
+      "targetKey": "fed. r. civ. p. 65",
+      "toAuthorityId": "4a587571-3331-4e8a-81bb-792f3029ba3f",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 2,
+      "edgeIds": [
+        "0765bb49-abe7-4e7e-9cb2-28971f8ffec3",
+        "8f850bd7-8ee2-4276-b687-1b2a3e3e4e25"
+      ],
+      "rawCitation": "Fed.R.Civ.P. 65",
+      "normalizedCitation": "Fed. R. Civ. P. 65",
+      "evidence": [
+        "alias:fed. r. civ. p. 65",
+        "exact:fed. r. civ. p. 65"
+      ]
+    },
+    {
+      "targetKey": "fed. r. app. p. 4",
+      "toAuthorityId": "f8116cd1-f0ed-4544-8e51-c2edf6d5d742",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 2,
+      "edgeIds": [
+        "b860bc97-a88c-4149-b814-4fff7ec64c90",
+        "722a02c1-73e2-40de-8f15-4e3b0652d852"
+      ],
+      "rawCitation": "Fed. R.App.P. 4",
+      "normalizedCitation": "Fed. R. App. P. 4",
+      "evidence": [
+        "alias:fed. r. app. p. 4",
+        "exact:fed. r. app. p. 4"
+      ]
+    },
+    {
+      "targetKey": "28 u.s.c. § 2412",
+      "toAuthorityId": "bf06a221-2520-4ed8-ae0c-0c5279167b24",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "0b264d4f-aba4-44ef-9c39-a1e70466c4f4"
+      ],
+      "rawCitation": "28 U. S. C. § 2412",
+      "normalizedCitation": "28 U.S.C. § 2412",
+      "evidence": [
+        "alias:28 u.s.c. § 2412",
+        "alias:28 usc § 2412",
+        "exact:28 u.s.c. § 2412"
+      ]
+    },
+    {
+      "targetKey": "18 u.s.c. § 3553",
+      "toAuthorityId": "6858c21f-e06d-415c-ba66-8a7419fc9b90",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "203a0cd0-1989-40e1-a90b-4a46fdd0cd20"
+      ],
+      "rawCitation": "18 U. S. C. § 3553",
+      "normalizedCitation": "18 U.S.C. § 3553",
+      "evidence": [
+        "alias:18 u.s.c. § 3553",
+        "alias:18 usc § 3553",
+        "exact:18 u.s.c. § 3553"
+      ]
+    },
+    {
+      "targetKey": "18 u.s.c. § 922",
+      "toAuthorityId": "be87e198-c48c-4f78-8be4-af1706d212d8",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "16bac7eb-0ea2-4e2a-af4e-c4b5c425f595"
+      ],
+      "rawCitation": "18 U. S. C. § 922",
+      "normalizedCitation": "18 U.S.C. § 922",
+      "evidence": [
+        "alias:18 u.s.c. § 922",
+        "alias:18 usc § 922",
+        "exact:18 u.s.c. § 922"
+      ]
+    },
+    {
+      "targetKey": "28 u.s.c. § 1441",
+      "toAuthorityId": "3a33a9e8-28bd-4e1a-9ddc-e41270af1a37",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "a52177b6-070d-4beb-9a38-012303e797c3"
+      ],
+      "rawCitation": "28 U. S. C. § 1441",
+      "normalizedCitation": "28 U.S.C. § 1441",
+      "evidence": [
+        "alias:28 u.s.c. § 1441",
+        "alias:28 usc § 1441",
+        "exact:28 u.s.c. § 1441"
+      ]
+    },
+    {
+      "targetKey": "28 u.s.c. § 1404",
+      "toAuthorityId": "6a851061-7c96-421f-847d-7ed9eaa89acb",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "796a3c82-baf1-428d-83b3-03d60eb34d5e"
+      ],
+      "rawCitation": "28 U. S. C. § 1404",
+      "normalizedCitation": "28 U.S.C. § 1404",
+      "evidence": [
+        "alias:28 u.s.c. § 1404",
+        "alias:28 usc § 1404",
+        "exact:28 u.s.c. § 1404"
+      ]
+    },
+    {
+      "targetKey": "28 u.s.c. § 1391",
+      "toAuthorityId": "2743d19c-62af-43d0-be26-1206acdb3365",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "c8d28897-d9b8-4220-92d3-e9f380b8c9c1"
+      ],
+      "rawCitation": "28 U. S. C. § 1391",
+      "normalizedCitation": "28 U.S.C. § 1391",
+      "evidence": [
+        "alias:28 u.s.c. § 1391",
+        "alias:28 usc § 1391",
+        "exact:28 u.s.c. § 1391"
+      ]
+    },
+    {
+      "targetKey": "28 u.s.c. § 1332",
+      "toAuthorityId": "812517d3-1d25-4877-940c-52209f0dc82b",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "4c90a8c7-5401-4696-90bd-59ab16842d15"
+      ],
+      "rawCitation": "28 U. S. C. § 1332",
+      "normalizedCitation": "28 U.S.C. § 1332",
+      "evidence": [
+        "alias:28 u.s.c. § 1332",
+        "alias:28 usc § 1332",
+        "exact:28 u.s.c. § 1332"
+      ]
+    },
+    {
+      "targetKey": "18 u.s.c. § 1343",
+      "toAuthorityId": "92053c15-5753-4a7c-bfe7-4b0b43daa930",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "f45d24b6-9184-4f1d-9467-1b5d608d37d9"
+      ],
+      "rawCitation": "18 U. S. C. §1343",
+      "normalizedCitation": "18 U.S.C. § 1343",
+      "evidence": [
+        "alias:18 u.s.c. § 1343",
+        "alias:18 usc § 1343",
+        "exact:18 u.s.c. § 1343"
+      ]
+    },
+    {
+      "targetKey": "29 u.s.c. § 207",
+      "toAuthorityId": "95610d18-d0b0-431a-bea4-58faadb15b1e",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "a8abdefb-033b-4d56-9ce4-966a7189686e"
+      ],
+      "rawCitation": "29 U. S. C. § 207",
+      "normalizedCitation": "29 U.S.C. § 207",
+      "evidence": [
+        "alias:29 u.s.c. § 207",
+        "alias:29 usc § 207",
+        "exact:29 u.s.c. § 207"
+      ]
+    },
+    {
+      "targetKey": "fed. r. evid. 401",
+      "toAuthorityId": "4e4f8ddb-50fe-4333-b391-904f31a0e01c",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "95145942-b3c8-48d3-8988-79f890bfca9f"
+      ],
+      "rawCitation": "Fed.R.Evid. 401",
+      "normalizedCitation": "Fed. R. Evid. 401",
+      "evidence": [
+        "alias:fed. r. evid. 401",
+        "exact:fed. r. evid. 401"
+      ]
+    },
+    {
+      "targetKey": "fed. r. evid. 402",
+      "toAuthorityId": "b0004dbb-5d91-4270-b79c-1f6f5c0534ac",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "c51110ac-e9b0-4fee-aa4a-7d3322e427e1"
+      ],
+      "rawCitation": "Fed.R.Evid. 402",
+      "normalizedCitation": "Fed. R. Evid. 402",
+      "evidence": [
+        "alias:fed. r. evid. 402",
+        "exact:fed. r. evid. 402"
+      ]
+    },
+    {
+      "targetKey": "fed. r. civ. p. 1",
+      "toAuthorityId": "ccaf559e-d6df-4b5d-91dc-265700a7d7cf",
+      "method": "LOCAL_EXACT",
+      "confidence": "HIGH",
+      "edgeCount": 1,
+      "edgeIds": [
+        "9aaeb1eb-87ee-45fc-9ed4-74910b69eb61"
+      ],
+      "rawCitation": "Fed.R.Civ.P. 1",
+      "normalizedCitation": "Fed. R. Civ. P. 1",
+      "evidence": [
+        "alias:fed. r. civ. p. 1",
+        "exact:fed. r. civ. p. 1"
+      ]
+    }
+  ],
+  "backfill": {
+    "edgesPlanned": 172,
+    "uniqueTargets": 44
+  },
+  "queue": {
+    "unresolvedEdges": 56724,
+    "uniqueTargets": 44508,
+    "dedupRatio": 1.2744675114586141,
+    "lookupSuitable": 31027
+  },
+  "performance": {
+    "indexMs": 259,
+    "queueMs": 6128,
+    "totalMs": 11472,
+    "indexStats": {
+      "authorities": 6491,
+      "aliasKeys": 3255,
+      "vrpKeys": 933,
+      "externalKeys": 12982
+    }
+  },
+  "fullTextDemandTargets": 1577,
+  "clClient": {
+    "textsPerRequest": 1,
+    "quotaDefaults": {
+      "limitMin": 25,
+      "limitHour": 300,
+      "limitDay": 1400
+    },
+    "mockBatch": {
+      "requests": 12,
+      "resolved": 4,
+      "ambiguous": 1,
+      "notFound": 7
+    },
+    "liveCalls": 0
+  },
+  "schema": {
+    "sharedProductMigrationRequired": false,
+    "edgeIdentityColumn": "legal_authority_citations.to_authority_id",
+    "provenance": "packages/research/corpus/resolution/ledger (JSONL)",
+    "aliases": "legal_authorities.metadata.citationAliases|parallelCitations",
+    "corpusComplete": "ingestion_status + legal_authority_chunks.embedding"
+  }
+}
