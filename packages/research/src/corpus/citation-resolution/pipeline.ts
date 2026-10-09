@@ -7,6 +7,7 @@ import { planGlobalBackfill } from "./backfill.js";
 import { LocalAuthorityIndex } from "./local-index.js";
 import { dryRunLocalHighResolver } from "./local-resolver.js";
 import { metricsForNewCaseBatch } from "./metrics.js";
+import { classifyCaseCitationLookupEligibility } from "./eligibility.js";
 import { experimentalNormalize, targetKey } from "./normalize.js";
 import { buildUnresolvedTargetQueue } from "./target-queue.js";
 import type {
@@ -16,6 +17,24 @@ import type {
   ResolutionMethod,
   UnresolvedEdgeRow,
 } from "./types.js";
+
+/**
+ * Future ingestion design (identity lane):
+ * extract → classify reference type → normalize → local resolve →
+ * case-lookup eligibility gate → unique-target dedup → external identity queue →
+ * authority resolved → demand-driven full text.
+ *
+ * Non-case / malformed references must NOT enter the CourtListener case-identity lane.
+ * Raw citation evidence is always preserved on the edge.
+ */
+export function filterExternalIdentityQueueTargets<
+  T extends { representativeRaw: string; normalizedCitation: string; lookupSuitable?: boolean },
+>(targets: T[]): T[] {
+  return targets.filter((t) => {
+    const el = classifyCaseCitationLookupEligibility(t.representativeRaw, t.normalizedCitation);
+    return el.eligible;
+  });
+}
 
 export type IngestCitationInput = {
   fromAuthorityId: string;

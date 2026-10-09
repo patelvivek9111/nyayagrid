@@ -1,0 +1,2448 @@
+{
+  "ok": true,
+  "classification": "CITATION_RESOLUTION_QUEUE_HARDENING",
+  "stopReason": "QUEUE_HARDENED_DRY_RUN_READY",
+  "courtListenerCalls": 0,
+  "citationMutations": 0,
+  "resolverVersion": "citation-resolution-engine/v1",
+  "citeTableColumns": [
+    "id",
+    "from_authority_id",
+    "to_authority_id",
+    "raw_citation",
+    "normalized_citation",
+    "pinpoint",
+    "created_at"
+  ],
+  "batch4MissAnalysis": {
+    "noResultTargets": 15,
+    "yyyyPageNArtifacts": 14,
+    "otherMisses": 1,
+    "rootCause": "scripts/lib/case-citation-extraction.cjs EXTRACT_RES catch-all /\\b\\d{1,4}\\s+[A-Z][a-z]{0,10}\\.?\\s*(?:2d|3d)?\\s+\\d{1,4}\\b/g matched document pagination headers (e.g. '2026 Page 2') in Indiana appellate opinion text. Edges stored with raw_citation=normalized_citation unchanged. Example citing case: 'Tawk Hre v. State of Indiana' (st-in-app). Pre-Batch4 isLookupSuitableCitation treated vol+word+page as suitable via loose regex; parseVolReporterPage returned null. Idaho miss (163 Idaho 856) is a real official reporter cite found in opinion text quoting Lunneborg; CL returned not_found (coverage), and remains CASE_IDENTITY_LOOKUP_ELIGIBLE. Raw evidence preserved; only resolution lane reclassified.",
+    "artifactEdgeStats": {
+      "edges": 305,
+      "targets": 41
+    },
+    "details": [
+      {
+        "targetKey": "163 idaho 856",
+        "edgeCount": 16,
+        "uniqueCitingCases": 16,
+        "jurisdictions": [
+          "st-id-high",
+          "st-unknown"
+        ],
+        "sampleEdges": [
+          {
+            "id": "f1a162d2-29ad-4912-8d1d-8b9feb610db4",
+            "rawCitation": "163 Idaho 856",
+            "normalizedCitation": "163 Idaho 856",
+            "fromAuthorityId": "1e6e4bbf-c8fa-4788-840b-f753901f029b",
+            "fromTitle": "State v. Frandsen",
+            "fromCitation": null,
+            "fromCourt": "st-id-high",
+            "createdAt": "2026-10-02T08:50:58.191Z"
+          },
+          {
+            "id": "26912406-c1a0-4329-b79e-ccf202eb4c04",
+            "rawCitation": "163 Idaho 856",
+            "normalizedCitation": "163 Idaho 856",
+            "fromAuthorityId": "2569f417-1388-4569-8e7c-17bfcb849dcf",
+            "fromTitle": "St. Luke's Health System, LTD v. Rodriguez",
+            "fromCitation": null,
+            "fromCourt": "st-id-high",
+            "createdAt": "2026-10-02T08:50:58.339Z"
+          },
+          {
+            "id": "e21b13a3-3f68-4308-874d-950a8ca107d6",
+            "rawCitation": "163 Idaho 856",
+            "normalizedCitation": "163 Idaho 856",
+            "fromAuthorityId": "3ee5798e-2106-4e58-a421-482c2887d633",
+            "fromTitle": "Cave Bay Community Services v. Lohman",
+            "fromCitation": null,
+            "fromCourt": "st-id-high",
+            "createdAt": "2026-10-02T08:50:58.590Z"
+          },
+          {
+            "id": "e2c8474a-c82f-4ca9-8305-0cffd43a6b84",
+            "rawCitation": "163 Idaho 856",
+            "normalizedCitation": "163 Idaho 856",
+            "fromAuthorityId": "568211ac-3d11-4437-9ffa-1869176cb2ee",
+            "fromTitle": "Johnson v. SRM-Double L, LLC",
+            "fromCitation": null,
+            "fromCourt": "st-id-high",
+            "createdAt": "2026-10-02T08:50:59.035Z"
+          },
+          {
+            "id": "acab4c3d-a664-48f8-bd70-8e03567bffde",
+            "rawCitation": "163 Idaho 856",
+            "normalizedCitation": "163 Idaho 856",
+            "fromAuthorityId": "6f31a9fb-f853-4a38-b197-277bbdc44ef8",
+            "fromTitle": "Camp Magical Moments, Cancer Camp for Kids, Inc. v. Walsh, Walsh",
+            "fromCitation": null,
+            "fromCourt": "st-id-high",
+            "createdAt": "2026-10-02T08:50:59.322Z"
+          },
+          {
+            "id": "021cc34f-4513-41a3-ac86-52c3754b15d0",
+            "rawCitation": "163 Idaho 856",
+            "normalizedCitation": "163 Idaho 856",
+            "fromAuthorityId": "8ed60b43-e0f5-4e11-b3c5-011dfbd9c9e8",
+            "fromTitle": "Monson v. Monson",
+            "fromCitation": null,
+            "fromCourt": "st-id-high",
+            "createdAt": "2026-10-02T08:50:59.522Z"
+          },
+          {
+            "id": "efc997c8-35a0-47b2-8190-1e85ceedd09f",
+            "rawCitation": "163 Idaho 856",
+            "normalizedCitation": "163 Idaho 856",
+            "fromAuthorityId": "a7619477-9a03-411b-af43-0464bb135a81",
+            "fromTitle": "Miller v. Miller",
+            "fromCitation": null,
+            "fromCourt": "st-id-high",
+            "createdAt": "2026-10-02T08:50:59.764Z"
+          },
+          {
+            "id": "70311de8-92d8-43db-9ef6-832b9b42c1bf",
+            "rawCitation": "163 Idaho 856",
+            "normalizedCitation": "163 Idaho 856",
+            "fromAuthorityId": "bfcd1fbc-34ce-43e7-a7bc-ce3926b9be64",
+            "fromTitle": "Camp Magical Moments, Cancer Camp for Kids, Inc. v. Walsh, Walsh",
+            "fromCitation": null,
+            "fromCourt": "st-id-high",
+            "createdAt": "2026-10-02T08:51:00.155Z"
+          }
+        ],
+        "normalizationResult": "163 Idaho 856",
+        "reporterParserResult": null,
+        "oldLookupSuitable": true,
+        "newEligibility": {
+          "eligible": true,
+          "lane": "CASE_IDENTITY_LOOKUP_ELIGIBLE",
+          "reasons": [
+            "recognized_reporter_vrp"
+          ],
+          "reporterFamily": "Idaho",
+          "volume": 163,
+          "page": 856,
+          "normalized": "163 Idaho 856"
+        },
+        "extractorHint": {
+          "metadataKeys": [
+            "adapter",
+            "clCourt",
+            "retrievedAt",
+            "sourceClass",
+            "citationStatus",
+            "treatmentSignals"
+          ],
+          "citationExtraction": null,
+          "eyecite": null
+        },
+        "surroundingContext": [
+          "Villa-Guzman, 166 Idaho 382, 384, 458 P.3d 960, 962 (2020) (quoting Lunneborg v. My Fun Life, 163 Idaho 856, 863, 421 P.3d 187, 194 (2018)). A party may challenge a juror for cause during voir dire, or “at a later time as permitted by the court on a showing of good cause.” I.C.R. 24(c)(3). “A juror lacks impartiality if actual or implied bias exists, and the Idaho Code provides criminal defendants"
+        ],
+        "artifactKind": "OTHER"
+      },
+      {
+        "targetKey": "2026 page 2",
+        "edgeCount": 15,
+        "uniqueCitingCases": 15,
+        "jurisdictions": [
+          "st-in-app",
+          "st-in-high"
+        ],
+        "sampleEdges": [
+          {
+            "id": "6aebd870-a297-4551-ab67-d1d6c6d4d7b9",
+            "rawCitation": "2026 Page 2",
+            "normalizedCitation": "2026 Page 2",
+            "fromAuthorityId": "0ec1a4d2-3403-41c3-a3f3-aa95303272d5",
+            "fromTitle": "Tawk Hre v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:33.631Z"
+          },
+          {
+            "id": "3d9a3d9a-cbff-49e1-aed7-6550ae25ff4f",
+            "rawCitation": "2026 Page 2",
+            "normalizedCitation": "2026 Page 2",
+            "fromAuthorityId": "4cbbab7c-4c1d-43d6-a077-a9cd9d65283f",
+            "fromTitle": "Layke D. Leonard v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:34.225Z"
+          },
+          {
+            "id": "7af286b8-a359-46ff-a216-8b8bbb68b50e",
+            "rawCitation": "2026 Page 2",
+            "normalizedCitation": "2026 Page 2",
+            "fromAuthorityId": "9dd87091-c4f8-4d4b-aac6-ee31cd0fb577",
+            "fromTitle": "Brian Oller v. Trey W. Culvey",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:34.776Z"
+          },
+          {
+            "id": "f04567f0-5281-482c-94b1-044e48582abb",
+            "rawCitation": "2026 Page 2",
+            "normalizedCitation": "2026 Page 2",
+            "fromAuthorityId": "ec15336f-a41d-43d2-93d6-22639497d635",
+            "fromTitle": "Jennifer E. Chadd v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.138Z"
+          },
+          {
+            "id": "ebb374a7-c940-46d2-8042-2442691985ca",
+            "rawCitation": "2026 Page 2",
+            "normalizedCitation": "2026 Page 2",
+            "fromAuthorityId": "2f7f861e-5f65-4473-814f-13d6dd8e986c",
+            "fromTitle": "T M v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.800Z"
+          },
+          {
+            "id": "095e54d7-bb84-4630-988e-03202ac4ef1c",
+            "rawCitation": "2026 Page 2",
+            "normalizedCitation": "2026 Page 2",
+            "fromAuthorityId": "3c12ffb4-9c46-4a06-9487-c8f11d35a9d1",
+            "fromTitle": "U.S. Bank National Association v. Bradford W. Raths",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.962Z"
+          },
+          {
+            "id": "253f9ab6-6694-429b-980d-6a96ddb2c701",
+            "rawCitation": "2026 Page 2",
+            "normalizedCitation": "2026 Page 2",
+            "fromAuthorityId": "a168895a-16f0-426b-96ad-587de74c6a66",
+            "fromTitle": "Paternity: Brenden Carrell v. Katherine Schurman",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.439Z"
+          },
+          {
+            "id": "6775764c-1809-46c7-942e-c18f57fcca4d",
+            "rawCitation": "2026 Page 2",
+            "normalizedCitation": "2026 Page 2",
+            "fromAuthorityId": "ae7ddc35-fc93-462e-a299-0391d5c5b87f",
+            "fromTitle": "Marquel Jamar Wattley v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.527Z"
+          }
+        ],
+        "normalizationResult": "2026 Page 2",
+        "reporterParserResult": null,
+        "oldLookupSuitable": false,
+        "newEligibility": {
+          "eligible": false,
+          "lane": "MALFORMED_CASE_REFERENCE",
+          "reasons": [
+            "yyyy_page_n_document_pagination"
+          ],
+          "reporterFamily": null,
+          "volume": null,
+          "page": null,
+          "normalized": "2026 Page 2"
+        },
+        "extractorHint": {
+          "metadataKeys": [
+            "adapter",
+            "clCourt",
+            "retrievedAt",
+            "sourceClass",
+            "citationStatus",
+            "treatmentSignals"
+          ],
+          "citationExtraction": null,
+          "eyecite": null
+        },
+        "surroundingContext": [
+          "hether the trial court abused its discretion when it ordered Hre to pay Mumford restitution for her rental car expenses. Facts [3] In January 2025, forty-two-year-old Hre crashed his vehicle into and damaged Mumford’s car (“the car”).1 A blood test revealed that Hre’s alcohol concentration equivalent was .277 gram of alcohol per 100 milliliters of blood. In November 2025, he pleaded guilty, pursua"
+        ],
+        "artifactKind": "YYYY_PAGE_N"
+      },
+      {
+        "targetKey": "2026 page 3",
+        "edgeCount": 15,
+        "uniqueCitingCases": 15,
+        "jurisdictions": [
+          "st-in-app",
+          "st-in-high"
+        ],
+        "sampleEdges": [
+          {
+            "id": "67c622b7-7922-4827-8f53-8593c9c0efb2",
+            "rawCitation": "2026 Page 3",
+            "normalizedCitation": "2026 Page 3",
+            "fromAuthorityId": "0ec1a4d2-3403-41c3-a3f3-aa95303272d5",
+            "fromTitle": "Tawk Hre v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:33.635Z"
+          },
+          {
+            "id": "41ff57ee-e5f2-4afc-b49b-979a5894ca2f",
+            "rawCitation": "2026 Page 3",
+            "normalizedCitation": "2026 Page 3",
+            "fromAuthorityId": "4cbbab7c-4c1d-43d6-a077-a9cd9d65283f",
+            "fromTitle": "Layke D. Leonard v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:34.229Z"
+          },
+          {
+            "id": "db9430e7-6ab4-4d71-928d-c249287162a4",
+            "rawCitation": "2026 Page 3",
+            "normalizedCitation": "2026 Page 3",
+            "fromAuthorityId": "9dd87091-c4f8-4d4b-aac6-ee31cd0fb577",
+            "fromTitle": "Brian Oller v. Trey W. Culvey",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:34.779Z"
+          },
+          {
+            "id": "fb9d7f69-9623-4221-9df8-e398ad86899b",
+            "rawCitation": "2026 Page 3",
+            "normalizedCitation": "2026 Page 3",
+            "fromAuthorityId": "ec15336f-a41d-43d2-93d6-22639497d635",
+            "fromTitle": "Jennifer E. Chadd v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.141Z"
+          },
+          {
+            "id": "34ba170d-9029-4895-b8b0-642205c4023b",
+            "rawCitation": "2026 Page 3",
+            "normalizedCitation": "2026 Page 3",
+            "fromAuthorityId": "2f7f861e-5f65-4473-814f-13d6dd8e986c",
+            "fromTitle": "T M v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.803Z"
+          },
+          {
+            "id": "fdc6c8a0-ca5d-4adf-8547-9482f791e8b8",
+            "rawCitation": "2026 Page 3",
+            "normalizedCitation": "2026 Page 3",
+            "fromAuthorityId": "3c12ffb4-9c46-4a06-9487-c8f11d35a9d1",
+            "fromTitle": "U.S. Bank National Association v. Bradford W. Raths",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.965Z"
+          },
+          {
+            "id": "1cd137e6-2fb0-41ca-bc1c-364f4e872268",
+            "rawCitation": "2026 Page 3",
+            "normalizedCitation": "2026 Page 3",
+            "fromAuthorityId": "a168895a-16f0-426b-96ad-587de74c6a66",
+            "fromTitle": "Paternity: Brenden Carrell v. Katherine Schurman",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.443Z"
+          },
+          {
+            "id": "0b240cd2-bf1c-4f8f-ae97-53b4bbc09b26",
+            "rawCitation": "2026 Page 3",
+            "normalizedCitation": "2026 Page 3",
+            "fromAuthorityId": "ae7ddc35-fc93-462e-a299-0391d5c5b87f",
+            "fromTitle": "Marquel Jamar Wattley v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.530Z"
+          }
+        ],
+        "normalizationResult": "2026 Page 3",
+        "reporterParserResult": null,
+        "oldLookupSuitable": false,
+        "newEligibility": {
+          "eligible": false,
+          "lane": "MALFORMED_CASE_REFERENCE",
+          "reasons": [
+            "yyyy_page_n_document_pagination"
+          ],
+          "reporterFamily": null,
+          "volume": null,
+          "page": null,
+          "normalized": "2026 Page 3"
+        },
+        "extractorHint": {
+          "metadataKeys": [
+            "adapter",
+            "clCourt",
+            "retrievedAt",
+            "sourceClass",
+            "citationStatus",
+            "treatmentSignals"
+          ],
+          "citationExtraction": null,
+          "eyecite": null
+        },
+        "surroundingContext": [
+          "itution for her rental car expenses. We agree. Court of Appeals of Indiana | Opinion 26A-CR-1089 | September 22, 2026 Page 3 of 7 [8] “Generally, an order of restitution is within the trial court’s discretion, and it will be reversed only upon a finding of an abuse of that discretion.” Akehurst v. State, 115 N.E.3d 515, 518 (Ind. Ct. App. 2018) (cleaned up). An abuse of discretion occurs when the "
+        ],
+        "artifactKind": "YYYY_PAGE_N"
+      },
+      {
+        "targetKey": "2026 page 4",
+        "edgeCount": 14,
+        "uniqueCitingCases": 14,
+        "jurisdictions": [
+          "st-in-app",
+          "st-in-high"
+        ],
+        "sampleEdges": [
+          {
+            "id": "dec3aa1b-c167-4279-b4dd-c4e219157f80",
+            "rawCitation": "2026 Page 4",
+            "normalizedCitation": "2026 Page 4",
+            "fromAuthorityId": "0ec1a4d2-3403-41c3-a3f3-aa95303272d5",
+            "fromTitle": "Tawk Hre v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:33.638Z"
+          },
+          {
+            "id": "cf9977fc-8354-48c2-b7f2-0f6b09ba322e",
+            "rawCitation": "2026 Page 4",
+            "normalizedCitation": "2026 Page 4",
+            "fromAuthorityId": "4cbbab7c-4c1d-43d6-a077-a9cd9d65283f",
+            "fromTitle": "Layke D. Leonard v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:34.232Z"
+          },
+          {
+            "id": "4d07369f-7f35-4e50-8cd7-066d2828a5df",
+            "rawCitation": "2026 Page 4",
+            "normalizedCitation": "2026 Page 4",
+            "fromAuthorityId": "9dd87091-c4f8-4d4b-aac6-ee31cd0fb577",
+            "fromTitle": "Brian Oller v. Trey W. Culvey",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:34.782Z"
+          },
+          {
+            "id": "655fdf45-d32e-4e58-a9bb-5923ee5f9683",
+            "rawCitation": "2026 Page 4",
+            "normalizedCitation": "2026 Page 4",
+            "fromAuthorityId": "ec15336f-a41d-43d2-93d6-22639497d635",
+            "fromTitle": "Jennifer E. Chadd v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.144Z"
+          },
+          {
+            "id": "300d4ea6-ce53-493f-9ffc-48b3b6c12af2",
+            "rawCitation": "2026 Page 4",
+            "normalizedCitation": "2026 Page 4",
+            "fromAuthorityId": "2f7f861e-5f65-4473-814f-13d6dd8e986c",
+            "fromTitle": "T M v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.806Z"
+          },
+          {
+            "id": "2030603d-9e28-4cb6-8d06-7db566dee40a",
+            "rawCitation": "2026 Page 4",
+            "normalizedCitation": "2026 Page 4",
+            "fromAuthorityId": "3c12ffb4-9c46-4a06-9487-c8f11d35a9d1",
+            "fromTitle": "U.S. Bank National Association v. Bradford W. Raths",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.969Z"
+          },
+          {
+            "id": "bc5c18b8-f38a-4b32-b669-bb8465096c6f",
+            "rawCitation": "2026 Page 4",
+            "normalizedCitation": "2026 Page 4",
+            "fromAuthorityId": "a168895a-16f0-426b-96ad-587de74c6a66",
+            "fromTitle": "Paternity: Brenden Carrell v. Katherine Schurman",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.446Z"
+          },
+          {
+            "id": "dfa4f1d4-b3be-4ff4-a7b2-82898a1ffa61",
+            "rawCitation": "2026 Page 4",
+            "normalizedCitation": "2026 Page 4",
+            "fromAuthorityId": "ae7ddc35-fc93-462e-a299-0391d5c5b87f",
+            "fromTitle": "Marquel Jamar Wattley v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.534Z"
+          }
+        ],
+        "normalizationResult": "2026 Page 4",
+        "reporterParserResult": null,
+        "oldLookupSuitable": false,
+        "newEligibility": {
+          "eligible": false,
+          "lane": "MALFORMED_CASE_REFERENCE",
+          "reasons": [
+            "yyyy_page_n_document_pagination"
+          ],
+          "reporterFamily": null,
+          "volume": null,
+          "page": null,
+          "normalized": "2026 Page 4"
+        },
+        "extractorHint": {
+          "metadataKeys": [
+            "adapter",
+            "clCourt",
+            "retrievedAt",
+            "sourceClass",
+            "citationStatus",
+            "treatmentSignals"
+          ],
+          "citationExtraction": null,
+          "eyecite": null
+        },
+        "surroundingContext": [
+          "y the victim (before the date of the sentencing) as a result of the crime; (3) the cost of medical laboratory tests to determine if the crime has caused the victim to contract a disease or other medical condition; (4) earnings lost by the victim (before the date of sentencing) as a result of the crime including earnings lost while the victim was hospitalized or participating in the investigation o"
+        ],
+        "artifactKind": "YYYY_PAGE_N"
+      },
+      {
+        "targetKey": "2026 page 5",
+        "edgeCount": 13,
+        "uniqueCitingCases": 13,
+        "jurisdictions": [
+          "st-in-app",
+          "st-in-high"
+        ],
+        "sampleEdges": [
+          {
+            "id": "877248a9-85fa-46d2-b9a9-8d5b35e9b514",
+            "rawCitation": "2026 Page 5",
+            "normalizedCitation": "2026 Page 5",
+            "fromAuthorityId": "0ec1a4d2-3403-41c3-a3f3-aa95303272d5",
+            "fromTitle": "Tawk Hre v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:33.642Z"
+          },
+          {
+            "id": "b871dd02-a13b-4e14-ba8e-77fb46ef2606",
+            "rawCitation": "2026 Page 5",
+            "normalizedCitation": "2026 Page 5",
+            "fromAuthorityId": "9dd87091-c4f8-4d4b-aac6-ee31cd0fb577",
+            "fromTitle": "Brian Oller v. Trey W. Culvey",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:34.786Z"
+          },
+          {
+            "id": "6c69f18f-0134-43cb-a7b7-01740e42db91",
+            "rawCitation": "2026 Page 5",
+            "normalizedCitation": "2026 Page 5",
+            "fromAuthorityId": "ec15336f-a41d-43d2-93d6-22639497d635",
+            "fromTitle": "Jennifer E. Chadd v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.148Z"
+          },
+          {
+            "id": "b55e28b4-618e-419b-9f55-f0756ff0dcf5",
+            "rawCitation": "2026 Page 5",
+            "normalizedCitation": "2026 Page 5",
+            "fromAuthorityId": "2f7f861e-5f65-4473-814f-13d6dd8e986c",
+            "fromTitle": "T M v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.810Z"
+          },
+          {
+            "id": "bcd2c4df-2ba8-4359-9220-45a0ce0fdc60",
+            "rawCitation": "2026 Page 5",
+            "normalizedCitation": "2026 Page 5",
+            "fromAuthorityId": "3c12ffb4-9c46-4a06-9487-c8f11d35a9d1",
+            "fromTitle": "U.S. Bank National Association v. Bradford W. Raths",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.973Z"
+          },
+          {
+            "id": "82603186-d7ef-4e06-884c-4d97f08ef16f",
+            "rawCitation": "2026 Page 5",
+            "normalizedCitation": "2026 Page 5",
+            "fromAuthorityId": "a168895a-16f0-426b-96ad-587de74c6a66",
+            "fromTitle": "Paternity: Brenden Carrell v. Katherine Schurman",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.449Z"
+          },
+          {
+            "id": "7d3cfe07-fde7-431d-a6cb-87cfc1e637b8",
+            "rawCitation": "2026 Page 5",
+            "normalizedCitation": "2026 Page 5",
+            "fromAuthorityId": "ae7ddc35-fc93-462e-a299-0391d5c5b87f",
+            "fromTitle": "Marquel Jamar Wattley v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.537Z"
+          },
+          {
+            "id": "1e45a5bc-cba8-4214-ba8b-1f2b4200f642",
+            "rawCitation": "2026 Page 5",
+            "normalizedCitation": "2026 Page 5",
+            "fromAuthorityId": "d742f6eb-9ac2-46f6-993c-74a785d6ac8c",
+            "fromTitle": "Amanda Maree Sayger v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.773Z"
+          }
+        ],
+        "normalizationResult": "2026 Page 5",
+        "reporterParserResult": null,
+        "oldLookupSuitable": false,
+        "newEligibility": {
+          "eligible": false,
+          "lane": "MALFORMED_CASE_REFERENCE",
+          "reasons": [
+            "yyyy_page_n_document_pagination"
+          ],
+          "reporterFamily": null,
+          "volume": null,
+          "page": null,
+          "normalized": "2026 Page 5"
+        },
+        "extractorHint": {
+          "metadataKeys": [
+            "adapter",
+            "clCourt",
+            "retrievedAt",
+            "sourceClass",
+            "citationStatus",
+            "treatmentSignals"
+          ],
+          "citationExtraction": null,
+          "eyecite": null
+        },
+        "surroundingContext": [
+          "s public transportation expenses. Person, 93 N.E.3d at 1127. 2 The State does not concede that the trial court abused its discretion in this case. Further, the State does not attempt to distinguish the facts in Person from the facts in the case before us. Court of Appeals of Indiana | Opinion 26A-CR-1089 | September 22, 2026 Page 5 of 7 [12] We agree with Hre that the facts before us are analogous"
+        ],
+        "artifactKind": "YYYY_PAGE_N"
+      },
+      {
+        "targetKey": "2026 page 6",
+        "edgeCount": 13,
+        "uniqueCitingCases": 13,
+        "jurisdictions": [
+          "st-in-app",
+          "st-in-high"
+        ],
+        "sampleEdges": [
+          {
+            "id": "4113e169-6726-4d3f-9170-0eab09e1001d",
+            "rawCitation": "2026 Page 6",
+            "normalizedCitation": "2026 Page 6",
+            "fromAuthorityId": "0ec1a4d2-3403-41c3-a3f3-aa95303272d5",
+            "fromTitle": "Tawk Hre v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:33.645Z"
+          },
+          {
+            "id": "d2e76ad6-ca82-4dd2-95bf-34fe444bb8ee",
+            "rawCitation": "2026 Page 6",
+            "normalizedCitation": "2026 Page 6",
+            "fromAuthorityId": "9dd87091-c4f8-4d4b-aac6-ee31cd0fb577",
+            "fromTitle": "Brian Oller v. Trey W. Culvey",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:34.789Z"
+          },
+          {
+            "id": "5568dab6-696f-45e8-8087-dfb1e3c43ef9",
+            "rawCitation": "2026 Page 6",
+            "normalizedCitation": "2026 Page 6",
+            "fromAuthorityId": "ec15336f-a41d-43d2-93d6-22639497d635",
+            "fromTitle": "Jennifer E. Chadd v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.151Z"
+          },
+          {
+            "id": "afbb4dfa-e743-48d1-a7fc-e2b1b86a1818",
+            "rawCitation": "2026 Page 6",
+            "normalizedCitation": "2026 Page 6",
+            "fromAuthorityId": "2f7f861e-5f65-4473-814f-13d6dd8e986c",
+            "fromTitle": "T M v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.813Z"
+          },
+          {
+            "id": "97893e6b-6c03-4076-9320-2e818aea6f16",
+            "rawCitation": "2026 Page 6",
+            "normalizedCitation": "2026 Page 6",
+            "fromAuthorityId": "3c12ffb4-9c46-4a06-9487-c8f11d35a9d1",
+            "fromTitle": "U.S. Bank National Association v. Bradford W. Raths",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.976Z"
+          },
+          {
+            "id": "10319965-c38a-4427-8a3c-ae37fccc21ce",
+            "rawCitation": "2026 Page 6",
+            "normalizedCitation": "2026 Page 6",
+            "fromAuthorityId": "a168895a-16f0-426b-96ad-587de74c6a66",
+            "fromTitle": "Paternity: Brenden Carrell v. Katherine Schurman",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.453Z"
+          },
+          {
+            "id": "f2761ecd-9b54-4549-b1e9-962625aa24e5",
+            "rawCitation": "2026 Page 6",
+            "normalizedCitation": "2026 Page 6",
+            "fromAuthorityId": "ae7ddc35-fc93-462e-a299-0391d5c5b87f",
+            "fromTitle": "Marquel Jamar Wattley v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.541Z"
+          },
+          {
+            "id": "842bec4c-7933-4512-9ef4-2f58981973b8",
+            "rawCitation": "2026 Page 6",
+            "normalizedCitation": "2026 Page 6",
+            "fromAuthorityId": "d742f6eb-9ac2-46f6-993c-74a785d6ac8c",
+            "fromTitle": "Amanda Maree Sayger v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.777Z"
+          }
+        ],
+        "normalizationResult": "2026 Page 6",
+        "reporterParserResult": null,
+        "oldLookupSuitable": false,
+        "newEligibility": {
+          "eligible": false,
+          "lane": "MALFORMED_CASE_REFERENCE",
+          "reasons": [
+            "yyyy_page_n_document_pagination"
+          ],
+          "reporterFamily": null,
+          "volume": null,
+          "page": null,
+          "normalized": "2026 Page 6"
+        },
+        "extractorHint": {
+          "metadataKeys": [
+            "adapter",
+            "clCourt",
+            "retrievedAt",
+            "sourceClass",
+            "citationStatus",
+            "treatmentSignals"
+          ],
+          "citationExtraction": null,
+          "eyecite": null
+        },
+        "surroundingContext": [
+          "ich v. State, 890 N.E.2d 44, 53 (Ind. Ct. App. 2008) (reversing trial court’s restitution order requiring Rich to pay for the cost of the Court of Appeals of Indiana | Opinion 26A-CR-1089 | September 22, 2026 Page 6 of 7 victim’s security system because no portion of the restitution statute could be construed to authorize such an order), trans. denied.3 [14] Reversed and remanded with instructions"
+        ],
+        "artifactKind": "YYYY_PAGE_N"
+      },
+      {
+        "targetKey": "2026 page 7",
+        "edgeCount": 13,
+        "uniqueCitingCases": 13,
+        "jurisdictions": [
+          "st-in-app",
+          "st-in-high"
+        ],
+        "sampleEdges": [
+          {
+            "id": "39678891-f50c-4d52-b9a8-b707ca786455",
+            "rawCitation": "2026 Page 7",
+            "normalizedCitation": "2026 Page 7",
+            "fromAuthorityId": "0ec1a4d2-3403-41c3-a3f3-aa95303272d5",
+            "fromTitle": "Tawk Hre v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:33.648Z"
+          },
+          {
+            "id": "431695cb-cdb7-43d7-a2ae-5fd68bf4cc4b",
+            "rawCitation": "2026 Page 7",
+            "normalizedCitation": "2026 Page 7",
+            "fromAuthorityId": "9dd87091-c4f8-4d4b-aac6-ee31cd0fb577",
+            "fromTitle": "Brian Oller v. Trey W. Culvey",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:34.792Z"
+          },
+          {
+            "id": "3cf4ae35-59fa-45d5-b004-1f05cc0dbbfc",
+            "rawCitation": "2026 Page 7",
+            "normalizedCitation": "2026 Page 7",
+            "fromAuthorityId": "ec15336f-a41d-43d2-93d6-22639497d635",
+            "fromTitle": "Jennifer E. Chadd v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.155Z"
+          },
+          {
+            "id": "43ac91a6-1740-4938-b092-a22520e6ca0b",
+            "rawCitation": "2026 Page 7",
+            "normalizedCitation": "2026 Page 7",
+            "fromAuthorityId": "2f7f861e-5f65-4473-814f-13d6dd8e986c",
+            "fromTitle": "T M v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.816Z"
+          },
+          {
+            "id": "be912fd8-854f-4cab-915e-faa1897f2c0d",
+            "rawCitation": "2026 Page 7",
+            "normalizedCitation": "2026 Page 7",
+            "fromAuthorityId": "3c12ffb4-9c46-4a06-9487-c8f11d35a9d1",
+            "fromTitle": "U.S. Bank National Association v. Bradford W. Raths",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.980Z"
+          },
+          {
+            "id": "2fb144ed-9314-42ef-97bf-b62835208dcf",
+            "rawCitation": "2026 Page 7",
+            "normalizedCitation": "2026 Page 7",
+            "fromAuthorityId": "a168895a-16f0-426b-96ad-587de74c6a66",
+            "fromTitle": "Paternity: Brenden Carrell v. Katherine Schurman",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.456Z"
+          },
+          {
+            "id": "1008f9b5-80aa-4698-9c14-7ed5dc06681b",
+            "rawCitation": "2026 Page 7",
+            "normalizedCitation": "2026 Page 7",
+            "fromAuthorityId": "ae7ddc35-fc93-462e-a299-0391d5c5b87f",
+            "fromTitle": "Marquel Jamar Wattley v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.544Z"
+          },
+          {
+            "id": "f052936c-8a11-47e7-8185-e248276ea295",
+            "rawCitation": "2026 Page 7",
+            "normalizedCitation": "2026 Page 7",
+            "fromAuthorityId": "d742f6eb-9ac2-46f6-993c-74a785d6ac8c",
+            "fromTitle": "Amanda Maree Sayger v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.780Z"
+          }
+        ],
+        "normalizationResult": "2026 Page 7",
+        "reporterParserResult": null,
+        "oldLookupSuitable": false,
+        "newEligibility": {
+          "eligible": false,
+          "lane": "MALFORMED_CASE_REFERENCE",
+          "reasons": [
+            "yyyy_page_n_document_pagination"
+          ],
+          "reporterFamily": null,
+          "volume": null,
+          "page": null,
+          "normalized": "2026 Page 7"
+        },
+        "extractorHint": {
+          "metadataKeys": [
+            "adapter",
+            "clCourt",
+            "retrievedAt",
+            "sourceClass",
+            "citationStatus",
+            "treatmentSignals"
+          ],
+          "citationExtraction": null,
+          "eyecite": null
+        },
+        "surroundingContext": [
+          "ifically, here, the trial court did not order Hre to pay Mumford reimbursement for the actual cost to replace the car. Rather, the trial court ordered Hre to pay Mumford reimbursement for her rental car expenses, which, as previously discussed, are not included in the restitution statute. Court of Appeals of Indiana | Opinion 26A-CR-1089 | September 22, 2026 Page 7 of 7"
+        ],
+        "artifactKind": "YYYY_PAGE_N"
+      },
+      {
+        "targetKey": "2026 page 8",
+        "edgeCount": 12,
+        "uniqueCitingCases": 12,
+        "jurisdictions": [
+          "st-in-app",
+          "st-in-high"
+        ],
+        "sampleEdges": [
+          {
+            "id": "fb8768fe-f7a2-4f9c-bf8f-0c0fe5a15fa2",
+            "rawCitation": "2026 Page 8",
+            "normalizedCitation": "2026 Page 8",
+            "fromAuthorityId": "9dd87091-c4f8-4d4b-aac6-ee31cd0fb577",
+            "fromTitle": "Brian Oller v. Trey W. Culvey",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:34.796Z"
+          },
+          {
+            "id": "e8c915ee-df65-4a92-adf2-ca9d260ac405",
+            "rawCitation": "2026 Page 8",
+            "normalizedCitation": "2026 Page 8",
+            "fromAuthorityId": "ec15336f-a41d-43d2-93d6-22639497d635",
+            "fromTitle": "Jennifer E. Chadd v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.158Z"
+          },
+          {
+            "id": "e48a45d8-1e68-46c0-8993-bf9850f0111c",
+            "rawCitation": "2026 Page 8",
+            "normalizedCitation": "2026 Page 8",
+            "fromAuthorityId": "2f7f861e-5f65-4473-814f-13d6dd8e986c",
+            "fromTitle": "T M v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.823Z"
+          },
+          {
+            "id": "324d4599-0c8f-4f8a-8d5a-308fe75d5329",
+            "rawCitation": "2026 Page 8",
+            "normalizedCitation": "2026 Page 8",
+            "fromAuthorityId": "3c12ffb4-9c46-4a06-9487-c8f11d35a9d1",
+            "fromTitle": "U.S. Bank National Association v. Bradford W. Raths",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.983Z"
+          },
+          {
+            "id": "6a3ad1dc-d809-473a-a370-babfb31154ca",
+            "rawCitation": "2026 Page 8",
+            "normalizedCitation": "2026 Page 8",
+            "fromAuthorityId": "a168895a-16f0-426b-96ad-587de74c6a66",
+            "fromTitle": "Paternity: Brenden Carrell v. Katherine Schurman",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.460Z"
+          },
+          {
+            "id": "15871a65-1f59-473f-a09e-33a21406fda2",
+            "rawCitation": "2026 Page 8",
+            "normalizedCitation": "2026 Page 8",
+            "fromAuthorityId": "ae7ddc35-fc93-462e-a299-0391d5c5b87f",
+            "fromTitle": "Marquel Jamar Wattley v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.547Z"
+          },
+          {
+            "id": "8982d471-b07a-4686-9f8f-095e8f3e976f",
+            "rawCitation": "2026 Page 8",
+            "normalizedCitation": "2026 Page 8",
+            "fromAuthorityId": "d742f6eb-9ac2-46f6-993c-74a785d6ac8c",
+            "fromTitle": "Amanda Maree Sayger v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.783Z"
+          },
+          {
+            "id": "045a69ba-5703-4930-9855-befd63441954",
+            "rawCitation": "2026 Page 8",
+            "normalizedCitation": "2026 Page 8",
+            "fromAuthorityId": "08ba97b9-f8e8-4cec-be2e-b9682944f663",
+            "fromTitle": "Estate of Elmer Gordon Waggoner v. Anonymous Health System, Inc.",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:51:10.024Z"
+          }
+        ],
+        "normalizationResult": "2026 Page 8",
+        "reporterParserResult": null,
+        "oldLookupSuitable": false,
+        "newEligibility": {
+          "eligible": false,
+          "lane": "MALFORMED_CASE_REFERENCE",
+          "reasons": [
+            "yyyy_page_n_document_pagination"
+          ],
+          "reporterFamily": null,
+          "volume": null,
+          "page": null,
+          "normalized": "2026 Page 8"
+        },
+        "extractorHint": {
+          "metadataKeys": [
+            "adapter",
+            "clCourt",
+            "retrievedAt",
+            "sourceClass",
+            "citationStatus",
+            "treatmentSignals"
+          ],
+          "citationExtraction": null,
+          "eyecite": null
+        },
+        "surroundingContext": [
+          ", hence, no liability.” Pennington v. Mem’l Hosp. of S. Bend, Inc., 223 N.E.3d 1086, 1096 (Ind. 2024) (citing Goodwin, 62 N.E.3d at 386). Whether DoorDash owed Oller a duty of care “is a question of law for the court to decide.” Id. (quoting Goodwin, 62 N.E.3d at 386–87). Court of Appeals of Indiana | Opinion 26A-CT-425 | September 18, 2026 Page 8 of 19 [15] If an “alleged duty is well-established"
+        ],
+        "artifactKind": "YYYY_PAGE_N"
+      },
+      {
+        "targetKey": "2026 page 9",
+        "edgeCount": 12,
+        "uniqueCitingCases": 12,
+        "jurisdictions": [
+          "st-in-app",
+          "st-in-high"
+        ],
+        "sampleEdges": [
+          {
+            "id": "f88839cc-a148-499e-afd0-94029b51266a",
+            "rawCitation": "2026 Page 9",
+            "normalizedCitation": "2026 Page 9",
+            "fromAuthorityId": "9dd87091-c4f8-4d4b-aac6-ee31cd0fb577",
+            "fromTitle": "Brian Oller v. Trey W. Culvey",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:34.799Z"
+          },
+          {
+            "id": "c3a6ff35-c34d-4403-b09a-f55dd9e703a3",
+            "rawCitation": "2026 Page 9",
+            "normalizedCitation": "2026 Page 9",
+            "fromAuthorityId": "ec15336f-a41d-43d2-93d6-22639497d635",
+            "fromTitle": "Jennifer E. Chadd v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.162Z"
+          },
+          {
+            "id": "8bb938a4-3b4a-4fcd-b92a-94180e99caee",
+            "rawCitation": "2026 Page 9",
+            "normalizedCitation": "2026 Page 9",
+            "fromAuthorityId": "2f7f861e-5f65-4473-814f-13d6dd8e986c",
+            "fromTitle": "T M v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.826Z"
+          },
+          {
+            "id": "6f0dad42-2da8-4d76-844a-f14f8a67c42c",
+            "rawCitation": "2026 Page 9",
+            "normalizedCitation": "2026 Page 9",
+            "fromAuthorityId": "3c12ffb4-9c46-4a06-9487-c8f11d35a9d1",
+            "fromTitle": "U.S. Bank National Association v. Bradford W. Raths",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:35.986Z"
+          },
+          {
+            "id": "dd9d5dbc-a71c-47dd-abc8-38fe705fe1d2",
+            "rawCitation": "2026 Page 9",
+            "normalizedCitation": "2026 Page 9",
+            "fromAuthorityId": "a168895a-16f0-426b-96ad-587de74c6a66",
+            "fromTitle": "Paternity: Brenden Carrell v. Katherine Schurman",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.463Z"
+          },
+          {
+            "id": "428a490d-2381-4b57-86a5-39b0c6e47bb9",
+            "rawCitation": "2026 Page 9",
+            "normalizedCitation": "2026 Page 9",
+            "fromAuthorityId": "ae7ddc35-fc93-462e-a299-0391d5c5b87f",
+            "fromTitle": "Marquel Jamar Wattley v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.550Z"
+          },
+          {
+            "id": "407cc5d2-5be4-4bfa-9f21-1a8550a35e0d",
+            "rawCitation": "2026 Page 9",
+            "normalizedCitation": "2026 Page 9",
+            "fromAuthorityId": "d742f6eb-9ac2-46f6-993c-74a785d6ac8c",
+            "fromTitle": "Amanda Maree Sayger v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-app",
+            "createdAt": "2026-10-02T08:50:36.786Z"
+          },
+          {
+            "id": "038c0d10-5ec3-48e6-b133-b458bc0a8511",
+            "rawCitation": "2026 Page 9",
+            "normalizedCitation": "2026 Page 9",
+            "fromAuthorityId": "08ba97b9-f8e8-4cec-be2e-b9682944f663",
+            "fromTitle": "Estate of Elmer Gordon Waggoner v. Anonymous Health System, Inc.",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:51:10.027Z"
+          }
+        ],
+        "normalizationResult": "2026 Page 9",
+        "reporterParserResult": null,
+        "oldLookupSuitable": false,
+        "newEligibility": {
+          "eligible": false,
+          "lane": "MALFORMED_CASE_REFERENCE",
+          "reasons": [
+            "yyyy_page_n_document_pagination"
+          ],
+          "reporterFamily": null,
+          "volume": null,
+          "page": null,
+          "normalized": "2026 Page 9"
+        },
+        "extractorHint": {
+          "metadataKeys": [
+            "adapter",
+            "clCourt",
+            "retrievedAt",
+            "sourceClass",
+            "citationStatus",
+            "treatmentSignals"
+          ],
+          "citationExtraction": null,
+          "eyecite": null
+        },
+        "surroundingContext": [
+          "., 81 N.E.3d 199, 206–07 (Ind. 2017) (citing Webb v. Jarvis, 575 N.E.2d 992, 995 (Ind. 1991), disapproved in part on other grounds by Goodwin, 62 N.E.3d at 391). [16] Oller argues that DoorDash owed him a general duty of protection from the risks and dangers of its business model and app. To determine whether DoorDash owed Oller this duty, he urges us to apply the Webb test. DoorDash counters that"
+        ],
+        "artifactKind": "YYYY_PAGE_N"
+      },
+      {
+        "targetKey": "2025 page 2",
+        "edgeCount": 12,
+        "uniqueCitingCases": 12,
+        "jurisdictions": [
+          "st-in-high",
+          "st-ga-high"
+        ],
+        "sampleEdges": [
+          {
+            "id": "7fb8ec94-0855-4d39-9310-850462223041",
+            "rawCitation": "2025 Page 2",
+            "normalizedCitation": "2025 Page 2",
+            "fromAuthorityId": "07bb4e2e-49bd-410c-b306-a680b7882184",
+            "fromTitle": "In the Matter of Calvin Delee Hawkins",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.339Z"
+          },
+          {
+            "id": "a7099d44-cd07-4034-acad-0981867d6763",
+            "rawCitation": "2025 Page 2",
+            "normalizedCitation": "2025 Page 2",
+            "fromAuthorityId": "1a2b03ee-f4cf-4f46-a90b-0141b4b0166c",
+            "fromTitle": "Automotive Finance Corporation v. Meng Liu",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.429Z"
+          },
+          {
+            "id": "802a7e4a-2c6a-450a-90ef-5b70627bc82f",
+            "rawCitation": "2025 Page 2",
+            "normalizedCitation": "2025 Page 2",
+            "fromAuthorityId": "21146e85-bdce-4cf2-b7a2-1b0f06760d54",
+            "fromTitle": "Kiera Isgrig v. Trustees of Indiana University",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.575Z"
+          },
+          {
+            "id": "b33f87fb-ed0b-4a38-9964-c75e430381ab",
+            "rawCitation": "2025 Page 2",
+            "normalizedCitation": "2025 Page 2",
+            "fromAuthorityId": "31b1ec2c-2949-4663-980d-096687403e09",
+            "fromTitle": "In the Matter of Nathan L Pearson",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.634Z"
+          },
+          {
+            "id": "76825840-f124-4568-89ee-cfb829094c60",
+            "rawCitation": "2025 Page 2",
+            "normalizedCitation": "2025 Page 2",
+            "fromAuthorityId": "67ae011e-193c-4b14-9f2a-c3a3b7fc24ba",
+            "fromTitle": "Emily Tingley v. First Financial Bank, As Trustee of Land Trust No. 428",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.763Z"
+          },
+          {
+            "id": "00f7e03d-b310-4097-b012-452a6836424a",
+            "rawCitation": "2025 Page 2",
+            "normalizedCitation": "2025 Page 2",
+            "fromAuthorityId": "945e805a-e325-4a47-87ae-9afc33d3ec20",
+            "fromTitle": "Calvary Temple Church of Evansville, Inc. v. Gerard A. Kirsch",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.994Z"
+          },
+          {
+            "id": "447083e5-d9fd-4ed0-8bab-fcce2affc75c",
+            "rawCitation": "2025 Page 2",
+            "normalizedCitation": "2025 Page 2",
+            "fromAuthorityId": "9bdcff54-cf98-46fe-aafd-b128c6630c90",
+            "fromTitle": "Linda Gierek v. Anonymous 1",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.050Z"
+          },
+          {
+            "id": "fc4b5996-22dc-4a5c-aca3-e76fcaa51c8d",
+            "rawCitation": "2025 Page 2",
+            "normalizedCitation": "2025 Page 2",
+            "fromAuthorityId": "e7d2a1b4-cbc8-40d3-9950-8beada2030e8",
+            "fromTitle": "Antonio Turner v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.811Z"
+          }
+        ],
+        "normalizationResult": "2025 Page 2",
+        "reporterParserResult": null,
+        "oldLookupSuitable": false,
+        "newEligibility": {
+          "eligible": false,
+          "lane": "MALFORMED_CASE_REFERENCE",
+          "reasons": [
+            "yyyy_page_n_document_pagination"
+          ],
+          "reporterFamily": null,
+          "volume": null,
+          "page": null,
+          "normalized": "2025 Page 2"
+        },
+        "extractorHint": {
+          "metadataKeys": [
+            "adapter",
+            "clCourt",
+            "retrievedAt",
+            "sourceClass",
+            "citationStatus",
+            "treatmentSignals"
+          ],
+          "citationExtraction": null,
+          "eyecite": null
+        },
+        "surroundingContext": [
+          "at Respondent said, but he did not rephrase his question. J.P. consistently told Respondent that his physical advances were unwelcome, including by: (1) informing Respondent that she did not want to be hugged by him because it made her uncomfortable; (2) informing Respondent not to come near her work area in the courthouse because it made her uncomfortable; and (3) turning her back to Respondent a"
+        ],
+        "artifactKind": "YYYY_PAGE_N"
+      },
+      {
+        "targetKey": "2025 page 3",
+        "edgeCount": 12,
+        "uniqueCitingCases": 12,
+        "jurisdictions": [
+          "st-in-high",
+          "st-ga-high"
+        ],
+        "sampleEdges": [
+          {
+            "id": "cb677a9b-6f03-4059-a71f-fe97945ec062",
+            "rawCitation": "2025 Page 3",
+            "normalizedCitation": "2025 Page 3",
+            "fromAuthorityId": "07bb4e2e-49bd-410c-b306-a680b7882184",
+            "fromTitle": "In the Matter of Calvin Delee Hawkins",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.343Z"
+          },
+          {
+            "id": "a76e687f-f74b-4f1c-8810-aae3d212906a",
+            "rawCitation": "2025 Page 3",
+            "normalizedCitation": "2025 Page 3",
+            "fromAuthorityId": "1a2b03ee-f4cf-4f46-a90b-0141b4b0166c",
+            "fromTitle": "Automotive Finance Corporation v. Meng Liu",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.432Z"
+          },
+          {
+            "id": "08456dc8-4585-49bd-944a-67c38b8ad173",
+            "rawCitation": "2025 Page 3",
+            "normalizedCitation": "2025 Page 3",
+            "fromAuthorityId": "21146e85-bdce-4cf2-b7a2-1b0f06760d54",
+            "fromTitle": "Kiera Isgrig v. Trustees of Indiana University",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.578Z"
+          },
+          {
+            "id": "9c7fd5dd-e279-412f-85d6-5b99823b9d6f",
+            "rawCitation": "2025 Page 3",
+            "normalizedCitation": "2025 Page 3",
+            "fromAuthorityId": "31b1ec2c-2949-4663-980d-096687403e09",
+            "fromTitle": "In the Matter of Nathan L Pearson",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.637Z"
+          },
+          {
+            "id": "d6384cdd-9b52-47b1-b8df-1738736ed5a9",
+            "rawCitation": "2025 Page 3",
+            "normalizedCitation": "2025 Page 3",
+            "fromAuthorityId": "67ae011e-193c-4b14-9f2a-c3a3b7fc24ba",
+            "fromTitle": "Emily Tingley v. First Financial Bank, As Trustee of Land Trust No. 428",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.766Z"
+          },
+          {
+            "id": "fd456fb0-5890-4900-aac2-47a7979151b2",
+            "rawCitation": "2025 Page 3",
+            "normalizedCitation": "2025 Page 3",
+            "fromAuthorityId": "945e805a-e325-4a47-87ae-9afc33d3ec20",
+            "fromTitle": "Calvary Temple Church of Evansville, Inc. v. Gerard A. Kirsch",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.997Z"
+          },
+          {
+            "id": "d53f7ae0-e0a9-4038-b6ac-b442321713c0",
+            "rawCitation": "2025 Page 3",
+            "normalizedCitation": "2025 Page 3",
+            "fromAuthorityId": "9bdcff54-cf98-46fe-aafd-b128c6630c90",
+            "fromTitle": "Linda Gierek v. Anonymous 1",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.054Z"
+          },
+          {
+            "id": "af796f52-638e-4ffb-a933-dcde99cf27f4",
+            "rawCitation": "2025 Page 3",
+            "normalizedCitation": "2025 Page 3",
+            "fromAuthorityId": "e7d2a1b4-cbc8-40d3-9950-8beada2030e8",
+            "fromTitle": "Antonio Turner v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.814Z"
+          }
+        ],
+        "normalizationResult": "2025 Page 3",
+        "reporterParserResult": null,
+        "oldLookupSuitable": false,
+        "newEligibility": {
+          "eligible": false,
+          "lane": "MALFORMED_CASE_REFERENCE",
+          "reasons": [
+            "yyyy_page_n_document_pagination"
+          ],
+          "reporterFamily": null,
+          "volume": null,
+          "page": null,
+          "normalized": "2025 Page 3"
+        },
+        "extractorHint": {
+          "metadataKeys": [
+            "adapter",
+            "clCourt",
+            "retrievedAt",
+            "sourceClass",
+            "citationStatus",
+            "treatmentSignals"
+          ],
+          "citationExtraction": null,
+          "eyecite": null
+        },
+        "surroundingContext": [
+          " the paperwork. F.R. told Respondent she would bring the paperwork to him, but Respondent went to F.R.’s office and stood in her doorway anyway. F.R. was uncomfortable because of the way Respondent greeted her and because there was not adequate space for both of them in her office. When F.R. handed the paperwork to Respondent in the hallway, Respondent tried to hug F.R. by attempting to put his ar"
+        ],
+        "artifactKind": "YYYY_PAGE_N"
+      },
+      {
+        "targetKey": "2025 page 4",
+        "edgeCount": 12,
+        "uniqueCitingCases": 12,
+        "jurisdictions": [
+          "st-in-high",
+          "st-ga-high"
+        ],
+        "sampleEdges": [
+          {
+            "id": "4ba3f67f-890c-4cc5-a499-1e49d4d7cd21",
+            "rawCitation": "2025 Page 4",
+            "normalizedCitation": "2025 Page 4",
+            "fromAuthorityId": "07bb4e2e-49bd-410c-b306-a680b7882184",
+            "fromTitle": "In the Matter of Calvin Delee Hawkins",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.347Z"
+          },
+          {
+            "id": "d3d53900-af3e-480a-b2a5-2666f5b0601f",
+            "rawCitation": "2025 Page 4",
+            "normalizedCitation": "2025 Page 4",
+            "fromAuthorityId": "1a2b03ee-f4cf-4f46-a90b-0141b4b0166c",
+            "fromTitle": "Automotive Finance Corporation v. Meng Liu",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.436Z"
+          },
+          {
+            "id": "5dbeabb6-d563-41fc-a648-2064a2c7248d",
+            "rawCitation": "2025 Page 4",
+            "normalizedCitation": "2025 Page 4",
+            "fromAuthorityId": "21146e85-bdce-4cf2-b7a2-1b0f06760d54",
+            "fromTitle": "Kiera Isgrig v. Trustees of Indiana University",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.581Z"
+          },
+          {
+            "id": "e6211437-3684-4400-a442-cc89c0472c31",
+            "rawCitation": "2025 Page 4",
+            "normalizedCitation": "2025 Page 4",
+            "fromAuthorityId": "31b1ec2c-2949-4663-980d-096687403e09",
+            "fromTitle": "In the Matter of Nathan L Pearson",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.640Z"
+          },
+          {
+            "id": "972dddef-d5e1-465f-b013-0208361427ed",
+            "rawCitation": "2025 Page 4",
+            "normalizedCitation": "2025 Page 4",
+            "fromAuthorityId": "67ae011e-193c-4b14-9f2a-c3a3b7fc24ba",
+            "fromTitle": "Emily Tingley v. First Financial Bank, As Trustee of Land Trust No. 428",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.770Z"
+          },
+          {
+            "id": "5c5e3c63-1911-49c4-9f46-d622fa13bbca",
+            "rawCitation": "2025 Page 4",
+            "normalizedCitation": "2025 Page 4",
+            "fromAuthorityId": "945e805a-e325-4a47-87ae-9afc33d3ec20",
+            "fromTitle": "Calvary Temple Church of Evansville, Inc. v. Gerard A. Kirsch",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.001Z"
+          },
+          {
+            "id": "bf5f30c4-3d23-42d7-a267-f2b3e64bdd0b",
+            "rawCitation": "2025 Page 4",
+            "normalizedCitation": "2025 Page 4",
+            "fromAuthorityId": "9bdcff54-cf98-46fe-aafd-b128c6630c90",
+            "fromTitle": "Linda Gierek v. Anonymous 1",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.057Z"
+          },
+          {
+            "id": "28d4be2d-967f-4c97-935d-180f0cdde950",
+            "rawCitation": "2025 Page 4",
+            "normalizedCitation": "2025 Page 4",
+            "fromAuthorityId": "e7d2a1b4-cbc8-40d3-9950-8beada2030e8",
+            "fromTitle": "Antonio Turner v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.817Z"
+          }
+        ],
+        "normalizationResult": "2025 Page 4",
+        "reporterParserResult": null,
+        "oldLookupSuitable": false,
+        "newEligibility": {
+          "eligible": false,
+          "lane": "MALFORMED_CASE_REFERENCE",
+          "reasons": [
+            "yyyy_page_n_document_pagination"
+          ],
+          "reporterFamily": null,
+          "volume": null,
+          "page": null,
+          "normalized": "2025 Page 4"
+        },
+        "extractorHint": {
+          "metadataKeys": [
+            "adapter",
+            "clCourt",
+            "retrievedAt",
+            "sourceClass",
+            "citationStatus",
+            "treatmentSignals"
+          ],
+          "citationExtraction": null,
+          "eyecite": null
+        },
+        "surroundingContext": [
+          "d to bias, prejudice, or harassment based upon race, sex, gender, religion, national origin, ethnicity, disability, age, sexual orientation, marital status, socioeconomic status, or political affiliation, in the performance of judicial duties; and • Rule 2.8(B), requiring judges to be patient, dignified, and courteous to litigants, jurors, witnesses, lawyers, court staff, court officials, and othe"
+        ],
+        "artifactKind": "YYYY_PAGE_N"
+      },
+      {
+        "targetKey": "2025 page 5",
+        "edgeCount": 10,
+        "uniqueCitingCases": 10,
+        "jurisdictions": [
+          "st-in-high"
+        ],
+        "sampleEdges": [
+          {
+            "id": "bf4f21ce-8d59-4efd-a050-ff1b468a2847",
+            "rawCitation": "2025 Page 5",
+            "normalizedCitation": "2025 Page 5",
+            "fromAuthorityId": "07bb4e2e-49bd-410c-b306-a680b7882184",
+            "fromTitle": "In the Matter of Calvin Delee Hawkins",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.358Z"
+          },
+          {
+            "id": "a72e7f4f-4547-43a0-830b-1ffa21da68df",
+            "rawCitation": "2025 Page 5",
+            "normalizedCitation": "2025 Page 5",
+            "fromAuthorityId": "1a2b03ee-f4cf-4f46-a90b-0141b4b0166c",
+            "fromTitle": "Automotive Finance Corporation v. Meng Liu",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.439Z"
+          },
+          {
+            "id": "89c5b8c1-6f8c-410e-b9dc-8b0cd855d8d0",
+            "rawCitation": "2025 Page 5",
+            "normalizedCitation": "2025 Page 5",
+            "fromAuthorityId": "21146e85-bdce-4cf2-b7a2-1b0f06760d54",
+            "fromTitle": "Kiera Isgrig v. Trustees of Indiana University",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.585Z"
+          },
+          {
+            "id": "b241cfca-d63e-4cce-bbd5-f5c689940bd6",
+            "rawCitation": "2025 Page 5",
+            "normalizedCitation": "2025 Page 5",
+            "fromAuthorityId": "31b1ec2c-2949-4663-980d-096687403e09",
+            "fromTitle": "In the Matter of Nathan L Pearson",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.644Z"
+          },
+          {
+            "id": "2b8ffc08-9ea5-46fa-8d54-ae3a867dea77",
+            "rawCitation": "2025 Page 5",
+            "normalizedCitation": "2025 Page 5",
+            "fromAuthorityId": "67ae011e-193c-4b14-9f2a-c3a3b7fc24ba",
+            "fromTitle": "Emily Tingley v. First Financial Bank, As Trustee of Land Trust No. 428",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.773Z"
+          },
+          {
+            "id": "b863c2c8-5326-4217-9daf-4880f79ceffb",
+            "rawCitation": "2025 Page 5",
+            "normalizedCitation": "2025 Page 5",
+            "fromAuthorityId": "945e805a-e325-4a47-87ae-9afc33d3ec20",
+            "fromTitle": "Calvary Temple Church of Evansville, Inc. v. Gerard A. Kirsch",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.004Z"
+          },
+          {
+            "id": "9ba61dce-664a-4e70-ae0d-ca912cfa222e",
+            "rawCitation": "2025 Page 5",
+            "normalizedCitation": "2025 Page 5",
+            "fromAuthorityId": "9bdcff54-cf98-46fe-aafd-b128c6630c90",
+            "fromTitle": "Linda Gierek v. Anonymous 1",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.061Z"
+          },
+          {
+            "id": "4cff374c-88bf-4eae-800b-199432c029b8",
+            "rawCitation": "2025 Page 5",
+            "normalizedCitation": "2025 Page 5",
+            "fromAuthorityId": "e7d2a1b4-cbc8-40d3-9950-8beada2030e8",
+            "fromTitle": "Antonio Turner v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.820Z"
+          }
+        ],
+        "normalizationResult": "2025 Page 5",
+        "reporterParserResult": null,
+        "oldLookupSuitable": false,
+        "newEligibility": {
+          "eligible": false,
+          "lane": "MALFORMED_CASE_REFERENCE",
+          "reasons": [
+            "yyyy_page_n_document_pagination"
+          ],
+          "reporterFamily": null,
+          "volume": null,
+          "page": null,
+          "normalized": "2025 Page 5"
+        },
+        "extractorHint": {
+          "metadataKeys": [
+            "adapter",
+            "clCourt",
+            "retrievedAt",
+            "sourceClass",
+            "citationStatus",
+            "treatmentSignals"
+          ],
+          "citationExtraction": null,
+          "eyecite": null
+        },
+        "surroundingContext": [
+          "and violated by Respondent’s actions. “In determining whether the recommended sanction is appropriate, we consider any aggravating and mitigating circumstances before the Court.” Matter of Brown, 4 N.E.3d 619, 628 (Ind. 2014). Here, the parties call our attention to several “agreed sanction factors.” They note that Respondent has cooperated with these disciplinary proceedings to arrive at an agree"
+        ],
+        "artifactKind": "YYYY_PAGE_N"
+      },
+      {
+        "targetKey": "2025 page 6",
+        "edgeCount": 10,
+        "uniqueCitingCases": 10,
+        "jurisdictions": [
+          "st-in-high"
+        ],
+        "sampleEdges": [
+          {
+            "id": "c04e7fd2-0a84-4c98-8172-3713999ff4a7",
+            "rawCitation": "2025 Page 6",
+            "normalizedCitation": "2025 Page 6",
+            "fromAuthorityId": "07bb4e2e-49bd-410c-b306-a680b7882184",
+            "fromTitle": "In the Matter of Calvin Delee Hawkins",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.361Z"
+          },
+          {
+            "id": "2c88001f-8f88-4ace-9d07-8c08b1764575",
+            "rawCitation": "2025 Page 6",
+            "normalizedCitation": "2025 Page 6",
+            "fromAuthorityId": "1a2b03ee-f4cf-4f46-a90b-0141b4b0166c",
+            "fromTitle": "Automotive Finance Corporation v. Meng Liu",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.443Z"
+          },
+          {
+            "id": "4a3aaee6-a899-41fb-a27a-f595c733f209",
+            "rawCitation": "2025 Page 6",
+            "normalizedCitation": "2025 Page 6",
+            "fromAuthorityId": "21146e85-bdce-4cf2-b7a2-1b0f06760d54",
+            "fromTitle": "Kiera Isgrig v. Trustees of Indiana University",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.589Z"
+          },
+          {
+            "id": "deb2be1d-8170-424c-b6fc-d2e46742c98f",
+            "rawCitation": "2025 Page 6",
+            "normalizedCitation": "2025 Page 6",
+            "fromAuthorityId": "31b1ec2c-2949-4663-980d-096687403e09",
+            "fromTitle": "In the Matter of Nathan L Pearson",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.648Z"
+          },
+          {
+            "id": "19d187e8-f8ef-4c93-ba4f-a62160f0ed65",
+            "rawCitation": "2025 Page 6",
+            "normalizedCitation": "2025 Page 6",
+            "fromAuthorityId": "67ae011e-193c-4b14-9f2a-c3a3b7fc24ba",
+            "fromTitle": "Emily Tingley v. First Financial Bank, As Trustee of Land Trust No. 428",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.776Z"
+          },
+          {
+            "id": "13d04228-a978-40de-b3c4-38bb7049ecc8",
+            "rawCitation": "2025 Page 6",
+            "normalizedCitation": "2025 Page 6",
+            "fromAuthorityId": "945e805a-e325-4a47-87ae-9afc33d3ec20",
+            "fromTitle": "Calvary Temple Church of Evansville, Inc. v. Gerard A. Kirsch",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.008Z"
+          },
+          {
+            "id": "da9bc352-7c43-4897-87c1-9e38486d20ec",
+            "rawCitation": "2025 Page 6",
+            "normalizedCitation": "2025 Page 6",
+            "fromAuthorityId": "9bdcff54-cf98-46fe-aafd-b128c6630c90",
+            "fromTitle": "Linda Gierek v. Anonymous 1",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.064Z"
+          },
+          {
+            "id": "ba3e47c7-062e-429f-a28a-73e712db351d",
+            "rawCitation": "2025 Page 6",
+            "normalizedCitation": "2025 Page 6",
+            "fromAuthorityId": "e7d2a1b4-cbc8-40d3-9950-8beada2030e8",
+            "fromTitle": "Antonio Turner v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.823Z"
+          }
+        ],
+        "normalizationResult": "2025 Page 6",
+        "reporterParserResult": null,
+        "oldLookupSuitable": false,
+        "newEligibility": {
+          "eligible": false,
+          "lane": "MALFORMED_CASE_REFERENCE",
+          "reasons": [
+            "yyyy_page_n_document_pagination"
+          ],
+          "reporterFamily": null,
+          "volume": null,
+          "page": null,
+          "normalized": "2025 Page 6"
+        },
+        "extractorHint": {
+          "metadataKeys": [
+            "adapter",
+            "clCourt",
+            "retrievedAt",
+            "sourceClass",
+            "citationStatus",
+            "treatmentSignals"
+          ],
+          "citationExtraction": null,
+          "eyecite": null
+        },
+        "surroundingContext": [
+          "conduct was serious, included repeated physical advances toward employees despite their express rejections, and was an abject abuse of his position and power. Through his pattern of misconduct, Respondent has fallen far short of the standard required of him. Based on those concerns, and the parties’ agreed sanction factors, the Court concludes that the sanction the Commission and Respondent propos"
+        ],
+        "artifactKind": "YYYY_PAGE_N"
+      },
+      {
+        "targetKey": "2025 page 7",
+        "edgeCount": 10,
+        "uniqueCitingCases": 10,
+        "jurisdictions": [
+          "st-in-high"
+        ],
+        "sampleEdges": [
+          {
+            "id": "23e727e7-e679-46be-a30f-936b0f4dcece",
+            "rawCitation": "2025 Page 7",
+            "normalizedCitation": "2025 Page 7",
+            "fromAuthorityId": "07bb4e2e-49bd-410c-b306-a680b7882184",
+            "fromTitle": "In the Matter of Calvin Delee Hawkins",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.364Z"
+          },
+          {
+            "id": "05aaa262-273c-41c2-88e6-dd3d9545dcc2",
+            "rawCitation": "2025 Page 7",
+            "normalizedCitation": "2025 Page 7",
+            "fromAuthorityId": "1a2b03ee-f4cf-4f46-a90b-0141b4b0166c",
+            "fromTitle": "Automotive Finance Corporation v. Meng Liu",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.446Z"
+          },
+          {
+            "id": "ad8a2d7d-a89e-491b-bfa7-6ff02a79ca0b",
+            "rawCitation": "2025 Page 7",
+            "normalizedCitation": "2025 Page 7",
+            "fromAuthorityId": "21146e85-bdce-4cf2-b7a2-1b0f06760d54",
+            "fromTitle": "Kiera Isgrig v. Trustees of Indiana University",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.592Z"
+          },
+          {
+            "id": "45c99bd2-b3c7-4f7c-acfd-07874bafba3b",
+            "rawCitation": "2025 Page 7",
+            "normalizedCitation": "2025 Page 7",
+            "fromAuthorityId": "31b1ec2c-2949-4663-980d-096687403e09",
+            "fromTitle": "In the Matter of Nathan L Pearson",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.652Z"
+          },
+          {
+            "id": "a44accfb-4e1a-46a9-80c6-2871716d44e7",
+            "rawCitation": "2025 Page 7",
+            "normalizedCitation": "2025 Page 7",
+            "fromAuthorityId": "67ae011e-193c-4b14-9f2a-c3a3b7fc24ba",
+            "fromTitle": "Emily Tingley v. First Financial Bank, As Trustee of Land Trust No. 428",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:51.779Z"
+          },
+          {
+            "id": "74dcaac2-5248-4496-ac98-d9b0468a9ecf",
+            "rawCitation": "2025 Page 7",
+            "normalizedCitation": "2025 Page 7",
+            "fromAuthorityId": "945e805a-e325-4a47-87ae-9afc33d3ec20",
+            "fromTitle": "Calvary Temple Church of Evansville, Inc. v. Gerard A. Kirsch",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.011Z"
+          },
+          {
+            "id": "1fb92a6c-98ee-461a-b1cc-997b73e41643",
+            "rawCitation": "2025 Page 7",
+            "normalizedCitation": "2025 Page 7",
+            "fromAuthorityId": "9bdcff54-cf98-46fe-aafd-b128c6630c90",
+            "fromTitle": "Linda Gierek v. Anonymous 1",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.068Z"
+          },
+          {
+            "id": "5c03b40c-9697-40d8-805e-e5aebe852484",
+            "rawCitation": "2025 Page 7",
+            "normalizedCitation": "2025 Page 7",
+            "fromAuthorityId": "e7d2a1b4-cbc8-40d3-9950-8beada2030e8",
+            "fromTitle": "Antonio Turner v. State of Indiana",
+            "fromCitation": null,
+            "fromCourt": "st-in-high",
+            "createdAt": "2026-10-02T08:50:52.827Z"
+          }
+        ],
+        "normalizationResult": "2025 Page 7",
+        "reporterParserResult": null,
+        "oldLookupSuitable": false,
+        "newEligibility": {
+          "eligible": false,
+          "lane": "MALFORMED_CASE_REFERENCE",
+          "reasons": [
+            "yyyy_page_n_document_pagination"
+          ],
+          "reporterFamily": null,
+          "volume": null,
+          "page": null,
+          "normalized": "2025 Page 7"
+        },
+        "extractorHint": {
+          "metadataKeys": [
+            "adapter",
+            "clCourt",
+            "retrievedAt",
+            "sourceClass",
+            "citationStatus",
+            "treatmentSignals"
+          ],
+          "citationExtraction": null,
+          "eyecite": null
+        },
+        "surroundingContext": [
+          "ndent. And Respondent shall complete at his own expense, including travel, a course in sexual harassment training through the National Center for State Courts. Massa, Slaughter, and Molter, JJ., concur. Rush, C.J., and Goff, J., dissent, believing Respondent should be removed from office due to his repeated acts of sexual harassment in the workplace. ATTORNEYS FOR RESPONDENT James Voyles, Jr. Jenn"
+        ],
+        "artifactKind": "YYYY_PAGE_N"
+      }
+    ]
+  },
+  "eligibilityGate": {
+    "CASE_IDENTITY_LOOKUP_ELIGIBLE": 36576,
+    "NON_CASE_REFERENCE": 1,
+    "MALFORMED_CASE_REFERENCE": 859,
+    "PIN_CITE_ONLY": 0,
+    "STATUTE_RULE_REGULATION": 1398,
+    "UNKNOWN_REVIEW": 5491
+  },
+  "queueBefore": {
+    "lookupCandidates": 36617,
+    "ge10": 17,
+    "ge5": 371,
+    "ge3": 1441,
+    "ge12": 34788,
+    "edges": {
+      "ge10": 221,
+      "ge5": 2122,
+      "ge3": 4790,
+      "ge12": 38597
+    },
+    "note": "Before ≈ current eligible + 41 YYYY Page N artifact targets (Batch4 treated Page as suitable). ge10 dropped 17→3 after removing Page artifacts."
+  },
+  "queueAfter": {
+    "lookupEligible": 36576,
+    "ge10": 3,
+    "ge5": 357,
+    "ge3": 1433,
+    "ge12": 34783,
+    "edges": {
+      "ge10": 48,
+      "ge5": 2027,
+      "ge3": 4761,
+      "ge12": 38589
+    },
+    "uniqueIdentityTargets": 44325,
+    "totalIdentityUnresolvedEdges": 55365
+  },
+  "filterImpact": {
+    "batch4CallsThatWouldHaveBeenAvoided": 14,
+    "currentArtifactTargetsRemovedFromClQueue": 41,
+    "nonCaseFiltered": 1399,
+    "malformedFiltered": 859,
+    "pinCiteFiltered": 0,
+    "estimatedFutureClCallsAvoided": 1319
+  },
+  "ge5IdentityLane": {
+    "targets": 360,
+    "edgesRepresented": 2075,
+    "ca3": 60,
+    "edpa": 8,
+    "pa": 9,
+    "federal": 348,
+    "state": 12,
+    "historical": 10,
+    "parallel": 63,
+    "expectedValue": {
+      "historicalBulkTargetRate": 0.85,
+      "historicalBulkEdgesPerCl": 6.5,
+      "batch4ReporterValidOnly": {
+        "lookups": 6,
+        "high": 5,
+        "rate": 0.8333333333333334,
+        "edges": 60,
+        "edgesPerCl": 10
+      },
+      "preferredLane": ">=5 reporter-valid CASE_IDENTITY_LOOKUP_ELIGIBLE"
+    }
+  },
+  "policy34": {
+    "strategicLookup": 245,
+    "defer": 1188,
+    "localOnlyWait": 0,
+    "strategicSample": [
+      "386 u.s. 1021",
+      "477 f.2d 1073",
+      "267 f.2d 237",
+      "533 u.s. 194",
+      "5 l. ed. 2d 492",
+      "18 l. ed. 2d 288",
+      "108 l. ed. 2d 222",
+      "167 l. ed. 2d 929",
+      "121 s. ct. 2151",
+      "150 l. ed. 2d 272",
+      "87 s. ct. 1367",
+      "18 l. ed. 2d 457",
+      "768 f.2d 503",
+      "132 s. ct. 945",
+      "115 l. ed. 2d 389"
+    ]
+  },
+  "policy12": {
+    "strategicExceptions": 2518,
+    "noBulk": 32265
+  },
+  "fullTextQueue": {
+    "total": 116,
+    "tierA": 20,
+    "tierB": 95,
+    "tierC": 1,
+    "topTierA": [
+      {
+        "citation": "16 Wall. 36",
+        "caseName": "Butchers' Benevolent Ass'n v. Crescent City Live-Stock Landing & Slaughter-House Co.",
+        "edgeCount": 13,
+        "rankScore": 78.75,
+        "reason": "practice_jurisdiction_value"
+      },
+      {
+        "citation": "96 U.S. 727",
+        "caseName": "Ex Parte Jackson",
+        "edgeCount": 9,
+        "rankScore": 77.15,
+        "reason": "scotus_parallel_or_us_reports"
+      },
+      {
+        "citation": "106 S. Ct. 2505",
+        "caseName": "Anderson v. Liberty Lobby, Inc.",
+        "edgeCount": 23,
+        "rankScore": 74,
+        "reason": "high_citation_demand"
+      },
+      {
+        "citation": "128 S. Ct. 2783",
+        "caseName": "District of Columbia v. Heller",
+        "edgeCount": 23,
+        "rankScore": 74,
+        "reason": "high_citation_demand"
+      },
+      {
+        "citation": "106 S. Ct. 2548",
+        "caseName": "Celotex Corp. v. Catrett, Administratrix of the Estate of Catrett",
+        "edgeCount": 22,
+        "rankScore": 72,
+        "reason": "high_citation_demand"
+      },
+      {
+        "citation": "18 How. 272",
+        "caseName": "Den Ex Dem. Murray v. Hoboken Land & Improvement Co.",
+        "edgeCount": 10,
+        "rankScore": 68.7,
+        "reason": "practice_jurisdiction_value"
+      },
+      {
+        "citation": "130 S. Ct. 3020",
+        "caseName": "McDonald v. City of Chicago",
+        "edgeCount": 20,
+        "rankScore": 68,
+        "reason": "high_citation_demand"
+      },
+      {
+        "citation": "451 U.S. 204",
+        "caseName": "Steagald v. United States",
+        "edgeCount": 18,
+        "rankScore": 64,
+        "reason": "high_citation_demand"
+      },
+      {
+        "citation": "421 U.S. 240",
+        "caseName": "Alyeska Pipeline Service Co. v. Wilderness Society",
+        "edgeCount": 18,
+        "rankScore": 64,
+        "reason": "high_citation_demand"
+      },
+      {
+        "citation": "106 S. Ct. 1348",
+        "caseName": "Matsushita Electric Industrial Co., Ltd. v. Zenith Radio Corporation",
+        "edgeCount": 17,
+        "rankScore": 62,
+        "reason": "high_citation_demand"
+      },
+      {
+        "citation": "95 S. Ct. 1612",
+        "caseName": "Alyeska Pipeline Service Co. v. Wilderness Society",
+        "edgeCount": 17,
+        "rankScore": 62,
+        "reason": "high_citation_demand"
+      },
+      {
+        "citation": "103 S. Ct. 1933",
+        "caseName": "Hensley v. Eckerhart",
+        "edgeCount": 17,
+        "rankScore": 62,
+        "reason": "high_citation_demand"
+      },
+      {
+        "citation": "390 U.S. 400",
+        "caseName": "Newman v. Piggie Park Enterprises, Inc.",
+        "edgeCount": 16,
+        "rankScore": 60,
+        "reason": "high_citation_demand"
+      },
+      {
+        "citation": "100 S. Ct. 1371",
+        "caseName": "Payton v. New York",
+        "edgeCount": 16,
+        "rankScore": 60,
+        "reason": "high_citation_demand"
+      },
+      {
+        "citation": "78 S. Ct. 99",
+        "caseName": "Conley v. Gibson",
+        "edgeCount": 13,
+        "rankScore": 54,
+        "reason": "scotus_parallel_or_us_reports"
+      }
+    ]
+  },
+  "permanentPolicy": {
+    "bulkIdentityThreshold": ">=5 edges AND CASE_IDENTITY_LOOKUP_ELIGIBLE",
+    "strategicExceptionPolicy": "3–4 or 1–2 only when CA3/EDPA/high-value PA/SCOTUS benchmark/priorityScore>=55 and reporter-valid",
+    "oneTwoEdgePolicy": "NO_BULK_EXTERNAL_LOOKUP; alias/parallel/local growth or on-demand",
+    "nonCaseHandling": "NON_CASE_REFERENCE / STATUTE_RULE_REGULATION — preserve raw; never CL case-identity lane",
+    "malformedHandling": "MALFORMED_CASE_REFERENCE — preserve raw; never CL case-identity lane",
+    "mixedAllocation": {
+      "identityPct": 55,
+      "fullTextPct": 35,
+      "reservePct": 10
+    }
+  },
+  "dryRunNextBatch": {
+    "totalProposedClMax": 40,
+    "identityCalls": 22,
+    "identityTargets": [
+      {
+        "targetKey": "1 cranch 137",
+        "citation": "1 Cranch 137",
+        "edgeCount": 21,
+        "jurisdictions": [
+          "us-scotus",
+          "us-ca-2"
+        ]
+      },
+      {
+        "targetKey": "573 u.s. 373",
+        "citation": "573 U.S. 373",
+        "edgeCount": 11,
+        "jurisdictions": [
+          "us-scotus",
+          "us-ca-2",
+          "us-ca-3",
+          "st-ct-high",
+          "st-wi-high",
+          "st-mi-high",
+          "st-id-high",
+          "us-ca-4",
+          "us-ca-6",
+          "st-in-high"
+        ]
+      },
+      {
+        "targetKey": "573 u.s. 149",
+        "citation": "573 U.S. 149",
+        "edgeCount": 9,
+        "jurisdictions": [
+          "us-scotus",
+          "us-ca-3",
+          "us-ca-8",
+          "st-nv-high",
+          "us-d-ilnd",
+          "us-ca-6"
+        ]
+      },
+      {
+        "targetKey": "109 u.s. 3",
+        "citation": "109 U.S. 3",
+        "edgeCount": 5,
+        "jurisdictions": [
+          "st-nm-high",
+          "us-scotus",
+          "us-d-paed",
+          "us-ca-3"
+        ]
+      },
+      {
+        "targetKey": "24 l. ed. 2d 593",
+        "citation": "24 L. Ed. 2d 593",
+        "edgeCount": 9,
+        "jurisdictions": [
+          "us-ca-5",
+          "us-ca-3",
+          "us-ca-9",
+          "us-ca-2"
+        ]
+      },
+      {
+        "targetKey": "430 u.s. 188",
+        "citation": "430 U.S. 188",
+        "edgeCount": 6,
+        "jurisdictions": [
+          "us-scotus",
+          "st-ky-high",
+          "st-fl-app",
+          "us-ca-11",
+          "us-ca-3",
+          "us-ca-dc"
+        ]
+      },
+      {
+        "targetKey": "326 u.s. 99",
+        "citation": "326 U.S. 99",
+        "edgeCount": 6,
+        "jurisdictions": [
+          "us-scotus",
+          "us-ca-1",
+          "us-d-ilnd",
+          "us-ca-dc",
+          "us-ca-3"
+        ]
+      },
+      {
+        "targetKey": "163 idaho 856",
+        "citation": "163 Idaho 856",
+        "edgeCount": 16,
+        "jurisdictions": [
+          "st-id-high",
+          "st-unknown"
+        ]
+      },
+      {
+        "targetKey": "39 l. ed. 2d 662",
+        "citation": "39 L. Ed. 2d 662",
+        "edgeCount": 8,
+        "jurisdictions": [
+          "us-ca-1",
+          "us-ca-5",
+          "us-ca-2",
+          "us-ca-3"
+        ]
+      },
+      {
+        "targetKey": "79 l. ed. 2d 891",
+        "citation": "79 L. Ed. 2d 891",
+        "edgeCount": 8,
+        "jurisdictions": [
+          "us-circuit-unspecified",
+          "us-ca-3",
+          "us-ca-9",
+          "us-ca-6",
+          "us-ca-dc"
+        ]
+      },
+      {
+        "targetKey": "149 u.s. 698",
+        "citation": "149 U.S. 698",
+        "edgeCount": 5,
+        "jurisdictions": [
+          "us-ca-3",
+          "us-scotus"
+        ]
+      },
+      {
+        "targetKey": "552 u.s. 264",
+        "citation": "552 U.S. 264",
+        "edgeCount": 5,
+        "jurisdictions": [
+          "st-mi-high",
+          "us-scotus",
+          "us-ca-3"
+        ]
+      },
+      {
+        "targetKey": "378 u.s. 546",
+        "citation": "378 U.S. 546",
+        "edgeCount": 5,
+        "jurisdictions": [
+          "us-scotus",
+          "us-ca-3"
+        ]
+      },
+      {
+        "targetKey": "446 u.s. 14",
+        "citation": "446 U.S. 14",
+        "edgeCount": 5,
+        "jurisdictions": [
+          "us-ca-3",
+          "us-scotus",
+          "us-circuit-unspecified"
+        ]
+      },
+      {
+        "targetKey": "409 u.s. 942",
+        "citation": "409 U.S. 942",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-ca-1",
+          "us-ca-2",
+          "us-ca-3",
+          "us-ca-9"
+        ]
+      },
+      {
+        "targetKey": "93 s. ct. 290",
+        "citation": "93 S. Ct. 290",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-ca-1",
+          "us-ca-2",
+          "us-ca-3",
+          "us-ca-9"
+        ]
+      },
+      {
+        "targetKey": "34 l. ed. 2d 215",
+        "citation": "34 L. Ed. 2d 215",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-ca-1",
+          "us-ca-2",
+          "us-ca-3",
+          "us-ca-9"
+        ]
+      },
+      {
+        "targetKey": "36 l. ed. 2d 702",
+        "citation": "36 L. Ed. 2d 702",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-ca-5",
+          "us-ca-3",
+          "us-ca-7",
+          "us-ca-9",
+          "us-ca-2"
+        ]
+      },
+      {
+        "targetKey": "46 l. ed. 2d 542",
+        "citation": "46 L. Ed. 2d 542",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-circuit-unspecified",
+          "us-ca-2",
+          "us-ca-7",
+          "us-ca-3",
+          "us-ca-9"
+        ]
+      },
+      {
+        "targetKey": "91 l. ed. 2d 466",
+        "citation": "91 L. Ed. 2d 466",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-circuit-unspecified",
+          "us-ca-3",
+          "us-ca-9"
+        ]
+      },
+      {
+        "targetKey": "92 l. ed. 2d 439",
+        "citation": "92 L. Ed. 2d 439",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-circuit-unspecified",
+          "us-ca-3",
+          "us-ca-9",
+          "us-ca-6",
+          "us-ca-dc"
+        ]
+      },
+      {
+        "targetKey": "97 l. ed. 2d 585",
+        "citation": "97 L. Ed. 2d 585",
+        "edgeCount": 7,
+        "jurisdictions": [
+          "us-circuit-unspecified",
+          "us-ca-3",
+          "us-ca-9",
+          "us-ca-dc"
+        ]
+      }
+    ],
+    "identityEdgesRepresented": 175,
+    "expectedIdentityHigh": 19,
+    "expectedIdentityEdges": 143,
+    "fullTextCalls": 14,
+    "fullTextTargets": [
+      {
+        "citation": "16 Wall. 36",
+        "caseName": "Butchers' Benevolent Ass'n v. Crescent City Live-Stock Landing & Slaughter-House Co.",
+        "edgeCount": 13,
+        "authorityId": "406c4cb2-07b9-483d-93f8-293535c8df8c",
+        "rankScore": 78.75,
+        "reason": "controlling_jurisdiction_gap"
+      },
+      {
+        "citation": "96 U.S. 727",
+        "caseName": "Ex Parte Jackson",
+        "edgeCount": 9,
+        "authorityId": "6dc21f19-f018-4114-9c40-26c98585a916",
+        "rankScore": 77.15,
+        "reason": "controlling_jurisdiction_gap"
+      },
+      {
+        "citation": "106 S. Ct. 2505",
+        "caseName": "Anderson v. Liberty Lobby, Inc.",
+        "edgeCount": 23,
+        "authorityId": "ea83101a-a697-46c3-8ab9-6db536953827",
+        "rankScore": 74,
+        "reason": "high_citation_demand_metadata_only"
+      },
+      {
+        "citation": "128 S. Ct. 2783",
+        "caseName": "District of Columbia v. Heller",
+        "edgeCount": 23,
+        "authorityId": "a958ac72-0858-42ea-b48d-24461837a31a",
+        "rankScore": 74,
+        "reason": "high_citation_demand_metadata_only"
+      },
+      {
+        "citation": "106 S. Ct. 2548",
+        "caseName": "Celotex Corp. v. Catrett, Administratrix of the Estate of Catrett",
+        "edgeCount": 22,
+        "authorityId": "5009c6ad-4563-4189-97e8-dab4297464f7",
+        "rankScore": 72,
+        "reason": "high_citation_demand_metadata_only"
+      },
+      {
+        "citation": "18 How. 272",
+        "caseName": "Den Ex Dem. Murray v. Hoboken Land & Improvement Co.",
+        "edgeCount": 10,
+        "authorityId": "e5aa923a-d18a-40c1-8213-a9e4261efa51",
+        "rankScore": 68.7,
+        "reason": "controlling_jurisdiction_gap"
+      },
+      {
+        "citation": "130 S. Ct. 3020",
+        "caseName": "McDonald v. City of Chicago",
+        "edgeCount": 20,
+        "authorityId": "f4b12054-2260-4dff-b8c1-2f0726777a28",
+        "rankScore": 68,
+        "reason": "high_citation_demand_metadata_only"
+      },
+      {
+        "citation": "451 U.S. 204",
+        "caseName": "Steagald v. United States",
+        "edgeCount": 18,
+        "authorityId": "543c647d-08db-44a5-a2fd-86a571fa0f38",
+        "rankScore": 64,
+        "reason": "high_citation_demand_metadata_only"
+      },
+      {
+        "citation": "421 U.S. 240",
+        "caseName": "Alyeska Pipeline Service Co. v. Wilderness Society",
+        "edgeCount": 18,
+        "authorityId": "4da88fa6-adc8-4f7d-8254-de370222477d",
+        "rankScore": 64,
+        "reason": "high_citation_demand_metadata_only"
+      },
+      {
+        "citation": "106 S. Ct. 1348",
+        "caseName": "Matsushita Electric Industrial Co., Ltd. v. Zenith Radio Corporation",
+        "edgeCount": 17,
+        "authorityId": "730995f1-442d-4777-a5aa-d772534da74d",
+        "rankScore": 62,
+        "reason": "high_citation_demand_metadata_only"
+      },
+      {
+        "citation": "95 S. Ct. 1612",
+        "caseName": "Alyeska Pipeline Service Co. v. Wilderness Society",
+        "edgeCount": 17,
+        "authorityId": "4da88fa6-adc8-4f7d-8254-de370222477d",
+        "rankScore": 62,
+        "reason": "high_citation_demand_metadata_only"
+      },
+      {
+        "citation": "103 S. Ct. 1933",
+        "caseName": "Hensley v. Eckerhart",
+        "edgeCount": 17,
+        "authorityId": "895161c9-b325-41a6-861b-2b8c413c0c12",
+        "rankScore": 62,
+        "reason": "high_citation_demand_metadata_only"
+      },
+      {
+        "citation": "390 U.S. 400",
+        "caseName": "Newman v. Piggie Park Enterprises, Inc.",
+        "edgeCount": 16,
+        "authorityId": "1397fa35-69cb-4ecf-a9a9-95f62cc72085",
+        "rankScore": 60,
+        "reason": "high_citation_demand_metadata_only"
+      },
+      {
+        "citation": "100 S. Ct. 1371",
+        "caseName": "Payton v. New York",
+        "edgeCount": 16,
+        "authorityId": "40e93263-20aa-4e7b-9320-a34e02ffe445",
+        "rankScore": 60,
+        "reason": "high_citation_demand_metadata_only"
+      }
+    ],
+    "estimatedRequestCost": 36,
+    "headroom": 4,
+    "allocation": {
+      "identityPct": 55,
+      "fullTextPct": 35,
+      "reservePct": 10
+    }
+  },
+  "generatedAt": "2026-10-09T17:16:01.983Z",
+  "tests": {
+    "classifier": "packages/research citation-resolution.test.ts CASE_CITATION_LOOKUP_ELIGIBLE gate",
+    "falsePositiveProtection": "rejects Page/statute/rule/secondary/pin",
+    "falseNegativeProtection": "keeps U.S./F.3d/S.Ct/Idaho/N.H./Wall./neutral",
+    "futureIngestion": "pipeline.filterExternalIdentityQueueTargets + extract isExtractableCitation v1.1",
+    "queue": "target-queue sets eligibilityLane on each unique target",
+    "healthRegression": "read-only probe; citationMutations=0; courtListenerCalls=0"
+  },
+  "nextGate": "MIXED_CL_BATCH_READY",
+  "finalClassification": "CITATION_QUEUE_HARDENED"
+}

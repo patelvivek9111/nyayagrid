@@ -170,6 +170,11 @@ export function targetKey(raw: string | null | undefined, normalized?: string | 
   return lean.toLowerCase().replace(/\s+/g, " ").trim() || "__empty__";
 }
 
+/**
+ * Legacy name for case-identity lookup suitability.
+ * Prefer classifyCaseCitationLookupEligibility for lane metadata.
+ * Kept self-contained (no import of eligibility) to avoid circular deps.
+ */
 export function isLookupSuitableCitation(text: string | null | undefined): boolean {
   const t = experimentalNormalize(text) || normalizeCitationWhitespace(text || "");
   if (!t || t.length < 5) return false;
@@ -177,16 +182,25 @@ export function isLookupSuitableCitation(text: string | null | undefined): boole
   if (/\bU\.?\s*S\.?\s*C\.?\s*§/i.test(t)) return false;
   if (/\bC\.?\s*F\.?\s*R\.?\s*§/i.test(t)) return false;
   if (/^Fed\.\s*R\./i.test(t)) return false;
-  // Extraction artifacts: "2026 Page 2", "2025 Page 7" — not reporter citations.
-  if (/^\d{4}\s+Page\s+\d+$/i.test(t)) return false;
-  if (/\bPage\b/i.test(t) && !/\b[A-Z][a-z]*\.\s*(2d|3d|4th)?\b/.test(t)) return false;
+  if (/^\d{4}\s+Pages?\s+\d+$/i.test(t)) return false;
+  if (/^(?:at\s+)?\d{1,4}(?:\s*[-–]\s*\d{1,4})?$/i.test(t)) return false;
   const parsed = parseVolReporterPage(t);
-  if (parsed) {
-    if (/^page$/i.test(parsed.reporter)) return false;
+  if (parsed) return !/^page$/i.test(parsed.reporter);
+  // Neutral citations
+  if (/^(?:19|20)\d{2}\s+(?:ND|SD|OK|NM|WY|MT|KS|NE|IA|WI|MN|AK|HI|OH|UT|VT|ME|NH|NV|ID|DE|RI|SC|NC|WV)\s+\d{1,4}$/i.test(t)) {
     return true;
   }
-  // Require a reporter-like token (contains a letter+period or known series), not bare words.
-  if (!/\d{1,4}\s+[A-Za-z][A-Za-z.]*\.?[A-Za-z0-9.]*\s+\d{1,4}\b/.test(t)) return false;
-  if (/^\d{4}\s+[A-Za-z]+\s+\d{1,4}$/.test(t) && !/\./.test(t)) return false;
-  return true;
+  // Recognized state / historical official reporters (Idaho, Or., Wall., etc.)
+  if (
+    /^\d{1,4}\s+(?:Idaho|Or\.?|N\.?\s*H\.?|Wall\.?|How\.?|Pet\.?|Ill\.?|Cal\.?|Mass\.?|Pa\.?|Tex\.?)\s*(?:2d|3d|App\.?)?\s+\d{1,4}$/i.test(
+      t,
+    )
+  ) {
+    return true;
+  }
+  // Regional dotted reporters
+  if (/^\d{1,4}\s+(?:A\.|P\.|N\.?\s*E\.?|N\.?\s*W\.?|S\.?\s*E\.?|S\.?\s*W\.?|So\.)\s*(?:2d|3d)?\s+\d{1,4}$/i.test(t)) {
+    return true;
+  }
+  return false;
 }

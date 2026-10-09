@@ -2,9 +2,9 @@
  * Unique unresolved-target queue: collapse edges → canonical target keys.
  */
 
+import { classifyCaseCitationLookupEligibility } from "./eligibility.js";
 import {
   experimentalNormalize,
-  isLookupSuitableCitation,
   normalizeCitationWhitespace,
   parseVolReporterPage,
   targetKey,
@@ -113,12 +113,17 @@ export function buildUnresolvedTargetQueue(
   for (const row of acc.values()) {
     const p = parseVolReporterPage(row.normalizedCitation);
     const localCandidateStatus = matchBucket(index, row.representativeRaw, row.normalizedCitation);
-    const lookupSuitable = isLookupSuitableCitation(row.normalizedCitation);
+    const eligibility = classifyCaseCitationLookupEligibility(
+      row.representativeRaw,
+      row.normalizedCitation,
+    );
+    const lookupSuitable = eligibility.eligible;
+    const reporter = eligibility.reporterFamily || p?.reporter || null;
     const base = {
       edgeCount: row.edgeIds.length,
       uniqueCitingCases: row.citing.size,
       jurisdictions: [...row.jurisdictions],
-      reporter: p?.reporter ?? null,
+      reporter,
       lookupSuitable,
       localCandidateStatus,
     };
@@ -130,8 +135,8 @@ export function buildUnresolvedTargetQueue(
       uniqueCitingCases: base.uniqueCitingCases,
       jurisdictions: base.jurisdictions,
       reporter: base.reporter,
-      volume: p?.volume ?? null,
-      page: p?.page ?? null,
+      volume: eligibility.volume ?? p?.volume ?? null,
+      page: eligibility.page ?? p?.page ?? null,
       year: null,
       firstSeen: row.firstSeen,
       lastSeen: row.lastSeen,
@@ -143,6 +148,8 @@ export function buildUnresolvedTargetQueue(
       priorityScore: scoreUnresolvedTarget(base),
       edgeIds: row.edgeIds,
       lookupSuitable,
+      eligibilityLane: eligibility.lane,
+      eligibilityReasons: eligibility.reasons,
     });
   }
 

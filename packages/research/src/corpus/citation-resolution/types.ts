@@ -105,6 +105,15 @@ export type UnresolvedTarget = {
   priorityScore: number;
   edgeIds: string[];
   lookupSuitable: boolean;
+  /** External case-identity lane classification (does not mutate raw citation evidence). */
+  eligibilityLane?:
+    | "CASE_IDENTITY_LOOKUP_ELIGIBLE"
+    | "NON_CASE_REFERENCE"
+    | "MALFORMED_CASE_REFERENCE"
+    | "PIN_CITE_ONLY"
+    | "STATUTE_RULE_REGULATION"
+    | "UNKNOWN_REVIEW";
+  eligibilityReasons?: string[];
 };
 
 export type LocalResolveProposal = {

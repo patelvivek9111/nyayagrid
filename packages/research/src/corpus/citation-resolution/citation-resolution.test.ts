@@ -13,11 +13,18 @@ import { LocalAuthorityIndex } from "./local-index.js";
 import { dryRunLocalHighResolver, planBackfillFromProposals } from "./local-resolver.js";
 import { metricsForNewCaseBatch } from "./metrics.js";
 import {
+  classifyCaseCitationLookupEligibility,
+  classifyDemandLanePolicy,
+  isCaseCitationLookupEligible,
+  isStrategicIdentityException,
+} from "./eligibility.js";
+import {
   citationLookupAliases,
   experimentalNormalize,
+  isLookupSuitableCitation,
   targetKey,
 } from "./normalize.js";
-import { resolveNewCitationsLocalFirst } from "./pipeline.js";
+import { filterExternalIdentityQueueTargets, resolveNewCitationsLocalFirst } from "./pipeline.js";
 import { buildUnresolvedTargetQueue, chunkTargetsForBatch, scoreUnresolvedTarget } from "./target-queue.js";
 import { authorityCorpusState, type AuthorityIndexRow, type UnresolvedEdgeRow } from "./types.js";
 
@@ -37,6 +44,79 @@ describe("citation-resolution normalize", () => {
     expect(experimentalNormalize("F.Supp..2d")).toContain("F.Supp");
     expect(citationLookupAliases("42 U.S.C. § 1983")).toContain("42 USC § 1983");
     expect(c).toBe(a);
+  });
+});
+
+describe("CASE_CITATION_LOOKUP_ELIGIBLE gate", () => {
+  it("accepts valid federal, state, parallel, and neutral citations", () => {
+    expect(isCaseCitationLookupEligible("410 U.S. 113")).toBe(true);
+    expect(isCaseCitationLookupEligible("503 F.3d 284")).toBe(true);
+    expect(isCaseCitationLookupEligible("106 S. Ct. 2505")).toBe(true);
+    expect(isCaseCitationLookupEligible("163 Idaho 856")).toBe(true);
+    expect(isCaseCitationLookupEligible("149 N.H. 31")).toBe(true);
+    expect(isCaseCitationLookupEligible("16 Wall. 36")).toBe(true);
+    expect(isCaseCitationLookupEligible("2026 ND 26")).toBe(true);
+    expect(isLookupSuitableCitation("410 U.S. 113")).toBe(true);
+  });
+
+  it("rejects YYYY Page N, bare page, statute, regulation, rule, secondary, pin, malformed", () => {
+    expect(classifyCaseCitationLookupEligibility("2026 Page 2").lane).toBe("MALFORMED_CASE_REFERENCE");
+    expect(classifyCaseCitationLookupEligibility("2025 Page 7").eligible).toBe(false);
+    expect(classifyCaseCitationLookupEligibility("at 123").lane).toBe("PIN_CITE_ONLY");
+    expect(classifyCaseCitationLookupEligibility("42 U.S.C. § 1983").lane).toBe("STATUTE_RULE_REGULATION");
+    expect(classifyCaseCitationLookupEligibility("42 C.F.R. § 100.1").lane).toBe("STATUTE_RULE_REGULATION");
+    expect(classifyCaseCitationLookupEligibility("Fed. R. Civ. P. 12").lane).toBe("STATUTE_RULE_REGULATION");
+    expect(classifyCaseCitationLookupEligibility("Am. Jur. 2d Contracts § 1").lane).toBe("NON_CASE_REFERENCE");
+    expect(classifyCaseCitationLookupEligibility("ECF No. 12").lane).toBe("NON_CASE_REFERENCE");
+    expect(classifyCaseCitationLookupEligibility("999 Zzzz 1").lane).toBe("UNKNOWN_REVIEW");
+    expect(isLookupSuitableCitation("2026 Page 2")).toBe(false);
+  });
+
+  it("does not over-filter valid >=5 demand targets and allows strategic 1–2 exceptions", () => {
+    const edges: UnresolvedEdgeRow[] = [
+      ...Array.from({ length: 6 }, (_, i) => ({
+        id: `e${i}`,
+        fromAuthorityId: `c${i}`,
+        rawCitation: "410 U.S. 113",
+        normalizedCitation: "410 U.S. 113",
+        fromCourtId: "us-ca-3",
+      })),
+      {
+        id: "s1",
+        fromAuthorityId: "c9",
+        rawCitation: "1 F.3d 1",
+        normalizedCitation: "1 F.3d 1",
+        fromCourtId: "us-ca-3",
+      },
+      {
+        id: "bad",
+        fromAuthorityId: "c8",
+        rawCitation: "2026 Page 2",
+        normalizedCitation: "2026 Page 2",
+        fromCourtId: "st-in-high",
+      },
+    ];
+    const q = buildUnresolvedTargetQueue(edges, new LocalAuthorityIndex([]));
+    const eligible = filterExternalIdentityQueueTargets(q.targets);
+    expect(eligible.some((t) => t.targetKey.includes("410"))).toBe(true);
+    expect(eligible.some((t) => /page/i.test(t.normalizedCitation))).toBe(false);
+    const pageTarget = q.targets.find((t) => /page/i.test(t.normalizedCitation));
+    expect(pageTarget?.eligibilityLane).toBe("MALFORMED_CASE_REFERENCE");
+    expect(pageTarget?.lookupSuitable).toBe(false);
+
+    expect(
+      isStrategicIdentityException({ edgeCount: 1, jurisdictions: ["us-ca-3"], priorityScore: 30 }),
+    ).toBe(true);
+    expect(classifyDemandLanePolicy({ eligible: true, edgeCount: 6 })).toBe("BULK_IDENTITY");
+    expect(
+      classifyDemandLanePolicy({
+        eligible: true,
+        edgeCount: 1,
+        jurisdictions: ["us-d-paed"],
+        priorityScore: 20,
+      }),
+    ).toBe("STRATEGIC_LOOKUP");
+    expect(classifyDemandLanePolicy({ eligible: true, edgeCount: 1, jurisdictions: ["st-xx"] })).toBe("NO_BULK");
   });
 });
 
