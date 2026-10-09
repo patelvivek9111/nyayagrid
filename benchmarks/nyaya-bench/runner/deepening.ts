@@ -2,6 +2,7 @@ import {
   answerCivilClaimsQuestion,
   answerDiscoveryQuestion,
   answerSuppressionQuestion,
+  applyDraftCitationResolveOrAbstain,
   buildCivilClaimMatrix,
   buildCivilClaimStrengthAnalysis,
   buildCivilWholeMatterView,
@@ -30,6 +31,15 @@ import {
   runSuppressionHierarchyReview,
   unansweredItems,
 } from "@nyayagrid/intelligence";
+import {
+  applyResolveOrAbstainPolicy,
+  blocksUnsupportedTreatmentMemory,
+  buildPass5CitationFixture,
+  canLinkAuthorityInGraph,
+  memorySafeResolutionFact,
+  resolveCitationsForProduct,
+  TREATMENT_UNVERIFIED_NOTICE,
+} from "@nyayagrid/research";
 import { DEEPENING_ASSIGNMENTS, type DeepeningAssignment } from "../datasets/deepening/catalog";
 
 export type DeepeningGrade = {
@@ -611,7 +621,189 @@ const GRADERS: Record<string, (assignment: DeepeningAssignment) => DeepeningGrad
   "D4-DISC-SUPP-01": gradeDiscSupplement,
   "D4-DISC-MOTION-01": gradeDiscMotion,
   "D4-DISC-WHOLE-01": gradeDiscWhole,
+  "D5-CITE-RESOLVED-01": gradeCiteResolved,
+  "D5-CITE-META-01": gradeCiteMeta,
+  "D5-CITE-AMBIG-01": gradeCiteAmbig,
+  "D5-CITE-UNRESOLVED-01": gradeCiteUnresolved,
+  "D5-CITE-NONCASE-01": gradeCiteNonCase,
+  "D5-CITE-MALFORMED-01": gradeCiteMalformed,
+  "D5-CITE-PARALLEL-01": gradeCiteParallel,
+  "D5-CITE-TREATMENT-01": gradeCiteTreatment,
+  "D5-CITE-ASK-01": gradeCiteAsk,
+  "D5-CITE-DRAFT-01": gradeCiteDraft,
+  "D5-CITE-GRAPH-01": gradeCiteGraph,
+  "D5-CITE-MEMORY-01": gradeCiteMemory,
 };
+
+function gradeCiteResolved(assignment: DeepeningAssignment): DeepeningGrade {
+  const fixture = buildPass5CitationFixture();
+  const [row] = resolveCitationsForProduct({
+    citations: [{ rawCitation: fixture.citations.resolvedCorpusComplete }],
+    authorities: fixture.authorities,
+  });
+  const failures: string[] = [];
+  if (row?.outcome !== "RESOLVED_HIGH_CONFIDENCE") failures.push("not resolved");
+  if (row?.authorityState !== "CORPUS_COMPLETE" || !row.corpusComplete) failures.push("not corpus complete");
+  if (!row?.coverage.treatmentUnknown) failures.push("invented treatment");
+  return fail(assignment, failures);
+}
+
+function gradeCiteMeta(assignment: DeepeningAssignment): DeepeningGrade {
+  const fixture = buildPass5CitationFixture();
+  const [row] = resolveCitationsForProduct({
+    citations: [{ rawCitation: fixture.citations.resolvedMetadataOnly }],
+    authorities: fixture.authorities,
+  });
+  const failures: string[] = [];
+  if (row?.authorityState !== "AUTHORITY_RESOLVED") failures.push("expected AUTHORITY_RESOLVED");
+  if (row?.corpusComplete) failures.push("false corpus-complete");
+  if (row?.coverage.displayState !== "IDENTITY_VERIFIED_TEXT_NOT_IN_CORPUS") {
+    failures.push("missing text-not-in-corpus disclosure");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeCiteAmbig(assignment: DeepeningAssignment): DeepeningGrade {
+  const fixture = buildPass5CitationFixture();
+  const [row] = resolveCitationsForProduct({
+    citations: [{ rawCitation: fixture.citations.ambiguous }],
+    authorities: fixture.authorities,
+  });
+  const policy = applyResolveOrAbstainPolicy({ resolutions: row ? [row] : [] });
+  const failures: string[] = [];
+  if (row?.outcome !== "AMBIGUOUS") failures.push("not ambiguous");
+  if (row?.authorityId) failures.push("silent winner selected");
+  if (!policy.suppressedCitations.includes(fixture.citations.ambiguous)) failures.push("not suppressed");
+  return fail(assignment, failures);
+}
+
+function gradeCiteUnresolved(assignment: DeepeningAssignment): DeepeningGrade {
+  const fixture = buildPass5CitationFixture();
+  const [row] = resolveCitationsForProduct({
+    citations: [{ rawCitation: fixture.citations.unresolved }],
+    authorities: fixture.authorities,
+  });
+  const failures: string[] = [];
+  if (row?.coverage.displayState !== "UNRESOLVED") failures.push("not unresolved");
+  if (row?.authorityId) failures.push("fabricated authority");
+  return fail(assignment, failures);
+}
+
+function gradeCiteNonCase(assignment: DeepeningAssignment): DeepeningGrade {
+  const fixture = buildPass5CitationFixture();
+  const [row] = resolveCitationsForProduct({
+    citations: [{ rawCitation: fixture.citations.nonCase }],
+    authorities: fixture.authorities,
+  });
+  return fail(assignment, row?.outcome === "NOT_CASE_CITATION" ? [] : ["expected NOT_CASE_CITATION"]);
+}
+
+function gradeCiteMalformed(assignment: DeepeningAssignment): DeepeningGrade {
+  const fixture = buildPass5CitationFixture();
+  const [row] = resolveCitationsForProduct({
+    citations: [{ rawCitation: fixture.citations.malformed }],
+    authorities: fixture.authorities,
+  });
+  return fail(assignment, row?.outcome === "MALFORMED" ? [] : ["expected MALFORMED"]);
+}
+
+function gradeCiteParallel(assignment: DeepeningAssignment): DeepeningGrade {
+  const fixture = buildPass5CitationFixture();
+  const [row] = resolveCitationsForProduct({
+    citations: [{ rawCitation: fixture.citations.parallel }],
+    authorities: fixture.authorities,
+  });
+  const failures: string[] = [];
+  if (row?.outcome !== "RESOLVED_HIGH_CONFIDENCE") failures.push("parallel not resolved");
+  if (row?.outcome === "AMBIGUOUS") failures.push("unexpected ambiguity");
+  return fail(assignment, failures);
+}
+
+function gradeCiteTreatment(assignment: DeepeningAssignment): DeepeningGrade {
+  const fixture = buildPass5CitationFixture();
+  const rows = resolveCitationsForProduct({
+    citations: [
+      { rawCitation: fixture.citations.resolvedCorpusComplete },
+      { rawCitation: fixture.citations.resolvedMetadataOnly },
+    ],
+    authorities: fixture.authorities,
+  });
+  const failures: string[] = [];
+  if (!rows.every((row) => row.coverage.treatmentUnknown)) failures.push("treatment not unknown");
+  if (!rows.every((row) => row.coverage.coverageWarning?.includes(TREATMENT_UNVERIFIED_NOTICE))) {
+    failures.push("missing treatment unverified notice");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeCiteAsk(assignment: DeepeningAssignment): DeepeningGrade {
+  const fixture = buildPass5CitationFixture();
+  const resolutions = resolveCitationsForProduct({
+    citations: [
+      { rawCitation: fixture.citations.resolvedCorpusComplete },
+      { rawCitation: fixture.citations.resolvedMetadataOnly },
+      { rawCitation: fixture.citations.ambiguous },
+    ],
+    authorities: fixture.authorities,
+  });
+  const policy = applyResolveOrAbstainPolicy({ resolutions });
+  const failures: string[] = [];
+  if (!policy.allowedFullTextAuthorityIds.includes("auth-brown")) failures.push("full-text not allowed");
+  if (!policy.allowedIdentityAuthorityIds.includes("auth-roe-meta")) failures.push("identity not allowed");
+  if (!policy.suppressedCitations.includes(fixture.citations.ambiguous)) failures.push("ambiguous not suppressed");
+  return fail(assignment, failures);
+}
+
+function gradeCiteDraft(assignment: DeepeningAssignment): DeepeningGrade {
+  const fixture = buildPass5CitationFixture();
+  const resolutions = resolveCitationsForProduct({
+    citations: [
+      { rawCitation: fixture.citations.ambiguous },
+      { rawCitation: fixture.citations.unresolved },
+    ],
+    authorities: fixture.authorities,
+  });
+  const grounded = applyDraftCitationResolveOrAbstain({
+    content: `See ${fixture.citations.ambiguous} and ${fixture.citations.unresolved}.`,
+    assumptions: [],
+    resolutions,
+  });
+  const failures: string[] = [];
+  if (grounded.suppressedCitations.length < 2) failures.push("suppressed citations missing");
+  if (!/Attorney review required/i.test(grounded.content)) failures.push("review banner missing");
+  if (/invented authority/i.test(grounded.content)) failures.push("fabricated substitute");
+  return fail(assignment, failures);
+}
+
+function gradeCiteGraph(assignment: DeepeningAssignment): DeepeningGrade {
+  const fixture = buildPass5CitationFixture();
+  const [resolved, ambiguous] = resolveCitationsForProduct({
+    citations: [
+      { rawCitation: fixture.citations.resolvedCorpusComplete },
+      { rawCitation: fixture.citations.ambiguous },
+    ],
+    authorities: fixture.authorities,
+  });
+  const failures: string[] = [];
+  if (!canLinkAuthorityInGraph(resolved!)) failures.push("resolved should be linkable");
+  if (canLinkAuthorityInGraph(ambiguous!)) failures.push("ambiguous must not be linkable");
+  return fail(assignment, failures);
+}
+
+function gradeCiteMemory(assignment: DeepeningAssignment): DeepeningGrade {
+  const fixture = buildPass5CitationFixture();
+  const [resolved] = resolveCitationsForProduct({
+    citations: [{ rawCitation: fixture.citations.resolvedMetadataOnly }],
+    authorities: fixture.authorities,
+  });
+  const fact = memorySafeResolutionFact(resolved!);
+  const failures: string[] = [];
+  if (!fact.allowed || !fact.fact) failures.push("resolution fact blocked");
+  if (!blocksUnsupportedTreatmentMemory("This case is still good law.")) {
+    failures.push("good-law conclusion not blocked");
+  }
+  return fail(assignment, failures);
+}
 
 /** Deterministic deepening grades. No database, model, or CourtListener calls. */
 export function runDeepeningPass(): { grades: DeepeningGrade[]; passed: number; failed: number } {
