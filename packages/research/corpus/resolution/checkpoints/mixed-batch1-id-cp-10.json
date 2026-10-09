@@ -1,0 +1,12 @@
+{
+  "lane": "identity",
+  "atLookup": 10,
+  "totalCl": 11,
+  "idHigh": 9,
+  "idEdgesBackfilled": 67,
+  "health": {
+    "green": true,
+    "unresolved": 55298,
+    "METADATA_ONLY": 115
+  }
+}

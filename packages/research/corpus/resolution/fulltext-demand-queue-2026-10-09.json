@@ -1,59 +1,7 @@
 {
-  "generatedAt": "2026-10-09T16:35:22.280Z",
-  "batch": "identity-batch1+2+3+4",
+  "generatedAt": "2026-10-09T17:29:55.107Z",
+  "batch": "identity-batch1+2+3+4+mixed1",
   "candidates": [
-    {
-      "targetKey": "16 wall. 36",
-      "authorityId": "406c4cb2-07b9-483d-93f8-293535c8df8c",
-      "clusterId": "88661",
-      "citation": "16 Wall. 36",
-      "edgeCount": 13,
-      "uniqueCitingCases": 13,
-      "caseName": "Butchers' Benevolent Ass'n v. Crescent City Live-Stock Landing & Slaughter-House Co.",
-      "court": null,
-      "jurisdictions": [
-        "us-scotus"
-      ],
-      "priorityReason": "metadata_only_after_identity",
-      "unresolvedDemandRepresented": 13,
-      "controllingRelevance": true,
-      "practiceValue": 67.5
-    },
-    {
-      "targetKey": "18 how. 272",
-      "authorityId": "e5aa923a-d18a-40c1-8213-a9e4261efa51",
-      "clusterId": "87010",
-      "citation": "18 How. 272",
-      "edgeCount": 10,
-      "uniqueCitingCases": 10,
-      "caseName": "Den Ex Dem. Murray v. Hoboken Land & Improvement Co.",
-      "court": null,
-      "jurisdictions": [
-        "us-scotus"
-      ],
-      "priorityReason": "metadata_only_after_identity",
-      "unresolvedDemandRepresented": 10,
-      "controllingRelevance": true,
-      "practiceValue": 57
-    },
-    {
-      "targetKey": "96 u.s. 727",
-      "authorityId": "6dc21f19-f018-4114-9c40-26c98585a916",
-      "clusterId": "89759",
-      "citation": "96 U.S. 727",
-      "edgeCount": 9,
-      "uniqueCitingCases": 9,
-      "caseName": "Ex Parte Jackson",
-      "court": null,
-      "jurisdictions": [
-        "us-scotus",
-        "us-ca-dc"
-      ],
-      "priorityReason": "metadata_only_after_identity",
-      "unresolvedDemandRepresented": 9,
-      "controllingRelevance": true,
-      "practiceValue": 71.5
-    },
     {
       "targetKey": "346 or 160",
       "authorityId": "0445a411-5500-4465-ae94-5951f4fc43bd",
@@ -87,51 +35,6 @@
       "unresolvedDemandRepresented": 14,
       "controllingRelevance": false,
       "practiceValue": 61
-    },
-    {
-      "targetKey": "106 s. ct. 2505",
-      "authorityId": "ea83101a-a697-46c3-8ab9-6db536953827",
-      "clusterId": "111719",
-      "citation": "106 S. Ct. 2505",
-      "edgeCount": 23,
-      "caseName": "Anderson v. Liberty Lobby, Inc.",
-      "court": null
-    },
-    {
-      "targetKey": "128 s. ct. 2783",
-      "authorityId": "a958ac72-0858-42ea-b48d-24461837a31a",
-      "clusterId": "145777",
-      "citation": "128 S. Ct. 2783",
-      "edgeCount": 23,
-      "caseName": "District of Columbia v. Heller",
-      "court": null
-    },
-    {
-      "targetKey": "106 s. ct. 2548",
-      "authorityId": "5009c6ad-4563-4189-97e8-dab4297464f7",
-      "clusterId": "111722",
-      "citation": "106 S. Ct. 2548",
-      "edgeCount": 22,
-      "caseName": "Celotex Corp. v. Catrett, Administratrix of the Estate of Catrett",
-      "court": null
-    },
-    {
-      "targetKey": "130 s. ct. 3020",
-      "authorityId": "f4b12054-2260-4dff-b8c1-2f0726777a28",
-      "clusterId": "149702",
-      "citation": "130 S. Ct. 3020",
-      "edgeCount": 20,
-      "caseName": "McDonald v. City of Chicago",
-      "court": null
-    },
-    {
-      "targetKey": "451 u.s. 204",
-      "authorityId": "543c647d-08db-44a5-a2fd-86a571fa0f38",
-      "clusterId": "110464",
-      "citation": "451 U.S. 204",
-      "edgeCount": 18,
-      "caseName": "Steagald v. United States",
-      "court": null
     },
     {
       "targetKey": "421 u.s. 240",
