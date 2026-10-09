@@ -22,6 +22,20 @@ describe("graph_node_type shared contract", () => {
     expect(GRAPH_NODE_TYPES).toContain("defense");
   });
 
+  it("accepts minimal discovery ledger node types", () => {
+    for (const nodeType of [
+      "discovery_request_set",
+      "discovery_request_item",
+      "discovery_response",
+      "discovery_production",
+      "discovery_deficiency",
+      "privilege_assertion",
+    ] as const) {
+      expect(isGraphNodeType(nodeType)).toBe(true);
+      expect(GRAPH_NODE_TYPES).toContain(nodeType);
+    }
+  });
+
   it("preserves every legacy node type", () => {
     for (const nodeType of LEGACY_NODE_TYPES) {
       expect(isGraphNodeType(nodeType)).toBe(true);
@@ -34,6 +48,8 @@ describe("graph_node_type shared contract", () => {
     expect(isGraphNodeType("Claim")).toBe(false);
     expect(isGraphNodeType("")).toBe(false);
     expect(isGraphNodeType("counterclaim")).toBe(false);
+    expect(isGraphNodeType("discovery_objection")).toBe(false);
+    expect(isGraphNodeType("bates_range")).toBe(false);
   });
 
   it("exposes a stable serialization round-trip for the accepted set", () => {
@@ -45,6 +61,11 @@ describe("graph_node_type shared contract", () => {
     }
     const claim: GraphNodeType = "claim";
     const defense: GraphNodeType = "defense";
-    expect(JSON.parse(JSON.stringify({ claim, defense }))).toEqual({ claim: "claim", defense: "defense" });
+    const discoveryRequestSet: GraphNodeType = "discovery_request_set";
+    expect(JSON.parse(JSON.stringify({ claim, defense, discoveryRequestSet }))).toEqual({
+      claim: "claim",
+      defense: "defense",
+      discoveryRequestSet: "discovery_request_set",
+    });
   });
 });
