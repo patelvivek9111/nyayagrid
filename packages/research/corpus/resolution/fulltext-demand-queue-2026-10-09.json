@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-09T17:29:55.107Z",
-  "batch": "identity-batch1+2+3+4+mixed1",
+  "generatedAt": "2026-10-09T17:43:50.041Z",
+  "batch": "identity-batch1+2+3+4+mixed1+mixed2",
   "candidates": [
     {
       "targetKey": "346 or 160",
@@ -35,69 +35,6 @@
       "unresolvedDemandRepresented": 14,
       "controllingRelevance": false,
       "practiceValue": 61
-    },
-    {
-      "targetKey": "421 u.s. 240",
-      "authorityId": "4da88fa6-adc8-4f7d-8254-de370222477d",
-      "clusterId": "109246",
-      "citation": "421 U.S. 240",
-      "edgeCount": 18,
-      "caseName": "Alyeska Pipeline Service Co. v. Wilderness Society",
-      "court": null
-    },
-    {
-      "targetKey": "106 s. ct. 1348",
-      "authorityId": "730995f1-442d-4777-a5aa-d772534da74d",
-      "clusterId": "111620",
-      "citation": "106 S. Ct. 1348",
-      "edgeCount": 17,
-      "caseName": "Matsushita Electric Industrial Co., Ltd. v. Zenith Radio Corporation",
-      "court": null
-    },
-    {
-      "targetKey": "95 s. ct. 1612",
-      "authorityId": "4da88fa6-adc8-4f7d-8254-de370222477d",
-      "clusterId": "109246",
-      "citation": "95 S. Ct. 1612",
-      "edgeCount": 17,
-      "caseName": "Alyeska Pipeline Service Co. v. Wilderness Society",
-      "court": null
-    },
-    {
-      "targetKey": "103 s. ct. 1933",
-      "authorityId": "895161c9-b325-41a6-861b-2b8c413c0c12",
-      "clusterId": "110929",
-      "citation": "103 S. Ct. 1933",
-      "edgeCount": 17,
-      "caseName": "Hensley v. Eckerhart",
-      "court": null
-    },
-    {
-      "targetKey": "390 u.s. 400",
-      "authorityId": "1397fa35-69cb-4ecf-a9a9-95f62cc72085",
-      "clusterId": "107637",
-      "citation": "390 U.S. 400",
-      "edgeCount": 16,
-      "caseName": "Newman v. Piggie Park Enterprises, Inc.",
-      "court": null
-    },
-    {
-      "targetKey": "100 s. ct. 1371",
-      "authorityId": "40e93263-20aa-4e7b-9320-a34e02ffe445",
-      "clusterId": "110235",
-      "citation": "100 S. Ct. 1371",
-      "edgeCount": 16,
-      "caseName": "Payton v. New York",
-      "court": null
-    },
-    {
-      "targetKey": "78 s. ct. 99",
-      "authorityId": "2e89c31d-135e-4acd-8896-358fc62a25cc",
-      "clusterId": "105573",
-      "citation": "78 S. Ct. 99",
-      "edgeCount": 13,
-      "caseName": "Conley v. Gibson",
-      "court": null
     },
     {
       "targetKey": "401 u.s. 82",
