@@ -1,7 +1,93 @@
 {
-  "generatedAt": "2026-10-09T16:25:23.585Z",
-  "batch": "identity-batch1+2",
+  "generatedAt": "2026-10-09T16:35:22.280Z",
+  "batch": "identity-batch1+2+3+4",
   "candidates": [
+    {
+      "targetKey": "16 wall. 36",
+      "authorityId": "406c4cb2-07b9-483d-93f8-293535c8df8c",
+      "clusterId": "88661",
+      "citation": "16 Wall. 36",
+      "edgeCount": 13,
+      "uniqueCitingCases": 13,
+      "caseName": "Butchers' Benevolent Ass'n v. Crescent City Live-Stock Landing & Slaughter-House Co.",
+      "court": null,
+      "jurisdictions": [
+        "us-scotus"
+      ],
+      "priorityReason": "metadata_only_after_identity",
+      "unresolvedDemandRepresented": 13,
+      "controllingRelevance": true,
+      "practiceValue": 67.5
+    },
+    {
+      "targetKey": "18 how. 272",
+      "authorityId": "e5aa923a-d18a-40c1-8213-a9e4261efa51",
+      "clusterId": "87010",
+      "citation": "18 How. 272",
+      "edgeCount": 10,
+      "uniqueCitingCases": 10,
+      "caseName": "Den Ex Dem. Murray v. Hoboken Land & Improvement Co.",
+      "court": null,
+      "jurisdictions": [
+        "us-scotus"
+      ],
+      "priorityReason": "metadata_only_after_identity",
+      "unresolvedDemandRepresented": 10,
+      "controllingRelevance": true,
+      "practiceValue": 57
+    },
+    {
+      "targetKey": "96 u.s. 727",
+      "authorityId": "6dc21f19-f018-4114-9c40-26c98585a916",
+      "clusterId": "89759",
+      "citation": "96 U.S. 727",
+      "edgeCount": 9,
+      "uniqueCitingCases": 9,
+      "caseName": "Ex Parte Jackson",
+      "court": null,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-dc"
+      ],
+      "priorityReason": "metadata_only_after_identity",
+      "unresolvedDemandRepresented": 9,
+      "controllingRelevance": true,
+      "practiceValue": 71.5
+    },
+    {
+      "targetKey": "346 or 160",
+      "authorityId": "0445a411-5500-4465-ae94-5951f4fc43bd",
+      "clusterId": "835187",
+      "citation": "346 Or 160",
+      "edgeCount": 14,
+      "uniqueCitingCases": 14,
+      "caseName": "State v. Gaines",
+      "court": null,
+      "jurisdictions": [
+        "st-or-high"
+      ],
+      "priorityReason": "metadata_only_after_identity",
+      "unresolvedDemandRepresented": 14,
+      "controllingRelevance": false,
+      "practiceValue": 61
+    },
+    {
+      "targetKey": "137 n.h. 321",
+      "authorityId": "c5bbe069-77ad-43a3-8c91-394af7c4035e",
+      "clusterId": "8091148",
+      "citation": "137 N.H. 321",
+      "edgeCount": 14,
+      "uniqueCitingCases": 14,
+      "caseName": "Vogel v. Vogel",
+      "court": null,
+      "jurisdictions": [
+        "st-nh-high"
+      ],
+      "priorityReason": "metadata_only_after_identity",
+      "unresolvedDemandRepresented": 14,
+      "controllingRelevance": false,
+      "practiceValue": 61
+    },
     {
       "targetKey": "106 s. ct. 2505",
       "authorityId": "ea83101a-a697-46c3-8ab9-6db536953827",
@@ -9,6 +95,15 @@
       "citation": "106 S. Ct. 2505",
       "edgeCount": 23,
       "caseName": "Anderson v. Liberty Lobby, Inc.",
+      "court": null
+    },
+    {
+      "targetKey": "128 s. ct. 2783",
+      "authorityId": "a958ac72-0858-42ea-b48d-24461837a31a",
+      "clusterId": "145777",
+      "citation": "128 S. Ct. 2783",
+      "edgeCount": 23,
+      "caseName": "District of Columbia v. Heller",
       "court": null
     },
     {
@@ -21,12 +116,12 @@
       "court": null
     },
     {
-      "targetKey": "106 s. ct. 1348",
-      "authorityId": "730995f1-442d-4777-a5aa-d772534da74d",
-      "clusterId": "111620",
-      "citation": "106 S. Ct. 1348",
-      "edgeCount": 17,
-      "caseName": "Matsushita Electric Industrial Co., Ltd. v. Zenith Radio Corporation",
+      "targetKey": "130 s. ct. 3020",
+      "authorityId": "f4b12054-2260-4dff-b8c1-2f0726777a28",
+      "clusterId": "149702",
+      "citation": "130 S. Ct. 3020",
+      "edgeCount": 20,
+      "caseName": "McDonald v. City of Chicago",
       "court": null
     },
     {
@@ -48,39 +143,12 @@
       "court": null
     },
     {
-      "targetKey": "390 u.s. 400",
-      "authorityId": "1397fa35-69cb-4ecf-a9a9-95f62cc72085",
-      "clusterId": "107637",
-      "citation": "390 U.S. 400",
-      "edgeCount": 16,
-      "caseName": "Newman v. Piggie Park Enterprises, Inc.",
-      "court": null
-    },
-    {
-      "targetKey": "128 s. ct. 2783",
-      "authorityId": "a958ac72-0858-42ea-b48d-24461837a31a",
-      "clusterId": "145777",
-      "citation": "128 S. Ct. 2783",
-      "edgeCount": 23,
-      "caseName": "District of Columbia v. Heller",
-      "court": null
-    },
-    {
-      "targetKey": "130 s. ct. 3020",
-      "authorityId": "f4b12054-2260-4dff-b8c1-2f0726777a28",
-      "clusterId": "149702",
-      "citation": "130 S. Ct. 3020",
-      "edgeCount": 20,
-      "caseName": "McDonald v. City of Chicago",
-      "court": null
-    },
-    {
-      "targetKey": "78 s. ct. 99",
-      "authorityId": "2e89c31d-135e-4acd-8896-358fc62a25cc",
-      "clusterId": "105573",
-      "citation": "78 S. Ct. 99",
-      "edgeCount": 13,
-      "caseName": "Conley v. Gibson",
+      "targetKey": "106 s. ct. 1348",
+      "authorityId": "730995f1-442d-4777-a5aa-d772534da74d",
+      "clusterId": "111620",
+      "citation": "106 S. Ct. 1348",
+      "edgeCount": 17,
+      "caseName": "Matsushita Electric Industrial Co., Ltd. v. Zenith Radio Corporation",
       "court": null
     },
     {
@@ -102,12 +170,12 @@
       "court": null
     },
     {
-      "targetKey": "460 u.s. 491",
-      "authorityId": "861f44ca-c99d-482d-ab0d-48239f6ee6d1",
-      "clusterId": "110890",
-      "citation": "460 U.S. 491",
-      "edgeCount": 10,
-      "caseName": "Florida v. Royer",
+      "targetKey": "390 u.s. 400",
+      "authorityId": "1397fa35-69cb-4ecf-a9a9-95f62cc72085",
+      "clusterId": "107637",
+      "citation": "390 U.S. 400",
+      "edgeCount": 16,
+      "caseName": "Newman v. Piggie Park Enterprises, Inc.",
       "court": null
     },
     {
@@ -120,6 +188,15 @@
       "court": null
     },
     {
+      "targetKey": "78 s. ct. 99",
+      "authorityId": "2e89c31d-135e-4acd-8896-358fc62a25cc",
+      "clusterId": "105573",
+      "citation": "78 S. Ct. 99",
+      "edgeCount": 13,
+      "caseName": "Conley v. Gibson",
+      "court": null
+    },
+    {
       "targetKey": "401 u.s. 82",
       "authorityId": "7dd862d3-4596-4977-a4a7-94f0bf731db9",
       "clusterId": "108266",
@@ -129,22 +206,15 @@
       "court": null
     },
     {
-      "targetKey": "127 s. ct. 1955",
-      "authorityId": "ab740285-c189-4c08-b29a-6760fc394e7c",
-      "clusterId": "145730",
-      "citation": "127 S. Ct. 1955",
-      "edgeCount": 8,
-      "caseName": "Bell Atlantic Corp. v. Twombly",
-      "court": null
-    },
-    {
-      "targetKey": "94 s. ct. 1683",
-      "authorityId": "1edea158-b59f-4c9a-870e-8c4d2c06e5f9",
-      "clusterId": "109009",
-      "citation": "94 S. Ct. 1683",
-      "edgeCount": 10,
-      "caseName": "Scheuer v. Rhodes",
-      "court": null
+      "targetKey": "69 s. ct. 1221",
+      "authorityId": "c7df1dd4-3565-4bdf-8916-3a338a8a06b8",
+      "clusterId": "104695",
+      "citation": "69 S. Ct. 1221",
+      "edgeCount": 13,
+      "caseName": "Cohen v. Beneficial Industrial Loan Corp.",
+      "court": null,
+      "priorityReason": "high_edge_demand_identity_only",
+      "unresolvedDemandRepresented": 13
     },
     {
       "targetKey": "307 u.s. 174",
@@ -165,48 +235,33 @@
       "court": null
     },
     {
-      "targetKey": "494 u.s. 259",
-      "authorityId": "1535708c-3aee-4079-b556-0946083b551e",
-      "clusterId": "112382",
-      "citation": "494 U.S. 259",
-      "edgeCount": 7,
-      "caseName": "United States v. Verdugo-Urquidez",
+      "targetKey": "407 u.s. 143",
+      "authorityId": "9a7fd3ad-bee0-4174-9c4f-ec908c40ec1b",
+      "clusterId": "108571",
+      "citation": "407 U.S. 143",
+      "edgeCount": 11,
+      "caseName": "Adams v. Williams",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 7
+      "unresolvedDemandRepresented": 11
     },
     {
-      "targetKey": "69 s. ct. 1221",
-      "authorityId": "c7df1dd4-3565-4bdf-8916-3a338a8a06b8",
-      "clusterId": "104695",
-      "citation": "69 S. Ct. 1221",
-      "edgeCount": 13,
-      "caseName": "Cohen v. Beneficial Industrial Loan Corp.",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 13
+      "targetKey": "460 u.s. 491",
+      "authorityId": "861f44ca-c99d-482d-ab0d-48239f6ee6d1",
+      "clusterId": "110890",
+      "citation": "460 U.S. 491",
+      "edgeCount": 10,
+      "caseName": "Florida v. Royer",
+      "court": null
     },
     {
-      "targetKey": "92 s. ct. 2701",
-      "authorityId": "4d28d0a8-e5ec-4ed9-81c0-93f2fb28c5ff",
-      "clusterId": "108608",
-      "citation": "92 S. Ct. 2701",
-      "edgeCount": 9,
-      "caseName": "Board of Regents of State Colleges v. Roth",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 9
-    },
-    {
-      "targetKey": "112 s. ct. 2130",
-      "authorityId": "a76c1e03-1b40-4126-87ee-2baed1b8c792",
-      "clusterId": "112747",
-      "citation": "112 S. Ct. 2130",
-      "edgeCount": 9,
-      "caseName": "Lujan v. Defenders of Wildlife",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 9
+      "targetKey": "94 s. ct. 1683",
+      "authorityId": "1edea158-b59f-4c9a-870e-8c4d2c06e5f9",
+      "clusterId": "109009",
+      "citation": "94 S. Ct. 1683",
+      "edgeCount": 10,
+      "caseName": "Scheuer v. Rhodes",
+      "court": null
     },
     {
       "targetKey": "491 u.s. 781",
@@ -242,48 +297,70 @@
       "unresolvedDemandRepresented": 10
     },
     {
-      "targetKey": "468 u.s. 705",
-      "authorityId": "86584693-9048-4bf9-82bc-51a7059c0d3c",
-      "clusterId": "111257",
-      "citation": "468 U.S. 705",
-      "edgeCount": 6,
-      "caseName": "United States v. Karo",
+      "targetKey": "423 u.s. 336",
+      "authorityId": "befba553-d99f-4780-9bea-b91a20d26774",
+      "clusterId": "109348",
+      "citation": "423 U.S. 336",
+      "edgeCount": 10,
+      "caseName": "Thermtron Products, Inc. v. Hermansdorfer",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 6
+      "unresolvedDemandRepresented": 10
     },
     {
-      "targetKey": "129 s. ct. 1937",
-      "authorityId": "ef418852-0707-4666-90db-f1e68966065f",
-      "clusterId": "145875",
-      "citation": "129 S. Ct. 1937",
-      "edgeCount": 6,
-      "caseName": "Ashcroft v. Iqbal",
+      "targetKey": "113 s. ct. 1770",
+      "authorityId": "a0889ef9-fcfd-4760-afa7-501a673f4b6f",
+      "clusterId": "112848",
+      "citation": "113 S. Ct. 1770",
+      "edgeCount": 10,
+      "caseName": "United States v. Olano",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 6
+      "unresolvedDemandRepresented": 10
     },
     {
-      "targetKey": "451 u.s. 527",
-      "authorityId": "a1aaa83c-10ca-44cc-a893-e6a88fd28a90",
-      "clusterId": "110478",
-      "citation": "451 U.S. 527",
-      "edgeCount": 6,
-      "caseName": "Parratt v. Taylor",
+      "targetKey": "104 s. ct. 1541",
+      "authorityId": "8a5af6c3-1f76-4fdf-a710-b900ac3d3c37",
+      "clusterId": "111123",
+      "citation": "104 S. Ct. 1541",
+      "edgeCount": 10,
+      "caseName": "Blum v. Stenson",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 6
+      "unresolvedDemandRepresented": 10
     },
     {
-      "targetKey": "98 s. ct. 2018",
-      "authorityId": "0f5aeee6-4bfc-4aa6-aa6f-5152791103d4",
-      "clusterId": "109881",
-      "citation": "98 S. Ct. 2018",
-      "edgeCount": 8,
-      "caseName": "Monell v. New York City Dept. of Social Servs.",
+      "targetKey": "377 u.s. 360",
+      "authorityId": "9aa4f8da-cad5-4df3-8fc8-b84df98b2333",
+      "clusterId": "106837",
+      "citation": "377 U.S. 360",
+      "edgeCount": 10,
+      "caseName": "Baggett v. Bullitt",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 8
+      "unresolvedDemandRepresented": 10
+    },
+    {
+      "targetKey": "92 s. ct. 2701",
+      "authorityId": "4d28d0a8-e5ec-4ed9-81c0-93f2fb28c5ff",
+      "clusterId": "108608",
+      "citation": "92 S. Ct. 2701",
+      "edgeCount": 9,
+      "caseName": "Board of Regents of State Colleges v. Roth",
+      "court": null,
+      "priorityReason": "high_edge_demand_identity_only",
+      "unresolvedDemandRepresented": 9
+    },
+    {
+      "targetKey": "112 s. ct. 2130",
+      "authorityId": "a76c1e03-1b40-4126-87ee-2baed1b8c792",
+      "clusterId": "112747",
+      "citation": "112 S. Ct. 2130",
+      "edgeCount": 9,
+      "caseName": "Lujan v. Defenders of Wildlife",
+      "court": null,
+      "priorityReason": "high_edge_demand_identity_only",
+      "unresolvedDemandRepresented": 9
     },
     {
       "targetKey": "364 u.s. 479",
@@ -308,26 +385,79 @@
       "unresolvedDemandRepresented": 9
     },
     {
-      "targetKey": "408 u.s. 593",
-      "authorityId": "1211e51a-e158-48c1-9163-07f7130fb7b9",
-      "clusterId": "108609",
-      "citation": "408 U.S. 593",
-      "edgeCount": 5,
-      "caseName": "Perry v. Sindermann",
+      "targetKey": "91 s. ct. 746",
+      "authorityId": "1496477b-8963-416c-ab95-82d5a31d293a",
+      "clusterId": "108263",
+      "citation": "91 S. Ct. 746",
+      "edgeCount": 9,
+      "caseName": "Younger v. Harris",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 5
+      "unresolvedDemandRepresented": 9
     },
     {
-      "targetKey": "95 s. ct. 2197",
-      "authorityId": "3c50adea-0127-40f3-b443-77b6c89edfb2",
-      "clusterId": "109301",
-      "citation": "95 S. Ct. 2197",
-      "edgeCount": 7,
-      "caseName": "Warth v. Seldin",
+      "targetKey": "93 s. ct. 1817",
+      "authorityId": "f0b89205-c412-496a-b94c-623c38c5ca17",
+      "clusterId": "108786",
+      "citation": "93 S. Ct. 1817",
+      "edgeCount": 9,
+      "caseName": "McDonnell Douglas Corp. v. Green",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 7
+      "unresolvedDemandRepresented": 9
+    },
+    {
+      "targetKey": "107 s. ct. 3034",
+      "authorityId": "f1341c97-a1a2-4ed7-a993-bafe32815694",
+      "clusterId": "111953",
+      "citation": "107 S. Ct. 3034",
+      "edgeCount": 9,
+      "caseName": "Anderson v. Creighton",
+      "court": null,
+      "priorityReason": "high_edge_demand_identity_only",
+      "unresolvedDemandRepresented": 9
+    },
+    {
+      "targetKey": "396 u.s. 375",
+      "authorityId": "b581f9e3-bb23-477d-a4c3-15fd13e4253d",
+      "clusterId": "108032",
+      "citation": "396 U.S. 375",
+      "edgeCount": 9,
+      "caseName": "Mills v. Electric Auto-Lite Co.",
+      "court": null,
+      "priorityReason": "high_edge_demand_identity_only",
+      "unresolvedDemandRepresented": 9
+    },
+    {
+      "targetKey": "494 u.s. 325",
+      "authorityId": "1973f06b-978a-456a-86e9-825f7f7e4df4",
+      "clusterId": "112384",
+      "citation": "494 U.S. 325",
+      "edgeCount": 9,
+      "caseName": "Maryland v. Buie",
+      "court": null,
+      "priorityReason": "high_edge_demand_identity_only",
+      "unresolvedDemandRepresented": 9
+    },
+    {
+      "targetKey": "127 s. ct. 1955",
+      "authorityId": "ab740285-c189-4c08-b29a-6760fc394e7c",
+      "clusterId": "145730",
+      "citation": "127 S. Ct. 1955",
+      "edgeCount": 8,
+      "caseName": "Bell Atlantic Corp. v. Twombly",
+      "court": null
+    },
+    {
+      "targetKey": "98 s. ct. 2018",
+      "authorityId": "0f5aeee6-4bfc-4aa6-aa6f-5152791103d4",
+      "clusterId": "109881",
+      "citation": "98 S. Ct. 2018",
+      "edgeCount": 8,
+      "caseName": "Monell v. New York City Dept. of Social Servs.",
+      "court": null,
+      "priorityReason": "high_edge_demand_identity_only",
+      "unresolvedDemandRepresented": 8
     },
     {
       "targetKey": "307 u.s. 161",
@@ -374,59 +504,81 @@
       "unresolvedDemandRepresented": 8
     },
     {
-      "targetKey": "91 s. ct. 746",
-      "authorityId": "1496477b-8963-416c-ab95-82d5a31d293a",
-      "clusterId": "108263",
-      "citation": "91 S. Ct. 746",
-      "edgeCount": 9,
-      "caseName": "Younger v. Harris",
+      "targetKey": "552 u.s. 442",
+      "authorityId": "a266d1d6-74f7-4539-98cd-8c550de1b7ad",
+      "clusterId": "145824",
+      "citation": "552 U.S. 442",
+      "edgeCount": 8,
+      "caseName": "Washington State Grange v. Washington State Republican Party",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 9
+      "unresolvedDemandRepresented": 8
     },
     {
-      "targetKey": "423 u.s. 336",
-      "authorityId": "befba553-d99f-4780-9bea-b91a20d26774",
-      "clusterId": "109348",
-      "citation": "423 U.S. 336",
-      "edgeCount": 10,
-      "caseName": "Thermtron Products, Inc. v. Hermansdorfer",
+      "targetKey": "28 s. ct. 441",
+      "authorityId": "e4965302-b4e7-4ce9-a166-15be4e9b490d",
+      "clusterId": "96819",
+      "citation": "28 S. Ct. 441",
+      "edgeCount": 8,
+      "caseName": "Ex Parte Young",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 10
+      "unresolvedDemandRepresented": 8
     },
     {
-      "targetKey": "113 s. ct. 1770",
-      "authorityId": "a0889ef9-fcfd-4760-afa7-501a673f4b6f",
-      "clusterId": "112848",
-      "citation": "113 S. Ct. 1770",
-      "edgeCount": 10,
-      "caseName": "United States v. Olano",
+      "targetKey": "103 s. ct. 927",
+      "authorityId": "9bf8e448-1540-4eb5-8f70-61095aa17a39",
+      "clusterId": "110873",
+      "citation": "103 S. Ct. 927",
+      "edgeCount": 8,
+      "caseName": "Moses H. Cone Memorial Hospital v. Mercury Construction Corp.",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 10
+      "unresolvedDemandRepresented": 8
     },
     {
-      "targetKey": "104 s. ct. 1541",
-      "authorityId": "8a5af6c3-1f76-4fdf-a710-b900ac3d3c37",
-      "clusterId": "111123",
-      "citation": "104 S. Ct. 1541",
-      "edgeCount": 10,
-      "caseName": "Blum v. Stenson",
+      "targetKey": "102 s. ct. 2727",
+      "authorityId": "1e6cf417-3f9b-4313-a962-f8323241478a",
+      "clusterId": "110763",
+      "citation": "102 S. Ct. 2727",
+      "edgeCount": 8,
+      "caseName": "Harlow v. Fitzgerald",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 10
+      "unresolvedDemandRepresented": 8
     },
     {
-      "targetKey": "81 s. ct. 473",
-      "authorityId": "de698ad7-9fe8-460d-9408-06b7b9f1b06b",
-      "clusterId": "106170",
-      "citation": "81 S. Ct. 473",
-      "edgeCount": 6,
-      "caseName": "Monroe v. Pape",
+      "targetKey": "107 s. ct. 3078",
+      "authorityId": "07701948-0d2d-4998-a3cd-576f64267332",
+      "clusterId": "111955",
+      "citation": "107 S. Ct. 3078",
+      "edgeCount": 8,
+      "caseName": "Pennsylvania v. Delaware Valley Citizens' Council for Clean Air",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 6
+      "unresolvedDemandRepresented": 8
+    },
+    {
+      "targetKey": "494 u.s. 259",
+      "authorityId": "1535708c-3aee-4079-b556-0946083b551e",
+      "clusterId": "112382",
+      "citation": "494 U.S. 259",
+      "edgeCount": 7,
+      "caseName": "United States v. Verdugo-Urquidez",
+      "court": null,
+      "priorityReason": "high_edge_demand_identity_only",
+      "unresolvedDemandRepresented": 7
+    },
+    {
+      "targetKey": "95 s. ct. 2197",
+      "authorityId": "3c50adea-0127-40f3-b443-77b6c89edfb2",
+      "clusterId": "109301",
+      "citation": "95 S. Ct. 2197",
+      "edgeCount": 7,
+      "caseName": "Warth v. Seldin",
+      "court": null,
+      "priorityReason": "high_edge_demand_identity_only",
+      "unresolvedDemandRepresented": 7
     },
     {
       "targetKey": "422 u.s. 332",
@@ -550,17 +702,6 @@
       "unresolvedDemandRepresented": 7
     },
     {
-      "targetKey": "66 s. ct. 773",
-      "authorityId": "55427c19-7983-4ea1-bdf6-2750d949a1ec",
-      "clusterId": "104272",
-      "citation": "66 S. Ct. 773",
-      "edgeCount": 3,
-      "caseName": "Bell v. Hood",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 3
-    },
-    {
       "targetKey": "104 s. ct. 3405",
       "authorityId": "530c9abf-8492-4c87-aa7d-8616a0424bfa",
       "clusterId": "111262",
@@ -572,59 +713,125 @@
       "unresolvedDemandRepresented": 7
     },
     {
-      "targetKey": "93 s. ct. 1817",
-      "authorityId": "f0b89205-c412-496a-b94c-623c38c5ca17",
-      "clusterId": "108786",
-      "citation": "93 S. Ct. 1817",
-      "edgeCount": 9,
-      "caseName": "McDonnell Douglas Corp. v. Green",
+      "targetKey": "500 u.s. 565",
+      "authorityId": "aa968f52-91d4-4a8c-afde-e211bd703f85",
+      "clusterId": "112608",
+      "citation": "500 U.S. 565",
+      "edgeCount": 7,
+      "caseName": "California v. Acevedo",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 9
+      "unresolvedDemandRepresented": 7
     },
     {
-      "targetKey": "107 s. ct. 3034",
-      "authorityId": "f1341c97-a1a2-4ed7-a993-bafe32815694",
-      "clusterId": "111953",
-      "citation": "107 S. Ct. 3034",
-      "edgeCount": 9,
-      "caseName": "Anderson v. Creighton",
+      "targetKey": "523 u.s. 833",
+      "authorityId": "3c4870df-25ce-4188-b0d1-8fdd6bf6aa97",
+      "clusterId": "118214",
+      "citation": "523 U.S. 833",
+      "edgeCount": 7,
+      "caseName": "County of Sacramento v. Lewis",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 9
+      "unresolvedDemandRepresented": 7
     },
     {
-      "targetKey": "396 u.s. 375",
-      "authorityId": "b581f9e3-bb23-477d-a4c3-15fd13e4253d",
-      "clusterId": "108032",
-      "citation": "396 U.S. 375",
-      "edgeCount": 9,
-      "caseName": "Mills v. Electric Auto-Lite Co.",
+      "targetKey": "125 s. ct. 738",
+      "authorityId": "ad18610f-e731-4e2c-aa02-d1ad9d25c75a",
+      "clusterId": "137739",
+      "citation": "125 S. Ct. 738",
+      "edgeCount": 7,
+      "caseName": "United States v. Booker",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 9
+      "unresolvedDemandRepresented": 7
     },
     {
-      "targetKey": "494 u.s. 325",
-      "authorityId": "1973f06b-978a-456a-86e9-825f7f7e4df4",
-      "clusterId": "112384",
-      "citation": "494 U.S. 325",
-      "edgeCount": 9,
-      "caseName": "Maryland v. Buie",
+      "targetKey": "412 u.s. 1",
+      "authorityId": "9f66efc4-ab88-46f6-a963-9f7bcbcd9d17",
+      "clusterId": "108792",
+      "citation": "412 U.S. 1",
+      "edgeCount": 7,
+      "caseName": "Hall v. Cole",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 9
+      "unresolvedDemandRepresented": 7
     },
     {
-      "targetKey": "87 s. ct. 1213",
-      "authorityId": "3d49dcc4-0e3e-4f33-a102-9118b8c85bff",
-      "clusterId": "107411",
-      "citation": "87 S. Ct. 1213",
-      "edgeCount": 5,
-      "caseName": "Pierson v. Ray",
+      "targetKey": "106 s. ct. 2686",
+      "authorityId": "9e7052df-30eb-42e0-abed-96de0d0d5312",
+      "clusterId": "111730",
+      "citation": "106 S. Ct. 2686",
+      "edgeCount": 7,
+      "caseName": "City of Riverside v. Rivera",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 5
+      "unresolvedDemandRepresented": 7
+    },
+    {
+      "targetKey": "106 s. ct. 3088",
+      "authorityId": "fd16240e-bd9d-401d-bcd1-ab40587f4f0d",
+      "clusterId": "111749",
+      "citation": "106 S. Ct. 3088",
+      "edgeCount": 7,
+      "caseName": "Pennsylvania v. Delaware Valley Citizens' Council for Clean Air",
+      "court": null,
+      "priorityReason": "high_edge_demand_identity_only",
+      "unresolvedDemandRepresented": 7
+    },
+    {
+      "targetKey": "105 u.s. 527",
+      "authorityId": "a7c11f3f-5159-4c66-b4b3-deb568e5728a",
+      "clusterId": "90604",
+      "citation": "105 U.S. 527",
+      "edgeCount": 7,
+      "caseName": "Trustees v. Greenough",
+      "court": null,
+      "priorityReason": "high_edge_demand_identity_only",
+      "unresolvedDemandRepresented": 7
+    },
+    {
+      "targetKey": "468 u.s. 705",
+      "authorityId": "86584693-9048-4bf9-82bc-51a7059c0d3c",
+      "clusterId": "111257",
+      "citation": "468 U.S. 705",
+      "edgeCount": 6,
+      "caseName": "United States v. Karo",
+      "court": null,
+      "priorityReason": "high_edge_demand_identity_only",
+      "unresolvedDemandRepresented": 6
+    },
+    {
+      "targetKey": "129 s. ct. 1937",
+      "authorityId": "ef418852-0707-4666-90db-f1e68966065f",
+      "clusterId": "145875",
+      "citation": "129 S. Ct. 1937",
+      "edgeCount": 6,
+      "caseName": "Ashcroft v. Iqbal",
+      "court": null,
+      "priorityReason": "high_edge_demand_identity_only",
+      "unresolvedDemandRepresented": 6
+    },
+    {
+      "targetKey": "451 u.s. 527",
+      "authorityId": "a1aaa83c-10ca-44cc-a893-e6a88fd28a90",
+      "clusterId": "110478",
+      "citation": "451 U.S. 527",
+      "edgeCount": 6,
+      "caseName": "Parratt v. Taylor",
+      "court": null,
+      "priorityReason": "high_edge_demand_identity_only",
+      "unresolvedDemandRepresented": 6
+    },
+    {
+      "targetKey": "81 s. ct. 473",
+      "authorityId": "de698ad7-9fe8-460d-9408-06b7b9f1b06b",
+      "clusterId": "106170",
+      "citation": "81 S. Ct. 473",
+      "edgeCount": 6,
+      "caseName": "Monroe v. Pape",
+      "court": null,
+      "priorityReason": "high_edge_demand_identity_only",
+      "unresolvedDemandRepresented": 6
     },
     {
       "targetKey": "422 u.s. 922",
@@ -737,92 +944,48 @@
       "unresolvedDemandRepresented": 6
     },
     {
-      "targetKey": "407 u.s. 143",
-      "authorityId": "9a7fd3ad-bee0-4174-9c4f-ec908c40ec1b",
-      "clusterId": "108571",
-      "citation": "407 U.S. 143",
-      "edgeCount": 11,
-      "caseName": "Adams v. Williams",
+      "targetKey": "480 u.s. 321",
+      "authorityId": "b5e7d224-89ed-48d0-a1e1-243a79916e99",
+      "clusterId": "111834",
+      "citation": "480 U.S. 321",
+      "edgeCount": 6,
+      "caseName": "Arizona v. Hicks",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 11
+      "unresolvedDemandRepresented": 6
     },
     {
-      "targetKey": "500 u.s. 565",
-      "authorityId": "aa968f52-91d4-4a8c-afde-e211bd703f85",
-      "clusterId": "112608",
-      "citation": "500 U.S. 565",
-      "edgeCount": 7,
-      "caseName": "California v. Acevedo",
+      "targetKey": "88 s. ct. 507",
+      "authorityId": "ef19a7ee-717e-43ae-b383-f69ef768b4c4",
+      "clusterId": "107564",
+      "citation": "88 S. Ct. 507",
+      "edgeCount": 6,
+      "caseName": "Katz v. United States",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 7
+      "unresolvedDemandRepresented": 6
     },
     {
-      "targetKey": "552 u.s. 442",
-      "authorityId": "a266d1d6-74f7-4539-98cd-8c550de1b7ad",
-      "clusterId": "145824",
-      "citation": "552 U.S. 442",
-      "edgeCount": 8,
-      "caseName": "Washington State Grange v. Washington State Republican Party",
+      "targetKey": "408 u.s. 593",
+      "authorityId": "1211e51a-e158-48c1-9163-07f7130fb7b9",
+      "clusterId": "108609",
+      "citation": "408 U.S. 593",
+      "edgeCount": 5,
+      "caseName": "Perry v. Sindermann",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 8
+      "unresolvedDemandRepresented": 5
     },
     {
-      "targetKey": "28 s. ct. 441",
-      "authorityId": "e4965302-b4e7-4ce9-a166-15be4e9b490d",
-      "clusterId": "96819",
-      "citation": "28 S. Ct. 441",
-      "edgeCount": 8,
-      "caseName": "Ex Parte Young",
+      "targetKey": "87 s. ct. 1213",
+      "authorityId": "3d49dcc4-0e3e-4f33-a102-9118b8c85bff",
+      "clusterId": "107411",
+      "citation": "87 S. Ct. 1213",
+      "edgeCount": 5,
+      "caseName": "Pierson v. Ray",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 8
-    },
-    {
-      "targetKey": "103 s. ct. 927",
-      "authorityId": "9bf8e448-1540-4eb5-8f70-61095aa17a39",
-      "clusterId": "110873",
-      "citation": "103 S. Ct. 927",
-      "edgeCount": 8,
-      "caseName": "Moses H. Cone Memorial Hospital v. Mercury Construction Corp.",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 8
-    },
-    {
-      "targetKey": "102 s. ct. 2727",
-      "authorityId": "1e6cf417-3f9b-4313-a962-f8323241478a",
-      "clusterId": "110763",
-      "citation": "102 S. Ct. 2727",
-      "edgeCount": 8,
-      "caseName": "Harlow v. Fitzgerald",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 8
-    },
-    {
-      "targetKey": "107 s. ct. 3078",
-      "authorityId": "07701948-0d2d-4998-a3cd-576f64267332",
-      "clusterId": "111955",
-      "citation": "107 S. Ct. 3078",
-      "edgeCount": 8,
-      "caseName": "Pennsylvania v. Delaware Valley Citizens' Council for Clean Air",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 8
-    },
-    {
-      "targetKey": "487 u.s. 42",
-      "authorityId": "8f98ea1b-3c05-41c9-9aab-2708bee0ed04",
-      "clusterId": "112116",
-      "citation": "487 U.S. 42",
-      "edgeCount": 4,
-      "caseName": "West v. Atkins",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 4
+      "unresolvedDemandRepresented": 5
     },
     {
       "targetKey": "558 u.s. 45",
@@ -1023,103 +1186,48 @@
       "unresolvedDemandRepresented": 5
     },
     {
-      "targetKey": "377 u.s. 360",
-      "authorityId": "9aa4f8da-cad5-4df3-8fc8-b84df98b2333",
-      "clusterId": "106837",
-      "citation": "377 U.S. 360",
-      "edgeCount": 10,
-      "caseName": "Baggett v. Bullitt",
+      "targetKey": "487 u.s. 42",
+      "authorityId": "8f98ea1b-3c05-41c9-9aab-2708bee0ed04",
+      "clusterId": "112116",
+      "citation": "487 U.S. 42",
+      "edgeCount": 4,
+      "caseName": "West v. Atkins",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 10
+      "unresolvedDemandRepresented": 4
     },
     {
-      "targetKey": "480 u.s. 321",
-      "authorityId": "b5e7d224-89ed-48d0-a1e1-243a79916e99",
-      "clusterId": "111834",
-      "citation": "480 U.S. 321",
-      "edgeCount": 6,
-      "caseName": "Arizona v. Hicks",
+      "targetKey": "555 u.s. 223",
+      "authorityId": "683fe6bd-d322-4498-ae06-28b33839f982",
+      "clusterId": "145918",
+      "citation": "555 U.S. 223",
+      "edgeCount": 4,
+      "caseName": "Pearson v. Callahan",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 6
+      "unresolvedDemandRepresented": 4
     },
     {
-      "targetKey": "88 s. ct. 507",
-      "authorityId": "ef19a7ee-717e-43ae-b383-f69ef768b4c4",
-      "clusterId": "107564",
-      "citation": "88 S. Ct. 507",
-      "edgeCount": 6,
-      "caseName": "Katz v. United States",
+      "targetKey": "556 u.s. 332",
+      "authorityId": "c87da8f9-ff49-4c1f-a7ae-fa361aaf9987",
+      "clusterId": "145887",
+      "citation": "556 U.S. 332",
+      "edgeCount": 4,
+      "caseName": "Arizona v. Gant",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 6
+      "unresolvedDemandRepresented": 4
     },
     {
-      "targetKey": "523 u.s. 833",
-      "authorityId": "3c4870df-25ce-4188-b0d1-8fdd6bf6aa97",
-      "clusterId": "118214",
-      "citation": "523 U.S. 833",
-      "edgeCount": 7,
-      "caseName": "County of Sacramento v. Lewis",
+      "targetKey": "66 s. ct. 773",
+      "authorityId": "55427c19-7983-4ea1-bdf6-2750d949a1ec",
+      "clusterId": "104272",
+      "citation": "66 S. Ct. 773",
+      "edgeCount": 3,
+      "caseName": "Bell v. Hood",
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 7
-    },
-    {
-      "targetKey": "125 s. ct. 738",
-      "authorityId": "ad18610f-e731-4e2c-aa02-d1ad9d25c75a",
-      "clusterId": "137739",
-      "citation": "125 S. Ct. 738",
-      "edgeCount": 7,
-      "caseName": "United States v. Booker",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 7
-    },
-    {
-      "targetKey": "412 u.s. 1",
-      "authorityId": "9f66efc4-ab88-46f6-a963-9f7bcbcd9d17",
-      "clusterId": "108792",
-      "citation": "412 U.S. 1",
-      "edgeCount": 7,
-      "caseName": "Hall v. Cole",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 7
-    },
-    {
-      "targetKey": "106 s. ct. 2686",
-      "authorityId": "9e7052df-30eb-42e0-abed-96de0d0d5312",
-      "clusterId": "111730",
-      "citation": "106 S. Ct. 2686",
-      "edgeCount": 7,
-      "caseName": "City of Riverside v. Rivera",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 7
-    },
-    {
-      "targetKey": "106 s. ct. 3088",
-      "authorityId": "fd16240e-bd9d-401d-bcd1-ab40587f4f0d",
-      "clusterId": "111749",
-      "citation": "106 S. Ct. 3088",
-      "edgeCount": 7,
-      "caseName": "Pennsylvania v. Delaware Valley Citizens' Council for Clean Air",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 7
-    },
-    {
-      "targetKey": "105 u.s. 527",
-      "authorityId": "a7c11f3f-5159-4c66-b4b3-deb568e5728a",
-      "clusterId": "90604",
-      "citation": "105 U.S. 527",
-      "edgeCount": 7,
-      "caseName": "Trustees v. Greenough",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 7
+      "unresolvedDemandRepresented": 3
     },
     {
       "targetKey": "213 f.3d 113",
@@ -1164,28 +1272,6 @@
       "court": null,
       "priorityReason": "high_edge_demand_identity_only",
       "unresolvedDemandRepresented": 3
-    },
-    {
-      "targetKey": "555 u.s. 223",
-      "authorityId": "683fe6bd-d322-4498-ae06-28b33839f982",
-      "clusterId": "145918",
-      "citation": "555 U.S. 223",
-      "edgeCount": 4,
-      "caseName": "Pearson v. Callahan",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 4
-    },
-    {
-      "targetKey": "556 u.s. 332",
-      "authorityId": "c87da8f9-ff49-4c1f-a7ae-fa361aaf9987",
-      "clusterId": "145887",
-      "citation": "556 U.S. 332",
-      "edgeCount": 4,
-      "caseName": "Arizona v. Gant",
-      "court": null,
-      "priorityReason": "high_edge_demand_identity_only",
-      "unresolvedDemandRepresented": 4
     }
   ],
   "note": "Demand-driven full-text queue; not acquired in identity batches."

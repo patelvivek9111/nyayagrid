@@ -177,6 +177,16 @@ export function isLookupSuitableCitation(text: string | null | undefined): boole
   if (/\bU\.?\s*S\.?\s*C\.?\s*§/i.test(t)) return false;
   if (/\bC\.?\s*F\.?\s*R\.?\s*§/i.test(t)) return false;
   if (/^Fed\.\s*R\./i.test(t)) return false;
-  if (parseVolReporterPage(t)) return true;
-  return /\b\d{1,4}\s+[A-Za-z.]+\s+\d{1,4}\b/.test(t);
+  // Extraction artifacts: "2026 Page 2", "2025 Page 7" — not reporter citations.
+  if (/^\d{4}\s+Page\s+\d+$/i.test(t)) return false;
+  if (/\bPage\b/i.test(t) && !/\b[A-Z][a-z]*\.\s*(2d|3d|4th)?\b/.test(t)) return false;
+  const parsed = parseVolReporterPage(t);
+  if (parsed) {
+    if (/^page$/i.test(parsed.reporter)) return false;
+    return true;
+  }
+  // Require a reporter-like token (contains a letter+period or known series), not bare words.
+  if (!/\d{1,4}\s+[A-Za-z][A-Za-z.]*\.?[A-Za-z0-9.]*\s+\d{1,4}\b/.test(t)) return false;
+  if (/^\d{4}\s+[A-Za-z]+\s+\d{1,4}$/.test(t) && !/\./.test(t)) return false;
+  return true;
 }

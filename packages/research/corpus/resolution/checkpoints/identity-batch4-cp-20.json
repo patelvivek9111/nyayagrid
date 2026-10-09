@@ -1,0 +1,30 @@
+{
+  "atLookup": 20,
+  "totalCl": 21,
+  "identityLookups": 20,
+  "externalTargetResolutionRate": 0.25,
+  "edgesResolvedPerExternalCl": 3,
+  "cumulativeEdgesResolved": 60,
+  "avgEdgesRepresentedPerAttempted": 12.45,
+  "ambiguityRate": 0,
+  "noResultRate": 0.75,
+  "rolling20": {
+    "n": 20,
+    "edgesPerCl": 3,
+    "targetResolutionRate": 0.25,
+    "ambiguityRate": 0
+  },
+  "locallyResolvedBeforeExternal": 0,
+  "externalLookupAvoided": 0,
+  "newlyLocalResolvableTargets": 0,
+  "newlyLocalResolvableEdges": 0,
+  "health": {
+    "green": true,
+    "resolved": 11580,
+    "unresolved": 55365,
+    "METADATA_ONLY_AUTHORITIES": 115,
+    "CORPUS_COMPLETE_AUTHORITIES": 5136
+  },
+  "hit429": false,
+  "updatedAt": "2026-10-09T16:35:22.266Z"
+}

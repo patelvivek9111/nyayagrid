@@ -1,0 +1,1175 @@
+{
+  "ok": true,
+  "classification": "CITATION_IDENTITY_LIVE_BATCH4_EFFICIENCY_FRONTIER",
+  "stopReason": "EFFICIENCY_FRONTIER_REACHED",
+  "courtListener": {
+    "quotaProbeRequests": 1,
+    "identityLookupRequests": 20,
+    "totalClRequests": 21,
+    "minuteAtStart": 25,
+    "hourAtStart": 144,
+    "dayAtStart": 512,
+    "estimatedDayRemaining": 492,
+    "hit429": false,
+    "hit502": 0
+  },
+  "start": {
+    "casesTyped": 5246,
+    "authorities": 6601,
+    "extracted": 66945,
+    "resolved": 11520,
+    "unresolved": 55425,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "presentTargetAmbiguous": 1,
+    "green": true,
+    "TOTAL_CANONICAL_AUTHORITIES": 6601,
+    "METADATA_ONLY_AUTHORITIES": 110,
+    "CORPUS_COMPLETE_AUTHORITIES": 5136,
+    "FULL_TEXT_READY_AUTHORITIES": 5136,
+    "EMBEDDED_AUTHORITIES": 5664,
+    "CASE_TYPED_AUTHORITIES": 5246,
+    "note": "case-typed count includes metadata-only AUTHORITY_RESOLVED identities; CORPUS_COMPLETE requires ready+embeddings",
+    "AUTHORITY_RESOLVED_EDGES": 11520,
+    "CORPUS_COMPLETE_EDGES": 10393,
+    "IDENTITY_UNRESOLVED_EDGES": 55425
+  },
+  "end": {
+    "casesTyped": 5251,
+    "authorities": 6606,
+    "extracted": 66945,
+    "resolved": 11580,
+    "unresolved": 55365,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "presentTargetAmbiguous": 1,
+    "green": true,
+    "TOTAL_CANONICAL_AUTHORITIES": 6606,
+    "METADATA_ONLY_AUTHORITIES": 115,
+    "CORPUS_COMPLETE_AUTHORITIES": 5136,
+    "FULL_TEXT_READY_AUTHORITIES": 5136,
+    "EMBEDDED_AUTHORITIES": 5664,
+    "CASE_TYPED_AUTHORITIES": 5251,
+    "note": "case-typed count includes metadata-only AUTHORITY_RESOLVED identities; CORPUS_COMPLETE requires ready+embeddings",
+    "AUTHORITY_RESOLVED_EDGES": 11580,
+    "CORPUS_COMPLETE_EDGES": 10393,
+    "IDENTITY_UNRESOLVED_EDGES": 55365
+  },
+  "resolvedDelta": 60,
+  "unresolvedDelta": -60,
+  "localLearningBeforeExternal": {
+    "aliasesAvailable": 487,
+    "parallelMappingsAvailable": 244,
+    "NEWLY_LOCAL_RESOLVABLE_TARGETS": 0,
+    "NEWLY_LOCAL_RESOLVABLE_EDGES": 0,
+    "LOCAL_RESOLVED_BEFORE_EXTERNAL": 0,
+    "EXTERNAL_LOOKUP_AVOIDED": 0,
+    "CL_calls_avoided": 0
+  },
+  "targets": {
+    "queueConsidered": {
+      "total": 4490,
+      "ge10": 19,
+      "ge5": 381,
+      "ge3": 1370,
+      "strategic12": 2720,
+      "excludedLowDemandNonStrategic": 26374
+    },
+    "ge10Attempted": 19,
+    "ge5Attempted": 1,
+    "ge3Attempted": 0,
+    "strategic12Attempted": 0,
+    "externalUniqueTargetsAttempted": 20,
+    "resolvedHigh": 5,
+    "externalHigh": 5,
+    "ambiguous": 0,
+    "notFound": 15,
+    "providerFailure": 0
+  },
+  "demandBucketResults": {
+    "ge10": {
+      "attempted": 19,
+      "resolved": 4,
+      "successRate": 0.21052631578947367,
+      "edgesRepresented": 240,
+      "edgesResolved": 51,
+      "edgesPerCl": 2.6842105263157894,
+      "ambiguity": 0,
+      "noResult": 0.7894736842105263
+    },
+    "ge5": {
+      "attempted": 1,
+      "resolved": 1,
+      "successRate": 1,
+      "edgesRepresented": 9,
+      "edgesResolved": 9,
+      "edgesPerCl": 9,
+      "ambiguity": 0,
+      "noResult": 0
+    },
+    "ge3": {
+      "attempted": 0,
+      "resolved": 0,
+      "successRate": null,
+      "edgesRepresented": 0,
+      "edgesResolved": 0,
+      "edgesPerCl": null,
+      "ambiguity": null,
+      "noResult": null
+    },
+    "strategic12": {
+      "attempted": 0,
+      "resolved": 0,
+      "successRate": null,
+      "edgesRepresented": 0,
+      "edgesResolved": 0,
+      "edgesPerCl": null,
+      "ambiguity": null,
+      "noResult": null
+    }
+  },
+  "resolution": {
+    "newMetadataOnlyAuthorities": 5,
+    "existingMetadataAuthoritiesMatched": 0,
+    "existingCorpusCompleteMatches": 0,
+    "AUTHORITY_RESOLVED_targets": 5,
+    "CORPUS_COMPLETE_targets": 0,
+    "fullTextAcquired": 0
+  },
+  "backfill": {
+    "externalEdgesResolved": 60,
+    "localLearningEdgesResolved": 0,
+    "edgesResolved": 60,
+    "oldUnresolvedBackfilled": 60
+  },
+  "learning": {
+    "aliasesLearned": 12,
+    "parallelCitationsLearned": 10,
+    "targetsResolvedThroughNewlyLearnedAliases": 0,
+    "externalCallsAvoidedByLearning": 0,
+    "lookupsAvoidedByAliases": 0,
+    "lookupsAvoidedByParallelMappings": 0
+  },
+  "yield": {
+    "externalTargetResolutionRate": 0.25,
+    "externalEdgesPerCl": 3,
+    "totalEdgesPerClIncludingZeroCostLocal": 2.857142857142857,
+    "ambiguityRate": 0,
+    "noResultRate": 0.75,
+    "batch1": {
+      "targetResolution": 0.9,
+      "edgesPerCl": 14.15
+    },
+    "batch2": {
+      "targetResolution": 0.8696,
+      "edgesPerCl": 7.5
+    },
+    "batch3": {
+      "targetResolution": 0.8116,
+      "edgesPerCl": 4.56
+    },
+    "batch4": {
+      "targetResolution": 0.25,
+      "edgesPerCl": 2.857142857142857,
+      "edgesPerExternalCl": 3,
+      "frontierNote": "Stopped early at 20 lookups: resolution rate collapse from non-citation high-demand targets"
+    }
+  },
+  "efficiencyFrontier": {
+    "recommendedMinimumTargetDemandThreshold": ">=5 edges",
+    "evidence": [
+      "Batches 1–3: 5–9-edge targets ~88% HIGH and ~5.5–7.5 edges/CL — durable bulk band",
+      "Batches 1–3: >=10 remains best when reporter-valid (Batch1 head 14.15 edges/CL)",
+      "Batches 1–3: 3–4 ~65–76% HIGH and ~2.3–3.5 edges/CL — near early-stop floor of 2.0 edges/CL",
+      "Batch 4: remaining >=10 queue 79% NOT_FOUND; 14/15 misses were extraction artifacts (YYYY Page N), not resolver failure",
+      "Batch 4: 5 reporter-valid HIGH resolutions still yielded 3.0 edges/external CL before frontier stop",
+      "Rolling last-20 target resolution 25% < 60% gate → EFFICIENCY_FRONTIER_REACHED (successful stop)"
+    ],
+    "combinedBuckets": {
+      "ge10": {
+        "attempted": 41,
+        "resolved": 24,
+        "successRate": 0.5853658536585366,
+        "edgesResolved": 351,
+        "avgEdgesPerCl": 9.171052631578947
+      },
+      "ge5": {
+        "attempted": 98,
+        "resolved": 86,
+        "successRate": 0.8775510204081632,
+        "edgesResolved": 597,
+        "avgEdgesPerCl": 7
+      },
+      "ge3": {
+        "attempted": 38,
+        "resolved": 29,
+        "successRate": 0.7631578947368421,
+        "edgesResolved": 103,
+        "avgEdgesPerCl": 3.15
+      },
+      "strategic12": {
+        "attempted": 0,
+        "resolved": 0,
+        "successRate": null,
+        "edgesResolved": 0,
+        "avgEdgesPerCl": null
+      }
+    },
+    "belowThresholdPolicy": "Do not bulk-process below >=5 edges. Allow 3–4 only after local-first/alias learning or reporter-valid opportunistic. 1–2 only for CA3/EDPA/high-value PA/benchmark-critical. Exclude page-number extraction artifacts from external queue.",
+    "batch4ArtifactFinding": {
+      "notFoundOf20": 15,
+      "pageArtifactNotFound": 14,
+      "reporterValidHigh": 5,
+      "note": "Demand alone is insufficient; bulk CL requires reporter-valid citations at >=5 edges"
+    }
+  },
+  "identityVsAcquisition": {
+    "identityOldEdgeResolutionPerCl": 3,
+    "recentAcquisitionOldEdgeResolutionPerCl": 0.714,
+    "recentAcquisitionOldEdgeResolutionPerClAlt": 0.778,
+    "acquisitionHighDemandEdgesPerCl": 3.5,
+    "note": "Citation-backlog efficiency only; acquisition also yields full text, embeddings, retrieval, and authority reasoning.",
+    "whenIdentityLookup": "Bulk CL identity when unique target demand meets >=3 edges; local-first always.",
+    "whenFullTextAcquisition": "Use acquisition for METADATA_ONLY high-demand authorities needing full legal text/embeddings/research retrieval — not to chase 1–2-edge identity long-tail."
+  },
+  "health": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "duplicateActiveMappings": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "status": "PASS"
+  },
+  "fullTextQueue": {
+    "newCandidatesThisBatch": 5,
+    "totalQueued": 116,
+    "top20": [
+      {
+        "targetKey": "16 wall. 36",
+        "authorityId": "406c4cb2-07b9-483d-93f8-293535c8df8c",
+        "clusterId": "88661",
+        "citation": "16 Wall. 36",
+        "edgeCount": 13,
+        "uniqueCitingCases": 13,
+        "caseName": "Butchers' Benevolent Ass'n v. Crescent City Live-Stock Landing & Slaughter-House Co.",
+        "court": null,
+        "jurisdictions": [
+          "us-scotus"
+        ],
+        "priorityReason": "metadata_only_after_identity",
+        "unresolvedDemandRepresented": 13,
+        "controllingRelevance": true,
+        "practiceValue": 67.5
+      },
+      {
+        "targetKey": "18 how. 272",
+        "authorityId": "e5aa923a-d18a-40c1-8213-a9e4261efa51",
+        "clusterId": "87010",
+        "citation": "18 How. 272",
+        "edgeCount": 10,
+        "uniqueCitingCases": 10,
+        "caseName": "Den Ex Dem. Murray v. Hoboken Land & Improvement Co.",
+        "court": null,
+        "jurisdictions": [
+          "us-scotus"
+        ],
+        "priorityReason": "metadata_only_after_identity",
+        "unresolvedDemandRepresented": 10,
+        "controllingRelevance": true,
+        "practiceValue": 57
+      },
+      {
+        "targetKey": "96 u.s. 727",
+        "authorityId": "6dc21f19-f018-4114-9c40-26c98585a916",
+        "clusterId": "89759",
+        "citation": "96 U.S. 727",
+        "edgeCount": 9,
+        "uniqueCitingCases": 9,
+        "caseName": "Ex Parte Jackson",
+        "court": null,
+        "jurisdictions": [
+          "us-scotus",
+          "us-ca-dc"
+        ],
+        "priorityReason": "metadata_only_after_identity",
+        "unresolvedDemandRepresented": 9,
+        "controllingRelevance": true,
+        "practiceValue": 71.5
+      },
+      {
+        "targetKey": "346 or 160",
+        "authorityId": "0445a411-5500-4465-ae94-5951f4fc43bd",
+        "clusterId": "835187",
+        "citation": "346 Or 160",
+        "edgeCount": 14,
+        "uniqueCitingCases": 14,
+        "caseName": "State v. Gaines",
+        "court": null,
+        "jurisdictions": [
+          "st-or-high"
+        ],
+        "priorityReason": "metadata_only_after_identity",
+        "unresolvedDemandRepresented": 14,
+        "controllingRelevance": false,
+        "practiceValue": 61
+      },
+      {
+        "targetKey": "137 n.h. 321",
+        "authorityId": "c5bbe069-77ad-43a3-8c91-394af7c4035e",
+        "clusterId": "8091148",
+        "citation": "137 N.H. 321",
+        "edgeCount": 14,
+        "uniqueCitingCases": 14,
+        "caseName": "Vogel v. Vogel",
+        "court": null,
+        "jurisdictions": [
+          "st-nh-high"
+        ],
+        "priorityReason": "metadata_only_after_identity",
+        "unresolvedDemandRepresented": 14,
+        "controllingRelevance": false,
+        "practiceValue": 61
+      },
+      {
+        "targetKey": "106 s. ct. 2505",
+        "authorityId": "ea83101a-a697-46c3-8ab9-6db536953827",
+        "clusterId": "111719",
+        "citation": "106 S. Ct. 2505",
+        "edgeCount": 23,
+        "caseName": "Anderson v. Liberty Lobby, Inc.",
+        "court": null
+      },
+      {
+        "targetKey": "128 s. ct. 2783",
+        "authorityId": "a958ac72-0858-42ea-b48d-24461837a31a",
+        "clusterId": "145777",
+        "citation": "128 S. Ct. 2783",
+        "edgeCount": 23,
+        "caseName": "District of Columbia v. Heller",
+        "court": null
+      },
+      {
+        "targetKey": "106 s. ct. 2548",
+        "authorityId": "5009c6ad-4563-4189-97e8-dab4297464f7",
+        "clusterId": "111722",
+        "citation": "106 S. Ct. 2548",
+        "edgeCount": 22,
+        "caseName": "Celotex Corp. v. Catrett, Administratrix of the Estate of Catrett",
+        "court": null
+      },
+      {
+        "targetKey": "130 s. ct. 3020",
+        "authorityId": "f4b12054-2260-4dff-b8c1-2f0726777a28",
+        "clusterId": "149702",
+        "citation": "130 S. Ct. 3020",
+        "edgeCount": 20,
+        "caseName": "McDonald v. City of Chicago",
+        "court": null
+      },
+      {
+        "targetKey": "451 u.s. 204",
+        "authorityId": "543c647d-08db-44a5-a2fd-86a571fa0f38",
+        "clusterId": "110464",
+        "citation": "451 U.S. 204",
+        "edgeCount": 18,
+        "caseName": "Steagald v. United States",
+        "court": null
+      },
+      {
+        "targetKey": "421 u.s. 240",
+        "authorityId": "4da88fa6-adc8-4f7d-8254-de370222477d",
+        "clusterId": "109246",
+        "citation": "421 U.S. 240",
+        "edgeCount": 18,
+        "caseName": "Alyeska Pipeline Service Co. v. Wilderness Society",
+        "court": null
+      },
+      {
+        "targetKey": "106 s. ct. 1348",
+        "authorityId": "730995f1-442d-4777-a5aa-d772534da74d",
+        "clusterId": "111620",
+        "citation": "106 S. Ct. 1348",
+        "edgeCount": 17,
+        "caseName": "Matsushita Electric Industrial Co., Ltd. v. Zenith Radio Corporation",
+        "court": null
+      },
+      {
+        "targetKey": "95 s. ct. 1612",
+        "authorityId": "4da88fa6-adc8-4f7d-8254-de370222477d",
+        "clusterId": "109246",
+        "citation": "95 S. Ct. 1612",
+        "edgeCount": 17,
+        "caseName": "Alyeska Pipeline Service Co. v. Wilderness Society",
+        "court": null
+      },
+      {
+        "targetKey": "103 s. ct. 1933",
+        "authorityId": "895161c9-b325-41a6-861b-2b8c413c0c12",
+        "clusterId": "110929",
+        "citation": "103 S. Ct. 1933",
+        "edgeCount": 17,
+        "caseName": "Hensley v. Eckerhart",
+        "court": null
+      },
+      {
+        "targetKey": "390 u.s. 400",
+        "authorityId": "1397fa35-69cb-4ecf-a9a9-95f62cc72085",
+        "clusterId": "107637",
+        "citation": "390 U.S. 400",
+        "edgeCount": 16,
+        "caseName": "Newman v. Piggie Park Enterprises, Inc.",
+        "court": null
+      },
+      {
+        "targetKey": "100 s. ct. 1371",
+        "authorityId": "40e93263-20aa-4e7b-9320-a34e02ffe445",
+        "clusterId": "110235",
+        "citation": "100 S. Ct. 1371",
+        "edgeCount": 16,
+        "caseName": "Payton v. New York",
+        "court": null
+      },
+      {
+        "targetKey": "78 s. ct. 99",
+        "authorityId": "2e89c31d-135e-4acd-8896-358fc62a25cc",
+        "clusterId": "105573",
+        "citation": "78 S. Ct. 99",
+        "edgeCount": 13,
+        "caseName": "Conley v. Gibson",
+        "court": null
+      },
+      {
+        "targetKey": "401 u.s. 82",
+        "authorityId": "7dd862d3-4596-4977-a4a7-94f0bf731db9",
+        "clusterId": "108266",
+        "citation": "401 U.S. 82",
+        "edgeCount": 13,
+        "caseName": "Perez v. Ledesma",
+        "court": null
+      },
+      {
+        "targetKey": "69 s. ct. 1221",
+        "authorityId": "c7df1dd4-3565-4bdf-8916-3a338a8a06b8",
+        "clusterId": "104695",
+        "citation": "69 S. Ct. 1221",
+        "edgeCount": 13,
+        "caseName": "Cohen v. Beneficial Industrial Loan Corp.",
+        "court": null,
+        "priorityReason": "high_edge_demand_identity_only",
+        "unresolvedDemandRepresented": 13
+      },
+      {
+        "targetKey": "307 u.s. 174",
+        "authorityId": "6827aba9-7d1c-41aa-b0f7-423cb0f9363f",
+        "clusterId": "103203",
+        "citation": "307 U.S. 174",
+        "edgeCount": 11,
+        "caseName": "United States v. Miller",
+        "court": null
+      }
+    ]
+  },
+  "checkpoints": [
+    {
+      "atLookup": 10,
+      "totalCl": 11,
+      "identityLookups": 10,
+      "externalTargetResolutionRate": 0.3,
+      "edgesResolvedPerExternalCl": 4.1,
+      "cumulativeEdgesResolved": 41,
+      "avgEdgesRepresentedPerAttempted": 14,
+      "ambiguityRate": 0,
+      "noResultRate": 0.7,
+      "rolling20": {
+        "n": 10,
+        "edgesPerCl": 4.1,
+        "targetResolutionRate": 0.3,
+        "ambiguityRate": 0
+      },
+      "locallyResolvedBeforeExternal": 0,
+      "externalLookupAvoided": 0,
+      "newlyLocalResolvableTargets": 0,
+      "newlyLocalResolvableEdges": 0,
+      "health": {
+        "green": true,
+        "resolved": 11561,
+        "unresolved": 55384,
+        "METADATA_ONLY_AUTHORITIES": 113,
+        "CORPUS_COMPLETE_AUTHORITIES": 5136
+      },
+      "hit429": false,
+      "updatedAt": "2026-10-09T16:34:30.937Z"
+    },
+    {
+      "atLookup": 20,
+      "totalCl": 21,
+      "identityLookups": 20,
+      "externalTargetResolutionRate": 0.25,
+      "edgesResolvedPerExternalCl": 3,
+      "cumulativeEdgesResolved": 60,
+      "avgEdgesRepresentedPerAttempted": 12.45,
+      "ambiguityRate": 0,
+      "noResultRate": 0.75,
+      "rolling20": {
+        "n": 20,
+        "edgesPerCl": 3,
+        "targetResolutionRate": 0.25,
+        "ambiguityRate": 0
+      },
+      "locallyResolvedBeforeExternal": 0,
+      "externalLookupAvoided": 0,
+      "newlyLocalResolvableTargets": 0,
+      "newlyLocalResolvableEdges": 0,
+      "health": {
+        "green": true,
+        "resolved": 11580,
+        "unresolved": 55365,
+        "METADATA_ONLY_AUTHORITIES": 115,
+        "CORPUS_COMPLETE_AUTHORITIES": 5136
+      },
+      "hit429": false,
+      "updatedAt": "2026-10-09T16:35:22.266Z"
+    }
+  ],
+  "nextStrategy": "MIX_IDENTITY_AND_FULLTEXT",
+  "nextRecommendedBudget": 40,
+  "finalClassification": "CITATION_IDENTITY_EFFICIENCY_FRONTIER_ESTABLISHED",
+  "results": [
+    {
+      "targetKey": "163 idaho 856",
+      "citation": "163 Idaho 856",
+      "representativeRaw": "163 Idaho 856",
+      "edgeCount": 16,
+      "uniqueCitingCases": 16,
+      "jurisdictions": [
+        "st-id-high",
+        "st-unknown"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "candidateCount": 0,
+      "evidence": [
+        "no_cluster_id"
+      ],
+      "externalLookup": true,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "2026 page 2",
+      "citation": "2026 Page 2",
+      "representativeRaw": "2026 Page 2",
+      "edgeCount": 15,
+      "uniqueCitingCases": 15,
+      "jurisdictions": [
+        "st-in-app",
+        "st-in-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "candidateCount": 0,
+      "evidence": [
+        "empty_response"
+      ],
+      "externalLookup": true,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "2026 page 3",
+      "citation": "2026 Page 3",
+      "representativeRaw": "2026 Page 3",
+      "edgeCount": 15,
+      "uniqueCitingCases": 15,
+      "jurisdictions": [
+        "st-in-app",
+        "st-in-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "candidateCount": 0,
+      "evidence": [
+        "empty_response"
+      ],
+      "externalLookup": true,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "2026 page 4",
+      "citation": "2026 Page 4",
+      "representativeRaw": "2026 Page 4",
+      "edgeCount": 14,
+      "uniqueCitingCases": 14,
+      "jurisdictions": [
+        "st-in-app",
+        "st-in-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "candidateCount": 0,
+      "evidence": [
+        "empty_response"
+      ],
+      "externalLookup": true,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "346 or 160",
+      "citation": "346 Or 160",
+      "representativeRaw": "346 Or 160",
+      "edgeCount": 14,
+      "uniqueCitingCases": 14,
+      "jurisdictions": [
+        "st-or-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "835187",
+      "opinionIds": [],
+      "citations": [
+        "346 Or. 160",
+        "[object Object]"
+      ],
+      "caseName": "State v. Gaines",
+      "court": null,
+      "dateFiled": "2009-04-30",
+      "candidateCount": 1,
+      "evidence": [
+        "cluster:835187",
+        "cite:346 Or. 160",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "0445a411-5500-4465-ae94-5951f4fc43bd",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 14
+    },
+    {
+      "targetKey": "137 n.h. 321",
+      "citation": "137 N.H. 321",
+      "representativeRaw": "137 N.H. 321",
+      "edgeCount": 14,
+      "uniqueCitingCases": 14,
+      "jurisdictions": [
+        "st-nh-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "8091148",
+      "opinionIds": [],
+      "citations": [
+        "137 N.H. 321",
+        "[object Object]"
+      ],
+      "caseName": "Vogel v. Vogel",
+      "court": null,
+      "dateFiled": "1993-06-30",
+      "candidateCount": 1,
+      "evidence": [
+        "cluster:8091148",
+        "cite:137 N.H. 321",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "c5bbe069-77ad-43a3-8c91-394af7c4035e",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 14
+    },
+    {
+      "targetKey": "16 wall. 36",
+      "citation": "16 Wall. 36",
+      "representativeRaw": "16 Wall. 36",
+      "edgeCount": 13,
+      "uniqueCitingCases": 13,
+      "jurisdictions": [
+        "us-scotus"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "88661",
+      "opinionIds": [],
+      "citations": [
+        "16 Wall. 36",
+        "[object Object]"
+      ],
+      "caseName": "Butchers' Benevolent Ass'n v. Crescent City Live-Stock Landing & Slaughter-House Co.",
+      "court": null,
+      "dateFiled": "1873-04-14",
+      "candidateCount": 1,
+      "evidence": [
+        "cluster:88661",
+        "cite:16 Wall. 36",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "406c4cb2-07b9-483d-93f8-293535c8df8c",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 13
+    },
+    {
+      "targetKey": "2026 page 5",
+      "citation": "2026 Page 5",
+      "representativeRaw": "2026 Page 5",
+      "edgeCount": 13,
+      "uniqueCitingCases": 13,
+      "jurisdictions": [
+        "st-in-app",
+        "st-in-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "candidateCount": 0,
+      "evidence": [
+        "empty_response"
+      ],
+      "externalLookup": true,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "2026 page 6",
+      "citation": "2026 Page 6",
+      "representativeRaw": "2026 Page 6",
+      "edgeCount": 13,
+      "uniqueCitingCases": 13,
+      "jurisdictions": [
+        "st-in-app",
+        "st-in-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "candidateCount": 0,
+      "evidence": [
+        "empty_response"
+      ],
+      "externalLookup": true,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "2026 page 7",
+      "citation": "2026 Page 7",
+      "representativeRaw": "2026 Page 7",
+      "edgeCount": 13,
+      "uniqueCitingCases": 13,
+      "jurisdictions": [
+        "st-in-app",
+        "st-in-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "candidateCount": 0,
+      "evidence": [
+        "empty_response"
+      ],
+      "externalLookup": true,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "2026 page 8",
+      "citation": "2026 Page 8",
+      "representativeRaw": "2026 Page 8",
+      "edgeCount": 12,
+      "uniqueCitingCases": 12,
+      "jurisdictions": [
+        "st-in-app",
+        "st-in-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "candidateCount": 0,
+      "evidence": [
+        "empty_response"
+      ],
+      "externalLookup": true,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "2026 page 9",
+      "citation": "2026 Page 9",
+      "representativeRaw": "2026 Page 9",
+      "edgeCount": 12,
+      "uniqueCitingCases": 12,
+      "jurisdictions": [
+        "st-in-app",
+        "st-in-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "candidateCount": 0,
+      "evidence": [
+        "empty_response"
+      ],
+      "externalLookup": true,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "2025 page 2",
+      "citation": "2025 Page 2",
+      "representativeRaw": "2025 Page 2",
+      "edgeCount": 12,
+      "uniqueCitingCases": 12,
+      "jurisdictions": [
+        "st-in-high",
+        "st-ga-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "candidateCount": 0,
+      "evidence": [
+        "empty_response"
+      ],
+      "externalLookup": true,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "2025 page 3",
+      "citation": "2025 Page 3",
+      "representativeRaw": "2025 Page 3",
+      "edgeCount": 12,
+      "uniqueCitingCases": 12,
+      "jurisdictions": [
+        "st-in-high",
+        "st-ga-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "candidateCount": 0,
+      "evidence": [
+        "empty_response"
+      ],
+      "externalLookup": true,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "2025 page 4",
+      "citation": "2025 Page 4",
+      "representativeRaw": "2025 Page 4",
+      "edgeCount": 12,
+      "uniqueCitingCases": 12,
+      "jurisdictions": [
+        "st-in-high",
+        "st-ga-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "candidateCount": 0,
+      "evidence": [
+        "empty_response"
+      ],
+      "externalLookup": true,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "18 how. 272",
+      "citation": "18 How. 272",
+      "representativeRaw": "18 How. 272",
+      "edgeCount": 10,
+      "uniqueCitingCases": 10,
+      "jurisdictions": [
+        "us-scotus"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "87010",
+      "opinionIds": [],
+      "citations": [
+        "18 How. 272",
+        "[object Object]"
+      ],
+      "caseName": "Den Ex Dem. Murray v. Hoboken Land & Improvement Co.",
+      "court": null,
+      "dateFiled": "1856-02-19",
+      "candidateCount": 1,
+      "evidence": [
+        "cluster:87010",
+        "cite:18 How. 272",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "e5aa923a-d18a-40c1-8213-a9e4261efa51",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 10
+    },
+    {
+      "targetKey": "2025 page 5",
+      "citation": "2025 Page 5",
+      "representativeRaw": "2025 Page 5",
+      "edgeCount": 10,
+      "uniqueCitingCases": 10,
+      "jurisdictions": [
+        "st-in-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "candidateCount": 0,
+      "evidence": [
+        "empty_response"
+      ],
+      "externalLookup": true,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "2025 page 6",
+      "citation": "2025 Page 6",
+      "representativeRaw": "2025 Page 6",
+      "edgeCount": 10,
+      "uniqueCitingCases": 10,
+      "jurisdictions": [
+        "st-in-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "candidateCount": 0,
+      "evidence": [
+        "empty_response"
+      ],
+      "externalLookup": true,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "2025 page 7",
+      "citation": "2025 Page 7",
+      "representativeRaw": "2025 Page 7",
+      "edgeCount": 10,
+      "uniqueCitingCases": 10,
+      "jurisdictions": [
+        "st-in-high"
+      ],
+      "reporter": null,
+      "volume": null,
+      "page": null,
+      "demandBucket": "ge10",
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "candidateCount": 0,
+      "evidence": [
+        "empty_response"
+      ],
+      "externalLookup": true,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "96 u.s. 727",
+      "citation": "96 U.S. 727",
+      "representativeRaw": "96 U. S. 727",
+      "edgeCount": 9,
+      "uniqueCitingCases": 9,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-dc"
+      ],
+      "reporter": "U.S.",
+      "volume": 96,
+      "page": 727,
+      "demandBucket": "ge5",
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "89759",
+      "opinionIds": [],
+      "citations": [
+        "96 U.S. 727",
+        "[object Object]"
+      ],
+      "caseName": "Ex Parte Jackson",
+      "court": null,
+      "dateFiled": "1878-05-13",
+      "candidateCount": 1,
+      "evidence": [
+        "cluster:89759",
+        "cite:96 U.S. 727",
+        "cite:[object Object]"
+      ],
+      "externalLookup": true,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "6dc21f19-f018-4114-9c40-26c98585a916",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 9
+    }
+  ],
+  "generatedAt": "2026-10-09T16:35:22.670Z",
+  "resolverVersion": "citation-resolution-engine/v1",
+  "fullTextAcquired": 0
+}
