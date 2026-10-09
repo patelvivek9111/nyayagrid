@@ -9,7 +9,41 @@
 
 const { createHash, randomUUID } = require("node:crypto");
 
-const CITATION_EXTRACTION_VERSION = "case-cite-extract-v1";
+const CITATION_EXTRACTION_VERSION = "case-cite-extract-v1.1";
+
+/** Catch-all tokens that look like vol+word+page but are not reporters (Batch4 waste). */
+const NON_REPORTER_EXTRACT_TOKENS = new Set([
+  "page",
+  "pages",
+  "id",
+  "ibid",
+  "supra",
+  "see",
+  "cf",
+  "but",
+  "and",
+  "the",
+  "at",
+  "of",
+  "in",
+  "to",
+  "for",
+  "note",
+  "vol",
+  "doc",
+  "ex",
+  "exh",
+  "exhibit",
+  "ecf",
+  "docket",
+  "record",
+  "app",
+  "cir",
+  "dist",
+  "no",
+  "slip",
+  "op",
+]);
 
 const EXTRACT_RES = [
   /\b\d{1,3}\s+U\.?\s*S\.?\s+\d{1,4}\b/gi,
@@ -24,10 +58,13 @@ const EXTRACT_RES = [
   /\b\d{1,4}\s+(?:N\.?\s*E\.?|N\.?\s*W\.?|S\.?\s*E\.?|S\.?\s*W\.?|A\.?|P\.?|So\.?)\s*(?:2d|3d)?\s+\d{1,4}\b/gi,
   // Two-letter dotted reporters: N.H., N.J., etc. with page
   /\b\d{1,4}\s+[A-Z]\.\s*[A-Z]\.?\s+\d{1,4}\b/g,
-  // Common state reporter abbreviations with page: Ill., Cal., Mass., etc.
-  /\b\d{1,4}\s+(?:Ill|Cal|Mass|Tex|Ohio|Mich|Pa|NY|N\.Y|Fla|Ga|Va|Wash|Or|Minn|Wis|Kan|Okla|Ark|Ala|Tenn|Ky|Ind|Conn|Md|Mo|Colo|Ariz)\.?\s*(?:2d|3d|App\.?)?\s+\d{1,4}\b/gi,
+  // Common state reporter abbreviations with page: Ill., Cal., Mass., Idaho, etc.
+  /\b\d{1,4}\s+(?:Ill|Cal|Mass|Tex|Ohio|Mich|Pa|NY|N\.Y|Fla|Ga|Va|Wash|Or|Minn|Wis|Kan|Okla|Ark|Ala|Tenn|Ky|Ind|Conn|Md|Mo|Colo|Ariz|Idaho)\.?\s*(?:2d|3d|App\.?)?\s+\d{1,4}\b/gi,
+  // Historical U.S. reports
+  /\b\d{1,3}\s+(?:Wall|How|Pet|Cranch|Dallas|Black)\.?\s+\d{1,4}\b/gi,
   // State neutral citations: 2026 ND 26, 2026 OK 65
   /\b(?:19|20)\d{2}\s+(?:ND|SD|OK|NM|WY|MT|KS|NE|IA|WI|MN|AK|HI|OH|UT|VT|ME|NH|NV|ID|DE|RI|SC|NC|WV)\s+\d{1,4}\b/g,
+  // Catch-all state/official name reporters — post-filtered for non-reporter tokens
   /\b\d{1,4}\s+[A-Z][a-z]{0,10}\.?\s*(?:2d|3d)?\s+\d{1,4}\b/g,
 ];
 
@@ -47,6 +84,21 @@ function normalizeCitation(raw) {
     .trim();
 }
 
+function isExtractableCitation(normalized) {
+  const t = String(normalized || "").trim();
+  if (!t || t.length < 5) return false;
+  // Document pagination artifacts must never enter citation edges going forward.
+  if (/^\d{4}\s+Pages?\s+\d+$/i.test(t)) return false;
+  const loose = t.match(/^(\d{1,4})\s+([A-Za-z][A-Za-z.]{0,20}?)\s*(?:2d|3d)?\s+(\d{1,4})$/i);
+  if (loose) {
+    const token = String(loose[2] || "")
+      .replace(/\./g, "")
+      .toLowerCase();
+    if (NON_REPORTER_EXTRACT_TOKENS.has(token)) return false;
+  }
+  return true;
+}
+
 function extractCaseCitationsFromText(content) {
   const seen = new Set();
   const out = [];
@@ -58,6 +110,7 @@ function extractCaseCitationsFromText(content) {
       const raw = m[0].trim();
       const normalized = normalizeCitation(raw);
       if (!normalized || normalized.length < 5) continue;
+      if (!isExtractableCitation(normalized)) continue;
       if (seen.has(normalized)) continue;
       seen.add(normalized);
       out.push({ raw, normalized });
@@ -167,6 +220,7 @@ module.exports = {
   CITATION_EXTRACTION_VERSION,
   sha256Text,
   normalizeCitation,
+  isExtractableCitation,
   extractCaseCitationsFromText,
   looksCitationLike,
   buildExtractionMeta,

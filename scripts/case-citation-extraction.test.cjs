@@ -88,6 +88,21 @@ test("extracts regional reporters and state neutral citations", () => {
   assert.ok(norms.some((n) => /2026 OK 65/.test(n)));
 });
 
+test("rejects YYYY Page N pagination artifacts; keeps Idaho official reporter", () => {
+  const text = `
+    Header junk: 2026 Page 2 and 2025 Page 7.
+    Real cite: State v. Foo, 163 Idaho 856 (2018). Also 16 Wall. 36.
+  `;
+  const cites = extractCaseCitationsFromText(text);
+  const norms = cites.map((c) => c.normalized);
+  assert.equal(
+    norms.filter((n) => /^\d{4}\s+Page\s+\d+$/i.test(n)).length,
+    0,
+  );
+  assert.ok(norms.some((n) => /163 Idaho 856/i.test(n)));
+  assert.ok(norms.some((n) => /16 Wall\.?\s*36/i.test(n)));
+});
+
 
 console.log(
   JSON.stringify({
