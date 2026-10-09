@@ -3,8 +3,9 @@
  *
  * Additive matter-scoped tables for Deepening Pass 4.
  * Reuses documents, civil_evidence_items, matter_entities, and tasks.
- * communication_id / motion_id are opaque matter-scoped UUID refs until
- * general communications/motions tables exist (validated in services).
+ * communication_id / motion_id harden to matter_communications / matter_motions
+ * via composite FKs in migration 0023 (orphans nulled safely).
+ * motion_document_id remains a convenience document pointer.
  * No sanctions or privilege legal-conclusion columns.
  */
 
