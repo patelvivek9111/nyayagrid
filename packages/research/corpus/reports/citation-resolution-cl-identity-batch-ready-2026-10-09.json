@@ -1,0 +1,22 @@
+{
+  "gate": "COURTLISTENER_IDENTITY_BATCH_READY",
+  "courtListenerHttpCalls": 1,
+  "quota": {
+    "minuteRemaining": 25,
+    "hourRemaining": 300,
+    "dayRemaining": 378,
+    "dayResetAt": "2026-10-09T16:11:08.971763+00:00"
+  },
+  "recommendedIdentityBatchRequestBudget": 20,
+  "recommendedUniqueTargets": 20,
+  "estimatedRepresentedEdges": 311,
+  "targetMix": {
+    "highDemand": 20,
+    "ca3": 20,
+    "federal": 19,
+    "state": 9,
+    "historical": 0
+  },
+  "note": "1 text per citation-lookup request. Do not start live identity lookups without explicit authorization.",
+  "generatedAt": "2026-10-09T15:49:54.740Z"
+}

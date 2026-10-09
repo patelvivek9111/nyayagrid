@@ -1,0 +1,105 @@
+{
+  "ok": true,
+  "classification": "CITATION_RESOLUTION_LOCAL_WRITE_CERTIFICATION",
+  "courtListenerHttpCalls": 0,
+  "corpusMutations": 172,
+  "casesAdded": 0,
+  "authoritiesAdded": 0,
+  "fullOpinionAcquisitions": 0,
+  "preWriteApprox": {
+    "cases": 5136,
+    "authorities": 6491,
+    "extracted": 66945,
+    "resolved": 10221,
+    "unresolved": 56724
+  },
+  "after": {
+    "cases": 5136,
+    "authorities": 6491,
+    "extracted": 66945,
+    "resolved": 10393,
+    "unresolved": 56552,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0
+  },
+  "resolvedDelta": 172,
+  "unresolvedDelta": -172,
+  "write": {
+    "targetsAuthorized": 44,
+    "edgesAuthorized": 172,
+    "targetsActuallyResolved": 44,
+    "edgesActuallyResolved": 172,
+    "ambiguousSkipped": 1,
+    "unexpectedTargetMappings": 0
+  },
+  "presentTarget": {
+    "naiveCount": 1,
+    "deterministicDefects": 0,
+    "ambiguousResidual": [
+      {
+        "id": "335e4cb6-f4fc-4aca-9c26-e968ea9fd3b3",
+        "raw_citation": "15 U.S.C. § 45",
+        "normalized_citation": "15 U.S.C. § 45",
+        "n": 2
+      }
+    ],
+    "note": "Naive present-target count includes NO_AUTO_RESOLVE ambiguous multi-authority matches. Certification requires deterministic defects = 0."
+  },
+  "state": {
+    "AUTHORITY_RESOLVED_edges_among_plan": 0,
+    "CORPUS_COMPLETE_edges_among_plan": 172,
+    "identityOnlyTargets": 0,
+    "rawCitationPreserved": true
+  },
+  "ledger": {
+    "recordsAdded": 172,
+    "highConfidenceOnly": true,
+    "provenanceComplete": true,
+    "reversible": true,
+    "duplicateActiveMappings": 0,
+    "resolverVersion": "citation-resolution-engine/v1",
+    "path": "C:\\Users\\patel\\Documents\\nyayagrid-corpus-v2\\packages\\research\\corpus\\resolution\\ledger\\local-high-2026-10-09.jsonl"
+  },
+  "idempotency": {
+    "secondRunMutations": 0
+  },
+  "health": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "presentTargetAmbiguous": 1,
+    "presentTargetDefectsNaive": 1,
+    "status": "PASS"
+  },
+  "generatedAt": "2026-10-09T15:48:59.124Z",
+  "quotaGate": {
+    "gate": "COURTLISTENER_IDENTITY_BATCH_READY",
+    "courtListenerHttpCalls": 1,
+    "quota": {
+      "minuteRemaining": 25,
+      "hourRemaining": 300,
+      "dayRemaining": 378,
+      "dayResetAt": "2026-10-09T16:11:08.971763+00:00"
+    },
+    "recommendedIdentityBatchRequestBudget": 20,
+    "recommendedUniqueTargets": 20,
+    "estimatedRepresentedEdges": 311,
+    "targetMix": {
+      "highDemand": 20,
+      "ca3": 20,
+      "federal": 19,
+      "state": 9,
+      "historical": 0
+    },
+    "note": "1 text per citation-lookup request. Do not start live identity lookups without explicit authorization.",
+    "generatedAt": "2026-10-09T15:49:54.740Z"
+  },
+  "nextGate": "COURTLISTENER_IDENTITY_BATCH_READY",
+  "finalClassification": "CITATION_LOCAL_WRITE_CERTIFIED"
+}
