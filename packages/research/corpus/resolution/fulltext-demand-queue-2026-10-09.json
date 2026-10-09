@@ -1,0 +1,169 @@
+{
+  "generatedAt": "2026-10-09T15:57:11.945Z",
+  "batch": "identity-batch1",
+  "candidates": [
+    {
+      "targetKey": "106 s. ct. 2505",
+      "authorityId": "ea83101a-a697-46c3-8ab9-6db536953827",
+      "clusterId": "111719",
+      "citation": "106 S. Ct. 2505",
+      "edgeCount": 23,
+      "caseName": "Anderson v. Liberty Lobby, Inc.",
+      "court": null
+    },
+    {
+      "targetKey": "106 s. ct. 2548",
+      "authorityId": "5009c6ad-4563-4189-97e8-dab4297464f7",
+      "clusterId": "111722",
+      "citation": "106 S. Ct. 2548",
+      "edgeCount": 22,
+      "caseName": "Celotex Corp. v. Catrett, Administratrix of the Estate of Catrett",
+      "court": null
+    },
+    {
+      "targetKey": "106 s. ct. 1348",
+      "authorityId": "730995f1-442d-4777-a5aa-d772534da74d",
+      "clusterId": "111620",
+      "citation": "106 S. Ct. 1348",
+      "edgeCount": 17,
+      "caseName": "Matsushita Electric Industrial Co., Ltd. v. Zenith Radio Corporation",
+      "court": null
+    },
+    {
+      "targetKey": "451 u.s. 204",
+      "authorityId": "543c647d-08db-44a5-a2fd-86a571fa0f38",
+      "clusterId": "110464",
+      "citation": "451 U.S. 204",
+      "edgeCount": 18,
+      "caseName": "Steagald v. United States",
+      "court": null
+    },
+    {
+      "targetKey": "421 u.s. 240",
+      "authorityId": "4da88fa6-adc8-4f7d-8254-de370222477d",
+      "clusterId": "109246",
+      "citation": "421 U.S. 240",
+      "edgeCount": 18,
+      "caseName": "Alyeska Pipeline Service Co. v. Wilderness Society",
+      "court": null
+    },
+    {
+      "targetKey": "390 u.s. 400",
+      "authorityId": "1397fa35-69cb-4ecf-a9a9-95f62cc72085",
+      "clusterId": "107637",
+      "citation": "390 U.S. 400",
+      "edgeCount": 16,
+      "caseName": "Newman v. Piggie Park Enterprises, Inc.",
+      "court": null
+    },
+    {
+      "targetKey": "128 s. ct. 2783",
+      "authorityId": "a958ac72-0858-42ea-b48d-24461837a31a",
+      "clusterId": "145777",
+      "citation": "128 S. Ct. 2783",
+      "edgeCount": 23,
+      "caseName": "District of Columbia v. Heller",
+      "court": null
+    },
+    {
+      "targetKey": "130 s. ct. 3020",
+      "authorityId": "f4b12054-2260-4dff-b8c1-2f0726777a28",
+      "clusterId": "149702",
+      "citation": "130 S. Ct. 3020",
+      "edgeCount": 20,
+      "caseName": "McDonald v. City of Chicago",
+      "court": null
+    },
+    {
+      "targetKey": "78 s. ct. 99",
+      "authorityId": "2e89c31d-135e-4acd-8896-358fc62a25cc",
+      "clusterId": "105573",
+      "citation": "78 S. Ct. 99",
+      "edgeCount": 13,
+      "caseName": "Conley v. Gibson",
+      "court": null
+    },
+    {
+      "targetKey": "95 s. ct. 1612",
+      "authorityId": "4da88fa6-adc8-4f7d-8254-de370222477d",
+      "clusterId": "109246",
+      "citation": "95 S. Ct. 1612",
+      "edgeCount": 17,
+      "caseName": "Alyeska Pipeline Service Co. v. Wilderness Society",
+      "court": null
+    },
+    {
+      "targetKey": "103 s. ct. 1933",
+      "authorityId": "895161c9-b325-41a6-861b-2b8c413c0c12",
+      "clusterId": "110929",
+      "citation": "103 S. Ct. 1933",
+      "edgeCount": 17,
+      "caseName": "Hensley v. Eckerhart",
+      "court": null
+    },
+    {
+      "targetKey": "460 u.s. 491",
+      "authorityId": "861f44ca-c99d-482d-ab0d-48239f6ee6d1",
+      "clusterId": "110890",
+      "citation": "460 U.S. 491",
+      "edgeCount": 10,
+      "caseName": "Florida v. Royer",
+      "court": null
+    },
+    {
+      "targetKey": "100 s. ct. 1371",
+      "authorityId": "40e93263-20aa-4e7b-9320-a34e02ffe445",
+      "clusterId": "110235",
+      "citation": "100 S. Ct. 1371",
+      "edgeCount": 16,
+      "caseName": "Payton v. New York",
+      "court": null
+    },
+    {
+      "targetKey": "401 u.s. 82",
+      "authorityId": "7dd862d3-4596-4977-a4a7-94f0bf731db9",
+      "clusterId": "108266",
+      "citation": "401 U.S. 82",
+      "edgeCount": 13,
+      "caseName": "Perez v. Ledesma",
+      "court": null
+    },
+    {
+      "targetKey": "127 s. ct. 1955",
+      "authorityId": "ab740285-c189-4c08-b29a-6760fc394e7c",
+      "clusterId": "145730",
+      "citation": "127 S. Ct. 1955",
+      "edgeCount": 8,
+      "caseName": "Bell Atlantic Corp. v. Twombly",
+      "court": null
+    },
+    {
+      "targetKey": "94 s. ct. 1683",
+      "authorityId": "1edea158-b59f-4c9a-870e-8c4d2c06e5f9",
+      "clusterId": "109009",
+      "citation": "94 S. Ct. 1683",
+      "edgeCount": 10,
+      "caseName": "Scheuer v. Rhodes",
+      "court": null
+    },
+    {
+      "targetKey": "307 u.s. 174",
+      "authorityId": "6827aba9-7d1c-41aa-b0f7-423cb0f9363f",
+      "clusterId": "103203",
+      "citation": "307 U.S. 174",
+      "edgeCount": 11,
+      "caseName": "United States v. Miller",
+      "court": null
+    },
+    {
+      "targetKey": "415 u.s. 651",
+      "authorityId": "8d9516a6-a2d3-4403-a6e8-e07821da560a",
+      "clusterId": "108990",
+      "citation": "415 U.S. 651",
+      "edgeCount": 11,
+      "caseName": "Edelman v. Jordan",
+      "court": null
+    }
+  ],
+  "note": "Demand-driven full-text queue only; not acquired in this run."
+}

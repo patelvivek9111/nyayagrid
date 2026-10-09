@@ -1,0 +1,976 @@
+{
+  "ok": true,
+  "classification": "CITATION_IDENTITY_LIVE_BATCH1",
+  "stopReason": "BATCH_COMPLETE",
+  "courtListenerHttpCalls": 20,
+  "fullTextAcquired": 0,
+  "start": {
+    "cases": 5136,
+    "authorities": 6491,
+    "extracted": 66945,
+    "resolved": 10393,
+    "unresolved": 56552,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "presentTargetAmbiguous": 1,
+    "green": true
+  },
+  "end": {
+    "cases": 5153,
+    "authorities": 6508,
+    "extracted": 66945,
+    "resolved": 10676,
+    "unresolved": 56269,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "presentTargetAmbiguous": 1,
+    "green": true
+  },
+  "resolvedDelta": 283,
+  "unresolvedDelta": -283,
+  "authoritiesCreated": 17,
+  "casesAdded": 17,
+  "authoritiesAdded": 17,
+  "targets": {
+    "attempted": 20,
+    "highResolved": 18,
+    "ambiguous": 0,
+    "notFound": 2,
+    "providerFailure": 0
+  },
+  "states": {
+    "AUTHORITY_RESOLVED_targets": 18,
+    "CORPUS_COMPLETE_targets_already_local": 0,
+    "identityOnlyTargets": 18
+  },
+  "backfill": {
+    "edgesRepresented": 311,
+    "edgesResolved": 283,
+    "oldUnresolvedEdgesBackfilled": 283,
+    "backfillMultiplier": 15.722222222222221
+  },
+  "yield": {
+    "targetResolutionRate": 0.9,
+    "edgeResolutionRate": 14.15,
+    "ambiguityRate": 0,
+    "noResultRate": 0.1,
+    "authorityOnlyRate": 1,
+    "projectedIdentitySuccess": "45-70%",
+    "actualIdentitySuccess": 0.9,
+    "withinProjection": true
+  },
+  "health": {
+    "cases": 5153,
+    "authorities": 6508,
+    "extracted": 66945,
+    "resolved": 10676,
+    "unresolved": 56269,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "presentTargetAmbiguous": 1,
+    "green": true,
+    "duplicateActiveMappings": 0,
+    "status": "PASS"
+  },
+  "fullTextQueue": {
+    "newCandidates": 18,
+    "topCandidates": [
+      {
+        "targetKey": "106 s. ct. 2505",
+        "authorityId": "ea83101a-a697-46c3-8ab9-6db536953827",
+        "clusterId": "111719",
+        "citation": "106 S. Ct. 2505",
+        "edgeCount": 23,
+        "caseName": "Anderson v. Liberty Lobby, Inc.",
+        "court": null
+      },
+      {
+        "targetKey": "106 s. ct. 2548",
+        "authorityId": "5009c6ad-4563-4189-97e8-dab4297464f7",
+        "clusterId": "111722",
+        "citation": "106 S. Ct. 2548",
+        "edgeCount": 22,
+        "caseName": "Celotex Corp. v. Catrett, Administratrix of the Estate of Catrett",
+        "court": null
+      },
+      {
+        "targetKey": "106 s. ct. 1348",
+        "authorityId": "730995f1-442d-4777-a5aa-d772534da74d",
+        "clusterId": "111620",
+        "citation": "106 S. Ct. 1348",
+        "edgeCount": 17,
+        "caseName": "Matsushita Electric Industrial Co., Ltd. v. Zenith Radio Corporation",
+        "court": null
+      },
+      {
+        "targetKey": "451 u.s. 204",
+        "authorityId": "543c647d-08db-44a5-a2fd-86a571fa0f38",
+        "clusterId": "110464",
+        "citation": "451 U.S. 204",
+        "edgeCount": 18,
+        "caseName": "Steagald v. United States",
+        "court": null
+      },
+      {
+        "targetKey": "421 u.s. 240",
+        "authorityId": "4da88fa6-adc8-4f7d-8254-de370222477d",
+        "clusterId": "109246",
+        "citation": "421 U.S. 240",
+        "edgeCount": 18,
+        "caseName": "Alyeska Pipeline Service Co. v. Wilderness Society",
+        "court": null
+      },
+      {
+        "targetKey": "390 u.s. 400",
+        "authorityId": "1397fa35-69cb-4ecf-a9a9-95f62cc72085",
+        "clusterId": "107637",
+        "citation": "390 U.S. 400",
+        "edgeCount": 16,
+        "caseName": "Newman v. Piggie Park Enterprises, Inc.",
+        "court": null
+      },
+      {
+        "targetKey": "128 s. ct. 2783",
+        "authorityId": "a958ac72-0858-42ea-b48d-24461837a31a",
+        "clusterId": "145777",
+        "citation": "128 S. Ct. 2783",
+        "edgeCount": 23,
+        "caseName": "District of Columbia v. Heller",
+        "court": null
+      },
+      {
+        "targetKey": "130 s. ct. 3020",
+        "authorityId": "f4b12054-2260-4dff-b8c1-2f0726777a28",
+        "clusterId": "149702",
+        "citation": "130 S. Ct. 3020",
+        "edgeCount": 20,
+        "caseName": "McDonald v. City of Chicago",
+        "court": null
+      },
+      {
+        "targetKey": "78 s. ct. 99",
+        "authorityId": "2e89c31d-135e-4acd-8896-358fc62a25cc",
+        "clusterId": "105573",
+        "citation": "78 S. Ct. 99",
+        "edgeCount": 13,
+        "caseName": "Conley v. Gibson",
+        "court": null
+      },
+      {
+        "targetKey": "95 s. ct. 1612",
+        "authorityId": "4da88fa6-adc8-4f7d-8254-de370222477d",
+        "clusterId": "109246",
+        "citation": "95 S. Ct. 1612",
+        "edgeCount": 17,
+        "caseName": "Alyeska Pipeline Service Co. v. Wilderness Society",
+        "court": null
+      }
+    ]
+  },
+  "http": {
+    "requestsAuthorized": 20,
+    "requestsUsed": 20,
+    "hit429": false,
+    "hit502": 0
+  },
+  "scaleDecision": "SCALE_IDENTITY_RESOLUTION",
+  "nextRecommendedBudget": 71,
+  "finalClassification": "CITATION_IDENTITY_BATCH1_STRONG",
+  "results": [
+    {
+      "targetKey": "106 s. ct. 2505",
+      "citation": "106 S. Ct. 2505",
+      "representativeRaw": "106 S.Ct. 2505",
+      "edgeCount": 23,
+      "uniqueCitingCases": 23,
+      "jurisdictions": [
+        "us-d-nysd",
+        "us-d-cand",
+        "us-d-ilnd",
+        "us-d-cacd",
+        "us-ca-dc",
+        "us-ca-7",
+        "us-ca-6",
+        "us-d-njd",
+        "st-unknown",
+        "us-ca-3",
+        "us-d-paed",
+        "us-circuit-unspecified",
+        "us-ca-11"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "111719",
+      "opinionIds": [],
+      "citations": [
+        "106 S. Ct. 2505",
+        "[object Object]"
+      ],
+      "caseName": "Anderson v. Liberty Lobby, Inc.",
+      "court": null,
+      "dateFiled": "1986-06-25",
+      "evidence": [
+        "cluster:111719",
+        "cite:106 S. Ct. 2505",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "ea83101a-a697-46c3-8ab9-6db536953827",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 23
+    },
+    {
+      "targetKey": "106 s. ct. 2548",
+      "citation": "106 S. Ct. 2548",
+      "representativeRaw": "106 S.Ct. 2548",
+      "edgeCount": 22,
+      "uniqueCitingCases": 22,
+      "jurisdictions": [
+        "us-d-ilnd",
+        "us-d-cand",
+        "us-d-cacd",
+        "us-d-txnd",
+        "us-ca-dc",
+        "us-ca-5",
+        "us-d-njd",
+        "st-unknown",
+        "us-d-paed",
+        "us-circuit-unspecified",
+        "us-ca-11",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "111722",
+      "opinionIds": [],
+      "citations": [
+        "106 S. Ct. 2548",
+        "[object Object]"
+      ],
+      "caseName": "Celotex Corp. v. Catrett, Administratrix of the Estate of Catrett",
+      "court": null,
+      "dateFiled": "1986-06-25",
+      "evidence": [
+        "cluster:111722",
+        "cite:106 S. Ct. 2548",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "5009c6ad-4563-4189-97e8-dab4297464f7",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 22
+    },
+    {
+      "targetKey": "106 s. ct. 1348",
+      "citation": "106 S. Ct. 1348",
+      "representativeRaw": "106 S.Ct. 1348",
+      "edgeCount": 17,
+      "uniqueCitingCases": 17,
+      "jurisdictions": [
+        "us-d-nysd",
+        "us-d-cand",
+        "us-d-cacd",
+        "us-ca-7",
+        "us-d-njd",
+        "us-ca-3",
+        "st-unknown",
+        "us-d-paed",
+        "us-circuit-unspecified"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "111620",
+      "opinionIds": [],
+      "citations": [
+        "106 S. Ct. 1348",
+        "[object Object]"
+      ],
+      "caseName": "Matsushita Electric Industrial Co., Ltd. v. Zenith Radio Corporation",
+      "court": null,
+      "dateFiled": "1986-03-26",
+      "evidence": [
+        "cluster:111620",
+        "cite:106 S. Ct. 1348",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "730995f1-442d-4777-a5aa-d772534da74d",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 17
+    },
+    {
+      "targetKey": "451 u.s. 204",
+      "citation": "451 U.S. 204",
+      "representativeRaw": "451 U.S. 204",
+      "edgeCount": 18,
+      "uniqueCitingCases": 18,
+      "jurisdictions": [
+        "st-wi-high",
+        "us-scotus",
+        "us-ca-3",
+        "us-ca-5",
+        "us-ca-2",
+        "us-ca-10",
+        "us-ca-9",
+        "us-ca-7",
+        "us-ca-8",
+        "us-ca-6"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "110464",
+      "opinionIds": [],
+      "citations": [
+        "451 U.S. 204",
+        "[object Object]"
+      ],
+      "caseName": "Steagald v. United States",
+      "court": null,
+      "dateFiled": "1981-04-21",
+      "evidence": [
+        "cluster:110464",
+        "cite:451 U.S. 204",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "543c647d-08db-44a5-a2fd-86a571fa0f38",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 18
+    },
+    {
+      "targetKey": "421 u.s. 240",
+      "citation": "421 U.S. 240",
+      "representativeRaw": "421 U.S. 240",
+      "edgeCount": 18,
+      "uniqueCitingCases": 18,
+      "jurisdictions": [
+        "st-dc-high",
+        "us-d-njd",
+        "us-ca-5",
+        "us-scotus",
+        "us-ca-3",
+        "us-circuit-unspecified",
+        "us-ca-1",
+        "us-ca-2",
+        "us-ca-9",
+        "us-ca-dc"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "109246",
+      "opinionIds": [],
+      "citations": [
+        "421 U.S. 240",
+        "[object Object]"
+      ],
+      "caseName": "Alyeska Pipeline Service Co. v. Wilderness Society",
+      "court": null,
+      "dateFiled": "1975-05-12",
+      "evidence": [
+        "cluster:109246",
+        "cite:421 U.S. 240",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "4da88fa6-adc8-4f7d-8254-de370222477d",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 18
+    },
+    {
+      "targetKey": "390 u.s. 400",
+      "citation": "390 U.S. 400",
+      "representativeRaw": "390 U.S. 400",
+      "edgeCount": 16,
+      "uniqueCitingCases": 16,
+      "jurisdictions": [
+        "st-dc-high",
+        "us-scotus",
+        "us-ca-5",
+        "us-ca-dc",
+        "us-ca-1",
+        "us-ca-3",
+        "us-ca-7",
+        "us-ca-2",
+        "us-ca-9"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "107637",
+      "opinionIds": [],
+      "citations": [
+        "390 U.S. 400",
+        "[object Object]"
+      ],
+      "caseName": "Newman v. Piggie Park Enterprises, Inc.",
+      "court": null,
+      "dateFiled": "1968-03-18",
+      "evidence": [
+        "cluster:107637",
+        "cite:390 U.S. 400",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "1397fa35-69cb-4ecf-a9a9-95f62cc72085",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 16
+    },
+    {
+      "targetKey": "128 s. ct. 2783",
+      "citation": "128 S. Ct. 2783",
+      "representativeRaw": "128 S.Ct. 2783",
+      "edgeCount": 23,
+      "uniqueCitingCases": 23,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-ca-dc",
+        "us-ca-9",
+        "us-ca-11",
+        "us-ca-7",
+        "us-ca-10",
+        "us-ca-4",
+        "us-ca-1",
+        "us-ca-6",
+        "us-ca-8"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "145777",
+      "opinionIds": [],
+      "citations": [
+        "128 S. Ct. 2783",
+        "[object Object]"
+      ],
+      "caseName": "District of Columbia v. Heller",
+      "court": null,
+      "dateFiled": "2008-06-26",
+      "evidence": [
+        "cluster:145777",
+        "cite:128 S. Ct. 2783",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "a958ac72-0858-42ea-b48d-24461837a31a",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 23
+    },
+    {
+      "targetKey": "130 s. ct. 3020",
+      "citation": "130 S. Ct. 3020",
+      "representativeRaw": "130 S.Ct. 3020",
+      "edgeCount": 20,
+      "uniqueCitingCases": 20,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-ca-dc",
+        "us-ca-7",
+        "us-ca-2",
+        "us-ca-10",
+        "us-ca-4",
+        "us-ca-1",
+        "us-ca-8",
+        "us-ca-6",
+        "us-ca-5"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "149702",
+      "opinionIds": [],
+      "citations": [
+        "130 S. Ct. 3020",
+        "[object Object]"
+      ],
+      "caseName": "McDonald v. City of Chicago",
+      "court": null,
+      "dateFiled": "2010-06-28",
+      "evidence": [
+        "cluster:149702",
+        "cite:130 S. Ct. 3020",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "f4b12054-2260-4dff-b8c1-2f0726777a28",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 20
+    },
+    {
+      "targetKey": "78 s. ct. 99",
+      "citation": "78 S. Ct. 99",
+      "representativeRaw": "78 S.Ct. 99",
+      "edgeCount": 13,
+      "uniqueCitingCases": 13,
+      "jurisdictions": [
+        "us-d-paed",
+        "us-d-nysd",
+        "us-ca-fed",
+        "us-d-njd",
+        "us-ca-2",
+        "us-circuit-unspecified",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "105573",
+      "opinionIds": [],
+      "citations": [
+        "78 S. Ct. 99",
+        "[object Object]"
+      ],
+      "caseName": "Conley v. Gibson",
+      "court": null,
+      "dateFiled": "1957-11-18",
+      "evidence": [
+        "cluster:105573",
+        "cite:78 S. Ct. 99",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "2e89c31d-135e-4acd-8896-358fc62a25cc",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 13
+    },
+    {
+      "targetKey": "95 s. ct. 1612",
+      "citation": "95 S. Ct. 1612",
+      "representativeRaw": "95 S.Ct. 1612",
+      "edgeCount": 17,
+      "uniqueCitingCases": 17,
+      "jurisdictions": [
+        "st-dc-high",
+        "us-d-njd",
+        "us-ca-5",
+        "us-ca-3",
+        "us-circuit-unspecified",
+        "us-ca-1",
+        "us-ca-2",
+        "us-ca-9",
+        "us-ca-dc"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "109246",
+      "opinionIds": [],
+      "citations": [
+        "95 S. Ct. 1612",
+        "[object Object]"
+      ],
+      "caseName": "Alyeska Pipeline Service Co. v. Wilderness Society",
+      "court": null,
+      "dateFiled": "1975-05-12",
+      "evidence": [
+        "cluster:109246",
+        "cite:95 S. Ct. 1612",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "4da88fa6-adc8-4f7d-8254-de370222477d",
+      "createdAuthority": false,
+      "corpusComplete": false,
+      "edgesBackfilled": 17
+    },
+    {
+      "targetKey": "103 s. ct. 1933",
+      "citation": "103 S. Ct. 1933",
+      "representativeRaw": "103 S.Ct. 1933",
+      "edgeCount": 17,
+      "uniqueCitingCases": 17,
+      "jurisdictions": [
+        "us-d-flsd",
+        "us-d-ilnd",
+        "us-ca-10",
+        "us-ca-3",
+        "us-circuit-unspecified",
+        "us-ca-9",
+        "us-ca-6",
+        "us-ca-dc"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "110929",
+      "opinionIds": [],
+      "citations": [
+        "103 S. Ct. 1933",
+        "[object Object]"
+      ],
+      "caseName": "Hensley v. Eckerhart",
+      "court": null,
+      "dateFiled": "1983-05-16",
+      "evidence": [
+        "cluster:110929",
+        "cite:103 S. Ct. 1933",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "895161c9-b325-41a6-861b-2b8c413c0c12",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 17
+    },
+    {
+      "targetKey": "17 stat. 13",
+      "citation": "17 Stat. 13",
+      "representativeRaw": "17 Stat. 13",
+      "edgeCount": 17,
+      "uniqueCitingCases": 17,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "evidence": [
+        "empty_response"
+      ],
+      "candidateCount": 0,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "460 u.s. 491",
+      "citation": "460 U.S. 491",
+      "representativeRaw": "460 U.S. 491",
+      "edgeCount": 10,
+      "uniqueCitingCases": 10,
+      "jurisdictions": [
+        "st-al-high",
+        "us-scotus",
+        "us-d-paed",
+        "us-circuit-unspecified",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "110890",
+      "opinionIds": [],
+      "citations": [
+        "460 U.S. 491",
+        "[object Object]"
+      ],
+      "caseName": "Florida v. Royer",
+      "court": null,
+      "dateFiled": "1983-03-23",
+      "evidence": [
+        "cluster:110890",
+        "cite:460 U.S. 491",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "861f44ca-c99d-482d-ab0d-48239f6ee6d1",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 10
+    },
+    {
+      "targetKey": "100 s. ct. 1371",
+      "citation": "100 S. Ct. 1371",
+      "representativeRaw": "100 S.Ct. 1371",
+      "edgeCount": 16,
+      "uniqueCitingCases": 16,
+      "jurisdictions": [
+        "us-circuit-unspecified",
+        "us-ca-11",
+        "us-ca-2",
+        "us-ca-10",
+        "us-ca-9",
+        "us-ca-7",
+        "us-ca-8",
+        "us-ca-6",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "110235",
+      "opinionIds": [],
+      "citations": [
+        "100 S. Ct. 1371",
+        "[object Object]"
+      ],
+      "caseName": "Payton v. New York",
+      "court": null,
+      "dateFiled": "1980-04-15",
+      "evidence": [
+        "cluster:110235",
+        "cite:100 S. Ct. 1371",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "40e93263-20aa-4e7b-9320-a34e02ffe445",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 16
+    },
+    {
+      "targetKey": "401 u.s. 82",
+      "citation": "401 U.S. 82",
+      "representativeRaw": "401 U.S. 82",
+      "edgeCount": 13,
+      "uniqueCitingCases": 13,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-scotus",
+        "us-ca-2",
+        "us-circuit-unspecified",
+        "us-ca-5"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "108266",
+      "opinionIds": [],
+      "citations": [
+        "401 U.S. 82",
+        "[object Object]"
+      ],
+      "caseName": "Perez v. Ledesma",
+      "court": null,
+      "dateFiled": "1971-02-23",
+      "evidence": [
+        "cluster:108266",
+        "cite:401 U.S. 82",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "7dd862d3-4596-4977-a4a7-94f0bf731db9",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 13
+    },
+    {
+      "targetKey": "127 s. ct. 1955",
+      "citation": "127 S. Ct. 1955",
+      "representativeRaw": "127 S.Ct. 1955",
+      "edgeCount": 8,
+      "uniqueCitingCases": 8,
+      "jurisdictions": [
+        "us-d-cacd",
+        "us-d-cand",
+        "us-scotus",
+        "us-d-paed",
+        "us-circuit-unspecified",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "145730",
+      "opinionIds": [],
+      "citations": [
+        "127 S. Ct. 1955",
+        "[object Object]"
+      ],
+      "caseName": "Bell Atlantic Corp. v. Twombly",
+      "court": null,
+      "dateFiled": "2007-05-21",
+      "evidence": [
+        "cluster:145730",
+        "cite:127 S. Ct. 1955",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "ab740285-c189-4c08-b29a-6760fc394e7c",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 8
+    },
+    {
+      "targetKey": "94 s. ct. 1683",
+      "citation": "94 S. Ct. 1683",
+      "representativeRaw": "94 S.Ct. 1683",
+      "edgeCount": 10,
+      "uniqueCitingCases": 10,
+      "jurisdictions": [
+        "us-d-paed",
+        "us-d-nysd",
+        "us-ca-5",
+        "us-ca-2",
+        "us-circuit-unspecified",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "109009",
+      "opinionIds": [],
+      "citations": [
+        "94 S. Ct. 1683",
+        "[object Object]"
+      ],
+      "caseName": "Scheuer v. Rhodes",
+      "court": null,
+      "dateFiled": "1974-04-17",
+      "evidence": [
+        "cluster:109009",
+        "cite:94 S. Ct. 1683",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "1edea158-b59f-4c9a-870e-8c4d2c06e5f9",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 10
+    },
+    {
+      "targetKey": "573 u.s. 373",
+      "citation": "573 U.S. 373",
+      "representativeRaw": "573 U. S. 373",
+      "edgeCount": 11,
+      "uniqueCitingCases": 11,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-2",
+        "us-ca-3",
+        "st-ct-high",
+        "st-wi-high",
+        "st-mi-high",
+        "st-id-high",
+        "us-ca-4",
+        "us-ca-6",
+        "st-in-high"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "not_found",
+      "clusterId": null,
+      "opinionIds": [],
+      "citations": [],
+      "caseName": null,
+      "court": null,
+      "dateFiled": null,
+      "evidence": [
+        "no_cluster_id"
+      ],
+      "candidateCount": 0,
+      "status": "IDENTITY_UNRESOLVED"
+    },
+    {
+      "targetKey": "307 u.s. 174",
+      "citation": "307 U.S. 174",
+      "representativeRaw": "307 U.S. 174",
+      "edgeCount": 11,
+      "uniqueCitingCases": 11,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-scotus",
+        "us-circuit-unspecified",
+        "us-ca-dc",
+        "us-ca-4",
+        "us-ca-8",
+        "us-ca-6"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "103203",
+      "opinionIds": [],
+      "citations": [
+        "307 U.S. 174",
+        "[object Object]"
+      ],
+      "caseName": "United States v. Miller",
+      "court": null,
+      "dateFiled": "1939-05-15",
+      "evidence": [
+        "cluster:103203",
+        "cite:307 U.S. 174",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "6827aba9-7d1c-41aa-b0f7-423cb0f9363f",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 11
+    },
+    {
+      "targetKey": "415 u.s. 651",
+      "citation": "415 U.S. 651",
+      "representativeRaw": "415 U.S. 651",
+      "edgeCount": 11,
+      "uniqueCitingCases": 11,
+      "jurisdictions": [
+        "us-ca-1",
+        "us-ca-2",
+        "us-scotus",
+        "us-ca-3"
+      ],
+      "httpStatus": 200,
+      "providerStatus": "resolved",
+      "clusterId": "108990",
+      "opinionIds": [],
+      "citations": [
+        "415 U.S. 651",
+        "[object Object]"
+      ],
+      "caseName": "Edelman v. Jordan",
+      "court": null,
+      "dateFiled": "1974-05-13",
+      "evidence": [
+        "cluster:108990",
+        "cite:415 U.S. 651",
+        "cite:[object Object]"
+      ],
+      "candidateCount": 1,
+      "status": "HIGH_RESOLVED",
+      "confidence": "HIGH",
+      "authorityId": "8d9516a6-a2d3-4403-a6e8-e07821da560a",
+      "createdAuthority": true,
+      "corpusComplete": false,
+      "edgesBackfilled": 11
+    }
+  ],
+  "generatedAt": "2026-10-09T15:57:11.947Z",
+  "resolverVersion": "citation-resolution-engine/v1"
+}

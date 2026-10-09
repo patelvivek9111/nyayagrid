@@ -1,0 +1,30 @@
+{
+  "atRequest": 15,
+  "requestsUsed": 15,
+  "targetsHigh": 14,
+  "targetsAmbiguous": 0,
+  "targetsNotFound": 1,
+  "targetsFailed": 0,
+  "edgesResolved": 243,
+  "authorityResolvedTargets": 14,
+  "corpusCompleteTargets": 0,
+  "identityOnlyTargets": 14,
+  "fullTextCandidatesQueued": 14,
+  "health": {
+    "cases": 5149,
+    "authorities": 6504,
+    "extracted": 66945,
+    "resolved": 10636,
+    "unresolved": 56309,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "presentTargetAmbiguous": 1,
+    "green": true
+  },
+  "hit429": false,
+  "updatedAt": "2026-10-09T15:56:47.182Z"
+}
