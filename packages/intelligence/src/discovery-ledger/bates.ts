@@ -5,10 +5,8 @@
 
 import type { BatesRange, BatesReviewSignal, DiscoveryProduction } from "./types";
 
-const SINGLE =
-  /\b([A-Za-z]{1,12})[-_]?(\d{3,12})\b/;
-const RANGE =
-  /\b([A-Za-z]{1,12})[-_]?(\d{3,12})\s*[–—-]\s*(?:\1[-_]?)?(\d{3,12})\b/;
+const SINGLE = /\b([A-Za-z]{1,12})[-_]?(\d{3,12})\b/;
+const RANGE = /\b([A-Za-z]{1,12})[-_]?(\d{3,12})\s*[–—-]\s*(?:\1[-_]?)?(\d{3,12})\b/;
 
 export type ParsedBatesRange = {
   prefix: string;
@@ -40,12 +38,16 @@ export function formatBatesNumber(prefix: string, n: number, width = 6): string 
   return `${prefix}${String(n).padStart(width, "0")}`;
 }
 
-function overlaps(a: BatesRange, b: BatesRange): boolean {
+function hasNumericBounds(range: BatesRange): range is BatesRange & { start: number; end: number } {
+  return typeof range.start === "number" && typeof range.end === "number";
+}
+
+function overlaps(a: BatesRange & { start: number; end: number }, b: BatesRange & { start: number; end: number }): boolean {
   if (a.prefix.toUpperCase() !== b.prefix.toUpperCase()) return false;
   return a.start <= b.end && b.start <= a.end;
 }
 
-function identical(a: BatesRange, b: BatesRange): boolean {
+function identical(a: BatesRange & { start: number; end: number }, b: BatesRange & { start: number; end: number }): boolean {
   return (
     a.prefix.toUpperCase() === b.prefix.toUpperCase() &&
     a.start === b.start &&
@@ -54,13 +56,16 @@ function identical(a: BatesRange, b: BatesRange): boolean {
 }
 
 /** Apparent gap only when same prefix and sorted ranges leave an interior hole. */
-function apparentGap(a: BatesRange, b: BatesRange): boolean {
+function apparentGap(
+  a: BatesRange & { start: number; end: number },
+  b: BatesRange & { start: number; end: number },
+): boolean {
   if (a.prefix.toUpperCase() !== b.prefix.toUpperCase()) return false;
   const [left, right] = a.start <= b.start ? [a, b] : [b, a];
   return right.start > left.end + 1;
 }
 
-type RangeRef = { production: DiscoveryProduction; range: BatesRange };
+type RangeRef = { production: DiscoveryProduction; range: BatesRange & { start: number; end: number } };
 
 function pushPairSignal(
   signals: BatesReviewSignal[],
@@ -82,9 +87,8 @@ function pushPairSignal(
 export function detectBatesReviewSignals(productions: DiscoveryProduction[]): BatesReviewSignal[] {
   const signals: BatesReviewSignal[] = [];
 
-  // Within a single production
   for (const production of productions) {
-    const ranges = production.batesRanges;
+    const ranges = production.batesRanges.filter(hasNumericBounds);
     for (let i = 0; i < ranges.length; i += 1) {
       for (let j = i + 1; j < ranges.length; j += 1) {
         const a = ranges[i]!;
@@ -120,10 +124,10 @@ export function detectBatesReviewSignals(productions: DiscoveryProduction[]): Ba
     }
   }
 
-  // Across productions (same prefix) — review signals only
   const flat: RangeRef[] = [];
   for (const production of productions) {
     for (const range of production.batesRanges) {
+      if (!hasNumericBounds(range)) continue;
       flat.push({ production, range });
     }
   }

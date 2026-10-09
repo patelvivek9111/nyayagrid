@@ -77,7 +77,8 @@ type NodeFilter =
   | "events"
   | "facts"
   | "claims"
-  | "defenses";
+  | "defenses"
+  | "discovery";
 
 function nodeHref(
   matterId: string,
@@ -103,6 +104,14 @@ function nodeHref(
   }
   if (node.canonicalEntityType === "civil_defense" || node.nodeType === "defense") {
     return `/app/cases/${matterId}/claims`;
+  }
+  if (
+    node.canonicalEntityType.startsWith("discovery_") ||
+    node.canonicalEntityType === "privilege_assertion" ||
+    node.nodeType.startsWith("discovery_") ||
+    node.nodeType === "privilege_assertion"
+  ) {
+    return `/app/cases/${matterId}/discovery`;
   }
   return null;
 }
@@ -378,6 +387,7 @@ export default function CaseGraphPage() {
           { id: "facts", label: "Facts" },
           { id: "claims", label: "Claims" },
           { id: "defenses", label: "Defenses" },
+          { id: "discovery", label: "Discovery" },
         ]}
       />
       <div className="flex flex-wrap items-center gap-2">

@@ -30,6 +30,7 @@ export function MatterShell({
     { href: `/app/cases/${matterId}/timeline`, label: "Timeline" },
     { href: `/app/cases/${matterId}/evidence`, label: "Evidence" },
     { href: `/app/cases/${matterId}/claims`, label: "Claims" },
+    { href: `/app/cases/${matterId}/discovery`, label: "Discovery" },
     { href: `/app/cases/${matterId}/people`, label: "People" },
     { href: `/app/cases/${matterId}/graph`, label: "Graph" },
     { href: `/app/cases/${matterId}/memory`, label: "Memory" },

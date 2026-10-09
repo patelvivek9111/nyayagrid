@@ -55,6 +55,7 @@ import type {
   DiscoveryDeficiencyStatus,
 } from "./types";
 import { DiscoveryError } from "./domain";
+import { enrichLedgerWithBatesSignals } from "./model";
 
 function toAppProvenance(p: RecordProvenance | null | undefined): DiscoveryProvenance {
   const origin = p?.extractionOrigin;
@@ -400,7 +401,7 @@ export async function loadDiscoveryLedgerReview(
     partyIds.add(production.receivingPartyId);
   }
 
-  return {
+  return enrichLedgerWithBatesSignals({
     matterId: params.matterId,
     organizationId: params.organizationId,
     parties: entities
@@ -419,7 +420,7 @@ export async function loadDiscoveryLedgerReview(
     coverageWarnings: [],
     sanctionsConclusion: null,
     privilegeLegalConclusion: null,
-  };
+  });
 }
 
 export async function persistDiscoveryLedgerReview(

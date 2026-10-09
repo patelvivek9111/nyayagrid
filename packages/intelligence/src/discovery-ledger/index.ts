@@ -23,8 +23,8 @@ export {
   assertDiscoveryDeficiencyKind,
   assertDiscoveryDeficiencyStatus,
   assertPrivilegeReviewStatus,
-  assertSameMatter,
-  assertSameOrg,
 } from "./domain";
+// assertSameMatter / assertSameOrg stay internal to discovery domain to avoid colliding with civil exports.
 export * from "./postgres";
 export * from "./adapter";
+export * from "./graph-materialize";

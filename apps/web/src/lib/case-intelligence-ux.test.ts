@@ -202,6 +202,8 @@ describe("Case Intelligence graph UX", () => {
     expect(graphNodeFilterType("fact")).toBe("facts");
     expect(graphNodeFilterType("claim")).toBe("claims");
     expect(graphNodeFilterType("defense")).toBe("defenses");
+    expect(graphNodeFilterType("discovery_request_item")).toBe("discovery");
+    expect(graphNodeFilterType("privilege_assertion")).toBe("discovery");
   });
 
   it("hides ordinary canvas labels by default and shows them on hover or selection", () => {

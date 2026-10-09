@@ -261,7 +261,7 @@ export function peopleKindFilter(
 
 export function graphNodeFilterType(
   nodeType: string,
-): "people" | "organizations" | "documents" | "events" | "facts" | "claims" | "defenses" | "other" {
+): "people" | "organizations" | "documents" | "events" | "facts" | "claims" | "defenses" | "discovery" | "other" {
   const type = nodeType.toLowerCase();
   if (type === "person" || type === "client") return "people";
   if (type === "organization") return "organizations";
@@ -270,6 +270,16 @@ export function graphNodeFilterType(
   if (type === "fact") return "facts";
   if (type === "claim") return "claims";
   if (type === "defense") return "defenses";
+  if (
+    type === "discovery_request_set" ||
+    type === "discovery_request_item" ||
+    type === "discovery_response" ||
+    type === "discovery_production" ||
+    type === "discovery_deficiency" ||
+    type === "privilege_assertion"
+  ) {
+    return "discovery";
+  }
   return "other";
 }
 
@@ -343,7 +353,8 @@ export function userFacingLoadError(
     | "chats"
     | "documents"
     | "review"
-    | "claims",
+    | "claims"
+    | "discovery",
   status?: number,
 ): string {
   if (status === 401) return USER_FACING_AUTH.unauthenticated;
@@ -357,6 +368,7 @@ export function userFacingLoadError(
   if (kind === "documents") return "We couldn't load documents. Try again.";
   if (kind === "review") return "We couldn't load the review queue. Try again.";
   if (kind === "claims") return "We couldn't load civil claims. Try again.";
+  if (kind === "discovery") return "We couldn't load the discovery ledger. Try again.";
   return "We couldn't load case memory. Try again.";
 }
 
