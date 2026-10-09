@@ -1,9 +1,8 @@
 /**
  * Application-layer Discovery / Production Ledger model (Deepening Pass 4).
  *
- * Deterministic, non-persisted prototype. Does not write to the database and does not
- * invent court adjudication, sanctions, or privilege legal conclusions.
- * Production L4 persistence requires a coordinated shared schema (see schema proposal).
+ * Shared contract for persistence adapters and application-layer review helpers.
+ * Does not invent court adjudication, sanctions, or privilege legal conclusions.
  */
 
 export const DISCOVERY_REQUEST_TYPES = [
@@ -17,7 +16,7 @@ export const DISCOVERY_REQUEST_TYPES = [
 ] as const;
 export type DiscoveryRequestType = (typeof DISCOVERY_REQUEST_TYPES)[number];
 
-/** Operational workflow statuses — not court adjudications. */
+/** Operational workflow statuses - not court adjudications. */
 export const DISCOVERY_ITEM_STATUSES = [
   "NOT_DUE",
   "OPEN",
@@ -58,7 +57,7 @@ export const DISCOVERY_DEFICIENCY_STATUSES = [
 ] as const;
 export type DiscoveryDeficiencyStatus = (typeof DISCOVERY_DEFICIENCY_STATUSES)[number];
 
-/** Privilege-review operational states — not a determination that a document is privileged. */
+/** Privilege-review operational states - not a determination that a document is privileged. */
 export const PRIVILEGE_REVIEW_STATUSES = [
   "ASSERTED",
   "UNDER_REVIEW",
@@ -137,8 +136,8 @@ export type BatesRange = {
   id: string;
   productionId: string;
   prefix: string;
-  start: number;
-  end: number;
+  start: number | null;
+  end: number | null;
   rawText: string;
   provenance: DiscoveryProvenance;
 };
@@ -173,7 +172,7 @@ export type DiscoveryDeficiency = {
   communicationId: string | null;
   meetAndConferId: string | null;
   motionId: string | null;
-  /** Review signal only — not a finding of legal violation. */
+  /** Review signal only ??? not a finding of legal violation. */
   isReviewSignal: boolean;
   provenance: DiscoveryProvenance;
 };
