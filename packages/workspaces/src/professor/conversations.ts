@@ -364,6 +364,9 @@ export function validateProfessorAnswer(
   } else if (uploadedCaseSources.length === 0) {
     limitations.push(CASE_ONLY_LIMITATION);
   }
+  limitations.push(
+    "Authority identity and corpus-text availability are distinct: a resolved citation does not imply full local opinion text or verified treatment/currentness.",
+  );
 
   if (!grounded) {
     return {

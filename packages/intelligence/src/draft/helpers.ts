@@ -151,6 +151,45 @@ export function appendExternalResearchNoteIfNeeded(content: string, assumptions:
   return `${content.trim()}\n\n${EXTERNAL_RESEARCH_NOTE}`;
 }
 
+/**
+ * Pass 5 draft grounding helper: qualify/suppress unresolved or ambiguous legal citations.
+ * Matter/document sources remain independent. Never fabricates a substitute authority.
+ */
+export function applyDraftCitationResolveOrAbstain(params: {
+  content: string;
+  assumptions: string[];
+  resolutions: Array<{
+    rawCitation: string;
+    coverage: { attribution: string; coverageWarning: string | null; displayState: string };
+  }>;
+}): { content: string; assumptions: string[]; suppressedCitations: string[] } {
+  const assumptions = [...params.assumptions];
+  const suppressedCitations: string[] = [];
+  for (const resolution of params.resolutions) {
+    if (
+      resolution.coverage.attribution === "ABSTAIN_AMBIGUOUS" ||
+      resolution.coverage.attribution === "ABSTAIN_UNRESOLVED"
+    ) {
+      suppressedCitations.push(resolution.rawCitation);
+      const note = `Draft citation "${resolution.rawCitation}" is ${resolution.coverage.displayState.toLowerCase().replaceAll("_", " ")} and must not be treated as verified legal authority.`;
+      if (!assumptions.includes(note)) assumptions.push(note);
+      continue;
+    }
+    if (resolution.coverage.coverageWarning && !assumptions.includes(resolution.coverage.coverageWarning)) {
+      assumptions.push(resolution.coverage.coverageWarning);
+    }
+  }
+  let content = params.content;
+  if (suppressedCitations.length > 0) {
+    const banner =
+      "Attorney review required: one or more legal citations in this draft are unresolved or ambiguous and were not treated as verified authority.";
+    if (!content.includes(banner)) {
+      content = `${content.trim()}\n\n${banner}`;
+    }
+  }
+  return { content, assumptions, suppressedCitations };
+}
+
 export type DiffChange = {
   changeType: "added" | "removed" | "changed" | "moved" | "formatting";
   locationA: string | null;

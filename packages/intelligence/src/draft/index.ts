@@ -29,6 +29,7 @@ import {
 import {
   appendExternalResearchNoteIfNeeded,
   appendResearchDisclaimerIfNeeded,
+  applyDraftCitationResolveOrAbstain,
   classifyDraftAssertions,
   countAssertionsByProvenance,
   extractUnresolvedPlaceholders,
@@ -38,6 +39,29 @@ import {
   withInsufficientSourceAssumption,
   type ClassifiedDraftAssertion,
 } from "./helpers";
+
+async function groundGeneratedDraftCitations(params: {
+  db: Database;
+  content: string;
+  assumptions: string[];
+}): Promise<{ content: string; assumptions: string[] }> {
+  try {
+    const research = await import("@nyayagrid/research");
+    const authorities = await research.loadAuthorityIndexForProduct(params.db, { limit: 5000 });
+    const resolutions = research.extractAndResolveCitationsInText({
+      text: params.content,
+      authorities,
+    });
+    if (resolutions.length === 0) return { content: params.content, assumptions: params.assumptions };
+    return applyDraftCitationResolveOrAbstain({
+      content: params.content,
+      assumptions: params.assumptions,
+      resolutions,
+    });
+  } catch {
+    return { content: params.content, assumptions: params.assumptions };
+  }
+}
 
 const HIGH_STAKES_DRAFTS = new Set([
   "complaint",
@@ -433,11 +457,17 @@ export async function generateDraft(params: {
     assertions: parsed.assertions,
     authorityContext,
   });
-  const content = appendResearchDisclaimerIfNeeded(
-    appendExternalResearchNoteIfNeeded(
-      groundedDraftBody(parsed.content, chunks, [verifiedContext, authorityBlock].filter(Boolean).join("\n\n")),
-      honesty.assumptions,
+  const groundedCitations = await groundGeneratedDraftCitations({
+    db: params.db,
+    content: groundedDraftBody(
+      parsed.content,
+      chunks,
+      [verifiedContext, authorityBlock].filter(Boolean).join("\n\n"),
     ),
+    assumptions: honesty.assumptions,
+  });
+  const content = appendResearchDisclaimerIfNeeded(
+    appendExternalResearchNoteIfNeeded(groundedCitations.content, groundedCitations.assumptions),
     {
       savedAuthorityCount: authorityContext.authorityIds.length,
       legalAuthorityAssertionCount: counts.LEGAL_AUTHORITY,
@@ -446,7 +476,7 @@ export async function generateDraft(params: {
       ).length,
     },
   );
-  const unresolvedPlaceholders = extractUnresolvedPlaceholders(content, honesty.assumptions);
+  const unresolvedPlaceholders = extractUnresolvedPlaceholders(content, groundedCitations.assumptions);
 
   const [draft] = await params.db
     .insert(drafts)
@@ -459,7 +489,7 @@ export async function generateDraft(params: {
       sourceContext: {
         documentIds: params.documentIds ?? [],
         instructions: params.instructions ?? null,
-        assumptions: honesty.assumptions,
+        assumptions: groundedCitations.assumptions,
         unresolvedPlaceholders,
         insufficientSourceMaterial: honesty.insufficientSourceMaterial,
         legalAuthority: {
@@ -528,7 +558,7 @@ export async function generateDraft(params: {
   return {
     draft: draft!,
     version,
-    assumptions: honesty.assumptions,
+    assumptions: groundedCitations.assumptions,
     unresolvedPlaceholders,
     insufficientSourceMaterial: honesty.insufficientSourceMaterial,
     legalAuthorityIds: authorityContext.authorityIds,
@@ -854,11 +884,17 @@ export async function transformDraftSection(params: {
     assertions: parsed.assertions,
     authorityContext,
   });
-  const content = appendResearchDisclaimerIfNeeded(
-    appendExternalResearchNoteIfNeeded(
-      groundedDraftBody(parsed.content, chunks, [verifiedContext, authorityBlock].filter(Boolean).join("\n\n")),
-      honesty.assumptions,
+  const groundedCitations = await groundGeneratedDraftCitations({
+    db: params.db,
+    content: groundedDraftBody(
+      parsed.content,
+      chunks,
+      [verifiedContext, authorityBlock].filter(Boolean).join("\n\n"),
     ),
+    assumptions: honesty.assumptions,
+  });
+  const content = appendResearchDisclaimerIfNeeded(
+    appendExternalResearchNoteIfNeeded(groundedCitations.content, groundedCitations.assumptions),
     {
       savedAuthorityCount: authorityContext.authorityIds.length,
       legalAuthorityAssertionCount: counts.LEGAL_AUTHORITY,
@@ -867,7 +903,7 @@ export async function transformDraftSection(params: {
       ).length,
     },
   );
-  const unresolvedPlaceholders = extractUnresolvedPlaceholders(content, honesty.assumptions);
+  const unresolvedPlaceholders = extractUnresolvedPlaceholders(content, groundedCitations.assumptions);
 
   const nextVersion = existing.draft.currentVersionNumber + 1;
   const version = await insertDraftVersion({
@@ -894,7 +930,7 @@ export async function transformDraftSection(params: {
       promptVersion: DRAFT_GENERATION_PROMPT_VERSION,
       sourceContext: {
         ...(existing.draft.sourceContext ?? {}),
-        assumptions: honesty.assumptions,
+        assumptions: groundedCitations.assumptions,
         unresolvedPlaceholders,
         insufficientSourceMaterial: honesty.insufficientSourceMaterial,
       },
@@ -994,6 +1030,7 @@ export async function updateDraftStatus(params: {
 export {
   appendExternalResearchNoteIfNeeded,
   appendResearchDisclaimerIfNeeded,
+  applyDraftCitationResolveOrAbstain,
   applyComparisonSummaryAlignmentPolicy,
   buildDiffDigestCorpus,
   classifyDraftAssertions,

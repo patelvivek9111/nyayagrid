@@ -16,3 +16,4 @@ export * from "./synthesize";
 export * from "./memo";
 export * from "./corpus";
 export * from "./citation-resolution-contract";
+export * from "./product-citation-resolution";

@@ -51,6 +51,12 @@ import type { AuthoritySearchOptions } from "./search";
 import { loadAuthorizedAuthorityChunks, type AuthorityChunkProvenance } from "./context";
 import { validateQuoteAgainstText } from "./quotes";
 import { TREATMENT_UNVERIFIED_NOTICE, rewriteUnsourcedEditorialTreatment } from "./treatment";
+import {
+  applyResolveOrAbstainPolicy,
+  resolveCitationsForProduct,
+  toAuthorityIndexRow,
+  type AuthorityIndexRow,
+} from "./product-citation-resolution";
 import { ensureResearchSession, type ResearchSession } from "./sessions";
 import { rewriteUnsupportedControllingClaims } from "./weight";
 
@@ -447,6 +453,8 @@ export function buildCoverageWarnings(input: {
   treatmentVerified?: boolean;
   extra?: string[];
   jurisdictionKnown?: boolean;
+  /** Optional product citation resolutions for Pass 5 coverage honesty. */
+  citationResolutions?: ReturnType<typeof resolveCitationsForProduct>;
 }): string[] {
   const warnings: string[] = [LIMITED_CORPUS_WARNING];
 
@@ -460,6 +468,27 @@ export function buildCoverageWarnings(input: {
 
   if (!input.treatmentVerified) {
     warnings.push(TREATMENT_UNVERIFIED_NOTICE);
+  }
+
+  if (input.citationResolutions && input.citationResolutions.length > 0) {
+    const policy = applyResolveOrAbstainPolicy({ resolutions: input.citationResolutions });
+    for (const note of policy.qualifications.slice(0, 8)) {
+      warnings.push(note);
+    }
+    if (policy.suppressedCitations.length > 0) {
+      warnings.push(
+        `Unresolved or ambiguous citation identity: ${policy.suppressedCitations.join("; ")}. NyayaGrid will not guess.`,
+      );
+    }
+    if (
+      input.citationResolutions.some(
+        (row) => row.coverage.displayState === "IDENTITY_VERIFIED_TEXT_NOT_IN_CORPUS",
+      )
+    ) {
+      warnings.push(
+        "One or more authorities have verified identity but full opinion text is not yet available in the local corpus.",
+      );
+    }
   }
 
   const hasJurisdiction =
@@ -1101,6 +1130,27 @@ export async function runResearchQuery(
       forumLabels,
     ),
   };
+  const resolutionIndex: AuthorityIndexRow[] = hits.map((hit) =>
+    toAuthorityIndexRow({
+      id: hit.authorityId,
+      citation: hit.citation ?? hit.normalizedCitation ?? null,
+      normalizedCitation: hit.normalizedCitation ?? hit.citation ?? null,
+      title: hit.title ?? null,
+      court: hit.court ?? null,
+      decisionDate: hit.decisionDate ?? null,
+      sourceProvider: hit.sourceProvider ?? null,
+      authorityType: hit.authorityType ?? null,
+      // Retrieved chunk/snippet means local text was available for this hit.
+      corpusComplete: Boolean(hit.snippet && hit.snippet.trim().length > 40),
+    }),
+  );
+  const citationResolutions = resolveCitationsForProduct({
+    citations: hits
+      .map((hit) => hit.citation ?? hit.normalizedCitation)
+      .filter((value): value is string => Boolean(value && value.trim()))
+      .map((rawCitation) => ({ rawCitation })),
+    authorities: resolutionIndex,
+  });
   const coverageWarnings = buildCoverageWarnings({
     hitCount: hits.length,
     authorityCount: index.authorityIds.size,
@@ -1111,6 +1161,7 @@ export async function runResearchQuery(
       jurisdictionLayer.context &&
         jurisdictionLayer.context.jurisdictionMode !== "unknown",
     ),
+    citationResolutions,
     extra: [...validated.synthesis.coverageWarnings, ...extraWarnings],
   });
 

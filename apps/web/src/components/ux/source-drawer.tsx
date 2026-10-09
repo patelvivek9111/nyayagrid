@@ -7,6 +7,16 @@ import { openMatterDocument } from "@/lib/document-open";
 
 export type SourceDrawerCategory = "case_evidence" | "legal_authority" | "web";
 
+export type CitationResolutionDisplayState =
+  | "VERIFIED_IDENTITY"
+  | "FULL_TEXT_AVAILABLE"
+  | "IDENTITY_VERIFIED_TEXT_NOT_IN_CORPUS"
+  | "AMBIGUOUS"
+  | "UNRESOLVED"
+  | "NOT_CASE_CITATION"
+  | "MALFORMED"
+  | "TREATMENT_NOT_VERIFIED";
+
 export type SourceDrawerItem = {
   id: string;
   title: string;
@@ -22,6 +32,9 @@ export type SourceDrawerItem = {
   documentId?: string;
   url?: string;
   retrievedAt?: string;
+  /** Pass 5 legal-authority resolution display (never imply full text from identity alone). */
+  citationResolutionState?: CitationResolutionDisplayState;
+  citationCoverageWarning?: string;
 };
 
 const CATEGORY_ORDER: SourceDrawerCategory[] = ["case_evidence", "legal_authority", "web"];
@@ -38,6 +51,29 @@ function resolveCategory(item: SourceDrawerItem): SourceDrawerCategory {
   if (label.includes("web") || item.url || item.documentId?.startsWith("web:")) return "web";
   if (label.includes("legal") || label.includes("authority")) return "legal_authority";
   return "case_evidence";
+}
+
+function citationStateLabel(state: CitationResolutionDisplayState): string {
+  switch (state) {
+    case "FULL_TEXT_AVAILABLE":
+      return "Full text available";
+    case "IDENTITY_VERIFIED_TEXT_NOT_IN_CORPUS":
+      return "Identity verified · text not in corpus";
+    case "VERIFIED_IDENTITY":
+      return "Verified identity";
+    case "AMBIGUOUS":
+      return "Ambiguous citation";
+    case "UNRESOLVED":
+      return "Unresolved citation";
+    case "NOT_CASE_CITATION":
+      return "Not a case citation";
+    case "MALFORMED":
+      return "Malformed citation";
+    case "TREATMENT_NOT_VERIFIED":
+      return "Treatment not verified";
+    default:
+      return state;
+  }
 }
 
 export function SourceDrawer({
@@ -112,6 +148,14 @@ export function SourceDrawer({
                       Source {i + 1} · {item.classLabel || CATEGORY_HEADINGS[category]}
                     </p>
                     <h4 className="mt-1 font-semibold text-ink">{item.title}</h4>
+                    {item.citationResolutionState ? (
+                      <p className="mt-1 text-[10px] font-semibold uppercase tracking-wide text-ink/55">
+                        {citationStateLabel(item.citationResolutionState)}
+                      </p>
+                    ) : null}
+                    {item.citationCoverageWarning ? (
+                      <p className="mt-1 text-xs text-ink/60">{item.citationCoverageWarning}</p>
+                    ) : null}
                     {item.subtitle ? (
                       <p className="mt-0.5 text-xs text-ink/55">{item.subtitle}</p>
                     ) : null}

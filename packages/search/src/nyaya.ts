@@ -87,6 +87,11 @@ import {
   loadMatterLegalAuthorityContext,
   looksLikeLegalDoctrineQuestion,
   validateAuthorityMentionsInText,
+  applyResolveOrAbstainPolicy,
+  extractAndResolveCitationsInText,
+  formatResolutionForAskContext,
+  loadAuthorityIndexForProduct,
+  type AuthorityIndexRow,
   type AuthoritySearchFilters,
   type AuthoritySearchHit,
 } from "@nyayagrid/research";
@@ -1414,6 +1419,43 @@ export async function askNyayaAboutMatter(params: {
       validated.answer.assumptions.push(
         `${authorityValidation.unverifiedQuotes.length} quoted passage(s) could not be matched verbatim to a provided source and must be verified before use.`,
       );
+    }
+
+    // Pass 5: shared product citation resolver — resolve-or-abstain for reporter citations.
+    try {
+      const authorityIndex: AuthorityIndexRow[] = await loadAuthorityIndexForProduct(params.db, {
+        limit: 5000,
+      });
+      const citationResolutions = extractAndResolveCitationsInText({
+        text: validated.answer.answer,
+        authorities: authorityIndex,
+      });
+      if (citationResolutions.length > 0) {
+        const policy = applyResolveOrAbstainPolicy({ resolutions: citationResolutions });
+        for (const note of policy.qualifications) {
+          if (!validated.answer.assumptions.includes(note)) {
+            validated.answer.assumptions.push(note);
+          }
+        }
+        if (policy.suppressedCitations.length > 0) {
+          const suppressNote = `The following citation(s) are unresolved or ambiguous and must not be treated as verified authority: ${policy.suppressedCitations.join("; ")}.`;
+          if (!validated.answer.assumptions.includes(suppressNote)) {
+            validated.answer.assumptions.push(suppressNote);
+          }
+          validated.answer.unresolvedQuestions.push(
+            "Which authority identity was intended for the unresolved or ambiguous citation(s)?",
+          );
+        }
+        const resolutionBlock = formatResolutionForAskContext(citationResolutions);
+        if (resolutionBlock && askStructuredContextText) {
+          // Resolution summary stays in assumptions for auditability without inventing treatment.
+          validated.answer.assumptions.push(
+            "Citation resolution states distinguish IDENTITY_UNRESOLVED, AUTHORITY_RESOLVED, and CORPUS_COMPLETE; AUTHORITY_RESOLVED does not imply full opinion text.",
+          );
+        }
+      }
+    } catch {
+      // Authority index unavailable — leave existing passage-grounding validators in place.
     }
 
     emit({

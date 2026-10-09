@@ -129,6 +129,16 @@ function toSourceRef(source: GuideSourceInput): GuideSourceRef {
         : source.class === "USER_PROVIDED"
           ? "user_provided"
           : "guide_explanation";
+  const baseNote = source.citation ?? undefined;
+  const authorityNote =
+    source.class === "LEGAL_AUTHORITY"
+      ? [
+          baseNote,
+          "Authority references are informational only; treatment/currentness is not independently verified.",
+        ]
+          .filter(Boolean)
+          .join(" ")
+      : baseNote;
   return {
     provenance,
     authorityId: source.authorityId ?? undefined,
@@ -136,7 +146,7 @@ function toSourceRef(source: GuideSourceInput): GuideSourceRef {
     documentId: source.documentId ?? undefined,
     chunkId: source.chunkId ?? undefined,
     quote: source.quote ?? null,
-    note: source.citation ?? undefined,
+    note: authorityNote,
   };
 }
 
