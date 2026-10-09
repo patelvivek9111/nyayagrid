@@ -1,0 +1,27 @@
+{
+  "ok": true,
+  "status": 200,
+  "membership": {
+    "level": "CL Membership - Tier 4",
+    "is_active": true
+  },
+  "limits": {
+    "minute": {
+      "remaining": 25,
+      "limit": 25
+    },
+    "hour": {
+      "remaining": 300,
+      "limit": 300
+    },
+    "day": {
+      "remaining": 307,
+      "limit": 1400
+    }
+  },
+  "safeDailySpend": 207,
+  "batchBudget": 200,
+  "gate": "PROCEED",
+  "courtListenerHttpCalls": 1,
+  "generatedAt": "2026-10-09T00:08:58.223Z"
+}

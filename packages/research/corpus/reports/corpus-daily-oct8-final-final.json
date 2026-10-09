@@ -1,0 +1,420 @@
+{
+  "ok": true,
+  "classification": "DAILY_HIGH_VALUE_COURTLISTENER_OCT8_FINAL",
+  "status": "CORPUS_DAILY_OCT8_FINAL_PARTIAL",
+  "stopReason": "SAFE_DAILY_FLOOR",
+  "retryAfter": null,
+  "circuitRefinement": {
+    "reviewed": 20,
+    "exactCircuitsResolved": 19,
+    "thirdCircuitIdentified": 1,
+    "otherCircuitsIdentified": 18,
+    "stillUnresolved": 78,
+    "byCircuit": {
+      "us-ca-11": 6,
+      "us-ca-dc": 2,
+      "us-ca-1": 1,
+      "us-ca-3": 1,
+      "us-ca-2": 2,
+      "us-ca-6": 1,
+      "us-ca-8": 2,
+      "us-ca-9": 2,
+      "us-ca-7": 1,
+      "us-ca-5": 1
+    },
+    "refineCl": 60,
+    "gateway502_504": 1
+  },
+  "courtListener": {
+    "limitMin": 25,
+    "limitHour": 300,
+    "limitDay": 1400,
+    "remainingAtStart": {
+      "minute": 25,
+      "hour": 300,
+      "day": 307
+    },
+    "safeBudget": 200,
+    "priorCl": 61,
+    "productiveRequests": 139,
+    "requestsActuallyUsed": 200,
+    "rateLimited429": 0,
+    "gateway502_504": 0,
+    "longWaitsOver5m": 0,
+    "safeDailySpend": 207,
+    "actualSafeBatchBudget": 200,
+    "estimatedDayRemainingAfterRun": 107
+  },
+  "startSnapshot": {
+    "cases": 5106,
+    "authorities": 6461,
+    "extracted": 65319,
+    "resolved": 9999,
+    "unresolved": 55320,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": 0,
+    "usCircuitUnspecified": 78
+  },
+  "acquisition": {
+    "casesAdded": 30,
+    "thirdCircuit": 15,
+    "otherCircuits": 15,
+    "edpa": 0,
+    "otherFederal": 0,
+    "paAppellate": 0
+  },
+  "laneResults": {
+    "third_circuit": {
+      "requests": 139,
+      "cases": 30,
+      "resolvedDeltaApprox": 222
+    },
+    "other_circuits": {
+      "requests": 0,
+      "cases": 0,
+      "resolvedDeltaApprox": 0
+    },
+    "edpa": {
+      "requests": 0,
+      "cases": 0,
+      "resolvedDeltaApprox": 0
+    },
+    "federal_reporter": {
+      "requests": 0,
+      "cases": 0,
+      "resolvedDeltaApprox": 0
+    },
+    "pa_appellate": {
+      "requests": 0,
+      "cases": 0,
+      "resolvedDeltaApprox": 0
+    }
+  },
+  "citationResolution": {
+    "OLD_UNRESOLVED_RESOLVED": 85,
+    "NEW_EDGES_TOTAL": 1627,
+    "NEW_EDGES_RESOLVED_IMMEDIATELY": 138,
+    "NEW_EDGES_STILL_UNRESOLVED": 1489,
+    "TOTAL_RESOLVED_THIS_RUN": 223,
+    "NET_UNRESOLVED_CHANGE": 1404,
+    "UNIQUE_MISSING_TARGETS_ELIMINATED": 30
+  },
+  "efficiency": {
+    "casesPerCl": 0.216,
+    "oldUnresolvedResolvedPerCl": 0.612,
+    "newImmediateResolvedPerCl": 0.993,
+    "totalResolvedPerCl": 1.604,
+    "uniqueTargetsPerCl": 0.216,
+    "courtIdentificationsPerCl": 0.317,
+    "controllingPerCl": 0.216
+  },
+  "corpusHealth": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": 0,
+    "status": "GREEN"
+  },
+  "endSnapshot": {
+    "cases": 5136,
+    "authorities": 6491,
+    "extracted": 66945,
+    "resolved": 10221,
+    "unresolved": 56724,
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefects": 0,
+    "usCircuitUnspecified": 78
+  },
+  "highValueHandoff": [
+    {
+      "citation": "494 F.2d 885",
+      "title": "Brandenburger v. Thompson",
+      "court": "United States Court of Appeals for the Ninth Circuit",
+      "authorityId": "5bf366a1-bf6d-48f3-8fd3-79e8f5dc3d84",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=5",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "512 F.2d 1137",
+      "title": "Anthony Souza v. Anthony P. Travisono",
+      "court": "United States Court of Appeals for the First Circuit",
+      "authorityId": "ae6a400a-c65a-425a-b7fc-ba5c9d7344c0",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=4",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "746 F.2d 4",
+      "title": "Laffey v. Northwest Airlines, Inc.",
+      "court": "United States Court of Appeals for the District of Columbia Circuit",
+      "authorityId": "4aad325f-de67-41cf-b3f5-9b12a9d03338",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=4",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "361 F.2d 581",
+      "title": "William J. Bauers, Jr. v. Herbert T. Heisel, Jr",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "7e08720c-2d4e-4492-9b6c-f9082f6f3b1b",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=4",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "151 F.2d 240",
+      "title": "Picking v. Pennsylvania R. Co.",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "08c2f885-6ddd-4f41-b03b-16dde5a30101",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "664 F.2d 99",
+      "title": "Joseph Wheeler, Cross v. City of Pleasant Grove, a Municipal Corp., Cross",
+      "court": "United States Court of Appeals for the Fifth Circuit",
+      "authorityId": "6dc1f906-b2cf-4f72-a449-55ce1f8b3f9c",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "455 F.2d 618",
+      "title": "Kathleen Hackett, on Behalf of Herself and All Others Similarly Situated v. General Host Corporation",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "c383fd1d-166e-4d03-80b0-9f55c5e7ed3e",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "456 F.2d 1339",
+      "title": "Webster Bivens v. Six Unknown Named Agents of the Federal Bureau of Narcotics",
+      "court": "United States Court of Appeals for the Second Circuit",
+      "authorityId": "9ad6aab3-bc20-45c0-a569-ee2ffed08163",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "267 F.2d 241",
+      "title": "Powell v. Pennsylvania Railroad",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "2eff08c8-d537-4b95-87fb-e3db02e0d853",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "501 F.2d 31",
+      "title": "Dr. Joseph T. Skehan v. Board of Trustees of Bloomsburg State College",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "1ce624d5-a337-4e4c-a7a2-76a7b72a266d",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "365 F.3d 181",
+      "title": "Rivas v. City of Passaic",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "5e6c0611-73c9-4fc8-acdb-9a2fdad82409",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "370 F.2d 119",
+      "title": "Eisen v. Carlisle & Jacquelin",
+      "court": "United States Court of Appeals for the Second Circuit",
+      "authorityId": "da0083f0-0dfc-4b33-82ed-d4c90e6c3891",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "505 F.2d 123",
+      "title": "Elena Class v. Nicholas Norton",
+      "court": "United States Court of Appeals for the Second Circuit",
+      "authorityId": "17c65177-1f9d-41e0-b375-2ed4b20a8694",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "481 F.2d 1028",
+      "title": "Johnson v. Glick",
+      "court": "United States Court of Appeals for the Second Circuit",
+      "authorityId": "657d6ce3-2889-451e-b5d6-60bf422b8bfb",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "417 F.2d 1122",
+      "title": "Richard JOHNSON, Jr., Plaintiff-Appellant, v. GEORGIA HIGHWAY EXPRESS, INC., Defendant-Appellee",
+      "court": "United States Court of Appeals for the Fifth Circuit",
+      "authorityId": "108dff75-93be-4525-8a0e-c1fd1a8a1fd9",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "406 F.3d 207",
+      "title": "United States v. Rogers Lockett, III A/K/A Manny Strong Rogers Lockett",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "53879d24-7393-4dc8-ac18-6c83ced5b1e8",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "95 F.3d 1199",
+      "title": "Kneipp v. Tedder",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "35e9d7a2-baa1-45b8-894a-f95715ee3e0b",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "424 F.2d 161",
+      "title": "Alexander Kahan, on Behalf of Himself and All Others Similarly Situated v. Lewis Rosenstiel",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "e5acbce1-a1d6-47af-97ab-ff85de54c100",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "426 F.2d 534",
+      "title": "Miller v. Amusement Enterprises, Inc.",
+      "court": "United States Court of Appeals for the Fifth Circuit",
+      "authorityId": "3c69c747-71ee-403c-afeb-ef2dd63a2f86",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=3",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "428 F.2d 1",
+      "title": "Jack Gittlemacker v. Arthur T. Prasse, Commissioner of Prisons of Pa. And Frank C. Johnston, Warden, State Correctional Institution, Dallas, Pa",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "47601e74-9d8e-4790-82b7-65d533f50268",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=2",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "443 F.2d 921",
+      "title": "Louis Martinez v. Vincent R. Mancusi, Warden, Attica Prison, Dr. Williams, Dr. Stamburg, and Nurse Hoffman, Attica Prison",
+      "court": "United States Court of Appeals for the Second Circuit",
+      "authorityId": "3d780224-9c44-4ddb-bebe-bacc48284293",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=2",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "443 F.3d 276",
+      "title": "Bright v. Westmoreland County",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "45b8a86e-7e1b-4c8a-9519-b417a949e725",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=2",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "455 F.2d 770",
+      "title": "Weight Watchers of Philadelphia, Inc. v. Weight Watchers International, Inc.",
+      "court": "United States Court of Appeals for the Second Circuit",
+      "authorityId": "28cf580a-cb9b-4804-a5be-f9a209257dda",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=2",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "other_circuits",
+      "status": "imported"
+    },
+    {
+      "citation": "467 F.3d 842",
+      "title": "DirecTV, Inc. v. Leto",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "3b0ec3d6-f6d6-4bcd-ae6b-3563935d8c61",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=2",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    },
+    {
+      "citation": "472 F.2d 732",
+      "title": "Safeguard Mutual Insurance Co. v. Robert A. Miller C. M. Clark Insurance Agency, Inc. v. Robert A. Miller",
+      "court": "United States Court of Appeals for the Third Circuit",
+      "authorityId": "a2171cf7-5922-4623-8430-5a6e54cb02a8",
+      "clRequests": 4,
+      "reason": "LANE1_ca3_edges=2",
+      "laneName": "third_circuit",
+      "trueCourtBucket": "third_circuit",
+      "status": "imported"
+    }
+  ],
+  "finalResolve": {
+    "resolvedAfter": 10221
+  },
+  "batches": 3,
+  "nextBObjective": "Next quota window/day: finish remaining ~78 us-circuit-unspecified via docket-court lookups, then acquire verified CA3/EDPA/federal-reporter READY targets (no SCOTUS)."
+}
