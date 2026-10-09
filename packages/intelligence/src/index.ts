@@ -23,5 +23,6 @@ export * from "./analysis/compare";
 export * from "./legal";
 export * from "./prosecution";
 export * from "./civil";
+export * from "./discovery-ledger";
 export * from "./week4";
 export * from "./deepening";
