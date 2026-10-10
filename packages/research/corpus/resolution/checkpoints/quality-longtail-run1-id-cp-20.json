@@ -1,0 +1,168 @@
+{
+  "lane": "identity",
+  "atLookup": 20,
+  "totalCl": 21,
+  "idHigh": 18,
+  "idEdgesBackfilled": 72,
+  "edgesPerIdentityCl": 3.6,
+  "ambiguityRate": 0.1,
+  "notFoundRate": 0,
+  "stage": "A_4EDGE",
+  "edge4": {
+    "attempted": 20,
+    "high": 18,
+    "edges": 72,
+    "ambiguous": 2,
+    "notFound": 0,
+    "edgesPerCl": 3.6,
+    "rolling": [
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": false,
+        "edges": 0,
+        "ambiguous": true
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": false,
+        "edges": 0,
+        "ambiguous": true
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      },
+      {
+        "high": true,
+        "edges": 4,
+        "ambiguous": false
+      }
+    ]
+  },
+  "edge3": {
+    "attempted": 0,
+    "high": 0,
+    "edges": 0,
+    "ambiguous": 0,
+    "notFound": 0,
+    "edgesPerCl": null,
+    "rolling": []
+  },
+  "jurisStats": {
+    "CA3": {
+      "attempted": 0,
+      "resolved": 0
+    },
+    "EDPA": {
+      "attempted": 0,
+      "resolved": 0
+    },
+    "PA": {
+      "attempted": 0,
+      "resolved": 0
+    },
+    "SCOTUS": {
+      "attempted": 0,
+      "resolved": 0
+    },
+    "OTHER_FEDERAL": {
+      "attempted": 20,
+      "resolved": 18
+    },
+    "STATE": {
+      "attempted": 0,
+      "resolved": 0
+    }
+  },
+  "rolling20": {
+    "n": 20,
+    "targetResolution": 0.9,
+    "edgesPerCl": 3.6,
+    "ambiguity": 0.1
+  },
+  "identityStopReason": null,
+  "health": {
+    "green": true,
+    "unresolved": 52480,
+    "METADATA_ONLY": 743
+  }
+}
