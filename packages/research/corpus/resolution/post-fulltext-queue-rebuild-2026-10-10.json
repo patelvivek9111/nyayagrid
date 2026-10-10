@@ -1,0 +1,234 @@
+{
+  "generatedAt": "2026-10-10T19:09:18.085Z",
+  "bucketsBeforeLocal": {
+    "ge10": {
+      "targets": 4,
+      "edges": 63
+    },
+    "e5to9": {
+      "targets": 73,
+      "edges": 413
+    },
+    "e4": {
+      "targets": 154,
+      "edges": 616
+    },
+    "e3": {
+      "targets": 1056,
+      "edges": 3168
+    },
+    "e2": {
+      "targets": 4154,
+      "edges": 8308
+    },
+    "e1": {
+      "targets": 31040,
+      "edges": 31040
+    },
+    "ineligible": {
+      "targets": 8104,
+      "edges": 10673
+    }
+  },
+  "localFirst": {
+    "localTargets": 41,
+    "localEdges": 92,
+    "localOld": 16,
+    "localNew": 76,
+    "aliasesUsed": 0,
+    "parallelsUsed": 14
+  },
+  "afterLocal": {
+    "ge5": 77,
+    "edge4AB": 154,
+    "edge4A": 32,
+    "edge3Strong": 0,
+    "materiallyImproved3": false
+  },
+  "selectedLane": "LANE_A_GE5",
+  "laneReason": "fresh reporter-valid >=5 targets: 77",
+  "topGe5": [
+    {
+      "citation": "1 Cranch 137",
+      "edges": 24,
+      "tier": "A",
+      "score": 370
+    },
+    {
+      "citation": "163 Idaho 856",
+      "edges": 16,
+      "tier": "B",
+      "score": 232
+    },
+    {
+      "citation": "302 U.S. 633",
+      "edges": 12,
+      "tier": "B",
+      "score": 214
+    },
+    {
+      "citation": "573 U.S. 373",
+      "edges": 11,
+      "tier": "B",
+      "score": 242
+    },
+    {
+      "citation": "573 U.S. 149",
+      "edges": 9,
+      "tier": "B",
+      "score": 218
+    },
+    {
+      "citation": "930 S.E.2d 400",
+      "edges": 9,
+      "tier": "B",
+      "score": 148
+    },
+    {
+      "citation": "93 S. Ct. 290",
+      "edges": 8,
+      "tier": "A",
+      "score": 188
+    },
+    {
+      "citation": "409 U.S. 942",
+      "edges": 8,
+      "tier": "B",
+      "score": 176
+    },
+    {
+      "citation": "34 L. Ed. 2d 215",
+      "edges": 8,
+      "tier": "B",
+      "score": 176
+    },
+    {
+      "citation": "382 U.S. 406",
+      "edges": 8,
+      "tier": "B",
+      "score": 166
+    },
+    {
+      "citation": "45 F.3d 444",
+      "edges": 8,
+      "tier": "A",
+      "score": 148
+    },
+    {
+      "citation": "326 U.S. 99",
+      "edges": 7,
+      "tier": "B",
+      "score": 194
+    },
+    {
+      "citation": "378 U.S. 546",
+      "edges": 7,
+      "tier": "B",
+      "score": 194
+    },
+    {
+      "citation": "362 U.S. 17",
+      "edges": 7,
+      "tier": "B",
+      "score": 154
+    },
+    {
+      "citation": "288 U.S. 249",
+      "edges": 7,
+      "tier": "B",
+      "score": 154
+    }
+  ],
+  "top4": [
+    {
+      "citation": "267 F.2d 237",
+      "edges": 4,
+      "tier": "A",
+      "score": 190
+    },
+    {
+      "citation": "768 F.2d 503",
+      "edges": 4,
+      "tier": "A",
+      "score": 160
+    },
+    {
+      "citation": "1 Cranch 103",
+      "edges": 4,
+      "tier": "A",
+      "score": 155
+    },
+    {
+      "citation": "922 F.2d 1097",
+      "edges": 4,
+      "tier": "A",
+      "score": 125
+    },
+    {
+      "citation": "967 F.3d 327",
+      "edges": 4,
+      "tier": "A",
+      "score": 125
+    },
+    {
+      "citation": "16 S. Ct. 631",
+      "edges": 4,
+      "tier": "A",
+      "score": 125
+    },
+    {
+      "citation": "48 S. Ct. 97",
+      "edges": 4,
+      "tier": "A",
+      "score": 125
+    },
+    {
+      "citation": "90 S. Ct. 1989",
+      "edges": 4,
+      "tier": "A",
+      "score": 125
+    },
+    {
+      "citation": "98 S. Ct. 2254",
+      "edges": 4,
+      "tier": "A",
+      "score": 125
+    },
+    {
+      "citation": "130 S. Ct. 1686",
+      "edges": 4,
+      "tier": "A",
+      "score": 125
+    },
+    {
+      "citation": "96 S. Ct. 19",
+      "edges": 4,
+      "tier": "A",
+      "score": 125
+    },
+    {
+      "citation": "321 F.2d 494",
+      "edges": 4,
+      "tier": "A",
+      "score": 125
+    },
+    {
+      "citation": "472 F.2d 985",
+      "edges": 4,
+      "tier": "A",
+      "score": 125
+    },
+    {
+      "citation": "130 S. Ct. 1265",
+      "edges": 4,
+      "tier": "A",
+      "score": 115
+    },
+    {
+      "citation": "354 F.2d 608",
+      "edges": 4,
+      "tier": "A",
+      "score": 115
+    }
+  ]
+}

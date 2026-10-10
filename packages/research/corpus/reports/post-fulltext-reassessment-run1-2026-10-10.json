@@ -1,0 +1,1636 @@
+{
+  "ok": true,
+  "classification": "POST_FULLTEXT_CORPUS_REASSESSMENT_RUN",
+  "runStartLocal": "10/10/2026, 3:08:08 PM",
+  "stopReason": "QUOTA_SAFETY_THRESHOLD",
+  "precheck": {
+    "branch": "nyaya/corpus-citation-strengthening-v2",
+    "startTip": "74c51629df00b121d469081a8da0f774e7ff6837"
+  },
+  "start": {
+    "AUTHORITY_RESOLVED_EDGES": 16281,
+    "CORPUS_COMPLETE_EDGES": 12555,
+    "IDENTITY_UNRESOLVED_EDGES": 54281,
+    "TOTAL_CANONICAL_AUTHORITIES": 7307,
+    "METADATA_ONLY_AUTHORITIES": 704,
+    "CORPUS_COMPLETE_AUTHORITIES": 5248,
+    "FULL_TEXT_READY_AUTHORITIES": 5248,
+    "EMBEDDED_AUTHORITIES": 5776
+  },
+  "end": {
+    "AUTHORITY_RESOLVED_EDGES": 17289,
+    "CORPUS_COMPLETE_EDGES": 14345,
+    "IDENTITY_UNRESOLVED_EDGES": 56689,
+    "TOTAL_CANONICAL_AUTHORITIES": 7307,
+    "METADATA_ONLY_AUTHORITIES": 585,
+    "CORPUS_COMPLETE_AUTHORITIES": 5367,
+    "FULL_TEXT_READY_AUTHORITIES": 5367,
+    "EMBEDDED_AUTHORITIES": 5895
+  },
+  "queueRebuild": {
+    "ge10": {
+      "targets": 4,
+      "edges": 63
+    },
+    "e5to9": {
+      "targets": 73,
+      "edges": 413
+    },
+    "e4": {
+      "targets": 154,
+      "edges": 616
+    },
+    "e3": {
+      "targets": 1056,
+      "edges": 3168
+    },
+    "e2": {
+      "targets": 4154,
+      "edges": 8308
+    },
+    "e1": {
+      "targets": 31040,
+      "edges": 31040
+    },
+    "ineligible": {
+      "targets": 8104,
+      "edges": 10673
+    }
+  },
+  "localFirst": {
+    "localTargets": 41,
+    "localEdges": 92,
+    "localOld": 16,
+    "localNew": 76,
+    "clAvoided": 41,
+    "aliasesUsed": 0,
+    "parallelsUsed": 14
+  },
+  "laneDecision": {
+    "freshGe5": 77,
+    "quality4": 32,
+    "quality4AB": 154,
+    "materiallyImproved3": false,
+    "edge3Strong": 0,
+    "selectedLane": "LANE_A_GE5",
+    "laneReason": "fresh reporter-valid >=5 targets: 77"
+  },
+  "quota": {
+    "probe": 1,
+    "minuteStart": 25,
+    "hourStart": 300,
+    "dayStart": 467,
+    "preferredMaxCl": 270,
+    "estimatedHourRemaining": 42,
+    "estimatedDayRemaining": 209,
+    "hit429": false,
+    "hit502": 0
+  },
+  "identity": {
+    "cl": 20,
+    "attempted": 20,
+    "high": 0,
+    "ambiguous": 14,
+    "notFound": 6,
+    "failures": 0,
+    "oldUnresolvedResolved": 0,
+    "newlyIntroducedResolved": 0,
+    "totalEdgesResolved": 0,
+    "oldPerCl": 0,
+    "totalPerCl": 0,
+    "rollingHigh": 0,
+    "rollingAmbiguity": 0.7,
+    "rollingOldPerCl": 0,
+    "aliasesLearned": 0,
+    "parallelsLearned": 0
+  },
+  "fullText": {
+    "cl": 238,
+    "attempted": 119,
+    "completed": 119,
+    "failed": 0,
+    "byCourt": {
+      "SCOTUS": 119,
+      "CA3": 0,
+      "EDPA": 0,
+      "PA": 0,
+      "OTHER_FEDERAL": 0,
+      "OTHER": 0
+    },
+    "metadataToComplete": 119,
+    "NEW_EDGES_TOTAL": 3416,
+    "NEW_EDGES_RESOLVED_IMMEDIATELY": 916,
+    "NEW_EDGES_STILL_UNRESOLVED": 2500,
+    "OLD_UNRESOLVED_RESOLVED": 0,
+    "CORPUS_COMPLETE_EDGES_delta": 1790,
+    "newEmbeddings": 119
+  },
+  "totalCl": {
+    "probe": 1,
+    "identity": 20,
+    "fullText": 238,
+    "retry": 0,
+    "total": 259
+  },
+  "weekend": {
+    "OLD_PROGRESS_BEFORE": 2979,
+    "OLD_PROGRESS_THIS_RUN": 16,
+    "OLD_PROGRESS_TOTAL": 2995,
+    "OLD_REMAINING_TO_15000": 12005,
+    "NET_IDENTITY_UNRESOLVED_CHANGE": 2408,
+    "newlyIntroducedResolvedThisRun": 76,
+    "sunday15k": "OFF_TRACK",
+    "requiredYield": 29.3520782396088,
+    "demonstratedOldYield": 0,
+    "economicBacklogStatus": "ONLY_STRATEGIC_IDENTITY_REMAINS"
+  },
+  "health": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "duplicateActiveMappings": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "rawCitationLoss": 0,
+    "status": "PASS"
+  },
+  "nextDecision": "CONTINUE_HIGH_VALUE_FULLTEXT",
+  "nextRecommendedClBudget": 175,
+  "idResults": [
+    {
+      "targetKey": "1 cranch 137",
+      "citation": "1 Cranch 137",
+      "edgeCount": 24,
+      "status": "AMBIGUOUS"
+    },
+    {
+      "targetKey": "163 idaho 856",
+      "citation": "163 Idaho 856",
+      "edgeCount": 16,
+      "status": "NOT_FOUND"
+    },
+    {
+      "targetKey": "302 u.s. 633",
+      "citation": "302 U.S. 633",
+      "edgeCount": 12,
+      "status": "AMBIGUOUS"
+    },
+    {
+      "targetKey": "573 u.s. 373",
+      "citation": "573 U.S. 373",
+      "edgeCount": 11,
+      "status": "NOT_FOUND"
+    },
+    {
+      "targetKey": "573 u.s. 149",
+      "citation": "573 U.S. 149",
+      "edgeCount": 9,
+      "status": "NOT_FOUND"
+    },
+    {
+      "targetKey": "930 s.e.2d 400",
+      "citation": "930 S.E.2d 400",
+      "edgeCount": 9,
+      "status": "NOT_FOUND"
+    },
+    {
+      "targetKey": "93 s. ct. 290",
+      "citation": "93 S. Ct. 290",
+      "edgeCount": 8,
+      "status": "AMBIGUOUS"
+    },
+    {
+      "targetKey": "409 u.s. 942",
+      "citation": "409 U.S. 942",
+      "edgeCount": 8,
+      "status": "AMBIGUOUS"
+    },
+    {
+      "targetKey": "34 l. ed. 2d 215",
+      "citation": "34 L. Ed. 2d 215",
+      "edgeCount": 8,
+      "status": "NOT_FOUND"
+    },
+    {
+      "targetKey": "382 u.s. 406",
+      "citation": "382 U.S. 406",
+      "edgeCount": 8,
+      "status": "AMBIGUOUS"
+    },
+    {
+      "targetKey": "45 f.3d 444",
+      "citation": "45 F.3d 444",
+      "edgeCount": 8,
+      "status": "AMBIGUOUS"
+    },
+    {
+      "targetKey": "326 u.s. 99",
+      "citation": "326 U.S. 99",
+      "edgeCount": 7,
+      "status": "AMBIGUOUS"
+    },
+    {
+      "targetKey": "378 u.s. 546",
+      "citation": "378 U.S. 546",
+      "edgeCount": 7,
+      "status": "AMBIGUOUS"
+    },
+    {
+      "targetKey": "362 u.s. 17",
+      "citation": "362 U.S. 17",
+      "edgeCount": 7,
+      "status": "AMBIGUOUS"
+    },
+    {
+      "targetKey": "288 u.s. 249",
+      "citation": "288 U.S. 249",
+      "edgeCount": 7,
+      "status": "AMBIGUOUS"
+    },
+    {
+      "targetKey": "498 u.s. 906",
+      "citation": "498 U.S. 906",
+      "edgeCount": 7,
+      "status": "AMBIGUOUS"
+    },
+    {
+      "targetKey": "905 s.e.2d 528",
+      "citation": "905 S.E.2d 528",
+      "edgeCount": 7,
+      "status": "NOT_FOUND"
+    },
+    {
+      "targetKey": "430 u.s. 188",
+      "citation": "430 U.S. 188",
+      "edgeCount": 6,
+      "status": "AMBIGUOUS"
+    },
+    {
+      "targetKey": "408 u.s. 104",
+      "citation": "408 U.S. 104",
+      "edgeCount": 6,
+      "status": "AMBIGUOUS"
+    },
+    {
+      "targetKey": "496 f.2d 646",
+      "citation": "496 F.2d 646",
+      "edgeCount": 6,
+      "status": "AMBIGUOUS"
+    }
+  ],
+  "ftResults": [
+    {
+      "citation": "494 U.S. 325",
+      "caseName": "Maryland v. Buie",
+      "authorityId": "1973f06b-978a-456a-86e9-825f7f7e4df4",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 20,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 13,
+      "NEW_EDGES_STILL_UNRESOLVED": 7,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "474 U.S. 327",
+      "caseName": "Daniels v. Williams",
+      "authorityId": "4163881a-0dad-4806-9a22-37a9d5785ff3",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 24,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 14,
+      "NEW_EDGES_STILL_UNRESOLVED": 10,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "422 U.S. 332",
+      "caseName": "Hicks v. Miranda",
+      "authorityId": "934855ad-96d7-4790-b993-3d6e71a3f5a4",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 25,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 8,
+      "NEW_EDGES_STILL_UNRESOLVED": 17,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "497 U.S. 871",
+      "caseName": "Lujan v. National Wildlife Federation",
+      "authorityId": "72fe71d0-4c72-47f7-8da6-f8ed2b3fd8ce",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 41,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 8,
+      "NEW_EDGES_STILL_UNRESOLVED": 33,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "473 U.S. 432",
+      "caseName": "City of Cleburne v. Cleburne Living Center, Inc.",
+      "authorityId": "82d102b3-eeb9-4c5f-8e4e-3a372d0fb03c",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 39,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 6,
+      "NEW_EDGES_STILL_UNRESOLVED": 33,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "161 U.S. 483",
+      "caseName": "Spalding v. Vilas",
+      "authorityId": "84ecef40-151f-44ab-84fe-3239d08c2c96",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 8,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 1,
+      "NEW_EDGES_STILL_UNRESOLVED": 7,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "377 U.S. 360",
+      "caseName": "Baggett v. Bullitt",
+      "authorityId": "9aa4f8da-cad5-4df3-8fc8-b84df98b2333",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 54,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 18,
+      "NEW_EDGES_STILL_UNRESOLVED": 36,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "391 U.S. 543",
+      "caseName": "Bumper v. North Carolina",
+      "authorityId": "a7efb19d-785b-401d-8cc4-5aeb11690fac",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 37,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 9,
+      "NEW_EDGES_STILL_UNRESOLVED": 28,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "357 U.S. 493",
+      "caseName": "Jones v. United States",
+      "authorityId": "d0477435-cc38-4495-b0ed-1a4deff79bc6",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 9,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 7,
+      "NEW_EDGES_STILL_UNRESOLVED": 2,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "437 U.S. 678",
+      "caseName": "Hutto v. Finney",
+      "authorityId": "f22f1b29-ec0f-47c9-8f45-1aafaec7cdcf",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 48,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 12,
+      "NEW_EDGES_STILL_UNRESOLVED": 36,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "360 U.S. 185",
+      "caseName": "County of Allegheny v. Frank Mashuda Co.",
+      "authorityId": "e23c41a3-ad54-42ac-9685-76cb4edbd279",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 79,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 11,
+      "NEW_EDGES_STILL_UNRESOLVED": 68,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "552 U.S. 442",
+      "caseName": "Washington State Grange v. Washington State Republican Party",
+      "authorityId": "a266d1d6-74f7-4539-98cd-8c550de1b7ad",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 34,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 9,
+      "NEW_EDGES_STILL_UNRESOLVED": 25,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "484 U.S. 343",
+      "caseName": "Carnegie-Mellon University v. Cohill",
+      "authorityId": "ebdb0d27-6204-465e-af3b-1d50357a68f7",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 16,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 2,
+      "NEW_EDGES_STILL_UNRESOLVED": 14,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "404 U.S. 97",
+      "caseName": "Chevron Oil Co. v. Huson",
+      "authorityId": "efface12-2ea1-4bf8-a159-4aea91c5158d",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 53,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 7,
+      "NEW_EDGES_STILL_UNRESOLVED": 46,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "364 U.S. 479",
+      "caseName": "Shelton v. Tucker",
+      "authorityId": "99446bae-691d-41a0-bb75-5e3563638396",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 27,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 10,
+      "NEW_EDGES_STILL_UNRESOLVED": 17,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "408 U.S. 593",
+      "caseName": "Perry v. Sindermann",
+      "authorityId": "1211e51a-e158-48c1-9163-07f7130fb7b9",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 19,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 11,
+      "NEW_EDGES_STILL_UNRESOLVED": 8,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "468 U.S. 705",
+      "caseName": "United States v. Karo",
+      "authorityId": "86584693-9048-4bf9-82bc-51a7059c0d3c",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 20,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 15,
+      "NEW_EDGES_STILL_UNRESOLVED": 5,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "426 U.S. 67",
+      "caseName": "Mathews v. Diaz",
+      "authorityId": "f3135564-4d23-4dc9-a4cc-2d4ae4adb58f",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 61,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 7,
+      "NEW_EDGES_STILL_UNRESOLVED": 54,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "402 U.S. 313",
+      "caseName": "Blonder-Tongue Laboratories, Inc. v. University of Illinois Foundation",
+      "authorityId": "b671a62d-36c1-4f7e-9021-c62d751b1ba4",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 29,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 1,
+      "NEW_EDGES_STILL_UNRESOLVED": 28,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "394 U.S. 618",
+      "caseName": "Shapiro v. Thompson",
+      "authorityId": "a295d2bd-7e6e-48f7-917b-b7996a024677",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 41,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 10,
+      "NEW_EDGES_STILL_UNRESOLVED": 31,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "310 U.S. 88",
+      "caseName": "Thornhill v. Alabama",
+      "authorityId": "34d7044c-2f76-404f-9e9c-d89dde01917b",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 51,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 11,
+      "NEW_EDGES_STILL_UNRESOLVED": 40,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "417 U.S. 156",
+      "caseName": "Eisen v. Carlisle & Jacquelin",
+      "authorityId": "1673239f-c149-458d-9d04-b671183ea842",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 14,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 3,
+      "NEW_EDGES_STILL_UNRESOLVED": 11,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "483 U.S. 868",
+      "caseName": "Griffin v. Wisconsin",
+      "authorityId": "e71f959c-252e-4cf0-a496-399f1aae6287",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 22,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 7,
+      "NEW_EDGES_STILL_UNRESOLVED": 15,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "309 U.S. 470",
+      "caseName": "Federal Communications Commission v. Sanders Bros. Radio Station",
+      "authorityId": "5ec7e9c5-fdbc-4f45-a3de-9003f0284a64",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 12,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 0,
+      "NEW_EDGES_STILL_UNRESOLVED": 12,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "360 U.S. 167",
+      "caseName": "Harrison v. National Ass'n for the Advancement of Colored People",
+      "authorityId": "d7774c1e-5be2-414f-9852-a84d01fd5589",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 31,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 14,
+      "NEW_EDGES_STILL_UNRESOLVED": 17,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "320 U.S. 476",
+      "caseName": "Brady v. Southern Railway Co.",
+      "authorityId": "f051ee2d-839b-4e39-8513-19a8af48b5f1",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 28,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 0,
+      "NEW_EDGES_STILL_UNRESOLVED": 28,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "128 U.S. 289",
+      "caseName": "Ex Parte Terry",
+      "authorityId": "861ddfe6-160a-4a28-90f4-644e5f4f8ca5",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 22,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 7,
+      "NEW_EDGES_STILL_UNRESOLVED": 15,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "398 U.S. 144",
+      "caseName": "Adickes v. S. H. Kress & Co.",
+      "authorityId": "4726c6b9-63d9-4938-88c4-29651323992e",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 31,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 9,
+      "NEW_EDGES_STILL_UNRESOLVED": 22,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "436 U.S. 547",
+      "caseName": "Zurcher v. Stanford Daily",
+      "authorityId": "41154770-6953-4ba7-a971-dd6e0a633a5a",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 37,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 13,
+      "NEW_EDGES_STILL_UNRESOLVED": 24,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "388 U.S. 41",
+      "caseName": "Berger v. New York",
+      "authorityId": "cb34282c-c529-453b-8161-1c9b58a3dd06",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 35,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 22,
+      "NEW_EDGES_STILL_UNRESOLVED": 13,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "561 U.S. 247",
+      "caseName": "Morrison v. National Australia Bank Ltd.",
+      "authorityId": "589d4fcb-ba17-4bfd-a494-2a04b0af9f7e",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 55,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 2,
+      "NEW_EDGES_STILL_UNRESOLVED": 53,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "492 U.S. 469",
+      "caseName": "Board of Trustees of State Univ. of NY v. Fox",
+      "authorityId": "d3f89e55-feee-44ab-9e33-e569844afadf",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 33,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 8,
+      "NEW_EDGES_STILL_UNRESOLVED": 25,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "429 U.S. 190",
+      "caseName": "Craig v. Boren",
+      "authorityId": "f8f5ba44-7368-42d3-b1ac-7327b5c9502f",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 61,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 18,
+      "NEW_EDGES_STILL_UNRESOLVED": 43,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "386 U.S. 714",
+      "caseName": "Fleischmann Distilling Corp. v. Maier Brewing Co.",
+      "authorityId": "60e58cbb-174c-49ce-89e1-0574c8704a0e",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 62,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 2,
+      "NEW_EDGES_STILL_UNRESOLVED": 60,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "347 U.S. 497",
+      "caseName": "Bolling v. Sharpe",
+      "authorityId": "5230e592-6473-48a3-87df-c45d7a227d7f",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 11,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 4,
+      "NEW_EDGES_STILL_UNRESOLVED": 7,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "333 U.S. 364",
+      "caseName": "United States v. United States Gypsum Co.",
+      "authorityId": "340a42ae-e54e-4997-ac26-4f654d63f3ae",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 8,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 0,
+      "NEW_EDGES_STILL_UNRESOLVED": 8,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "467 U.S. 69",
+      "caseName": "Hishon v. King & Spalding",
+      "authorityId": "01e68227-6be9-42f6-8dc1-e83a2efc10af",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 23,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 4,
+      "NEW_EDGES_STILL_UNRESOLVED": 19,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "356 U.S. 560",
+      "caseName": "Payne v. Arkansas",
+      "authorityId": "8ce9d810-fa00-40e9-a18f-0daf01ee7e1d",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 19,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 12,
+      "NEW_EDGES_STILL_UNRESOLVED": 7,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "373 U.S. 503",
+      "caseName": "Haynes v. Washington",
+      "authorityId": "f8d3ea22-e494-4752-bd7b-d1e3c92225a2",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 19,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 14,
+      "NEW_EDGES_STILL_UNRESOLVED": 5,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "312 U.S. 45",
+      "caseName": "Beal v. Missouri Pacific R. Corp.",
+      "authorityId": "ca07fdf4-34e6-49f3-b6f7-f855bc929c98",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 16,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 6,
+      "NEW_EDGES_STILL_UNRESOLVED": 10,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "110 U.S. 651",
+      "caseName": "Ex Parte Yarbrough",
+      "authorityId": "f1fa1c06-f648-4607-9f73-41f45ee2df82",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 14,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 4,
+      "NEW_EDGES_STILL_UNRESOLVED": 10,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "310 U.S. 150",
+      "caseName": "United States v. Socony-Vacuum Oil Co.",
+      "authorityId": "8162a19f-91ec-474d-b8e1-332efaa886e0",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 11,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 0,
+      "NEW_EDGES_STILL_UNRESOLVED": 11,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "103 U.S. 168",
+      "caseName": "Kilbourn v. Thompson",
+      "authorityId": "33285572-33e0-46c3-b067-f7a2971a1645",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 7,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 1,
+      "NEW_EDGES_STILL_UNRESOLVED": 6,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "394 U.S. 721",
+      "caseName": "Davis v. Mississippi",
+      "authorityId": "3750fdc6-4dad-4272-8390-80bf513b742d",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 11,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 4,
+      "NEW_EDGES_STILL_UNRESOLVED": 7,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "403 U.S. 365",
+      "caseName": "Graham v. Richardson",
+      "authorityId": "a52520ee-5863-48bf-875c-10bfb3c60105",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 62,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 13,
+      "NEW_EDGES_STILL_UNRESOLVED": 49,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "365 U.S. 610",
+      "caseName": "Chapman v. United States",
+      "authorityId": "73c40e6b-c298-4481-bd56-7c61db4c88b6",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 13,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 8,
+      "NEW_EDGES_STILL_UNRESOLVED": 5,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "422 U.S. 563",
+      "caseName": "O'Connor v. Donaldson",
+      "authorityId": "5f13536a-8514-4f2f-9946-1f86f8078121",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 14,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 5,
+      "NEW_EDGES_STILL_UNRESOLVED": 9,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "334 U.S. 266",
+      "caseName": "Price v. Johnston",
+      "authorityId": "5f0ae1a6-5a93-41b3-a37b-b0453796623b",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 33,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 7,
+      "NEW_EDGES_STILL_UNRESOLVED": 26,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "163 U.S. 228",
+      "caseName": "Wong Wing v. United States",
+      "authorityId": "be758fef-5eff-444d-9818-1a58f3cbdabd",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 12,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 2,
+      "NEW_EDGES_STILL_UNRESOLVED": 10,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "434 U.S. 412",
+      "caseName": "Christiansburg Garment Co. v. Equal Employment Opportunity Commission",
+      "authorityId": "4dd332a2-6a64-4d0a-b548-e7d1d80391d1",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 51,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 5,
+      "NEW_EDGES_STILL_UNRESOLVED": 46,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "423 U.S. 362",
+      "caseName": "Rizzo v. Goode",
+      "authorityId": "4d56cb24-0c25-465e-ab68-6bbe59fd0310",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 20,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 11,
+      "NEW_EDGES_STILL_UNRESOLVED": 9,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "316 U.S. 168",
+      "caseName": "Chicago v. Fieldcrest Dairies, Inc.",
+      "authorityId": "d287af7c-aa77-44d6-9b4b-41f9eb50955d",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 6,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 2,
+      "NEW_EDGES_STILL_UNRESOLVED": 4,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "500 U.S. 565",
+      "caseName": "California v. Acevedo",
+      "authorityId": "aa968f52-91d4-4a8c-afde-e211bd703f85",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 21,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 11,
+      "NEW_EDGES_STILL_UNRESOLVED": 10,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "480 U.S. 321",
+      "caseName": "Arizona v. Hicks",
+      "authorityId": "b5e7d224-89ed-48d0-a1e1-243a79916e99",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 12,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 7,
+      "NEW_EDGES_STILL_UNRESOLVED": 5,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "489 U.S. 288",
+      "caseName": "Teague v. Lane",
+      "authorityId": "b854f4f0-3071-4783-af80-1eeefffd8eb8",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 77,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 31,
+      "NEW_EDGES_STILL_UNRESOLVED": 46,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "174 U.S. 47",
+      "caseName": "Kirby v. United States",
+      "authorityId": "a10d320f-f68b-4528-b6b4-cb3902aaf925",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 6,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 1,
+      "NEW_EDGES_STILL_UNRESOLVED": 5,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "355 U.S. 184",
+      "caseName": "Green v. United States",
+      "authorityId": "f699aed8-f14f-4c6d-9566-0d59380d6633",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 28,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 5,
+      "NEW_EDGES_STILL_UNRESOLVED": 23,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "316 U.S. 101",
+      "caseName": "Waley v. Johnston",
+      "authorityId": "9b89416e-c0de-40ea-9682-8e0d0eec9e1b",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 9,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 6,
+      "NEW_EDGES_STILL_UNRESOLVED": 3,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "373 U.S. 668",
+      "caseName": "McNeese v. Board of Education for Community Unit School District 187 Cahokia",
+      "authorityId": "8bfdc2d3-6923-4965-8590-143802233cb6",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 27,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 8,
+      "NEW_EDGES_STILL_UNRESOLVED": 19,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "521 U.S. 702",
+      "caseName": "Washington v. Glucksberg",
+      "authorityId": "a7d8938d-5721-49fd-9f5b-d29bdaf70d13",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 40,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 15,
+      "NEW_EDGES_STILL_UNRESOLVED": 25,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "123 U.S. 443",
+      "caseName": "In Re Ayers",
+      "authorityId": "1e02c41a-d498-41dd-a6ff-c60398c33800",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 24,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 3,
+      "NEW_EDGES_STILL_UNRESOLVED": 21,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "413 U.S. 601",
+      "caseName": "Broadrick v. Oklahoma",
+      "authorityId": "ba36c969-ceb9-4fce-8f99-a96cd1137e3a",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 59,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 24,
+      "NEW_EDGES_STILL_UNRESOLVED": 35,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "391 U.S. 367",
+      "caseName": "United States v. O'Brien",
+      "authorityId": "b75f4e7b-3a98-4796-a9f5-4cf5ebc61cb7",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 41,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 9,
+      "NEW_EDGES_STILL_UNRESOLVED": 32,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "323 U.S. 459",
+      "caseName": "Ford Motor Co. v. Department of Treasury",
+      "authorityId": "caf943d3-a895-4064-8c7c-19a5b3100c9e",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 43,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 3,
+      "NEW_EDGES_STILL_UNRESOLVED": 40,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "435 U.S. 268",
+      "caseName": "United States v. Ceccolini",
+      "authorityId": "7f8c26bf-0bfb-4cfe-988b-b5783c9dabd5",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 20,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 10,
+      "NEW_EDGES_STILL_UNRESOLVED": 10,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "456 U.S. 798",
+      "caseName": "United States v. Ross",
+      "authorityId": "1991e48f-3d7d-46b2-9848-7e2b297f6e85",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 22,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 9,
+      "NEW_EDGES_STILL_UNRESOLVED": 13,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "394 U.S. 731",
+      "caseName": "Frazier v. Cupp",
+      "authorityId": "114a8f62-1e29-46e2-bbeb-0b8bd08ed114",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 17,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 9,
+      "NEW_EDGES_STILL_UNRESOLVED": 8,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "321 U.S. 288",
+      "caseName": "Stark v. Wickard",
+      "authorityId": "572dcf41-f511-46f4-b502-704c1ca4a331",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 31,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 1,
+      "NEW_EDGES_STILL_UNRESOLVED": 30,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "320 U.S. 228",
+      "caseName": "Meredith v. Winter Haven",
+      "authorityId": "8fc1c14e-9eeb-4bef-86f0-d23369a019f6",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 61,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 9,
+      "NEW_EDGES_STILL_UNRESOLVED": 52,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "164 U.S. 492",
+      "caseName": "Allen v. United States",
+      "authorityId": "9d8e7c9c-5430-41d0-87b7-805312b1caa3",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 10,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 1,
+      "NEW_EDGES_STILL_UNRESOLVED": 9,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "424 U.S. 693",
+      "caseName": "Paul v. Davis",
+      "authorityId": "ea713eb6-efe3-4894-883f-8e467e57b7af",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 27,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 19,
+      "NEW_EDGES_STILL_UNRESOLVED": 8,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "288 U.S. 52",
+      "caseName": "Hawks v. Hamill",
+      "authorityId": "b6df5b5b-909c-4424-86ef-cc39057e1b53",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 32,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 0,
+      "NEW_EDGES_STILL_UNRESOLVED": 32,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "377 U.S. 426",
+      "caseName": "J. I. Case Co. v. Borak",
+      "authorityId": "89e647bf-b6ba-429a-9cfb-0fbbfeed883b",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 23,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 3,
+      "NEW_EDGES_STILL_UNRESOLVED": 20,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "434 U.S. 555",
+      "caseName": "Procunier v. Navarette",
+      "authorityId": "5c065e8c-c5e0-4df0-acf9-e1841f0e3f42",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 32,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 8,
+      "NEW_EDGES_STILL_UNRESOLVED": 24,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "496 U.S. 325",
+      "caseName": "Alabama v. White",
+      "authorityId": "842384fe-a428-4842-a206-10517960b417",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 12,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 9,
+      "NEW_EDGES_STILL_UNRESOLVED": 3,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "330 U.S. 1",
+      "caseName": "Everson v. Board of Ed. of Ewing",
+      "authorityId": "9b7b8665-7beb-43cc-b006-087dbb860862",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 35,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 11,
+      "NEW_EDGES_STILL_UNRESOLVED": 24,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "302 U.S. 464",
+      "caseName": "Alabama Power Co. v. Ickes",
+      "authorityId": "377be03a-2bb8-4f22-9047-fa1dbe7e7367",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 20,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 1,
+      "NEW_EDGES_STILL_UNRESOLVED": 19,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "471 U.S. 1",
+      "caseName": "Tennessee v. Garner",
+      "authorityId": "2a48a0d9-4aa4-4698-a1ad-5889def88d76",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 67,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 23,
+      "NEW_EDGES_STILL_UNRESOLVED": 44,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "374 U.S. 203",
+      "caseName": "Abington School Dist. v. Schempp",
+      "authorityId": "36ccc9f7-146c-4cf7-b575-472b88926726",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 18,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 6,
+      "NEW_EDGES_STILL_UNRESOLVED": 12,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "428 U.S. 543",
+      "caseName": "United States v. Martinez-Fuerte",
+      "authorityId": "3044168e-0fe9-4ed1-96b4-0d479bbc5f70",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 29,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 9,
+      "NEW_EDGES_STILL_UNRESOLVED": 20,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "341 U.S. 97",
+      "caseName": "Williams v. United States",
+      "authorityId": "6c44d060-8bf5-433e-ad4d-ba26b93734de",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 11,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 6,
+      "NEW_EDGES_STILL_UNRESOLVED": 5,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "116 U.S. 252",
+      "caseName": "Presser v. Illinois",
+      "authorityId": "f65257f3-bddc-4752-848d-237687932a61",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 20,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 2,
+      "NEW_EDGES_STILL_UNRESOLVED": 18,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "393 U.S. 483",
+      "caseName": "Johnson v. Avery",
+      "authorityId": "2e278734-ffc4-4f32-b8b3-58da567d5b2b",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 19,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 3,
+      "NEW_EDGES_STILL_UNRESOLVED": 16,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "516 U.S. 137",
+      "caseName": "Bailey v. United States",
+      "authorityId": "39c12e81-2749-4cbf-a70b-48082d21905b",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 21,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 0,
+      "NEW_EDGES_STILL_UNRESOLVED": 21,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "486 U.S. 567",
+      "caseName": "Michigan v. Chesternut",
+      "authorityId": "37e4a662-3977-4229-b1d0-c7e0fce40ee3",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 15,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 7,
+      "NEW_EDGES_STILL_UNRESOLVED": 8,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "422 U.S. 922",
+      "caseName": "Doran v. Salem Inn, Inc.",
+      "authorityId": "7e81c39d-a028-492e-b6af-1940b6b4c37c",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 17,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 5,
+      "NEW_EDGES_STILL_UNRESOLVED": 12,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "480 U.S. 340",
+      "caseName": "Illinois v. Krull",
+      "authorityId": "ab9affb0-59ca-4807-bfe6-8364c56fd543",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 35,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 16,
+      "NEW_EDGES_STILL_UNRESOLVED": 19,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "526 U.S. 603",
+      "caseName": "Wilson v. Layne",
+      "authorityId": "4168fb4c-c13c-44af-b01c-758a0d1c4197",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 34,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 15,
+      "NEW_EDGES_STILL_UNRESOLVED": 19,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "444 U.S. 85",
+      "caseName": "Ybarra v. Illinois",
+      "authorityId": "e92e783c-b3b9-4149-8cbc-de853dc23da1",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 24,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 17,
+      "NEW_EDGES_STILL_UNRESOLVED": 7,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "275 U.S. 70",
+      "caseName": "Fairmont Creamery Co. v. Minnesota",
+      "authorityId": "f35003c2-8608-4e0f-b005-dc40f7ceaf32",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 24,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 0,
+      "NEW_EDGES_STILL_UNRESOLVED": 24,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "427 U.S. 38",
+      "caseName": "United States v. Santana",
+      "authorityId": "c08864c5-71d9-4344-b706-0117dcba73d6",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 9,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 8,
+      "NEW_EDGES_STILL_UNRESOLVED": 1,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "521 U.S. 844",
+      "caseName": "Reno v. American Civil Liberties Union",
+      "authorityId": "91d5b5a2-9009-4788-912a-94b02e6dea2c",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 20,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 5,
+      "NEW_EDGES_STILL_UNRESOLVED": 15,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "354 U.S. 476",
+      "caseName": "Roth v. United States",
+      "authorityId": "c924e7a5-5ce1-4e44-b540-8f72879d0977",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 96,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 15,
+      "NEW_EDGES_STILL_UNRESOLVED": 81,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "466 U.S. 485",
+      "caseName": "Bose Corp. v. Consumers Union of United States, Inc.",
+      "authorityId": "142a939c-f7ef-43b4-9da5-f67db1343831",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 34,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 10,
+      "NEW_EDGES_STILL_UNRESOLVED": 24,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "455 U.S. 603",
+      "caseName": "Fletcher v. Weir",
+      "authorityId": "dd0efabb-8dc8-4534-bb54-b0de9ed419e6",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 8,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 5,
+      "NEW_EDGES_STILL_UNRESOLVED": 3,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "422 U.S. 171",
+      "caseName": "United States v. Hale",
+      "authorityId": "2067954e-3430-471c-9f3c-27bbf4dc6d1e",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 17,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 4,
+      "NEW_EDGES_STILL_UNRESOLVED": 13,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "379 U.S. 64",
+      "caseName": "Garrison v. Louisiana",
+      "authorityId": "010f2395-58b9-4039-8896-e239f8ec4c30",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 24,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 5,
+      "NEW_EDGES_STILL_UNRESOLVED": 19,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "373 U.S. 132",
+      "caseName": "Florida Lime & Avocado Growers, Inc. v. Paul",
+      "authorityId": "66a0e9a7-3259-4629-bb60-360815fff433",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 41,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 5,
+      "NEW_EDGES_STILL_UNRESOLVED": 36,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "390 U.S. 719",
+      "caseName": "Barber v. Page",
+      "authorityId": "72cce030-6383-4030-af12-f2780debe412",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 18,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 6,
+      "NEW_EDGES_STILL_UNRESOLVED": 12,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "312 U.S. 52",
+      "caseName": "Hines v. Davidowitz",
+      "authorityId": "e05bb4be-f33e-4a92-9f5b-911b82c89299",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 47,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 2,
+      "NEW_EDGES_STILL_UNRESOLVED": 45,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "384 U.S. 333",
+      "caseName": "Sheppard v. Maxwell",
+      "authorityId": "70ddead2-2981-4411-93ff-072ade6131b5",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 19,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 10,
+      "NEW_EDGES_STILL_UNRESOLVED": 9,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "177 U.S. 442",
+      "caseName": "Carter v. Texas",
+      "authorityId": "54ade588-3f27-4df1-ace9-d7699a4b6b9a",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 8,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 3,
+      "NEW_EDGES_STILL_UNRESOLVED": 5,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "412 U.S. 291",
+      "caseName": "Cupp v. Murphy",
+      "authorityId": "faa199ed-2f3b-427b-a729-7e0bb578df26",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 10,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 5,
+      "NEW_EDGES_STILL_UNRESOLVED": 5,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "278 U.S. 63",
+      "caseName": "New York Ex Rel. Bryant v. Zimmerman",
+      "authorityId": "dc9a696e-3e1e-44d3-963d-56f19861fa00",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 63,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 5,
+      "NEW_EDGES_STILL_UNRESOLVED": 58,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "287 U.S. 124",
+      "caseName": "Grau v. United States",
+      "authorityId": "b6ad2a38-799d-41a0-8cde-c0cd04131d44",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 7,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 5,
+      "NEW_EDGES_STILL_UNRESOLVED": 2,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "338 U.S. 49",
+      "caseName": "Watts v. Indiana",
+      "authorityId": "d049b3fb-1e1f-4bd6-97bf-85698346f360",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 22,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 9,
+      "NEW_EDGES_STILL_UNRESOLVED": 13,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "312 U.S. 569",
+      "caseName": "Cox v. New Hampshire",
+      "authorityId": "c1437baa-7fb6-49c8-8fb4-d081ec300570",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 8,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 5,
+      "NEW_EDGES_STILL_UNRESOLVED": 3,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "417 U.S. 433",
+      "caseName": "Michigan v. Tucker",
+      "authorityId": "fe5a7674-7d4c-4820-acdd-d0d5cc1f0d0a",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 45,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 25,
+      "NEW_EDGES_STILL_UNRESOLVED": 20,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "165 U.S. 275",
+      "caseName": "Robertson v. Baldwin",
+      "authorityId": "e95f816a-c4fc-487e-b48e-589dab593140",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 14,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 2,
+      "NEW_EDGES_STILL_UNRESOLVED": 12,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "413 U.S. 15",
+      "caseName": "Miller v. California",
+      "authorityId": "961e76f6-9dd2-4f84-a54a-c0b426417d0e",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 49,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 11,
+      "NEW_EDGES_STILL_UNRESOLVED": 38,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "398 U.S. 281",
+      "caseName": "Atlantic Coast Line Railroad v. Brotherhood of Locomotive Engineers",
+      "authorityId": "f1a3e9ab-0f48-498e-a69b-51c09f10f437",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 30,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 3,
+      "NEW_EDGES_STILL_UNRESOLVED": 27,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "446 U.S. 754",
+      "caseName": "Hanrahan v. Hampton",
+      "authorityId": "09d3a0bd-210d-46f7-9f7f-f903c4e9ecf0",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 19,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 4,
+      "NEW_EDGES_STILL_UNRESOLVED": 15,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "390 U.S. 611",
+      "caseName": "Cameron v. Johnson",
+      "authorityId": "be5b10b2-12b5-4571-9fd5-7c6e1dac666c",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 27,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 12,
+      "NEW_EDGES_STILL_UNRESOLVED": 15,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "365 U.S. 534",
+      "caseName": "Rogers v. Richmond",
+      "authorityId": "6b02ce9c-8de6-4239-898c-8c8e2e05f41c",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 44,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 10,
+      "NEW_EDGES_STILL_UNRESOLVED": 34,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "281 U.S. 276",
+      "caseName": "Patton v. United States",
+      "authorityId": "ba85cd6d-9459-4ad4-a62e-1b75011b4f37",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 23,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 0,
+      "NEW_EDGES_STILL_UNRESOLVED": 23,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "301 U.S. 292",
+      "caseName": "Ohio Bell Telephone Co. v. Public Utilities Commission",
+      "authorityId": "4661157b-5a51-4397-8ab8-2ddd910cd906",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 26,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 2,
+      "NEW_EDGES_STILL_UNRESOLVED": 24,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "421 U.S. 684",
+      "caseName": "Mullaney v. Wilbur",
+      "authorityId": "3757b7af-20ec-4c06-9126-aefa88c5e149",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 46,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 8,
+      "NEW_EDGES_STILL_UNRESOLVED": 38,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "320 U.S. 81",
+      "caseName": "Hirabayashi v. United States",
+      "authorityId": "b3bd7316-19a5-4ac6-9caf-249b36c49317",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 32,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 2,
+      "NEW_EDGES_STILL_UNRESOLVED": 30,
+      "OLD_EDGES_BACKFILLED": 0
+    },
+    {
+      "citation": "385 U.S. 293",
+      "caseName": "Hoffa v. United States",
+      "authorityId": "72c1b732-24bd-413d-b55a-939829187cf0",
+      "courtBucket": "SCOTUS",
+      "status": "acquired_corpus_complete",
+      "NEW_EDGES_TOTAL": 19,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 11,
+      "NEW_EDGES_STILL_UNRESOLVED": 8,
+      "OLD_EDGES_BACKFILLED": 0
+    }
+  ],
+  "checkpoints": [
+    {
+      "lane": "fulltext",
+      "atAcquired": 5,
+      "totalCl": 31,
+      "fullTextCl": 5,
+      "health": {
+        "green": true,
+        "CORPUS_COMPLETE": 5253
+      }
+    },
+    {
+      "lane": "fulltext",
+      "atAcquired": 10,
+      "totalCl": 41,
+      "fullTextCl": 10,
+      "health": {
+        "green": true,
+        "CORPUS_COMPLETE": 5258
+      }
+    },
+    {
+      "lane": "fulltext",
+      "atAcquired": 15,
+      "totalCl": 51,
+      "fullTextCl": 15,
+      "health": {
+        "green": true,
+        "CORPUS_COMPLETE": 5263
+      }
+    }
+  ],
+  "finalClassification": "POST_FULLTEXT_REASSESSMENT_STRONG",
+  "generatedAt": "2026-10-10T19:13:57.104Z",
+  "resolverVersion": "citation-resolution-engine/v1",
+  "continuation": {
+    "noQuotaProbe": true,
+    "continueClCap": 200,
+    "continueClUsed": 200,
+    "ftAcquired": 100,
+    "ftAttempted": 100,
+    "ftFailed": 0
+  }
+}

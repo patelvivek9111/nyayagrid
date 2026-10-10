@@ -1,0 +1,10 @@
+{
+  "lane": "fulltext",
+  "atAcquired": 5,
+  "totalCl": 31,
+  "fullTextCl": 5,
+  "health": {
+    "green": true,
+    "CORPUS_COMPLETE": 5253
+  }
+}
