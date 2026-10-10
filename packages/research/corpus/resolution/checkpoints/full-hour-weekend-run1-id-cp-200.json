@@ -1,0 +1,22 @@
+{
+  "lane": "identity",
+  "atLookup": 200,
+  "totalCl": 201,
+  "idHigh": 191,
+  "idEdgesBackfilled": 1025,
+  "edgesPerIdentityCl": 5.125,
+  "ambiguityRate": 0.04,
+  "notFoundRate": 0.005,
+  "rolling20": {
+    "n": 20,
+    "targetResolution": 0.85,
+    "edgesPerCl": 4.95,
+    "ambiguity": 0.1
+  },
+  "identityStopReason": null,
+  "health": {
+    "green": true,
+    "unresolved": 54065,
+    "METADATA_ONLY": 365
+  }
+}

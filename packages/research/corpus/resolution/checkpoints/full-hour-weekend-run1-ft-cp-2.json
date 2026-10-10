@@ -1,0 +1,13 @@
+{
+  "lane": "fulltext",
+  "atAcquired": 2,
+  "totalCl": 245,
+  "fullTextCl": 4,
+  "ftAcquired": 2,
+  "ftNewEdgesTotal": 44,
+  "health": {
+    "green": true,
+    "unresolved": 53936,
+    "CORPUS_COMPLETE": 5156
+  }
+}
