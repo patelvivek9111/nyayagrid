@@ -76,13 +76,17 @@ const nextConfig: NextConfig = {
   // `experimental.instrumentationHook`. See https://nextjs.org/docs/app/api-reference/file-conventions/instrumentation.
   transpilePackages: [
     "@nyayagrid/ai",
+    "@nyayagrid/agents",
     "@nyayagrid/auth",
     "@nyayagrid/database",
     "@nyayagrid/documents",
+    "@nyayagrid/intelligence",
     "@nyayagrid/jobs",
+    "@nyayagrid/jurisdiction",
     "@nyayagrid/observability",
     "@nyayagrid/permissions",
     "@nyayagrid/platform",
+    "@nyayagrid/research",
     "@nyayagrid/search",
     "@nyayagrid/ui",
     "@nyayagrid/validation",
@@ -103,6 +107,16 @@ const nextConfig: NextConfig = {
     "@aws-sdk/client-s3",
     "@aws-sdk/s3-request-presigner",
   ],
+  // Research citation-resolution (and other ESM TS sources) import sibling modules with `.js`
+  // extensions. Webpack must remap those to `.ts` during transpilePackages resolution.
+  webpack: (config) => {
+    config.resolve.extensionAlias = {
+      ...(config.resolve.extensionAlias ?? {}),
+      ".js": [".ts", ".tsx", ".js"],
+      ".mjs": [".mts", ".mjs"],
+    };
+    return config;
+  },
   experimental: {
     externalDir: true,
   },

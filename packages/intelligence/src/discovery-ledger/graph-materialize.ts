@@ -274,16 +274,17 @@ export function buildDiscoveryGraphMaterializationPlan(
       });
     }
     if (deficiency.communicationId && isUuid(deficiency.communicationId)) {
+      // Pass 6: communicationId is an FK to matter_communications — use first-class node type.
       addNode({
-        canonicalEntityType: "document",
+        canonicalEntityType: "communication",
         canonicalEntityId: deficiency.communicationId,
-        nodeType: "document",
+        nodeType: "communication",
         displayName: `Communication ${deficiency.communicationId}`,
         metadata: { role: "discovery_communication_ref" },
       });
       edges.push({
         fromKey: nodeKey("discovery_deficiency", deficiency.id),
-        toKey: nodeKey("document", deficiency.communicationId),
+        toKey: nodeKey("communication", deficiency.communicationId),
         relationshipType: DISCOVERY_GRAPH_EDGE.RELATED_COMMUNICATION,
         label: "related communication",
       });
@@ -291,6 +292,43 @@ export function buildDiscoveryGraphMaterializationPlan(
   }
 
   for (const motion of review.motionLinks) {
+    const motionIsFirstClass = isUuid(motion.motionId);
+    if (motionIsFirstClass) {
+      addNode({
+        canonicalEntityType: "motion",
+        canonicalEntityId: motion.motionId,
+        nodeType: "motion",
+        displayName: motion.motionLabel,
+        metadata: { motionType: motion.motionType },
+      });
+      for (const deficiencyId of motion.deficiencyIds) {
+        edges.push({
+          fromKey: nodeKey("discovery_deficiency", deficiencyId),
+          toKey: nodeKey("motion", motion.motionId),
+          relationshipType: DISCOVERY_GRAPH_EDGE.RELATED_MOTION_DOC,
+          label: motion.motionType,
+        });
+      }
+      // Convenience: keep motion paper document identity separate from the motion entity.
+      if (motion.documentId && isUuid(motion.documentId)) {
+        addNode({
+          canonicalEntityType: "document",
+          canonicalEntityId: motion.documentId,
+          nodeType: "document",
+          displayName: `${motion.motionLabel} paper`,
+          metadata: { motionType: motion.motionType, motionId: motion.motionId, role: "motion_document" },
+        });
+        edges.push({
+          fromKey: nodeKey("motion", motion.motionId),
+          toKey: nodeKey("document", motion.documentId),
+          relationshipType: DISCOVERY_GRAPH_EDGE.SOURCE_DOCUMENT,
+          label: "motion document",
+        });
+      }
+      continue;
+    }
+
+    // Legacy fixture / non-UUID motion ids: document-only fallback when no first-class motion row.
     if (!motion.documentId) continue;
     addNode({
       canonicalEntityType: "document",
