@@ -23,6 +23,11 @@ import {
   runComplexDiscoveryLedgerFixture,
   runDeepeningLawFirm,
   runDeepeningProsecution,
+  runPass6LitigationFixture,
+  answerMotionsCommunicationsQuestion,
+  formatMotionsCommunicationsAnswer,
+  planMotionsCommunicationsGraph,
+  planMotionsCommunicationsTimelineEvents,
   runMirandaReview,
   runMissingAffidavitReview,
   runMultiTheoryWarrantReview,
@@ -633,7 +638,198 @@ const GRADERS: Record<string, (assignment: DeepeningAssignment) => DeepeningGrad
   "D5-CITE-DRAFT-01": gradeCiteDraft,
   "D5-CITE-GRAPH-01": gradeCiteGraph,
   "D5-CITE-MEMORY-01": gradeCiteMemory,
+  "D6-MOT-PENDING-01": gradeD6Pending,
+  "D6-MOT-STATUS-01": gradeD6Status,
+  "D6-MOT-DISC-01": gradeD6DiscoveryChain,
+  "D6-COMM-CHRONO-01": gradeD6Chronology,
+  "D6-DEADLINE-01": gradeD6Deadlines,
+  "D6-RULING-01": gradeD6Ruling,
+  "D6-CLAIM-LINK-01": gradeD6ClaimLink,
+  "D6-EVIDENCE-01": gradeD6Evidence,
+  "D6-ABSTAIN-01": gradeD6Abstain,
+  "D6-ISOLATION-01": gradeD6Isolation,
+  "D6-WHOLE-01": gradeD6Whole,
+  "D6-MAC-SAFE-01": gradeD6MacSafe,
 };
+
+function gradeD6Pending(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review, ids } = runPass6LitigationFixture();
+  const answer = answerMotionsCommunicationsQuestion({
+    review,
+    question: "What motions are pending?",
+  });
+  const failures: string[] = [];
+  if (!answer.pendingMotionIds.includes(ids.motionPending)) failures.push("pending motion missing");
+  if (answer.pendingMotionIds.includes(ids.motionCompel)) failures.push("compel treated as pending");
+  return fail(assignment, failures);
+}
+
+function gradeD6Status(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review, ids } = runPass6LitigationFixture();
+  const answer = answerMotionsCommunicationsQuestion({
+    review,
+    question: "What is the status of the motion to compel?",
+  });
+  const motion = answer.motions.find((m) => m.id === ids.motionCompel);
+  const failures: string[] = [];
+  if (!motion) failures.push("compel missing");
+  if (motion?.disposition !== "GRANTED_IN_PART") failures.push("wrong disposition");
+  if (motion?.status !== "GRANTED_IN_PART") failures.push("wrong status");
+  return fail(assignment, failures);
+}
+
+function gradeD6DiscoveryChain(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review, ids } = runPass6LitigationFixture();
+  const answer = answerMotionsCommunicationsQuestion({
+    review,
+    question: "What discovery deficiencies led to the motion to compel?",
+  });
+  const motion = answer.motions.find((m) => m.id === ids.motionCompel);
+  const failures: string[] = [];
+  if (!motion?.relatedDeficiencyIds.includes(ids.deficiencyId)) failures.push("deficiency not linked");
+  if (
+    !review.motionLinks.some(
+      (l) => l.motionId === ids.motionCompel && l.linkType === "DISCOVERY_REQUEST_ITEM",
+    )
+  ) {
+    failures.push("request item not linked");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeD6Chronology(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review, ids } = runPass6LitigationFixture();
+  const answer = answerMotionsCommunicationsQuestion({
+    review,
+    question: "What communications occurred before the motion was filed?",
+  });
+  const failures: string[] = [];
+  if (!answer.communications.some((c) => c.id === ids.macComm)) failures.push("mac missing");
+  if (!answer.communications.some((c) => c.id === ids.followComm)) failures.push("follow-up missing");
+  return fail(assignment, failures);
+}
+
+function gradeD6Deadlines(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runPass6LitigationFixture();
+  const answer = answerMotionsCommunicationsQuestion({
+    review,
+    question: "What deadlines are associated with the motion?",
+  });
+  const failures: string[] = [];
+  if (!answer.explicitDeadlines.some((d) => d.label === "hearing")) failures.push("hearing missing");
+  if (!answer.limitations.some((l) => /No jurisdictional deadline was calculated/i.test(l))) {
+    failures.push("invented deadline risk not limited");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeD6Ruling(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review, ids } = runPass6LitigationFixture();
+  const answer = answerMotionsCommunicationsQuestion({
+    review,
+    question: "What did the court rule on the motion to compel?",
+  });
+  const motion = answer.motions.find((m) => m.id === ids.motionCompel);
+  const failures: string[] = [];
+  if (motion?.disposition !== "GRANTED_IN_PART") failures.push("wrong disposition");
+  if (!motion?.rulingSummary?.toLowerCase().includes("grants in part")) {
+    failures.push("ruling summary missing");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeD6ClaimLink(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review, ids } = runPass6LitigationFixture();
+  const answer = answerMotionsCommunicationsQuestion({
+    review,
+    question: "Which claim is this motion related to?",
+  });
+  const motion = answer.motions.find((m) => m.id === ids.motionCompel);
+  const failures: string[] = [];
+  if (!motion?.relatedClaimIds.includes(ids.claimId)) failures.push("claim not linked");
+  if (!answer.limitations.some((l) => /does not mean the court disposed/i.test(l))) {
+    failures.push("overclaim limitation missing");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeD6Evidence(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review, ids } = runPass6LitigationFixture();
+  const answer = answerMotionsCommunicationsQuestion({
+    review,
+    question: "What evidence supports the motion?",
+  });
+  const motion = answer.motions.find((m) => m.id === ids.motionCompel);
+  const failures: string[] = [];
+  if (!motion?.relatedEvidenceIds.includes(ids.evidenceId)) failures.push("evidence not linked");
+  if (!answer.limitations.some((l) => /does not independently prove/i.test(l))) {
+    failures.push("association limitation missing");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeD6Abstain(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runPass6LitigationFixture();
+  const answer = answerMotionsCommunicationsQuestion({
+    review,
+    question: "Will the motion to compel win because the judge favors plaintiff?",
+  });
+  const text = formatMotionsCommunicationsAnswer(answer);
+  const failures: string[] = [];
+  if (answer.predictiveOutcome !== null) failures.push("predictive outcome set");
+  if (!/PREDICTIVE_OUTCOME: null/.test(text)) failures.push("predictive line missing");
+  if (!answer.limitations.some((l) => /predictive|bad faith|judicial favor/i.test(l))) {
+    failures.push("abstention limitation missing");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeD6Isolation(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runPass6LitigationFixture();
+  const failures: string[] = [];
+  if (!review.organizationId || !review.matterId) failures.push("missing scope ids");
+  if (review.motions.some((m) => m.organizationId !== review.organizationId)) {
+    failures.push("motion org mismatch");
+  }
+  if (review.communications.some((c) => c.matterId !== review.matterId)) {
+    failures.push("communication matter mismatch");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeD6Whole(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review, ids } = runPass6LitigationFixture();
+  const answer = answerMotionsCommunicationsQuestion({
+    review,
+    question: "Summarize the motions and communications on this matter.",
+  });
+  const failures: string[] = [];
+  if (review.motions.length < 2) failures.push("expected two motions");
+  if (review.communications.length < 2) failures.push("expected two communications");
+  if (!answer.motions.some((m) => m.id === ids.motionCompel && m.disposition === "GRANTED_IN_PART")) {
+    failures.push("compel disposition missing from summary");
+  }
+  const graph = planMotionsCommunicationsGraph(review);
+  if (!graph.nodes.some((n) => n.nodeType === "motion")) failures.push("graph motion node missing");
+  const timeline = planMotionsCommunicationsTimelineEvents(review);
+  if (!timeline.some((e) => e.eventType === "motion_ruled")) failures.push("timeline ruling missing");
+  return fail(assignment, failures);
+}
+
+function gradeD6MacSafe(assignment: DeepeningAssignment): DeepeningGrade {
+  const { review } = runPass6LitigationFixture();
+  const answer = answerMotionsCommunicationsQuestion({
+    review,
+    question: "What meet-and-confer communications occurred?",
+  });
+  const failures: string[] = [];
+  if (answer.sanctionsConclusion !== null) failures.push("sanctions conclusion");
+  if (answer.privilegeLegalConclusion !== null) failures.push("privilege legal conclusion");
+  if (!answer.communications.some((c) => c.communicationType === "MEET_AND_CONFER")) {
+    failures.push("mac communication missing");
+  }
+  return fail(assignment, failures);
+}
 
 function gradeCiteResolved(assignment: DeepeningAssignment): DeepeningGrade {
   const fixture = buildPass5CitationFixture();
