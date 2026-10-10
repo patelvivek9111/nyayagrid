@@ -14,7 +14,7 @@ const ASK_LIMITS = {
 } as const;
 
 export function isWholeMatterAskQuestion(question: string): boolean {
-  return /\b(complete status|whole matter|matter status|status of this matter|strongest and weakest|investigate next|what should we (investigate|do) next|cross[- ]domain|overall matter|matter overview|gaps remain|what remains unresolved|authorities apply|facts are still unsupported|communications led to|discovery gaps|evidence supports each element|contradictions should|deadlines\/tasks remain|unsupported)\b/i.test(
+  return /\b(complete status|current status|whole matter|matter status|status of this matter|strongest and weakest|investigate next|what should (we|the attorney) (investigate|do) next|cross[- ]domain|overall matter|matter overview|gaps remain|remain unresolved|what remains unresolved|authorities apply|facts are (still )?unsupported|communications led to|discovery (gaps|deficiencies)|evidence (supports each element|contradicts)|contradictions should|tasks and explicit deadlines|deadlines\/tasks remain|supports claim|missing for claim|did the court|unsupported|will we win|witness is lying)\b/i.test(
     question,
   );
 }

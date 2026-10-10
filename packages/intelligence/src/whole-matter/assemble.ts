@@ -1,7 +1,6 @@
 import type { CivilClaimsReview } from "../civil/claims-model";
 import { buildCivilClaimMatrix, buildCivilWholeMatterView } from "../civil/claims-model";
 import type { DiscoveryLedgerReview } from "../discovery-ledger/types";
-import { openDeficiencies } from "../discovery-ledger/model";
 import type { MatterMotionsCommunicationsReview } from "../motions-communications/postgres";
 import { isPendingMotionStatus } from "../motions-communications/domain";
 import type {
@@ -447,7 +446,19 @@ export function assembleWholeMatterIntelligence(
   const discoveryChains = buildDiscoveryChains(discovery, motionsComms);
   const motions = buildMotions(motionsComms);
   const contradictions = buildContradictions(civil);
-  const openDeficiencyIds = discovery ? openDeficiencies(discovery).map((d) => d.id) : [];
+  // Outstanding includes motion-escalated deficiencies (not yet RESOLVED/WITHDRAWN).
+  const openDeficiencyIds = discovery
+    ? discovery.deficiencies
+        .filter((d) => ["OPEN", "MEET_AND_CONFER", "MOTION_PENDING"].includes(d.status))
+        .map((d) => d.id)
+    : [];
+
+  // Wire authority ↔ claim from civil relations when matter-authority rows lack relatedClaimIds.
+  const authoritiesWired = authorities.map((a) => {
+    if (a.relatedClaimIds.length > 0) return a;
+    const fromClaims = claims.filter((c) => c.relatedAuthorityIds.includes(a.id)).map((c) => c.claimId);
+    return fromClaims.length > 0 ? { ...a, relatedClaimIds: fromClaims } : a;
+  });
 
   const tasks = (input.tasks ?? []).map((t) => ({
     id: t.id,
@@ -592,7 +603,7 @@ export function assembleWholeMatterIntelligence(
     contradictions,
     discoveryChains,
     motions,
-    authorities,
+    authorities: authoritiesWired,
     tasks,
     openDeficiencyIds,
   });
@@ -603,7 +614,7 @@ export function assembleWholeMatterIntelligence(
     motions,
     openDeficiencyIds,
     tasks,
-    authorities,
+    authorities: authoritiesWired,
     communications,
   });
 
@@ -637,7 +648,7 @@ export function assembleWholeMatterIntelligence(
     tasks,
     deadlines,
     timeline,
-    authorities,
+    authorities: authoritiesWired,
     investigateNext,
     limitations: [
       "Whole-matter intelligence is derived from persisted records only.",
