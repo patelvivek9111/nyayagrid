@@ -1,0 +1,60 @@
+{
+  "lane": "identity",
+  "atLookup": 80,
+  "totalCl": 81,
+  "idHigh": 74,
+  "idEdgesBackfilled": 296,
+  "edgesPerIdentityCl": 3.7,
+  "ambiguityRate": 0.075,
+  "notFoundRate": 0,
+  "edge4": {
+    "attempted": 80,
+    "high": 74,
+    "edges": 296,
+    "edgesPerCl": 3.7
+  },
+  "edge3": {
+    "attempted": 0,
+    "high": 0,
+    "edges": 0,
+    "edgesPerCl": null
+  },
+  "jurisStats": {
+    "CA3": {
+      "attempted": 0,
+      "resolved": 0
+    },
+    "EDPA": {
+      "attempted": 9,
+      "resolved": 9
+    },
+    "PA": {
+      "attempted": 0,
+      "resolved": 0
+    },
+    "SCOTUS": {
+      "attempted": 71,
+      "resolved": 65
+    },
+    "OTHER_FEDERAL": {
+      "attempted": 0,
+      "resolved": 0
+    },
+    "STATE": {
+      "attempted": 0,
+      "resolved": 0
+    }
+  },
+  "rolling20": {
+    "n": 20,
+    "targetResolution": 1,
+    "edgesPerCl": 4,
+    "ambiguity": 0
+  },
+  "identityStopReason": null,
+  "health": {
+    "green": true,
+    "unresolved": 53336,
+    "METADATA_ONLY": 535
+  }
+}
