@@ -242,9 +242,15 @@ async function validateMotionLinkTarget(
       const [row] = await db
         .select({ id: legalIssues.id })
         .from(legalIssues)
-        .where(and(eq(legalIssues.id, targetId), eq(legalIssues.organizationId, organizationId)))
+        .where(
+          and(
+            eq(legalIssues.id, targetId),
+            eq(legalIssues.matterId, matterId),
+            eq(legalIssues.organizationId, organizationId),
+          ),
+        )
         .limit(1);
-      if (!row) throw new MotionsCommunicationsError("CROSS_ORG", "Legal issue not in organization.", 403);
+      if (!row) throw new MotionsCommunicationsError("CROSS_MATTER", "Legal issue not in matter.", 403);
       return;
     }
     case "DISCOVERY_REQUEST_ITEM": {
@@ -650,8 +656,18 @@ export async function listMotionDocuments(
     .orderBy(asc(matterMotionDocuments.sortOrder), asc(matterMotionDocuments.createdAt));
   if (links.length === 0) return [];
   const docIds = [...new Set(links.map((l) => l.documentId))];
-  const docs = await db.select().from(documents).where(inArray(documents.id, docIds));
+  const docs = await db
+    .select()
+    .from(documents)
+    .where(
+      and(
+        inArray(documents.id, docIds),
+        eq(documents.organizationId, params.organizationId),
+        eq(documents.matterId, params.matterId),
+      ),
+    );
   const byId = new Map(docs.map((d) => [d.id, d]));
+  // Stale/foreign document IDs remain linked but never leak foreign document rows.
   return links.map((link) => ({
     ...link,
     document: byId.get(link.documentId) ?? null,
