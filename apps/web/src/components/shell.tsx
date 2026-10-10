@@ -25,6 +25,7 @@ export function MatterShell({
 }) {
   const tabs = [
     { href: `/app/cases/${matterId}`, label: "Home" },
+    { href: `/app/cases/${matterId}/intelligence`, label: "Intelligence" },
     { href: `/app/cases/${matterId}/chats`, label: "Chats" },
     { href: `/app/cases/${matterId}/documents`, label: "Documents" },
     { href: `/app/cases/${matterId}/timeline`, label: "Timeline" },

@@ -76,9 +76,13 @@ import {
   loadMatterMotionsCommunicationsReview,
   isMotionsCommunicationsAskQuestion as isMotionsCommunicationsAskQuestionFromIntelligence,
   buildMotionsCommunicationsAskContextBlock as buildMcAskContextFromIntelligence,
+  loadWholeMatterIntelligence,
+  isWholeMatterAskQuestion as isWholeMatterAskQuestionFromIntelligence,
+  buildWholeMatterAskContextBlock as buildWholeMatterAskContextFromIntelligence,
   type CivilClaimsReview,
   type DiscoveryLedgerReview,
   type MatterMotionsCommunicationsReview,
+  type WholeMatterIntelligence,
   type StructuredAnswerContext,
   type SuppressionReview,
 } from "@nyayagrid/intelligence";
@@ -225,7 +229,18 @@ export function buildMotionsCommunicationsAskContextBlock(params: {
   return buildMcAskContextFromIntelligence(params);
 }
 
-/** Prefixed Ask context. Week-4, suppression, civil, discovery, and motions/comms blocks stay independent. */
+export function isWholeMatterAskQuestion(question: string): boolean {
+  return isWholeMatterAskQuestionFromIntelligence(question);
+}
+
+export function buildWholeMatterAskContextBlock(params: {
+  question: string;
+  intelligence: WholeMatterIntelligence | null | undefined;
+}): string | null {
+  return buildWholeMatterAskContextFromIntelligence(params);
+}
+
+/** Prefixed Ask context. Domain blocks stay independent; whole-matter is an additional convergence block. */
 export function mergeAskContextText(...parts: Array<string | null | undefined>): string | null {
   const merged = parts.filter((part): part is string => Boolean(part && part.trim()));
   return merged.length > 0 ? merged.join("\n\n") : null;
@@ -1088,12 +1103,30 @@ export async function askNyayaAboutMatter(params: {
         motionsCommsContextText = null;
       }
     }
+
+    let wholeMatterContextText: string | null = null;
+    if (isWholeMatterAskQuestion(params.question) && params.workspaceType !== "prosecution") {
+      try {
+        const wholeMatter = await loadWholeMatterIntelligence(params.db, {
+          userId: params.userId,
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+        });
+        wholeMatterContextText = buildWholeMatterAskContextBlock({
+          question: params.question,
+          intelligence: wholeMatter,
+        });
+      } catch {
+        wholeMatterContextText = null;
+      }
+    }
     const askStructuredContextText = mergeAskContextText(
       week4ContextText,
       suppressionContextText,
       civilContextText,
       discoveryContextText,
       motionsCommsContextText,
+      wholeMatterContextText,
     );
 
     if (authority) {
