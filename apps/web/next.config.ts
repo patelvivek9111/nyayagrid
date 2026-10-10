@@ -109,6 +109,8 @@ const nextConfig: NextConfig = {
   ],
   // Research citation-resolution (and other ESM TS sources) import sibling modules with `.js`
   // extensions. Webpack must remap those to `.ts` during transpilePackages resolution.
+  // Note: Next 15.5 Turbopack does not yet support resolveExtensionAlias parity, so default
+  // `npm run dev` uses webpack. Re-enable `dev:turbo` after upgrading Next once that lands.
   webpack: (config) => {
     config.resolve.extensionAlias = {
       ...(config.resolve.extensionAlias ?? {}),
