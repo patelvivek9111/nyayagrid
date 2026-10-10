@@ -4,7 +4,7 @@
  * Production Neon / CourtListener: unused. Schema migration: NONE.
  */
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { and, count, eq } from "drizzle-orm";
+import { and, count, eq, inArray } from "drizzle-orm";
 import {
   closeDb,
   createDb,
@@ -14,8 +14,11 @@ import {
   graphEdges,
   graphNodes,
   legalAuthorities,
+  legalIssues,
   matterAuthorities,
   matterFacts,
+  matterMotionDocuments,
+  matterMotionLinks,
   matters,
   matterEntities,
   matterMembers,
@@ -26,6 +29,7 @@ import {
   users,
 } from "@nyayagrid/database";
 import { AuthorizationError } from "@nyayagrid/permissions";
+import { loadCivilClaimsReview } from "../civil/adapter";
 import {
   addCivilClaimElement,
   createCivilClaim,
@@ -47,11 +51,13 @@ import {
 import { materializeDiscoveryGraph } from "../discovery-ledger/graph-materialize";
 import { materializeVerifiedGraph } from "../graph/materialize";
 import {
+  MotionsCommunicationsError,
   createMatterCommunication,
   createMatterMotion,
   linkMatterCommunicationTarget,
   linkMatterMotionTarget,
   linkMotionDocument,
+  listMotionDocuments,
   materializeMotionsCommunicationsGraph,
   materializeMotionsCommunicationsTimeline,
 } from "../motions-communications/index";
@@ -61,6 +67,7 @@ import {
   isWholeMatterAskQuestion,
   loadWholeMatterIntelligence,
   planWholeMatterGraph,
+  resolveAuthorityResolutionBucket,
 } from "./index";
 
 const runDbTests = process.env.RUN_DB_TESTS === "1";
@@ -257,8 +264,8 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
     ids.docProd = await doc(`Incomplete production cover ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
     ids.docB = await doc(`Foreign Doc ${suffix}`, ids.orgB!, ids.matterB!, ids.outsider!);
 
-    // Hundreds of source/document references for performance realism.
-    for (let i = 0; i < 220; i++) {
+    // 500+ source/document references for performance realism.
+    for (let i = 0; i < 500; i++) {
       await doc(`Source ref ${i} ${suffix}`, ids.orgA!, ids.matterA!, ids.owner!);
     }
 
@@ -416,6 +423,73 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
       .returning();
     ids.authUnresolved = authUnresolved!.id;
 
+    const [authProcessing] = await db
+      .insert(legalAuthorities)
+      .values({
+        authorityType: "case",
+        title: "Processing Authority",
+        citation: `111 Proc.Rep. 2 D7 ${suffix}`,
+        jurisdiction: "US",
+        ingestionStatus: "processing",
+        treatmentStatus: "unknown",
+        currentnessStatus: "unknown",
+        metadata: {},
+        sourceProvider: "synthetic_d7",
+        sourceExternalId: `processing_${suffix}`,
+      })
+      .returning();
+    ids.authProcessing = authProcessing!.id;
+
+    const [authFailed] = await db
+      .insert(legalAuthorities)
+      .values({
+        authorityType: "case",
+        title: "Failed Ingestion Authority",
+        citation: `222 Fail.Rep. 3 D7 ${suffix}`,
+        jurisdiction: "US",
+        ingestionStatus: "failed",
+        treatmentStatus: "unknown",
+        currentnessStatus: "unknown",
+        metadata: {},
+        sourceProvider: "synthetic_d7",
+        sourceExternalId: `failed_${suffix}`,
+      })
+      .returning();
+    ids.authFailed = authFailed!.id;
+
+    const [authNullStatus] = await db
+      .insert(legalAuthorities)
+      .values({
+        authorityType: "case",
+        title: "Null Status Authority",
+        citation: `333 Null.Rep. 4 D7 ${suffix}`,
+        jurisdiction: "US",
+        ingestionStatus: "pending",
+        treatmentStatus: "unknown",
+        currentnessStatus: "unknown",
+        metadata: {},
+        sourceProvider: "synthetic_d7",
+        sourceExternalId: `nullish_${suffix}`,
+      })
+      .returning();
+    ids.authNullish = authNullStatus!.id;
+
+    // Global authority noise — not linked to matter A — proves civil loader does not scan all.
+    for (let i = 0; i < 80; i++) {
+      await db.insert(legalAuthorities).values({
+        authorityType: "case",
+        title: `Global noise authority ${i}`,
+        citation: `Noise ${i} F.3d ${i} D7 ${suffix}`,
+        jurisdiction: "US",
+        ingestionStatus: "ready",
+        treatmentStatus: "unknown",
+        currentnessStatus: "unknown",
+        metadata: {},
+        sourceProvider: "synthetic_d7_noise",
+        sourceExternalId: `noise_${suffix}_${i}`,
+      });
+    }
+
     await db.insert(matterAuthorities).values([
       {
         organizationId: ids.orgA!,
@@ -438,8 +512,68 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
         status: "saved",
         addedByUserId: ids.owner!,
       },
+      {
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        authorityId: ids.authProcessing!,
+        status: "saved",
+        addedByUserId: ids.owner!,
+      },
+      {
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        authorityId: ids.authFailed!,
+        status: "saved",
+        addedByUserId: ids.owner!,
+      },
+      {
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        authorityId: ids.authNullish!,
+        status: "saved",
+        addedByUserId: ids.owner!,
+      },
     ]);
-  }, 180_000);
+
+    const [issueA] = await db
+      .insert(legalIssues)
+      .values({
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        issueType: "contract",
+        jurisdiction: "US-CA",
+        description: `Matter A legal issue ${suffix}`,
+        provenance: { extractionOrigin: "human", humanEntered: true },
+      })
+      .returning();
+    ids.issueA = issueA!.id;
+
+    const [issueA2] = await db
+      .insert(legalIssues)
+      .values({
+        organizationId: ids.orgA!,
+        matterId: ids.matterA2!,
+        issueType: "contract",
+        jurisdiction: "US-CA",
+        description: `Matter A2 sibling legal issue ${suffix}`,
+        provenance: { extractionOrigin: "human", humanEntered: true },
+      })
+      .returning();
+    ids.issueA2 = issueA2!.id;
+
+    const [issueB] = await db
+      .insert(legalIssues)
+      .values({
+        organizationId: ids.orgB!,
+        matterId: ids.matterB!,
+        issueType: "contract",
+        jurisdiction: "US-NY",
+        description: `Matter B legal issue ${suffix}`,
+        provenance: { extractionOrigin: "human", humanEntered: true },
+      })
+      .returning();
+    ids.issueB = issueB!.id;
+  }, 300_000);
 
   afterAll(async () => {
     await closeDb(db);
@@ -979,13 +1113,20 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
     expect(wm.timeline.some((e) => e.eventType === "motion_ruled")).toBe(true);
     expect(wm.timeline.every((e) => e.eventDate != null)).toBe(true);
 
-    const buckets = new Set(wm.authorities.map((a) => a.resolution));
-    expect(buckets.has("AUTHORITY_RESOLVED")).toBe(true);
-    expect(buckets.has("CORPUS_COMPLETE")).toBe(true);
-    expect(buckets.has("IDENTITY_UNRESOLVED")).toBe(true);
-    expect(wm.authorities.every((a) => a.treatmentVerified === false || a.resolution === "CORPUS_COMPLETE")).toBe(
-      true,
-    );
+    const byId = new Map(wm.authorities.map((a) => [a.id, a]));
+    expect(byId.get(ids.authResolved!)?.resolution).toBe("AUTHORITY_RESOLVED");
+    expect(byId.get(ids.authCorpus!)?.resolution).toBe("CORPUS_COMPLETE");
+    expect(byId.get(ids.authUnresolved!)?.resolution).toBe("IDENTITY_UNRESOLVED");
+    expect(byId.get(ids.authProcessing!)?.resolution).toBe("IDENTITY_UNRESOLVED");
+    expect(byId.get(ids.authFailed!)?.resolution).toBe("IDENTITY_UNRESOLVED");
+    expect(byId.get(ids.authNullish!)?.resolution).toBe("IDENTITY_UNRESOLVED");
+    expect(wm.authorities.every((a) => a.treatmentVerified === false)).toBe(true);
+    expect(
+      wm.authorities.filter((a) => a.resolution === "AUTHORITY_RESOLVED").map((a) => a.id),
+    ).toEqual([ids.authResolved]);
+    // Processing/failed must never be labeled AUTHORITY_RESOLVED
+    expect(byId.get(ids.authProcessing!)?.resolution).not.toBe("AUTHORITY_RESOLVED");
+    expect(byId.get(ids.authFailed!)?.resolution).not.toBe("AUTHORITY_RESOLVED");
     expect(wm.investigateNext.length).toBeGreaterThan(0);
     expect(wm.investigateNext.every((i) => i.why && i.resolvesIf && i.predictiveOutcome === null)).toBe(true);
     expect(wm.sourceRefs.some((s) => s.kind === "claim" && s.id === ids.claimA)).toBe(true);
@@ -1351,7 +1492,13 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
     const ctx = formatWholeMatterAnswer(ask);
     expect(ask.motions.length).toBeLessThanOrEqual(24);
     expect(ask.communications.length).toBeLessThanOrEqual(24);
+    expect(ask.authorities.length).toBeLessThanOrEqual(16);
+    expect(ask.claims.every((c) => c.openGaps.length <= 5)).toBe(true);
     expect(ctx.length).toBeLessThan(80_000);
+    // Whole-matter Ask block only — no duplicate legacy domain headers.
+    expect(ctx).toContain("WHOLE_MATTER_INTELLIGENCE");
+    expect((ctx.match(/WHOLE_MATTER_INTELLIGENCE/g) ?? []).length).toBe(1);
+    expect(ctx).not.toMatch(/CIVIL_CLAIMS_CONTEXT|DISCOVERY_LEDGER_CONTEXT|MOTIONS_COMMUNICATIONS_CONTEXT/);
 
     const tGraph = performance.now();
     const graph = planWholeMatterGraph(wm);
@@ -1367,15 +1514,21 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
     expect(askMs).toBeLessThan(500);
     expect(graphMs).toBeLessThan(750);
 
+    const maxOpenGaps = Math.max(0, ...ask.claims.map((c) => c.openGaps.length));
     console.log(
       JSON.stringify({
         pass7_scale: {
-          docs_seeded: "220+",
+          docs_seeded: "500+",
           motions: wm.motions.length,
           communications: wm.communications.length,
           tasks: wm.tasks.length,
           timeline_events: timelineLen,
           authorities: wm.authorities.length,
+          ask_claims: ask.claims.length,
+          ask_open_gaps_max: maxOpenGaps,
+          ask_motions: ask.motions.length,
+          ask_communications: ask.communications.length,
+          ask_authorities: ask.authorities.length,
           assembly_ms: Math.round(assemblyMs),
           ask_ms: Math.round(askMs),
           ask_context_chars: ctx.length,
@@ -1386,5 +1539,239 @@ describe.runIf(runDbTests)("Pass 7 whole-matter live certification (local DB)", 
         },
       }),
     );
-  }, 300_000);
+  }, 420_000);
+
+  it("certifies authority-state honesty for processing/failed/corpus/resolved", async () => {
+    expect(resolveAuthorityResolutionBucket({ ingestionStatus: "processing" })).toBe("IDENTITY_UNRESOLVED");
+    expect(resolveAuthorityResolutionBucket({ ingestionStatus: "failed" })).toBe("IDENTITY_UNRESOLVED");
+    expect(resolveAuthorityResolutionBucket({ ingestionStatus: null })).toBe("IDENTITY_UNRESOLVED");
+    expect(resolveAuthorityResolutionBucket({ ingestionStatus: "ready" })).toBe("AUTHORITY_RESOLVED");
+    expect(
+      resolveAuthorityResolutionBucket({
+        ingestionStatus: "pending",
+        metadata: { corpusComplete: true },
+      }),
+    ).toBe("CORPUS_COMPLETE");
+
+    const wm = await loadWholeMatterIntelligence(db, {
+      userId: ids.owner!,
+      organizationId: ids.orgA!,
+      matterId: ids.matterA!,
+    });
+    const byId = new Map(wm.authorities.map((a) => [a.id, a]));
+    expect(byId.get(ids.authCorpus!)?.resolution).toBe("CORPUS_COMPLETE");
+    expect(byId.get(ids.authResolved!)?.resolution).toBe("AUTHORITY_RESOLVED");
+    expect(byId.get(ids.authProcessing!)?.resolution).toBe("IDENTITY_UNRESOLVED");
+    expect(byId.get(ids.authFailed!)?.resolution).toBe("IDENTITY_UNRESOLVED");
+    expect(byId.get(ids.authUnresolved!)?.resolution).toBe("IDENTITY_UNRESOLVED");
+    expect(wm.authorities.every((a) => a.treatmentVerified === false)).toBe(true);
+    const ask = answerWholeMatterQuestion({
+      intelligence: wm,
+      question: "What authorities apply to the unresolved issues?",
+    });
+    expect(formatWholeMatterAnswer(ask)).toMatch(/treatment=UNKNOWN/);
+    expect(formatWholeMatterAnswer(ask)).not.toMatch(/treatment=VERIFIED/);
+  }, 60_000);
+
+  it("loads civil authorities by matter-linked IDs only (no global table scan)", async () => {
+    const [globalAuthRow] = await db.select({ value: count() }).from(legalAuthorities);
+    const globalAuthCount = Number(globalAuthRow?.value ?? 0);
+    expect(globalAuthCount).toBeGreaterThan(80);
+
+    const t0 = performance.now();
+    const civil = await loadCivilClaimsReview(db, {
+      userId: ids.owner!,
+      organizationId: ids.orgA!,
+      matterId: ids.matterA!,
+    });
+    const civilMs = performance.now() - t0;
+    timings.civilAuthorityMs = civilMs;
+
+    const linkedIds = new Set<string>();
+    for (const claim of civil.claims) {
+      for (const a of claim.authorities ?? []) linkedIds.add(a.authorityId);
+      for (const el of claim.elements ?? []) {
+        for (const a of el.authorities ?? []) linkedIds.add(a.authorityId);
+      }
+    }
+    // Matter A only linked resolved+corpus via civil relations (processing/failed are matterAuthorities only).
+    expect(linkedIds.has(ids.authResolved!)).toBe(true);
+    expect(linkedIds.has(ids.authCorpus!)).toBe(true);
+    // Noise authorities must not appear in civil review merely because they exist globally.
+    expect([...linkedIds].every((id) => id === ids.authResolved || id === ids.authCorpus)).toBe(true);
+    expect(civilMs).toBeLessThan(8_000);
+
+    console.log(
+      JSON.stringify({
+        stabilization_civil_authority: {
+          global_authority_rows: Number(globalAuthCount),
+          matter_linked_authority_ids: linkedIds.size,
+          civil_load_ms: Math.round(civilMs),
+          global_scan_removed: true,
+        },
+      }),
+    );
+  }, 60_000);
+
+  it("rejects LEGAL_ISSUE motion links across matter/org and persists zero illegal rows", async () => {
+    const same = await linkMatterMotionTarget(db, {
+      userId: ids.owner!,
+      organizationId: ids.orgA!,
+      matterId: ids.matterA!,
+      motionId: ids.motionCompel!,
+      linkType: "LEGAL_ISSUE",
+      targetId: ids.issueA!,
+    });
+    expect(same.targetId).toBe(ids.issueA);
+
+    await expect(
+      linkMatterMotionTarget(db, {
+        userId: ids.owner!,
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        motionId: ids.motionCompel!,
+        linkType: "LEGAL_ISSUE",
+        targetId: ids.issueA2!,
+      }),
+    ).rejects.toBeInstanceOf(MotionsCommunicationsError);
+
+    await expect(
+      linkMatterMotionTarget(db, {
+        userId: ids.owner!,
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        motionId: ids.motionCompel!,
+        linkType: "LEGAL_ISSUE",
+        targetId: ids.issueB!,
+      }),
+    ).rejects.toBeInstanceOf(MotionsCommunicationsError);
+
+    const illegal = await db
+      .select()
+      .from(matterMotionLinks)
+      .where(
+        and(
+          eq(matterMotionLinks.motionId, ids.motionCompel!),
+          eq(matterMotionLinks.linkType, "LEGAL_ISSUE"),
+          inArray(matterMotionLinks.targetId, [ids.issueA2!, ids.issueB!]),
+        ),
+      );
+    expect(illegal.length).toBe(0);
+
+    const legal = await db
+      .select()
+      .from(matterMotionLinks)
+      .where(
+        and(
+          eq(matterMotionLinks.motionId, ids.motionCompel!),
+          eq(matterMotionLinks.linkType, "LEGAL_ISSUE"),
+          eq(matterMotionLinks.targetId, ids.issueA!),
+        ),
+      );
+    expect(legal.length).toBe(1);
+  }, 60_000);
+
+  it("fails closed on foreign/stale motion-document reads without metadata leakage", async () => {
+    // Inject corrupt edge: Matter A motion → Org B document (bypasses write-path guard).
+    await db.insert(matterMotionDocuments).values({
+      organizationId: ids.orgA!,
+      matterId: ids.matterA!,
+      motionId: ids.motionCompel!,
+      documentId: ids.docB!,
+      role: "EXHIBIT",
+      sortOrder: 99,
+    });
+
+    const listed = await listMotionDocuments(db, {
+      userId: ids.owner!,
+      organizationId: ids.orgA!,
+      matterId: ids.matterA!,
+      motionId: ids.motionCompel!,
+    });
+    const foreign = listed.find((row) => row.documentId === ids.docB);
+    expect(foreign).toBeTruthy();
+    expect(foreign!.document).toBeNull();
+    const serialized = JSON.stringify(listed);
+    expect(serialized).not.toContain("Foreign Doc");
+    expect(serialized).not.toMatch(/Foreign Doc|foreign doc/i);
+
+    // Same-matter document still returns.
+    const local = listed.find((row) => row.documentId === ids.docMotion);
+    expect(local?.document?.title).toMatch(/Motion to Compel/);
+  }, 60_000);
+
+  it("measures scaled list/timeline timings and classifies residual P3 paths", async () => {
+    const tMotions = performance.now();
+    const wm = await loadWholeMatterIntelligence(db, {
+      userId: ids.owner!,
+      organizationId: ids.orgA!,
+      matterId: ids.matterA!,
+    });
+    const loadMs = performance.now() - tMotions;
+
+    const tTl = performance.now();
+    const tl = await materializeMotionsCommunicationsTimeline({
+      db,
+      organizationId: ids.orgA!,
+      matterId: ids.matterA!,
+      userId: ids.owner!,
+    });
+    const timelineMaterializeMs = performance.now() - tTl;
+
+    // Timeline N+1 write path: classify P1 only if practically slow at current scale.
+    const timelineClassification = timelineMaterializeMs > 10_000 ? "P1" : "P3";
+    const motionCommArrayClassification =
+      wm.motions.length >= 55 && wm.communications.length >= 200 && loadMs < 15_000 ? "P3" : "P1";
+
+    expect(timelineClassification).toBe("P3");
+    expect(motionCommArrayClassification).toBe("P3");
+    expect(tl.eventsUpserted).toBeGreaterThanOrEqual(0);
+
+    console.log(
+      JSON.stringify({
+        stabilization_perf: {
+          whole_matter_load_ms: Math.round(loadMs),
+          timeline_materialize_ms: Math.round(timelineMaterializeMs),
+          motions: wm.motions.length,
+          communications: wm.communications.length,
+          timeline_n1_classification: timelineClassification,
+          motion_comm_arrays_classification: motionCommArrayClassification,
+        },
+      }),
+    );
+  }, 180_000);
+
+  it("fails closed on foreign motion/communication/evidence IDs without 500s", async () => {
+    const foreignEvidenceId = crypto.randomUUID();
+    const foreignMotionId = crypto.randomUUID();
+    await expect(
+      linkMatterMotionTarget(db, {
+        userId: ids.owner!,
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        motionId: ids.motionCompel!,
+        linkType: "EVIDENCE",
+        targetId: foreignEvidenceId,
+      }),
+    ).rejects.toBeInstanceOf(MotionsCommunicationsError);
+
+    await expect(
+      linkMatterCommunicationTarget(db, {
+        userId: ids.owner!,
+        organizationId: ids.orgA!,
+        matterId: ids.matterA!,
+        communicationId: ids.macComm!,
+        linkType: "MOTION",
+        targetId: foreignMotionId,
+      }),
+    ).rejects.toBeInstanceOf(MotionsCommunicationsError);
+
+    const sibling = await loadWholeMatterIntelligence(db, {
+      userId: ids.owner!,
+      organizationId: ids.orgA!,
+      matterId: ids.matterA2!,
+    });
+    expect(sibling.motions.some((m) => m.motionId === ids.motionCompel)).toBe(false);
+    expect(sibling.communications.some((c) => c.id === ids.macComm)).toBe(false);
+  }, 60_000);
 });
