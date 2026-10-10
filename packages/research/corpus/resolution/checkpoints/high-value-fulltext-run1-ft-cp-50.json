@@ -1,0 +1,16 @@
+{
+  "lane": "fulltext",
+  "atAcquired": 50,
+  "totalCl": 101,
+  "fullTextCl": 100,
+  "ftAcquired": 50,
+  "ftFailed": 0,
+  "ftNewEdgesTotal": 1825,
+  "ftOldUnresolvedResolved": 10,
+  "health": {
+    "green": true,
+    "METADATA_ONLY": 741,
+    "CORPUS_COMPLETE": 5211,
+    "CORPUS_COMPLETE_EDGES": 12002
+  }
+}

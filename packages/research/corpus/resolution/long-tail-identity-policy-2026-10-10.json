@@ -1,0 +1,18 @@
+{
+  "recordedAt": "2026-10-10T14:21:45.564Z",
+  "bulkIdentityCurrentlyStopped": true,
+  "policies": {
+    ">=5": "bulk external identity allowed when reporter-valid",
+    "4-edge": "quality-gated external identity only",
+    "3-edge": "NO BULK after measured 1.09 e/CL + 54.5% ambiguity",
+    "1-2": "NO BULK"
+  },
+  "allowLowDemandVia": [
+    "future local aliases/parallels",
+    "future corpus additions",
+    "on-demand Research queries",
+    "specific strategic need",
+    "future provider/index improvements"
+  ],
+  "governingObjective": "CORPUS_COMPLETENESS_AND_LEGAL_PRODUCT_VALUE"
+}
