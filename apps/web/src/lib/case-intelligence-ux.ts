@@ -354,7 +354,9 @@ export function userFacingLoadError(
     | "documents"
     | "review"
     | "claims"
-    | "discovery",
+    | "discovery"
+    | "motions"
+    | "communications",
   status?: number,
 ): string {
   if (status === 401) return USER_FACING_AUTH.unauthenticated;
@@ -369,6 +371,8 @@ export function userFacingLoadError(
   if (kind === "review") return "We couldn't load the review queue. Try again.";
   if (kind === "claims") return "We couldn't load civil claims. Try again.";
   if (kind === "discovery") return "We couldn't load the discovery ledger. Try again.";
+  if (kind === "motions") return "We couldn't load motions. Try again.";
+  if (kind === "communications") return "We couldn't load communications. Try again.";
   return "We couldn't load case memory. Try again.";
 }
 

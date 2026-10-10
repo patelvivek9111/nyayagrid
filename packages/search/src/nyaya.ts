@@ -73,8 +73,12 @@ import {
   formatDiscoveryAnswer,
   isDiscoveryAskQuestion as isDiscoveryAskQuestionFromIntelligence,
   loadDiscoveryLedgerReview,
+  loadMatterMotionsCommunicationsReview,
+  isMotionsCommunicationsAskQuestion as isMotionsCommunicationsAskQuestionFromIntelligence,
+  buildMotionsCommunicationsAskContextBlock as buildMcAskContextFromIntelligence,
   type CivilClaimsReview,
   type DiscoveryLedgerReview,
+  type MatterMotionsCommunicationsReview,
   type StructuredAnswerContext,
   type SuppressionReview,
 } from "@nyayagrid/intelligence";
@@ -210,7 +214,18 @@ export function buildDiscoveryAskContextBlock(params: {
   );
 }
 
-/** Prefixed Ask context. Week-4, suppression, civil, and discovery blocks stay independent. */
+export function isMotionsCommunicationsAskQuestion(question: string): boolean {
+  return isMotionsCommunicationsAskQuestionFromIntelligence(question);
+}
+
+export function buildMotionsCommunicationsAskContextBlock(params: {
+  question: string;
+  review: MatterMotionsCommunicationsReview | null | undefined;
+}): string | null {
+  return buildMcAskContextFromIntelligence(params);
+}
+
+/** Prefixed Ask context. Week-4, suppression, civil, discovery, and motions/comms blocks stay independent. */
 export function mergeAskContextText(...parts: Array<string | null | undefined>): string | null {
   const merged = parts.filter((part): part is string => Boolean(part && part.trim()));
   return merged.length > 0 ? merged.join("\n\n") : null;
@@ -1053,11 +1068,32 @@ export async function askNyayaAboutMatter(params: {
         discoveryContextText = null;
       }
     }
+
+    let motionsCommsContextText: string | null = null;
+    if (
+      isMotionsCommunicationsAskQuestion(params.question) &&
+      params.workspaceType !== "prosecution"
+    ) {
+      try {
+        const mcReview = await loadMatterMotionsCommunicationsReview(params.db, {
+          userId: params.userId,
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+        });
+        motionsCommsContextText = buildMotionsCommunicationsAskContextBlock({
+          question: params.question,
+          review: mcReview,
+        });
+      } catch {
+        motionsCommsContextText = null;
+      }
+    }
     const askStructuredContextText = mergeAskContextText(
       week4ContextText,
       suppressionContextText,
       civilContextText,
       discoveryContextText,
+      motionsCommsContextText,
     );
 
     if (authority) {

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useParams } from "next/navigation";
 import { EmptyState, ErrorState, LoadingState } from "@/components/ux";
@@ -461,7 +462,13 @@ export default function DiscoveryLedgerPage() {
                       )
                       .map((row) => (
                         <li key={row.id}>
-                          {row.motionType}: {row.motionLabel}
+                          {row.motionType}:{" "}
+                          <Link
+                            href={`/app/cases/${matterId}/motions/${row.motionId}`}
+                            className="text-accent underline-offset-2 hover:underline"
+                          >
+                            {row.motionLabel}
+                          </Link>
                         </li>
                       ))}
                   </ul>
@@ -566,8 +573,27 @@ export default function DiscoveryLedgerPage() {
                 <p className="text-sm text-ink/80">{row.description}</p>
                 <p className="text-xs text-ink/50">
                   Opened {row.openedAt ?? "unknown"} · Request {row.itemId ?? "(none)"} · Communication{" "}
-                  {row.communicationId ?? "(none)"} · Meet-and-confer {row.meetAndConferId ?? "(none)"} · Motion{" "}
-                  {row.motionId ?? "(none)"}
+                  {row.communicationId ? (
+                    <Link
+                      href={`/app/cases/${matterId}/communications/${row.communicationId}`}
+                      className="text-accent hover:underline"
+                    >
+                      {row.communicationId.slice(0, 8)}…
+                    </Link>
+                  ) : (
+                    "(none)"
+                  )}{" "}
+                  · Meet-and-confer {row.meetAndConferId ?? "(none)"} · Motion{" "}
+                  {row.motionId ? (
+                    <Link
+                      href={`/app/cases/${matterId}/motions/${row.motionId}`}
+                      className="text-accent hover:underline"
+                    >
+                      {row.motionId.slice(0, 8)}…
+                    </Link>
+                  ) : (
+                    "(none)"
+                  )}
                 </p>
               </article>
             ))
@@ -616,7 +642,16 @@ export default function DiscoveryLedgerPage() {
                 {row.outcomeNotes ? <p className="text-sm text-ink/80">{row.outcomeNotes}</p> : null}
                 <p className="text-xs text-ink/50">
                   Deficiencies: {row.deficiencyIds.join(", ") || "(none)"} · Communication{" "}
-                  {row.communicationId ?? "(none)"}
+                  {row.communicationId ? (
+                    <Link
+                      href={`/app/cases/${matterId}/communications/${row.communicationId}`}
+                      className="text-accent hover:underline"
+                    >
+                      open communication
+                    </Link>
+                  ) : (
+                    "(none)"
+                  )}
                 </p>
               </article>
             ))
@@ -627,7 +662,14 @@ export default function DiscoveryLedgerPage() {
               <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-ink/80">
                 {data.motionLinks.map((row) => (
                   <li key={row.id}>
-                    {row.motionType}: {row.motionLabel} · deficiencies {row.deficiencyIds.join(", ")}
+                    {row.motionType}:{" "}
+                    <Link
+                      href={`/app/cases/${matterId}/motions/${row.motionId}`}
+                      className="text-accent hover:underline"
+                    >
+                      {row.motionLabel}
+                    </Link>{" "}
+                    · deficiencies {row.deficiencyIds.join(", ")}
                   </li>
                 ))}
               </ul>
