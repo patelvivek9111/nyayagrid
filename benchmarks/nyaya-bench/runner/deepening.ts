@@ -24,8 +24,11 @@ import {
   runDeepeningLawFirm,
   runDeepeningProsecution,
   runPass6LitigationFixture,
+  runPass7WholeMatterFixture,
   answerMotionsCommunicationsQuestion,
   formatMotionsCommunicationsAnswer,
+  answerWholeMatterQuestion,
+  formatWholeMatterAnswer,
   planMotionsCommunicationsGraph,
   planMotionsCommunicationsTimelineEvents,
   runMirandaReview,
@@ -650,7 +653,199 @@ const GRADERS: Record<string, (assignment: DeepeningAssignment) => DeepeningGrad
   "D6-ISOLATION-01": gradeD6Isolation,
   "D6-WHOLE-01": gradeD6Whole,
   "D6-MAC-SAFE-01": gradeD6MacSafe,
+  "D7-STATUS-01": gradeD7Status,
+  "D7-CLAIM-SUPPORT-01": gradeD7ClaimSupport,
+  "D7-CLAIM-GAP-01": gradeD7ClaimGap,
+  "D7-DEFENSE-01": gradeD7Defense,
+  "D7-EVIDENCE-ELEMENT-01": gradeD7EvidenceElement,
+  "D7-CONTRADICTION-01": gradeD7Contradiction,
+  "D7-DISC-GAP-01": gradeD7DiscGap,
+  "D7-COMM-MOTION-01": gradeD7CommMotion,
+  "D7-RULING-01": gradeD7Ruling,
+  "D7-DEADLINE-01": gradeD7Deadline,
+  "D7-AUTH-01": gradeD7Auth,
+  "D7-ABSTAIN-01": gradeD7Abstain,
+  "D7-INVESTIGATE-01": gradeD7Investigate,
+  "D7-ISOLATION-01": gradeD7Isolation,
+  "D7-WHOLE-01": gradeD7Whole,
 };
+
+function gradeD7Status(assignment: DeepeningAssignment): DeepeningGrade {
+  const { intelligence } = runPass7WholeMatterFixture();
+  const failures: string[] = [];
+  if (intelligence.status.flags.length === 0) failures.push("no status flags");
+  if (
+    !intelligence.status.flags.some((f) =>
+      ["CLAIMS_ACTIVE", "EVIDENCE_GAP", "DEFICIENCIES_OUTSTANDING", "MOTION_PENDING", "MOTION_RULED"].includes(
+        f,
+      ),
+    )
+  ) {
+    failures.push("expected core status flags");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeD7ClaimSupport(assignment: DeepeningAssignment): DeepeningGrade {
+  const { intelligence, ids } = runPass7WholeMatterFixture();
+  const claim = intelligence.claims.find((c) => c.claimId === ids.claimBreach);
+  const failures: string[] = [];
+  if (!claim) failures.push("claim missing");
+  if (!claim?.supportStatus) failures.push("support status missing");
+  if (intelligence.liabilityConclusion !== null) failures.push("liability set");
+  return fail(assignment, failures);
+}
+
+function gradeD7ClaimGap(assignment: DeepeningAssignment): DeepeningGrade {
+  const { intelligence, ids } = runPass7WholeMatterFixture();
+  const claim = intelligence.claims.find((c) => c.claimId === ids.claimBreach);
+  const failures: string[] = [];
+  if (!claim) failures.push("claim missing");
+  if (
+    !(
+      (claim?.openGaps.length ?? 0) > 0 ||
+      claim?.supportStatus === "PARTIALLY_SUPPORTED" ||
+      claim?.supportStatus === "NO_EVIDENCE_FOUND" ||
+      claim?.supportStatus === "CONFLICTED"
+    )
+  ) {
+    failures.push("expected gap or partial/conflicted support");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeD7Defense(assignment: DeepeningAssignment): DeepeningGrade {
+  const { intelligence, ids } = runPass7WholeMatterFixture();
+  const defense = intelligence.defenses.find((d) => d.defenseId === ids.defense);
+  const failures: string[] = [];
+  if (!defense) failures.push("defense missing");
+  if (defense?.established !== false) failures.push("defense treated as established");
+  return fail(assignment, failures);
+}
+
+function gradeD7EvidenceElement(assignment: DeepeningAssignment): DeepeningGrade {
+  const { intelligence } = runPass7WholeMatterFixture();
+  const failures: string[] = [];
+  if (intelligence.propositions.length === 0) failures.push("no propositions");
+  return fail(assignment, failures);
+}
+
+function gradeD7Contradiction(assignment: DeepeningAssignment): DeepeningGrade {
+  const { intelligence } = runPass7WholeMatterFixture();
+  const failures: string[] = [];
+  if (intelligence.contradictions.length === 0) failures.push("no contradictions");
+  if (intelligence.contradictions.some((c) => c.credibilityConclusion !== null)) {
+    failures.push("credibility conclusion set");
+  }
+  if (
+    !intelligence.contradictions.some((c) =>
+      ["DIRECT_CONFLICT", "POTENTIAL_TENSION"].includes(c.kind),
+    )
+  ) {
+    failures.push("expected conflict/tension kind");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeD7DiscGap(assignment: DeepeningAssignment): DeepeningGrade {
+  const { intelligence } = runPass7WholeMatterFixture();
+  const failures: string[] = [];
+  if (intelligence.openDeficiencyIds.length === 0) failures.push("no open deficiencies");
+  if (intelligence.discoveryChains.length === 0) failures.push("no discovery chains");
+  return fail(assignment, failures);
+}
+
+function gradeD7CommMotion(assignment: DeepeningAssignment): DeepeningGrade {
+  const { intelligence, ids } = runPass7WholeMatterFixture();
+  const failures: string[] = [];
+  if (!intelligence.communications.some((c) => c.id === ids.macComm)) failures.push("mac missing");
+  if (!intelligence.motions.some((m) => m.motionId === ids.motionCompel)) failures.push("compel missing");
+  const answer = answerWholeMatterQuestion({
+    intelligence,
+    question: "What communications led to the motion to compel?",
+  });
+  if (!answer.communications.some((c) => c.id === ids.macComm)) failures.push("ask missing mac");
+  return fail(assignment, failures);
+}
+
+function gradeD7Ruling(assignment: DeepeningAssignment): DeepeningGrade {
+  const { intelligence, ids } = runPass7WholeMatterFixture();
+  const motion = intelligence.motions.find((m) => m.motionId === ids.motionCompel);
+  const failures: string[] = [];
+  if (motion?.disposition !== "GRANTED_IN_PART") failures.push("wrong disposition");
+  if (motion?.disposesEntireClaim !== false) failures.push("overstated claim disposal");
+  if (intelligence.claims.some((c) => c.wholeClaimDisposedByMotion)) {
+    failures.push("claim marked disposed by motion");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeD7Deadline(assignment: DeepeningAssignment): DeepeningGrade {
+  const { intelligence } = runPass7WholeMatterFixture();
+  const failures: string[] = [];
+  if (intelligence.tasks.length === 0 && intelligence.deadlines.length === 0) {
+    failures.push("no tasks/deadlines");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeD7Auth(assignment: DeepeningAssignment): DeepeningGrade {
+  const { intelligence } = runPass7WholeMatterFixture();
+  const buckets = new Set(intelligence.authorities.map((a) => a.resolution));
+  const failures: string[] = [];
+  if (!buckets.has("AUTHORITY_RESOLVED")) failures.push("missing AUTHORITY_RESOLVED");
+  if (!buckets.has("CORPUS_COMPLETE")) failures.push("missing CORPUS_COMPLETE");
+  if (!buckets.has("IDENTITY_UNRESOLVED")) failures.push("missing IDENTITY_UNRESOLVED");
+  return fail(assignment, failures);
+}
+
+function gradeD7Abstain(assignment: DeepeningAssignment): DeepeningGrade {
+  const { intelligence } = runPass7WholeMatterFixture();
+  const answer = answerWholeMatterQuestion({
+    intelligence,
+    question: "Will we win because the witness is lying?",
+  });
+  const text = formatWholeMatterAnswer(answer);
+  const failures: string[] = [];
+  if (answer.predictiveOutcome !== null) failures.push("predictive set");
+  if (answer.credibilityConclusion !== null) failures.push("credibility set");
+  if (!/PREDICTIVE_OUTCOME: null/.test(text)) failures.push("predictive line missing");
+  return fail(assignment, failures);
+}
+
+function gradeD7Investigate(assignment: DeepeningAssignment): DeepeningGrade {
+  const { intelligence } = runPass7WholeMatterFixture();
+  const failures: string[] = [];
+  if (intelligence.investigateNext.length === 0) failures.push("no investigate items");
+  if (intelligence.investigateNext.some((i) => !i.why || !i.resolvesIf)) {
+    failures.push("investigate item missing why/resolvesIf");
+  }
+  if (intelligence.investigateNext.some((i) => i.predictiveOutcome !== null)) {
+    failures.push("investigate predictive set");
+  }
+  return fail(assignment, failures);
+}
+
+function gradeD7Isolation(assignment: DeepeningAssignment): DeepeningGrade {
+  const { intelligence } = runPass7WholeMatterFixture();
+  const failures: string[] = [];
+  if (!intelligence.organizationId || !intelligence.matterId) failures.push("missing scope ids");
+  return fail(assignment, failures);
+}
+
+function gradeD7Whole(assignment: DeepeningAssignment): DeepeningGrade {
+  const { intelligence } = runPass7WholeMatterFixture();
+  const answer = answerWholeMatterQuestion({
+    intelligence,
+    question: "Give me the complete status of this matter.",
+  });
+  const failures: string[] = [];
+  if (intelligence.claims.length === 0) failures.push("no claims");
+  if (intelligence.motions.length === 0) failures.push("no motions");
+  if (intelligence.communications.length === 0) failures.push("no communications");
+  if (answer.summaryLines.length === 0) failures.push("no summary");
+  return fail(assignment, failures);
+}
 
 function gradeD6Pending(assignment: DeepeningAssignment): DeepeningGrade {
   const { review, ids } = runPass6LitigationFixture();
