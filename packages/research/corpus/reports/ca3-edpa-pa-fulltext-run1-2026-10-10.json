@@ -1,0 +1,184 @@
+{
+  "ok": false,
+  "classification": "CA3_EDPA_PA_FULLTEXT_RUN",
+  "runStartLocal": "10/10/2026, 5:16:57 PM",
+  "stopReason": "DAILY_CAPACITY_TOO_LOW_FOR_FULL_RUN",
+  "courtListener": {
+    "quotaProbeRequests": 1,
+    "identityLookupCl": 0,
+    "fullTextCl": 0,
+    "retryOtherCl": 0,
+    "totalClRequests": 1,
+    "minuteAtStart": 25,
+    "hourAtStart": 300,
+    "dayAtStart": 209,
+    "estimatedHourRemaining": 300,
+    "estimatedDayRemaining": 209,
+    "hit429": false,
+    "hit502": 0,
+    "budgetCap": 270,
+    "ordinaryExternalIdentity": 0
+  },
+  "start": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "green": true,
+    "TOTAL_CANONICAL_AUTHORITIES": 7307,
+    "METADATA_ONLY_AUTHORITIES": 585,
+    "CORPUS_COMPLETE_AUTHORITIES": 5367,
+    "FULL_TEXT_READY_AUTHORITIES": 5367,
+    "EMBEDDED_AUTHORITIES": 5895,
+    "AUTHORITY_RESOLVED_EDGES": 17289,
+    "CORPUS_COMPLETE_EDGES": 14345,
+    "IDENTITY_UNRESOLVED_EDGES": 56689
+  },
+  "end": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "green": true,
+    "TOTAL_CANONICAL_AUTHORITIES": 7307,
+    "METADATA_ONLY_AUTHORITIES": 585,
+    "CORPUS_COMPLETE_AUTHORITIES": 5367,
+    "FULL_TEXT_READY_AUTHORITIES": 5367,
+    "EMBEDDED_AUTHORITIES": 5895,
+    "AUTHORITY_RESOLVED_EDGES": 17327,
+    "CORPUS_COMPLETE_EDGES": 14383,
+    "IDENTITY_UNRESOLVED_EDGES": 56651
+  },
+  "priorityQueue": {
+    "tierA": 30,
+    "tierB": 66,
+    "tierC": 489,
+    "tierAByOwnCourt": {
+      "CA3": 0,
+      "EDPA": 0,
+      "PA_SUPREME": 0,
+      "PA_SUPERIOR": 0,
+      "PA_COMMONWEALTH": 0,
+      "SCOTUS": 30,
+      "OTHER_FEDERAL": 0
+    },
+    "absentTierA": 14
+  },
+  "localFirst": {
+    "targetsResolved": 16,
+    "oldEdgesResolved": 38,
+    "newEdgesResolved": 0,
+    "clAvoided": 16
+  },
+  "lookup": {
+    "attempted": 0,
+    "high": 0,
+    "ambiguous": 0,
+    "notFound": 0,
+    "skipNonPriority": 0
+  },
+  "acquisition": {
+    "attempted": 0,
+    "completed": 0,
+    "failed": 0,
+    "newAuthoritiesCreated": 0,
+    "metadataOnlyToCorpusComplete": 0,
+    "byCourt": {
+      "CA3": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "EDPA": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "PA_SUPREME": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "PA_SUPERIOR": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "PA_COMMONWEALTH": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "PA_OTHER": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "SCOTUS": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "OTHER_FEDERAL": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "OTHER_STATE": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "OTHER": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      }
+    }
+  },
+  "citations": {
+    "NEW_EDGES_TOTAL": 0,
+    "NEW_EDGES_RESOLVED_IMMEDIATELY": 0,
+    "NEW_EDGES_STILL_UNRESOLVED": 0,
+    "OLD_UNRESOLVED_RESOLVED": 38,
+    "OLD_EDGES_BACKFILLED_LOCALLY": 0,
+    "CORPUS_COMPLETE_EDGES_start": 14345,
+    "CORPUS_COMPLETE_EDGES_end": 14383,
+    "delta": 38
+  },
+  "historical15k": {
+    "OLD_PROGRESS_BEFORE": 2995,
+    "OLD_PROGRESS_THIS_RUN": 38,
+    "OLD_PROGRESS_TOTAL": 3033,
+    "OLD_REMAINING_TO_15000": 11967
+  },
+  "health": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "duplicateActiveMappings": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "rawCitationLoss": 0,
+    "status": "PASS"
+  },
+  "productValue": {
+    "majorDoctrines": [],
+    "ca3Added": 0,
+    "edpaAdded": 0,
+    "paAdded": 0,
+    "note": "Priority courts acquired only when citation-lookup verified court membership; non-priority lookups skipped without opinion fetch"
+  },
+  "nextDecision": "PAUSE_FOR_QUOTA_RECOVERY",
+  "nextRecommendedClBudget": 0,
+  "results": [],
+  "checkpoints": [],
+  "finalClassification": "CA3_EDPA_PA_FULLTEXT_BLOCKED",
+  "generatedAt": "2026-10-10T21:17:02.018Z",
+  "resolverVersion": "citation-resolution-engine/v1"
+}

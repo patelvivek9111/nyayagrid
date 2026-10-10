@@ -1,0 +1,321 @@
+{
+  "generatedAt": "2026-10-10T21:17:01.446Z",
+  "metadataOnly": {
+    "total": 585,
+    "tierA": 30,
+    "tierB": 66,
+    "tierC": 489,
+    "tierAByOwnCourt": {
+      "CA3": 0,
+      "EDPA": 0,
+      "PA_SUPREME": 0,
+      "PA_SUPERIOR": 0,
+      "PA_COMMONWEALTH": 0,
+      "SCOTUS": 30,
+      "OTHER_FEDERAL": 0
+    },
+    "note": "All existing CA3/EDPA/PA authorities already CORPUS_COMPLETE; MO queue is practice-demand SCOTUS/federal stubs",
+    "topPracticeMo": [
+      {
+        "citation": "18 L. Ed. 2d 457",
+        "inbound": 3,
+        "ca3": 2,
+        "edpa": 1,
+        "pa": 1,
+        "score": 59
+      },
+      {
+        "citation": "442 U.S. 228",
+        "inbound": 5,
+        "ca3": 3,
+        "edpa": 0,
+        "pa": 0,
+        "score": 51
+      },
+      {
+        "citation": "487 U.S. 42",
+        "inbound": 4,
+        "ca3": 1,
+        "edpa": 1,
+        "pa": 1,
+        "score": 50
+      },
+      {
+        "citation": "66 S. Ct. 773",
+        "inbound": 3,
+        "ca3": 1,
+        "edpa": 1,
+        "pa": 1,
+        "score": 47
+      },
+      {
+        "citation": "99 S. Ct. 2689",
+        "inbound": 3,
+        "ca3": 1,
+        "edpa": 1,
+        "pa": 1,
+        "score": 47
+      },
+      {
+        "citation": "519 U.S. 33",
+        "inbound": 6,
+        "ca3": 0,
+        "edpa": 1,
+        "pa": 1,
+        "score": 44
+      },
+      {
+        "citation": "512 U.S. 622",
+        "inbound": 6,
+        "ca3": 2,
+        "edpa": 0,
+        "pa": 0,
+        "score": 42
+      },
+      {
+        "citation": "83 S. Ct. 227",
+        "inbound": 5,
+        "ca3": 0,
+        "edpa": 1,
+        "pa": 1,
+        "score": 41
+      },
+      {
+        "citation": "540 U.S. 551",
+        "inbound": 5,
+        "ca3": 2,
+        "edpa": 0,
+        "pa": 0,
+        "score": 39
+      },
+      {
+        "citation": "549 U.S. 422",
+        "inbound": 5,
+        "ca3": 2,
+        "edpa": 0,
+        "pa": 0,
+        "score": 39
+      },
+      {
+        "citation": "571 U.S. 69",
+        "inbound": 5,
+        "ca3": 2,
+        "edpa": 0,
+        "pa": 0,
+        "score": 39
+      },
+      {
+        "citation": "537 U.S. 71",
+        "inbound": 5,
+        "ca3": 2,
+        "edpa": 0,
+        "pa": 0,
+        "score": 39
+      },
+      {
+        "citation": "529 U.S. 803",
+        "inbound": 5,
+        "ca3": 2,
+        "edpa": 0,
+        "pa": 0,
+        "score": 39
+      },
+      {
+        "citation": "444 U.S. 277",
+        "inbound": 5,
+        "ca3": 2,
+        "edpa": 0,
+        "pa": 0,
+        "score": 39
+      },
+      {
+        "citation": "512 U.S. 997",
+        "inbound": 4,
+        "ca3": 0,
+        "edpa": 1,
+        "pa": 1,
+        "score": 38
+      },
+      {
+        "citation": "520 U.S. 43",
+        "inbound": 4,
+        "ca3": 0,
+        "edpa": 1,
+        "pa": 1,
+        "score": 38
+      },
+      {
+        "citation": "547 U.S. 332",
+        "inbound": 4,
+        "ca3": 0,
+        "edpa": 1,
+        "pa": 1,
+        "score": 38
+      },
+      {
+        "citation": "109 S. Ct. 1865",
+        "inbound": 4,
+        "ca3": 0,
+        "edpa": 1,
+        "pa": 1,
+        "score": 38
+      },
+      {
+        "citation": "92 S. Ct. 594",
+        "inbound": 4,
+        "ca3": 0,
+        "edpa": 1,
+        "pa": 1,
+        "score": 38
+      },
+      {
+        "citation": "511 U.S. 375",
+        "inbound": 4,
+        "ca3": 0,
+        "edpa": 1,
+        "pa": 1,
+        "score": 38
+      }
+    ]
+  },
+  "absentPriority": {
+    "total": 14,
+    "top40": [
+      {
+        "citation": "922 F.2d 1097",
+        "edges": 4,
+        "ca3": 4,
+        "edpa": 0,
+        "pa": 0,
+        "score": 147,
+        "family": "F.2d"
+      },
+      {
+        "citation": "267 F.2d 237",
+        "edges": 4,
+        "ca3": 1,
+        "edpa": 1,
+        "pa": 1,
+        "score": 135,
+        "family": "F.2d"
+      },
+      {
+        "citation": "406 F.2d 291",
+        "edges": 5,
+        "ca3": 2,
+        "edpa": 0,
+        "pa": 0,
+        "score": 130,
+        "family": "F.2d"
+      },
+      {
+        "citation": "496 F.2d 646",
+        "edges": 6,
+        "ca3": 1,
+        "edpa": 0,
+        "pa": 0,
+        "score": 128,
+        "family": "F.2d"
+      },
+      {
+        "citation": "221 A.3d 717",
+        "edges": 3,
+        "ca3": 0,
+        "edpa": 0,
+        "pa": 3,
+        "score": 124,
+        "family": "A.3d"
+      },
+      {
+        "citation": "306 A.3d 432",
+        "edges": 3,
+        "ca3": 0,
+        "edpa": 0,
+        "pa": 3,
+        "score": 124,
+        "family": "A.3d"
+      },
+      {
+        "citation": "321 F.2d 494",
+        "edges": 4,
+        "ca3": 2,
+        "edpa": 0,
+        "pa": 0,
+        "score": 117,
+        "family": "F.2d"
+      },
+      {
+        "citation": "443 F.2d 1301",
+        "edges": 5,
+        "ca3": 1,
+        "edpa": 0,
+        "pa": 0,
+        "score": 115,
+        "family": "F.2d"
+      },
+      {
+        "citation": "45 F.3d 444",
+        "edges": 8,
+        "ca3": 0,
+        "edpa": 0,
+        "pa": 0,
+        "score": 104,
+        "family": "F.3d"
+      },
+      {
+        "citation": "472 F.2d 985",
+        "edges": 4,
+        "ca3": 1,
+        "edpa": 0,
+        "pa": 0,
+        "score": 102,
+        "family": "F.2d"
+      },
+      {
+        "citation": "506 A.2d 1100",
+        "edges": 3,
+        "ca3": 1,
+        "edpa": 0,
+        "pa": 0,
+        "score": 94,
+        "family": "A.2d"
+      },
+      {
+        "citation": "404 F.2d 571",
+        "edges": 6,
+        "ca3": 0,
+        "edpa": 0,
+        "pa": 0,
+        "score": 78,
+        "family": "F.2d"
+      },
+      {
+        "citation": "611 F.2d 624",
+        "edges": 6,
+        "ca3": 0,
+        "edpa": 0,
+        "pa": 0,
+        "score": 78,
+        "family": "F.2d"
+      },
+      {
+        "citation": "444 F.2d 791",
+        "edges": 5,
+        "ca3": 0,
+        "edpa": 0,
+        "pa": 0,
+        "score": 65,
+        "family": "F.2d"
+      }
+    ]
+  },
+  "localFirst": {
+    "localTargets": 16,
+    "localEdges": 38,
+    "localOld": 38,
+    "localNew": 0,
+    "clAvoided": 16
+  },
+  "externalIdentityOrdinary": 0,
+  "justifiedIdentity": "citation-lookup only for ABSENT >=4 (or A.* >=3) practice-weighted targets not in failed long-tail MO identity lane"
+}
