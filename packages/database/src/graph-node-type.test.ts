@@ -36,6 +36,13 @@ describe("graph_node_type shared contract", () => {
     }
   });
 
+  it("accepts Pass 6 motion and communication node types", () => {
+    expect(isGraphNodeType("motion")).toBe(true);
+    expect(isGraphNodeType("communication")).toBe(true);
+    expect(GRAPH_NODE_TYPES).toContain("motion");
+    expect(GRAPH_NODE_TYPES).toContain("communication");
+  });
+
   it("preserves every legacy node type", () => {
     for (const nodeType of LEGACY_NODE_TYPES) {
       expect(isGraphNodeType(nodeType)).toBe(true);
