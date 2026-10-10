@@ -16,7 +16,10 @@ export function ClientGuestAppShell({ children }: { children: ReactNode }) {
   const { organizationId, loading: orgLoading } = useActiveOrganization();
   const viewCap = useOrgCapability(organizationId, "matters.view");
 
-  const roleReady = !orgLoading && (!organizationId || !viewCap.loading);
+  // Wait for capability resolution when an org is active so guest chrome never
+  // flashes professional navigation for one frame before roleKey arrives.
+  const roleReady =
+    !orgLoading && (!organizationId || (!viewCap.loading && viewCap.allowed !== null));
   const isGuest = isClientGuestRole(viewCap.roleKey);
 
   useEffect(() => {

@@ -11,17 +11,20 @@ type CapabilityState = {
 export function useOrgCapability(organizationId: string, capability: string): CapabilityState {
   const [allowed, setAllowed] = useState<boolean | null>(null);
   const [roleKey, setRoleKey] = useState<string | null>(null);
-  const [loading, setLoading] = useState(Boolean(organizationId));
+  const [resolvedFor, setResolvedFor] = useState<string | null>(null);
+
+  // Derived: pending whenever orgId is set and we have not finished a fetch for it.
+  // Avoids one-frame false "ready" when organizationId transitions from empty → set.
+  const loading = Boolean(organizationId) && resolvedFor !== organizationId;
 
   useEffect(() => {
     if (!organizationId) {
       setAllowed(null);
       setRoleKey(null);
-      setLoading(false);
+      setResolvedFor(null);
       return;
     }
     let cancelled = false;
-    setLoading(true);
     fetch(
       `/api/v1/organizations/${organizationId}/capabilities?capability=${encodeURIComponent(capability)}`,
     )
@@ -35,12 +38,14 @@ export function useOrgCapability(organizationId: string, capability: string): Ca
           setAllowed(false);
           setRoleKey(typeof data.roleKey === "string" ? data.roleKey : null);
         }
+        setResolvedFor(organizationId);
       })
       .catch(() => {
-        if (!cancelled) setAllowed(false);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) {
+          setAllowed(false);
+          setRoleKey(null);
+          setResolvedFor(organizationId);
+        }
       });
     return () => {
       cancelled = true;
