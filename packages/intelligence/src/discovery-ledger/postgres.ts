@@ -15,7 +15,9 @@ import {
   discoveryResponseProductions,
   discoveryResponses,
   documents,
+  matterCommunications,
   matterEntities,
+  matterMotions,
   matters,
   tasks,
   type Database,
@@ -135,7 +137,6 @@ async function requireTaskInMatter(
   return row;
 }
 
-/** Opaque motion refs require an in-matter motion document when provided. */
 async function requireMotionDocumentInMatter(
   db: Database,
   organizationId: string,
@@ -143,6 +144,50 @@ async function requireMotionDocumentInMatter(
   motionDocumentId: string,
 ) {
   return requireDocumentInMatter(db, organizationId, matterId, motionDocumentId);
+}
+
+async function requireMatterMotionInMatter(
+  db: Database,
+  organizationId: string,
+  matterId: string,
+  motionId: string,
+) {
+  const [row] = await db
+    .select({ id: matterMotions.id })
+    .from(matterMotions)
+    .where(
+      and(
+        eq(matterMotions.id, motionId),
+        eq(matterMotions.matterId, matterId),
+        eq(matterMotions.organizationId, organizationId),
+      ),
+    )
+    .limit(1);
+  if (!row) throw new DiscoveryError("FOREIGN_MOTION", "Motion not in matter.", 403);
+  return row;
+}
+
+async function requireMatterCommunicationInMatter(
+  db: Database,
+  organizationId: string,
+  matterId: string,
+  communicationId: string,
+) {
+  const [row] = await db
+    .select({ id: matterCommunications.id })
+    .from(matterCommunications)
+    .where(
+      and(
+        eq(matterCommunications.id, communicationId),
+        eq(matterCommunications.matterId, matterId),
+        eq(matterCommunications.organizationId, organizationId),
+      ),
+    )
+    .limit(1);
+  if (!row) {
+    throw new DiscoveryError("FOREIGN_COMMUNICATION", "Communication not in matter.", 403);
+  }
+  return row;
 }
 
 export async function createDiscoveryRequestSet(
@@ -825,6 +870,14 @@ export async function createDiscoveryDeficiency(
       .limit(1);
     if (!mac) throw new DiscoveryError("CROSS_MATTER", "Meet-and-confer not in matter.", 403);
   }
+  if (params.communicationId) {
+    await requireMatterCommunicationInMatter(
+      db,
+      params.organizationId,
+      params.matterId,
+      params.communicationId,
+    );
+  }
   if (params.motionDocumentId) {
     await requireMotionDocumentInMatter(
       db,
@@ -833,11 +886,12 @@ export async function createDiscoveryDeficiency(
       params.motionDocumentId,
     );
   }
-  if (params.motionId && !params.motionDocumentId) {
-    throw new DiscoveryError(
-      "FOREIGN_MOTION",
-      "Opaque motion_id requires motionDocumentId in the same matter for isolation checks.",
-      403,
+  if (params.motionId) {
+    await requireMatterMotionInMatter(
+      db,
+      params.organizationId,
+      params.matterId,
+      params.motionId,
     );
   }
 
@@ -977,6 +1031,14 @@ export async function createDiscoveryMeetAndConferIssue(
   await requireMatterRow(db, params.organizationId, params.matterId);
   if (params.taskId) {
     await requireTaskInMatter(db, params.organizationId, params.matterId, params.taskId);
+  }
+  if (params.communicationId) {
+    await requireMatterCommunicationInMatter(
+      db,
+      params.organizationId,
+      params.matterId,
+      params.communicationId,
+    );
   }
 
   const [created] = await db

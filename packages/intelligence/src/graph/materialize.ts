@@ -504,6 +504,9 @@ export async function materializeVerifiedGraph(params: {
     let discoveryNodesUpserted = 0;
     let discoveryEdgesCreated = 0;
     let discoveryEdgesMerged = 0;
+    let motionsCommsNodesUpserted = 0;
+    let motionsCommsEdgesCreated = 0;
+    let motionsCommsEdgesMerged = 0;
     if (params.userId) {
       const { materializeDiscoveryGraph } = await import("../discovery-ledger/graph-materialize");
       const discoveryGraph = await materializeDiscoveryGraph({
@@ -517,6 +520,21 @@ export async function materializeVerifiedGraph(params: {
       discoveryNodesUpserted = discoveryGraph.nodesUpserted;
       discoveryEdgesCreated = discoveryGraph.edgesCreated;
       discoveryEdgesMerged = discoveryGraph.edgesMerged;
+
+      const { materializeMotionsCommunicationsGraph } = await import(
+        "../motions-communications/graph-materialize"
+      );
+      const motionsCommsGraph = await materializeMotionsCommunicationsGraph({
+        db: params.db,
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        userId: params.userId,
+      });
+      nodesCreated += motionsCommsGraph.nodesUpserted;
+      edgesCreated += motionsCommsGraph.edgesCreated;
+      motionsCommsNodesUpserted = motionsCommsGraph.nodesUpserted;
+      motionsCommsEdgesCreated = motionsCommsGraph.edgesCreated;
+      motionsCommsEdgesMerged = motionsCommsGraph.edgesMerged;
     }
 
     const stats = {
@@ -528,6 +546,9 @@ export async function materializeVerifiedGraph(params: {
       discoveryNodesUpserted,
       discoveryEdgesCreated,
       discoveryEdgesMerged,
+      motionsCommsNodesUpserted,
+      motionsCommsEdgesCreated,
+      motionsCommsEdgesMerged,
     };
     const [completed] = await params.db
       .update(graphMaterializationRuns)

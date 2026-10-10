@@ -15,6 +15,7 @@ import {
   memberships,
   users,
   civilEvidenceItems,
+  matterCommunications,
   tasks,
 } from "@nyayagrid/database";
 import { AuthorizationError } from "@nyayagrid/permissions";
@@ -430,6 +431,18 @@ describe.runIf(runDbTests)("discovery production ledger integration", () => {
       openedAt: new Date("2026-03-05T00:00:00Z"),
       responsiblePartyEntityId: ids.defendant!,
       provenance,
+    });
+    await db.insert(matterCommunications).values({
+      id: "00000000-0000-4000-8000-0000000000aa",
+      organizationId: ids.orgA!,
+      matterId: ids.matterA!,
+      communicationType: "MEET_AND_CONFER",
+      direction: "OUTBOUND",
+      status: "SENT",
+      subject: "March meet and confer letter",
+      provenance,
+      createdByUserId: ids.owner!,
+      updatedByUserId: ids.owner!,
     });
     await createDiscoveryMeetAndConferIssue(db, {
       userId: ids.owner!,

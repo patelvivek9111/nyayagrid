@@ -18,7 +18,9 @@ import {
   discoveryRequestSets,
   discoveryResponseProductions,
   discoveryResponses,
+  matterCommunications,
   matterEntities,
+  matterMotions,
   type Database,
   type RecordProvenance,
 } from "@nyayagrid/database";
@@ -602,6 +604,76 @@ export async function persistDiscoveryLedgerReview(
       basis: objection.basis,
       text: objection.text,
       provenance: toDbProvenance(objection.provenance),
+    });
+  }
+
+  // Ensure first-class motion/communication rows exist before FK-linked discovery writes.
+  const motionIds = new Set<string>();
+  const communicationIds = new Set<string>();
+  for (const link of params.review.motionLinks) {
+    if (link.motionId) motionIds.add(link.motionId);
+  }
+  for (const deficiency of params.review.deficiencies) {
+    if (deficiency.motionId) motionIds.add(deficiency.motionId);
+    if (deficiency.communicationId) communicationIds.add(deficiency.communicationId);
+  }
+  for (const mac of params.review.meetAndConferIssues) {
+    if (mac.communicationId) communicationIds.add(mac.communicationId);
+  }
+
+  for (const motionId of motionIds) {
+    const [existing] = await db
+      .select({ id: matterMotions.id })
+      .from(matterMotions)
+      .where(
+        and(
+          eq(matterMotions.id, motionId),
+          eq(matterMotions.matterId, params.matterId),
+          eq(matterMotions.organizationId, params.organizationId),
+        ),
+      )
+      .limit(1);
+    if (existing) continue;
+    const link = params.review.motionLinks.find((m) => m.motionId === motionId);
+    await db.insert(matterMotions).values({
+      id: motionId,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      motionType: link?.motionType === "PROTECTIVE_ORDER" ? "PROTECTIVE_ORDER" : "MOTION_TO_COMPEL",
+      title: link?.motionLabel ?? "Discovery-linked motion",
+      status: "FILED",
+      primaryDocumentId: link?.documentId ?? null,
+      provenance: { humanEntered: true, extractionOrigin: "import" },
+      createdByUserId: params.userId,
+      updatedByUserId: params.userId,
+    });
+  }
+
+  for (const communicationId of communicationIds) {
+    const [existing] = await db
+      .select({ id: matterCommunications.id })
+      .from(matterCommunications)
+      .where(
+        and(
+          eq(matterCommunications.id, communicationId),
+          eq(matterCommunications.matterId, params.matterId),
+          eq(matterCommunications.organizationId, params.organizationId),
+        ),
+      )
+      .limit(1);
+    if (existing) continue;
+    await db.insert(matterCommunications).values({
+      id: communicationId,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      communicationType: "MEET_AND_CONFER",
+      direction: "OUTBOUND",
+      status: "SENT",
+      subject: "Discovery meet-and-confer communication",
+      summary: null,
+      provenance: { humanEntered: true, extractionOrigin: "import" },
+      createdByUserId: params.userId,
+      updatedByUserId: params.userId,
     });
   }
 
