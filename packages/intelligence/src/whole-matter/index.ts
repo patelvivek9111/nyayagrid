@@ -17,7 +17,7 @@ export type {
 } from "./types";
 
 export { assembleWholeMatterIntelligence, type WholeMatterAssemblyInput } from "./assemble";
-export { loadWholeMatterIntelligence } from "./load";
+export { loadWholeMatterIntelligence, resolveAuthorityResolutionBucket } from "./load";
 export {
   isWholeMatterAskQuestion,
   answerWholeMatterQuestion,

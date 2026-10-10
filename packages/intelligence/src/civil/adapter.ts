@@ -3,7 +3,7 @@
  * Does not invent liability conclusions.
  */
 
-import { and, eq } from "drizzle-orm";
+import { and, eq, inArray } from "drizzle-orm";
 import {
   civilAuthorityRelations,
   civilClaimElements,
@@ -210,7 +210,6 @@ export async function loadCivilClaimsReview(
     authorityRels,
     standardRels,
     issueRows,
-    authorityRows,
     standardRows,
   ] = await Promise.all([
     db
@@ -285,12 +284,18 @@ export async function loadCivilClaimsReview(
           eq(legalIssues.matterId, params.matterId),
         ),
       ),
-    db.select().from(legalAuthorities),
     db
       .select()
       .from(legalStandards)
       .where(eq(legalStandards.organizationId, params.organizationId)),
   ]);
+
+  // Bound authority lookup to IDs linked on this matter — never scan the global table.
+  const linkedAuthorityIds = [...new Set(authorityRels.map((r) => r.authorityId))];
+  const authorityRows =
+    linkedAuthorityIds.length === 0
+      ? []
+      : await db.select().from(legalAuthorities).where(inArray(legalAuthorities.id, linkedAuthorityIds));
 
   const authorityById = new Map(authorityRows.map((a) => [a.id, a]));
   const standardById = new Map(standardRows.map((s) => [s.id, s]));

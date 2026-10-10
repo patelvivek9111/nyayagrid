@@ -6,6 +6,7 @@ import {
   formatWholeMatterAnswer,
   isWholeMatterAskQuestion,
   planWholeMatterGraph,
+  resolveAuthorityResolutionBucket,
   runPass7WholeMatterFixture,
 } from "./index";
 import type { WholeMatterIntelligence } from "./types";
@@ -101,6 +102,40 @@ describe("Pass 7 whole-matter intelligence", () => {
     expect(wm.matterId).toBeTruthy();
     expect(wm.motions.every((m) => m.motionId)).toBe(true);
     expect(wm.communications.every((c) => c.id)).toBe(true);
+  });
+
+  it("never maps failed/processing authority ingestion to AUTHORITY_RESOLVED", () => {
+    expect(resolveAuthorityResolutionBucket({ ingestionStatus: "failed" })).toBe("IDENTITY_UNRESOLVED");
+    expect(resolveAuthorityResolutionBucket({ ingestionStatus: "processing" })).toBe(
+      "IDENTITY_UNRESOLVED",
+    );
+    expect(resolveAuthorityResolutionBucket({ ingestionStatus: "pending" })).toBe("IDENTITY_UNRESOLVED");
+    expect(resolveAuthorityResolutionBucket({ ingestionStatus: null })).toBe("IDENTITY_UNRESOLVED");
+    expect(resolveAuthorityResolutionBucket({ ingestionStatus: "ready" })).toBe("AUTHORITY_RESOLVED");
+    expect(
+      resolveAuthorityResolutionBucket({
+        ingestionStatus: "pending",
+        metadata: { corpusComplete: true },
+      }),
+    ).toBe("CORPUS_COMPLETE");
+  });
+
+  it("bounds openGaps per claim and surfaces treatment UNKNOWN honestly in Ask", () => {
+    const inflated: WholeMatterIntelligence = {
+      ...wm,
+      claims: wm.claims.map((c) => ({
+        ...c,
+        openGaps: Array.from({ length: 40 }, (_, i) => `Gap ${i} for ${c.claimId}`),
+      })),
+    };
+    const answer = answerWholeMatterQuestion({
+      intelligence: inflated,
+      question: "Give me the complete status of this matter.",
+    });
+    expect(answer.claims.every((c) => c.openGaps.length <= 5)).toBe(true);
+    expect(answer.authorities.every((a) => typeof a.treatmentVerified === "boolean")).toBe(true);
+    expect(formatWholeMatterAnswer(answer)).toMatch(/treatment=(VERIFIED|UNKNOWN)/);
+    expect(formatWholeMatterAnswer(answer)).toContain("treatment=UNKNOWN");
   });
 
   it("plans Graph edges from the same read-model truth without duplicate keys", () => {

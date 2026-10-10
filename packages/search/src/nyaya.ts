@@ -1049,8 +1049,17 @@ export async function askNyayaAboutMatter(params: {
       });
     }
 
+    // When whole-matter Ask applies, skip overlapping domain loaders — whole-matter
+    // already assembles bounded civil/discovery/motions/comms summaries.
+    const wantsWholeMatterAsk =
+      isWholeMatterAskQuestion(params.question) && params.workspaceType !== "prosecution";
+
     let civilContextText: string | null = null;
-    if (isCivilClaimsAskQuestion(params.question) && params.workspaceType !== "prosecution") {
+    if (
+      !wantsWholeMatterAsk &&
+      isCivilClaimsAskQuestion(params.question) &&
+      params.workspaceType !== "prosecution"
+    ) {
       try {
         const civilReview = await loadCivilClaimsReview(params.db, {
           userId: params.userId,
@@ -1068,7 +1077,11 @@ export async function askNyayaAboutMatter(params: {
     }
 
     let discoveryContextText: string | null = null;
-    if (isDiscoveryAskQuestion(params.question) && params.workspaceType !== "prosecution") {
+    if (
+      !wantsWholeMatterAsk &&
+      isDiscoveryAskQuestion(params.question) &&
+      params.workspaceType !== "prosecution"
+    ) {
       try {
         const discoveryReview = await loadDiscoveryLedgerReview(params.db, {
           userId: params.userId,
@@ -1086,6 +1099,7 @@ export async function askNyayaAboutMatter(params: {
 
     let motionsCommsContextText: string | null = null;
     if (
+      !wantsWholeMatterAsk &&
       isMotionsCommunicationsAskQuestion(params.question) &&
       params.workspaceType !== "prosecution"
     ) {
@@ -1105,7 +1119,7 @@ export async function askNyayaAboutMatter(params: {
     }
 
     let wholeMatterContextText: string | null = null;
-    if (isWholeMatterAskQuestion(params.question) && params.workspaceType !== "prosecution") {
+    if (wantsWholeMatterAsk) {
       try {
         const wholeMatter = await loadWholeMatterIntelligence(params.db, {
           userId: params.userId,

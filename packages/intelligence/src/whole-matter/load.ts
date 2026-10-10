@@ -8,7 +8,8 @@ import { loadVerifiedMatterIntelligence } from "../verified";
 import { assembleWholeMatterIntelligence } from "./assemble";
 import type { AuthorityContextItem, WholeMatterIntelligence } from "./types";
 
-function authorityBucket(row: {
+/** Map ingestion/corpus signals to honesty buckets — never treat failed/processing as resolved. */
+export function resolveAuthorityResolutionBucket(row: {
   ingestionStatus?: string | null;
   metadata?: Record<string, unknown> | null;
 }): AuthorityContextItem["resolution"] {
@@ -22,10 +23,8 @@ function authorityBucket(row: {
   ) {
     return "AUTHORITY_RESOLVED";
   }
-  if (row.ingestionStatus === "pending" || row.ingestionStatus == null) {
-    return "IDENTITY_UNRESOLVED";
-  }
-  return "AUTHORITY_RESOLVED";
+  // pending | processing | failed | null | unknown — identity not verified
+  return "IDENTITY_UNRESOLVED";
 }
 
 async function loadMatterAuthorityContext(
@@ -54,7 +53,7 @@ async function loadMatterAuthorityContext(
   return rows.map((row) => {
     const meta = (row.metadata ?? {}) as Record<string, unknown>;
     const treatmentVerified = meta.treatmentVerified === true;
-    const resolution = authorityBucket({
+    const resolution = resolveAuthorityResolutionBucket({
       ingestionStatus: row.ingestionStatus,
       metadata: meta,
     });
@@ -62,8 +61,8 @@ async function loadMatterAuthorityContext(
       id: row.authorityId,
       citation: row.citation,
       title: row.title,
-      // Keep identity/corpus buckets distinct from treatment verification.
-      resolution: treatmentVerified && resolution === "CORPUS_COMPLETE" ? "CORPUS_COMPLETE" : resolution,
+      // Identity/corpus buckets stay independent of treatment verification.
+      resolution,
       treatmentVerified,
       relatedClaimIds: [],
       relatedIssueIds: [],

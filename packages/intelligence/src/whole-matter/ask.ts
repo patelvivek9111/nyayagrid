@@ -11,6 +11,7 @@ const ASK_LIMITS = {
   investigateNext: 12,
   discoveryGaps: 24,
   deadlinesTasks: 24,
+  openGapsPerClaim: 5,
 } as const;
 
 export function isWholeMatterAskQuestion(question: string): boolean {
@@ -30,7 +31,12 @@ export type WholeMatterAskAnswer = {
   communications: Array<{ id: string; subject: string; occurredAt: string | null }>;
   contradictions: Array<{ id: string; kind: string; description: string }>;
   deadlinesTasks: string[];
-  authorities: Array<{ id: string; citation: string | null; resolution: string }>;
+  authorities: Array<{
+    id: string;
+    citation: string | null;
+    resolution: string;
+    treatmentVerified: boolean;
+  }>;
   investigateNext: Array<{ id: string; title: string; why: string; resolvesIf: string }>;
   limitations: string[];
   liabilityConclusion: null;
@@ -147,7 +153,7 @@ export function answerWholeMatterQuestion(params: {
       id: c.claimId,
       label: c.label,
       supportStatus: c.supportStatus,
-      openGaps: c.openGaps,
+      openGaps: c.openGaps.slice(0, ASK_LIMITS.openGapsPerClaim),
     })),
     defenses: defenses.slice(0, ASK_LIMITS.defenses).map((d) => ({
       id: d.defenseId,
@@ -176,6 +182,7 @@ export function answerWholeMatterQuestion(params: {
       id: a.id,
       citation: a.citation,
       resolution: a.resolution,
+      treatmentVerified: a.treatmentVerified === true,
     })),
     investigateNext: rankedInvestigate.slice(0, ASK_LIMITS.investigateNext).map((i) => ({
       id: i.id,
@@ -228,7 +235,10 @@ export function formatWholeMatterAnswer(answer: WholeMatterAskAnswer): string {
     ...(answer.deadlinesTasks.length ? answer.deadlinesTasks.map((d) => `- ${d}`) : ["- (none)"]),
     "AUTHORITIES:",
     ...(answer.authorities.length
-      ? answer.authorities.map((a) => `- ${a.id} ${a.citation ?? "n/a"} resolution=${a.resolution}`)
+      ? answer.authorities.map(
+          (a) =>
+            `- ${a.id} ${a.citation ?? "n/a"} resolution=${a.resolution} treatment=${a.treatmentVerified ? "VERIFIED" : "UNKNOWN"}`,
+        )
       : ["- (none)"]),
     "INVESTIGATE_NEXT:",
     ...(answer.investigateNext.length
