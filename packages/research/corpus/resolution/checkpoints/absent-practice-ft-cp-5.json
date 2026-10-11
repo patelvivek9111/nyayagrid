@@ -1,0 +1,21 @@
+{
+  "lane": "absent_priority_fulltext",
+  "atAcquired": 5,
+  "totalCl": 42,
+  "jurisCompleted": {
+    "CA3": 0,
+    "EDPA": 0,
+    "PA_SUPREME": 0,
+    "PA_SUPERIOR": 0,
+    "PA_COMMONWEALTH": 0,
+    "PA_OTHER": 0,
+    "SCOTUS": 0,
+    "OTHER_FEDERAL": 5,
+    "OTHER_STATE": 0,
+    "OTHER": 0
+  },
+  "health": {
+    "green": true,
+    "CORPUS_COMPLETE": 5372
+  }
+}

@@ -1,0 +1,435 @@
+{
+  "ok": true,
+  "classification": "ABSENT_PRACTICE_AUTHORITY_RUN",
+  "runStartLocal": "10/10/2026, 9:24:04 PM",
+  "stopReason": "BATCH_COMPLETE",
+  "courtListener": {
+    "quotaProbeRequests": 1,
+    "identityLookupCl": 35,
+    "fullTextCl": 27,
+    "retryOtherCl": 0,
+    "totalClRequests": 63,
+    "minuteAtStart": 25,
+    "hourAtStart": 300,
+    "dayAtStart": 463,
+    "estimatedHourRemaining": 238,
+    "estimatedDayRemaining": 401,
+    "hit429": false,
+    "hit502": 0,
+    "budgetCap": 270,
+    "ordinaryExternalIdentity": 0
+  },
+  "start": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "green": true,
+    "TOTAL_CANONICAL_AUTHORITIES": 7307,
+    "METADATA_ONLY_AUTHORITIES": 585,
+    "CORPUS_COMPLETE_AUTHORITIES": 5367,
+    "FULL_TEXT_READY_AUTHORITIES": 5367,
+    "EMBEDDED_AUTHORITIES": 5895,
+    "AUTHORITY_RESOLVED_EDGES": 17327,
+    "CORPUS_COMPLETE_EDGES": 14383,
+    "IDENTITY_UNRESOLVED_EDGES": 56651
+  },
+  "end": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "green": true,
+    "TOTAL_CANONICAL_AUTHORITIES": 7316,
+    "METADATA_ONLY_AUTHORITIES": 585,
+    "CORPUS_COMPLETE_AUTHORITIES": 5376,
+    "FULL_TEXT_READY_AUTHORITIES": 5376,
+    "EMBEDDED_AUTHORITIES": 5904,
+    "AUTHORITY_RESOLVED_EDGES": 17393,
+    "CORPUS_COMPLETE_EDGES": 14443,
+    "IDENTITY_UNRESOLVED_EDGES": 56840
+  },
+  "priorityQueue": {
+    "initialAbsentTargets": 14,
+    "tierA": 35,
+    "tierB": 0,
+    "localResolvable": 0,
+    "externalIdentityRequired": 35,
+    "topTargets": [
+      {
+        "citation": "922 F.2d 1097",
+        "reporter": "F.2d",
+        "demand": 4,
+        "citers": 4,
+        "reason": "CA3/Third Circuit practice demand"
+      },
+      {
+        "citation": "318 F.3d 473",
+        "reporter": "F.3d",
+        "demand": 3,
+        "citers": 3,
+        "reason": "Pennsylvania practice demand"
+      },
+      {
+        "citation": "267 F.2d 237",
+        "reporter": "F.2d",
+        "demand": 4,
+        "citers": 4,
+        "reason": "Pennsylvania practice demand"
+      },
+      {
+        "citation": "406 F.2d 291",
+        "reporter": "F.2d",
+        "demand": 5,
+        "citers": 5,
+        "reason": "CA3/Third Circuit practice demand"
+      },
+      {
+        "citation": "496 F.2d 646",
+        "reporter": "F.2d",
+        "demand": 6,
+        "citers": 6,
+        "reason": "CA3/Third Circuit practice demand"
+      },
+      {
+        "citation": "221 A.3d 717",
+        "reporter": "A.3d",
+        "demand": 3,
+        "citers": 3,
+        "reason": "PA appellate (Atlantic reporter)"
+      },
+      {
+        "citation": "306 A.3d 432",
+        "reporter": "A.3d",
+        "demand": 3,
+        "citers": 3,
+        "reason": "PA appellate (Atlantic reporter)"
+      },
+      {
+        "citation": "768 F.2d 503",
+        "reporter": "F.2d",
+        "demand": 3,
+        "citers": 3,
+        "reason": "Pennsylvania practice demand"
+      },
+      {
+        "citation": "132 F.3d 902",
+        "reporter": "F.3d",
+        "demand": 3,
+        "citers": 3,
+        "reason": "CA3/Third Circuit practice demand"
+      },
+      {
+        "citation": "174 F.3d 368",
+        "reporter": "F.3d",
+        "demand": 3,
+        "citers": 3,
+        "reason": "CA3/Third Circuit practice demand"
+      },
+      {
+        "citation": "51 F.3d 1137",
+        "reporter": "F.3d",
+        "demand": 3,
+        "citers": 3,
+        "reason": "CA3/Third Circuit practice demand"
+      },
+      {
+        "citation": "967 F.3d 327",
+        "reporter": "F.3d",
+        "demand": 3,
+        "citers": 3,
+        "reason": "CA3/Third Circuit practice demand"
+      },
+      {
+        "citation": "972 F.2d 1364",
+        "reporter": "F.2d",
+        "demand": 3,
+        "citers": 3,
+        "reason": "CA3/Third Circuit practice demand"
+      },
+      {
+        "citation": "321 F.2d 494",
+        "reporter": "F.2d",
+        "demand": 4,
+        "citers": 4,
+        "reason": "CA3/Third Circuit practice demand"
+      }
+    ]
+  },
+  "localFirst": {
+    "targetsResolved": 0,
+    "oldEdgesResolved": 0,
+    "newEdgesResolved": 0,
+    "clAvoided": 0
+  },
+  "lookup": {
+    "attempted": 35,
+    "high": 9,
+    "ambiguous": 23,
+    "notFound": 3,
+    "skipNonPriority": 0
+  },
+  "acquisition": {
+    "attempted": 9,
+    "completed": 9,
+    "failed": 0,
+    "newAuthoritiesCreated": 9,
+    "metadataOnlyToCorpusComplete": 0,
+    "byCourt": {
+      "CA3": {
+        "attempted": 1,
+        "completed": 1,
+        "failed": 0
+      },
+      "EDPA": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "PA_SUPREME": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "PA_SUPERIOR": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "PA_COMMONWEALTH": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "PA_OTHER": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "SCOTUS": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "OTHER_FEDERAL": {
+        "attempted": 8,
+        "completed": 8,
+        "failed": 0
+      },
+      "OTHER_STATE": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      },
+      "OTHER": {
+        "attempted": 0,
+        "completed": 0,
+        "failed": 0
+      }
+    }
+  },
+  "citations": {
+    "NEW_EDGES_TOTAL": 255,
+    "NEW_EDGES_RESOLVED_IMMEDIATELY": 37,
+    "NEW_EDGES_STILL_UNRESOLVED": 218,
+    "OLD_UNRESOLVED_RESOLVED": 29,
+    "OLD_EDGES_BACKFILLED_LOCALLY": 29,
+    "CORPUS_COMPLETE_EDGES_start": 14383,
+    "CORPUS_COMPLETE_EDGES_end": 14443,
+    "delta": 60
+  },
+  "historical15k": {
+    "OLD_PROGRESS_BEFORE": 3033,
+    "OLD_PROGRESS_THIS_RUN": 29,
+    "OLD_PROGRESS_TOTAL": 3062,
+    "OLD_REMAINING_TO_15000": 11938
+  },
+  "health": {
+    "duplicates": 0,
+    "orphans": 0,
+    "missingEmbeddings": 0,
+    "failed": 0,
+    "notProcessed": 0,
+    "duplicateActiveMappings": 0,
+    "presentTargetDefectsDeterministic": 0,
+    "rawCitationLoss": 0,
+    "status": "PASS"
+  },
+  "productValue": {
+    "majorDoctrines": [
+      "186 F.2d 473 (ROLAX Et Al. v. ATLANTIC COAST LINE R. CO. Et Al.) [OTHER_FEDERAL]",
+      "183 F.2d 121 (Brandhove v. Tenney) [OTHER_FEDERAL]",
+      "352 F.2d 213 (Robert L. Pierson v. J. L. Ray) [OTHER_FEDERAL]",
+      "422 F.2d 141 (John Caceres D/B/A Caceres Agency v. International Air Transport Association) [OTHER_FEDERAL]",
+      "456 F.2d 835 (Katie Ruth Anderson v. J. J. Nosser, James Bradley v. J. J. Nosser) [OTHER_FEDERAL]",
+      "467 F.2d 836 (Robert J. COOPER, Plaintiff-Appellant, v. Ivan ALLEN, Jr., Mayor of the City of Atlanta, Georgia, Et Al., Defendants-Appellees) [OTHER_FEDERAL]",
+      "472 F.2d 318 (Carolyn Bradley and Michael Bradley, Infants, by Minerva Bradley, Their Mother and Next Friend v. The School Board of the City of Richmond, Virginia) [OTHER_FEDERAL]",
+      "532 F.2d 950 (Mrs. Carmella M. Borelli v. City of Reading) [CA3]",
+      "444 F.2d 791 (Dorothy P. Robinson v. Lorillard Corporation (Two Cases)) [OTHER_FEDERAL]"
+    ],
+    "ca3Added": 1,
+    "edpaAdded": 0,
+    "paAdded": 0,
+    "note": "Priority courts acquired only when citation-lookup verified court membership; non-priority lookups skipped without opinion fetch"
+  },
+  "nextDecision": "CONTINUE_ABSENT_PRACTICE_ACQUISITION",
+  "nextRecommendedClBudget": 200,
+  "results": [
+    {
+      "citation": "186 F.2d 473",
+      "caseName": "ROLAX Et Al. v. ATLANTIC COAST LINE R. CO. Et Al.",
+      "authorityId": "ed6dc2bf-0fa0-4c44-abf9-f39e0fe1b606",
+      "clusterId": "226366",
+      "courtBucket": "OTHER_FEDERAL",
+      "status": "acquired_corpus_complete",
+      "createdNew": true,
+      "embeddedChunks": 28,
+      "NEW_EDGES_TOTAL": 24,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 3,
+      "NEW_EDGES_STILL_UNRESOLVED": 21,
+      "OLD_EDGES_BACKFILLED": 3
+    },
+    {
+      "citation": "183 F.2d 121",
+      "caseName": "Brandhove v. Tenney",
+      "authorityId": "5cb14bc9-8ba5-4d8b-ab7a-70de72661f5d",
+      "clusterId": "225380",
+      "courtBucket": "OTHER_FEDERAL",
+      "status": "acquired_corpus_complete",
+      "createdNew": true,
+      "embeddedChunks": 15,
+      "NEW_EDGES_TOTAL": 17,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 5,
+      "NEW_EDGES_STILL_UNRESOLVED": 12,
+      "OLD_EDGES_BACKFILLED": 3
+    },
+    {
+      "citation": "352 F.2d 213",
+      "caseName": "Robert L. Pierson v. J. L. Ray",
+      "authorityId": "c8a80fe0-babf-4f77-9687-3a1737d354a0",
+      "clusterId": "269500",
+      "courtBucket": "OTHER_FEDERAL",
+      "status": "acquired_corpus_complete",
+      "createdNew": true,
+      "embeddedChunks": 24,
+      "NEW_EDGES_TOTAL": 54,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 5,
+      "NEW_EDGES_STILL_UNRESOLVED": 49,
+      "OLD_EDGES_BACKFILLED": 3
+    },
+    {
+      "citation": "422 F.2d 141",
+      "caseName": "John Caceres D/B/A Caceres Agency v. International Air Transport Association",
+      "authorityId": "1c6a22ea-7738-4961-96bb-a3c35be04a3e",
+      "clusterId": "288606",
+      "courtBucket": "OTHER_FEDERAL",
+      "status": "acquired_corpus_complete",
+      "createdNew": true,
+      "embeddedChunks": 13,
+      "NEW_EDGES_TOTAL": 37,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 4,
+      "NEW_EDGES_STILL_UNRESOLVED": 33,
+      "OLD_EDGES_BACKFILLED": 3
+    },
+    {
+      "citation": "456 F.2d 835",
+      "caseName": "Katie Ruth Anderson v. J. J. Nosser, James Bradley v. J. J. Nosser",
+      "authorityId": "3facb8dd-6d43-4406-a3f4-ce59217181ec",
+      "clusterId": "302032",
+      "courtBucket": "OTHER_FEDERAL",
+      "status": "acquired_corpus_complete",
+      "createdNew": true,
+      "embeddedChunks": 25,
+      "NEW_EDGES_TOTAL": 21,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 4,
+      "NEW_EDGES_STILL_UNRESOLVED": 17,
+      "OLD_EDGES_BACKFILLED": 3
+    },
+    {
+      "citation": "467 F.2d 836",
+      "caseName": "Robert J. COOPER, Plaintiff-Appellant, v. Ivan ALLEN, Jr., Mayor of the City of Atlanta, Georgia, Et Al., Defendants-Appellees",
+      "authorityId": "ab04e24a-10d2-419e-9cd5-772c0ea43231",
+      "clusterId": "305877",
+      "courtBucket": "OTHER_FEDERAL",
+      "status": "acquired_corpus_complete",
+      "createdNew": true,
+      "embeddedChunks": 17,
+      "NEW_EDGES_TOTAL": 20,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 4,
+      "NEW_EDGES_STILL_UNRESOLVED": 16,
+      "OLD_EDGES_BACKFILLED": 3
+    },
+    {
+      "citation": "472 F.2d 318",
+      "caseName": "Carolyn Bradley and Michael Bradley, Infants, by Minerva Bradley, Their Mother and Next Friend v. The School Board of the City of Richmond, Virginia",
+      "authorityId": "01764bae-bf14-487f-a67a-dd47d8506f11",
+      "clusterId": "307851",
+      "courtBucket": "OTHER_FEDERAL",
+      "status": "acquired_corpus_complete",
+      "createdNew": true,
+      "embeddedChunks": 41,
+      "NEW_EDGES_TOTAL": 29,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 6,
+      "NEW_EDGES_STILL_UNRESOLVED": 23,
+      "OLD_EDGES_BACKFILLED": 3
+    },
+    {
+      "citation": "532 F.2d 950",
+      "caseName": "Mrs. Carmella M. Borelli v. City of Reading",
+      "authorityId": "eda484cd-cb45-4b6d-bc02-7d458cef9b83",
+      "clusterId": "334477",
+      "courtBucket": "CA3",
+      "status": "acquired_corpus_complete",
+      "createdNew": true,
+      "embeddedChunks": 6,
+      "NEW_EDGES_TOTAL": 8,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 1,
+      "NEW_EDGES_STILL_UNRESOLVED": 7,
+      "OLD_EDGES_BACKFILLED": 3
+    },
+    {
+      "citation": "444 F.2d 791",
+      "caseName": "Dorothy P. Robinson v. Lorillard Corporation (Two Cases)",
+      "authorityId": "b97fe693-03de-4a96-bb63-93cec5266c2d",
+      "clusterId": "297540",
+      "courtBucket": "OTHER_FEDERAL",
+      "status": "acquired_corpus_complete",
+      "createdNew": true,
+      "embeddedChunks": 40,
+      "NEW_EDGES_TOTAL": 45,
+      "NEW_EDGES_RESOLVED_IMMEDIATELY": 5,
+      "NEW_EDGES_STILL_UNRESOLVED": 40,
+      "OLD_EDGES_BACKFILLED": 5
+    }
+  ],
+  "checkpoints": [
+    {
+      "lane": "absent_priority_fulltext",
+      "atAcquired": 5,
+      "totalCl": 42,
+      "jurisCompleted": {
+        "CA3": 0,
+        "EDPA": 0,
+        "PA_SUPREME": 0,
+        "PA_SUPERIOR": 0,
+        "PA_COMMONWEALTH": 0,
+        "PA_OTHER": 0,
+        "SCOTUS": 0,
+        "OTHER_FEDERAL": 5,
+        "OTHER_STATE": 0,
+        "OTHER": 0
+      },
+      "health": {
+        "green": true,
+        "CORPUS_COMPLETE": 5372
+      }
+    }
+  ],
+  "finalClassification": "ABSENT_PRACTICE_AUTHORITY_MODERATE",
+  "generatedAt": "2026-10-11T01:28:19.701Z",
+  "resolverVersion": "citation-resolution-engine/v1"
+}
