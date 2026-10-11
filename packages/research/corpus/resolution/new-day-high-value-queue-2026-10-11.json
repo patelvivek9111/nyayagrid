@@ -1,0 +1,783 @@
+{
+  "generatedAt": "2026-10-11T21:15:09.509Z",
+  "candidatesBeforeFilter": 1454,
+  "qualified": 58,
+  "averagePracticeConcentration": 0.9956896551724136,
+  "topTargets": [
+    {
+      "rawCitation": "665 F. Supp. 2d 1210",
+      "normalizedCitation": "665 F. Supp. 2d 1210",
+      "reporter": "F.Supp.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 0,
+      "edpa": 2,
+      "pa": 2,
+      "other": 0,
+      "concentration": 2,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_EDPA",
+        "predominantly_PA",
+        "repeated_CA3_EDPA_PA_demand",
+        "EDPA_FSupp_pattern"
+      ],
+      "reason": "predominantly_EDPA+predominantly_PA+repeated_CA3_EDPA_PA_demand+EDPA_FSupp_pattern",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "318 F.3d 473",
+      "normalizedCitation": "318 F.3d 473",
+      "reporter": "F.3d",
+      "demand": 3,
+      "uniqueCiters": 3,
+      "ca3": 2,
+      "edpa": 1,
+      "pa": 1,
+      "other": 0,
+      "concentration": 1.333,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "repeated_CA3_EDPA_PA_demand",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+repeated_CA3_EDPA_PA_demand+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "322 F.3d 293",
+      "normalizedCitation": "322 F.3d 293",
+      "reporter": "F.3d",
+      "demand": 3,
+      "uniqueCiters": 3,
+      "ca3": 2,
+      "edpa": 1,
+      "pa": 1,
+      "other": 0,
+      "concentration": 1.333,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "repeated_CA3_EDPA_PA_demand",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+repeated_CA3_EDPA_PA_demand+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "922 F.2d 1097",
+      "normalizedCitation": "922 F.2d 1097",
+      "reporter": "F.2d",
+      "demand": 4,
+      "uniqueCiters": 4,
+      "ca3": 4,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "repeated_CA3_EDPA_PA_demand",
+        "CA3_federal_reporter_concentration",
+        "high_unique_practice_citers"
+      ],
+      "reason": "predominantly_CA3+repeated_CA3_EDPA_PA_demand+CA3_federal_reporter_concentration+high_unique_practice_citers",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "444 A.2d 653",
+      "normalizedCitation": "444 A.2d 653",
+      "reporter": "A.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 0,
+      "edpa": 1,
+      "pa": 2,
+      "other": 0,
+      "concentration": 1.5,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_PA",
+        "repeated_CA3_EDPA_PA_demand",
+        "PA_atlantic_concentration"
+      ],
+      "reason": "predominantly_PA+repeated_CA3_EDPA_PA_demand+PA_atlantic_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "132 F.3d 902",
+      "normalizedCitation": "132 F.3d 902",
+      "reporter": "F.3d",
+      "demand": 3,
+      "uniqueCiters": 3,
+      "ca3": 3,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "repeated_CA3_EDPA_PA_demand",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+repeated_CA3_EDPA_PA_demand+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "174 F.3d 368",
+      "normalizedCitation": "174 F.3d 368",
+      "reporter": "F.3d",
+      "demand": 3,
+      "uniqueCiters": 3,
+      "ca3": 3,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "repeated_CA3_EDPA_PA_demand",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+repeated_CA3_EDPA_PA_demand+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "51 F.3d 1137",
+      "normalizedCitation": "51 F.3d 1137",
+      "reporter": "F.3d",
+      "demand": 3,
+      "uniqueCiters": 3,
+      "ca3": 3,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "repeated_CA3_EDPA_PA_demand",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+repeated_CA3_EDPA_PA_demand+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "967 F.3D 327",
+      "normalizedCitation": "967 F.3d 327",
+      "reporter": "F.3d",
+      "demand": 3,
+      "uniqueCiters": 3,
+      "ca3": 3,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "repeated_CA3_EDPA_PA_demand",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+repeated_CA3_EDPA_PA_demand+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "972 F.2d 1364",
+      "normalizedCitation": "972 F.2d 1364",
+      "reporter": "F.2d",
+      "demand": 3,
+      "uniqueCiters": 3,
+      "ca3": 3,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "repeated_CA3_EDPA_PA_demand",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+repeated_CA3_EDPA_PA_demand+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "221 A.3d 717",
+      "normalizedCitation": "221 A.3d 717",
+      "reporter": "A.3d",
+      "demand": 3,
+      "uniqueCiters": 3,
+      "ca3": 0,
+      "edpa": 0,
+      "pa": 3,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_PA",
+        "repeated_CA3_EDPA_PA_demand",
+        "PA_atlantic_concentration"
+      ],
+      "reason": "predominantly_PA+repeated_CA3_EDPA_PA_demand+PA_atlantic_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "306 A.3d 432",
+      "normalizedCitation": "306 A.3d 432",
+      "reporter": "A.3d",
+      "demand": 3,
+      "uniqueCiters": 3,
+      "ca3": 0,
+      "edpa": 0,
+      "pa": 3,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_PA",
+        "repeated_CA3_EDPA_PA_demand",
+        "PA_atlantic_concentration"
+      ],
+      "reason": "predominantly_PA+repeated_CA3_EDPA_PA_demand+PA_atlantic_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "124 F.2d 965",
+      "normalizedCitation": "124 F.2d 965",
+      "reporter": "F.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "162 F.3d 6",
+      "normalizedCitation": "162 F.3d 6",
+      "reporter": "F.3d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "180 F.4th 512",
+      "normalizedCitation": "180 F.4th 512",
+      "reporter": "F.4th",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "185 F.2d 543",
+      "normalizedCitation": "185 F.2d 543",
+      "reporter": "F.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "199 F.3d 140",
+      "normalizedCitation": "199 F.3d 140",
+      "reporter": "F.3d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "205 F.3d 606",
+      "normalizedCitation": "205 F.3d 606",
+      "reporter": "F.3d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "212 F.3d 798",
+      "normalizedCitation": "212 F.3d 798",
+      "reporter": "F.3d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "229 F.3d 220",
+      "normalizedCitation": "229 F.3d 220",
+      "reporter": "F.3d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "240 F.3d 1222",
+      "normalizedCitation": "240 F.3d 1222",
+      "reporter": "F.3d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "250 F.3d 789",
+      "normalizedCitation": "250 F.3d 789",
+      "reporter": "F.3d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "26 F.3d 375",
+      "normalizedCitation": "26 F.3d 375",
+      "reporter": "F.3d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "288 F.3d 57",
+      "normalizedCitation": "288 F.3d 57",
+      "reporter": "F.3d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "318 F.3d 497",
+      "normalizedCitation": "318 F.3d 497",
+      "reporter": "F.3d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "413 F.2d 88",
+      "normalizedCitation": "413 F.2d 88",
+      "reporter": "F.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "438 F.2d 401",
+      "normalizedCitation": "438 F.2d 401",
+      "reporter": "F.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "460 F.2d 343",
+      "normalizedCitation": "460 F.2d 343",
+      "reporter": "F.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "497 F.3d 286",
+      "normalizedCitation": "497 F.3d 286",
+      "reporter": "F.3d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "535 F.3d 132",
+      "normalizedCitation": "535 F.3d 132",
+      "reporter": "F.3d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "550 F.2d 834",
+      "normalizedCitation": "550 F.2d 834",
+      "reporter": "F.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "557 F.2d 1015",
+      "normalizedCitation": "557 F.2d 1015",
+      "reporter": "F.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "569 F.2d 187",
+      "normalizedCitation": "569 F.2d 187",
+      "reporter": "F.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "622 F.2d 672",
+      "normalizedCitation": "622 F.2d 672",
+      "reporter": "F.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "652 F.2d 1165",
+      "normalizedCitation": "652 F.2d 1165",
+      "reporter": "F.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "675 F.2d 1319",
+      "normalizedCitation": "675 F.2d 1319",
+      "reporter": "F.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "688 F.3d 637",
+      "normalizedCitation": "688 F.3d 637",
+      "reporter": "F.3d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "741 F.2d 22",
+      "normalizedCitation": "741 F.2d 22",
+      "reporter": "F.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "752 F.2d 891",
+      "normalizedCitation": "752 F.2d 891",
+      "reporter": "F.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    },
+    {
+      "rawCitation": "757 F.2d 66",
+      "normalizedCitation": "757 F.2d 66",
+      "reporter": "F.2d",
+      "demand": 2,
+      "uniqueCiters": 2,
+      "ca3": 2,
+      "edpa": 0,
+      "pa": 0,
+      "other": 0,
+      "concentration": 1,
+      "benchmarkRelevance": false,
+      "signals": [
+        "predominantly_CA3",
+        "CA3_federal_reporter_concentration"
+      ],
+      "reason": "predominantly_CA3+CA3_federal_reporter_concentration",
+      "externalIdentityRequired": true
+    }
+  ],
+  "note": "Reporter alone insufficient; require ≥2 practice signals + concentration floor"
+}
