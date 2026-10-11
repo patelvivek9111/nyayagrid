@@ -1,0 +1,970 @@
+{
+  "generatedAt": "2026-10-11T22:24:06.866Z",
+  "buckets": {
+    "ge10": {
+      "raw": 73,
+      "suitable": 16,
+      "previouslyAttempted": 27,
+      "edges": 203,
+      "avgScore": 59.6
+    },
+    "ge5to9": {
+      "raw": 398,
+      "suitable": 246,
+      "previouslyAttempted": 43,
+      "edges": 1439,
+      "avgScore": 62.8
+    },
+    "e4": {
+      "raw": 432,
+      "suitable": 321,
+      "previouslyAttempted": 24,
+      "edges": 1284,
+      "avgScore": 56
+    },
+    "e3": {
+      "raw": 1429,
+      "suitable": 147,
+      "previouslyAttempted": 14,
+      "edges": 441,
+      "avgScore": 63.9
+    },
+    "e2": {
+      "raw": 5317,
+      "suitable": 0,
+      "previouslyAttempted": 6,
+      "edges": 0,
+      "avgScore": 0
+    },
+    "e1": {
+      "raw": 41323,
+      "suitable": 0,
+      "previouslyAttempted": 0,
+      "edges": 0,
+      "avgScore": 0
+    }
+  },
+  "top": [
+    {
+      "citation": "284 U.S. 521",
+      "edges": 13,
+      "citers": 13,
+      "score": 117,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "1 Cranch 137",
+      "edges": 28,
+      "citers": 28,
+      "score": 111,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-2",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "322 U.S. 596",
+      "edges": 12,
+      "citers": 12,
+      "score": 94,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "260 U.S. 226",
+      "edges": 11,
+      "citers": 11,
+      "score": 89,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "113 U.S. 116",
+      "edges": 7,
+      "citers": 7,
+      "score": 87,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "384 U.S. 719",
+      "edges": 10,
+      "citers": 10,
+      "score": 84,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-d-ilnd",
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "220 U.S. 61",
+      "edges": 10,
+      "citers": 10,
+      "score": 84,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "546 U.S. 500",
+      "edges": 6,
+      "citers": 6,
+      "score": 82,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-4",
+        "us-ca-dc",
+        "us-scotus",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "435 U.S. 349",
+      "edges": 6,
+      "citers": 6,
+      "score": 82,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-scotus"
+      ]
+    },
+    {
+      "citation": "534 U.S. 506",
+      "edges": 6,
+      "citers": 6,
+      "score": 82,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-circuit-unspecified",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "446 U.S. 478",
+      "edges": 6,
+      "citers": 6,
+      "score": 82,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "317 U.S. 173",
+      "edges": 6,
+      "citers": 6,
+      "score": 82,
+      "familySize": 1,
+      "jurisdictions": [
+        "st-az-app",
+        "us-ca-3",
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "327 U.S. 582",
+      "edges": 6,
+      "citers": 6,
+      "score": 82,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "20 Wall. 590",
+      "edges": 7,
+      "citers": 7,
+      "score": 81,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "5 How. 410",
+      "edges": 7,
+      "citers": 7,
+      "score": 81,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "217 U.S. 268",
+      "edges": 9,
+      "citers": 9,
+      "score": 79,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus"
+      ]
+    },
+    {
+      "citation": "388 U.S. 1",
+      "edges": 9,
+      "citers": 9,
+      "score": 79,
+      "familySize": 1,
+      "jurisdictions": [
+        "st-dc-high",
+        "us-scotus",
+        "st-wa-high",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "361 U.S. 516",
+      "edges": 9,
+      "citers": 9,
+      "score": 79,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "406 U.S. 311",
+      "edges": 9,
+      "citers": 9,
+      "score": 79,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "300 U.S. 515",
+      "edges": 9,
+      "citers": 9,
+      "score": 79,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "503 U.S. 115",
+      "edges": 5,
+      "citers": 5,
+      "score": 77,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "146 U.S. 1",
+      "edges": 5,
+      "citers": 5,
+      "score": 77,
+      "familySize": 1,
+      "jurisdictions": [
+        "st-mn-high",
+        "us-scotus",
+        "us-ca-3",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "384 U.S. 808",
+      "edges": 5,
+      "citers": 5,
+      "score": 77,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-scotus"
+      ]
+    },
+    {
+      "citation": "354 U.S. 1",
+      "edges": 5,
+      "citers": 5,
+      "score": 77,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "534 U.S. 61",
+      "edges": 5,
+      "citers": 5,
+      "score": 77,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-circuit-unspecified",
+        "us-ca-3",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "310 U.S. 113",
+      "edges": 5,
+      "citers": 5,
+      "score": 77,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "213 U.S. 175",
+      "edges": 5,
+      "citers": 5,
+      "score": 77,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "421 U.S. 454",
+      "edges": 5,
+      "citers": 5,
+      "score": 77,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-d-nysd",
+        "us-ca-3",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "414 U.S. 1033",
+      "edges": 5,
+      "citers": 5,
+      "score": 77,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-8",
+        "us-ca-6",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "500 U.S. 226",
+      "edges": 5,
+      "citers": 5,
+      "score": 77,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-7",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "108 U.S. 436",
+      "edges": 5,
+      "citers": 5,
+      "score": 77,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-2",
+        "us-ca-3",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "392 U.S. 481",
+      "edges": 5,
+      "citers": 5,
+      "score": 77,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-circuit-unspecified",
+        "us-ca-3",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "369 U.S. 527",
+      "edges": 5,
+      "citers": 5,
+      "score": 77,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "87 S. Ct. 1404",
+      "edges": 5,
+      "citers": 5,
+      "score": 77,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-ca-9"
+      ]
+    },
+    {
+      "citation": "16 Wall. 203",
+      "edges": 6,
+      "citers": 6,
+      "score": 76,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "106 U.S. 196",
+      "edges": 8,
+      "citers": 8,
+      "score": 74,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "378 U.S. 184",
+      "edges": 8,
+      "citers": 8,
+      "score": 74,
+      "familySize": 1,
+      "jurisdictions": [
+        "st-mt-high",
+        "st-fl-app",
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "367 U.S. 488",
+      "edges": 8,
+      "citers": 8,
+      "score": 74,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "372 U.S. 229",
+      "edges": 8,
+      "citers": 8,
+      "score": 74,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "396 U.S. 229",
+      "edges": 8,
+      "citers": 8,
+      "score": 74,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "279 U.S. 159",
+      "edges": 8,
+      "citers": 8,
+      "score": 74,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "309 U.S. 478",
+      "edges": 8,
+      "citers": 8,
+      "score": 74,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "93 U.S. 18",
+      "edges": 8,
+      "citers": 8,
+      "score": 74,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "357 U.S. 77",
+      "edges": 8,
+      "citers": 8,
+      "score": 74,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus"
+      ]
+    },
+    {
+      "citation": "289 U.S. 238",
+      "edges": 8,
+      "citers": 8,
+      "score": 74,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "266 U.S. 497",
+      "edges": 8,
+      "citers": 8,
+      "score": 74,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus"
+      ]
+    },
+    {
+      "citation": "526 U.S. 574",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-3",
+        "st-wa-high",
+        "us-circuit-unspecified",
+        "us-scotus"
+      ]
+    },
+    {
+      "citation": "487 U.S. 781",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-scotus"
+      ]
+    },
+    {
+      "citation": "452 U.S. 640",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "298 U.S. 178",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-4",
+        "us-scotus",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "423 U.S. 1031",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "468 U.S. 364",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "st-fl-high",
+        "us-ca-3",
+        "us-scotus"
+      ]
+    },
+    {
+      "citation": "467 U.S. 180",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-3",
+        "st-wa-high",
+        "us-scotus"
+      ]
+    },
+    {
+      "citation": "118 S. Ct. 1003",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-2",
+        "us-scotus",
+        "us-ca-7",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "384 U.S. 780",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-scotus"
+      ]
+    },
+    {
+      "citation": "416 U.S. 312",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "177 U.S. 449",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "467 U.S. 253",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "393 U.S. 268",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "401 U.S. 983",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "434 U.S. 159",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "354 U.S. 363",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "427 U.S. 347",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "st-in-app",
+        "us-ca-3",
+        "us-ca-7",
+        "us-scotus"
+      ]
+    },
+    {
+      "citation": "452 U.S. 337",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "407 U.S. 925",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-scotus",
+        "us-ca-2",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "309 U.S. 190",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-scotus",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "457 U.S. 202",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-ca-4"
+      ]
+    },
+    {
+      "citation": "424 U.S. 747",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "st-wi-high",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "404 U.S. 336",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "st-nm-high",
+        "us-ca-11",
+        "us-ca-3",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "16 S. Ct. 631",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-ca-2"
+      ]
+    },
+    {
+      "citation": "96 S. Ct. 2868",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-dc",
+        "st-unknown",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "48 S. Ct. 97",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-1",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "455 U.S. 385",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-d-cand",
+        "us-circuit-unspecified",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "399 U.S. 222",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-d-dcd",
+        "us-ca-3",
+        "us-ca-1"
+      ]
+    },
+    {
+      "citation": "90 S. Ct. 1989",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-d-dcd",
+        "us-ca-3",
+        "us-ca-1"
+      ]
+    },
+    {
+      "citation": "407 U.S. 918",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-2",
+        "us-ca-3",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "311 U.S. 223",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-3",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "478 U.S. 546",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-circuit-unspecified",
+        "us-ca-3"
+      ]
+    },
+    {
+      "citation": "547 U.S. 250",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-circuit-unspecified",
+        "us-ca-3",
+        "us-unknown"
+      ]
+    },
+    {
+      "citation": "87 S. Ct. 1487",
+      "edges": 4,
+      "citers": 4,
+      "score": 72,
+      "familySize": 1,
+      "jurisdictions": [
+        "us-ca-2",
+        "us-ca-3",
+        "us-ca2"
+      ]
+    }
+  ]
+}
