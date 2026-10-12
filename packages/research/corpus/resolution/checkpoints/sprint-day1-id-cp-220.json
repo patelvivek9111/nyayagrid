@@ -1,0 +1,19 @@
+{
+  "atLookup": 220,
+  "totalCl": 221,
+  "HIGH": 201,
+  "ambiguous": 19,
+  "notFound": 0,
+  "failed": 0,
+  "oldEdges": 1190,
+  "oldEdgesPerCl": 5.409090909090909,
+  "rolling20": {
+    "high": 0.9,
+    "ambiguity": 0.1,
+    "oldEdgesPerCl": 4.5
+  },
+  "remainingHighScore": 167,
+  "identityStopReason": null,
+  "unresolved": 60269,
+  "green": true
+}
