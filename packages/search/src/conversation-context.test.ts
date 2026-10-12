@@ -62,6 +62,16 @@ describe("conversation-context foundation (Phase 1)", () => {
     );
   });
 
+  it("source ID eligibility rejects non-uuid foreign shapes before matter revalidation", () => {
+    const uuidOk = "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee";
+    const UUID_RE =
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+    const filtered = [uuidOk, "not-a-real-id", "web:x", "auth:y"].filter(
+      (id) => !id.startsWith("web:") && !id.startsWith("auth:") && UUID_RE.test(id),
+    );
+    expect(filtered).toEqual([uuidOk]);
+  });
+
   it("bounds recent turns and does not dump full transcript", () => {
     const many = Array.from({ length: 40 }, (_, i) =>
       turn({

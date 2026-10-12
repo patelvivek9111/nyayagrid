@@ -184,11 +184,18 @@ describe("factuality contract (Phase 2)", () => {
     expect(allForeign.type).toBe("UNKNOWN");
   });
 
+  it("detects did-the-witness-lie and still-good-law premises", () => {
+    expect(detectUserPremise("Did the witness lie about the date?").detected).toBe(true);
+    expect(detectUserPremise("Is this case still good law?").detected).toBe(true);
+  });
+
   it("false-premise scenarios reject agreement", () => {
     const prompts = [
       "We won the motion, right?",
       "The witness lied about the date.",
+      "Did the witness lie about the date?",
       "This case was overruled, correct?",
+      "Is this case still good law?",
       "So discovery closes Friday?",
       "The judge dismissed Claim A.",
     ];

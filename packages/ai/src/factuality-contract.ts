@@ -170,7 +170,7 @@ export function sanitizeConflictCredibility(assertion: FactualityAssertion): {
       text: "These statements conflict. The current record contains inconsistent accounts. There is insufficient evidence to determine why they differ.",
       conflictKind: assertion.conflictKind ?? "DIRECT_CONFLICT",
       reason:
-        "Credibility leap blocked: contradiction alone does not establish lying or dishonesty.",
+        "Credibility leap blocked: contradiction alone does not establish a credibility conclusion.",
     },
     credibilityLeapBlocked: true,
   };
@@ -236,7 +236,10 @@ export function detectUserPremise(question: string): DetectedUserPremise {
     return { detected: true, assertionText: "User asserts a win/prevailing outcome", kind: "outcome_win" };
   }
 
-  if (/\b(witness|they|he|she)\b.{0,40}\b(lied|lying|is dishonest|false testimony)\b/i.test(q)) {
+  if (
+    /\b(witness|they|he|she)\b.{0,40}\b(lie|lied|lying|is dishonest|false testimony)\b/i.test(q) ||
+    /\bdid (the )?witness lie\b/i.test(q)
+  ) {
     return {
       detected: true,
       assertionText: "User asserts witness lied / credibility failure",
@@ -244,10 +247,14 @@ export function detectUserPremise(question: string): DetectedUserPremise {
     };
   }
 
-  if (/\b(overruled|no longer good law|bad law)\b/i.test(q) && /\b(case|authority|decision|holding)\b/i.test(q)) {
+  if (
+    (/\b(overruled|no longer good law|bad law|still good law|good law)\b/i.test(q) &&
+      /\b(case|authority|decision|holding)\b/i.test(q)) ||
+    /\bis this case still good law\b/i.test(q)
+  ) {
     return {
       detected: true,
-      assertionText: "User asserts authority was overruled / not good law",
+      assertionText: "User asserts or asks treatment / good-law status",
       kind: "overruled",
     };
   }
@@ -468,7 +475,7 @@ export function evaluatePremiseAgainstRecord(params: {
       result: "UNSUPPORTED",
       mappedFactuality: "UNSUPPORTED",
       reason:
-        "Credibility conclusions (lied / dishonest) are not established from contradiction alone.",
+        "Credibility conclusions are not established from contradiction alone.",
     };
   }
 

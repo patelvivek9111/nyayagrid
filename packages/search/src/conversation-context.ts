@@ -411,11 +411,20 @@ export function buildNextWorkingState(params: {
   });
 }
 
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
 export async function revalidateDocumentIdsInMatter(
   db: Database,
   params: { organizationId: string; matterId: string; documentIds: string[] },
 ): Promise<string[]> {
-  const ids = uniq(params.documentIds).filter((id) => !id.startsWith("web:") && !id.startsWith("auth:"));
+  // Reject non-UUID / foreign-shaped IDs before querying (Postgres uuid columns error otherwise).
+  const ids = uniq(params.documentIds).filter(
+    (id) =>
+      !id.startsWith("web:") &&
+      !id.startsWith("auth:") &&
+      UUID_RE.test(id),
+  );
   if (ids.length === 0) return [];
   const rows = await db
     .select({ id: documents.id })
