@@ -12,6 +12,7 @@ import {
   isAuthoritativeAssistantTurn,
   mergeWorkingStates,
   parseWorkingState,
+  restrictTurnSourceIds,
   selectRecentTurns,
   truncateTurnContent,
   type ConversationTurnForPrompt,
@@ -167,6 +168,35 @@ describe("conversation-context foundation (Phase 1)", () => {
     });
     expect(block).toContain("doc-notice");
     expect(block).toContain("sources=");
+  });
+
+  it("strips foreign source IDs from turns before prompt injection", () => {
+    const dirty = [
+      turn({
+        messageId: "a1",
+        role: "assistant",
+        content: "The cure notice supports Claim A.",
+        sourceIds: ["doc-notice", "doc-foreign"],
+      }),
+    ];
+    const clean = restrictTurnSourceIds(dirty, ["doc-notice"]);
+    expect(clean[0]!.sourceIds).toEqual(["doc-notice"]);
+    const ws = buildNextWorkingState({
+      prior: null,
+      recentTurns: clean,
+      currentQuestion: "show me the sources",
+      sourceIds: ["doc-notice"],
+      authorityIds: [],
+      unresolvedQuestions: [],
+    });
+    const block = formatConversationContextForPrompt({
+      recentTurns: clean,
+      summaryLines: ws.summaryLines,
+      workingState: ws,
+    });
+    expect(block).toContain("doc-notice");
+    expect(block).not.toContain("doc-foreign");
+    expect(ws.activeSourceIds).not.toContain("doc-foreign");
   });
 
   it("parses working state from artifact validation JSON", () => {

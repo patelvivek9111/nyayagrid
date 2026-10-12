@@ -295,6 +295,18 @@ export function selectRecentTurns(
   return authoritative.slice(-limit);
 }
 
+/** Keep only matter-validated document IDs on turns before prompt injection. */
+export function restrictTurnSourceIds(
+  turns: ConversationTurnForPrompt[],
+  allowedSourceIds: readonly string[],
+): ConversationTurnForPrompt[] {
+  const allowed = new Set(allowedSourceIds);
+  return turns.map((t) => ({
+    ...t,
+    sourceIds: t.sourceIds.filter((id) => allowed.has(id)),
+  }));
+}
+
 export function formatConversationContextForPrompt(params: {
   recentTurns: ConversationTurnForPrompt[];
   summaryLines: string[];
@@ -533,6 +545,10 @@ export async function assembleConversationAskContext(
     documentIds: candidateSourceIds,
   });
 
+  // Strip foreign / out-of-matter source IDs from turns before prompt injection so
+  // RecentTurns cannot reintroduce IDs that failed matter validation.
+  const sanitizedTurns = restrictTurnSourceIds(recentTurns, validatedSources);
+
   // Drop entity IDs from prior state that are not UUIDs of this conversation's
   // working set — Phase 1 keeps prior IDs but strips sources that failed matter checks.
   // Cross-matter IDs never enter because messages/artifacts are conversation+matter scoped.
@@ -540,7 +556,7 @@ export async function assembleConversationAskContext(
     prior: priorState
       ? { ...priorState, activeSourceIds: validatedSources }
       : emptyWorkingState(),
-    recentTurns,
+    recentTurns: sanitizedTurns,
     currentQuestion: params.currentQuestion,
     sourceIds: validatedSources,
     authorityIds: priorState?.activeAuthorityIds ?? [],
@@ -550,19 +566,19 @@ export async function assembleConversationAskContext(
 
   const summaryLines = workingState.summaryLines;
   const promptBlock = formatConversationContextForPrompt({
-    recentTurns,
+    recentTurns: sanitizedTurns,
     summaryLines,
     workingState,
   });
 
   return {
     conversationId: params.conversationId,
-    recentTurns,
+    recentTurns: sanitizedTurns,
     summaryLines,
     workingState,
     promptBlock,
     metrics: {
-      recentTurnCount: recentTurns.length,
+      recentTurnCount: sanitizedTurns.length,
       summaryChars: summaryLines.join("\n").length,
       promptChars: promptBlock?.length ?? 0,
       sourceIdCount: workingState.activeSourceIds.length,
