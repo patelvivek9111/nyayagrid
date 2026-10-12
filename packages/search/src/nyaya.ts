@@ -2,6 +2,13 @@ import { createHash } from "node:crypto";
 import type { Database } from "@nyayagrid/database";
 import { conversations, messages, aiArtifacts, documents, documentVersions, criminalCases, and, eq, or, sql } from "@nyayagrid/database";
 import {
+  assembleConversationAskContext,
+  buildNextWorkingState,
+  emptyWorkingState,
+  type AssembledConversationContext,
+  type ConversationWorkingState,
+} from "./conversation-context";
+import {
   assessNeedMoreDocuments,
   assessRetrievedEvidence,
   assertSourceScopeInvariants,
@@ -643,6 +650,8 @@ export async function askNyayaAboutMatter(params: {
   let unresolvedConflictCount = 0;
   let conversationId = params.conversationId ?? null;
   let generationStarted = false;
+  let conversationAskContext: AssembledConversationContext | null = null;
+  let conversationWorkingState: ConversationWorkingState = emptyWorkingState();
 
   try {
     throwIfAborted();
@@ -1134,7 +1143,9 @@ export async function askNyayaAboutMatter(params: {
         wholeMatterContextText = null;
       }
     }
-    const askStructuredContextText = mergeAskContextText(
+    // Conversation history is assembled after conversationId is resolved (below).
+    // Placeholder; rebuilt once prior turns are loaded.
+    let askStructuredContextText = mergeAskContextText(
       week4ContextText,
       suppressionContextText,
       civilContextText,
@@ -1241,6 +1252,30 @@ export async function askNyayaAboutMatter(params: {
           ),
       });
       if (!existing) throw new Error("Conversation not found in matter scope");
+    }
+
+    // Bounded multi-turn context — load BEFORE inserting the current user turn.
+    try {
+      conversationAskContext = await assembleConversationAskContext(params.db, {
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        conversationId: conversationIdResolved!,
+        currentQuestion: params.question,
+      });
+      if (conversationAskContext) {
+        conversationWorkingState = conversationAskContext.workingState;
+        askStructuredContextText = mergeAskContextText(
+          conversationAskContext.promptBlock,
+          week4ContextText,
+          suppressionContextText,
+          civilContextText,
+          discoveryContextText,
+          motionsCommsContextText,
+          wholeMatterContextText,
+        );
+      }
+    } catch {
+      conversationAskContext = null;
     }
 
     if (!isContinue) {
@@ -1708,6 +1743,21 @@ export async function askNyayaAboutMatter(params: {
           assessmentTriggered: assessmentResult.triggered,
           assessmentCategories: assessmentResult.categories,
           usageActionId,
+          // Phase 1 Command Center — working state for multi-turn continuity (no migration).
+          conversationWorkingState: buildNextWorkingState({
+            prior: conversationWorkingState,
+            recentTurns: conversationAskContext?.recentTurns ?? [],
+            currentQuestion: params.question,
+            sourceIds: validated.answer.sources
+              .map((s) => s.documentId)
+              .filter((id) => typeof id === "string" && id.length > 0 && !id.startsWith("web:")),
+            authorityIds: [...(authority?.authorityIds ?? [])],
+            authorityStates: conversationWorkingState.authorityStates,
+            unresolvedQuestions: validated.answer.unresolvedQuestions,
+          }),
+          conversationContextMetrics: conversationAskContext?.metrics ?? null,
+          // Reserved for Phase 2 factuality contract — keep shape extensible.
+          assertionReady: true,
         },
         createdByUserId: params.userId,
       })
