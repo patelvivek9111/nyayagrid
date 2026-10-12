@@ -187,6 +187,7 @@ describe("factuality contract (Phase 2)", () => {
   it("detects did-the-witness-lie and still-good-law premises", () => {
     expect(detectUserPremise("Did the witness lie about the date?").detected).toBe(true);
     expect(detectUserPremise("Is this case still good law?").detected).toBe(true);
+    expect(detectUserPremise("Is that still good law?").detected).toBe(true);
   });
 
   it("false-premise scenarios reject agreement", () => {

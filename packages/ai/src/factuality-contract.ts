@@ -249,8 +249,8 @@ export function detectUserPremise(question: string): DetectedUserPremise {
 
   if (
     (/\b(overruled|no longer good law|bad law|still good law|good law)\b/i.test(q) &&
-      /\b(case|authority|decision|holding)\b/i.test(q)) ||
-    /\bis this case still good law\b/i.test(q)
+      /\b(case|authority|decision|holding|that)\b/i.test(q)) ||
+    /\bis (this|that)( case)? still good law\b/i.test(q)
   ) {
     return {
       detected: true,

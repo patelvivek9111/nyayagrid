@@ -487,6 +487,39 @@ describe("Phase 3 multi-turn chains", () => {
     expect(t2.referents.some((r) => r.entityId === motion1)).toBe(true);
   });
 
+  it("motion+ruling same entityId is not false ambiguity", () => {
+    const withRuling = [
+      ...candidates(),
+      {
+        entityType: "ruling" as const,
+        entityId: motion1,
+        label: "Motion to Compel filed May 4 (GRANTED)",
+        organizationId: ORG,
+        matterId: MATTER,
+        orderKey: "2025-05-04",
+      },
+    ];
+    const explicit = resolveConversationalReferents({
+      question: "What happened with the motion to compel?",
+      organizationId: ORG,
+      matterId: MATTER,
+      workingState: state(),
+      matterCandidates: withRuling,
+    });
+    expect(explicit.status).toBe("RESOLVED");
+    expect(explicit.referents[0]?.entityId).toBe(motion1);
+
+    const rulingFollowUp = resolveConversationalReferents({
+      question: "what did the judge rule?",
+      organizationId: ORG,
+      matterId: MATTER,
+      workingState: state({ activeMotionIds: [motion1] }),
+      matterCandidates: withRuling,
+    });
+    expect(rulingFollowUp.status).toBe("RESOLVED");
+    expect(rulingFollowUp.referents[0]?.entityId).toBe(motion1);
+  });
+
   it("CHAIN 3 — motion → ruling → why → after that", () => {
     let ws = state({ activeMotionIds: [motion1] });
     const t1 = resolveConversationalReferents({

@@ -15,6 +15,7 @@ import {
 import {
   ambiguityAnswerText,
   formatReferentResolutionForPrompt,
+  loadMatterReferentCandidates,
   resolveConversationalReferents,
   type ReferentResolutionResult,
 } from "./conversational-referent-resolver";
@@ -1121,12 +1122,50 @@ export async function askNyayaAboutMatter(params: {
     const priorAssistant = [...(conversationAskContext?.recentTurns ?? [])]
       .reverse()
       .find((t) => t.role === "assistant" && t.completionStatus === "completed");
+    let candidateLookupLatencyMs = 0;
+    let matterCandidates: Awaited<
+      ReturnType<typeof loadMatterReferentCandidates>
+    >["candidates"] = [];
+    try {
+      const loaded = await loadMatterReferentCandidates(params.db, {
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+      });
+      matterCandidates = loaded.candidates;
+      candidateLookupLatencyMs = loaded.lookupLatencyMs;
+    } catch {
+      matterCandidates = [];
+    }
+    // Synthetic authority candidates from working state / prior structured refs (no CL).
+    const authorityIdsForCandidates = [
+      ...new Set([
+        ...conversationWorkingState.activeAuthorityIds,
+        ...(priorAssistant?.authorityIds ?? []),
+      ]),
+    ];
+    for (const authId of authorityIdsForCandidates) {
+      if (!matterCandidates.some((c) => c.entityType === "authority" && c.entityId === authId)) {
+        const snap = conversationWorkingState.authorityStates.find((a) => a.id === authId);
+        const label = snap
+          ? `Authority ${authId.slice(0, 8)} (${snap.resolution})`
+          : `Authority ${authId.slice(0, 8)}`;
+        matterCandidates.push({
+          entityType: "authority",
+          entityId: authId,
+          label,
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          orderKey: authId,
+        });
+      }
+    }
     referentResolution = resolveConversationalReferents({
       question: params.question,
       organizationId: params.organizationId,
       matterId: params.matterId,
       workingState: conversationWorkingState,
       recentTurns: conversationAskContext?.recentTurns ?? [],
+      matterCandidates,
       allowedSourceIds: conversationWorkingState.activeSourceIds,
       priorStructured: priorAssistant
         ? {
@@ -1136,6 +1175,15 @@ export async function askNyayaAboutMatter(params: {
           }
         : null,
     });
+    if (referentResolution.diagnostics) {
+      referentResolution = {
+        ...referentResolution,
+        diagnostics: {
+          ...referentResolution.diagnostics,
+          candidateLookupLatencyMs,
+        },
+      };
+    }
     if (referentResolution.status === "RESOLVED") {
       conversationWorkingState = referentResolution.activeStateAfter;
     }
@@ -1171,6 +1219,20 @@ export async function askNyayaAboutMatter(params: {
           question: params.question,
           civilReview,
         });
+        // Promote claim IDs into working state when referent did not already bind one.
+        if (conversationWorkingState.activeClaimIds.length === 0) {
+          const claimIds = (civilReview.claims ?? [])
+            .filter((c) => c.isCurrent !== false)
+            .map((c) => c.id)
+            .filter((id): id is string => typeof id === "string" && id.length > 0)
+            .slice(0, 3);
+          if (claimIds.length) {
+            conversationWorkingState = {
+              ...conversationWorkingState,
+              activeClaimIds: claimIds,
+            };
+          }
+        }
       } catch {
         // Matter may lack civil rows or access; leave civil context unset.
         civilContextText = null;
@@ -1189,6 +1251,18 @@ export async function askNyayaAboutMatter(params: {
           question: params.question,
           discoveryReview,
         });
+        if (conversationWorkingState.activeDeficiencyIds.length === 0) {
+          const defIds = (discoveryReview.deficiencies ?? [])
+            .map((d) => d.id)
+            .filter((id): id is string => typeof id === "string" && id.length > 0)
+            .slice(0, 4);
+          if (defIds.length) {
+            conversationWorkingState = {
+              ...conversationWorkingState,
+              activeDeficiencyIds: defIds,
+            };
+          }
+        }
       } catch {
         discoveryContextText = null;
       }
@@ -1206,6 +1280,30 @@ export async function askNyayaAboutMatter(params: {
           question: params.question,
           review: mcReview,
         });
+        if (conversationWorkingState.activeMotionIds.length === 0) {
+          const motionIds = (mcReview.motions ?? [])
+            .map((m) => m.id)
+            .filter((id): id is string => typeof id === "string" && id.length > 0)
+            .slice(0, 3);
+          if (motionIds.length) {
+            conversationWorkingState = {
+              ...conversationWorkingState,
+              activeMotionIds: motionIds,
+            };
+          }
+        }
+        if (conversationWorkingState.activeCommunicationIds.length === 0) {
+          const commIds = (mcReview.communications ?? [])
+            .map((c) => c.id)
+            .filter((id): id is string => typeof id === "string" && id.length > 0)
+            .slice(0, 4);
+          if (commIds.length) {
+            conversationWorkingState = {
+              ...conversationWorkingState,
+              activeCommunicationIds: commIds,
+            };
+          }
+        }
       } catch {
         motionsCommsContextText = null;
       }

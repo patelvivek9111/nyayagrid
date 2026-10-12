@@ -2,6 +2,15 @@
  * Phase 3 — Deterministic conversational referent resolution + active entity binding.
  * Prefer structured working state / prior payload over fuzzy prose. No schema migration.
  */
+import { and, asc, eq } from "drizzle-orm";
+import {
+  civilClaims,
+  discoveryDeficiencies,
+  documents,
+  matterCommunications,
+  matterMotions,
+  type Database,
+} from "@nyayagrid/database";
 import type { ConversationalDomain } from "./conversational-context-router";
 import {
   emptyWorkingState,
@@ -87,6 +96,8 @@ export type ReferentDiagnostics = {
   activeContextAfter: Record<string, string[]>;
   routerDomainsAfterResolution: ConversationalDomain[];
   resolverLatencyMs: number;
+  /** Optional DB candidate lookup latency (Ask path). */
+  candidateLookupLatencyMs?: number;
 };
 
 export type ReferentResolutionResult = {
@@ -309,18 +320,30 @@ function matchExplicitClaimLabel(question: string, candidates: MatterEntityCandi
   });
 }
 
+function dedupeByEntityId(list: MatterEntityCandidate[]): MatterEntityCandidate[] {
+  const seen = new Set<string>();
+  const out: MatterEntityCandidate[] = [];
+  for (const c of list) {
+    if (seen.has(c.entityId)) continue;
+    seen.add(c.entityId);
+    out.push(c);
+  }
+  return out;
+}
+
 function matchExplicitMotionLabel(question: string, candidates: MatterEntityCandidate[]): MatterEntityCandidate[] {
-  const motions = candidatesOfType(candidates, ["motion", "ruling"]);
+  // Prefer motion rows only — do not treat disposition/ruling projections as a second motion.
+  const motions = candidatesOfType(candidates, "motion");
   if (/\bmotion to compel\b/i.test(question)) {
-    return motions.filter((c) => /compel/i.test(c.label));
+    return dedupeByEntityId(motions.filter((c) => /compel/i.test(c.label)));
   }
   if (/\bsummary[- ]judgment\b/i.test(question)) {
-    return motions.filter((c) => /summary/i.test(c.label));
+    return dedupeByEntityId(motions.filter((c) => /summary/i.test(c.label)));
   }
   const titled = question.match(/\b(?:the )?([A-Z][\w\s-]{2,40} motion)\b/);
   if (titled) {
     const needle = normalizeLabel(titled[1]!);
-    return motions.filter((c) => normalizeLabel(c.label).includes(needle));
+    return dedupeByEntityId(motions.filter((c) => normalizeLabel(c.label).includes(needle)));
   }
   return [];
 }
@@ -397,7 +420,10 @@ function pickUniqueActive(
 ): { match: MatterEntityCandidate | null; ambiguous: MatterEntityCandidate[] } {
   const types = Array.isArray(type) ? type : [type];
   const ids = uniq(types.flatMap((t) => activeIdsForType(state, t)));
-  const matches = candidatesOfType(candidates, types).filter((c) => ids.includes(c.entityId));
+  // Collapse motion+ruling projections that share one entity id — not true ambiguity.
+  const matches = dedupeByEntityId(
+    candidatesOfType(candidates, types).filter((c) => ids.includes(c.entityId)),
+  );
   // Fall back to ID-only synthetic candidates when labels unknown.
   if (matches.length === 0 && ids.length === 1) {
     return {
@@ -762,7 +788,7 @@ export function resolveConversationalReferents(params: {
     status = "RESOLVED";
   }
 
-  const explicitMotion = matchExplicitMotionLabel(params.question, candidates);
+  const explicitMotion = dedupeByEntityId(matchExplicitMotionLabel(params.question, candidates));
   if (explicitMotion.length > 1) return finishAmbiguous("motion", explicitMotion);
   if (explicitMotion.length === 1 && !referents.some((r) => r.entityType === "motion")) {
     referents.push(resolvedFromCandidate(explicitMotion[0]!, "EXPLICIT_LABEL", null));
@@ -1167,4 +1193,170 @@ export function ambiguityAnswerText(result: ReferentResolutionResult): string {
     result.clarificationPrompt ??
     "I need a clarification before answering — more than one item in this matter could match that reference."
   );
+}
+
+/**
+ * Lightweight matter-scoped candidate lookup for referent resolution.
+ * Reuses existing tables; does not invoke Pass 3–7 full loaders.
+ */
+export async function loadMatterReferentCandidates(
+  db: Database,
+  params: { organizationId: string; matterId: string },
+): Promise<{ candidates: MatterEntityCandidate[]; lookupLatencyMs: number }> {
+  const started = Date.now();
+  const scope = and(
+    eq(civilClaims.organizationId, params.organizationId),
+    eq(civilClaims.matterId, params.matterId),
+  );
+  void scope;
+
+  const [claims, motions, deficiencies, communications, docs] = await Promise.all([
+    db
+      .select({
+        id: civilClaims.id,
+        label: civilClaims.label,
+        createdAt: civilClaims.createdAt,
+      })
+      .from(civilClaims)
+      .where(
+        and(
+          eq(civilClaims.organizationId, params.organizationId),
+          eq(civilClaims.matterId, params.matterId),
+        ),
+      )
+      .orderBy(asc(civilClaims.createdAt))
+      .limit(40),
+    db
+      .select({
+        id: matterMotions.id,
+        title: matterMotions.title,
+        filedAt: matterMotions.filedAt,
+        createdAt: matterMotions.createdAt,
+        disposition: matterMotions.disposition,
+      })
+      .from(matterMotions)
+      .where(
+        and(
+          eq(matterMotions.organizationId, params.organizationId),
+          eq(matterMotions.matterId, params.matterId),
+        ),
+      )
+      .orderBy(asc(matterMotions.filedAt), asc(matterMotions.createdAt))
+      .limit(40),
+    db
+      .select({
+        id: discoveryDeficiencies.id,
+        description: discoveryDeficiencies.description,
+        kind: discoveryDeficiencies.kind,
+        motionId: discoveryDeficiencies.motionId,
+        communicationId: discoveryDeficiencies.communicationId,
+        createdAt: discoveryDeficiencies.createdAt,
+      })
+      .from(discoveryDeficiencies)
+      .where(
+        and(
+          eq(discoveryDeficiencies.organizationId, params.organizationId),
+          eq(discoveryDeficiencies.matterId, params.matterId),
+        ),
+      )
+      .orderBy(asc(discoveryDeficiencies.createdAt))
+      .limit(40),
+    db
+      .select({
+        id: matterCommunications.id,
+        subject: matterCommunications.subject,
+        occurredAt: matterCommunications.occurredAt,
+        createdAt: matterCommunications.createdAt,
+      })
+      .from(matterCommunications)
+      .where(
+        and(
+          eq(matterCommunications.organizationId, params.organizationId),
+          eq(matterCommunications.matterId, params.matterId),
+        ),
+      )
+      .orderBy(asc(matterCommunications.occurredAt), asc(matterCommunications.createdAt))
+      .limit(40),
+    db
+      .select({ id: documents.id, title: documents.title, createdAt: documents.createdAt })
+      .from(documents)
+      .where(
+        and(
+          eq(documents.organizationId, params.organizationId),
+          eq(documents.matterId, params.matterId),
+        ),
+      )
+      .orderBy(asc(documents.createdAt))
+      .limit(40),
+  ]);
+
+  const candidates: MatterEntityCandidate[] = [];
+  for (const c of claims) {
+    candidates.push({
+      entityType: "claim",
+      entityId: c.id,
+      label: c.label,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      orderKey: c.createdAt?.toISOString?.() ?? null,
+    });
+  }
+  for (const m of motions) {
+    const orderKey = (m.filedAt ?? m.createdAt)?.toISOString?.() ?? null;
+    candidates.push({
+      entityType: "motion",
+      entityId: m.id,
+      label: m.title,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      orderKey,
+    });
+    // Ruling focus reuses the motion id as the structured anchor (no duplicate candidate row).
+    if (m.disposition) {
+      candidates.push({
+        entityType: "ruling",
+        entityId: m.id,
+        label: `${m.title} (${m.disposition})`,
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        orderKey,
+      });
+    }
+  }
+  for (const d of deficiencies) {
+    const linked: MatterEntityCandidate["linkedIds"] = {};
+    if (d.motionId) linked.motion = [d.motionId];
+    if (d.communicationId) linked.communication = [d.communicationId];
+    candidates.push({
+      entityType: "discovery_deficiency",
+      entityId: d.id,
+      label: d.description || d.kind,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      orderKey: d.createdAt?.toISOString?.() ?? null,
+      linkedIds: linked,
+    });
+  }
+  for (const c of communications) {
+    candidates.push({
+      entityType: "communication",
+      entityId: c.id,
+      label: c.subject || "Communication",
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      orderKey: (c.occurredAt ?? c.createdAt)?.toISOString?.() ?? null,
+    });
+  }
+  for (const d of docs) {
+    candidates.push({
+      entityType: "document",
+      entityId: d.id,
+      label: d.title || "Document",
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      orderKey: d.createdAt?.toISOString?.() ?? null,
+    });
+  }
+
+  return { candidates, lookupLatencyMs: Math.max(0, Date.now() - started) };
 }
