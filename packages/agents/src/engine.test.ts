@@ -443,6 +443,7 @@ describe("prompt injection on research and drafting retrieved content", () => {
       step({
         agentType: "research_agent",
         requiredTools: ["searchLegalAuthorities", "saveResearchArtifact"],
+        approvalRequirement: "high",
       }),
     ]);
 
@@ -470,12 +471,12 @@ describe("prompt injection on research and drafting retrieved content", () => {
       ]),
     });
 
-    expect(result.run.status).toBe("completed");
-    expect(result.limitations.join(" ")).toMatch(/did not change tool authorization/i);
-    expect(result.toolCalls.map((c) => c.toolName).sort()).toEqual(
-      ["saveResearchArtifact", "searchLegalAuthorities"].sort(),
-    );
+    // Phase 4: research read may run; artifact save is approval-gated (no auto-write tool call).
+    expect(["completed", "awaiting_approval"]).toContain(result.run.status);
+    expect(result.limitations.join(" ")).toMatch(/did not change tool authorization|not saved automatically/i);
+    expect(result.toolCalls.map((c) => c.toolName)).toEqual(["searchLegalAuthorities"]);
     expect(result.toolCalls.every((c) => c.status === "completed")).toBe(true);
+    expect(result.approvals.length).toBeGreaterThan(0);
   });
 
   it("draft_agent scans retrieved matter chunks and does not widen tools", async () => {
@@ -483,6 +484,7 @@ describe("prompt injection on research and drafting retrieved content", () => {
       step({
         agentType: "draft_agent",
         requiredTools: ["retrieveMatterChunks", "createDraft"],
+        approvalRequirement: "high",
       }),
     ]);
 
@@ -508,11 +510,11 @@ describe("prompt injection on research and drafting retrieved content", () => {
       ]),
     });
 
-    expect(result.run.status).toBe("completed");
-    expect(result.limitations.join(" ")).toMatch(/did not change tool authorization/i);
-    expect(result.toolCalls.map((c) => c.toolName).sort()).toEqual(
-      ["createDraft", "retrieveMatterChunks"].sort(),
-    );
+    // Phase 4: draft preview only; CREATE_DRAFT is an approval proposal (no auto-write tool call).
+    expect(["completed", "awaiting_approval"]).toContain(result.run.status);
+    expect(result.limitations.join(" ")).toMatch(/did not change tool authorization|not saved automatically/i);
+    expect(result.toolCalls.map((c) => c.toolName)).toEqual(["retrieveMatterChunks"]);
+    expect(result.approvals.some((a) => a.actionType === "CREATE_DRAFT")).toBe(true);
   });
 });
 

@@ -8,7 +8,7 @@ import {
   type AgentRiskLevel,
 } from "@nyayagrid/database";
 import { AuthorizationError, requireMatterAccess, writeAuditEvent } from "@nyayagrid/permissions";
-import { reviewMatterMemory } from "@nyayagrid/intelligence";
+import { createDraft, reviewMatterMemory } from "@nyayagrid/intelligence";
 import { saveAuthorityToMatter } from "@nyayagrid/research";
 import type { EmbeddingProvider } from "@nyayagrid/ai";
 
@@ -290,12 +290,31 @@ export async function reviewApproval(params: ReviewApprovalParams): Promise<Revi
         break;
       }
       case "CREATE_DRAFT": {
-        const draftId = asString(proposedData.draftId);
-        executedRecordId = draftId;
-        executedRecordType = draftId ? "draft" : null;
-        executionNote = draftId
-          ? "Draft already exists as reviewable work product; approval records the attorney sign-off."
-          : "No draft id was attached to this approval.";
+        const existingDraftId = asString(proposedData.draftId);
+        if (existingDraftId) {
+          executedRecordId = existingDraftId;
+          executedRecordType = "draft";
+          executionNote =
+            "Draft already exists as reviewable work product; approval records the attorney sign-off.";
+          break;
+        }
+        // Phase 4: persist draft from confirmed preview payload (no silent agent auto-write).
+        const title = asString(proposedData.title) ?? "Approved draft";
+        const draftType = asString(proposedData.draftType) ?? "general";
+        const content = asString(proposedData.content) ?? "";
+        const created = await createDraft({
+          db: params.db,
+          organizationId: params.organizationId,
+          matterId: approval.matterId,
+          userId: params.userId,
+          title,
+          draftType,
+          content,
+          aiGenerated: true,
+        });
+        executedRecordId = created.draft.id;
+        executedRecordType = "draft";
+        executionNote = "Draft created from approved conversational/agent preview.";
         break;
       }
       case "PROPOSE_TIMELINE_EVENT":

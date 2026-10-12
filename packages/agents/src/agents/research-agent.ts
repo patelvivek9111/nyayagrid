@@ -1,29 +1,21 @@
 import { z } from "zod";
 import type { NyayaAgent } from "../agent";
-import type { AgentExecutionResult } from "../types";
+import type { AgentActionProposalInput, AgentExecutionResult } from "../types";
 import { AgentOutputBuilder, agentInputSchema, agentOutputSchema, invokeIfAllowed } from "./shared";
 
 type AuthorityHits = { hits: Array<{ authorityId: string; chunkId: string; snippet: string }> };
-type ResearchRun = {
-  artifactId: string | null;
-  grounded: boolean;
-  coverageWarnings: string[];
-  provider: string;
-  model: string;
-  synthesis?: { answer?: string | null };
-};
 
 /**
- * Legal research over the shared authority corpus.
+ * Legal research over the shared authority corpus (read path).
  *
- * Synthesis, quote validation and coverage warnings all live in @nyayagrid/research; this agent
- * only decides which research calls the step needs and reports what came back.
+ * Phase 4: does not auto-persist research artifacts. Search/read may run; save requires
+ * an explicit approval proposal (OTHER / research save intent).
  */
 export const researchAgent: NyayaAgent = {
   id: "research_agent",
   name: "Nyaya Research Agent",
   description:
-    "Searches the legal authority corpus and records a grounded research synthesis with citations.",
+    "Searches the legal authority corpus and returns grounded hits; artifact save requires approval.",
   supportedIntents: ["research", "multi_step_task", "drafting"],
   requiredCapabilities: ["research.run"],
   allowedTools: [
@@ -32,13 +24,14 @@ export const researchAgent: NyayaAgent = {
     "getVerifiedTimeline",
     "retrieveMatterMemory",
   ],
-  riskClass: "low",
+  riskClass: "medium",
   inputSchema: agentInputSchema,
   outputSchema: agentOutputSchema,
 
   async execute(ctx, input): Promise<AgentExecutionResult> {
     const { goal, objective } = agentInputSchema.parse(input);
     const builder = new AgentOutputBuilder();
+    const actionProposals: AgentActionProposalInput[] = [];
     const question = objective.length > goal.length ? goal : objective;
 
     const search = await invokeIfAllowed<AuthorityHits>(ctx, builder, "searchLegalAuthorities", {
@@ -58,31 +51,45 @@ export const researchAgent: NyayaAgent = {
       );
     }
 
-    const synthesis = await invokeIfAllowed<ResearchRun>(ctx, builder, "saveResearchArtifact", {
-      question,
-      includeContrary: true,
+    const hitCount = search?.data?.hits?.length ?? 0;
+    actionProposals.push({
+      actionType: "OTHER",
+      proposedData: {
+        kind: "SAVE_RESEARCH_ARTIFACT",
+        question,
+        includeContrary: true,
+        authorityIds: (search?.data?.hits ?? []).map((h) => h.authorityId),
+        treatmentVerified: false,
+        requiresConfirmation: true,
+      },
+      rationale:
+        "Research read completed from local/indexed authorities. Approve to persist a research artifact (no CourtListener fetch).",
+      riskLevel: "high",
     });
-    if (synthesis) {
-      builder.addToolResult("saveResearchArtifact", synthesis);
-      for (const warning of synthesis.data?.coverageWarnings ?? []) {
-        builder.addLimitation(warning);
-      }
-      if (synthesis.data && !synthesis.data.grounded) {
-        builder.addLimitation(
-          "No retrieved authority supported a grounded answer; the gap was recorded rather than filled.",
-        );
-      }
+
+    builder.addLimitation(
+      "Research artifact was not saved automatically. Approve the save proposal (or confirm in chat) to persist.",
+    );
+    builder.addLimitation(
+      "Authority treatment remains NOT VERIFIED unless treatmentVerified=true on the record.",
+    );
+    if (hitCount === 0) {
+      builder.addLimitation(
+        "No retrieved authority supported a grounded answer; the gap was recorded rather than filled.",
+      );
     }
 
-    return builder.build({
-      fallbackSummary: "No research tool was authorized for this step.",
-      content: synthesis?.data?.synthesis?.answer ?? null,
-      canonicalRef: synthesis?.data?.artifactId
-        ? { kind: "research_artifact", researchArtifactId: synthesis.data.artifactId }
-        : null,
-      provider: synthesis?.data?.provider ?? null,
-      model: synthesis?.data?.model ?? null,
-    });
+    return {
+      ...builder.build({
+        fallbackSummary:
+          hitCount > 0
+            ? `Research read found ${hitCount} authority hit(s); save awaits approval.`
+            : "Research read found no grounded authority hits; save awaits approval if desired.",
+        content: null,
+        canonicalRef: null,
+      }),
+      actionProposals,
+    };
   },
 };
 

@@ -57,10 +57,11 @@ const TEMPLATES: Record<AgentIntent, Template> = {
     {
       stepId: "research-2",
       agentType: "research_agent",
-      objective: "Produce a grounded research synthesis and persist it as a research artifact.",
+      objective:
+        "Complete the research read and propose a SAVE_RESEARCH_ARTIFACT approval (do not auto-persist).",
       dependencies: ["research-1"],
-      requiredTools: ["saveResearchArtifact"],
-      approvalRequirement: "medium",
+      requiredTools: ["searchLegalAuthorities"],
+      approvalRequirement: "high",
     },
   ],
   drafting: () => [
@@ -75,10 +76,11 @@ const TEMPLATES: Record<AgentIntent, Template> = {
     {
       stepId: "draft-2",
       agentType: "draft_agent",
-      objective: "Generate the requested draft grounded in the gathered sources.",
+      objective:
+        "Prepare a draft preview grounded in gathered sources and propose CREATE_DRAFT for approval.",
       dependencies: ["draft-1"],
-      requiredTools: ["createDraft"],
-      approvalRequirement: "medium",
+      requiredTools: ["retrieveMatterChunks"],
+      approvalRequirement: "high",
     },
   ],
   contract_review: (goal) => {
@@ -207,18 +209,20 @@ const TEMPLATES: Record<AgentIntent, Template> = {
     {
       stepId: "task-2",
       agentType: "research_agent",
-      objective: "Research the legal standards the request turns on and record the synthesis.",
+      objective:
+        "Research the legal standards the request turns on (read only; propose save for approval).",
       dependencies: ["task-1"],
-      requiredTools: ["searchLegalAuthorities", "saveResearchArtifact"],
-      approvalRequirement: "medium",
+      requiredTools: ["searchLegalAuthorities"],
+      approvalRequirement: "high",
     },
     {
       stepId: "task-3",
       agentType: "draft_agent",
-      objective: "Prepare the requested work product grounded in the gathered material.",
+      objective:
+        "Prepare a draft preview grounded in the gathered material and propose CREATE_DRAFT.",
       dependencies: ["task-2"],
-      requiredTools: ["createDraft"],
-      approvalRequirement: "medium",
+      requiredTools: ["retrieveMatterChunks"],
+      approvalRequirement: "high",
     },
     {
       stepId: "task-4",

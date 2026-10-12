@@ -1,16 +1,9 @@
 import type { NyayaAgent } from "../agent";
-import type { AgentExecutionResult } from "../types";
+import type { AgentActionProposalInput, AgentExecutionResult } from "../types";
 import { AgentOutputBuilder, agentInputSchema, agentOutputSchema, invokeIfAllowed } from "./shared";
 
 type ChunkHits = {
   chunks: Array<{ chunkId: string; documentId: string; documentVersionId: string; quote: string }>;
-};
-type GeneratedDraft = {
-  draft: { id: string; title: string };
-  version: { id: string; versionNumber: number; content?: string };
-  assertionCounts?: Record<string, number>;
-  authorityWarnings?: string[];
-  assumptions?: string[];
 };
 
 function draftTypeFromObjective(objective: string): string {
@@ -24,18 +17,16 @@ function draftTypeFromObjective(objective: string): string {
 }
 
 /**
- * Produces matter drafts.
+ * Produces draft *previews* and CREATE_DRAFT approval proposals.
  *
- * A draft is internal, versioned work product: it is never transmitted anywhere, which is why
- * generation runs as a medium-risk proposal instead of blocking on an approval. Any external use
- * still requires an attorney, and the draft body carries the disclaimers @nyayagrid/intelligence
- * attaches when authority coverage is incomplete.
+ * Phase 4: does not auto-persist drafts. Persistence requires human approval via
+ * agent_approvals (or conversational confirmation that reuses the same table).
  */
 export const draftAgent: NyayaAgent = {
   id: "draft_agent",
   name: "Nyaya Draft Agent",
   description:
-    "Generates and revises matter drafts grounded in retrieved matter sources and saved authorities.",
+    "Prepares matter draft previews grounded in retrieved sources; persistence requires approval.",
   supportedIntents: ["drafting", "multi_step_task"],
   requiredCapabilities: ["drafts.create"],
   allowedTools: [
@@ -45,24 +36,27 @@ export const draftAgent: NyayaAgent = {
     "createDraft",
     "reviseDraft",
   ],
-  riskClass: "medium",
+  riskClass: "high",
   inputSchema: agentInputSchema,
   outputSchema: agentOutputSchema,
 
   async execute(ctx, input): Promise<AgentExecutionResult> {
     const { goal, objective } = agentInputSchema.parse(input);
     const builder = new AgentOutputBuilder();
+    const actionProposals: AgentActionProposalInput[] = [];
 
     const chunks = await invokeIfAllowed<ChunkHits>(ctx, builder, "retrieveMatterChunks", {
       query: goal,
       limit: Math.min(12, ctx.budgets.maxRetrievedContext),
     });
     const documentIds: string[] = [];
+    const previewParts: string[] = [];
     if (chunks) {
       builder.addToolResult("retrieveMatterChunks", chunks);
       for (const chunk of chunks.data?.chunks ?? []) {
         builder.scanRetrievedText(`document ${chunk.documentId}`, chunk.quote);
         if (!documentIds.includes(chunk.documentId)) documentIds.push(chunk.documentId);
+        previewParts.push(chunk.quote.slice(0, 500));
       }
       builder.addSources(
         (chunks.data?.chunks ?? []).map((chunk) => ({
@@ -73,39 +67,40 @@ export const draftAgent: NyayaAgent = {
       );
     }
 
-    const created = await invokeIfAllowed<GeneratedDraft>(ctx, builder, "createDraft", {
-      title: objective.slice(0, 200),
-      draftType: draftTypeFromObjective(objective),
-      instructions: goal,
-      ...(documentIds.length > 0 ? { documentIds: documentIds.slice(0, 25) } : {}),
-      generate: true,
+    const draftType = draftTypeFromObjective(objective);
+    const title = objective.slice(0, 200);
+    const previewText =
+      previewParts.length > 0
+        ? `DRAFT PREVIEW (${draftType})\n\n${previewParts.join("\n\n").slice(0, 8000)}`
+        : `DRAFT PREVIEW (${draftType})\n\nNo retrieved passages were available to ground a draft body.`;
+
+    actionProposals.push({
+      actionType: "CREATE_DRAFT",
+      proposedData: {
+        title,
+        draftType,
+        instructions: goal,
+        content: previewText,
+        documentIds: documentIds.slice(0, 25),
+        generate: false,
+        requiresConfirmation: true,
+      },
+      rationale:
+        "Draft preview prepared from matter sources. Approve to persist as a Drafts work product.",
+      riskLevel: "high",
     });
 
-    if (!created) {
-      return builder.build({
-        fallbackSummary: "Draft creation was not authorized for this step; no draft was created.",
-      });
-    }
-
-    builder.addToolResult("createDraft", created);
-    for (const warning of created.data?.authorityWarnings ?? []) builder.addLimitation(warning);
-    for (const assumption of created.data?.assumptions ?? []) {
-      builder.addLimitation(`Draft assumption requiring verification: ${assumption}`);
-    }
     builder.addLimitation(
-      "The draft is internal work product and requires attorney review before any external use.",
+      "Draft was not saved automatically. Approve the CREATE_DRAFT proposal (or confirm in chat) to persist.",
     );
 
-    return builder.build({
-      fallbackSummary: "Draft generated.",
-      content: created.data?.version?.content ?? null,
-      canonicalRef: created.data?.draft?.id
-        ? {
-            kind: "draft",
-            draftId: created.data.draft.id,
-            draftVersionId: created.data.version?.id,
-          }
-        : null,
-    });
+    return {
+      ...builder.build({
+        fallbackSummary: "Draft preview prepared; awaiting approval to save.",
+        content: previewText,
+        canonicalRef: null,
+      }),
+      actionProposals,
+    };
   },
 };
