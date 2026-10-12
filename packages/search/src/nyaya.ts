@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import type { Database } from "@nyayagrid/database";
-import { conversations, messages, aiArtifacts, documents, documentVersions, criminalCases, and, eq, or, sql } from "@nyayagrid/database";
+import { conversations, messages, aiArtifacts, documents, documentVersions, criminalCases, and, desc, eq, or, sql } from "@nyayagrid/database";
 import {
   assembleConversationAskContext,
   buildNextWorkingState,
@@ -19,6 +19,21 @@ import {
   resolveConversationalReferents,
   type ReferentResolutionResult,
 } from "./conversational-referent-resolver";
+import {
+  attachApprovalScaffold,
+  buildDraftPreview,
+  buildMemoryPreview,
+  buildNavigationAction,
+  buildTaskPreview,
+  capabilityForAction,
+  classifyConversationalAction,
+  createPendingActionRecord,
+  executeConfirmedConversationalAction,
+  formatActionPreviewAnswer,
+  loadPendingActionFromValidation,
+  validateActionConfirmation,
+  type ConversationalActionRecord,
+} from "./conversational-workflow-actions";
 import {
   assessNeedMoreDocuments,
   assessRetrievedEvidence,
@@ -673,6 +688,7 @@ export async function askNyayaAboutMatter(params: {
   let premiseCheck: PremiseCheck | null = null;
   let factualityContract: FactualityContract | null = null;
   let referentResolution: ReferentResolutionResult | null = null;
+  let conversationalAction: ConversationalActionRecord | null = null;
 
   try {
     throwIfAborted();
@@ -1186,6 +1202,415 @@ export async function askNyayaAboutMatter(params: {
     }
     if (referentResolution.status === "RESOLVED") {
       conversationWorkingState = referentResolution.activeStateAfter;
+    }
+
+    // Phase 4 — classify conversational workflow intent (reads vs confirmation-gated writes).
+    const workflowClassification = classifyConversationalAction({
+      question: params.question,
+      referent: referentResolution,
+    });
+    const conversationIdForWorkflow = conversationIdResolvedEarly!;
+
+    const finishWorkflowAnswer = async (paramsFinish: {
+      answer: string;
+      action: ConversationalActionRecord | null;
+      unresolved?: string[];
+      evidenceState?: "grounded" | "partial" | "insufficient";
+    }) => {
+      conversationalAction = paramsFinish.action;
+      if (!isContinue) {
+        await params.db.insert(messages).values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          conversationId: conversationIdForWorkflow,
+          role: "user",
+          content: params.question,
+          createdByUserId: params.userId,
+        });
+      }
+      const [assistantMessage] = await params.db
+        .insert(messages)
+        .values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          conversationId: conversationIdForWorkflow,
+          role: "assistant",
+          content: paramsFinish.answer,
+          createdByUserId: params.userId,
+        })
+        .returning();
+      const [artifact] = await params.db
+        .insert(aiArtifacts)
+        .values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          conversationId: conversationIdForWorkflow,
+          messageId: assistantMessage!.id,
+          artifactType: "matter_qa",
+          question: params.question,
+          answer: paramsFinish.answer,
+          evidenceState: paramsFinish.evidenceState ?? "insufficient",
+          provider: "nyaya_workflow",
+          model: "deterministic",
+          promptVersion: NYAYA_PROMPT_VERSION,
+          retrievedChunkIds: [],
+          citations: [],
+          validation: {
+            completionStatus: "completed",
+            premiseCheck: null,
+            selectedDomains: [],
+            referentResolution: referentResolution
+              ? {
+                  status: referentResolution.status,
+                  referents: referentResolution.referents,
+                  candidates: referentResolution.candidates,
+                  clarificationPrompt: referentResolution.clarificationPrompt,
+                  diagnostics: referentResolution.diagnostics,
+                  draftIntentPreview: referentResolution.draftIntentPreview,
+                  forceDomains: referentResolution.forceDomains,
+                }
+              : null,
+            conversationWorkingState,
+            conversationalAction: paramsFinish.action,
+            workflowClassification,
+            assertionReady: true,
+          },
+          createdByUserId: params.userId,
+        })
+        .returning();
+      emit({ type: "text_delta", text: paramsFinish.answer, at: nowIso() });
+      const provenance = buildProvenanceSummary({
+        sourceScope,
+        caseSourceCount: 0,
+        webSourceCount: 0,
+        authoritySourceCount: 0,
+      });
+      emit({
+        type: "generation_completed",
+        answer: paramsFinish.answer,
+        conversationId: conversationIdForWorkflow,
+        artifactId: artifact?.id,
+        messageId: assistantMessage?.id,
+        status: "completed",
+        provenance,
+        at: nowIso(),
+      });
+      return {
+        conversationId: conversationIdForWorkflow,
+        artifact,
+        answer: {
+          answer: paramsFinish.answer,
+          sources: [],
+          assumptions: [],
+          unresolvedQuestions: paramsFinish.unresolved ?? [],
+          evidenceState: paramsFinish.evidenceState ?? ("insufficient" as const),
+        },
+        retrieved: passages,
+        provenance,
+        sourceScope,
+        usageActionId,
+        needsMoreDocuments: false,
+        needMoreDocumentReasons: [],
+        usedFollowUpRetrieval: false,
+        usedVerifiedIntelligence: false,
+        usedGraph: false,
+        usedMemory: false,
+        usedProfessionalAnalysis: false,
+        usedLegalAuthority: false,
+        usedWeek4CombinedContext: false,
+        week4StructuredContext: null,
+        doctrineQuestion: false,
+        authorityResearchMissing: false,
+        authorityWarnings: [] as string[],
+        authorityValidation: null,
+        timings: { ...timings, totalMs: Date.now() - startedAsk },
+      };
+    };
+
+    if (workflowClassification.actionClass === "PROHIBITED_AUTONOMOUSLY") {
+      const answer = formatActionPreviewAnswer({
+        classification: workflowClassification,
+        pending: null,
+        prohibitedReason: workflowClassification.prohibitedReason,
+      });
+      return await finishWorkflowAnswer({
+        answer,
+        action: {
+          ...createPendingActionRecord({
+            actionType: "PROHIBITED",
+            actionClass: "PROHIBITED_AUTONOMOUSLY",
+            conversationId: conversationIdForWorkflow,
+            organizationId: params.organizationId,
+            matterId: params.matterId,
+            workingState: conversationWorkingState,
+            previewPayload: { reason: workflowClassification.prohibitedReason },
+            classificationLatencyMs: workflowClassification.latencyMs,
+          }),
+          actionStatus: "PROHIBITED",
+          workflowStatus: "CANCELLED",
+          confirmationRequired: false,
+        },
+        unresolved: ["Autonomous external/destructive action blocked"],
+      });
+    }
+
+    // Load prior pending conversational action from latest assistant artifact (no migration).
+    let priorPending: ConversationalActionRecord | null = null;
+    try {
+      const [priorArtifact] = await params.db
+        .select({ validation: aiArtifacts.validation })
+        .from(aiArtifacts)
+        .where(
+          and(
+            eq(aiArtifacts.organizationId, params.organizationId),
+            eq(aiArtifacts.matterId, params.matterId),
+            eq(aiArtifacts.conversationId, conversationIdForWorkflow),
+          ),
+        )
+        .orderBy(desc(aiArtifacts.createdAt))
+        .limit(1);
+      priorPending = loadPendingActionFromValidation(priorArtifact?.validation);
+    } catch {
+      priorPending = null;
+    }
+
+    const tryConfirmPending = async () => {
+      const validation = validateActionConfirmation({
+        pendingActions: priorPending ? [priorPending] : [],
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        conversationId: conversationIdForWorkflow,
+        workingState: conversationWorkingState,
+        focusChanged: false,
+      });
+      if (!validation.ok) {
+        const answer = formatActionPreviewAnswer({
+          classification: workflowClassification,
+          pending: null,
+          staleReason: `${validation.code}: ${validation.reason}`,
+        });
+        return await finishWorkflowAnswer({
+          answer,
+          action: priorPending
+            ? {
+                ...priorPending,
+                actionStatus: "ACTION_CONFIRMATION_STALE",
+                failureReason: validation.reason,
+              }
+            : null,
+          unresolved: [validation.reason],
+        });
+      }
+      const executed = await executeConfirmedConversationalAction({
+        db: params.db,
+        userId: params.userId,
+        pending: validation.pending,
+        capability: capabilityForAction(validation.pending.actionType),
+      });
+      const answer = formatActionPreviewAnswer({
+        classification: workflowClassification,
+        pending: executed.updatedAction,
+        execution: executed,
+      });
+      return await finishWorkflowAnswer({
+        answer,
+        action: executed.updatedAction,
+        evidenceState: executed.status === "COMPLETED" ? "grounded" : "insufficient",
+        unresolved: executed.failureReason ? [executed.failureReason] : [],
+      });
+    };
+
+    if (workflowClassification.actionType === "CONFIRM_PENDING") {
+      return await tryConfirmPending();
+    }
+
+    // Typed save phrases confirm matching pending preview when present.
+    if (
+      (workflowClassification.actionType === "DRAFT_SAVE" ||
+        workflowClassification.actionType === "RESEARCH_SAVE" ||
+        workflowClassification.actionType === "MEMORY_SAVE") &&
+      priorPending &&
+      (priorPending.actionType === workflowClassification.actionType ||
+        (workflowClassification.actionType === "DRAFT_SAVE" &&
+          priorPending.actionType === "DRAFT_GENERATE_PREVIEW") ||
+        (workflowClassification.actionType === "RESEARCH_SAVE" &&
+          priorPending.actionType === "RESEARCH_READ"))
+    ) {
+      return await tryConfirmPending();
+    }
+
+    if (workflowClassification.actionClass === "NAVIGATION" && workflowClassification.navigationKind) {
+      const allowed = new Set(
+        matterCandidates
+          .filter(
+            (c) =>
+              c.organizationId === params.organizationId && c.matterId === params.matterId,
+          )
+          .map((c) => c.entityId),
+      );
+      for (const id of [
+        ...conversationWorkingState.activeMotionIds,
+        ...conversationWorkingState.activeClaimIds,
+        ...conversationWorkingState.activeSourceIds,
+        ...conversationWorkingState.activeDeficiencyIds,
+        ...conversationWorkingState.activeCommunicationIds,
+        ...conversationWorkingState.activeAuthorityIds,
+      ]) {
+        allowed.add(id);
+      }
+      const nav = buildNavigationAction({
+        kind: workflowClassification.navigationKind,
+        matterId: params.matterId,
+        organizationId: params.organizationId,
+        workingState: conversationWorkingState,
+        allowedEntityIds: allowed,
+      });
+      if (!nav.ok) {
+        return await finishWorkflowAnswer({
+          answer: `I cannot navigate there yet: ${nav.reason}`,
+          action: null,
+          unresolved: [nav.reason],
+        });
+      }
+      const action = createPendingActionRecord({
+        actionType: "NAVIGATE",
+        actionClass: "NAVIGATION",
+        conversationId: conversationIdForWorkflow,
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        workingState: conversationWorkingState,
+        previewPayload: nav.payload as unknown as Record<string, unknown>,
+        targetEntityIds: nav.payload.targetEntityId ? [nav.payload.targetEntityId] : [],
+        classificationLatencyMs: workflowClassification.latencyMs,
+      });
+      action.actionStatus = "COMPLETED";
+      action.workflowStatus = "COMPLETED";
+      action.confirmationRequired = false;
+      const answer = formatActionPreviewAnswer({
+        classification: workflowClassification,
+        pending: action,
+        navigation: nav.payload,
+      });
+      return await finishWorkflowAnswer({ answer, action, evidenceState: "grounded" });
+    }
+
+    if (workflowClassification.actionType === "TASK_CREATE") {
+      const preview = buildTaskPreview({
+        question: params.question,
+        matterId: params.matterId,
+        workingState: conversationWorkingState,
+      });
+      let action = createPendingActionRecord({
+        actionType: "TASK_CREATE",
+        actionClass: "WRITE_CONFIRMATION_REQUIRED",
+        conversationId: conversationIdForWorkflow,
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        workingState: conversationWorkingState,
+        previewPayload: preview as unknown as Record<string, unknown>,
+        targetEntityIds: preview.linkedEntityIds,
+        sourceRefs: preview.linkedSourceIds,
+        classificationLatencyMs: workflowClassification.latencyMs,
+      });
+      try {
+        action = await attachApprovalScaffold({
+          db: params.db,
+          userId: params.userId,
+          pending: action,
+        });
+      } catch {
+        // Approval scaffold is best-effort audit; preview still returned.
+      }
+      const answer = formatActionPreviewAnswer({
+        classification: workflowClassification,
+        pending: action,
+      });
+      return await finishWorkflowAnswer({ answer, action });
+    }
+
+    if (workflowClassification.actionType === "MEMORY_SAVE") {
+      const supportOk = conversationWorkingState.activeSourceIds.length > 0;
+      const preview = buildMemoryPreview({
+        question: params.question,
+        workingState: conversationWorkingState,
+        supportOk,
+      });
+      if (preview.unsafe) {
+        const answer = formatActionPreviewAnswer({
+          classification: workflowClassification,
+          pending: createPendingActionRecord({
+            actionType: "MEMORY_SAVE",
+            actionClass: "WRITE_CONFIRMATION_REQUIRED",
+            conversationId: conversationIdForWorkflow,
+            organizationId: params.organizationId,
+            matterId: params.matterId,
+            workingState: conversationWorkingState,
+            previewPayload: preview as unknown as Record<string, unknown>,
+          }),
+        });
+        return await finishWorkflowAnswer({
+          answer,
+          action: null,
+          unresolved: [preview.unsafeReason ?? "Unsafe memory blocked"],
+        });
+      }
+      let action = createPendingActionRecord({
+        actionType: "MEMORY_SAVE",
+        actionClass: "WRITE_CONFIRMATION_REQUIRED",
+        conversationId: conversationIdForWorkflow,
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        workingState: conversationWorkingState,
+        previewPayload: preview as unknown as Record<string, unknown>,
+        sourceRefs: preview.sourceRefs,
+        classificationLatencyMs: workflowClassification.latencyMs,
+      });
+      try {
+        action = await attachApprovalScaffold({
+          db: params.db,
+          userId: params.userId,
+          pending: action,
+        });
+      } catch {
+        // best-effort
+      }
+      const answer = formatActionPreviewAnswer({
+        classification: workflowClassification,
+        pending: action,
+      });
+      return await finishWorkflowAnswer({ answer, action });
+    }
+
+    if (workflowClassification.actionType === "RESEARCH_SAVE") {
+      let action = createPendingActionRecord({
+        actionType: "RESEARCH_SAVE",
+        actionClass: "WRITE_CONFIRMATION_REQUIRED",
+        conversationId: conversationIdForWorkflow,
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        workingState: conversationWorkingState,
+        previewPayload: {
+          question: params.question,
+          authorityRefs: conversationWorkingState.activeAuthorityIds,
+          treatmentVerified: false,
+        },
+        authorityRefs: conversationWorkingState.activeAuthorityIds,
+        classificationLatencyMs: workflowClassification.latencyMs,
+      });
+      try {
+        action = await attachApprovalScaffold({
+          db: params.db,
+          userId: params.userId,
+          pending: action,
+        });
+      } catch {
+        // best-effort
+      }
+      const answer = formatActionPreviewAnswer({
+        classification: workflowClassification,
+        pending: action,
+      });
+      return await finishWorkflowAnswer({ answer, action });
     }
 
     // Phase 2 bounded context router — selects domains; whole-matter suppresses overlaps.
@@ -1995,6 +2420,94 @@ export async function askNyayaAboutMatter(params: {
     });
     emit({ type: "provenance_ready", provenance, at: nowIso() });
 
+    // Phase 4 — draft/compare workflow wrappers (preview only; no silent persistence).
+    if (workflowClassification.actionClass === "DRAFT_PREVIEW") {
+      const sourceRefs = validated.answer.sources
+        .map((s) => s.documentId)
+        .filter((id): id is string => typeof id === "string" && id.length > 0 && !id.startsWith("web:"));
+      const draftPreview = buildDraftPreview({
+        question: params.question,
+        matterId: params.matterId,
+        workingState: conversationWorkingState,
+        answerText: validated.answer.answer,
+        sourceRefs,
+        authorityRefs: [...(authority?.authorityIds ?? [])],
+      });
+      conversationalAction = createPendingActionRecord({
+        actionType: "DRAFT_GENERATE_PREVIEW",
+        actionClass: "DRAFT_PREVIEW",
+        conversationId: conversationId!,
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        workingState: conversationWorkingState,
+        previewPayload: draftPreview as unknown as Record<string, unknown>,
+        sourceRefs: draftPreview.sourceRefs,
+        authorityRefs: draftPreview.authorityRefs,
+        targetEntityIds: draftPreview.relatedEntities,
+        classificationLatencyMs: workflowClassification.latencyMs,
+      });
+      try {
+        conversationalAction = await attachApprovalScaffold({
+          db: params.db,
+          userId: params.userId,
+          pending: conversationalAction,
+        });
+      } catch {
+        // best-effort audit scaffold
+      }
+      validated.answer.answer = formatActionPreviewAnswer({
+        classification: workflowClassification,
+        pending: conversationalAction,
+      });
+      validated.answer.unresolvedQuestions.push(
+        "Confirm with “save this draft” / “save it” before the draft is persisted.",
+      );
+    } else if (workflowClassification.actionType === "COMPARE_READ") {
+      validated.answer.assumptions.push(
+        "Compare result: differences are source-backed observations only (SAME / DIFFERENCE / CONFLICT / MISSING_CONTEXT). Conflict ≠ dishonesty.",
+      );
+      conversationalAction = createPendingActionRecord({
+        actionType: "COMPARE_READ",
+        actionClass: "READ_ONLY",
+        conversationId: conversationId!,
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        workingState: conversationWorkingState,
+        previewPayload: {
+          leftEntityIds: conversationWorkingState.activeSourceIds.slice(0, 1),
+          rightEntityIds: conversationWorkingState.activeSourceIds.slice(1, 2),
+          credibilityConclusion: null,
+        },
+        sourceRefs: conversationWorkingState.activeSourceIds.slice(0, 4),
+        classificationLatencyMs: workflowClassification.latencyMs,
+      });
+      conversationalAction.actionStatus = "COMPLETED";
+      conversationalAction.workflowStatus = "COMPLETED";
+      conversationalAction.confirmationRequired = false;
+    } else if (workflowClassification.actionType === "RESEARCH_READ") {
+      conversationalAction = createPendingActionRecord({
+        actionType: "RESEARCH_READ",
+        actionClass: "LONG_RUNNING_READ",
+        conversationId: conversationId!,
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        workingState: conversationWorkingState,
+        previewPayload: {
+          workflowStatus: "COMPLETED",
+          treatmentVerified: false,
+          note: "Research read completed from local/indexed context only (no CourtListener). Say “save this research” to confirm persistence.",
+        },
+        authorityRefs: [...(authority?.authorityIds ?? [])],
+        classificationLatencyMs: workflowClassification.latencyMs,
+      });
+      conversationalAction.actionStatus = "COMPLETED";
+      conversationalAction.workflowStatus = "COMPLETED";
+      conversationalAction.confirmationRequired = false;
+      validated.answer.assumptions.push(
+        "Authority treatment remains NOT VERIFIED unless treatmentVerified=true on the matter record. Research artifact save requires confirmation.",
+      );
+    }
+
     // Progressive render of the FINAL validated answer (not pre-validation draft tokens).
     for (const chunk of chunkAnswerForStreaming(validated.answer.answer)) {
       throwIfAborted();
@@ -2128,6 +2641,9 @@ export async function askNyayaAboutMatter(params: {
                 forceDomains: referentResolution.forceDomains,
               }
             : null,
+          // Phase 4 conversational workflow action (preview / confirmation / navigation).
+          conversationalAction,
+          workflowClassification,
           factualityContract: (() => {
             const allowed = validated.answer.sources
               .map((s) => s.documentId)
