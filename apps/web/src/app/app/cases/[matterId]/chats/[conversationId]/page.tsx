@@ -3,11 +3,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import type { AskStreamEvent, ProvenanceSummary, SourceScope } from "@nyayagrid/ai";
+import type { AskStreamEvent, AskUxPayload, ProvenanceSummary, SourceScope } from "@nyayagrid/ai";
 import { getSourceScopedAbstentionCopy } from "@nyayagrid/ai/source-scope";
 import { Button } from "@nyayagrid/ui";
 import {
+  ActionConfirmationCard,
+  AmbiguityChooser,
   AskProgress,
+  CancelledTurnBanner,
   CaseChip,
   ChatComposer,
   EvidenceStateBadge,
@@ -15,13 +18,17 @@ import {
   FactualityAssertionBadges,
   IntelligenceHeader,
   LoadingState,
+  NavigationActionLink,
   ProvenanceBadge,
   SourceDrawer,
   SourceMarker,
+  type CommandCenterActionUx,
   type SourceDrawerItem,
 } from "@/components/ux";
 import { useMatterChrome } from "@/components/use-matter-chrome";
 import { userFacingLoadError } from "@/lib/case-intelligence-ux";
+import { GUEST_COMMAND_CENTER_MESSAGE } from "@/lib/command-center-guest-policy";
+import { filterRenderableMatterSources } from "@/lib/command-center-ux";
 import { USER_FACING_ASK_ERROR } from "@/lib/user-facing-error";
 
 type ChatTurn = {
@@ -36,6 +43,8 @@ type ChatTurn = {
   needsMoreDocuments?: boolean;
   provenance?: ProvenanceSummary;
   factualityTypes?: string[];
+  cancelled?: boolean;
+  ux?: AskUxPayload;
 };
 
 function sourcesFromAnswer(sources: any[] | undefined): SourceDrawerItem[] {
@@ -210,7 +219,12 @@ export default function CaseChatThreadPage() {
     fetch(`/api/v1/matters/${matterId}/conversations/${conversationId}`)
       .then(async (res) => {
         const data = await res.json();
-        if (!res.ok) throw new Error(userFacingLoadError("chats", res.status));
+        if (!res.ok) {
+          if (data?.error?.code === "DENY_GUEST_ASK") {
+            throw new Error(data?.error?.message ?? GUEST_COMMAND_CENTER_MESSAGE);
+          }
+          throw new Error(userFacingLoadError("chats", res.status));
+        }
         setTitle(data.conversation?.title ?? "Chat");
         const artifactsByMsg = new Map<string, any>();
         for (const a of data.artifacts ?? []) {
@@ -220,7 +234,103 @@ export default function CaseChatThreadPage() {
           (data.messages ?? []).map((m: any) => {
             const art = artifactsByMsg.get(m.id);
             const validation = (art?.validation ?? {}) as Record<string, unknown>;
-            const sources = sourcesFromCitations(art?.citations, m.id);
+            const sources = filterRenderableMatterSources(
+              sourcesFromCitations(art?.citations, m.id),
+              { matterId },
+            );
+            const rawAction = (validation.conversationalAction ?? null) as Record<
+              string,
+              unknown
+            > | null;
+            const previewPayload =
+              rawAction?.previewPayload && typeof rawAction.previewPayload === "object"
+                ? (rawAction.previewPayload as Record<string, unknown>)
+                : {};
+            const action: CommandCenterActionUx | undefined =
+              rawAction && typeof rawAction.pendingActionId === "string"
+                ? {
+                    pendingActionId: rawAction.pendingActionId,
+                    actionType: String(rawAction.actionType ?? ""),
+                    actionClass: String(rawAction.actionClass ?? ""),
+                    actionStatus: String(rawAction.actionStatus ?? ""),
+                    workflowStatus:
+                      typeof rawAction.workflowStatus === "string"
+                        ? rawAction.workflowStatus
+                        : undefined,
+                    confirmationRequired: Boolean(rawAction.confirmationRequired),
+                    summary:
+                      typeof previewPayload.previewText === "string"
+                        ? previewPayload.previewText
+                        : typeof previewPayload.title === "string"
+                          ? previewPayload.title
+                          : undefined,
+                    targetLabel:
+                      typeof previewPayload.label === "string"
+                        ? previewPayload.label
+                        : typeof previewPayload.title === "string"
+                          ? previewPayload.title
+                          : undefined,
+                    sourceCount: Array.isArray(rawAction.sourceRefs)
+                      ? rawAction.sourceRefs.length
+                      : undefined,
+                    failureReason:
+                      typeof rawAction.failureReason === "string"
+                        ? rawAction.failureReason
+                        : null,
+                    draftRoute: `/app/cases/${matterId}/draft`,
+                  }
+                : undefined;
+            const referent = validation.referentResolution as
+              | {
+                  status?: string;
+                  clarificationPrompt?: string;
+                  candidates?: Array<{ label: string; entityType: string }>;
+                }
+              | undefined;
+            const completionStatus = String(validation.completionStatus ?? "");
+            const factualityTypes = (() => {
+              const contract = validation.factualityContract as
+                | { assertions?: Array<{ type?: string }> }
+                | undefined;
+              const types = (contract?.assertions ?? [])
+                .map((a) => a.type)
+                .filter((t): t is string => typeof t === "string" && t.length > 0);
+              return types.length ? [...new Set(types)] : undefined;
+            })();
+            const ux: AskUxPayload | undefined = (() => {
+              if (referent?.status === "AMBIGUOUS" && referent.candidates?.length) {
+                return {
+                  turnKind: "ambiguity",
+                  ambiguity: {
+                    prompt: referent.clarificationPrompt ?? "Which one do you mean?",
+                    choices: referent.candidates.map((c) => ({
+                      label: c.label,
+                      entityType: c.entityType,
+                    })),
+                  },
+                  factualityTypes,
+                };
+              }
+              if (action?.pendingActionId) {
+                return {
+                  turnKind:
+                    action.actionStatus === "COMPLETED" ? "action_result" : "action_preview",
+                  action,
+                  factualityTypes,
+                  navigation:
+                    action.actionClass === "NAVIGATION" &&
+                    typeof previewPayload.route === "string"
+                      ? {
+                          kind: String(previewPayload.kind ?? "NAVIGATE"),
+                          route: previewPayload.route,
+                          label: String(previewPayload.label ?? "item"),
+                        }
+                      : undefined,
+                };
+              }
+              if (factualityTypes?.length) return { turnKind: "answer", factualityTypes };
+              return undefined;
+            })();
             return {
               id: m.id,
               role: m.role,
@@ -236,15 +346,12 @@ export default function CaseChatThreadPage() {
               artifactId: art?.id,
               needsMoreDocuments: Boolean(validation.needsMoreDocuments),
               provenance: validation.provenance as ProvenanceSummary | undefined,
-              factualityTypes: (() => {
-                const contract = validation.factualityContract as
-                  | { assertions?: Array<{ type?: string }> }
-                  | undefined;
-                const types = (contract?.assertions ?? [])
-                  .map((a) => a.type)
-                  .filter((t): t is string => typeof t === "string" && t.length > 0);
-                return types.length ? [...new Set(types)] : undefined;
-              })(),
+              factualityTypes,
+              cancelled:
+                completionStatus === "cancelled" ||
+                action?.actionStatus === "CANCELLED" ||
+                /\[Generation stopped\]/i.test(String(m.content ?? "")),
+              ux,
             } satisfies ChatTurn;
           }),
         );
@@ -317,7 +424,12 @@ export default function CaseChatThreadPage() {
   }
 
 
-  async function send(opts?: { continueToken?: string | null; questionOverride?: string }) {
+  async function send(opts?: {
+    continueToken?: string | null;
+    questionOverride?: string;
+    /** Retry after failure — same conversation, do not duplicate the user turn. */
+    skipUserTurn?: boolean;
+  }) {
     const q = (opts?.questionOverride ?? question).trim();
     if (!q && !opts?.continueToken) return;
     const text = q || lastQuestionRef.current;
@@ -329,7 +441,7 @@ export default function CaseChatThreadPage() {
     setLiveAnswer("");
     setContinueToken(null);
     lastQuestionRef.current = text;
-    if (!opts?.continueToken) {
+    if (!opts?.continueToken && !opts?.skipUserTurn) {
       setQuestion("");
       setTurns((prev) => [...prev, { id: `u-${Date.now()}`, role: "user", content: text }]);
     }
@@ -345,6 +457,8 @@ export default function CaseChatThreadPage() {
     let unresolvedQuestions: string[] | undefined;
     let needsMoreDocuments = false;
     let wasStopped = false;
+    let uxPayload: AskUxPayload | undefined;
+    let factualityTypes: string[] | undefined;
 
     try {
       const res = await fetch(`/api/v1/matters/${matterId}/ask`, {
@@ -367,6 +481,9 @@ export default function CaseChatThreadPage() {
       const contentType = res.headers.get("content-type") ?? "";
       if (!res.ok) {
         const data = await res.json().catch(() => null);
+        if (data?.error?.code === "DENY_GUEST_ASK") {
+          throw new Error(data?.error?.message ?? GUEST_COMMAND_CENTER_MESSAGE);
+        }
         throw new Error(data?.error?.message ?? USER_FACING_ASK_ERROR);
       }
 
@@ -380,7 +497,8 @@ export default function CaseChatThreadPage() {
           if (event.type === "source_added") {
             const item = streamSourceToDrawerItem(event);
             liveSources.push(item);
-            setDrawerItems([...liveSources]);
+            const safe = filterRenderableMatterSources(liveSources, { matterId });
+            setDrawerItems(safe);
             setDrawerOpen(true);
           }
           if (event.type === "provenance_ready") {
@@ -390,6 +508,8 @@ export default function CaseChatThreadPage() {
             finalAnswer = event.answer;
             artifactId = event.artifactId;
             provenance = event.provenance;
+            uxPayload = event.ux;
+            factualityTypes = event.ux?.factualityTypes;
           }
           if (event.type === "continue_available") {
             clearHardAbortTimer();
@@ -418,10 +538,13 @@ export default function CaseChatThreadPage() {
         artifactId = qa.artifact?.id;
         provenance = qa.provenance ?? qa.artifact?.validation?.provenance;
         needsMoreDocuments = Boolean(qa.needsMoreDocuments);
-        liveSources.push(...sourcesFromAnswer(answer?.sources));
+        liveSources.push(
+          ...filterRenderableMatterSources(sourcesFromAnswer(answer?.sources), { matterId }),
+        );
       }
 
-      if (finalAnswer || liveSources.length || provenance || wasStopped) {
+      const safeSources = filterRenderableMatterSources(liveSources, { matterId });
+      if (finalAnswer || safeSources.length || provenance || wasStopped) {
         setTurns((prev) => [
           ...prev,
           {
@@ -429,12 +552,15 @@ export default function CaseChatThreadPage() {
             role: "assistant",
             content: finalAnswer || liveAnswer || "[Generation stopped]",
             evidenceState: wasStopped ? "insufficient" : evidenceState,
-            sources: liveSources.length ? liveSources : undefined,
+            sources: safeSources.length ? safeSources : undefined,
             assumptions,
             unresolvedQuestions,
             artifactId,
             needsMoreDocuments,
             provenance,
+            factualityTypes,
+            cancelled: wasStopped,
+            ux: wasStopped ? { turnKind: "cancelled", factualityTypes } : uxPayload,
           },
         ]);
       }
@@ -449,7 +575,11 @@ export default function CaseChatThreadPage() {
             id: `stopped-${Date.now()}`,
             role: "assistant",
             content: liveAnswer || "[Generation stopped]",
-            sources: liveSources.length ? liveSources : undefined,
+            sources: liveSources.length
+              ? filterRenderableMatterSources(liveSources, { matterId })
+              : undefined,
+            cancelled: true,
+            ux: { turnKind: "cancelled" },
           },
         ]);
       } else {
@@ -480,7 +610,22 @@ export default function CaseChatThreadPage() {
           </Link>
         }
       />
-      {error ? <ErrorState message={error} /> : null}
+      {error ? (
+        <ErrorState
+          message={error}
+          onRetry={
+            lastQuestionRef.current
+              ? () => {
+                  setError("");
+                  void send({
+                    questionOverride: lastQuestionRef.current,
+                    skipUserTurn: true,
+                  });
+                }
+              : undefined
+          }
+        />
+      ) : null}
       <div className="grid min-h-[28rem] gap-3 lg:grid-cols-[15rem_minmax(0,1fr)]">
         <aside className="hidden overflow-hidden rounded-xl border border-line bg-white/80 lg:block">
           <p className="border-b border-line px-3 py-2 text-[11px] font-semibold uppercase tracking-wide text-ink/45">
@@ -530,13 +675,16 @@ export default function CaseChatThreadPage() {
                 <p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-ink/45">
                   {t.role === "user" ? "You" : "Nyaya"}
                 </p>
+                {t.role === "assistant" && t.cancelled ? <CancelledTurnBanner /> : null}
                 {t.role === "assistant" && t.evidenceState ? (
                   <div className="mb-2">
                     <EvidenceStateBadge state={t.evidenceState} />
                   </div>
                 ) : null}
-                {t.role === "assistant" && t.factualityTypes?.length ? (
-                  <FactualityAssertionBadges types={t.factualityTypes} />
+                {t.role === "assistant" && (t.factualityTypes ?? t.ux?.factualityTypes)?.length ? (
+                  <FactualityAssertionBadges
+                    types={t.factualityTypes ?? t.ux?.factualityTypes}
+                  />
                 ) : null}
                 {t.role === "assistant" && t.provenance ? (
                   <div className="mb-2">
@@ -544,6 +692,31 @@ export default function CaseChatThreadPage() {
                   </div>
                 ) : null}
                 <p className="whitespace-pre-wrap">{t.content}</p>
+                {t.role === "assistant" && t.ux?.ambiguity?.choices?.length ? (
+                  <AmbiguityChooser
+                    prompt={t.ux.ambiguity.prompt}
+                    choices={t.ux.ambiguity.choices}
+                    disabled={busy}
+                    onChoose={(label) => void send({ questionOverride: label })}
+                  />
+                ) : null}
+                {t.role === "assistant" && t.ux?.navigation ? (
+                  <NavigationActionLink
+                    matterId={matterId}
+                    label={t.ux.navigation.label}
+                    route={t.ux.navigation.route}
+                    kind={t.ux.navigation.kind}
+                  />
+                ) : null}
+                {t.role === "assistant" && t.ux?.action ? (
+                  <ActionConfirmationCard
+                    matterId={matterId}
+                    action={t.ux.action}
+                    disabled={busy}
+                    onConfirm={(phrase) => void send({ questionOverride: phrase })}
+                    onCancel={(phrase) => void send({ questionOverride: phrase })}
+                  />
+                ) : null}
                 {isInsufficient(t.evidenceState) ? (
                   <p className="mt-2 rounded border border-line bg-black/[0.02] px-3 py-2 text-xs text-ink/65">
                     {
@@ -599,7 +772,7 @@ export default function CaseChatThreadPage() {
                 {t.sources?.length ? (
                   <div className="mt-2 flex flex-wrap items-center gap-2">
                     <span className="text-[11px] font-semibold uppercase tracking-wide text-ink/45">
-                      Sources
+                      Sources ({t.sources.length})
                     </span>
                     {t.sources.map((src, i) => (
                       <SourceMarker
@@ -611,9 +784,10 @@ export default function CaseChatThreadPage() {
                     <button
                       type="button"
                       className="text-xs font-semibold text-accent underline"
+                      aria-label={`Open ${t.sources.length} sources`}
                       onClick={() => openSources(t.sources ?? [], t.sources?.[0]?.id)}
                     >
-                      View source
+                      View sources
                     </button>
                     {(t.provenance?.sourceScope ?? "case") !== "legal_research" &&
                     (t.provenance?.sourceScope ?? "case") !== "web" ? (

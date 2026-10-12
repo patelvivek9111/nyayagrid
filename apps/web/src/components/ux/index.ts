@@ -4,7 +4,7 @@ export { GuideChrome } from "./guide-chrome";
 export { CaseHeader, CaseTabs, CaseWorkspaceChrome } from "./case-chrome";
 export { CaseChip, ChatComposer, SourceMarker, type CaseOption } from "./chat-composer";
 export { SourceScopeSelector } from "./source-scope-selector";
-export { AskProgress, progressFromAskEvents } from "./ask-progress";
+export { AskProgress, progressFromAskEvents, askProgressIsTerminal } from "./ask-progress";
 export { ProvenanceBadge } from "./provenance-badge";
 export { ExecutionStrategyControl } from "./execution-strategy-control";
 export {
@@ -15,6 +15,14 @@ export {
   type SourceDrawerItem,
   type SourceDrawerCategory,
 } from "./source-drawer";
+export {
+  AmbiguityChooser,
+  ActionConfirmationCard,
+  NavigationActionLink,
+  CancelledTurnBanner,
+  type CommandCenterActionUx,
+  type AmbiguityChoice,
+} from "./command-center-cards";
 export {
   VerifiedBadge,
   SuggestedBadge,

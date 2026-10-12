@@ -2,6 +2,7 @@
 
 import type { AskProgressItem, AskStreamEvent } from "@nyayagrid/ai";
 import { cx } from "@nyayagrid/ui";
+import { stageFromAskStreamEventType } from "../../lib/command-center-ux";
 
 function statusGlyph(status: AskProgressItem["status"]): string {
   if (status === "done") return "✓";
@@ -13,6 +14,7 @@ function statusGlyph(status: AskProgressItem["status"]): string {
 
 /**
  * Reduce stream events into factual progress rows — no chain-of-thought.
+ * Labels map to runtime-supported stages only (Phase 5).
  */
 export function progressFromAskEvents(events: AskStreamEvent[]): AskProgressItem[] {
   const byId = new Map<string, AskProgressItem>();
@@ -21,17 +23,28 @@ export function progressFromAskEvents(events: AskStreamEvent[]): AskProgressItem
   };
 
   for (const event of events) {
+    const stage = stageFromAskStreamEventType(event.type);
     switch (event.type) {
       case "request_started":
-        upsert({ id: "request", label: "Request started", status: "done" });
+        upsert({
+          id: "request",
+          label: "Request accepted",
+          status: "done",
+          detail: stage ?? undefined,
+        });
         break;
       case "retrieval_started":
-        upsert({ id: "retrieval", label: event.label, status: "active" });
+        upsert({
+          id: "retrieval",
+          label: "Loading matter context…",
+          status: "active",
+          detail: stage ?? undefined,
+        });
         break;
       case "retrieval_completed":
         upsert({
           id: "retrieval",
-          label: event.label,
+          label: "Matter sources retrieved",
           status: "done",
           detail: `${event.passagesFound} passage${event.passagesFound === 1 ? "" : "s"}`,
         });
@@ -39,20 +52,20 @@ export function progressFromAskEvents(events: AskStreamEvent[]): AskProgressItem
       case "related_retrieval_started":
         upsert({
           id: "related",
-          label: `Related retrieval (${event.reason})`,
+          label: "Retrieving related matter context…",
           status: "active",
         });
         break;
       case "related_retrieval_completed":
         upsert({
           id: "related",
-          label: `Related retrieval (${event.reason})`,
+          label: "Related context ready",
           status: "done",
           detail: `+${event.passagesAdded}`,
         });
         break;
       case "amendment_check_started":
-        upsert({ id: "amendment", label: "Checking amendments", status: "active" });
+        upsert({ id: "amendment", label: "Checking cited authorities…", status: "active" });
         break;
       case "amendment_check_completed":
         upsert({
@@ -62,7 +75,7 @@ export function progressFromAskEvents(events: AskStreamEvent[]): AskProgressItem
         });
         break;
       case "contradiction_check_started":
-        upsert({ id: "contradiction", label: "Checking conflicts", status: "active" });
+        upsert({ id: "contradiction", label: "Checking conflicts…", status: "active" });
         break;
       case "contradiction_check_completed":
         upsert({
@@ -72,7 +85,7 @@ export function progressFromAskEvents(events: AskStreamEvent[]): AskProgressItem
         });
         break;
       case "citation_check_started":
-        upsert({ id: "citations", label: "Checking citations", status: "active" });
+        upsert({ id: "citations", label: "Checking cited authorities…", status: "active" });
         break;
       case "citation_check_completed":
         upsert({
@@ -83,18 +96,37 @@ export function progressFromAskEvents(events: AskStreamEvent[]): AskProgressItem
         });
         break;
       case "generation_started":
-        upsert({ id: "generation", label: "Generating answer", status: "active" });
+        upsert({
+          id: "generation",
+          label: "Preparing answer…",
+          status: "active",
+          detail: stage ?? undefined,
+        });
         break;
-      case "generation_completed":
-        upsert({ id: "generation", label: "Answer ready", status: "done" });
+      case "generation_completed": {
+        const awaiting = event.ux?.action?.confirmationRequired &&
+          (event.ux.action.actionStatus === "AWAITING_CONFIRMATION" ||
+            event.ux.action.actionStatus === "PREVIEW");
+        upsert({
+          id: "generation",
+          label: awaiting ? "Waiting for confirmation…" : "Answer ready",
+          status: awaiting ? "warning" : "done",
+          detail: awaiting ? "WAITING_FOR_CONFIRMATION" : "COMPLETED",
+        });
         break;
+      }
       case "generation_stopped":
-        upsert({ id: "generation", label: "Generation stopped", status: "warning" });
+        upsert({
+          id: "generation",
+          label: "Cancelled",
+          status: "warning",
+          detail: "CANCELLED",
+        });
         break;
       case "generation_failed":
         upsert({
           id: "generation",
-          label: "Generation failed",
+          label: "Failed",
           status: "error",
           detail: event.message,
         });
@@ -107,6 +139,16 @@ export function progressFromAskEvents(events: AskStreamEvent[]): AskProgressItem
   return [...byId.values()];
 }
 
+/** True only when a completed/failed/cancelled terminal event has arrived. */
+export function askProgressIsTerminal(events: AskStreamEvent[]): boolean {
+  return events.some(
+    (e) =>
+      e.type === "generation_completed" ||
+      e.type === "generation_stopped" ||
+      e.type === "generation_failed",
+  );
+}
+
 export function AskProgress({
   items,
   events,
@@ -116,8 +158,14 @@ export function AskProgress({
 }) {
   const rows = items ?? (events ? progressFromAskEvents(events) : []);
   if (rows.length === 0) return null;
+  const terminal = events ? askProgressIsTerminal(events) : true;
   return (
-    <ul className="space-y-1 rounded-lg border border-line bg-black/[0.015] px-3 py-2 text-xs text-ink/70">
+    <ul
+      className="space-y-1 rounded-lg border border-line bg-black/[0.015] px-3 py-2 text-xs text-ink/70"
+      aria-live="polite"
+      aria-busy={!terminal}
+      aria-label="Ask progress"
+    >
       {rows.map((row) => (
         <li key={row.id} className="flex items-start gap-2">
           <span
@@ -135,7 +183,9 @@ export function AskProgress({
           </span>
           <span>
             <span className="font-semibold text-ink/80">{row.label}</span>
-            {row.detail ? <span className="text-ink/50"> · {row.detail}</span> : null}
+            {row.detail && !["REQUEST_ACCEPTED", "RETRIEVING_MATTER", "CONTEXT_LOADING", "FINALIZING", "COMPLETED", "CANCELLED", "WAITING_FOR_CONFIRMATION"].includes(row.detail) ? (
+              <span className="text-ink/50"> · {row.detail}</span>
+            ) : null}
           </span>
         </li>
       ))}

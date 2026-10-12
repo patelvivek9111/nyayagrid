@@ -103,7 +103,7 @@ export function EvidenceStateBadge({ state }: { state?: string | null }) {
 
 const FACTUALITY_BADGE_COPY: Record<string, string> = {
   FACT: "Record fact",
-  SUPPORTED_INFERENCE: "Inference",
+  SUPPORTED_INFERENCE: "Supported inference",
   CONFLICT: "Conflict",
   UNKNOWN: "Not established",
   UNSUPPORTED: "Unsupported by current record",
