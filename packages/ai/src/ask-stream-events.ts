@@ -53,6 +53,41 @@ export type AskCoverageRow = {
   detail?: string;
 };
 
+/** Lightweight Command Center UX payload — no hidden reasoning; optional on completion. */
+export type AskUxPayload = {
+  factualityTypes?: string[];
+  turnKind?:
+    | "answer"
+    | "ambiguity"
+    | "action_preview"
+    | "action_result"
+    | "navigation"
+    | "prohibited"
+    | "cancelled";
+  ambiguity?: {
+    prompt: string;
+    choices: Array<{ label: string; entityType: string }>;
+  };
+  action?: {
+    pendingActionId: string;
+    actionType: string;
+    actionClass: string;
+    actionStatus: string;
+    workflowStatus?: string;
+    confirmationRequired: boolean;
+    summary?: string;
+    targetLabel?: string;
+    sourceCount?: number;
+    failureReason?: string | null;
+    draftRoute?: string | null;
+  };
+  navigation?: {
+    kind: string;
+    route: string;
+    label: string;
+  };
+};
+
 export type AskStreamEvent =
   | {
       type: "request_started";
@@ -148,6 +183,8 @@ export type AskStreamEvent =
       messageId?: string;
       status: "completed";
       provenance: ProvenanceSummary;
+      /** Phase 5 Command Center UX — structured, no chain-of-thought. */
+      ux?: AskUxPayload;
       at: string;
     }
   | {

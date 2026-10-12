@@ -193,6 +193,16 @@ export function isConfirmationUtterance(question: string): boolean {
   );
 }
 
+/** Explicit cancel of a pending preview — never executes the write. */
+export function isCancelUtterance(question: string): boolean {
+  const q = question.trim();
+  return (
+    /^(cancel|never mind|nevermind|dismiss|forget it)([.,!\s]|$)/i.test(q) ||
+    /^(don'?t|do not)\s+(save|create|confirm|proceed)\b/i.test(q) ||
+    /^cancel (that|it|this|the (draft|task|preview|action))\b/i.test(q)
+  );
+}
+
 export function detectProhibitedAutonomousAction(question: string): string | null {
   if (/\b(send|email|mail)\b.+\b(counsel|client|court|opposing)\b/i.test(question)) {
     return "sendEmail";
@@ -749,6 +759,12 @@ export function collectPendingActionsFromValidations(
       action.actionStatus === "PROHIBITED"
     ) {
       completedIds.add(action.pendingActionId);
+      const extra = action.executionResult?.cancelledPendingActionIds;
+      if (Array.isArray(extra)) {
+        for (const id of extra) {
+          if (typeof id === "string" && id) completedIds.add(id);
+        }
+      }
       continue;
     }
     if (action.actionStatus !== "AWAITING_CONFIRMATION" && action.actionStatus !== "PREVIEW") {

@@ -101,7 +101,7 @@ export type FactualityContract = z.infer<typeof factualityContractSchema>;
 
 export const FACTUALITY_UI_LABELS: Record<FactualityType, string> = {
   FACT: "Record fact",
-  SUPPORTED_INFERENCE: "Inference",
+  SUPPORTED_INFERENCE: "Supported inference",
   CONFLICT: "Conflict",
   UNKNOWN: "Not established",
   UNSUPPORTED: "Unsupported by current record",

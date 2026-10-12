@@ -6,3 +6,4 @@ export * from "./conversation-context";
 export * from "./conversational-context-router";
 export * from "./conversational-referent-resolver";
 export * from "./conversational-workflow-actions";
+export * from "./conversational-ux-payload";

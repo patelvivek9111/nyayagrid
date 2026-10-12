@@ -31,9 +31,11 @@ import {
   createPendingActionRecord,
   executeConfirmedConversationalAction,
   formatActionPreviewAnswer,
+  isCancelUtterance,
   validateActionConfirmation,
   type ConversationalActionRecord,
 } from "./conversational-workflow-actions";
+import { buildAskUxPayload } from "./conversational-ux-payload";
 import {
   assessNeedMoreDocuments,
   assessRetrievedEvidence,
@@ -1293,6 +1295,11 @@ export async function askNyayaAboutMatter(params: {
         messageId: assistantMessage?.id,
         status: "completed",
         provenance,
+        ux: buildAskUxPayload({
+          matterId: params.matterId,
+          conversationalAction: paramsFinish.action,
+          referentResolution,
+        }),
         at: nowIso(),
       });
       return {
@@ -1426,6 +1433,27 @@ export async function askNyayaAboutMatter(params: {
         unresolved: executed.failureReason ? [executed.failureReason] : [],
       });
     };
+
+    // Phase 5 — explicit Cancel dismisses pending previews without executing writes.
+    if (isCancelUtterance(params.question) && priorPendingActions.length > 0) {
+      const cancelledIds = priorPendingActions.map((a) => a.pendingActionId);
+      const head = priorPendingActions[0]!;
+      return await finishWorkflowAnswer({
+        answer:
+          cancelledIds.length === 1
+            ? "Cancelled the pending action preview. Nothing was saved."
+            : `Cancelled ${cancelledIds.length} pending action previews. Nothing was saved.`,
+        action: {
+          ...head,
+          actionStatus: "CANCELLED",
+          workflowStatus: "CANCELLED",
+          confirmationRequired: false,
+          failureReason: "Cancelled by user",
+          executionResult: { cancelledPendingActionIds: cancelledIds },
+        },
+        unresolved: [],
+      });
+    }
 
     if (workflowClassification.actionType === "CONFIRM_PENDING") {
       return await tryConfirmPending(priorPendingActions);
@@ -1967,6 +1995,10 @@ export async function askNyayaAboutMatter(params: {
         messageId: assistantMessage?.id,
         status: "completed",
         provenance: clarifyProvenance,
+        ux: buildAskUxPayload({
+          matterId: params.matterId,
+          referentResolution,
+        }),
         at: nowIso(),
       });
       return {
@@ -2725,6 +2757,12 @@ export async function askNyayaAboutMatter(params: {
       messageId: assistantMessage?.id,
       status: "completed",
       provenance,
+      ux: buildAskUxPayload({
+        matterId: params.matterId,
+        factualityTypes: (factualityContract?.assertions ?? []).map((a) => String(a.type)),
+        conversationalAction,
+        referentResolution,
+      }),
       at: nowIso(),
     });
 
