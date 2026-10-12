@@ -13,6 +13,12 @@ import {
   type ConversationalRouterPlan,
 } from "./conversational-context-router";
 import {
+  ambiguityAnswerText,
+  formatReferentResolutionForPrompt,
+  resolveConversationalReferents,
+  type ReferentResolutionResult,
+} from "./conversational-referent-resolver";
+import {
   assessNeedMoreDocuments,
   assessRetrievedEvidence,
   assertSourceScopeInvariants,
@@ -665,6 +671,7 @@ export async function askNyayaAboutMatter(params: {
   let routerPlan: ConversationalRouterPlan | null = null;
   let premiseCheck: PremiseCheck | null = null;
   let factualityContract: FactualityContract | null = null;
+  let referentResolution: ReferentResolutionResult | null = null;
 
   try {
     throwIfAborted();
@@ -1071,13 +1078,86 @@ export async function askNyayaAboutMatter(params: {
       });
     }
 
-    // Phase 2 bounded context router — selects domains; whole-matter suppresses overlaps.
-    routerPlan = planConversationalContext({
+    // Phase 3 — assemble prior conversation + resolve referents BEFORE domain routing.
+    let conversationIdResolvedEarly = conversationId;
+    if (!conversationIdResolvedEarly) {
+      const [created] = await params.db
+        .insert(conversations)
+        .values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          createdByUserId: params.userId,
+          title: params.question.slice(0, 120),
+        })
+        .returning();
+      conversationIdResolvedEarly = created!.id;
+      conversationId = conversationIdResolvedEarly;
+    } else {
+      const existing = await params.db.query.conversations.findFirst({
+        where: (table, ops) =>
+          ops.and(
+            ops.eq(table.id, conversationIdResolvedEarly!),
+            ops.eq(table.organizationId, params.organizationId),
+            ops.eq(table.matterId, params.matterId),
+          ),
+      });
+      if (!existing) throw new Error("Conversation not found in matter scope");
+    }
+
+    try {
+      conversationAskContext = await assembleConversationAskContext(params.db, {
+        organizationId: params.organizationId,
+        matterId: params.matterId,
+        conversationId: conversationIdResolvedEarly!,
+        currentQuestion: params.question,
+      });
+      if (conversationAskContext) {
+        conversationWorkingState = conversationAskContext.workingState;
+      }
+    } catch {
+      conversationAskContext = null;
+    }
+
+    const priorAssistant = [...(conversationAskContext?.recentTurns ?? [])]
+      .reverse()
+      .find((t) => t.role === "assistant" && t.completionStatus === "completed");
+    referentResolution = resolveConversationalReferents({
       question: params.question,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      workingState: conversationWorkingState,
+      recentTurns: conversationAskContext?.recentTurns ?? [],
+      allowedSourceIds: conversationWorkingState.activeSourceIds,
+      priorStructured: priorAssistant
+        ? {
+            sourceRefs: priorAssistant.sourceIds,
+            authorityRefs: priorAssistant.authorityIds,
+            messageId: priorAssistant.messageId,
+          }
+        : null,
+    });
+    if (referentResolution.status === "RESOLVED") {
+      conversationWorkingState = referentResolution.activeStateAfter;
+    }
+
+    // Phase 2 bounded context router — selects domains; whole-matter suppresses overlaps.
+    // Phase 3 forceDomains come from deterministic referent binding.
+    routerPlan = planConversationalContext({
+      question: referentResolution.routingQuestion || params.question,
       workspaceType: params.workspaceType,
       priorSourceCount: conversationWorkingState.activeSourceIds.length,
       priorAuthorityCount: conversationWorkingState.activeAuthorityIds.length,
+      forceDomains: referentResolution.forceDomains,
     });
+    if (referentResolution.diagnostics) {
+      referentResolution = {
+        ...referentResolution,
+        diagnostics: {
+          ...referentResolution.diagnostics,
+          routerDomainsAfterResolution: routerPlan.selectedDomains,
+        },
+      };
+    }
 
     let civilContextText: string | null = null;
     if (routerPlan.loaders.civil) {
@@ -1234,68 +1314,157 @@ export async function askNyayaAboutMatter(params: {
       ? formatEvidenceAssessmentForPrompt(assessmentResult.assessment)
       : null;
 
-    let conversationIdResolved = conversationId;
-    if (!conversationIdResolved) {
-      const [created] = await params.db
-        .insert(conversations)
+    // Conversation was assembled before routing (Phase 3). Refresh merge + diagnostics only.
+    const conversationIdResolved = conversationId;
+    if (!conversationIdResolved) throw new Error("Conversation id missing after early resolve");
+
+    if (conversationAskContext) {
+      askStructuredContextText = mergeAskContextText(
+        conversationAskContext.promptBlock,
+        week4ContextText,
+        suppressionContextText,
+        civilContextText,
+        discoveryContextText,
+        motionsCommsContextText,
+        wholeMatterContextText,
+        formatReferentResolutionForPrompt(referentResolution),
+      );
+      if (routerPlan) {
+        routerPlan = {
+          ...routerPlan,
+          diagnostics: {
+            ...routerPlan.diagnostics,
+            contextCharsEstimate:
+              (conversationAskContext.metrics.promptChars ?? 0) +
+              [civilContextText, discoveryContextText, motionsCommsContextText, wholeMatterContextText]
+                .filter(Boolean)
+                .join("").length,
+            sourceCount: conversationAskContext.metrics.sourceIdCount,
+            authorityCount: conversationAskContext.metrics.authorityIdCount,
+          },
+        };
+      }
+    } else {
+      askStructuredContextText = mergeAskContextText(
+        week4ContextText,
+        suppressionContextText,
+        civilContextText,
+        discoveryContextText,
+        motionsCommsContextText,
+        wholeMatterContextText,
+        formatReferentResolutionForPrompt(referentResolution),
+      );
+    }
+
+    // Fail closed on ambiguous referents — do not guess; return clarification.
+    if (referentResolution?.status === "AMBIGUOUS") {
+      const clarify = ambiguityAnswerText(referentResolution);
+      if (!isContinue) {
+        await params.db.insert(messages).values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          conversationId: conversationIdResolved,
+          role: "user",
+          content: params.question,
+          createdByUserId: params.userId,
+        });
+      }
+      const [assistantMessage] = await params.db
+        .insert(messages)
         .values({
           organizationId: params.organizationId,
           matterId: params.matterId,
+          conversationId: conversationIdResolved,
+          role: "assistant",
+          content: clarify,
           createdByUserId: params.userId,
-          title: params.question.slice(0, 120),
         })
         .returning();
-      conversationIdResolved = created!.id;
-      conversationId = conversationIdResolved;
-    } else {
-      const existing = await params.db.query.conversations.findFirst({
-        where: (table, ops) =>
-          ops.and(
-            ops.eq(table.id, conversationIdResolved!),
-            ops.eq(table.organizationId, params.organizationId),
-            ops.eq(table.matterId, params.matterId),
-          ),
-      });
-      if (!existing) throw new Error("Conversation not found in matter scope");
-    }
-
-    // Bounded multi-turn context — load BEFORE inserting the current user turn.
-    try {
-      conversationAskContext = await assembleConversationAskContext(params.db, {
-        organizationId: params.organizationId,
-        matterId: params.matterId,
-        conversationId: conversationIdResolved!,
-        currentQuestion: params.question,
-      });
-      if (conversationAskContext) {
-        conversationWorkingState = conversationAskContext.workingState;
-        askStructuredContextText = mergeAskContextText(
-          conversationAskContext.promptBlock,
-          week4ContextText,
-          suppressionContextText,
-          civilContextText,
-          discoveryContextText,
-          motionsCommsContextText,
-          wholeMatterContextText,
-        );
-        if (routerPlan) {
-          routerPlan = {
-            ...routerPlan,
-            diagnostics: {
-              ...routerPlan.diagnostics,
-              contextCharsEstimate:
-                (conversationAskContext.metrics.promptChars ?? 0) +
-                [civilContextText, discoveryContextText, motionsCommsContextText, wholeMatterContextText]
-                  .filter(Boolean)
-                  .join("").length,
-              sourceCount: conversationAskContext.metrics.sourceIdCount,
-              authorityCount: conversationAskContext.metrics.authorityIdCount,
+      const [artifact] = await params.db
+        .insert(aiArtifacts)
+        .values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          conversationId: conversationIdResolved,
+          messageId: assistantMessage!.id,
+          artifactType: "matter_qa",
+          question: params.question,
+          answer: clarify,
+          evidenceState: "insufficient",
+          provider: "nyaya_referent",
+          model: "deterministic",
+          promptVersion: NYAYA_PROMPT_VERSION,
+          retrievedChunkIds: [],
+          citations: [],
+          validation: {
+            completionStatus: "completed",
+            premiseCheck: null,
+            selectedDomains: routerPlan?.selectedDomains ?? [],
+            referentResolution: {
+              status: referentResolution.status,
+              referents: referentResolution.referents,
+              candidates: referentResolution.candidates,
+              clarificationPrompt: referentResolution.clarificationPrompt,
+              diagnostics: referentResolution.diagnostics,
+              draftIntentPreview: referentResolution.draftIntentPreview,
             },
-          };
-        }
-      }
-    } catch {
-      conversationAskContext = null;
+            conversationWorkingState: conversationWorkingState,
+            assertionReady: true,
+          },
+          createdByUserId: params.userId,
+        })
+        .returning();
+      emit({
+        type: "text_delta",
+        text: clarify,
+        at: nowIso(),
+      });
+      const clarifyProvenance = buildProvenanceSummary({
+        sourceScope,
+        caseSourceCount: 0,
+        webSourceCount: 0,
+        authoritySourceCount: 0,
+      });
+      emit({
+        type: "generation_completed",
+        answer: clarify,
+        conversationId: conversationIdResolved,
+        artifactId: artifact?.id,
+        messageId: assistantMessage?.id,
+        status: "completed",
+        provenance: clarifyProvenance,
+        at: nowIso(),
+      });
+      return {
+        conversationId: conversationIdResolved,
+        artifact,
+        answer: {
+          answer: clarify,
+          sources: [],
+          assumptions: [],
+          unresolvedQuestions: [referentResolution.clarificationPrompt ?? "Ambiguous referent"],
+          evidenceState: "insufficient" as const,
+        },
+        retrieved: passages,
+        provenance: clarifyProvenance,
+        sourceScope,
+        usageActionId,
+        needsMoreDocuments: false,
+        needMoreDocumentReasons: [],
+        usedFollowUpRetrieval: false,
+        usedVerifiedIntelligence: false,
+        usedGraph: false,
+        usedMemory: false,
+        usedProfessionalAnalysis: false,
+        usedLegalAuthority: false,
+        usedWeek4CombinedContext: false,
+        week4StructuredContext: null,
+        doctrineQuestion: false,
+        authorityResearchMissing: false,
+        authorityWarnings: [],
+        authorityValidation: null,
+        timings: { ...timings, totalMs: Date.now() - startedAsk },
+      };
     }
 
     // Premise check after prior working state is available — before generation.
@@ -1834,12 +2003,33 @@ export async function askNyayaAboutMatter(params: {
             authorityIds: [...(authority?.authorityIds ?? [])],
             authorityStates: conversationWorkingState.authorityStates,
             unresolvedQuestions: validated.answer.unresolvedQuestions,
+            entityHints: {
+              activeClaimIds: conversationWorkingState.activeClaimIds,
+              activeDefenseIds: conversationWorkingState.activeDefenseIds,
+              activeMotionIds: conversationWorkingState.activeMotionIds,
+              activeDiscoveryIds: conversationWorkingState.activeDiscoveryIds,
+              activeDeficiencyIds: conversationWorkingState.activeDeficiencyIds,
+              activeCommunicationIds: conversationWorkingState.activeCommunicationIds,
+              activeTaskIds: conversationWorkingState.activeTaskIds,
+            },
           }),
           conversationContextMetrics: conversationAskContext?.metrics ?? null,
           // Phase 2 factuality contract + router diagnostics (no migration).
           assertionReady: true,
           selectedDomains: routerPlan?.selectedDomains ?? [],
           premiseCheck,
+          // Phase 3 referent resolution diagnostics (no hidden reasoning).
+          referentResolution: referentResolution
+            ? {
+                status: referentResolution.status,
+                referents: referentResolution.referents,
+                candidates: referentResolution.candidates,
+                clarificationPrompt: referentResolution.clarificationPrompt,
+                diagnostics: referentResolution.diagnostics,
+                draftIntentPreview: referentResolution.draftIntentPreview,
+                forceDomains: referentResolution.forceDomains,
+              }
+            : null,
           factualityContract: (() => {
             const allowed = validated.answer.sources
               .map((s) => s.documentId)

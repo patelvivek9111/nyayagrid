@@ -53,7 +53,7 @@ const dbUrl = process.env.DATABASE_URL ?? "postgresql://nyayagrid:nyayagrid@loca
 const provenance = {
   documentId: null,
   sourceSpan: null,
-  extractionOrigin: "manual" as const,
+  extractionOrigin: "human" as const,
   humanEntered: true,
 };
 

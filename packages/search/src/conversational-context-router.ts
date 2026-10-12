@@ -174,10 +174,16 @@ export function planConversationalContext(params: {
   priorAuthorityCount?: number;
   /** Estimated chars already reserved for conversation context. */
   conversationContextChars?: number;
+  /**
+   * Phase 3 — domains forced by deterministic referent resolution.
+   * Does not expand whole-matter; only enables targeted loaders when narrow.
+   */
+  forceDomains?: readonly ConversationalDomain[];
 }): ConversationalRouterPlan {
   const started = Date.now();
   const q = params.question;
   const prosecution = params.workspaceType === "prosecution";
+  const forced = new Set(params.forceDomains ?? []);
 
   const selected: ConversationalDomain[] = [];
   const skipped: ConversationalDomain[] = [];
@@ -187,21 +193,31 @@ export function planConversationalContext(params: {
   const wholeMatterCandidate =
     !prosecution && isWholeMatterAskQuestion(q);
   const civilCandidate =
-    !prosecution && isCivilClaimsAskQuestion(q);
+    !prosecution &&
+    (isCivilClaimsAskQuestion(q) ||
+      forced.has("CLAIMS") ||
+      forced.has("DEFENSES") ||
+      forced.has("EVIDENCE") ||
+      forced.has("EVIDENCE_MATRIX"));
   const mcCandidate =
-    !prosecution && isMotionsCommunicationsAskQuestion(q);
+    !prosecution &&
+    (isMotionsCommunicationsAskQuestion(q) ||
+      forced.has("MOTIONS") ||
+      forced.has("COMMUNICATIONS"));
   const { motions: motionsHit, communications: commsHit } = splitMotionsVsComms(q);
+  const motionsForced = forced.has("MOTIONS") || motionsHit;
+  const commsForced = forced.has("COMMUNICATIONS") || commsHit;
 
   // Discovery gate shares "compel" / meet-and-confer with motions. Prefer motions when
   // the question is ruling/motion-centric and lacks discovery-specific vocabulary.
   const discoverySpecific =
     /\b(discovery|interrogator|request for production|\brfp\b|\brfa\b|bates|unanswered|supplemental production|deficiency|deficiencies)\b/i.test(
       q,
-    );
+    ) || forced.has("DISCOVERY");
   const discoveryCandidate =
     !prosecution &&
-    isDiscoveryAskQuestion(q) &&
-    (discoverySpecific || !(motionsHit || mcCandidate));
+    (forced.has("DISCOVERY") ||
+      (isDiscoveryAskQuestion(q) && (discoverySpecific || !(motionsForced || mcCandidate))));
 
   let wholeMatterUsed = false;
   let loadCivil = false;
@@ -237,31 +253,39 @@ export function planConversationalContext(params: {
 
     if (civilCandidate || wantsClaims(q) || wantsDefenses(q) || wantsEvidence(q) || wantsEvidenceMatrix(q)) {
       loadCivil = civilCandidate;
-      if (wantsClaims(q) || civilCandidate) selected.push("CLAIMS");
-      if (wantsDefenses(q) || (civilCandidate && /\bdefense\b/i.test(q))) selected.push("DEFENSES");
-      if (wantsEvidence(q) || wantsEvidenceMatrix(q) || civilCandidate) selected.push("EVIDENCE");
-      if (wantsEvidenceMatrix(q)) selected.push("EVIDENCE_MATRIX");
+      if (wantsClaims(q) || civilCandidate || forced.has("CLAIMS")) selected.push("CLAIMS");
+      if (wantsDefenses(q) || forced.has("DEFENSES") || (civilCandidate && /\bdefense\b/i.test(q))) {
+        selected.push("DEFENSES");
+      }
+      if (wantsEvidence(q) || wantsEvidenceMatrix(q) || civilCandidate || forced.has("EVIDENCE")) {
+        selected.push("EVIDENCE");
+      }
+      if (wantsEvidenceMatrix(q) || forced.has("EVIDENCE_MATRIX")) selected.push("EVIDENCE_MATRIX");
       if (civilCandidate) reasonCodes.push("CIVIL_GATE");
+      if (forced.has("CLAIMS") || forced.has("EVIDENCE")) reasonCodes.push("REFERENT_FORCE_CIVIL");
     }
 
     if (discoveryCandidate) {
       loadDiscovery = true;
       selected.push("DISCOVERY");
-      reasonCodes.push("DISCOVERY_GATE");
+      reasonCodes.push(forced.has("DISCOVERY") ? "REFERENT_FORCE_DISCOVERY" : "DISCOVERY_GATE");
     }
 
-    if (mcCandidate || motionsHit || commsHit) {
-      loadMotionsComms = mcCandidate;
-      if (motionsHit || mcCandidate) selected.push("MOTIONS");
-      if (commsHit || (mcCandidate && !motionsHit)) selected.push("COMMUNICATIONS");
+    if (mcCandidate || motionsForced || commsForced) {
+      loadMotionsComms = mcCandidate || forced.has("MOTIONS") || forced.has("COMMUNICATIONS");
+      if (motionsForced || mcCandidate) selected.push("MOTIONS");
+      if (commsForced || (mcCandidate && !motionsForced)) selected.push("COMMUNICATIONS");
       if (mcCandidate) reasonCodes.push("MOTIONS_COMMS_GATE");
+      if (forced.has("MOTIONS") || forced.has("COMMUNICATIONS")) {
+        reasonCodes.push("REFERENT_FORCE_MOTIONS_COMMS");
+      }
     }
   }
 
   // Secondary domains — advisory selection; loaders may already be elsewhere in Ask.
-  if (wantsTimeline(q)) {
+  if (wantsTimeline(q) || forced.has("TIMELINE")) {
     selected.push("TIMELINE");
-    reasonCodes.push("TIMELINE_HINT");
+    reasonCodes.push(forced.has("TIMELINE") ? "REFERENT_FORCE_TIMELINE" : "TIMELINE_HINT");
   } else {
     skipped.push("TIMELINE");
   }
@@ -273,23 +297,29 @@ export function planConversationalContext(params: {
     skipped.push("TASKS");
   }
 
-  const auth = wantsAuthorities(q) || wholeMatterUsed;
+  const auth = wantsAuthorities(q) || wholeMatterUsed || forced.has("AUTHORITIES");
   if (auth) {
     selected.push("AUTHORITIES");
-    reasonCodes.push(wantsAuthorities(q) ? "AUTHORITIES_HINT" : "AUTHORITIES_WITH_WHOLE_MATTER");
+    reasonCodes.push(
+      forced.has("AUTHORITIES")
+        ? "REFERENT_FORCE_AUTHORITIES"
+        : wantsAuthorities(q)
+          ? "AUTHORITIES_HINT"
+          : "AUTHORITIES_WITH_WHOLE_MATTER",
+    );
   } else {
     skipped.push("AUTHORITIES");
   }
 
-  if (wantsResearch(q)) {
+  if (wantsResearch(q) || forced.has("RESEARCH")) {
     selected.push("RESEARCH");
-    reasonCodes.push("RESEARCH_HINT");
+    reasonCodes.push(forced.has("RESEARCH") ? "REFERENT_FORCE_RESEARCH" : "RESEARCH_HINT");
   } else {
     skipped.push("RESEARCH");
   }
 
   let draftPreview = false;
-  if (wantsDraft(q)) {
+  if (wantsDraft(q) || forced.has("DRAFT")) {
     selected.push("DRAFT");
     draftPreview = true;
     reasonCodes.push("DRAFT_PREVIEW_ONLY");
