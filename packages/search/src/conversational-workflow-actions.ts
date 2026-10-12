@@ -169,8 +169,17 @@ function asRecord(value: unknown): Record<string, unknown> {
     : {};
 }
 
+/** Stable JSON for hashing — Postgres jsonb may reorder object keys on round-trip. */
+function stableStringify(value: unknown): string {
+  if (value === null || typeof value !== "object") return JSON.stringify(value);
+  if (Array.isArray(value)) return `[${value.map((v) => stableStringify(v)).join(",")}]`;
+  const obj = value as Record<string, unknown>;
+  const keys = Object.keys(obj).sort();
+  return `{${keys.map((k) => `${JSON.stringify(k)}:${stableStringify(obj[k])}`).join(",")}}`;
+}
+
 export function hashPreviewPayload(payload: Record<string, unknown>): string {
-  return createHash("sha256").update(JSON.stringify(payload)).digest("hex").slice(0, 32);
+  return createHash("sha256").update(stableStringify(payload)).digest("hex").slice(0, 32);
 }
 
 export function isConfirmationUtterance(question: string): boolean {
@@ -426,7 +435,12 @@ function detectNavigation(question: string): NavigationKind | null {
   if (/\b(open|show|take me to)\b.+\bmotion\b/i.test(question) || /\bopen the motion\b/i.test(question)) {
     return "OPEN_MOTION";
   }
-  if (/\b(open|show|take me to)\b.+\bdiscovery\b/i.test(question)) return "OPEN_DISCOVERY";
+  if (
+    /\b(open|show|take me to)\b.+\bdiscovery\b/i.test(question) ||
+    /\bopen\s+RFP\b/i.test(question)
+  ) {
+    return "OPEN_DISCOVERY";
+  }
   if (/\b(show|open).+\btimeline\b|\bshow this on the timeline\b/i.test(question)) {
     return "OPEN_TIMELINE";
   }
@@ -611,7 +625,7 @@ export function buildMemoryPreview(params: {
     .replace(/^save this as (an )?issue[:\s]*/i, "")
     .trim()
     .slice(0, 2000);
-  const credibilityUnsafe = /\b(lied|dishonest|unreliable witness)\b/i.test(content);
+  const credibilityUnsafe = /\b(lied|lying|liar|dishonest|unreliable witness)\b/i.test(content);
   const outcomeUnsafe = /\b(will win|guaranteed outcome|certain to)\b/i.test(content);
   const treatmentUnsafe = /\b(overruled|still good law|bad law)\b/i.test(content);
   const blocked = credibilityUnsafe || outcomeUnsafe || treatmentUnsafe;
@@ -715,6 +729,39 @@ export function loadPendingActionFromValidation(validation: unknown): Conversati
   return action;
 }
 
+/**
+ * Collect open pending actions from newest→oldest artifact validations.
+ * Completed/failed/cancelled ids suppress older matching pending rows.
+ */
+export function collectPendingActionsFromValidations(
+  validations: unknown[],
+): ConversationalActionRecord[] {
+  const completedIds = new Set<string>();
+  const pending: ConversationalActionRecord[] = [];
+  const seenPending = new Set<string>();
+  for (const raw of validations) {
+    const action = parseConversationalAction(asRecord(raw).conversationalAction);
+    if (!action) continue;
+    if (
+      action.actionStatus === "COMPLETED" ||
+      action.actionStatus === "FAILED" ||
+      action.actionStatus === "CANCELLED" ||
+      action.actionStatus === "PROHIBITED"
+    ) {
+      completedIds.add(action.pendingActionId);
+      continue;
+    }
+    if (action.actionStatus !== "AWAITING_CONFIRMATION" && action.actionStatus !== "PREVIEW") {
+      continue;
+    }
+    if (completedIds.has(action.pendingActionId)) continue;
+    if (seenPending.has(action.pendingActionId)) continue;
+    seenPending.add(action.pendingActionId);
+    pending.push(action);
+  }
+  return pending;
+}
+
 export type ConfirmationValidationResult =
   | { ok: true; pending: ConversationalActionRecord }
   | {
@@ -762,19 +809,17 @@ export function validateActionConfirmation(params: {
     };
   }
   const snap = action.activeSnapshot;
-  const claimDrift =
-    (snap.claims?.[0] &&
-      params.workingState.activeClaimIds[0] &&
-      snap.claims[0] !== params.workingState.activeClaimIds[0] &&
-      params.workingState.activeClaimIds[0] !== undefined &&
-      !snap.claims.includes(params.workingState.activeClaimIds[0])) ||
-    false;
-  const motionDrift =
-    (snap.motions?.[0] &&
-      params.workingState.activeMotionIds[0] &&
-      snap.motions[0] !== params.workingState.activeMotionIds[0] &&
-      !snap.motions.includes(params.workingState.activeMotionIds[0]!)) ||
-    false;
+  // Stale only when the preview's primary focus was replaced (original id no longer active).
+  const claimDrift = Boolean(
+    snap.claims?.[0] &&
+      params.workingState.activeClaimIds.length > 0 &&
+      !params.workingState.activeClaimIds.includes(snap.claims[0]!),
+  );
+  const motionDrift = Boolean(
+    snap.motions?.[0] &&
+      params.workingState.activeMotionIds.length > 0 &&
+      !params.workingState.activeMotionIds.includes(snap.motions[0]!),
+  );
   if (claimDrift || motionDrift) {
     return {
       ok: false,

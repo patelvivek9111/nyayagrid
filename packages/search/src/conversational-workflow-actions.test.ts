@@ -81,7 +81,7 @@ describe("Phase 4 conversational workflow actions", () => {
     });
     expect(ok.unsafe).toBe(false);
     const bad = buildMemoryPreview({
-      question: "Remember that the witness lied.",
+      question: "Remember that the witness is lying.",
       workingState: emptyWorkingState(),
       supportOk: false,
     });

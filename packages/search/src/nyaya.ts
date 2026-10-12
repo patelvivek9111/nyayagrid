@@ -27,10 +27,10 @@ import {
   buildTaskPreview,
   capabilityForAction,
   classifyConversationalAction,
+  collectPendingActionsFromValidations,
   createPendingActionRecord,
   executeConfirmedConversationalAction,
   formatActionPreviewAnswer,
-  loadPendingActionFromValidation,
   validateActionConfirmation,
   type ConversationalActionRecord,
 } from "./conversational-workflow-actions";
@@ -1354,10 +1354,11 @@ export async function askNyayaAboutMatter(params: {
       });
     }
 
-    // Load prior pending conversational action from latest assistant artifact (no migration).
-    let priorPending: ConversationalActionRecord | null = null;
+    // Load pending conversational actions from recent artifacts (no migration).
+    // Multiple AWAITING_CONFIRMATION rows → generic "yes" must fail closed.
+    let priorPendingActions: ConversationalActionRecord[] = [];
     try {
-      const [priorArtifact] = await params.db
+      const recentArtifacts = await params.db
         .select({ validation: aiArtifacts.validation })
         .from(aiArtifacts)
         .where(
@@ -1368,15 +1369,18 @@ export async function askNyayaAboutMatter(params: {
           ),
         )
         .orderBy(desc(aiArtifacts.createdAt))
-        .limit(1);
-      priorPending = loadPendingActionFromValidation(priorArtifact?.validation);
+        .limit(12);
+      priorPendingActions = collectPendingActionsFromValidations(
+        recentArtifacts.map((row) => row.validation),
+      );
     } catch {
-      priorPending = null;
+      priorPendingActions = [];
     }
+    const priorPending = priorPendingActions[0] ?? null;
 
-    const tryConfirmPending = async () => {
+    const tryConfirmPending = async (candidates: ConversationalActionRecord[]) => {
       const validation = validateActionConfirmation({
-        pendingActions: priorPending ? [priorPending] : [],
+        pendingActions: candidates,
         organizationId: params.organizationId,
         matterId: params.matterId,
         conversationId: conversationIdForWorkflow,
@@ -1391,10 +1395,13 @@ export async function askNyayaAboutMatter(params: {
         });
         return await finishWorkflowAnswer({
           answer,
-          action: priorPending
+          action: candidates[0]
             ? {
-                ...priorPending,
-                actionStatus: "ACTION_CONFIRMATION_STALE",
+                ...candidates[0],
+                actionStatus:
+                  validation.code === "ACTION_CONFIRMATION_STALE"
+                    ? "ACTION_CONFIRMATION_STALE"
+                    : candidates[0].actionStatus,
                 failureReason: validation.reason,
               }
             : null,
@@ -1421,22 +1428,26 @@ export async function askNyayaAboutMatter(params: {
     };
 
     if (workflowClassification.actionType === "CONFIRM_PENDING") {
-      return await tryConfirmPending();
+      return await tryConfirmPending(priorPendingActions);
     }
 
-    // Typed save phrases confirm matching pending preview when present.
-    if (
-      (workflowClassification.actionType === "DRAFT_SAVE" ||
-        workflowClassification.actionType === "RESEARCH_SAVE" ||
-        workflowClassification.actionType === "MEMORY_SAVE") &&
-      priorPending &&
-      (priorPending.actionType === workflowClassification.actionType ||
-        (workflowClassification.actionType === "DRAFT_SAVE" &&
-          priorPending.actionType === "DRAFT_GENERATE_PREVIEW") ||
-        (workflowClassification.actionType === "RESEARCH_SAVE" &&
-          priorPending.actionType === "RESEARCH_READ"))
-    ) {
-      return await tryConfirmPending();
+    // Typed save phrases confirm only matching pending previews (not unrelated pendings).
+    if (workflowClassification.actionType === "DRAFT_SAVE") {
+      const draftPendings = priorPendingActions.filter(
+        (a) =>
+          a.actionType === "DRAFT_SAVE" || a.actionType === "DRAFT_GENERATE_PREVIEW",
+      );
+      if (draftPendings.length > 0) return await tryConfirmPending(draftPendings);
+    }
+    if (workflowClassification.actionType === "RESEARCH_SAVE") {
+      const researchPendings = priorPendingActions.filter(
+        (a) => a.actionType === "RESEARCH_SAVE" || a.actionType === "RESEARCH_READ",
+      );
+      if (researchPendings.length > 0) return await tryConfirmPending(researchPendings);
+    }
+    if (workflowClassification.actionType === "MEMORY_SAVE") {
+      const memoryPendings = priorPendingActions.filter((a) => a.actionType === "MEMORY_SAVE");
+      if (memoryPendings.length > 0) return await tryConfirmPending(memoryPendings);
     }
 
     if (workflowClassification.actionClass === "NAVIGATION" && workflowClassification.navigationKind) {
