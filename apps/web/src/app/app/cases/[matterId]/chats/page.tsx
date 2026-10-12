@@ -97,8 +97,8 @@ export default function CaseChatsPage() {
   return (
     <div className="space-y-4">
       <IntelligenceHeader
-        title="Case Chats"
-        description="Conversations stay tied to this Case. Nyaya answers from the files you uploaded here."
+        title="Nyaya Command Center"
+        description="Persistent matter conversations. Nyaya evaluates the record — it does not invent facts or treat unsupported conclusions as true."
         actions={
           <Button
             type="button"
@@ -106,7 +106,7 @@ export default function CaseChatsPage() {
             disabled={busy}
             onClick={() => void createChat()}
           >
-            New chat
+            New conversation
           </Button>
         }
       />
@@ -144,11 +144,11 @@ export default function CaseChatsPage() {
           <div className="flex-1 px-4 py-4">
             {!loading && conversations.length === 0 ? (
               <EmptyState
-                title="Start a conversation about this case."
-                description="Ask Nyaya about this Case to create the first conversation."
+                title="Start a Command Center conversation"
+                description="Ask about matter status, claims, discovery, motions, or what to investigate next. Specialized ledgers stay available from the case menu."
               />
             ) : (
-              <p className="text-sm text-ink/60">Ask Nyaya about:</p>
+              <p className="text-sm text-ink/60">Ask Nyaya about this matter:</p>
             )}
             <ul className="mt-3 flex flex-wrap gap-2">
               {SUGGESTED_CHAT_PROMPTS.map((prompt) => (

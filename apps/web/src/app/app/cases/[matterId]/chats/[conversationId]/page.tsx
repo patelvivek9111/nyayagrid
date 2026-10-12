@@ -459,8 +459,8 @@ export default function CaseChatThreadPage() {
   return (
     <div className="space-y-3">
       <IntelligenceHeader
-        title="Case Chats"
-        description="Conversations stay tied to this Case. Nyaya's answers are drafts, not legal advice."
+        title="Nyaya Command Center"
+        description="Multi-turn matter conversation. Answers are drafts grounded in this case record — not legal advice."
         actions={
           <Link href={`/app/cases/${matterId}/chats`}>
             <Button type="button" variant="ghost">
