@@ -101,6 +101,42 @@ export function EvidenceStateBadge({ state }: { state?: string | null }) {
   return null;
 }
 
+const FACTUALITY_BADGE_COPY: Record<string, string> = {
+  FACT: "Record fact",
+  SUPPORTED_INFERENCE: "Inference",
+  CONFLICT: "Conflict",
+  UNKNOWN: "Not established",
+  UNSUPPORTED: "Unsupported by current record",
+};
+
+/** Compact badges for substantive factuality conclusions — not per-sentence labels. */
+export function FactualityAssertionBadges({
+  types,
+}: {
+  types?: string[] | null;
+}) {
+  if (!types?.length) return null;
+  const unique = [...new Set(types)].slice(0, 4);
+  return (
+    <div className="mb-2 flex flex-wrap gap-1.5" aria-label="Factuality">
+      {unique.map((type) => {
+        const label = FACTUALITY_BADGE_COPY[type] ?? type;
+        if (type === "FACT") return <VerifiedBadge key={type}>{label}</VerifiedBadge>;
+        if (type === "SUPPORTED_INFERENCE") {
+          return <SuggestedBadge key={type}>{label}</SuggestedBadge>;
+        }
+        if (type === "CONFLICT") {
+          return <DisputedBadge key={type}>{label}</DisputedBadge>;
+        }
+        if (type === "UNSUPPORTED") {
+          return <NeedsReviewBadge key={type}>{label}</NeedsReviewBadge>;
+        }
+        return <ArchivedBadge key={type}>{label}</ArchivedBadge>;
+      })}
+    </div>
+  );
+}
+
 export function EmptyState({
   title,
   description,

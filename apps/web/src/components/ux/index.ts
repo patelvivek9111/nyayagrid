@@ -23,6 +23,7 @@ export {
   ArchivedBadge,
   ConflictingEvidenceBadge,
   EvidenceStateBadge,
+  FactualityAssertionBadges,
   EmptyState,
   LoadingState,
   ErrorState,

@@ -12,6 +12,7 @@ import {
   ChatComposer,
   EvidenceStateBadge,
   ErrorState,
+  FactualityAssertionBadges,
   IntelligenceHeader,
   LoadingState,
   ProvenanceBadge,
@@ -34,6 +35,7 @@ type ChatTurn = {
   artifactId?: string;
   needsMoreDocuments?: boolean;
   provenance?: ProvenanceSummary;
+  factualityTypes?: string[];
 };
 
 function sourcesFromAnswer(sources: any[] | undefined): SourceDrawerItem[] {
@@ -234,6 +236,15 @@ export default function CaseChatThreadPage() {
               artifactId: art?.id,
               needsMoreDocuments: Boolean(validation.needsMoreDocuments),
               provenance: validation.provenance as ProvenanceSummary | undefined,
+              factualityTypes: (() => {
+                const contract = validation.factualityContract as
+                  | { assertions?: Array<{ type?: string }> }
+                  | undefined;
+                const types = (contract?.assertions ?? [])
+                  .map((a) => a.type)
+                  .filter((t): t is string => typeof t === "string" && t.length > 0);
+                return types.length ? [...new Set(types)] : undefined;
+              })(),
             } satisfies ChatTurn;
           }),
         );
@@ -523,6 +534,9 @@ export default function CaseChatThreadPage() {
                   <div className="mb-2">
                     <EvidenceStateBadge state={t.evidenceState} />
                   </div>
+                ) : null}
+                {t.role === "assistant" && t.factualityTypes?.length ? (
+                  <FactualityAssertionBadges types={t.factualityTypes} />
                 ) : null}
                 {t.role === "assistant" && t.provenance ? (
                   <div className="mb-2">

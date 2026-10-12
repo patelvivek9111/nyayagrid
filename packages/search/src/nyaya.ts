@@ -9,16 +9,22 @@ import {
   type ConversationWorkingState,
 } from "./conversation-context";
 import {
+  planConversationalContext,
+  type ConversationalRouterPlan,
+} from "./conversational-context-router";
+import {
   assessNeedMoreDocuments,
   assessRetrievedEvidence,
   assertSourceScopeInvariants,
   buildFollowUpRetrievalQuery,
+  buildFactualityContract,
   buildNyayaSystemPromptWithIntelligence,
   buildNyayaSystemPromptWithResearch,
   buildNyayaUserPrompt,
   buildNyayaUserPromptWithResearch,
   buildProvenanceSummary,
   chunkAnswerForStreaming,
+  constrainAnswerToPremiseCheck,
   constrainCitedAnswer,
   constrainUnsupportedFraudPremise,
   constrainUnsupportedStatusClaims,
@@ -27,7 +33,9 @@ import {
   createEnvWebSearchClient,
   createHttpPageFetcher,
   ensureMissingInstrumentDisclosure,
+  evaluatePremiseAgainstRecord,
   formatEvidenceAssessmentForPrompt,
+  formatFactualityContractForPrompt,
   formatResearchAuthorityChunks,
   getSourceScopedAbstentionCopy,
   newUsageActionId,
@@ -45,7 +53,9 @@ import {
   type AskStreamListener,
   type AskStreamSource,
   type EmbeddingProvider,
+  type FactualityContract,
   type GroundingPassage,
+  type PremiseCheck,
   type ProvenanceSummary,
   type ResearchAuthorityChunk,
   type RiskSignal,
@@ -652,6 +662,9 @@ export async function askNyayaAboutMatter(params: {
   let generationStarted = false;
   let conversationAskContext: AssembledConversationContext | null = null;
   let conversationWorkingState: ConversationWorkingState = emptyWorkingState();
+  let routerPlan: ConversationalRouterPlan | null = null;
+  let premiseCheck: PremiseCheck | null = null;
+  let factualityContract: FactualityContract | null = null;
 
   try {
     throwIfAborted();
@@ -1058,17 +1071,16 @@ export async function askNyayaAboutMatter(params: {
       });
     }
 
-    // When whole-matter Ask applies, skip overlapping domain loaders — whole-matter
-    // already assembles bounded civil/discovery/motions/comms summaries.
-    const wantsWholeMatterAsk =
-      isWholeMatterAskQuestion(params.question) && params.workspaceType !== "prosecution";
+    // Phase 2 bounded context router — selects domains; whole-matter suppresses overlaps.
+    routerPlan = planConversationalContext({
+      question: params.question,
+      workspaceType: params.workspaceType,
+      priorSourceCount: conversationWorkingState.activeSourceIds.length,
+      priorAuthorityCount: conversationWorkingState.activeAuthorityIds.length,
+    });
 
     let civilContextText: string | null = null;
-    if (
-      !wantsWholeMatterAsk &&
-      isCivilClaimsAskQuestion(params.question) &&
-      params.workspaceType !== "prosecution"
-    ) {
+    if (routerPlan.loaders.civil) {
       try {
         const civilReview = await loadCivilClaimsReview(params.db, {
           userId: params.userId,
@@ -1086,11 +1098,7 @@ export async function askNyayaAboutMatter(params: {
     }
 
     let discoveryContextText: string | null = null;
-    if (
-      !wantsWholeMatterAsk &&
-      isDiscoveryAskQuestion(params.question) &&
-      params.workspaceType !== "prosecution"
-    ) {
+    if (routerPlan.loaders.discovery) {
       try {
         const discoveryReview = await loadDiscoveryLedgerReview(params.db, {
           userId: params.userId,
@@ -1107,11 +1115,7 @@ export async function askNyayaAboutMatter(params: {
     }
 
     let motionsCommsContextText: string | null = null;
-    if (
-      !wantsWholeMatterAsk &&
-      isMotionsCommunicationsAskQuestion(params.question) &&
-      params.workspaceType !== "prosecution"
-    ) {
+    if (routerPlan.loaders.motionsComms) {
       try {
         const mcReview = await loadMatterMotionsCommunicationsReview(params.db, {
           userId: params.userId,
@@ -1128,7 +1132,7 @@ export async function askNyayaAboutMatter(params: {
     }
 
     let wholeMatterContextText: string | null = null;
-    if (wantsWholeMatterAsk) {
+    if (routerPlan.loaders.wholeMatter) {
       try {
         const wholeMatter = await loadWholeMatterIntelligence(params.db, {
           userId: params.userId,
@@ -1143,6 +1147,7 @@ export async function askNyayaAboutMatter(params: {
         wholeMatterContextText = null;
       }
     }
+
     // Conversation history is assembled after conversationId is resolved (below).
     // Placeholder; rebuilt once prior turns are loaded.
     let askStructuredContextText = mergeAskContextText(
@@ -1273,10 +1278,78 @@ export async function askNyayaAboutMatter(params: {
           motionsCommsContextText,
           wholeMatterContextText,
         );
+        if (routerPlan) {
+          routerPlan = {
+            ...routerPlan,
+            diagnostics: {
+              ...routerPlan.diagnostics,
+              contextCharsEstimate:
+                (conversationAskContext.metrics.promptChars ?? 0) +
+                [civilContextText, discoveryContextText, motionsCommsContextText, wholeMatterContextText]
+                  .filter(Boolean)
+                  .join("").length,
+              sourceCount: conversationAskContext.metrics.sourceIdCount,
+              authorityCount: conversationAskContext.metrics.authorityIdCount,
+            },
+          };
+        }
       }
     } catch {
       conversationAskContext = null;
     }
+
+    // Premise check after prior working state is available — before generation.
+    const priorHadClaimSupport = conversationWorkingState.issueLabels.some((l) =>
+      /claim|evidence/i.test(l),
+    );
+    premiseCheck = evaluatePremiseAgainstRecord({
+      question: params.question,
+      record: {
+        matterId: params.matterId,
+        organizationId: params.organizationId,
+        allowedSourceIds: conversationWorkingState.activeSourceIds,
+        authorities: conversationWorkingState.authorityStates.map((a) => ({
+          id: a.id,
+          resolution: a.resolution,
+          treatmentVerified: a.treatmentVerified,
+        })),
+        recordText: [
+          civilContextText,
+          discoveryContextText,
+          motionsCommsContextText,
+          wholeMatterContextText,
+        ]
+          .filter(Boolean)
+          .join("\n"),
+        propositionSupported: priorHadClaimSupport ? true : null,
+        propositionPartial: priorHadClaimSupport ? true : null,
+      },
+    });
+    const factualityPromptSeed = buildFactualityContract({
+      premiseCheck,
+      selectedDomains: routerPlan?.selectedDomains ?? [],
+      sourceRefs: conversationWorkingState.activeSourceIds,
+      authorityRefs: conversationWorkingState.activeAuthorityIds,
+      activeEntityRefs: [
+        ...conversationWorkingState.activeClaimIds,
+        ...conversationWorkingState.activeMotionIds,
+      ],
+      allowedSourceIds: conversationWorkingState.activeSourceIds,
+      contextDiagnostics: routerPlan
+        ? {
+            selectedDomains: routerPlan.selectedDomains,
+            skippedDomains: routerPlan.skippedDomains,
+            reasonCodes: routerPlan.reasonCodes,
+            wholeMatterUsed: routerPlan.wholeMatterUsed,
+            duplicateLoaderSuppressed: routerPlan.duplicateLoaderSuppressed,
+            contextChars: routerPlan.diagnostics.contextCharsEstimate,
+            sourceCount: routerPlan.diagnostics.sourceCount,
+            authorityCount: routerPlan.diagnostics.authorityCount,
+            routerLatencyMs: routerPlan.diagnostics.routerLatencyMs,
+          }
+        : undefined,
+    });
+    factualityContract = factualityPromptSeed;
 
     if (!isContinue) {
       await params.db.insert(messages).values({
@@ -1318,7 +1391,10 @@ export async function askNyayaAboutMatter(params: {
         ? buildNyayaSystemPromptWithResearch()
         : buildNyayaSystemPromptWithIntelligence();
 
-    const userPrompt = flags.webEnabled
+    const factualityPromptText = factualityContract
+      ? formatFactualityContractForPrompt(factualityContract)
+      : null;
+    const userPromptBase = flags.webEnabled
       ? `${jurisdictionBlock}Question: ${params.question}\n${webAuthorityBlock}\nSources:\n${passages
           .map(
             (p) =>
@@ -1345,6 +1421,9 @@ export async function askNyayaAboutMatter(params: {
             analysisText,
             assessmentText,
           )}`;
+    const userPrompt = factualityPromptText
+      ? `${userPromptBase}\n\n${factualityPromptText}`
+      : userPromptBase;
 
     const generation = await ai.generate({
       temperature: 0,
@@ -1426,6 +1505,7 @@ export async function askNyayaAboutMatter(params: {
       params.question,
       passages.map((p) => p.quote).join("\n"),
     );
+    validated.answer = constrainAnswerToPremiseCheck(validated.answer, premiseCheck);
     if (
       /\b(conflict|contradict|inconsistent)\b/i.test(params.question) &&
       (validated.answer.answer !== beforeContradiction ||
@@ -1756,8 +1836,67 @@ export async function askNyayaAboutMatter(params: {
             unresolvedQuestions: validated.answer.unresolvedQuestions,
           }),
           conversationContextMetrics: conversationAskContext?.metrics ?? null,
-          // Reserved for Phase 2 factuality contract — keep shape extensible.
+          // Phase 2 factuality contract + router diagnostics (no migration).
           assertionReady: true,
+          selectedDomains: routerPlan?.selectedDomains ?? [],
+          premiseCheck,
+          factualityContract: (() => {
+            const allowed = validated.answer.sources
+              .map((s) => s.documentId)
+              .filter((id) => typeof id === "string" && id.length > 0 && !id.startsWith("web:"));
+            const rebuilt = buildFactualityContract({
+              assertions: [
+                ...(factualityContract?.assertions ?? []),
+                ...validated.answer.sources.slice(0, 6).map((s) => ({
+                  type: "FACT" as const,
+                  text: (s.quote ?? "").slice(0, 400) || "Sourced record excerpt",
+                  sourceIds: s.documentId ? [s.documentId] : [],
+                  sourceType: "document",
+                  matterId: params.matterId,
+                  organizationId: params.organizationId,
+                  relatedEntityIds: [] as string[],
+                  reason: "Grounded citation from validated Ask sources",
+                })),
+              ],
+              premiseCheck,
+              sourceRefs: allowed,
+              authorityRefs: [...(authority?.authorityIds ?? [])],
+              activeEntityRefs: [
+                ...conversationWorkingState.activeClaimIds,
+                ...conversationWorkingState.activeMotionIds,
+              ],
+              selectedDomains: routerPlan?.selectedDomains ?? [],
+              allowedSourceIds: allowed,
+              contextDiagnostics: routerPlan
+                ? {
+                    selectedDomains: routerPlan.selectedDomains,
+                    skippedDomains: routerPlan.skippedDomains,
+                    reasonCodes: routerPlan.reasonCodes,
+                    wholeMatterUsed: routerPlan.wholeMatterUsed,
+                    duplicateLoaderSuppressed: routerPlan.duplicateLoaderSuppressed,
+                    contextChars: routerPlan.diagnostics.contextCharsEstimate,
+                    sourceCount: allowed.length,
+                    authorityCount: authority?.authorityIds.size ?? 0,
+                    routerLatencyMs: routerPlan.diagnostics.routerLatencyMs,
+                  }
+                : undefined,
+            });
+            factualityContract = rebuilt;
+            return rebuilt;
+          })(),
+          routerDiagnostics: routerPlan
+            ? {
+                selectedDomains: routerPlan.selectedDomains,
+                skippedDomains: routerPlan.skippedDomains,
+                reasonCodes: routerPlan.reasonCodes,
+                wholeMatterUsed: routerPlan.wholeMatterUsed,
+                duplicateLoaderSuppressed: routerPlan.duplicateLoaderSuppressed,
+                contextChars: routerPlan.diagnostics.contextCharsEstimate,
+                sourceCount: routerPlan.diagnostics.sourceCount,
+                authorityCount: routerPlan.diagnostics.authorityCount,
+                routerLatencyMs: routerPlan.diagnostics.routerLatencyMs,
+              }
+            : null,
         },
         createdByUserId: params.userId,
       })
