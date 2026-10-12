@@ -2,6 +2,7 @@ import { cancelAskStreamSchema } from "@nyayagrid/validation";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { askRunKey, cancelAskRun } from "@nyayagrid/search";
 import { requireUser } from "@/lib/auth";
+import { assertProfessionalCommandCenterAccess } from "@/lib/command-center-guest-policy";
 import { handleRouteError, jsonOk } from "@/lib/http";
 import { enforceRateLimit } from "@/lib/rate-limit";
 
@@ -22,12 +23,13 @@ export async function POST(request: Request, { params }: Params) {
     if (limited) return limited;
 
     const body = cancelAskStreamSchema.parse(await request.json());
-    const { matter } = await requireMatterAccess(db, {
+    const { matter, membership } = await requireMatterAccess(db, {
       userId: user.id,
       matterId,
       minAccess: "read",
       capability: "matters.view",
     });
+    assertProfessionalCommandCenterAccess(membership.roleKey);
 
     const key = askRunKey({
       organizationId: matter.organizationId,

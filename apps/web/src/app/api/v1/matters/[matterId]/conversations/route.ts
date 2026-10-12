@@ -2,6 +2,7 @@ import { and, desc, eq } from "drizzle-orm";
 import { conversations, messages } from "@nyayagrid/database";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { requireUser } from "@/lib/auth";
+import { assertProfessionalCommandCenterAccess } from "@/lib/command-center-guest-policy";
 import { conversationListPreview } from "@/lib/conversation-list-preview";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
@@ -11,12 +12,13 @@ export async function GET(request: Request, { params }: Params) {
   try {
     const { matterId } = await params;
     const { db, user } = await requireUser(request.headers);
-    const { matter } = await requireMatterAccess(db, {
+    const { matter, membership } = await requireMatterAccess(db, {
       userId: user.id,
       matterId,
       minAccess: "read",
       capability: "matters.view",
     });
+    assertProfessionalCommandCenterAccess(membership.roleKey);
 
     const url = new URL(request.url);
     const limit = Math.min(Number(url.searchParams.get("limit") ?? "50") || 50, 100);
@@ -66,12 +68,13 @@ export async function POST(request: Request, { params }: Params) {
   try {
     const { matterId } = await params;
     const { db, user } = await requireUser(request.headers);
-    const { matter } = await requireMatterAccess(db, {
+    const { matter, membership } = await requireMatterAccess(db, {
       userId: user.id,
       matterId,
       minAccess: "edit",
       capability: "matters.view",
     });
+    assertProfessionalCommandCenterAccess(membership.roleKey);
     const body = (await request.json().catch(() => ({}))) as { title?: string };
     const [created] = await db
       .insert(conversations)

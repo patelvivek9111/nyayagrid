@@ -37,8 +37,11 @@ export function ClientGuestAppShell({ children }: { children: ReactNode }) {
 
   if (isGuest) {
     return (
-      <div className="flex min-h-screen items-center justify-center px-6">
-        <p className="text-sm text-ink/60">Opening your client portal…</p>
+      <div className="flex min-h-screen flex-col items-center justify-center gap-2 px-6 text-center">
+        <p className="text-sm font-medium text-ink/80">
+          This workspace is not available for client guest access.
+        </p>
+        <p className="text-sm text-ink/55">Opening your client portal…</p>
       </div>
     );
   }

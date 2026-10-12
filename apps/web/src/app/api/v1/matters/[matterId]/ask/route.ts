@@ -12,6 +12,7 @@ import {
   mergeAbortSignals,
 } from "@nyayagrid/search";
 import { requireUser } from "@/lib/auth";
+import { assertProfessionalCommandCenterAccess } from "@/lib/command-center-guest-policy";
 import { assertFeatureEnabled } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 import { getAgentBudgetsFromEnv, getAI, getEmbeddings, getRetriever } from "@/lib/infra";
@@ -112,12 +113,14 @@ export async function POST(request: Request, { params }: Params) {
       body.stream === true ||
       (request.headers.get("accept") ?? "").includes("text/event-stream");
 
-    const { matter } = await requireMatterAccess(db, {
+    const { matter, membership } = await requireMatterAccess(db, {
       userId: user.id,
       matterId,
       minAccess: mayCreateRun && execute ? "edit" : "read",
       capability: mayCreateRun && execute ? "matters.edit" : "matters.view",
     });
+    // Phase 5 — client_guest must not use professional Ask / Command Center (API-level).
+    assertProfessionalCommandCenterAccess(membership.roleKey);
 
     if (mayCreateRun) {
       const agentLimited = await enforceRateLimit(request, {

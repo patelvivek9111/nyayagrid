@@ -2,6 +2,7 @@ import { and, asc, eq } from "drizzle-orm";
 import { aiArtifacts, conversations, messages } from "@nyayagrid/database";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { requireUser } from "@/lib/auth";
+import { assertProfessionalCommandCenterAccess } from "@/lib/command-center-guest-policy";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
 
 type Params = { params: Promise<{ matterId: string; conversationId: string }> };
@@ -10,12 +11,13 @@ export async function GET(request: Request, { params }: Params) {
   try {
     const { matterId, conversationId } = await params;
     const { db, user } = await requireUser(request.headers);
-    const { matter } = await requireMatterAccess(db, {
+    const { matter, membership } = await requireMatterAccess(db, {
       userId: user.id,
       matterId,
       minAccess: "read",
       capability: "matters.view",
     });
+    assertProfessionalCommandCenterAccess(membership.roleKey);
 
     const [conversation] = await db
       .select()
@@ -64,12 +66,13 @@ export async function PATCH(request: Request, { params }: Params) {
   try {
     const { matterId, conversationId } = await params;
     const { db, user } = await requireUser(request.headers);
-    const { matter } = await requireMatterAccess(db, {
+    const { matter, membership } = await requireMatterAccess(db, {
       userId: user.id,
       matterId,
       minAccess: "edit",
       capability: "matters.view",
     });
+    assertProfessionalCommandCenterAccess(membership.roleKey);
     const body = (await request.json()) as { title?: string };
     if (!body.title?.trim()) {
       return jsonError("VALIDATION_ERROR", "title is required", 400);

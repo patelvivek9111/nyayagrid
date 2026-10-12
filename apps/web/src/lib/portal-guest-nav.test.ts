@@ -53,8 +53,20 @@ describe("client guest portal navigation policy", () => {
     expect(layout).toContain("ClientGuestAppShell");
     expect(shell).toContain('router.replace("/portal")');
     expect(shell).toContain("Opening your client portal");
+    expect(shell).toContain("not available for client guest access");
     expect(shell).toContain("isClientGuestRole");
     expect(shell).toContain("GlobalSidebar");
+  });
+
+  it("M — Ask and conversation APIs deny client_guest at server level", () => {
+    const ask = src("src/app/api/v1/matters/[matterId]/ask/route.ts");
+    const chats = src("src/app/api/v1/matters/[matterId]/conversations/route.ts");
+    const thread = src(
+      "src/app/api/v1/matters/[matterId]/conversations/[conversationId]/route.ts",
+    );
+    expect(ask).toContain("assertProfessionalCommandCenterAccess");
+    expect(chats).toContain("assertProfessionalCommandCenterAccess");
+    expect(thread).toContain("assertProfessionalCommandCenterAccess");
   });
 
   it("cases routes still bounce guests to portal", () => {

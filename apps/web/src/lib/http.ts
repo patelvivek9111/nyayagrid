@@ -13,6 +13,7 @@ import {
 import { ZodError } from "zod";
 import { InviteRoleNotFoundError } from "./invites";
 import { FeatureDisabledError } from "./features";
+import { GuestCommandCenterError } from "./command-center-guest-policy";
 import { InvalidJurisdictionError } from "@nyayagrid/jurisdiction";
 import { RouterUnavailableError, ROUTER_UNAVAILABLE_USER_MESSAGE } from "@nyayagrid/ai";
 import { LegalWorkError } from "@nyayagrid/intelligence";
@@ -57,6 +58,9 @@ export function handleRouteError(error: unknown) {
   }
   if (error instanceof UnauthenticatedError) {
     return jsonError(error.code, USER_FACING_AUTH.unauthenticated, 401);
+  }
+  if (error instanceof GuestCommandCenterError) {
+    return jsonError(error.code, error.message, 403);
   }
   if (error instanceof AuthorizationError) {
     return jsonError(error.code, USER_FACING_AUTH.forbidden, 403);
