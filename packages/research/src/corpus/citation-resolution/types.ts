@@ -20,6 +20,7 @@ export type ResolutionMethod =
   | "CONTEXTUAL_SHORT_CITE"
   | "COURTLISTENER_CITATION_LOOKUP"
   | "COURTLISTENER_CLUSTER"
+  | "COURTLISTENER_BULK_CITATION_GRAPH"
   | "MANUAL";
 
 export type ResolutionConfidence = "HIGH" | "MEDIUM" | "LOW";
