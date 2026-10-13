@@ -13,3 +13,4 @@ export * from "./bulk-citation-index.js";
 export * from "./ambiguous-metadata-resolver.js";
 export * from "./citing-context-resolver.js";
 export * from "./citation-graph-resolver.js";
+export * from "./govinfo-usreports.js";
