@@ -20,8 +20,11 @@ import {
 } from "./eligibility.js";
 import {
   citationLookupAliases,
+  deterministicCitationVariants,
   experimentalNormalize,
   isLookupSuitableCitation,
+  isUnsafeOcrTransform,
+  scrubCitationUnicode,
   targetKey,
 } from "./normalize.js";
 import { filterExternalIdentityQueueTargets, resolveNewCitationsLocalFirst } from "./pipeline.js";
@@ -44,6 +47,87 @@ describe("citation-resolution normalize", () => {
     expect(experimentalNormalize("F.Supp..2d")).toContain("F.Supp");
     expect(citationLookupAliases("42 U.S.C. § 1983")).toContain("42 USC § 1983");
     expect(c).toBe(a);
+  });
+
+  it("supports historical/regional reporter punctuation and spacing variants", () => {
+    expect(experimentalNormalize("123 P. 2d 456")).toBe("123 P.2d 456");
+    expect(experimentalNormalize("10 F4th 20")).toBe("10 F.4th 20");
+    expect(deterministicCitationVariants("55 So.2d 99")).toContain("55 So.2d 99");
+    expect(deterministicCitationVariants("55 So 2d 99").some((v) => /So\.2d/i.test(v))).toBe(true);
+    expect(citationLookupAliases("100 A.2d 1")).toContain("100 A.2d 1");
+  });
+
+  it("scrubs unicode punctuation safely and rejects unsafe OCR transforms", () => {
+    expect(scrubCitationUnicode("410\u00A0U.S.\u2013113")).toContain("410 U.S.-113");
+    expect(isUnsafeOcrTransform("410 U.S. 113", "411 U.S. 113")).toBe(true);
+    expect(isUnsafeOcrTransform("100 F. 50", "100 F.2d 50")).toBe(true);
+    expect(isUnsafeOcrTransform("100 F.2d 50", "100 F.2d 50")).toBe(false);
+    expect(isUnsafeOcrTransform("100 F 2d 50", "100 F.2d 50")).toBe(false);
+  });
+
+  it("resolves unique normalized alias and refuses ambiguous normalized matches", () => {
+    const index = new LocalAuthorityIndex([
+      authority({
+        id: "a1",
+        citation: "123 P.2d 456",
+        normalizedCitation: "123 P.2d 456",
+        metadata: { citationAliases: ["123 P 2d 456"] },
+      }),
+      authority({
+        id: "a2",
+        citation: "999 A.2d 1",
+        normalizedCitation: "999 A.2d 1",
+      }),
+      authority({
+        id: "a3",
+        citation: "999 A.2d 1",
+        normalizedCitation: "999 A.2d 1 (alt)",
+        metadata: { citationAliases: ["999 A.2d 1"] },
+      }),
+    ]);
+    const unique = index.lookupCitation("123 P 2d 456", null);
+    expect(unique.kind).toBe("one");
+    if (unique.kind === "one") expect(unique.authorityId).toBe("a1");
+    const amb = index.lookupCitation("999 A.2d 1", null);
+    expect(amb.kind).toBe("ambiguous");
+  });
+});
+
+describe("CourtListener identity parse + queue gates", () => {
+  it("accepts unique HIGH identity and refuses ambiguous / empty results", () => {
+    const high = parseCitationLookupResponse([
+      {
+        status: 200,
+        normalized_citations: ["573 U.S. 373"],
+        clusters: [{ id: 2812209, citations: ["573 U.S. 373"], case_name: "Example" }],
+      },
+    ]);
+    expect(high.status).toBe("resolved");
+    if (high.status === "resolved") expect(high.clusterId).toBe("2812209");
+
+    const amb = parseCitationLookupResponse([
+      {
+        status: 200,
+        clusters: [
+          { id: 1, citations: ["1 F.3d 1"] },
+          { id: 2, citations: ["1 F.3d 1"] },
+        ],
+      },
+    ]);
+    expect(amb.status).toBe("ambiguous");
+
+    const nf = parseCitationLookupResponse([]);
+    expect(nf.status).toBe("not_found");
+  });
+
+  it("excludes ineligible targets from external identity queue", () => {
+    const filtered = filterExternalIdentityQueueTargets([
+      { representativeRaw: "573 U.S. 373", normalizedCitation: "573 U.S. 373" },
+      { representativeRaw: "2026 Page 2", normalizedCitation: "2026 Page 2" },
+      { representativeRaw: "42 U.S.C. § 1983", normalizedCitation: "42 U.S.C. § 1983" },
+    ]);
+    expect(filtered).toHaveLength(1);
+    expect(filtered[0]!.normalizedCitation).toBe("573 U.S. 373");
   });
 });
 

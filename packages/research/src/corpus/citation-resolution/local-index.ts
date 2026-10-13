@@ -5,7 +5,9 @@
 
 import {
   citationLookupAliases,
+  deterministicCitationVariants,
   experimentalNormalize,
+  isUnsafeOcrTransform,
   normalizeCitationWhitespace,
   parseVolReporterPage,
   vrpKey,
@@ -36,6 +38,9 @@ export class LocalAuthorityIndex {
 
       for (const v of [a.normalizedCitation, a.citation].filter(Boolean) as string[]) {
         const lean = experimentalNormalize(v) || v;
+        for (const variant of deterministicCitationVariants(v)) {
+          for (const k of citationLookupAliases(variant)) keys.add(k.toLowerCase());
+        }
         for (const k of citationLookupAliases(lean)) keys.add(k.toLowerCase());
         for (const k of citationLookupAliases(v)) keys.add(k.toLowerCase());
         const p = parseVolReporterPage(lean);
@@ -48,6 +53,9 @@ export class LocalAuthorityIndex {
 
       for (const alias of metaStringList(meta, "citationAliases")) {
         const lean = experimentalNormalize(alias) || alias;
+        for (const variant of deterministicCitationVariants(alias)) {
+          for (const k of citationLookupAliases(variant)) keys.add(k.toLowerCase());
+        }
         for (const k of citationLookupAliases(lean)) keys.add(k.toLowerCase());
       }
 
@@ -56,6 +64,12 @@ export class LocalAuthorityIndex {
         ...metaStringList(meta, "parallel_citations"),
       ]) {
         const lean = experimentalNormalize(alias) || alias;
+        for (const variant of deterministicCitationVariants(alias)) {
+          for (const k of citationLookupAliases(variant)) {
+            keys.add(k.toLowerCase());
+            parallelKeys.add(k.toLowerCase());
+          }
+        }
         for (const k of citationLookupAliases(lean)) {
           keys.add(k.toLowerCase());
           parallelKeys.add(k.toLowerCase());
@@ -113,11 +127,17 @@ export class LocalAuthorityIndex {
    */
   lookupCitation(raw: string | null | undefined, normalized?: string | null): LookupCandidateResult {
     const lookupKeys = new Set<string>();
-    for (const v of [experimentalNormalize(normalized || raw), experimentalNormalize(raw), normalized, raw].filter(
+    const seeds = [experimentalNormalize(normalized || raw), experimentalNormalize(raw), normalized, raw].filter(
       Boolean,
-    ) as string[]) {
+    ) as string[];
+    for (const v of seeds) {
+      if (isUnsafeOcrTransform(String(raw || normalized || ""), v)) continue;
       for (const a of citationLookupAliases(v)) lookupKeys.add(a.toLowerCase());
       for (const a of citationLookupAliases(experimentalNormalize(v) || v)) lookupKeys.add(a.toLowerCase());
+      for (const variant of deterministicCitationVariants(v)) {
+        if (isUnsafeOcrTransform(String(raw || normalized || ""), variant)) continue;
+        for (const a of citationLookupAliases(variant)) lookupKeys.add(a.toLowerCase());
+      }
     }
 
     const hitIds = new Set<string>();

@@ -21,21 +21,68 @@ export function normalizeCitationWhitespace(raw: string): string {
     .replace(/\s+,/g, ",");
 }
 
+/** Strip Unicode punctuation/spacing that is safe and deterministic for citation matching. */
+export function scrubCitationUnicode(raw: string): string {
+  return String(raw || "")
+    .replace(/[\u2010-\u2015\u2212]/g, "-")
+    .replace(/[\u00A0\u2000-\u200B\u202F\u205F]/g, " ")
+    .replace(/[\u2018\u2019]/g, "'")
+    .replace(/[\u201C\u201D]/g, '"');
+}
+
+/**
+ * Deterministic citation display variants for lookup (not fuzzy).
+ * Each variant is an auditable, reversible-style punctuation/spacing transform.
+ */
+export function deterministicCitationVariants(raw: string | null | undefined): string[] {
+  const seed = scrubCitationUnicode(String(raw || ""));
+  const out = new Set<string>();
+  const add = (v: string | null | undefined) => {
+    const t = collapseWhitespace(String(v || ""));
+    if (t) out.add(t);
+  };
+  add(seed);
+  add(experimentalNormalize(seed));
+  for (const a of citationLookupAliases(seed)) add(a);
+  for (const a of citationLookupAliases(experimentalNormalize(seed) || seed)) add(a);
+  // Compact regional reporters: P3d / SE2d / NW2d / So2d
+  add(seed.replace(/\bP\s*\.?\s*(2d|3d)\b/gi, (_m, s: string) => `P.${s.toLowerCase()}`));
+  add(seed.replace(/\bS\s*\.?\s*E\s*\.?\s*(2d|3d)?\b/gi, (_m, s: string | undefined) => (s ? `S.E.${s.toLowerCase()}` : "S.E.")));
+  add(seed.replace(/\bS\s*\.?\s*W\s*\.?\s*(2d|3d)?\b/gi, (_m, s: string | undefined) => (s ? `S.W.${s.toLowerCase()}` : "S.W.")));
+  add(seed.replace(/\bN\s*\.?\s*E\s*\.?\s*(2d|3d)?\b/gi, (_m, s: string | undefined) => (s ? `N.E.${s.toLowerCase()}` : "N.E.")));
+  add(seed.replace(/\bN\s*\.?\s*W\s*\.?\s*(2d|3d)?\b/gi, (_m, s: string | undefined) => (s ? `N.W.${s.toLowerCase()}` : "N.W.")));
+  add(seed.replace(/\bSo\s*\.?\s*(2d|3d)?\b/gi, (_m, s: string | undefined) => (s ? `So.${s.toLowerCase()}` : "So.")));
+  add(seed.replace(/\bA\s*\.?\s*(2d|3d)?\b/gi, (_m, s: string | undefined) => (s ? `A.${s.toLowerCase()}` : "A.")));
+  // F.4th compacted / spaced
+  add(seed.replace(/\bF\s*\.?\s*4th\b/gi, "F.4th"));
+  add(seed.replace(/\bF4th\b/gi, "F.4th"));
+  // L.Ed.2d compacted
+  add(seed.replace(/\bL\s*\.?\s*Ed\s*\.?\s*2d\b/gi, "L. Ed. 2d"));
+  add(seed.replace(/\bL\.Ed\.2d\b/gi, "L. Ed. 2d"));
+  // Drop trailing letter-only page suffix only when digits precede (123a → keep via bulk page parser elsewhere)
+  return [...out];
+}
+
 /** Recover common reporter punctuation variants (in-memory only unless applied intentionally). */
 export function experimentalNormalize(raw: string | null | undefined): string | null {
-  let c = normalizeCitationWhitespace(raw || "");
+  let c = normalizeCitationWhitespace(scrubCitationUnicode(raw || ""));
   if (!c) return null;
   c = c.replace(/\bF\.?\s*Supp\.+\s*(2d|3d|4th)?\b/gi, (_m, s: string | undefined) =>
     s ? `F.Supp.${s.toLowerCase()}` : "F.Supp.",
   );
   c = c.replace(/\bF\s*\.\s*(2d|3d|4th)\b/gi, (_m, s: string) => `F.${s.toLowerCase()}`);
   c = c.replace(/\bF(2d|3d|4th)\b/gi, (_m, s: string) => `F.${s.toLowerCase()}`);
+  c = c.replace(/\bF\s*\.?\s*4th\b/gi, "F.4th");
+  c = c.replace(/\bF4th\b/gi, "F.4th");
   c = c.replace(/\bU\s*\.\s*S\s*\./gi, "U.S.");
   c = c.replace(/\bUS\b(?=\s+\d)/g, "U.S.");
   c = c.replace(/\bS\s*\.\s*Ct\s*\./gi, "S. Ct.");
   c = c.replace(/\bL\s*\.\s*Ed\s*\.?\s*(2d)?\b/gi, (_m, s: string | undefined) =>
     s ? "L. Ed. 2d" : "L. Ed.",
   );
+  c = c.replace(/\bP\s*\.?\s*(2d|3d)\b/gi, (_m, s: string) => `P.${s.toLowerCase()}`);
+  c = c.replace(/\bSo\s*\.?\s*(2d|3d)\b/gi, (_m, s: string) => `So.${s.toLowerCase()}`);
+  c = c.replace(/\bA\s*\.?\s*(2d|3d)\b/gi, (_m, s: string) => `A.${s.toLowerCase()}`);
 
   const usc = c.match(/^(\d{1,2})\s+U\.?\s?S\.?\s?C\.?\s*§\s*(.+)$/i);
   if (usc) return `${usc[1]} U.S.C. § ${usc[2]}`;
@@ -57,6 +104,12 @@ export function experimentalNormalize(raw: string | null | undefined): string | 
 
   const fRep = c.match(/^(\d{1,4})\s+F\.?\s*(2d|3d|4th)\s+(\d{1,4})$/i);
   if (fRep) return `${fRep[1]} F.${fRep[2].toLowerCase()} ${fRep[3]}`;
+
+  const f4 = c.match(/^(\d{1,4})\s+F\.?\s*4th\s+(\d{1,4})$/i);
+  if (f4) return `${f4[1]} F.4th ${f4[2]}`;
+
+  const pRep = c.match(/^(\d{1,4})\s+P\.?\s*(2d|3d)\s+(\d{1,4})$/i);
+  if (pRep) return `${pRep[1]} P.${pRep[2].toLowerCase()} ${pRep[3]}`;
 
   const fr = c.match(/^Fed\.?\s*R\.?\s*(Civ\.?\s*P\.?|Evid\.?|App\.?\s*P\.?|Crim\.?\s*P\.?)\s+(\d+[A-Za-z]?)$/i);
   if (fr) {
@@ -107,6 +160,30 @@ export function citationLookupAliases(normalizedOrRaw: string | null | undefined
     }
   }
 
+  const regional = base.match(
+    /^(\d{1,4})\s+(P|A|So|S\.?\s*E|S\.?\s*W|N\.?\s*E|N\.?\s*W)\.?\s*(2d|3d)?\s+(\d{1,4})$/i,
+  );
+  if (regional) {
+    const vol = regional[1];
+    const page = regional[4];
+    const series = (regional[3] || "").toLowerCase();
+    const fam = regional[2].replace(/\s+/g, "").replace(/\./g, "").toUpperCase();
+    const map: Record<string, string> = {
+      P: "P.",
+      A: "A.",
+      SO: "So.",
+      SE: "S.E.",
+      SW: "S.W.",
+      NE: "N.E.",
+      NW: "N.W.",
+    };
+    const rep = map[fam];
+    if (rep) {
+      aliases.add(`${vol} ${rep}${series} ${page}`.replace(/\s+/g, " ").trim());
+      if (series) aliases.add(`${vol} ${rep.replace(/\.$/, "")}${series} ${page}`);
+    }
+  }
+
   const fr = base.match(/^Fed\.?\s*R\.?\s*(Civ\.?\s*P\.?|Evid\.?|App\.?\s*P\.?|Crim\.?\s*P\.?)\s+(\d+[A-Za-z]?)$/i);
   if (fr) {
     const lean = experimentalNormalize(base);
@@ -153,7 +230,65 @@ export function parseVolReporterPage(cite: string | null | undefined): VolReport
       series: m[2].toLowerCase(),
     };
   }
+  m = t.match(/^(\d{1,4})\s+P\.?\s*(2d|3d)\s+(\d{1,4})$/i);
+  if (m) {
+    return {
+      family: "p",
+      volume: Number(m[1]),
+      page: Number(m[3]),
+      reporter: `P.${m[2].toLowerCase()}`,
+      series: m[2].toLowerCase(),
+    };
+  }
+  m = t.match(/^(\d{1,4})\s+A\.?\s*(2d|3d)\s+(\d{1,4})$/i);
+  if (m) {
+    return {
+      family: "a",
+      volume: Number(m[1]),
+      page: Number(m[3]),
+      reporter: `A.${m[2].toLowerCase()}`,
+      series: m[2].toLowerCase(),
+    };
+  }
+  m = t.match(/^(\d{1,4})\s+So\.?\s*(2d|3d)\s+(\d{1,4})$/i);
+  if (m) {
+    return {
+      family: "so",
+      volume: Number(m[1]),
+      page: Number(m[3]),
+      reporter: `So.${m[2].toLowerCase()}`,
+      series: m[2].toLowerCase(),
+    };
+  }
+  m = t.match(/^(\d{1,4})\s+(Idaho|Or\.?|Mass\.?|Conn\.?|Kan\.?|Cal\.?|Ill\.?|Pa\.?|Tex\.?|Mich\.?)\s*(2d|3d|App\.?)?\s+(\d{1,4})$/i);
+  if (m) {
+    const rep = `${m[2].replace(/\.$/, "")}${m[3] ? ` ${m[3]}` : ""}`.replace(/\s+/g, " ").trim();
+    return {
+      family: "state_reporter",
+      volume: Number(m[1]),
+      page: Number(m[4]),
+      reporter: rep,
+      series: (m[3] || "").toLowerCase(),
+    };
+  }
   return null;
+}
+
+/** Reject speculative OCR transforms that are not deterministic enough to auto-resolve. */
+export function isUnsafeOcrTransform(from: string, to: string): boolean {
+  const a = collapseWhitespace(from || "").toLowerCase();
+  const b = collapseWhitespace(to || "").toLowerCase();
+  if (!a || !b || a === b) return false;
+  // Digit edits / letter substitutions inside volume or page are unsafe.
+  const av = a.match(/^(\d+)/);
+  const bv = b.match(/^(\d+)/);
+  if (av && bv && av[1] !== bv[1]) return true;
+  const ap = a.match(/(\d+)\s*$/);
+  const bp = b.match(/(\d+)\s*$/);
+  if (ap && bp && ap[1] !== bp[1]) return true;
+  // Inserting an entire reporter series token (e.g. inventing 2d/3d/4th) without source evidence is unsafe.
+  if (!/\b(2d|3d|4th)\b/i.test(a) && /\b(2d|3d|4th)\b/i.test(b)) return true;
+  return false;
 }
 
 export function vrpKey(p: VolReporterPage | null): string | null {
