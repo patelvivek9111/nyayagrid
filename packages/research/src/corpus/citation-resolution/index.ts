@@ -10,3 +10,4 @@ export * from "./cl-identity-client.js";
 export * from "./metrics.js";
 export * from "./pipeline.js";
 export * from "./bulk-citation-index.js";
+export * from "./ambiguous-metadata-resolver.js";
