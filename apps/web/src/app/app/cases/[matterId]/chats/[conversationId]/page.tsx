@@ -212,9 +212,13 @@ export default function CaseChatThreadPage() {
   const threadRef = useRef<HTMLDivElement>(null);
   const abortRef = useRef<AbortController | null>(null);
   const hardAbortTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const cancelRequestedRef = useRef(false);
+  const busyRef = useRef(false);
+  const loadGenRef = useRef(0);
   const lastQuestionRef = useRef("");
 
   useEffect(() => {
+    const loadGen = ++loadGenRef.current;
     setLoading(true);
     fetch(`/api/v1/matters/${matterId}/conversations/${conversationId}`)
       .then(async (res) => {
@@ -224,6 +228,10 @@ export default function CaseChatThreadPage() {
             throw new Error(data?.error?.message ?? GUEST_COMMAND_CENTER_MESSAGE);
           }
           throw new Error(userFacingLoadError("chats", res.status));
+        }
+        // Stale or in-flight Ask: never clobber live turns with a late empty/partial load.
+        if (loadGen !== loadGenRef.current || busyRef.current) {
+          return;
         }
         setTitle(data.conversation?.title ?? "Chat");
         const artifactsByMsg = new Map<string, any>();
@@ -356,14 +364,22 @@ export default function CaseChatThreadPage() {
           }),
         );
       })
-      .catch((err) => setError(err instanceof Error ? err.message : userFacingLoadError("chats")))
-      .finally(() => setLoading(false));
+      .catch((err) => {
+        if (loadGen !== loadGenRef.current) return;
+        setError(err instanceof Error ? err.message : userFacingLoadError("chats"));
+      })
+      .finally(() => {
+        if (loadGen === loadGenRef.current) setLoading(false);
+      });
     fetch(`/api/v1/matters/${matterId}/conversations?limit=20`)
       .then(async (res) => {
         const data = await res.json();
-        if (res.ok) setConversations(data.conversations ?? []);
+        if (res.ok && loadGen === loadGenRef.current) setConversations(data.conversations ?? []);
       })
       .catch(() => undefined);
+    return () => {
+      loadGenRef.current += 1;
+    };
   }, [matterId, conversationId]);
 
   async function enrichSource(item: SourceDrawerItem) {
@@ -406,6 +422,16 @@ export default function CaseChatThreadPage() {
   }
 
   function stopGenerating() {
+    // Optimistic cancel: race-safe when mock/fast Ask completes before soft-cancel lands.
+    cancelRequestedRef.current = true;
+    setStreamEvents((prev) => [
+      ...prev,
+      {
+        type: "generation_stopped",
+        status: "cancelled",
+        at: new Date().toISOString(),
+      },
+    ]);
     // Soft-cancel: abort generation on the server without tearing down the SSE
     // socket, so generation_stopped + continue_available can still arrive.
     void fetch(`/api/v1/matters/${matterId}/ask/cancel`, {
@@ -416,11 +442,14 @@ export default function CaseChatThreadPage() {
       /* best-effort; fall back to hard abort below */
     });
     clearHardAbortTimer();
-    // Hard abort remains a last-resort fallback if soft-cancel never lands.
+    // Hard abort quickly so a completed stream cannot paint COMPLETED after Stop.
     hardAbortTimerRef.current = setTimeout(() => {
       hardAbortTimerRef.current = null;
       abortRef.current?.abort();
-    }, 8_000);
+      // Guarantee composer unlock even if the fetch promise never settles.
+      busyRef.current = false;
+      setBusy(false);
+    }, 500);
   }
 
 
@@ -436,10 +465,12 @@ export default function CaseChatThreadPage() {
     if (!text.trim()) return;
 
     setBusy(true);
+    busyRef.current = true;
     setError("");
     setStreamEvents([]);
     setLiveAnswer("");
     setContinueToken(null);
+    cancelRequestedRef.current = false;
     lastQuestionRef.current = text;
     if (!opts?.continueToken && !opts?.skipUserTurn) {
       setQuestion("");
@@ -518,6 +549,10 @@ export default function CaseChatThreadPage() {
           if (event.type === "generation_stopped") {
             clearHardAbortTimer();
             wasStopped = true;
+            cancelRequestedRef.current = true;
+            // Unblock the SSE reader — soft-cancel alone can leave the stream open
+            // and stick the composer in busy/disabled.
+            queueMicrotask(() => abortRef.current?.abort());
           }
           if (event.type === "generation_failed") {
             setError(event.message || USER_FACING_ASK_ERROR);
@@ -544,23 +579,26 @@ export default function CaseChatThreadPage() {
       }
 
       const safeSources = filterRenderableMatterSources(liveSources, { matterId });
-      if (finalAnswer || safeSources.length || provenance || wasStopped) {
+      const cancelled = wasStopped || cancelRequestedRef.current;
+      if (finalAnswer || safeSources.length || provenance || cancelled) {
         setTurns((prev) => [
           ...prev,
           {
             id: artifactId ?? `a-${Date.now()}`,
             role: "assistant",
-            content: finalAnswer || liveAnswer || "[Generation stopped]",
-            evidenceState: wasStopped ? "insufficient" : evidenceState,
-            sources: safeSources.length ? safeSources : undefined,
-            assumptions,
-            unresolvedQuestions,
-            artifactId,
-            needsMoreDocuments,
-            provenance,
-            factualityTypes,
-            cancelled: wasStopped,
-            ux: wasStopped ? { turnKind: "cancelled", factualityTypes } : uxPayload,
+            content: cancelled
+              ? finalAnswer || liveAnswer || "[Generation stopped]"
+              : finalAnswer || liveAnswer || "[Generation stopped]",
+            evidenceState: cancelled ? "insufficient" : evidenceState,
+            sources: cancelled ? undefined : safeSources.length ? safeSources : undefined,
+            assumptions: cancelled ? undefined : assumptions,
+            unresolvedQuestions: cancelled ? undefined : unresolvedQuestions,
+            artifactId: cancelled ? undefined : artifactId,
+            needsMoreDocuments: cancelled ? false : needsMoreDocuments,
+            provenance: cancelled ? undefined : provenance,
+            factualityTypes: cancelled ? undefined : factualityTypes,
+            cancelled,
+            ux: cancelled ? { turnKind: "cancelled", factualityTypes } : uxPayload,
           },
         ]);
       }
@@ -568,26 +606,33 @@ export default function CaseChatThreadPage() {
         threadRef.current?.scrollTo({ top: threadRef.current.scrollHeight, behavior: "smooth" });
       });
     } catch (err) {
-      if (controller.signal.aborted) {
-        setTurns((prev) => [
-          ...prev,
-          {
-            id: `stopped-${Date.now()}`,
-            role: "assistant",
-            content: liveAnswer || "[Generation stopped]",
-            sources: liveSources.length
-              ? filterRenderableMatterSources(liveSources, { matterId })
-              : undefined,
-            cancelled: true,
-            ux: { turnKind: "cancelled" },
-          },
-        ]);
+      if (controller.signal.aborted || cancelRequestedRef.current || wasStopped) {
+        // Avoid duplicate cancelled turns when soft-cancel already finalized in try.
+        setTurns((prev) => {
+          if (prev.some((t) => t.role === "assistant" && t.cancelled && t.content)) {
+            return prev;
+          }
+          return [
+            ...prev,
+            {
+              id: `stopped-${Date.now()}`,
+              role: "assistant",
+              content: liveAnswer || "[Generation stopped]",
+              sources: liveSources.length
+                ? filterRenderableMatterSources(liveSources, { matterId })
+                : undefined,
+              cancelled: true,
+              ux: { turnKind: "cancelled" },
+            },
+          ];
+        });
       } else {
         setError(err instanceof Error ? err.message : "Failed");
       }
     } finally {
       clearHardAbortTimer();
       abortRef.current = null;
+      busyRef.current = false;
       setBusy(false);
       setLiveAnswer("");
       setStreamEvents([]);
@@ -826,7 +871,7 @@ export default function CaseChatThreadPage() {
             <ChatComposer
               value={question}
               onChange={setQuestion}
-              onSubmit={() => void send()}
+              onSubmit={(text) => void send({ questionOverride: text })}
               busy={busy}
               placeholder="Ask Nyaya about this Case…"
               sourceScope={sourceScope}

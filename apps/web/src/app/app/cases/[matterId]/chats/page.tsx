@@ -172,7 +172,7 @@ export default function CaseChatsPage() {
             <ChatComposer
               value={question}
               onChange={setQuestion}
-              onSubmit={() => void startChat()}
+              onSubmit={(text) => void startChat(text)}
               busy={busy}
               onRunTask={flags.agents ? () => setRunTask(true) : undefined}
               placeholder="Ask Nyaya about this Case…"

@@ -54,6 +54,24 @@ describe("Phase 5 Ask progress truthfulness", () => {
     expect(rows.find((r) => r.id === "generation")?.label).toBe("Cancelled");
   });
 
+  it("cancel wins race against late generation_completed", () => {
+    const events: AskStreamEvent[] = [
+      { type: "generation_started", at: at() },
+      { type: "generation_stopped", status: "cancelled", at: at() },
+      {
+        type: "generation_completed",
+        answer: "Too late",
+        conversationId: "c1",
+        status: "completed",
+        provenance: emptyProvenance,
+        at: at(),
+      },
+    ];
+    const rows = progressFromAskEvents(events);
+    expect(rows.find((r) => r.id === "generation")?.label).toBe("Cancelled");
+    expect(rows.find((r) => r.id === "generation")?.detail).toBe("CANCELLED");
+  });
+
   it("shows waiting-for-confirmation when UX payload requires it", () => {
     const events: AskStreamEvent[] = [
       {

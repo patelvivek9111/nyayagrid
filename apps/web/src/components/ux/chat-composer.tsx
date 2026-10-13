@@ -44,7 +44,8 @@ export function ChatComposer({
 }: {
   value: string;
   onChange: (v: string) => void;
-  onSubmit: () => void;
+  /** Receives the composer text so submit is not racing a stale controlled-state read. */
+  onSubmit: (value?: string) => void;
   placeholder?: string;
   disabled?: boolean;
   busy?: boolean;
@@ -64,7 +65,7 @@ export function ChatComposer({
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     if (!value.trim() || disabled || busy) return;
-    onSubmit();
+    onSubmit(value);
   }
 
   return (

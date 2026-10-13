@@ -104,6 +104,11 @@ export function progressFromAskEvents(events: AskStreamEvent[]): AskProgressItem
         });
         break;
       case "generation_completed": {
+        // Cancel wins races: never paint COMPLETED after the user stopped.
+        const prior = byId.get("generation");
+        if (prior?.detail === "CANCELLED" || prior?.label === "Cancelled") {
+          break;
+        }
         const awaiting = event.ux?.action?.confirmationRequired &&
           (event.ux.action.actionStatus === "AWAITING_CONFIRMATION" ||
             event.ux.action.actionStatus === "PREVIEW");
