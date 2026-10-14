@@ -3,8 +3,8 @@
  * Idempotent planning — does not mutate.
  */
 
-import { targetKey } from "./normalize.js";
-import type { LocalResolveProposal, UnresolvedEdgeRow } from "./types.js";
+import { targetKey } from "./normalize";
+import type { LocalResolveProposal, UnresolvedEdgeRow } from "./types";
 
 export type BackfillPlanItem = {
   edgeId: string;

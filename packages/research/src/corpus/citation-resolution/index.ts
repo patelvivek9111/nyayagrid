@@ -1,6 +1,7 @@
 export * from "./types.js";
 export * from "./normalize.js";
 export * from "./eligibility.js";
+export * from "./classification.js";
 export * from "./local-index.js";
 export * from "./target-queue.js";
 export * from "./local-resolver.js";

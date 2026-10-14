@@ -7,7 +7,7 @@ import {
   experimentalNormalize,
   normalizeCitationWhitespace,
   parseVolReporterPage,
-} from "./normalize.js";
+} from "./normalize";
 
 /** Resolution-lane classification for unresolved citation targets. */
 export type CitationLookupLane =

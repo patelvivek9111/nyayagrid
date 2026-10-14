@@ -7,7 +7,7 @@
  * unless a future API contract is verified.
  */
 
-import type { ClIdentityLookupResult } from "./types.js";
+import type { ClIdentityLookupResult } from "./types";
 
 export const CL_CITATION_LOOKUP_PATH = "/api/rest/v4/citation-lookup/";
 export const CL_DEFAULT_BASE = "https://www.courtlistener.com";
