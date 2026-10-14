@@ -6,7 +6,7 @@
 import { createHash, randomUUID } from "node:crypto";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, renameSync, unlinkSync, writeFileSync } from "node:fs";
 import { dirname } from "node:path";
-import { RESOLVER_VERSION, type CitationResolutionRecord, type ResolutionMethod } from "./types.js";
+import { RESOLVER_VERSION, type CitationResolutionRecord, type ResolutionMethod } from "./types";
 
 export function createResolutionRecord(input: {
   rawCitation: string;

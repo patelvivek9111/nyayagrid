@@ -1,4 +1,65 @@
-import { emptyAntiRegressionMetrics, type AntiRegressionMetrics, type ResolutionMethod } from "./types.js";
+import {
+  isCitationArtifactClassification,
+  isTrueCaseIdentityClassification,
+  isUnknownClassification,
+  normalizeClassification,
+} from "./classification";
+import {
+  emptyAntiRegressionMetrics,
+  type AntiRegressionMetrics,
+  type CitationIdentityAccountingMetrics,
+  type ResolutionMethod,
+} from "./types";
+
+/** Edge shape for honest identity accounting (classification ≠ resolution state). */
+export type CitationAccountingEdge = {
+  toAuthorityId?: string | null;
+  citationTargetClassification?: string | null;
+};
+
+/**
+ * Distinct unresolved metrics. Does not redefine NEW_EDGES_IDENTITY_UNRESOLVED / RAW.
+ * Resolved edges (toAuthorityId present) are excluded from all unresolved buckets.
+ */
+export function computeCitationIdentityAccounting(
+  edges: CitationAccountingEdge[],
+): CitationIdentityAccountingMetrics {
+  let raw = 0;
+  let trueCase = 0;
+  let artifact = 0;
+  let unknown = 0;
+  let resolved = 0;
+
+  for (const edge of edges) {
+    if (edge.toAuthorityId) {
+      resolved += 1;
+      continue;
+    }
+    raw += 1;
+    const c = normalizeClassification(edge.citationTargetClassification);
+    if (isTrueCaseIdentityClassification(c)) trueCase += 1;
+    else if (isCitationArtifactClassification(c)) artifact += 1;
+    else if (isUnknownClassification(c)) unknown += 1;
+  }
+
+  return {
+    IDENTITY_UNRESOLVED_EDGES_RAW: raw,
+    TRUE_CASE_IDENTITY_UNRESOLVED_EDGES: trueCase,
+    INELIGIBLE_ARTIFACT_EDGES: artifact,
+    UNKNOWN_CLASSIFICATION_EDGES: unknown,
+    AUTHORITY_RESOLVED_EDGES: resolved,
+  };
+}
+
+export function emptyCitationIdentityAccounting(): CitationIdentityAccountingMetrics {
+  return {
+    IDENTITY_UNRESOLVED_EDGES_RAW: 0,
+    TRUE_CASE_IDENTITY_UNRESOLVED_EDGES: 0,
+    INELIGIBLE_ARTIFACT_EDGES: 0,
+    UNKNOWN_CLASSIFICATION_EDGES: 0,
+    AUTHORITY_RESOLVED_EDGES: 0,
+  };
+}
 
 export function recordLocalResolution(
   metrics: AntiRegressionMetrics,

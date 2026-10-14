@@ -3,20 +3,24 @@
  * External lookup is never per-edge.
  */
 
-import { planGlobalBackfill } from "./backfill.js";
-import { LocalAuthorityIndex } from "./local-index.js";
-import { dryRunLocalHighResolver } from "./local-resolver.js";
-import { metricsForNewCaseBatch } from "./metrics.js";
-import { classifyCaseCitationLookupEligibility } from "./eligibility.js";
-import { experimentalNormalize, targetKey } from "./normalize.js";
-import { buildUnresolvedTargetQueue } from "./target-queue.js";
+import { planGlobalBackfill } from "./backfill";
+import {
+  filterCaseIdentityQueueByClassification,
+  isCaseIdentityEligible,
+} from "./classification";
+import { LocalAuthorityIndex } from "./local-index";
+import { dryRunLocalHighResolver } from "./local-resolver";
+import { metricsForNewCaseBatch } from "./metrics";
+import { classifyCaseCitationLookupEligibility } from "./eligibility";
+import { experimentalNormalize, targetKey } from "./normalize";
+import { buildUnresolvedTargetQueue } from "./target-queue";
 import type {
   AntiRegressionMetrics,
   AuthorityIndexRow,
   LocalResolveProposal,
   ResolutionMethod,
   UnresolvedEdgeRow,
-} from "./types.js";
+} from "./types";
 
 /**
  * Future ingestion design (identity lane):
@@ -26,15 +30,25 @@ import type {
  *
  * Non-case / malformed references must NOT enter the CourtListener case-identity lane.
  * Raw citation evidence is always preserved on the edge.
+ * Persisted artifact classifications are excluded when present (no CL for statutes/exhibits/etc.).
  */
 export function filterExternalIdentityQueueTargets<
-  T extends { representativeRaw: string; normalizedCitation: string; lookupSuitable?: boolean },
+  T extends {
+    representativeRaw: string;
+    normalizedCitation: string;
+    lookupSuitable?: boolean;
+    citationTargetClassification?: string | null;
+  },
 >(targets: T[]): T[] {
   return targets.filter((t) => {
+    if (!isCaseIdentityEligible(t.citationTargetClassification)) return false;
     const el = classifyCaseCitationLookupEligibility(t.representativeRaw, t.normalizedCitation);
     return el.eligible;
   });
 }
+
+/** Alias for queue consumers that filter solely on persisted classification. */
+export { filterCaseIdentityQueueByClassification };
 
 export type IngestCitationInput = {
   fromAuthorityId: string;

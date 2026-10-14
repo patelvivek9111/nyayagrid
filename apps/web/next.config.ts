@@ -83,6 +83,7 @@ const nextConfig: NextConfig = {
     "@nyayagrid/observability",
     "@nyayagrid/permissions",
     "@nyayagrid/platform",
+    "@nyayagrid/research",
     "@nyayagrid/search",
     "@nyayagrid/ui",
     "@nyayagrid/validation",

@@ -3,8 +3,8 @@
  * MEDIUM/LOW never auto-resolve. Ambiguous → NO_AUTO_RESOLVE.
  */
 
-import { LocalAuthorityIndex } from "./local-index.js";
-import type { LocalResolveProposal, UnresolvedTarget } from "./types.js";
+import { LocalAuthorityIndex } from "./local-index";
+import type { LocalResolveProposal, UnresolvedTarget } from "./types";
 
 export type LocalResolveDryRun = {
   proposals: LocalResolveProposal[];

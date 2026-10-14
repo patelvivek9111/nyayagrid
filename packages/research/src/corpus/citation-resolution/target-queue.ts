@@ -2,15 +2,15 @@
  * Unique unresolved-target queue: collapse edges → canonical target keys.
  */
 
-import { classifyCaseCitationLookupEligibility } from "./eligibility.js";
+import { classifyCaseCitationLookupEligibility } from "./eligibility";
 import {
   experimentalNormalize,
   normalizeCitationWhitespace,
   parseVolReporterPage,
   targetKey,
-} from "./normalize.js";
-import { LocalAuthorityIndex } from "./local-index.js";
-import type { LocalMatchBucket, UnresolvedEdgeRow, UnresolvedTarget } from "./types.js";
+} from "./normalize";
+import { LocalAuthorityIndex } from "./local-index";
+import type { LocalMatchBucket, UnresolvedEdgeRow, UnresolvedTarget } from "./types";
 
 function toIso(d: string | Date | null | undefined): string | null {
   if (!d) return null;
@@ -75,6 +75,7 @@ export function buildUnresolvedTargetQueue(
     jurisdictions: Set<string>;
     firstSeen: string | null;
     lastSeen: string | null;
+    classifications: Set<string>;
   };
 
   const acc = new Map<string, Acc>();
@@ -95,6 +96,7 @@ export function buildUnresolvedTargetQueue(
         jurisdictions: new Set(),
         firstSeen: null,
         lastSeen: null,
+        classifications: new Set(),
       };
       acc.set(key, row);
     }
@@ -102,6 +104,9 @@ export function buildUnresolvedTargetQueue(
     if (e.fromAuthorityId) row.citing.add(e.fromAuthorityId);
     const court = e.fromCourtId || e.fromCourt;
     if (court) row.jurisdictions.add(String(court));
+    if (e.citationTargetClassification) {
+      row.classifications.add(String(e.citationTargetClassification));
+    }
     const ts = toIso(e.createdAt);
     if (ts) {
       if (!row.firstSeen || ts < row.firstSeen) row.firstSeen = ts;
@@ -127,6 +132,14 @@ export function buildUnresolvedTargetQueue(
       lookupSuitable,
       localCandidateStatus,
     };
+    // Prefer a single shared classification; mixed → UNKNOWN (conservative queue keep).
+    let citationTargetClassification: string | null = null;
+    if (row.classifications.size === 1) {
+      citationTargetClassification = [...row.classifications][0] ?? null;
+    } else if (row.classifications.size > 1) {
+      citationTargetClassification = "UNKNOWN";
+    }
+
     targets.push({
       targetKey: row.targetKey,
       representativeRaw: row.representativeRaw,
@@ -150,6 +163,7 @@ export function buildUnresolvedTargetQueue(
       lookupSuitable,
       eligibilityLane: eligibility.lane,
       eligibilityReasons: eligibility.reasons,
+      citationTargetClassification,
     });
   }
 

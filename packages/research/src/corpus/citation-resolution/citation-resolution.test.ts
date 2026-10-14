@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { planGlobalBackfill, selectDemandFullTextTargets } from "./backfill.js";
+import { planGlobalBackfill, selectDemandFullTextTargets } from "./backfill";
 import {
   CL_LOOKUP_TEXTS_PER_REQUEST,
   dedupeLookupTexts,
@@ -7,26 +7,36 @@ import {
   parseCitationLookupResponse,
   runIdentityBatch,
   simulateLookupFromFixture,
-} from "./cl-identity-client.js";
-import { createResolutionRecord, supersedeRecord } from "./ledger.js";
-import { LocalAuthorityIndex } from "./local-index.js";
-import { dryRunLocalHighResolver, planBackfillFromProposals } from "./local-resolver.js";
-import { metricsForNewCaseBatch } from "./metrics.js";
+} from "./cl-identity-client";
+import { createResolutionRecord, supersedeRecord } from "./ledger";
+import { LocalAuthorityIndex } from "./local-index";
+import { dryRunLocalHighResolver, planBackfillFromProposals } from "./local-resolver";
+import {
+  computeCitationIdentityAccounting,
+  metricsForNewCaseBatch,
+} from "./metrics";
 import {
   classifyCaseCitationLookupEligibility,
   classifyDemandLanePolicy,
   isCaseCitationLookupEligible,
   isStrategicIdentityException,
-} from "./eligibility.js";
+} from "./eligibility";
+import {
+  filterCaseIdentityQueueByClassification,
+  isCaseIdentityEligible,
+  isCitationArtifactClassification,
+  isTrueCaseIdentityClassification,
+  isUnknownClassification,
+} from "./classification";
 import {
   citationLookupAliases,
   experimentalNormalize,
   isLookupSuitableCitation,
   targetKey,
-} from "./normalize.js";
-import { filterExternalIdentityQueueTargets, resolveNewCitationsLocalFirst } from "./pipeline.js";
-import { buildUnresolvedTargetQueue, chunkTargetsForBatch, scoreUnresolvedTarget } from "./target-queue.js";
-import { authorityCorpusState, type AuthorityIndexRow, type UnresolvedEdgeRow } from "./types.js";
+} from "./normalize";
+import { filterExternalIdentityQueueTargets, resolveNewCitationsLocalFirst } from "./pipeline";
+import { buildUnresolvedTargetQueue, chunkTargetsForBatch, scoreUnresolvedTarget } from "./target-queue";
+import { authorityCorpusState, type AuthorityIndexRow, type UnresolvedEdgeRow } from "./types";
 
 const authority = (partial: Partial<AuthorityIndexRow> & { id: string }): AuthorityIndexRow => ({
   citation: null,
@@ -361,5 +371,131 @@ describe("anti-regression metrics", () => {
     expect(m.LOCAL_RESOLUTION_RATE).toBeCloseTo(0.5);
     expect(m.NEW_EDGES_IDENTITY_UNRESOLVED).toBe(30);
     expect(m.EXTERNAL_LOOKUPS_PER_1000_NEW_CASES).toBe(2000);
+  });
+});
+
+describe("citation_target_classification semantics", () => {
+  it("CASE_CITATION is case-identity eligible; artifacts are not", () => {
+    expect(isCaseIdentityEligible("CASE_CITATION")).toBe(true);
+    expect(isTrueCaseIdentityClassification("CASE_CITATION")).toBe(true);
+    expect(isCitationArtifactClassification("CASE_CITATION")).toBe(false);
+
+    for (const c of [
+      "STATUTE",
+      "RULE",
+      "REGULATION",
+      "YYYY_PAGE_N",
+      "RECORD_REFERENCE",
+      "EXHIBIT_REFERENCE",
+      "OCR_MALFORMED",
+      "PARSER_MALFORMED",
+      "CASE_LIKE_BUT_MALFORMED",
+      "BARE_PAGE",
+      "PIN_CITE_ONLY",
+      "DOCKET_REFERENCE",
+      "SECTION_REFERENCE",
+      "NON_CASE_REPORTER",
+      "OTHER_NON_CASE",
+      "UNKNOWN_ARTIFACT",
+    ] as const) {
+      expect(isCaseIdentityEligible(c)).toBe(false);
+      expect(isCitationArtifactClassification(c)).toBe(true);
+      expect(isTrueCaseIdentityClassification(c)).toBe(false);
+    }
+  });
+
+  it("UNKNOWN is conservatively queue-eligible but not true-case", () => {
+    expect(isCaseIdentityEligible("UNKNOWN")).toBe(true);
+    expect(isCaseIdentityEligible(null)).toBe(true);
+    expect(isCaseIdentityEligible(undefined)).toBe(true);
+    expect(isUnknownClassification("UNKNOWN")).toBe(true);
+    expect(isTrueCaseIdentityClassification("UNKNOWN")).toBe(false);
+    expect(isCitationArtifactClassification("UNKNOWN")).toBe(false);
+  });
+
+  it("CASE_LIKE_BUT_MALFORMED is preserved as artifact (excluded from case queue)", () => {
+    expect(isCitationArtifactClassification("CASE_LIKE_BUT_MALFORMED")).toBe(true);
+    expect(isCaseIdentityEligible("CASE_LIKE_BUT_MALFORMED")).toBe(false);
+  });
+
+  it("honest metrics preserve RAW and split true-case / artifact / unknown", () => {
+    const edges = [
+      { toAuthorityId: null, citationTargetClassification: "CASE_CITATION" },
+      { toAuthorityId: null, citationTargetClassification: "CASE_CITATION" },
+      { toAuthorityId: null, citationTargetClassification: "STATUTE" },
+      { toAuthorityId: null, citationTargetClassification: "YYYY_PAGE_N" },
+      { toAuthorityId: null, citationTargetClassification: "UNKNOWN" },
+      { toAuthorityId: null, citationTargetClassification: null },
+      { toAuthorityId: "auth-1", citationTargetClassification: "CASE_CITATION" },
+      { toAuthorityId: "auth-2", citationTargetClassification: "STATUTE" },
+    ];
+    const m = computeCitationIdentityAccounting(edges);
+    expect(m.IDENTITY_UNRESOLVED_EDGES_RAW).toBe(6);
+    expect(m.TRUE_CASE_IDENTITY_UNRESOLVED_EDGES).toBe(2);
+    expect(m.INELIGIBLE_ARTIFACT_EDGES).toBe(2);
+    expect(m.UNKNOWN_CLASSIFICATION_EDGES).toBe(2);
+    expect(m.AUTHORITY_RESOLVED_EDGES).toBe(2);
+    // Classification alone must not mutate authority-resolution accounting.
+    expect(m.AUTHORITY_RESOLVED_EDGES + m.IDENTITY_UNRESOLVED_EDGES_RAW).toBe(edges.length);
+  });
+
+  it("queue excludes artifact classifications; keeps CASE_CITATION and UNKNOWN", () => {
+    const items = [
+      { id: "1", citationTargetClassification: "CASE_CITATION" as const },
+      { id: "2", citationTargetClassification: "UNKNOWN" as const },
+      { id: "3", citationTargetClassification: "STATUTE" as const },
+      { id: "4", citationTargetClassification: "EXHIBIT_REFERENCE" as const },
+      { id: "5", citationTargetClassification: "CASE_LIKE_BUT_MALFORMED" as const },
+    ];
+    const kept = filterCaseIdentityQueueByClassification(items);
+    expect(kept.map((i) => i.id)).toEqual(["1", "2"]);
+
+    const targets = [
+      {
+        representativeRaw: "410 U.S. 113",
+        normalizedCitation: "410 U.S. 113",
+        citationTargetClassification: "CASE_CITATION",
+      },
+      {
+        representativeRaw: "42 U.S.C. § 1983",
+        normalizedCitation: "42 U.S.C. § 1983",
+        citationTargetClassification: "STATUTE",
+      },
+      {
+        representativeRaw: "410 U.S. 113",
+        normalizedCitation: "410 U.S. 113",
+        citationTargetClassification: "OCR_MALFORMED",
+      },
+    ];
+    const eligible = filterExternalIdentityQueueTargets(targets);
+    expect(eligible).toHaveLength(1);
+    expect(eligible[0]?.citationTargetClassification).toBe("CASE_CITATION");
+  });
+
+  it("target queue propagates persisted classification without dropping raw evidence", () => {
+    const edges: UnresolvedEdgeRow[] = [
+      {
+        id: "e1",
+        fromAuthorityId: "c1",
+        rawCitation: "2026 Page 2",
+        normalizedCitation: "2026 Page 2",
+        citationTargetClassification: "YYYY_PAGE_N",
+      },
+      {
+        id: "e2",
+        fromAuthorityId: "c2",
+        rawCitation: "410 U.S. 113",
+        normalizedCitation: "410 U.S. 113",
+        citationTargetClassification: "CASE_CITATION",
+      },
+    ];
+    const q = buildUnresolvedTargetQueue(edges, new LocalAuthorityIndex([]));
+    const page = q.targets.find((t) => /page/i.test(t.normalizedCitation));
+    const us = q.targets.find((t) => t.normalizedCitation.includes("410"));
+    expect(page?.citationTargetClassification).toBe("YYYY_PAGE_N");
+    expect(us?.citationTargetClassification).toBe("CASE_CITATION");
+    expect(page?.representativeRaw).toBe("2026 Page 2");
+    const filtered = filterExternalIdentityQueueTargets(q.targets);
+    expect(filtered.every((t) => t.citationTargetClassification !== "YYYY_PAGE_N")).toBe(true);
   });
 });

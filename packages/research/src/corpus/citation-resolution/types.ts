@@ -2,8 +2,10 @@
  * Corpus-owned citation identity resolution model.
  * Persistence of provenance uses the corpus ledger + authority metadata;
  * edge identity uses existing legal_authority_citations.to_authority_id.
- * Does NOT require a shared product schema migration.
+ * Citation-target classification is persisted on the shared edge row (Integration schema).
  */
+
+import type { CitationTargetClassification } from "@nyayagrid/database";
 
 export const RESOLVER_VERSION = "citation-resolution-engine/v1";
 
@@ -82,6 +84,8 @@ export type UnresolvedEdgeRow = {
   createdAt?: string | Date | null;
   fromCourtId?: string | null;
   fromCourt?: string | null;
+  /** Persisted citation_target_classification when available. */
+  citationTargetClassification?: CitationTargetClassification | string | null;
 };
 
 export type UnresolvedTarget = {
@@ -114,6 +118,8 @@ export type UnresolvedTarget = {
     | "STATUTE_RULE_REGULATION"
     | "UNKNOWN_REVIEW";
   eligibilityReasons?: string[];
+  /** Persisted edge classification when available (shared schema). */
+  citationTargetClassification?: CitationTargetClassification | string | null;
 };
 
 export type LocalResolveProposal = {
@@ -156,6 +162,7 @@ export type AntiRegressionMetrics = {
   NEW_EDGES_RESOLVED_PARALLEL: number;
   NEW_EDGES_RESOLVED_CONTEXTUAL: number;
   NEW_EDGES_AUTHORITY_RESOLVED_EXTERNAL: number;
+  /** Raw unresolved (= IDENTITY_UNRESOLVED_EDGES_RAW for batch accounting). */
   NEW_EDGES_IDENTITY_UNRESOLVED: number;
   UNIQUE_NEW_UNRESOLVED_TARGETS: number;
   OLD_EDGES_BACKFILLED: number;
@@ -165,6 +172,19 @@ export type AntiRegressionMetrics = {
   LOCAL_RESOLUTION_RATE: number;
   EXTERNAL_LOOKUPS_PER_1000_NEW_CASES: number;
   IDENTITY_UNRESOLVED_PER_1000_NEW_CASES: number;
+};
+
+/**
+ * Honest corpus citation accounting.
+ * RAW is preserved for audit; TRUE_CASE / ARTIFACT / UNKNOWN split classification.
+ * Resolved edges (toAuthorityId set) are never counted as unresolved.
+ */
+export type CitationIdentityAccountingMetrics = {
+  IDENTITY_UNRESOLVED_EDGES_RAW: number;
+  TRUE_CASE_IDENTITY_UNRESOLVED_EDGES: number;
+  INELIGIBLE_ARTIFACT_EDGES: number;
+  UNKNOWN_CLASSIFICATION_EDGES: number;
+  AUTHORITY_RESOLVED_EDGES: number;
 };
 
 export function emptyAntiRegressionMetrics(): AntiRegressionMetrics {
