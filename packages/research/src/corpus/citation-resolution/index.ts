@@ -15,3 +15,5 @@ export * from "./citing-context-resolver.js";
 export * from "./citation-graph-resolver.js";
 export * from "./govinfo-usreports.js";
 export * from "./cap-static.js";
+export * from "./artifact-classifier.js";
+export * from "./selective-cl-lanes.js";

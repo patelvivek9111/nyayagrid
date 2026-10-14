@@ -59,6 +59,23 @@ export function buildCitationLookupPayload(text: string): { text: string } {
   return { text: String(text || "").trim() };
 }
 
+/** Format CL citation objects `{volume,reporter,page}` into display strings. */
+export function formatClusterCitation(value: unknown): string | null {
+  if (value == null) return null;
+  if (typeof value === "string") {
+    const t = value.trim();
+    return t && t !== "[object Object]" ? t : null;
+  }
+  if (typeof value === "object") {
+    const o = value as Record<string, unknown>;
+    const volume = o.volume != null ? String(o.volume).trim() : "";
+    const reporter = o.reporter != null ? String(o.reporter).trim() : "";
+    const page = o.page != null ? String(o.page).trim() : "";
+    if (volume && reporter && page) return `${volume} ${reporter} ${page}`;
+  }
+  return null;
+}
+
 /** Deduplicate target texts while preserving first-seen order. */
 export function dedupeLookupTexts(texts: string[]): string[] {
   const seen = new Set<string>();
@@ -109,12 +126,12 @@ export function parseCitationLookupResponse(body: unknown): ClIdentityLookupResu
       const clusterId = c.id != null ? String(c.id) : c.cluster_id != null ? String(c.cluster_id) : null;
       const cites = [
         ...normCites,
-        ...(Array.isArray(c.citations) ? c.citations.map(String) : []),
+        ...(Array.isArray(c.citations) ? c.citations.map(formatClusterCitation).filter(Boolean) : []),
         ...(typeof c.citation === "string" ? [c.citation] : []),
       ];
       candidates.push({
         clusterId,
-        citations: [...new Set(cites.filter(Boolean))],
+        citations: [...new Set(cites.filter(Boolean) as string[])],
         caseName: c.case_name != null ? String(c.case_name) : c.caseName != null ? String(c.caseName) : null,
         court: c.court_id != null ? String(c.court_id) : c.court != null ? String(c.court) : null,
         dateFiled: c.date_filed != null ? String(c.date_filed) : null,

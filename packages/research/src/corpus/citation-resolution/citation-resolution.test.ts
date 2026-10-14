@@ -120,6 +120,27 @@ describe("CourtListener identity parse + queue gates", () => {
     expect(nf.status).toBe("not_found");
   });
 
+  it("formats cluster citation objects into strings (no [object Object])", () => {
+    const high = parseCitationLookupResponse([
+      {
+        status: 200,
+        normalized_citations: ["410 U.S. 113"],
+        clusters: [
+          {
+            id: 108713,
+            case_name: "Roe v. Wade",
+            citations: [{ volume: "410", reporter: "U.S.", page: "113", type: 1 }],
+          },
+        ],
+      },
+    ]);
+    expect(high.status).toBe("resolved");
+    if (high.status === "resolved") {
+      expect(high.citations).toContain("410 U.S. 113");
+      expect(high.citations?.some((c) => c.includes("[object Object]"))).toBe(false);
+    }
+  });
+
   it("excludes ineligible targets from external identity queue", () => {
     const filtered = filterExternalIdentityQueueTargets([
       { representativeRaw: "573 U.S. 373", normalizedCitation: "573 U.S. 373" },
