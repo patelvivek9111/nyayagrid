@@ -5,7 +5,7 @@
  * Citation-target classification is persisted on the shared edge row (Integration schema).
  */
 
-import type { CitationTargetClassification } from "@nyayagrid/database";
+import type { CitationTargetClassification } from "./classification.js";
 
 export const RESOLVER_VERSION = "citation-resolution-engine/v1";
 

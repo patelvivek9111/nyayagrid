@@ -4,12 +4,32 @@
  * Do not overload resolution flags with artifact semantics.
  */
 
-import {
-  CITATION_TARGET_CLASSIFICATIONS,
-  type CitationTargetClassification,
-} from "@nyayagrid/database";
+/**
+ * Keep in sync with packages/database CITATION_TARGET_CLASSIFICATIONS / migration 0024.
+ * Local constant avoids pulling the full database barrel (drizzle) into unit tests.
+ */
+export const CITATION_TARGET_CLASSIFICATIONS = [
+  "CASE_CITATION",
+  "STATUTE",
+  "RULE",
+  "REGULATION",
+  "BARE_PAGE",
+  "PIN_CITE_ONLY",
+  "YYYY_PAGE_N",
+  "RECORD_REFERENCE",
+  "EXHIBIT_REFERENCE",
+  "DOCKET_REFERENCE",
+  "SECTION_REFERENCE",
+  "OCR_MALFORMED",
+  "PARSER_MALFORMED",
+  "NON_CASE_REPORTER",
+  "OTHER_NON_CASE",
+  "CASE_LIKE_BUT_MALFORMED",
+  "UNKNOWN_ARTIFACT",
+  "UNKNOWN",
+] as const;
 
-export { CITATION_TARGET_CLASSIFICATIONS, type CitationTargetClassification };
+export type CitationTargetClassification = (typeof CITATION_TARGET_CLASSIFICATIONS)[number];
 
 /** Deterministic non-case / malformed artifact categories (ineligible for case-identity queue). */
 export const CITATION_ARTIFACT_CLASSIFICATIONS = [

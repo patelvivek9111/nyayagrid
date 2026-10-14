@@ -17,4 +17,15 @@ export * from "./citation-graph-resolver.js";
 export * from "./govinfo-usreports.js";
 export * from "./cap-static.js";
 export * from "./artifact-classifier.js";
-export * from "./selective-cl-lanes.js";
+export {
+  type ClLaneReporter,
+  type LaneEconomicStats,
+  type LaneDecision,
+  type CollisionDiscriminator,
+  mapToLaneReporter,
+  scoreLaneTarget,
+  rankLaneTargets,
+  mayQueryCollisionTarget,
+  evaluateLaneEconomics,
+  filterTargetsForLane,
+} from "./selective-cl-lanes.js";
