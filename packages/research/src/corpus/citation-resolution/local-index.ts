@@ -9,8 +9,8 @@ import {
   normalizeCitationWhitespace,
   parseVolReporterPage,
   vrpKey,
-} from "./normalize.js";
-import type { AuthorityIndexRow, LookupCandidateResult, ResolutionMethod } from "./types.js";
+} from "./normalize";
+import type { AuthorityIndexRow, LookupCandidateResult, ResolutionMethod } from "./types";
 
 function metaStringList(meta: Record<string, unknown> | null | undefined, key: string): string[] {
   const v = meta?.[key];

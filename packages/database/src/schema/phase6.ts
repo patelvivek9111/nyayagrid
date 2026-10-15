@@ -196,6 +196,34 @@ export const legalAuthorityChunks = pgTable(
   ],
 );
 
+/**
+ * Persisted citation-target classification on legal_authority_citations.
+ * Independent of authority-resolution state (to_authority_id / AUTHORITY_RESOLVED / CORPUS_COMPLETE).
+ * Default UNKNOWN preserves historical rows without inventing CASE_CITATION.
+ */
+export const CITATION_TARGET_CLASSIFICATIONS = [
+  "CASE_CITATION",
+  "STATUTE",
+  "RULE",
+  "REGULATION",
+  "BARE_PAGE",
+  "PIN_CITE_ONLY",
+  "YYYY_PAGE_N",
+  "RECORD_REFERENCE",
+  "EXHIBIT_REFERENCE",
+  "DOCKET_REFERENCE",
+  "SECTION_REFERENCE",
+  "OCR_MALFORMED",
+  "PARSER_MALFORMED",
+  "NON_CASE_REPORTER",
+  "OTHER_NON_CASE",
+  "CASE_LIKE_BUT_MALFORMED",
+  "UNKNOWN_ARTIFACT",
+  "UNKNOWN",
+] as const;
+
+export type CitationTargetClassification = (typeof CITATION_TARGET_CLASSIFICATIONS)[number];
+
 /** Outbound citations parsed from authority text. Unresolved citations keep toAuthorityId null. */
 export const legalAuthorityCitations = pgTable(
   "legal_authority_citations",
@@ -210,6 +238,14 @@ export const legalAuthorityCitations = pgTable(
     rawCitation: text("raw_citation").notNull(),
     normalizedCitation: text("normalized_citation"),
     pinpoint: text("pinpoint"),
+    /**
+     * Target-kind classification. Not an authority-resolution flag.
+     * UNKNOWN until deterministic classifier/backfill sets a specific value.
+     */
+    citationTargetClassification: text("citation_target_classification")
+      .$type<CitationTargetClassification>()
+      .notNull()
+      .default("UNKNOWN"),
     createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
   },
   (table) => [

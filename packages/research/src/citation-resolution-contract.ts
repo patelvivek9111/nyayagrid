@@ -10,7 +10,7 @@
  * AUTHORITY_RESOLVED never implies CORPUS_COMPLETE.
  */
 
-import { LocalAuthorityIndex } from "./corpus/citation-resolution/local-index.js";
+import { LocalAuthorityIndex } from "./corpus/citation-resolution/local-index";
 import {
   RESOLVER_VERSION,
   authorityCorpusState,
@@ -27,7 +27,7 @@ import {
   type ResolutionConfidence,
   type ResolutionMethod,
   type ResolutionState,
-} from "./corpus/citation-resolution/index.js";
+} from "./corpus/citation-resolution/index";
 
 /** Product UI / service outcome vocabulary (maps over engine results; does not rename persisted states). */
 export type ProductResolutionOutcome =

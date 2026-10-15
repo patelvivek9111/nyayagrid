@@ -19,7 +19,7 @@ export {
   type LookupCandidateResult,
   type ClIdentityLookupResult,
   type AntiRegressionMetrics,
-} from "./types.js";
+} from "./types";
 
 export {
   collapseWhitespace,
@@ -32,7 +32,7 @@ export {
   // Avoid colliding with Research citations.ts exports of the same names.
   normalizeCitationWhitespace as normalizeResolutionCitationWhitespace,
   citationLookupAliases as resolutionCitationLookupAliases,
-} from "./normalize.js";
+} from "./normalize";
 
 export {
   classifyCaseCitationLookupEligibility,
@@ -42,16 +42,31 @@ export {
   type CitationLookupLane,
   type CaseCitationEligibility,
   type DemandLanePolicy,
-} from "./eligibility.js";
+} from "./eligibility";
 
-export { LocalAuthorityIndex } from "./local-index.js";
+export {
+  CITATION_TARGET_CLASSIFICATIONS,
+  CITATION_ARTIFACT_CLASSIFICATIONS,
+  isCaseIdentityEligible,
+  isCitationArtifactClassification,
+  isTrueCaseIdentityClassification,
+  isUnknownClassification,
+  normalizeClassification,
+  caseIdentityEligibleClassifications,
+  citationArtifactClassifications,
+  filterCaseIdentityQueueByClassification,
+  type CitationTargetClassification,
+  type CitationArtifactClassification,
+} from "./classification";
+
+export { LocalAuthorityIndex } from "./local-index";
 export {
   buildUnresolvedTargetQueue,
   chunkTargetsForBatch,
   scoreUnresolvedTarget,
-} from "./target-queue.js";
-export { dryRunLocalHighResolver, planBackfillFromProposals } from "./local-resolver.js";
-export { planGlobalBackfill, selectDemandFullTextTargets } from "./backfill.js";
+} from "./target-queue";
+export { dryRunLocalHighResolver, planBackfillFromProposals } from "./local-resolver";
+export { planGlobalBackfill, selectDemandFullTextTargets } from "./backfill";
 export {
   createResolutionRecord,
   supersedeRecord,
@@ -59,7 +74,7 @@ export {
   loadLedger,
   activeRecordsByEdge,
   writeJsonAtomic,
-} from "./ledger.js";
+} from "./ledger";
 export {
   CL_CITATION_LOOKUP_PATH,
   CL_DEFAULT_BASE,
@@ -74,8 +89,13 @@ export {
   runIdentityBatch,
   type ClIdentityClientOptions,
   type ClLookupCheckpoint,
-} from "./cl-identity-client.js";
-export { metricsForNewCaseBatch } from "./metrics.js";
+} from "./cl-identity-client";
+export {
+  metricsForNewCaseBatch,
+  computeCitationIdentityAccounting,
+  emptyCitationIdentityAccounting,
+  type CitationAccountingEdge,
+} from "./metrics";
 export {
   filterExternalIdentityQueueTargets,
   resolveNewCitationsLocalFirst,
@@ -83,4 +103,5 @@ export {
   edgeTargetKey,
   type IngestCitationInput,
   type IngestResolveResult,
-} from "./pipeline.js";
+} from "./pipeline";
+export type { CitationIdentityAccountingMetrics } from "./types";
