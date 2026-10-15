@@ -37,6 +37,16 @@ import {
 } from "./conversational-workflow-actions";
 import { buildAskUxPayload } from "./conversational-ux-payload";
 import {
+  buildHearingPrepResult,
+  extractHearingFocusIssue,
+  formatHearingPrepForPrompt,
+  hearingPrepForceDomains,
+  isHearingCompressionRequest,
+  isHearingOutlineRequest,
+  isHearingPrepQuestion,
+  type HearingPrepResult,
+} from "./conversational-hearing-prep";
+import {
   assessNeedMoreDocuments,
   assessRetrievedEvidence,
   assertSourceScopeInvariants,
@@ -1654,12 +1664,16 @@ export async function askNyayaAboutMatter(params: {
 
     // Phase 2 bounded context router — selects domains; whole-matter suppresses overlaps.
     // Phase 3 forceDomains come from deterministic referent binding.
+    // Oct 19–25 Phase 1: hearing prep forces motions/claims/discovery/comms/authorities.
+    const hearingPrepDomains = isHearingPrepQuestion(params.question)
+      ? hearingPrepForceDomains()
+      : [];
     routerPlan = planConversationalContext({
       question: referentResolution.routingQuestion || params.question,
       workspaceType: params.workspaceType,
       priorSourceCount: conversationWorkingState.activeSourceIds.length,
       priorAuthorityCount: conversationWorkingState.activeAuthorityIds.length,
-      forceDomains: referentResolution.forceDomains,
+      forceDomains: [...referentResolution.forceDomains, ...hearingPrepDomains],
     });
     if (referentResolution.diagnostics) {
       referentResolution = {
@@ -1672,6 +1686,7 @@ export async function askNyayaAboutMatter(params: {
     }
 
     let civilContextText: string | null = null;
+    let civilReviewForHearing: CivilClaimsReview | null = null;
     if (routerPlan.loaders.civil) {
       try {
         const civilReview = await loadCivilClaimsReview(params.db, {
@@ -1679,6 +1694,7 @@ export async function askNyayaAboutMatter(params: {
           organizationId: params.organizationId,
           matterId: params.matterId,
         });
+        civilReviewForHearing = civilReview;
         civilContextText = buildCivilClaimsAskContextBlock({
           question: params.question,
           civilReview,
@@ -1704,6 +1720,7 @@ export async function askNyayaAboutMatter(params: {
     }
 
     let discoveryContextText: string | null = null;
+    let discoveryReviewForHearing: DiscoveryLedgerReview | null = null;
     if (routerPlan.loaders.discovery) {
       try {
         const discoveryReview = await loadDiscoveryLedgerReview(params.db, {
@@ -1711,6 +1728,7 @@ export async function askNyayaAboutMatter(params: {
           organizationId: params.organizationId,
           matterId: params.matterId,
         });
+        discoveryReviewForHearing = discoveryReview;
         discoveryContextText = buildDiscoveryAskContextBlock({
           question: params.question,
           discoveryReview,
@@ -1733,6 +1751,7 @@ export async function askNyayaAboutMatter(params: {
     }
 
     let motionsCommsContextText: string | null = null;
+    let mcReviewForHearing: MatterMotionsCommunicationsReview | null = null;
     if (routerPlan.loaders.motionsComms) {
       try {
         const mcReview = await loadMatterMotionsCommunicationsReview(params.db, {
@@ -1740,6 +1759,7 @@ export async function askNyayaAboutMatter(params: {
           organizationId: params.organizationId,
           matterId: params.matterId,
         });
+        mcReviewForHearing = mcReview;
         motionsCommsContextText = buildMotionsCommunicationsAskContextBlock({
           question: params.question,
           review: mcReview,
@@ -1773,6 +1793,145 @@ export async function askNyayaAboutMatter(params: {
       }
     }
 
+    // Oct 19–25 Phase 1 — deterministic hearing-prep record (bounded; no full-matter dump).
+    let hearingPrepResult: HearingPrepResult | null = null;
+    let hearingPrepContextText: string | null = null;
+    if (
+      (isHearingPrepQuestion(params.question) ||
+        isHearingOutlineRequest(params.question) ||
+        isHearingCompressionRequest(params.question) != null) &&
+      mcReviewForHearing
+    ) {
+      const linksByMotion = new Map<string, typeof mcReviewForHearing.motionLinks>();
+      for (const link of mcReviewForHearing.motionLinks ?? []) {
+        const list = linksByMotion.get(link.motionId) ?? [];
+        list.push(link);
+        linksByMotion.set(link.motionId, list);
+      }
+      const motionInputs = (mcReviewForHearing.motions ?? []).map((m) => {
+        const links = linksByMotion.get(m.id) ?? [];
+        return {
+          id: m.id,
+          title: m.title,
+          motionType: m.motionType,
+          status: m.status,
+          disposition: m.disposition,
+          filedAt: m.filedAt ? new Date(m.filedAt).toISOString() : null,
+          hearingAt: m.hearingAt ? new Date(m.hearingAt).toISOString() : null,
+          rulingAt: m.rulingAt ? new Date(m.rulingAt).toISOString() : null,
+          rulingSummary: m.rulingSummary,
+          relatedClaimIds: links.filter((l) => l.linkType === "CLAIM").map((l) => l.targetId),
+          relatedDeficiencyIds: links
+            .filter((l) => l.linkType === "DISCOVERY_DEFICIENCY")
+            .map((l) => l.targetId),
+          relatedEvidenceIds: links.filter((l) => l.linkType === "EVIDENCE").map((l) => l.targetId),
+          relatedCommunicationIds: links
+            .filter((l) => l.linkType === "COMMUNICATION")
+            .map((l) => l.targetId),
+          matterId: params.matterId,
+        };
+      });
+      const resolvedMotionId =
+        referentResolution.referents.find(
+          (r) => r.entityType === "motion" || r.entityType === "ruling",
+        )?.entityId ?? null;
+      const ambiguousMotionIds =
+        referentResolution.status === "AMBIGUOUS"
+          ? referentResolution.candidates
+              .filter((c) => c.entityType === "motion" || c.entityType === "ruling")
+              .map((c) => c.entityId)
+          : undefined;
+      hearingPrepResult = buildHearingPrepResult({
+        question: params.question,
+        matterId: params.matterId,
+        motions: motionInputs,
+        resolvedMotionId,
+        ambiguousMotionIds,
+        claims: (civilReviewForHearing?.claims ?? [])
+          .filter((c) => c.isCurrent !== false)
+          .map((c) => ({
+            id: c.id,
+            label: c.label,
+            supportStatus: c.supportStatus ?? null,
+            description: c.description ?? null,
+          })),
+        evidence: (() => {
+          const evidenceLabel = new Map(
+            (civilReviewForHearing?.evidence ?? []).map((e) => [e.id, e.label] as const),
+          );
+          const byId = new Map<
+            string,
+            {
+              id: string;
+              label: string;
+              supportsClaimIds: string[];
+              contradictsClaimIds: string[];
+              documentId: string | null;
+            }
+          >();
+          for (const claim of civilReviewForHearing?.claims ?? []) {
+            if (claim.isCurrent === false) continue;
+            for (const el of claim.elements ?? []) {
+              for (const rel of el.supportingEvidence ?? []) {
+                const id = rel.evidenceId;
+                if (!id) continue;
+                const prior = byId.get(id) ?? {
+                  id,
+                  label: evidenceLabel.get(id) || rel.note || id,
+                  supportsClaimIds: [],
+                  contradictsClaimIds: [],
+                  documentId: null,
+                };
+                if (!prior.supportsClaimIds.includes(claim.id)) prior.supportsClaimIds.push(claim.id);
+                byId.set(id, prior);
+              }
+              for (const rel of el.contraryEvidence ?? []) {
+                const id = rel.evidenceId;
+                if (!id) continue;
+                const prior = byId.get(id) ?? {
+                  id,
+                  label: evidenceLabel.get(id) || rel.note || id,
+                  supportsClaimIds: [],
+                  contradictsClaimIds: [],
+                  documentId: null,
+                };
+                if (!prior.contradictsClaimIds.includes(claim.id)) prior.contradictsClaimIds.push(claim.id);
+                byId.set(id, prior);
+              }
+            }
+          }
+          return [...byId.values()].slice(0, 40);
+        })(),
+        deficiencies: (discoveryReviewForHearing?.deficiencies ?? []).map((d) => ({
+          id: d.id,
+          description: d.description || d.kind || "Deficiency",
+          status: d.status ?? "OPEN",
+          motionId: d.motionId ?? null,
+        })),
+        communications: (mcReviewForHearing.communications ?? []).map((c) => {
+          const links = (mcReviewForHearing.communicationLinks ?? []).filter(
+            (l) => l.communicationId === c.id,
+          );
+          return {
+            id: c.id,
+            subject: c.subject || "Communication",
+            summary: c.summary,
+            relatedMotionIds: links.filter((l) => l.linkType === "MOTION").map((l) => l.targetId),
+          };
+        }),
+        authorities: conversationWorkingState.authorityStates.map((a) => ({
+          id: a.id,
+          label: a.id,
+          resolution: a.resolution,
+          treatmentVerified: a.treatmentVerified,
+        })),
+        focusIssue: extractHearingFocusIssue(params.question),
+        outlineRequested: isHearingOutlineRequest(params.question),
+        compressMinutes: isHearingCompressionRequest(params.question),
+      });
+      hearingPrepContextText = formatHearingPrepForPrompt(hearingPrepResult);
+    }
+
     let wholeMatterContextText: string | null = null;
     if (routerPlan.loaders.wholeMatter) {
       try {
@@ -1798,6 +1957,7 @@ export async function askNyayaAboutMatter(params: {
       civilContextText,
       discoveryContextText,
       motionsCommsContextText,
+      hearingPrepContextText,
       wholeMatterContextText,
     );
 
@@ -1888,6 +2048,7 @@ export async function askNyayaAboutMatter(params: {
         civilContextText,
         discoveryContextText,
         motionsCommsContextText,
+        hearingPrepContextText,
         wholeMatterContextText,
         formatReferentResolutionForPrompt(referentResolution),
       );
@@ -1898,7 +2059,13 @@ export async function askNyayaAboutMatter(params: {
             ...routerPlan.diagnostics,
             contextCharsEstimate:
               (conversationAskContext.metrics.promptChars ?? 0) +
-              [civilContextText, discoveryContextText, motionsCommsContextText, wholeMatterContextText]
+              [
+                civilContextText,
+                discoveryContextText,
+                motionsCommsContextText,
+                hearingPrepContextText,
+                wholeMatterContextText,
+              ]
                 .filter(Boolean)
                 .join("").length,
             sourceCount: conversationAskContext.metrics.sourceIdCount,
@@ -1913,6 +2080,7 @@ export async function askNyayaAboutMatter(params: {
         civilContextText,
         discoveryContextText,
         motionsCommsContextText,
+        hearingPrepContextText,
         wholeMatterContextText,
         formatReferentResolutionForPrompt(referentResolution),
       );
@@ -2033,6 +2201,122 @@ export async function askNyayaAboutMatter(params: {
       };
     }
 
+    // Hearing target ambiguity (NO_AUTO_PICK) — ask; do not fabricate a hearing prep.
+    if (hearingPrepResult?.hearingTarget.posture === "AMBIGUOUS") {
+      const choices = hearingPrepResult.sourceMap
+        .filter((s) => s.kind === "motion")
+        .map((s) => ({ label: s.label, entityType: "motion" }));
+      const clarify =
+        "Multiple motions/hearings match. Which motion or hearing should I prepare?\n" +
+        choices.map((c, i) => `${i + 1}. ${c.label}`).join("\n");
+      if (!isContinue) {
+        await params.db.insert(messages).values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          conversationId: conversationIdResolved,
+          role: "user",
+          content: params.question,
+          createdByUserId: params.userId,
+        });
+      }
+      const [assistantMessage] = await params.db
+        .insert(messages)
+        .values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          conversationId: conversationIdResolved,
+          role: "assistant",
+          content: clarify,
+          createdByUserId: params.userId,
+        })
+        .returning();
+      const [artifact] = await params.db
+        .insert(aiArtifacts)
+        .values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          conversationId: conversationIdResolved,
+          messageId: assistantMessage!.id,
+          artifactType: "matter_qa",
+          question: params.question,
+          answer: clarify,
+          evidenceState: "insufficient",
+          provider: "nyaya_hearing_prep",
+          model: "deterministic",
+          promptVersion: NYAYA_PROMPT_VERSION,
+          retrievedChunkIds: [],
+          citations: [],
+          validation: {
+            completionStatus: "completed",
+            premiseCheck: null,
+            selectedDomains: routerPlan?.selectedDomains ?? [],
+            hearingPrep: {
+              posture: "AMBIGUOUS",
+              motionId: null,
+              sourceMap: hearingPrepResult.sourceMap,
+            },
+            conversationWorkingState,
+            assertionReady: true,
+          },
+          createdByUserId: params.userId,
+        })
+        .returning();
+      const clarifyProvenance = buildProvenanceSummary({
+        sourceScope,
+        caseSourceCount: 0,
+        webSourceCount: 0,
+        authoritySourceCount: 0,
+      });
+      emit({ type: "text_delta", text: clarify, at: nowIso() });
+      emit({
+        type: "generation_completed",
+        answer: clarify,
+        conversationId: conversationIdResolved,
+        artifactId: artifact?.id,
+        messageId: assistantMessage?.id,
+        status: "completed",
+        provenance: clarifyProvenance,
+        ux: {
+          turnKind: "ambiguity",
+          ambiguity: {
+            prompt: "Which motion or hearing should I prepare?",
+            choices: choices.slice(0, 6),
+          },
+        },
+        at: nowIso(),
+      });
+      return {
+        conversationId: conversationIdResolved,
+        artifact,
+        answer: {
+          answer: clarify,
+          sources: [],
+          assumptions: [],
+          unresolvedQuestions: ["Ambiguous hearing/motion target"],
+          evidenceState: "insufficient" as const,
+        },
+        retrieved: passages,
+        provenance: clarifyProvenance,
+        sourceScope,
+        usageActionId,
+        needsMoreDocuments: false,
+        needMoreDocumentReasons: [],
+        usedFollowUpRetrieval: false,
+        usedVerifiedIntelligence: false,
+        usedGraph: false,
+        usedMemory: false,
+        usedProfessionalAnalysis: false,
+        usedLegalAuthority: false,
+        usedWeek4CombinedContext: false,
+        week4StructuredContext: null,
+        doctrineQuestion: false,
+        authorityResearchMissing: false,
+        authorityWarnings: [],
+        authorityValidation: null,
+        timings: { ...timings, totalMs: Date.now() - startedAsk },
+      };
+    }
+
     // Premise check after prior working state is available — before generation.
     const priorHadClaimSupport = conversationWorkingState.issueLabels.some((l) =>
       /claim|evidence/i.test(l),
@@ -2052,6 +2336,7 @@ export async function askNyayaAboutMatter(params: {
           civilContextText,
           discoveryContextText,
           motionsCommsContextText,
+          hearingPrepContextText,
           wholeMatterContextText,
         ]
           .filter(Boolean)
@@ -2687,6 +2972,26 @@ export async function askNyayaAboutMatter(params: {
           // Phase 4 conversational workflow action (preview / confirmation / navigation).
           conversationalAction,
           workflowClassification,
+          // Oct 19–25 Phase 1 — hearing preparation structured result (no schema).
+          hearingPrep: hearingPrepResult
+            ? {
+                posture: hearingPrepResult.hearingTarget.posture,
+                motionId: hearingPrepResult.hearingTarget.motionId,
+                hearingAt: hearingPrepResult.hearingTarget.hearingAt,
+                disposition: hearingPrepResult.hearingTarget.disposition,
+                issueCount: hearingPrepResult.issuesBeforeCourt.length,
+                investigateCount: hearingPrepResult.investigateBeforeHearing.length,
+                authorityTreatment: hearingPrepResult.authorities.map((a) => ({
+                  id: a.id,
+                  treatmentStatus: a.treatmentStatus,
+                  resolution: a.resolution,
+                })),
+                sourceMap: hearingPrepResult.sourceMap,
+                outlinePreview: Boolean(hearingPrepResult.outlinePreview),
+                compressed: Boolean(hearingPrepResult.compressedOralArgument),
+                limitations: hearingPrepResult.limitations,
+              }
+            : null,
           factualityContract: (() => {
             const allowed = validated.answer.sources
               .map((s) => s.documentId)

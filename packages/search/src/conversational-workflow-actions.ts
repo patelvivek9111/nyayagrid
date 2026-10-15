@@ -13,6 +13,11 @@ import {
 } from "@nyayagrid/permissions";
 import type { ConversationWorkingState } from "./conversation-context";
 import type { ReferentResolutionResult } from "./conversational-referent-resolver";
+import {
+  isHearingCompressionRequest,
+  isHearingOutlineRequest,
+  isHearingPrepQuestion,
+} from "./conversational-hearing-prep";
 
 export const CONVERSATIONAL_ACTION_CLASSES = [
   "READ_ONLY",
@@ -29,6 +34,7 @@ export const CONVERSATIONAL_ACTION_TYPES = [
   "RESEARCH_READ",
   "COMPARE_READ",
   "DEPOSITION_PREP_PREVIEW",
+  "HEARING_PREP_READ",
   "MEMORY_INSPECT",
   "GRAPH_SHOW",
   "TIMELINE_SHOW",
@@ -355,6 +361,27 @@ export function classifyConversationalAction(params: {
     };
   }
 
+  // Hearing outline / oral-argument compression → DRAFT_PREVIEW (save still confirmation-gated).
+  if (
+    isHearingOutlineRequest(q) ||
+    (isHearingCompressionRequest(q) != null && /\b(outline|oral argument|version|bullet)\b/i.test(q)) ||
+    (/\b(draft|write)\b/i.test(q) && /\bhearing outline\b/i.test(q))
+  ) {
+    return {
+      actionType: "DRAFT_GENERATE_PREVIEW",
+      actionClass: "DRAFT_PREVIEW",
+      confirmationUtterance: false,
+      navigationKind: null,
+      draftRequested: true,
+      researchRequested: false,
+      compareRequested: false,
+      taskRequested: false,
+      memoryRequested: false,
+      prohibitedReason: null,
+      latencyMs: Math.max(0, Date.now() - started),
+    };
+  }
+
   const draftRequested =
     Boolean(params.referent?.draftIntentPreview?.requested) ||
     /\b(draft|write|turn this into|revise the draft)\b/i.test(q);
@@ -365,6 +392,23 @@ export function classifyConversationalAction(params: {
       confirmationUtterance: false,
       navigationKind: null,
       draftRequested: true,
+      researchRequested: false,
+      compareRequested: false,
+      taskRequested: false,
+      memoryRequested: false,
+      prohibitedReason: null,
+      latencyMs: Math.max(0, Date.now() - started),
+    };
+  }
+
+  // Hearing preparation itself is READ_ONLY (evaluate the record; no writes).
+  if (isHearingPrepQuestion(q)) {
+    return {
+      actionType: "HEARING_PREP_READ",
+      actionClass: "READ_ONLY",
+      confirmationUtterance: false,
+      navigationKind: null,
+      draftRequested: false,
       researchRequested: false,
       compareRequested: false,
       taskRequested: false,

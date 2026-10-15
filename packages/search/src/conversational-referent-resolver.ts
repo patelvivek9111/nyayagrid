@@ -253,8 +253,17 @@ export function detectReferentRequest(question: string): {
   if (/\bwhat motion did that lead to\b/i.test(q)) {
     kinds.push("motion");
     kinds.push("discovery_chain");
-  } else if (/\bthat motion\b|\bthe motion\b/i.test(q)) {
+  } else   if (/\bthat motion\b|\bthe motion\b/i.test(q)) {
     kinds.push("motion");
+  }
+  // Hearing cues bind to motion targets (hearingAt lives on matter_motions).
+  if (
+    /\b(this hearing|the hearing|tomorrow'?s hearing|upcoming hearing|oral argument)\b/i.test(q) ||
+    /\b(prepare|prep)\b.+\b(hearing|oral argument)\b/i.test(q) ||
+    /\bhearing (?:about|on|for)\b/i.test(q)
+  ) {
+    kinds.push("motion");
+    kinds.push("hearing");
   }
   if (/\bthat case\b|\bwhich case\b|\bthe first case\b|\bstill good law\b/i.test(q)) {
     kinds.push("authority");
@@ -927,7 +936,7 @@ export function resolveConversationalReferents(params: {
     }
   }
 
-  // --- Motion demonstrative / "that motion" ---
+  // --- Motion demonstrative / "that motion" / hearing target ---
   if (kinds.has("motion") && !referents.some((r) => r.entityType === "motion" || r.entityType === "ruling")) {
     const { match, ambiguous } = pickUniqueActive(prior, ["motion", "ruling"], candidates);
     if (ambiguous.length > 1 || (kinds.has("demonstrative") && prior.activeMotionIds.length > 1)) {
@@ -946,8 +955,30 @@ export function resolveConversationalReferents(params: {
       referents.push(resolvedFromCandidate(match, "ACTIVE_CONTEXT", latestAssistant?.messageId ?? null));
       method = "ACTIVE_CONTEXT";
       forceDomains.push("MOTIONS");
+      if (kinds.has("hearing")) forceDomains.push("CLAIMS", "DISCOVERY", "COMMUNICATIONS");
       if (/\blead to\b/i.test(params.question)) forceDomains.push("DISCOVERY", "COMMUNICATIONS");
       status = "RESOLVED";
+    } else if (kinds.has("hearing")) {
+      // No auto-pick across multiple matter motions for hearing prep.
+      const motionPool = candidatesOfType(candidates, "motion");
+      if (motionPool.length > 1) {
+        return finishAmbiguous(
+          "motion",
+          motionPool.map((c) => ({ entityType: c.entityType, entityId: c.entityId, label: c.label })),
+        );
+      }
+      if (motionPool.length === 1) {
+        referents.push(resolvedFromCandidate(motionPool[0]!, "UNIQUE_MATTER_MATCH", null));
+        method = "UNIQUE_MATTER_MATCH";
+        forceDomains.push("MOTIONS", "CLAIMS", "DISCOVERY", "COMMUNICATIONS");
+        status = "RESOLVED";
+      } else {
+        status = "UNRESOLVED";
+        method = "UNRESOLVED";
+        clarificationPrompt = "Which motion or hearing should I prepare?";
+        userClarificationNeeded = true;
+        forceDomains.push("MOTIONS");
+      }
     }
   }
 
