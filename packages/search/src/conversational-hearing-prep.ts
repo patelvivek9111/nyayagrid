@@ -273,6 +273,14 @@ export function selectHearingMotionTarget(params: {
       return { motion: null, ambiguous: withHearing, posture: "AMBIGUOUS" };
     }
   }
+  // Outline / compression transforms require an already-resolved target — do not auto-pick.
+  if (
+    (/\boutline\b/i.test(q) || /\bminute\b/i.test(q) || /\bbullet version\b/i.test(q)) &&
+    !params.resolvedMotionId
+  ) {
+    if (pool.length === 1) return { motion: pool[0]!, ambiguous: [], posture: motionPosture(pool[0]!) };
+    if (pool.length > 1) return { motion: null, ambiguous: pool, posture: "AMBIGUOUS" };
+  }
   if (pool.length === 1) return { motion: pool[0]!, ambiguous: [], posture: motionPosture(pool[0]!) };
   if (pool.length > 1) return { motion: null, ambiguous: pool, posture: "AMBIGUOUS" };
   return { motion: null, ambiguous: [], posture: "NO_MOTION" };

@@ -1665,9 +1665,11 @@ export async function askNyayaAboutMatter(params: {
     // Phase 2 bounded context router — selects domains; whole-matter suppresses overlaps.
     // Phase 3 forceDomains come from deterministic referent binding.
     // Oct 19–25 Phase 1: hearing prep forces motions/claims/discovery/comms/authorities.
-    const hearingPrepDomains = isHearingPrepQuestion(params.question)
-      ? hearingPrepForceDomains()
-      : [];
+    const hearingPrepIntent =
+      isHearingPrepQuestion(params.question) ||
+      isHearingOutlineRequest(params.question) ||
+      isHearingCompressionRequest(params.question) != null;
+    const hearingPrepDomains = hearingPrepIntent ? hearingPrepForceDomains() : [];
     routerPlan = planConversationalContext({
       question: referentResolution.routingQuestion || params.question,
       workspaceType: params.workspaceType,
@@ -1764,7 +1766,9 @@ export async function askNyayaAboutMatter(params: {
           question: params.question,
           review: mcReview,
         });
-        if (conversationWorkingState.activeMotionIds.length === 0) {
+        // Do not dump every motion into active context for hearing prep — that breaks
+        // multi-turn continuity (outline/compression must keep a unique target).
+        if (conversationWorkingState.activeMotionIds.length === 0 && !hearingPrepIntent) {
           const motionIds = (mcReview.motions ?? [])
             .map((m) => m.id)
             .filter((id): id is string => typeof id === "string" && id.length > 0)
@@ -1796,12 +1800,7 @@ export async function askNyayaAboutMatter(params: {
     // Oct 19–25 Phase 1 — deterministic hearing-prep record (bounded; no full-matter dump).
     let hearingPrepResult: HearingPrepResult | null = null;
     let hearingPrepContextText: string | null = null;
-    if (
-      (isHearingPrepQuestion(params.question) ||
-        isHearingOutlineRequest(params.question) ||
-        isHearingCompressionRequest(params.question) != null) &&
-      mcReviewForHearing
-    ) {
+    if (hearingPrepIntent && mcReviewForHearing) {
       const linksByMotion = new Map<string, typeof mcReviewForHearing.motionLinks>();
       for (const link of mcReviewForHearing.motionLinks ?? []) {
         const list = linksByMotion.get(link.motionId) ?? [];
@@ -1831,12 +1830,18 @@ export async function askNyayaAboutMatter(params: {
           matterId: params.matterId,
         };
       });
-      const resolvedMotionId =
+      const referentMotionId =
         referentResolution.referents.find(
           (r) => r.entityType === "motion" || r.entityType === "ruling",
         )?.entityId ?? null;
+      // Multi-turn continuity: keep the unique active motion for outline/compression follow-ups.
+      const activeMotionId =
+        conversationWorkingState.activeMotionIds.length === 1
+          ? conversationWorkingState.activeMotionIds[0]!
+          : null;
+      const resolvedMotionId = referentMotionId ?? activeMotionId;
       const ambiguousMotionIds =
-        referentResolution.status === "AMBIGUOUS"
+        referentResolution.status === "AMBIGUOUS" && !resolvedMotionId
           ? referentResolution.candidates
               .filter((c) => c.entityType === "motion" || c.entityType === "ruling")
               .map((c) => c.entityId)
@@ -1930,6 +1935,12 @@ export async function askNyayaAboutMatter(params: {
         compressMinutes: isHearingCompressionRequest(params.question),
       });
       hearingPrepContextText = formatHearingPrepForPrompt(hearingPrepResult);
+      if (hearingPrepResult.hearingTarget.motionId) {
+        conversationWorkingState = {
+          ...conversationWorkingState,
+          activeMotionIds: [hearingPrepResult.hearingTarget.motionId],
+        };
+      }
     }
 
     let wholeMatterContextText: string | null = null;
@@ -2753,11 +2764,16 @@ export async function askNyayaAboutMatter(params: {
       const sourceRefs = validated.answer.sources
         .map((s) => s.documentId)
         .filter((id): id is string => typeof id === "string" && id.length > 0 && !id.startsWith("web:"));
+      // Prefer deterministic hearing outline / compressed oral argument over model prose.
+      const hearingDraftText =
+        hearingPrepResult?.outlinePreview ??
+        hearingPrepResult?.compressedOralArgument ??
+        null;
       const draftPreview = buildDraftPreview({
         question: params.question,
         matterId: params.matterId,
         workingState: conversationWorkingState,
-        answerText: validated.answer.answer,
+        answerText: hearingDraftText ?? validated.answer.answer,
         sourceRefs,
         authorityRefs: [...(authority?.authorityIds ?? [])],
       });
@@ -2945,7 +2961,9 @@ export async function askNyayaAboutMatter(params: {
             entityHints: {
               activeClaimIds: conversationWorkingState.activeClaimIds,
               activeDefenseIds: conversationWorkingState.activeDefenseIds,
-              activeMotionIds: conversationWorkingState.activeMotionIds,
+              activeMotionIds: hearingPrepResult?.hearingTarget.motionId
+                ? [hearingPrepResult.hearingTarget.motionId]
+                : conversationWorkingState.activeMotionIds,
               activeDiscoveryIds: conversationWorkingState.activeDiscoveryIds,
               activeDeficiencyIds: conversationWorkingState.activeDeficiencyIds,
               activeCommunicationIds: conversationWorkingState.activeCommunicationIds,

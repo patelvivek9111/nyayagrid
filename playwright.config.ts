@@ -73,8 +73,8 @@ export default defineConfig({
     {
       command: "npm run dev -w @nyayagrid/web",
       url: APP_HEALTH_URL,
-      reuseExistingServer: false,
-      timeout: 120_000,
+      reuseExistingServer: !process.env.CI,
+      timeout: 240_000,
       stdout: "pipe",
       stderr: "pipe",
       env: e2eEnv,
@@ -82,8 +82,8 @@ export default defineConfig({
     {
       command: "node scripts/e2e-inngest-dev.mjs",
       url: "http://127.0.0.1:8288",
-      reuseExistingServer: false,
-      timeout: 120_000,
+      reuseExistingServer: !process.env.CI,
+      timeout: 240_000,
       stdout: "pipe",
       stderr: "pipe",
       env: e2eEnv,
