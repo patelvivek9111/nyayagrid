@@ -18,6 +18,11 @@ import {
   isHearingOutlineRequest,
   isHearingPrepQuestion,
 } from "./conversational-hearing-prep";
+import {
+  isDepositionContinuityQuestion,
+  isDepositionOutlineRequest,
+  isDepositionPrepQuestion,
+} from "./conversational-deposition-prep";
 
 export const CONVERSATIONAL_ACTION_CLASSES = [
   "READ_ONLY",
@@ -382,10 +387,35 @@ export function classifyConversationalAction(params: {
     };
   }
 
+  // Deposition outline → DRAFT_PREVIEW (save still confirmation-gated).
+  if (
+    isDepositionOutlineRequest(q) ||
+    (/\b(draft|write|turn this into)\b/i.test(q) && /\bdeposition outline\b/i.test(q))
+  ) {
+    return {
+      actionType: "DEPOSITION_PREP_PREVIEW",
+      actionClass: "DRAFT_PREVIEW",
+      confirmationUtterance: false,
+      navigationKind: null,
+      draftRequested: true,
+      researchRequested: false,
+      compareRequested: false,
+      taskRequested: false,
+      memoryRequested: false,
+      prohibitedReason: null,
+      latencyMs: Math.max(0, Date.now() - started),
+    };
+  }
+
   const draftRequested =
     Boolean(params.referent?.draftIntentPreview?.requested) ||
     /\b(draft|write|turn this into|revise the draft)\b/i.test(q);
-  if (draftRequested && /\b(draft|write|revise|turn this into|motion section|argument|reply)\b/i.test(q)) {
+  if (
+    draftRequested &&
+    /\b(draft|write|revise|turn this into|motion section|argument|reply)\b/i.test(q) &&
+    !isDepositionPrepQuestion(q) &&
+    !isDepositionContinuityQuestion(q)
+  ) {
     return {
       actionType: "DRAFT_GENERATE_PREVIEW",
       actionClass: "DRAFT_PREVIEW",
@@ -434,7 +464,14 @@ export function classifyConversationalAction(params: {
     };
   }
 
-  if (/\b(deposition questions|prepare questions|questions for (this )?witness)\b/i.test(q)) {
+  // Deposition preparation / analysis is READ_ONLY (evaluate the record; no writes).
+  const hasPersonReferent = Boolean(
+    params.referent?.referents.some((r) => r.entityType === "person" && r.entityId),
+  );
+  if (
+    isDepositionPrepQuestion(q) ||
+    (isDepositionContinuityQuestion(q) && hasPersonReferent)
+  ) {
     return {
       actionType: "DEPOSITION_PREP_PREVIEW",
       actionClass: "READ_ONLY",
@@ -722,6 +759,7 @@ function activeSnapshot(state: ConversationWorkingState): Record<string, string[
     deficiencies: [...state.activeDeficiencyIds],
     authorities: [...state.activeAuthorityIds],
     sources: [...state.activeSourceIds],
+    persons: [...state.activePersonIds],
   };
 }
 

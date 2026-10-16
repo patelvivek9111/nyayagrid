@@ -8,6 +8,7 @@ import {
   discoveryDeficiencies,
   documents,
   matterCommunications,
+  matterEntities,
   matterMotions,
   type Database,
 } from "@nyayagrid/database";
@@ -129,6 +130,7 @@ const ACTIVE_BUCKET_CAPS: Record<keyof Pick<
   | "activeAuthorityIds"
   | "activeSourceIds"
   | "activeTaskIds"
+  | "activePersonIds"
 >, number> = {
   activeClaimIds: 3,
   activeDefenseIds: 3,
@@ -139,6 +141,7 @@ const ACTIVE_BUCKET_CAPS: Record<keyof Pick<
   activeAuthorityIds: 3,
   activeSourceIds: 8,
   activeTaskIds: 3,
+  activePersonIds: 2,
 };
 
 function uniq(ids: string[]): string[] {
@@ -160,6 +163,7 @@ function activeSnapshot(state: ConversationWorkingState): Record<string, string[
     authorities: [...state.activeAuthorityIds],
     sources: [...state.activeSourceIds],
     tasks: [...state.activeTaskIds],
+    persons: [...state.activePersonIds],
   };
 }
 
@@ -222,6 +226,8 @@ function bucketForType(
     case "task":
     case "deadline":
       return "activeTaskIds";
+    case "person":
+      return "activePersonIds";
     default:
       return null;
   }
@@ -264,6 +270,15 @@ export function detectReferentRequest(question: string): {
   ) {
     kinds.push("motion");
     kinds.push("hearing");
+  }
+  // Deposition / deponent cues bind to person entities (matter_entities).
+  if (
+    /\b(this (witness|deponent)|the (witness|deponent)|prepare (me )?to depose|depose)\b/i.test(q) ||
+    /\b(deposition|witness prep|questions for (this )?witness)\b/i.test(q) ||
+    /\b(prepare|prep)\b.+\b(depos(?:e|ition)|witness)\b/i.test(q)
+  ) {
+    kinds.push("person");
+    kinds.push("deposition");
   }
   if (/\bthat case\b|\bwhich case\b|\bthe first case\b|\bstill good law\b/i.test(q)) {
     kinds.push("authority");
@@ -515,6 +530,7 @@ export function ageActiveWorkingState(params: {
     activeAuthorityIds: [...params.prior.activeAuthorityIds],
     activeSourceIds: [...params.prior.activeSourceIds],
     activeTaskIds: [...params.prior.activeTaskIds],
+    activePersonIds: [...params.prior.activePersonIds],
     issueLabels: [...params.prior.issueLabels],
     updatedAt: new Date().toISOString(),
   };
@@ -596,6 +612,7 @@ export function candidatesFromWorkingState(params: {
   push("authority", params.workingState.activeAuthorityIds, "Authority");
   push("document", params.workingState.activeSourceIds, "Source");
   push("task", params.workingState.activeTaskIds, "Task");
+  push("person", params.workingState.activePersonIds, "Person");
   return out;
 }
 
@@ -653,6 +670,7 @@ export function resolveConversationalReferents(params: {
         (id) => allowedIds.has(id) || (params.allowedSourceIds ?? []).includes(id),
       ),
       activeTaskIds: prior.activeTaskIds.filter((id) => allowedIds.has(id)),
+      activePersonIds: prior.activePersonIds.filter((id) => allowedIds.has(id)),
     };
   }
 
@@ -933,6 +951,66 @@ export function resolveConversationalReferents(params: {
     } else {
       status = "UNRESOLVED";
       method = "UNRESOLVED";
+    }
+  }
+
+  // --- Person / deponent target (NO_AUTO_PICK) ---
+  if (kinds.has("person") || kinds.has("deposition")) {
+    const personPool = candidatesOfType(candidates, "person");
+    const qLower = params.question.toLowerCase();
+    const named = personPool.filter((c) => {
+      const label = c.label.toLowerCase();
+      const tokens = label.split(/\s+/).filter((t) => t.length > 2);
+      return tokens.some((t) => qLower.includes(t)) || qLower.includes(label);
+    });
+    if (named.length > 1) {
+      return finishAmbiguous(
+        "person",
+        named.map((c) => ({ entityType: c.entityType, entityId: c.entityId, label: c.label })),
+      );
+    }
+    if (named.length === 1) {
+      referents.push(resolvedFromCandidate(named[0]!, "EXPLICIT_LABEL", null));
+      method = "EXPLICIT_LABEL";
+      forceDomains.push("EVIDENCE", "CLAIMS", "COMMUNICATIONS", "TIMELINE", "DEPOSITION");
+      status = "RESOLVED";
+    } else {
+      const { match, ambiguous } = pickUniqueActive(prior, "person", candidates);
+      if (ambiguous.length > 1) {
+        return finishAmbiguous(
+          "person",
+          ambiguous.map((c) => ({ entityType: c.entityType, entityId: c.entityId, label: c.label })),
+        );
+      }
+      if (match) {
+        referents.push(resolvedFromCandidate(match, "ACTIVE_CONTEXT", latestAssistant?.messageId ?? null));
+        method = "ACTIVE_CONTEXT";
+        forceDomains.push("EVIDENCE", "CLAIMS", "COMMUNICATIONS", "TIMELINE", "DEPOSITION");
+        status = "RESOLVED";
+      } else if (kinds.has("deposition")) {
+        if (personPool.length > 1) {
+          return finishAmbiguous(
+            "person",
+            personPool.map((c) => ({
+              entityType: c.entityType,
+              entityId: c.entityId,
+              label: c.label,
+            })),
+          );
+        }
+        if (personPool.length === 1) {
+          referents.push(resolvedFromCandidate(personPool[0]!, "UNIQUE_MATTER_MATCH", null));
+          method = "UNIQUE_MATTER_MATCH";
+          forceDomains.push("EVIDENCE", "CLAIMS", "COMMUNICATIONS", "TIMELINE", "DEPOSITION");
+          status = "RESOLVED";
+        } else {
+          status = "UNRESOLVED";
+          method = "UNRESOLVED";
+          clarificationPrompt = "Which person should I prepare to depose?";
+          userClarificationNeeded = true;
+          forceDomains.push("DEPOSITION", "EVIDENCE");
+        }
+      }
     }
   }
 
@@ -1241,7 +1319,7 @@ export async function loadMatterReferentCandidates(
   );
   void scope;
 
-  const [claims, motions, deficiencies, communications, docs] = await Promise.all([
+  const [claims, motions, deficiencies, communications, docs, persons] = await Promise.all([
     db
       .select({
         id: civilClaims.id,
@@ -1319,6 +1397,23 @@ export async function loadMatterReferentCandidates(
       )
       .orderBy(asc(documents.createdAt))
       .limit(40),
+    db
+      .select({
+        id: matterEntities.id,
+        displayName: matterEntities.displayName,
+        entityType: matterEntities.entityType,
+        description: matterEntities.description,
+        createdAt: matterEntities.createdAt,
+      })
+      .from(matterEntities)
+      .where(
+        and(
+          eq(matterEntities.organizationId, params.organizationId),
+          eq(matterEntities.matterId, params.matterId),
+        ),
+      )
+      .orderBy(asc(matterEntities.createdAt))
+      .limit(60),
   ]);
 
   const candidates: MatterEntityCandidate[] = [];
@@ -1386,6 +1481,21 @@ export async function loadMatterReferentCandidates(
       organizationId: params.organizationId,
       matterId: params.matterId,
       orderKey: d.createdAt?.toISOString?.() ?? null,
+    });
+  }
+  for (const p of persons) {
+    // Person referent bucket covers natural persons; org entities may still be
+    // deposition targets (corp. representative) when explicitly named.
+    candidates.push({
+      entityType: "person",
+      entityId: p.id,
+      label:
+        p.entityType === "organization"
+          ? `${p.displayName} (organization)`
+          : p.displayName,
+      organizationId: params.organizationId,
+      matterId: params.matterId,
+      orderKey: p.createdAt?.toISOString?.() ?? null,
     });
   }
 

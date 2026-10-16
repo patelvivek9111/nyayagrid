@@ -1,6 +1,6 @@
 import { createHash } from "node:crypto";
 import type { Database } from "@nyayagrid/database";
-import { conversations, messages, aiArtifacts, documents, documentVersions, criminalCases, and, desc, eq, or, sql } from "@nyayagrid/database";
+import { conversations, messages, aiArtifacts, documents, documentVersions, criminalCases, matterEntities, and, desc, eq, or, sql } from "@nyayagrid/database";
 import {
   assembleConversationAskContext,
   buildNextWorkingState,
@@ -46,6 +46,17 @@ import {
   isHearingPrepQuestion,
   type HearingPrepResult,
 } from "./conversational-hearing-prep";
+import {
+  buildDepositionPrepResult,
+  depositionPrepForceDomains,
+  extractDepositionFocusIssue,
+  extractDepositionQuestionLimit,
+  formatDepositionPrepForPrompt,
+  isDepositionContinuityQuestion,
+  isDepositionOutlineRequest,
+  isDepositionPrepQuestion,
+  type DepositionPrepResult,
+} from "./conversational-deposition-prep";
 import {
   assessNeedMoreDocuments,
   assessRetrievedEvidence,
@@ -1665,17 +1676,28 @@ export async function askNyayaAboutMatter(params: {
     // Phase 2 bounded context router — selects domains; whole-matter suppresses overlaps.
     // Phase 3 forceDomains come from deterministic referent binding.
     // Oct 19–25 Phase 1: hearing prep forces motions/claims/discovery/comms/authorities.
+    // Oct 19–25 Phase 2: deposition prep forces person-centric claims/evidence/comms/timeline.
     const hearingPrepIntent =
       isHearingPrepQuestion(params.question) ||
       isHearingOutlineRequest(params.question) ||
       isHearingCompressionRequest(params.question) != null;
+    const depositionPrepIntent =
+      isDepositionPrepQuestion(params.question) ||
+      isDepositionOutlineRequest(params.question) ||
+      (conversationWorkingState.activePersonIds.length === 1 &&
+        isDepositionContinuityQuestion(params.question));
     const hearingPrepDomains = hearingPrepIntent ? hearingPrepForceDomains() : [];
+    const depositionPrepDomains = depositionPrepIntent ? depositionPrepForceDomains() : [];
     routerPlan = planConversationalContext({
       question: referentResolution.routingQuestion || params.question,
       workspaceType: params.workspaceType,
       priorSourceCount: conversationWorkingState.activeSourceIds.length,
       priorAuthorityCount: conversationWorkingState.activeAuthorityIds.length,
-      forceDomains: [...referentResolution.forceDomains, ...hearingPrepDomains],
+      forceDomains: [
+        ...referentResolution.forceDomains,
+        ...hearingPrepDomains,
+        ...depositionPrepDomains,
+      ],
     });
     if (referentResolution.diagnostics) {
       referentResolution = {
@@ -1943,6 +1965,145 @@ export async function askNyayaAboutMatter(params: {
       }
     }
 
+    // Oct 19–25 Phase 2 — deterministic deposition-prep record (person-centric; no full-matter dump).
+    let depositionPrepResult: DepositionPrepResult | null = null;
+    let depositionPrepContextText: string | null = null;
+    if (depositionPrepIntent) {
+      let personRows: Array<{
+        id: string;
+        displayName: string;
+        entityType: string;
+        description: string | null;
+      }> = [];
+      try {
+        personRows = await params.db
+          .select({
+            id: matterEntities.id,
+            displayName: matterEntities.displayName,
+            entityType: matterEntities.entityType,
+            description: matterEntities.description,
+          })
+          .from(matterEntities)
+          .where(
+            and(
+              eq(matterEntities.organizationId, params.organizationId),
+              eq(matterEntities.matterId, params.matterId),
+            ),
+          )
+          .limit(60);
+      } catch {
+        personRows = [];
+      }
+      const persons = personRows.map((p) => ({
+        id: p.id,
+        label: p.displayName,
+        entityType: p.entityType,
+        roleHint: p.description,
+        organizationHint: p.entityType === "organization" ? p.displayName : null,
+        matterId: params.matterId,
+      }));
+      const referentPersonId =
+        referentResolution.referents.find((r) => r.entityType === "person")?.entityId ?? null;
+      const activePersonId =
+        conversationWorkingState.activePersonIds.length === 1
+          ? conversationWorkingState.activePersonIds[0]!
+          : null;
+      const resolvedPersonId = referentPersonId ?? activePersonId;
+      const ambiguousPersonIds =
+        referentResolution.status === "AMBIGUOUS" && !resolvedPersonId
+          ? referentResolution.candidates
+              .filter((c) => c.entityType === "person")
+              .map((c) => c.entityId)
+          : undefined;
+      const docInputs = (() => {
+        const byId = new Map<
+          string,
+          {
+            id: string;
+            label: string;
+            relatedPersonIds: string[];
+            relatedClaimIds: string[];
+            foundationResolved: boolean;
+          }
+        >();
+        for (const e of civilReviewForHearing?.evidence ?? []) {
+          byId.set(e.id, {
+            id: e.id,
+            label: e.label || e.id,
+            relatedPersonIds: resolvedPersonId ? [resolvedPersonId] : [],
+            relatedClaimIds: [],
+            foundationResolved: false,
+          });
+        }
+        for (const sid of conversationWorkingState.activeSourceIds.slice(0, 20)) {
+          if (!byId.has(sid)) {
+            byId.set(sid, {
+              id: sid,
+              label: `Document ${sid.slice(0, 8)}`,
+              relatedPersonIds: resolvedPersonId ? [resolvedPersonId] : [],
+              relatedClaimIds: [],
+              foundationResolved: false,
+            });
+          }
+        }
+        return [...byId.values()].slice(0, 40);
+      })();
+      const priorStatements = (mcReviewForHearing?.communications ?? [])
+        .slice(0, 12)
+        .map((c) => ({
+          id: c.id,
+          label: c.subject || "Communication",
+          text: c.summary || c.subject || "",
+          kind: /deposition|transcript/i.test(c.subject || "")
+            ? ("deposition" as const)
+            : /affidavit|declaration/i.test(c.subject || "")
+              ? ("affidavit" as const)
+              : ("email" as const),
+        }))
+        .filter((s) => s.text.length > 0);
+      depositionPrepResult = buildDepositionPrepResult({
+        question: params.question,
+        matterId: params.matterId,
+        persons,
+        resolvedPersonId,
+        ambiguousPersonIds,
+        claims: (civilReviewForHearing?.claims ?? [])
+          .filter((c) => c.isCurrent !== false)
+          .map((c) => ({
+            id: c.id,
+            label: c.label,
+            supportStatus: c.supportStatus ?? null,
+            description: c.description ?? null,
+          })),
+        documents: docInputs,
+        communications: (mcReviewForHearing?.communications ?? []).map((c) => {
+          const links = (mcReviewForHearing?.communicationLinks ?? []).filter(
+            (l) => l.communicationId === c.id,
+          );
+          return {
+            id: c.id,
+            subject: c.subject || "Communication",
+            summary: c.summary,
+            relatedPersonIds: resolvedPersonId ? [resolvedPersonId] : [],
+            relatedClaimIds: links.filter((l) => l.linkType === "CLAIM").map((l) => l.targetId),
+            occurredAt: c.occurredAt ? new Date(c.occurredAt).toISOString() : null,
+          };
+        }),
+        priorStatements,
+        focusIssue: extractDepositionFocusIssue(params.question),
+        outlineRequested: isDepositionOutlineRequest(params.question),
+        questionLimit: extractDepositionQuestionLimit(params.question),
+        includeAnalysis: /\bwhat did this deposition change\b/i.test(params.question),
+      });
+      depositionPrepContextText = formatDepositionPrepForPrompt(depositionPrepResult);
+      if (depositionPrepResult.deponent.personId) {
+        conversationWorkingState = {
+          ...conversationWorkingState,
+          activePersonIds: [depositionPrepResult.deponent.personId],
+        };
+      }
+    }
+
     let wholeMatterContextText: string | null = null;
     if (routerPlan.loaders.wholeMatter) {
       try {
@@ -1969,6 +2130,7 @@ export async function askNyayaAboutMatter(params: {
       discoveryContextText,
       motionsCommsContextText,
       hearingPrepContextText,
+      depositionPrepContextText,
       wholeMatterContextText,
     );
 
@@ -2060,6 +2222,7 @@ export async function askNyayaAboutMatter(params: {
         discoveryContextText,
         motionsCommsContextText,
         hearingPrepContextText,
+        depositionPrepContextText,
         wholeMatterContextText,
         formatReferentResolutionForPrompt(referentResolution),
       );
@@ -2075,6 +2238,7 @@ export async function askNyayaAboutMatter(params: {
                 discoveryContextText,
                 motionsCommsContextText,
                 hearingPrepContextText,
+                depositionPrepContextText,
                 wholeMatterContextText,
               ]
                 .filter(Boolean)
@@ -2092,6 +2256,7 @@ export async function askNyayaAboutMatter(params: {
         discoveryContextText,
         motionsCommsContextText,
         hearingPrepContextText,
+        depositionPrepContextText,
         wholeMatterContextText,
         formatReferentResolutionForPrompt(referentResolution),
       );
@@ -2328,6 +2493,122 @@ export async function askNyayaAboutMatter(params: {
       };
     }
 
+    // Deponent ambiguity (NO_AUTO_PICK) — ask; do not fabricate deposition prep.
+    if (depositionPrepResult?.deponent.posture === "AMBIGUOUS") {
+      const choices = depositionPrepResult.sourceMap
+        .filter((s) => s.kind === "person")
+        .map((s) => ({ label: s.label, entityType: "person" }));
+      const clarify =
+        "Multiple people match. Which person should I prepare to depose?\n" +
+        choices.map((c, i) => `${i + 1}. ${c.label}`).join("\n");
+      if (!isContinue) {
+        await params.db.insert(messages).values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          conversationId: conversationIdResolved,
+          role: "user",
+          content: params.question,
+          createdByUserId: params.userId,
+        });
+      }
+      const [assistantMessage] = await params.db
+        .insert(messages)
+        .values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          conversationId: conversationIdResolved,
+          role: "assistant",
+          content: clarify,
+          createdByUserId: params.userId,
+        })
+        .returning();
+      const [artifact] = await params.db
+        .insert(aiArtifacts)
+        .values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          conversationId: conversationIdResolved,
+          messageId: assistantMessage!.id,
+          artifactType: "matter_qa",
+          question: params.question,
+          answer: clarify,
+          evidenceState: "insufficient",
+          provider: "nyaya_deposition_prep",
+          model: "deterministic",
+          promptVersion: NYAYA_PROMPT_VERSION,
+          retrievedChunkIds: [],
+          citations: [],
+          validation: {
+            completionStatus: "completed",
+            premiseCheck: null,
+            selectedDomains: routerPlan?.selectedDomains ?? [],
+            depositionPrep: {
+              posture: "AMBIGUOUS",
+              personId: null,
+              sourceMap: depositionPrepResult.sourceMap,
+            },
+            conversationWorkingState,
+            assertionReady: true,
+          },
+          createdByUserId: params.userId,
+        })
+        .returning();
+      const clarifyProvenance = buildProvenanceSummary({
+        sourceScope,
+        caseSourceCount: 0,
+        webSourceCount: 0,
+        authoritySourceCount: 0,
+      });
+      emit({ type: "text_delta", text: clarify, at: nowIso() });
+      emit({
+        type: "generation_completed",
+        answer: clarify,
+        conversationId: conversationIdResolved,
+        artifactId: artifact?.id,
+        messageId: assistantMessage?.id,
+        status: "completed",
+        provenance: clarifyProvenance,
+        ux: {
+          turnKind: "ambiguity",
+          ambiguity: {
+            prompt: "Which person should I prepare to depose?",
+            choices: choices.slice(0, 6),
+          },
+        },
+        at: nowIso(),
+      });
+      return {
+        conversationId: conversationIdResolved,
+        artifact,
+        answer: {
+          answer: clarify,
+          sources: [],
+          assumptions: [],
+          unresolvedQuestions: ["Ambiguous deponent target"],
+          evidenceState: "insufficient" as const,
+        },
+        retrieved: passages,
+        provenance: clarifyProvenance,
+        sourceScope,
+        usageActionId,
+        needsMoreDocuments: false,
+        needMoreDocumentReasons: [],
+        usedFollowUpRetrieval: false,
+        usedVerifiedIntelligence: false,
+        usedGraph: false,
+        usedMemory: false,
+        usedProfessionalAnalysis: false,
+        usedLegalAuthority: false,
+        usedWeek4CombinedContext: false,
+        week4StructuredContext: null,
+        doctrineQuestion: false,
+        authorityResearchMissing: false,
+        authorityWarnings: [],
+        authorityValidation: null,
+        timings: { ...timings, totalMs: Date.now() - startedAsk },
+      };
+    }
+
     // Premise check after prior working state is available — before generation.
     const priorHadClaimSupport = conversationWorkingState.issueLabels.some((l) =>
       /claim|evidence/i.test(l),
@@ -2348,6 +2629,7 @@ export async function askNyayaAboutMatter(params: {
           discoveryContextText,
           motionsCommsContextText,
           hearingPrepContextText,
+          depositionPrepContextText,
           wholeMatterContextText,
         ]
           .filter(Boolean)
@@ -2364,6 +2646,7 @@ export async function askNyayaAboutMatter(params: {
       activeEntityRefs: [
         ...conversationWorkingState.activeClaimIds,
         ...conversationWorkingState.activeMotionIds,
+        ...conversationWorkingState.activePersonIds,
       ],
       allowedSourceIds: conversationWorkingState.activeSourceIds,
       contextDiagnostics: routerPlan
@@ -2968,6 +3251,9 @@ export async function askNyayaAboutMatter(params: {
               activeDeficiencyIds: conversationWorkingState.activeDeficiencyIds,
               activeCommunicationIds: conversationWorkingState.activeCommunicationIds,
               activeTaskIds: conversationWorkingState.activeTaskIds,
+              activePersonIds: depositionPrepResult?.deponent.personId
+                ? [depositionPrepResult.deponent.personId]
+                : conversationWorkingState.activePersonIds,
             },
           }),
           conversationContextMetrics: conversationAskContext?.metrics ?? null,
@@ -3010,6 +3296,31 @@ export async function askNyayaAboutMatter(params: {
                 limitations: hearingPrepResult.limitations,
               }
             : null,
+          // Oct 19–25 Phase 2 — deposition preparation structured result (no schema).
+          depositionPrep: depositionPrepResult
+            ? {
+                posture: depositionPrepResult.deponent.posture,
+                personId: depositionPrepResult.deponent.personId,
+                label: depositionPrepResult.deponent.label,
+                roleInMatter: depositionPrepResult.deponent.roleInMatter,
+                issueCount: depositionPrepResult.relevantIssues.length,
+                questionCount: depositionPrepResult.questionTopics.length,
+                conflictCount: depositionPrepResult.conflictsToClarify.length,
+                investigateCount: depositionPrepResult.investigateBeforeDeposition.length,
+                sourceMap: depositionPrepResult.sourceMap,
+                outlinePreview: Boolean(depositionPrepResult.outlinePreview),
+                compressed: Boolean(depositionPrepResult.compressedQuestionList),
+                premiseChallenge: depositionPrepResult.premiseChallenge,
+                limitations: depositionPrepResult.limitations,
+                analysis: depositionPrepResult.analysis
+                  ? {
+                      admissionCount: depositionPrepResult.analysis.admissions.length,
+                      conflictCount: depositionPrepResult.analysis.conflicts.length,
+                      followUpCount: depositionPrepResult.analysis.followUpDiscovery.length,
+                    }
+                  : null,
+              }
+            : null,
           factualityContract: (() => {
             const allowed = validated.answer.sources
               .map((s) => s.documentId)
@@ -3034,6 +3345,7 @@ export async function askNyayaAboutMatter(params: {
               activeEntityRefs: [
                 ...conversationWorkingState.activeClaimIds,
                 ...conversationWorkingState.activeMotionIds,
+                ...conversationWorkingState.activePersonIds,
               ],
               selectedDomains: routerPlan?.selectedDomains ?? [],
               allowedSourceIds: allowed,

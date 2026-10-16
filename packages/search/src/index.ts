@@ -8,3 +8,4 @@ export * from "./conversational-referent-resolver";
 export * from "./conversational-workflow-actions";
 export * from "./conversational-ux-payload";
 export * from "./conversational-hearing-prep";
+export * from "./conversational-deposition-prep";

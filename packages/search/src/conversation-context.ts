@@ -37,6 +37,8 @@ export type ConversationWorkingState = {
   activeAuthorityIds: string[];
   activeSourceIds: string[];
   activeTaskIds: string[];
+  /** Person/entity targets for deposition and person-centric workflows (JSON working state only). */
+  activePersonIds: string[];
   issueLabels: string[];
   unresolvedQuestions: string[];
   authorityStates: AuthorityStateSnapshot[];
@@ -83,6 +85,7 @@ export function emptyWorkingState(now = new Date()): ConversationWorkingState {
     activeAuthorityIds: [],
     activeSourceIds: [],
     activeTaskIds: [],
+    activePersonIds: [],
     issueLabels: [],
     unresolvedQuestions: [],
     authorityStates: [],
@@ -123,6 +126,7 @@ export function parseWorkingState(raw: unknown): ConversationWorkingState | null
     activeAuthorityIds: asStringArray(obj.activeAuthorityIds),
     activeSourceIds: asStringArray(obj.activeSourceIds),
     activeTaskIds: asStringArray(obj.activeTaskIds),
+    activePersonIds: asStringArray(obj.activePersonIds),
     issueLabels: asStringArray(obj.issueLabels),
     unresolvedQuestions: asStringArray(obj.unresolvedQuestions),
     authorityStates: Array.isArray(obj.authorityStates)
@@ -225,6 +229,7 @@ export function mergeWorkingStates(
     activeAuthorityIds: uniq([...(next.activeAuthorityIds ?? []), ...base.activeAuthorityIds]),
     activeSourceIds: uniq([...(next.activeSourceIds ?? []), ...base.activeSourceIds]),
     activeTaskIds: uniq([...(next.activeTaskIds ?? []), ...base.activeTaskIds]),
+    activePersonIds: uniq([...(next.activePersonIds ?? []), ...base.activePersonIds]),
     issueLabels: uniq([...(next.issueLabels ?? []), ...base.issueLabels]),
     unresolvedQuestions: uniq([
       ...(next.unresolvedQuestions ?? []),
@@ -390,6 +395,7 @@ export function buildNextWorkingState(params: {
       | "activeDeficiencyIds"
       | "activeCommunicationIds"
       | "activeTaskIds"
+      | "activePersonIds"
     >
   >;
 }): ConversationWorkingState {
