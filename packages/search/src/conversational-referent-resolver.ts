@@ -272,10 +272,14 @@ export function detectReferentRequest(question: string): {
     kinds.push("hearing");
   }
   // Deposition / deponent cues bind to person entities (matter_entities).
+  // Bare "deposition" in compare/research phrasing must NOT force deponent pick.
   if (
     /\b(this (witness|deponent)|the (witness|deponent)|prepare (me )?to depose|depose)\b/i.test(q) ||
-    /\b(deposition|witness prep|questions for (this )?witness)\b/i.test(q) ||
-    /\b(prepare|prep)\b.+\b(depos(?:e|ition)|witness)\b/i.test(q)
+    /\b(witness prep|deposition prep|deposition outline|questions for (this )?witness)\b/i.test(q) ||
+    /\b(prepare|prep)\b.+\b(depos(?:e|ition)|witness)\b/i.test(q) ||
+    (/\bdeposition\b/i.test(q) &&
+      !/\bcompare\b/i.test(q) &&
+      !/\bwith (her|his|their|the) deposition\b/i.test(q))
   ) {
     kinds.push("person");
     kinds.push("deposition");
@@ -289,8 +293,16 @@ export function detectReferentRequest(question: string): {
   if (/\b(the other one|same one|that one|this one)\b/i.test(q) || /^\s*(it|that|this|those|they|them)\b/i.test(q)) {
     kinds.push("demonstrative");
   }
-  if (/\bdraft it\b|\bwrite the reply\b|\bturn that into\b/i.test(q)) {
+  // "turn that into..." is resolved by conversational-cross-workflow (source + target).
+  // Do not auto-force draft when the target is ambiguous or non-draft.
+  if (/\bdraft it\b|\bwrite the reply\b/i.test(q)) {
     kinds.push("draft");
+  }
+  if (/\bturn that into\b.+\b(draft|argument|factual|section|memo)\b/i.test(q)) {
+    kinds.push("draft");
+  }
+  if (/\bturn that into\b/i.test(q) && !/\binto\b.+\b(draft|task|research|hearing|deposition|investigate)\b/i.test(q)) {
+    kinds.push("transform_ambiguous");
   }
   if (/\bthat deficiency\b|\bthat ruling\b|\bthe other witness\b|\bcompare that\b|\bcompare those\b/i.test(q)) {
     kinds.push("relational");

@@ -790,11 +790,16 @@ export function buildComparePreview(params: {
 function activeSnapshot(state: ConversationWorkingState): Record<string, string[]> {
   return {
     claims: [...state.activeClaimIds],
+    defenses: [...state.activeDefenseIds],
     motions: [...state.activeMotionIds],
     deficiencies: [...state.activeDeficiencyIds],
     authorities: [...state.activeAuthorityIds],
     sources: [...state.activeSourceIds],
     persons: [...state.activePersonIds],
+    drafts: [...state.activeDraftIds],
+    researchIssues: [...state.activeResearchIssueIds],
+    investigateGaps: [...state.activeInvestigateGapIds],
+    lastWorkflow: state.lastWorkflowKind ? [state.lastWorkflowKind] : [],
   };
 }
 
@@ -942,18 +947,30 @@ export function validateActionConfirmation(params: {
     };
   }
   const snap = action.activeSnapshot;
-  // Stale only when the preview's primary focus was replaced (original id no longer active).
-  const claimDrift = Boolean(
-    snap.claims?.[0] &&
-      params.workingState.activeClaimIds.length > 0 &&
-      !params.workingState.activeClaimIds.includes(snap.claims[0]!),
-  );
-  const motionDrift = Boolean(
-    snap.motions?.[0] &&
-      params.workingState.activeMotionIds.length > 0 &&
-      !params.workingState.activeMotionIds.includes(snap.motions[0]!),
-  );
-  if (claimDrift || motionDrift) {
+  // Stale when primary focus changed, was cleared, or original id is no longer primary/active.
+  const drifted = (key: string, active: string[]) => {
+    const priorPrimary = snap[key]?.[0];
+    if (!priorPrimary) return false;
+    if (active.length === 0) return true;
+    if (active[0] !== priorPrimary) return true;
+    return !active.includes(priorPrimary);
+  };
+  const claimDrift = drifted("claims", params.workingState.activeClaimIds);
+  const motionDrift = drifted("motions", params.workingState.activeMotionIds);
+  const personDrift = drifted("persons", params.workingState.activePersonIds);
+  const draftDrift = drifted("drafts", params.workingState.activeDraftIds);
+  const researchDrift = drifted("researchIssues", params.workingState.activeResearchIssueIds);
+  const investigateDrift = drifted("investigateGaps", params.workingState.activeInvestigateGapIds);
+  const sourceDrift = drifted("sources", params.workingState.activeSourceIds);
+  if (
+    claimDrift ||
+    motionDrift ||
+    personDrift ||
+    draftDrift ||
+    researchDrift ||
+    investigateDrift ||
+    sourceDrift
+  ) {
     return {
       ok: false,
       code: "ACTION_CONFIRMATION_STALE",
@@ -978,10 +995,29 @@ export function detectMaterialFocusChange(params: {
 }): boolean {
   if (!params.priorPending) return false;
   // Explicit topic switch language before yes.
-  if (/\b(instead|different|claim b|other motion|never ?mind)\b/i.test(params.question)) {
+  if (
+    /\b(instead|different|claim b|other motion|never ?mind|switch to|focus on)\b/i.test(
+      params.question,
+    )
+  ) {
     return true;
   }
-  return false;
+  const snap = params.priorPending.activeSnapshot;
+  const drift = (key: string, active: string[]) => {
+    const priorPrimary = snap[key]?.[0];
+    if (!priorPrimary) return false;
+    if (active.length === 0) return true;
+    return active[0] !== priorPrimary || !active.includes(priorPrimary);
+  };
+  return (
+    drift("claims", params.workingStateBeforeConfirm.activeClaimIds) ||
+    drift("motions", params.workingStateBeforeConfirm.activeMotionIds) ||
+    drift("persons", params.workingStateBeforeConfirm.activePersonIds) ||
+    drift("drafts", params.workingStateBeforeConfirm.activeDraftIds) ||
+    drift("researchIssues", params.workingStateBeforeConfirm.activeResearchIssueIds) ||
+    drift("investigateGaps", params.workingStateBeforeConfirm.activeInvestigateGapIds) ||
+    drift("sources", params.workingStateBeforeConfirm.activeSourceIds)
+  );
 }
 
 async function ensureConversationalAgentRun(params: {

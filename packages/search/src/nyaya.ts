@@ -29,6 +29,7 @@ import {
   classifyConversationalAction,
   collectPendingActionsFromValidations,
   createPendingActionRecord,
+  detectMaterialFocusChange,
   executeConfirmedConversationalAction,
   extractExplicitDueDate,
   formatActionPreviewAnswer,
@@ -100,6 +101,21 @@ import {
   type InvestigateCandidateInput,
   type InvestigateNextResult,
 } from "./conversational-investigate-next";
+import {
+  applyFocusInvalidation,
+  buildMatterSynthesis,
+  crossWorkflowForceDomains,
+  detectMaterialCrossWorkflowFocusChange,
+  detectWorkflowIntent,
+  detectWhatChanged,
+  formatMatterSynthesisForPrompt,
+  formatWhatChangedForPrompt,
+  isMatterSynthesisQuestion,
+  isTurnThatIntoRequest,
+  resolveTurnThatInto,
+  type MatterSynthesis,
+  type WhatChangedResult,
+} from "./conversational-cross-workflow";
 import {
   assessNeedMoreDocuments,
   assessRetrievedEvidence,
@@ -1201,6 +1217,17 @@ export async function askNyayaAboutMatter(params: {
       conversationAskContext = null;
     }
 
+    // Oct 19–25 Phase 5 — invalidate stale focus BEFORE referent resolution so
+    // explicit switches (claim/person/motion) clear prior IDs before rebinding.
+    conversationWorkingState = applyFocusInvalidation({
+      question: params.question,
+      state: conversationWorkingState,
+    });
+    const claimFocusInvalidated =
+      conversationAskContext != null &&
+      conversationAskContext.workingState.activeClaimIds.length > 0 &&
+      conversationWorkingState.activeClaimIds.length === 0;
+
     const priorAssistant = [...(conversationAskContext?.recentTurns ?? [])]
       .reverse()
       .find((t) => t.role === "assistant" && t.completionStatus === "completed");
@@ -1276,6 +1303,53 @@ export async function askNyayaAboutMatter(params: {
       referent: referentResolution,
     });
     const conversationIdForWorkflow = conversationIdResolvedEarly!;
+
+    // Oct 19–25 Phase 5 — prior validation for chaining / turn-that-into.
+    let priorValidationForChain: Record<string, unknown> | null = null;
+    try {
+      const recentVal = await params.db
+        .select({ validation: aiArtifacts.validation })
+        .from(aiArtifacts)
+        .where(
+          and(
+            eq(aiArtifacts.organizationId, params.organizationId),
+            eq(aiArtifacts.matterId, params.matterId),
+            eq(aiArtifacts.conversationId, conversationIdForWorkflow),
+          ),
+        )
+        .orderBy(desc(aiArtifacts.createdAt))
+        .limit(4);
+      for (const row of recentVal) {
+        if (row.validation && typeof row.validation === "object") {
+          priorValidationForChain = row.validation as Record<string, unknown>;
+          break;
+        }
+      }
+    } catch {
+      priorValidationForChain = null;
+    }
+    let turnThatIntoAmbiguity: string | null = null;
+    if (isTurnThatIntoRequest(params.question)) {
+      const transform = resolveTurnThatInto({
+        question: params.question,
+        workingState: conversationWorkingState,
+        priorValidation: priorValidationForChain,
+      });
+      if (
+        transform.status === "AMBIGUOUS_SOURCE" ||
+        transform.status === "AMBIGUOUS_TARGET" ||
+        transform.status === "AMBIGUOUS_BOTH"
+      ) {
+        turnThatIntoAmbiguity = transform.clarificationPrompt;
+      } else if (transform.status === "RESOLVED") {
+        referentResolution = {
+          ...referentResolution,
+          forceDomains: [
+            ...new Set([...referentResolution.forceDomains, ...transform.forceDomains]),
+          ] as typeof referentResolution.forceDomains,
+        };
+      }
+    }
 
     const finishWorkflowAnswer = async (paramsFinish: {
       answer: string;
@@ -1398,6 +1472,15 @@ export async function askNyayaAboutMatter(params: {
       };
     };
 
+    if (turnThatIntoAmbiguity) {
+      return await finishWorkflowAnswer({
+        answer: turnThatIntoAmbiguity,
+        action: null,
+        unresolved: ["Ambiguous turn-that-into transform — NO_AUTO_PICK."],
+        evidenceState: "insufficient",
+      });
+    }
+
     if (workflowClassification.actionClass === "PROHIBITED_AUTONOMOUSLY") {
       const answer = formatActionPreviewAnswer({
         classification: workflowClassification,
@@ -1450,13 +1533,29 @@ export async function askNyayaAboutMatter(params: {
     const priorPending = priorPendingActions[0] ?? null;
 
     const tryConfirmPending = async (candidates: ConversationalActionRecord[]) => {
+      const focusChanged =
+        detectMaterialFocusChange({
+          priorPending: candidates[0] ?? null,
+          question: params.question,
+          workingStateBeforeConfirm: conversationWorkingState,
+        }) ||
+        detectMaterialCrossWorkflowFocusChange({
+          priorPending: candidates[0]
+            ? {
+                activeSnapshot: candidates[0].activeSnapshot,
+                previewPayload: candidates[0].previewPayload,
+              }
+            : null,
+          question: params.question,
+          workingState: conversationWorkingState,
+        });
       const validation = validateActionConfirmation({
         pendingActions: candidates,
         organizationId: params.organizationId,
         matterId: params.matterId,
         conversationId: conversationIdForWorkflow,
         workingState: conversationWorkingState,
-        focusChanged: false,
+        focusChanged,
       });
       if (!validation.ok) {
         const answer = formatActionPreviewAnswer({
@@ -1809,6 +1908,10 @@ export async function askNyayaAboutMatter(params: {
       (isInvestigateNextFollowUp(params.question) &&
         conversationWorkingState.activeInvestigateGapIds.length > 0);
     const investigateNextDomains = investigateNextIntent ? investigateNextForceDomains() : [];
+    // Oct 19–25 Phase 5 — cross-workflow transition domains (invalidation already applied early).
+    const workflowIntent = detectWorkflowIntent(params.question);
+    const crossWorkflowDomains = crossWorkflowForceDomains(workflowIntent);
+    const matterSynthesisIntent = isMatterSynthesisQuestion(params.question);
     routerPlan = planConversationalContext({
       question: referentResolution.routingQuestion || params.question,
       workspaceType: params.workspaceType,
@@ -1820,6 +1923,8 @@ export async function askNyayaAboutMatter(params: {
         ...depositionPrepDomains,
         ...draftResearchDomains,
         ...investigateNextDomains,
+        ...crossWorkflowDomains,
+        ...(matterSynthesisIntent ? (["WHOLE_MATTER", "CLAIMS", "DEFENSES"] as const) : []),
       ],
     });
     if (referentResolution.diagnostics) {
@@ -1847,7 +1952,12 @@ export async function askNyayaAboutMatter(params: {
           civilReview,
         });
         // Promote claim IDs into working state when referent did not already bind one.
-        if (conversationWorkingState.activeClaimIds.length === 0) {
+        // Do not refill after an explicit claim-focus invalidation (stale-confirm safety).
+        if (
+          conversationWorkingState.activeClaimIds.length === 0 &&
+          !claimFocusInvalidated &&
+          !/\bwhat about claim\b|\bclaim [a-z0-9]\b/i.test(params.question)
+        ) {
           const claimIds = (civilReview.claims ?? [])
             .filter((c) => c.isCurrent !== false)
             .map((c) => c.id)
@@ -2417,7 +2527,11 @@ export async function askNyayaAboutMatter(params: {
     let wholeMatterContextText: string | null = null;
     let wholeMatterForInvestigate: Awaited<ReturnType<typeof loadWholeMatterIntelligence>> | null =
       null;
-    if (routerPlan.loaders.wholeMatter || investigateNextIntent) {
+    let matterSynthesisResult: MatterSynthesis | null = null;
+    let matterSynthesisContextText: string | null = null;
+    let whatChangedResult: WhatChangedResult | null = null;
+    let whatChangedContextText: string | null = null;
+    if (routerPlan.loaders.wholeMatter || investigateNextIntent || matterSynthesisIntent) {
       try {
         const wholeMatter = await loadWholeMatterIntelligence(params.db, {
           userId: params.userId,
@@ -2429,6 +2543,34 @@ export async function askNyayaAboutMatter(params: {
           question: params.question,
           intelligence: wholeMatter,
         });
+        if (matterSynthesisIntent) {
+          const change = detectWhatChanged({
+            question: params.question,
+            priorValidation: priorValidationForChain,
+            currentInvestigateGaps: conversationWorkingState.activeInvestigateGapIds,
+            currentConflictCount: wholeMatter.contradictions.length,
+            currentAuthorityCount: wholeMatter.authorities.length,
+          });
+          whatChangedResult = change;
+          whatChangedContextText = formatWhatChangedForPrompt(change);
+          matterSynthesisResult = buildMatterSynthesis({
+            question: params.question,
+            claims: wholeMatter.claims,
+            defenses: wholeMatter.defenses,
+            contradictions: wholeMatter.contradictions,
+            investigateNext: wholeMatter.investigateNext,
+            parties: wholeMatter.parties,
+            propositions: wholeMatter.propositions as Array<{ text?: string; kind?: string }>,
+            priorChangeLines: change.available
+              ? [
+                  ...change.newGaps.map((g) => `NEW_GAP:${g}`),
+                  ...change.resolvedGaps.map((g) => `RESOLVED_GAP:${g}`),
+                  ...change.newConflicts,
+                ]
+              : [],
+          });
+          matterSynthesisContextText = formatMatterSynthesisForPrompt(matterSynthesisResult);
+        }
       } catch {
         wholeMatterContextText = null;
         wholeMatterForInvestigate = null;
@@ -2631,6 +2773,8 @@ export async function askNyayaAboutMatter(params: {
       matterDraftContextText,
       wholeMatterContextText,
       investigateNextContextText,
+      matterSynthesisContextText,
+      whatChangedContextText,
     );
 
     if (authority) {
@@ -2726,6 +2870,8 @@ export async function askNyayaAboutMatter(params: {
         matterDraftContextText,
         wholeMatterContextText,
         investigateNextContextText,
+        matterSynthesisContextText,
+        whatChangedContextText,
         formatReferentResolutionForPrompt(referentResolution),
       );
       if (routerPlan) {
@@ -2745,6 +2891,8 @@ export async function askNyayaAboutMatter(params: {
                 matterDraftContextText,
                 wholeMatterContextText,
                 investigateNextContextText,
+                matterSynthesisContextText,
+                whatChangedContextText,
               ]
                 .filter(Boolean)
                 .join("").length,
@@ -2766,6 +2914,8 @@ export async function askNyayaAboutMatter(params: {
         matterDraftContextText,
         wholeMatterContextText,
         investigateNextContextText,
+        matterSynthesisContextText,
+        whatChangedContextText,
         formatReferentResolutionForPrompt(referentResolution),
       );
     }
@@ -3770,7 +3920,7 @@ export async function askNyayaAboutMatter(params: {
       );
     }
 
-    // Prefer deterministic Phase 4 investigate-next record over model prose.
+    // Prefer deterministic Phase 4 investigate-next / Phase 5 synthesis over model prose.
     if (investigateNextResult && investigateNextIntent) {
       validated.answer.answer = formatInvestigateNextAnswer(investigateNextResult);
       validated.answer.assumptions.push(
@@ -3779,6 +3929,24 @@ export async function askNyayaAboutMatter(params: {
       if (investigateNextResult.posture === "NO_MATERIAL_GAP") {
         validated.answer.evidenceState = "insufficient";
       }
+    } else if (matterSynthesisResult && matterSynthesisIntent) {
+      validated.answer.answer = [
+        formatMatterSynthesisForPrompt(matterSynthesisResult),
+        whatChangedResult ? formatWhatChangedForPrompt(whatChangedResult) : null,
+      ]
+        .filter(Boolean)
+        .join("\n\n");
+      validated.answer.assumptions.push(
+        "Matter intelligence synthesis is record-derived; credibility scoring=0; win probability=0.",
+      );
+    }
+
+    // Persist last workflow for chaining continuity.
+    if (workflowIntent !== "UNKNOWN") {
+      conversationWorkingState = {
+        ...conversationWorkingState,
+        lastWorkflowKind: workflowIntent,
+      };
     }
 
     // Progressive render of the FINAL validated answer (not pre-validation draft tokens).
@@ -3909,6 +4077,10 @@ export async function askNyayaAboutMatter(params: {
               activeInvestigateGapIds: investigateNextResult?.gaps.length
                 ? investigateNextResult.gaps.map((g) => g.id)
                 : conversationWorkingState.activeInvestigateGapIds,
+              lastWorkflowKind:
+                workflowIntent !== "UNKNOWN"
+                  ? workflowIntent
+                  : conversationWorkingState.lastWorkflowKind,
             },
           }),
           conversationContextMetrics: conversationAskContext?.metrics ?? null,
@@ -4010,6 +4182,22 @@ export async function askNyayaAboutMatter(params: {
           investigateNext: investigateNextResult
             ? toInvestigateNextValidationSnapshot(investigateNextResult)
             : null,
+          // Oct 19–25 Phase 5 — cross-workflow + matter synthesis (no schema).
+          crossWorkflow: {
+            lastWorkflowKind: workflowIntent !== "UNKNOWN" ? workflowIntent : conversationWorkingState.lastWorkflowKind,
+            matterSynthesis: matterSynthesisResult
+              ? {
+                  coreIssues: matterSynthesisResult.coreIssues,
+                  strongestSupported: matterSynthesisResult.strongestSupported,
+                  weakestAreas: matterSynthesisResult.weakestAreas,
+                  claimReadiness: matterSynthesisResult.claimReadiness,
+                  defenseReadiness: matterSynthesisResult.defenseReadiness,
+                  credibilityScoring: 0,
+                  winProbability: 0,
+                }
+              : null,
+            whatChanged: whatChangedResult,
+          },
           factualityContract: (() => {
             const allowed = validated.answer.sources
               .map((s) => s.documentId)

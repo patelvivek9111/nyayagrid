@@ -45,6 +45,11 @@ export type ConversationWorkingState = {
   activeResearchIssueIds: string[];
   /** Bounded investigate-next gap IDs from last structured result (JSON working state only). */
   activeInvestigateGapIds: string[];
+  /**
+   * Last deterministic workflow kind for cross-workflow chaining (JSON only).
+   * Examples: HEARING_PREP, DEPOSITION_PREP, DRAFT, RESEARCH, INVESTIGATE_NEXT, MATTER_ANALYSIS.
+   */
+  lastWorkflowKind: string | null;
   issueLabels: string[];
   unresolvedQuestions: string[];
   authorityStates: AuthorityStateSnapshot[];
@@ -95,6 +100,7 @@ export function emptyWorkingState(now = new Date()): ConversationWorkingState {
     activeDraftIds: [],
     activeResearchIssueIds: [],
     activeInvestigateGapIds: [],
+    lastWorkflowKind: null,
     issueLabels: [],
     unresolvedQuestions: [],
     authorityStates: [],
@@ -139,6 +145,7 @@ export function parseWorkingState(raw: unknown): ConversationWorkingState | null
     activeDraftIds: asStringArray(obj.activeDraftIds),
     activeResearchIssueIds: asStringArray(obj.activeResearchIssueIds),
     activeInvestigateGapIds: asStringArray(obj.activeInvestigateGapIds),
+    lastWorkflowKind: typeof obj.lastWorkflowKind === "string" ? obj.lastWorkflowKind : null,
     issueLabels: asStringArray(obj.issueLabels),
     unresolvedQuestions: asStringArray(obj.unresolvedQuestions),
     authorityStates: Array.isArray(obj.authorityStates)
@@ -251,6 +258,8 @@ export function mergeWorkingStates(
       ...(next.activeInvestigateGapIds ?? []),
       ...base.activeInvestigateGapIds,
     ]).slice(0, 16),
+    lastWorkflowKind:
+      next.lastWorkflowKind !== undefined ? next.lastWorkflowKind : base.lastWorkflowKind,
     issueLabels: uniq([...(next.issueLabels ?? []), ...base.issueLabels]),
     unresolvedQuestions: uniq([
       ...(next.unresolvedQuestions ?? []),
@@ -343,14 +352,26 @@ export function formatConversationContextForPrompt(params: {
   if (params.recentTurns.length === 0 && params.summaryLines.length === 0) return null;
 
   const activeBits = [
+    params.workingState.lastWorkflowKind
+      ? `lastWorkflow=${params.workingState.lastWorkflowKind}`
+      : null,
     params.workingState.activeClaimIds.length
       ? `claims=${params.workingState.activeClaimIds.slice(0, 8).join(",")}`
+      : null,
+    params.workingState.activeDefenseIds.length
+      ? `defenses=${params.workingState.activeDefenseIds.slice(0, 8).join(",")}`
       : null,
     params.workingState.activeMotionIds.length
       ? `motions=${params.workingState.activeMotionIds.slice(0, 8).join(",")}`
       : null,
+    params.workingState.activePersonIds.length
+      ? `persons=${params.workingState.activePersonIds.slice(0, 8).join(",")}`
+      : null,
     params.workingState.activeDeficiencyIds.length
       ? `deficiencies=${params.workingState.activeDeficiencyIds.slice(0, 8).join(",")}`
+      : null,
+    params.workingState.activeDiscoveryIds.length
+      ? `discovery=${params.workingState.activeDiscoveryIds.slice(0, 8).join(",")}`
       : null,
     params.workingState.activeCommunicationIds.length
       ? `communications=${params.workingState.activeCommunicationIds.slice(0, 8).join(",")}`
@@ -360,6 +381,15 @@ export function formatConversationContextForPrompt(params: {
       : null,
     params.workingState.activeSourceIds.length
       ? `sources=${params.workingState.activeSourceIds.slice(0, 12).join(",")}`
+      : null,
+    params.workingState.activeDraftIds.length
+      ? `drafts=${params.workingState.activeDraftIds.slice(0, 4).join(",")}`
+      : null,
+    params.workingState.activeResearchIssueIds.length
+      ? `researchIssues=${params.workingState.activeResearchIssueIds.slice(0, 4).join(",")}`
+      : null,
+    params.workingState.activeInvestigateGapIds.length
+      ? `investigateGaps=${params.workingState.activeInvestigateGapIds.slice(0, 8).join(",")}`
       : null,
     params.workingState.issueLabels.length
       ? `topics=${params.workingState.issueLabels.slice(0, 8).join(" | ")}`
@@ -420,6 +450,7 @@ export function buildNextWorkingState(params: {
       | "activeDraftIds"
       | "activeResearchIssueIds"
       | "activeInvestigateGapIds"
+      | "lastWorkflowKind"
     >
   >;
 }): ConversationWorkingState {
