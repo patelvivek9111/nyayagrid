@@ -82,7 +82,11 @@ function processingLabel(doc: Doc): string {
       return "Blocked by malware scan";
     }
     if (doc.processingState === "malware_scan_failed") return "Scan failed — file not indexed";
-    if (doc.processingState === "extraction_failed") return "Could not read text";
+    if (doc.processingState === "extraction_failed") {
+      const err = (doc.processingError ?? "").toLowerCase();
+      if (/ocr failed|ocr provider|empty text/i.test(err)) return "OCR failed — needs attention";
+      return "Could not read text";
+    }
     return "Processing failed";
   }
   if (doc.processingState === "ready") {
@@ -98,7 +102,16 @@ function processingLabel(doc: Doc): string {
     return "Processing (scan skipped in development)";
   if (doc.processingState === "scan_clean") return "Scan complete — reading file";
   if (doc.processingState === "extracting_text") return "Reading text";
-  if (doc.processingState === "requires_ocr") return "Needs OCR (not enabled)";
+  if (doc.processingState === "requires_ocr") {
+    const err = (doc.processingError ?? "").toLowerCase();
+    if (
+      /not enabled|feature_ocr|no ocr provider|not configured|unsupported/i.test(err) ||
+      !doc.processingError
+    ) {
+      return "Needs OCR (not enabled)";
+    }
+    return "Needs OCR";
+  }
   if (doc.processingState === "chunking") return "Preparing for search";
   if (doc.processingState === "embedding") return "Indexing";
   if (doc.processingState === "indexed") return "Indexed — finishing";

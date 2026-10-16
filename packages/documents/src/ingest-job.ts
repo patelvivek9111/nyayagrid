@@ -4,6 +4,7 @@ import { evaluateIngestGate, type IngestIdentity } from "./ingest-gate";
 import { processDocumentPipeline } from "./pipeline";
 import type { MalwareScanner } from "./malware";
 import type { StorageProvider } from "./storage";
+import type { OcrProvider } from "./ocr";
 import { isPermanentIngestState } from "./retry";
 
 export type DocumentIngestJobResult = {
@@ -21,6 +22,10 @@ export type DocumentIngestDeps = {
   storage: StorageProvider;
   scanner: MalwareScanner;
   embeddings: EmbeddingProvider;
+  /** Optional OCR provider; when omitted, scanned PDFs remain at requires_ocr unless wired by caller. */
+  ocr?: OcrProvider | null;
+  /** When undefined, pipeline reads FEATURE_OCR from the environment. */
+  ocrEnabled?: boolean;
 };
 
 /**

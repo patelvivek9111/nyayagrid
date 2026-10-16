@@ -14,7 +14,8 @@ import {
 import { extractMatterIntelligenceForDocument } from "@nyayagrid/intelligence";
 import { MockAIProvider, newUsageActionId } from "@nyayagrid/ai";
 import { recordUsage } from "@nyayagrid/platform";
-import { getAI, getEmbeddings, getMalwareScanner, getStorage } from "@/lib/infra";
+import { getAI, getEmbeddings, getMalwareScanner, getOcrProvider, getStorage } from "@/lib/infra";
+import { isFeatureEnabled } from "@nyayagrid/platform";
 import { getDb } from "@/lib/db";
 import { inngest } from "@/inngest/client";
 import type { JobPayload } from "@nyayagrid/jobs";
@@ -90,6 +91,8 @@ export async function handleDocumentIngestEvent(params: { payload: JobPayload; a
       storage: getStorage(),
       scanner: getMalwareScanner(),
       embeddings: getEmbeddings(),
+      ocr: getOcrProvider(),
+      ocrEnabled: isFeatureEnabled("ocr"),
     },
     { ...identity, idempotencyKey: params.payload.idempotencyKey },
     { attempt: params.attempt },

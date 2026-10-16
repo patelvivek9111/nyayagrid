@@ -11,16 +11,34 @@ import { chunkSegments } from "./chunk";
 import { transitionDocumentState } from "./processing-states";
 import type { MalwareScanner } from "./malware";
 import type { StorageProvider } from "./storage";
+import type { OcrProvider } from "./ocr";
+import { isOcrFeatureEnabled, resolveTextWithOptionalOcr } from "./ocr-resolve";
 import {
   assertPageCountAllowed,
   assertUploadSizeAllowed,
   DEFAULT_EXTRACTION_TIMEOUT_MS,
+  DEFAULT_OCR_TIMEOUT_MS,
   DEFAULT_SCAN_TIMEOUT_MS,
   MAX_EXTRACTED_CHARS,
   rejectZipBombsOrArchives,
   withTimeout,
 } from "./limits";
 import { isRetryableProcessingError } from "./retry";
+
+export type ProcessDocumentPipelineDeps = {
+  db: Database;
+  storage: StorageProvider;
+  scanner: MalwareScanner;
+  embeddings: EmbeddingProvider;
+  extractor?: TextExtractor;
+  /** Real OCR provider when configured; UnsupportedOcrProvider / omit when unavailable. */
+  ocr?: OcrProvider | null;
+  /**
+   * When undefined, reads FEATURE_OCR from the environment.
+   * Flag alone never bypasses provider readiness (see resolveTextWithOptionalOcr).
+   */
+  ocrEnabled?: boolean;
+};
 
 export type ProcessDocumentInput = {
   organizationId: string;
@@ -73,16 +91,11 @@ function truncateSegmentsToCharLimit(
 }
 
 export async function processDocumentPipeline(
-  deps: {
-    db: Database;
-    storage: StorageProvider;
-    scanner: MalwareScanner;
-    embeddings: EmbeddingProvider;
-    extractor?: TextExtractor;
-  },
+  deps: ProcessDocumentPipelineDeps,
   input: ProcessDocumentInput,
 ): Promise<{ ok: boolean; state: DocumentProcessingState; message: string }> {
   const extractor = deps.extractor ?? createDefaultTextExtractor();
+  const ocrEnabled = deps.ocrEnabled ?? isOcrFeatureEnabled();
 
   const [doc] = await deps.db
     .select()
@@ -195,20 +208,34 @@ export async function processDocumentPipeline(
         "text extraction",
       );
 
-      if (extraction.status === "requires_ocr") {
+      // Native text path skips OCR. Scanned/low-text PDFs may invoke OCR when configured.
+      const resolved = await withTimeout(
+        resolveTextWithOptionalOcr({
+          extraction,
+          ocr: deps.ocr,
+          ocrEnabled,
+          buffer: bytes,
+          contentType: version.contentType,
+          filename: version.originalFilename,
+        }),
+        DEFAULT_OCR_TIMEOUT_MS,
+        "OCR text resolution",
+      );
+
+      if (resolved.status === "requires_ocr") {
         await setState(deps.db, doc.id, state, "requires_ocr", {
-          processingError: extraction.reason,
+          processingError: resolved.reason,
         });
-        return { ok: false, state: "requires_ocr", message: extraction.reason };
+        return { ok: false, state: "requires_ocr", message: resolved.reason };
       }
-      if (extraction.status === "failed") {
+      if (resolved.status === "ocr_failed" || resolved.status === "extraction_failed") {
         await setState(deps.db, doc.id, state, "extraction_failed", {
-          processingError: extraction.reason,
+          processingError: resolved.reason,
         });
-        return { ok: false, state: "extraction_failed", message: extraction.reason };
+        return { ok: false, state: "extraction_failed", message: resolved.reason };
       }
 
-      const maxPage = extraction.segments.reduce((max, s) => Math.max(max, s.page ?? 0), 0);
+      const maxPage = resolved.segments.reduce((max, s) => Math.max(max, s.page ?? 0), 0);
       try {
         assertPageCountAllowed(maxPage);
       } catch (limitError) {
@@ -217,11 +244,11 @@ export async function processDocumentPipeline(
         return { ok: false, state: "extraction_failed", message };
       }
 
-      const totalChars = extraction.segments.reduce((sum, s) => sum + s.text.length, 0);
+      const totalChars = resolved.segments.reduce((sum, s) => sum + s.text.length, 0);
       const truncatedText = totalChars > MAX_EXTRACTED_CHARS;
       const segments = truncatedText
-        ? truncateSegmentsToCharLimit(extraction.segments, MAX_EXTRACTED_CHARS)
-        : extraction.segments;
+        ? truncateSegmentsToCharLimit(resolved.segments, MAX_EXTRACTED_CHARS)
+        : resolved.segments;
 
       await setState(deps.db, doc.id, state, "chunking");
       state = "chunking";
@@ -265,12 +292,13 @@ export async function processDocumentPipeline(
       state = "indexed";
       await setState(deps.db, doc.id, state, "ready");
       state = "ready";
+      const viaOcr = resolved.source === "ocr" ? ` (OCR via ${resolved.provider})` : "";
       return {
         ok: true,
         state,
         message: truncatedText
-          ? "Document ready (extracted text truncated to configured limit)"
-          : "Document ready",
+          ? `Document ready${viaOcr} (extracted text truncated to configured limit)`
+          : `Document ready${viaOcr}`,
       };
     }
 

@@ -2,6 +2,7 @@ export * from "./storage";
 export * from "./processing-states";
 export * from "./malware";
 export * from "./ocr";
+export * from "./ocr-resolve";
 export * from "./extract";
 export * from "./chunk";
 export * from "./pipeline";

@@ -36,10 +36,11 @@ const FLAG_ENV_VAR: Record<FeatureFlag, string> = {
 };
 
 /**
- * `ocr` is off everywhere because only `UnsupportedOcrProvider` exists; turning it on would promise
- * text extraction from scanned files that cannot happen. `live_ai` is off everywhere because it
- * describes calling a paid provider, which an operator opts into deliberately. Everything else is
- * on locally so the product is fully explorable, and off in staging/production until declared.
+ * `ocr` is off everywhere by default. Enabling FEATURE_OCR alone does not extract text — ingest
+ * also requires a configured provider (OCR_ENDPOINT or OCR_PROVIDER=tesseract). Without a provider
+ * the pipeline stays honestly at requires_ocr. `live_ai` is off everywhere because it describes
+ * calling a paid provider, which an operator opts into deliberately. Everything else is on locally
+ * so the product is fully explorable, and off in staging/production until declared.
  */
 const DEFAULTS_BY_ENV: Record<AppEnv, FeatureFlagState> = {
   development: {
