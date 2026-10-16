@@ -58,6 +58,28 @@ import {
   type DepositionPrepResult,
 } from "./conversational-deposition-prep";
 import {
+  buildMatterDraftResult,
+  buildMatterResearchResult,
+  detectDraftType,
+  draftResearchForceDomains,
+  draftToResearch,
+  extractParagraphNumber,
+  formatDraftForPrompt,
+  formatResearchForPrompt,
+  isAuthorityOnlyRevision,
+  isConversationalDraftQuestion,
+  isDraftToResearchRequest,
+  isResearchToDraftRequest,
+  isResearchWorkflowQuestion,
+  isSourceOnlyRevision,
+  researchToDraft,
+  reviseDraftAuthorityOnly,
+  reviseDraftParagraph,
+  reviseDraftSourceOnly,
+  type DraftResult,
+  type ResearchResult,
+} from "./conversational-draft-research";
+import {
   assessNeedMoreDocuments,
   assessRetrievedEvidence,
   assertSourceScopeInvariants,
@@ -1688,6 +1710,12 @@ export async function askNyayaAboutMatter(params: {
         isDepositionContinuityQuestion(params.question));
     const hearingPrepDomains = hearingPrepIntent ? hearingPrepForceDomains() : [];
     const depositionPrepDomains = depositionPrepIntent ? depositionPrepForceDomains() : [];
+    const draftResearchIntent =
+      isResearchWorkflowQuestion(params.question) ||
+      isConversationalDraftQuestion(params.question) ||
+      isResearchToDraftRequest(params.question) ||
+      isDraftToResearchRequest(params.question);
+    const draftResearchDomains = draftResearchIntent ? draftResearchForceDomains() : [];
     routerPlan = planConversationalContext({
       question: referentResolution.routingQuestion || params.question,
       workspaceType: params.workspaceType,
@@ -1697,6 +1725,7 @@ export async function askNyayaAboutMatter(params: {
         ...referentResolution.forceDomains,
         ...hearingPrepDomains,
         ...depositionPrepDomains,
+        ...draftResearchDomains,
       ],
     });
     if (referentResolution.diagnostics) {
@@ -2104,6 +2133,193 @@ export async function askNyayaAboutMatter(params: {
       }
     }
 
+    // Oct 19–25 Phase 3 — deterministic research + draft records (local corpus; no CL).
+    let matterResearchResult: ResearchResult | null = null;
+    let matterDraftResult: DraftResult | null = null;
+    let matterResearchContextText: string | null = null;
+    let matterDraftContextText: string | null = null;
+    if (draftResearchIntent) {
+      const issueInputs = (civilReviewForHearing?.claims ?? [])
+        .filter((c) => c.isCurrent !== false)
+        .map((c) => ({
+          id: c.id,
+          label: c.label,
+          kind: "claim" as const,
+          supportStatus: c.supportStatus ?? null,
+          description: c.description ?? null,
+        }));
+      const motionIssues = (mcReviewForHearing?.motions ?? []).slice(0, 12).map((m) => ({
+        id: m.id,
+        label: m.title,
+        kind: "motion" as const,
+        supportStatus: m.status ?? null,
+        description: m.rulingSummary ?? null,
+      }));
+      const allIssues = [...issueInputs, ...motionIssues];
+      const referentIssueId =
+        referentResolution.referents.find(
+          (r) => r.entityType === "claim" || r.entityType === "motion",
+        )?.entityId ?? null;
+      const activeResearchIssueId =
+        conversationWorkingState.activeResearchIssueIds.length === 1
+          ? conversationWorkingState.activeResearchIssueIds[0]!
+          : conversationWorkingState.activeClaimIds.length === 1
+            ? conversationWorkingState.activeClaimIds[0]!
+            : null;
+      const resolvedIssueId = referentIssueId ?? activeResearchIssueId;
+      const ambiguousIssueIds =
+        referentResolution.status === "AMBIGUOUS" && !resolvedIssueId
+          ? referentResolution.candidates
+              .filter((c) => c.entityType === "claim" || c.entityType === "motion")
+              .map((c) => c.entityId)
+          : undefined;
+
+      const authorityInputs = conversationWorkingState.authorityStates.map((a) => ({
+        id: a.id,
+        label: `Authority ${a.id.slice(0, 8)}`,
+        resolution: a.resolution,
+        treatmentVerified: a.treatmentVerified,
+        hasFullText: a.resolution === "CORPUS_COMPLETE",
+        stance: "unknown" as const,
+        jurisdictionHint: null,
+      }));
+
+      const factInputs = (civilReviewForHearing?.claims ?? [])
+        .filter((c) => c.isCurrent !== false)
+        .slice(0, 20)
+        .map((c) => {
+          const status = (c.supportStatus ?? "UNKNOWN").toUpperCase();
+          const factuality =
+            status === "SUPPORTED"
+              ? ("FACT" as const)
+              : status.includes("PARTIAL")
+                ? ("SUPPORTED_INFERENCE" as const)
+                : status === "UNKNOWN"
+                  ? ("UNKNOWN" as const)
+                  : ("PARTY_ALLEGATION" as const);
+          return {
+            id: c.id,
+            text: c.description || c.label,
+            factuality,
+            sourceIds: conversationWorkingState.activeSourceIds.slice(0, 4),
+            disputed: status === "UNKNOWN" || status.includes("CONFLICT"),
+          };
+        });
+
+      if (isDraftToResearchRequest(params.question)) {
+        const seedDraft = buildMatterDraftResult({
+          question: params.question,
+          matterId: params.matterId,
+          facts: factInputs,
+          issues: allIssues,
+          authorities: authorityInputs,
+          resolvedDraftId:
+            conversationWorkingState.activeDraftIds.length === 1
+              ? conversationWorkingState.activeDraftIds[0]!
+              : null,
+        });
+        matterResearchResult = draftToResearch({
+          question: params.question,
+          matterId: params.matterId,
+          draft: seedDraft,
+          paragraphNumber: extractParagraphNumber(params.question),
+          issues: allIssues,
+          authorities: authorityInputs,
+        });
+        matterResearchContextText = formatResearchForPrompt(matterResearchResult);
+      } else if (isResearchWorkflowQuestion(params.question)) {
+        matterResearchResult = buildMatterResearchResult({
+          question: params.question,
+          matterId: params.matterId,
+          issues: allIssues,
+          authorities: authorityInputs,
+          facts: factInputs,
+          resolvedIssueId,
+          ambiguousIssueIds,
+        });
+        matterResearchContextText = formatResearchForPrompt(matterResearchResult);
+      }
+      if (matterResearchResult?.issue.id) {
+        conversationWorkingState = {
+          ...conversationWorkingState,
+          activeResearchIssueIds: [matterResearchResult.issue.id],
+          activeClaimIds: [
+            matterResearchResult.issue.id,
+            ...conversationWorkingState.activeClaimIds.filter(
+              (id) => id !== matterResearchResult!.issue.id,
+            ),
+          ].slice(0, 3),
+        };
+      }
+
+      if (
+        isConversationalDraftQuestion(params.question) ||
+        isResearchToDraftRequest(params.question) ||
+        isSourceOnlyRevision(params.question) ||
+        isAuthorityOnlyRevision(params.question)
+      ) {
+        if (!matterResearchResult && (isResearchToDraftRequest(params.question) || /argument|research memo/i.test(params.question))) {
+          matterResearchResult = buildMatterResearchResult({
+            question: params.question,
+            matterId: params.matterId,
+            issues: allIssues,
+            authorities: authorityInputs,
+            resolvedIssueId,
+            ambiguousIssueIds,
+          });
+          matterResearchContextText = formatResearchForPrompt(matterResearchResult);
+        }
+        if (isResearchToDraftRequest(params.question) && matterResearchResult) {
+          matterDraftResult = researchToDraft({
+            question: params.question,
+            matterId: params.matterId,
+            research: matterResearchResult,
+            facts: factInputs,
+          });
+        } else {
+          matterDraftResult = buildMatterDraftResult({
+            question: params.question,
+            matterId: params.matterId,
+            draftType: detectDraftType(params.question),
+            facts: factInputs,
+            issues: allIssues,
+            authorities: authorityInputs,
+            research: matterResearchResult,
+            hearingOutline: hearingPrepResult?.outlinePreview ?? hearingPrepResult?.compressedOralArgument ?? null,
+            depositionOutline: depositionPrepResult?.outlinePreview ?? depositionPrepResult?.compressedQuestionList ?? null,
+            resolvedDraftId:
+              conversationWorkingState.activeDraftIds.length === 1
+                ? conversationWorkingState.activeDraftIds[0]!
+                : null,
+            researchArtifactId: matterResearchResult?.issue.id
+              ? `research:${matterResearchResult.issue.id}`
+              : null,
+          });
+        }
+        if (isSourceOnlyRevision(params.question) && matterDraftResult) {
+          matterDraftResult = reviseDraftSourceOnly(matterDraftResult);
+        }
+        if (isAuthorityOnlyRevision(params.question) && matterDraftResult) {
+          matterDraftResult = reviseDraftAuthorityOnly(
+            matterDraftResult,
+            authorityInputs,
+            /unverified/i.test(params.question) ? "drop_unverified" : "binding_unknown_safe",
+          );
+        }
+        const paraN = extractParagraphNumber(params.question);
+        if (paraN != null && /rewrite paragraph/i.test(params.question) && matterDraftResult) {
+          matterDraftResult = reviseDraftParagraph(matterDraftResult, paraN, params.question);
+        }
+        matterDraftContextText = formatDraftForPrompt(matterDraftResult);
+        if (matterDraftResult.draftId) {
+          conversationWorkingState = {
+            ...conversationWorkingState,
+            activeDraftIds: [matterDraftResult.draftId],
+          };
+        }
+      }
+    }
+
     let wholeMatterContextText: string | null = null;
     if (routerPlan.loaders.wholeMatter) {
       try {
@@ -2131,6 +2347,8 @@ export async function askNyayaAboutMatter(params: {
       motionsCommsContextText,
       hearingPrepContextText,
       depositionPrepContextText,
+      matterResearchContextText,
+      matterDraftContextText,
       wholeMatterContextText,
     );
 
@@ -2223,6 +2441,8 @@ export async function askNyayaAboutMatter(params: {
         motionsCommsContextText,
         hearingPrepContextText,
         depositionPrepContextText,
+        matterResearchContextText,
+        matterDraftContextText,
         wholeMatterContextText,
         formatReferentResolutionForPrompt(referentResolution),
       );
@@ -2239,6 +2459,8 @@ export async function askNyayaAboutMatter(params: {
                 motionsCommsContextText,
                 hearingPrepContextText,
                 depositionPrepContextText,
+                matterResearchContextText,
+                matterDraftContextText,
                 wholeMatterContextText,
               ]
                 .filter(Boolean)
@@ -2257,6 +2479,8 @@ export async function askNyayaAboutMatter(params: {
         motionsCommsContextText,
         hearingPrepContextText,
         depositionPrepContextText,
+        matterResearchContextText,
+        matterDraftContextText,
         wholeMatterContextText,
         formatReferentResolutionForPrompt(referentResolution),
       );
@@ -2630,6 +2854,8 @@ export async function askNyayaAboutMatter(params: {
           motionsCommsContextText,
           hearingPrepContextText,
           depositionPrepContextText,
+          matterResearchContextText,
+          matterDraftContextText,
           wholeMatterContextText,
         ]
           .filter(Boolean)
@@ -3047,18 +3273,32 @@ export async function askNyayaAboutMatter(params: {
       const sourceRefs = validated.answer.sources
         .map((s) => s.documentId)
         .filter((id): id is string => typeof id === "string" && id.length > 0 && !id.startsWith("web:"));
-      // Prefer deterministic hearing outline / compressed oral argument over model prose.
+      // Prefer deterministic Phase 1–3 records over model prose.
       const hearingDraftText =
         hearingPrepResult?.outlinePreview ??
         hearingPrepResult?.compressedOralArgument ??
+        null;
+      const deterministicDraftText =
+        matterDraftResult?.previewText ??
+        hearingDraftText ??
+        depositionPrepResult?.outlinePreview ??
         null;
       const draftPreview = buildDraftPreview({
         question: params.question,
         matterId: params.matterId,
         workingState: conversationWorkingState,
-        answerText: hearingDraftText ?? validated.answer.answer,
-        sourceRefs,
-        authorityRefs: [...(authority?.authorityIds ?? [])],
+        answerText: deterministicDraftText ?? validated.answer.answer,
+        sourceRefs: [
+          ...sourceRefs,
+          ...(matterDraftResult?.sourceMap
+            .filter((s) => s.kind === "document")
+            .map((s) => s.id) ?? []),
+        ],
+        authorityRefs: [
+          ...(authority?.authorityIds ?? []),
+          ...(matterDraftResult?.paragraphs.flatMap((p) => p.authorityIds) ?? []),
+          ...(matterResearchResult?.authoritiesFound.map((a) => a.id) ?? []),
+        ],
       });
       conversationalAction = createPendingActionRecord({
         actionType: "DRAFT_GENERATE_PREVIEW",
@@ -3254,6 +3494,12 @@ export async function askNyayaAboutMatter(params: {
               activePersonIds: depositionPrepResult?.deponent.personId
                 ? [depositionPrepResult.deponent.personId]
                 : conversationWorkingState.activePersonIds,
+              activeDraftIds: matterDraftResult?.draftId
+                ? [matterDraftResult.draftId]
+                : conversationWorkingState.activeDraftIds,
+              activeResearchIssueIds: matterResearchResult?.issue.id
+                ? [matterResearchResult.issue.id]
+                : conversationWorkingState.activeResearchIssueIds,
             },
           }),
           conversationContextMetrics: conversationAskContext?.metrics ?? null,
@@ -3319,6 +3565,36 @@ export async function askNyayaAboutMatter(params: {
                       followUpCount: depositionPrepResult.analysis.followUpDiscovery.length,
                     }
                   : null,
+              }
+            : null,
+          // Oct 19–25 Phase 3 — research + draft structured results (no schema).
+          matterResearch: matterResearchResult
+            ? {
+                posture: matterResearchResult.posture,
+                issueId: matterResearchResult.issue.id,
+                issueLabel: matterResearchResult.issue.label,
+                authorityCount: matterResearchResult.authoritiesFound.length,
+                supportedCount: matterResearchResult.propositionsSupported.length,
+                unsupportedCount: matterResearchResult.propositionsNotSupported.length,
+                conflictCount: matterResearchResult.conflictingAuthorities.length,
+                gapCount: matterResearchResult.researchGaps.length,
+                sourceMap: matterResearchResult.sourceMap,
+                limitations: matterResearchResult.limitations,
+              }
+            : null,
+          matterDraft: matterDraftResult
+            ? {
+                posture: matterDraftResult.posture,
+                draftType: matterDraftResult.draftType,
+                draftId: matterDraftResult.draftId,
+                paragraphCount: matterDraftResult.paragraphs.length,
+                unsupportedRemoved: matterDraftResult.unsupportedRemoved.length,
+                hearingContinuity: matterDraftResult.hearingContinuity,
+                depositionContinuity: matterDraftResult.depositionContinuity,
+                researchArtifactId: matterDraftResult.researchArtifactId,
+                premiseChallenge: matterDraftResult.premiseChallenge,
+                sourceMap: matterDraftResult.sourceMap,
+                limitations: matterDraftResult.limitations,
               }
             : null,
           factualityContract: (() => {

@@ -23,6 +23,11 @@ import {
   isDepositionOutlineRequest,
   isDepositionPrepQuestion,
 } from "./conversational-deposition-prep";
+import {
+  isConversationalDraftQuestion,
+  isResearchToDraftRequest,
+  isResearchWorkflowQuestion,
+} from "./conversational-draft-research";
 
 export const CONVERSATIONAL_ACTION_CLASSES = [
   "READ_ONLY",
@@ -407,6 +412,34 @@ export function classifyConversationalAction(params: {
     };
   }
 
+  // Phase 3 — research→draft / grounded conversational draft → DRAFT_PREVIEW.
+  if (
+    isResearchToDraftRequest(q) ||
+    isConversationalDraftQuestion(q) ||
+    Boolean(params.referent?.draftIntentPreview?.requested)
+  ) {
+    if (
+      /\b(draft|write|revise|turn .+ into|factual background|argument section|research memo|make (it |this )?(stronger|more persuasive|shorter)|remove anything|rewrite paragraph|only use)\b/i.test(
+        q,
+      ) ||
+      Boolean(params.referent?.draftIntentPreview?.requested)
+    ) {
+      return {
+        actionType: "DRAFT_GENERATE_PREVIEW",
+        actionClass: "DRAFT_PREVIEW",
+        confirmationUtterance: false,
+        navigationKind: null,
+        draftRequested: true,
+        researchRequested: false,
+        compareRequested: false,
+        taskRequested: false,
+        memoryRequested: false,
+        prohibitedReason: null,
+        latencyMs: Math.max(0, Date.now() - started),
+      };
+    }
+  }
+
   const draftRequested =
     Boolean(params.referent?.draftIntentPreview?.requested) ||
     /\b(draft|write|turn this into|revise the draft)\b/i.test(q);
@@ -488,6 +521,7 @@ export function classifyConversationalAction(params: {
   }
 
   if (
+    isResearchWorkflowQuestion(q) ||
     /\b(research|controlling (case|authority|rule)|find (controlling )?cases|which (cases|authorities) support)\b/i.test(
       q,
     )

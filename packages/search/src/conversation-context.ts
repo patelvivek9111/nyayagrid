@@ -39,6 +39,10 @@ export type ConversationWorkingState = {
   activeTaskIds: string[];
   /** Person/entity targets for deposition and person-centric workflows (JSON working state only). */
   activePersonIds: string[];
+  /** Draft preview / saved draft IDs for multi-turn drafting continuity (JSON working state only). */
+  activeDraftIds: string[];
+  /** Research issue IDs (usually claim/motion) for research↔draft continuity. */
+  activeResearchIssueIds: string[];
   issueLabels: string[];
   unresolvedQuestions: string[];
   authorityStates: AuthorityStateSnapshot[];
@@ -86,6 +90,8 @@ export function emptyWorkingState(now = new Date()): ConversationWorkingState {
     activeSourceIds: [],
     activeTaskIds: [],
     activePersonIds: [],
+    activeDraftIds: [],
+    activeResearchIssueIds: [],
     issueLabels: [],
     unresolvedQuestions: [],
     authorityStates: [],
@@ -127,6 +133,8 @@ export function parseWorkingState(raw: unknown): ConversationWorkingState | null
     activeSourceIds: asStringArray(obj.activeSourceIds),
     activeTaskIds: asStringArray(obj.activeTaskIds),
     activePersonIds: asStringArray(obj.activePersonIds),
+    activeDraftIds: asStringArray(obj.activeDraftIds),
+    activeResearchIssueIds: asStringArray(obj.activeResearchIssueIds),
     issueLabels: asStringArray(obj.issueLabels),
     unresolvedQuestions: asStringArray(obj.unresolvedQuestions),
     authorityStates: Array.isArray(obj.authorityStates)
@@ -230,6 +238,11 @@ export function mergeWorkingStates(
     activeSourceIds: uniq([...(next.activeSourceIds ?? []), ...base.activeSourceIds]),
     activeTaskIds: uniq([...(next.activeTaskIds ?? []), ...base.activeTaskIds]),
     activePersonIds: uniq([...(next.activePersonIds ?? []), ...base.activePersonIds]),
+    activeDraftIds: uniq([...(next.activeDraftIds ?? []), ...base.activeDraftIds]),
+    activeResearchIssueIds: uniq([
+      ...(next.activeResearchIssueIds ?? []),
+      ...base.activeResearchIssueIds,
+    ]),
     issueLabels: uniq([...(next.issueLabels ?? []), ...base.issueLabels]),
     unresolvedQuestions: uniq([
       ...(next.unresolvedQuestions ?? []),
@@ -396,6 +409,8 @@ export function buildNextWorkingState(params: {
       | "activeCommunicationIds"
       | "activeTaskIds"
       | "activePersonIds"
+      | "activeDraftIds"
+      | "activeResearchIssueIds"
     >
   >;
 }): ConversationWorkingState {
