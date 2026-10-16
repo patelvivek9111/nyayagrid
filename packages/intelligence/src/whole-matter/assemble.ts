@@ -304,6 +304,19 @@ function buildInvestigateNext(params: {
       });
     }
   }
+  // Defense openGaps are already computed on DefenseCentricView — emit them (do not invent elements).
+  for (const defense of params.defenses) {
+    for (const gap of defense.openGaps.slice(0, 3)) {
+      push({
+        priority: "high",
+        title: `Close evidence gap on defense ${defense.label}`,
+        why: gap,
+        triggeredBy: [{ kind: "defense", id: defense.defenseId, label: defense.label }],
+        resolvesIf:
+          "Add source-backed evidence for the defense element or record that it remains unsupported after review.",
+      });
+    }
+  }
   for (const c of params.contradictions) {
     push({
       priority: "high",

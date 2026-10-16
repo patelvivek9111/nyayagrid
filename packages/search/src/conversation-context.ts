@@ -43,6 +43,8 @@ export type ConversationWorkingState = {
   activeDraftIds: string[];
   /** Research issue IDs (usually claim/motion) for research↔draft continuity. */
   activeResearchIssueIds: string[];
+  /** Bounded investigate-next gap IDs from last structured result (JSON working state only). */
+  activeInvestigateGapIds: string[];
   issueLabels: string[];
   unresolvedQuestions: string[];
   authorityStates: AuthorityStateSnapshot[];
@@ -92,6 +94,7 @@ export function emptyWorkingState(now = new Date()): ConversationWorkingState {
     activePersonIds: [],
     activeDraftIds: [],
     activeResearchIssueIds: [],
+    activeInvestigateGapIds: [],
     issueLabels: [],
     unresolvedQuestions: [],
     authorityStates: [],
@@ -135,6 +138,7 @@ export function parseWorkingState(raw: unknown): ConversationWorkingState | null
     activePersonIds: asStringArray(obj.activePersonIds),
     activeDraftIds: asStringArray(obj.activeDraftIds),
     activeResearchIssueIds: asStringArray(obj.activeResearchIssueIds),
+    activeInvestigateGapIds: asStringArray(obj.activeInvestigateGapIds),
     issueLabels: asStringArray(obj.issueLabels),
     unresolvedQuestions: asStringArray(obj.unresolvedQuestions),
     authorityStates: Array.isArray(obj.authorityStates)
@@ -243,6 +247,10 @@ export function mergeWorkingStates(
       ...(next.activeResearchIssueIds ?? []),
       ...base.activeResearchIssueIds,
     ]),
+    activeInvestigateGapIds: uniq([
+      ...(next.activeInvestigateGapIds ?? []),
+      ...base.activeInvestigateGapIds,
+    ]).slice(0, 16),
     issueLabels: uniq([...(next.issueLabels ?? []), ...base.issueLabels]),
     unresolvedQuestions: uniq([
       ...(next.unresolvedQuestions ?? []),
@@ -411,6 +419,7 @@ export function buildNextWorkingState(params: {
       | "activePersonIds"
       | "activeDraftIds"
       | "activeResearchIssueIds"
+      | "activeInvestigateGapIds"
     >
   >;
 }): ConversationWorkingState {

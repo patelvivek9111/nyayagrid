@@ -38,6 +38,19 @@ describe("Pass 7 whole-matter intelligence", () => {
     );
   });
 
+  it("emits defense openGaps into investigate-next (no invented elements)", () => {
+    const defense = wm.defenses.find((d) => d.defenseId === ids.defense);
+    expect(defense).toBeTruthy();
+    expect(defense!.openGaps.length).toBeGreaterThan(0);
+    expect(
+      wm.investigateNext.some(
+        (i) =>
+          i.triggeredBy.some((t) => t.kind === "defense" && t.id === ids.defense) ||
+          /defense/i.test(i.title),
+      ),
+    ).toBe(true);
+  });
+
   it("answers whole-matter Ask questions with abstention on unsupported predictions", () => {
     expect(isWholeMatterAskQuestion("Give me the complete status of this matter.")).toBe(true);
     expect(isWholeMatterAskQuestion("What motions are pending?")).toBe(false);

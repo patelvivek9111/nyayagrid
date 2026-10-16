@@ -10,3 +10,4 @@ export * from "./conversational-ux-payload";
 export * from "./conversational-hearing-prep";
 export * from "./conversational-deposition-prep";
 export * from "./conversational-draft-research";
+export * from "./conversational-investigate-next";

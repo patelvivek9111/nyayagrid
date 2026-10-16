@@ -30,6 +30,7 @@ import {
   collectPendingActionsFromValidations,
   createPendingActionRecord,
   executeConfirmedConversationalAction,
+  extractExplicitDueDate,
   formatActionPreviewAnswer,
   isCancelUtterance,
   validateActionConfirmation,
@@ -79,6 +80,26 @@ import {
   type DraftResult,
   type ResearchResult,
 } from "./conversational-draft-research";
+import {
+  buildInvestigateNextResult,
+  buildInvestigateTaskPreview,
+  candidatesFromDeposition,
+  candidatesFromDraft,
+  candidatesFromHearing,
+  candidatesFromResearch,
+  candidatesFromWholeMatter,
+  formatInvestigateNextAnswer,
+  formatInvestigateNextForPrompt,
+  isInvestigateNextFollowUp,
+  isInvestigateNextQuestion,
+  investigateNextForceDomains,
+  parsePriorInvestigateGaps,
+  resolveInvestigateGapReferent,
+  toInvestigateNextValidationSnapshot,
+  type ConversationalGap,
+  type InvestigateCandidateInput,
+  type InvestigateNextResult,
+} from "./conversational-investigate-next";
 import {
   assessNeedMoreDocuments,
   assessRetrievedEvidence,
@@ -1577,11 +1598,78 @@ export async function askNyayaAboutMatter(params: {
     }
 
     if (workflowClassification.actionType === "TASK_CREATE") {
-      const preview = buildTaskPreview({
-        question: params.question,
-        matterId: params.matterId,
-        workingState: conversationWorkingState,
-      });
+      // Oct 19–25 Phase 4 — task from investigate-next gap (#N) when prior snapshot exists.
+      let gapTaskPreview: ReturnType<typeof buildInvestigateTaskPreview> | null = null;
+      if (/\bturn #?\d+ into a task\b/i.test(params.question) || /#\d+/.test(params.question)) {
+        try {
+          const recentForGaps = await params.db
+            .select({ validation: aiArtifacts.validation })
+            .from(aiArtifacts)
+            .where(
+              and(
+                eq(aiArtifacts.organizationId, params.organizationId),
+                eq(aiArtifacts.matterId, params.matterId),
+                eq(aiArtifacts.conversationId, conversationIdForWorkflow),
+              ),
+            )
+            .orderBy(desc(aiArtifacts.createdAt))
+            .limit(8);
+          let priorGaps: ConversationalGap[] = [];
+          for (const row of recentForGaps) {
+            const v =
+              row.validation && typeof row.validation === "object"
+                ? (row.validation as Record<string, unknown>)
+                : {};
+            priorGaps = parsePriorInvestigateGaps(v.investigateNext);
+            if (priorGaps.length) break;
+          }
+          const resolved = resolveInvestigateGapReferent({
+            question: params.question,
+            priorGaps,
+          });
+          if (resolved.status === "RESOLVED") {
+            gapTaskPreview = buildInvestigateTaskPreview({
+              gap: resolved.gap,
+              matterId: params.matterId,
+              question: params.question,
+              explicitDueAt: extractExplicitDueDate(params.question),
+            });
+          } else if (resolved.status === "AMBIGUOUS") {
+            return await finishWorkflowAnswer({
+              answer: resolved.clarificationPrompt,
+              action: createPendingActionRecord({
+                actionType: "TASK_CREATE",
+                actionClass: "WRITE_CONFIRMATION_REQUIRED",
+                conversationId: conversationIdForWorkflow,
+                organizationId: params.organizationId,
+                matterId: params.matterId,
+                workingState: conversationWorkingState,
+                previewPayload: { ambiguous: true, candidates: resolved.candidates.map((c) => c.id) },
+                classificationLatencyMs: workflowClassification.latencyMs,
+              }),
+            });
+          }
+        } catch {
+          gapTaskPreview = null;
+        }
+      }
+      const preview = gapTaskPreview
+        ? {
+            title: gapTaskPreview.title,
+            description: `${gapTaskPreview.whyItMatters}\n\nNext: ${gapTaskPreview.description}`,
+            linkedEntityIds: gapTaskPreview.relatedEntityIds,
+            linkedSourceIds: gapTaskPreview.linkedSourceIds,
+            proposedDueAt: gapTaskPreview.proposedDueAt,
+            assigneeUserId: null as string | null,
+            matterId: params.matterId,
+            gapId: gapTaskPreview.gapId,
+            gapType: gapTaskPreview.gapType,
+          }
+        : buildTaskPreview({
+            question: params.question,
+            matterId: params.matterId,
+            workingState: conversationWorkingState,
+          });
       let action = createPendingActionRecord({
         actionType: "TASK_CREATE",
         actionClass: "WRITE_CONFIRMATION_REQUIRED",
@@ -1716,6 +1804,11 @@ export async function askNyayaAboutMatter(params: {
       isResearchToDraftRequest(params.question) ||
       isDraftToResearchRequest(params.question);
     const draftResearchDomains = draftResearchIntent ? draftResearchForceDomains() : [];
+    const investigateNextIntent =
+      isInvestigateNextQuestion(params.question) ||
+      (isInvestigateNextFollowUp(params.question) &&
+        conversationWorkingState.activeInvestigateGapIds.length > 0);
+    const investigateNextDomains = investigateNextIntent ? investigateNextForceDomains() : [];
     routerPlan = planConversationalContext({
       question: referentResolution.routingQuestion || params.question,
       workspaceType: params.workspaceType,
@@ -1726,6 +1819,7 @@ export async function askNyayaAboutMatter(params: {
         ...hearingPrepDomains,
         ...depositionPrepDomains,
         ...draftResearchDomains,
+        ...investigateNextDomains,
       ],
     });
     if (referentResolution.diagnostics) {
@@ -2321,19 +2415,205 @@ export async function askNyayaAboutMatter(params: {
     }
 
     let wholeMatterContextText: string | null = null;
-    if (routerPlan.loaders.wholeMatter) {
+    let wholeMatterForInvestigate: Awaited<ReturnType<typeof loadWholeMatterIntelligence>> | null =
+      null;
+    if (routerPlan.loaders.wholeMatter || investigateNextIntent) {
       try {
         const wholeMatter = await loadWholeMatterIntelligence(params.db, {
           userId: params.userId,
           organizationId: params.organizationId,
           matterId: params.matterId,
         });
+        wholeMatterForInvestigate = wholeMatter;
         wholeMatterContextText = buildWholeMatterAskContextBlock({
           question: params.question,
           intelligence: wholeMatter,
         });
       } catch {
         wholeMatterContextText = null;
+        wholeMatterForInvestigate = null;
+      }
+    }
+
+    // Oct 19–25 Phase 4 — deterministic investigate-next unification (no schema / no CL).
+    let investigateNextResult: InvestigateNextResult | null = null;
+    let investigateNextContextText: string | null = null;
+    if (investigateNextIntent) {
+      let priorGaps: ConversationalGap[] = [];
+      try {
+        if (conversationId) {
+          const recentForGaps = await params.db
+            .select({ validation: aiArtifacts.validation })
+            .from(aiArtifacts)
+            .where(
+              and(
+                eq(aiArtifacts.organizationId, params.organizationId),
+                eq(aiArtifacts.matterId, params.matterId),
+                eq(aiArtifacts.conversationId, conversationId),
+              ),
+            )
+            .orderBy(desc(aiArtifacts.createdAt))
+            .limit(8);
+          for (const row of recentForGaps) {
+            const v =
+              row.validation && typeof row.validation === "object"
+                ? (row.validation as Record<string, unknown>)
+                : {};
+            priorGaps = parsePriorInvestigateGaps(v.investigateNext);
+            if (priorGaps.length) break;
+          }
+        }
+      } catch {
+        priorGaps = [];
+      }
+
+      const referentFollowUp =
+        isInvestigateNextFollowUp(params.question) &&
+        (/\b#\d+\b/.test(params.question) ||
+          /\b(the|that) (missing attachment|timeline issue|authority gap|discovery)/i.test(
+            params.question,
+          )) &&
+        !/\bturn #?\d+ into a task\b/i.test(params.question);
+
+      if (referentFollowUp) {
+        const resolved = resolveInvestigateGapReferent({
+          question: params.question,
+          priorGaps,
+        });
+        if (resolved.status === "AMBIGUOUS") {
+          investigateNextResult = {
+            posture: "AMBIGUOUS_REFERENT",
+            scope: `matter:${params.matterId}`,
+            gaps: resolved.candidates,
+            candidateCount: resolved.candidates.length,
+            dedupedCount: resolved.candidates.length,
+            returnedCount: resolved.candidates.length,
+            domainsConsidered: [],
+            filters: {
+              topN: null,
+              priorityOnly: null,
+              domains: [],
+              personIds: [],
+              motionIds: [],
+              claimIds: [],
+              issueLabels: [],
+              ignoreAuthority: false,
+              missingDocumentsOnly: false,
+              twoHourConstraint: false,
+            },
+            changeSet: null,
+            sourceMap: resolved.candidates.flatMap((g) => g.sourceMap),
+            limitations: ["NO_AUTO_PICK — ambiguous gap referent."],
+            genericChecklistLeakage: 0,
+            inventedUrgency: 0,
+          };
+          investigateNextContextText = resolved.clarificationPrompt;
+        } else if (resolved.status === "RESOLVED") {
+          investigateNextResult = buildInvestigateNextResult({
+            question: params.question,
+            matterId: params.matterId,
+            candidates: [
+              {
+                title: resolved.gap.title,
+                why: resolved.gap.whyItMatters,
+                resolvesIf: resolved.gap.recommendedNextStep,
+                gapType: resolved.gap.gapType,
+                domain: resolved.gap.relatedDomain,
+                relatedEntityIds: resolved.gap.relatedEntityIds,
+                sourceRefs: resolved.gap.sourceMap,
+                priority: resolved.gap.priority,
+                priorityRationale: resolved.gap.priorityRationale,
+                impact: resolved.gap.impact,
+                effort: resolved.gap.effort,
+              },
+            ],
+            priorGaps,
+          });
+          investigateNextContextText = /\bsources?\b/i.test(params.question)
+            ? `GAP ${resolved.gap.id} SOURCES:\n${
+                resolved.gap.sourceMap
+                  .map((s) => `- ${s.kind}:${s.id} ${s.label ?? ""}`)
+                  .join("\n") || "(none)"
+              }\nWHY_HIGH=${resolved.gap.priorityRationale}`
+            : formatInvestigateNextAnswer(investigateNextResult);
+        } else {
+          investigateNextContextText = resolved.clarificationPrompt;
+          investigateNextResult = {
+            posture: "FILTERED_EMPTY",
+            scope: `matter:${params.matterId}`,
+            gaps: [],
+            candidateCount: 0,
+            dedupedCount: 0,
+            returnedCount: 0,
+            domainsConsidered: [],
+            filters: {
+              topN: null,
+              priorityOnly: null,
+              domains: [],
+              personIds: [],
+              motionIds: [],
+              claimIds: [],
+              issueLabels: [],
+              ignoreAuthority: false,
+              missingDocumentsOnly: false,
+              twoHourConstraint: false,
+            },
+            changeSet: null,
+            sourceMap: [],
+            limitations: [resolved.clarificationPrompt],
+            genericChecklistLeakage: 0,
+            inventedUrgency: 0,
+          };
+        }
+      } else {
+        const candidates: InvestigateCandidateInput[] = [];
+        if (wholeMatterForInvestigate) {
+          candidates.push(...candidatesFromWholeMatter(wholeMatterForInvestigate));
+        }
+        if (hearingPrepResult?.investigateBeforeHearing?.length) {
+          candidates.push(...candidatesFromHearing(hearingPrepResult.investigateBeforeHearing));
+        }
+        if (depositionPrepResult?.investigateBeforeDeposition?.length) {
+          candidates.push(
+            ...candidatesFromDeposition(
+              depositionPrepResult.investigateBeforeDeposition as Array<{
+                id?: string;
+                whyThisGapMatters?: string;
+                whatToLookFor?: string;
+                relatedEntityIds?: string[];
+                sources?: Array<{ kind: string; id: string; label?: string }>;
+                priority?: "high" | "medium" | "low";
+              }>,
+            ),
+          );
+        }
+        if (matterResearchResult?.investigateNext?.length) {
+          candidates.push(...candidatesFromResearch(matterResearchResult.investigateNext));
+        }
+        if (matterDraftResult) {
+          candidates.push(
+            ...candidatesFromDraft({
+              unsupportedRemoved: matterDraftResult.unsupportedRemoved,
+              paragraphs: matterDraftResult.paragraphs,
+            }),
+          );
+        }
+        investigateNextResult = buildInvestigateNextResult({
+          question: params.question,
+          matterId: params.matterId,
+          candidates,
+          priorGaps,
+          personIds: conversationWorkingState.activePersonIds,
+          motionIds: conversationWorkingState.activeMotionIds,
+          claimIds: conversationWorkingState.activeClaimIds,
+        });
+        investigateNextContextText = formatInvestigateNextForPrompt(investigateNextResult);
+        if (investigateNextResult.gaps.length) {
+          conversationWorkingState = {
+            ...conversationWorkingState,
+            activeInvestigateGapIds: investigateNextResult.gaps.map((g) => g.id),
+          };
+        }
       }
     }
 
@@ -2350,6 +2630,7 @@ export async function askNyayaAboutMatter(params: {
       matterResearchContextText,
       matterDraftContextText,
       wholeMatterContextText,
+      investigateNextContextText,
     );
 
     if (authority) {
@@ -2444,6 +2725,7 @@ export async function askNyayaAboutMatter(params: {
         matterResearchContextText,
         matterDraftContextText,
         wholeMatterContextText,
+        investigateNextContextText,
         formatReferentResolutionForPrompt(referentResolution),
       );
       if (routerPlan) {
@@ -2462,6 +2744,7 @@ export async function askNyayaAboutMatter(params: {
                 matterResearchContextText,
                 matterDraftContextText,
                 wholeMatterContextText,
+                investigateNextContextText,
               ]
                 .filter(Boolean)
                 .join("").length,
@@ -2482,8 +2765,119 @@ export async function askNyayaAboutMatter(params: {
         matterResearchContextText,
         matterDraftContextText,
         wholeMatterContextText,
+        investigateNextContextText,
         formatReferentResolutionForPrompt(referentResolution),
       );
+    }
+
+    // Fail closed on ambiguous investigate-next gap referents (NO_AUTO_PICK).
+    if (investigateNextResult?.posture === "AMBIGUOUS_REFERENT" && investigateNextContextText) {
+      const clarify = investigateNextContextText;
+      if (!isContinue) {
+        await params.db.insert(messages).values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          conversationId: conversationIdResolved,
+          role: "user",
+          content: params.question,
+          createdByUserId: params.userId,
+        });
+      }
+      const [assistantMessage] = await params.db
+        .insert(messages)
+        .values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          conversationId: conversationIdResolved,
+          role: "assistant",
+          content: clarify,
+          createdByUserId: params.userId,
+        })
+        .returning();
+      const [artifact] = await params.db
+        .insert(aiArtifacts)
+        .values({
+          organizationId: params.organizationId,
+          matterId: params.matterId,
+          conversationId: conversationIdResolved,
+          messageId: assistantMessage!.id,
+          artifactType: "matter_qa",
+          question: params.question,
+          answer: clarify,
+          evidenceState: "insufficient",
+          provider: "nyaya_investigate_next",
+          model: "deterministic",
+          promptVersion: NYAYA_PROMPT_VERSION,
+          retrievedChunkIds: [],
+          citations: [],
+          validation: {
+            completionStatus: "completed",
+            premiseCheck: null,
+            selectedDomains: routerPlan?.selectedDomains ?? [],
+            investigateNext: toInvestigateNextValidationSnapshot(investigateNextResult),
+            conversationWorkingState,
+            assertionReady: true,
+          },
+          createdByUserId: params.userId,
+        })
+        .returning();
+      const clarifyProvenance = buildProvenanceSummary({
+        sourceScope,
+        caseSourceCount: 0,
+        webSourceCount: 0,
+        authoritySourceCount: 0,
+      });
+      emit({ type: "text_delta", text: clarify, at: nowIso() });
+      emit({
+        type: "generation_completed",
+        answer: clarify,
+        conversationId: conversationIdResolved,
+        artifactId: artifact?.id,
+        messageId: assistantMessage?.id,
+        status: "completed",
+        provenance: clarifyProvenance,
+        ux: {
+          turnKind: "ambiguity",
+          ambiguity: {
+            prompt: "Which investigation gap should I focus on?",
+            choices: investigateNextResult.gaps.slice(0, 6).map((g) => ({
+              label: `${g.id} ${g.title}`.slice(0, 120),
+              entityType: "investigate_gap",
+            })),
+          },
+        },
+        at: nowIso(),
+      });
+      return {
+        conversationId: conversationIdResolved,
+        artifact,
+        answer: {
+          answer: clarify,
+          sources: [],
+          assumptions: ["Ambiguous investigate-next gap referent — NO_AUTO_PICK."],
+          unresolvedQuestions: ["Which investigation gap should I focus on?"],
+          evidenceState: "insufficient" as const,
+        },
+        retrieved: passages,
+        provenance: clarifyProvenance,
+        sourceScope,
+        usageActionId,
+        needsMoreDocuments: false,
+        needMoreDocumentReasons: [],
+        usedFollowUpRetrieval: false,
+        usedVerifiedIntelligence: false,
+        usedGraph: false,
+        usedMemory: false,
+        usedProfessionalAnalysis: false,
+        usedLegalAuthority: false,
+        usedWeek4CombinedContext: false,
+        week4StructuredContext: null,
+        doctrineQuestion: false,
+        authorityResearchMissing: false,
+        authorityWarnings: [],
+        authorityValidation: null,
+        timings: { ...timings, totalMs: Date.now() - startedAsk },
+      };
     }
 
     // Fail closed on ambiguous referents — do not guess; return clarification.
@@ -3282,6 +3676,7 @@ export async function askNyayaAboutMatter(params: {
         matterDraftResult?.previewText ??
         hearingDraftText ??
         depositionPrepResult?.outlinePreview ??
+        (investigateNextResult ? formatInvestigateNextAnswer(investigateNextResult) : null) ??
         null;
       const draftPreview = buildDraftPreview({
         question: params.question,
@@ -3373,6 +3768,17 @@ export async function askNyayaAboutMatter(params: {
       validated.answer.assumptions.push(
         "Authority treatment remains NOT VERIFIED unless treatmentVerified=true on the matter record. Research artifact save requires confirmation.",
       );
+    }
+
+    // Prefer deterministic Phase 4 investigate-next record over model prose.
+    if (investigateNextResult && investigateNextIntent) {
+      validated.answer.answer = formatInvestigateNextAnswer(investigateNextResult);
+      validated.answer.assumptions.push(
+        "Investigate-next recommendations are record-derived gaps only; no generic checklist and no invented urgency.",
+      );
+      if (investigateNextResult.posture === "NO_MATERIAL_GAP") {
+        validated.answer.evidenceState = "insufficient";
+      }
     }
 
     // Progressive render of the FINAL validated answer (not pre-validation draft tokens).
@@ -3500,6 +3906,9 @@ export async function askNyayaAboutMatter(params: {
               activeResearchIssueIds: matterResearchResult?.issue.id
                 ? [matterResearchResult.issue.id]
                 : conversationWorkingState.activeResearchIssueIds,
+              activeInvestigateGapIds: investigateNextResult?.gaps.length
+                ? investigateNextResult.gaps.map((g) => g.id)
+                : conversationWorkingState.activeInvestigateGapIds,
             },
           }),
           conversationContextMetrics: conversationAskContext?.metrics ?? null,
@@ -3596,6 +4005,10 @@ export async function askNyayaAboutMatter(params: {
                 sourceMap: matterDraftResult.sourceMap,
                 limitations: matterDraftResult.limitations,
               }
+            : null,
+          // Oct 19–25 Phase 4 — investigate-next structured snapshot (no schema).
+          investigateNext: investigateNextResult
+            ? toInvestigateNextValidationSnapshot(investigateNextResult)
             : null,
           factualityContract: (() => {
             const allowed = validated.answer.sources

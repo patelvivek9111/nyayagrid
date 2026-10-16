@@ -302,8 +302,9 @@ export function classifyConversationalAction(params: {
 
   if (
     /\b(create|add|make)\b.+\btask\b/i.test(q) ||
+    /\bturn #?\d+ into a task\b/i.test(q) ||
     /\bremind the team\b/i.test(q) ||
-    /\bfollow up on\b/i.test(q) && /\btask\b/i.test(q)
+    (/\bfollow up on\b/i.test(q) && /\btask\b/i.test(q))
   ) {
     return {
       actionType: "TASK_CREATE",
