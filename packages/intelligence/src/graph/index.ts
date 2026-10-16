@@ -1,4 +1,4 @@
-import { and, eq, inArray, or } from "@nyayagrid/database";
+import { and, asc, eq, inArray, or, sql } from "@nyayagrid/database";
 import type { Database } from "@nyayagrid/database";
 import {
   graphNodes,
@@ -20,6 +20,36 @@ import { checkpointCreatedLegalWork, trackLiveChange } from "../recovery";
 import { loadAuthorizedChunks, resolveValidatedSources } from "../provenance";
 import { upsertGraphEdge } from "./materialize";
 import { attorneyBadgeKind } from "../review-status";
+import {
+  GRAPH_EXTRACT_CHUNK_CANDIDATE_SOFT_CAP,
+  GRAPH_EXTRACT_CHUNK_CAP,
+  GRAPH_EXTRACT_NODE_CAP,
+  GraphFocusRejectedError,
+  buildGraphExtractionCoverage,
+  degreeMapFromEdges,
+  neighborhoodIdsFromFocus,
+  preferredDocumentIdsFromNodes,
+  selectChunksForGraphExtraction,
+  selectNodesForGraphExtraction,
+  type GraphExtractionCoverage,
+  type GraphSelectionMode,
+  type SelectableChunk,
+  type SelectableGraphNode,
+} from "./selection";
+
+export {
+  GRAPH_EXTRACT_CHUNK_CANDIDATE_SOFT_CAP,
+  GRAPH_EXTRACT_CHUNK_CAP,
+  GRAPH_EXTRACT_MAX_CHUNKS_PER_DOC,
+  GRAPH_EXTRACT_NODE_CAP,
+  GraphFocusRejectedError,
+  buildGraphExtractionCoverage,
+  selectChunksForGraphExtraction,
+  selectNodesForGraphExtraction,
+  scoreGraphNodeForExtraction,
+  type GraphExtractionCoverage,
+  type GraphSelectionMode,
+} from "./selection";
 
 export async function extractGraphRelationshipCandidates(params: {
   db: Database;
@@ -27,8 +57,10 @@ export async function extractGraphRelationshipCandidates(params: {
   matterId: string;
   userId?: string | null;
   ai?: AIProvider;
+  /** Optional focus node for FOCUSED extraction. Foreign IDs are rejected. */
+  focusNodeId?: string | null;
 }) {
-  const nodes = await params.db
+  const eligibleNodes = await params.db
     .select()
     .from(graphNodes)
     .where(
@@ -37,19 +69,223 @@ export async function extractGraphRelationshipCandidates(params: {
         eq(graphNodes.matterId, params.matterId),
         inArray(graphNodes.status, ["approved", "edited_and_approved"]),
       ),
-    )
-    .limit(40);
+    );
 
-  const chunks = await params.db
-    .select()
+  let selectionMode: GraphSelectionMode = "WHOLE_MATTER";
+  let focusNodeId: string | null = null;
+  let neighborhoodIds: Set<string> | undefined;
+
+  if (params.focusNodeId) {
+    const [focusRow] = await params.db
+      .select({
+        id: graphNodes.id,
+        organizationId: graphNodes.organizationId,
+        matterId: graphNodes.matterId,
+        status: graphNodes.status,
+      })
+      .from(graphNodes)
+      .where(eq(graphNodes.id, params.focusNodeId))
+      .limit(1);
+
+    if (!focusRow) {
+      // Missing/deleted focus: safe fallback to whole-matter.
+      selectionMode = "WHOLE_MATTER";
+      focusNodeId = null;
+    } else if (
+      focusRow.organizationId !== params.organizationId ||
+      focusRow.matterId !== params.matterId
+    ) {
+      throw new GraphFocusRejectedError("Focus node is not in this matter");
+    } else if (
+      focusRow.status === "approved" ||
+      focusRow.status === "edited_and_approved"
+    ) {
+      selectionMode = "FOCUSED";
+      focusNodeId = focusRow.id;
+    } else {
+      // Focus exists in matter but is not eligible for extraction — safe fallback.
+      selectionMode = "WHOLE_MATTER";
+      focusNodeId = null;
+    }
+  }
+
+  const edgeRows = await params.db
+    .select({
+      fromNodeId: graphEdges.fromNodeId,
+      toNodeId: graphEdges.toNodeId,
+    })
+    .from(graphEdges)
+    .where(
+      and(
+        eq(graphEdges.organizationId, params.organizationId),
+        eq(graphEdges.matterId, params.matterId),
+        inArray(graphEdges.status, ["approved", "edited_and_approved", "proposed"]),
+      ),
+    );
+
+  const degreeByNodeId = degreeMapFromEdges(edgeRows);
+  if (focusNodeId) {
+    neighborhoodIds = neighborhoodIdsFromFocus(focusNodeId, edgeRows);
+  }
+
+  // Batched source-support counts for connectivity (one query, not per-node).
+  const sourceSupportByNodeId = new Map<string, number>();
+  if (edgeRows.length > 0) {
+    const supportRows = await params.db
+      .select({
+        fromNodeId: graphEdges.fromNodeId,
+        toNodeId: graphEdges.toNodeId,
+        sourceCount: sql<number>`count(${graphEdgeSources.id})::int`,
+      })
+      .from(graphEdges)
+      .leftJoin(graphEdgeSources, eq(graphEdgeSources.graphEdgeId, graphEdges.id))
+      .where(
+        and(
+          eq(graphEdges.organizationId, params.organizationId),
+          eq(graphEdges.matterId, params.matterId),
+        ),
+      )
+      .groupBy(graphEdges.fromNodeId, graphEdges.toNodeId);
+
+    for (const row of supportRows) {
+      const n = Number(row.sourceCount) || 0;
+      if (n <= 0) continue;
+      sourceSupportByNodeId.set(
+        row.fromNodeId,
+        (sourceSupportByNodeId.get(row.fromNodeId) ?? 0) + n,
+      );
+      sourceSupportByNodeId.set(
+        row.toNodeId,
+        (sourceSupportByNodeId.get(row.toNodeId) ?? 0) + n,
+      );
+    }
+  }
+
+  const selectableCandidates: SelectableGraphNode[] = eligibleNodes.map((n) => ({
+    id: n.id,
+    nodeType: n.nodeType,
+    displayName: n.displayName,
+    canonicalEntityType: n.canonicalEntityType,
+    canonicalEntityId: n.canonicalEntityId,
+  }));
+
+  const selectedNodeRefs = selectNodesForGraphExtraction({
+    candidates: selectableCandidates,
+    cap: GRAPH_EXTRACT_NODE_CAP,
+    selectionMode,
+    focusNodeId,
+    neighborhoodIds,
+    degreeByNodeId,
+    sourceSupportByNodeId,
+  });
+  const selectedNodeIdSet = new Set(selectedNodeRefs.map((n) => n.id));
+  const nodes = eligibleNodes.filter((n) => selectedNodeIdSet.has(n.id));
+
+  const preferredDocIds = preferredDocumentIdsFromNodes(selectedNodeRefs);
+
+  // Batched: documents that already source edges touching selected nodes.
+  if (selectedNodeRefs.length > 0) {
+    const linkedSourceDocs = await params.db
+      .selectDistinct({ documentId: graphEdgeSources.documentId })
+      .from(graphEdgeSources)
+      .innerJoin(graphEdges, eq(graphEdges.id, graphEdgeSources.graphEdgeId))
+      .where(
+        and(
+          eq(graphEdgeSources.organizationId, params.organizationId),
+          eq(graphEdgeSources.matterId, params.matterId),
+          or(
+            inArray(graphEdges.fromNodeId, [...selectedNodeIdSet]),
+            inArray(graphEdges.toNodeId, [...selectedNodeIdSet]),
+          ),
+        ),
+      );
+    for (const row of linkedSourceDocs) {
+      preferredDocIds.add(row.documentId);
+    }
+  }
+
+  const [chunkCountRow] = await params.db
+    .select({ count: sql<number>`count(*)::int` })
     .from(documentChunks)
     .where(
       and(
         eq(documentChunks.organizationId, params.organizationId),
         eq(documentChunks.matterId, params.matterId),
       ),
-    )
-    .limit(24);
+    );
+  const candidateChunkCount = Number(chunkCountRow?.count) || 0;
+
+  // Bounded candidate pull: prefer preferred docs, else soft-capped whole-matter scan.
+  let chunkCandidatesRaw: Array<{
+    id: string;
+    documentId: string;
+    chunkIndex: number;
+    content: string;
+  }> = [];
+
+  const preferredList = [...preferredDocIds];
+  if (preferredList.length > 0) {
+    chunkCandidatesRaw = await params.db
+      .select({
+        id: documentChunks.id,
+        documentId: documentChunks.documentId,
+        chunkIndex: documentChunks.chunkIndex,
+        content: documentChunks.content,
+      })
+      .from(documentChunks)
+      .where(
+        and(
+          eq(documentChunks.organizationId, params.organizationId),
+          eq(documentChunks.matterId, params.matterId),
+          inArray(documentChunks.documentId, preferredList),
+        ),
+      )
+      .orderBy(asc(documentChunks.documentId), asc(documentChunks.chunkIndex))
+      .limit(GRAPH_EXTRACT_CHUNK_CANDIDATE_SOFT_CAP);
+  }
+
+  if (chunkCandidatesRaw.length < GRAPH_EXTRACT_CHUNK_CAP) {
+    const extra = await params.db
+      .select({
+        id: documentChunks.id,
+        documentId: documentChunks.documentId,
+        chunkIndex: documentChunks.chunkIndex,
+        content: documentChunks.content,
+      })
+      .from(documentChunks)
+      .where(
+        and(
+          eq(documentChunks.organizationId, params.organizationId),
+          eq(documentChunks.matterId, params.matterId),
+        ),
+      )
+      .orderBy(asc(documentChunks.documentId), asc(documentChunks.chunkIndex))
+      .limit(GRAPH_EXTRACT_CHUNK_CANDIDATE_SOFT_CAP);
+    const seen = new Set(chunkCandidatesRaw.map((c) => c.id));
+    for (const row of extra) {
+      if (seen.has(row.id)) continue;
+      chunkCandidatesRaw.push(row);
+      seen.add(row.id);
+      if (chunkCandidatesRaw.length >= GRAPH_EXTRACT_CHUNK_CANDIDATE_SOFT_CAP) break;
+    }
+  }
+
+  const selectableChunks: SelectableChunk[] = chunkCandidatesRaw;
+  const selectedChunks = selectChunksForGraphExtraction({
+    candidates: selectableChunks,
+    preferredDocumentIds: preferredDocIds,
+    cap: GRAPH_EXTRACT_CHUNK_CAP,
+  });
+  const chunks = selectedChunks;
+
+  const coverage = buildGraphExtractionCoverage({
+    candidateNodes: eligibleNodes.length,
+    selectedNodes: nodes.length,
+    candidateChunks: candidateChunkCount,
+    selectedChunks: chunks.length,
+    selectionMode,
+    domainsRepresented: [...new Set(nodes.map((n) => n.nodeType))],
+  });
 
   const nodeRefs = nodes.map((n) => ({
     canonicalEntityType: n.canonicalEntityType,
@@ -66,7 +302,13 @@ export async function extractGraphRelationshipCandidates(params: {
       action: "graph.relationships_extracted",
       targetType: "matter",
       targetId: params.matterId,
-      metadata: { proposed: 0, merged: 0, rejected: 0, skipped: "no_verified_nodes" },
+      metadata: {
+        proposed: 0,
+        merged: 0,
+        rejected: 0,
+        skipped: "no_verified_nodes",
+        coverage,
+      },
     });
     return {
       proposed: 0,
@@ -75,6 +317,7 @@ export async function extractGraphRelationshipCandidates(params: {
       provider: "none",
       model: "none",
       skipped: "no_verified_nodes" as const,
+      coverage,
     };
   }
 
@@ -172,7 +415,14 @@ export async function extractGraphRelationshipCandidates(params: {
     action: "graph.relationships_extracted",
     targetType: "matter",
     targetId: params.matterId,
-    metadata: { proposed, merged, rejected, provider: generation.provider },
+    metadata: {
+      proposed,
+      merged,
+      rejected,
+      provider: generation.provider,
+      coverage,
+      focusNodeId,
+    },
   });
 
   if (params.userId && proposedEdgeIds.length > 0) {
@@ -190,7 +440,14 @@ export async function extractGraphRelationshipCandidates(params: {
     });
   }
 
-  return { proposed, merged, rejected, provider: generation.provider, model: generation.model };
+  return {
+    proposed,
+    merged,
+    rejected,
+    provider: generation.provider,
+    model: generation.model,
+    coverage,
+  };
 }
 
 export async function reviewGraphEdge(params: {

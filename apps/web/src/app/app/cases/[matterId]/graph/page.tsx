@@ -141,6 +141,7 @@ export default function CaseGraphPage() {
   const [editRelationship, setEditRelationship] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [drawerItems, setDrawerItems] = useState<SourceDrawerItem[]>([]);
+  const [coverageNotice, setCoverageNotice] = useState<string | null>(null);
 
   async function load() {
     const qs = new URLSearchParams();
@@ -255,9 +256,32 @@ export default function CaseGraphPage() {
   async function extractRelationships() {
     setBusy(true);
     setError("");
+    setCoverageNotice(null);
     try {
-      const res = await fetch(`/api/v1/matters/${matterId}/graph/extract`, { method: "POST" });
-      if (!res.ok) throw new Error("We couldn't suggest connections. Try again.");
+      const res = await fetch(`/api/v1/matters/${matterId}/graph/extract`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(selected?.id ? { focusNodeId: selected.id } : {}),
+      });
+      if (!res.ok) {
+        const body = (await res.json().catch(() => null)) as
+          | { error?: { code?: string; message?: string } }
+          | null;
+        if (body?.error?.code === "GRAPH_FOCUS_REJECTED") {
+          throw new Error("That focus is not part of this matter.");
+        }
+        throw new Error("We couldn't suggest connections. Try again.");
+      }
+      const json = (await res.json()) as {
+        coverage?: { coverageLimited?: boolean; truncated?: boolean };
+      };
+      if (json.coverage?.coverageLimited || json.coverage?.truncated) {
+        setCoverageNotice(
+          "Suggested connections were generated from a relevance-ranked bounded subset of this matter.",
+        );
+      } else {
+        setCoverageNotice(null);
+      }
       const { nextProposed } = await load();
       if (nextProposed[0]) setSelectedProposed(nextProposed[0]);
     } catch (err) {
@@ -371,6 +395,15 @@ export default function CaseGraphPage() {
         }
       />
       {error ? <ErrorState message={error} /> : null}
+      {coverageNotice ? (
+        <p
+          className="rounded-md border border-amber-200/80 bg-amber-50 px-3 py-2 text-sm text-amber-950"
+          role="status"
+          data-testid="graph-coverage-notice"
+        >
+          {coverageNotice}
+        </p>
+      ) : null}
       <FilterChipBar
         value={nodeFilter}
         onChange={(id) => setNodeFilter(id as NodeFilter)}
