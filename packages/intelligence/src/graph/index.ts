@@ -285,6 +285,8 @@ export async function extractGraphRelationshipCandidates(params: {
     selectedChunks: chunks.length,
     selectionMode,
     domainsRepresented: [...new Set(nodes.map((n) => n.nodeType))],
+    selectedNodeIds: selectedNodeRefs.map((n) => n.id),
+    selectedChunkIds: chunks.map((c) => c.id),
   });
 
   const nodeRefs = nodes.map((n) => ({

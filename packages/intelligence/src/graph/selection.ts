@@ -23,6 +23,10 @@ export type GraphExtractionCoverage = {
   omittedChunkCount: number;
   domainsRepresented: string[];
   selectionBasis: "relevance_ranked_bounded";
+  /** Deterministic ordered IDs of nodes sent to the model. */
+  selectedNodeIds: string[];
+  /** Deterministic ordered IDs of chunks sent to the model. */
+  selectedChunkIds: string[];
 };
 
 export type SelectableGraphNode = {
@@ -270,6 +274,8 @@ export function buildGraphExtractionCoverage(params: {
   selectedChunks: number;
   selectionMode: GraphSelectionMode;
   domainsRepresented: string[];
+  selectedNodeIds: string[];
+  selectedChunkIds: string[];
 }): GraphExtractionCoverage {
   const omittedNodeCount = Math.max(0, params.candidateNodes - params.selectedNodes);
   const omittedChunkCount = Math.max(0, params.candidateChunks - params.selectedChunks);
@@ -286,6 +292,8 @@ export function buildGraphExtractionCoverage(params: {
     omittedChunkCount,
     domainsRepresented: [...params.domainsRepresented].sort((a, b) => a.localeCompare(b)),
     selectionBasis: "relevance_ranked_bounded",
+    selectedNodeIds: [...params.selectedNodeIds],
+    selectedChunkIds: [...params.selectedChunkIds],
   };
 }
 

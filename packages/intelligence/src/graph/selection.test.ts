@@ -73,11 +73,15 @@ describe("graph extraction selection", () => {
       selectedChunks: selectedChunks.length,
       selectionMode: "WHOLE_MATTER",
       domainsRepresented: [...new Set(selectedNodes.map((n) => n.nodeType))],
+      selectedNodeIds: selectedNodes.map((n) => n.id),
+      selectedChunkIds: selectedChunks.map((c) => c.id),
     });
     expect(coverage.coverageLimited).toBe(false);
     expect(coverage.truncated).toBe(false);
     expect(coverage.omittedNodeCount).toBe(0);
     expect(coverage.omittedChunkCount).toBe(0);
+    expect(coverage.selectedNodeIds).toHaveLength(3);
+    expect(coverage.selectedChunkIds).toHaveLength(3);
   });
 
   it("4. large matter is bounded by caps", () => {
@@ -328,6 +332,8 @@ describe("graph extraction selection", () => {
       selectedChunks: 24,
       selectionMode: "WHOLE_MATTER",
       domainsRepresented: ["claim", "document"],
+      selectedNodeIds: Array.from({ length: 40 }, (_, i) => `n-${i}`),
+      selectedChunkIds: Array.from({ length: 24 }, (_, i) => `c-${i}`),
     });
     expect(coverage.coverageLimited).toBe(true);
     expect(coverage.truncated).toBe(true);
@@ -338,6 +344,8 @@ describe("graph extraction selection", () => {
     expect(coverage.selectedNodes).toBe(40);
     expect(coverage.candidateChunks).toBe(500);
     expect(coverage.selectedChunks).toBe(24);
+    expect(coverage.selectedNodeIds).toHaveLength(40);
+    expect(coverage.selectedChunkIds).toHaveLength(24);
   });
 
   it("27. whole-matter mode seeds domain diversity", () => {
