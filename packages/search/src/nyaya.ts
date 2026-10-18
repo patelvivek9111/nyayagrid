@@ -113,6 +113,7 @@ import {
   isMatterSynthesisQuestion,
   isTurnThatIntoRequest,
   resolveTurnThatInto,
+  toMatterSynthesisValidationSnapshot,
   type MatterSynthesis,
   type WhatChangedResult,
 } from "./conversational-cross-workflow";
@@ -3110,6 +3111,9 @@ export async function askNyayaAboutMatter(params: {
         ux: buildAskUxPayload({
           matterId: params.matterId,
           referentResolution,
+          investigateNext: investigateNextResult
+            ? toInvestigateNextValidationSnapshot(investigateNextResult)
+            : null,
         }),
         at: nowIso(),
       });
@@ -4186,15 +4190,7 @@ export async function askNyayaAboutMatter(params: {
           crossWorkflow: {
             lastWorkflowKind: workflowIntent !== "UNKNOWN" ? workflowIntent : conversationWorkingState.lastWorkflowKind,
             matterSynthesis: matterSynthesisResult
-              ? {
-                  coreIssues: matterSynthesisResult.coreIssues,
-                  strongestSupported: matterSynthesisResult.strongestSupported,
-                  weakestAreas: matterSynthesisResult.weakestAreas,
-                  claimReadiness: matterSynthesisResult.claimReadiness,
-                  defenseReadiness: matterSynthesisResult.defenseReadiness,
-                  credibilityScoring: 0,
-                  winProbability: 0,
-                }
+              ? toMatterSynthesisValidationSnapshot(matterSynthesisResult)
               : null,
             whatChanged: whatChangedResult,
           },
@@ -4274,6 +4270,12 @@ export async function askNyayaAboutMatter(params: {
         factualityTypes: (factualityContract?.assertions ?? []).map((a) => String(a.type)),
         conversationalAction,
         referentResolution,
+        investigateNext: investigateNextResult
+          ? toInvestigateNextValidationSnapshot(investigateNextResult)
+          : null,
+        matterSynthesis: matterSynthesisResult
+          ? toMatterSynthesisValidationSnapshot(matterSynthesisResult)
+          : null,
       }),
       at: nowIso(),
     });

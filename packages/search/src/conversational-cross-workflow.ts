@@ -635,6 +635,31 @@ export function formatMatterSynthesisForPrompt(s: MatterSynthesis): string {
   ].join("\n");
 }
 
+/**
+ * Thin validation/Ask UX snapshot — already-computed fields only.
+ * Does not surface winProbability/credibilityScoring as positive metrics.
+ */
+export function toMatterSynthesisValidationSnapshot(s: MatterSynthesis): Record<string, unknown> {
+  return {
+    coreIssues: s.coreIssues,
+    strongestSupported: s.strongestSupported,
+    weakestAreas: s.weakestAreas,
+    keyFacts: s.keyFacts,
+    keyEvidence: s.keyEvidence,
+    keyPeople: s.keyPeople,
+    conflicts: s.conflicts,
+    unknowns: s.unknowns,
+    claimReadiness: s.claimReadiness,
+    defenseReadiness: s.defenseReadiness,
+    recentChanges: s.recentChanges,
+    investigateNextTitles: s.investigateNextTitles,
+    limitations: s.limitations,
+    // Fixed zeros — UI must not display these as scores.
+    credibilityScoring: 0,
+    winProbability: 0,
+  };
+}
+
 export function detectWhatChanged(params: {
   question: string;
   priorValidation?: Record<string, unknown> | null;

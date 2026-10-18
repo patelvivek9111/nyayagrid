@@ -43,14 +43,27 @@ export function buildAskUxPayload(params: {
   conversationalAction?: ConversationalActionRecord | null;
   referentResolution?: ReferentResolutionResult | null;
   cancelled?: boolean;
+  /** Already-computed investigate-next validation snapshot (no new reasoning). */
+  investigateNext?: Record<string, unknown> | null;
+  /** Already-computed matter synthesis validation snapshot (no new reasoning). */
+  matterSynthesis?: Record<string, unknown> | null;
 }): AskUxPayload {
   const ux: AskUxPayload = {};
   if (params.factualityTypes?.length) {
     ux.factualityTypes = [...new Set(params.factualityTypes)].slice(0, 6);
   }
+  if (params.investigateNext && typeof params.investigateNext === "object") {
+    ux.investigateNext = params.investigateNext;
+  }
+  if (params.matterSynthesis && typeof params.matterSynthesis === "object") {
+    ux.matterSynthesis = params.matterSynthesis;
+  }
+
+  const finish = (payload: AskUxPayload): AskUxPayload => payload;
+
   if (params.cancelled) {
     ux.turnKind = "cancelled";
-    return ux;
+    return finish(ux);
   }
 
   const referent = params.referentResolution;
@@ -64,13 +77,13 @@ export function buildAskUxPayload(params: {
         entityType: c.entityType,
       })),
     };
-    return ux;
+    return finish(ux);
   }
 
   const action = params.conversationalAction;
   if (!action) {
     ux.turnKind = "answer";
-    return ux;
+    return finish(ux);
   }
 
   if (action.actionClass === "PROHIBITED_AUTONOMOUSLY" || action.actionStatus === "PROHIBITED") {
@@ -85,7 +98,7 @@ export function buildAskUxPayload(params: {
       summary: action.failureReason ?? "This action cannot be performed autonomously.",
       failureReason: action.failureReason,
     };
-    return ux;
+    return finish(ux);
   }
 
   if (action.actionClass === "NAVIGATION") {
@@ -105,7 +118,7 @@ export function buildAskUxPayload(params: {
       summary: `Open ${label}`,
       targetLabel: label,
     };
-    return ux;
+    return finish(ux);
   }
 
   const awaiting =
@@ -143,8 +156,5 @@ export function buildAskUxPayload(params: {
       ? `/app/cases/${params.matterId}/draft?draftId=${encodeURIComponent(draftId)}`
       : `/app/cases/${params.matterId}/draft`,
   };
-  if (ux.factualityTypes?.length) {
-    /* keep */
-  }
-  return ux;
+  return finish(ux);
 }

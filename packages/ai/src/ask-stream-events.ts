@@ -86,6 +86,12 @@ export type AskUxPayload = {
     route: string;
     label: string;
   };
+  /**
+   * Week 3 Slice 3 — structured Command Center cards.
+   * Snapshots mirror validation.investigateNext / crossWorkflow.matterSynthesis (no new intelligence).
+   */
+  investigateNext?: Record<string, unknown> | null;
+  matterSynthesis?: Record<string, unknown> | null;
 };
 
 export type AskStreamEvent =

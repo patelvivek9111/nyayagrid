@@ -17,7 +17,9 @@ import {
   ErrorState,
   FactualityAssertionBadges,
   IntelligenceHeader,
+  InvestigateNextCards,
   LoadingState,
+  MatterSynthesisCards,
   NavigationActionLink,
   ProvenanceBadge,
   SourceDrawer,
@@ -305,10 +307,23 @@ export default function CaseChatThreadPage() {
                 .filter((t): t is string => typeof t === "string" && t.length > 0);
               return types.length ? [...new Set(types)] : undefined;
             })();
+            const crossWorkflow = (validation.crossWorkflow ?? {}) as Record<string, unknown>;
+            const investigateNextSnap =
+              validation.investigateNext && typeof validation.investigateNext === "object"
+                ? (validation.investigateNext as Record<string, unknown>)
+                : null;
+            const matterSynthesisSnap =
+              crossWorkflow.matterSynthesis && typeof crossWorkflow.matterSynthesis === "object"
+                ? (crossWorkflow.matterSynthesis as Record<string, unknown>)
+                : null;
             const ux: AskUxPayload | undefined = (() => {
+              const structured: Pick<AskUxPayload, "investigateNext" | "matterSynthesis"> = {};
+              if (investigateNextSnap) structured.investigateNext = investigateNextSnap;
+              if (matterSynthesisSnap) structured.matterSynthesis = matterSynthesisSnap;
+
               if (referent?.status === "AMBIGUOUS" && referent.candidates?.length) {
                 return {
-                  turnKind: "ambiguity",
+                  turnKind: "ambiguity" as const,
                   ambiguity: {
                     prompt: referent.clarificationPrompt ?? "Which one do you mean?",
                     choices: referent.candidates.map((c) => ({
@@ -317,12 +332,15 @@ export default function CaseChatThreadPage() {
                     })),
                   },
                   factualityTypes,
+                  ...structured,
                 };
               }
               if (action?.pendingActionId) {
                 return {
                   turnKind:
-                    action.actionStatus === "COMPLETED" ? "action_result" : "action_preview",
+                    action.actionStatus === "COMPLETED"
+                      ? ("action_result" as const)
+                      : ("action_preview" as const),
                   action,
                   factualityTypes,
                   navigation:
@@ -334,9 +352,12 @@ export default function CaseChatThreadPage() {
                           label: String(previewPayload.label ?? "item"),
                         }
                       : undefined,
+                  ...structured,
                 };
               }
-              if (factualityTypes?.length) return { turnKind: "answer", factualityTypes };
+              if (factualityTypes?.length || investigateNextSnap || matterSynthesisSnap) {
+                return { turnKind: "answer" as const, factualityTypes, ...structured };
+              }
               return undefined;
             })();
             return {
@@ -737,6 +758,17 @@ export default function CaseChatThreadPage() {
                   </div>
                 ) : null}
                 <p className="whitespace-pre-wrap">{t.content}</p>
+                {t.role === "assistant" && t.ux?.investigateNext ? (
+                  <InvestigateNextCards
+                    snapshot={t.ux.investigateNext}
+                    disabled={busy}
+                    onViewSources={(items, activeId) => void openSources(items, activeId)}
+                    onTurnIntoTask={(phrase) => void send({ questionOverride: phrase })}
+                  />
+                ) : null}
+                {t.role === "assistant" && t.ux?.matterSynthesis ? (
+                  <MatterSynthesisCards snapshot={t.ux.matterSynthesis} />
+                ) : null}
                 {t.role === "assistant" && t.ux?.ambiguity?.choices?.length ? (
                   <AmbiguityChooser
                     prompt={t.ux.ambiguity.prompt}

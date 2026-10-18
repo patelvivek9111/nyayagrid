@@ -24,6 +24,10 @@ export {
   type AmbiguityChoice,
 } from "./command-center-cards";
 export {
+  InvestigateNextCards,
+  MatterSynthesisCards,
+} from "./command-center-structured-cards";
+export {
   VerifiedBadge,
   SuggestedBadge,
   NeedsReviewBadge,

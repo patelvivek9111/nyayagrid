@@ -5,6 +5,7 @@ import {
   assertNoAuthorityEscalation,
   assertNoFactualityEscalation,
   buildMatterSynthesis,
+  toMatterSynthesisValidationSnapshot,
   detectMaterialCrossWorkflowFocusChange,
   detectTransformTargets,
   detectWorkflowIntent,
@@ -169,6 +170,17 @@ describe("Oct 19–25 Phase 5 cross-workflow", () => {
     expect(s.limitations.some((l) => /win-probability|credibility/i.test(l))).toBe(true);
     expect(s.strongestSupported.length).toBeGreaterThan(0);
     expect(s.conflicts[0]).toMatch(/Date conflict/);
+
+    const snap = toMatterSynthesisValidationSnapshot(s);
+    expect(snap.coreIssues).toEqual(s.coreIssues);
+    expect(snap.keyFacts).toEqual(s.keyFacts);
+    expect(snap.keyPeople).toEqual(s.keyPeople);
+    expect(snap.conflicts).toEqual(s.conflicts);
+    expect(snap.unknowns).toEqual(s.unknowns);
+    expect(snap.recentChanges).toEqual(s.recentChanges);
+    expect(snap.investigateNextTitles).toEqual(s.investigateNextTitles);
+    expect(snap.credibilityScoring).toBe(0);
+    expect(snap.winProbability).toBe(0);
   });
 
   it("22 — what-changed unavailable without prior snapshot", () => {
