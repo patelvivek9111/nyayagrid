@@ -238,7 +238,11 @@ export function detectUserPremise(question: string): DetectedUserPremise {
 
   if (
     /\b(witness|they|he|she)\b.{0,40}\b(lie|lied|lying|is dishonest|false testimony)\b/i.test(q) ||
-    /\bdid (the )?witness lie\b/i.test(q)
+    /\bdid (the )?witness lie\b/i.test(q) ||
+    /\bwhich witness is lying\b/i.test(q) ||
+    /\bwho should we believe\b/i.test(q) ||
+    /\bwhich testimony is false\b/i.test(q) ||
+    /\bthis proves (he|she|they) lied\b/i.test(q)
   ) {
     return {
       detected: true,

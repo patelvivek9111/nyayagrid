@@ -178,7 +178,7 @@ export type DepositionPrepBuildParams = {
 };
 
 const CREDIBILITY_LEAP =
-  /\b(prove (he|she|they) lied|get (him|her|them) to admit (fraud|theft|stole)|prove dishonesty|make (him|her) admit)\b/i;
+  /\b(prove (he|she|they) lied|get (him|her|them) to admit (fraud|theft|stole)|prove dishonesty|make (him|her) admit|who should we believe|which witness is lying|which testimony is false|this proves (he|she|they) lied)\b/i;
 
 export function isDepositionPrepQuestion(question: string): boolean {
   const q = question.trim();

@@ -151,6 +151,27 @@ describe("Oct 19–25 Phase 2 deposition prep", () => {
     );
   });
 
+  it("9b — believe / false-testimony ranking asks stay neutral", () => {
+    for (const question of [
+      "who should we believe?",
+      "which witness is lying?",
+      "which testimony is false?",
+      "this proves he lied, right?",
+    ]) {
+      expect(isDepositionPrepQuestion(question)).toBe(true);
+      const result = buildDepositionPrepResult({
+        question,
+        matterId: "matter-a",
+        persons: [john],
+        resolvedPersonId: "p-john",
+        claims: [{ id: "c1", label: "Payment", supportStatus: "UNKNOWN" }],
+      });
+      expect(result.premiseChallenge).toMatch(/does not establish dishonesty/i);
+      expect(depositionPrepRejectsCredibilityLeap(result)).toBe(true);
+      expect(JSON.stringify(result)).not.toMatch(/\b(he is lying|believe John|false witness)\b/i);
+    }
+  });
+
   it("11/12 — key document recommendation + foundation uncertainty", () => {
     const result = buildDepositionPrepResult({
       question: "what documents should I use?",

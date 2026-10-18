@@ -143,6 +143,9 @@ describe("Week 3 Slice 3 structured Command Center helpers", () => {
     const empty = parseInvestigateNextForCards({ posture: "NO_MATERIAL_GAP", gaps: [] });
     expect(empty!.gaps).toHaveLength(0);
     expect(investigateEmptyMessage(empty!.posture)).toMatch(/No additional high-priority/);
+    const filtered = parseInvestigateNextForCards({ posture: "FILTERED_EMPTY", gaps: [] });
+    expect(filtered!.gaps).toHaveLength(0);
+    expect(investigateEmptyMessage(filtered!.posture)).toMatch(/No investigation gaps matched the current filters/);
     expect(parseInvestigateNextForCards(null)).toBeNull();
     expect(parseInvestigateNextForCards({ gaps: [{ id: 1 }] })).toBeNull();
     expect(parseMatterSynthesisForCards({})).toBeNull();

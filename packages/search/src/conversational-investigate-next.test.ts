@@ -431,6 +431,30 @@ describe("Oct 19–25 Phase 4 investigate-next", () => {
     expect(formatInvestigateNextAnswer(result)).toMatch(/No additional high-priority/i);
   });
 
+  it("29b — FILTERED_EMPTY does not invent replacement gaps", () => {
+    const result = buildInvestigateNextResult({
+      question: "only discovery gaps",
+      matterId: "m1",
+      candidates: [
+        cand({
+          title: "Claim evidence gap",
+          why: "element unsupported",
+          domain: "CLAIMS",
+          gapType: "CLAIM_ELEMENT_GAP",
+          priority: "HIGH",
+          priorityRationale: "no support",
+        }),
+      ],
+    });
+    expect(result.posture).toBe("FILTERED_EMPTY");
+    expect(result.gaps).toHaveLength(0);
+    expect(result.returnedCount).toBe(0);
+    expect(result.dedupedCount).toBeGreaterThan(0);
+    expect(result.genericChecklistLeakage).toBe(0);
+    expect(formatInvestigateNextAnswer(result)).toMatch(/Filters removed all grounded gaps/i);
+    expect(formatInvestigateNextAnswer(result)).not.toMatch(/standard litigation checklist/i);
+  });
+
   it("30 — generic checklist leakage blocked", () => {
     const result = buildInvestigateNextResult({
       question: "give me the standard litigation checklist",

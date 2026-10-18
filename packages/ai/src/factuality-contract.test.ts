@@ -190,6 +190,34 @@ describe("factuality contract (Phase 2)", () => {
     expect(detectUserPremise("Is that still good law?").detected).toBe(true);
   });
 
+  it("detects credibility-ranking asks without treating them as record facts", () => {
+    for (const question of [
+      "which witness is lying?",
+      "who should we believe?",
+      "which testimony is false?",
+      "this proves he lied, right?",
+    ]) {
+      const detected = detectUserPremise(question);
+      expect(detected.detected).toBe(true);
+      expect(detected.kind).toBe("credibility");
+      const premise = evaluatePremiseAgainstRecord({
+        question,
+        record: {
+          persistedDeadlines: [],
+          persistedDispositions: [],
+          authorities: [],
+        },
+      });
+      expect(premise.result).toBe("UNSUPPORTED");
+      expect(premise.mappedFactuality).toBe("UNSUPPORTED");
+      const out = constrainAnswerToPremiseCheck(
+        { answer: "Yes, the witness is lying.", evidenceState: "grounded" },
+        premise,
+      );
+      expect(out.answer).not.toMatch(/^Yes, the witness is lying/i);
+    }
+  });
+
   it("false-premise scenarios reject agreement", () => {
     const prompts = [
       "We won the motion, right?",
