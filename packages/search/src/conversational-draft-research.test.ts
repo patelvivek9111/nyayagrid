@@ -287,11 +287,28 @@ describe("Oct 19–25 Phase 3 draft + research", () => {
         resolvedIssueId: "c-notice",
       }),
     });
-    expect(stronger.paragraphs.every((p) => p.assertionSupport !== "SUPPORTED" || p.factuality === "FACT" || true)).toBe(
-      true,
-    );
-    const { notes } = strengthenWithoutOverstatement(base.paragraphs);
+    // Make-stronger must not promote disputed / partial claims to FACT.
+    expect(
+      stronger.paragraphs.some(
+        (p) => /knowingly concealed/i.test(p.text) && p.factuality === "FACT",
+      ),
+    ).toBe(false);
+    expect(
+      stronger.paragraphs.every(
+        (p) =>
+          p.factuality !== "FACT" ||
+          (p.assertionSupport === "SUPPORTED" && p.sources.length > 0),
+      ),
+    ).toBe(true);
+    const { notes, paragraphs: strengthened } = strengthenWithoutOverstatement(base.paragraphs);
     expect(notes.join(" ")).toMatch(/without upgrading/i);
+    expect(
+      strengthened.every(
+        (p, i) =>
+          p.factuality === base.paragraphs[i]?.factuality &&
+          p.assertionSupport === base.paragraphs[i]?.assertionSupport,
+      ),
+    ).toBe(true);
   });
 
   it("20 — source-only revision", () => {
@@ -327,14 +344,21 @@ describe("Oct 19–25 Phase 3 draft + research", () => {
       resolvedIssueId: "c-notice",
     });
     const d = researchToDraft({ question: "turn research into argument", matterId: "m1", research });
-    const revised = reviseDraftAuthorityOnly(d, [authA, authB], "drop_unverified");
-    expect(revised.paragraphs.every((p) => p.authorityIds.every((id) => id !== "auth-a" && id !== "auth-b") || p.authorityIds.length === 0 || false || true)).toBe(
+    expect(d.paragraphs.some((p) => p.authorityIds.includes("auth-a") || p.authorityIds.includes("auth-b"))).toBe(
       true,
     );
-    // All authorities are unverified → authority-linked paragraphs dropped or emptied.
+    const revised = reviseDraftAuthorityOnly(d, [authA, authB], "drop_unverified");
+    // Both fixture authorities are treatmentVerified=false → must be stripped; no guessed binding.
     expect(
-      revised.paragraphs.filter((p) => p.authorityIds.length > 0).every((p) =>
-        p.authorityIds.every((id) => [authA, authB].find((a) => a.id === id)?.treatmentVerified),
+      revised.paragraphs.every(
+        (p) => !p.authorityIds.includes("auth-a") && !p.authorityIds.includes("auth-b"),
+      ),
+    ).toBe(true);
+    expect(
+      revised.paragraphs.every((p) =>
+        p.authorityIds.every(
+          (id) => [authA, authB].find((a) => a.id === id)?.treatmentVerified === true,
+        ),
       ),
     ).toBe(true);
   });
