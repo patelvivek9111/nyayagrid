@@ -596,4 +596,43 @@ describe("Phase 3 multi-turn chains", () => {
     expect(result.referents.every((r) => r.entityId == null)).toBe(true);
     expect(result.clarificationPrompt).toMatch(/motion to compel|summary-judgment/i);
   });
+
+  it("credibility ranking ask does not force person pick among org parties", () => {
+    const orgParties: MatterEntityCandidate[] = [
+      {
+        entityType: "person",
+        entityId: "cccccccc-cccc-4ccc-8ccc-ccccccccccc1",
+        label: "River Supply Co. (organization)",
+        organizationId: ORG,
+        matterId: MATTER,
+      },
+      {
+        entityType: "person",
+        entityId: "cccccccc-cccc-4ccc-8ccc-ccccccccccc2",
+        label: "Acme Parts LLC (organization)",
+        organizationId: ORG,
+        matterId: MATTER,
+      },
+    ];
+    const detected = detectReferentRequest("Did the witness lie about the date?");
+    expect(detected.kinds).not.toContain("person");
+    expect(detected.kinds).not.toContain("deposition");
+
+    const result = resolveConversationalReferents({
+      question: "Did the witness lie about the date?",
+      organizationId: ORG,
+      matterId: MATTER,
+      workingState: state(),
+      matterCandidates: orgParties,
+    });
+    expect(result.status).not.toBe("AMBIGUOUS");
+    expect(result.clarificationPrompt ?? "").not.toMatch(/River Supply|Acme Parts/i);
+
+    const premise = evaluatePremiseAgainstRecord({
+      question: "Did the witness lie about the date?",
+      record: { persistedDispositions: [] },
+    });
+    expect(premise.detected).toBe(true);
+    expect(premise.result).toBe("UNSUPPORTED");
+  });
 });

@@ -273,13 +273,24 @@ export function detectReferentRequest(question: string): {
   }
   // Deposition / deponent cues bind to person entities (matter_entities).
   // Bare "deposition" in compare/research phrasing must NOT force deponent pick.
+  // Credibility-ranking asks ("did the witness lie", "who should we believe") must NOT
+  // force a person pick — they are handled by the factuality/premise honesty path.
+  // Org parties are not witness candidates for those prompts.
+  const credibilityRankingAsk =
+    /\bdid (the )?witness lie\b/i.test(q) ||
+    /\bwhich witness is lying\b/i.test(q) ||
+    /\bwho should we believe\b/i.test(q) ||
+    /\bwhich testimony is false\b/i.test(q) ||
+    /\bthis proves (he|she|they) lied\b/i.test(q) ||
+    /\bprove (he|she|they) lied\b/i.test(q);
   if (
-    /\b(this (witness|deponent)|the (witness|deponent)|prepare (me )?to depose|depose)\b/i.test(q) ||
-    /\b(witness prep|deposition prep|deposition outline|questions for (this )?witness)\b/i.test(q) ||
-    /\b(prepare|prep)\b.+\b(depos(?:e|ition)|witness)\b/i.test(q) ||
-    (/\bdeposition\b/i.test(q) &&
-      !/\bcompare\b/i.test(q) &&
-      !/\bwith (her|his|their|the) deposition\b/i.test(q))
+    !credibilityRankingAsk &&
+    (/\b(this (witness|deponent)|the (witness|deponent)|prepare (me )?to depose|depose)\b/i.test(q) ||
+      /\b(witness prep|deposition prep|deposition outline|questions for (this )?witness)\b/i.test(q) ||
+      /\b(prepare|prep)\b.+\b(depos(?:e|ition)|witness)\b/i.test(q) ||
+      (/\bdeposition\b/i.test(q) &&
+        !/\bcompare\b/i.test(q) &&
+        !/\bwith (her|his|their|the) deposition\b/i.test(q)))
   ) {
     kinds.push("person");
     kinds.push("deposition");
@@ -969,11 +980,16 @@ export function resolveConversationalReferents(params: {
   // --- Person / deponent target (NO_AUTO_PICK) ---
   if (kinds.has("person") || kinds.has("deposition")) {
     const personPool = candidatesOfType(candidates, "person");
+    // Org entities are mapped into the person bucket for explicit corp-rep naming only.
+    // Bare "the witness" must not treat unlabeled org parties as competing deponents.
+    const isOrgPersonCandidate = (c: { label: string }) => /\(organization\)\s*$/i.test(c.label);
+    const naturalPersonPool = personPool.filter((c) => !isOrgPersonCandidate(c));
     const qLower = params.question.toLowerCase();
     const named = personPool.filter((c) => {
       const label = c.label.toLowerCase();
-      const tokens = label.split(/\s+/).filter((t) => t.length > 2);
-      return tokens.some((t) => qLower.includes(t)) || qLower.includes(label);
+      const bare = label.replace(/\s*\(organization\)\s*$/i, "").trim();
+      const tokens = bare.split(/\s+/).filter((t) => t.length > 2);
+      return tokens.some((t) => qLower.includes(t)) || qLower.includes(bare);
     });
     if (named.length > 1) {
       return finishAmbiguous(
@@ -987,7 +1003,7 @@ export function resolveConversationalReferents(params: {
       forceDomains.push("EVIDENCE", "CLAIMS", "COMMUNICATIONS", "TIMELINE", "DEPOSITION");
       status = "RESOLVED";
     } else {
-      const { match, ambiguous } = pickUniqueActive(prior, "person", candidates);
+      const { match, ambiguous } = pickUniqueActive(prior, "person", naturalPersonPool);
       if (ambiguous.length > 1) {
         return finishAmbiguous(
           "person",
@@ -1000,18 +1016,20 @@ export function resolveConversationalReferents(params: {
         forceDomains.push("EVIDENCE", "CLAIMS", "COMMUNICATIONS", "TIMELINE", "DEPOSITION");
         status = "RESOLVED";
       } else if (kinds.has("deposition")) {
-        if (personPool.length > 1) {
+        // Bare deponent cue: only natural persons compete; org-only matters stay UNRESOLVED.
+        const barePool = naturalPersonPool.length > 0 ? naturalPersonPool : [];
+        if (barePool.length > 1) {
           return finishAmbiguous(
             "person",
-            personPool.map((c) => ({
+            barePool.map((c) => ({
               entityType: c.entityType,
               entityId: c.entityId,
               label: c.label,
             })),
           );
         }
-        if (personPool.length === 1) {
-          referents.push(resolvedFromCandidate(personPool[0]!, "UNIQUE_MATTER_MATCH", null));
+        if (barePool.length === 1) {
+          referents.push(resolvedFromCandidate(barePool[0]!, "UNIQUE_MATTER_MATCH", null));
           method = "UNIQUE_MATTER_MATCH";
           forceDomains.push("EVIDENCE", "CLAIMS", "COMMUNICATIONS", "TIMELINE", "DEPOSITION");
           status = "RESOLVED";
