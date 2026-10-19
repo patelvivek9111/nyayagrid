@@ -45,6 +45,19 @@ describe("Phase 3 silent Mock force removal", () => {
     expect(src).toContain("getAI()");
     expect(src).not.toContain("new MockAIProvider()");
   });
+
+  it("Guide ask/explain use getAI() and never ZodError→Mock silent fallback", () => {
+    const ask = source("src/app/api/v1/guide/ask/route.ts");
+    const explain = source("src/app/api/v1/guide/documents/[documentId]/explain/route.ts");
+    for (const [name, src] of [
+      ["guide.ask", ask],
+      ["guide.explain", explain],
+    ] as const) {
+      expect(src, name).toContain("getAI()");
+      expect(src, name).not.toContain("new MockAIProvider()");
+      expect(src, name).not.toMatch(/ZodError[\s\S]*MockAIProvider/);
+    }
+  });
 });
 
 describe("Phase 3 createAIProviderFromEnv safety", () => {

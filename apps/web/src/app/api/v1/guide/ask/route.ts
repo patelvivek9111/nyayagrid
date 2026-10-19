@@ -1,5 +1,3 @@
-import { ZodError } from "zod";
-import { MockAIProvider } from "@nyayagrid/ai";
 import { askGuideSchema } from "@nyayagrid/validation";
 import { askGuide } from "@nyayagrid/workspaces";
 import { recordUsage } from "@nyayagrid/platform";
@@ -12,6 +10,9 @@ import { enforceRateLimit } from "@/lib/rate-limit";
  * Ask Nyaya Guide a question. `requireUser` is the entire authorization boundary — Guide never
  * checks matter/organization access, and any conversation/document/situation id supplied here is
  * proven to belong to this user inside `askGuide` itself.
+ *
+ * Provider selection is canonical (`getAI()`). Schema/provider failures must not silently fall
+ * back to MockAIProvider.
  */
 export async function POST(request: Request) {
   try {
@@ -22,7 +23,7 @@ export async function POST(request: Request) {
     const body = askGuideSchema.parse(await request.json());
 
     const startedAt = Date.now();
-    const input = {
+    const result = await askGuide({
       db,
       userId: user.id,
       embeddings: getEmbeddings(),
@@ -31,14 +32,8 @@ export async function POST(request: Request) {
       conversationId: body.conversationId,
       documentId: body.documentId,
       situationId: body.situationId,
-    };
-    let result;
-    try {
-      result = await askGuide({ ...input, ai: getAI() });
-    } catch (error) {
-      if (!(error instanceof ZodError)) throw error;
-      result = await askGuide({ ...input, ai: new MockAIProvider() });
-    }
+      ai: getAI(),
+    });
 
     // Guide has no organizationId/matterId — usage is tracked by userId alone.
     await recordUsage(db, {
