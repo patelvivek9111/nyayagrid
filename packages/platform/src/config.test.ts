@@ -162,6 +162,69 @@ describe("collectProductionConfigProblems", () => {
     expect(problems.some((p) => p.includes("EMBEDDING_PROVIDER resolves to mock"))).toBe(true);
   });
 
+  it("C: production EMBEDDING_PROVIDER=mock is refused by validateConfigForEnv", () => {
+    expect(() =>
+      validateConfigForEnv({
+        ...SAFE_PRODUCTION_ENV,
+        EMBEDDING_PROVIDER: "mock",
+      }),
+    ).toThrow(ConfigurationError);
+    try {
+      validateConfigForEnv({
+        ...SAFE_PRODUCTION_ENV,
+        EMBEDDING_PROVIDER: "mock",
+      });
+    } catch (error) {
+      expect(error).toBeInstanceOf(ConfigurationError);
+      const message = error instanceof ConfigurationError ? error.message : String(error);
+      const details =
+        error instanceof ConfigurationError ? error.problems.join("\n") : message;
+      expect(details).toMatch(/EMBEDDING_PROVIDER resolves to mock/);
+      expect(details).not.toMatch(/sk-openai-test/);
+    }
+  });
+
+  it("D: production unknown EMBEDDING_PROVIDER is an explicit unsupported problem (not silent mock)", () => {
+    const problems = collectProductionConfigProblems({
+      ...SAFE_PRODUCTION_ENV,
+      EMBEDDING_PROVIDER: "not-a-real-provider",
+    });
+    expect(problems.some((p) => p.includes("not-a-real-provider"))).toBe(true);
+    expect(problems.some((p) => /must not fall back to mock/i.test(p))).toBe(true);
+    expect(problems.some((p) => p.includes("EMBEDDING_PROVIDER resolves to mock"))).toBe(false);
+
+    expect(() =>
+      validateConfigForEnv({
+        ...SAFE_PRODUCTION_ENV,
+        EMBEDDING_PROVIDER: "not-a-real-provider",
+      }),
+    ).toThrow(ConfigurationError);
+  });
+
+  it("E: development/test unknown EMBEDDING_PROVIDER is refused (factory/config agree)", () => {
+    expect(() =>
+      validateConfigForEnv({
+        APP_ENV: "development",
+        EMBEDDING_PROVIDER: "not-a-real-provider",
+      }),
+    ).toThrow(/unsupported EMBEDDING_PROVIDER/i);
+    expect(() =>
+      validateConfigForEnv({
+        APP_ENV: "test",
+        EMBEDDING_PROVIDER: "not-a-real-provider",
+      }),
+    ).toThrow(/unsupported EMBEDDING_PROVIDER/i);
+  });
+
+  it("A: production openai embeddings are not a config problem when key present", () => {
+    const problems = collectProductionConfigProblems({
+      ...SAFE_PRODUCTION_ENV,
+      EMBEDDING_PROVIDER: "openai",
+      OPENAI_API_KEY: "sk-openai-test",
+    });
+    expect(problems.some((p) => /EMBEDDING_PROVIDER/i.test(p))).toBe(false);
+  });
+
   it("flags MALWARE_SCANNER=development (the default)", () => {
     const problems = collectProductionConfigProblems({
       ...SAFE_PRODUCTION_ENV,

@@ -5,8 +5,10 @@ import {
   citedAnswerSchema,
   createAIProviderFromEnv,
   createDirectProvider,
+  createEmbeddingProviderFromEnv,
   MockAIProvider,
   MockEmbeddingProvider,
+  OpenAIEmbeddingProvider,
   validateCitedAnswerAgainstPassages,
   buildNyayaUserPrompt,
   buildMatterIntelligenceSystemPrompt,
@@ -230,6 +232,99 @@ describe("embeddings", () => {
     const [a, b] = await provider.embed(["hello world", "hello world"]);
     expect(a).toHaveLength(EMBEDDING_DIMENSIONS);
     expect(a).toEqual(b);
+  });
+});
+
+describe("createEmbeddingProviderFromEnv fail-closed", () => {
+  const original = {
+    EMBEDDING_PROVIDER: process.env.EMBEDDING_PROVIDER,
+    AI_PROVIDER: process.env.AI_PROVIDER,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    APP_ENV: process.env.APP_ENV,
+  };
+
+  function restoreEnv() {
+    for (const [key, value] of Object.entries(original)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  }
+
+  function withEnv(patch: Record<string, string | undefined>, fn: () => void) {
+    for (const [key, value] of Object.entries(patch)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+    try {
+      fn();
+    } finally {
+      restoreEnv();
+    }
+  }
+
+  it("A: production openai constructs OpenAI embeddings (not mock)", () => {
+    withEnv(
+      {
+        APP_ENV: "production",
+        EMBEDDING_PROVIDER: "openai",
+        AI_PROVIDER: "openai",
+        OPENAI_API_KEY: "sk-test-embedding-factory",
+      },
+      () => {
+        const provider = createEmbeddingProviderFromEnv();
+        expect(provider.name).toBe("openai");
+        expect(provider).not.toBeInstanceOf(MockEmbeddingProvider);
+        // Cached wrapper exposes inner name; ensure OpenAIEmbeddingProvider is the adapter.
+        expect(provider.name).not.toBe("mock");
+        const direct = new OpenAIEmbeddingProvider({ apiKey: "sk-test-embedding-factory" });
+        expect(direct.name).toBe("openai");
+        expect(provider.model).toBe(direct.model);
+      },
+    );
+  });
+
+  it("B: development explicit mock constructs Mock embeddings", () => {
+    withEnv(
+      {
+        APP_ENV: "development",
+        EMBEDDING_PROVIDER: "mock",
+        AI_PROVIDER: "mock",
+        OPENAI_API_KEY: undefined,
+      },
+      () => {
+        const provider = createEmbeddingProviderFromEnv();
+        expect(provider.name).toBe("mock");
+      },
+    );
+  });
+
+  it("D/F: unsupported provider throws and must not return mock", () => {
+    withEnv(
+      {
+        APP_ENV: "production",
+        EMBEDDING_PROVIDER: "not-a-real-provider",
+        AI_PROVIDER: "openai",
+        OPENAI_API_KEY: "sk-test-embedding-factory",
+      },
+      () => {
+        expect(() => createEmbeddingProviderFromEnv()).toThrow(/Unsupported EMBEDDING_PROVIDER/);
+        expect(() => createEmbeddingProviderFromEnv()).toThrow(/not-a-real-provider/);
+        expect(() => createEmbeddingProviderFromEnv()).toThrow(/must not fall back to mock/);
+      },
+    );
+  });
+
+  it("E: development unsupported provider also throws (no silent mock)", () => {
+    withEnv(
+      {
+        APP_ENV: "development",
+        EMBEDDING_PROVIDER: "hashicorp-vault-embeddings",
+        AI_PROVIDER: "mock",
+      },
+      () => {
+        expect(() => createEmbeddingProviderFromEnv()).toThrow(/Unsupported EMBEDDING_PROVIDER/);
+      },
+    );
   });
 });
 

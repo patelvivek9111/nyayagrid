@@ -193,14 +193,28 @@ export function deterministicEmbedding(text: string, dimensions = EMBEDDING_DIME
   return vector.map((v) => v / magnitude);
 }
 
+/**
+ * Embedding adapters this factory may construct. Keep in sync with
+ * `@nyayagrid/platform` `SUPPORTED_EMBEDDING_PROVIDERS`.
+ * Unknown names must throw — never fall through to MockEmbeddingProvider.
+ */
+export const SUPPORTED_EMBEDDING_PROVIDERS = ["openai", "mock"] as const;
+
 export function createEmbeddingProviderFromEnv(): EmbeddingProvider {
-  const provider = process.env.EMBEDDING_PROVIDER ?? process.env.AI_PROVIDER ?? "mock";
+  const raw = process.env.EMBEDDING_PROVIDER ?? process.env.AI_PROVIDER ?? "mock";
+  const provider = raw.trim().toLowerCase();
   if (provider === "openai") {
     const apiKey = process.env.OPENAI_API_KEY;
     if (!apiKey) throw new Error("EMBEDDING_PROVIDER=openai requires OPENAI_API_KEY");
     return new CachedEmbeddingProvider(new OpenAIEmbeddingProvider({ apiKey }));
   }
-  return new CachedEmbeddingProvider(new MockEmbeddingProvider());
+  if (provider === "mock") {
+    return new CachedEmbeddingProvider(new MockEmbeddingProvider());
+  }
+  throw new Error(
+    `Unsupported EMBEDDING_PROVIDER=${raw}. Supported values: openai, mock. ` +
+      `Unknown providers must not fall back to mock.`,
+  );
 }
 
 export type GroundingPassage = {

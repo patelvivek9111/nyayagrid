@@ -119,6 +119,27 @@ export function resolveEmbeddingProvider(env: EnvSource = process.env): string {
   return readLower(env, "EMBEDDING_PROVIDER") ?? readLower(env, "AI_PROVIDER") ?? "mock";
 }
 
+/**
+ * Embedding adapters the factory may construct. Keep in sync with
+ * `@nyayagrid/ai` `createEmbeddingProviderFromEnv` / `SUPPORTED_EMBEDDING_PROVIDERS`.
+ * `openai` is the production retrieval path; `mock` is deterministic hash embeddings for
+ * development/test only and must never be selected silently for an unknown name.
+ */
+export const SUPPORTED_EMBEDDING_PROVIDERS = ["openai", "mock"] as const;
+
+export function isSupportedEmbeddingProvider(provider: string): boolean {
+  return (SUPPORTED_EMBEDDING_PROVIDERS as readonly string[]).includes(provider);
+}
+
+/** Explicit unsupported-provider message — shared by production problems and hard refuses. */
+export function unsupportedEmbeddingProviderProblem(provider: string): string {
+  return (
+    `EMBEDDING_PROVIDER=${provider} is not supported. Supported values: openai ` +
+    `(production retrieval) and mock (development/test only). Unknown providers must not ` +
+    `fall back to mock.`
+  );
+}
+
 export function resolveStorageProvider(env: EnvSource = process.env): string {
   return readLower(env, "STORAGE_PROVIDER") ?? "minio";
 }
@@ -270,10 +291,15 @@ export function collectProductionConfigProblems(env: EnvSource = process.env): s
     );
   }
 
-  if (resolveEmbeddingProvider(env) === "mock") {
+  const embeddingProvider = resolveEmbeddingProvider(env);
+  if (!isSupportedEmbeddingProvider(embeddingProvider)) {
+    problems.push(unsupportedEmbeddingProviderProblem(embeddingProvider));
+  } else if (embeddingProvider === "mock") {
     problems.push(
       "EMBEDDING_PROVIDER resolves to mock. Deterministic hash embeddings do not retrieve real passages, so citations would be grounded in nothing. Set EMBEDDING_PROVIDER=openai.",
     );
+  } else if (embeddingProvider === "openai" && !read(env, "OPENAI_API_KEY")) {
+    problems.push("EMBEDDING_PROVIDER=openai requires OPENAI_API_KEY.");
   }
 
   const malwareScanner = resolveMalwareScanner(env);
@@ -465,7 +491,10 @@ export function collectStagingStandInProblems(env: EnvSource = process.env): str
       "AI_PROVIDER resolves to mock. Staging must use a real model provider. Set AI_PROVIDER=openai (Router still selects certified routes).",
     );
   }
-  if (resolveEmbeddingProvider(env) === "mock") {
+  const embeddingProvider = resolveEmbeddingProvider(env);
+  if (!isSupportedEmbeddingProvider(embeddingProvider)) {
+    problems.push(unsupportedEmbeddingProviderProblem(embeddingProvider));
+  } else if (embeddingProvider === "mock") {
     problems.push(
       "EMBEDDING_PROVIDER resolves to mock. Staging retrieval must use real embeddings. Set EMBEDDING_PROVIDER=openai.",
     );
@@ -551,6 +580,15 @@ export function validateConfigForEnv(env: EnvSource = process.env): ConfigValida
   const logger = createLogger("platform.config");
   const summary = summarizeConfig(env);
   const warnings = collectConfigWarnings(env);
+
+  // Every environment: unknown EMBEDDING_PROVIDER must fail closed (never silent Mock).
+  const embeddingProvider = resolveEmbeddingProvider(env);
+  if (!isSupportedEmbeddingProvider(embeddingProvider)) {
+    throw new ConfigurationError(
+      "Refusing to start: unsupported EMBEDDING_PROVIDER",
+      [unsupportedEmbeddingProviderProblem(embeddingProvider)],
+    );
+  }
 
   if (appEnv === "production") {
     validateProductionConfig(env);
