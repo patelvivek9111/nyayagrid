@@ -4,7 +4,16 @@
  * CourtListener: 0.
  */
 import { createHash, randomUUID } from "node:crypto";
-import { and, eq, tasks, agentApprovals, agentRuns, type Database } from "@nyayagrid/database";
+import {
+  aiJobs,
+  and,
+  eq,
+  sql,
+  tasks,
+  agentApprovals,
+  agentRuns,
+  type Database,
+} from "@nyayagrid/database";
 import { createDraft, createMatterMemory } from "@nyayagrid/intelligence";
 import {
   AuthorizationError,
@@ -1090,10 +1099,29 @@ export type ExecuteConfirmedActionResult = {
   failureReason: string | null;
   latencyMs: number;
   updatedAction: ConversationalActionRecord;
+  /** True when a prior successful confirm for the same pendingActionId was reused. */
+  alreadyExecuted?: boolean;
 };
+
+/** Durable at-most-once key for confirmation writes (uses existing ai_jobs unique index). */
+export function conversationalConfirmIdempotencyKey(pendingActionId: string): string {
+  return `conversational_confirm:${pendingActionId}`;
+}
+
+function completedResultFromJobPayload(
+  payload: Record<string, unknown> | null | undefined,
+): Record<string, unknown> | null {
+  const exec = payload?.executionResult;
+  if (exec && typeof exec === "object" && !Array.isArray(exec)) {
+    return exec as Record<string, unknown>;
+  }
+  return null;
+}
 
 /**
  * Re-checks matter edit capability at execution time, then performs the confirmed write.
+ * Concurrent/repeated confirms for the same pendingActionId are serialized and at-most-once
+ * via pg_advisory_xact_lock + ai_jobs.idempotency_key (no new migration).
  */
 export async function executeConfirmedConversationalAction(params: {
   db: Database;
@@ -1132,162 +1160,224 @@ export async function executeConfirmedConversationalAction(params: {
     };
   }
 
-  try {
-    let executionResult: Record<string, unknown> = {};
-    const preview = params.pending.previewPayload;
+  const idempotencyKey = conversationalConfirmIdempotencyKey(params.pending.pendingActionId);
 
-    if (params.pending.actionType === "TASK_CREATE") {
-      const title = String(preview.title ?? "").trim();
-      if (!title) throw new Error("Task preview missing title");
-      const dueAtRaw = typeof preview.proposedDueAt === "string" ? preview.proposedDueAt : null;
-      const [task] = await params.db
-        .insert(tasks)
-        .values({
+  try {
+    return await params.db.transaction(async (tx) => {
+      // Serialize concurrent confirms for this token (session-scoped xact lock).
+      await tx.execute(
+        sql`select pg_advisory_xact_lock(hashtext(${params.pending.pendingActionId}))`,
+      );
+
+      const [existingJob] = await tx
+        .select()
+        .from(aiJobs)
+        .where(eq(aiJobs.idempotencyKey, idempotencyKey))
+        .limit(1);
+      if (existingJob?.status === "completed") {
+        const prior = completedResultFromJobPayload(
+          existingJob.payload as Record<string, unknown> | null,
+        ) ?? { reused: true };
+        const updated: ConversationalActionRecord = {
+          ...base,
+          actionStatus: "COMPLETED",
+          workflowStatus: "COMPLETED",
+          executionResult: prior,
+          failureReason: null,
+        };
+        return {
+          status: "COMPLETED" as const,
+          workflowStatus: "COMPLETED" as const,
+          executionResult: prior,
+          failureReason: null,
+          latencyMs: Math.max(0, Date.now() - started),
+          updatedAction: updated,
+          alreadyExecuted: true,
+        };
+      }
+
+      let executionResult: Record<string, unknown> = {};
+      const preview = params.pending.previewPayload;
+
+      if (params.pending.actionType === "TASK_CREATE") {
+        const title = String(preview.title ?? "").trim();
+        if (!title) throw new Error("Task preview missing title");
+        const dueAtRaw = typeof preview.proposedDueAt === "string" ? preview.proposedDueAt : null;
+        const [task] = await tx
+          .insert(tasks)
+          .values({
+            organizationId: params.pending.organizationId,
+            matterId: params.pending.matterId,
+            title,
+            description: typeof preview.description === "string" ? preview.description : null,
+            priority: "medium",
+            assignedToUserId: params.userId,
+            createdByUserId: params.userId,
+            dueAt: dueAtRaw ? new Date(dueAtRaw) : null,
+          })
+          .returning();
+        executionResult = { taskId: task!.id, dueAt: dueAtRaw };
+        await writeAuditEvent(tx as unknown as Database, {
+          organizationId: params.pending.organizationId,
+          actorUserId: params.userId,
+          matterId: params.pending.matterId,
+          action: "task.created",
+          targetType: "task",
+          targetId: task!.id,
+          metadata: {
+            origin: "conversational_workflow",
+            pendingActionId: params.pending.pendingActionId,
+            conversationId: params.pending.conversationId,
+          },
+        });
+      } else if (
+        params.pending.actionType === "DRAFT_SAVE" ||
+        params.pending.actionType === "DRAFT_GENERATE_PREVIEW"
+      ) {
+        const draftType = String(preview.draftType ?? "argument");
+        const title = String(preview.requestedPurpose ?? "Conversational draft").slice(0, 200);
+        const content = String(preview.previewText ?? "");
+        const sourceRefs = Array.isArray(preview.sourceRefs)
+          ? preview.sourceRefs.filter((id): id is string => typeof id === "string" && UUID_RE.test(id))
+          : params.pending.sourceRefs;
+        for (const id of sourceRefs) {
+          if (!UUID_RE.test(id)) throw new Error("Invalid source id in draft preview");
+        }
+        const created = await createDraft({
+          db: tx as unknown as Database,
           organizationId: params.pending.organizationId,
           matterId: params.pending.matterId,
+          userId: params.userId,
           title,
-          description: typeof preview.description === "string" ? preview.description : null,
-          priority: "medium",
-          assignedToUserId: params.userId,
-          createdByUserId: params.userId,
-          dueAt: dueAtRaw ? new Date(dueAtRaw) : null,
-        })
-        .returning();
-      executionResult = { taskId: task!.id, dueAt: dueAtRaw };
-      await writeAuditEvent(params.db, {
-        organizationId: params.pending.organizationId,
-        actorUserId: params.userId,
-        matterId: params.pending.matterId,
-        action: "task.created",
-        targetType: "task",
-        targetId: task!.id,
-        metadata: {
-          origin: "conversational_workflow",
-          pendingActionId: params.pending.pendingActionId,
-          conversationId: params.pending.conversationId,
-        },
-      });
-    } else if (params.pending.actionType === "DRAFT_SAVE" || params.pending.actionType === "DRAFT_GENERATE_PREVIEW") {
-      const draftType = String(preview.draftType ?? "argument");
-      const title = String(preview.requestedPurpose ?? "Conversational draft").slice(0, 200);
-      const content = String(preview.previewText ?? "");
-      const sourceRefs = Array.isArray(preview.sourceRefs)
-        ? preview.sourceRefs.filter((id): id is string => typeof id === "string" && UUID_RE.test(id))
-        : params.pending.sourceRefs;
-      for (const id of sourceRefs) {
-        if (!UUID_RE.test(id)) throw new Error("Invalid source id in draft preview");
-      }
-      const created = await createDraft({
-        db: params.db,
-        organizationId: params.pending.organizationId,
-        matterId: params.pending.matterId,
-        userId: params.userId,
-        title,
-        draftType,
-        content,
-        aiGenerated: true,
-      });
-      executionResult = {
-        draftId: created.draft.id,
-        versionId: created.version.id,
-        sourceRefs,
-      };
-    } else if (params.pending.actionType === "MEMORY_SAVE") {
-      if (preview.unsafe === true) {
-        throw new Error(String(preview.unsafeReason ?? "Unsafe memory proposal blocked."));
-      }
-      const memory = await createMatterMemory({
-        db: params.db,
-        organizationId: params.pending.organizationId,
-        matterId: params.pending.matterId,
-        userId: params.userId,
-        memoryType:
-          preview.memoryType === "factual_caveat" ||
-          preview.memoryType === "user_instruction" ||
-          preview.memoryType === "strategic_note"
-            ? preview.memoryType
-            : "other",
-        title: String(preview.title ?? "Matter note").slice(0, 200),
-        content: String(preview.content ?? ""),
-        origin: "ai",
-        status: "approved",
-        sourceType: "conversational_workflow",
-        sourceReference: {
-          pendingActionId: params.pending.pendingActionId,
-          conversationId: params.pending.conversationId,
-          sourceRefs: preview.sourceRefs ?? [],
-        },
-      });
-      executionResult = { memoryId: memory.id };
-    } else if (params.pending.actionType === "RESEARCH_SAVE") {
-      // Persistence of research artifacts requires research.run path; mark confirmed intent.
-      // Actual corpus save stays confirmation-gated and is recorded for the Research UI to complete
-      // without CourtListener in Phase 4.
-      executionResult = {
-        savedIntent: true,
-        question: preview.question ?? null,
-        note: "Research save confirmed; use Research workspace to persist the artifact from this session context.",
-        authorityRefs: params.pending.authorityRefs,
-        treatmentVerified: false,
-      };
-      await writeAuditEvent(params.db, {
-        organizationId: params.pending.organizationId,
-        actorUserId: params.userId,
-        matterId: params.pending.matterId,
-        action: "conversational_workflow.research_save_confirmed",
-        targetType: "conversational_action",
-        targetId: params.pending.pendingActionId,
-        metadata: { conversationId: params.pending.conversationId },
-      });
-    } else {
-      throw new Error(`Unsupported confirmed action type: ${params.pending.actionType}`);
-    }
-
-    // Mark linked agent approval approved when present (audit reuse).
-    if (params.pending.agentApprovalId) {
-      await params.db
-        .update(agentApprovals)
-        .set({
+          draftType,
+          content,
+          aiGenerated: true,
+        });
+        executionResult = {
+          draftId: created.draft.id,
+          versionId: created.version.id,
+          sourceRefs,
+        };
+      } else if (params.pending.actionType === "MEMORY_SAVE") {
+        if (preview.unsafe === true) {
+          throw new Error(String(preview.unsafeReason ?? "Unsafe memory proposal blocked."));
+        }
+        const memory = await createMatterMemory({
+          db: tx as unknown as Database,
+          organizationId: params.pending.organizationId,
+          matterId: params.pending.matterId,
+          userId: params.userId,
+          memoryType:
+            preview.memoryType === "factual_caveat" ||
+            preview.memoryType === "user_instruction" ||
+            preview.memoryType === "strategic_note"
+              ? preview.memoryType
+              : "other",
+          title: String(preview.title ?? "Matter note").slice(0, 200),
+          content: String(preview.content ?? ""),
+          origin: "ai",
           status: "approved",
-          reviewedByUserId: params.userId,
-          reviewedAt: new Date(),
-          reviewNote: "Confirmed in conversational Command Center",
-          updatedAt: new Date(),
-        })
-        .where(
-          and(
-            eq(agentApprovals.id, params.pending.agentApprovalId),
-            eq(agentApprovals.organizationId, params.pending.organizationId),
-          ),
-        );
-    }
-    if (params.pending.agentRunId) {
-      await params.db
-        .update(agentRuns)
-        .set({ status: "completed", completedAt: new Date(), updatedAt: new Date() })
-        .where(
-          and(
-            eq(agentRuns.id, params.pending.agentRunId),
-            eq(agentRuns.organizationId, params.pending.organizationId),
-          ),
-        );
-    }
+          sourceType: "conversational_workflow",
+          sourceReference: {
+            pendingActionId: params.pending.pendingActionId,
+            conversationId: params.pending.conversationId,
+            sourceRefs: preview.sourceRefs ?? [],
+          },
+        });
+        executionResult = { memoryId: memory.id };
+      } else if (params.pending.actionType === "RESEARCH_SAVE") {
+        executionResult = {
+          savedIntent: true,
+          question: preview.question ?? null,
+          note: "Research save confirmed; use Research workspace to persist the artifact from this session context.",
+          authorityRefs: params.pending.authorityRefs,
+          treatmentVerified: false,
+        };
+        await writeAuditEvent(tx as unknown as Database, {
+          organizationId: params.pending.organizationId,
+          actorUserId: params.userId,
+          matterId: params.pending.matterId,
+          action: "conversational_workflow.research_save_confirmed",
+          targetType: "conversational_action",
+          targetId: params.pending.pendingActionId,
+          metadata: { conversationId: params.pending.conversationId },
+        });
+      } else {
+        throw new Error(`Unsupported confirmed action type: ${params.pending.actionType}`);
+      }
 
-    const updated: ConversationalActionRecord = {
-      ...base,
-      actionStatus: "COMPLETED",
-      workflowStatus: "COMPLETED",
-      executionResult,
-      failureReason: null,
-    };
-    return {
-      status: "COMPLETED",
-      workflowStatus: "COMPLETED",
-      executionResult,
-      failureReason: null,
-      latencyMs: Math.max(0, Date.now() - started),
-      updatedAction: updated,
-    };
+      if (params.pending.agentApprovalId) {
+        await tx
+          .update(agentApprovals)
+          .set({
+            status: "approved",
+            reviewedByUserId: params.userId,
+            reviewedAt: new Date(),
+            reviewNote: "Confirmed in conversational Command Center",
+            updatedAt: new Date(),
+          })
+          .where(
+            and(
+              eq(agentApprovals.id, params.pending.agentApprovalId),
+              eq(agentApprovals.organizationId, params.pending.organizationId),
+            ),
+          );
+      }
+      if (params.pending.agentRunId) {
+        await tx
+          .update(agentRuns)
+          .set({ status: "completed", completedAt: new Date(), updatedAt: new Date() })
+          .where(
+            and(
+              eq(agentRuns.id, params.pending.agentRunId),
+              eq(agentRuns.organizationId, params.pending.organizationId),
+            ),
+          );
+      }
+
+      const jobPayload = {
+        pendingActionId: params.pending.pendingActionId,
+        actionType: params.pending.actionType,
+        conversationId: params.pending.conversationId,
+        executionResult,
+      };
+      if (existingJob) {
+        await tx
+          .update(aiJobs)
+          .set({
+            status: "completed",
+            payload: jobPayload,
+            updatedAt: new Date(),
+            lastError: null,
+          })
+          .where(eq(aiJobs.id, existingJob.id));
+      } else {
+        await tx.insert(aiJobs).values({
+          organizationId: params.pending.organizationId,
+          jobType: "conversational_action_confirm",
+          idempotencyKey,
+          status: "completed",
+          payload: jobPayload,
+        });
+      }
+
+      const updated: ConversationalActionRecord = {
+        ...base,
+        actionStatus: "COMPLETED",
+        workflowStatus: "COMPLETED",
+        executionResult,
+        failureReason: null,
+      };
+      return {
+        status: "COMPLETED" as const,
+        workflowStatus: "COMPLETED" as const,
+        executionResult,
+        failureReason: null,
+        latencyMs: Math.max(0, Date.now() - started),
+        updatedAction: updated,
+        alreadyExecuted: false,
+      };
+    });
   } catch (err) {
     const reason = err instanceof Error ? err.message : "Write execution failed.";
     const updated: ConversationalActionRecord = {

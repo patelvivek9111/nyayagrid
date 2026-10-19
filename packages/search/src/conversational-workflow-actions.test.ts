@@ -18,6 +18,7 @@ import {
   extractExplicitDueDate,
   hashPreviewPayload,
   isConfirmationUtterance,
+  conversationalConfirmIdempotencyKey,
   validateActionConfirmation,
 } from "./conversational-workflow-actions";
 
@@ -148,6 +149,11 @@ describe("Phase 4 conversational workflow actions", () => {
     expect(capabilityForAction("DRAFT_SAVE")).toBe("drafts.create");
     expect(capabilityForAction("TASK_CREATE")).toBe("matters.edit");
     // client_guest has neither drafts.create nor matters.edit — execution-time requireMatterAccess rejects.
+  });
+
+  it("at-most-once confirm uses durable ai_jobs idempotency key", () => {
+    const id = "cccccccc-cccc-4ccc-8ccc-cccccccccccc";
+    expect(conversationalConfirmIdempotencyKey(id)).toBe(`conversational_confirm:${id}`);
   });
 
   it("K/L: foreign navigation target rejected; matter-valid accepted", () => {
