@@ -1,7 +1,7 @@
+import { getAI, getEmbeddings } from "@/lib/infra";
 import { generateResearchMemoSchema } from "@nyayagrid/validation";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { generateResearchMemo } from "@nyayagrid/research";
-import { MockAIProvider, MockEmbeddingProvider } from "@nyayagrid/ai";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
@@ -26,9 +26,9 @@ export async function POST(request: Request, { params }: Params) {
       userId: user.id,
       question: body.researchQuestion,
       includeMatterFacts: body.includeMatterContext,
-      ai: process.env.AI_PROVIDER === "openai" ? undefined : new MockAIProvider(),
+      ai: getAI(),
       embeddings:
-        process.env.EMBEDDING_PROVIDER === "openai" ? undefined : new MockEmbeddingProvider(),
+        getEmbeddings(),
     });
     return jsonOk(result, { status: 201 });
   } catch (error) {

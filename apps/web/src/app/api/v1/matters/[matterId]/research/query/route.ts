@@ -1,7 +1,7 @@
+import { getAI, getEmbeddings } from "@/lib/infra";
 import { runResearchQuerySchema } from "@nyayagrid/validation";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { createResearchSession, listResearchSessions, runResearchQuery } from "@nyayagrid/research";
-import { MockAIProvider, MockEmbeddingProvider } from "@nyayagrid/ai";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
 
@@ -80,8 +80,8 @@ export async function POST(request: Request, { params }: Params) {
       executionStrategy: body.executionStrategy,
       modelId: body.modelId,
       embeddings:
-        process.env.EMBEDDING_PROVIDER === "openai" ? undefined : new MockEmbeddingProvider(),
-      ai: process.env.AI_PROVIDER === "openai" ? undefined : new MockAIProvider(),
+        getEmbeddings(),
+      ai: getAI(),
     });
     return jsonOk(
       {

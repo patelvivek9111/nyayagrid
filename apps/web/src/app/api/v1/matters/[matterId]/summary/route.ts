@@ -1,4 +1,4 @@
-import { MockAIProvider } from "@nyayagrid/ai";
+import { getAI } from "@/lib/infra";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { getLatestMatterSummary, regenerateMatterSummary } from "@nyayagrid/intelligence";
 import { requireUser } from "@/lib/auth";
@@ -43,7 +43,7 @@ export async function POST(request: Request, { params }: Params) {
       matterId,
       matterTitle: matter.title,
       userId: user.id,
-      ai: process.env.AI_PROVIDER === "openai" ? undefined : new MockAIProvider(),
+      ai: getAI(),
     });
     return jsonOk({ summary }, { status: 201 });
   } catch (error) {

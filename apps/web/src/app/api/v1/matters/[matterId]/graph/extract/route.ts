@@ -1,4 +1,3 @@
-import { MockAIProvider } from "@nyayagrid/ai";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import {
   extractGraphRelationshipCandidates,
@@ -6,10 +5,13 @@ import {
 } from "@nyayagrid/intelligence";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonError, jsonOk } from "@/lib/http";
+import { getAI } from "@/lib/infra";
+import { beginRouteCorrelation } from "@/lib/request-correlation";
 
 type Params = { params: Promise<{ matterId: string }> };
 
 export async function POST(request: Request, { params }: Params) {
+  const corr = beginRouteCorrelation(request, "api.graph.extract");
   try {
     const { matterId } = await params;
     const { db, user } = await requireUser(request.headers);
@@ -33,19 +35,45 @@ export async function POST(request: Request, { params }: Params) {
       }
     }
 
+    const focusMode = focusNodeId ? "FOCUSED" : "WHOLE_MATTER";
     const result = await extractGraphRelationshipCandidates({
       db,
       organizationId: matter.organizationId,
       matterId,
       userId: user.id,
       focusNodeId,
-      ai: process.env.AI_PROVIDER === "openai" ? undefined : new MockAIProvider(),
+      ai: getAI(),
     });
-    return jsonOk(result, { status: 201 });
+    const coverage = result.coverage;
+    corr.log.info("graph.extract", {
+      route: "graph.extract",
+      matterId,
+      focusMode,
+      candidateNodes: coverage?.candidateNodes ?? null,
+      selectedNodes: coverage?.selectedNodes ?? null,
+      candidateChunks: coverage?.candidateChunks ?? null,
+      selectedChunks: coverage?.selectedChunks ?? null,
+      coverageLimited: coverage?.coverageLimited ?? null,
+      provider: result.provider ?? null,
+      durationMs: corr.elapsedMs(),
+      outcome: "ok",
+    });
+    return corr.attach(jsonOk(result, { status: 201 }));
   } catch (error) {
     if (error instanceof GraphFocusRejectedError) {
-      return jsonError("GRAPH_FOCUS_REJECTED", error.message, 400);
+      corr.log.warn("graph.extract.focus_rejected", {
+        route: "graph.extract",
+        matterId: (await params).matterId,
+        durationMs: corr.elapsedMs(),
+        outcome: "GRAPH_FOCUS_REJECTED",
+      });
+      return corr.attach(jsonError("GRAPH_FOCUS_REJECTED", error.message, 400));
     }
-    return handleRouteError(error);
+    corr.log.error("graph.extract.error", {
+      route: "graph.extract",
+      durationMs: corr.elapsedMs(),
+      outcome: "error",
+    });
+    return corr.attach(handleRouteError(error));
   }
 }

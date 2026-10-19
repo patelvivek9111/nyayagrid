@@ -16,6 +16,7 @@ import { assertProfessionalCommandCenterAccess } from "@/lib/command-center-gues
 import { assertFeatureEnabled } from "@/lib/features";
 import { handleRouteError, jsonOk } from "@/lib/http";
 import { getAgentBudgetsFromEnv, getAI, getEmbeddings, getRetriever } from "@/lib/infra";
+import { beginRouteCorrelation } from "@/lib/request-correlation";
 import { enforceRateLimit } from "@/lib/rate-limit";
 import { askNyayaAboutMatter } from "@/server/nyaya";
 
@@ -34,6 +35,7 @@ async function answerDirectly(params: {
   signal?: AbortSignal;
   onEvent?: AskStreamListener;
   continueToken?: string;
+  correlationId?: string;
 }) {
   const conversationKey = params.conversationId?.trim() || "pending";
   const runKey = askRunKey({
@@ -60,6 +62,7 @@ async function answerDirectly(params: {
       signal: mergeAbortSignals(params.signal, runController.signal),
       onEvent: params.onEvent,
       continueToken: params.continueToken,
+      correlationId: params.correlationId,
     });
 
     await writeAuditEvent(params.db, {
@@ -83,7 +86,6 @@ async function answerDirectly(params: {
   }
 }
 
-
 /**
  * Ask-or-task entry point. `mode: "ask"` always answers directly (the classic Nyaya Q&A path).
  * `mode: "task"` always creates an agent run. `mode: "auto"` (default) classifies the goal first
@@ -91,6 +93,7 @@ async function answerDirectly(params: {
  * questions cheap while still routing multi-step requests to the orchestrator.
  */
 export async function POST(request: Request, { params }: Params) {
+  const corr = beginRouteCorrelation(request, "api.ask");
   try {
     const { matterId } = await params;
     const { db, user } = await requireUser(request.headers);
@@ -98,7 +101,7 @@ export async function POST(request: Request, { params }: Params) {
       endpointClass: "ask_nyaya",
       userId: user.id,
     });
-    if (limited) return limited;
+    if (limited) return corr.attach(limited);
 
     const body = askOrTaskSchema.parse(await request.json());
     const mode = body.mode ?? "auto";
@@ -128,13 +131,20 @@ export async function POST(request: Request, { params }: Params) {
         organizationId: matter.organizationId,
         userId: user.id,
       });
-      if (agentLimited) return agentLimited;
+      if (agentLimited) return corr.attach(agentLimited);
     }
+
+    const askMeta = {
+      route: "ask",
+      matterId,
+      conversationId: body.conversationId ?? null,
+      mode,
+    };
 
     if (mode === "ask" || !agentsOn) {
       if (wantsStream) {
-        return createAskSseResponse(async (emit) => {
-          await answerDirectly({
+        const stream = createAskSseResponse(async (emit) => {
+          const qa = await answerDirectly({
             db,
             organizationId: matter.organizationId,
             matterId,
@@ -147,8 +157,18 @@ export async function POST(request: Request, { params }: Params) {
             signal: request.signal,
             onEvent: emit,
             continueToken: body.continueToken,
+            correlationId: corr.correlationId,
+          });
+          corr.log.info("ask.completed", {
+            ...askMeta,
+            artifactId: qa.artifact?.id ?? null,
+            evidenceState: qa.answer.evidenceState,
+            durationMs: corr.elapsedMs(),
+            outcome: "ok",
+            stream: true,
           });
         });
+        return corr.attach(stream);
       }
       const qa = await answerDirectly({
         db,
@@ -162,8 +182,17 @@ export async function POST(request: Request, { params }: Params) {
         sourceScope,
         signal: request.signal,
         continueToken: body.continueToken,
+        correlationId: corr.correlationId,
       });
-      return jsonOk({ mode: "qa", qa });
+      corr.log.info("ask.completed", {
+        ...askMeta,
+        artifactId: qa.artifact?.id ?? null,
+        evidenceState: qa.answer.evidenceState,
+        durationMs: corr.elapsedMs(),
+        outcome: "ok",
+        stream: false,
+      });
+      return corr.attach(jsonOk({ mode: "qa", qa }));
     }
 
     const orchestrator = new NyayaOrchestrator();
@@ -182,8 +211,8 @@ export async function POST(request: Request, { params }: Params) {
 
     if (outcome.mode === "qa") {
       if (wantsStream) {
-        return createAskSseResponse(async (emit) => {
-          await answerDirectly({
+        const stream = createAskSseResponse(async (emit) => {
+          const qa = await answerDirectly({
             db,
             organizationId: matter.organizationId,
             matterId,
@@ -196,8 +225,18 @@ export async function POST(request: Request, { params }: Params) {
             signal: request.signal,
             onEvent: emit,
             continueToken: body.continueToken,
+            correlationId: corr.correlationId,
+          });
+          corr.log.info("ask.completed", {
+            ...askMeta,
+            artifactId: qa.artifact?.id ?? null,
+            evidenceState: qa.answer.evidenceState,
+            durationMs: corr.elapsedMs(),
+            outcome: "ok",
+            stream: true,
           });
         });
+        return corr.attach(stream);
       }
       const qa = await answerDirectly({
         db,
@@ -211,8 +250,17 @@ export async function POST(request: Request, { params }: Params) {
         sourceScope,
         signal: request.signal,
         continueToken: body.continueToken,
+        correlationId: corr.correlationId,
       });
-      return jsonOk({ mode: "qa", intent: outcome.intent, qa });
+      corr.log.info("ask.completed", {
+        ...askMeta,
+        artifactId: qa.artifact?.id ?? null,
+        evidenceState: qa.answer.evidenceState,
+        durationMs: corr.elapsedMs(),
+        outcome: "ok",
+        stream: false,
+      });
+      return corr.attach(jsonOk({ mode: "qa", intent: outcome.intent, qa }));
     }
 
     // Agent path: record one usage event per generated artifact (each step may call the model
@@ -230,14 +278,27 @@ export async function POST(request: Request, { params }: Params) {
       });
     }
 
-    return jsonOk({
-      mode: "task",
-      intent: outcome.intent,
-      run: outcome.run,
-      userFacingPlan: outcome.userFacingPlan,
-      executed: outcome.executed,
+    corr.log.info("ask.task.completed", {
+      ...askMeta,
+      runId: outcome.run.run.id,
+      durationMs: corr.elapsedMs(),
+      outcome: "ok",
     });
+    return corr.attach(
+      jsonOk({
+        mode: "task",
+        intent: outcome.intent,
+        run: outcome.run,
+        userFacingPlan: outcome.userFacingPlan,
+        executed: outcome.executed,
+      }),
+    );
   } catch (error) {
-    return handleRouteError(error);
+    corr.log.warn("ask.error", {
+      route: "ask",
+      durationMs: corr.elapsedMs(),
+      outcome: "error",
+    });
+    return corr.attach(handleRouteError(error));
   }
 }

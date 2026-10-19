@@ -697,6 +697,8 @@ export async function askNyayaAboutMatter(params: {
   workspaceType?: string | null;
   criminalCaseId?: string | null;
   suppressionReview?: SuppressionReview | null;
+  /** Optional HTTP correlation id for confirmation/trace logs (never log question text). */
+  correlationId?: string;
 }) {
   const sourceScope: SourceScope = params.sourceScope ?? "case";
   const flags = resolveSourceScopeFlags(sourceScope);
@@ -1584,6 +1586,7 @@ export async function askNyayaAboutMatter(params: {
         userId: params.userId,
         pending: validation.pending,
         capability: capabilityForAction(validation.pending.actionType),
+        correlationId: params.correlationId,
       });
       const answer = formatActionPreviewAnswer({
         classification: workflowClassification,

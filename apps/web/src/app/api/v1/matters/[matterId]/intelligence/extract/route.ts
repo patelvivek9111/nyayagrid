@@ -1,4 +1,4 @@
-import { MockAIProvider } from "@nyayagrid/ai";
+import { getAI } from "@/lib/infra";
 import { extractIntelligenceSchema } from "@nyayagrid/validation";
 import { requireMatterAccess, writeAuditEvent } from "@nyayagrid/permissions";
 import { extractMatterIntelligenceForReadyDocuments } from "@nyayagrid/intelligence";
@@ -32,7 +32,7 @@ export async function POST(request: Request, { params }: Params) {
       userId: user.id,
       documentVersionId: body.documentVersionId ?? undefined,
       force: body.force,
-      ai: process.env.AI_PROVIDER === "openai" ? undefined : new MockAIProvider(),
+      ai: getAI(),
     });
 
     await writeAuditEvent(db, {

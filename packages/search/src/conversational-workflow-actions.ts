@@ -15,11 +15,14 @@ import {
   type Database,
 } from "@nyayagrid/database";
 import { createDraft, createMatterMemory } from "@nyayagrid/intelligence";
+import { createLogger } from "@nyayagrid/observability";
 import {
   AuthorizationError,
   requireMatterAccess,
   writeAuditEvent,
 } from "@nyayagrid/permissions";
+
+const confirmLog = createLogger("conversational-confirm");
 import type { ConversationWorkingState } from "./conversation-context";
 import type { ReferentResolutionResult } from "./conversational-referent-resolver";
 import {
@@ -1129,9 +1132,18 @@ export async function executeConfirmedConversationalAction(params: {
   pending: ConversationalActionRecord;
   /** Capability expected for this write (rechecked at execution time). */
   capability: "matters.edit" | "drafts.create" | "research.run";
+  /** Optional HTTP correlation id (never log preview/body content). */
+  correlationId?: string;
 }): Promise<ExecuteConfirmedActionResult> {
   const started = Date.now();
   const base = { ...params.pending, actionStatus: "EXECUTING" as const, workflowStatus: "RUNNING" as const };
+  const safeFields = {
+    correlationId: params.correlationId ?? null,
+    pendingActionId: params.pending.pendingActionId,
+    actionType: params.pending.actionType,
+    actionClass: params.pending.actionClass,
+    matterId: params.pending.matterId,
+  };
 
   try {
     await requireMatterAccess(params.db, {
@@ -1150,12 +1162,20 @@ export async function executeConfirmedConversationalAction(params: {
       failureReason: reason,
       executionResult: null,
     };
+    const latencyMs = Math.max(0, Date.now() - started);
+    confirmLog.warn("confirm.denied", {
+      ...safeFields,
+      outcome: "FAILED",
+      errorCode: "AUTHORIZATION",
+      alreadyExecuted: false,
+      durationMs: latencyMs,
+    });
     return {
       status: "FAILED",
       workflowStatus: "FAILED",
       executionResult: null,
       failureReason: reason,
-      latencyMs: Math.max(0, Date.now() - started),
+      latencyMs,
       updatedAction: updated,
     };
   }
@@ -1185,12 +1205,19 @@ export async function executeConfirmedConversationalAction(params: {
           executionResult: prior,
           failureReason: null,
         };
+        const latencyMs = Math.max(0, Date.now() - started);
+        confirmLog.info("confirm.completed", {
+          ...safeFields,
+          outcome: "COMPLETED",
+          alreadyExecuted: true,
+          durationMs: latencyMs,
+        });
         return {
           status: "COMPLETED" as const,
           workflowStatus: "COMPLETED" as const,
           executionResult: prior,
           failureReason: null,
-          latencyMs: Math.max(0, Date.now() - started),
+          latencyMs,
           updatedAction: updated,
           alreadyExecuted: true,
         };
@@ -1368,12 +1395,19 @@ export async function executeConfirmedConversationalAction(params: {
         executionResult,
         failureReason: null,
       };
+      const latencyMs = Math.max(0, Date.now() - started);
+      confirmLog.info("confirm.completed", {
+        ...safeFields,
+        outcome: "COMPLETED",
+        alreadyExecuted: false,
+        durationMs: latencyMs,
+      });
       return {
         status: "COMPLETED" as const,
         workflowStatus: "COMPLETED" as const,
         executionResult,
         failureReason: null,
-        latencyMs: Math.max(0, Date.now() - started),
+        latencyMs,
         updatedAction: updated,
         alreadyExecuted: false,
       };
@@ -1387,12 +1421,20 @@ export async function executeConfirmedConversationalAction(params: {
       failureReason: reason,
       executionResult: null,
     };
+    const latencyMs = Math.max(0, Date.now() - started);
+    confirmLog.error("confirm.failed", {
+      ...safeFields,
+      outcome: "FAILED",
+      errorCode: "WRITE_EXECUTION_FAILED",
+      alreadyExecuted: false,
+      durationMs: latencyMs,
+    });
     return {
       status: "FAILED",
       workflowStatus: "FAILED",
       executionResult: null,
       failureReason: reason,
-      latencyMs: Math.max(0, Date.now() - started),
+      latencyMs,
       updatedAction: updated,
     };
   }

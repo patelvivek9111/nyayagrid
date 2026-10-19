@@ -1,7 +1,7 @@
 import { createDraftSchema, generateDraftSchema } from "@nyayagrid/validation";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { createDraft, generateDraft, listDrafts } from "@nyayagrid/intelligence";
-import { MockAIProvider } from "@nyayagrid/ai";
+import { getAI } from "@/lib/infra";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
@@ -47,7 +47,7 @@ export async function POST(request: Request, { params }: Params) {
         draftType: body.draftType,
         instructions: body.instructions,
         documentIds: body.documentIds,
-        ai: process.env.AI_PROVIDER === "openai" ? undefined : new MockAIProvider(),
+        ai: getAI(),
         executionStrategy: body.executionStrategy,
         modelId: body.modelId,
       });

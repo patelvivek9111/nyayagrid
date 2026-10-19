@@ -1,7 +1,7 @@
 import { analyzeContractSchema } from "@nyayagrid/validation";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { analyzeContract, listContractAnalyses } from "@nyayagrid/intelligence";
-import { MockAIProvider } from "@nyayagrid/ai";
+import { getAI } from "@/lib/infra";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonOk } from "@/lib/http";
 import { enforceRateLimit } from "@/lib/rate-limit";
@@ -56,7 +56,7 @@ export async function POST(request: Request, { params }: Params) {
       documentVersionId: body.documentVersionId,
       userId: user.id,
       force: body.force,
-      ai: process.env.AI_PROVIDER === "openai" ? undefined : new MockAIProvider(),
+      ai: getAI(),
     });
     return jsonOk(result, { status: result.skipped ? 200 : 201 });
   } catch (error) {

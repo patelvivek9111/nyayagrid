@@ -1,7 +1,7 @@
 import { proposeDiscoveryClassificationSchema } from "@nyayagrid/validation";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { proposeDiscoveryClassification } from "@nyayagrid/intelligence";
-import { MockAIProvider } from "@nyayagrid/ai";
+import { getAI } from "@/lib/infra";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
@@ -25,7 +25,7 @@ export async function POST(request: Request, { params }: Params) {
       documentId,
       userId: user.id,
       requestSummary: body.requestSummary,
-      ai: process.env.AI_PROVIDER === "openai" ? undefined : new MockAIProvider(),
+      ai: getAI(),
     });
     return jsonOk(result, { status: 201 });
   } catch (error) {

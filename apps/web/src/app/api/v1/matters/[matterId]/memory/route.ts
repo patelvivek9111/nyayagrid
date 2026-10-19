@@ -10,7 +10,7 @@ import {
   proposeMatterMemories,
   supersedeMatterMemory,
 } from "@nyayagrid/intelligence";
-import { MockAIProvider } from "@nyayagrid/ai";
+import { getAI } from "@/lib/infra";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonOk } from "@/lib/http";
 
@@ -63,7 +63,7 @@ export async function POST(request: Request, { params }: Params) {
         userId: user.id,
         question: body.question,
         hint: body.hint,
-        ai: process.env.AI_PROVIDER === "openai" ? undefined : new MockAIProvider(),
+        ai: getAI(),
       });
       if ((result.proposals?.length ?? 0) === 0 && body.hint?.trim()) {
         const memory = await createMatterMemory({

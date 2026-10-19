@@ -1,7 +1,7 @@
 import { compareDocumentsSchema } from "@nyayagrid/validation";
 import { requireMatterAccess } from "@nyayagrid/permissions";
 import { compareDocuments, listDocumentComparisons } from "@nyayagrid/intelligence";
-import { MockAIProvider } from "@nyayagrid/ai";
+import { getAI } from "@/lib/infra";
 import { requireUser } from "@/lib/auth";
 import { handleRouteError, jsonOk } from "@/lib/http";
 import { enforceRateLimit } from "@/lib/rate-limit";
@@ -55,7 +55,7 @@ export async function POST(request: Request, { params }: Params) {
       documentBId: body.documentBId,
       versionBId: body.versionBId,
       userId: user.id,
-      ai: process.env.AI_PROVIDER === "openai" ? undefined : new MockAIProvider(),
+      ai: getAI(),
     });
     return jsonOk(result, { status: result.skipped ? 200 : 201 });
   } catch (error) {

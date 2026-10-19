@@ -12,7 +12,7 @@ import {
   type IngestIdentity,
 } from "@nyayagrid/documents";
 import { extractMatterIntelligenceForDocument } from "@nyayagrid/intelligence";
-import { MockAIProvider, newUsageActionId } from "@nyayagrid/ai";
+import { newUsageActionId } from "@nyayagrid/ai";
 import { recordUsage } from "@nyayagrid/platform";
 import { getAI, getEmbeddings, getMalwareScanner, getOcrProvider, getStorage } from "@/lib/infra";
 import { isFeatureEnabled } from "@nyayagrid/platform";
@@ -187,7 +187,7 @@ export async function handleDocumentIntelligenceEvent(params: {
       documentId: identity.documentId!,
       documentVersionId: identity.documentVersionId!,
       userId: params.payload.userId ?? null,
-      ai: process.env.AI_PROVIDER === "openai" ? getAI() : new MockAIProvider(),
+      ai: getAI(),
     });
 
     if (loaded.document && loaded.document.processingState === "indexed") {

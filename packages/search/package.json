@@ -22,6 +22,7 @@
     "@nyayagrid/database": "*",
     "@nyayagrid/intelligence": "*",
     "@nyayagrid/jurisdiction": "*",
+    "@nyayagrid/observability": "*",
     "@nyayagrid/permissions": "*",
     "@nyayagrid/research": "*"
   }
