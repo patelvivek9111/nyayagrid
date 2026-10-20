@@ -35,8 +35,15 @@ deploy-wave2.log
 
 # Temporary corpus/CL runner outputs (not canonical reports)
 scripts/*.json.tmp
+*.json.tmp
+
+# Obsolete one-shot runners (Batch 1); do not re-commit
+scripts/tmp-*.cjs
+scripts/tmp-*.ts
+scripts/run-tmp-*.cjs
+
+.tmp-rc3-standalone-runtime/
 
 # Queue #2 live ownership lock (runtime-local; do not commit)
 packages/research/corpus/reports/queue2-worker.lock.json
 packages/research/corpus/reports/queue2-worker.lock.archived.*.json
-
