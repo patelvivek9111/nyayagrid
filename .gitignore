@@ -47,3 +47,8 @@ scripts/run-tmp-*.cjs
 # Queue #2 live ownership lock (runtime-local; do not commit)
 packages/research/corpus/reports/queue2-worker.lock.json
 packages/research/corpus/reports/queue2-worker.lock.archived.*.json
+
+# Generated esbuild bundles (reproducible from scripts sources)
+scripts/**/*-bundled.cjs
+# REVIEW: keep retrieval SQL bundle visible/trackable until disposition
+!scripts/staging-retrieval-sql-bundled.cjs
