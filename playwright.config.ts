@@ -80,7 +80,7 @@ export default defineConfig({
       env: e2eEnv,
     },
     {
-      command: "node scripts/e2e-inngest-dev.mjs",
+      command: "node scripts/certification/e2e-inngest-dev.mjs",
       url: "http://127.0.0.1:8288",
       reuseExistingServer: !process.env.CI,
       timeout: 240_000,

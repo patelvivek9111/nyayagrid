@@ -182,7 +182,7 @@ function checkObservabilityArtifacts(): OpsCheckResult {
 
 function checkBackupDocs(): OpsCheckResult {
   const backupDoc = join(REPO_ROOT, "docs/BACKUP_RESTORE.md");
-  const script = join(REPO_ROOT, "scripts/rehearse-backup-restore.mjs");
+  const script = join(REPO_ROOT, "scripts/maintenance/rehearse-backup-restore.mjs");
   const rootPkg = JSON.parse(readFileSync(join(REPO_ROOT, "package.json"), "utf8")) as {
     scripts?: Record<string, string>;
   };

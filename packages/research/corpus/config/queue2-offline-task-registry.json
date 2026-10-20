@@ -24,7 +24,7 @@
       "completion": {
         "type": "checkpoint_advanced"
       },
-      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#usReportsGap",
+      "deterministicRunner": "scripts/corpus/queue/queue2-lane-b-runners.cjs#usReportsGap",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -52,7 +52,7 @@
       "completion": {
         "type": "batch_imported"
       },
-      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#nonClIntake",
+      "deterministicRunner": "scripts/corpus/queue/queue2-lane-b-runners.cjs#nonClIntake",
       "mayMutate": true,
       "mayUseNetwork": true,
       "mayUseAI": false,
@@ -79,7 +79,7 @@
       "completion": {
         "type": "depth_delta"
       },
-      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#uscDepth",
+      "deterministicRunner": "scripts/corpus/queue/queue2-lane-b-runners.cjs#uscDepth",
       "mayMutate": true,
       "mayUseNetwork": true,
       "mayUseAI": false,
@@ -104,7 +104,7 @@
       "completion": {
         "type": "depth_delta"
       },
-      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#cfrDepth",
+      "deterministicRunner": "scripts/corpus/queue/queue2-lane-b-runners.cjs#cfrDepth",
       "mayMutate": true,
       "mayUseNetwork": true,
       "mayUseAI": false,
@@ -129,7 +129,7 @@
       "completion": {
         "type": "depth_delta"
       },
-      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#federalRulesDepth",
+      "deterministicRunner": "scripts/corpus/queue/queue2-lane-b-runners.cjs#federalRulesDepth",
       "mayMutate": true,
       "mayUseNetwork": true,
       "mayUseAI": false,
@@ -156,7 +156,7 @@
       "completion": {
         "type": "corpus_version_caught_up"
       },
-      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#citationReresolve",
+      "deterministicRunner": "scripts/corpus/queue/queue2-lane-b-runners.cjs#citationReresolve",
       "mayMutate": true,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -183,7 +183,7 @@
       "completion": {
         "type": "manifest_version_bumped"
       },
-      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#refreshLaneAManifest",
+      "deterministicRunner": "scripts/corpus/queue/queue2-lane-b-runners.cjs#refreshLaneAManifest",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -209,7 +209,7 @@
       "completion": {
         "type": "analysis_written"
       },
-      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#historicalGaps",
+      "deterministicRunner": "scripts/corpus/queue/queue2-lane-b-runners.cjs#historicalGaps",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -236,7 +236,7 @@
       "completion": {
         "type": "candidates_documented"
       },
-      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#intermediateMapping",
+      "deterministicRunner": "scripts/corpus/queue/queue2-lane-b-runners.cjs#intermediateMapping",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -263,7 +263,7 @@
       "completion": {
         "type": "audit_timestamp"
       },
-      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#integrityAudit",
+      "deterministicRunner": "scripts/corpus/queue/queue2-lane-b-runners.cjs#integrityAudit",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -290,7 +290,7 @@
       "completion": {
         "type": "corpus_version_caught_up"
       },
-      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#retrievalRegression",
+      "deterministicRunner": "scripts/corpus/queue/queue2-lane-b-runners.cjs#retrievalRegression",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -314,7 +314,7 @@
       "completion": {
         "type": "audit_timestamp"
       },
-      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#currentnessAudit",
+      "deterministicRunner": "scripts/corpus/queue/queue2-lane-b-runners.cjs#currentnessAudit",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -338,7 +338,7 @@
       "completion": {
         "type": "prep_written"
       },
-      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#prepareNextClBatch",
+      "deterministicRunner": "scripts/corpus/queue/queue2-lane-b-runners.cjs#prepareNextClBatch",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,
@@ -364,7 +364,7 @@
       "completion": {
         "type": "scorecard_written"
       },
-      "deterministicRunner": "scripts/queue2-lane-b-runners.cjs#dailyScorecard",
+      "deterministicRunner": "scripts/corpus/queue/queue2-lane-b-runners.cjs#dailyScorecard",
       "mayMutate": false,
       "mayUseNetwork": false,
       "mayUseAI": false,

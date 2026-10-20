@@ -51,7 +51,7 @@ describe("async document ingest wiring", () => {
 
   it("Playwright starts Inngest with the Next.js app", () => {
     const pw = readFileSync(resolve(webRoot, "../../playwright.config.ts"), "utf8");
-    expect(pw).toContain("scripts/e2e-inngest-dev.mjs");
+    expect(pw).toContain("scripts/certification/e2e-inngest-dev.mjs");
     expect(pw).toContain("127.0.0.1:8288");
     expect(pw).toContain("INNGEST_DEV");
     expect(pw).not.toMatch(/FEATURE_AGENTS\s*:/);

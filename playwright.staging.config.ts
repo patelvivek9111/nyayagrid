@@ -7,7 +7,7 @@ import path from "node:path";
  *
  * Auth artifact: playwright/.auth/staging-user.json (gitignored).
  * Preferred: interactive Clerk login once, then reuse storageState.
- * Optional: SMOKE_AUTH_HEADER for API-only scripts (scripts/q9-staging-recovery-acceptance.ts).
+ * Optional: SMOKE_AUTH_HEADER for API-only scripts (scripts/certification/q9-staging-recovery-acceptance.ts).
  */
 const STAGING_URL = (process.env.STAGING_E2E_BASE_URL ?? "https://staging.nyayagrid.com").replace(
   /\/$/,

@@ -44,7 +44,7 @@ npm run queue2:worker
 Equivalent:
 
 ```bash
-node scripts/run-queue2-dual-lane.cjs --loop
+node scripts/corpus/queue/run-queue2-dual-lane.cjs --loop
 ```
 
 Single bounded cycle (ops/debug only):
@@ -78,7 +78,7 @@ Known Tier 2 limits: **30 / min**, **300 / hour**, **1200 / day**.
 
 ### Adaptive usable capacity (no fixed 25-request gate)
 
-Lane A capacity is task-aware (`scripts/cl-adaptive-quota.cjs`, config `adaptiveQuota` in `queue2-worker-safety.json`):
+Lane A capacity is task-aware (`scripts/corpus/courtlistener/cl-adaptive-quota.cjs`, config `adaptiveQuota` in `queue2-worker-safety.json`):
 
 - `usableRequests = min(minuteRem-minuteReserve, hourRem-hourReserve, dayRem-dayReserve)`
 - Modes: `FINISH_TARGET` | `FULL_BATCH` | `MICRO_BATCH` | `WAIT_MINUTE` | `WAIT_HOUR` | `DAY_BLOCKED`
@@ -91,7 +91,7 @@ Default reserves: minute **2**, hour **5**, day **10**. Minimum micro-batch: **3
 
 ## WATCHDOG / AUTONOMOUS OPERATIONS
 
-Module: `scripts/queue2-watchdog.cjs`  
+Module: `scripts/corpus/queue/queue2-watchdog.cjs`  
 Config: `packages/research/corpus/config/queue2-watchdog.json`  
 Status: `packages/research/corpus/reports/queue2-watchdog-status.json`
 
@@ -256,7 +256,7 @@ When the production checklist is satisfied, the worker sets completion candidate
 - Safety config: `config/queue2-worker-safety.json`  
 - Idempotency ledger: `queue2-idempotency-ledger.jsonl`  
 - Audit trail: `queue2-worker-audit.jsonl`  
-- Policy / safety: `scripts/queue2-autonomy-policy.cjs`, `scripts/queue2-worker-safety.cjs`
+- Policy / safety: `scripts/corpus/queue/queue2-autonomy-policy.cjs`, `scripts/corpus/queue/queue2-worker-safety.cjs`
 
 
 ## Overnight zero-quota morning workflow

@@ -14,7 +14,7 @@ const postgres = require("postgres");
 const fs = require("fs");
 const {
   ensureCaseCitationExtraction,
-} = require("./lib/case-citation-extraction.cjs");
+} = require("./dev/lib/case-citation-extraction.cjs");
 
 const CL_BASE = "https://www.courtlistener.com/api/rest/v4";
 const SOURCE = "courtlistener";

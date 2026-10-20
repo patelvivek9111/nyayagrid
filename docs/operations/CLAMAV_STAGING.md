@@ -95,7 +95,7 @@ Do not roll back to the official `clamav/clamav` image with `tail -f /dev/null`.
 From the **NyayaGrid staging web** machine (uses 6PN DNS and the app `CLAMAV_HOST`):
 
 ```bash
-fly ssh sftp put scripts/staging-clamav-verify.cjs /tmp/staging-clamav-verify.cjs --app nyayagrid-staging
+fly ssh sftp put scripts/corpus/staging/staging-clamav-verify.cjs /tmp/staging-clamav-verify.cjs --app nyayagrid-staging
 fly ssh console --app nyayagrid-staging --command "node /tmp/staging-clamav-verify.cjs"
 ```
 
