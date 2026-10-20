@@ -45,7 +45,7 @@ const steps: StepResult[] = [
   ]),
   runStep(
     "J010-J011-J012-J015-J016-J018-J019",
-    ["test", "-w", "@nyayagrid/permissions", "--", "src/phase6s.integration.test.ts"],
+    ["test", "-w", "@nyayagrid/permissions", "--", "src/jurisdiction-isolation.integration.test.ts"],
     { RUN_DB_TESTS: "1" },
   ),
 ];

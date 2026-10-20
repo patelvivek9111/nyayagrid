@@ -3,7 +3,7 @@ import { selectWorkspace } from "./select-workspace";
 
 /**
  * Oct 19–25 Phase 5 — Cross-workflow Command Center browser certification.
- * Separate from legacy e2e/command-center-phase5.spec.ts.
+ * Separate from e2e/command-center-cross-workflow-ui.spec.ts.
  * CourtListener: 0. Schema migrations: none.
  */
 const suffix = Date.now().toString(36);

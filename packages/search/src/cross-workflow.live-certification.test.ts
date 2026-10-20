@@ -1,6 +1,6 @@
 /**
  * Oct 19–25 Phase 5 — Cross-workflow chaining LOCAL live certification.
- * Separate from legacy conversational-phase5.live-certification.test.ts (UX/confirm).
+ * Separate from cross-workflow-suite.live-certification.test.ts (UX/confirm).
  * Requires SHARED_RUNTIME_LOCK + RUN_DB_TESTS=1. CourtListener: 0. No schema migration.
  */
 import { afterAll, beforeAll, describe, expect, it } from "vitest";

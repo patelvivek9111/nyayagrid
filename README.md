@@ -87,7 +87,7 @@ npm run research:import -w @nyayagrid/research -- --fixtures
 ```powershell
 $env:RUN_DB_TESTS="1"
 $env:DATABASE_URL="postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid"
-npm run test -w @nyayagrid/permissions -- src/phase6.integration.test.ts
+npm run test -w @nyayagrid/permissions -- src/research-corpus-access.integration.test.ts
 npm run test -w @nyayagrid/research
 ```
 
@@ -121,7 +121,7 @@ See `docs/NYAYA_AGENTS.md` for the full design; this is the click-through happy 
 $env:RUN_DB_TESTS="1"
 $env:DATABASE_URL="postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid"
 npm run test -w @nyayagrid/agents
-npm run test -w @nyayagrid/permissions -- src/phase7.integration.test.ts
+npm run test -w @nyayagrid/permissions -- src/agent-orchestration-access.integration.test.ts
 ```
 
 ## Manual Phase 8 walkthrough
@@ -168,7 +168,7 @@ completion announcement.**
 $env:RUN_DB_TESTS="1"
 $env:DATABASE_URL="postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid"
 npm run test -w @nyayagrid/workspaces
-npm run test -w @nyayagrid/permissions -- src/phase8.integration.test.ts
+npm run test -w @nyayagrid/permissions -- src/professor-guide-workspace-access.integration.test.ts
 ```
 
 ## Phase 9 — production hardening
@@ -183,7 +183,7 @@ documentation linked above.
 ```powershell
 $env:RUN_DB_TESTS="1"
 $env:DATABASE_URL="postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid"
-npm run test -w @nyayagrid/permissions -- src/phase9.integration.test.ts
+npm run test -w @nyayagrid/permissions -- src/production-readiness.integration.test.ts
 ```
 
 ### End-to-end tests (Playwright)

@@ -116,7 +116,7 @@ const suites: Suite[] = [
       "--",
       "src/index.test.ts",
       "src/beta-security-audit.integration.test.ts",
-      "src/phase6s.integration.test.ts",
+      "src/jurisdiction-isolation.integration.test.ts",
     ],
     env: { RUN_DB_TESTS: "1" },
   },

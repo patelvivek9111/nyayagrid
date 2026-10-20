@@ -1,7 +1,7 @@
 {
   "id": "j1-2026-08-19",
   "name": "Phase 6S Nyaya Jurisdiction architecture (J1)",
-  "note": "Deterministic architecture benchmark, not 50-state certification. Runnable via npm run bench:j1. J012/J015/J016 execute live askNyayaAboutMatter / generateDraft / executeAgentRun paths in phase6s.integration.test.ts (RUN_DB_TESTS=1).",
+  "note": "Deterministic architecture benchmark, not 50-state certification. Runnable via npm run bench:j1. J012/J015/J016 execute live askNyayaAboutMatter / generateDraft / executeAgentRun paths in jurisdiction-isolation.integration.test.ts (RUN_DB_TESTS=1).",
   "tasks": [
     { "id": "J001", "title": "state matter context" },
     { "id": "J002", "title": "federal district derives circuit" },
