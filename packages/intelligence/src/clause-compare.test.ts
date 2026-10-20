@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   applyComparisonSummaryAlignmentPolicy,
   computeParagraphDiffs,
-} from "./draft/helpers";
+} from "./draft/draft-text-helpers";
 import {
   classifyChangeAttention,
   computeClauseDiffs,

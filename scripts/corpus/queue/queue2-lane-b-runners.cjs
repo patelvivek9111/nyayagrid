@@ -10,13 +10,23 @@ const path = require("node:path");
 const ROOT = path.join(__dirname, "../../..");
 const REPORTS = path.join(ROOT, "packages/research/corpus/reports");
 
+/**
+ * Validation/tests must not mutate tracked corpus report artifacts.
+ * Production Lane B worker keeps writing evidence under reports/.
+ */
+function isRepoReportsWriteSuppressed() {
+  if (process.env.QUEUE2_VALIDATION_READONLY === "1") return true;
+  return process.argv.some((a) => /\.test\.cjs$/i.test(String(a)));
+}
+
 function ensureReports() {
   fs.mkdirSync(REPORTS, { recursive: true });
 }
 
 function writeEvidence(name, payload) {
-  ensureReports();
   const file = path.join(REPORTS, name);
+  if (isRepoReportsWriteSuppressed()) return file;
+  ensureReports();
   fs.writeFileSync(file, JSON.stringify(payload, null, 2));
   return file;
 }
@@ -173,7 +183,9 @@ function refreshLaneAManifest() {
   } = require("./queue2-autonomy-policy.cjs");
   const manifest = loadOrCreateLaneAManifest({ createIfMissing: true });
   const reranked = rerankLaneAManifest(manifest);
-  persistLaneAManifest(reranked);
+  if (!isRepoReportsWriteSuppressed()) {
+    persistLaneAManifest(reranked);
+  }
   return okResult("DEPTH_MANIFEST_REFRESH", {
     checkpoint: `manifest-v${reranked.version || reranked.manifestVersion || 1}`,
   });

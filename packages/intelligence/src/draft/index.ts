@@ -38,7 +38,7 @@ import {
   normalizeDraftGenerationRaw,
   withInsufficientSourceAssumption,
   type ClassifiedDraftAssertion,
-} from "./helpers";
+} from "./draft-text-helpers";
 
 async function groundGeneratedDraftCitations(params: {
   db: Database;
@@ -1048,11 +1048,11 @@ export {
   EXTERNAL_RESEARCH_NOTE,
   INSUFFICIENT_SOURCE_MATERIAL,
   RESEARCH_AUTHORITY_INCOMPLETE_NOTE,
-} from "./helpers";
+} from "./draft-text-helpers";
 export type {
   ClassifiedDraftAssertion,
   ComparisonSummaryAlignment,
   ComparisonSummaryScore,
   DraftProvenanceClass,
-} from "./helpers";
+} from "./draft-text-helpers";
 export * from "./authorities";

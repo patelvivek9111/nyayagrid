@@ -15,7 +15,7 @@ import {
   scoreComparisonSummaryAgainstDiffs,
   type ComparisonSummaryScore,
   type DiffChange,
-} from "../draft/helpers";
+} from "../draft/draft-text-helpers";
 
 async function verifyDocumentVersionInMatter(params: {
   db: Database;
@@ -387,5 +387,5 @@ export {
   computeParagraphDiffs,
   scoreComparisonSummaryAgainstDiffs,
   splitParagraphs,
-} from "../draft/helpers";
-export type { ComparisonSummaryScore, ComparisonSummaryAlignment } from "../draft/helpers";
+} from "../draft/draft-text-helpers";
+export type { ComparisonSummaryScore, ComparisonSummaryAlignment } from "../draft/draft-text-helpers";

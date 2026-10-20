@@ -11,7 +11,7 @@ import {
   splitParagraphs,
   validateDraftAssertions,
   withInsufficientSourceAssumption,
-} from "./draft/helpers";
+} from "./draft/draft-text-helpers";
 
 describe("phase 5 draft helpers", () => {
   it("builds contract analysis idempotency keys", () => {

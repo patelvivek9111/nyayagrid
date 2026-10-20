@@ -9,7 +9,7 @@ import {
   computeParagraphDiffs,
   scoreComparisonSummaryAgainstDiffs,
   type DiffChange,
-} from "../draft/helpers";
+} from "../draft/draft-text-helpers";
 import {
   CLOSEST_MATCH_LIMITATION,
   CONTRACT_COMPARE_CASES,

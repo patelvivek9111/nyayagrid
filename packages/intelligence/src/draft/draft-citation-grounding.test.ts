@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { buildPass5CitationFixture, resolveCitationsForProduct } from "@nyayagrid/research";
-import { applyDraftCitationResolveOrAbstain } from "./helpers";
+import { applyDraftCitationResolveOrAbstain } from "./draft-text-helpers";
 
 describe("draft citation resolve-or-abstain", () => {
   it("flags ambiguous and unresolved legal citations without inventing substitutes", () => {

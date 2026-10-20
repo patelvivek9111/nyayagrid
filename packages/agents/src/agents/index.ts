@@ -37,4 +37,4 @@ export function createDefaultAgentRegistry(extraAgents: NyayaAgent[] = []): Agen
   return createAgentRegistry([...DEFAULT_AGENTS, ...extraAgents]);
 }
 
-export * from "./shared";
+export * from "./agent-run-shared";

@@ -4,7 +4,7 @@ import {
   applyComparisonSummaryAlignmentPolicy,
   computeParagraphDiffs,
   scoreComparisonSummaryAgainstDiffs,
-} from "./draft/helpers";
+} from "./draft/draft-text-helpers";
 import { GOLDEN_CONTRACT_ORIGINAL, GOLDEN_CONTRACT_REDLINE } from "@nyayagrid/ai/evals";
 
 describe("clause-aligned redline / comparison summary scoring", () => {

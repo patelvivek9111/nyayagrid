@@ -1,4 +1,4 @@
-import type { DiffChange } from "../draft/helpers";
+import type { DiffChange } from "../draft/draft-text-helpers";
 
 export type LegalSegment = {
   sectionNumber: string | null;

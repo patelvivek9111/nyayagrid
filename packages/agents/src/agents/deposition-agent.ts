@@ -1,6 +1,6 @@
 import type { NyayaAgent } from "../agent";
 import type { AgentExecutionResult } from "../types";
-import { AgentOutputBuilder, agentInputSchema, agentOutputSchema, invokeIfAllowed } from "./shared";
+import { AgentOutputBuilder, agentInputSchema, agentOutputSchema, invokeIfAllowed } from "./agent-run-shared";
 
 type ChunkHits = {
   chunks: Array<{ chunkId: string; documentId: string; documentVersionId: string; quote: string }>;

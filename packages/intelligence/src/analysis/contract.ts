@@ -25,7 +25,7 @@ import {
 import { writeAuditEvent } from "@nyayagrid/permissions";
 import { checkpointCreatedLegalWork, snapshotIfNeeded } from "../recovery";
 import { loadAuthorizedChunks } from "../provenance";
-import { buildContractAnalysisIdempotencyKey } from "../draft/helpers";
+import { buildContractAnalysisIdempotencyKey } from "../draft/draft-text-helpers";
 import {
   alignContractSummary,
   collapseNearDuplicateContractItems,

@@ -47,7 +47,7 @@ const { agentApprovals, agentArtifacts, agentRunSteps, agentRuns, agentToolCalls
 const { cancelAgentRun, createAgentRun, executeAgentRun, getAgentRun } = await import("./engine");
 const { createAgentRegistry } = await import("./agent");
 const { createToolRegistry, toolOk } = await import("./tools/registry");
-const { AgentOutputBuilder } = await import("./agents/shared");
+const { AgentOutputBuilder } = await import("./agents/agent-run-shared");
 const { DEFAULT_BUDGETS } = await import("./types");
 const { researchAgent } = await import("./agents/research-agent");
 const { draftAgent } = await import("./agents/draft-agent");

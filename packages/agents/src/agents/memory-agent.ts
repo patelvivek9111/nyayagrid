@@ -1,6 +1,6 @@
 import type { NyayaAgent } from "../agent";
 import type { AgentActionProposalInput, AgentExecutionResult } from "../types";
-import { AgentOutputBuilder, agentInputSchema, agentOutputSchema, invokeIfAllowed } from "./shared";
+import { AgentOutputBuilder, agentInputSchema, agentOutputSchema, invokeIfAllowed } from "./agent-run-shared";
 
 type MemoryProposals = { proposals: Array<{ id: string; title: string; content: string }> };
 type TaskProposal = {

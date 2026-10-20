@@ -18,7 +18,7 @@ import {
   applyComparisonSummaryAlignmentPolicy,
   computeParagraphDiffs,
   type DiffChange,
-} from "../draft/helpers";
+} from "../draft/draft-text-helpers";
 
 export type LiveCompareGrade = {
   caseId: string;

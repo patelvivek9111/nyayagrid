@@ -1,7 +1,7 @@
 import { z } from "zod";
 import type { NyayaAgent } from "../agent";
 import type { AgentActionProposalInput, AgentExecutionResult } from "../types";
-import { AgentOutputBuilder, agentInputSchema, agentOutputSchema, invokeIfAllowed } from "./shared";
+import { AgentOutputBuilder, agentInputSchema, agentOutputSchema, invokeIfAllowed } from "./agent-run-shared";
 
 type AuthorityHits = { hits: Array<{ authorityId: string; chunkId: string; snippet: string }> };
 
