@@ -1,13 +1,8 @@
 # NyayaGrid AI Evaluations
 
-Phase 1: provider-agnostic AI abstraction + mock provider  
-Phase 2: grounded matter Q&A + citation validation  
-Phase 3: structured matter-intelligence extraction + human review  
-Phase 4: graph relationship extraction + memory proposals + context selection  
-Phase 5: Nyaya Draft + professional document analysis + discovery classification proposals  
-Phase 6: Nyaya Research — legal authority corpus ingestion, hybrid retrieval, and grounded synthesis
-Phase 7: Nyaya Agents — goal-to-plan orchestration, tool-mediated multi-step execution, and approval-gated autonomy
-Phase 8: Nyaya Professor (Student Workspace) + Nyaya Guide (Public Workspace) — case briefs, case comparison, and grounded Q&A over a student's own uploaded cases; plain-language document explanation, situation tracking, and consultation packets for the public, with deterministic no-advice/no-illegality-claim/no-computed-deadline guardrails
+How NyayaGrid evaluates AI behavior across matter Q&A, intelligence extraction, graph/memory, drafting, professional analysis, research, agents, Professor, and Guide.
+
+Packages: `@nyayagrid/ai`, `@nyayagrid/intelligence`, `@nyayagrid/agents`, `@nyayagrid/research`, `@nyayagrid/workspaces`.
 
 Evaluation priorities:
 
@@ -54,9 +49,9 @@ Hard rules encoded in code:
 
 Never fabricate legal citations in fixtures.
 
-## Phase 5 professional analysis schemas
+## Professional analysis schemas
 
-All Phase 5 generation schemas live in `packages/ai/src/professional.ts` and are named with an
+Generation schemas live in `packages/ai/src/professional.ts` and are named with an
 explicit `*_PROMPT_VERSION` constant so persisted analyses can be traced back to the exact
 prompt contract that produced them.
 
@@ -76,14 +71,14 @@ proposalNote}`; all four status fields default to `"unknown"` when the model is 
 
 ## No fabricated legal authorities
 
-Every Phase 5 system prompt (`buildDraftGenerationSystemPrompt`, `buildContractAnalysisSystemPrompt`,
+Every professional-analysis system prompt (`buildDraftGenerationSystemPrompt`, `buildContractAnalysisSystemPrompt`,
 `buildRedlineSuggestionsSystemPrompt`, `buildDepositionAnalysisSystemPrompt`,
 `buildContradictionAnalysisSystemPrompt`, `buildDiscoveryClassificationSystemPrompt`) explicitly
 instructs the model to use ONLY the provided source chunks and to never invent clauses,
 citations, testimony, or privilege bases. Nyaya Draft additionally detects when generated content
 references external legal authority (`needsExternalResearchNote`) and appends a fixed disclaimer
-(`EXTERNAL_RESEARCH_NOTE`) rather than allowing an unverified citation to stand unqualified,
-since NyayaGrid has no external case-law research capability.
+(`EXTERNAL_RESEARCH_NOTE`) rather than allowing an unverified citation to stand unqualified
+outside the research corpus path.
 
 ## Discovery classification proposals are not final
 
@@ -94,9 +89,9 @@ Evaluation fixtures should assert that an AI classification call alone never res
 document being treated as privileged, responsive, or confidential without a subsequent human
 `updateDiscoveryReview` call.
 
-## Phase 6 research evaluation dimensions
+## Research evaluation dimensions
 
-All Phase 6 generation schemas live in `packages/ai/src/professional.ts` (research synthesis, memo,
+Research generation schemas live in `packages/ai/src/professional.ts` (research synthesis, memo,
 legal issue extraction, contrary-authority search, authority summary), each with its own
 `*_PROMPT_VERSION` constant. Every synthesis and memo prompt instructs the model to answer using
 **only** the supplied authority chunks and to never draw on training-data legal knowledge; when zero
@@ -140,22 +135,22 @@ Evaluation fixtures for Nyaya Research should exercise, at minimum:
   mixed on the same entry. `classifyDraftAssertions` and `buildMemoPropositions` are the functions
   under test for this dimension.
 
-## No fabricated legal authorities (Phase 6)
+## No fabricated legal authorities (research)
 
 `buildResearchSynthesisSystemPrompt`, `buildResearchMemoSystemPrompt`,
 `buildLegalIssueExtractionSystemPrompt`, and `buildContraryAuthoritySearchSystemPrompt` all instruct
 the model to cite only the provided authority chunk ids and to never assert a rule, holding, or
-quotation beyond what those passages support. Unlike Phase 5 (which appends a disclaimer when a
+quotation beyond what those passages support. Unlike Draft (which appends a disclaimer when a
 draft references external authority it cannot verify), Nyaya Research is the system that is
 supposed to supply that authority — so instead of a disclaimer, ungrounded content is deleted from
 the persisted result and the gap is recorded as a coverage warning.
 
-## Phase 7 agent evaluation dimensions
+## Agent evaluation dimensions
 
-Nyaya Agents (`packages/agents`) adds an orchestration layer on top of Phases 2–6 rather than a new
-generation schema; its evaluation surface is behavioral (routing, execution, authorization,
-honesty) more than content-schema validation. Fixtures live in
-`packages/permissions/src/phase7.integration.test.ts` and `packages/agents/src/*.test.ts`.
+Nyaya Agents (`packages/agents`) adds an orchestration layer on top of Q&A, intelligence, graph,
+memory, draft, analysis, and research rather than a new generation schema; its evaluation surface
+is behavioral (routing, execution, authorization, honesty) more than content-schema validation.
+Fixtures live in `packages/permissions` integration tests and `packages/agents/src/*.test.ts`.
 At minimum, exercise:
 
 - **Intent routing accuracy** — a pure question ("When was the agreement signed?") must classify
@@ -200,17 +195,17 @@ At minimum, exercise:
 - **Provenance class separation on agent artifacts** — an artifact produced from both matter
   documents and the legal authority corpus must carry distinct `MATTER_EVIDENCE`/`LEGAL_AUTHORITY`
   provenance entries whose `refs` resolve only inside their respective source tables, mirroring the
-  Phase 6 matter/authority provenance separation dimension above.
+  the research matter/authority provenance separation dimension above.
 - **Job idempotency** — dispatching the same `agent.execute_run` job payload (same
   `idempotencyKey`) twice through `InMemoryJobDispatcher` must execute the run's steps only once;
   assert on `agent_run_steps`/`agent_tool_calls` row counts, not just on the dispatcher's own
   bookkeeping, since the goal is no duplicated side effects, not just a deduplicated queue entry.
 
-## Phase 8 evaluation dimensions (Nyaya Professor + Nyaya Guide)
+## Professor + Guide evaluation dimensions
 
-All Phase 8 generation schemas live in `packages/ai/src/professor.ts` and `packages/ai/src/guide.ts`,
+Generation schemas live in `packages/ai/src/professor.ts` and `packages/ai/src/guide.ts`,
 each with its own `*_PROMPT_VERSION` constant. Fixtures live in
-`packages/permissions/src/phase8.integration.test.ts` and `packages/workspaces/src/{professor,
+`packages/permissions` workspace integration tests and `packages/workspaces/src/{professor,
 guide}/*.test.ts`. At minimum, exercise:
 
 - **User-scope isolation, both directions** — a second student/guide user must never be able to
