@@ -31,4 +31,6 @@ Matter-scoped AI-assisted document analysis: contract review, version comparison
 
 ## Citations are mandatory
 
-Every analysis item, redline suggestion (when tied to source text), deposition finding, and contradiction side requires at least one server-validated chunk citation scoped to the same organization and matter. Cross-matter or hallucinated chunk IDs never reach persistence — see `SECURITY.md`.
+Every analysis item, redline suggestion (when tied to source text), deposition finding, and contradiction side requires at least one server-validated chunk citation scoped to the same organization and matter. Cross-matter or hallucinated chunk IDs never reach persistence — see [`SECURITY.md`](./SECURITY.md).
+
+Distinguish findings as **supported**, **conflicting**, **unknown**, or **unsupported** — never present AI analysis as a final legal conclusion.

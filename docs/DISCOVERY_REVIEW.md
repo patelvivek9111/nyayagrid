@@ -15,7 +15,7 @@ Matter-scoped e-discovery document review: relevance, privilege, responsiveness,
 
 Setting `privilege` to `privileged` or `not_privileged` via `updateDiscoveryReview` **requires the caller to pass `humanPrivilegeFinal: true` in the same call**; the call throws before writing anything otherwise. Once that guard is satisfied, the row is stored with `humanPrivilegeFinal = true`. This exists so a privilege determination can never be set accidentally, programmatically, or by an AI proposal alone — only an explicit human call can flip a document to a final privilege state.
 
-Nyaya's professional-analysis context surfaces `humanPrivilegeFinal` alongside `aiPrivilege` and instructs the model that the human designation is authoritative while the AI proposal is not final — see `SECURITY.md` and `AI_EVALUATIONS.md`.
+Nyaya's professional-analysis context surfaces `humanPrivilegeFinal` alongside `aiPrivilege` and instructs the model that the human designation is authoritative while the AI proposal is not final — see [`SECURITY.md`](./SECURITY.md) and [`AI_EVALUATIONS.md`](./AI_EVALUATIONS.md).
 
 ## Tags
 

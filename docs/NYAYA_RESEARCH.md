@@ -2,8 +2,9 @@
 
 Nyaya Research is NyayaGrid's legal research capability: a shared corpus of imported legal
 authorities (cases, statutes, regulations, etc.), hybrid retrieval over that corpus, and
-grounded, citation-verified synthesis. It lives in `packages/research` and the `phase6` database
-schema (`packages/database/src/schema/phase6.ts`).
+grounded, citation-verified synthesis. It lives in `packages/research` and the research schema
+module (`packages/database/src/schema/phase6.ts`). CourtListener corpus worker ops:
+[`packages/research/corpus/QUEUE2_WORKER_OPERATIONS.md`](../packages/research/corpus/QUEUE2_WORKER_OPERATIONS.md).
 
 The single rule underlying every decision in this package: **matter documents are not legal
 authority, and legal authority is not matter evidence.** The two are stored in separate tables,

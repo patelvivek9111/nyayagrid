@@ -237,8 +237,8 @@ the actual write:
   - `SAVE_AUTHORITY` → calls `saveAuthorityToMatter`.
   - `CREATE_DRAFT`, `PROPOSE_TIMELINE_EVENT`, `ADD_GRAPH_RELATIONSHIP`, `OTHER` → recorded as
     approved with an `executionNote`; drafts already exist as reviewable work product the moment
-    they're created; timeline/graph proposals are executed through their own Phase 3/4 review
-    workflows, not duplicated here.
+    they're created; timeline/graph proposals are executed through their own matter-intelligence and
+    Nyaya Graph review workflows, not duplicated here.
 - On `reject`, nothing downstream is touched — the proposal's `proposedData` is preserved for the
   record, but no task/memory/authority state ever changes.
 
@@ -252,10 +252,11 @@ Every `agent_artifacts` row carries a `provenance: AgentProvenanceEntry[]`, buil
 `AgentOutputBuilder.addToolResult` directly from each tool call's own `provenanceClass` and
 `resourceIds` — never hand-authored by an agent. The six provenance classes
 (`MATTER_EVIDENCE`, `VERIFIED_MATTER_INTELLIGENCE`, `GRAPH_RELATIONSHIP`, `MATTER_MEMORY`,
-`LEGAL_AUTHORITY`, `USER_INSTRUCTION`) mirror the Phase 6 provenance model
+`LEGAL_AUTHORITY`, `USER_INSTRUCTION`) mirror the Nyaya Research provenance model
 (see `NYAYA_RESEARCH.md`), extended with two agent-specific classes:
-`VERIFIED_MATTER_INTELLIGENCE` (Phase 3 timeline/facts/entities/deadlines) and
-`GRAPH_RELATIONSHIP` (Phase 4 approved graph edges). A single artifact from a multi-tool step (e.g.
+`VERIFIED_MATTER_INTELLIGENCE` (verified timeline, facts, entities, and deadlines from matter
+intelligence) and `GRAPH_RELATIONSHIP` (approved Nyaya Graph edges). A single artifact from a
+multi-tool step (e.g.
 `multi_step_task`'s evidence-gathering step, which calls `retrieveMatterChunks`,
 `getVerifiedTimeline`, and `getEvidenceMatrix`) naturally accumulates multiple provenance entries
 with different classes and different `refs`, each resolving only inside its own source table —

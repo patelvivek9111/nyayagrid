@@ -8,7 +8,7 @@ Nyaya Memory is persistent, curated matter knowledge — not conversation histor
 2. AI proposal → proposed → human approve/reject
 3. Edit + approve
 4. Archive
-5. Supersede (newer memory replaces active role of older memory; older remains historical)
+5. Supersede (newer memory replaces the active role of an older memory; older remains historical)
 
 ## Active memory selection
 
@@ -22,9 +22,9 @@ Proposed and superseded memories remain queryable in UI/history but do not silen
 
 ## Retrieval
 
-Matter-scoped first. Optional semantic ranking over embeddings within that scoped candidate set. No firm-wide memory in Phase 4.
+Matter-scoped first. Optional semantic ranking over embeddings within that scoped candidate set. No firm-wide shared memory pool for answers.
 
 ## Importance
 
-`low | normal | high | critical`  
+`low | normal | high | critical`
 Manual selection overrides AI suggestions. AI proposals may not freely mark everything critical.

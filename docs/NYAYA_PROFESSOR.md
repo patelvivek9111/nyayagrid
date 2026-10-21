@@ -126,7 +126,7 @@ data" guarantee enforceable at runtime, not just documented:
   **not** carry any of `FORBIDDEN_STUDENT_RESULT_FIELDS` (`documentId`, `documentVersionId`,
   `matterId`, `organizationId`) — fields that would prove a result crossed into professional scope.
 
-See `SECURITY.md` for the security-specific summary and `DATA_MODEL.md` for the full table
+See [`SECURITY.md`](./SECURITY.md) for the security-specific summary and [`DATA_MODEL.md`](./DATA_MODEL.md) for the full table
 reference.
 
 ## Free/local limitations

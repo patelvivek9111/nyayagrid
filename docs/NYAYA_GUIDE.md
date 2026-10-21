@@ -156,7 +156,7 @@ Guide reads the shared `legal_authorities*` corpus (see `NYAYA_RESEARCH.md`) —
 deliberate cross-workspace exception Professor makes, because that corpus is non-confidential
 reference material.
 
-See `SECURITY.md` for the security-specific summary and `DATA_MODEL.md` for the full table
+See [`SECURITY.md`](./SECURITY.md) for the security-specific summary and [`DATA_MODEL.md`](./DATA_MODEL.md) for the full table
 reference.
 
 ## Free/local limitations

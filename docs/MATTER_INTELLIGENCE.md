@@ -1,11 +1,11 @@
-# Matter Intelligence lifecycle
+# Matter Intelligence
 
 AI extraction proposes structured matter intelligence from ready document chunks.
 
 ```
 Ready document version
 → extract_matter_intelligence (idempotent per version)
-→ validate source chunk IDs in org+matter scope
+→ validate source chunk IDs in org + matter scope
 → conservative dedupe / source merge
 → persist proposed timeline events, facts, entities, deadlines
 → human review (approve / edit+approve / reject)
@@ -16,6 +16,8 @@ Rules:
 
 1. Proposed items are never shown as verified facts.
 2. Approval requires provenance for AI-origin records.
-3. Deadlines are extracted only from document evidence; Phase 3 does not calculate procedural court deadlines.
+3. Deadlines are extracted only from document evidence; NyayaGrid does not calculate procedural court calendars.
 4. Manual events are labeled `origin=manual` and are not falsely marked AI-extracted.
 5. Matter summaries are AI-generated from verified intelligence only and are not attorney-authored.
+
+Distinguish in UI and prompts: **fact** (verified), **supported inference**, **conflict**, **unknown**, **unsupported**.

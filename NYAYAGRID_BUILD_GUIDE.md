@@ -1,271 +1,166 @@
-NyayaGrid Build Guide for Cursor
+# NyayaGrid Build Guide
+
+Developer setup and build reference for the NyayaGrid monorepo.
+
+NyayaGrid is one platform. Nyaya, Nyaya Graph, Nyaya Memory, Nyaya Timeline, Nyaya Research, Nyaya Draft, Nyaya Professor, and Nyaya Guide are capabilities inside NyayaGrid — not separate apps, auth systems, or domains.
+
+Authoritative companions: [`.cursorrules`](.cursorrules), [`NYAYAGRID_PRODUCT_SPEC.md`](NYAYAGRID_PRODUCT_SPEC.md), [`README.md`](README.md).
+
+## Prerequisites
+
+- Node.js **≥ 20** (repo `engines.node`)
+- npm **10.x** (package manager pinned in root `package.json`)
+- Docker Desktop (Postgres + MinIO via Compose)
+
+## Local quick start
+
+```bash
+cp .env.example .env
+npm install
+npm run docker:up
+npm run db:migrate
+npm run dev
+```
+
+Open http://localhost:3000
+
+| Service | Local default |
+| --- | --- |
+| Web app | http://localhost:3000 (`apps/web`) |
+| Postgres + pgvector | `localhost:5433` → `postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid` |
+| MinIO (S3-compatible) | http://localhost:9000 |
+
+Default local providers (from `.env.example`): `AUTH_PROVIDER=dev`, `AI_PROVIDER=mock`, `EMBEDDING_PROVIDER=mock`, `STORAGE_PROVIDER=minio`.
+
+Optional worker process (document/jobs pipeline):
+
+```bash
+npm run dev:worker
+```
+
+## Monorepo layout
+
+```
+apps/
+  web/          Next.js professional/student/public surfaces
+  worker/       Background job worker
+packages/
+  ai/           Provider-agnostic AI + evals
+  agents/       Nyaya Agents orchestration
+  auth/         Auth adapters (dev / Clerk)
+  database/     Drizzle schema + SQL migrations
+  documents/    Upload, OCR, chunking, embeddings pipeline
+  intelligence/ Matter intelligence / analysis helpers
+  jobs/         Job definitions (Inngest-backed)
+  jurisdiction/ US jurisdiction awareness
+  permissions/  Capability + matter authorization
+  platform/     Config gate, feature flags, models
+  research/     Legal authority corpus + research
+  search/       Retrieval
+  ui/           Shared UI
+  validation/   Shared schemas
+  workspaces/   Student / public workspace helpers
+  observability/
+benchmarks/
+  nyaya-bench/  Reliability / jurisdiction benches
+scripts/
+  certification/  Beta / release certification helpers
+  corpus/         CourtListener queue, staging, reconciliation, generation
+  dev/            Local developer utilities
+  maintenance/    Ops rehearsals (backup, ClamAV)
+  migrations/     One-off migration helpers
+```
+
+Workspaces are declared in root `package.json` (`apps/*`, `packages/*`, selected benchmarks).
+
+## Common commands
+
+| Command | Purpose |
+| --- | --- |
+| `npm run dev` | Web app |
+| `npm run dev:worker` | Worker |
+| `npm run build` | Build web |
+| `npm run typecheck` | Typecheck workspaces |
+| `npm run test` | Unit/integration tests (workspaces) |
+| `npm run test:e2e` | Playwright |
+| `npm run db:generate` | Drizzle generate (`@nyayagrid/database`) |
+| `npm run db:migrate` | Apply SQL migrations |
+| `npm run db:studio` | Drizzle Studio |
+| `npm run eval:ai` | Mock AI evals (CI-safe) |
+| `npm run eval:ai:live` | Opt-in live evals — see [`docs/AI_EVAL_LIVE.md`](docs/AI_EVAL_LIVE.md) |
+| `npm run seed:golden-matter` | Seed SYNTH golden matter fixtures |
+| `npm run docker:up` / `docker:down` | Local Postgres + MinIO |
+| `npm run ops:backup-rehearse` | Backup/restore rehearsal |
+| `npm run ops:verify-clamav` | ClamAV verification helper |
+| `npm run research:import` | Import research fixtures (`--fixtures` for SYNTH) |
+
+Corpus / CourtListener worker tooling (ops only; never required for local app boot):
+
+| Command | Purpose |
+| --- | --- |
+| `npm run queue2:preflight` | Queue2 preflight |
+| `npm run queue2:worker:once` | Dual-lane worker once |
+| `npm run queue2:validate` | Queue2 / CL controller unit tests |
 
-Goal
+See [`packages/research/corpus/QUEUE2_WORKER_OPERATIONS.md`](packages/research/corpus/QUEUE2_WORKER_OPERATIONS.md).
 
-Build one complete vertical slice at a time. Do not generate every page as a disconnected mockup.
+## Environment
 
-NyayaGrid is the single platform. Nyaya, Nyaya Graph, Nyaya Memory, Nyaya Timeline, Nyaya Research, Nyaya Draft, Nyaya Professor, and Nyaya Guide are capabilities inside NyayaGrid. Do not create separate apps, repositories, authentication systems, billing systems, or domains for these modules.
+Copy [`.env.example`](.env.example). Do not invent production secrets in docs.
 
-For the professional product, Nyaya is the assistant surface while Nyaya Memory, Nyaya Graph, Nyaya Timeline, Nyaya Research, and Nyaya Draft operate as integrated matter capabilities. For students, surface Nyaya Professor. For public users, surface Nyaya Guide.
+Load-bearing categories:
 
-Recommended First Vertical Slice
+- `APP_ENV` — `development` \| `test` \| `staging` \| `production` (production config gate)
+- `DATABASE_URL`
+- `AUTH_PROVIDER` (`dev` \| `clerk`) + Clerk keys when clerk
+- Storage (`STORAGE_PROVIDER`, S3/MinIO vars)
+- AI (`AI_PROVIDER`, `EMBEDDING_PROVIDER`, optional OpenAI/Anthropic/Google keys)
+- Optional: ClamAV, SMTP, Stripe, Inngest, feature flags
 
-A professional user should be able to:
+`APP_ENV=production` refuses unsafe local providers — see [`docs/PRODUCTION_READINESS.md`](docs/PRODUCTION_READINESS.md) and `packages/platform`.
 
-Create an account.
+## Database
 
-Create or join a firm.
+- ORM / schema: **Drizzle** in `packages/database`
+- SQL migrations: `packages/database/drizzle/` (current tip includes `0024_citation_target_classification.sql`)
+- Apply: `npm run db:migrate`
 
-Create a client.
+Authorization is application-layer (permissions + matter membership), not Postgres RLS — see [`docs/SECURITY.md`](docs/SECURITY.md).
 
-Create a matter.
+## First vertical slice (smoke)
 
-Upload a PDF.
+Prove one matter-centric loop, not disconnected mock pages:
 
-Wait for processing.
+1. Sign in (dev auth locally)
+2. Create/join organization → client → matter
+3. Upload a PDF → wait until document is `ready`
+4. Ask Nyaya a question → receive cited answer
+5. Propose/approve a timeline event → create a task
 
-Open the document.
+## Testing priorities
 
-Ask a question about the document or matter.
+- Tenant and matter isolation (`@nyayagrid/permissions`)
+- Citation / quote validation (`@nyayagrid/ai`)
+- Upload + document processing
+- Human approval gates (memory, graph edges, agent proposals, privilege)
+- Audit logging
+- Professional vs Professor vs Guide isolation
 
-Receive a cited answer.
+DB-backed tests often need:
 
-Save the answer as a matter note.
+```bash
+# PowerShell
+$env:RUN_DB_TESTS="1"
+$env:DATABASE_URL="postgresql://nyayagrid:nyayagrid@localhost:5433/nyayagrid"
+```
 
-Generate proposed timeline events.
+## Demo / fixture rules
 
-Approve one timeline event.
+Use clearly synthetic names and fictional authorities. Never invent realistic-looking case citations that could be mistaken for real authority.
 
-Create a task from the event.
+## Related docs
 
-This flow proves the central NyayaGrid concept: Nyaya answers the legal question while NyayaGrid manages the legal work around it.
-
-Suggested Repository Structure
-
-/apps
-/web
-/worker
-/packages
-/ai
-/auth
-/database
-/documents
-/permissions
-/search
-/ui
-/validation
-/observability
-/docs
-NYAYAGRID_PRODUCT_SPEC.md
-SECURITY.md
-DATA_MODEL.md
-AI_EVALUATIONS.md
-
-A single Next.js application plus a worker is acceptable for the MVP. Do not split into many services prematurely.
-
-First Database Tables
-
-users
-
-organizations
-
-memberships
-
-roles
-
-permissions
-
-clients
-
-contacts
-
-matters
-
-matter_members
-
-documents
-
-document_versions
-
-document_chunks
-
-notes
-
-tasks
-
-deadlines
-
-timeline_events
-
-conversations
-
-messages
-
-ai_jobs
-
-ai_artifacts
-
-citations
-
-audit_events
-
-First Screens
-
-Sign in
-
-Workspace onboarding
-
-Professional home
-
-Clients list and detail
-
-Matters list
-
-Matter overview
-
-Matter documents
-
-Document viewer
-
-Nyaya matter assistant
-
-Nyaya Timeline
-
-Matter tasks
-
-Settings and members
-
-First Nyaya AI Tools
-
-retrieveMatterSources
-
-retrieveSelectedDocuments
-
-createMatterNote
-
-proposeTimelineEvents
-
-createTaskDraft
-
-validateCitations
-
-Keep tools narrow and permission-aware.
-
-Initial Application Routes
-
-/app — professional home
-
-/app/matters — matter list
-
-/app/matters/:matterId — matter overview
-
-/app/matters/:matterId/documents — documents
-
-/app/matters/:matterId/ai — Nyaya contextual assistant
-
-/app/matters/:matterId/timeline — Nyaya Timeline
-
-/app/matters/:matterId/graph — Nyaya Graph
-
-/app/matters/:matterId/research — Nyaya Research
-
-/app/matters/:matterId/drafts — Nyaya Draft
-
-/professor — Nyaya Professor
-
-/guide — Nyaya Guide
-
-Use these as logical route boundaries, not separate deployments.
-
-First API Endpoints
-
-POST /api/v1/organizations
-
-POST /api/v1/clients
-
-POST /api/v1/matters
-
-POST /api/v1/matters/:matterId/documents
-
-GET /api/v1/matters/:matterId/documents
-
-POST /api/v1/matters/:matterId/ask
-
-POST /api/v1/matters/:matterId/notes
-
-POST /api/v1/matters/:matterId/timeline/proposals
-
-POST /api/v1/matters/:matterId/timeline/:eventId/approve
-
-POST /api/v1/matters/:matterId/tasks
-
-First AI Output Schemas
-
-Cited Answer
-
-interface CitedAnswer {
-answer: string;
-sources: Array<{
-documentId: string;
-documentVersionId: string;
-page?: number;
-paragraph?: string;
-quote: string;
-}>;
-assumptions: string[];
-unresolvedQuestions: string[];
-}
-
-Timeline Proposal
-
-interface TimelineProposal {
-eventDate?: string;
-datePrecision: "exact" | "approximate" | "unknown";
-description: string;
-eventType: string;
-sourceIds: string[];
-sourceQuotes: string[];
-confidence: "low" | "medium" | "high";
-}
-
-Extracted Deadline
-
-interface DeadlineProposal {
-title: string;
-dueAt?: string;
-timezone?: string;
-triggerText: string;
-sourceIds: string[];
-calculationExplanation?: string;
-requiresVerification: true;
-}
-
-Testing Priorities
-
-Tenant isolation
-
-Matter-level permissions
-
-Citation correctness
-
-Upload processing
-
-Prompt injection from documents
-
-Timeline approval workflow
-
-Audit logging
-
-AI job retries
-
-Document version handling
-
-Public versus professional data isolation
-
-Demo Data Rules
-
-Use synthetic names and clearly fictional authorities. Never create realistic-looking fake legal citations in a way that could be misunderstood as real.
-
-Completion Milestone
-
-The first milestone is complete only when the full vertical slice works end to end with real persistence, real permission checks, source citations, and audit logs. Static pages alone do not count.
+- [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)
+- [`docs/OPERATIONS.md`](docs/OPERATIONS.md)
+- [`docs/DATA_MODEL.md`](docs/DATA_MODEL.md)
+- [`docs/AI_EVALUATIONS.md`](docs/AI_EVALUATIONS.md)

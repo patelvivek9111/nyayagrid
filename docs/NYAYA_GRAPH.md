@@ -2,9 +2,11 @@
 
 Nyaya Graph is the matter-scoped legal knowledge graph. It represents relationships between canonical NyayaGrid records.
 
+UI: `/app/matters/[matterId]/graph`
+
 ## Node lifecycle
 
-1. Verified Phase 3 entities/events/facts/deadlines (and documents/tasks) are materialized into `graph_nodes`.
+1. Verified entities/events/facts/deadlines (and documents/tasks/motions/communications where materialized) become `graph_nodes`.
 2. Nodes reference existing records via `canonicalEntityType` + `canonicalEntityId`.
 3. Deduplication is primarily by canonical reference within a matter.
 
@@ -21,4 +23,4 @@ AI/document-derived edges require validated matter-scoped chunk sources. Halluci
 
 ## UI
 
-`/app/matters/[matterId]/graph` provides node search/filter, neighborhood exploration, evidence inspection, manual edges, and a relationship list fallback.
+Node search/filter, neighborhood exploration, evidence inspection, manual edges, and a relationship list fallback.
