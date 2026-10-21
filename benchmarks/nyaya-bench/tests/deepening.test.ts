@@ -4,13 +4,18 @@ import { runDeepeningPass } from "../runner/deepening";
 
 describe("full-completion deepening assignments", () => {
   it("keeps distinct deepening scenarios and does not reuse Week 5 ids", () => {
-    expect(DEEPENING_ASSIGNMENTS).toHaveLength(46);
-    expect(new Set(DEEPENING_ASSIGNMENTS.map((row) => row.id)).size).toBe(46);
+    // Catalog grew with D6/D7 tracks (6+6+12+10+12+12+15 = 73); D3–D5 slice sizes stay fixed.
+    expect(DEEPENING_ASSIGNMENTS).toHaveLength(73);
+    expect(new Set(DEEPENING_ASSIGNMENTS.map((row) => row.id)).size).toBe(73);
     expect(DEEPENING_ASSIGNMENTS.filter((row) => row.id.startsWith("D3-"))).toHaveLength(12);
     expect(DEEPENING_ASSIGNMENTS.filter((row) => row.id.startsWith("D4-"))).toHaveLength(10);
     expect(DEEPENING_ASSIGNMENTS.filter((row) => row.id.startsWith("D5-"))).toHaveLength(12);
+    expect(DEEPENING_ASSIGNMENTS.filter((row) => row.id.startsWith("D6-"))).toHaveLength(12);
+    expect(DEEPENING_ASSIGNMENTS.filter((row) => row.id.startsWith("D7-"))).toHaveLength(15);
     expect(DEEPENING_ASSIGNMENTS.every((row) => !row.id.startsWith("W5-"))).toBe(true);
-    expect(DEEPENING_ASSIGNMENTS.every((row) => row.rubric.length > 0 && row.expected.length > 0)).toBe(true);
+    expect(
+      DEEPENING_ASSIGNMENTS.every((row) => row.rubric.length > 0 && row.expected.length > 0),
+    ).toBe(true);
   });
 
   it("passes the deterministic deepening set", () => {
