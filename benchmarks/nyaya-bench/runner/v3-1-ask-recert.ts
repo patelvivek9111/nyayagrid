@@ -35,7 +35,8 @@ process.env.FEATURE_AGENTS = "0";
 if (/localhost|127\.0\.0\.1/.test(process.env.DATABASE_URL ?? "")) {
   process.env.APP_ENV = "development";
 }
-if ((process.env.AI_PROVIDER ?? "mock").toLowerCase() === "mock") process.env.AI_PROVIDER = "openai";
+if ((process.env.AI_PROVIDER ?? "mock").toLowerCase() === "mock")
+  process.env.AI_PROVIDER = "openai";
 if ((process.env.EMBEDDING_PROVIDER ?? "mock").toLowerCase() === "mock") {
   process.env.EMBEDDING_PROVIDER = "openai";
 }
@@ -71,7 +72,11 @@ async function workspace(db: Database, slug: string) {
   return { userId: user.id, organizationId: org.id };
 }
 
-async function citationMeta(db: Database, organizationId: string, matterId: string): Promise<Map<string, V31Citation>> {
+async function citationMeta(
+  db: Database,
+  organizationId: string,
+  matterId: string,
+): Promise<Map<string, V31Citation>> {
   const rows = await db
     .select({
       documentId: documents.id,
@@ -95,11 +100,15 @@ async function citationMeta(db: Database, organizationId: string, matterId: stri
 async function main() {
   if (getFeatureFlags().agents) throw new Error("FEATURE_AGENTS must remain 0");
   const databaseUrl = process.env.DATABASE_URL;
-  if (!databaseUrl || /neon\.tech/i.test(databaseUrl)) throw new Error("recert must use local/non-Neon database");
+  if (!databaseUrl || /neon\.tech/i.test(databaseUrl))
+    throw new Error("recert must use local/non-Neon database");
   const db = createDb(databaseUrl);
   const orgA = await workspace(db, "nyaya-bench-v3-a");
   const matter = await db.query.matters.findFirst({
-    where: and(eq(matters.organizationId, orgA.organizationId), eq(matters.matterNumber, "V3-V3-01")),
+    where: and(
+      eq(matters.organizationId, orgA.organizationId),
+      eq(matters.matterNumber, "V3-V3-01"),
+    ),
   });
   if (!matter) throw new Error("missing matter V3-V3-01");
   const ai = createAIProviderFromEnv();
@@ -117,8 +126,9 @@ async function main() {
     provider: string;
     model: string;
   }> = [];
-  let served = ASK_SERVED_MODEL_RECERT.served;
-  let servedProvider = ASK_SERVED_MODEL_RECERT.provider;
+  // Start from the pinned recert identity; runtime audits may report wider string IDs.
+  let served: string = ASK_SERVED_MODEL_RECERT.served;
+  let servedProvider: string = ASK_SERVED_MODEL_RECERT.provider;
   for (const test of tests) {
     const started = Date.now();
     let lastError = "";
@@ -168,7 +178,9 @@ async function main() {
       title: docMeta.get(s.documentId)?.title,
       filename: docMeta.get(s.documentId)?.filename,
     }));
-    const citationText = citations.map((c) => [c.documentId, c.title, c.filename, c.quote].filter(Boolean).join(" ")).join("\n");
+    const citationText = citations
+      .map((c) => [c.documentId, c.title, c.filename, c.quote].filter(Boolean).join(" "))
+      .join("\n");
     const grade = gradeV3Test({
       test: test as V3Test,
       answer: result.answer.answer,
@@ -203,7 +215,11 @@ async function main() {
     evaluatedIdentity: served,
     contract: ASK_SERVED_MODEL_RECERT.contract,
     tasks: rows,
-    latency: { n: latencies.length, medianMs: percentile(latencies, 50), p95Ms: percentile(latencies, 95) },
+    latency: {
+      n: latencies.length,
+      medianMs: percentile(latencies, 50),
+      p95Ms: percentile(latencies, 95),
+    },
     criticalOrFail: criticalFail,
     recertifiedAt: new Date().toISOString(),
   };
@@ -226,6 +242,8 @@ async function main() {
 }
 
 main().catch((error) => {
-  process.stderr.write(`${error instanceof Error ? error.stack ?? error.message : String(error)}\n`);
+  process.stderr.write(
+    `${error instanceof Error ? (error.stack ?? error.message) : String(error)}\n`,
+  );
   process.exit(1);
 });

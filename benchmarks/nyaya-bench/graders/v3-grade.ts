@@ -2,7 +2,12 @@
  * Frozen V3 graders. Do not change after the first untouched RC1 run begins.
  */
 import { hasAbstentionLanguage } from "./signals";
-import { V3_GRADER_VERSION, type V3Expectation, type V3Severity, type V3Test } from "../datasets/v3/catalog";
+import {
+  V3_GRADER_VERSION,
+  type V3Expectation,
+  type V3Severity,
+  type V3Test,
+} from "../datasets/v3/catalog";
 
 export type V3Verdict = "PASS" | "FAIL" | "CRITICAL" | "INFRA";
 
@@ -45,7 +50,9 @@ export function gradeV3Test(params: {
   error?: string;
 }): V3Grade {
   const test = params.test;
-  const hay = fold([params.answer, params.evidenceState ?? "", params.citationText ?? ""].join("\n"));
+  const hay = fold(
+    [params.answer, params.evidenceState ?? "", params.citationText ?? ""].join("\n"),
+  );
   const expectation: V3Expectation = test.expectation;
   const abstained =
     hasAbstentionLanguage(params.answer) || /insufficient/.test(params.evidenceState ?? "");
@@ -65,20 +72,37 @@ export function gradeV3Test(params: {
 
   const fabricated = anyForbidden(hay, expectation.fabricatedBait);
   if (fabricated && !hasAbstentionLanguage(params.answer)) {
-    return fail(test, "CRITICAL", `fabricated_or_bait_authority:${fabricated}`, "authority_jurisdiction_defect");
+    return fail(
+      test,
+      "CRITICAL",
+      `fabricated_or_bait_authority:${fabricated}`,
+      "authority_jurisdiction_defect",
+    );
   }
 
   if (expectation.type === "must_abstain") {
     const banned = anyForbidden(hay, expectation.forbidden);
     if (banned) return fail(test, "CRITICAL", `overclaim:${banned}`, "abstention_defect");
-    if (!abstained) return fail(test, test.severity === "critical" ? "CRITICAL" : "FAIL", "required abstention missing", "abstention_defect");
+    if (!abstained)
+      return fail(
+        test,
+        test.severity === "critical" ? "CRITICAL" : "FAIL",
+        "required abstention missing",
+        "abstention_defect",
+      );
     return pass(test, "abstained");
   }
 
   if (expectation.type === "reject_premise") {
     const banned = anyForbidden(hay, expectation.forbidden);
-    if (banned) return fail(test, "CRITICAL", `accepted_false_premise:${banned}`, "abstention_defect");
-    if (!abstained && !/(false premise|do not (establish|prove|show)|does not (establish|prove|show)|not supported|incorrect|unsupported)/i.test(params.answer)) {
+    if (banned)
+      return fail(test, "CRITICAL", `accepted_false_premise:${banned}`, "abstention_defect");
+    if (
+      !abstained &&
+      !/(false premise|do not (establish|prove|show)|does not (establish|prove|show)|not supported|incorrect|unsupported)/i.test(
+        params.answer,
+      )
+    ) {
       return fail(test, "CRITICAL", "did not reject false premise", "abstention_defect");
     }
     return pass(test, "premise challenged");
@@ -87,26 +111,45 @@ export function gradeV3Test(params: {
   if (expectation.type === "forbid" || expectation.type === "isolation") {
     const banned = anyForbidden(hay, expectation.forbidden);
     if (banned) {
-      const cls = expectation.type === "isolation" ? "cross_matter_or_org_leakage" : "hallucination_overclaim";
+      const cls =
+        expectation.type === "isolation"
+          ? "cross_matter_or_org_leakage"
+          : "hallucination_overclaim";
       return fail(test, "CRITICAL", `forbidden:${banned}`, cls);
     }
     return pass(test, "forbidden claims absent");
   }
 
   const missingNeedles = (expectation.needles ?? []).filter((n) => !hasNeedle(hay, n));
-  const anyHit = (expectation.anyNeedles ?? []).length === 0 || (expectation.anyNeedles ?? []).some((n) => hasNeedle(hay, n));
+  const anyHit =
+    (expectation.anyNeedles ?? []).length === 0 ||
+    (expectation.anyNeedles ?? []).some((n) => hasNeedle(hay, n));
   if (expectation.requireCitationDocs?.length) {
     const citeHay = fold(params.citationText ?? "");
-    const cited = expectation.requireCitationDocs.some((doc) => citeHay.includes(fold(doc)) || citeHay.includes(fold(doc.replace(/_/g, " ").replace(/\.txt$/i, ""))));
+    const cited = expectation.requireCitationDocs.some(
+      (doc) =>
+        citeHay.includes(fold(doc)) ||
+        citeHay.includes(fold(doc.replace(/_/g, " ").replace(/\.txt$/i, ""))),
+    );
     if (!cited && !abstained) {
       return fail(test, "FAIL", "required supporting document not cited", "citation_defect");
     }
   }
   if (missingNeedles.length > 0 || !anyHit) {
     if (test.severity === "critical") {
-      return fail(test, "CRITICAL", `needles_missing:${missingNeedles.join(",")}`, "reasoning_defect");
+      return fail(
+        test,
+        "CRITICAL",
+        `needles_missing:${missingNeedles.join(",")}`,
+        "reasoning_defect",
+      );
     }
-    return fail(test, "FAIL", `needles_missing:${missingNeedles.join(",") || "anyNeedles"}`, "reasoning_defect");
+    return fail(
+      test,
+      "FAIL",
+      `needles_missing:${missingNeedles.join(",") || "anyNeedles"}`,
+      "reasoning_defect",
+    );
   }
   return pass(test, "needles matched");
 }
@@ -145,17 +188,21 @@ export function summarizeV3(grades: V3Grade[]) {
   const byFamily: Record<string, { n: number; pass: number }> = {};
   const bySubsystem: Record<string, { n: number; pass: number }> = {};
   for (const g of eligible) {
-    byFamily[g.family] ??= { n: 0, pass: 0 };
-    byFamily[g.family].n += 1;
-    if (g.verdict === "PASS") byFamily[g.family].pass += 1;
-    bySubsystem[g.subsystem] ??= { n: 0, pass: 0 };
-    bySubsystem[g.subsystem].n += 1;
-    if (g.verdict === "PASS") bySubsystem[g.subsystem].pass += 1;
+    const family = byFamily[g.family] ?? { n: 0, pass: 0 };
+    family.n += 1;
+    if (g.verdict === "PASS") family.pass += 1;
+    byFamily[g.family] = family;
+    const subsystem = bySubsystem[g.subsystem] ?? { n: 0, pass: 0 };
+    subsystem.n += 1;
+    if (g.verdict === "PASS") subsystem.pass += 1;
+    bySubsystem[g.subsystem] = subsystem;
   }
   const pct = (pass: number, n: number) => (n === 0 ? 0 : Math.round((pass / n) * 1000) / 10);
   const citationFails = grades.filter((g) => g.taxonomy === "citation_defect").length;
   const abstentionFails = grades.filter((g) => g.taxonomy === "abstention_defect").length;
-  const jurisdictionFails = grades.filter((g) => g.taxonomy === "authority_jurisdiction_defect" || g.family === "jurisdiction").filter((g) => g.verdict !== "PASS" && g.verdict !== "INFRA").length;
+  const jurisdictionFails = grades
+    .filter((g) => g.taxonomy === "authority_jurisdiction_defect" || g.family === "jurisdiction")
+    .filter((g) => g.verdict !== "PASS" && g.verdict !== "INFRA").length;
   const infra = grades.filter((g) => g.verdict === "INFRA").length;
   const materialPct = pct(materialPass, eligible.length);
   const criticalPct = pct(critical.length - criticalFail.length, critical.length || 1);
@@ -173,7 +220,9 @@ export function summarizeV3(grades: V3Grade[]) {
     infraFails: infra,
     eligible: eligible.length,
     byFamily: Object.fromEntries(Object.entries(byFamily).map(([k, v]) => [k, pct(v.pass, v.n)])),
-    bySubsystem: Object.fromEntries(Object.entries(bySubsystem).map(([k, v]) => [k, pct(v.pass, v.n)])),
+    bySubsystem: Object.fromEntries(
+      Object.entries(bySubsystem).map(([k, v]) => [k, pct(v.pass, v.n)]),
+    ),
     classification,
   };
 }

@@ -90,7 +90,9 @@ export function median(values: number[]): number | null {
   const sorted = [...values].sort((a, b) => a - b);
   const mid = Math.floor(sorted.length / 2);
   const value =
-    sorted.length % 2 === 0 ? ((sorted[mid - 1] ?? 0) + (sorted[mid] ?? 0)) / 2 : (sorted[mid] ?? 0);
+    sorted.length % 2 === 0
+      ? ((sorted[mid - 1] ?? 0) + (sorted[mid] ?? 0)) / 2
+      : (sorted[mid] ?? 0);
   return Math.round(value * 100) / 100;
 }
 
@@ -117,7 +119,10 @@ function splitCsvLine(line: string): string[] {
 }
 
 export function parseReviewsCsv(text: string): ReviewRecord[] {
-  const lines = text.replace(/^\uFEFF/, "").split(/\r?\n/).filter((l) => l.trim().length > 0);
+  const lines = text
+    .replace(/^\uFEFF/, "")
+    .split(/\r?\n/)
+    .filter((l) => l.trim().length > 0);
   if (lines.length === 0) return [];
   const header = splitCsvLine(lines[0]!).map((h) => h.trim());
   const idx = (name: string) => {
@@ -176,7 +181,10 @@ export function parseReviewsCsv(text: string): ReviewRecord[] {
 }
 
 export function parseIssuesCsv(text: string): IssueRecord[] {
-  const lines = text.replace(/^\uFEFF/, "").split(/\r?\n/).filter((l) => l.trim().length > 0);
+  const lines = text
+    .replace(/^\uFEFF/, "")
+    .split(/\r?\n/)
+    .filter((l) => l.trim().length > 0);
   if (lines.length === 0) return [];
   const header = splitCsvLine(lines[0]!).map((h) => h.trim());
   const idx = (name: string) => {
@@ -245,7 +253,9 @@ export function aggregateDogfood(reviews: ReviewRecord[], issues: IssueRecord[])
   const means: Record<string, number | null> = {};
   const medians: Record<string, number | null> = {};
   for (const cat of RUBRIC_CATEGORIES) {
-    const values = reviews.map((r) => r.scores[cat.key]).filter((n): n is number => typeof n === "number");
+    const values = reviews
+      .map((r) => r.scores[cat.key])
+      .filter((n): n is number => typeof n === "number");
     means[cat.key] = mean(values);
     medians[cat.key] = median(values);
   }
@@ -295,18 +305,26 @@ export function aggregateDogfood(reviews: ReviewRecord[], issues: IssueRecord[])
       safetyYesCounts,
     };
   }
-  if (criticalCount > 0) holdReasons.push(`${criticalCount} CRITICAL issue(s) — never averaged away`);
+  if (criticalCount > 0)
+    holdReasons.push(`${criticalCount} CRITICAL issue(s) — never averaged away`);
   if (attorneyReviewers.size === 0) {
-    holdReasons.push("No admitted-attorney reviewer. Operator/student/paralegal scores are advisory only.");
+    holdReasons.push(
+      "No admitted-attorney reviewer. Operator/student/paralegal scores are advisory only.",
+    );
   }
-  const factual = means.A;
-  const citation = means.B;
-  const trust = means.K;
+  // Indexed Record access is `T | undefined` under noUncheckedIndexedAccess.
+  const factual = means.A ?? null;
+  const citation = means.B ?? null;
+  const trust = means.K ?? null;
+  const estimatedTimeSavedMean = means.L ?? null;
   const usefulness = mean(
-    reviews.flatMap((r) => [r.scores.C, r.scores.I, r.scores.J].filter((n): n is number => typeof n === "number")),
+    reviews.flatMap((r) =>
+      [r.scores.C, r.scores.I, r.scores.J].filter((n): n is number => typeof n === "number"),
+    ),
   );
   if (factual !== null && factual < 4) holdReasons.push(`mean factual accuracy ${factual} < 4`);
-  if (citation !== null && citation < 4) holdReasons.push(`mean citation traceability ${citation} < 4`);
+  if (citation !== null && citation < 4)
+    holdReasons.push(`mean citation traceability ${citation} < 4`);
   if (trust !== null && trust < 4) holdReasons.push(`mean trust ${trust} < 4`);
   if (usefulness !== null && usefulness < 4) holdReasons.push(`mean usefulness ${usefulness} < 4`);
   const majorityUse = wouldUse.YES + wouldUse.WITH_CHANGES > wouldUse.NO;
@@ -315,12 +333,16 @@ export function aggregateDogfood(reviews: ReviewRecord[], issues: IssueRecord[])
     (t) => t.count >= 2 && /unsupported|fabricat|cannot trace|missing citation/.test(t.theme),
   );
   if (recurringUnsupported.length > 0) {
-    holdReasons.push(`recurring unsupported/traceability theme: ${recurringUnsupported.map((t) => t.theme).join("; ")}`);
+    holdReasons.push(
+      `recurring unsupported/traceability theme: ${recurringUnsupported.map((t) => t.theme).join("; ")}`,
+    );
   }
 
   let status: GateStatus;
   if (reviews.length === 0) status = "READY-FOR-HUMAN-REVIEW";
-  else if (holdReasons.length > 0) status = attorneyReviewers.size === 0 && criticalCount === 0 ? "READY-FOR-HUMAN-REVIEW" : "HOLD";
+  else if (holdReasons.length > 0)
+    status =
+      attorneyReviewers.size === 0 && criticalCount === 0 ? "READY-FOR-HUMAN-REVIEW" : "HOLD";
   else status = "DOGFOOD PASS";
 
   if (attorneyReviewers.size === 0 && criticalCount === 0) status = "READY-FOR-HUMAN-REVIEW";
@@ -341,7 +363,7 @@ export function aggregateDogfood(reviews: ReviewRecord[], issues: IssueRecord[])
     minorCount,
     trustScore: trust,
     usefulnessScore: usefulness,
-    estimatedTimeSavedMean: means.L,
+    estimatedTimeSavedMean,
     wouldUse: { ...wouldUse, pct: wouldPct },
     recurringThemes,
     safetyYesCounts,
@@ -350,7 +372,8 @@ export function aggregateDogfood(reviews: ReviewRecord[], issues: IssueRecord[])
 
 export function formatReport(report: DogfoodReport): string {
   const scoreLines = RUBRIC_CATEGORIES.map(
-    (c) => `- ${c.key} ${c.label}: mean ${report.means[c.key] ?? "n/a"} / median ${report.medians[c.key] ?? "n/a"}`,
+    (c) =>
+      `- ${c.key} ${c.label}: mean ${report.means[c.key] ?? "n/a"} / median ${report.medians[c.key] ?? "n/a"}`,
   );
   return [
     `# Dogfood aggregation`,
@@ -405,7 +428,9 @@ function main(): void {
   mkdirSync(outDir, { recursive: true });
   writeFileSync(join(outDir, "AGGREGATE.json"), `${JSON.stringify(report, null, 2)}\n`);
   writeFileSync(join(outDir, "AGGREGATE.md"), `${formatReport(report)}\n`);
-  process.stdout.write(`${JSON.stringify({ status: report.status, reviewers: report.reviewers, critical: report.criticalCount })}\n`);
+  process.stdout.write(
+    `${JSON.stringify({ status: report.status, reviewers: report.reviewers, critical: report.criticalCount })}\n`,
+  );
 }
 
 const isDirect = process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1];

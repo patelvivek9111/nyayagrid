@@ -46,7 +46,7 @@ export type RetryPolicy = {
   deadLetter: boolean;
 };
 
-export const EXTERNAL_RETRY_POLICIES: Record<string, RetryPolicy> = {
+export const EXTERNAL_RETRY_POLICIES = {
   ai_provider: {
     retryable: ["timeout", "429", "500", "connection"],
     nonRetryable: ["400", "401", "403", "malformed"],
@@ -79,7 +79,7 @@ export const EXTERNAL_RETRY_POLICIES: Record<string, RetryPolicy> = {
     timeoutMs: 20_000,
     deadLetter: true,
   },
-};
+} satisfies Record<"ai_provider" | "object_storage" | "database" | "courtlistener", RetryPolicy>;
 
 function checkJobInventory(): ReliabilityCheckResult {
   return {
@@ -111,28 +111,28 @@ async function checkDuplicateDelivery(): Promise<ReliabilityCheckResult> {
 
 function checkWorkerCrashRecovery(): ReliabilityCheckResult {
   // Simulate: crash mid-processing → restart → same idempotency key resumes without double-write.
+  // Object box keeps DocState mutable across the nested helper; bare `let` is frozen by CFA.
   type DocState = "pending" | "processing" | "ready" | "failed";
-  let state: DocState = "pending";
-  let writes = 0;
+  const doc: { state: DocState; writes: number } = { state: "pending", writes: 0 };
   const processOnce = (crashAfterWrite: boolean) => {
-    if (state === "ready") return;
-    state = "processing";
-    writes += 1;
+    if (doc.state === "ready") return;
+    doc.state = "processing";
+    doc.writes += 1;
     if (crashAfterWrite) {
       // crash before ack — state remains processing, not ready
       return;
     }
-    state = "ready";
+    doc.state = "ready";
   };
   processOnce(true); // crash after first write
   processOnce(false); // recovery
-  const passed = state === "ready" && writes === 2;
+  const passed = doc.state === "ready" && doc.writes === 2;
   return {
     id: "W6-REL-CRASH",
     name: "Worker crash mid-processing recovers without silent complete",
     passed,
     severity: "HIGH",
-    detail: `finalState=${state}; writeAttempts=${writes}`,
+    detail: `finalState=${doc.state}; writeAttempts=${doc.writes}`,
   };
 }
 
@@ -149,7 +149,8 @@ function checkPartialIngestFailure(): ReliabilityCheckResult {
     }
     completed.push(step);
   }
-  const passed = status === "partial_error" && !completed.includes("timeline") && completed.includes("chunk");
+  const passed =
+    status === "partial_error" && !completed.includes("timeline") && completed.includes("chunk");
   return {
     id: "W6-REL-PARTIAL",
     name: "Partial ingestion records explicit failure state",
@@ -255,11 +256,12 @@ function checkCourtListenerController(): ReliabilityCheckResult {
 }
 
 function checkRetryPolicyCoverage(): ReliabilityCheckResult {
+  const policies = Object.values(EXTERNAL_RETRY_POLICIES);
+  const complete = policies.every(
+    (p) =>
+      p.maxAttempts >= 1 && p.timeoutMs > 0 && p.retryable.length > 0 && p.nonRetryable.length > 0,
+  );
   const deps = Object.keys(EXTERNAL_RETRY_POLICIES);
-  const complete = deps.every((d) => {
-    const p = EXTERNAL_RETRY_POLICIES[d]!;
-    return p.maxAttempts >= 1 && p.timeoutMs > 0 && p.retryable.length > 0 && p.nonRetryable.length > 0;
-  });
   return {
     id: "W6-REL-RETRY-AUDIT",
     name: "Retry policies defined for external dependencies",
