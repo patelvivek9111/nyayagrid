@@ -15,7 +15,7 @@ Private malware scanner for NyayaGrid staging. Do not attach a public IP or HTTP
 | Image | `ops/clamav/Dockerfile` (`clamav/clamav:1.4` + NyayaGrid entrypoint) |
 | Config | `fly.clamav.staging.toml` |
 
-Intended topology after the 2026-09-11 handoff: **one** machine in process group `app`. Confirm with `fly machines list --app nyayagrid-clamav-staging`.
+Intended topology: **one** machine in process group `app`. Confirm with `fly machines list --app nyayagrid-clamav-staging`.
 
 ## Why this image exists
 

@@ -1,10 +1,12 @@
 # Incident Response — NyayaGrid
 
 **Status: documented, not rehearsed.** These runbooks have not been exercised as a tabletop/game-day
-exercise. Treat them as a first draft to walk through and correct, not a proven process. Because
-NyayaGrid handles legal matters (client-privileged and personally sensitive data), a security
+exercise. Treat them as operational guidance to walk through and correct, not a proven process.
+Because NyayaGrid handles legal matters (client-privileged and personally sensitive data), a security
 incident here can carry professional-responsibility and regulatory consequences beyond the usual
 "outage" cost — treat any suspected data exposure as high severity by default.
+
+Related: [`OPERATIONS.md`](./OPERATIONS.md), [`SECURITY.md`](./SECURITY.md), [`PRODUCTION_SECURITY_REVIEW.md`](./PRODUCTION_SECURITY_REVIEW.md).
 
 ## Severity levels
 

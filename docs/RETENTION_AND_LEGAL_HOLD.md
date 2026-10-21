@@ -1,6 +1,6 @@
-# Retention and legal hold (P7 design)
+# Retention and legal hold
 
-Spec: design now; full records-management product later. The load-bearing control already in code is **legal hold blocks deletion**.
+Full records-management automation is future scope. The load-bearing control already in code is **legal hold blocks deletion**.
 
 ## What a hold covers
 
@@ -13,7 +13,7 @@ Holds outrank user deletion requests and any future retention job. Spoliation is
 - There is no silent purge job.
 - `requestDataDeletion` records intent (`pending` / `scheduled` / `rejected` / `cancelled` / `completed`).
 - If a hold covers the scope, the request is stored as **`rejected`** with the hold reason — not queued as if it could run.
-- Original uploaded files remain in object storage until an operator-executed deletion (out of this slice) re-checks holds.
+- Original uploaded files remain in object storage until an operator-executed deletion re-checks holds.
 
 ## Intended retention (not auto-enforced)
 

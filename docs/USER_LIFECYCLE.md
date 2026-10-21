@@ -1,4 +1,4 @@
-# User lifecycle (P7)
+# User lifecycle
 
 NyayaGrid owns **authorization**. Identity providers authenticate. This file is the documented lifecycle procurement asks for when SCIM is not yet implemented.
 
@@ -6,7 +6,7 @@ NyayaGrid owns **authorization**. Identity providers authenticate. This file is 
 
 - Production intent: `AUTH_PROVIDER=clerk`. Sessions are verified in `apps/web/src/lib/clerk-session.ts`. Missing Clerk email → unauthenticated (no `${userId}@clerk.local`).
 - Development: `AUTH_PROVIDER=dev` with `x-nyayagrid-dev-user`. `DevAuthProvider` returns no identity on staging/production.
-- **SSO (SAML/OIDC)** is a Clerk Enterprise configuration on the Clerk application (Account Portal / SSO connections). NyayaGrid does not implement a SAML service provider. Until a live Clerk production app exists (P2 BLOCKER), SSO cannot be verified end-to-end.
+- **SSO (SAML/OIDC)** is a Clerk Enterprise configuration on the Clerk application (Account Portal / SSO connections). NyayaGrid does not implement a SAML service provider. Until a live Clerk production app is provisioned and verified, SSO cannot be proven end-to-end.
 
 ## Joining an organization
 

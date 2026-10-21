@@ -1,22 +1,18 @@
-# NYAYAGRID BETA DEPLOYMENT READINESS
+# Deployment readiness runbook
 
-This is an operations audit of the **actual** repo stack. There is no Kubernetes, Terraform, or multi-region layer in-tree. Production is: one Next.js web process, managed Postgres+pgvector, Redis, S3/MinIO, ClamAV, Clerk, OpenAI, and Inngest Cloud calling `/api/inngest`.
+Operations guide for the **actual** repo stack. There is no Kubernetes, Terraform, or multi-region layer in-tree. Production shape: one Next.js web process, managed Postgres+pgvector, Redis, S3/MinIO, ClamAV, Clerk, OpenAI, and Inngest Cloud calling `/api/inngest`.
 
-Draft and frozen AI subsystems were not modified.
+## 1. Executive summary
 
----
-
-## 1. Executive Summary
-
-Security P0 and Performance P0 (async ingest) are already encoded in boot gates. Remaining ops gaps that would still hurt a first beta:
+Boot gates already encode many unsafe-config refusals. Remaining ops gaps that still hurt a first beta:
 
 - In-app **SMTP invite send is unimplemented** (console is forbidden; `EMAIL_PROVIDER=smtp` throws at send). Use Clerk to add users for now.
-- Managed **Postgres/object-storage restore has not been proven** on the production-shaped provider (local docker rehearsal exists).
+- Managed **Postgres/object-storage restore has not been proven** on the production-shaped provider (local docker rehearsal exists via `npm run ops:backup-rehearse`).
 - **Dockerfile.worker is Inngest Dev CLI only** — production must use Inngest Cloud against the web `/api/inngest` URL, not that image.
 
-This phase added: stricter production fail-closed (Inngest required; Professor/Agents/HTTP import rejected; compose MinIO creds rejected), Agents API feature-flag, Redis/config on readiness, `npm run beta:check` / `beta:stuck-documents` / `beta:smoke`, seed/bench refuse `APP_ENV=production`, `.env.beta.example`.
+Operator helpers: `npm run beta:check`, `npm run beta:stuck-documents`, `npm run beta:smoke`, `npm run ops:verify-clamav`. Seed/bench refuse `APP_ENV=production`. See `.env.beta.example`.
 
-**Decision: READY AFTER P0 OPS FIXES** — specifically: (1) Inngest Cloud registered against the deployed app before any real upload, (2) Clerk-based user provisioning because SMTP cannot send, (3) operator-owned backups with a restore you have actually run.
+**Before real uploads:** (1) Inngest Cloud registered against the deployed app, (2) Clerk-based user provisioning, (3) operator-owned backups with a restore you have actually run.
 
 ---
 
@@ -63,7 +59,7 @@ Do not put real secrets in git.
 
 `packages/platform/src/config.ts` → `validateConfigForEnv` at Node boot.
 
-This phase additionally fails production on: disabled Inngest, weak event key, enabled Professor/Agents/HTTP import, localhost/compose MinIO under the MinIO opt-in, missing `NEXT_PUBLIC_APP_URL`.
+Production boot also fails on: disabled Inngest, weak event key, enabled Professor/Agents/HTTP import, localhost/compose MinIO under the MinIO opt-in, missing `NEXT_PUBLIC_APP_URL`.
 
 Staging still boots with warnings except **AUTH_PROVIDER=dev** which already throws.
 
@@ -101,7 +97,7 @@ OpenAI is not pinged on ready.
 - Extensions: `vector`, `pgcrypto` (`docker/postgres/init.sql`). Managed DBs must allow-list them.
 - Files: `0000`–`0011` in `packages/database/drizzle/`.
 - Destructive: treat as **forward-only**. There is **no automated down migration**. Rollback = restore snapshot from before migrate.
-- Live traffic: apply during a short window; additive phases have been the pattern — still snapshot first.
+- Live traffic: apply during a short window; additive migrations have been the pattern — still snapshot first.
 - Check (no mutate): `npm run beta:check` (DB, extensions, drizzle table present).
 
 ---
@@ -232,7 +228,7 @@ npm run beta:check
 
 Validates env gate, flags, DB reachability, pgvector/pgcrypto, drizzle migrations table, Redis ping. Prints provider names only.
 
-Also: `npm run beta:stuck-documents`.
+Also: `npm run beta:stuck-documents`, `npm run ops:verify-clamav` (ClamAV from the app host; see [CLAMAV_STAGING.md](./CLAMAV_STAGING.md) for Fly staging).
 
 ---
 
@@ -297,4 +293,4 @@ Design-partner private preview runbook: [DESIGN_PARTNER_BETA.md](./DESIGN_PARTNE
 
 **Register the production web `/api/inngest` endpoint in Inngest Cloud, run one synthetic upload smoke, and confirm the ingest + intelligence functions complete before any client matter is uploaded.**
 
-Do not implement a new SMTP stack or DR platform in this phase; that was not this recommendation.
+Do not bundle a new SMTP stack or DR platform into that single recommendation.

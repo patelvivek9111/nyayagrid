@@ -1,6 +1,6 @@
 # SOC 2 control map (internal evidence, not an audit)
 
-This maps a subset of Trust Services Criteria to **existing NyayaGrid controls**. It is not SOC 2 Type I or Type II. No auditor has examined these controls. Do not show this file to a customer as a report.
+This maps a subset of Trust Services Criteria to **existing NyayaGrid controls**. It is internal engineering evidence only — **not** SOC 2 Type I or Type II certification, not an audit report, and not customer-facing attestation. No auditor has examined these controls. Do not show this file to a customer as proof of compliance or claim “SOC 2 compliant.”
 
 Related: [`PRODUCTION_SECURITY_REVIEW.md`](./PRODUCTION_SECURITY_REVIEW.md) (self-review, not a pen test).
 

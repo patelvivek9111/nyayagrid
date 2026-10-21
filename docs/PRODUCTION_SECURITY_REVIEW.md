@@ -1,4 +1,4 @@
-# Production Security Review — NyayaGrid (Phase 9)
+# Production Security Review — NyayaGrid
 
 Scope: application-layer authorization/tenant isolation, dependency vulnerabilities, secrets
 handling, and known gaps. This is a self-review by the team that wrote the code, not an
@@ -43,7 +43,7 @@ security improvement and is listed as **OPTIONAL / future work** in
   strategy that supports them, which is a non-trivial infrastructure change to the current
   single-pooled-connection (`postgres.js`) setup in `@nyayagrid/database`.
 - It would need its own full test suite (RLS policies are easy to write incorrectly in ways that
-  silently pass most tests), which has not been budgeted in Phase 9.
+  silently pass most tests), which has not been budgeted in the current production-hardening work.
 - The current application-layer model already has significant automated coverage: capability
   matrix unit tests, `phase*.integration.test.ts` files in `packages/permissions` exercising
   cross-organization/cross-matter access attempts against a real database, and now
@@ -66,7 +66,7 @@ active.**
 
 ## Prompt-injection / AI safety
 
-`packages/agents/src/prompt-injection.test.ts` and the manual Phase 7 walkthrough in the README
+`packages/agents/src/prompt-injection.test.ts` and the Agents walkthrough in the README
 cover: instruction-like text embedded in user input is detected and recorded as a limitation
 rather than acted on; agent tool calls are restricted to an authorized, plan-scoped allowlist; no
 agent action can send email, accept a settlement, or otherwise bind the user without an explicit
@@ -175,7 +175,7 @@ clean afterward.
 
 1. Schedule a dedicated `next@16` upgrade spike (framework migration guide review, full
    regression pass, Playwright E2E rerun) — tracked as a BLOCKER-adjacent follow-up, not required
-   before _this_ Phase 9 documentation lands, but required before it can be marked resolved here.
+   before this security review can mark the item resolved.
    Once done, `sharp`/`postcss` resolve as a side effect.
    {{Note: 4 high, 0 critical, 0 moderate — every remaining prod finding is one of these two upgrades.}}
 2. Fix the phantom `drizzle-orm` dependency: have `apps/web` and `packages/intelligence` declare

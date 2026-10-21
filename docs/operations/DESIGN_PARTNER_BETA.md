@@ -4,8 +4,8 @@ Status: **READY-FOR-EXTERNAL-DESIGN-PARTNER** is a release decision, not a defau
 
 This is a **1–3 firm** invite-only preview on the existing staging host. Not a public launch. Not GA. Not CJIS / prosecutor-ready. `FEATURE_AGENTS=0`.
 
-Partner-facing URL: `https://staging.nyayagrid.com`  
-Fly app: `nyayagrid-staging`  
+Partner-facing URL: `https://staging.nyayagrid.com`
+Fly app: `nyayagrid-staging`
 Auth: Clerk (`AUTH_PROVIDER=clerk`). DevAuth must not be exposed (`ALLOW_STAGING_DEV_AUTH` unset).
 
 Git tag for this preview: `design-partner-beta-1` (annotate after the beta commit). Rollback Fly image if a new deploy fails: `nyayagrid-staging:deployment-01M2GY75WNPTSXXWQ2F5WS0VNM` (v49). Older pre-cutover image: `deployment-01M288AYQQMVAQTGW45B21DNJS` (v47). Keep `AUTH_PROVIDER=clerk`, `FEATURE_AGENTS=0`, and `ALLOW_STAGING_DEV_AUTH` unset on rollback.
@@ -80,8 +80,8 @@ Membership rows may remain `active` after a Clerk lock; authorization still requ
 
 ## Verify organization membership
 
-Settings → Members & access lists email + role.  
-`GET /api/v1/organizations/:organizationId/members` (authenticated, `organization.manage`).  
+Settings → Members & access lists email + role.
+`GET /api/v1/organizations/:organizationId/members` (authenticated, `organization.manage`).
 Client guests only see assigned cases (Settings → Case access).
 
 ## Readiness / monitoring
@@ -124,12 +124,12 @@ Prefer synthetic, public, or non-sensitive evaluation files.
 
 **Every meaningful session** — one row in `benchmarks/nyaya-bench/dogfood/forms/beta-sessions.csv`.
 
-Usefulness: `useful` / `partially_useful` / `not_useful`.  
+Usefulness: `useful` / `partially_useful` / `not_useful`.
 Would-use: `YES` / `WITH_CHANGES` / `NO`.
 
 ## Record attorney review when one occurs
 
-Legally qualified reviewers complete `forms/reviews.csv` + `forms/issues.csv` using [RUBRIC.md](../../benchmarks/nyaya-bench/dogfood/RUBRIC.md). Drop completed files in `dogfood/completed/` and run `npm run dogfood:aggregate -w @nyayagrid/nyaya-bench`.
+Legally qualified reviewers complete `forms/reviews.csv` + `forms/issues.csv` under `benchmarks/nyaya-bench/dogfood/forms/` (scoring categories are defined in `benchmarks/nyaya-bench/dogfood/catalog.ts`; see that folder’s README). Drop completed files in `dogfood/completed/` and run `npm run dogfood:aggregate -w @nyayagrid/nyaya-bench`.
 
 Never average away CRITICAL. Operator-only rows cannot close DOGFOOD PASS. Do not manufacture PASS.
 
