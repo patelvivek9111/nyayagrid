@@ -1,10 +1,10 @@
 # NyayaGrid Agent Quality Spec
 
-**Status:** Active engineering standard  
-**Audience:** Product, AI, backend  
+**Status:** Active engineering standard
+**Audience:** Product, AI, backend
 **Scope:** Three revenue workflows that must feel industrial before we claim Harvey-class insight quality.
 
-This document defines *what good looks like*, how we measure it, and what the code must enforce. It does not invent new product surfaces. It hardens Case Q&A, contract compare, and contradiction/timeline insight on top of existing Phase 3–7 architecture.
+This document defines *what good looks like*, how we measure it, and what the code must enforce. It does not invent new product surfaces. It hardens Case Q&A, contract compare, and contradiction/timeline insight on top of existing matter intelligence, graph, memory, research, and agents architecture.
 
 ---
 
@@ -146,7 +146,7 @@ Run: `npm run eval:ai` (mock) / `npm run eval:ai:stress` (GullibleMock vs advers
 
 ### Numeric pass bars (quality gate)
 
-A workflow is **not industrial** until a *measured* suite meets these numbers. Record actual rates in [`AGENT_QUALITY_TRACKER.md`](./AGENT_QUALITY_TRACKER.md). Mock `eval:ai` rates are code-regression measurements only. **They are not sufficient without Section B attorney review.**
+A workflow is **not industrial** until a *measured* suite meets these numbers. Record live rates in your ops log (outside git) together with the live-run config block from [`AI_EVAL_LIVE.md`](./AI_EVAL_LIVE.md). Mock `eval:ai` rates are code-regression measurements only. **They are not sufficient without Section B attorney review.**
 
 | Workflow | Citation accuracy | Hallucination (fabricated / unverifiable quotes) | False-insufficient | False-confidence (answered when refuse / one-sided / decoy expected) |
 |---|---|---|---|---|

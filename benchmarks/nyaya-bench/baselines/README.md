@@ -2,24 +2,25 @@
 
 These are synthetic-fixture scores, **not** attorney review.
 
-| Label                    | File                                                       | What it measures                                                          |
-| ------------------------ | ---------------------------------------------------------- | ------------------------------------------------------------------------- |
-| `BASELINE_A_RAW_CASE_QA` | `BASELINE_A_RAW_CASE_QA.md` / `.json`                      | Original 500-task run, original graders, Case Q&A only                    |
-| Baseline A.1             | `BASELINE_A1_CORRECTED_CASE_QA.md` / `.json`               | Same 500 saved answers, corrected graders                                 |
-| Baseline A.2             | `BASELINE_A2_EVIDENCE_BOUND_CASE_QA.md` / `.json`          | Live 500 with prompt-only evidence-bound Case Q&A (`nyaya-matter-qa-v9`)  |
-| Baseline A.3             | `BASELINE_A3_STRUCTURED_EVIDENCE_CASE_QA.md` / `.json`     | Live 500 with structured evidence assessment (`nyaya-matter-qa-v10`)      |
+## Retained Markdown gate / baseline docs
 
-| Baseline A.4             | `BASELINE_A4_OPERATIVE_FACT_CASE_QA.md` / `.json`         | Live 500 with operative-fact selection (`nyaya-matter-qa-v11`)            |
-| Baseline B.1             | `BASELINE_B1_COMPARE_CONTRADICTION.md` / `.json`          | Unchanged production Compare + Contradiction, structured graders (V2 T007–T011) |
-| Baseline B.2             | `BASELINE_B2_COMPARE.md` / `.json`                        | Clause-level Compare reliability (V2 T007–T009 only; Contradiction frozen) |
+Actively used by runners and tests (do not delete):
 
-Phase 6A audit: `PHASE_6A_FULL_SYSTEM_RELIABILITY_AUDIT.md`.  
-Phase 6B report: `PHASE_6B_COMPARE_CONTRADICTION_BASELINE.md`.
+| Doc | Role |
+| --- | --- |
+| `BASELINE_6T_C1_50_STATE.md` | 50-state jurisdiction baseline |
+| `BASELINE_6T_C2A_REAL_STATE_BATCH.md` | Real-state batch baseline |
+| `BASELINE_6T_CORPUS1.md` | Corpus build baseline |
+| `PHASE_6T_50_STATE_JURISDICTION_CERTIFICATION.md` | 6T certification gate |
+| `PHASE_6T_C2A_INITIAL_STATE_CERTIFICATION.md` | C2A certification gate |
+| `PHASE_6T_CORPUS_BUILD.md` | Corpus build gate |
+| `BASELINE_6U_FSJ1.md` / `BASELINE_6U_FSJ2.md` | Full-system jurisdiction baselines |
+| `PHASE_6U_JURISDICTION_FULL_SYSTEM_BETA_GATE.md` | 6U beta gate |
+| `PHASE_6U_R1_TARGETED_REMEDIATION.md` | 6U remediation gate |
+| `PHASE_6V_GENERAL_QUALITY_90_PLUS.md` | 6V quality gate |
 
-T014 “current” vs Amendment 1: see `ERRATUM_T014_CURRENT_NOTICE.md`. Hidden ground truth was **not** rewritten; A.1–A.4 must not be recalculated.
+## JSON score artifacts
 
-Phase 5B freeze review: `PHASE_5B_COMPLETION_REPORT.md`. A.5 was not run.
-
-Do not overwrite `BASELINE_A_RAW_CASE_QA*`, `BASELINE_A1_*`, `BASELINE_A2_*`, `BASELINE_A3_*`, `BASELINE_A4_*`, `BASELINE_B1_*`, or the raw run directories under `reports/runs/`.
+Historical Case Q&A / Compare / 6W JSON baselines remain under this directory (e.g. `BASELINE_A1_*.json`, `BASELINE_6W_*.json`). Prefer the Markdown gates above for human-readable certification context. Do not overwrite frozen JSON score files or raw run directories under `reports/runs/`.
 
 `eval:ai` / `eval:ai:live` is a separate prompt/canary harness and is not replaced by these baselines.

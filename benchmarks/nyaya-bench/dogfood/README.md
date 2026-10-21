@@ -2,28 +2,23 @@
 
 **Status: READY-FOR-HUMAN-REVIEW**
 
-This pack is for practicing lawyers or legally qualified reviewers. It is **not** a quality-gate substitute for V3.1 or FW1. Automated scores already exist; this pack tests whether the product is understandable, cautious, source-traceable, and useful in realistic work.
+This pack is for practicing lawyers or legally qualified reviewers. It is **not** a quality-gate substitute for automated benches. Automated scores already exist; this pack tests whether the product is understandable, cautious, source-traceable, and useful in realistic work.
 
-Design-partner sessions use [forms/beta-sessions.csv](./forms/beta-sessions.csv) plus this rubric. Operator notes: [docs/operations/DESIGN_PARTNER_BETA.md](../../../docs/operations/DESIGN_PARTNER_BETA.md).
+Design-partner sessions use [forms/beta-sessions.csv](./forms/beta-sessions.csv). Operator notes: [docs/operations/DESIGN_PARTNER_BETA.md](../../../docs/operations/DESIGN_PARTNER_BETA.md).
 
 Do not treat an engineering self-score as attorney review. Do not manufacture PASS.
 
-FEATURE_AGENTS=0. Synthetic / public-test material only. No real client files.
+`FEATURE_AGENTS=0`. Synthetic / public-test material only. No real client files.
 
 ## What is in this folder
 
-| File | Audience |
+| Path | Audience |
 | --- | --- |
-| [REVIEWER_INSTRUCTIONS.md](./REVIEWER_INSTRUCTIONS.md) | Reviewers |
-| [RUBRIC.md](./RUBRIC.md) | Reviewers |
-| [REVIEW_PACKET.md](./REVIEW_PACKET.md) | Compact packet + form |
-| [MATTERS.md](./MATTERS.md) | Matter list (no ground truth) |
-| [RECRUITMENT.md](./RECRUITMENT.md) | Facilitator |
-| [FACILITATOR.md](./FACILITATOR.md) | Facilitator only |
-| `forms/*.csv` | Spreadsheet forms |
-| `aggregate.ts` | Deterministic rollup |
+| `forms/*.csv` | Spreadsheet forms for reviewers |
+| `aggregate.ts` / `catalog.ts` / `pack-sources.ts` | Deterministic pack generation / rollup |
+| `completed/` | Completed review artifacts (if any) |
 
-Generate source files (no model calls):
+Generate source packets (no model calls):
 
 ```bash
 npm run dogfood:pack -w @nyayagrid/nyaya-bench
@@ -50,7 +45,7 @@ No in-repo criminal case file is complete enough to review safely. Do not add on
 
 ## Gate (after humans)
 
-Preferred **DOGFOOD PASS**: 0 CRITICAL; mean A/B/K ≥ 4; usefulness ≥ 4; majority YES or WITH CHANGES; at least one **attorney** reviewer.
+Preferred **DOGFOOD PASS**: 0 CRITICAL; mean usefulness high; majority YES or WITH CHANGES; at least one **attorney** reviewer.
 
 **HOLD** if any reproducible CRITICAL, recurring unsupported material claims, or reviewers cannot trace conclusions to sources.
 

@@ -41,7 +41,7 @@ npm run bench -- smoke-subsystems
 
 Mode without `run` lists the catalog. Do not run 500 full-system live calls unless intended.
 
-Modes with no compatible V1/V2 tasks (`graph`, `memory`, `research`, `draft`, `agents`) return `NOT_APPLICABLE_TO_SUBSYSTEM` unless a smoke override is used. See `SUBSYSTEM_ROUTING.md`.
+Modes with no compatible V1/V2 tasks (`graph`, `memory`, `research`, `draft`, `agents`) return `NOT_APPLICABLE_TO_SUBSYSTEM` unless a smoke override is used. Routing behavior is covered by `tests/routing.test.ts` and the runner in `runner/run.ts`.
 
 ## Scoring
 
