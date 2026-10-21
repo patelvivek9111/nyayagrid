@@ -126,7 +126,7 @@ Human-authoritative classifications separate from AI proposals. Privilege finals
 
 ### Motions and communications
 
-First-class matter tables (`matter_motions`, `matter_communications`, link tables) with org/matter scope and provenance. Dates are explicit/source-backed only — no automatic jurisdictional deadline inference. See [`docs/reports/deepening-pass6-motions-communications-architecture-2026-10-09.md`](docs/reports/deepening-pass6-motions-communications-architecture-2026-10-09.md) (durable architecture note; may relocate under `docs/architecture/` later).
+First-class matter tables (`matter_motions`, `matter_communications`, link tables) with org/matter scope and provenance. Dates are explicit/source-backed only — no automatic jurisdictional deadline inference. See [`docs/architecture/motions-communications.md`](docs/architecture/motions-communications.md).
 
 ### Nyaya Research
 

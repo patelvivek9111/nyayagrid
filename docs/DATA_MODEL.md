@@ -88,7 +88,7 @@ Defined in `packages/database/src/schema/phase17.ts`; migration `0023_matter_mot
 - `matter_communications`, `matter_communication_links`
 - Graph node types include `motion` and `communication`
 
-No automatic jurisdictional deadline inference. No court CMS / e-filing fields. See the durable architecture note under `docs/reports/deepening-pass6-motions-communications-architecture-2026-10-09.md`.
+No automatic jurisdictional deadline inference. No court CMS / e-filing fields. See [`docs/architecture/motions-communications.md`](./architecture/motions-communications.md).
 
 ## Nyaya Professor + Nyaya Guide
 
