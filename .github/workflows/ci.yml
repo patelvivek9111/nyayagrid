@@ -57,6 +57,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # Full history of this ref so the formatting gate can diff against its base.
+          fetch-depth: 0
 
       - name: Set up Node.js 20
         uses: actions/setup-node@v4
@@ -77,7 +80,17 @@ jobs:
       - name: Run database migrations
         run: npm run db:migrate
 
+      # prettier --check . has failed since CI run 2 (1400+ tracked files of historical
+      # debt). Check files changed from the merge base so new and modified source
+      # must be formatted, without a repository-wide rewrite. Push events diff the
+      # commits in that push. Pull requests diff the merge base. A new branch with
+      # no previous SHA falls back to origin/nyaya/integration-checkpoint.
       - name: Check formatting
+        env:
+          PRETTIER_EVENT: ${{ github.event_name }}
+          PRETTIER_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          PRETTIER_HEAD_SHA: ${{ github.sha }}
+          PRETTIER_BASE_REF: origin/${{ github.event.pull_request.base.ref || 'nyaya/integration-checkpoint' }}
         run: npm run format:check
 
       - name: Lint

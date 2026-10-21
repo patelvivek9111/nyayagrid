@@ -1,0 +1,27 @@
+# Generated files and data artifacts.
+# Maintained application source is intentionally not ignored.
+# CI checks changed in-scope files; it does not rewrite historical formatting debt.
+
+# Generated Next.js type reference
+apps/web/next-env.d.ts
+
+# Generated RC1 freeze snapshot
+docs/rc1-freeze.json
+
+# Recorded performance baseline snapshot
+docs/performance/*.json
+
+# Corpus authority bundles (data, not application source)
+packages/research/corpus/bundles/
+
+# Generated corpus operational reports
+packages/research/corpus/reports/
+
+# Benchmark fixture JSON, recorded baselines, and certification artifacts
+benchmarks/nyaya-bench/datasets/**/*.json
+benchmarks/nyaya-bench/baselines/**/*.json
+benchmarks/nyaya-bench/reports/*.json
+benchmarks/nyaya-bench/model-routing/artifacts/
+
+# Committed staging runner outputs
+scripts/corpus/staging/*-results.json
